@@ -4,19 +4,25 @@
 */
 
 function ready() {
-    console.log(core.object.test());
+    console.log(package.core.node.test());
 };
+
+var package = {};
 
 var core = new function() {
     //methods
-    this.set = function(package, name, property) {
-        Object.defineProperty(package, name, {
+    this.set = function(package_name, component_name, property) {
+        if(package[package_name] === 'undefined') {
+            package[package_name] = {};
+        }
+        package_object = package[package_name];
+        Object.defineProperty(package_object, component_name, {
             get: property,
             set: undefined
         });
     };
-    this.register = function(package, name, component) {
-        this.set(package, name, function() {
+    this.register = function(package_name, component_name, component) {
+        this.set(package_name, component_name, function() {
             return new component();
         });
     };
@@ -31,10 +37,9 @@ var core = new function() {
     this.import = function(package, name, callback) {
         this.switch(this.platform, {
         "server": function() {
-            global.core = core;
             path="../" + package + "/" + package + "_" + name;
             require(path);
-            callback();
+            setImmediate(callback);
         },
         "client": function() {
             var head = document.getElementsByTagName('head')[0];
@@ -51,7 +56,7 @@ var core = new function() {
         core = this;
         urls.map(function(url) {
             name = url[0] + "_" + url[1];
-            core.import(url[0], url[1], function() {
+            package.core.import(url[0], url[1], function() {
                 responses_left--;
                 if(responses_left <= 0) { 
                     callback(urls)
@@ -60,7 +65,8 @@ var core = new function() {
         });
     };
     //init
-    this.set(this, "platform", function() {
+    package["core"] = this;
+    this.set("core", "platform", function() {
         if(typeof require !== 'undefined') {
             return "server";
         }
@@ -68,7 +74,14 @@ var core = new function() {
             return "client";
         }
     });
+    this.switch(this.platform, {
+    "server": function() {
+        global.package = package;
+    },
+    "default":function() {
+    }})();
     this.imports([
-        ["core", "object"]
+        ["core", "object"],
+        ["core", "node"]
     ], function() { ready(); });
 };
