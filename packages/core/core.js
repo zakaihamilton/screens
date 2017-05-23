@@ -12,8 +12,8 @@ var package = {};
 var core = new function() {
     //methods
     this.set = function(package_name, component_name, property) {
-        if(package[package_name] === 'undefined') {
-            package[package_name] = {};
+        if(package_name in package == false) {
+            package[package_name] = new function() { package[package_name] = this; };
         }
         package_object = package[package_name];
         Object.defineProperty(package_object, component_name, {
