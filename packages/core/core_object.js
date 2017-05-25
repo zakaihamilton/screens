@@ -3,8 +3,18 @@
     @component CoreObject
 */
 
-package.core.register("core", "object", function() {
+package.core.object = new function CoreObject() {
     this.test = function() {
         return "Test";
     };
-});
+    this.switch = function(exp, cases) {
+        if(cases[exp] === undefined) {
+            if(cases["default"] !== undefined) {
+                return cases["default"]();
+            }
+        }
+        else {
+            return cases[exp]();
+        }
+    };
+};

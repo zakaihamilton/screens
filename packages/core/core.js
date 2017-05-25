@@ -3,85 +3,46 @@
     @component Core
 */
 
-function ready() {
-    console.log(package.core.node.test());
-};
-
-var package = {};
-
-var core = new function() {
-    //methods
-    this.set = function(package_name, component_name, property) {
-        if(package_name in package == false) {
-            package[package_name] = new function() { package[package_name] = this; };
-        }
-        package_object = package[package_name];
-        Object.defineProperty(package_object, component_name, {
-            get: property,
-            set: undefined
-        });
-    };
-    this.register = function(package_name, component_name, component) {
-        this.set(package_name, component_name, function() {
-            return new component();
-        });
-    };
-    this.switch = function(exp, cases) {
-        if(cases[exp] === undefined) {
-            return cases["default"];
-        }
-        else {
-            return cases[exp];
-        }
-    };
-    this.import = function(package, name, callback) {
-        this.switch(this.platform, {
-        "server": function() {
-            path="../" + package + "/" + package + "_" + name;
-            require(path);
-            setImmediate(callback);
-        },
-        "client": function() {
-            var head = document.getElementsByTagName('head')[0];
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = "packages/" + package + "/" + package + "_" + name + ".js";
-            script.onload=callback;
-            head.appendChild(script);
-            head.appendChild(script);
-        }})();
-    };
-    this.imports = function(urls, callback) {
-        responses_left = urls.length;
-        core = this;
-        urls.map(function(url) {
-            name = url[0] + "_" + url[1];
-            package.core.import(url[0], url[1], function() {
-                responses_left--;
-                if(responses_left <= 0) { 
-                    callback(urls)
+var package = new Proxy({}, {
+    get: function (object, property) {
+      /* Check if package exists */
+      if (Reflect.has(object, property)) {
+        return Reflect.get(object, property);
+      } else {
+        /* Create package */
+        package_obj = new Proxy({__package:property}, {
+            get: function(object, property) {
+                /* Check if component exists */
+                if (Reflect.has(object, property)) {
+                  return Reflect.get(object, property);
+                } else {
+                    /* Load component */
+                    package_name=Reflect.get(object, "__package");
+                    if(typeof require !== 'undefined') {
+                        global.package = package;
+                        path="../" + package_name + "/" + package_name + "_" + property;
+                        require(path);
+                    }
+                    else {
+                        var xhrObj = new XMLHttpRequest();
+                        xhrObj.open('GET', "packages/" + package_name + "/" + package_name + "_" + property + ".js", false);
+                        xhrObj.send(null);
+                        var se = document.createElement('script');
+                        se.type = "text/javascript";
+                        se.text = xhrObj.responseText;
+                        document.getElementsByTagName('head')[0].appendChild(se);
+                    }
+                    return Reflect.get(object, property);
                 }
-            });
+            },
+            set: function(object, property, value) {
+                Reflect.set(object, property, value);
+            }
         });
-    };
-    //init
-    package["core"] = this;
-    this.set("core", "platform", function() {
-        if(typeof require !== 'undefined') {
-            return "server";
-        }
-        else {
-            return "client";
-        }
-    });
-    this.switch(this.platform, {
-    "server": function() {
-        global.package = package;
-    },
-    "default":function() {
-    }})();
-    this.imports([
-        ["core", "object"],
-        ["core", "node"]
-    ], function() { ready(); });
-};
+        Reflect.set(object, property, package_obj);
+        return package_obj;
+      }
+    }
+  });
+
+console.log(package.core.platform);

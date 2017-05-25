@@ -3,8 +3,8 @@
     @component CoreNode
 */
 
-package.core.register("core", "node", function() {
+package.core.node = new function CoreNode() {
     this.test = function() {
-        return "Node";
+        return "Test";
     };
-});
+};
