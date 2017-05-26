@@ -1,0 +1,11 @@
+{
+  "name": "screens",
+  "main": "core.js",
+  "dependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zakaihamilton/screens.git"
+  },
+  "license": "Unlicense"
+}
