@@ -17,9 +17,11 @@ package.core.event = new function CoreEvent() {
         forwarding_list = this._forwarding_list[component];
         if (forwarding_list !== undefined) {
             forwarding_list.forEach(function (enabled, target_id) {
-                target = package[target_id];
-                if (typeof component.name === "function") {
-                    target.name.apply(target, Array.prototype.slice.call(arguments, 3));
+                if(enabled) {
+                    target = package[target_id];
+                    if (typeof target.name === "function") {
+                        target.name.apply(target, Array.prototype.slice.call(arguments, 3));
+                    }
                 }
             });
         }
