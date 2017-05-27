@@ -7,7 +7,7 @@ package.core.job = new function() {
     this.jobs = [];
     this.tasks = [];
     this.open = function() {
-        var job = packages.core.ref.gen();
+        var job = package.core.ref.gen();
         this.jobs[job] = {state:true,tasks:[], callback:null};
         return job;
     };
@@ -24,7 +24,7 @@ package.core.job = new function() {
     this.begin = function(job) {
         var job_info = this.jobs[job];
         if(job_info !== undefined) {
-            var task = packages.core.ref.gen();
+            var task = package.core.ref.gen();
             this.tasks[task] = {job:job};
             job_info.tasks.push(task);
         }

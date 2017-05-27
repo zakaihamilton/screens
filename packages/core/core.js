@@ -42,7 +42,6 @@ var package = new Proxy({}, {
                         }
                         component = Reflect.get(object, property);
                         component.id = object.id + "." + property;
-                        console.log(component);
                         return component;
                     }
                 },
@@ -56,5 +55,4 @@ var package = new Proxy({}, {
     }
 });
 
-console.log(package.core.platform);
 package.core.http.init();
