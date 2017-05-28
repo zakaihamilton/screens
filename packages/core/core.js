@@ -41,7 +41,9 @@ var package = new Proxy({}, {
                             document.getElementsByTagName('head')[0].appendChild(element);
                         }
                         component = Reflect.get(object, property);
-                        component.id = object.id + "." + property;
+                        if(component !== undefined) {
+                            component.id = object.id + "." + property;
+                        }
                         console.log("Loaded " + object.id + "." + property);
                         return component;
                     }
@@ -59,3 +61,4 @@ var package = new Proxy({}, {
 package.core.http;
 package.core.module;
 console.log(package.core.platform);
+console.log(package.core.remote.test("a", "b", "c"));

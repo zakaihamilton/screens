@@ -28,6 +28,7 @@ package.core.http = new function CoreHttp() {
                         body:"",
                         job:job
                     };
+                    console.log("Received request: " + JSON.stringify(info));
                     core.event.send(core.http.id, "recieve", info);
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
@@ -46,6 +47,16 @@ package.core.http = new function CoreHttp() {
         }
     };
     this.send = function(info) {
+        if(core.platform === "client") {
+            var request = new XMLHttpRequest();
+            request.open(info.method, info.url, false);
+            request.send(null);
+            if(request.status == 200) {
+                return request.responseText;
+            }
+        }
+    };
+    this.send_async = function(info) {
         if(core.platform === "client") {
             var request = new XMLHttpRequest();
             request.open(info.method, info.url, true);
