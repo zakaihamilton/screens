@@ -18,6 +18,7 @@ package.core.job = new function() {
             job_info.state = false;
             if(job_info.tasks.length === 0) {
                 callback(job);
+                this.jobs.splice(this.jobs.indexOf(job), 1);
             }
         }
     };
@@ -34,15 +35,12 @@ package.core.job = new function() {
         var task_info = this.tasks[task];
         if(task_info !== undefined) {
             var job_info = this.jobs[task_info.job];
-            var index = job_info.tasks.indexOf(task);
-            if (index > -1) {
-                job_info.tasks.splice(index, 1);
-            }
+            job_info.tasks.splice(job_info.tasks.indexOf(task), 1);
             this.tasks.splice(this.tasks.indexOf(task), 1);
             if(job_info.state == false && job_info.tasks.length == 0) {
                 job_info.callback(task_info.job);
+                this.jobs.splice(this.jobs.indexOf(task_info.job), 1);
             }
-            this.jobs.splice(this.jobs.indexOf(task_info.job), 1);
         }
     };
 };
