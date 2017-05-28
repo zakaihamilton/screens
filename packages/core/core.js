@@ -56,6 +56,6 @@ var package = new Proxy({}, {
     }
 });
 
-package.core.http.init();
+package.core.http;
 package.core.module;
 console.log(package.core.platform);

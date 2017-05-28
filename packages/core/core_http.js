@@ -7,11 +7,9 @@ package.core.http = new function CoreHttp() {
     var core = package.core;
     this.port = 8080;
     this.listeners = [];
-    if(core.platform === "server") {
-        this.http = require("http");
-    }
     this.init = function() {
         if(core.platform === "server") {
+            this.http = require("http");
             this.server = this.http.createServer(function(request, response) {
                 var body = [];
                   request.on('error', function(err) {
@@ -20,7 +18,7 @@ package.core.http = new function CoreHttp() {
                     body.push(chunk);
                   }).on('end', function() {
                     body = Buffer.concat(body).toString();
-                    var job = core.job.open(info);
+                    var job = core.job.open();
                     var info = {
                         method:request.method,
                         url:request.url,
@@ -30,7 +28,7 @@ package.core.http = new function CoreHttp() {
                         body:"",
                         job:job
                     };
-                    core.event.send(package.core.http.id, "recieve", info);
+                    core.event.send(core.http.id, "recieve", info);
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
                             "Content-Type": info["content-type"],
@@ -43,7 +41,7 @@ package.core.http = new function CoreHttp() {
                 if (err) {
                   return console.log("something bad happened", err)
                 }
-                console.log("server is listening on " + package.core.http.port);
+                console.log("server is listening on " + core.http.port);
             });
         }
     };
@@ -65,4 +63,5 @@ package.core.http = new function CoreHttp() {
             request.send(null);
         }
     };
+    this.init();
 };

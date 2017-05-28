@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component CoreEvent
+ @component CoreModule
  */
 
 package.core.module = new function() {
