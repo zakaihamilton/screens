@@ -38,11 +38,11 @@ package.core.job = new function() {
             if (index > -1) {
                 job_info.tasks.splice(index, 1);
             }
-            this.tasks.delete(task);
+            this.tasks.splice(this.tasks.indexOf(task), 1);
             if(job_info.state == false && job_info.tasks.length == 0) {
-                job_info.callback(job);
+                job_info.callback(task_info.job);
             }
-            this.jobs.delete(job);
+            this.jobs.splice(this.jobs.indexOf(task_info.job), 1);
         }
     };
 };

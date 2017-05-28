@@ -13,9 +13,6 @@ package.core.http = new function CoreHttp() {
     this.init = function() {
         if(core.platform === "server") {
             this.server = this.http.createServer(function(request, response) {
-                console.log("method:" + request.method);
-                console.log("url: " + request.url);
-                console.log("headers: " + request.headers);
                 var body = [];
                   request.on('error', function(err) {
                     console.error(err);
@@ -33,7 +30,7 @@ package.core.http = new function CoreHttp() {
                         body:"",
                         job:job
                     };
-                    core.event.send(this.id, "recieve", info);
+                    core.event.send(package.core.http.id, "recieve", info);
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
                             "Content-Type": info["content-type"],

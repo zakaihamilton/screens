@@ -38,10 +38,11 @@ var package = new Proxy({}, {
                             var element = document.createElement('script');
                             element.type = "text/javascript";
                             element.text = request.responseText;
-                            document.getElementsByTagName('head')[0].appendChild(se);
+                            document.getElementsByTagName('head')[0].appendChild(element);
                         }
                         component = Reflect.get(object, property);
                         component.id = object.id + "." + property;
+                        console.log("Loaded " + object.id + "." + property);
                         return component;
                     }
                 },
@@ -56,3 +57,5 @@ var package = new Proxy({}, {
 });
 
 package.core.http.init();
+package.core.module;
+console.log(package.core.platform);

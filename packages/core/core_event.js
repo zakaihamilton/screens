@@ -16,14 +16,16 @@ package.core.event = new function CoreEvent() {
     this.send = function (component, name, params) {
         forwarding_list = this._forwarding_list[component];
         if (forwarding_list !== undefined) {
-            forwarding_list.forEach(function (enabled, target_id) {
+            for (var target in forwarding_list) {
+                var enabled = forwarding_list[target];
                 if(enabled) {
-                    target = package[target_id];
-                    if (typeof target.name === "function") {
-                        target.name.apply(target, Array.prototype.slice.call(arguments, 3));
+                    target = package[target];
+                    if (typeof target[name] === "function") {
+                        args = Array.prototype.slice.call(arguments, 2);
+                        target[name].apply(target, args);
                     }
                 }
-            });
+            }
         }
     };
 };
