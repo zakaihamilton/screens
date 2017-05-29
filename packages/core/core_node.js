@@ -4,6 +4,7 @@
 */
 
 package.core.node = new function CoreNode() {
+    this.remote = true;
     this.test = function() {
         return "Test";
     };

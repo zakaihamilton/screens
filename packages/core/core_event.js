@@ -4,7 +4,6 @@
  */
 
 package.core.event = new function CoreEvent() {
-    /* example: package.core.event.forward(package.core.http, package.ui.window, true) */
     this._forwarding_list = {};
     this.forward = function (source, target, enabled) {
         source_list = this._forwarding_list[source];

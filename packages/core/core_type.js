@@ -21,8 +21,7 @@ package.core.type = new function() {
     };
     this.wrap_args = function(unwrapped_args) {
         var wrapped_args = {args:[]};
-        var args_count = Object.keys(unwrapped_args).length;
-        for(var args_index = 0; args_index < args_count; args_index++) {
+        for(var args_index = 0; args_index < unwrapped_args.length; args_index++) {
             wrapped_args.args.push(package.core.type.wrap(unwrapped_args[args_index]));
         }
         return encodeURIComponent(JSON.stringify(wrapped_args));

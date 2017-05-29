@@ -32,20 +32,25 @@ package.core.module = new function() {
                 else if(info.url.endsWith(".js")) {
                     var task = core.job.begin(info.job);
                     var component_path = core.module.path_file_to_component(file_path);
-                    var remote = component_path && package[component_path].remote == true;
+                    var platform = null;
+                    if(component_path) {
+                        platform = package[component_path].platform;
+                    }
                     info["content-type"] = "application/javascript";
-                    if(remote === undefined || remote == false) {
-                        console.log("component_path: " + component_path);
-                        fs.readFile(file_path, 'utf8', function (err,data) {
-                            console.log("serving file: " + info.url);
+                    if(platform) {
+                        fs.readFile("packages/remote.js", 'utf8', function (err,data) {
+                            console.log("serving remote file as: " + info.url);
+                            data = data.split("@component").join(component_path);
+                            data = data.split("@platform").join(platform);
                             info.body = data;
                             core.job.end(task);
                         });
                     }
                     else {
-                        fs.readFile("packages/core/remote.js", 'utf8', function (err,data) {
-                            console.log("serving remote file as: " + info.url);
-                            info.body = data.split("@component").join(component_path);
+                        console.log("component_path: " + component_path);
+                        fs.readFile(file_path, 'utf8', function (err,data) {
+                            console.log("serving file: " + info.url + " err: " + err);
+                            info.body = data;
                             core.job.end(task);
                         });
                     }
