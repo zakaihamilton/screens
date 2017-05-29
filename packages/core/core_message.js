@@ -23,20 +23,16 @@ package.core.message = new function CoreMessage() {
         var info = {method:method,params:args};
         postMessage(info);
     };
-    this.receive_client = function(info) {
+    this.receive = function(info) {
         var component = info.method.substring(0, info.method.lastIndexOf("."));
-        package[info.method].apply(component, info.params);
-    };
-    this.receive_browser = function(info) {
-        var component = info.method.substring(0, info.method.lastIndexOf("."));
-        package[info.method].apply(component, info.params);
+        return package[info.method].apply(component, info.params);
     };
     console.log("platform:" + package.core.platform);
     if(package.core.platform == "browser") {
         this.worker = new Worker("packages/package.js");
-        this.worker.addEventListener("message", this.receive_browser);
+        this.worker.addEventListener("message", this.receive);
     }
     else if(package.core.platform == "client") {
-        addEventListener("message", this.receive_client);
+        addEventListener("message", this.receive);
     }
 };

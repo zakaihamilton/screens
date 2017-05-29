@@ -24,8 +24,8 @@ package.core.module = new function() {
                     var method = info.url.substring(info.url.indexOf(find)+find.length, info.url.indexOf("("));
                     var params = info.url.substring(info.url.indexOf("(")+1, info.url.lastIndexOf(")"));
                     var args = core.type.unwrap_args(params);
-                    var component = method.substring(0, method.lastIndexOf("."));
-                    var result = package[method].apply(package[component], args);
+                    var info={method:method,params:args};
+                    var result = core.message.receive(info);
                     console.log("type: " + typeof result + " result:" + result);
                     info.body = core.type.wrap(result);
                 }
