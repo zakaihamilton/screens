@@ -62,3 +62,7 @@ package.core.http;
 package.core.module;
 console.log(package.core.platform);
 console.log(package.core.remote.test("a", "b", "c"));
+console.log(package.core.remote.return_number(5));
+console.log(package.core.remote.return_string("testing 1, 2, 3"));
+console.log(package.core.remote.return_map({a:1,b:2,c:3}));
+console.log(package.core.remote.return_array([5,6,7,8]));

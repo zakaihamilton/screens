@@ -8,9 +8,9 @@ package.@component = new Proxy({}, {
         }
         return function (args) {
             var info = {method:"GET",
-                        url:"method/@component." + property + "(" + encodeURIComponent(JSON.stringify(arguments)) + ")"};
+                        url:"method/@component." + property + "(" + package.core.type.wrap_args(arguments) + ")"};
             var result = package.core.http.send(info);
-            return result;
+            return package.core.type.unwrap(result);
         };
     }
     });

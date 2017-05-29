@@ -14,16 +14,6 @@ package.core.module = new function() {
         var component_path = file_path.replace("_", ".").replace(".js", "");
         return component_path;
     };
-    this.params_to_args = function(params) {
-        var args = [];
-        var args_map = JSON.parse(decodeURIComponent(params));
-        var args_count = Object.keys(args_map).length;
-        for(var args_index = 0; args_index < args_count; args_index++) {
-            args.push(args_map[args_index.toString()]);
-        }
-        console.log("len:" + args_count + " " + JSON.stringify(args_map) + "=" + JSON.stringify(args));
-        return args;
-    };
     this.recieve = function(info) {
         if(core.platform == "server") {
             var fs = require("fs");
@@ -33,10 +23,11 @@ package.core.module = new function() {
                     var find = "/method/";
                     var method = info.url.substring(info.url.indexOf(find)+find.length, info.url.indexOf("("));
                     var params = info.url.substring(info.url.indexOf("(")+1, info.url.lastIndexOf(")"));
-                    var args = core.module.params_to_args(params);
+                    var args = core.type.unwrap_args(params);
                     var component = method.substring(0, method.lastIndexOf("."));
                     var result = package[method].apply(package[component], args);
-                    info.body = result;
+                    console.log("type: " + typeof result + " result:" + result);
+                    info.body = core.type.wrap(result);
                 }
                 else if(info.url.endsWith(".js")) {
                     var task = core.job.begin(info.job);
