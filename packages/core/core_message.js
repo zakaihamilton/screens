@@ -9,7 +9,7 @@ package.core.message = new function CoreMessage() {
         if(core.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {method:"GET",
-                        url:"/method/" + method + "(" + package.core.type.wrap_args(args) + ")"};
+                        url:"/method/" + method + package.core.type.wrap_args(args)};
             var result = core.http.send(info);
             return core.type.unwrap(result);
         }

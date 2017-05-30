@@ -18,13 +18,11 @@ package.core.module = new function() {
         if(core.platform == "server") {
             var fs = require("fs");
             if(info.method == "GET") {
-                console.log("url: " + info.url);
                 var file_path = info.url.substring(1);
                 if(info.url.startsWith("/method")) {
                     var find = "/method/";
-                    var method = info.url.substring(info.url.indexOf(find)+find.length, info.url.indexOf("("));
-                    var params = info.url.substring(info.url.indexOf("(")+1, info.url.lastIndexOf(")"));
-                    var args = core.type.unwrap_args(params);
+                    var method = info.url.substring(info.url.indexOf(find)+find.length);
+                    var args = core.type.unwrap_args(info.query);
                     var message={method:method,params:args};
                     var result = core.message.receive(message);
                     info.body = core.type.wrap(result);

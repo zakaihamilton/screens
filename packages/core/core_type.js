@@ -22,13 +22,25 @@ package.core.type = new function() {
         }
     };
     this.wrap_args = function(unwrapped_args) {
-        var wrapped_args = {args:unwrapped_args.map(function(item) { return package.core.type.wrap(item); })};
-        return encodeURIComponent(JSON.stringify(wrapped_args));
+        var query = "";
+        for(var i = 0; i < unwrapped_args.length; i++) {
+            var value = encodeURIComponent(package.core.type.wrap(unwrapped_args[i]));
+            if(i == 0) {
+                query = "?" + i + "=" + value;
+            }
+            else {
+                query += "&" + i + "=" + value;
+            }
+        };
+        return query;
     };
     this.unwrap_args = function(wrapped_args) {
         var unwrapped_args = [];
-        wrapped_args = JSON.parse(decodeURIComponent(wrapped_args));
-        unwrapped_args = wrapped_args.args.map(function(item) { return package.core.type.unwrap(item); });
+        for(var key in wrapped_args) {
+            if(wrapped_args.hasOwnProperty(key)) {
+                unwrapped_args.push(package.core.type.unwrap(wrapped_args[key]));
+            }
+        }
         return unwrapped_args;
     };
 };
