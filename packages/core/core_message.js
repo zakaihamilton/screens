@@ -5,6 +5,7 @@
 
 package.core.message = new function CoreMessage() {
     var core = package.core;
+    core.event.forward("core.http", "core.message", true);
     this.send_server = function(method, params) {
         if(core.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
@@ -30,6 +31,18 @@ package.core.message = new function CoreMessage() {
         }
     };
     this.receive = function(info) {
+        core.console.log("matching url: " + info.url);
+        if(core.platform == "server" && info.method == "GET" && info.url.startsWith("/method/")) {
+            var find = "/method/";
+            var method = info.url.substring(info.url.indexOf(find)+find.length);
+            var args = core.type.unwrap_args(info.query);
+            var message={method:method,params:args};
+            core.console.log("executing method: " + method);
+            var result = core.message.execute(message);
+            info.body = core.type.wrap(result);
+        }
+    };
+    this.execute = function(info) {
         var component = info.method.substring(0, info.method.lastIndexOf("."));
         var method = package[info.method];
         package.core.console.log("method: " + info.method + " component: " + component);
@@ -37,9 +50,9 @@ package.core.message = new function CoreMessage() {
     };
     if(core.platform == "browser") {
         this.worker = new Worker("packages/package.js");
-        this.worker.onmessage = function(event) { return package.core.message.receive(event.data); };
+        this.worker.onmessage = function(event) { return package.core.message.execute(event.data); };
     }
     else if(core.platform == "client") {
-        self.onmessage = function(event) { return package.core.message.receive(event.data); };
+        self.onmessage = function(event) { return package.core.message.execute(event.data); };
     }
 };

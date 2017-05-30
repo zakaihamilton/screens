@@ -20,7 +20,7 @@ package.core.event = new function CoreEvent() {
                 if(enabled) {
                     target = package[target];
                     if (typeof target[name] === "function") {
-                        args = Array.prototype.slice.call(arguments, 2);
+                        var args = Array.prototype.slice.call(arguments, 2);
                         target[name].apply(target, args);
                     }
                 }

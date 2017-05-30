@@ -69,15 +69,17 @@ var package = new Proxy({}, {
 package.core.platform;
 package.core.console;
 package.core.remote;
+package.core.event;
 package.core.message;
 if(typeof require !== 'undefined') {
     /* server */
     package.core.http;
     package.core.module;
+    package.core.script;
 }
 else if(typeof importScripts !== 'undefined') {
     /* client */
-    package.core.message.send_browser("app.main.initialised");
+    package.core.message.send_browser("app.main.browser");
 }
 else {
     /* browser */

@@ -14,20 +14,12 @@ package.core.module = new function() {
         var component_path = file_path.replace("_", ".").replace(".js", "");
         return component_path;
     };
-    this.recieve = function(info) {
+    this.receive = function(info) {
         if(core.platform == "server") {
             var fs = require("fs");
             if(info.method == "GET") {
                 var file_path = info.url.substring(1);
-                if(info.url.startsWith("/method")) {
-                    var find = "/method/";
-                    var method = info.url.substring(info.url.indexOf(find)+find.length);
-                    var args = core.type.unwrap_args(info.query);
-                    var message={method:method,params:args};
-                    var result = core.message.receive(message);
-                    info.body = core.type.wrap(result);
-                }
-                else if(file_path.endsWith(".js")) {
+                if(file_path.endsWith(".js")) {
                     var task = core.job.begin(info.job);
                     var component_path = core.module.path_file_to_component(file_path);
                     var target_platform = null;
@@ -40,9 +32,9 @@ package.core.module = new function() {
                         console.log("source: " + source_platform + " target: " + target_platform);
                         fs.readFile("packages/remote.js", 'utf8', function (err,data) {
                             core.console.log("serving remote file as: " + info.url);
-                            data = data.split("@component").join(component_path);
-                            data = data.split("@platform").join(target_platform);
+                            info.vars = {"component":component_path,"platform":target_platform};
                             info.body = data;
+                            core.event.send(core.module.id, "parse", info);
                             core.job.end(task);
                         });
                     }
@@ -51,6 +43,7 @@ package.core.module = new function() {
                         fs.readFile(file_path, 'utf8', function (err,data) {
                             core.console.log("serving file: " + info.url + " err: " + err);
                             info.body = data;
+                            core.event.send(core.module.id, "parse", info);
                             core.job.end(task);
                         });
                     }
