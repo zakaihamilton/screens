@@ -18,15 +18,15 @@ package.core.module = new function() {
         if(core.platform == "server") {
             var fs = require("fs");
             if(info.method == "GET") {
+                console.log("url: " + info.url);
                 file_path = info.url.substring(1);
                 if(info.url.startsWith("/method")) {
                     var find = "/method/";
                     var method = info.url.substring(info.url.indexOf(find)+find.length, info.url.indexOf("("));
                     var params = info.url.substring(info.url.indexOf("(")+1, info.url.lastIndexOf(")"));
                     var args = core.type.unwrap_args(params);
-                    var info={method:method,params:args};
-                    var result = core.message.receive(info);
-                    console.log("type: " + typeof result + " result:" + result);
+                    var message={method:method,params:args};
+                    var result = core.message.receive(message);
                     info.body = core.type.wrap(result);
                 }
                 else if(info.url.endsWith(".js")) {
@@ -39,7 +39,7 @@ package.core.module = new function() {
                     info["content-type"] = "application/javascript";
                     if(platform) {
                         fs.readFile("packages/remote.js", 'utf8', function (err,data) {
-                            console.log("serving remote file as: " + info.url);
+                            core.console.log("serving remote file as: " + info.url);
                             data = data.split("@component").join(component_path);
                             data = data.split("@platform").join(platform);
                             info.body = data;
@@ -47,9 +47,9 @@ package.core.module = new function() {
                         });
                     }
                     else {
-                        console.log("component_path: " + component_path);
+                        core.console.log("component_path: " + component_path);
                         fs.readFile(file_path, 'utf8', function (err,data) {
-                            console.log("serving file: " + info.url + " err: " + err);
+                            core.console.log("serving file: " + info.url + " err: " + err);
                             info.body = data;
                             core.job.end(task);
                         });
@@ -58,7 +58,7 @@ package.core.module = new function() {
                 else if(info.url.endsWith(".html")) {
                     var task = core.job.begin(info.job);
                     fs.readFile(file_path, 'utf8', function (err,data) {
-                        console.log("serving file: " + info.url);
+                        core.console.log("serving file: " + info.url);
                         info["content-type"] = "text/html";
                         info.body = data;
                         core.job.end(task);

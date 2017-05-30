@@ -9,6 +9,6 @@ package.core.node = new function CoreNode() {
         return "Test";
     };
     this.print = function(text) {
-        console.log(text);
+        core.console.log(text);
     };
 };

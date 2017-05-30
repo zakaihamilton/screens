@@ -26,7 +26,7 @@ var package = new Proxy({}, {
                         if(component !== undefined) {
                             component.id = object.id + "." + property;
                         }
-                        console.log("Loaded " + object.id + "." + property);
+                        console.log(package.core.platform + ": Loaded " + object.id + "." + property);
                     };
                     /* Check if component exists */
                     if (Reflect.has(object, property)) {
@@ -65,22 +65,20 @@ var package = new Proxy({}, {
     }
 });
 
+package.core.platform;
+package.core.console;
+package.core.remote;
+package.core.message;
 if(typeof require !== 'undefined') {
     /* server */
-    package.core.platform;
     package.core.http;
     package.core.module;
-    package.core.remote;
 }
 else if(typeof importScripts !== 'undefined') {
     /* client */
-    package.core.platform;
-    package.core.message;
-    package.core.remote;
+    package.core.message.send_browser("app.main.initialised");
 }
 else {
     /* browser */
-    package.core.platform;
-    package.core.message;
-    package.core.remote;
+    package.app.main;
 }

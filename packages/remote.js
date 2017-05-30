@@ -7,7 +7,9 @@ package.@component = new Proxy({}, {
             return Reflect.get(object, property);
         }
         return function (args) {
-            package.core.message.send_@platform(property, arguments)
+            var args = Array.prototype.slice.call(arguments);
+            args.unshift("@component." + property);
+            return package.core.message.send_@platform.apply(package.core.message, args);
         };
     }
     });

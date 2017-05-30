@@ -28,7 +28,7 @@ package.core.http = new function CoreHttp() {
                         body:"",
                         job:job
                     };
-                    console.log("Received request: " + JSON.stringify(info));
+                    core.console.log("Received request: " + JSON.stringify(info));
                     core.event.send(core.http.id, "recieve", info);
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
@@ -40,9 +40,9 @@ package.core.http = new function CoreHttp() {
             });
             this.server.listen(this.port, function(err) {
                 if (err) {
-                  return console.log("something bad happened", err)
+                  return core.console.log("something bad happened", err)
                 }
-                console.log("server is listening on " + core.http.port);
+                core.console.log("server is listening on " + core.http.port);
             });
         }
     };
@@ -57,7 +57,7 @@ package.core.http = new function CoreHttp() {
         }
     };
     this.send_async = function(info) {
-        if(core.platform === "client") {
+        if(core.platform !== "server") {
             var request = new XMLHttpRequest();
             request.open(info.method, info.url, true);
             request.onreadystatechange = function(e) {

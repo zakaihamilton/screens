@@ -4,35 +4,40 @@
 */
 
 package.core.message = new function CoreMessage() {
+    var core = package.core;
     this.send_server = function(method, params) {
-        if(platform == "server") {
+        if(core.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {method:"GET",
-                        url:"method/@component." + method + "(" + package.core.type.wrap_args(args) + ")"};
-            var result = package.core.http.send(info);
-            return package.core.type.unwrap(result);
+                        url:"/method/" + method + "(" + package.core.type.wrap_args(args) + ")"};
+            var result = core.http.send(info);
+            return core.type.unwrap(result);
         }
     };
     this.send_client = function(method, params) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        var info = {method:method,params:args};
-        this.worker.postMessage(info);
+        if(core.platform === "browser") {
+            var args = Array.prototype.slice.call(arguments, 1);
+            var info = {method:method,params:args};
+            this.worker.postMessage(info);
+        }
     };
     this.send_browser = function(method, params) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        var info = {method:method,params:args};
-        postMessage(info);
+        if(core.platform === "client") {
+            var args = Array.prototype.slice.call(arguments, 1);
+            var info = {method:method,params:args};
+            console.log(JSON.stringify(info));
+            self.postMessage(info);
+        }
     };
     this.receive = function(info) {
         var component = info.method.substring(0, info.method.lastIndexOf("."));
         return package[info.method].apply(component, info.params);
     };
-    console.log("platform:" + package.core.platform);
-    if(package.core.platform == "browser") {
+    if(core.platform == "browser") {
         this.worker = new Worker("packages/package.js");
-        this.worker.addEventListener("message", this.receive);
+        this.worker.onmessage = function(event) { return package.core.message.receive(event.data); };
     }
-    else if(package.core.platform == "client") {
-        addEventListener("message", this.receive);
+    else if(core.platform == "client") {
+        self.onmessage = function(event) { return package.core.message.receive(event.data); };
     }
 };
