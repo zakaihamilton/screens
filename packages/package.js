@@ -39,16 +39,17 @@ var package = new Proxy({}, {
                             path = "./" + package_name + "/" + package_name + "_" + property;
                             require(path);
                         } else if(typeof importScripts !== 'undefined') {
-                            importScripts("/packages/" + package_name + "/" + package_name + "_" + property + ".js");
+                            importScripts("/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=client");
                         }
                         else {
                             /* browser can only load asyncronously components */
                             var ref = document.getElementsByTagName( "script" )[ 0 ];
                             var script = document.createElement( "script" );
-                            script.src = "/packages/" + package_name + "/" + package_name + "_" + property + ".js";
+                            script.src = "/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=browser";
                             script.async = true;
                             ref.parentNode.insertBefore(script, ref);
                             script.onload = component_loaded;
+                            Reflect.set(object, property, null);
                             return null;
                         }
                         component_loaded();

@@ -19,7 +19,7 @@ package.core.module = new function() {
             var fs = require("fs");
             if(info.method == "GET") {
                 console.log("url: " + info.url);
-                file_path = info.url.substring(1);
+                var file_path = info.url.substring(1);
                 if(info.url.startsWith("/method")) {
                     var find = "/method/";
                     var method = info.url.substring(info.url.indexOf(find)+find.length, info.url.indexOf("("));
@@ -29,19 +29,21 @@ package.core.module = new function() {
                     var result = core.message.receive(message);
                     info.body = core.type.wrap(result);
                 }
-                else if(info.url.endsWith(".js")) {
+                else if(file_path.endsWith(".js")) {
                     var task = core.job.begin(info.job);
                     var component_path = core.module.path_file_to_component(file_path);
-                    var platform = null;
+                    var target_platform = null;
                     if(component_path) {
-                        platform = package[component_path].platform;
+                        target_platform = package[component_path].platform;
                     }
+                    var source_platform = info.query["platform"];
                     info["content-type"] = "application/javascript";
-                    if(platform) {
+                    if(target_platform && source_platform !== target_platform) {
+                        console.log("source: " + source_platform + " target: " + target_platform);
                         fs.readFile("packages/remote.js", 'utf8', function (err,data) {
                             core.console.log("serving remote file as: " + info.url);
                             data = data.split("@component").join(component_path);
-                            data = data.split("@platform").join(platform);
+                            data = data.split("@platform").join(target_platform);
                             info.body = data;
                             core.job.end(task);
                         });
@@ -55,7 +57,7 @@ package.core.module = new function() {
                         });
                     }
                 }
-                else if(info.url.endsWith(".html")) {
+                else if(file_path.endsWith(".html")) {
                     var task = core.job.begin(info.job);
                     fs.readFile(file_path, 'utf8', function (err,data) {
                         core.console.log("serving file: " + info.url);

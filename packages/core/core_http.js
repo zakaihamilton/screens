@@ -19,9 +19,17 @@ package.core.http = new function CoreHttp() {
                   }).on('end', function() {
                     body = Buffer.concat(body).toString();
                     var job = core.job.open();
+                    var url = request.url;
+                    var query = "";
+                    var query_offset = url.lastIndexOf("?");
+                    if(query_offset != -1) {
+                        url = request.url.substring(0, query_offset);
+                        query = request.url.substring(query_offset+1);
+                    }
                     var info = {
                         method:request.method,
-                        url:request.url,
+                        url:url,
+                        query:core.http.parse_query(query),
                         headers:request.headers,
                         code:200,
                         "content-type":"application/json",
@@ -45,6 +53,17 @@ package.core.http = new function CoreHttp() {
                 core.console.log("server is listening on " + core.http.port);
             });
         }
+    };
+    this.parse_query = function(query) {
+        var array = {};
+        if(query != "") {
+            var a = (query[0] === '?' ? query.substr(1) : query).split('&');
+            for (var i = 0; i < a.length; i++) {
+                var b = a[i].split('=');
+                array[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+            }
+        }
+        return array;
     };
     this.send = function(info) {
         if(core.platform === "client") {

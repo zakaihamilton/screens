@@ -25,13 +25,15 @@ package.core.message = new function CoreMessage() {
         if(core.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {method:method,params:args};
-            console.log(JSON.stringify(info));
+            package.core.console.log(JSON.stringify(info));
             self.postMessage(info);
         }
     };
     this.receive = function(info) {
         var component = info.method.substring(0, info.method.lastIndexOf("."));
-        return package[info.method].apply(component, info.params);
+        var method = package[info.method];
+        package.core.console.log("method: " + info.method + " component: " + component);
+        return method.apply(package[component], info.params);
     };
     if(core.platform == "browser") {
         this.worker = new Worker("packages/package.js");
