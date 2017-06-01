@@ -66,8 +66,9 @@ package.core.http = new function CoreHttp() {
         return array;
     };
     this.send = function(info) {
-        if(core.platform === "client") {
+        if(core.platform !== "server") {
             var request = new XMLHttpRequest();
+            core.console.log("sending http: " + JSON.stringify(info));
             request.open(info.method, info.url, false);
             request.send(null);
             if(request.status == 200) {

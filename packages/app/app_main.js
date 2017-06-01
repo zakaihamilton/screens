@@ -19,6 +19,7 @@ package.app.main = new function() {
         package.core.console.log(package.core.remote.return_map({a:1,b:2,c:3}));
         package.core.console.log(package.core.remote.return_array([5,6,7,8]));
         package.core.console.log(package["core.remote.return_array"]([5,6,7,8]));
+        package.core.message.send_server("core.node.print", "Hello World!");
         
         package.ui.element.create();
     };

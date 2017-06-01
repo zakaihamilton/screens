@@ -71,9 +71,10 @@ package.core.console;
 package.core.remote;
 package.core.event;
 package.core.message;
+package.core.type;
+package.core.http;
 if(typeof require !== 'undefined') {
     /* server */
-    package.core.http;
     package.core.module;
     package.core.script;
 }

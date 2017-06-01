@@ -4,7 +4,7 @@
 */
 
 package.core.node = new function CoreNode() {
-    this.remote = true;
+    var core = package.core;
     this.test = function() {
         return "Test";
     };

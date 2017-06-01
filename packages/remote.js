@@ -6,7 +6,7 @@ package.@component = new Proxy({}, {
         if (Reflect.has(object, property)) {
             return Reflect.get(object, property);
         }
-        return function (args) {
+        return function () {
             var args = Array.prototype.slice.call(arguments);
             args.unshift("@component." + property);
             return package.core.message.send_@platform.apply(package.core.message, args);

@@ -8,8 +8,8 @@ package.core.type = new function() {
         return JSON.stringify({type:typeof unwrapped_data,value:JSON.stringify(unwrapped_data)});
     };
     this.unwrap = function(wrapped_data) {
-        if(wrapped_data) {
-            wrapped_data = JSON.parse(wrapped_data);
+        wrapped_data = JSON.parse(wrapped_data);
+        if(wrapped_data.value !== undefined) {
             var unwrapped_data = JSON.parse(wrapped_data.value);
             var type = wrapped_data.type;
             if(type == "integer") {
