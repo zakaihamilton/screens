@@ -5,20 +5,28 @@
 
 package.ui.element = new function() {
     this.platform = "browser";
+    this.matches = function(properties) {
+        /* Find matching components */
+        var matches = Object.keys(package["ui"]).map(function(component_name) {
+            component = package["ui." + component_name];
+            if(component.depends) {
+                for(var depend_index = 0; depend_index < component.depends.length; depend_index++) {
+                    if(!(component.depends[depend_index] in properties)) {
+                        return null;
+                    }
+                }
+                return component.id;
+            }
+            else {
+                return null;
+            }
+        });
+        return matches.filter(Boolean);
+    };
     this.create = function(properties) {
-        /* Rules */
-        var type = null;
-        if(properties['ui.element.data']) {
-            type = "ui.dropdown";
-        }
-        else if(properties['ui.element.checked']) {
-            type = "ui.checkbox";
-        }
-        else if(properties['ui.element.title'] && properties['ui.element.pressed']) {
-            type = "ui.button";
-        }
-        if(type !== null) {
-            package[type].create(properties);
+        var matches = this.matches(properties);
+        if(matches.length) {
+            package[matches[0]].create(properties);
         }
     };
 };

@@ -70,9 +70,10 @@ package.core.platform;
 package.core.console;
 package.core.remote;
 package.core.event;
+package.core.http;
 package.core.message;
 package.core.type;
-package.core.http;
+package.core.ref;
 if(typeof require !== 'undefined') {
     /* server */
     package.core.module;
@@ -86,7 +87,7 @@ else {
     /* browser */
     package.app.main;
     package.ui.element;
-    package.ui.button;
     package.ui.checkbox;
     package.ui.dropdown;
+    package.ui.button;
 }

@@ -4,7 +4,6 @@
  */
 
 package.core.remote = new function() {
-    this.platform = "server";
     this.test = function(param1, param2, param3) {
         var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + package.core.platform;
         package.core.console.log("result: " + result);
