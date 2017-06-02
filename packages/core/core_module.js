@@ -5,7 +5,7 @@
 
 package.core.module = new function() {
     var core = package.core;
-    core.event.forward("core.http", "core.module", true);
+    core.event.forward(core.http.id, "core.module", true);
     this.path_file_to_component = function(file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/")+1);
         if(file_path.indexOf("_") == -1) {

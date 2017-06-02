@@ -85,4 +85,8 @@ else if(typeof importScripts !== 'undefined') {
 else {
     /* browser */
     package.app.main;
+    package.ui.element;
+    package.ui.button;
+    package.ui.checkbox;
+    package.ui.dropdown;
 }

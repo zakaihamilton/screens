@@ -21,6 +21,9 @@ package.app.main = new function() {
         package.core.console.log(package["core.remote.return_array"]([5,6,7,8]));
         package.core.message.send_server("core.node.print", "Hello World!");
         
-        package.ui.element.create();
+        package.ui.element.create({"ui.element.data":["Apple","Banana","Apricot"],"ui.element.checked":true,"ui.element.title":"Hello World!","ui.element.pressed":"app.main.hello"});
+    };
+    this.hello = function() {
+        alert("whoo hoo!");
     };
 };

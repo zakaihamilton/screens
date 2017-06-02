@@ -1,22 +1,24 @@
 /*
  @author Zakai Hamilton
- @component CoreModule
+ @component UIElement
  */
 
 package.ui.element = new function() {
     this.platform = "browser";
-    this.create = function() {
-        // 1. Create the button
-        var button = document.createElement("button");
-        button.innerHTML = "Do Something";
-
-        // 2. Append somewhere
-        var body = document.getElementsByTagName("body")[0];
-        body.appendChild(button);
-
-        // 3. Add event handler
-        button.addEventListener ("click", function() {
-          alert("did something");
-        });
+    this.create = function(properties) {
+        /* Rules */
+        var type = null;
+        if(properties['ui.element.data']) {
+            type = "ui.dropdown";
+        }
+        else if(properties['ui.element.checked']) {
+            type = "ui.checkbox";
+        }
+        else if(properties['ui.element.title'] && properties['ui.element.pressed']) {
+            type = "ui.button";
+        }
+        if(type !== null) {
+            package[type].create(properties);
+        }
     };
 };
