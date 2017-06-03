@@ -23,10 +23,40 @@ package.ui.element = new function() {
         });
         return matches.filter(Boolean);
     };
+    this.get = function(object, method) {
+        var params = [object];
+        var result = package.core.message.execute({prefix:"get_",method:method,params:params});
+        if(typeof result === "undefined" && !method.includes(object.component)) {
+            result = package.core.message.execute({prefix:"get_",method:method,params:params,component:object.component});
+        }
+        return result;
+    };
+    this.set = function(object, method, value) {
+        var params = [object,value];
+        package.core.message.execute({prefix:"set_",method:method,params:params});
+        if(!method.includes(object.component)) {
+            package.core.message.execute({prefix:"set_",method:method,params:params,component:object.component});
+        }
+    };
     this.create = function(properties) {
         var matches = this.matches(properties);
-        if(matches.length) {
-            package[matches[0]].create(properties);
+        var object = null;
+        if(matches.length === 0) {
+            return null;
         }
+        var name = matches[0];
+        var component = package[name];
+        object = document.createElement(component.type);
+        object.properties = properties;
+        object.component = name;
+        package.core.message.execute({method:name + ".init",params:[object]});
+        for (var key in properties) {
+            this.set(object,key,properties[key]);
+        }
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(object);
+        var info = package.core.ref.path(object, "parentNode");
+        console.log("found:" + package.core.ref.get(info.root, info.path, "childNodes"));
+        return object;
     };
 };

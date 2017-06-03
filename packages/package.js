@@ -90,4 +90,5 @@ else {
     package.ui.checkbox;
     package.ui.dropdown;
     package.ui.button;
+    package.ui.event;
 }

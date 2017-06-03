@@ -21,9 +21,23 @@ package.app.main = new function() {
         package.core.console.log(package["core.remote.return_array"]([5,6,7,8]));
         package.core.message.send_server("core.node.print", "Hello World!");
         
-        package.ui.element.create({"ui.element.data":["Apple","Banana","Apricot"],"ui.element.title":"Hello World!","ui.element.pressed":"app.main.hello"});
+        package.core.message.send_browser("app.main.ready");
+    }
+    this.ready = function() {
+        this.dropdown = package.ui.element.create({
+            "ui.element.data":["Apple","Banana","Apricot"],
+            "ui.element.title":"Hello World!",
+            "ui.event.pressed":"app.main.hello"});
+        console.log("dropdown:" + this.dropdown);
     };
     this.hello = function() {
-        alert("whoo hoo!");
+        if(typeof this.button === "undefined") {
+            this.button = package.ui.element.create({
+                "ui.element.title":"Alert selection",
+                "ui.event.pressed":"app.main.alert"});
+        }
+    };
+    this.alert = function() {
+        alert("you have selected " + package.ui.element.get(this.dropdown, "ui.element.selection"));
     };
 };

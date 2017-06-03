@@ -43,10 +43,27 @@ package.core.message = new function CoreMessage() {
         }
     };
     this.execute = function(info) {
-        var component = info.method.substring(0, info.method.lastIndexOf("."));
-        var method = package[info.method];
-        package.core.console.log("method: " + info.method + " component: " + component);
-        return method.apply(package[component], info.params);
+        var offset = info.method.lastIndexOf(".");
+        var component = null;
+        var method = null;
+        if(offset !== -1) {
+            component = info.method.substring(0, offset);
+            method = info.method.substring(offset+1);
+        }
+        else {
+            method = info.method;
+        }
+        if(info.prefix) {
+            method = info.prefix + method;
+        }
+        if(info.component) {
+            component = info.component;
+        }
+        package.core.console.log("method: " + method + " component: " + component + " params: " + info.params);
+        var callback = package[component + "." + method];
+        if(typeof callback === "function") {
+            return callback.apply(package[component], info.params);
+        }
     };
     if(core.platform == "browser") {
         this.worker = new Worker("packages/package.js");
