@@ -14,20 +14,33 @@ package.core.message = new function CoreMessage() {
             var result = core.http.send(info);
             return core.type.unwrap(result);
         }
-    };
-    this.send_client = function(method, params) {
-        if(core.platform === "browser") {
-            var args = Array.prototype.slice.call(arguments, 1);
-            var info = {method:method,params:args};
-            this.worker.postMessage(info);
-        }
-    };
-    this.send_browser = function(method, params) {
-        if(core.platform === "client") {
+        else if(core.platform == "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {method:method,params:args};
             package.core.console.log(JSON.stringify(info));
+            this.execute(info);
+        }
+    };
+    this.send_client = function(method, params) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var info = {method:method,params:args};
+        package.core.console.log(JSON.stringify(info));
+        if(core.platform === "browser") {
+            this.worker.postMessage(info);
+        }
+        else if(core.platform == "client") {
+            this.execute(info);
+        }
+    };
+    this.send_browser = function(method, params) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var info = {method:method,params:args};
+        package.core.console.log(JSON.stringify(info));
+        if(core.platform === "client") {
             self.postMessage(info);
+        }
+        else if(core.platform == "browser") {
+            this.execute(info);
         }
     };
     this.receive = function(info) {
@@ -66,7 +79,7 @@ package.core.message = new function CoreMessage() {
         }
     };
     if(core.platform == "browser") {
-        this.worker = new Worker("packages/package.js");
+        this.worker = new Worker("packages/platform/client.js");
         this.worker.onmessage = function(event) { return package.core.message.execute(event.data); };
     }
     else if(core.platform == "client") {

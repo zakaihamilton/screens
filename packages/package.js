@@ -21,13 +21,6 @@ var package = new Proxy({}, {
             /* Create package */
             package_obj = new Proxy({id: property}, {
                 get: function (object, property) {
-                    function component_loaded() {
-                        component = Reflect.get(object, property);
-                        if(component !== undefined) {
-                            component.id = object.id + "." + property;
-                        }
-                        console.log(package.core.platform + ": Loaded " + object.id + "." + property);
-                    };
                     /* Check if component exists */
                     if (Reflect.has(object, property)) {
                         return Reflect.get(object, property);
@@ -35,7 +28,6 @@ var package = new Proxy({}, {
                         /* Load component */
                         package_name = Reflect.get(object, "id");
                         if (typeof require !== 'undefined') {
-                            global.package = package;
                             path = "./" + package_name + "/" + package_name + "_" + property;
                             require(path);
                         } else if(typeof importScripts !== 'undefined') {
@@ -43,16 +35,12 @@ var package = new Proxy({}, {
                         }
                         else {
                             /* browser can only load asyncronously components */
-                            var ref = document.getElementsByTagName( "script" )[ 0 ];
-                            var script = document.createElement( "script" );
-                            script.src = "/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=browser";
-                            script.async = true;
-                            ref.parentNode.insertBefore(script, ref);
-                            script.onload = component_loaded;
-                            Reflect.set(object, property, null);
                             return null;
                         }
-                        component_loaded();
+                        /* Load component */
+                        component = Reflect.get(object, property);
+                        component.id = object.id + "." + property;
+                        console.log(package.core.platform + ": Loaded " + object.id + "." + property);
                         return component;
                     }
                 },
@@ -66,29 +54,41 @@ var package = new Proxy({}, {
     }
 });
 
-package.core.platform;
-package.core.console;
-package.core.remote;
-package.core.event;
-package.core.http;
-package.core.message;
-package.core.type;
-package.core.ref;
-if(typeof require !== 'undefined') {
-    /* server */
-    package.core.module;
-    package.core.script;
+var include = function(dependencies, callback) {
+    var load = function(index) {
+        if(index >= dependencies.length) {
+            if(callback) {
+                callback();
+            }
+            return;
+        }
+        var dependency = dependencies[index];
+        if(typeof importScripts === 'undefined' && typeof require === 'undefined') {
+            console.log("browser: Loading " + dependency);
+            var offset = dependency.lastIndexOf(".");
+            var component_name = dependency.substring(offset+1);
+            var package_name = dependency.substring(0, offset);
+            var ref = document.getElementsByTagName( "script" )[ 0 ];
+            var script = document.createElement( "script" );
+            script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
+            script.onload = function() {
+                console.log("browser: Loaded " + component_name);
+                package[package_name + "." + component_name].id = package_name + "." + component_name;
+                /* Load next component */
+                load(index+1);
+            };
+            ref.parentNode.insertBefore(script, ref);
+        }
+        else {
+            console.log(package.core.platform + ": Loading " + dependency);
+            package[dependency];
+            load(index+1);
+        }
+    }
+    load(0);
 }
-else if(typeof importScripts !== 'undefined') {
-    /* client */
-    package.core.message.send_browser("app.main.browser");
-}
-else {
-    /* browser */
-    package.app.main;
-    package.ui.element;
-    package.ui.checkbox;
-    package.ui.dropdown;
-    package.ui.button;
-    package.ui.event;
+
+if (typeof require !== 'undefined') {
+    global.package = package;
+    global.include = include;
 }

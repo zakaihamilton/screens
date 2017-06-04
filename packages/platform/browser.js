@@ -1,0 +1,21 @@
+include([
+"core.platform",
+"core.console",
+"core.remote",
+"core.event",
+"core.http",
+"core.message",
+"core.type",
+"core.ref",
+"core.module",
+"core.script",
+"ui.element",
+"ui.checkbox",
+"ui.dropdown",
+"ui.button",
+"ui.event",
+"app.main",
+],
+function() {
+    package.core.message.send_browser("app.main.browser");
+});

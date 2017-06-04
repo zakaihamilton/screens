@@ -9,6 +9,7 @@ package.ui.element = new function() {
         /* Find matching components */
         var matches = Object.keys(package["ui"]).map(function(component_name) {
             component = package["ui." + component_name];
+            console.log("component: " + component.id);
             if(component.depends) {
                 for(var depend_index = 0; depend_index < component.depends.length; depend_index++) {
                     if(!(component.depends[depend_index] in properties)) {
