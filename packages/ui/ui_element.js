@@ -28,7 +28,23 @@ package.ui.element = new function() {
         });
         return matches;
     };
+    this.to_path = function(object) {
+        var path = null;
+        var info = package.core.ref.gen_path(object, "parentNode");
+        if(typeof this.root === "undefined") {
+            this.root = info.root;
+        }
+        return info.path;
+    };
+    this.to_object = function(path) {
+        var object = path;
+        if(typeof path === "string") {
+            object = package.core.ref.find_object(this.root, path, "childNodes");
+        }
+        return object;
+    };
     this.get = function(object, method) {
+        object = this.to_object(object);
         var params = [object];
         var result = package.core.message.execute({prefix:"get_",method:method,params:params});
         if(typeof result === "undefined" && !method.includes(object.component)) {
@@ -37,6 +53,7 @@ package.ui.element = new function() {
         return result;
     };
     this.set = function(object, method, value) {
+        object = this.to_object(object);
         var params = [object,value];
         package.core.message.execute({prefix:"set_",method:method,params:params});
         if(!method.includes(object.component)) {
@@ -60,8 +77,7 @@ package.ui.element = new function() {
         }
         var body = document.getElementsByTagName("body")[0];
         this.set(object,"ui.node.parent",body);
-        var info = package.core.ref.path(object, "parentNode");
-        console.log("found:" + package.core.ref.get(info.root, info.path, "childNodes"));
-        return object;
+        object.path = this.to_path(object);
+        return object.path;
     };
 };

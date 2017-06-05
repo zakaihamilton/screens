@@ -9,7 +9,7 @@ package.core.ref = new function() {
         this.current++;
         return "ref_" + this.current;
     };
-    this.path = function(node, parent_method, property="id") {
+    this.gen_path = function(node, parent_method, property="id") {
         var path = "", name = "";
         var root = null;
         while(node) {
@@ -41,7 +41,7 @@ package.core.ref = new function() {
         console.log("path: " + path + " root: " + root);
         return {path:path,root:root};
     };
-    this.get = function(node, path, children_method, property="id") {
+    this.find_object = function(node, path, children_method, property="id") {
         if (path.includes("/")) {
             parts = path.split("/");
             var children = null, child = null, found = null;
