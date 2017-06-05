@@ -9,7 +9,6 @@ package.ui.element = new function() {
         /* Find matching components */
         var matches = Object.keys(package["ui"]).map(function(component_name) {
             component = package["ui." + component_name];
-            console.log("component: " + component.id);
             if(component.depends) {
                 for(var depend_index = 0; depend_index < component.depends.length; depend_index++) {
                     if(!(component.depends[depend_index] in properties)) {
@@ -22,7 +21,12 @@ package.ui.element = new function() {
                 return null;
             }
         });
-        return matches.filter(Boolean);
+        matches = matches.filter(Boolean);
+        /* TODO: sort by dependency count */
+        matches.sort(function(source, target){
+            return package[target].depends.length - package[source].depends.length;
+        });
+        return matches;
     };
     this.get = function(object, method) {
         var params = [object];
@@ -50,12 +54,12 @@ package.ui.element = new function() {
         object = document.createElement(component.type);
         object.properties = properties;
         object.component = name;
-        package.core.message.execute({method:name + ".init",params:[object]});
+        package.core.message.execute({component:name,method:"init",params:[object]});
         for (var key in properties) {
             this.set(object,key,properties[key]);
         }
         var body = document.getElementsByTagName("body")[0];
-        body.appendChild(object);
+        this.set(object,"ui.node.parent",body);
         var info = package.core.ref.path(object, "parentNode");
         console.log("found:" + package.core.ref.get(info.root, info.path, "childNodes"));
         return object;

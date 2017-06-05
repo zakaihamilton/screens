@@ -59,7 +59,7 @@ package.core.message = new function CoreMessage() {
         var offset = info.method.lastIndexOf(".");
         var component = null;
         var method = null;
-        if(offset !== -1) {
+        if(info.method.indexOf(".") !== offset) {
             component = info.method.substring(0, offset);
             method = info.method.substring(offset+1);
         }
@@ -74,6 +74,7 @@ package.core.message = new function CoreMessage() {
         }
         package.core.console.log("method: " + method + " component: " + component + " params: " + info.params);
         var callback = package[component + "." + method];
+        package.core.console.log("callback: " + callback);
         if(typeof callback === "function") {
             return callback.apply(package[component], info.params);
         }

@@ -4,9 +4,12 @@
  */
 
 package.ui.button = new function() {
-    this.depends = ["ui.element.title"];
+    this.depends = ["ui.element.text"];
     this.type = "button";
-    this.set_title = function(object, value) {
+    this.set_text = function(object, value) {
         object.innerHTML = value;
+    };
+    this.get_text = function(object) {
+        return object.innerHTML;
     };
 };

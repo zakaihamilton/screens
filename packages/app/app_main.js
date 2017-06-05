@@ -26,14 +26,34 @@ package.app.main = new function() {
     this.ready = function() {
         this.dropdown = package.ui.element.create({
             "ui.element.data":["Apple","Banana","Apricot"],
-            "ui.element.title":"Hello World!",
-            "ui.event.pressed":"app.main.hello"});
-        console.log("dropdown:" + this.dropdown);
+            "ui.event.pressed":"app.main.hello"
+        });
+        package.ui.element.create({
+            "ui.element.group":"Selection",
+            "ui.element.text":"Apple",
+            "ui.element.checked":false,
+        });
+        package.ui.element.create({
+            "ui.element.group":"Selection",
+            "ui.element.text":"Banana",
+            "ui.element.checked":true
+        });
+        package.ui.element.create({
+            "ui.element.data":["Apple","Banana","Apricot"],
+            "ui.element.count":10,
+            "ui.element.multiple":true
+        });
+        package.ui.element.create({
+            "ui.element.text":"Editor",
+            "ui.element.edit":true,
+            "ui.element.rows":5,
+            "ui.element.columns":50
+        });
     };
     this.hello = function() {
         if(typeof this.button === "undefined") {
             this.button = package.ui.element.create({
-                "ui.element.title":"Alert selection",
+                "ui.element.text":"Alert selection",
                 "ui.event.pressed":"app.main.alert"});
         }
     };

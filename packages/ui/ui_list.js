@@ -3,7 +3,7 @@
  @component UIDropDown
  */
 
-package.ui.dropdown = new function() {
+package.ui.list = new function() {
     this.depends = ["ui.element.data"];
     this.type = "select";
     this.set_data = function(object, value) {
@@ -17,5 +17,17 @@ package.ui.dropdown = new function() {
     };
     this.get_selection = function(object) {
         return object.options[object.selectedIndex].value;
+    };
+    this.get_count = function(object) {
+        return object.size;
+    };
+    this.set_count = function(object, value) {
+        object.size = value;
+    };
+    this.get_multiple = function(object) {
+        return object.multiple;
+    };
+    this.set_multiple = function(object, value) {
+        object.multiple = value;
     };
 };
