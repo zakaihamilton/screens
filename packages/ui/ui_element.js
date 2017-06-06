@@ -43,21 +43,27 @@ package.ui.element = new function() {
         }
         return object;
     };
-    this.get = function(object, method) {
+    this.get = function(object, path) {
         object = this.to_object(object);
-        var params = [object];
-        var result = package.core.message.execute({prefix:"get_",method:method,params:params});
+        var method = path.substring(path.lastIndexOf(".")+1)
+        var result = package.core.message.execute({method:"get",path:path,params:[object,method]});
+        if(typeof result === "undefined") {
+            result = package.core.message.execute({prefix:"get_",path:path,params:[object]});
+        }
         if(typeof result === "undefined" && !method.includes(object.component)) {
-            result = package.core.message.execute({prefix:"get_",method:method,params:params,component:object.component});
+            result = package.core.message.execute({prefix:"get_",path:path,params:[object],component:object.component});
         }
         return result;
     };
-    this.set = function(object, method, value) {
+    this.set = function(object, path, value) {
         object = this.to_object(object);
-        var params = [object,value];
-        package.core.message.execute({prefix:"set_",method:method,params:params});
-        if(!method.includes(object.component)) {
-            package.core.message.execute({prefix:"set_",method:method,params:params,component:object.component});
+        var method = path.substring(path.lastIndexOf(".")+1)
+        if(!path.startsWith("ui.element")) {
+            package.core.message.execute({method:"set",path:path,params:[object,method,value]});
+        }
+        package.core.message.execute({prefix:"set_",path:path,params:[object,value]});
+        if(!path.startsWith(object.component)) {
+            package.core.message.execute({prefix:"set_",path:path,params:[object,value],component:object.component});
         }
     };
     this.create = function(properties) {

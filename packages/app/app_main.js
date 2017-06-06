@@ -7,7 +7,6 @@ package.app.main = new function() {
     this.browser = function() {
         /* run on the browser */
         package.core.console.log("browser is ready");
-        package.ui.element;
         package.core.message.send_client("app.main.client");
     };
     this.client = function() {
@@ -25,8 +24,13 @@ package.app.main = new function() {
     }
     this.ready = function() {
         this.dropdown = package.ui.element.create({
-            "ui.element.data":["Apple","Banana","Apricot"],
-            "ui.event.pressed":"app.main.hello"
+            "ui.element.data":["Apple","Banana","Orange","Apricot","Peach"],
+            "ui.event.pressed":"app.main.hello",
+            "ui.style.backgroundColor":"lightgray"
+        });
+        package.ui.element.create({
+            "ui.element.text":"Label",
+            "ui.style.color":"red"
         });
         package.ui.element.create({
             "ui.element.group":"Selection",
@@ -47,7 +51,7 @@ package.app.main = new function() {
             "ui.element.text":"Editor",
             "ui.element.edit":true,
             "ui.element.rows":5,
-            "ui.element.columns":50
+            "ui.element.columns":50,
         });
     };
     this.hello = function() {
@@ -56,6 +60,9 @@ package.app.main = new function() {
                 "ui.element.text":"Alert selection",
                 "ui.event.pressed":"app.main.alert"});
         }
+    };
+    this.showme = function() {
+        alert("Show me the money!");
     };
     this.alert = function() {
         alert("you have selected " + package.ui.element.get(this.dropdown, "ui.element.selection"));

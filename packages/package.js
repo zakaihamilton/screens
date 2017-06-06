@@ -72,7 +72,7 @@ var include = function(dependencies, callback) {
             var script = document.createElement( "script" );
             script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
             script.onload = function() {
-                console.log("browser: Loaded " + component_name);
+                console.log("browser: Loaded " + package_name + "." + component_name);
                 package[package_name + "." + component_name].id = package_name + "." + component_name;
                 /* Load next component */
                 load(index+1);

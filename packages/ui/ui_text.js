@@ -1,11 +1,14 @@
 /*
  @author Zakai Hamilton
- @component UIButton
+ @component UIText
  */
 
-package.ui.button = new function() {
-    this.depends = ["ui.element.text","ui.event.pressed"];
-    this.type = "button";
+package.ui.text = new function() {
+    this.depends = ["ui.element.text"];
+    this.type = "div";
+    this.init = function(object) {
+        
+    };
     this.set_text = function(object, value) {
         object.innerHTML = value;
     };

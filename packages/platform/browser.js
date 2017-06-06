@@ -11,13 +11,15 @@ include([
 "core.script",
 "ui.node",
 "ui.element",
+"ui.event",
+"ui.style",
 "ui.radio",
 "ui.checkbox",
 "ui.list",
 "ui.button",
 "ui.input",
-"ui.event",
-"app.main",
+"ui.text",
+"app.main"
 ],
 function() {
     package.core.message.send_browser("app.main.browser");

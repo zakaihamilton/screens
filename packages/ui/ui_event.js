@@ -9,7 +9,7 @@ package.ui.event = new function() {
         if(value) {
             object.addEventListener ("click", function() {
                 console.log("value: " + value + " object: " + object);
-                package.core.message.execute({method:value,params:[object]});
+                package.core.message.execute({path:value,params:[object]});
             });
         }
     };
