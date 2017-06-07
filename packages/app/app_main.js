@@ -60,6 +60,14 @@ package.app.main = new function () {
             "ui.element.rows": 5,
             "ui.element.columns": 50,
         });
+        package.ui.element.create({
+            "ui.element.component":"ui.text",
+            "ui.element.text":"Container",
+            "ui.group.data":{
+                "ui.data.type" : "ui.element.text",
+                "ui.data.source": ["Apple","Banana","Orange","Apricot","Peach"]
+            },
+        });
     };
     me.hello = function () {
         if (typeof me.button === "undefined") {

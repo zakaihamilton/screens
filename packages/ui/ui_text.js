@@ -9,9 +9,6 @@ package.ui.text = new function UIText() {
         properties:["ui.element.text"]
     };
     me.type = "div";
-    me.init = function(object) {
-        
-    };
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };

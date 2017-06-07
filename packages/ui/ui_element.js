@@ -113,16 +113,19 @@ package.ui.element = new function UIElement() {
         }
     };
     me.create_element = function (properties, parent) {
-        var match = me.matches(properties, parent);
         var object = null;
-        if (!match) {
+        var component_name = properties["ui.element.component"];
+        if(!component_name) {
+            component_name = me.matches(properties, parent);
+        }
+        if (!component_name) {
             return null;
         }
-        var component = package[match];
+        var component = package[component_name];
         object = document.createElement(component.type);
         object.properties = properties;
-        object.component = match;
-        package.core.message.send({component: match, method: "init", params: [object]});
+        object.component = component_name;
+        package.core.message.send({component: component_name, method: "init", params: [object]});
         if (!parent) {
             parent = document.getElementsByTagName("body")[0];
         }
