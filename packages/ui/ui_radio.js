@@ -6,7 +6,7 @@
 package.ui.radio = new function UIRadio() {
     var me = this;
     me.depends = {
-        properties:["ui.element.checked", "ui.element.group"]
+        properties:["ui.element.state", "ui.element.group"]
     };
     me.type = "input";
     me.init = function(object) {
@@ -18,10 +18,10 @@ package.ui.radio = new function UIRadio() {
     me.set_group = function(object, value) {
         object.name = value;
     };
-    me.get_checked = function(object) {
+    me.get_state = function(object) {
         return object.checked;
     };
-    me.set_checked = function(object, value) {
+    me.set_state = function(object, value) {
         object.checked = value;
     };
 };

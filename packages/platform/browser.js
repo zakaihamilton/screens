@@ -12,6 +12,7 @@ include([
 "ui.data",
 "ui.group",
 "ui.node",
+"ui.drag",
 "ui.element",
 "ui.event",
 "ui.style",
@@ -22,6 +23,8 @@ include([
 "ui.input",
 "ui.text",
 "ui.option",
+"ui.header",
+"ui.screen",
 "app.main"
 ],
 function() {

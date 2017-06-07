@@ -39,12 +39,12 @@ package.app.main = new function () {
         package.ui.element.create({
             "ui.element.group": "Selection",
             "ui.element.text": "Apple",
-            "ui.element.checked": false,
+            "ui.element.state": false,
         });
         package.ui.element.create({
             "ui.element.group": "Selection",
             "ui.element.text": "Banana",
-            "ui.element.checked": true
+            "ui.element.state": true
         });
         package.ui.element.create({
             "ui.group.data":{
@@ -64,9 +64,17 @@ package.app.main = new function () {
             "ui.element.component":"ui.text",
             "ui.element.text":"Container",
             "ui.group.data":{
-                "ui.data.type" : "ui.element.text",
-                "ui.data.source": ["Apple","Banana","Orange","Apricot","Peach"]
+                "ui.data.type" : "ui.element.state",
+                "ui.data.source": [true,false,false,true,true,false,false,true]
             },
+        });
+        package.ui.element.create({
+            "ui.element.component":"ui.text",
+            "ui.element.text":"",
+            "ui.group.data":{
+                "ui.data.type" : "ui.element.title",
+                "ui.data.source": ["Hello","Wello"]
+            }
         });
     };
     me.hello = function () {

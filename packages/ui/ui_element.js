@@ -125,11 +125,14 @@ package.ui.element = new function UIElement() {
         object = document.createElement(component.type);
         object.properties = properties;
         object.component = component_name;
-        package.core.message.send({component: component_name, method: "init", params: [object]});
         if (!parent) {
             parent = document.getElementsByTagName("body")[0];
         }
         me.set(object, "ui.node.parent", parent);
+        if(component.class) {
+            package.ui.style.add_class(object, component.class);
+        }
+        package.core.message.send({component: component_name, method: "init", params: [object]});
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
