@@ -1,21 +1,22 @@
 /*
  @author Zakai Hamilton
- @component CoreId
+ @component CoreRef
  */
 
-package.core.ref = new function() {
-    this.current = 1000;
-    this.gen = function() {
-        this.current++;
-        return "ref_" + this.current;
+package.core.ref = new function CoreRef() {
+    var me = this;
+    me.current = 1000;
+    me.gen = function() {
+        me.current++;
+        return "ref_" + me.current;
     };
-    this.gen_path = function(node, parent_method, property="id") {
+    me.gen_path = function(node, parent_method, property="id") {
         var path = "", name = "";
         var root = null;
         while(node) {
             root = node;
             if(typeof node[property] === "null" || typeof node[property] === "undefined" || node[property] === "") {
-                node[property] = this.gen();
+                node[property] = me.gen();
             }
             name = node[property];
             if(typeof node[parent_method] !== "undefined") {
@@ -41,7 +42,7 @@ package.core.ref = new function() {
         console.log("path: " + path + " root: " + root);
         return {path:path,root:root};
     };
-    this.find_object = function(node, path, children_method, property="id") {
+    me.find_object = function(node, path, children_method, property="id") {
         if (path.includes("/")) {
             parts = path.split("/");
             var children = null, child = null, found = null;

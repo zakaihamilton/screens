@@ -3,87 +3,134 @@
  @component UIElement
  */
 
-package.ui.element = new function() {
-    this.platform = "browser";
-    this.matches = function(properties) {
+package.ui.element = new function UIElement() {
+    var me = this;
+    me.platform = "browser";
+    me.matches = function (properties, parent) {
         /* Find matching components */
-        var matches = Object.keys(package["ui"]).map(function(component_name) {
+        var with_parent_dependency = false;
+        var matches = Object.keys(package["ui"]).map(function (component_name) {
             component = package["ui." + component_name];
-            if(component.depends) {
-                for(var depend_index = 0; depend_index < component.depends.length; depend_index++) {
-                    if(!(component.depends[depend_index] in properties)) {
+            if (component.depends) {
+                var depends = component.depends;
+                if (depends.parent) {
+                    if(parent) {
+                        var match = false;
+                        for (var depend_index = 0; depend_index < depends.parent.length; depend_index++) {
+                            if (depends.parent[depend_index] === parent.component) {
+                                match = true;
+                            }
+                        }
+                        if (!match) {
+                            return null;
+                        }
+                        with_parent_dependency = true;
+                    }
+                    else {
                         return null;
                     }
                 }
-                return component.id;
+                if (depends.properties) {
+                    for (var depend_index = 0; depend_index < depends.properties.length; depend_index++) {
+                        if (!(depends.properties[depend_index] in properties)) {
+                            return null;
+                        }
+                    }
+                    return component.id;
+                }
             }
-            else {
-                return null;
-            }
+            return null;
         });
         matches = matches.filter(Boolean);
-        /* TODO: sort by dependency count */
-        matches.sort(function(source, target){
-            return package[target].depends.length - package[source].depends.length;
+        /* sort by dependencies */
+        matches.sort(function (source, target) {
+            return package[target].depends.properties.length - package[source].depends.properties.length;
         });
-        return matches;
+        var match = matches[0];
+        if(with_parent_dependency) {
+            for(var match_index = 0; match_index < matches.length; match_index++) {
+                if(package[matches[match_index]].depends.parent) {
+                    match = matches[match_index];
+                    break;
+                }
+            }
+        }
+        return match;
     };
-    this.to_path = function(object) {
+    me.to_path = function (object) {
         var path = null;
         var info = package.core.ref.gen_path(object, "parentNode");
-        if(typeof this.root === "undefined") {
-            this.root = info.root;
+        if (typeof me.root === "undefined") {
+            me.root = info.root;
         }
         return info.path;
     };
-    this.to_object = function(path) {
+    me.to_object = function (path) {
         var object = path;
-        if(typeof path === "string") {
-            object = package.core.ref.find_object(this.root, path, "childNodes");
+        if (typeof path === "string") {
+            object = package.core.ref.find_object(me.root, path, "childNodes");
         }
         return object;
     };
-    this.get = function(object, path) {
-        object = this.to_object(object);
-        var method = path.substring(path.lastIndexOf(".")+1)
-        var result = package.core.message.execute({method:"get",path:path,params:[object,method]});
-        if(typeof result === "undefined") {
-            result = package.core.message.execute({prefix:"get_",path:path,params:[object]});
+    me.get = function (object, path) {
+        object = me.to_object(object);
+        var method = path.substring(path.lastIndexOf(".") + 1)
+        console.log("get path: " + path);
+        var result = undefined;
+        if (!path.startsWith("ui.element")) {
+            result = package.core.message.send({method: "get", path: path, params: [object, method]});
         }
-        if(typeof result === "undefined" && !method.includes(object.component)) {
-            result = package.core.message.execute({prefix:"get_",path:path,params:[object],component:object.component});
+        if (typeof result === "undefined") {
+            result = package.core.message.send({prefix: "get_", path: path, params: [object]});
+        }
+        if (typeof result === "undefined" && !method.includes(object.component)) {
+            result = package.core.message.send({prefix: "get_", path: path, params: [object], component: object.component});
         }
         return result;
     };
-    this.set = function(object, path, value) {
-        object = this.to_object(object);
-        var method = path.substring(path.lastIndexOf(".")+1)
-        if(!path.startsWith("ui.element")) {
-            package.core.message.execute({method:"set",path:path,params:[object,method,value]});
+    me.set = function (object, path, value) {
+        var result = null;
+        object = me.to_object(object);
+        var method = path.substring(path.lastIndexOf(".") + 1)
+        if (!path.startsWith("ui.element")) {
+            result = package.core.message.send({method: "set", path: path, params: [object, method, value]});
         }
-        package.core.message.execute({prefix:"set_",path:path,params:[object,value]});
-        if(!path.startsWith(object.component)) {
-            package.core.message.execute({prefix:"set_",path:path,params:[object,value],component:object.component});
+        if (!result) {
+            result = package.core.message.send({prefix: "set_", path: path, params: [object, value]});
+        }
+        if (!result && !path.startsWith(object.component)) {
+            result = package.core.message.send({prefix: "set_", path: path, params: [object, value], component: object.component});
+        }
+        return result;
+    };
+    me.create = function (data, parent) {
+        if (Array.isArray(data)) {
+            data.map(function (properties) {
+                me.create_element(properties, parent);
+            });
+        } else if(data) {
+            return me.create_element(data, parent);
         }
     };
-    this.create = function(properties) {
-        var matches = this.matches(properties);
+    me.create_element = function (properties, parent) {
+        var match = me.matches(properties, parent);
         var object = null;
-        if(matches.length === 0) {
+        if (!match) {
             return null;
         }
-        var name = matches[0];
-        var component = package[name];
+        var component = package[match];
         object = document.createElement(component.type);
         object.properties = properties;
-        object.component = name;
-        package.core.message.execute({component:name,method:"init",params:[object]});
-        for (var key in properties) {
-            this.set(object,key,properties[key]);
+        object.component = match;
+        package.core.message.send({component: match, method: "init", params: [object]});
+        if (!parent) {
+            parent = document.getElementsByTagName("body")[0];
         }
-        var body = document.getElementsByTagName("body")[0];
-        this.set(object,"ui.node.parent",body);
-        object.path = this.to_path(object);
+        me.set(object, "ui.node.parent", parent);
+        for (var key in properties) {
+            me.set(object, key, properties[key]);
+        }
+        object.path = me.to_path(object);
         return object.path;
     };
 };

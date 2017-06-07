@@ -4,11 +4,12 @@
 */
 
 package.core.node = new function CoreNode() {
+    var me = this;
     var core = package.core;
-    this.test = function() {
+    me.test = function() {
         return "Test";
     };
-    this.print = function(text) {
+    me.print = function(text) {
         core.console.log(text);
     };
 };

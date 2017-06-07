@@ -3,10 +3,11 @@
  @component CoreModule
  */
 
-package.core.module = new function() {
+package.core.module = new function CoreModule() {
+    var me = this;
     var core = package.core;
     core.event.forward("core.http", "core.module", true);
-    this.path_file_to_component = function(file_path) {
+    me.path_file_to_component = function(file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/")+1);
         if(file_path.indexOf("_") == -1) {
             return "";
@@ -14,7 +15,7 @@ package.core.module = new function() {
         var component_path = file_path.replace("_", ".").replace(".js", "");
         return component_path;
     };
-    this.receive = function(info) {
+    me.receive = function(info) {
         if(core.platform == "server") {
             var fs = require("fs");
             if(info.method == "GET") {

@@ -11,6 +11,9 @@ var package = new Proxy({}, {
             object = package;
             for (part_index = 0; part_index < parts.length; part_index++) {
                 object = object[parts[part_index]];
+                if(!object) {
+                    throw property + " not found"
+                }
             }
             return object;
         }

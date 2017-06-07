@@ -3,11 +3,12 @@
  @component UINode
  */
 
-package.ui.node = new function() {
-    this.get_parent = function(object) {
+package.ui.node = new function UINode() {
+    var me = this;
+    me.get_parent = function(object) {
         return object.parentNode;
     };
-    this.set_parent = function(object, value) {
+    me.set_parent = function(object, value) {
         value.appendChild(object);
     };
 };

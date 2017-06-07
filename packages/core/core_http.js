@@ -4,13 +4,14 @@
 */
 
 package.core.http = new function CoreHttp() {
+    var me = this;
     var core = package.core;
-    this.port = 8080;
-    this.listeners = [];
-    this.init = function() {
+    me.port = 8080;
+    me.listeners = [];
+    me.init = function() {
         if(core.platform === "server") {
-            this.http = require("http");
-            this.server = this.http.createServer(function(request, response) {
+            me.http = require("http");
+            me.server = me.http.createServer(function(request, response) {
                 var body = [];
                   request.on('error', function(err) {
                     console.error(err);
@@ -46,7 +47,7 @@ package.core.http = new function CoreHttp() {
                     });
                   });
             });
-            this.server.listen(this.port, function(err) {
+            me.server.listen(me.port, function(err) {
                 if (err) {
                   return core.console.log("something bad happened", err)
                 }
@@ -54,7 +55,7 @@ package.core.http = new function CoreHttp() {
             });
         }
     };
-    this.parse_query = function(query) {
+    me.parse_query = function(query) {
         var array = {};
         if(query != "") {
             var a = (query[0] === '?' ? query.substr(1) : query).split('&');
@@ -65,7 +66,7 @@ package.core.http = new function CoreHttp() {
         }
         return array;
     };
-    this.send = function(info) {
+    me.send = function(info) {
         if(core.platform !== "server") {
             var request = new XMLHttpRequest();
             core.console.log("sending http: " + JSON.stringify(info));
@@ -76,7 +77,7 @@ package.core.http = new function CoreHttp() {
             }
         }
     };
-    this.send_async = function(info) {
+    me.send_async = function(info) {
         if(core.platform !== "server") {
             var request = new XMLHttpRequest();
             request.open(info.method, info.url, true);
@@ -94,5 +95,5 @@ package.core.http = new function CoreHttp() {
             request.send(null);
         }
     };
-    this.init();
+    me.init();
 };

@@ -9,6 +9,8 @@ include([
 "core.ref",
 "core.module",
 "core.script",
+"ui.data",
+"ui.group",
 "ui.node",
 "ui.element",
 "ui.event",
@@ -19,6 +21,7 @@ include([
 "ui.button",
 "ui.input",
 "ui.text",
+"ui.option",
 "app.main"
 ],
 function() {

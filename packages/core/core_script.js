@@ -3,10 +3,11 @@
  @component CoreScript
  */
 
-package.core.script = new function() {
+package.core.script = new function CoreScript() {
+    var me = this;
     var core = package.core;
     core.event.forward("core.module", "core.script", true);
-    this.parse = function(info) {
+    me.parse = function(info) {
         var data = info.body;
         /* Apply variables */
         if(info.vars) {

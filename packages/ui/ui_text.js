@@ -3,16 +3,19 @@
  @component UIText
  */
 
-package.ui.text = new function() {
-    this.depends = ["ui.element.text"];
-    this.type = "div";
-    this.init = function(object) {
+package.ui.text = new function UIText() {
+    var me = this;
+    me.depends = {
+        properties:["ui.element.text"]
+    };
+    me.type = "div";
+    me.init = function(object) {
         
     };
-    this.set_text = function(object, value) {
+    me.set_text = function(object, value) {
         object.innerHTML = value;
     };
-    this.get_text = function(object) {
+    me.get_text = function(object) {
         return object.innerHTML;
     };
 };

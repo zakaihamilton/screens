@@ -3,16 +3,19 @@
  @component UICheckBox
  */
 
-package.ui.checkbox = new function() {
-    this.depends = ["ui.element.checked"];
-    this.type = "input";
-    this.init = function(object) {
+package.ui.checkbox = new function UICheckBox() {
+    var me = this;
+    me.depends = {
+        properties:["ui.element.checked"]
+    };
+    me.type = "input";
+    me.init = function(object) {
         object.type = "checkbox";
     };
-    this.get_checked = function(object) {
+    me.get_checked = function(object) {
         return object.checked;
     };
-    this.set_checked = function(object, value) {
+    me.set_checked = function(object, value) {
         object.checked = value;
     };
 };

@@ -1,13 +1,14 @@
 /*
     @author Zakai Hamilton
-    @component CoreObject
+    @component CoreType
 */
 
-package.core.type = new function() {
-    this.wrap = function(unwrapped_data) {
+package.core.type = new function CoreType() {
+    var me = this;
+    me.wrap = function(unwrapped_data) {
         return JSON.stringify({type:typeof unwrapped_data,value:JSON.stringify(unwrapped_data)});
     };
-    this.unwrap = function(wrapped_data) {
+    me.unwrap = function(wrapped_data) {
         wrapped_data = JSON.parse(wrapped_data);
         if(wrapped_data.value !== undefined) {
             var unwrapped_data = JSON.parse(wrapped_data.value);
@@ -21,7 +22,7 @@ package.core.type = new function() {
             return unwrapped_data;
         }
     };
-    this.wrap_args = function(unwrapped_args) {
+    me.wrap_args = function(unwrapped_args) {
         var query = "";
         for(var i = 0; i < unwrapped_args.length; i++) {
             var value = encodeURIComponent(package.core.type.wrap(unwrapped_args[i]));
@@ -34,7 +35,7 @@ package.core.type = new function() {
         };
         return query;
     };
-    this.unwrap_args = function(wrapped_args) {
+    me.unwrap_args = function(wrapped_args) {
         var unwrapped_args = [];
         for(var key in wrapped_args) {
             if(wrapped_args.hasOwnProperty(key)) {

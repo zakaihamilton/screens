@@ -1,10 +1,11 @@
 /*
  @author Zakai Hamilton
- @component CoreEvent
+ @component CoreConsole
  */
 
-package.core.console = new function CoreEvent() {
-    this.log = function(message) {
+package.core.console = new function CoreConsole() {
+    var me = this;
+    me.log = function(message) {
         console.log(package.core.platform + ": " + message);
     };
 }
