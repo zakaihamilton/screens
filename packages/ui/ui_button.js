@@ -8,6 +8,7 @@ package.ui.button = new function UIButton() {
     me.depends = {
         properties:["ui.element.text","ui.event.pressed"]
     };
+    me.extend = ["ui.drag"];
     me.type = "button";
     me.set_text = function(object, value) {
         object.innerHTML = value;
