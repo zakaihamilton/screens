@@ -30,10 +30,18 @@ var package = new Proxy({}, {
                     } else {
                         /* Load component */
                         package_name = Reflect.get(object, "id");
-                        if (typeof require !== 'undefined') {
+                        platform = "browser";
+                        if(typeof require !== 'undefined') {
+                            platform = "server";
+                        }
+                        else if(typeof importScripts !== 'undefined') {
+                            platform = "client";
+                        }
+                        if (platform === "server") {
                             path = "./" + package_name + "/" + package_name + "_" + property;
                             require(path);
-                        } else if(typeof importScripts !== 'undefined') {
+                        }
+                        else if (platform === "client") {
                             importScripts("/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=client");
                         }
                         else {
@@ -43,6 +51,9 @@ var package = new Proxy({}, {
                         /* Load component */
                         component = Reflect.get(object, property);
                         component.id = object.id + "." + property;
+                        if((!component.platform || component.platform === platform) && component.init) {
+                            component.init();
+                        }
                         console.log(package.core.platform + ": Loaded " + object.id + "." + property);
                         return component;
                     }
@@ -76,7 +87,11 @@ var include = function(dependencies, callback) {
             script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
             script.onload = function() {
                 console.log("browser: Loaded " + package_name + "." + component_name);
-                package[package_name + "." + component_name].id = package_name + "." + component_name;
+                component = package[package_name + "." + component_name];
+                component.id = package_name + "." + component_name;
+                if(component.init) {
+                    component.init();
+                }
                 /* Load next component */
                 load(index+1);
             };

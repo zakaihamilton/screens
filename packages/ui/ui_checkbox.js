@@ -9,7 +9,7 @@ package.ui.checkbox = new function UICheckBox() {
         properties:["ui.element.state"]
     };
     me.type = "input";
-    me.init = function(object) {
+    me.create = function(object) {
         object.type = "checkbox";
     };
     me.get_state = function(object) {

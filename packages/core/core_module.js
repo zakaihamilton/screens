@@ -16,9 +16,9 @@ package.core.module = new function CoreModule() {
         return component_path;
     };
     me.receive = function(info) {
-        if(core.platform == "server") {
+        if(core.platform === "server") {
             var fs = require("fs");
-            if(info.method == "GET") {
+            if(info.method === "GET") {
                 var file_path = info.url.substring(1);
                 if(file_path.endsWith(".js")) {
                     var task = core.job.begin(info.job);

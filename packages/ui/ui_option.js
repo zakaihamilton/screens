@@ -10,7 +10,7 @@ package.ui.option = new function UIOption() {
         parent:["ui.list"],
         properties:["ui.element.text"]
     };
-    me.init = function(object) {
+    me.create = function(object) {
         var label = document.createTextNode(object.properties["ui.element.text"]);
         object.appendChild(label);
     };

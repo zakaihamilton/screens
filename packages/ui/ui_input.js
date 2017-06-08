@@ -9,7 +9,7 @@ package.ui.input = new function UIInput() {
         properties:["ui.element.text","ui.element.edit","ui.element.rows"]
     };
     me.type = "textarea";
-    me.init = function(object) {
+    me.create = function(object) {
         object.type="text";
     };
     me.get_type = function(object) {

@@ -132,7 +132,7 @@ package.ui.element = new function UIElement() {
         if(component.class) {
             package.ui.style.add_class(object, component.class);
         }
-        package.core.message.send({component: component_name, method: "init", params: [object]});
+        package.core.message.send({component: component_name, method: "create", params: [object]});
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }

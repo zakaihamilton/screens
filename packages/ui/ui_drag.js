@@ -5,7 +5,7 @@
 
 package.ui.drag = new function UIDrag() {
     var me = this;
-    this.extend = function (component) {
+    me.extend = function (component) {
         var query = component.type + "." + package.ui.style.to_class(component.class);
         console.log("extending: " + component + " query: " + query);
         var cols = document.querySelectorAll(query);

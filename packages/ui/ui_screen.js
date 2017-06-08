@@ -5,13 +5,16 @@
 
 package.ui.screen = new function UIScreen() {
     var me = this;
+    me.platform = "browser";
     me.depends = {
         properties:["ui.element.title"]
     };
     me.type = "div";
     me.class = "ui.screen.window";
-    package.ui.drag.extend(me);
-    me.init = function(object) {
+    me.init = function() {
+        package.ui.drag.extend(me);
+    };
+    me.create = function(object) {
         object.setAttribute("draggable", true);
         object.title = package.ui.element.create({
             "ui.element.text":"",

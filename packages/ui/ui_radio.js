@@ -9,7 +9,7 @@ package.ui.radio = new function UIRadio() {
         properties:["ui.element.state", "ui.element.group"]
     };
     me.type = "input";
-    me.init = function(object) {
+    me.create = function(object) {
         object.type="radio";
     };
     me.get_group = function(object) {

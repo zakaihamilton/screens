@@ -95,5 +95,4 @@ package.core.http = new function CoreHttp() {
             request.send(null);
         }
     };
-    me.init();
 };
