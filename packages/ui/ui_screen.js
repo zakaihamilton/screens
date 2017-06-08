@@ -11,9 +11,7 @@ package.ui.screen = new function UIScreen() {
     };
     me.type = "div";
     me.class = "ui.screen.window";
-    me.init = function() {
-        package.ui.drag.extend(me);
-    };
+    me.extend = ["ui.drag"];
     me.create = function(object) {
         object.setAttribute("draggable", true);
         object.title = package.ui.element.create({

@@ -72,8 +72,8 @@ package.app.main = new function () {
             "ui.element.component":"ui.text",
             "ui.element.text":"",
             "ui.group.data":{
-                "ui.data.type" : "ui.element.title",
-                "ui.data.source": ["Hello","Wello"]
+                "ui.data.type" : ["ui.element.title", "ui.style.backgroundColor"],
+                "ui.data.source": [["A","red"],["B","blue"],["C","green"]]
             }
         });
     };

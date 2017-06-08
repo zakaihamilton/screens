@@ -136,6 +136,11 @@ package.ui.element = new function UIElement() {
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
+        if(component.extend) {
+            for(var extensionIndex = 0; extensionIndex < component.extend.length; extensionIndex++) {
+                package.core.message.send({component: component.extend[extensionIndex], method: "extend", params: [object]});
+            }
+        }
         object.path = me.to_path(object);
         return object.path;
     };
