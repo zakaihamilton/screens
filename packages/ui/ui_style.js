@@ -7,11 +7,13 @@ package.ui.style = new function UIStyle() {
     var me = this;
     me.platform = "browser";
     me.set = function (object, method, value) {
-        if(method === "class") {
-            me.add_class(object, value);
-        }
-        else {
-            object.style[method] = value;
+        if(typeof value !== "undefined") {
+            if(method === "class") {
+                me.add_class(object, value);
+            }
+            else {
+                object.style[method] = value;
+            }
         }
     };
     me.get = function (object, method) {
@@ -32,10 +34,11 @@ package.ui.style = new function UIStyle() {
         console.log(path + "=" + link.href);
     };
     me.to_class = function(path) {
-        return path.replace(/[.]/g, "-");
+        path = path.replace(/[\.\_]/g, "-");
+        return path;
     };
     me.add_class = function (object, path) {
-        var class_name = path.replace(/[.]/g, "-");
+        var class_name = me.to_class(path);
         var component_name = path.substring(0, path.lastIndexOf("."));
         if (!package[component_name].css) {
             package[component_name].css = me.load_css(component_name);

@@ -72,8 +72,8 @@ package.app.main = new function () {
             "ui.element.component":"ui.text",
             "ui.element.text":"",
             "ui.group.data":{
-                "ui.data.type" : ["ui.element.title", "ui.style.background"],
-                "ui.data.source": [["A","red"],["B","blue"],["C","green"],["D","linear-gradient(red,yellow)"]]
+                "ui.data.type" : ["ui.element.title", "ui.element.background","ui.style.width","ui.style.height"],
+                "ui.data.source": [["Root","white","300px"],["First","yellow","300px"],["Second","blue"],["Third","red"],["Fourth","green","200px","200px"]]
             }
         });
     };

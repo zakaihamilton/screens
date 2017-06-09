@@ -6,6 +6,7 @@
 package.ui.element = new function UIElement() {
     var me = this;
     me.platform = "browser";
+    me.type="div";
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -119,8 +120,9 @@ package.ui.element = new function UIElement() {
             component_name = me.matches(properties, parent);
         }
         if (!component_name) {
-            return null;
+            component_name="ui.element";
         }
+        console.log("creating element of " + component_name + " for properties: " + JSON.stringify(properties));
         var component = package[component_name];
         object = document.createElement(component.type);
         object.properties = properties;
@@ -129,10 +131,13 @@ package.ui.element = new function UIElement() {
             parent = document.getElementsByTagName("body")[0];
         }
         me.set(object, "ui.node.parent", parent);
+        object.path = me.to_path(object);
         if(component.class) {
             package.ui.style.add_class(object, component.class);
         }
-        package.core.message.send({component: component_name, method: "create", params: [object]});
+        if(component_name !== me.id) {
+            package.core.message.send({component: component_name, method: "create", params: [object]});
+        }
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
@@ -141,7 +146,41 @@ package.ui.element = new function UIElement() {
                 package.core.message.send({component: component.extend[extensionIndex], method: "extend", params: [object]});
             }
         }
-        object.path = me.to_path(object);
         return object.path;
+    };
+    me.get_rect = function(object) {
+      var xPos = 0;
+      var yPos = 0;
+      var width = object.offsetWidth;
+      var height = object.offsetHeight;
+
+      while (object) {
+        if (object.tagName == "BODY") {
+          // deal with browser quirks with body/window/document and page scroll
+          var xScroll = object.scrollLeft || document.documentElement.scrollLeft;
+          var yScroll = object.scrollTop || document.documentElement.scrollTop;
+
+          xPos += (object.offsetLeft - xScroll + object.clientLeft);
+          yPos += (object.offsetTop - yScroll + object.clientTop);
+        } else {
+          // for all other non-BODY elements
+          xPos += (object.offsetLeft - object.scrollLeft + object.clientLeft);
+          yPos += (object.offsetTop - object.scrollTop + object.clientTop);
+        }
+
+        object = object.offsetParent;
+      }
+      return {
+        left: xPos,
+        top: yPos,
+        width: width,
+        height: height,
+        right: xPos + width,
+        bottom: yPos + height
+      };
+    }
+    me.in_rect = function(object, x, y) {
+        var rect = me.get_rect(object);
+        return !(x < rect.left || y < rect.top || x > rect.right || y > rect.bottom)
     };
 };

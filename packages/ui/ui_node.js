@@ -15,8 +15,8 @@ package.ui.node = new function UINode() {
         for (var index = 0; (object = object.previousElementSibling); index++);
         return index;
     };
-    me.move = function(object, target) {
-        if(object && target && object !== target) {
+    me.shift = function(object, target) {
+        if(object && target && object !== target && object.parentNode == target.parentNode) {
             var object_index = me.index(object);
             var target_index = me.index(target);
             if(!target.nextSibling) {
