@@ -24,70 +24,20 @@ package.app.main = new function () {
         package.core.message.send_browser("app.main.ready");
     }
     me.ready = function () {
-        me.dropdown = package.ui.element.create({
-            "ui.group.data":{
-                "ui.data.type" : "ui.element.text",
-                "ui.data.source": ["Apple","Banana","Orange","Apricot","Peach"]
+        package.ui.element.update([
+            {
+                "ui.style.background": "lightblue"
             },
-            "ui.event.pressed": "app.main.hello",
-            "ui.style.backgroundColor": "lightgray"
-        });
-        package.ui.element.create({
-            "ui.element.text": "Label",
-            "ui.style.color": "red"
-        });
-        package.ui.element.create({
-            "ui.element.group": "Selection",
-            "ui.element.text": "Apple",
-            "ui.element.state": false,
-        });
-        package.ui.element.create({
-            "ui.element.group": "Selection",
-            "ui.element.text": "Banana",
-            "ui.element.state": true
-        });
-        package.ui.element.create({
-            "ui.group.data":{
-                "ui.data.type" : "ui.element.text",
-                "ui.data.source": ["Apple","Banana","Orange","Apricot","Peach"]
-            },
-            "ui.element.count": 10,
-            "ui.element.multiple": true
-        });
-        package.ui.element.create({
-            "ui.element.text": "Editor",
-            "ui.element.edit": true,
-            "ui.element.rows": 5,
-            "ui.element.columns": 50,
-        });
-        package.ui.element.create({
-            "ui.element.component":"ui.text",
-            "ui.element.text":"Container",
-            "ui.group.data":{
-                "ui.data.type" : "ui.element.state",
-                "ui.data.source": [true,false,false,true,true,false,false,true]
-            },
-        });
-        package.ui.element.create({
-            "ui.element.component":"ui.text",
-            "ui.element.text":"",
-            "ui.group.data":{
-                "ui.data.type" : ["ui.element.title", "ui.element.background","ui.style.width","ui.style.height"],
-                "ui.data.source": [["Root","white","300px"],["First","yellow","300px"],["Second","blue"],["Third","red"],["Fourth","green","200px","200px"]]
-            }
-        });
-    };
-    me.hello = function () {
-        if (typeof me.button === "undefined") {
-            me.button = package.ui.element.create({
-                "ui.element.text": "Alert selection",
-                "ui.event.pressed": "app.main.alert"});
-        }
-    };
-    me.showme = function () {
-        alert("Show me the money!");
-    };
-    me.alert = function () {
-        alert("you have selected " + package.ui.element.get(me.dropdown, "ui.element.selection"));
+        ], package.ui.element.body());
+        package.ui.element.create([{
+                "ui.group.data": {
+                    "ui.data.type": ["ui.element.title", "ui.element.background", "ui.style.width", "ui.style.height"],
+                    "ui.data.source": [["Root", "white", "300px"], ["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"], ["Fourth", "green", "200px", "200px"]]
+                }
+            }]);
+        package.ui.element.create([{
+                "ui.element.title":"Program Manager",
+                "ui.style.position":"absolute"
+            }]);
     };
 };

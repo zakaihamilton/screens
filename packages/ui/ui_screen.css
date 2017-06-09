@@ -17,7 +17,7 @@
     border: 1px solid #000000;
     background-color: #c0c0c0;
     margin-right: 5px;
-    cursor: move;
+    cursor:default;
 }
 
 .ui-screen-window.over {

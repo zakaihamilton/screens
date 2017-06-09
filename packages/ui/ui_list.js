@@ -6,7 +6,7 @@
 package.ui.list = new function UIList() {
     var me = this;
     me.depends = {
-        properties:["ui.group.data"]
+        properties:["ui.group.data","ui.element.count"]
     };
     me.type = "select";
     me.get_selection = function(object) {

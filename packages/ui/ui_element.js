@@ -104,6 +104,23 @@ package.ui.element = new function UIElement() {
         }
         return result;
     };
+    me.body = function() {
+        return document.getElementsByTagName("body")[0];
+    };
+    me.update = function (data, object) {
+        if (Array.isArray(data)) {
+            data.map(function (properties) {
+                me.update_element(properties, object);
+            });
+        } else if(data) {
+            return me.update_element(data, object);
+        }
+    };
+    me.update_element = function (properties, object) {
+        for (var key in properties) {
+            me.set(object, key, properties[key]);
+        }
+    };
     me.create = function (data, parent) {
         if (Array.isArray(data)) {
             data.map(function (properties) {
@@ -128,7 +145,7 @@ package.ui.element = new function UIElement() {
         object.properties = properties;
         object.component = component_name;
         if (!parent) {
-            parent = document.getElementsByTagName("body")[0];
+            parent = me.body();
         }
         me.set(object, "ui.node.parent", parent);
         object.path = me.to_path(object);

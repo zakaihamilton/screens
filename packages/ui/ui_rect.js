@@ -36,8 +36,7 @@ package.ui.rect = new function UIRect() {
             bottom: yPos + height
         };
     }
-    me.in_region = function (object, x, y) {
-        var rect = me.region(object);
+    me.in_region = function (rect, x, y) {
         return !(x < rect.left || y < rect.top || x > rect.right || y > rect.bottom)
     };
 }
