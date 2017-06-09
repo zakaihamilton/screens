@@ -18,7 +18,7 @@ package.ui.drag = new function UIDrag() {
         object.addEventListener('dragstart', function (e) {
             var target = me.parent_draggable(e.target);
             if(target.drag_element) {
-                in_rect = package.ui.element.in_rect(target.drag_element, e.clientX, e.clientY);
+                in_rect = package.ui.rect.in_region(target.drag_element, e.clientX, e.clientY);
                 if (!in_rect) {
                     if (e.preventDefault) {
                         e.preventDefault();

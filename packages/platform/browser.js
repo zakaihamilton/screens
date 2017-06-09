@@ -13,6 +13,7 @@ include([
 "ui.group",
 "ui.node",
 "ui.bar",
+"ui.rect",
 "ui.drag",
 "ui.element",
 "ui.event",
