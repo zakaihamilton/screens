@@ -3,8 +3,7 @@
  @component UIRect
  */
 
-package.ui.rect = new function UIRect() {
-    var me = this;
+package.ui.rect = function UIRect(me) {
     me.region = function (object) {
         var xPos = 0;
         var yPos = 0;

@@ -3,8 +3,7 @@
  @component UINode
  */
 
-package.ui.node = new function UINode() {
-    var me = this;
+package.ui.node = function UINode(me) {
     me.get_parent = function(object) {
         return object.parentNode;
     };

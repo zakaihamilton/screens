@@ -3,8 +3,7 @@
  @component UIRadio
  */
 
-package.ui.radio = new function UIRadio() {
-    var me = this;
+package.ui.radio = function UIRadio(me) {
     me.depends = {
         properties:["ui.element.state", "ui.element.group"]
     };

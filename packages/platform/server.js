@@ -2,7 +2,6 @@ require("../package.js");
 
 include({
     "core": [
-        "platform",
         "console",
         "remote",
         "event",

@@ -3,10 +3,9 @@
  @component CoreRemote
  */
 
-package.core.remote = new function CoreRemote() {
-    var me = this;
+package.core.remote = function CoreRemote(me) {
     me.test = function(param1, param2, param3) {
-        var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + package.core.platform;
+        var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + package.platform;
         package.core.console.log("result: " + result);
         return result;
     };

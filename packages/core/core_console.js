@@ -3,9 +3,8 @@
  @component CoreConsole
  */
 
-package.core.console = new function CoreConsole() {
-    var me = this;
+package.core.console = function CoreConsole(me) {
     me.log = function(message) {
-        console.log(package.core.platform + ": " + message);
+        console.log(package.platform + ": " + message);
     };
 }

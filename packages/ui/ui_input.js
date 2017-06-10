@@ -3,8 +3,7 @@
  @component UIInput
  */
 
-package.ui.input = new function UIInput() {
-    var me = this;
+package.ui.input = function UIInput(me) {
     me.depends = {
         properties:["ui.element.text","ui.element.edit","ui.element.rows"]
     };

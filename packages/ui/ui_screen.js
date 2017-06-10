@@ -3,8 +3,7 @@
  @component UIScreen
  */
 
-package.ui.screen = new function UIScreen() {
-    var me = this;
+package.ui.screen = function UIScreen(me) {
     me.platform = "browser";
     me.depends = {
         properties:["ui.element.title"]

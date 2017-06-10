@@ -3,8 +3,7 @@
  @component UIDrag
  */
 
-package.ui.drag = new function UIDrag() {
-    var me = this;
+package.ui.drag = function UIDrag(me) {
     me.source = null;
     me.target = null;
     me.set_element = function (object, value) {

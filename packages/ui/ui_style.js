@@ -3,8 +3,7 @@
  @component UIStyle
  */
 
-package.ui.style = new function UIStyle() {
-    var me = this;
+package.ui.style = function UIStyle(me) {
     me.platform = "browser";
     me.set = function (object, method, value) {
         if(typeof value !== "undefined") {

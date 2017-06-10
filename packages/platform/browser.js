@@ -1,6 +1,5 @@
 include({
     "core": [
-        "platform",
         "console",
         "remote",
         "event",

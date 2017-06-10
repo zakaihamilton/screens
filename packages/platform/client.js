@@ -2,7 +2,6 @@ importScripts("/packages/package.js?platform=client");
 
 include({
     "core": [
-        "platform",
         "console",
         "remote",
         "event",

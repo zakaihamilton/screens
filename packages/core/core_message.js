@@ -3,19 +3,18 @@
     @component CoreMessage
 */
 
-package.core.message = new function CoreMessage() {
-    var me = this;
+package.core.message = function CoreMessage(me) {
     var core = package.core;
     core.event.forward("core.http", "core.message", true);
     me.send_server = function(path, params) {
-        if(core.platform !== "server") {
+        if(package.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {method:"GET",
                         url:"/method/" + path + package.core.type.wrap_args(args)};
             var result = core.http.send(info);
             return core.type.unwrap(result);
         }
-        else if(core.platform == "server") {
+        else if(package.platform == "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             var info = {path:method,params:args};
             package.core.console.log(JSON.stringify(info));
@@ -26,10 +25,10 @@ package.core.message = new function CoreMessage() {
         var args = Array.prototype.slice.call(arguments, 1);
         var info = {path:path,params:args};
         package.core.console.log(JSON.stringify(info));
-        if(core.platform === "browser") {
+        if(package.platform === "browser") {
             me.worker.postMessage(info);
         }
-        else if(core.platform === "client") {
+        else if(package.platform === "client") {
             me.send(info);
         }
     };
@@ -37,16 +36,16 @@ package.core.message = new function CoreMessage() {
         var args = Array.prototype.slice.call(arguments, 1);
         var info = {path:path,params:args};
         package.core.console.log(JSON.stringify(info));
-        if(core.platform === "client") {
+        if(package.platform === "client") {
             self.postMessage(info);
         }
-        else if(core.platform === "browser") {
+        else if(package.platform === "browser") {
             me.send(info);
         }
     };
     me.receive = function(info) {
         core.console.log("matching url: " + info.url);
-        if(core.platform === "server" && info.method === "GET" && info.url.startsWith("/method/")) {
+        if(package.platform === "server" && info.method === "GET" && info.url.startsWith("/method/")) {
             var find = "/method/";
             var path = info.url.substring(info.url.indexOf(find)+find.length);
             var args = core.type.unwrap_args(info.query);
@@ -94,11 +93,11 @@ package.core.message = new function CoreMessage() {
             return callback.apply(package[component], info.params);
         }
     };
-    if(core.platform === "browser") {
+    if(package.platform === "browser") {
         me.worker = new Worker("packages/platform/client.js");
         me.worker.onmessage = function(event) { return package.core.message.send(event.data); };
     }
-    else if(core.platform === "client") {
+    else if(package.platform === "client") {
         self.onmessage = function(event) { return package.core.message.send(event.data); };
     }
 };

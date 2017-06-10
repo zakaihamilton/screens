@@ -3,13 +3,12 @@
     @component CoreHttp
 */
 
-package.core.http = new function CoreHttp() {
-    var me = this;
+package.core.http = function CoreHttp(me) {
     var core = package.core;
     me.port = 8080;
     me.listeners = [];
     me.init = function() {
-        if(core.platform === "server") {
+        if(package.platform === "server") {
             me.http = require("http");
             me.server = me.http.createServer(function(request, response) {
                 var body = [];
@@ -67,7 +66,7 @@ package.core.http = new function CoreHttp() {
         return array;
     };
     me.send = function(info) {
-        if(core.platform !== "server") {
+        if(package.platform !== "server") {
             var request = new XMLHttpRequest();
             core.console.log("sending http: " + JSON.stringify(info));
             request.open(info.method, info.url, false);
@@ -78,7 +77,7 @@ package.core.http = new function CoreHttp() {
         }
     };
     me.send_async = function(info) {
-        if(core.platform !== "server") {
+        if(package.platform !== "server") {
             var request = new XMLHttpRequest();
             request.open(info.method, info.url, true);
             request.onreadystatechange = function(e) {

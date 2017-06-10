@@ -3,8 +3,7 @@
  @component UIButton
  */
 
-package.ui.button = new function UIButton() {
-    var me = this;
+package.ui.button = function UIButton(me) {
     me.class = "ui.button.standard";
     me.depends = {
         properties:["ui.element.text","ui.event.pressed"]

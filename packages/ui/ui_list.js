@@ -3,8 +3,7 @@
  @component UIList
  */
 
-package.ui.list = new function UIList() {
-    var me = this;
+package.ui.list = function UIList(me) {
     me.depends = {
         properties:["ui.group.data","ui.element.count"]
     };

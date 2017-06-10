@@ -3,8 +3,7 @@
  @component AppMain
  */
 
-package.app.main = new function () {
-    var me = this;
+package.app.main = function (me) {
     me.browser = function () {
         /* run on the browser */
         package.core.console.log("browser is ready");

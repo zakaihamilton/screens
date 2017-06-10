@@ -3,8 +3,7 @@
  @component UIImage
  */
 
-package.ui.image = new function UIImage() {
-    var me = this;
+package.ui.image = function UIImage(me) {
     me.type = "img";
     me.depends = {
         properties:["ui.element.image"]

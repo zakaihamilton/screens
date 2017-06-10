@@ -3,8 +3,7 @@
  @component UIElement
  */
 
-package.ui.element = new function UIElement() {
-    var me = this;
+package.ui.element = function UIElement(me) {
     me.platform = "browser";
     me.type="div";
     me.matches = function (properties, parent) {

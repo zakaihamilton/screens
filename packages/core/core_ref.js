@@ -3,8 +3,7 @@
  @component CoreRef
  */
 
-package.core.ref = new function CoreRef() {
-    var me = this;
+package.core.ref = function CoreRef(me) {
     me.current = 1000;
     me.gen = function() {
         me.current++;

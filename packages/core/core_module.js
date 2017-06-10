@@ -3,20 +3,19 @@
  @component CoreModule
  */
 
-package.core.module = new function CoreModule() {
-    var me = this;
+package.core.module = function CoreModule(me) {
     var core = package.core;
     core.event.forward("core.http", "core.module", true);
     me.path_file_to_component = function(file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/")+1);
-        if(file_path.indexOf("_") == -1) {
+        if(file_path.indexOf("_") === -1) {
             return "";
         }
         var component_path = file_path.replace(/_/g, ".").replace(".js", "");
         return component_path;
     };
     me.receive = function(info) {
-        if(core.platform === "server") {
+        if(package.platform === "server") {
             var fs = require("fs");
             if(info.method === "GET") {
                 var file_path = info.url.substring(1);

@@ -3,8 +3,7 @@
  @component UIGroup
  */
 
-package.ui.group = new function UIGroup() {
-    var me = this;
+package.ui.group = function UIGroup(me) {
     me.set = function(object, method, value) {
         if (Array.isArray(value)) {
             package.ui.element.create(value, object);

@@ -3,8 +3,7 @@
  @component UICheckBox
  */
 
-package.ui.checkbox = new function UICheckBox() {
-    var me = this;
+package.ui.checkbox = function UICheckBox(me) {
     me.depends = {
         properties:["ui.element.state"]
     };

@@ -3,8 +3,7 @@
  @component UIOption
  */
 
-package.ui.option = new function UIOption() {
-    var me = this;
+package.ui.option = function UIOption(me) {
     me.type = "option";
     me.depends = {
         parent:["ui.list"],

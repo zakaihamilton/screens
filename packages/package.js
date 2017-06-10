@@ -17,6 +17,17 @@ var package = new Proxy({}, {
             }
             return object;
         }
+        /* Check if platform */
+        if(property === "platform") {
+            var platform = "browser";
+            if(typeof require !== 'undefined') {
+                platform = "server";
+            }
+            else if(typeof importScripts !== 'undefined') {
+                platform = "client";
+            }
+            return platform;
+        }
         /* Check if package exists */
         if (Reflect.has(object, property)) {
             return Reflect.get(object, property);
@@ -30,32 +41,29 @@ var package = new Proxy({}, {
                     } else {
                         /* Load component */
                         package_name = Reflect.get(object, "id");
-                        platform = "browser";
-                        if(typeof require !== 'undefined') {
-                            platform = "server";
-                        }
-                        else if(typeof importScripts !== 'undefined') {
-                            platform = "client";
-                        }
-                        if (platform === "server") {
+                        if (package.platform === "server") {
                             path = "./" + package_name + "/" + package_name + "_" + property;
                             require(path);
                         }
-                        else if (platform === "client") {
+                        else if (package.platform === "client") {
                             importScripts("/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=client");
                         }
                         else {
                             /* browser can only load asyncronously components */
                             return null;
                         }
-                        /* Load component */
-                        component = Reflect.get(object, property);
-                        component.id = object.id + "." + property;
-                        if((!component.platform || component.platform === platform) && component.init) {
-                            component.init();
+                        /* Retrieve component function */
+                        var component = Reflect.get(object, property);
+                        /* Create instance */
+                        var instance = {}
+                        instance.id = object.id + "." + property;
+                        Reflect.set(object, property, instance);
+                        component(instance);
+                        if((!instance.platform || instance.platform === platform) && instance.init) {
+                            instance.init();
                         }
-                        console.log(package.core.platform + ": Loaded " + object.id + "." + property);
-                        return component;
+                        console.log(package.platform + ": Loaded " + object.id + "." + property);
+                        return instance;
                     }
                 },
                 set: function (object, property, value) {
@@ -80,18 +88,23 @@ var include = function(packages, callback) {
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        console.log(package.core.platform + ": Loading " + package_name + "." + component_name);
+        console.log(package.platform + ": Loading " + package_name + "." + component_name);
         if(typeof importScripts === 'undefined' && typeof require === 'undefined') {
             var ref = document.getElementsByTagName( "script" )[ 0 ];
             var script = document.createElement( "script" );
             script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
             script.onload = function() {
-                console.log("browser: Loaded " + package_name + "." + component_name);
-                component = package[package_name + "." + component_name];
-                component.id = package_name + "." + component_name;
-                if(component.init) {
-                    component.init();
+                /* Retrieve component function */
+                var component = package[package_name + "." + component_name];
+                /* Create instance */
+                var instance = {}
+                instance.id = package_name + "." + component_name;
+                Reflect.set(package[package_name], component_name, instance);
+                component(instance);
+                if((!instance.platform || instance.platform === package.platform) && instance.init) {
+                    instance.init();
                 }
+                console.log(package.platform + ": Loaded " + instance.id);
                 /* Load next component */
                 component_index++;
                 if(component_index >= components.length) {

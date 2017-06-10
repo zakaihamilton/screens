@@ -3,8 +3,7 @@
  @component UIBar
  */
 
-package.ui.bar = new function UIBar() {
-    var me = this;
+package.ui.bar = function UIBar(me) {
     me.type = "div";
     me.set_class = function (object, value) {
         object.close = package.ui.element.create({

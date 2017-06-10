@@ -3,8 +3,7 @@
  @component CoreEvent
  */
 
-package.core.event = new function CoreEvent() {
-    var me = this;
+package.core.event = function CoreEvent(me) {
     me._forwarding_list = {};
     me.forward = function (source, target, enabled) {
         source_list = me._forwarding_list[source];

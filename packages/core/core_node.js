@@ -3,8 +3,7 @@
     @component CoreNode
 */
 
-package.core.node = new function CoreNode() {
-    var me = this;
+package.core.node = function CoreNode(me) {
     var core = package.core;
     me.test = function() {
         return "Test";

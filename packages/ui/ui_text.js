@@ -3,8 +3,7 @@
  @component UIText
  */
 
-package.ui.text = new function UIText() {
-    var me = this;
+package.ui.text = function UIText(me) {
     me.depends = {
         properties:["ui.element.text"]
     };

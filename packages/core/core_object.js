@@ -3,8 +3,7 @@
     @component CoreObject
 */
 
-package.core.object = new function CoreObject() {
-    var me = this;
+package.core.object = function CoreObject(me) {
     me.test = function() {
         return "Test";
     };

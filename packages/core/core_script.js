@@ -3,8 +3,7 @@
  @component CoreScript
  */
 
-package.core.script = new function CoreScript() {
-    var me = this;
+package.core.script = function CoreScript(me) {
     var core = package.core;
     core.event.forward("core.module", "core.script", true);
     me.parse = function(info) {

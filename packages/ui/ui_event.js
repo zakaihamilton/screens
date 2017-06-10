@@ -3,8 +3,7 @@
  @component UIEvent
  */
 
-package.ui.event = new function UIEvent() {
-    var me = this;
+package.ui.event = function UIEvent(me) {
     me.set_pressed = function(object, value) {
         console.log("object: " + object + " value: " + value);
         if(value) {

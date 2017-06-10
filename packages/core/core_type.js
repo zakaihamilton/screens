@@ -3,8 +3,7 @@
     @component CoreType
 */
 
-package.core.type = new function CoreType() {
-    var me = this;
+package.core.type = function CoreType(me) {
     me.wrap = function(unwrapped_data) {
         return JSON.stringify({type:typeof unwrapped_data,value:JSON.stringify(unwrapped_data)});
     };

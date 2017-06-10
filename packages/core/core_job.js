@@ -3,8 +3,7 @@
  @component CoreJob
  */
 
-package.core.job = new function CoreJob() {
-    var me = this;
+package.core.job = function CoreJob(me) {
     me.jobs = [];
     me.tasks = [];
     me.open = function() {

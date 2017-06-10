@@ -3,8 +3,7 @@
  @component UINode
  */
 
-package.ui.header = new function UINode() {
-    var me = this;
+package.ui.header = function UINode(me) {
     me.depends = {
         parent:["ui.screen"],
         properties:["ui.element.text"]

@@ -3,8 +3,7 @@
  @component UIData
  */
 
-package.ui.data = new function UIData() {
-    var me = this;
+package.ui.data = function UIData(me) {
     me.get_type = function(object) {
         return object.data_type;
     };
