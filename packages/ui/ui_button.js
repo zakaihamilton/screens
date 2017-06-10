@@ -5,10 +5,10 @@
 
 package.ui.button = new function UIButton() {
     var me = this;
+    me.class = "ui.button.standard";
     me.depends = {
         properties:["ui.element.text","ui.event.pressed"]
     };
-    me.extend = ["ui.drag"];
     me.type = "button";
     me.set_text = function(object, value) {
         object.innerHTML = value;

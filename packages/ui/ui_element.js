@@ -132,6 +132,7 @@ package.ui.element = new function UIElement() {
     };
     me.create_element = function (properties, parent) {
         var object = null;
+        parent = me.to_object(parent);
         var component_name = properties["ui.element.component"];
         if(!component_name) {
             component_name = me.matches(properties, parent);
@@ -162,6 +163,14 @@ package.ui.element = new function UIElement() {
             for(var extensionIndex = 0; extensionIndex < component.extend.length; extensionIndex++) {
                 package.core.message.send({component: component.extend[extensionIndex], method: "extend", params: [object]});
             }
+        }
+        if(properties['ui.element.members']) {
+            var content = object.content;
+            if(!content) {
+                content = object;
+            }
+            console.log("content: " + content);
+            me.create(properties['ui.element.members'], content);
         }
         return object.path;
     };

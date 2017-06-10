@@ -8,14 +8,21 @@ package.ui.checkbox = new function UICheckBox() {
     me.depends = {
         properties:["ui.element.state"]
     };
-    me.type = "input";
+    me.type = "div";
+    me.class="ui.checkbox.standard";
     me.create = function(object) {
-        object.type = "checkbox";
+        
     };
     me.get_state = function(object) {
         return object.checked;
     };
     me.set_state = function(object, value) {
         object.checked = value;
+    };
+    me.set_text = function(object, value) {
+        object.innerHTML = value;
+    };
+    me.get_text = function(object) {
+        return object.innerHTML;
     };
 };

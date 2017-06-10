@@ -1,0 +1,29 @@
+.ui-checkbox-standard {
+    position: relative;
+    width: 12px;
+    height: 12px;
+}
+
+.ui-checkbox-standard:before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: black white;
+}
+
+.ui-checkbox-standard:after {
+    content: '';
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    top: 0px;
+    bottom: 0px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: white transparent;
+}

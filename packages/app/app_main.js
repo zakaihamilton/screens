@@ -37,7 +37,24 @@ package.app.main = new function () {
             }]);
         package.ui.element.create([{
                 "ui.element.title":"Program Manager",
-                "ui.style.position":"absolute"
+                "ui.style.position":"absolute",
+                "ui.style.left":"500px",
+                "ui.style.top":"100px",
+                "ui.style.width":"300px",
+                "ui.element.members":[{
+                    "ui.element.state": true,
+                    "ui.element.text": "Toggle",
+                    "ui.style.left": "80px"
+                },{
+                    "ui.element.text" : "OK",
+                    "ui.event.pressed" : "app.main.ok",
+                    "ui.style.position": "relative",
+                    "ui.style.left" : "20px",
+                    "ui.style.top": "60px"
+                }]
             }]);
+    };
+    me.ok = function() {
+        alert("Hello!");
     };
 };
