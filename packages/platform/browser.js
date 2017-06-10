@@ -1,4 +1,4 @@
-include({
+package.include({
     "core": [
         "console",
         "remote",

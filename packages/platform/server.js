@@ -1,6 +1,6 @@
 require("../package.js");
 
-include({
+package.include({
     "core": [
         "console",
         "remote",

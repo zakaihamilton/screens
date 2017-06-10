@@ -1,6 +1,6 @@
 importScripts("/packages/package.js?platform=client");
 
-include({
+package.include({
     "core": [
         "console",
         "remote",
