@@ -1,14 +1,13 @@
 /*
  @author Zakai Hamilton
- @component UINode
+ @component WidgetText
  */
 
-package.ui.header = function UINode(me) {
+package.widget.text = function WidgetText(me) {
     me.depends = {
-        parent:["ui.screen"],
         properties:["ui.element.text"]
     };
-    me.type="header";
+    me.type = "div";
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };

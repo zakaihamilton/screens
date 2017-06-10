@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIInput
+ @component WidgetInput
  */
 
-package.ui.input = function UIInput(me) {
+package.widget.input = function WidgetInput(me) {
     me.depends = {
         properties:["ui.element.text","ui.element.edit","ui.element.rows"]
     };

@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIList
+ @component WidgetList
  */
 
-package.ui.list = function UIList(me) {
+package.widget.list = function WidgetList(me) {
     me.depends = {
         properties:["ui.group.data","ui.element.count"]
     };

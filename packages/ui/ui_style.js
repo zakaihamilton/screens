@@ -11,7 +11,9 @@ package.ui.style = function UIStyle(me) {
                 me.add_class(object, value);
             }
             else {
+                console.log("style " + "method: " + method);
                 object.style[method] = value;
+                return true;
             }
         }
     };

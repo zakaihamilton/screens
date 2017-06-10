@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIOption
+ @component WidgetOption
  */
 
-package.ui.option = function UIOption(me) {
+package.widget.option = function WidgetOption(me) {
     me.type = "option";
     me.depends = {
         parent:["ui.list"],

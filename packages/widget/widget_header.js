@@ -1,14 +1,14 @@
 /*
  @author Zakai Hamilton
- @component UIButton
+ @component WidgetHeader
  */
 
-package.ui.button = function UIButton(me) {
-    me.class = "ui.button.standard";
+package.widget.header = function WidgetHeader(me) {
     me.depends = {
-        properties:["ui.element.text","ui.event.pressed"]
+        parent:["widget.screen"],
+        properties:["ui.element.text"]
     };
-    me.type = "button";
+    me.type="header";
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };

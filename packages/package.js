@@ -56,7 +56,6 @@ function package_include(packages, callback) {
                 var instance = {}
                 instance.id = package_name + "." + component_name;
                 Reflect.set(package[package_name], component_name, instance);
-                console.log(package_name + "." + component_name + "=" + JSON.stringify(component));
                 component(instance);
                 if ((!instance.platform || instance.platform === package.platform) && instance.init) {
                     instance.init();

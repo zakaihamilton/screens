@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIBar
+ @component WidgetBar
  */
 
-package.ui.bar = function UIBar(me) {
+package.widget.bar = function WidgetBar(me) {
     me.type = "div";
     me.set_class = function (object, value) {
         object.close = package.ui.element.create({

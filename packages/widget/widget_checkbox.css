@@ -1,10 +1,10 @@
-.ui-checkbox-standard {
+.widget-checkbox-standard {
     position: relative;
     width: 12px;
     height: 12px;
 }
 
-.ui-checkbox-standard:before {
+.widget-checkbox-standard:before {
     content: '';
     position: absolute;
     left: 0px;
@@ -16,7 +16,7 @@
     border-color: black white;
 }
 
-.ui-checkbox-standard:after {
+.widget-checkbox-standard:after {
     content: '';
     position: absolute;
     left: 1px;

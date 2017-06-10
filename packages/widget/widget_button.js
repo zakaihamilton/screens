@@ -1,13 +1,14 @@
 /*
  @author Zakai Hamilton
- @component UIText
+ @component UIButton
  */
 
-package.ui.text = function UIText(me) {
+package.widget.button = function WidgetButton(me) {
+    me.class = "widget.button.standard";
     me.depends = {
-        properties:["ui.element.text"]
+        properties:["ui.element.text","ui.event.pressed"]
     };
-    me.type = "div";
+    me.type = "button";
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };

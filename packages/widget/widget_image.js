@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIImage
+ @component WidgetImage
  */
 
-package.ui.image = function UIImage(me) {
+package.widget.image = function WidgetImage(me) {
     me.type = "img";
     me.depends = {
         properties:["ui.element.image"]

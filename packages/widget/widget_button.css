@@ -1,4 +1,4 @@
-.ui-button-standard {
+.widget-button-standard {
     border-radius: 1px;
     background-color: #c0c0c0;
     margin-top: 5px;
@@ -10,7 +10,7 @@
     box-shadow: 0 0 0 1px #000000;
 }
 
-.ui-button-standard:hover:active {
+.widget-button-standard:hover:active {
     border-left: 2px solid #808080;
     border-top: 2px solid #808080;
     border-right: 2px solid #ffffff;

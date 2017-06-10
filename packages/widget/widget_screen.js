@@ -1,33 +1,33 @@
 /*
  @author Zakai Hamilton
- @component UIScreen
+ @component WidgetScreen
  */
 
-package.ui.screen = function UIScreen(me) {
+package.widget.screen = function WidgetScreen(me) {
     me.require = {platform:"browser"};
     me.depends = {
         properties:["ui.element.title"]
     };
     me.extend = ["ui.drag"];
     me.type = "div";
-    me.class = "ui.screen.window";
+    me.class = "widget.screen.window";
     me.create = function(object) {
         package.ui.element.create([{
-                "ui.style.class": "ui.screen.left_bottom"
+                "ui.style.class": "widget.screen.left_bottom"
             }, {
-                "ui.style.class": "ui.screen.right_bottom"
+                "ui.style.class": "widget.screen.right_bottom"
             }], object);
         object.content = package.ui.element.create({
-                "ui.style.class": "ui.screen.content"
+                "ui.style.class": "widget.screen.content"
             }, object);
         package.ui.element.create([{
-                "ui.style.class": "ui.screen.left_top"
+                "ui.style.class": "widget.screen.left_top"
             }, {
-                "ui.style.class": "ui.screen.right_top"
+                "ui.style.class": "widget.screen.right_top"
             }], object);
         object.title = package.ui.element.create({
-            "ui.element.component":"ui.bar",
-            "ui.style.class":"ui.screen.bar",
+            "ui.element.component":"widget.bar",
+            "ui.style.class":"widget.screen.bar",
         }, object);
     };
     me.get_title = function(object) {

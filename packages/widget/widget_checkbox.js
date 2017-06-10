@@ -1,14 +1,14 @@
 /*
  @author Zakai Hamilton
- @component UICheckBox
+ @component WidgetCheckBox
  */
 
-package.ui.checkbox = function UICheckBox(me) {
+package.widget.checkbox = function WidgetCheckBox(me) {
     me.depends = {
         properties:["ui.element.state"]
     };
     me.type = "div";
-    me.class="ui.checkbox.standard";
+    me.class="widget.checkbox.standard";
     me.create = function(object) {
         
     };

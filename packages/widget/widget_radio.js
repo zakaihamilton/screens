@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIRadio
+ @component WidgetRadio
  */
 
-package.ui.radio = function UIRadio(me) {
+package.widget.radio = function WidgetRadio(me) {
     me.depends = {
         properties:["ui.element.state", "ui.element.group"]
     };
