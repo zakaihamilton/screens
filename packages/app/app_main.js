@@ -42,9 +42,10 @@ package.app.main = new function () {
                 "ui.style.top":"100px",
                 "ui.style.width":"300px",
                 "ui.element.members":[{
-                    "ui.element.state": true,
-                    "ui.element.text": "Toggle",
-                    "ui.style.left": "80px"
+                    "ui.element.text": "This is some text",
+                    "ui.style.left": "80px",
+                    "ui.style.position": "relative",
+                    "ui.style.top" :"20px"
                 },{
                     "ui.element.text" : "OK",
                     "ui.event.pressed" : "app.main.ok",

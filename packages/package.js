@@ -68,20 +68,20 @@ var package = new Proxy({}, {
     }
 });
 
-var include = function(dependencies, callback) {
-    var load = function(index) {
-        if(index >= dependencies.length) {
+var include = function(packages, callback) {
+    var load = function(package_index, component_index) {
+        var package_keys = Object.keys(packages);
+        if(package_index >= package_keys.length) {
             if(callback) {
                 callback();
             }
             return;
         }
-        var dependency = dependencies[index];
+        var package_name = package_keys[package_index];
+        var components = packages[package_name];
+        var component_name = components[component_index];
+        console.log(package.core.platform + ": Loading " + package_name + "." + component_name);
         if(typeof importScripts === 'undefined' && typeof require === 'undefined') {
-            console.log("browser: Loading " + dependency);
-            var offset = dependency.lastIndexOf(".");
-            var component_name = dependency.substring(offset+1);
-            var package_name = dependency.substring(0, offset);
             var ref = document.getElementsByTagName( "script" )[ 0 ];
             var script = document.createElement( "script" );
             script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
@@ -93,17 +93,26 @@ var include = function(dependencies, callback) {
                     component.init();
                 }
                 /* Load next component */
-                load(index+1);
+                component_index++;
+                if(component_index >= components.length) {
+                    package_index++;
+                    component_index=0;
+                }
+                load(package_index,component_index);
             };
             ref.parentNode.insertBefore(script, ref);
         }
         else {
-            console.log(package.core.platform + ": Loading " + dependency);
-            package[dependency];
-            load(index+1);
+            package[package_name + "." + component_name];
+            component_index++;
+            if(component_index >= components.length) {
+                package_index++;
+                component_index=0;
+            }
+            load(package_index,component_index);
         }
     }
-    load(0);
+    load(0,0);
 }
 
 if (typeof require !== 'undefined') {

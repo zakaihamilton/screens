@@ -1,34 +1,40 @@
-include([
-"core.platform",
-"core.console",
-"core.remote",
-"core.event",
-"core.http",
-"core.message",
-"core.type",
-"core.ref",
-"core.module",
-"core.script",
-"ui.data",
-"ui.group",
-"ui.node",
-"ui.bar",
-"ui.rect",
-"ui.drag",
-"ui.element",
-"ui.event",
-"ui.style",
-"ui.radio",
-"ui.checkbox",
-"ui.list",
-"ui.button",
-"ui.input",
-"ui.text",
-"ui.option",
-"ui.header",
-"ui.screen",
-"app.main"
-],
-function() {
-    package.core.message.send_browser("app.main.browser");
-});
+include({
+    "core": [
+        "platform",
+        "console",
+        "remote",
+        "event",
+        "http",
+        "message",
+        "type",
+        "ref",
+        "module",
+        "script",
+    ],
+    "ui": [
+        "data",
+        "group",
+        "node",
+        "bar",
+        "rect",
+        "drag",
+        "element",
+        "event",
+        "style",
+        "radio",
+        "checkbox",
+        "list",
+        "button",
+        "input",
+        "text",
+        "option",
+        "header",
+        "screen",
+    ],
+    "app": [
+        "main"
+    ]
+},
+        function () {
+            package.core.message.send_browser("app.main.browser");
+        });
