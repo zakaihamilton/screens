@@ -24,7 +24,11 @@ package.core.module = function CoreModule(me) {
                     var component_path = core.module.path_file_to_component(file_path);
                     var target_platform = null;
                     if(component_path) {
-                        target_platform = package[component_path].platform;
+                        console.log("component_path: " + component_path);
+                        var requirements = package[component_path].require;
+                        if(requirements) {
+                            target_platform = requirements.platform;
+                        }
                     }
                     var source_platform = info.query["platform"];
                     info["content-type"] = "application/javascript";

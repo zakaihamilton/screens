@@ -4,12 +4,12 @@
  */
 
 package.ui.element = function UIElement(me) {
-    me.platform = "browser";
+    me.require = {platform:"browser"};
     me.type="div";
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = Object.keys(package["ui"]).map(function (component_name) {
+        var matches = package["ui"].components.map(function (component_name) {
             component = package["ui." + component_name];
             if (component.depends) {
                 var depends = component.depends;

@@ -4,7 +4,7 @@
  */
 
 package.ui.style = function UIStyle(me) {
-    me.platform = "browser";
+    me.require = {platform:"browser"};
     me.set = function (object, method, value) {
         if(typeof value !== "undefined") {
             if(method === "class") {

@@ -4,7 +4,7 @@
  */
 
 package.ui.screen = function UIScreen(me) {
-    me.platform = "browser";
+    me.require = {platform:"browser"};
     me.depends = {
         properties:["ui.element.title"]
     };
