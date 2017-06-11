@@ -9,7 +9,7 @@
     -webkit-user-drag: element;
 }
 
-.widget-screen-window {
+.widget-window-border {
     position: relative;
     height: 150px;
     width: 150px;
@@ -20,11 +20,11 @@
     cursor:default;
 }
 
-.widget-screen-window.over {
+.widget-window-border.over {
     border: 1px dashed #000000;
 }
 
-.widget-screen-content {
+.widget-window-content {
     position: absolute;
     left:4px;
     top:24px;
@@ -34,7 +34,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-left-top {
+.widget-window-left-top {
     position: absolute;
     left:-1px;
     top:-1px;
@@ -43,7 +43,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-right-top {
+.widget-window-right-top {
     position: absolute;
     top:-1px;
     right:-1px;
@@ -52,7 +52,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-left-bottom {
+.widget-window-left-bottom {
     position: absolute;
     left:-1px;
     bottom:-1px;
@@ -61,7 +61,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-right-bottom {
+.widget-window-right-bottom {
     position: absolute;
     bottom:-1px;
     right:-1px;
@@ -70,7 +70,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-bar {
+.widget-window-bar {
     position: absolute;
     left:4px;
     top:4px;
@@ -79,7 +79,7 @@
     border: 1px solid #000000;
 }
 
-.widget-screen-bar-title {
+.widget-window-bar-title {
     position: absolute;
     top:-1px;
     left:19px;
@@ -94,7 +94,7 @@
     line-height:19px;
 }
 
-.widget-screen-bar-close {
+.widget-window-bar-close {
     position: absolute;
     left:0px;
     top:0px;
@@ -103,7 +103,7 @@
     background-color: #c0c0c0;
 }
 
-.widget-screen-bar-close:after {
+.widget-window-bar-close:after {
     content: "";
     position: absolute;
     left:2px;
@@ -115,7 +115,7 @@
     box-shadow: 1px 1px 0px 0px #808080;
 }
 
-.widget-screen-bar-minimize {
+.widget-window-bar-minimize {
     position: absolute;
     right:20px;
     top:0px;
@@ -129,7 +129,7 @@
     box-shadow: inset -1px -1px 0px 0px #808080;
 }
 
-.widget-screen-bar-minimize::after {
+.widget-window-bar-minimize::after {
     content: "";
     position: absolute;
     left:5px;
@@ -139,7 +139,7 @@
     border-top: 4px solid black;
 }
 
-.widget-screen-bar-maximize {
+.widget-window-bar-maximize {
     position: absolute;
     right:0px;
     top:0px;
@@ -153,7 +153,7 @@
     box-shadow: inset -1px -1px 0px 0px #808080;
 }
 
-.widget-screen-bar-maximize::after {
+.widget-window-bar-maximize::after {
     content: "";
     position: absolute;
     left:5px;

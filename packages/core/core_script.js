@@ -4,7 +4,7 @@
  */
 
 package.core.script = function CoreScript(me) {
-    var core = package.core;
+    var core = me.core;
     core.event.forward("core.module", "core.script", true);
     me.parse = function(info) {
         var data = info.body;

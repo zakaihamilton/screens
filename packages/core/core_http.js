@@ -4,11 +4,11 @@
 */
 
 package.core.http = function CoreHttp(me) {
-    var core = package.core;
+    var core = me.core;
     me.port = 8080;
     me.listeners = [];
     me.init = function() {
-        if(package.platform === "server") {
+        if(me.platform === "server") {
             me.http = require("http");
             me.server = me.http.createServer(function(request, response) {
                 var body = [];
@@ -66,7 +66,7 @@ package.core.http = function CoreHttp(me) {
         return array;
     };
     me.send = function(info) {
-        if(package.platform !== "server") {
+        if(me.platform !== "server") {
             var request = new XMLHttpRequest();
             core.console.log("sending http: " + JSON.stringify(info));
             request.open(info.method, info.url, false);
@@ -77,7 +77,7 @@ package.core.http = function CoreHttp(me) {
         }
     };
     me.send_async = function(info) {
-        if(package.platform !== "server") {
+        if(me.platform !== "server") {
             var request = new XMLHttpRequest();
             request.open(info.method, info.url, true);
             request.onreadystatechange = function(e) {

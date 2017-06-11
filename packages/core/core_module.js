@@ -4,7 +4,7 @@
  */
 
 package.core.module = function CoreModule(me) {
-    var core = package.core;
+    var core = me.core;
     core.event.forward("core.http", "core.module", true);
     me.path_file_to_component = function(file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/")+1);
@@ -15,7 +15,7 @@ package.core.module = function CoreModule(me) {
         return component_path;
     };
     me.receive = function(info) {
-        if(package.platform === "server") {
+        if(me.platform === "server") {
             var fs = require("fs");
             if(info.method === "GET") {
                 var file_path = info.url.substring(1);

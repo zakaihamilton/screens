@@ -30,7 +30,7 @@ package.include({
         "text",
         "option",
         "header",
-        "screen",
+        "window",
     ],
     "app": [
         "main"

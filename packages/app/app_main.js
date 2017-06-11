@@ -50,7 +50,15 @@ package.app.main = function (me) {
                     "ui.event.pressed" : "app.main.ok",
                     "ui.style.position": "relative",
                     "ui.style.left" : "20px",
-                    "ui.style.top": "60px"
+                    "ui.style.top": "70px"
+                },{
+                    "ui.element.state":true,
+                    "ui.element.text":"Apple",
+                    "ui.style.left":"100px"
+                },{
+                    "ui.element.state":false,
+                    "ui.element.text":"Orange",
+                    "ui.style.left":"100px"
                 }]
             }]);
     };
