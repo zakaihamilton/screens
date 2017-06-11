@@ -53,4 +53,8 @@ package.ui.style = function UIStyle(me) {
         console.log("path: " + path + " style: " + class_name);
         object.classList.add(class_name);
     };
+    me.has_class = function(object, path) {
+        var class_name = me.to_class(path);
+        return object.classList.contains(class_name);
+    };
 };

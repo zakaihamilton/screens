@@ -26,8 +26,7 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.style.class": "widget.window.right_top"
             }], object);
         object.title = me.ui.element.create({
-            "ui.element.component":"widget.bar",
-            "ui.style.class":"widget.window.bar",
+            "ui.element.component":"widget.title",
         }, object);
     };
     me.get_title = function(object) {

@@ -98,6 +98,7 @@ package.ui.element = function UIElement(me) {
         object = me.to_object(object);
         var method = path.substring(path.lastIndexOf(".") + 1)
         if(object) {
+            console.log("set - object:" + object.path + " method: " + method + " value: " + value);
             if (typeof result === "undefined") {
                 result = me.core.message.send({prefix: "set_", path: path, params: [object, value]});
             }
@@ -179,6 +180,9 @@ package.ui.element = function UIElement(me) {
             }
             console.log("content: " + content);
             me.create(properties['ui.element.members'], content);
+        }
+        if(component_name !== me.id) {
+            component.send("draw", object);
         }
         console.log("object.path: " + object.path);
         return object.path;

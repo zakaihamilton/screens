@@ -117,11 +117,11 @@ function package_general(object, property) {
         return function() {
             var args = Array.prototype.slice.call(arguments, 1);
             var method = Reflect.get(object, arguments[0]);
-            console.log("Calling: " + arguments[0]);
+            console.log("Calling: " + object.id + "." + arguments[0]);
             if(method) {
                 method.apply(object, args);
             }
-        }
+        };
     }
     else if(property in package) {
         return package[property];

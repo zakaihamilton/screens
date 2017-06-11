@@ -31,7 +31,7 @@ package.app.main = function (me) {
         me.ui.element.create([{
                 "ui.group.data": {
                     "ui.data.type": ["ui.element.title", "ui.element.background", "ui.style.width", "ui.style.height"],
-                    "ui.data.source": [["Root", "white", "300px"], ["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"],["Fourth", "green", "200px", "200px"]]
+                    "ui.data.source": [["Root", "white", "300px"],["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"],["Fourth", "green", "200px", "200px"]]
                 }
             }]);
         me.ui.element.create([{
@@ -47,7 +47,7 @@ package.app.main = function (me) {
                     "ui.style.position": "relative",
                     "ui.style.top" :"20px"
                 },{
-                    "ui.element.text" : "OK",
+                    "ui.element.text" : "Hello",
                     "ui.event.pressed" : "app.main.ok",
                     "ui.style.position": "relative",
                     "ui.style.left" : "120px",
@@ -61,14 +61,24 @@ package.app.main = function (me) {
                     "ui.element.text":"Orange",
                     "ui.style.left":"100px"
                 },{
-                    "ui.element.state":true,
+                    "ui.element.state":false,
                     "ui.element.group":"together",
                     "ui.element.text":"One",
                     "ui.style.left":"100px"
                 },{
-                    "ui.element.state":false,
+                    "ui.element.state":true,
                     "ui.element.group":"together",
                     "ui.element.text":"Two",
+                    "ui.style.left":"100px"
+                },{
+                    "ui.element.state":false,
+                    "ui.element.group":"fruit",
+                    "ui.element.text":"Banana",
+                    "ui.style.left":"100px"
+                },{
+                    "ui.element.state":true,
+                    "ui.element.group":"fruit",
+                    "ui.element.text":"Grapefruit",
                     "ui.style.left":"100px"
                 }]
             }]);

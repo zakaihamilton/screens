@@ -35,7 +35,24 @@ package.ui.rect = function UIRect(me) {
             bottom: yPos + height
         };
     }
+    me.set_region = function(object, region) {
+        me.ui.element.set(object, "ui.style.left", region.left + "px");
+        me.ui.element.set(object, "ui.style.top", region.top + "px");
+        me.ui.element.set(object, "ui.style.width", region.width + "px");
+        me.ui.element.set(object, "ui.style.height", region.height + "px");
+    };
     me.in_region = function (rect, x, y) {
         return !(x < rect.left || y < rect.top || x > rect.right || y > rect.bottom)
+    };
+    me.viewport = function () {
+        var e = window, a = 'inner';
+        if (!('innerWidth' in window))
+        {
+            a = 'client';
+            e = document.documentElement || document.body;
+        }
+        var width = e[ a + 'Width' ]
+        var height = e[ a + 'Height' ]
+        return {left:0,top:0,width:width,height:height,right:width,bottom:height};
     };
 }

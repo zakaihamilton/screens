@@ -21,7 +21,7 @@ package.include({
         "style",
     ],
     "widget" : [
-        "bar",
+        "title",
         "radio",
         "checkbox",
         "list",
