@@ -37,19 +37,18 @@ function package_init(package_name, component_name) {
     /* Retrieve component function */
     var component = Reflect.get(package[package_name], component_name);
     /* Create component proxy */
-    var component_obj = {id: package_name + "." + component_name, package: package_name, component: component_name};
-/*    var component_obj = new Proxy({id: package_name + "." + component_name, package: package_name, component: component_name}, {
+    var component_obj = new Proxy({id: package_name + "." + component_name, package: package_name, component: component_name}, {
         get: function (object, property) {
             result = package_general(object, property);
             if (result) {
                 return result;
             }
-            return null;
+            return undefined;
         },
         set: function (object, property, value) {
             Reflect.set(object, property, value);
         }
-    });*/
+    });
     Reflect.set(package[package_name], component_name, component_obj);
     component(component_obj);
     if ((!component_obj.require || component_obj.require.platform === package.platform) && component_obj.init) {
@@ -105,16 +104,25 @@ function package_general(object, property) {
     if (Reflect.has(object, property)) {
         return Reflect.get(object, property);
     }
-    if (typeof property === "string" && property.includes(".")) {
+    else if (typeof property === "string" && property.includes(".")) {
         return package_path(object, property);
     }
-    if (property === "platform") {
+    else if (property === "platform") {
         return package_platform();
     }
-    if (property === "include") {
+    else if (property === "include") {
         return package_include;
     }
-    return null;
+    else if (property === "send") {
+        return function() {
+            var args = Array.prototype.slice.call(arguments, 1);
+            var method = Reflect.get(object, arguments[0]);
+            if(method) {
+                method(args);
+            }
+        }
+    }
+    return undefined;
 }
 
 var package = new Proxy({}, {
