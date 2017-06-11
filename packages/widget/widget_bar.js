@@ -4,7 +4,7 @@
  */
 
 package.widget.bar = function WidgetBar(me) {
-    me.type = "div";
+    me.tag_name = "div";
     me.set_class = function (object, value) {
         object.close = me.ui.element.create({
             "ui.style.class": value + "_close"

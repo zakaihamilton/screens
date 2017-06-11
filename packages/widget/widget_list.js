@@ -7,7 +7,7 @@ package.widget.list = function WidgetList(me) {
     me.depends = {
         properties:["ui.group.data","ui.element.count"]
     };
-    me.type = "select";
+    me.tag_name = "select";
     me.get_selection = function(object) {
         return object.options[object.selectedIndex].value;
     };

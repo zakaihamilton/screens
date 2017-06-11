@@ -13,8 +13,8 @@ package.ui.style = function UIStyle(me) {
             else {
                 console.log("style " + "method: " + method);
                 object.style[method] = value;
-                return true;
             }
+            return true;
         }
     };
     me.get = function (object, method) {

@@ -7,15 +7,9 @@ package.widget.input = function WidgetInput(me) {
     me.depends = {
         properties:["ui.element.text","ui.element.edit","ui.element.rows"]
     };
-    me.type = "textarea";
+    me.tag_name = "textarea";
     me.create = function(object) {
         object.type="text";
-    };
-    me.get_type = function(object) {
-        return object.getAtrribute(object, "type")
-    };
-    me.set_type = function(object, value) {
-        object.attributes["type"]=value;
     };
     me.set_text = function(object, value) {
         object.innerHTML = value;

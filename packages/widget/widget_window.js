@@ -9,7 +9,7 @@ package.widget.window = function WidgetWindow(me) {
         properties:["ui.element.title"]
     };
     me.extend = ["ui.drag"];
-    me.type = "div";
+    me.tag_name = "div";
     me.class = ["widget.window.border"];
     me.create = function(object) {
         me.ui.element.create([{

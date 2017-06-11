@@ -7,7 +7,7 @@ package.widget.radio = function WidgetRadio(me) {
     me.depends = {
         properties:["ui.element.state", "ui.element.group"]
     };
-    me.type = "input";
+    me.tag_name = "input";
     me.create = function(object) {
         object.type="radio";
     };

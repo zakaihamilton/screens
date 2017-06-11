@@ -8,7 +8,7 @@ package.widget.header = function WidgetHeader(me) {
         parent:["widget.screen"],
         properties:["ui.element.text"]
     };
-    me.type="header";
+    me.tag_name="header";
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };

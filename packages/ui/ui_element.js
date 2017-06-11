@@ -5,7 +5,7 @@
 
 package.ui.element = function UIElement(me) {
     me.require = {platform:"browser"};
-    me.type="div";
+    me.tag_name="div";
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -59,7 +59,7 @@ package.ui.element = function UIElement(me) {
     };
     me.to_path = function (object) {
         var path = null;
-        var info = me.core.ref.gen_path(object, "parentNode");
+        var info = me.core.ref.gen_path(object, "parentNode", "unique");
         if (typeof me.root === "undefined") {
             me.root = info.root;
         }
@@ -68,7 +68,7 @@ package.ui.element = function UIElement(me) {
     me.to_object = function (path) {
         var object = path;
         if (typeof path === "string") {
-            object = me.core.ref.find_object(me.root, path, "childNodes");
+            object = me.core.ref.find_object(me.root, path, "childNodes", "unique");
         }
         return object;
     };
@@ -78,31 +78,38 @@ package.ui.element = function UIElement(me) {
         var method = path.substring(path.lastIndexOf(".") + 1)
         console.log("get path: " + path);
         if(object) {
-            if (!path.startsWith("ui.element")) {
-                result = me.core.message.send({method: "get", path: path, params: [object, method]});
-            }
             if (typeof result === "undefined") {
                 result = me.core.message.send({prefix: "get_", path: path, params: [object]});
             }
             if (typeof result === "undefined" && !method.includes(object.component)) {
                 result = me.core.message.send({prefix: "get_", path: path, params: [object], component: object.component});
             }
+            if (typeof result === "undefined" && !path.startsWith("ui.element")) {
+                result = me.core.message.send({method: "get", path: path, params: [object, method]});
+            }
+            if (typeof result === "undefined") {
+                result = object[method];
+            }
         }
         return result;
     };
     me.set = function (object, path, value) {
-        var result = null;
+        var result = undefined;
         object = me.to_object(object);
         var method = path.substring(path.lastIndexOf(".") + 1)
         if(object) {
-            if (!path.startsWith("ui.element")) {
-                result = me.core.message.send({method: "set", path: path, params: [object, method, value]});
-            }
-            if (!result) {
+            if (typeof result === "undefined") {
                 result = me.core.message.send({prefix: "set_", path: path, params: [object, value]});
             }
-            if (!result && !path.startsWith(object.component)) {
+            if (typeof result === "undefined" && !path.startsWith(object.component)) {
                 result = me.core.message.send({prefix: "set_", path: path, params: [object, value], component: object.component});
+            }
+            if (typeof result === "undefined" && !path.startsWith("ui.element")) {
+                result = me.core.message.send({method: "set", path: path, params: [object, method, value]});
+            }
+            if (typeof result === "undefined") {
+                console.log("setting value: " + value + " for method: " + method + " in object: " + object.id);
+                result = object[method] = value;
             }
         }
         return result;
@@ -139,7 +146,11 @@ package.ui.element = function UIElement(me) {
         }
         console.log("creating element of " + component_name + " for properties: " + JSON.stringify(properties));
         var component = package[component_name];
-        object = document.createElement(component.type);
+        var tag_name = component.tag_name;
+        if(properties['ui.element.tag_name']) {
+            tag_name = properties['ui.element.tag_name'];
+        }
+        object = document.createElement(tag_name);
         object.properties = properties;
         object.component = component_name;
         if (!parent) {
@@ -169,6 +180,7 @@ package.ui.element = function UIElement(me) {
             console.log("content: " + content);
             me.create(properties['ui.element.members'], content);
         }
+        console.log("object.path: " + object.path);
         return object.path;
     };
 };

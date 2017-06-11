@@ -9,7 +9,7 @@ package.core.ref = function CoreRef(me) {
         me.current++;
         return "ref_" + me.current;
     };
-    me.gen_path = function(node, parent_method, property="id") {
+    me.gen_path = function(node, parent_method, property) {
         var path = "", name = "";
         var root = null;
         while(node) {
@@ -41,7 +41,7 @@ package.core.ref = function CoreRef(me) {
         console.log("path: " + path + " root: " + root);
         return {path:path,root:root};
     };
-    me.find_object = function(node, path, children_method, property="id") {
+    me.find_object = function(node, path, children_method, property) {
         if (path.includes("/")) {
             parts = path.split("/");
             var children = null, child = null, found = null;

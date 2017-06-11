@@ -4,7 +4,7 @@
  */
 
 package.widget.image = function WidgetImage(me) {
-    me.type = "img";
+    me.tag_name = "img";
     me.depends = {
         properties:["ui.element.image"]
     };

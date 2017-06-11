@@ -4,7 +4,7 @@
  */
 
 package.widget.option = function WidgetOption(me) {
-    me.type = "option";
+    me.tag_name = "option";
     me.depends = {
         parent:["ui.list"],
         properties:["ui.element.text"]

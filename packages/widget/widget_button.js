@@ -8,7 +8,7 @@ package.widget.button = function WidgetButton(me) {
     me.depends = {
         properties:["ui.element.text","ui.event.pressed"]
     };
-    me.type = "button";
+    me.tag_name = "button";
     me.set_text = function(object, value) {
         object.innerHTML = value;
     };
