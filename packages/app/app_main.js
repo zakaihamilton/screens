@@ -40,6 +40,7 @@ package.app.main = function (me) {
                 "ui.style.left":"500px",
                 "ui.style.top":"100px",
                 "ui.style.width":"300px",
+                "ui.style.height":"300px",
                 "ui.element.members":[{
                     "ui.element.text": "This is some text",
                     "ui.style.left": "80px",
@@ -49,8 +50,8 @@ package.app.main = function (me) {
                     "ui.element.text" : "OK",
                     "ui.event.pressed" : "app.main.ok",
                     "ui.style.position": "relative",
-                    "ui.style.left" : "20px",
-                    "ui.style.top": "70px"
+                    "ui.style.left" : "120px",
+                    "ui.style.top": "170px"
                 },{
                     "ui.element.state":true,
                     "ui.element.text":"Apple",
@@ -58,6 +59,16 @@ package.app.main = function (me) {
                 },{
                     "ui.element.state":false,
                     "ui.element.text":"Orange",
+                    "ui.style.left":"100px"
+                },{
+                    "ui.element.state":true,
+                    "ui.element.group":"together",
+                    "ui.element.text":"One",
+                    "ui.style.left":"100px"
+                },{
+                    "ui.element.state":false,
+                    "ui.element.group":"together",
+                    "ui.element.text":"Two",
                     "ui.style.left":"100px"
                 }]
             }]);

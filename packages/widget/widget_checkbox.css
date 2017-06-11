@@ -4,7 +4,7 @@
     top:-3px;
 }
 
-.widget-checkbox-icon {
+.widget-checkbox-original + .widget-checkbox-icon {
     display:inline-block;
     position: relative;
     width: 11px;
