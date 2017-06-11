@@ -39,6 +39,12 @@ package.ui.style = function UIStyle(me) {
         return path;
     };
     me.add_class = function (object, path) {
+        if (Array.isArray(path)) {
+            path.map(function (item) {
+                me.add_class(object, item);
+            });
+            return;
+        }
         var class_name = me.to_class(path);
         var component_name = path.substring(0, path.lastIndexOf("."));
         if (!package[component_name].css) {

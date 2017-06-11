@@ -59,7 +59,7 @@ package.ui.element = function UIElement(me) {
     };
     me.to_path = function (object) {
         var path = null;
-        var info = package.core.ref.gen_path(object, "parentNode");
+        var info = me.core.ref.gen_path(object, "parentNode");
         if (typeof me.root === "undefined") {
             me.root = info.root;
         }
@@ -68,7 +68,7 @@ package.ui.element = function UIElement(me) {
     me.to_object = function (path) {
         var object = path;
         if (typeof path === "string") {
-            object = package.core.ref.find_object(me.root, path, "childNodes");
+            object = me.core.ref.find_object(me.root, path, "childNodes");
         }
         return object;
     };
@@ -79,13 +79,13 @@ package.ui.element = function UIElement(me) {
         console.log("get path: " + path);
         if(object) {
             if (!path.startsWith("ui.element")) {
-                result = package.core.message.send({method: "get", path: path, params: [object, method]});
+                result = me.core.message.send({method: "get", path: path, params: [object, method]});
             }
             if (typeof result === "undefined") {
-                result = package.core.message.send({prefix: "get_", path: path, params: [object]});
+                result = me.core.message.send({prefix: "get_", path: path, params: [object]});
             }
             if (typeof result === "undefined" && !method.includes(object.component)) {
-                result = package.core.message.send({prefix: "get_", path: path, params: [object], component: object.component});
+                result = me.core.message.send({prefix: "get_", path: path, params: [object], component: object.component});
             }
         }
         return result;
@@ -96,13 +96,13 @@ package.ui.element = function UIElement(me) {
         var method = path.substring(path.lastIndexOf(".") + 1)
         if(object) {
             if (!path.startsWith("ui.element")) {
-                result = package.core.message.send({method: "set", path: path, params: [object, method, value]});
+                result = me.core.message.send({method: "set", path: path, params: [object, method, value]});
             }
             if (!result) {
-                result = package.core.message.send({prefix: "set_", path: path, params: [object, value]});
+                result = me.core.message.send({prefix: "set_", path: path, params: [object, value]});
             }
             if (!result && !path.startsWith(object.component)) {
-                result = package.core.message.send({prefix: "set_", path: path, params: [object, value], component: object.component});
+                result = me.core.message.send({prefix: "set_", path: path, params: [object, value], component: object.component});
             }
         }
         return result;
@@ -110,30 +110,24 @@ package.ui.element = function UIElement(me) {
     me.body = function() {
         return document.getElementsByTagName("body")[0];
     };
-    me.update = function (data, object) {
-        if (Array.isArray(data)) {
-            data.map(function (properties) {
-                me.update_element(properties, object);
+    me.update = function (properties, object) {
+        if (Array.isArray(properties)) {
+            properties.map(function (item) {
+                me.update(item, object);
             });
-        } else if(data) {
-            return me.update_element(data, object);
+            return;
         }
-    };
-    me.update_element = function (properties, object) {
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
     };
-    me.create = function (data, parent) {
-        if (Array.isArray(data)) {
-            data.map(function (properties) {
-                me.create_element(properties, parent);
+    me.create = function (properties, parent) {
+        if (Array.isArray(properties)) {
+            properties.map(function (item) {
+                me.create(item, parent);
             });
-        } else if(data) {
-            return me.create_element(data, parent);
+            return;
         }
-    };
-    me.create_element = function (properties, parent) {
         var object = null;
         parent = me.to_object(parent);
         var component_name = properties["ui.element.component"];
@@ -154,17 +148,17 @@ package.ui.element = function UIElement(me) {
         me.set(object, "ui.node.parent", parent);
         object.path = me.to_path(object);
         if(component.class) {
-            package.ui.style.add_class(object, component.class);
+            me.ui.style.add_class(object, component.class);
         }
         if(component_name !== me.id) {
-            package.core.message.send({component: component_name, method: "create", params: [object]});
+            component.send("create", object);
         }
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
         if(component.extend) {
             for(var extensionIndex = 0; extensionIndex < component.extend.length; extensionIndex++) {
-                package.core.message.send({component: component.extend[extensionIndex], method: "extend", params: [object]});
+                package[component.extend[extensionIndex]].send("extend", object);
             }
         }
         if(properties['ui.element.members']) {

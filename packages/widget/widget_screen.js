@@ -10,36 +10,36 @@ package.widget.screen = function WidgetScreen(me) {
     };
     me.extend = ["ui.drag"];
     me.type = "div";
-    me.class = "widget.screen.window";
+    me.class = ["widget.screen.window"];
     me.create = function(object) {
-        package.ui.element.create([{
+        me.ui.element.create([{
                 "ui.style.class": "widget.screen.left_bottom"
             }, {
                 "ui.style.class": "widget.screen.right_bottom"
             }], object);
-        object.content = package.ui.element.create({
+        object.content = me.ui.element.create({
                 "ui.style.class": "widget.screen.content"
             }, object);
-        package.ui.element.create([{
+        me.ui.element.create([{
                 "ui.style.class": "widget.screen.left_top"
             }, {
                 "ui.style.class": "widget.screen.right_top"
             }], object);
-        object.title = package.ui.element.create({
+        object.title = me.ui.element.create({
             "ui.element.component":"widget.bar",
             "ui.style.class":"widget.screen.bar",
         }, object);
     };
     me.get_title = function(object) {
-        return package.ui.element.get(object.title, "ui.element.text");
+        return me.ui.element.get(object.title, "ui.element.text");
     };
     me.set_title = function(object, value) {
-        package.ui.element.set(object.title, "ui.element.text", value);
+        me.ui.element.set(object.title, "ui.element.text", value);
     };
     me.get_background = function(object) {
-        return package.ui.element.get(object.content, "ui.style.background");
+        return me.ui.element.get(object.content, "ui.style.background");
     };
     me.set_background = function(object, value) {
-        package.ui.element.set(object.content, "ui.style.background", value);
+        me.ui.element.set(object.content, "ui.style.background", value);
     };
 };

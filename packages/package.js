@@ -117,10 +117,14 @@ function package_general(object, property) {
         return function() {
             var args = Array.prototype.slice.call(arguments, 1);
             var method = Reflect.get(object, arguments[0]);
+            console.log("Calling: " + arguments[0]);
             if(method) {
-                method(args);
+                method.apply(object, args);
             }
         }
+    }
+    else if(property in package) {
+        return package[property];
     }
     return undefined;
 }
@@ -135,7 +139,7 @@ var package = new Proxy({}, {
             return "package";
         }
         /* Create package proxy */
-        package_obj = new Proxy({id: property, package: property, component: null}, {
+        package_obj = new Proxy({id: property, package: property}, {
             get: function (object, property) {
                 result = package_general(object, property);
                 if (result) {

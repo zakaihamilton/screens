@@ -7,7 +7,7 @@ package.ui.drag = function UIDrag(me) {
     me.source = null;
     me.target = null;
     me.set_element = function (object, value) {
-        var element = package.ui.element.to_object(value);
+        var element = me.ui.element.to_object(value);
         if (element) {
             element.drag_element = object;
         }
@@ -16,9 +16,9 @@ package.ui.drag = function UIDrag(me) {
         object.setAttribute("draggable", true);
         object.addEventListener('dragstart', function (e) {
             var target = me.parent_draggable(e.target);
-            var rect = package.ui.rect.region(target.drag_element);
+            var rect = me.ui.rect.region(target.drag_element);
             if (target.drag_element) {
-                in_rect = package.ui.rect.in_region(rect, e.clientX, e.clientY);
+                in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
                 if (!in_rect) {
                     if (e.preventDefault) {
                         e.preventDefault();
@@ -27,7 +27,7 @@ package.ui.drag = function UIDrag(me) {
                 }
             }
             me.source = target;
-            var source_rect = package.ui.rect.region(target);
+            var source_rect = me.ui.rect.region(target);
             me.drag_offset = {x:e.clientX-source_rect.left, y: e.clientY-source_rect.top};
             target.style.opacity = '0.5';
             e.dataTransfer.effectAllowed = 'move';
@@ -66,7 +66,7 @@ package.ui.drag = function UIDrag(me) {
                     e.stopPropagation();
                 }
                 if (me.source.style.position!=="absolute") {
-                    package.ui.node.shift(me.source, target);
+                    me.ui.node.shift(me.source, target);
                 }
             }
             return false;

@@ -5,6 +5,6 @@
 
 package.core.console = function CoreConsole(me) {
     me.log = function(message) {
-        console.log(package.platform + ": " + message);
+        console.log(me.platform + ": " + message);
     };
 }

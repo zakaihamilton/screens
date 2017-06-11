@@ -28,7 +28,7 @@ package.ui.data = function UIData(me) {
                 else {
                     properties[object.data_type] = object.data_source[item_index];
                 }
-                package.ui.element.create(properties, object);
+                me.ui.element.create(properties, object);
             }
         }
     }

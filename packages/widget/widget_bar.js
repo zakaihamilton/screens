@@ -6,23 +6,23 @@
 package.widget.bar = function WidgetBar(me) {
     me.type = "div";
     me.set_class = function (object, value) {
-        object.close = package.ui.element.create({
+        object.close = me.ui.element.create({
             "ui.style.class": value + "_close"
         }, object);
-        object.title = package.ui.element.create({
+        object.title = me.ui.element.create({
             "ui.element.text": "Default",
             "ui.style.class": value + "_title",
             "ui.drag.element":object.parentNode.path
         }, object);
-        object.minimize = package.ui.element.create({
+        object.minimize = me.ui.element.create({
             "ui.style.class": value + "_minimize"
         }, object);
-        object.maximize = package.ui.element.create({
+        object.maximize = me.ui.element.create({
             "ui.style.class": value + "_maximize"
         }, object);
     };
     me.set_text = function (object, value) {
-        package.ui.element.set(object.title, "ui.element.text", value);
+        me.ui.element.set(object.title, "ui.element.text", value);
     };
     me.get_text = function (object) {
         return object.innerHTML;
