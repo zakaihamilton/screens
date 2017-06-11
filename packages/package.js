@@ -32,6 +32,33 @@ function package_platform() {
     return platform;
 }
 
+function package_init(package_name, component_name) {
+    console.log("package_init: " + package_name + "." + component_name);
+    /* Retrieve component function */
+    var component = Reflect.get(package[package_name], component_name);
+    /* Create component proxy */
+    var component_obj = {id: package_name + "." + component_name, package: package_name, component: component_name};
+/*    var component_obj = new Proxy({id: package_name + "." + component_name, package: package_name, component: component_name}, {
+        get: function (object, property) {
+            result = package_general(object, property);
+            if (result) {
+                return result;
+            }
+            return null;
+        },
+        set: function (object, property, value) {
+            Reflect.set(object, property, value);
+        }
+    });*/
+    Reflect.set(package[package_name], component_name, component_obj);
+    component(component_obj);
+    if ((!component_obj.require || component_obj.require.platform === package.platform) && component_obj.init) {
+        component_obj.init();
+    }
+    console.log(package.platform + ": Loaded " + component_obj.id);
+    return component_obj;
+}
+
 function package_include(packages, callback) {
     var load = function (package_index, component_index) {
         var package_keys = Object.keys(packages);
@@ -50,17 +77,7 @@ function package_include(packages, callback) {
             var script = document.createElement("script");
             script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
             script.onload = function () {
-                /* Retrieve component function */
-                var component = package[package_name + "." + component_name];
-                /* Create instance */
-                var instance = {}
-                instance.id = package_name + "." + component_name;
-                Reflect.set(package[package_name], component_name, instance);
-                component(instance);
-                if ((!instance.platform || instance.platform === package.platform) && instance.init) {
-                    instance.init();
-                }
-                console.log(package.platform + ": Loaded " + instance.id);
+                package_init(package_name, component_name);
                 /* Load next component */
                 component_index++;
                 if (component_index >= components.length) {
@@ -106,7 +123,7 @@ var package = new Proxy({}, {
         if (result) {
             return result;
         }
-        if(property === "id") {
+        if (property === "id") {
             return "package";
         }
         /* Create package proxy */
@@ -116,15 +133,15 @@ var package = new Proxy({}, {
                 if (result) {
                     return result;
                 }
-                if(property === "components") {
+                if (property === "components") {
                     var components = Object.keys(object);
-                    var components = components.filter(function(component) { 
+                    var components = components.filter(function (component) {
                         return component !== 'id' && component !== 'package' && component !== 'component';
                     });
                     return components;
                 }
                 /* Load component */
-                package_name = Reflect.get(object, "id");
+                var package_name = Reflect.get(object, "id");
                 if (package.platform === "server") {
                     path = "./" + package_name + "/" + package_name + "_" + property;
                     require(path);
@@ -134,28 +151,7 @@ var package = new Proxy({}, {
                     /* browser can only load asyncronously components */
                     return null;
                 }
-                /* Retrieve component function */
-                var component = Reflect.get(object, property);
-                /* Create component proxy */
-                var component_obj = new Proxy({id: package_name + "." + property, package: package_name, component: property}, {
-                    get: function (object, property) {
-                        result = package_general(object, property);
-                        if (result) {
-                            return result;
-                        }
-                        return null;
-                    },
-                    set: function (object, property, value) {
-                        Reflect.set(object, property, value);
-                    }
-                });
-                Reflect.set(object, property, component_obj);
-                component(component_obj);
-                if ((!component_obj.platform || component_obj.platform === package.platform) && component_obj.init) {
-                    component_obj.init();
-                }
-                console.log(package.platform + ": Loaded " + object.id + "." + property);
-                return component_obj;
+                return package_init(package_name, property);
             },
             set: function (object, property, value) {
                 Reflect.set(object, property, value);
