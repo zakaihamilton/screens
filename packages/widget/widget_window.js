@@ -6,7 +6,7 @@
 package.widget.window = function WidgetWindow(me) {
     me.require = {platform:"browser"};
     me.depends = {
-        properties:["ui.element.title"]
+        properties:["title"]
     };
     me.extend = ["ui.drag"];
     me.tag_name = "div";
@@ -26,14 +26,14 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.style.class": "widget.window.right_top"
             }], object);
         object.title = me.ui.element.create({
-            "ui.element.component":"widget.title",
+            "component":"widget.title",
         }, object);
     };
     me.get_title = function(object) {
-        return me.ui.element.get(object.title, "ui.element.text");
+        return me.ui.element.get(object.title, "text");
     };
     me.set_title = function(object, value) {
-        me.ui.element.set(object.title, "ui.element.text", value);
+        me.ui.element.set(object.title, "text", value);
     };
     me.get_background = function(object) {
         return me.ui.element.get(object.content, "ui.style.background");

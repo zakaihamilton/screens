@@ -5,26 +5,26 @@
 
 package.widget.checkbox = function WidgetCheckBox(me) {
     me.depends = {
-        properties:["ui.element.state"]
+        properties:["state"]
     };
     me.tag_name = "div";
     me.create = function(object) {
         object.input=me.ui.element.create({
-            "ui.element.tag_name":"input",
-            "ui.element.type":"checkbox",
+            "tag_name":"input",
+            "type":"checkbox",
             "ui.style.position":"relative",
             "ui.style.opacity":0,
             "ui.style.class":"widget.checkbox.original",
-            "ui.element.id":object.path
+            "id":object.path
         }, object);
         object.checkbox=me.ui.element.create({
-            "ui.element.tag_name":"label",
-            "ui.element.htmlFor":object.path,
+            "tag_name":"label",
+            "htmlFor":object.path,
             "ui.style.position":"relative",
             "ui.style.class":"widget.checkbox.icon"
         }, object);
         object.label=me.ui.element.create({
-            "ui.element.tag_name":"span",
+            "tag_name":"span",
             "ui.style.position":"relative",
             "ui.style.class":"widget.checkbox.label"
         }, object.checkbox);

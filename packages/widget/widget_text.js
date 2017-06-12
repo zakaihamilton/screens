@@ -5,7 +5,7 @@
 
 package.widget.text = function WidgetText(me) {
     me.depends = {
-        properties:["ui.element.text"]
+        properties:["text"]
     };
     me.tag_name = "div";
     me.set_text = function(object, value) {

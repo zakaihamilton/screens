@@ -5,26 +5,26 @@
 
 package.widget.radio = function WidgetRadio(me) {
     me.depends = {
-        properties:["ui.element.state", "ui.element.group"]
+        properties:["state", "group"]
     };
     me.tag_name = "div";
     me.create = function(object) {
         object.input=me.ui.element.create({
-            "ui.element.tag_name":"input",
-            "ui.element.type":"radio",
+            "tag_name":"input",
+            "type":"radio",
             "ui.style.position":"relative",
             "ui.style.opacity":0,
             "ui.style.class":"widget.radio.original",
-            "ui.element.id":object.path
+            "id":object.path
         }, object);
         object.radio=me.ui.element.create({
-            "ui.element.tag_name":"label",
-            "ui.element.htmlFor":object.path,
+            "tag_name":"label",
+            "htmlFor":object.path,
             "ui.style.position":"relative",
             "ui.style.class":"widget.radio.icon"
         }, object);
         object.label=me.ui.element.create({
-            "ui.element.tag_name":"span",
+            "tag_name":"span",
             "ui.style.position":"relative",
             "ui.style.class":"widget.radio.label"
         }, object.radio);

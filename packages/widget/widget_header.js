@@ -6,7 +6,7 @@
 package.widget.header = function WidgetHeader(me) {
     me.depends = {
         parent:["widget.screen"],
-        properties:["ui.element.text"]
+        properties:["text"]
     };
     me.tag_name="header";
     me.set_text = function(object, value) {

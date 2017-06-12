@@ -6,7 +6,7 @@
 package.widget.button = function WidgetButton(me) {
     me.class = "widget.button.standard";
     me.depends = {
-        properties:["ui.element.text","ui.event.pressed"]
+        properties:["text","ui.event.pressed"]
     };
     me.tag_name = "button";
     me.set_text = function(object, value) {

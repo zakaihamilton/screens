@@ -14,7 +14,7 @@ package.widget.title = function WidgetTitle(me) {
             "ui.style.class": "widget.title.close"
         }, object);
         object.title = me.ui.element.create({
-            "ui.element.text": "Default",
+            "text": "Default",
             "ui.style.class": "widget.title.label",
             "ui.drag.element":window.path
         }, object);
@@ -23,7 +23,7 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.style.class": "widget.title.action",
                 "ui.event.pressed": "widget.title.minimize",
                 "ui.style.right":"20px",
-                "ui.element.members" : {
+                "members" : {
                     "ui.style.class": "widget.title.minimize",
                 }
             }, object);
@@ -31,7 +31,7 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.style.class": "widget.title.action",
                 "ui.event.pressed": "widget.title.maximize",
                 "ui.style.right":"0px",
-                "ui.element.members" : {
+                "members" : {
                     "ui.style.class": "widget.title.maximize",
                 }
             }, object);
@@ -40,7 +40,7 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.event.pressed": "widget.title.restore",
                 "ui.style.right":"0px",
                 "ui.style.visibility":"hidden",
-                "ui.element.members" : {
+                "members" : {
                     "ui.style.class": "widget.title.restore",
                 }
             }, object);
@@ -50,7 +50,7 @@ package.widget.title = function WidgetTitle(me) {
         }
     };
     me.set_text = function (object, value) {
-        me.ui.element.set(object.title, "ui.element.text", value);
+        me.ui.element.set(object.title, "text", value);
     };
     me.get_text = function (object) {
         return object.innerHTML;

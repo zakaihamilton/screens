@@ -138,7 +138,7 @@ package.ui.element = function UIElement(me) {
         }
         var object = null;
         parent = me.to_object(parent);
-        var component_name = properties["ui.element.component"];
+        var component_name = properties["component"];
         if(!component_name) {
             component_name = me.matches(properties, parent);
         }
@@ -148,8 +148,8 @@ package.ui.element = function UIElement(me) {
         console.log("creating element of " + component_name + " for properties: " + JSON.stringify(properties));
         var component = package[component_name];
         var tag_name = component.tag_name;
-        if(properties['ui.element.tag_name']) {
-            tag_name = properties['ui.element.tag_name'];
+        if(properties['tag_name']) {
+            tag_name = properties['tag_name'];
         }
         object = document.createElement(tag_name);
         object.properties = properties;
@@ -173,13 +173,13 @@ package.ui.element = function UIElement(me) {
                 package[component.extend[extensionIndex]].send("extend", object);
             }
         }
-        if(properties['ui.element.members']) {
+        if(properties['members']) {
             var content = object.content;
             if(!content) {
                 content = object;
             }
             console.log("content: " + content);
-            me.create(properties['ui.element.members'], content);
+            me.create(properties['members'], content);
         }
         if(component_name !== me.id) {
             component.send("draw", object);
