@@ -22,7 +22,7 @@ package.ui.drag = function UIDrag(me) {
                 }
                 return;
             }
-            var rect = me.ui.rect.region(target.drag_element);
+            var rect = me.ui.rect.absolute_region(target.drag_element);
             if (target.drag_element) {
                 in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
                 if (!in_rect) {
@@ -33,7 +33,7 @@ package.ui.drag = function UIDrag(me) {
                 }
             }
             me.source = target;
-            var source_rect = me.ui.rect.region(target);
+            var source_rect = me.ui.rect.absolute_region(target);
             me.drag_offset = {x:e.clientX-source_rect.left, y: e.clientY-source_rect.top};
             target.style.opacity = '0.5';
             e.dataTransfer.effectAllowed = 'move';

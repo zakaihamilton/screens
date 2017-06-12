@@ -24,3 +24,21 @@ package.widget.list = function WidgetList(me) {
         object.multiple = value;
     };
 };
+
+package.widget.list.item = function WidgetListItem(me) {
+    me.tag_name = "option";
+    me.depends = {
+        parent:["widget.list"],
+        properties:["text"]
+    };
+    me.create = function(object) {
+        var label = document.createTextNode(object.properties["text"]);
+        object.appendChild(label);
+    };
+    me.get_value = function(object) {
+        return object.getAtrribute("value");
+    };
+    me.set_value = function(object, value) {
+        object.setAttribute("value", value);
+    };
+};

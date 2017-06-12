@@ -4,29 +4,24 @@
  */
 
 package.ui.data = function UIData(me) {
-    me.get_type = function(object) {
-        return object.data_type;
+    me.get_keys = function(object) {
+        return object.data_keys;
     };
-    me.set_type = function(object, value) {
-        object.data_type = value;
+    me.set_keys = function(object, value) {
+        object.data_keys = value;
     };
-    me.get_source = function(object) {
-        return object.data_source;
+    me.get_values = function(object) {
+        return object.data_values;
     };
-    me.set_source = function(object, value) {
-        object.data_source = value;
+    me.set_values = function(object, value) {
+        object.data_values = value;
     };
     me.group = function(object, value) {
-        if(object.data_source) {
-            for(var item_index = 0; item_index < object.data_source.length; item_index++) {
+        if(object.data_values) {
+            for(var item_index = 0; item_index < object.data_values.length; item_index++) {
                 var properties = {};
-                if (Array.isArray(object.data_type)) {
-                    for(var data_type_index = 0; data_type_index < object.data_type.length; data_type_index++) {
-                        properties[object.data_type[data_type_index]] = object.data_source[item_index][data_type_index];
-                    }
-                }
-                else {
-                    properties[object.data_type] = object.data_source[item_index];
+                for(var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
+                    properties[object.data_keys[data_key_index]] = object.data_values[item_index][data_key_index];
                 }
                 me.ui.element.create(properties, object);
             }

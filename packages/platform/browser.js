@@ -19,6 +19,7 @@ package.include({
         "element",
         "event",
         "style",
+        "popup"
     ],
     "widget" : [
         "title",
@@ -28,9 +29,9 @@ package.include({
         "button",
         "input",
         "text",
-        "option",
         "header",
         "window",
+        "menu",
     ],
     "app": [
         "main"

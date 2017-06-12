@@ -10,7 +10,7 @@ package.ui.element = function UIElement(me) {
         /* Find matching components */
         var with_parent_dependency = false;
         var matches = package["widget"].components.map(function (component_name) {
-            component = package["widget." + component_name];
+            component = package[component_name];
             if (component.depends) {
                 var depends = component.depends;
                 if (depends.parent) {
@@ -62,6 +62,9 @@ package.ui.element = function UIElement(me) {
         var info = me.core.ref.gen_path(object, "parentNode", "unique");
         if (typeof me.root === "undefined") {
             me.root = info.root;
+        }
+        if(me.to_object(info.path) !== object) {
+            throw "Invalid path " + info.path + " for object";
         }
         return info.path;
     };
@@ -180,6 +183,9 @@ package.ui.element = function UIElement(me) {
             }
             console.log("content: " + content);
             me.create(properties['members'], content);
+        }
+        if(component.update) {
+            me.update(component.update, object);
         }
         if(component_name !== me.id) {
             component.send("draw", object);

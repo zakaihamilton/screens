@@ -7,10 +7,6 @@ function package_path(object, path) {
         if (Reflect.has(object, items[0])) {
             root = object;
         }
-        /* Check if first parameter is a sibling component */
-        else if (Reflect.has(object.package, items[0])) {
-            root = object;
-        }
     }
     var item = root;
     for (part_index = 0; part_index < items.length; part_index++) {
@@ -32,12 +28,35 @@ function package_platform() {
     return platform;
 }
 
-function package_init(package_name, component_name) {
-    console.log("package_init: " + package_name + "." + component_name);
+function package_init(package_name, component_name, child_name=null, node=null) {
+    var children = [];
+    if(child_name) {
+        console.log("package_init: " + package_name + "." + component_name + "." + child_name);
+    }
+    else {
+        console.log("package_init: " + package_name + "." + component_name);
+    }
     /* Retrieve component function */
-    var component = Reflect.get(package[package_name], component_name);
+    if(!node) {
+        node = Reflect.get(package[package_name], component_name);
+    }
+    var id = package_name + "." + component_name;
+    if(child_name) {
+        console.log("component: " + JSON.stringify(node) + " child_name: " + child_name);
+        node = node[child_name];
+        id += "." + child_name;
+    }
+    else {
+        /* Check if there are any child components */
+        for(var key in node) {
+            console.log("child component: " + key);
+            children.push(key);
+        }
+    }
+    /* Register component in package */
+    package[package_name].components.push(id);
     /* Create component proxy */
-    var component_obj = new Proxy({id: package_name + "." + component_name, package: package_name, component: component_name}, {
+    var component_obj = new Proxy({id: id, package: package_name, component: component_name, child: child_name}, {
         get: function (object, property) {
             result = package_general(object, property);
             if (result) {
@@ -49,12 +68,21 @@ function package_init(package_name, component_name) {
             Reflect.set(object, property, value);
         }
     });
-    Reflect.set(package[package_name], component_name, component_obj);
-    component(component_obj);
+    if(child_name) {
+        Reflect.set(package[package_name + "." + component_name], child_name, component_obj);
+    }
+    else {
+        Reflect.set(package[package_name], component_name, component_obj);
+    }
+    node(component_obj);
     if ((!component_obj.require || component_obj.require.platform === package.platform) && component_obj.init) {
         component_obj.init();
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
+    /* Load child components */
+    children.map(function(child) {
+        package_init(package_name, component_name, child, node);
+    });
     return component_obj;
 }
 
@@ -139,18 +167,11 @@ var package = new Proxy({}, {
             return "package";
         }
         /* Create package proxy */
-        package_obj = new Proxy({id: property, package: property}, {
+        package_obj = new Proxy({id: property, package: property, components:[]}, {
             get: function (object, property) {
                 result = package_general(object, property);
                 if (result) {
                     return result;
-                }
-                if (property === "components") {
-                    var components = Object.keys(object);
-                    var components = components.filter(function (component) {
-                        return component !== 'id' && component !== 'package' && component !== 'component';
-                    });
-                    return components;
                 }
                 /* Load component */
                 var package_name = Reflect.get(object, "id");

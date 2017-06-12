@@ -1,0 +1,23 @@
+.widget-menu-border {
+    position: relative;
+    width: 167px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 0px 0px #808080;
+    z-index: 1;
+}
+
+.widget-menu-item {
+    color: black;
+    height:18px;
+    padding-left: 15px;
+    text-decoration: none;
+    display: block;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+}
+
+.widget-menu-item:hover {
+    background-color: #000080;
+    color:white;
+}

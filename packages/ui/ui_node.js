@@ -8,7 +8,12 @@ package.ui.node = function UINode(me) {
         return object.parentNode;
     };
     me.set_parent = function(object, value) {
-        value.appendChild(object);
+        if(object.parentNode) {
+            object.parentNode.removeChild(object);
+        }
+        if(value) {
+            value.appendChild(object);
+        }
     };
     me.index = function(object) {
         for (var index = 0; (object = object.previousElementSibling); index++);

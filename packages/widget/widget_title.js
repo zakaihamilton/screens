@@ -11,7 +11,8 @@ package.widget.title = function WidgetTitle(me) {
         console.log("window.path: " + window.path);
         var is_movable = (window.properties['ui.style.position'] === "absolute");
         object.close = me.ui.element.create({
-            "ui.style.class": "widget.title.close"
+            "ui.style.class": "widget.title.close",
+            "ui.event.pressed": "widget.title.menu"
         }, object);
         object.title = me.ui.element.create({
             "text": "Default",
@@ -61,6 +62,23 @@ package.widget.title = function WidgetTitle(me) {
     me.set_title_type = function (object, value) {
         object.title_type = value;
     };
+    me.menu = function(object) {
+        var region = me.ui.rect.relative_region(object);
+        if(me.ui.element.get(object.menu, "ui.node.parent")) {
+            me.ui.element.set(object.menu, "ui.node.parent", null);
+        }
+        else {
+            object.menu = me.ui.element.create({
+                "component":"widget.menu",
+                "ui.style.left":"0px",
+                "ui.style.top":region.bottom+"px",
+                "ui.group.data" : {
+                    "ui.data.keys":["text","select"],
+                    "ui.data.values":[["Restore","widget.title.restore"],["Move"],["Size"],["Minimize","widget.title.minimize"],["Maximize","widget.title.maximize"],["Close"],["Switch To"]]
+                }
+            }, object.parentNode);
+        }
+    };
     me.minimize = function(object) {
         
     };
@@ -68,7 +86,7 @@ package.widget.title = function WidgetTitle(me) {
         me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "visible");
         me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "hidden");
         var window = object.parentNode.parentNode;
-        window.region = me.ui.rect.region(window);
+        window.region = me.ui.rect.absolute_region(window);
         me.ui.rect.set_region(window, me.ui.rect.viewport());
         window.draggable = false;
     };

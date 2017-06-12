@@ -2,6 +2,7 @@
     position:relative;
     left:30px;
     top:-3px;
+    font-family: "MS Sans Serif";
 }
 
 .widget-radio-original + .widget-radio-icon {

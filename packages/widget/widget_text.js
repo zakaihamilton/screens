@@ -7,6 +7,7 @@ package.widget.text = function WidgetText(me) {
     me.depends = {
         properties:["text"]
     };
+    me.class="widget.text.normal";
     me.tag_name = "div";
     me.set_text = function(object, value) {
         object.innerHTML = value;
