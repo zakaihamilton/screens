@@ -16,6 +16,12 @@ package.ui.drag = function UIDrag(me) {
         object.setAttribute("draggable", true);
         object.addEventListener('dragstart', function (e) {
             var target = me.parent_draggable(e.target);
+            if(!target) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                return;
+            }
             var rect = me.ui.rect.region(target.drag_element);
             if (target.drag_element) {
                 in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
@@ -34,7 +40,7 @@ package.ui.drag = function UIDrag(me) {
             e.dataTransfer.setData('text/html', target.innerHTML);
         }, false);
         object.addEventListener('dragenter', function (e) {
-            if (me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position!=="absolute") {
                 var target = me.parent_draggable(e.target);
                 me.target = target;
                 target.classList.add('over');
@@ -44,7 +50,7 @@ package.ui.drag = function UIDrag(me) {
             if (e.preventDefault) {
                 e.preventDefault();
             }
-            if (me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position!=="absolute") {
                 var target = me.parent_draggable(e.target);
                 e.dataTransfer.dropEffect = 'move';
                 me.target = target;
@@ -53,14 +59,14 @@ package.ui.drag = function UIDrag(me) {
             return false;
         }, false);
         object.addEventListener('dragleave', function (e) {
-            if (me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position!=="absolute") {
                 var target = me.parent_draggable(e.target);
                 target.classList.remove('over');
                 me.target = null;
             }
         }, false);
         object.addEventListener('drop', function (e) {
-            if (me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position!=="absolute") {
                 var target = me.parent_draggable(e.target);
                 if (e.stopPropagation) {
                     e.stopPropagation();
@@ -72,25 +78,29 @@ package.ui.drag = function UIDrag(me) {
             return false;
         }, false);
         object.addEventListener('dragend', function (e) {
-            if (me.source.style.position!=="absolute") {
-                var target = me.parent_draggable(e.target);
-                if (me.target) {
-                    me.target.classList.remove('over');
+            if(me.source) {
+                if (me.source.style.position!=="absolute") {
+                    var target = me.parent_draggable(e.target);
+                    if (me.target) {
+                        me.target.classList.remove('over');
+                    }
+                    if (target) {
+                        target.classList.remove('over');
+                    }
                 }
-                if (target) {
-                    target.classList.remove('over');
-                }
+                me.source.style.opacity = '1.0';
+                me.source = me.target = null;
             }
-            me.source.style.opacity = '1.0';
-            me.source = me.target = null;
         }, false);
         object.addEventListener('drag', function(e) {
-            if(e.clientX && e.clientY) {
-                me.drag_pos = {x:e.clientX,y:e.clientY};
-            }
-            if (me.source.style.position==="absolute") {
-                me.source.style.left = me.drag_pos.x - me.drag_offset.x + "px";
-                me.source.style.top = me.drag_pos.y - me.drag_offset.y + "px";
+            if(me.source) {
+                if(e.clientX && e.clientY) {
+                    me.drag_pos = {x:e.clientX,y:e.clientY};
+                }
+                if (me.source.style.position==="absolute") {
+                    me.source.style.left = me.drag_pos.x - me.drag_offset.x + "px";
+                    me.source.style.top = me.drag_pos.y - me.drag_offset.y + "px";
+                }
             }
         });
     };

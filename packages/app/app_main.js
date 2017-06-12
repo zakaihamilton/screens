@@ -31,7 +31,7 @@ package.app.main = function (me) {
         me.ui.element.create([{
                 "ui.group.data": {
                     "ui.data.type": ["ui.element.title", "ui.element.background", "ui.style.width", "ui.style.height"],
-                    "ui.data.source": [["Root", "white", "300px"],["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"],["Fourth", "green", "200px", "200px"]]
+                    "ui.data.source": [["Root", "white", "100px"],["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"],["Fourth", "green", "200px", "200px"]]
                 }
             }]);
         me.ui.element.create([{

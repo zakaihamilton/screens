@@ -70,6 +70,7 @@ package.widget.title = function WidgetTitle(me) {
         var window = object.parentNode.parentNode;
         window.region = me.ui.rect.region(window);
         me.ui.rect.set_region(window, me.ui.rect.viewport());
+        window.draggable = false;
     };
     me.restore = function(object) {
         console.log("object: " + object.path);
@@ -77,5 +78,6 @@ package.widget.title = function WidgetTitle(me) {
         me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "visible");
         var window = object.parentNode.parentNode;
         me.ui.rect.set_region(window, window.region);
+        window.draggable = true;
     };
 };
