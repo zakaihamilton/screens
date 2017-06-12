@@ -8,8 +8,10 @@ package.ui.event = function UIEvent(me) {
         console.log("object: " + object + " value: " + value);
         if(value) {
             object.addEventListener ("click", function() {
-                console.log("value: " + value + " object: " + object);
-                me.core.message.send({path:value,params:[object]});
+                if(!object.getAttribute('disabled')) {
+                    console.log("value: " + value + " object: " + object);
+                    me.core.message.send({path:value,params:[object]});
+                }
             });
         }
     };

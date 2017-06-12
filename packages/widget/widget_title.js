@@ -73,10 +73,32 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.style.left":"0px",
                 "ui.style.top":region.bottom+"px",
                 "ui.group.data" : {
-                    "ui.data.keys":["text","select"],
-                    "ui.data.values":[["Restore","widget.title.restore"],["Move"],["Size"],["Minimize","widget.title.minimize"],["Maximize","widget.title.maximize"],["Close"],["Switch To"]]
+                    "ui.data.keys":["text","select","enabled"],
+                    "ui.data.values":[["Restore","widget.title.restore","widget.title.can_restore"],["Move","",false],["Size","",false],["Minimize","widget.title.minimize","widget.title.can_minimize"],["Maximize","widget.title.maximize","widget.title.can_maximize"],["Close","widget.title.close"],["Switch To"]]
                 }
             }, object.parentNode);
+        }
+    };
+    me.is_visible = function(object) {
+        if(object) {
+            var is_visible = me.ui.element.get(object, "ui.style.visibility");
+            console.log("object: " + object + " visible: " + is_visible);
+            return is_visible !== "hidden";
+        }
+    }
+    me.can_restore = function(object) {
+        return me.is_visible(object.parentNode.parentNode.restore);
+    };
+    me.can_minimize = function(object) {
+        return me.is_visible(object.parentNode.parentNode.minimize);
+    };
+    me.can_maximize = function(object) {
+        return me.is_visible(object.parentNode.parentNode.maximize);
+    };
+    me.close = function(object) {
+        var window = object.parentNode.parentNode;
+        if(window.parentNode) {
+            window.parentNode.removeChild(window);
         }
     };
     me.minimize = function(object) {
