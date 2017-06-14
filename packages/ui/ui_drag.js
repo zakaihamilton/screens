@@ -22,9 +22,9 @@ package.ui.drag = function UIDrag(me) {
                 }
                 return;
             }
-            var rect = me.ui.rect.absolute_region(target.drag_element);
             if (target.drag_element) {
-                in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
+                var rect = me.ui.rect.absolute_region(target.drag_element);
+                var in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
                 if (!in_rect) {
                     if (e.preventDefault) {
                         e.preventDefault();

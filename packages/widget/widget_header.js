@@ -9,10 +9,12 @@ package.widget.header = function WidgetHeader(me) {
         properties:["text"]
     };
     me.tag_name="header";
-    me.set_text = function(object, value) {
-        object.innerHTML = value;
-    };
-    me.get_text = function(object) {
-        return object.innerHTML;
+    me.text = {
+        get : function(object) {
+            return object.innerHTML;
+        },
+        set : function(object, value) {
+            object.innerHTML = value;
+        }
     };
 };

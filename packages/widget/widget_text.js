@@ -9,10 +9,12 @@ package.widget.text = function WidgetText(me) {
     };
     me.class="widget.text.normal";
     me.tag_name = "div";
-    me.set_text = function(object, value) {
-        object.innerHTML = value;
-    };
-    me.get_text = function(object) {
-        return object.innerHTML;
+    me.text = {
+        get : function(object) {
+            return object.innerHTML;
+        },
+        set : function(object, value) {
+            object.innerHTML = value;
+        }
     };
 };

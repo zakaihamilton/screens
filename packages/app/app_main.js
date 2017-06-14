@@ -41,7 +41,7 @@ package.app.main = function (me) {
                 "ui.style.top": "100px",
                 "ui.style.width": "300px",
                 "ui.style.height": "300px",
-                "members": [{
+                "elements": [{
                         "text": "This is some text",
                         "ui.style.left": "80px",
                         "ui.style.position": "relative",
@@ -84,7 +84,7 @@ package.app.main = function (me) {
             }]);
     };
     me.ok = function () {
-        me.send("test", "123");
+        me.send("app.main.test", "123");
     }
     me.test = function (arg) {
         alert("Hello!" + arg);

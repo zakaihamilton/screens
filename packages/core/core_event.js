@@ -5,9 +5,9 @@
 
 package.core.event = function CoreEvent(me) {
     me._forwarding_list = {};
-    me.forward = function (source, target, enabled) {
-        source_list = me._forwarding_list[source];
-        if (source_list == undefined) {
+    me.link = function (source, target, enabled) {
+        var source_list = me._forwarding_list[source];
+        if (!source_list) {
             me._forwarding_list[source] = {};
         }
         me._forwarding_list[source][target] = enabled;

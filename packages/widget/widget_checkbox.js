@@ -5,40 +5,71 @@
 
 package.widget.checkbox = function WidgetCheckBox(me) {
     me.depends = {
-        properties:["state"]
+        properties: ["state"]
     };
     me.tag_name = "div";
-    me.create = function(object) {
-        object.input=me.ui.element.create({
-            "tag_name":"input",
-            "type":"checkbox",
-            "ui.style.position":"relative",
-            "ui.style.opacity":0,
-            "ui.style.class":"widget.checkbox.original",
-            "id":object.path
-        }, object);
-        object.checkbox=me.ui.element.create({
-            "tag_name":"label",
-            "htmlFor":object.path,
-            "ui.style.position":"relative",
-            "ui.style.class":"widget.checkbox.icon"
-        }, object);
-        object.label=me.ui.element.create({
-            "tag_name":"span",
-            "ui.style.position":"relative",
-            "ui.style.class":"widget.checkbox.label"
-        }, object.checkbox);
+    me.create = function (object) {
+        me.ui.element.create([{
+                "var": "input",
+                "tag_name": "input",
+                "widget.checkbox.type": "checkbox",
+                "ui.style.position": "relative",
+                "ui.style.opacity": 0,
+                "ui.style.class": "widget.checkbox.original",
+                "widget.checkbox.elementId": object.path
+            },
+            {
+                "var": "checkbox",
+                "tag_name": "label",
+                "widget.checkbox.htmlFor": object.path,
+                "ui.style.position": "relative",
+                "ui.style.class": "widget.checkbox.icon",
+                "elements": {
+                    "var": "label",
+                    "tag_name": "span",
+                    "ui.style.position": "relative",
+                    "ui.style.class": "widget.checkbox.label"
+                }
+            }], object);
     };
-    me.get_state = function(object) {
-        return me.ui.element.get(object.input, "checked");
+    me.elementId = {
+        get : function(object) {
+            return me.ui.element.to_object(object).id;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).id = value;
+        }
     };
-    me.set_state = function(object, value) {
-        me.ui.element.set(object.input, "checked", value);
+    me.htmlFor = {
+        get : function(object) {
+            return me.ui.element.to_object(object).htmlFor;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).htmlFor = value;
+        }
     };
-    me.set_text = function(object, value) {
-        me.ui.element.set(object.label, "innerHTML", value);
+    me.type = {
+        get : function(object) {
+            return me.ui.element.to_object(object).type;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).type = value;
+        }
     };
-    me.get_text = function(object) {
-        me.ui.element.get(object.label, "innerHTML");
+    me.state = {
+        get : function(object) {
+            return me.ui.element.to_object(object.input).checked;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object.input).checked = value;
+        }
+    };
+    me.text = {
+        get : function(object) {
+            return me.ui.element.to_object([object.checkbox, "label"]).innerHTML;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object([object.checkbox, "label"]).innerHTML = value;
+        }
     };
 };

@@ -11,22 +11,28 @@ package.widget.input = function WidgetInput(me) {
     me.create = function(object) {
         object.type="text";
     };
-    me.set_text = function(object, value) {
-        object.innerHTML = value;
+    me.text = {
+        get : function(object) {
+            return object.innerHTML;
+        },
+        set : function(object, value) {
+            object.innerHTML = value;
+        }
     };
-    me.get_text = function(object) {
-        return object.innerHTML;
+    me.rows = {
+        get : function(object) {
+            return object.rows;
+        },
+        set : function(object, value) {
+            object.rows = value;
+        }
     };
-    me.get_rows = function(object) {
-        return object.rows;
-    };
-    me.set_rows = function(object, value) {
-        object.rows = value;
-    };
-    me.get_columns = function(object) {
-        return object.cols;
-    };
-    me.set_columns = function(object, value) {
-        object.cols = value;
+    me.columns = {
+        get : function(object) {
+            return object.cols;
+        },
+        set : function(object, value) {
+            object.cols = value;
+        }
     };
 };

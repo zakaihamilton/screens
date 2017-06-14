@@ -4,27 +4,33 @@
  */
 
 package.ui.style = function UIStyle(me) {
-    me.require = {platform:"browser"};
-    me.set = function (object, method, value) {
-        if(typeof value !== "undefined") {
-            if(method === "class") {
-                me.add_class(object, value);
+    me.require = {platform: "browser"};
+    me.stylesheets = {};
+    me.forward = {
+        get : function(object, property) {
+            return {
+                get: function (object) {
+                    if (object && object.style) {
+                        if (property in object.style) {
+                            return object.style[property];
+                        }
+                    }
+                },
+                set: function (object, value) {
+                    if (object && typeof value !== "undefined") {
+                        if (property === "class") {
+                            me.add_class(object, value);
+                        } else {
+                            object.style[property] = value;
+                        }
+                    }
+                }
             }
-            else {
-                console.log("style " + "method: " + method);
-                object.style[method] = value;
-            }
-            return true;
-        }
-    };
-    me.get = function (object, method) {
-        if (method in object.style) {
-            return object.style[method];
         }
     };
     me.load_css = function (path) {
         var period = path.lastIndexOf(".");
-        var component_name = path.substring(period+1);
+        var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
         var link = document.createElement("link");
         link.href = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".css";
@@ -32,9 +38,10 @@ package.ui.style = function UIStyle(me) {
         link.rel = "stylesheet";
         link.media = "screen,print";
         document.getElementsByTagName("head")[0].appendChild(link);
-        console.log(path + "=" + link.href);
+        console.log("Loaded css: " + path + "=" + link.href);
+        return link;
     };
-    me.to_class = function(path) {
+    me.to_class = function (path) {
         path = path.replace(/[\.\_]/g, "-");
         return path;
     };
@@ -47,13 +54,13 @@ package.ui.style = function UIStyle(me) {
         }
         var class_name = me.to_class(path);
         var component_name = path.substring(0, path.lastIndexOf("."));
-        if (!package[component_name].css) {
-            package[component_name].css = me.load_css(component_name);
+        if (!me.stylesheets[component_name]) {
+            me.stylesheets[component_name] = me.load_css(component_name);
         }
         console.log("path: " + path + " style: " + class_name);
         object.classList.add(class_name);
     };
-    me.has_class = function(object, path) {
+    me.has_class = function (object, path) {
         var class_name = me.to_class(path);
         return object.classList.contains(class_name);
     };

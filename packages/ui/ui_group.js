@@ -4,15 +4,20 @@
  */
 
 package.ui.group = function UIGroup(me) {
-    me.set = function(object, method, value) {
-        if (Array.isArray(value)) {
-            me.ui.element.create(value, object);
+    me.forward = {
+        get: function (object, property) {
+            return {
+                set: function (object, value) {
+                    if (Array.isArray(value)) {
+                        me.ui.element.create(value, object);
+                    } else if (value) {
+                        for (var key in value) {
+                            me.ui.element.set(object, key, value[key]);
+                        }
+                    }
+                    me.send("ui." + property + ".group", object)
+                }
+            };
         }
-        else if(value) {
-            for (var key in value) {
-                me.ui.element.set(object, key, value[key]);
-            }
-        }
-        me.core.message.send({component: "ui." + method, method: "group", params: [object]});
     };
 };

@@ -9,42 +9,75 @@ package.widget.radio = function WidgetRadio(me) {
     };
     me.tag_name = "div";
     me.create = function(object) {
-        object.input=me.ui.element.create({
+        me.ui.element.create([{
+            "var":"input",
             "tag_name":"input",
-            "type":"radio",
+            "widget.radio.type":"radio",
             "ui.style.position":"relative",
             "ui.style.opacity":0,
             "ui.style.class":"widget.radio.original",
-            "id":object.path
-        }, object);
-        object.radio=me.ui.element.create({
+            "widget.radio.elementId":object.path
+        },
+        {
+            "var":"radio",
             "tag_name":"label",
-            "htmlFor":object.path,
+            "widget.radio.htmlFor":object.path,
             "ui.style.position":"relative",
-            "ui.style.class":"widget.radio.icon"
-        }, object);
-        object.label=me.ui.element.create({
-            "tag_name":"span",
-            "ui.style.position":"relative",
-            "ui.style.class":"widget.radio.label"
-        }, object.radio);
+            "ui.style.class":"widget.radio.icon",
+            "elements" : {
+                "var" : "label",
+                "tag_name":"span",
+                "ui.style.position":"relative",
+                "ui.style.class":"widget.radio.label"
+            }
+        }], object);
     };
-    me.get_state = function(object) {
-        return me.ui.element.get(object.input, "checked");
+    me.elementId = {
+        get : function(object) {
+            return me.ui.element.to_object(object).id;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).id = value;
+        }
     };
-    me.set_state = function(object, value) {
-        me.ui.element.set(object.input, "checked", value);
+    me.htmlFor = {
+        get : function(object) {
+            return me.ui.element.to_object(object).htmlFor;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).htmlFor = value;
+        }
     };
-    me.set_text = function(object, value) {
-        me.ui.element.set(object.label, "innerHTML", value);
+    me.type = {
+        get : function(object) {
+            return me.ui.element.to_object(object).type;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object).type = value;
+        }
     };
-    me.get_text = function(object) {
-        me.ui.element.get(object.label, "innerHTML");
+    me.state = {
+        get : function(object) {
+            return me.ui.element.to_object(object.input).checked;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object.input).checked = value;
+        }
     };
-    me.get_group = function(object) {
-        return me.ui.element.get(object.input, "name");
+    me.text = {
+        get : function(object) {
+            return me.ui.element.to_object([object.radio, "label"]).innerHTML;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object([object.radio, "label"]).innerHTML = value;
+        }
     };
-    me.set_group = function(object, value) {
-        me.ui.element.set(object.input, "name", value);
+    me.group = {
+        get : function(object) {
+            return me.ui.element.to_object(object.input).name;
+        },
+        set : function(object, value) {
+            me.ui.element.to_object(object.input).name = value;
+        }
     };
 };

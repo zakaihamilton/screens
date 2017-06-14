@@ -4,17 +4,21 @@
  */
 
 package.ui.data = function UIData(me) {
-    me.get_keys = function (object) {
-        return object.data_keys;
+    me.keys = {
+        get: function(object) {
+            return object.data_keys;
+        },
+        set : function(object, value) {
+            object.data_keys = value;
+        }
     };
-    me.set_keys = function (object, value) {
-        object.data_keys = value;
-    };
-    me.get_values = function (object) {
-        return object.data_values;
-    };
-    me.set_values = function (object, value) {
-        object.data_values = value;
+    me.values = {
+        get: function(object) {
+            return object.data_values;
+        },
+        set : function(object, value) {
+            object.data_values = value;
+        }
     };
     me.group = function (object, value) {
         if (object.data_values) {

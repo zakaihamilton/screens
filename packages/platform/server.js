@@ -10,5 +10,6 @@ package.include({
         "type",
         "ref",
         "module",
-        "script"
+        "script",
+        "job"
     ]});

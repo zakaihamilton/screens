@@ -4,41 +4,50 @@
  */
 
 package.widget.window = function WidgetWindow(me) {
-    me.require = {platform:"browser"};
+    me.require = {platform: "browser"};
     me.depends = {
-        properties:["title"]
+        properties: ["title"]
     };
     me.extend = ["ui.drag"];
     me.tag_name = "div";
     me.class = ["widget.window.border"];
-    me.create = function(object) {
+    me.create = function (object) {
         me.ui.element.create([{
                 "ui.style.class": "widget.window.left_bottom"
-            }, {
+            },
+            {
                 "ui.style.class": "widget.window.right_bottom"
-            }], object);
-        object.content = me.ui.element.create({
-                "ui.style.class": "widget.window.content"
-            }, object);
-        me.ui.element.create([{
+            },
+            {
+                "ui.style.class": "widget.window.content",
+                "var": "content"
+            },
+            {
                 "ui.style.class": "widget.window.left_top"
-            }, {
+            },
+            {
                 "ui.style.class": "widget.window.right_top"
+            },
+            {
+                "var":"title",
+                "component": "widget.title",
             }], object);
-        object.title = me.ui.element.create({
-            "component":"widget.title",
-        }, object);
     };
-    me.get_title = function(object) {
-        return me.ui.element.get(object.title, "text");
+    me.title = {
+        get : function(object) {
+            return me.ui.element.get(object.title, "text");
+        },
+        set : function(object, value) {
+            console.log("window title: " + value + " object: " + object.title);
+            me.ui.element.set(object.title, "text", value);
+        }
     };
-    me.set_title = function(object, value) {
-        me.ui.element.set(object.title, "text", value);
-    };
-    me.get_background = function(object) {
-        return me.ui.element.get(object.content, "ui.style.background");
-    };
-    me.set_background = function(object, value) {
-        me.ui.element.set(object.content, "ui.style.background", value);
+    me.background = {
+        get : function(object) {
+            return me.ui.element.get(object.content, "ui.style.background");
+        },
+        set : function(object, value) {
+            me.ui.element.set(object.content, "ui.style.background", value);
+        }
     };
 };

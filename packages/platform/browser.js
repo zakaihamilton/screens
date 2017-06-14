@@ -21,7 +21,7 @@ package.include({
         "style",
         "popup"
     ],
-    "widget" : [
+    "widget": [
         "title",
         "radio",
         "checkbox",
@@ -38,5 +38,5 @@ package.include({
     ]
 },
         function () {
-            package.core.message.send_browser("app.main.browser");
+            package.send_browser("app.main.browser");
         });

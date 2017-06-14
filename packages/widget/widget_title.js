@@ -10,57 +10,59 @@ package.widget.title = function WidgetTitle(me) {
         var window = object.parentNode;
         console.log("window.path: " + window.path);
         var is_movable = (window.properties['ui.style.position'] === "absolute");
-        object.close = me.ui.element.create({
+        me.ui.element.create([{
+            "var":"close",
             "ui.style.class": "widget.title.close",
             "ui.event.pressed": "widget.title.menu"
-        }, object);
-        object.title = me.ui.element.create({
+        },
+        {
+            "var":"title",
             "text": "Default",
             "ui.style.class": "widget.title.label",
             "ui.drag.element":window.path
-        }, object);
+        }], object);
         if(is_movable) {
-            object.minimize = me.ui.element.create({
+            me.ui.element.create([{
+                "var" : "minimize",
                 "ui.style.class": "widget.title.action",
                 "ui.event.pressed": "widget.title.minimize",
                 "ui.style.right":"20px",
-                "members" : {
+                "elements" : {
                     "ui.style.class": "widget.title.minimize",
                 }
-            }, object);
-            object.maximize = me.ui.element.create({
+            }, 
+            {
+                "var" : "maximize",
                 "ui.style.class": "widget.title.action",
                 "ui.event.pressed": "widget.title.maximize",
                 "ui.style.right":"0px",
-                "members" : {
+                "elements" : {
                     "ui.style.class": "widget.title.maximize",
                 }
-            }, object);
-            object.restore = me.ui.element.create({
+            },
+            {
+                "var" : "restore",
                 "ui.style.class": "widget.title.action",
                 "ui.event.pressed": "widget.title.restore",
                 "ui.style.right":"0px",
                 "ui.style.visibility":"hidden",
-                "members" : {
+                "elements" : {
                     "ui.style.class": "widget.title.restore",
                 }
-            }, object);
+            }], object);
         }
         else {
+            console.log("object.title: " + object.title);
             me.ui.element.set(object.title, "ui.style.right", "0px");
         }
     };
-    me.set_text = function (object, value) {
-        me.ui.element.set(object.title, "text", value);
-    };
-    me.get_text = function (object) {
-        return object.innerHTML;
-    };
-    me.get_title_type = function (object) {
-        return object.title_type;
-    };
-    me.set_title_type = function (object, value) {
-        object.title_type = value;
+    me.text = {
+        get : function(object) {
+            return me.ui.element.get(object.title, "text");
+        },
+        set : function(object, value) {
+            me.ui.element.set(object.title, "text", value);
+        }
     };
     me.menu = function(object) {
         var region = me.ui.rect.relative_region(object);
@@ -74,7 +76,14 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.style.top":region.bottom+"px",
                 "ui.group.data" : {
                     "ui.data.keys":["text","select","enabled"],
-                    "ui.data.values":[["Restore","widget.title.restore","widget.title.can_restore"],["Move","",false],["Size","",false],["Minimize","widget.title.minimize","widget.title.can_minimize"],["Maximize","widget.title.maximize","widget.title.can_maximize"],["Close","widget.title.close"],["Switch To"]]
+                    "ui.data.values":[
+                        ["Restore","widget.title.restore","widget.title.can_restore"],
+                        ["Move","",false],
+                        ["Size","",false],
+                        ["Minimize","widget.title.minimize","widget.title.can_minimize"],
+                        ["Maximize","widget.title.maximize","widget.title.can_maximize"],
+                        ["Close","widget.title.close"],
+                        ["Switch To"]]
                 }
             }, object.parentNode);
         }

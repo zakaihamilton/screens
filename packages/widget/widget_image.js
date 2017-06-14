@@ -8,10 +8,12 @@ package.widget.image = function WidgetImage(me) {
     me.depends = {
         properties:["ui.element.image"]
     };
-    me.get_image = function(object) {
-        return object.src;
-    };
-    me.set_image = function(object, value) {
-        object.src = value;
+    me.image = {
+        get : function(object) {
+            return object.src;
+        },
+        set : function(object, value) {
+            object.src = value;
+        }
     };
 };

@@ -4,17 +4,19 @@
  */
 
 package.ui.node = function UINode(me) {
-    me.get_parent = function(object) {
-        return object.parentNode;
-    };
-    me.set_parent = function(object, value) {
-        if(object.parentNode) {
-            object.parentNode.removeChild(object);
+    me.parent = {
+        get : function(object) {
+            return object.parentNode;
+        },
+        set : function(object, value) {
+            if(object.parentNode) {
+                object.parentNode.removeChild(object);
+            }
+            if(value) {
+                value.appendChild(object);
+            }
         }
-        if(value) {
-            value.appendChild(object);
-        }
-    };
+    }
     me.index = function(object) {
         for (var index = 0; (object = object.previousElementSibling); index++);
         return index;

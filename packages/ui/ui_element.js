@@ -73,48 +73,40 @@ package.ui.element = function UIElement(me) {
         if (typeof path === "string") {
             object = me.core.ref.find_object(me.root, path, "childNodes", "unique");
         }
+        else if (Array.isArray(path)) {
+                object = null;
+                path.map(function (item) {
+                    if(!object) {
+                        object = me.to_object(item);
+                    }
+                    else {
+                        object = me.to_object(object[item]);
+                    }
+                });
+            }
         return object;
+    };
+    me.method = function(object, path) {
+        var method = "";
+        if(object && object.component) {
+            method = object.component + ".";
+        }
+        method += path;
+        return method;
     };
     me.get = function (object, path) {
         var result = undefined;
         object = me.to_object(object);
-        var method = path.substring(path.lastIndexOf(".") + 1)
-        console.log("get path: " + path);
         if(object) {
-            if (typeof result === "undefined") {
-                result = me.core.message.send({prefix: "get_", path: path, params: [object]});
-            }
-            if (typeof result === "undefined" && !method.includes(object.component)) {
-                result = me.core.message.send({prefix: "get_", path: path, params: [object], component: object.component});
-            }
-            if (typeof result === "undefined" && !path.startsWith("ui.element")) {
-                result = me.core.message.send({method: "get", path: path, params: [object, method]});
-            }
-            if (typeof result === "undefined") {
-                result = object[method];
-            }
+            result = me.send(me.method(object, path) + ".get", object);
         }
         return result;
     };
     me.set = function (object, path, value) {
         var result = undefined;
         object = me.to_object(object);
-        var method = path.substring(path.lastIndexOf(".") + 1)
         if(object) {
-            console.log("set - object:" + object.path + " method: " + method + " value: " + value);
-            if (typeof result === "undefined") {
-                result = me.core.message.send({prefix: "set_", path: path, params: [object, value]});
-            }
-            if (typeof result === "undefined" && !path.startsWith(object.component)) {
-                result = me.core.message.send({prefix: "set_", path: path, params: [object, value], component: object.component});
-            }
-            if (typeof result === "undefined" && !path.startsWith("ui.element")) {
-                result = me.core.message.send({method: "set", path: path, params: [object, method, value]});
-            }
-            if (typeof result === "undefined") {
-                console.log("setting value: " + value + " for method: " + method + " in object: " + object.id);
-                result = object[method] = value;
-            }
+            result = me.send(me.method(object, path) + ".set", object, value);
         }
         return result;
     };
@@ -162,33 +154,36 @@ package.ui.element = function UIElement(me) {
         }
         me.set(object, "ui.node.parent", parent);
         object.path = me.to_path(object);
+        if(properties['var']) {
+            parent[properties['var']] = object.path;
+        }
         if(component.class) {
             me.ui.style.add_class(object, component.class);
         }
         if(component_name !== me.id) {
-            component.send("create", object);
+            component.send(component.id + ".create", object);
         }
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }
         if(component.extend) {
-            for(var extensionIndex = 0; extensionIndex < component.extend.length; extensionIndex++) {
-                package[component.extend[extensionIndex]].send("extend", object);
-            }
+            component.extend.map(function(extension) {
+                me.send(extension + ".extend", object);
+            });
         }
-        if(properties['members']) {
+        if(properties['elements']) {
             var content = object.content;
             if(!content) {
                 content = object;
             }
             console.log("content: " + content);
-            me.create(properties['members'], content);
+            me.create(properties['elements'], content);
         }
         if(component.update) {
             me.update(component.update, object);
         }
         if(component_name !== me.id) {
-            component.send("draw", object);
+            component.send(component.id + ".draw", object);
         }
         console.log("object.path: " + object.path);
         return object.path;

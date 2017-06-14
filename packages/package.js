@@ -1,6 +1,6 @@
 function package_path(object, path) {
     var root = package;
-    items = path.split(".");
+    var items = path.split(".");
     /* Check root */
     if (object.component) {
         /* Check if first parameter is a property of the object */
@@ -9,7 +9,7 @@ function package_path(object, path) {
         }
     }
     var item = root;
-    for (part_index = 0; part_index < items.length; part_index++) {
+    for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
         if (!item) {
             throw path + " not found relative to " + root.id;
@@ -30,19 +30,12 @@ function package_platform() {
 
 function package_init(package_name, component_name, child_name=null, node=null) {
     var children = [];
-    if(child_name) {
-        console.log("package_init: " + package_name + "." + component_name + "." + child_name);
-    }
-    else {
-        console.log("package_init: " + package_name + "." + component_name);
-    }
     /* Retrieve component function */
-    if(!node) {
-        node = Reflect.get(package[package_name], component_name);
-    }
     var id = package_name + "." + component_name;
+    if(!node) {
+        node = package[id];
+    }
     if(child_name) {
-        console.log("component: " + JSON.stringify(node) + " child_name: " + child_name);
         node = node[child_name];
         id += "." + child_name;
     }
@@ -65,6 +58,13 @@ function package_init(package_name, component_name, child_name=null, node=null) 
             return undefined;
         },
         set: function (object, property, value) {
+            if (property !== "forward" && Reflect.has(object, "forward")) {
+                var forward = Reflect.get(object, "forward");
+                if(forward.enabled && forward.set) {
+                    forward.set(object, property, value);
+                    return;
+                }
+            }
             Reflect.set(object, property, value);
         }
     });
@@ -75,8 +75,12 @@ function package_init(package_name, component_name, child_name=null, node=null) 
         Reflect.set(package[package_name], component_name, component_obj);
     }
     node(component_obj);
-    if ((!component_obj.require || component_obj.require.platform === package.platform) && component_obj.init) {
-        component_obj.init();
+    var init_method = component_obj.init;
+    if(component_obj.forward) {
+        component_obj.forward.enabled = true;
+    }
+    if ((!component_obj.require || component_obj.require.platform === package.platform) && init_method) {
+        init_method();
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
@@ -84,6 +88,37 @@ function package_init(package_name, component_name, child_name=null, node=null) 
         package_init(package_name, component_name, child, node);
     });
     return component_obj;
+}
+
+function package_load(package_name, component_name, callback) {
+    var result = null;
+    console.log(package.platform + ": Loading " + package_name + "." + component_name);
+    if (package.platform === "browser") {
+        var ref = document.getElementsByTagName("script")[ 0 ];
+        var script = document.createElement("script");
+        script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
+        script.onload = function() {
+            package_init(package_name, component_name);
+            if(callback) {
+                callback();
+            }
+        };
+        ref.parentNode.insertBefore(script, ref);
+    } else if (package.platform === "server") {
+        path = "./" + package_name + "/" + package_name + "_" + component_name;
+        require(path);
+        result = package_init(package_name, component_name);
+        if(callback) {
+            callback();
+        }
+    } else if (package.platform === "client") {
+        importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
+        result = package_init(package_name, component_name);
+        if(callback) {
+            callback();
+        }
+    }
+    return result;
 }
 
 function package_include(packages, callback) {
@@ -98,31 +133,15 @@ function package_include(packages, callback) {
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        console.log(package.platform + ": Loading " + package_name + "." + component_name);
-        if (package.platform === "browser") {
-            var ref = document.getElementsByTagName("script")[ 0 ];
-            var script = document.createElement("script");
-            script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
-            script.onload = function () {
-                package_init(package_name, component_name);
-                /* Load next component */
-                component_index++;
-                if (component_index >= components.length) {
-                    package_index++;
-                    component_index = 0;
-                }
-                load(package_index, component_index);
-            };
-            ref.parentNode.insertBefore(script, ref);
-        } else {
-            package[package_name + "." + component_name];
+        package_load(package_name, component_name, function() {
+            /* Load next component */
             component_index++;
             if (component_index >= components.length) {
                 package_index++;
                 component_index = 0;
             }
             load(package_index, component_index);
-        }
+        });
     };
     load(0, 0);
 }
@@ -141,18 +160,17 @@ function package_general(object, property) {
     else if (property === "include") {
         return package_include;
     }
-    else if (property === "send") {
-        return function() {
-            var args = Array.prototype.slice.call(arguments, 1);
-            var method = Reflect.get(object, arguments[0]);
-            console.log("Calling: " + object.id + "." + arguments[0]);
-            if(method) {
-                method.apply(object, args);
-            }
-        };
+    else if (property === "remote") {
+        return package_remote;
     }
     else if(property in package) {
         return package[property];
+    }
+    else if (property !== "forward" && Reflect.has(object, "forward")) {
+        var forward = Reflect.get(object, "forward");
+        if(forward.enabled && forward.get) {
+            return forward.get(object, property);
+        }
     }
     return undefined;
 }
@@ -175,16 +193,7 @@ var package = new Proxy({}, {
                 }
                 /* Load component */
                 var package_name = Reflect.get(object, "id");
-                if (package.platform === "server") {
-                    path = "./" + package_name + "/" + package_name + "_" + property;
-                    require(path);
-                } else if (package.platform === "client") {
-                    importScripts("/packages/" + package_name + "/" + package_name + "_" + property + ".js?platform=client");
-                } else {
-                    /* browser can only load asyncronously components */
-                    return null;
-                }
-                return package_init(package_name, property);
+                return package_load(package_name, property);
             },
             set: function (object, property, value) {
                 Reflect.set(object, property, value);

@@ -9,10 +9,12 @@ package.widget.button = function WidgetButton(me) {
         properties:["text","ui.event.pressed"]
     };
     me.tag_name = "button";
-    me.set_text = function(object, value) {
-        object.innerHTML = value;
-    };
-    me.get_text = function(object) {
-        return object.innerHTML;
+    me.text = {
+        get : function(object) {
+            return object.innerHTML;
+        },
+        set : function(object, value) {
+            object.innerHTML = value;
+        }
     };
 };
