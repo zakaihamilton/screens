@@ -7,7 +7,9 @@ package.widget.list = function WidgetList(me) {
     me.depends = {
         properties:["ui.group.data","ui.element.count"]
     };
-    me.tag_name = "select";
+    me.default = {
+        "ui.basic.tag" : "select"
+    };
     me.get_selection = function(object) {
         return object.options[object.selectedIndex].value;
     };
@@ -26,14 +28,12 @@ package.widget.list = function WidgetList(me) {
 };
 
 package.widget.list.item = function WidgetListItem(me) {
-    me.tag_name = "option";
+    me.default = {
+        "ui.basic.tag" : "option"
+    };
     me.depends = {
         parent:["widget.list"],
-        properties:["text"]
-    };
-    me.create = function(object) {
-        var label = document.createTextNode(object.properties["text"]);
-        object.appendChild(label);
+        properties:["ui.basic.text"]
     };
     me.value = {
         get : function(object) {

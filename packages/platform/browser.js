@@ -8,18 +8,20 @@ package.include({
         "type",
         "ref",
         "module",
-        "script",
+        "script"
     ],
     "ui": [
         "data",
         "group",
         "node",
         "rect",
-        "drag",
+        "move",
+        "resize",
         "element",
         "event",
         "style",
-        "popup"
+        "popup",
+        "basic"
     ],
     "widget": [
         "title",

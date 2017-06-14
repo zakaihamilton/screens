@@ -10,7 +10,7 @@ package.ui.event = function UIEvent(me) {
                 object.addEventListener ("click", function() {
                     if(!object.getAttribute('disabled')) {
                         console.log("value: " + value + " object: " + object);
-                        me.send(value,object);
+                        me.ui.element.set(object, value, "click");
                     }
                 });
             }

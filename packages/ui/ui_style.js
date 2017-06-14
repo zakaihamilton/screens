@@ -10,11 +10,7 @@ package.ui.style = function UIStyle(me) {
         get : function(object, property) {
             return {
                 get: function (object) {
-                    if (object && object.style) {
-                        if (property in object.style) {
-                            return object.style[property];
-                        }
-                    }
+                    return getComputedStyle(object)[property];
                 },
                 set: function (object, value) {
                     if (object && typeof value !== "undefined") {

@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIDrag
+ @component UIMove
  */
 
-package.ui.drag = function UIDrag(me) {
+package.ui.move = function UIMove(me) {
     me.source = null;
     me.target = null;
     me.set_element = function (object, value) {

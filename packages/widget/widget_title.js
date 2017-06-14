@@ -4,129 +4,136 @@
  */
 
 package.widget.title = function WidgetTitle(me) {
-    me.tag_name = "div";
+    me.default = {
+        "ui.basic.tag": "div"
+    };
     me.class = ["widget.title.border"];
     me.draw = function (object) {
-        var window = object.parentNode;
-        console.log("window.path: " + window.path);
-        var is_movable = (window.properties['ui.style.position'] === "absolute");
+        var is_movable = me.ui.element.to_object(object.window).properties['ui.style.position'] === "absolute";
         me.ui.element.create([{
-            "var":"close",
-            "ui.style.class": "widget.title.close",
-            "ui.event.pressed": "widget.title.menu"
-        },
-        {
-            "var":"title",
-            "text": "Default",
-            "ui.style.class": "widget.title.label",
-            "ui.drag.element":window.path
-        }], object);
-        if(is_movable) {
-            me.ui.element.create([{
-                "var" : "minimize",
-                "ui.style.class": "widget.title.action",
-                "ui.event.pressed": "widget.title.minimize",
-                "ui.style.right":"20px",
-                "elements" : {
-                    "ui.style.class": "widget.title.minimize",
-                }
-            }, 
-            {
-                "var" : "maximize",
-                "ui.style.class": "widget.title.action",
-                "ui.event.pressed": "widget.title.maximize",
-                "ui.style.right":"0px",
-                "elements" : {
-                    "ui.style.class": "widget.title.maximize",
-                }
+                "ui.basic.var": "close",
+                "ui.style.class": "widget.title.close",
+                "ui.event.pressed": "widget.title.menu"
             },
             {
-                "var" : "restore",
-                "ui.style.class": "widget.title.action",
-                "ui.event.pressed": "widget.title.restore",
-                "ui.style.right":"0px",
-                "ui.style.visibility":"hidden",
-                "elements" : {
-                    "ui.style.class": "widget.title.restore",
-                }
+                "ui.basic.var": "title",
+                "ui.basic.text": "Default",
+                "ui.style.class": "widget.title.label",
+                "ui.move.element": object.window.path
             }], object);
-        }
-        else {
+        if (is_movable) {
+            me.ui.element.create([{
+                    "ui.basic.var": "minimize",
+                    "ui.style.class": "widget.title.action",
+                    "ui.event.pressed": "widget.title.minimize",
+                    "ui.style.right": "20px",
+                    "ui.basic.elements": {
+                        "ui.style.class": "widget.title.minimize",
+                    }
+                },
+                {
+                    "ui.basic.var": "maximize",
+                    "ui.style.class": "widget.title.action",
+                    "ui.event.pressed": "widget.title.maximize",
+                    "ui.style.right": "0px",
+                    "ui.basic.elements": {
+                        "ui.style.class": "widget.title.maximize",
+                    }
+                },
+                {
+                    "ui.basic.var": "restore",
+                    "ui.style.class": "widget.title.action",
+                    "ui.event.pressed": "widget.title.restore",
+                    "ui.style.right": "0px",
+                    "ui.style.visibility": "hidden",
+                    "ui.basic.elements": {
+                        "ui.style.class": "widget.title.restore",
+                    }
+                }], object);
+        } else {
             console.log("object.title: " + object.title);
             me.ui.element.set(object.title, "ui.style.right", "0px");
         }
+        me.ui.element.set(object, "ui.basic.label", object.title);
     };
-    me.text = {
-        get : function(object) {
-            return me.ui.element.get(object.title, "text");
+    me.window = {
+        get: function (object) {
+            return object.window;
         },
-        set : function(object, value) {
-            me.ui.element.set(object.title, "text", value);
+        set: function (object, value) {
+            object.window = value;
         }
     };
-    me.menu = function(object) {
-        var region = me.ui.rect.relative_region(object);
-        if(me.ui.element.get(object.menu, "ui.node.parent")) {
-            me.ui.element.set(object.menu, "ui.node.parent", null);
-        }
-        else {
-            object.menu = me.ui.element.create({
-                "component":"widget.menu",
-                "ui.style.left":"0px",
-                "ui.style.top":region.bottom+"px",
-                "ui.group.data" : {
-                    "ui.data.keys":["text","select","enabled"],
-                    "ui.data.values":[
-                        ["Restore","widget.title.restore","widget.title.can_restore"],
-                        ["Move","",false],
-                        ["Size","",false],
-                        ["Minimize","widget.title.minimize","widget.title.can_minimize"],
-                        ["Maximize","widget.title.maximize","widget.title.can_maximize"],
-                        ["Close","widget.title.close"],
-                        ["Switch To"]]
-                }
-            }, object.parentNode);
+    me.menu = {
+        set: function (object, value) {
+            var region = me.ui.rect.relative_region(object);
+            if (me.ui.element.get(object.menu, "ui.node.parent")) {
+                me.ui.element.set(object.menu, "ui.node.parent", null);
+            } else {
+                object.menu = me.ui.element.create({
+                    "component": "widget.menu",
+                    "ui.style.left": "0px",
+                    "ui.style.top": region.bottom + "px",
+                    "ui.group.data": {
+                        "ui.data.keys": ["ui.basic.text", "select"],
+                        "ui.data.values": [
+                            ["Restore", "widget.title.restore"],
+                            ["Move", ""],
+                            ["Size", ""],
+                            ["Minimize", "widget.title.minimize"],
+                            ["Maximize", "widget.title.maximize"],
+                            ["Close", "widget.title.close"],
+                            ["Switch To"]]
+                    }
+                }, object.parentNode);
+            }
         }
     };
-    me.is_visible = function(object) {
-        if(object) {
+    me.is_visible = function (object) {
+        if (object) {
             var is_visible = me.ui.element.get(object, "ui.style.visibility");
             console.log("object: " + object + " visible: " + is_visible);
             return is_visible !== "hidden";
         }
     }
-    me.can_restore = function(object) {
-        return me.is_visible(object.parentNode.parentNode.restore);
-    };
-    me.can_minimize = function(object) {
-        return me.is_visible(object.parentNode.parentNode.minimize);
-    };
-    me.can_maximize = function(object) {
-        return me.is_visible(object.parentNode.parentNode.maximize);
-    };
-    me.close = function(object) {
-        var window = object.parentNode.parentNode;
-        if(window.parentNode) {
-            window.parentNode.removeChild(window);
+    me.close = {
+        get: function (object) {
+            return me.is_visible(object.parentNode.close);
+        },
+        set: function (object, value) {
+            me.ui.element.set(object.parentNode.window, "ui.node.parent", null);
         }
     };
-    me.minimize = function(object) {
-        
+    me.minimize = {
+        get: function (object) {
+            return me.is_visible(object.parentNode.minimize);
+        },
+        set: function (object, value) {
+
+        }
     };
-    me.maximize = function(object) {
-        me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "visible");
-        me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "hidden");
-        var window = object.parentNode.parentNode;
-        window.region = me.ui.rect.absolute_region(window);
-        me.ui.rect.set_region(window, me.ui.rect.viewport());
-        window.draggable = false;
+    me.maximize = {
+        get: function (object) {
+            return me.is_visible(object.parentNode.maximize);
+        },
+        set: function (object, value) {
+            me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "visible");
+            me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "hidden");
+            object.parentNode.restore_region = me.ui.rect.absolute_region(object.parentNode.window);
+            me.ui.rect.set_region(object.parentNode.window, me.ui.rect.viewport());
+            object.parentNode.draggable = false;
+        }
     };
-    me.restore = function(object) {
-        console.log("object: " + object.path);
-        me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "hidden");
-        me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "visible");
-        var window = object.parentNode.parentNode;
-        me.ui.rect.set_region(window, window.region);
-        window.draggable = true;
+    me.restore = {
+        get: function (object) {
+            return me.is_visible(object.parentNode.restore);
+        },
+        set: function (object, value) {
+            console.log("object: " + object.path);
+            me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "hidden");
+            me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "visible");
+            me.ui.rect.set_region(object.parentNode.window, object.parentNode.restore_region);
+            object.parentNode.draggable = true;
+        }
     };
 };

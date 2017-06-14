@@ -19,7 +19,6 @@ package.app.main = function (me) {
         me.core.console.log(me.core.remote.return_array([5, 6, 7, 8]));
         me.core.console.log(package["core.remote.return_array"]([5, 6, 7, 8]));
         me.core.message.send_server("core.node.print", "Hello World!");
-
         me.core.message.send_browser("app.main.ready");
     }
     me.ready = function () {
@@ -35,58 +34,62 @@ package.app.main = function (me) {
                 }
             }]);
         me.ui.element.create([{
-                "title": "Program Manager",
                 "ui.style.position": "absolute",
+                "title": "Program Manager",
                 "ui.style.left": "500px",
                 "ui.style.top": "100px",
                 "ui.style.width": "300px",
                 "ui.style.height": "300px",
-                "elements": [{
-                        "text": "This is some text",
+                "ui.basic.elements": [{
+                        "ui.basic.text": "This is some text",
                         "ui.style.left": "80px",
                         "ui.style.position": "relative",
                         "ui.style.top": "20px"
                     }, {
-                        "text": "Hello",
+                        "ui.basic.text": "Hello",
                         "ui.event.pressed": "app.main.ok",
                         "ui.style.position": "relative",
                         "ui.style.left": "120px",
                         "ui.style.top": "170px"
                     }, {
                         "state": true,
-                        "text": "Apple",
+                        "ui.basic.text": "Apple",
                         "ui.style.left": "100px"
                     }, {
                         "state": false,
-                        "text": "Orange",
+                        "ui.basic.text": "Orange",
                         "ui.style.left": "100px"
                     }, {
                         "state": false,
                         "group": "together",
-                        "text": "One",
+                        "ui.basic.text": "One",
                         "ui.style.left": "100px"
                     }, {
                         "state": true,
                         "group": "together",
-                        "text": "Two",
+                        "ui.basic.text": "Two",
                         "ui.style.left": "100px"
                     }, {
                         "state": false,
                         "group": "fruit",
-                        "text": "Banana",
+                        "ui.basic.text": "Banana",
                         "ui.style.left": "100px"
                     }, {
                         "state": true,
                         "group": "fruit",
-                        "text": "Grapefruit",
+                        "ui.basic.text": "Grapefruit",
                         "ui.style.left": "100px"
                     }]
             }]);
     };
-    me.ok = function () {
-        me.send("app.main.test", "123");
-    }
-    me.test = function (arg) {
-        alert("Hello!" + arg);
+    me.ok = {
+        set: function (object, value) {
+            me.send("app.main.test", "123");
+        }
+    };
+    me.test = {
+        set : function(object, value) {
+            alert("Hello!" + value);
+        }
     };
 };

@@ -25,7 +25,7 @@ package.core.module = function CoreModule(me) {
                     var target_platform = null;
                     if(component_path) {
                         console.log("component_path: " + component_path);
-                        var requirements = package[component_path].require;
+                        var requirements = me[component_path].require;
                         if(requirements) {
                             target_platform = requirements.platform;
                         }

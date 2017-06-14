@@ -5,16 +5,10 @@
 
 package.widget.text = function WidgetText(me) {
     me.depends = {
-        properties:["text"]
+        properties:["ui.basic.text"]
     };
     me.class="widget.text.normal";
-    me.tag_name = "div";
-    me.text = {
-        get : function(object) {
-            return object.innerHTML;
-        },
-        set : function(object, value) {
-            object.innerHTML = value;
-        }
+    me.default = {
+        "ui.basic.tag" : "div"
     };
 };

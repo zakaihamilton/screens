@@ -4,7 +4,9 @@
  */
 
 package.widget.image = function WidgetImage(me) {
-    me.tag_name = "img";
+    me.default = {
+        "ui.basic.tag" : "img"
+    };
     me.depends = {
         properties:["ui.element.image"]
     };

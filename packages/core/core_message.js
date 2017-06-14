@@ -64,7 +64,7 @@ package.core.message = function CoreMessage(me) {
         var args = Array.prototype.slice.call(arguments, 1);
         var callback = null;
         try {
-            callback = package[path];
+            callback = me[path];
         }
         catch(error) {
             me.core.console.log(error);
@@ -72,7 +72,9 @@ package.core.message = function CoreMessage(me) {
         }
         me.core.console.log("sending: " + path + " with: " + JSON.stringify(args) + " callback: " +callback);
         if(typeof callback === "function") {
-            return callback.apply(null, args);
+            var result = callback.apply(null, args);
+            me.core.console.log("callback result from " + path + " is: " + result);
+            return result;
         }
         else {
             me.core.console.log("callback is not a function but rather " + JSON.stringify(callback));

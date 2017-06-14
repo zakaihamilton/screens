@@ -8,8 +8,10 @@ package.widget.window = function WidgetWindow(me) {
     me.depends = {
         properties: ["title"]
     };
-    me.extend = ["ui.drag"];
-    me.tag_name = "div";
+    me.extend = ["ui.move","ui.resize"];
+    me.default = {
+        "ui.basic.tag" : "div"
+    };
     me.class = ["widget.window.border"];
     me.create = function (object) {
         me.ui.element.create([{
@@ -20,7 +22,7 @@ package.widget.window = function WidgetWindow(me) {
             },
             {
                 "ui.style.class": "widget.window.content",
-                "var": "content"
+                "ui.basic.var": "content"
             },
             {
                 "ui.style.class": "widget.window.left_top"
@@ -29,17 +31,18 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.style.class": "widget.window.right_top"
             },
             {
-                "var":"title",
+                "ui.basic.var":"title",
                 "component": "widget.title",
+                "widget.title.window":object.path
             }], object);
     };
     me.title = {
         get : function(object) {
-            return me.ui.element.get(object.title, "text");
+            return me.ui.element.get(object.title, "ui.basic.text");
         },
         set : function(object, value) {
             console.log("window title: " + value + " object: " + object.title);
-            me.ui.element.set(object.title, "text", value);
+            me.ui.element.set(object.title, "ui.basic.text", value);
         }
     };
     me.background = {
