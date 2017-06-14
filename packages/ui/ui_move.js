@@ -6,17 +6,20 @@
 package.ui.move = function UIMove(me) {
     me.source = null;
     me.target = null;
-    me.set_element = function (object, value) {
-        var element = me.ui.element.to_object(value);
-        if (element) {
-            element.drag_element = object;
+    me.element = {
+        set: function (object, value) {
+            console.log("drag_element object: " + object + " value: " + value);
+            var element = me.ui.element.to_object(value);
+            if (element) {
+                element.drag_element = object;
+            }
         }
     };
     me.extend = function (object) {
         object.setAttribute("draggable", true);
         object.addEventListener('dragstart', function (e) {
             var target = me.parent_draggable(e.target);
-            if(!target) {
+            if (!target) {
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
@@ -34,13 +37,13 @@ package.ui.move = function UIMove(me) {
             }
             me.source = target;
             var source_rect = me.ui.rect.absolute_region(target);
-            me.drag_offset = {x:e.clientX-source_rect.left, y: e.clientY-source_rect.top};
+            me.drag_offset = {x: e.clientX - source_rect.left, y: e.clientY - source_rect.top};
             target.style.opacity = '0.5';
             e.dataTransfer.effectAllowed = 'move';
             e.dataTransfer.setData('text/html', target.innerHTML);
         }, false);
         object.addEventListener('dragenter', function (e) {
-            if (me.source && me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
                 me.target = target;
                 target.classList.add('over');
@@ -50,7 +53,7 @@ package.ui.move = function UIMove(me) {
             if (e.preventDefault) {
                 e.preventDefault();
             }
-            if (me.source && me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
                 e.dataTransfer.dropEffect = 'move';
                 me.target = target;
@@ -59,27 +62,27 @@ package.ui.move = function UIMove(me) {
             return false;
         }, false);
         object.addEventListener('dragleave', function (e) {
-            if (me.source && me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
                 target.classList.remove('over');
                 me.target = null;
             }
         }, false);
         object.addEventListener('drop', function (e) {
-            if (me.source && me.source.style.position!=="absolute") {
+            if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
                 if (e.stopPropagation) {
                     e.stopPropagation();
                 }
-                if (me.source.style.position!=="absolute") {
+                if (me.source.style.position !== "absolute") {
                     me.ui.node.shift(me.source, target);
                 }
             }
             return false;
         }, false);
         object.addEventListener('dragend', function (e) {
-            if(me.source) {
-                if (me.source.style.position!=="absolute") {
+            if (me.source) {
+                if (me.source.style.position !== "absolute") {
                     var target = me.parent_draggable(e.target);
                     if (me.target) {
                         me.target.classList.remove('over');
@@ -92,12 +95,12 @@ package.ui.move = function UIMove(me) {
                 me.source = me.target = null;
             }
         }, false);
-        object.addEventListener('drag', function(e) {
-            if(me.source) {
-                if(e.clientX && e.clientY) {
-                    me.drag_pos = {x:e.clientX,y:e.clientY};
+        object.addEventListener('drag', function (e) {
+            if (me.source) {
+                if (e.clientX && e.clientY) {
+                    me.drag_pos = {x: e.clientX, y: e.clientY};
                 }
-                if (me.source.style.position==="absolute") {
+                if (me.source.style.position === "absolute") {
                     me.source.style.left = me.drag_pos.x - me.drag_offset.x + "px";
                     me.source.style.top = me.drag_pos.y - me.drag_offset.y + "px";
                 }

@@ -9,7 +9,8 @@ package.widget.title = function WidgetTitle(me) {
     };
     me.class = ["widget.title.border"];
     me.draw = function (object) {
-        var is_movable = me.ui.element.to_object(object.window).properties['ui.style.position'] === "absolute";
+        var window = me.ui.element.to_object(object.window);
+        var is_movable = window.properties['ui.style.position'] === "absolute";
         me.ui.element.create([{
                 "ui.basic.var": "close",
                 "ui.style.class": "widget.title.close",
@@ -19,7 +20,7 @@ package.widget.title = function WidgetTitle(me) {
                 "ui.basic.var": "title",
                 "ui.basic.text": "Default",
                 "ui.style.class": "widget.title.label",
-                "ui.move.element": object.window.path
+                "ui.move.element": window.path
             }], object);
         if (is_movable) {
             me.ui.element.create([{
@@ -121,7 +122,7 @@ package.widget.title = function WidgetTitle(me) {
             me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "hidden");
             object.parentNode.restore_region = me.ui.rect.absolute_region(object.parentNode.window);
             me.ui.rect.set_region(object.parentNode.window, me.ui.rect.viewport());
-            object.parentNode.draggable = false;
+            me.ui.element.set(object.parentNode.window, "ui.basic.draggable", false);
         }
     };
     me.restore = {
@@ -133,7 +134,7 @@ package.widget.title = function WidgetTitle(me) {
             me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "hidden");
             me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "visible");
             me.ui.rect.set_region(object.parentNode.window, object.parentNode.restore_region);
-            object.parentNode.draggable = true;
+            me.ui.element.set(object.parentNode.window, "ui.basic.draggable", true);
         }
     };
 };

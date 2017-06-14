@@ -98,4 +98,12 @@ package.ui.basic = function UIBasic(me) {
             object.innerHTML = value;
         }
     };
+    me.draggable = {
+        get : function(object) {
+            return object.draggable;
+        },
+        set : function(object, value) {
+            object.draggable = value;
+        }
+    };
 };

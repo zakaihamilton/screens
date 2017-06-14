@@ -87,9 +87,7 @@ package.app.main = function (me) {
             me.send("app.main.test", "123");
         }
     };
-    me.test = {
-        set : function(object, value) {
-            alert("Hello!" + value);
-        }
+    me.test = function (value) {
+        alert("Hello!" + value);
     };
 };
