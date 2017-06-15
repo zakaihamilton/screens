@@ -17,6 +17,20 @@ package.ui.basic = function UIBasic(me) {
             object.id = value;
         }
     };
+    me.src = {
+        get: function (object) {
+            if(object.icon) {
+                object = me.ui.element.to_object(object.icon);
+            }
+            return object.src;
+        },
+        set: function (object, value) {
+            if(object.icon) {
+                object = me.ui.element.to_object(object.icon);
+            }
+            object.src = value;
+        }
+    };
     me.htmlFor = {
         get: function (object) {
             return object.htmlFor;

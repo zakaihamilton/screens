@@ -1,0 +1,7 @@
+.widget-icon-border {
+    border: 1px solid transparent;
+}
+
+.widget-icon-border.over {
+    border: 1px dashed black;
+}

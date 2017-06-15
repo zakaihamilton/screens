@@ -20,22 +20,30 @@ package.app.main = function (me) {
         me.core.console.log(package["core.remote.return_array"]([5, 6, 7, 8]));
         me.core.message.send_server("core.node.print", "Hello World!");
         me.core.message.send_browser("app.main.ready");
-    }
+    };
     me.ready = function () {
         me.ui.element.update([
             {
                 "ui.style.background": "lightblue"
-            },
+            }
         ], me.ui.element.body());
         me.ui.element.create([{
+                "ui.basic.var": "tray",
+                "ui.style.overflow": "hidden",
+                "ui.style.left": "50px",
+                "ui.style.bottom": "0px",
+                "ui.style.position":"absolute"
+            },
+            {
                 "ui.group.data": {
                     "ui.data.keys": ["title", "background", "ui.style.width", "ui.style.height"],
                     "ui.data.values": [["Root", "white", "100px"], ["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"], ["Fourth", "green", "200px", "200px"]]
                 }
-            }]);
-        me.ui.element.create([{
+            },
+            {
                 "ui.style.position": "absolute",
                 "title": "Program Manager",
+                "icon" : "/packages/res/icons/program_manager.png",
                 "ui.style.left": "500px",
                 "ui.style.top": "100px",
                 "ui.style.width": "300px",

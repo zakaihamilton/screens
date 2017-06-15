@@ -14,7 +14,7 @@ package.widget.title = function WidgetTitle(me) {
         me.ui.element.create([{
                 "ui.basic.var": "close",
                 "ui.style.class": "widget.title.close",
-                "ui.event.pressed": "widget.title.menu"
+                "ui.event.pressed": "widget.window.menu"
             },
             {
                 "ui.basic.var": "title",
@@ -65,31 +65,6 @@ package.widget.title = function WidgetTitle(me) {
             object.window = value;
         }
     };
-    me.menu = {
-        set: function (object, value) {
-            var region = me.ui.rect.relative_region(object);
-            if (me.ui.element.get(object.menu, "ui.node.parent")) {
-                me.ui.element.set(object.menu, "ui.node.parent", null);
-            } else {
-                object.menu = me.ui.element.create({
-                    "component": "widget.menu",
-                    "ui.style.left": "0px",
-                    "ui.style.top": region.bottom + "px",
-                    "ui.group.data": {
-                        "ui.data.keys": ["ui.basic.text", "select"],
-                        "ui.data.values": [
-                            ["Restore", "widget.title.restore"],
-                            ["Move", ""],
-                            ["Size", ""],
-                            ["Minimize", "widget.title.minimize"],
-                            ["Maximize", "widget.title.maximize"],
-                            ["Close", "widget.title.close"],
-                            ["Switch To"]]
-                    }
-                }, object.parentNode);
-            }
-        }
-    };
     me.is_visible = function (object) {
         if (object) {
             var is_visible = me.ui.element.get(object, "ui.style.visibility");
@@ -102,7 +77,7 @@ package.widget.title = function WidgetTitle(me) {
             return me.is_visible(object.parentNode.close);
         },
         set: function (object, value) {
-            me.ui.element.set(object.parentNode.window, "ui.node.parent", null);
+            me.ui.element.set(object.parentNode.window, "widget.window.close", null);
         }
     };
     me.minimize = {

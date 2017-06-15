@@ -85,6 +85,20 @@ package.core.module = function CoreModule(me) {
                         core.job.end(task);
                     });
                 }
+                else if(file_path.endsWith(".png")) {
+                    var task = core.job.begin(info.job);
+                    fs.readFile(file_path, function (err,data) {
+                        core.console.log("serving file: " + info.url);
+                        info["content-type"] = "image/png";
+                        if(err) {
+                            info.body = JSON.stringify(err);
+                        }
+                        else {
+                            info.body = data;
+                        }
+                        core.job.end(task);
+                    });
+                }
             }
         }
     };

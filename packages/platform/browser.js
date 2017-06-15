@@ -34,6 +34,8 @@ package.include({
         "header",
         "window",
         "menu",
+        "icon",
+        "image"
     ],
     "app": [
         "main"
