@@ -6,11 +6,9 @@
 package.ui.resize = function UIResize(me) {
     me.element = {
         set: function (object, value) {
-            console.log("resize_element object: " + object + " value: " + value);
             var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
                 var info = {target: window, left: e.clientX, top: e.clientY, width: window.offsetWidth, height: window.offsetHeight};
-                console.log("info: " + JSON.stringify(info));
                 var move_method = function (e) {
                     var window_region = me.ui.rect.absolute_region(window);
                     var object_region = me.ui.rect.absolute_region(object);
@@ -47,4 +45,4 @@ package.ui.resize = function UIResize(me) {
             });
         }
     };
-}
+};

@@ -121,7 +121,7 @@ package.widget.title = function WidgetTitle(me) {
             me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "visible");
             me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "hidden");
             object.parentNode.restore_region = me.ui.rect.absolute_region(object.parentNode.window);
-            me.ui.rect.set_region(object.parentNode.window, me.ui.rect.viewport());
+            me.ui.rect.set_absolute_region(object.parentNode.window, me.ui.rect.viewport());
             me.ui.element.set(object.parentNode.window, "ui.basic.draggable", false);
         }
     };
@@ -133,7 +133,7 @@ package.widget.title = function WidgetTitle(me) {
             console.log("object: " + object.path);
             me.ui.element.set(object.parentNode.restore, "ui.style.visibility", "hidden");
             me.ui.element.set(object.parentNode.maximize, "ui.style.visibility", "visible");
-            me.ui.rect.set_region(object.parentNode.window, object.parentNode.restore_region);
+            me.ui.rect.set_absolute_region(object.parentNode.window, object.parentNode.restore_region);
             me.ui.element.set(object.parentNode.window, "ui.basic.draggable", true);
         }
     };
