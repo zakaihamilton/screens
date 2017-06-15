@@ -8,27 +8,31 @@ package.widget.window = function WidgetWindow(me) {
     me.depends = {
         properties: ["title"]
     };
-    me.extend = ["ui.move","ui.resize"];
+    me.extend = ["ui.move"];
     me.default = {
         "ui.basic.tag" : "div"
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
         me.ui.element.create([{
-                "ui.style.class": "widget.window.left_bottom"
+                "ui.style.class": "widget.window.left_bottom",
+                "ui.resize.element": object.path
             },
             {
-                "ui.style.class": "widget.window.right_bottom"
+                "ui.style.class": "widget.window.right_bottom",
+                "ui.resize.element": object.path
             },
             {
                 "ui.style.class": "widget.window.content",
                 "ui.basic.var": "content"
             },
             {
-                "ui.style.class": "widget.window.left_top"
+                "ui.style.class": "widget.window.left_top",
+                "ui.resize.element": object.path
             },
             {
-                "ui.style.class": "widget.window.right_top"
+                "ui.style.class": "widget.window.right_top",
+                "ui.resize.element": object.path
             },
             {
                 "ui.basic.var":"title",

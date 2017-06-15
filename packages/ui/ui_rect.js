@@ -4,29 +4,14 @@
  */
 
 package.ui.rect = function UIRect(me) {
-    me.region = function (object) {
-        object = me.ui.element.to_object(object);
-        var xPos = object.style.left;
-        var yPos = object.style.top;
-        var width = object.offsetWidth;
-        var height = object.offsetHeight;
-        return {
-            left: xPos,
-            top: yPos,
-            width: width,
-            height: height,
-            right: xPos + width,
-            bottom: yPos + height
-        };
-    };
     me.relative_region = function (object) {
         object = me.ui.element.to_object(object);
         var parent_region = me.absolute_region(object.parentNode);
         var region = me.absolute_region(object);
         var xPos = region.left - parent_region.left;
         var yPos = region.top - parent_region.top;
-        var width = object.offsetWidth;
-        var height = object.offsetHeight;
+        var width = object.clientWidth;
+        var height = object.clientHeight;
         return {
             left: xPos,
             top: yPos,
@@ -40,8 +25,8 @@ package.ui.rect = function UIRect(me) {
         object = me.ui.element.to_object(object);
         var xPos = 0;
         var yPos = 0;
-        var width = object.offsetWidth;
-        var height = object.offsetHeight;
+        var width = object.clientWidth;
+        var height = object.clientHeight;
 
         while (object) {
             if (object.tagName === "BODY") {
@@ -68,11 +53,31 @@ package.ui.rect = function UIRect(me) {
             bottom: yPos + height
         };
     }
-    me.set_region = function(object, region) {
-        me.ui.element.set(object, "ui.style.left", region.left + "px");
-        me.ui.element.set(object, "ui.style.top", region.top + "px");
-        me.ui.element.set(object, "ui.style.width", region.width + "px");
-        me.ui.element.set(object, "ui.style.height", region.height + "px");
+    me.empty_region = function(region) {
+        region.left = 0;
+        region.top = 0;
+        region.width = 0;
+        region.height = 0;
+    }
+    me.set_relative_region = function(object, region) {
+        object = me.ui.element.to_object(object);
+        object.style.left = region.left + "px";
+        object.style.top = region.top + "px";
+        object.style.width = region.width + "px";
+        object.style.height = region.height + "px";
+    };
+    me.set_absolute_region = function(object, region) {
+        object = me.ui.element.to_object(object);
+        if(object.style.position === "absolute") {
+            object.style.left = region.left - object.clientLeft + "px";
+            object.style.top = region.top - object.clientTop + "px";
+        }
+        else if(object.style.position === "relative") {
+            object.style.left = region.left + "px";
+            object.style.top = region.top + "px";
+        }
+        object.style.width = region.width + "px";
+        object.style.height = region.height + "px";
     };
     me.in_region = function (rect, x, y) {
         return !(x < rect.left || y < rect.top || x > rect.right || y > rect.bottom)
