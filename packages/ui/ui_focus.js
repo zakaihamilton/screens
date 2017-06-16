@@ -126,6 +126,9 @@ package.ui.focus = function UIFocus(me) {
                 /* Activate new object */
                 var objects = me.ui.element.to_objects(object);
                 me.activate(objects, common, object);
+                if(object.style.position === "absolute") {
+                    object.parentNode.appendChild(object);
+                }
                 me.focus_element = me.ui.element.to_path(object);
             }
         }

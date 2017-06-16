@@ -22,7 +22,7 @@ package.ui.node = function UINode(me) {
         return index;
     };
     me.shift = function(object, target) {
-        if(object && target && object !== target && object.parentNode === target.parentNode) {
+        if(object && target && object !== target && object.parentNode && object.parentNode === target.parentNode) {
             var object_index = me.index(object);
             var target_index = me.index(target);
             if(!target.nextSibling) {
