@@ -96,14 +96,14 @@ package.ui.move = function UIMove(me) {
             }
         }, false);
         object.addEventListener('drag', function (e) {
-            if (me.source) {
+            if (me.source && me.source.style.position === "absolute") {
                 if (e.clientX && e.clientY) {
                     me.drag_pos = {x: e.clientX, y: e.clientY};
                 }
-                if (me.source.style.position === "absolute") {
-                    me.source.style.left = me.drag_pos.x - me.drag_offset.x + "px";
-                    me.source.style.top = me.drag_pos.y - me.drag_offset.y + "px";
-                }
+                var region = me.ui.rect.relative_region(me.source);
+                region.left = me.drag_pos.x - me.drag_offset.x;
+                region.top = me.drag_pos.y - me.drag_offset.y;
+                me.ui.rect.set_relative_region(me.source, region);
             }
         });
     };

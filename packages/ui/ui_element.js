@@ -6,7 +6,7 @@
 package.ui.element = function UIElement(me) {
     me.require = {platform: "browser"};
     me.default = {
-        "ui.basic.tag" : "div"
+        "ui.basic.tag": "div"
     };
     me.matches = function (properties, parent) {
         /* Find matching components */
@@ -97,7 +97,10 @@ package.ui.element = function UIElement(me) {
         var result = undefined;
         object = me.to_object(object);
         if (object) {
-            result = me.send(me.method(object, path) + ".get", object);
+            var method = me.method(object, path);
+            if (method.includes(".")) {
+                result = me.send(method + ".get", object);
+            }
         }
         return result;
     };
@@ -106,16 +109,19 @@ package.ui.element = function UIElement(me) {
         object = me.to_object(object);
         console.log("set object: " + object + " path: " + path + " value: " + value);
         if (object) {
-            result = me.send(me.method(object, path) + ".set", object, value);
+            var method = me.method(object, path);
+            if (method.includes(".")) {
+                result = me.send(method + ".set", object, value);
+            }
         }
         return result;
     };
-    me.bubble = function(object, path, value) {
+    me.bubble = function (object, path, value) {
         var result = undefined;
         object = me.to_object(object);
-        while(object) {
+        while (object) {
             result = me.send(me.method(object, path) + ".get", object);
-            if(result === value) {
+            if (result === value) {
                 return me.to_path(object);
             }
             object = object.parentNode;
@@ -136,13 +142,13 @@ package.ui.element = function UIElement(me) {
             me.set(object, key, properties[key]);
         }
     };
-    me.combine = function(maps) {
+    me.combine = function (maps) {
         var combined = {};
         var maps = Array.prototype.slice.call(arguments, 0);
-        for(var mapIndex = 0; mapIndex < maps.length; mapIndex++) {
+        for (var mapIndex = 0; mapIndex < maps.length; mapIndex++) {
             var map = maps[mapIndex];
-            if(map) {
-                for(var key in map) {
+            if (map) {
+                for (var key in map) {
                     combined[key] = map[key];
                 }
             }

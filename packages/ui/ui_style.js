@@ -15,7 +15,7 @@ package.ui.style = function UIStyle(me) {
                 set: function (object, value) {
                     if (object && typeof value !== "undefined") {
                         if (property === "class") {
-                            me.set_class(object, value, false);
+                            me.set_class(object, value);
                         } else {
                             object.style[property] = value;
                         }
@@ -52,6 +52,7 @@ package.ui.style = function UIStyle(me) {
         var class_name = me.to_class(path);
         var component_name = path.substring(0, path.lastIndexOf("."));
         if (!me.stylesheets[component_name]) {
+            console.log("loading: " + component_name);
             me.stylesheets[component_name] = me.load_css(component_name);
         }
         console.log("path: " + path + " style: " + class_name);

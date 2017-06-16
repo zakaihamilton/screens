@@ -84,7 +84,6 @@ package.core.ref = function CoreRef(me) {
             parts = path.split("/");
             var children = null, child = null, found = null;
             for (part_index = 0; part_index < parts.length; part_index++) {
-                result.push(node);
                 if(children_method) {
                     if(typeof node[children_method] !== "undefined") {
                         if(typeof node[children_method] === "function") {
@@ -106,6 +105,7 @@ package.core.ref = function CoreRef(me) {
                         }
                     }
                     node = found;
+                    result.push(node);
                 }
                 else {
                     node = node[parts[part_index]];

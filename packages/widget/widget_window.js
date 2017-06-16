@@ -93,7 +93,6 @@ package.widget.window = function WidgetWindow(me) {
             "ui.style.display": "none",
             "ui.basic.window": path
         }, document.body.tray);
-        me.ui.element.set(object, "ui.basic.label", object.title_label);
     };
     me.draw = function (object) {
         console.log("draw position: " + object.style.position)

@@ -32,7 +32,7 @@ package.app.main = function (me) {
                 "ui.style.overflow": "hidden",
                 "ui.style.left": "50px",
                 "ui.style.bottom": "0px",
-                "ui.style.position":"absolute"
+                "ui.style.position": "absolute"
             },
             {
                 "ui.group.data": {
@@ -43,10 +43,10 @@ package.app.main = function (me) {
             {
                 "ui.style.position": "absolute",
                 "title": "Program Manager",
-                "icon" : "/packages/res/icons/program_manager.png",
+                "icon": "/packages/res/icons/program_manager.png",
                 "ui.style.left": "500px",
                 "ui.style.top": "100px",
-                "ui.style.width": "300px",
+                "ui.style.width": "700px",
                 "ui.style.height": "300px",
                 "ui.basic.elements": [{
                         "ui.basic.text": "This is some text",
@@ -87,6 +87,16 @@ package.app.main = function (me) {
                         "group": "fruit",
                         "ui.basic.text": "Grapefruit",
                         "ui.style.left": "100px"
+                    }, {
+                        "ui.style.position": "absolute",
+                        "ui.style.left": "300px",
+                        "ui.style.top": "50px",
+                        "title": "Main"
+                    }, {
+                        "ui.style.position": "absolute",
+                        "ui.style.left": "500px",
+                        "ui.style.top": "50px",
+                        "title": "Games"
                     }]
             }]);
     };

@@ -61,8 +61,9 @@ package.ui.rect = function UIRect(me) {
     }
     me.set_relative_region = function(object, region) {
         object = me.ui.element.to_object(object);
-        object.style.left = region.left + "px";
-        object.style.top = region.top + "px";
+        var parent_region = me.absolute_region(object.parentNode);
+        object.style.left = region.left - parent_region.left + "px";
+        object.style.top = region.top - parent_region.top + "px";
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";
     };
