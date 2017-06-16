@@ -21,7 +21,8 @@ package.include({
         "event",
         "style",
         "popup",
-        "basic"
+        "basic",
+        "focus"
     ],
     "widget": [
         "radio",

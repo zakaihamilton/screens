@@ -8,7 +8,7 @@ package.widget.window = function WidgetWindow(me) {
     me.depends = {
         properties: ["title"]
     };
-    me.extend = ["ui.move"];
+    me.extend = ["ui.move","ui.focus"];
     me.default = {
         "ui.basic.tag": "div"
     };
@@ -47,9 +47,10 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.basic.window": object.window
             },
             {
-                "ui.basic.var": "title_bar",
+                "ui.basic.var": "title_label",
                 "ui.basic.text": "Default",
-                "ui.style.class": "widget.window.label",
+                "ui.focus.focus": "widget.window.label.focus",
+                "ui.focus.blur": "widget.window.label",
                 "ui.move.element": path
             },
             {
@@ -92,13 +93,13 @@ package.widget.window = function WidgetWindow(me) {
             "ui.style.display": "none",
             "ui.basic.window": path
         }, document.body.tray);
-        me.ui.element.set(object, "ui.basic.label", object.title_bar);
+        me.ui.element.set(object, "ui.basic.label", object.title_label);
     };
     me.draw = function (object) {
         console.log("draw position: " + object.style.position)
         if (object.style.position !== "absolute") {
-            console.log("object.title: " + object.title_bar);
-            me.ui.element.set(object.title_bar, "ui.style.right", "4px");
+            console.log("object.title: " + object.title_label);
+            me.ui.element.set(object.title_label, "ui.style.right", "24px");
             me.ui.element.set(object.minimize, "ui.style.right", "5px");
             me.ui.element.set(object.maximize, "ui.style.display", "none");
             me.ui.element.set(object.restore, "ui.style.display", "none");
@@ -127,11 +128,11 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.title = {
         get: function (object) {
-            return me.ui.element.get(object.title_bar, "ui.basic.text");
+            return me.ui.element.get(object.title_label, "ui.basic.text");
         },
         set: function (object, value) {
             console.log("window title: " + value + " object: " + object.title);
-            me.ui.element.set(object.title_bar, "ui.basic.text", value);
+            me.ui.element.set(object.title_label, "ui.basic.text", value);
             me.ui.element.set(object.icon, "ui.basic.text", value);
         }
     };

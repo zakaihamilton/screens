@@ -1,6 +1,6 @@
 .widget-menu-border {
     width: 167px;
-    border: 1px solid #000000;
+    border: 1px solid black;
     background-color: #ffffff;
     box-shadow: 1px 1px 0px 0px #808080;
     z-index: 1;

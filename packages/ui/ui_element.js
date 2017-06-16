@@ -59,8 +59,10 @@ package.ui.element = function UIElement(me) {
         return match;
     };
     me.to_path = function (object) {
-        var path = null;
-        var info = me.core.ref.gen_path(object, "parentNode", "unique");
+        if (typeof object === "string") {
+            return object;
+        }
+        var info = me.core.ref.path(object, "parentNode", "unique");
         if (typeof me.root === "undefined") {
             me.root = info.root;
         }
@@ -72,9 +74,16 @@ package.ui.element = function UIElement(me) {
     me.to_object = function (path) {
         var object = path;
         if (typeof path === "string") {
-            object = me.core.ref.find_object(me.root, path, "childNodes", "unique");
+            object = me.core.ref.object(me.root, path, "childNodes", "unique");
         }
         return object;
+    };
+    me.to_objects = function (path) {
+        if (typeof path !== "string") {
+            path = me.to_path(path);
+        }
+        objects = me.core.ref.objects(me.root, path, "childNodes", "unique");
+        return objects;
     };
     me.method = function (object, path) {
         var method = "";
@@ -100,6 +109,18 @@ package.ui.element = function UIElement(me) {
             result = me.send(me.method(object, path) + ".set", object, value);
         }
         return result;
+    };
+    me.bubble = function(object, path, value) {
+        var result = undefined;
+        object = me.to_object(object);
+        while(object) {
+            result = me.send(me.method(object, path) + ".get", object);
+            if(result === value) {
+                return me.to_path(object);
+            }
+            object = object.parentNode;
+        }
+        return null;
     };
     me.body = function () {
         return document.getElementsByTagName("body")[0];
