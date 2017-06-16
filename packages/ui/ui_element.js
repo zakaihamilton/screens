@@ -177,7 +177,7 @@ package.ui.element = function UIElement(me) {
         me.set(object, "ui.node.parent", parent);
         var path = me.to_path(object);
         if (component.class) {
-            me.ui.style.add_class(object, component.class);
+            me.ui.style.set_class(object, component.class);
         }
         if (component_name !== me.id) {
             component.send(component.id + ".create", object);

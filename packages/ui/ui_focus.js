@@ -8,6 +8,9 @@ package.ui.focus = function UIFocus(me) {
     me.extend = function(object) {
         me.ui.element.set(object, "ui.focus.focusable", true);
         me.ui.element.set(object, "ui.focus.active", true);
+        object.addEventListener('mousedown', function (e) {
+            me.ui.element.set(object, "ui.focus.active", true);
+        });
     };
     me.deactivate = function(from, to) {
         while(from && from !== to) {

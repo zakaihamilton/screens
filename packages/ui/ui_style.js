@@ -15,7 +15,7 @@ package.ui.style = function UIStyle(me) {
                 set: function (object, value) {
                     if (object && typeof value !== "undefined") {
                         if (property === "class") {
-                            me.add_class(object, value);
+                            me.set_class(object, value, false);
                         } else {
                             object.style[property] = value;
                         }
@@ -41,10 +41,11 @@ package.ui.style = function UIStyle(me) {
         path = path.replace(/[\.\_]/g, "-");
         return path;
     };
-    me.add_class = function (object, path) {
+    me.set_class = function (object, path, add=false) {
         if (Array.isArray(path)) {
+            object.className = "";
             path.map(function (item) {
-                me.add_class(object, item);
+                me.set_class(object, item, true);
             });
             return;
         }
@@ -54,7 +55,12 @@ package.ui.style = function UIStyle(me) {
             me.stylesheets[component_name] = me.load_css(component_name);
         }
         console.log("path: " + path + " style: " + class_name);
-        object.classList.add(class_name);
+        if(add || object.className === "") {
+            object.className += " " + class_name;
+        }
+        else {
+            object.className = class_name;
+        }
     };
     me.has_class = function (object, path) {
         var class_name = me.to_class(path);
