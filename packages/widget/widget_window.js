@@ -87,6 +87,7 @@ package.widget.window = function WidgetWindow(me) {
             "ui.style.float": "left",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.event.pressed": "widget.window.menu",
+            "ui.style.display" : "none",
             "ui.basic.window": path
         }, document.body.tray);
         me.ui.element.set(object, "ui.basic.label", object.title_bar);
@@ -181,6 +182,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
             me.ui.element.set(window, "ui.style.display", "none");
+            me.ui.element.set(window.icon, "ui.style.display", "block");
         }
     };
     me.maximize = {
@@ -191,6 +193,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
             me.ui.element.set(window, "ui.style.display", "block");
+            me.ui.element.set(window.icon, "ui.style.display", "none");
             me.ui.element.set(window.restore, "ui.style.display", "block");
             me.ui.element.set(window.maximize, "ui.style.display", "none");
             window.restore_region = me.ui.rect.absolute_region(window);
@@ -207,6 +210,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.ui.element.to_object(object.window);
             if(!me.is_visible(window)) {
                 me.ui.element.set(window, "ui.style.display", "block");
+                me.ui.element.set(window.icon, "ui.style.display", "none");
             }
             else {
                 me.ui.element.set(window.restore, "ui.style.display", "none");
