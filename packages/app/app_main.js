@@ -55,7 +55,7 @@ package.app.main = function (me) {
                         "ui.style.top": "20px"
                     }, {
                         "ui.basic.text": "Hello",
-                        "ui.event.pressed": "app.main.ok",
+                        "ui.event.click": "app.main.ok",
                         "ui.style.position": "relative",
                         "ui.style.left": "120px",
                         "ui.style.top": "170px"

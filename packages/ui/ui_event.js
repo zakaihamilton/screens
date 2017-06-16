@@ -4,16 +4,23 @@
  */
 
 package.ui.event = function UIEvent(me) {
-    me.pressed = {
+    me.handle = function(object, type, method) {
+        if(method) {
+            object.addEventListener (type, function() {
+                if(!object.getAttribute('disabled')) {
+                    me.ui.element.set(object, method, type);
+                }
+            });
+        }
+    };
+    me.click = {
         set : function(object, value) {
-            if(value) {
-                object.addEventListener ("click", function() {
-                    if(!object.getAttribute('disabled')) {
-                        console.log("value: " + value + " object: " + object);
-                        me.ui.element.set(object, value, "click");
-                    }
-                });
-            }
+            me.handle(object, "click", value);
+        }
+    };
+    me.dblclick = {
+        set : function(object, value) {
+            me.handle(object, "dblclick", value);
         }
     };
 };

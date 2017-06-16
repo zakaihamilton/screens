@@ -11,8 +11,7 @@ package.ui.popup = function UIPopup(me) {
     };
     me.handle_popup = function(e) {
         if(me.popup && !me.in_popup(e.target, me.popup)) {
-            var component = me[me.popup.component];
-            component.send(component.id + ".close", me.popup);
+            me.ui.element.set(me.popup, "close", null);
             me.popup = null;
         }
     };
