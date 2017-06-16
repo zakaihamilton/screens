@@ -79,9 +79,13 @@ package.ui.rect = function UIRect(me) {
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";
     };
-    me.in_region = function (rect, x, y) {
-        return !(x < rect.left || y < rect.top || x > rect.right || y > rect.bottom)
+    me.in_region = function (region, x, y) {
+        return !(x < region.left || y < region.top || x > region.right || y > region.bottom);
     };
+    me.in_view_bounds = function(region) {
+        var view = me.viewport();
+        return !(region.left < view.left || region.top < view.top || region.right > view.right || region.bottom > view.bottom);
+    }
     me.viewport = function () {
         var e = window, a = 'inner';
         if (!('innerWidth' in window))

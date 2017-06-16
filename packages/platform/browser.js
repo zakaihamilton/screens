@@ -24,7 +24,6 @@ package.include({
         "basic"
     ],
     "widget": [
-        "title",
         "radio",
         "checkbox",
         "list",

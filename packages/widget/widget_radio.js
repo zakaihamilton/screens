@@ -18,12 +18,12 @@ package.widget.radio = function WidgetRadio(me) {
             "ui.style.position":"relative",
             "ui.style.opacity":0,
             "ui.style.class":"widget.radio.original",
-            "ui.basic.elementId":object.path
+            "ui.basic.elementId": me.ui.element.to_path(object)
         },
         {
             "ui.basic.var":"radio",
             "ui.basic.tag":"label",
-            "ui.basic.htmlFor":object.path,
+            "ui.basic.htmlFor": me.ui.element.to_path(object),
             "ui.style.position":"relative",
             "ui.style.class":"widget.radio.icon",
             "ui.basic.elements" : {

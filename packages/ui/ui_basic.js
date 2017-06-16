@@ -53,7 +53,7 @@ package.ui.basic = function UIBasic(me) {
         },
         set: function (object, value) {
             if (value) {
-                object.parentNode[value] = object.path;
+                object.parentNode[value] = me.ui.element.to_path(object);
                 object.var = value;
             }
         }
@@ -118,6 +118,14 @@ package.ui.basic = function UIBasic(me) {
         },
         set : function(object, value) {
             object.draggable = value;
+        }
+    };
+    me.window = {
+        get: function (object) {
+            return object.window;
+        },
+        set: function (object, value) {
+            object.window = value;
         }
     };
 };

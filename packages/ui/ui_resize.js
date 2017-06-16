@@ -8,6 +8,10 @@ package.ui.resize = function UIResize(me) {
         set: function (object, value) {
             var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
+                if(window.draggable === false) {
+                    e.preventDefault();
+                    return;
+                }
                 var info = {target: window, left: e.clientX, top: e.clientY, width: window.offsetWidth, height: window.offsetHeight};
                 var move_method = function (e) {
                     var window_region = me.ui.rect.absolute_region(window);

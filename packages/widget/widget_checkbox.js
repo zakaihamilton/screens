@@ -18,12 +18,12 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                 "ui.style.position": "relative",
                 "ui.style.opacity": 0,
                 "ui.style.class": "widget.checkbox.original",
-                "ui.basic.elementId": object.path
+                "ui.basic.elementId": me.ui.element.to_path(object)
             },
             {
                 "ui.basic.var": "checkbox",
                 "ui.basic.tag": "label",
-                "ui.basic.htmlFor": object.path,
+                "ui.basic.htmlFor": me.ui.element.to_path(object),
                 "ui.style.position": "relative",
                 "ui.style.class": "widget.checkbox.icon",
                 "ui.basic.elements": {

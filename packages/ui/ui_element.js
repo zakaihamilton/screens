@@ -154,7 +154,7 @@ package.ui.element = function UIElement(me) {
             parent = me.body();
         }
         me.set(object, "ui.node.parent", parent);
-        object.path = me.to_path(object);
+        var path = me.to_path(object);
         if (component.class) {
             me.ui.style.add_class(object, component.class);
         }
@@ -172,7 +172,6 @@ package.ui.element = function UIElement(me) {
         if (component_name !== me.id) {
             component.send(component.id + ".draw", object);
         }
-        console.log("object.path: " + object.path);
-        return object.path;
+        return path;
     };
 };

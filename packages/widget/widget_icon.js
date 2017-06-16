@@ -19,7 +19,7 @@ package.widget.icon = function WidgetIcon(me) {
                 "ui.style.left": "40px",
                 "ui.style.top": "0px",
                 "ui.style.pointer-events" : "none",
-                "ui.move.element": object.path,
+                "ui.move.element": me.ui.element.to_path(object),
                 "ui.basic.var": "icon"
             },
             {
