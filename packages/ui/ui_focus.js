@@ -8,12 +8,23 @@ package.ui.focus = function UIFocus(me) {
     me.extend = function(object) {
         me.ui.element.set(object, "ui.focus.focusable", true);
         me.ui.element.set(object, "ui.focus.active", true);
-        object.addEventListener('mousedown', function (e) {
+        object.addEventListener('click', function (e) {
             var branch = me.find_branch(object, e.clientX, e.clientY);
             if(branch) {
                 me.ui.element.set(branch, "ui.focus.active", true);
             }
         }, true);
+    };
+    me.is_active = function(object) {
+        var parent = me.ui.element.to_object(me.focus_element);
+        var object = me.ui.element.to_object(object);
+        while(parent) {
+            if(parent === object) {
+                return true;
+            }
+            parent = parent.parentNode;
+        }
+        return false;
     };
     me.find_branch = function(object, x, y) {
         /* Find the lowest matching element on position */
@@ -118,7 +129,7 @@ package.ui.focus = function UIFocus(me) {
         },
         set: function(object, value) {
             var focus_element = me.ui.element.to_object(me.focus_element);
-            if(focus_element !== object) {
+            if(!me.is_active(object)) {
                 /* Find common object between previous and new focus */
                 var common = me.common(focus_element, object);
                 /* Deactivate previous object */

@@ -25,6 +25,7 @@ package.ui.move = function UIMove(me) {
                 }
                 return;
             }
+            me.ui.element.set(target, "ui.focus.active", true);
             if (target.move_element) {
                 var rect = me.ui.rect.absolute_region(target.move_element);
                 var in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);

@@ -12,6 +12,7 @@ package.ui.resize = function UIResize(me) {
                     e.preventDefault();
                     return;
                 }
+                me.ui.element.set(window, "ui.focus.active", true);
                 var info = {target: window, left: e.clientX, top: e.clientY, width: window.offsetWidth, height: window.offsetHeight};
                 var move_method = function (e) {
                     var window_region = me.ui.rect.absolute_region(window);

@@ -70,8 +70,15 @@ package.ui.rect = function UIRect(me) {
     me.set_absolute_region = function(object, region) {
         object = me.ui.element.to_object(object);
         if(object.style.position === "absolute") {
-            object.style.left = region.left - object.clientLeft + "px";
-            object.style.top = region.top - object.clientTop + "px";
+            if(object.parentNode === document.body) {
+                object.style.left = region.left - object.clientLeft + "px";
+                object.style.top = region.top - object.clientTop + "px";
+            }
+            else {
+                var parent_region = me.absolute_region(object.parentNode);
+                object.style.left = region.left - object.clientLeft - parent_region.left + "px";
+                object.style.top = region.top - object.clientLeft - parent_region.top + "px";
+            }
         }
         else if(object.style.position === "relative") {
             object.style.left = region.left + "px";

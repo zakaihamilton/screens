@@ -10,7 +10,9 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.extend = ["ui.move","ui.focus"];
     me.default = {
-        "ui.basic.tag": "div"
+        "ui.basic.tag": "div",
+        "ui.style.width":"150px",
+        "ui.style.height":"150px"
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
@@ -84,6 +86,16 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.style.class": "widget.window.restore",
                 }
             }], object);
+        parent = me.parent(object);
+        if(!parent.tray) {
+            parent.tray = me.ui.element.create({
+                "ui.basic.var": "tray",
+                "ui.style.overflow": "hidden",
+                "ui.style.left": "50px",
+                "ui.style.bottom": "0px",
+                "ui.style.position": "absolute"
+            }, parent);
+        }
         object.icon = me.ui.element.create({
             "text": "",
             "ui.style.float": "left",
@@ -92,7 +104,32 @@ package.widget.window = function WidgetWindow(me) {
             "ui.event.dblclick": "widget.window.restore",
             "ui.style.display": "none",
             "ui.basic.window": path
-        }, document.body.tray);
+        }, parent.tray);
+    };
+    me.parent = function (object) {
+        var parent = object.parentNode;
+        while(parent) {
+            if(parent === document.body) {
+                return parent;
+            }
+            if(parent.component === me.id) {
+                return parent;
+            }
+            parent = parent.parentNode;
+        };
+    };
+    me.parent_region = function(object) {
+        var parent = object.parentNode;
+        while(parent) {
+            if(parent === document.body) {
+                return me.ui.rect.viewport();
+            }
+            if(parent.component === me.id) {
+                console.log("parent: " + JSON.stringify(parent) + " parent.client:" + parent.content);
+                return me.ui.rect.absolute_region(parent.content);
+            }
+            parent = parent.parentNode;
+        };
     };
     me.draw = function (object) {
         console.log("draw position: " + object.style.position)
@@ -210,7 +247,11 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.element.set(window.restore, "ui.style.display", "block");
             me.ui.element.set(window.maximize, "ui.style.display", "none");
             window.restore_region = me.ui.rect.absolute_region(window);
-            me.ui.rect.set_absolute_region(window, me.ui.rect.viewport());
+            me.ui.rect.set_absolute_region(window, me.parent_region(window));
+            window.style.width = "";
+            window.style.height = "";
+            window.style.bottom = "0px";
+            window.style.right = "0px";
             me.ui.element.set(window, "ui.basic.draggable", false);
         }
     };
@@ -234,6 +275,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.rect.set_absolute_region(window, window.restore_region);
                 me.ui.element.set(window, "ui.basic.draggable", true);
             }
+            me.ui.element.set(window, "ui.focus.active", true);
         }
     };
 };

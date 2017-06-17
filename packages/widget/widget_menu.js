@@ -19,8 +19,8 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.select = {
         set: function (object, value) {
-            me.ui.element.set(object, value, value);
             me.ui.element.set(object, "close", value);
+            me.ui.element.set(object, value, value);
         }
     };
 };
