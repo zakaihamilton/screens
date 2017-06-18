@@ -4,6 +4,22 @@
  */
 
 package.ui.data = function UIData(me) {
+    me.default = {
+        get: function(object) {
+            return object.data_default;
+        },
+        set : function(object, value) {
+            object.data_default = value;
+        }
+    };
+    me.parent = {
+        get: function(object) {
+            return object.data_parent;
+        },
+        set : function(object, value) {
+            object.data_parent = value;
+        }
+    };
     me.keys = {
         get: function(object) {
             return object.data_keys;
@@ -30,7 +46,12 @@ package.ui.data = function UIData(me) {
                         properties[object.data_keys[data_key_index]] = data_value;
                     }
                 }
-                me.ui.element.create(properties, object);
+                parent = object;
+                if(object.data_parent) {
+                    parent = object.data_parent;
+                }
+                properties = me.ui.element.combine(object.data_default, properties);
+                me.ui.element.create(properties, parent);
             }
         }
     }

@@ -8,30 +8,33 @@ package.widget.window = function WidgetWindow(me) {
     me.depends = {
         properties: ["title"]
     };
-    me.extend = ["ui.move", "ui.focus"];
+    me.extend = ["ui.focus"];
     me.default = {
         "ui.basic.tag": "div",
         "ui.style.width": "150px",
-        "ui.style.height": "150px"
+        "ui.style.height": "150px",
+        "ui.style.position": "absolute",
+        "ui.style.left": "100px",
+        "ui.style.top": "100px"
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
         var path = me.ui.element.to_path(object);
         me.ui.element.create([{
                 "ui.theme.class": "widget.window.left_bottom",
-                "ui.resize.element": path
+                "ui.rect.resize": path
             },
             {
                 "ui.theme.class": "widget.window.right_bottom",
-                "ui.resize.element": path
+                "ui.rect.resize": path
             },
             {
                 "ui.theme.class": "widget.window.left_top",
-                "ui.resize.element": path
+                "ui.rect.resize": path
             },
             {
                 "ui.theme.class": "widget.window.right_top",
-                "ui.resize.element": path
+                "ui.rect.resize": path
             },
             {
                 "ui.theme.class": "widget.window.margin",
@@ -59,7 +62,8 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.basic.text": "Default",
                         "ui.theme.class": "widget.window.label",
                         "ui.theme.dynamic": true,
-                        "ui.move.element": path
+                        "ui.drag.element": path,
+                        "ui.rect.move": path,
                     },
                     {
                         "ui.basic.context": path,
@@ -269,7 +273,6 @@ package.widget.window = function WidgetWindow(me) {
             window.style.height = "";
             window.style.bottom = "-1px";
             window.style.right = "-1px";
-            me.ui.element.set(window, "ui.basic.draggable", false);
             me.ui.theme.change_class(window, null, "maximize", "focusable");
         }
     };
@@ -291,7 +294,6 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window.restore, "ui.style.display", "none");
                 me.ui.element.set(window.maximize, "ui.style.display", "block");
                 me.ui.rect.set_absolute_region(window, window.restore_region);
-                me.ui.element.set(window, "ui.basic.draggable", true);
                 me.ui.theme.change_class(window, "maximize", null, "focusable");
             }
             me.ui.element.set(window, "ui.focus.active", true);

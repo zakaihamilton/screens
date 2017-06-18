@@ -7,7 +7,7 @@ package.widget.icon = function WidgetIcon(me) {
     me.depends = {
         properties: ["ui.basic.src", "text"]
     };
-    me.extend = ["ui.move"];
+    me.extend = ["ui.drag"];
     me.default = {
         "ui.basic.tag": "div",
         "ui.theme.class" : "widget.icon.border"
@@ -19,7 +19,7 @@ package.widget.icon = function WidgetIcon(me) {
                 "ui.style.left": "40px",
                 "ui.style.top": "0px",
                 "ui.style.pointer-events" : "none",
-                "ui.move.element": me.ui.element.to_path(object),
+                "ui.drag.element": me.ui.element.to_path(object),
                 "ui.basic.var": "icon"
             },
             {

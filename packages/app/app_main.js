@@ -27,21 +27,16 @@ package.app.main = function (me) {
                 "ui.style.background": "lightblue"
             }
         ], me.ui.element.body());
-        me.ui.element.create([{
-                "ui.basic.var": "tray",
-                "ui.style.overflow": "hidden",
-                "ui.style.left": "50px",
-                "ui.style.bottom": "0px",
-                "ui.style.position": "absolute"
-            },
+        me.ui.element.create([
             {
                 "ui.group.data": {
-                    "ui.data.keys": ["title", "background", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Root", "white", "100px"], ["First", "yellow", "300px"], ["Second", "blue"], ["Third", "red"], ["Fourth", "green", "200px", "200px"]]
+                    "ui.data.parent": me.ui.element.body(),
+                    "ui.data.default": {"background":"radial-gradient(circle, red, yellow, green)"},
+                    "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
+                    "ui.data.values": [["Gradient"],["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue","500px","600px"], ["Third", "red","100px","600px"], ["Fourth", "green", "900px", "500px", "200px", "200px"]]
                 }
             },
             {
-                "ui.style.position": "absolute",
                 "title": "Program Manager",
                 "icon": "/packages/res/icons/program_manager.png",
                 "ui.style.left": "500px",
@@ -91,12 +86,14 @@ package.app.main = function (me) {
                         "ui.style.position": "absolute",
                         "ui.style.left": "300px",
                         "ui.style.top": "50px",
-                        "title": "Main"
+                        "title": "Main",
+                        "background":"repeating-linear-gradient(white, gray 30%, black 50%, white)"
                     }, {
                         "ui.style.position": "absolute",
                         "ui.style.left": "500px",
                         "ui.style.top": "50px",
-                        "title": "Games"
+                        "title": "Games",
+                        "background":"radial-gradient(circle, yellow, green, red)"
                     }]
             }]);
     };
