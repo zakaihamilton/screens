@@ -10,7 +10,7 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.move"];
     me.default = {
         "ui.basic.tag": "div",
-        "ui.style.class" : "widget.icon.border"
+        "ui.theme.class" : "widget.icon.border"
     };
     me.create = function(object) {
         me.ui.element.create([{

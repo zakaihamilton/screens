@@ -98,13 +98,19 @@ package.ui.focus = function UIFocus(me) {
     };
     me.apply_focus = function(object, state) {
         if(state) {
+            if(object.blur_class) {
+                me.ui.element.set(object, "ui.theme.remove", object.blur_class);
+            }
             if(object.focus_class) {
-                me.ui.element.set(object, "ui.style.class", object.focus_class);
+                me.ui.element.set(object, "ui.theme.add", object.focus_class);
             }
         }
         else {
+            if(object.focus_class) {
+                me.ui.element.set(object, "ui.theme.remove", object.focus_class);
+            }
             if(object.blur_class) {
-                me.ui.element.set(object, "ui.style.class", object.blur_class);
+                me.ui.element.set(object, "ui.theme.add", object.blur_class);
             }
         }
         for(var index = 0; index < object.childNodes.length; index++) {

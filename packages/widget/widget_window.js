@@ -8,87 +8,102 @@ package.widget.window = function WidgetWindow(me) {
     me.depends = {
         properties: ["title"]
     };
-    me.extend = ["ui.move","ui.focus"];
+    me.extend = ["ui.move", "ui.focus"];
     me.default = {
         "ui.basic.tag": "div",
-        "ui.style.width":"150px",
-        "ui.style.height":"150px"
+        "ui.style.width": "150px",
+        "ui.style.height": "150px"
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
         var path = me.ui.element.to_path(object);
-        me.ui.element.set(object, "ui.basic.window", path);
         me.ui.element.create([{
-                "ui.style.class": "widget.window.left_bottom",
+                "ui.theme.class": "widget.window.left_bottom",
                 "ui.resize.element": path
             },
             {
-                "ui.style.class": "widget.window.right_bottom",
+                "ui.theme.class": "widget.window.right_bottom",
                 "ui.resize.element": path
             },
             {
-                "ui.style.class": "widget.window.content",
-                "ui.basic.var": "content"
-            },
-            {
-                "ui.style.class": "widget.window.left_top",
+                "ui.theme.class": "widget.window.left_top",
                 "ui.resize.element": path
             },
             {
-                "ui.style.class": "widget.window.right_top",
+                "ui.theme.class": "widget.window.right_top",
                 "ui.resize.element": path
             },
             {
-                "ui.style.class": "widget.window.title"
-            },
-            {
-                "ui.basic.var": "close",
-                "ui.style.class": "widget.window.close",
-                "ui.event.click": "widget.window.menu",
-                "ui.event.dblclick": "widget.window.close",
-                "ui.basic.window": object.window
-            },
-            {
-                "ui.basic.var": "title_label",
-                "ui.basic.text": "Default",
-                "ui.focus.focus": "widget.window.label.focus",
-                "ui.focus.blur": "widget.window.label",
-                "ui.move.element": path
-            },
-            {
-                "ui.basic.var": "minimize",
-                "ui.style.class": "widget.window.action",
-                "ui.event.click": "widget.window.minimize",
-                "ui.style.right": "25px",
-                "ui.basic.window": object.window,
-                "ui.basic.elements": {
-                    "ui.style.class": "widget.window.minimize",
-                }
-            },
-            {
-                "ui.basic.var": "maximize",
-                "ui.style.class": "widget.window.action",
-                "ui.event.click": "widget.window.maximize",
-                "ui.style.right": "5px",
-                "ui.basic.window": object.window,
-                "ui.basic.elements": {
-                    "ui.style.class": "widget.window.maximize",
-                }
-            },
-            {
-                "ui.basic.var": "restore",
-                "ui.style.class": "widget.window.action",
-                "ui.event.click": "widget.window.restore",
-                "ui.style.right": "5px",
-                "ui.style.display": "none",
-                "ui.basic.window": object.window,
-                "ui.basic.elements": {
-                    "ui.style.class": "widget.window.restore",
-                }
-            }], object);
-        parent = me.parent(object);
-        if(!parent.tray) {
-            parent.tray = me.ui.element.create({
+                "ui.theme.class": "widget.window.margin",
+                "ui.basic.elements": [
+                    {
+                        "ui.theme.class": "widget.window.content",
+                        "ui.basic.context": path,
+                        "ui.basic.var": "content"
+                    },
+                    {
+                        "ui.theme.class": "widget.window.title"
+                    },
+                    {
+                        "ui.basic.context": path,
+                        "ui.basic.var": "close",
+                        "ui.theme.class": "widget.window.close",
+                        "ui.event.click": "widget.window.menu",
+                        "ui.event.dblclick": "widget.window.close",
+                        "ui.basic.window": path
+                    },
+                    {
+                        "ui.basic.context": path,
+                        "ui.basic.var": "title_label",
+                        "ui.basic.text": "Default",
+                        "ui.theme.class": "widget.window.label",
+                        "ui.focus.focus": "focus",
+                        "ui.focus.blur": "blur",
+                        "ui.move.element": path
+                    },
+                    {
+                        "ui.basic.context": path,
+                        "ui.basic.var": "minimize",
+                        "ui.theme.class": "widget.window.action",
+                        "ui.event.click": "widget.window.minimize",
+                        "ui.style.right": "21px",
+                        "ui.basic.window": path,
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.window.minimize",
+                        }
+                    },
+                    {
+                        "ui.basic.context": path,
+                        "ui.basic.var": "maximize",
+                        "ui.theme.class": "widget.window.action",
+                        "ui.event.click": "widget.window.maximize",
+                        "ui.style.right": "1px",
+                        "ui.basic.window": path,
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.window.maximize",
+                        }
+                    },
+                    {
+                        "ui.basic.context": path,
+                        "ui.basic.var": "restore",
+                        "ui.theme.class": "widget.window.action",
+                        "ui.event.click": "widget.window.restore",
+                        "ui.style.right": "1px",
+                        "ui.style.display": "none",
+                        "ui.basic.window": path,
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.window.restore",
+                        }
+                    }
+                ]
+            }
+        ], object);
+        var parent = me.parent(object);
+        if (parent === document.body) {
+            me.ui.element.set(object.close, "ui.theme.add", "main");
+        }
+        if (!parent.tray) {
+            me.ui.element.create({
                 "ui.basic.var": "tray",
                 "ui.style.overflow": "hidden",
                 "ui.style.left": "50px",
@@ -106,37 +121,44 @@ package.widget.window = function WidgetWindow(me) {
             "ui.basic.window": path
         }, parent.tray);
     };
+    me.is_root = {
+        get: function (object) {
+            return me.parent(object) === document.body;
+        }
+    };
     me.parent = function (object) {
         var parent = object.parentNode;
-        while(parent) {
-            if(parent === document.body) {
+        while (parent) {
+            if (parent === document.body) {
                 return parent;
             }
-            if(parent.component === me.id) {
+            if (parent.component === me.id) {
                 return parent;
             }
             parent = parent.parentNode;
-        };
+        }
+        ;
     };
-    me.parent_region = function(object) {
+    me.parent_region = function (object) {
         var parent = object.parentNode;
-        while(parent) {
-            if(parent === document.body) {
+        while (parent) {
+            if (parent === document.body) {
                 return me.ui.rect.viewport();
             }
-            if(parent.component === me.id) {
+            if (parent.component === me.id) {
                 console.log("parent: " + JSON.stringify(parent) + " parent.client:" + parent.content);
                 return me.ui.rect.absolute_region(parent.content);
             }
             parent = parent.parentNode;
-        };
+        }
+        ;
     };
     me.draw = function (object) {
         console.log("draw position: " + object.style.position)
         if (object.style.position !== "absolute") {
             console.log("object.title: " + object.title_label);
-            me.ui.element.set(object.title_label, "ui.style.right", "24px");
-            me.ui.element.set(object.minimize, "ui.style.right", "5px");
+            me.ui.element.set(object.title_label, "ui.style.right", "20px");
+            me.ui.element.set(object.minimize, "ui.style.right", "1px");
             me.ui.element.set(object.maximize, "ui.style.display", "none");
             me.ui.element.set(object.restore, "ui.style.display", "none");
         }
@@ -186,14 +208,14 @@ package.widget.window = function WidgetWindow(me) {
             if (!window) {
                 return;
             }
-            if(window.menu) {
+            if (window.menu) {
                 me.ui.element.set(window.menu, "close", null);
                 window.menu = null;
                 return;
             }
             var region = me.ui.rect.absolute_region(object);
             window.menu = me.ui.element.create({
-                "component": "widget.menu",
+                "ui.element.component": "widget.menu",
                 "ui.style.position": "fixed",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -250,8 +272,8 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.rect.set_absolute_region(window, me.parent_region(window));
             window.style.width = "";
             window.style.height = "";
-            window.style.bottom = "0px";
-            window.style.right = "0px";
+            window.style.bottom = "-1px";
+            window.style.right = "-1px";
             me.ui.element.set(window, "ui.basic.draggable", false);
         }
     };
@@ -262,7 +284,7 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
-            if(window.menu) {
+            if (window.menu) {
                 me.ui.element.set(window.menu, "close", null);
                 window.menu = null;
             }

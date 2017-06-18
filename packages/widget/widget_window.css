@@ -20,12 +20,20 @@
     border: 1px dashed black;
 }
 
-.widget-window-content {
+.widget-window-margin {
     position: absolute;
     left:4px;
-    top:24px;
+    top:4px;
     right:4px;
     bottom:4px;
+}
+
+.widget-window-content {
+    position: absolute;
+    left:0px;
+    top:20px;
+    right:0px;
+    bottom:0px;
     background: white;
     border: 1px solid black;
     overflow: hidden;
@@ -69,33 +77,18 @@
 
 .widget-window-title {
     position: absolute;
-    left:4px;
-    top:4px;
-    right:4px;
+    left:0px;
+    top:0px;
+    right:0px;
     height:19px;
     border: 1px solid black;
-}
-
-.widget-window-label-focus {
-    position: absolute;
-    top:4px;
-    left:24px;
-    right:44px;
-    height:19px;
-    color: #ffffff;
-    text-align: center;
-    background-color: #000080;
-    border: 1px solid black;
-    font-family: "MS Sans Serif";
-    font-size: 16px;
-    line-height:19px;
 }
 
 .widget-window-label {
     position: absolute;
-    top:4px;
-    left:24px;
-    right:44px;
+    top:0px;
+    left:20px;
+    right:40px;
     height:19px;
     color: black;
     text-align: center;
@@ -106,21 +99,38 @@
     line-height:19px;
 }
 
+.widget-window-label.focus {
+    color: white;
+    background-color: #000080;
+}
+
 .widget-window-close {
     position: absolute;
-    left:5px;
-    top:5px;
+    left:1px;
+    top:1px;
     width:19px;
     height:19px;
     background-color: #c0c0c0;
 }
 
-.widget-window-close:after {
+.widget-window-close.main:after {
     content: "";
     position: absolute;
     left:2px;
     top:7px;
     width:11px;
+    height:1px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    box-shadow: 1px 1px 0px 0px #808080;
+}
+
+.widget-window-close:after {
+    content: "";
+    position: absolute;
+    left:5px;
+    top:7px;
+    width:5px;
     height:1px;
     background-color: #ffffff;
     border: 1px solid black;
@@ -133,7 +143,7 @@
 
 .widget-window-action {
     position: absolute;
-    top:5px;
+    top:1px;
     width: 17px;
     height: 17px;
     border-left: 1px solid #ffffff;

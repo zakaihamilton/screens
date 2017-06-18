@@ -4,6 +4,7 @@
  */
 
 package.core.remote = function CoreRemote(me) {
+    me.require = {platform: "server"};
     me.test = function(param1, param2, param3) {
         var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + me.platform;
         package.core.console.log("result: " + result);

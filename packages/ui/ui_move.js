@@ -47,7 +47,7 @@ package.ui.move = function UIMove(me) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
                 me.target = target;
-                target.classList.add('over');
+                me.ui.element.set(target, "ui.theme.add", "over");
             }
         }, false);
         object.addEventListener('dragover', function (e) {
@@ -58,14 +58,14 @@ package.ui.move = function UIMove(me) {
                 var target = me.parent_draggable(e.target);
                 e.dataTransfer.dropEffect = 'move';
                 me.target = target;
-                target.classList.add('over');
+                me.ui.element.set(target, "ui.theme.add", "over");
             }
             return false;
         }, false);
         object.addEventListener('dragleave', function (e) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(e.target);
-                target.classList.remove('over');
+                me.ui.element.set(target, "ui.theme.remove", "over");
                 me.target = null;
             }
         }, false);
@@ -85,12 +85,8 @@ package.ui.move = function UIMove(me) {
             if (me.source) {
                 if (me.source.style.position !== "absolute") {
                     var target = me.parent_draggable(e.target);
-                    if (me.target) {
-                        me.target.classList.remove('over');
-                    }
-                    if (target) {
-                        target.classList.remove('over');
-                    }
+                    me.ui.element.set(me.target, "ui.theme.remove", "over");
+                    me.ui.element.set(target, "ui.theme.remove", "over");
                 }
                 me.source.style.opacity = '1.0';
                 me.source = me.target = null;

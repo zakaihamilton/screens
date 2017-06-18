@@ -93,6 +93,13 @@ package.ui.element = function UIElement(me) {
         method += path;
         return method;
     };
+    me.get_value = function(object, value) {
+        var result = me.get(object, value);
+        if(typeof result !== "undefined") {
+            value = result;
+        }
+        return value;
+    };
     me.get = function (object, path) {
         var result = undefined;
         object = me.to_object(object);
@@ -164,7 +171,7 @@ package.ui.element = function UIElement(me) {
         }
         var object = null;
         parent = me.to_object(parent);
-        var component_name = properties["component"];
+        var component_name = properties["ui.element.component"];
         if (!component_name) {
             component_name = me.matches(properties, parent);
         }
@@ -182,7 +189,7 @@ package.ui.element = function UIElement(me) {
         me.set(object, "ui.node.parent", parent);
         var path = me.to_path(object);
         if (component.class) {
-            me.ui.style.set_class(object, component.class);
+            me.ui.theme.set_class(object, component.class);
         }
         if (component_name !== me.id) {
             component.send(component.id + ".create", object);

@@ -48,13 +48,23 @@ package.ui.basic = function UIBasic(me) {
         }
     };
     me.var = {
+        set: function (object, value) {
+            if (value) {
+                var parent = object.parentNode;
+                if(object.context) {
+                    parent = me.ui.element.to_object(object.context);
+                }
+                parent[value] = me.ui.element.to_path(object);
+            }
+        }
+    };
+    me.context = {
         get: function (object) {
-            return object.var;
+            return object.context;
         },
         set: function (object, value) {
             if (value) {
-                object.parentNode[value] = me.ui.element.to_path(object);
-                object.var = value;
+                object.context = me.ui.element.to_path(value);
             }
         }
     };
@@ -82,6 +92,7 @@ package.ui.basic = function UIBasic(me) {
             return !object.getAttribute('disabled');
         },
         set : function(object, value) {
+            value = me.ui.element.get_value(object, value);
             if(value) {
                 object.removeAttribute('disabled');            
             }

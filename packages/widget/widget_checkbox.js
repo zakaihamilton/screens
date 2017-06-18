@@ -17,7 +17,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                 "ui.basic.type": "checkbox",
                 "ui.style.position": "relative",
                 "ui.style.opacity": 0,
-                "ui.style.class": "widget.checkbox.original",
+                "ui.theme.class": "widget.checkbox.original",
                 "ui.basic.elementId": me.ui.element.to_path(object)
             },
             {
@@ -25,12 +25,12 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                 "ui.basic.tag": "label",
                 "ui.basic.htmlFor": me.ui.element.to_path(object),
                 "ui.style.position": "relative",
-                "ui.style.class": "widget.checkbox.icon",
+                "ui.theme.class": "widget.checkbox.icon",
                 "ui.basic.elements": {
                     "ui.basic.var": "label",
                     "ui.basic.tag": "span",
                     "ui.style.position": "relative",
-                    "ui.style.class": "widget.checkbox.label"
+                    "ui.theme.class": "widget.checkbox.label"
                 }
             }], object);
         me.ui.element.set(object, "ui.basic.label", me.ui.element.to_object(object.checkbox).label);

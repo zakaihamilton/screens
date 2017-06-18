@@ -17,7 +17,7 @@ package.widget.radio = function WidgetRadio(me) {
             "ui.basic.type":"radio",
             "ui.style.position":"relative",
             "ui.style.opacity":0,
-            "ui.style.class":"widget.radio.original",
+            "ui.theme.class":"widget.radio.original",
             "ui.basic.elementId": me.ui.element.to_path(object)
         },
         {
@@ -25,12 +25,12 @@ package.widget.radio = function WidgetRadio(me) {
             "ui.basic.tag":"label",
             "ui.basic.htmlFor": me.ui.element.to_path(object),
             "ui.style.position":"relative",
-            "ui.style.class":"widget.radio.icon",
+            "ui.theme.class":"widget.radio.icon",
             "ui.basic.elements" : {
                 "ui.basic.var" : "label",
                 "ui.basic.tag":"span",
                 "ui.style.position":"relative",
-                "ui.style.class":"widget.radio.label"
+                "ui.theme.class":"widget.radio.label"
             }
         }], object);
         me.ui.element.set(object, "ui.basic.label", me.ui.element.to_object(object.radio).label);
