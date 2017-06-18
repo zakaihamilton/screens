@@ -83,13 +83,11 @@ package.app.main = function (me) {
                         "ui.basic.text": "Grapefruit",
                         "ui.style.left": "100px"
                     }, {
-                        "ui.style.position": "absolute",
                         "ui.style.left": "300px",
                         "ui.style.top": "50px",
                         "title": "Main",
                         "background":"repeating-linear-gradient(white, gray 30%, black 50%, white)"
                     }, {
-                        "ui.style.position": "absolute",
                         "ui.style.left": "500px",
                         "ui.style.top": "50px",
                         "title": "Games",

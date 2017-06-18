@@ -4,10 +4,30 @@
  */
 
 package.ui.rect = function UIRect(me) {
+    me.movable = {
+        get: function(object) {
+            return object.rect_movable;
+        },
+        set: function(object, value) {
+            object.rect_movable = value;
+        }
+    };
+    me.resizable = {
+        get: function(object) {
+            return object.rect_resizable;
+        },
+        set: function(object, value) {
+            object.rect_resizable = value;
+        }
+    };
     me.move = {
         set: function (object, value) {
             var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
+                if(!window.rect_movable) {
+                    e.preventDefault();
+                    return;
+                }
                 me.ui.element.set(window, "ui.focus.active", true);
                 var window_region = me.ui.rect.absolute_region(window);
                 var info = {target: window,
@@ -37,6 +57,10 @@ package.ui.rect = function UIRect(me) {
         set: function (object, value) {
             var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
+                if(!window.rect_resizable) {
+                    e.preventDefault();
+                    return;
+                }
                 me.ui.element.set(window, "ui.focus.active", true);
                 var info = {target: window, left: e.clientX, top: e.clientY, width: window.offsetWidth, height: window.offsetHeight};
                 var move_method = function (e) {

@@ -62,7 +62,6 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.basic.text": "Default",
                         "ui.theme.class": "widget.window.label",
                         "ui.theme.dynamic": true,
-                        "ui.drag.element": path,
                         "ui.rect.move": path,
                     },
                     {
@@ -274,6 +273,8 @@ package.widget.window = function WidgetWindow(me) {
             window.style.bottom = "-1px";
             window.style.right = "-1px";
             me.ui.theme.change_class(window, null, "maximize", "focusable");
+            me.ui.element.set(window, "ui.rect.movable", false);
+            me.ui.element.set(window, "ui.rect.resizable", false);
         }
     };
     me.restore = {
@@ -295,6 +296,8 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window.maximize, "ui.style.display", "block");
                 me.ui.rect.set_absolute_region(window, window.restore_region);
                 me.ui.theme.change_class(window, "maximize", null, "focusable");
+                me.ui.element.set(window, "ui.rect.movable", true);
+                me.ui.element.set(window, "ui.rect.resizable", true);
             }
             me.ui.element.set(window, "ui.focus.active", true);
         }
