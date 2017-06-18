@@ -8,7 +8,6 @@ package.ui.move = function UIMove(me) {
     me.target = null;
     me.element = {
         set: function (object, value) {
-            console.log("move_element object: " + object + " value: " + value);
             var element = me.ui.element.to_object(value);
             if (element) {
                 element.move_element = object;

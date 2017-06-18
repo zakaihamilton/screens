@@ -15,7 +15,7 @@ package.ui.theme = function UITheme(me) {
     };
     me.contains = {
         set: function(object, value) {
-            if(value) {
+            if(value && object.classList) {
                 var class_name = me.to_class(value);
                 return object.classList.contains(class_name);
             }
@@ -23,7 +23,7 @@ package.ui.theme = function UITheme(me) {
     };
     me.add = {
         set: function(object, value) {
-            if(value) {
+            if(value && object.classList) {
                 var class_name = me.to_class(value);
                 object.classList.add(class_name);
             }
@@ -31,9 +31,17 @@ package.ui.theme = function UITheme(me) {
     };
     me.remove = {
         set: function(object, value) {
-            if(value) {
+            if(value && object.classList) {
                 var class_name = me.to_class(value);
                 object.classList.remove(class_name);
+            }
+        }
+    };
+    me.toggle = {
+        set: function(object, value) {
+            if(value && object.classList) {
+                var class_name = me.to_class(value);
+                object.classList.toggle(class_name);
             }
         }
     };
@@ -68,12 +76,39 @@ package.ui.theme = function UITheme(me) {
             console.log("loading: " + component_name);
             me.stylesheets[component_name] = me.load_css(component_name);
         }
-        console.log("path: " + path + " style: " + class_name);
         if(add || object.className === "") {
             object.className += " " + class_name;
         }
         else {
             object.className = class_name;
+        }
+    };
+    me.dynamic = {
+        get: function(object) {
+            return object.dynamic_class;
+        },
+        set: function(object, value) {
+            value = me.ui.element.get_value(object, value);
+            if(typeof value !== "undefined") {
+                object.dynamic_class = value;
+            }
+        }
+    };
+    me.change_class = function(object, from, to, property_to_stop) {
+        if(object.dynamic_class) {
+            if(from) {
+                me.ui.element.set(object, "ui.theme.remove", from);
+            }
+            if(to) {
+                me.ui.element.set(object, "ui.theme.add", to);
+            }
+        }
+        for(var index = 0; index < object.childNodes.length; index++) {
+            var child = object.childNodes[index];
+            if(child[property_to_stop]) {
+                continue;
+            }
+            me.change_class(child, from, to, property_to_stop);
         }
     };
 };

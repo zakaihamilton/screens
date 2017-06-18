@@ -38,7 +38,6 @@ package.core.ref = function CoreRef(me) {
                 }
             }
         }
-        console.log("path: " + path + " root: " + root);
         return {path:path,root:root};
     };
     me.object = function(node, path, children_method, property) {

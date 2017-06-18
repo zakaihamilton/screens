@@ -49,7 +49,7 @@ package.ui.focus = function UIFocus(me) {
     me.deactivate = function(from, to) {
         while(from && from !== to) {
             from.is_active = false;
-            me.apply_focus(from, false);
+            me.ui.theme.change_class(from, "focus", "blur", "focusable");
             from = from.parentNode;
         }
     };
@@ -68,7 +68,7 @@ package.ui.focus = function UIFocus(me) {
         for(;index < list.length;index++) {
             var object = list[index];
             object.is_active = true;
-            me.apply_focus(object, true);
+            me.ui.theme.change_class(object, "blur", "focus", "focusable");
             if(object === to) {
                 break;
             }
@@ -95,31 +95,6 @@ package.ui.focus = function UIFocus(me) {
             }
         }
         return focusable;
-    };
-    me.apply_focus = function(object, state) {
-        if(state) {
-            if(object.blur_class) {
-                me.ui.element.set(object, "ui.theme.remove", object.blur_class);
-            }
-            if(object.focus_class) {
-                me.ui.element.set(object, "ui.theme.add", object.focus_class);
-            }
-        }
-        else {
-            if(object.focus_class) {
-                me.ui.element.set(object, "ui.theme.remove", object.focus_class);
-            }
-            if(object.blur_class) {
-                me.ui.element.set(object, "ui.theme.add", object.blur_class);
-            }
-        }
-        for(var index = 0; index < object.childNodes.length; index++) {
-            var child = object.childNodes[index];
-            if(child.focusable) {
-                continue;
-            }
-            me.apply_focus(child, state);
-        }
     };
     me.focusable = {
         get: function(object) {
@@ -148,16 +123,6 @@ package.ui.focus = function UIFocus(me) {
                 }
                 me.focus_element = me.ui.element.to_path(object);
             }
-        }
-    };
-    me.focus = {
-        set: function(object, value) {
-            object.focus_class = value;
-        }
-    };
-    me.blur = {
-        set : function(object, value) {
-            object.blur_class = value;
         }
     };
 };

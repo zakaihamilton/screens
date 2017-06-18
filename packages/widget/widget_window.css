@@ -28,6 +28,14 @@
     bottom:4px;
 }
 
+.widget-window-margin.maximize {
+    position: absolute;
+    left:-1px;
+    top:-1px;
+    right:-1px;
+    bottom:-1px;
+}
+
 .widget-window-content {
     position: absolute;
     left:0px;
@@ -152,6 +160,16 @@
     border-bottom: 1px solid #808080;
     background-color: #c0c0c0;
     box-shadow: inset -1px -1px 0px 0px #808080;
+}
+
+.widget-window-action:after {
+    content: "";
+    top:-2px;
+    left:-2px;
+    position: absolute;
+    border: 1px solid black;
+    width: 19px;
+    height: 19px;
 }
 
 .widget-window-action:hover:active {

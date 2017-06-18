@@ -73,7 +73,6 @@ package.core.message = function CoreMessage(me) {
         me.core.console.log("sending: " + path + " with: " + JSON.stringify(args) + " callback: " +callback);
         if(typeof callback === "function") {
             var result = callback.apply(null, args);
-            me.core.console.log("callback result from " + path + " is: " + result);
             return result;
         }
         else {

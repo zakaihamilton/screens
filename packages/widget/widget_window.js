@@ -35,6 +35,7 @@ package.widget.window = function WidgetWindow(me) {
             },
             {
                 "ui.theme.class": "widget.window.margin",
+                "ui.theme.dynamic": true,
                 "ui.basic.elements": [
                     {
                         "ui.theme.class": "widget.window.content",
@@ -57,8 +58,7 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.basic.var": "title_label",
                         "ui.basic.text": "Default",
                         "ui.theme.class": "widget.window.label",
-                        "ui.focus.focus": "focus",
-                        "ui.focus.blur": "blur",
+                        "ui.theme.dynamic": true,
                         "ui.move.element": path
                     },
                     {
@@ -146,7 +146,6 @@ package.widget.window = function WidgetWindow(me) {
                 return me.ui.rect.viewport();
             }
             if (parent.component === me.id) {
-                console.log("parent: " + JSON.stringify(parent) + " parent.client:" + parent.content);
                 return me.ui.rect.absolute_region(parent.content);
             }
             parent = parent.parentNode;
@@ -154,9 +153,7 @@ package.widget.window = function WidgetWindow(me) {
         ;
     };
     me.draw = function (object) {
-        console.log("draw position: " + object.style.position)
         if (object.style.position !== "absolute") {
-            console.log("object.title: " + object.title_label);
             me.ui.element.set(object.title_label, "ui.style.right", "20px");
             me.ui.element.set(object.minimize, "ui.style.right", "1px");
             me.ui.element.set(object.maximize, "ui.style.display", "none");
@@ -189,7 +186,6 @@ package.widget.window = function WidgetWindow(me) {
             return me.ui.element.get(object.title_label, "ui.basic.text");
         },
         set: function (object, value) {
-            console.log("window title: " + value + " object: " + object.title);
             me.ui.element.set(object.title_label, "ui.basic.text", value);
             me.ui.element.set(object.icon, "ui.basic.text", value);
         }
@@ -242,7 +238,6 @@ package.widget.window = function WidgetWindow(me) {
     me.is_visible = function (object) {
         if (object) {
             var is_visible = me.ui.element.get(object, "ui.style.display");
-            console.log("object: " + object + " visible: " + is_visible);
             return is_visible !== "none";
         }
     };
@@ -275,6 +270,7 @@ package.widget.window = function WidgetWindow(me) {
             window.style.bottom = "-1px";
             window.style.right = "-1px";
             me.ui.element.set(window, "ui.basic.draggable", false);
+            me.ui.theme.change_class(window, null, "maximize", "focusable");
         }
     };
     me.restore = {
@@ -296,6 +292,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window.maximize, "ui.style.display", "block");
                 me.ui.rect.set_absolute_region(window, window.restore_region);
                 me.ui.element.set(window, "ui.basic.draggable", true);
+                me.ui.theme.change_class(window, "maximize", null, "focusable");
             }
             me.ui.element.set(window, "ui.focus.active", true);
         }
