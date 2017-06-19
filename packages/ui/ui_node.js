@@ -13,10 +13,22 @@ package.ui.node = function UINode(me) {
                 object.parentNode.removeChild(object);
             }
             if(value) {
+                value = me.ui.element.to_object(value);
                 value.appendChild(object);
             }
         }
-    }
+    };
+    me.unshift = {
+        set: function(object, value) {
+            if(object.parentNode) {
+                object.parentNode.removeChild(object);
+            }
+            if(value) {
+                value = me.ui.element.to_object(value);
+                value.insertBefore(object, value.firstChild);
+            }
+        }
+    };
     me.index = function(object) {
         for (var index = 0; (object = object.previousElementSibling); index++);
         return index;

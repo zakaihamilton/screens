@@ -94,9 +94,11 @@ package.ui.element = function UIElement(me) {
         return method;
     };
     me.get_value = function(object, value) {
-        var result = me.get(object, value);
-        if(typeof result !== "undefined") {
-            value = result;
+        if(typeof value === "string" && value.startsWith("@")) {
+            var result = me.get(object, value);
+            if(typeof result !== "undefined") {
+                value = result;
+            }
         }
         return value;
     };
@@ -185,6 +187,9 @@ package.ui.element = function UIElement(me) {
         object.component = component_name;
         if (!parent) {
             parent = me.body();
+        }
+        if(component.container) {
+            parent = me.create(component.container, parent);
         }
         me.set(object, "ui.node.parent", parent);
         var path = me.to_path(object);

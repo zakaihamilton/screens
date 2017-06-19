@@ -5,16 +5,15 @@
 
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
-        "ui.basic.tag": "div"
+        "ui.basic.tag": "div",
+    };
+    me.container = {
+        "ui.modal.popup":"widget.menu.close",
     };
     me.class = ["widget.menu.border"];
-    me.extend = ["ui.popup"];
     me.close = {
         set: function (object, value) {
-            if (object.parentNode) {
-                object.parentNode.removeChild(object);
-            }
-            me.ui.popup.close(object);
+            me.ui.modal.close(object);
         }
     };
     me.select = {

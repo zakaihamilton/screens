@@ -15,7 +15,9 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.height": "150px",
         "ui.style.position": "absolute",
         "ui.style.left": "100px",
-        "ui.style.top": "100px"
+        "ui.style.top": "100px",
+        "ui.rect.movable":true,
+        "ui.rect.resizable":true,
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
@@ -170,10 +172,8 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
-            me.ui.element.set(window.menu, "close", null);
             me.ui.element.set(window.icon, "ui.node.parent", null);
             me.ui.element.set(window, "ui.node.parent", null);
-            window.menu = null;
         }
     };
     me.icon = {
@@ -207,13 +207,8 @@ package.widget.window = function WidgetWindow(me) {
             if (!window) {
                 return;
             }
-            if (window.menu) {
-                me.ui.element.set(window.menu, "close", null);
-                window.menu = null;
-                return;
-            }
             var region = me.ui.rect.absolute_region(object);
-            window.menu = me.ui.element.create({
+            var menu = me.ui.element.create({
                 "ui.element.component": "widget.menu",
                 "ui.style.position": "fixed",
                 "ui.style.left": region.left + "px",
@@ -231,10 +226,10 @@ package.widget.window = function WidgetWindow(me) {
                         ["Switch To"]]
                 }
             }, me.ui.element.body());
-            var menu_region = me.ui.rect.absolute_region(window.menu);
+            var menu_region = me.ui.rect.absolute_region(menu);
             if (!me.ui.rect.in_view_bounds(menu_region)) {
-                me.ui.element.set(window.menu, "ui.style.top", "");
-                me.ui.element.set(window.menu, "ui.style.bottom", "100px");
+                me.ui.element.set(menu, "ui.style.top", "");
+                me.ui.element.set(menu, "ui.style.bottom", "100px");
             }
         }
     };
@@ -284,10 +279,6 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
-            if (window.menu) {
-                me.ui.element.set(window.menu, "close", null);
-                window.menu = null;
-            }
             if (!me.is_visible(window)) {
                 me.ui.element.set(window, "ui.style.display", "block");
                 me.ui.element.set(window.icon, "ui.style.display", "none");

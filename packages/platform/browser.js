@@ -19,7 +19,7 @@ package.include({
         "element",
         "event",
         "style",
-        "popup",
+        "modal",
         "basic",
         "focus",
         "theme"
