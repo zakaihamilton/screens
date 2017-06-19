@@ -22,10 +22,10 @@
 
 .widget-window-margin {
     position: absolute;
-    left:4px;
-    top:4px;
-    right:4px;
-    bottom:4px;
+    left:2px;
+    top:2px;
+    right:2px;
+    bottom:2px;
 }
 
 .widget-window-margin.maximize {
@@ -39,7 +39,7 @@
 .widget-window-content {
     position: absolute;
     left:0px;
-    top:20px;
+    top:19px;
     right:0px;
     bottom:0px;
     background: white;
@@ -51,8 +51,8 @@
     position: absolute;
     left:-1px;
     top:-1px;
-    width:24px;
-    height:24px;
+    width:21px;
+    height:21px;
     border: 1px solid black;
 }
 
@@ -60,8 +60,8 @@
     position: absolute;
     top:-1px;
     right:-1px;
-    width:24px;
-    height:24px;
+    width:21px;
+    height:21px;
     border: 1px solid black;
 }
 
@@ -69,8 +69,8 @@
     position: absolute;
     left:-1px;
     bottom:-1px;
-    width:24px;
-    height:24px;
+    width:21px;
+    height:21px;
     border: 1px solid black;
 }
 
@@ -78,8 +78,8 @@
     position: absolute;
     bottom:-1px;
     right:-1px;
-    width:24px;
-    height:24px;
+    width:21px;
+    height:21px;
     border: 1px solid black;
 }
 
@@ -88,16 +88,16 @@
     left:0px;
     top:0px;
     right:0px;
-    height:19px;
+    height:18px;
     border: 1px solid black;
 }
 
 .widget-window-label {
     position: absolute;
     top:0px;
-    left:20px;
-    right:40px;
-    height:19px;
+    left:19px;
+    right:38px;
+    height:18px;
     color: black;
     text-align: center;
     background-color: white;
@@ -116,8 +116,8 @@
     position: absolute;
     left:1px;
     top:1px;
-    width:19px;
-    height:19px;
+    width:18px;
+    height:18px;
     background-color: #c0c0c0;
 }
 
@@ -152,8 +152,8 @@
 .widget-window-action {
     position: absolute;
     top:1px;
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
     border-left: 1px solid #ffffff;
     border-top: 1px solid #ffffff;
     border-right: 1px solid #808080;
@@ -168,8 +168,8 @@
     left:-2px;
     position: absolute;
     border: 1px solid black;
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
 }
 
 .widget-window-action:hover:active {

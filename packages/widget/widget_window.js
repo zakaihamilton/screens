@@ -71,7 +71,7 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.basic.var": "minimize",
                         "ui.theme.class": "widget.window.action",
                         "ui.event.click": "widget.window.minimize",
-                        "ui.style.right": "21px",
+                        "ui.style.right": "20px",
                         "ui.basic.window": path,
                         "ui.basic.elements": {
                             "ui.theme.class": "widget.window.minimize",
@@ -159,7 +159,7 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.draw = function (object) {
         if (object.style.position !== "absolute") {
-            me.ui.element.set(object.title_label, "ui.style.right", "20px");
+            me.ui.element.set(object.title_label, "ui.style.right", "18px");
             me.ui.element.set(object.minimize, "ui.style.right", "1px");
             me.ui.element.set(object.maximize, "ui.style.display", "none");
             me.ui.element.set(object.restore, "ui.style.display", "none");
