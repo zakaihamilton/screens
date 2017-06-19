@@ -22,6 +22,32 @@ package.widget.menu = function WidgetMenu(me) {
                 }, object.content);
             }
         }
+    };
+    me.select = {
+        set: function (object, value) {
+            var item = value[0];
+            var info = value[1];
+            if(typeof info === "string") {
+                me.ui.element.set(object, info, item);
+            }
+            else if (Array.isArray(info)) {
+                me.create_menu(item, info);
+            }
+        }
+    };
+    me.create_menu = function(object, values) {
+        var region = me.ui.rect.absolute_region(object);
+        me.ui.element.create({
+            "ui.element.component": "widget.menu.popup",
+            "ui.style.position": "absolute",
+            "ui.style.left": region.left + "px",
+            "ui.style.top": region.top + region.height + "px",
+            "ui.basic.window": object.window,
+            "ui.group.data": {
+                "ui.data.keys": ["ui.basic.text", "select"],
+                "ui.data.values": values
+            }
+        }, me.ui.element.body());
     }
 };
 
@@ -40,62 +66,39 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.select = {
         set: function (object, value) {
-            me.ui.element.set(object, "close", value);
-            me.ui.element.set(object, value, value);
+            var item = value[0];
+            var info = value[1];
+            me.ui.element.set(object, "close", item);
+            me.ui.element.set(object, info, item);
         }
     };
 };
 
-package.widget.menu.horizontal_item = function WidgetMenuHorizontalItem(me) {
+package.widget.menu.item = function WidgetMenuItem(me) {
     me.default = {
         "ui.basic.tag": "a",
         "ui.event.click": "click",
         "ui.basic.href":"#"
     };
     me.depends = {
-        parent: ["widget.menu"],
+        parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
     };
     me.select = {
         get: function (object) {
-            return object.select_method;
+            return object.menu_select;
         },
         set: function (object, value) {
-            object.select_method = value;
-            var enabled = me.ui.element.get(object.parentNode, value);
-            me.ui.element.set(object, "ui.basic.enabled", enabled);
+            object.menu_select = value;
+            if(!Array.isArray(value)) {
+                var enabled = me.ui.element.get(object.parentNode, value);
+                me.ui.element.set(object, "ui.basic.enabled", enabled);
+            }
         }
     };
     me.click = {
         set: function (object) {
-            me.ui.element.set(object.parentNode, "select", object.select_method);
-        }
-    };
-};
-
-package.widget.menu.vertical_item = function WidgetMenuVerticalItem(me) {
-    me.default = {
-        "ui.basic.tag": "a",
-        "ui.event.click": "click",
-        "ui.basic.href":"#"
-    };
-    me.depends = {
-        parent: ["widget.menu.popup"],
-        properties: ["ui.basic.text"]
-    };
-    me.select = {
-        get: function (object) {
-            return object.select_method;
-        },
-        set: function (object, value) {
-            object.select_method = value;
-            var enabled = me.ui.element.get(object.parentNode, value);
-            me.ui.element.set(object, "ui.basic.enabled", enabled);
-        }
-    };
-    me.click = {
-        set: function (object, value) {
-            me.ui.element.set(object.parentNode, "select", object.select_method);
+            me.ui.element.set(object.parentNode, "select", [object, object.menu_select]);
         }
     };
 };

@@ -118,10 +118,11 @@ package.ui.rect = function UIRect(me) {
     };
     me.absolute_region = function (object) {
         object = me.ui.element.to_object(object);
+        var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
-        var width = object.clientWidth;
-        var height = object.clientHeight;
+        var width = clientRect.width;
+        var height = clientRect.height;
 
         while (object) {
             if (object.tagName === "BODY") {

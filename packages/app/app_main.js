@@ -31,9 +31,9 @@ package.app.main = function (me) {
             {
                 "ui.group.data": {
                     "ui.data.parent": me.ui.element.body(),
-                    "ui.data.default": {"background":"radial-gradient(circle, red, yellow, green)"},
+                    "ui.data.default": {"background": "radial-gradient(circle, red, yellow, green)"},
                     "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Gradient"],["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue","500px","600px"], ["Third", "red","100px","600px"], ["Fourth", "green", "900px", "500px", "200px", "200px"]]
+                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "100px", "600px"], ["Fourth", "green", "900px", "500px", "200px", "200px"]]
                 }
             },
             {
@@ -43,11 +43,26 @@ package.app.main = function (me) {
                 "ui.style.top": "100px",
                 "ui.style.width": "700px",
                 "ui.style.height": "300px",
-                "widget.menu.items" : [
-                    ["File"],
+                "widget.menu.items": [
+                    ["File", [
+                            ["New..."],
+                            ["Open"],
+                            ["Move..."],
+                            ["Copy..."],
+                            ["Delete"],
+                            ["Properties"],
+                            ["Run..."],
+                            ["Exit Windows..."],
+                        ]],
                     ["Options"],
                     ["Window"],
-                    ["Help"]
+                    ["Help", [
+                            ["Contents"],
+                            ["Search for Help on..."],
+                            ["How to Use Help"],
+                            ["Windows Tutorial"],
+                            ["About Program Manager..."],
+                        ]]
                 ],
                 "ui.basic.elements": [{
                         "ui.basic.text": "This is some text",
@@ -92,12 +107,12 @@ package.app.main = function (me) {
                         "ui.style.left": "300px",
                         "ui.style.top": "50px",
                         "title": "Main",
-                        "background":"repeating-linear-gradient(white, gray 30%, black 50%, white)"
+                        "background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
                     }, {
                         "ui.style.left": "500px",
                         "ui.style.top": "50px",
                         "title": "Games",
-                        "background":"radial-gradient(circle, yellow, green, red)"
+                        "background": "radial-gradient(circle, yellow, green, red)"
                     }]
             }]);
     };

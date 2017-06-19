@@ -209,7 +209,7 @@ package.widget.window = function WidgetWindow(me) {
             var region = me.ui.rect.absolute_region(object);
             var menu = me.ui.element.create({
                 "ui.element.component": "widget.menu.popup",
-                "ui.style.position": "fixed",
+                "ui.style.position": "absolute",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
                 "ui.basic.window": object.window,
