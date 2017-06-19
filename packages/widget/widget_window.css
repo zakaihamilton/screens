@@ -183,7 +183,7 @@
 
 .widget-window-minimize {
     position: absolute;
-    left:5px;
+    left:4px;
     top:7px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
@@ -192,7 +192,7 @@
 
 .widget-window-maximize {
     position: absolute;
-    left:5px;
+    left:4px;
     top:6px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
@@ -201,7 +201,7 @@
 
 .widget-window-restore {
     position: absolute;
-    left:5px;
+    left:4px;
     top:9px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
