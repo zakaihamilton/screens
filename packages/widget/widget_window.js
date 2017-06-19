@@ -226,10 +226,11 @@ package.widget.window = function WidgetWindow(me) {
                         ["Switch To"]]
                 }
             }, me.ui.element.body());
-            var menu_region = me.ui.rect.absolute_region(menu);
-            if (!me.ui.rect.in_view_bounds(menu_region)) {
+            if (!me.is_visible(window)) {
+                var body_region = me.ui.rect.viewport();
+                var icon_region = me.ui.rect.absolute_region(window.icon);
                 me.ui.element.set(menu, "ui.style.top", "");
-                me.ui.element.set(menu, "ui.style.bottom", "100px");
+                me.ui.element.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + 3 + "px");
             }
         }
     };
