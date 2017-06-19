@@ -99,9 +99,9 @@ package.ui.rect = function UIRect(me) {
             });
         }
     };
-    me.relative_region = function (object) {
+    me.relative_region = function (object, parent=object.parentNode) {
         object = me.ui.element.to_object(object);
-        var parent_region = me.absolute_region(object.parentNode);
+        var parent_region = me.absolute_region(parent);
         var region = me.absolute_region(object);
         var xPos = region.left - parent_region.left;
         var yPos = region.top - parent_region.top;
@@ -154,9 +154,14 @@ package.ui.rect = function UIRect(me) {
         region.width = 0;
         region.height = 0;
     };
-    me.set_relative_region = function(object, region) {
+    me.set_relative_region = function(object, region, relative_to=null) {
         object = me.ui.element.to_object(object);
         var parent_region = me.absolute_region(object.parentNode);
+        if(relative_to) {
+            var relative_to_region = me.absolute_region(relative_to);
+            parent_region.left -= relative_to_region.left;
+            parent_region.top -= relative_to_region.top;
+        }
         object.style.left = region.left - parent_region.left + "px";
         object.style.top = region.top - parent_region.top + "px";
         object.style.width = region.width + "px";

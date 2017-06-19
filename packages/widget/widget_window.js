@@ -155,7 +155,6 @@ package.widget.window = function WidgetWindow(me) {
             }
             parent = parent.parentNode;
         }
-        ;
     };
     me.draw = function (object) {
         if (object.style.position !== "absolute") {
@@ -258,11 +257,12 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
+            var parent_window = me.parent(window);
             me.ui.element.set(window, "ui.style.display", "block");
             me.ui.element.set(window.icon, "ui.style.display", "none");
             me.ui.element.set(window.restore, "ui.style.display", "block");
             me.ui.element.set(window.maximize, "ui.style.display", "none");
-            window.restore_region = me.ui.rect.absolute_region(window);
+            window.restore_region = me.ui.rect.relative_region(window, parent_window);
             me.ui.rect.set_absolute_region(window, me.parent_region(window));
             window.style.width = "";
             window.style.height = "";
@@ -284,9 +284,10 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window, "ui.style.display", "block");
                 me.ui.element.set(window.icon, "ui.style.display", "none");
             } else {
+                var parent_window = me.parent(window);
                 me.ui.element.set(window.restore, "ui.style.display", "none");
                 me.ui.element.set(window.maximize, "ui.style.display", "block");
-                me.ui.rect.set_absolute_region(window, window.restore_region);
+                me.ui.rect.set_relative_region(window, window.restore_region, parent_window);
                 me.ui.theme.change_class(window, "maximize", null, "focusable");
                 me.ui.element.set(window, "ui.rect.movable", true);
                 me.ui.element.set(window, "ui.rect.resizable", true);
