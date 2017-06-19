@@ -10,7 +10,7 @@ package.ui.event = function UIEvent(me) {
                 object.event_types = [];
             }
             object.event_types.push(type);
-            object.addEventListener (type, function() {
+            object.addEventListener (type, function(event) {
                 /* Because of double click that can interfere with single click
                  * if both double click and single click are on the same object
                  * then delay the single click for the double click to occur before
@@ -25,7 +25,7 @@ package.ui.event = function UIEvent(me) {
                             return;
                         }
                         if(!object.getAttribute('disabled')) {
-                            me.ui.element.set(object, method, type);
+                            me.ui.element.set(object, method, event);
                         }
                     }, 200);
                 }
@@ -34,7 +34,7 @@ package.ui.event = function UIEvent(me) {
                         object.event_dblclick = true;
                     }
                     if(!object.getAttribute('disabled')) {
-                        me.ui.element.set(object, method, type);
+                        me.ui.element.set(object, method, event);
                     }
                 }
             });

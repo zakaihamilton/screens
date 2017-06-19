@@ -54,7 +54,7 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.basic.context": path,
                         "ui.basic.var": "close",
                         "ui.theme.class": "widget.window.close",
-                        "ui.event.click": "widget.window.menu",
+                        "ui.event.click": "widget.window.context_menu",
                         "ui.event.dblclick": "widget.window.close",
                         "ui.basic.window": path
                     },
@@ -120,7 +120,7 @@ package.widget.window = function WidgetWindow(me) {
             "text": "",
             "ui.style.float": "left",
             "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.event.click": "widget.window.menu",
+            "ui.event.click": "widget.window.context_menu",
             "ui.event.dblclick": "widget.window.restore",
             "ui.style.display": "none",
             "ui.basic.window": path
@@ -200,7 +200,7 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.element.set(object.content, "ui.style.background", value);
         }
     };
-    me.menu = {
+    me.context_menu = {
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
             if (!window) {
@@ -208,7 +208,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             var region = me.ui.rect.absolute_region(object);
             var menu = me.ui.element.create({
-                "ui.element.component": "widget.menu",
+                "ui.element.component": "widget.menu.popup",
                 "ui.style.position": "fixed",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",

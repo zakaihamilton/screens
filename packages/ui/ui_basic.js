@@ -31,6 +31,14 @@ package.ui.basic = function UIBasic(me) {
             object.src = value;
         }
     };
+    me.href = {
+        get: function (object) {
+            return object.href;
+        },
+        set: function (object, value) {
+            object.href = value;
+        }
+    };
     me.htmlFor = {
         get: function (object) {
             return object.htmlFor;

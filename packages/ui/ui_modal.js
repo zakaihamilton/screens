@@ -24,6 +24,10 @@ package.ui.modal = function UIModal(me) {
     };
     me.click = {
         set: function(object, value) {
+            var region = object.firstChild.getBoundingClientRect();
+            if(me.ui.rect.in_region(region, value.clientX, value.clientY)) {
+                return;
+            }
             me.ui.element.set(object.firstChild, object.modal_popup_method, value);
         }
     };

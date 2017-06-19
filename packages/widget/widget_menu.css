@@ -1,29 +1,71 @@
-.widget-menu-border {
-    width: 167px;
-    border: 1px solid black;
-    background-color: #ffffff;
-    box-shadow: 1px 1px 0px 0px #808080;
-    z-index: 1;
+.widget-menu-horizontal {
+    position: absolute;
+    left:-1px;
+    top:-1px;
+    right:-1px;
+    height:18px;
+    border-bottom: 1px solid black;
 }
 
-.widget-menu-item {
-    background-color: #ffffff;
+.widget-menu-horizontal a {
+    background-color: white;
+    color: black;
+    height:18px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: -1px;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.widget-menu-horizontal a:hover {
+    background-color: white;
+    color: black;
+}
+
+.widget-menu-horizontal a[disabled="true"] {
+    background-color: white;
+    color:lightgray;
+}
+
+.widget-menu-border a[disabled="true"]:hover {
+    background-color: white;
+    color:lightgray;
+}
+
+.widget-menu-vertical {
+    width: 167px;
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: 1px 1px 0px 0px #808080;
+}
+
+.widget-menu-vertical a {
+    background-color: white;
     color: black;
     height:18px;
     padding-left: 15px;
     font-family: "MS Sans Serif";
     font-size: 14px;
-    width: 167px;
+    width: 152px;
     text-align: left;
-    border:none;
+    text-decoration: none;
+    display: block;
 }
 
-.widget-menu-item:hover {
+.widget-menu-vertical a:hover {
     background-color: #000080;
     color:white;
 }
 
-.widget-menu-item:disabled {
-    background-color: #ffffff;
+.widget-menu-vertical a[disabled="true"] {
+    background-color: white;
+    color:lightgray;
+}
+
+.widget-menu-vertical a[disabled="true"]:hover {
+    background-color: #000080;
     color:lightgray;
 }

@@ -43,6 +43,12 @@ package.app.main = function (me) {
                 "ui.style.top": "100px",
                 "ui.style.width": "700px",
                 "ui.style.height": "300px",
+                "widget.menu.items" : [
+                    ["File"],
+                    ["Options"],
+                    ["Window"],
+                    ["Help"]
+                ],
                 "ui.basic.elements": [{
                         "ui.basic.text": "This is some text",
                         "ui.style.left": "80px",
