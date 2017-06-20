@@ -13,7 +13,7 @@ package.ui.focus = function UIFocus(me) {
             if(branch) {
                 me.ui.element.set(branch, "ui.focus.active", true);
             }
-        }, true);
+        }, false);
     };
     me.is_active = function(object) {
         var parent = me.ui.element.to_object(me.focus_element);
