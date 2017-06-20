@@ -33,7 +33,7 @@ package.app.main = function (me) {
                     "ui.data.parent": me.ui.element.body(),
                     "ui.data.default": {"background": "radial-gradient(circle, red, yellow, green)"},
                     "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "100px", "600px"], ["Fourth", "green", "900px", "500px", "200px", "200px"]]
+                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "100px", "600px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
                 }
             },
             {
@@ -42,7 +42,7 @@ package.app.main = function (me) {
                 "ui.style.left": "500px",
                 "ui.style.top": "100px",
                 "ui.style.width": "700px",
-                "ui.style.height": "300px",
+                "ui.style.height": "400px",
                 "widget.menu.items": [
                     ["File", [
                             ["New..."],

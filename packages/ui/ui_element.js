@@ -134,7 +134,32 @@ package.ui.element = function UIElement(me) {
             }
         }
     };
+    me.first = function(object, component_name) {
+        object = me.to_object(object);
+        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+            var child = object.childNodes[childIndex];
+            if (child.component === component_name) {
+                return child;
+            }
+        }
+        return null;
+    };
+    me.last = function(object, component_name) {
+        object = me.to_object(object);
+        for(var childIndex = object.childNodes.length - 1; childIndex >= 0; childIndex--) {
+            var child = object.childNodes[childIndex];
+            if (child.component === component_name) {
+                return child;
+            }
+            var result = me.last(child, component_name);
+            if(result) {
+                return result;
+            }
+        }
+        return null;
+    };
     me.parent = function (object, component_name) {
+        object = me.to_object(object);
         var parent = object.parentNode;
         while (parent) {
             if (parent === document.body) {

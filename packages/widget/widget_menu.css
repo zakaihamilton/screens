@@ -1,20 +1,20 @@
 .widget-menu-horizontal {
     position: absolute;
     left:-1px;
-    top:-1px;
     right:-1px;
-    height:18px;
+    top:-1px;
+    height:19px;
     border-bottom: 1px solid black;
     z-index: 1;
+    background-color: white;
 }
 
 .widget-menu-horizontal a {
-    background-color: white;
     color: black;
-    height:18px;
+    height:20px;
     padding-left: 4px;
     padding-right: 4px;
-    padding-top: -1px;
+    padding-bottom: 1px;
     font-family: "MS Sans Serif";
     font-size: 14px;
     text-align: left;

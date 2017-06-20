@@ -50,6 +50,7 @@ package.widget.menu = function WidgetMenu(me) {
             me.ui.element.broadcast(object, "ui.theme.remove", "select");
             me.ui.element.set(item, "ui.theme.add", "select");
             me.ui.element.set(object.menu, "ui.node.parent", null);
+            me.ui.element.set(object.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
                 me.ui.element.set(object, info, item);
             } else if (Array.isArray(info)) {
@@ -59,7 +60,6 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.create_menu = function (object, item, values) {
         var region = me.ui.rect.relative_region(item);
-        me.ui.element.set(object.modal, "ui.style.display", "initial");
         var menu = me.ui.element.create({
             "ui.basic.var":"menu",
             "ui.element.component": "widget.menu.popup",
