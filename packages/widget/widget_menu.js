@@ -28,17 +28,28 @@ package.widget.menu = function WidgetMenu(me) {
             }
         }
     };
-    me.close = {
+    me.back = {
         set: function (object, value) {
             me.ui.element.set(object.modal, "ui.style.display", "none");
             me.ui.element.set(object.menu, "ui.node.parent", null);
+            me.ui.element.broadcast(object, "ui.theme.remove", "select");
+            me.ui.element.broadcast(object, "ui.event.move", null);
+            object.selected_item = null;
         }
     };
     me.select = {
         set: function (object, value) {
-            me.ui.element.set(object.menu, "ui.node.parent", null);
             var item = value[0];
             var info = value[1];
+            if(item === object.selected_item) {
+                me.ui.element.set(object, "back", item);
+                return;
+            }
+            object.selected_item = item;
+            me.ui.element.broadcast(object, "ui.event.move", "focus");
+            me.ui.element.broadcast(object, "ui.theme.remove", "select");
+            me.ui.element.set(item, "ui.theme.add", "select");
+            me.ui.element.set(object.menu, "ui.node.parent", null);
             if (typeof info === "string") {
                 me.ui.element.set(object, info, item);
             } else if (Array.isArray(info)) {
@@ -75,8 +86,9 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
         }
     };
     me.class = ["widget.menu.vertical"];
-    me.close = {
+    me.back = {
         set: function (object, value) {
+            me.ui.element.set(object.parentNode, "back", value);
             me.ui.element.set(object, "ui.node.parent", null);
         }
     };
@@ -84,7 +96,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
         set: function (object, value) {
             var item = value[0];
             var info = value[1];
-            me.ui.element.set(object, "close", item);
+            me.ui.element.set(object, "back", item);
             me.ui.element.set(object, info, item);
         }
     };
@@ -109,6 +121,13 @@ package.widget.menu.item = function WidgetMenuItem(me) {
             if (!Array.isArray(value)) {
                 var enabled = me.ui.element.get(object.parentNode, value);
                 me.ui.element.set(object, "ui.basic.enabled", enabled);
+            }
+        }
+    };
+    me.focus = {
+        set: function (object, value) {
+            if(object.parentNode.selected_item !== object) {
+                me.ui.element.set(object.parentNode, "select", [object, object.menu_select]);
             }
         }
     };

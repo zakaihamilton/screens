@@ -11,7 +11,7 @@ package.widget.modal = function WidgetModel(me) {
     };
     me.click = {
         set: function(object, value) {
-            me.ui.element.set(object.parentNode, "close", value);
+            me.ui.element.set(object.parentNode, "back", value);
         }
     };
 };

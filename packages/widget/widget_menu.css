@@ -19,11 +19,13 @@
     font-size: 14px;
     text-align: left;
     text-decoration: none;
+    border-right: 1px solid transparent;
 }
 
-.widget-menu-horizontal a:hover {
-    background-color: white;
-    color: black;
+.widget-menu-horizontal a.select {
+    background-color: #000080;
+    color:white;
+    border-right: 1px solid black;
 }
 
 .widget-menu-horizontal a[disabled="true"] {

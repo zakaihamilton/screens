@@ -113,11 +113,11 @@ package.ui.element = function UIElement(me) {
         }
         return result;
     };
-    me.set = function (object, path, value) {
+    me.set = function (object, path, value=null) {
         var result = undefined;
         object = me.to_object(object);
-        console.log("set object: " + object + " path: " + path + " value: " + value);
-        if (object) {
+        if (object && (object.component || object === document.body)) {
+            console.log("set object: " + object + " path: " + path + " value: " + value);
             var method = me.method(object, path);
             if (method.includes(".")) {
                 result = me.send(method + ".set", object, value);
@@ -125,17 +125,14 @@ package.ui.element = function UIElement(me) {
         }
         return result;
     };
-    me.bubble = function (object, path, value) {
-        var result = undefined;
+    me.broadcast = function (object, path, value=null) {
+        me.set(object, path, value);
         object = me.to_object(object);
-        while (object) {
-            result = me.send(me.method(object, path) + ".get", object);
-            if (result === value) {
-                return me.to_path(object);
+        if(object.childNodes) {
+            for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+                me.broadcast(object.childNodes[childIndex], path, value);
             }
-            object = object.parentNode;
         }
-        return null;
     };
     me.parent = function (object, component_name) {
         var parent = object.parentNode;

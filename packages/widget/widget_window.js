@@ -65,6 +65,8 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.theme.class": "widget.window.label",
                         "ui.theme.dynamic": true,
                         "ui.rect.move": path,
+                        "ui.basic.window": path,
+                        "ui.event.dblclick":"widget.window.toggle"
                     },
                     {
                         "ui.basic.context": path,
@@ -194,12 +196,12 @@ package.widget.window = function WidgetWindow(me) {
             if (!window) {
                 return;
             }
-            var region = me.ui.rect.absolute_region(object);
             var visible = me.is_visible(window);
+            var region = visible ? me.ui.rect.relative_region(object) : me.ui.rect.absolute_region(object);
             var parent = visible ? window : document.body;
             var menu = me.ui.element.create({
                 "ui.element.component": "widget.menu.popup",
-                "ui.style.position": "fixed",
+                "ui.style.position": "absolute",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
                 "ui.basic.window": object.window,
@@ -289,6 +291,20 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window, "ui.rect.resizable", true);
             }
             me.ui.element.set(window, "ui.focus.active", true);
+        }
+    };
+    me.toggle = {
+        get: function(object) {
+            return true;
+        },
+        set: function(object, value) {
+            var window = me.ui.element.to_object(object.window);
+            if(me.is_visible(window.maximize)) {
+                me.ui.element.set(object, "widget.window.maximize");
+            }
+            else {
+                me.ui.element.set(object, "widget.window.restore");
+            }
         }
     };
 };
