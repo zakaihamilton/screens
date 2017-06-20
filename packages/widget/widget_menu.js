@@ -9,12 +9,12 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.class = ["widget.menu.horizontal"];
     me.items = {
-        set : function(object, value) {
-            if(!object.menu) {
+        set: function (object, value) {
+            if (!object.menu) {
                 object.menu = me.ui.element.create({
-                    "ui.element.component":"widget.menu",
-                    "ui.style.position":"absolute",
-                    "ui.basic.window":object,
+                    "ui.element.component": "widget.menu",
+                    "ui.style.position": "absolute",
+                    "ui.basic.window": object,
                     "ui.group.data": {
                         "ui.data.keys": ["ui.basic.text", "select"],
                         "ui.data.values": value
@@ -27,17 +27,16 @@ package.widget.menu = function WidgetMenu(me) {
         set: function (object, value) {
             var item = value[0];
             var info = value[1];
-            if(typeof info === "string") {
+            if (typeof info === "string") {
                 me.ui.element.set(object, info, item);
-            }
-            else if (Array.isArray(info)) {
-                me.create_menu(item, info);
+            } else if (Array.isArray(info)) {
+                me.create_menu(object, item, info);
             }
         }
     };
-    me.create_menu = function(object, values) {
-        var region = me.ui.rect.absolute_region(object);
-        me.ui.element.create({
+    me.create_menu = function (object, item, values) {
+        var region = me.ui.rect.absolute_region(item);
+        var menu = me.ui.element.create({
             "ui.element.component": "widget.menu.popup",
             "ui.style.position": "absolute",
             "ui.style.left": region.left + "px",
@@ -48,7 +47,9 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         }, me.ui.element.body());
-    }
+        me.ui.element.set(menu, "ui.modal.forward", object);
+        return menu;
+    };
 };
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
@@ -56,7 +57,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
         "ui.basic.tag": "div",
     };
     me.container = {
-        "ui.modal.popup":"widget.menu.popup.close",
+        "ui.modal.popup": "widget.menu.popup.close"
     };
     me.class = ["widget.menu.vertical"];
     me.close = {
@@ -78,7 +79,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
     me.default = {
         "ui.basic.tag": "a",
         "ui.event.click": "click",
-        "ui.basic.href":"#"
+        "ui.basic.href": "#"
     };
     me.depends = {
         parent: ["widget.menu", "widget.menu.popup"],
@@ -90,7 +91,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         },
         set: function (object, value) {
             object.menu_select = value;
-            if(!Array.isArray(value)) {
+            if (!Array.isArray(value)) {
                 var enabled = me.ui.element.get(object.parentNode, value);
                 me.ui.element.set(object, "ui.basic.enabled", enabled);
             }

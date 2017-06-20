@@ -30,6 +30,9 @@ package.ui.focus = function UIFocus(me) {
         /* Find the lowest matching element on position */
         for(var index = 0; index < object.childNodes.length; index++) {
             var node = object.childNodes[index];
+            if(!node.component) {
+                continue;
+            }
             var rect = me.ui.rect.absolute_region(node);
             var in_rect = me.ui.rect.in_region(rect, x, y);
             if(in_rect) {
