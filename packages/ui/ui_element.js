@@ -137,6 +137,19 @@ package.ui.element = function UIElement(me) {
         }
         return null;
     };
+    me.parent = function (object, component_name) {
+        var parent = object.parentNode;
+        while (parent) {
+            if (parent === document.body) {
+                return null;
+            }
+            if (parent.component === component_name) {
+                return parent;
+            }
+            parent = parent.parentNode;
+        }
+        return null;
+    };
     me.body = function () {
         return document.getElementsByTagName("body")[0];
     };
@@ -187,9 +200,6 @@ package.ui.element = function UIElement(me) {
         object.component = component_name;
         if (!parent) {
             parent = me.body();
-        }
-        if(component.container) {
-            parent = me.create(component.container, parent);
         }
         me.set(object, "ui.node.parent", parent);
         var path = me.to_path(object);

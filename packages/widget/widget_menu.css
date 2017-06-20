@@ -5,6 +5,7 @@
     right:-1px;
     height:18px;
     border-bottom: 1px solid black;
+    z-index: 1;
 }
 
 .widget-menu-horizontal a {
@@ -40,6 +41,7 @@
     border: 1px solid black;
     background-color: white;
     box-shadow: 1px 1px 0px 0px #808080;
+    z-index: 1;
 }
 
 .widget-menu-vertical a {
@@ -49,7 +51,6 @@
     padding-left: 15px;
     font-family: "MS Sans Serif";
     font-size: 14px;
-    width: 152px;
     text-align: left;
     text-decoration: none;
     display: block;

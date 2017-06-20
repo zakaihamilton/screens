@@ -73,7 +73,7 @@ package.ui.theme = function UITheme(me) {
         var class_name = me.to_class(path);
         var component_name = path.substring(0, path.lastIndexOf("."));
         if (!me.stylesheets[component_name]) {
-            console.log("loading: " + component_name);
+            console.log("loading css stylesheet: " + component_name);
             me.stylesheets[component_name] = me.load_css(component_name);
         }
         if(add || object.className === "") {

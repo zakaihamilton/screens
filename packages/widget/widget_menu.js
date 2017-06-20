@@ -6,6 +6,11 @@
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
         "ui.basic.tag": "div",
+        "ui.basic.elements" : {
+            "ui.basic.var":"modal",
+            "ui.style.display":"none",
+            "ui.element.component":"widget.modal"
+        }
     };
     me.class = ["widget.menu.horizontal"];
     me.items = {
@@ -23,8 +28,15 @@ package.widget.menu = function WidgetMenu(me) {
             }
         }
     };
+    me.close = {
+        set: function (object, value) {
+            me.ui.element.set(object.modal, "ui.style.display", "none");
+            me.ui.element.set(object.menu, "ui.node.parent", null);
+        }
+    };
     me.select = {
         set: function (object, value) {
+            me.ui.element.set(object.menu, "ui.node.parent", null);
             var item = value[0];
             var info = value[1];
             if (typeof info === "string") {
@@ -35,8 +47,10 @@ package.widget.menu = function WidgetMenu(me) {
         }
     };
     me.create_menu = function (object, item, values) {
-        var region = me.ui.rect.absolute_region(item);
+        var region = me.ui.rect.relative_region(item);
+        me.ui.element.set(object.modal, "ui.style.display", "initial");
         var menu = me.ui.element.create({
+            "ui.basic.var":"menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.position": "absolute",
             "ui.style.left": region.left + "px",
@@ -46,8 +60,8 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.keys": ["ui.basic.text", "select"],
                 "ui.data.values": values
             }
-        }, me.ui.element.body());
-        me.ui.element.set(menu, "ui.modal.forward", object);
+        }, object);
+        me.ui.element.set(me.ui.element.to_object(menu).modal, "ui.style.display", "none");
         return menu;
     };
 };
@@ -55,14 +69,15 @@ package.widget.menu = function WidgetMenu(me) {
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
         "ui.basic.tag": "div",
-    };
-    me.container = {
-        "ui.modal.popup": "widget.menu.popup.close"
+        "ui.basic.elements" : {
+            "ui.basic.var":"modal",
+            "ui.element.component":"widget.modal"
+        }
     };
     me.class = ["widget.menu.vertical"];
     me.close = {
         set: function (object, value) {
-            me.ui.modal.close(object);
+            me.ui.element.set(object, "ui.node.parent", null);
         }
     };
     me.select = {

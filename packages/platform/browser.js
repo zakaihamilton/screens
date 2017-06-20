@@ -19,7 +19,6 @@ package.include({
         "element",
         "event",
         "style",
-        "modal",
         "basic",
         "focus",
         "theme"
@@ -33,6 +32,7 @@ package.include({
         "text",
         "header",
         "window",
+        "modal",
         "menu",
         "icon",
         "image"

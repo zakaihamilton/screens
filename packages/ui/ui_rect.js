@@ -105,8 +105,8 @@ package.ui.rect = function UIRect(me) {
         var region = me.absolute_region(object);
         var xPos = region.left - parent_region.left;
         var yPos = region.top - parent_region.top;
-        var width = object.clientWidth;
-        var height = object.clientHeight;
+        var width = region.width;
+        var height = region.height;
         return {
             left: xPos,
             top: yPos,
@@ -121,9 +121,14 @@ package.ui.rect = function UIRect(me) {
         var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
-        var width = clientRect.width;
-        var height = clientRect.height;
-
+        var width = object.clientWidth;
+        var height = object.clientHeight;
+        if(!width) {
+            width = clientRect.width;
+        }
+        if(!height) {
+            height = clientRect.height;
+        }
         while (object) {
             if (object.tagName === "BODY") {
                 // deal with browser quirks with body/window/document and page scroll
