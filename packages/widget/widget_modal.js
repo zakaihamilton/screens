@@ -3,7 +3,7 @@
  @component UIModal
  */
 
-package.widget.modal = function WidgetModel(me) {
+package.widget.modal = function WidgetModal(me) {
     me.class=["widget.modal.overlay"];
     me.default = {
         "ui.basic.tag" : "div",

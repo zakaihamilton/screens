@@ -50,8 +50,8 @@
     background-color: white;
     color: black;
     height:18px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
     font-family: "MS Sans Serif";
     font-size: 14px;
     text-align: left;
@@ -72,4 +72,10 @@
 .widget-menu-vertical a[disabled="true"]:hover {
     background-color: #000080;
     color:lightgray;
+}
+
+.widget-menu-vertical a.checked:after {
+    content:'\2713';
+    position:absolute;
+    left:3px;
 }

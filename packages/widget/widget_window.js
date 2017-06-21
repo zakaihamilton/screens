@@ -157,7 +157,9 @@ package.widget.window = function WidgetWindow(me) {
     me.close = {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
-            return me.is_visible(window.close);
+            var enabled = me.is_visible(window.close) && me.is_visible(window);
+            var options = {"enabled":enabled};
+            return options;
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
@@ -249,7 +251,9 @@ package.widget.window = function WidgetWindow(me) {
     me.minimize = {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
-            return me.is_visible(window.minimize) && me.is_visible(window);
+            var enabled = me.is_visible(window.minimize) && me.is_visible(window);
+            var options = {"enabled":enabled};
+            return options;
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
@@ -265,7 +269,9 @@ package.widget.window = function WidgetWindow(me) {
     me.maximize = {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
-            return me.is_visible(window.maximize);
+            var enabled = me.is_visible(window.maximize) && me.is_visible(window);
+            var options = {"enabled":enabled};
+            return options;
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
@@ -296,7 +302,9 @@ package.widget.window = function WidgetWindow(me) {
     me.restore = {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
-            return me.is_visible(window.restore) || !me.is_visible(window);
+            var enabled = me.is_visible(window.restore) && me.is_visible(window);
+            var options = {"enabled":enabled};
+            return options;
         },
         set: function (object, value) {
             var window = me.ui.element.to_object(object.window);

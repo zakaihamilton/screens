@@ -68,7 +68,7 @@ package.widget.menu = function WidgetMenu(me) {
             "ui.style.top": region.top + region.height + "px",
             "ui.basic.window": object.window,
             "ui.group.data": {
-                "ui.data.keys": ["ui.basic.text", "select"],
+                "ui.data.keys": ["ui.basic.text", "select", "state"],
                 "ui.data.values": values
             }
         }, object);
@@ -119,8 +119,18 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, value) {
             object.menu_select = value;
             if (!Array.isArray(value)) {
-                var enabled = me.ui.element.get(object.parentNode, value);
-                me.ui.element.set(object, "ui.basic.enabled", enabled);
+                var options = me.ui.element.get(object.parentNode, value);
+                if(options["enabled"]) {
+                    me.ui.element.set(object, "ui.basic.enabled", options["enabled"]);
+                }
+                if(options["state"]) {
+                    if(options["state"]) {
+                        me.ui.element.set(object, "ui.theme.add", "checked");
+                    }
+                    else {
+                        me.ui.element.set(object, "ui.theme.remove", "checked");                
+                    }
+                }
             }
         }
     };

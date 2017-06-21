@@ -54,7 +54,9 @@ package.app.main = function (me) {
                             ["Run..."],
                             ["Exit Windows..."],
                         ]],
-                    ["Options"],
+                    ["Options", [
+                            ["Load on Startup", "app.main.check"]
+                        ]],
                     ["Window"],
                     ["Help", [
                             ["Contents"],
@@ -124,4 +126,13 @@ package.app.main = function (me) {
     me.test = function (value) {
         alert("Hello!" + value);
     };
+    me.check = {
+        get: function(object) {
+            var options = {"state":me.checked};
+            return options;
+        },
+        set: function(object, value) {
+            me.checked = !me.checked;
+        }
+    }
 };
