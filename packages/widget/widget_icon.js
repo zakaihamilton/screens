@@ -9,26 +9,21 @@ package.widget.icon = function WidgetIcon(me) {
     };
     me.extend = ["ui.drag"];
     me.default = {
-        "ui.basic.tag": "div",
-        "ui.theme.class" : "widget.icon.border"
+        "ui.basic.tag": "figure",
+        "ui.theme.class" : "widget.icon.border",
+        "ui.style.text-align":"center",
     };
     me.create = function(object) {
         me.ui.element.create([{
                 "ui.basic.src": "",
                 "ui.style.position": "relative",
-                "ui.style.left": "55px",
-                "ui.style.top": "0px",
                 "ui.style.pointer-events" : "none",
                 "ui.drag.element": me.ui.element.to_path(object),
                 "ui.basic.var": "icon"
             },
             {
-                "ui.basic.text": "",
-                "ui.style.position": "relative",
-                "ui.style.left": "0px",
-                "ui.style.top": "0px",
-                "ui.style.width": "100px",
-                "ui.style.height": "50px",
+                "ui.basic.tag":"figcaption",
+                "ui.style.display":"block",
                 "ui.style.text-align": "center",
                 "ui.basic.var": "label"
             }], object);

@@ -16,8 +16,8 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.position": "absolute",
         "ui.style.left": "100px",
         "ui.style.top": "100px",
-        "ui.rect.movable":true,
-        "ui.rect.resizable":true,
+        "ui.rect.movable": true,
+        "ui.rect.resizable": true,
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
@@ -66,7 +66,7 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.theme.dynamic": true,
                         "ui.rect.move": path,
                         "ui.basic.window": path,
-                        "ui.event.dblclick":"widget.window.toggle"
+                        "ui.event.dblclick": "widget.window.toggle"
                     },
                     {
                         "ui.basic.context": path,
@@ -113,7 +113,6 @@ package.widget.window = function WidgetWindow(me) {
         if (!parent.tray) {
             me.ui.element.create({
                 "ui.basic.var": "tray",
-                "ui.style.overflow": "hidden",
                 "ui.style.left": "50px",
                 "ui.style.bottom": "0px",
                 "ui.style.position": "absolute"
@@ -158,7 +157,7 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
             var enabled = me.is_visible(window.close) && me.is_visible(window);
-            var options = {"enabled":enabled};
+            var options = {"enabled": enabled, "separator": true};
             return options;
         },
         set: function (object, value) {
@@ -175,10 +174,10 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.element.set(object.icon, "ui.basic.src", value);
         }
     };
-    me.update_title = function(object) {
+    me.update_title = function (object) {
         var child_window = me.ui.element.last(object, me.id);
-        if(child_window) {
-            if(me.is_visible(child_window) && me.is_visible(child_window.restore)) {
+        if (child_window) {
+            if (me.is_visible(child_window) && me.is_visible(child_window.restore)) {
                 me.ui.element.set(object.title_label, "ui.basic.text", object.window_title + " - " + child_window.window_title);
                 return;
             }
@@ -193,7 +192,7 @@ package.widget.window = function WidgetWindow(me) {
             object.window_title = value;
             me.update_title(object);
             var parent_window = me.ui.element.parent(window, me.id);
-            if(parent_window) {
+            if (parent_window) {
                 me.update_title(parent_window);
             }
             me.ui.element.set(object.icon, "ui.basic.text", value);
@@ -214,31 +213,22 @@ package.widget.window = function WidgetWindow(me) {
                 return;
             }
             var visible = me.is_visible(window);
-            var region = visible ? me.ui.rect.relative_region(object) : me.ui.rect.absolute_region(object);
-            var parent = visible ? window : document.body;
-            var menu = me.ui.element.create({
-                "ui.element.component": "widget.menu.popup",
-                "ui.style.position": "absolute",
-                "ui.style.left": region.left + "px",
-                "ui.style.top": region.bottom + "px",
-                "ui.basic.window": object.window,
-                "ui.group.data": {
-                    "ui.data.keys": ["ui.basic.text", "select"],
-                    "ui.data.values": [
-                        ["Restore", "widget.window.restore"],
-                        ["Move", ""],
-                        ["Size", ""],
-                        ["Minimize", "widget.window.minimize"],
-                        ["Maximize", "widget.window.maximize"],
-                        ["Close", "widget.window.close"],
-                        ["Switch To"]]
-                }
-            }, parent);
+            var region = me.ui.rect.relative_region(object);
+            var parent = object.parentNode;
+            var menu = me.widget.menu.create_menu(object, region, [
+                ["Restore", "widget.window.restore"],
+                ["Move", ""],
+                ["Size", ""],
+                ["Minimize", "widget.window.minimize"],
+                ["Maximize", "widget.window.maximize"],
+                ["Close", "widget.window.close"],
+                ["Switch To", undefined, {"separator": true}]
+            ], parent);
             if (!visible) {
                 var body_region = me.ui.rect.viewport();
                 var icon_region = me.ui.rect.absolute_region(window.icon);
                 me.ui.element.set(menu, "ui.style.top", "");
-                me.ui.element.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + 3 + "px");
+                me.ui.element.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + "px");
             }
         }
     };
@@ -252,7 +242,7 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
             var enabled = me.is_visible(window.minimize) && me.is_visible(window);
-            var options = {"enabled":enabled};
+            var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
@@ -260,7 +250,7 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.element.set(window, "ui.style.display", "none");
             me.ui.element.set(window.icon, "ui.style.display", "block");
             var parent_window = me.ui.element.parent(window, me.id);
-            if(parent_window) {
+            if (parent_window) {
                 me.update_title(parent_window);
                 me.ui.element.set(parent_window.menu, "ui.style.right", "-1px");
             }
@@ -270,7 +260,7 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
             var enabled = me.is_visible(window.maximize) && me.is_visible(window);
-            var options = {"enabled":enabled};
+            var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
@@ -280,12 +270,11 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.element.set(window.restore, "ui.style.display", "block");
             me.ui.element.set(window.maximize, "ui.style.display", "none");
             var parent_window = me.ui.element.parent(window, me.id);
-            if(parent_window) {
+            if (parent_window) {
                 me.update_title(parent_window);
                 me.ui.element.set(window.title_label, "ui.style.display", "none");
                 me.ui.element.set(parent_window.menu, "ui.style.right", "38px");
-            }
-            else {
+            } else {
                 parent_window = document.body;
             }
             window.restore_region = me.ui.rect.relative_region(window, parent_window);
@@ -302,8 +291,8 @@ package.widget.window = function WidgetWindow(me) {
     me.restore = {
         get: function (object) {
             var window = me.ui.element.to_object(object.window);
-            var enabled = me.is_visible(window.restore) && me.is_visible(window);
-            var options = {"enabled":enabled};
+            var enabled = me.is_visible(window.restore) || !me.is_visible(window);
+            var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
@@ -312,7 +301,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window, "ui.style.display", "block");
                 me.ui.element.set(window.icon, "ui.style.display", "none");
                 var parent_window = me.ui.element.parent(window, me.id);
-                if(parent_window && me.is_visible(window.restore)) {
+                if (parent_window && me.is_visible(window.restore)) {
                     me.update_title(parent_window);
                     me.ui.element.set(parent_window.menu, "ui.style.right", "38px");
                 }
@@ -321,11 +310,10 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.element.set(window.maximize, "ui.style.display", "block");
                 me.ui.element.set(window.title_label, "ui.style.display", "block");
                 var parent_window = me.ui.element.parent(window, me.id);
-                if(parent_window) {
+                if (parent_window) {
                     me.update_title(parent_window);
                     me.ui.element.set(parent_window.menu, "ui.style.right", "-1px");
-                }
-                else {
+                } else {
                     parent_window = document.body;
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, parent_window);
@@ -337,15 +325,14 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.toggle = {
-        get: function(object) {
+        get: function (object) {
             return true;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var window = me.ui.element.to_object(object.window);
-            if(me.is_visible(window.restore)) {
+            if (me.is_visible(window.restore)) {
                 me.ui.element.set(object, "widget.window.restore");
-            }
-            else {
+            } else {
                 me.ui.element.set(object, "widget.window.maximize");
             }
         }

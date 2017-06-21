@@ -51,8 +51,8 @@ package.app.main = function (me) {
                             ["Copy..."],
                             ["Delete"],
                             ["Properties"],
-                            ["Run..."],
-                            ["Exit Windows..."],
+                            ["Run...",undefined,{"separator":true}],
+                            ["Exit Windows...",undefined,{"separator":true}],
                         ]],
                     ["Options", [
                             ["Load on Startup", "app.main.check"]
