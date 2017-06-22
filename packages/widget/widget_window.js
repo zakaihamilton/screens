@@ -154,7 +154,9 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
-            me.detach(window, parent_window);
+            if(parent_window) {
+                me.detach(window, parent_window);
+            }
             me.set(window.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
         }
