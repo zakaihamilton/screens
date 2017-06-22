@@ -124,7 +124,16 @@ package.app.main = function (me) {
                         "title": "Games",
                         "background": "radial-gradient(circle, yellow, green, red)"
                     }]
-            }]);
+            },
+            {
+                "title": "Convert",
+                "icon": "/packages/res/icons/convert.png",
+                "ui.style.left": "400px",
+                "ui.style.top": "200px",
+                "ui.style.width": "400px",
+                "ui.style.height": "300px"
+            },
+        ]);
     };
     me.ok = {
         set: function (object, value) {
