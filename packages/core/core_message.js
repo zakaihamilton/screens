@@ -70,7 +70,7 @@ package.core.message = function CoreMessage(me) {
             me.core.console.log(error);
             return undefined;
         }
-        me.core.console.log("sending: " + path + " with: " + JSON.stringify(args) + " callback: " +callback);
+        me.core.console.log("sending: " + path + " with: " + args);
         if(typeof callback === "function") {
             var result = callback.apply(null, args);
             return result;

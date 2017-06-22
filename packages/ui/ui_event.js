@@ -21,7 +21,7 @@ package.ui.event = function UIEvent(me) {
                         return;
                     }
                     if (!object.getAttribute('disabled')) {
-                        me.ui.element.set(object, method, event);
+                        me.set(object, method, event);
                     }
                 }, 200, object);
             } else {
@@ -29,7 +29,7 @@ package.ui.event = function UIEvent(me) {
                     object.event_dblclick = true;
                 }
                 if (!object.getAttribute('disabled')) {
-                    me.ui.element.set(object, method, event);
+                    me.set(object, method, event);
                 }
             }
         };

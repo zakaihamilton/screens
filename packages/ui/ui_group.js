@@ -12,7 +12,7 @@ package.ui.group = function UIGroup(me) {
                         me.ui.element.create(value, object);
                     } else if (value) {
                         for (var key in value) {
-                            me.ui.element.set(object, key, value[key]);
+                            me.set(object, key, value[key]);
                         }
                     }
                     me.send("ui." + property + ".group", object)

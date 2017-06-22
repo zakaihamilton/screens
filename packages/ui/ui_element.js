@@ -58,120 +58,6 @@ package.ui.element = function UIElement(me) {
         }
         return match;
     };
-    me.to_path = function (object) {
-        if (typeof object === "string") {
-            return object;
-        }
-        var info = me.core.ref.path(object, "parentNode", "unique");
-        if (typeof me.root === "undefined") {
-            me.root = info.root;
-        }
-        if (me.to_object(info.path) !== object) {
-            throw "Invalid path " + info.path + " for object";
-        }
-        return info.path;
-    };
-    me.to_object = function (path) {
-        var object = path;
-        if (typeof path === "string") {
-            object = me.core.ref.object(me.root, path, "childNodes", "unique");
-        }
-        return object;
-    };
-    me.to_objects = function (path) {
-        if (typeof path !== "string") {
-            path = me.to_path(path);
-        }
-        objects = me.core.ref.objects(me.root, path, "childNodes", "unique");
-        return objects;
-    };
-    me.method = function (object, path) {
-        var method = "";
-        if (object && object.component) {
-            method = object.component + ".";
-        }
-        method += path;
-        return method;
-    };
-    me.get_value = function(object, value) {
-        if(typeof value === "string" && value.startsWith("@")) {
-            var result = me.get(object, value);
-            if(typeof result !== "undefined") {
-                value = result;
-            }
-        }
-        return value;
-    };
-    me.get = function (object, path) {
-        var result = undefined;
-        object = me.to_object(object);
-        if (object) {
-            var method = me.method(object, path);
-            if (method.includes(".")) {
-                result = me.send(method + ".get", object);
-            }
-        }
-        return result;
-    };
-    me.set = function (object, path, value=null) {
-        var result = undefined;
-        object = me.to_object(object);
-        if (object && (object.component || object === document.body)) {
-            console.log("set object: " + object + " path: " + path + " value: " + value);
-            var method = me.method(object, path);
-            if (method.includes(".")) {
-                result = me.send(method + ".set", object, value);
-            }
-        }
-        return result;
-    };
-    me.broadcast = function (object, path, value=null) {
-        me.set(object, path, value);
-        object = me.to_object(object);
-        if(object.childNodes) {
-            for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-                me.broadcast(object.childNodes[childIndex], path, value);
-            }
-        }
-    };
-    me.first = function(object, component_name) {
-        object = me.to_object(object);
-        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-            var child = object.childNodes[childIndex];
-            if (child.component === component_name) {
-                return child;
-            }
-        }
-        return null;
-    };
-    me.last = function(object, component_name) {
-        object = me.to_object(object);
-        for(var childIndex = object.childNodes.length - 1; childIndex >= 0; childIndex--) {
-            var child = object.childNodes[childIndex];
-            if (child.component === component_name) {
-                return child;
-            }
-            var result = me.last(child, component_name);
-            if(result) {
-                return result;
-            }
-        }
-        return null;
-    };
-    me.parent = function (object, component_name) {
-        object = me.to_object(object);
-        var parent = object.parentNode;
-        while (parent) {
-            if (parent === document.body) {
-                return null;
-            }
-            if (parent.component === component_name) {
-                return parent;
-            }
-            parent = parent.parentNode;
-        }
-        return null;
-    };
     me.body = function () {
         return document.getElementsByTagName("body")[0];
     };
@@ -207,7 +93,6 @@ package.ui.element = function UIElement(me) {
             return;
         }
         var object = null;
-        parent = me.to_object(parent);
         var component_name = properties["ui.element.component"];
         if (!component_name) {
             component_name = me.matches(properties, parent);
@@ -217,14 +102,13 @@ package.ui.element = function UIElement(me) {
         }
         var component = me[component_name];
         properties = me.combine(component.default, properties);
-        console.log("creating element of " + component_name + " for properties: " + JSON.stringify(properties));
+        console.log("creating element of " + component_name);
         object = document.createElement(properties['ui.basic.tag']);
         object.component = component_name;
         if (!parent) {
             parent = me.body();
         }
         me.set(object, "ui.node.parent", parent);
-        var path = me.to_path(object);
         if (component.class) {
             me.ui.theme.set_class(object, component.class);
         }
@@ -242,6 +126,6 @@ package.ui.element = function UIElement(me) {
         if (component_name !== me.id) {
             component.send(component.id + ".draw", object);
         }
-        return path;
+        return object;
     };
 };

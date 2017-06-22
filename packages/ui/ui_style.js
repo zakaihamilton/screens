@@ -14,7 +14,6 @@ package.ui.style = function UIStyle(me) {
                 },
                 set: function (object, value) {
                     if (object && typeof value !== "undefined") {
-                        value = me.ui.element.get_value(object, value);
                         object.style[property] = value;
                     }
                 }

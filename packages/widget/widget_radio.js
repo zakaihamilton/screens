@@ -11,6 +11,7 @@ package.widget.radio = function WidgetRadio(me) {
         "ui.basic.tag" : "div"
     };
     me.create = function(object) {
+        var ref = me.core.ref.gen();
         me.ui.element.create([{
             "ui.basic.var":"input",
             "ui.basic.tag":"input",
@@ -18,12 +19,12 @@ package.widget.radio = function WidgetRadio(me) {
             "ui.style.position":"relative",
             "ui.style.opacity":0,
             "ui.theme.class":"widget.radio.original",
-            "ui.basic.elementId": me.ui.element.to_path(object)
+            "ui.basic.elementId": ref
         },
         {
             "ui.basic.var":"radio",
             "ui.basic.tag":"label",
-            "ui.basic.htmlFor": me.ui.element.to_path(object),
+            "ui.basic.htmlFor": ref,
             "ui.style.position":"relative",
             "ui.theme.class":"widget.radio.icon",
             "ui.basic.elements" : {
@@ -33,22 +34,22 @@ package.widget.radio = function WidgetRadio(me) {
                 "ui.theme.class":"widget.radio.label"
             }
         }], object);
-        me.ui.element.set(object, "ui.basic.label", me.ui.element.to_object(object.radio).label);
+        me.set(object, "ui.basic.label", object.radio.label);
     };
     me.state = {
         get : function(object) {
-            return me.ui.element.to_object(object.input).checked;
+            return object.input.checked;
         },
         set : function(object, value) {
-            me.ui.element.to_object(object.input).checked = value;
+            object.input.checked = value;
         }
     };
     me.group = {
         get : function(object) {
-            return me.ui.element.to_object(object.input).name;
+            return object.input.name;
         },
         set : function(object, value) {
-            me.ui.element.to_object(object.input).name = value;
+            object.input.name = value;
         }
     };
 };

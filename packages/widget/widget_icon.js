@@ -16,9 +16,8 @@ package.widget.icon = function WidgetIcon(me) {
     me.create = function(object) {
         me.ui.element.create([{
                 "ui.basic.src": "",
-                "ui.style.position": "relative",
                 "ui.style.pointer-events" : "none",
-                "ui.drag.element": me.ui.element.to_path(object),
+                "ui.drag.element": object,
                 "ui.basic.var": "icon"
             },
             {

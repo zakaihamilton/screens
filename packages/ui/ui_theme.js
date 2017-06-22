@@ -83,32 +83,4 @@ package.ui.theme = function UITheme(me) {
             object.className = class_name;
         }
     };
-    me.dynamic = {
-        get: function(object) {
-            return object.dynamic_class;
-        },
-        set: function(object, value) {
-            value = me.ui.element.get_value(object, value);
-            if(typeof value !== "undefined") {
-                object.dynamic_class = value;
-            }
-        }
-    };
-    me.change_class = function(object, from, to, property_to_stop) {
-        if(object.dynamic_class) {
-            if(from) {
-                me.ui.element.set(object, "ui.theme.remove", from);
-            }
-            if(to) {
-                me.ui.element.set(object, "ui.theme.add", to);
-            }
-        }
-        for(var index = 0; index < object.childNodes.length; index++) {
-            var child = object.childNodes[index];
-            if(child[property_to_stop]) {
-                continue;
-            }
-            me.change_class(child, from, to, property_to_stop);
-        }
-    };
 };

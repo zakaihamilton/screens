@@ -24,7 +24,9 @@ package.app.main = function (me) {
     me.ready = function () {
         me.ui.element.update([
             {
-                "ui.style.background": "lightblue"
+                "ui.style.background": "lightblue",
+                "ui.style.user-select" : "none",
+                "ui.style.cursor": "default"
             }
         ], me.ui.element.body());
         me.ui.element.create([
@@ -33,7 +35,7 @@ package.app.main = function (me) {
                     "ui.data.parent": me.ui.element.body(),
                     "ui.data.default": {"background": "radial-gradient(circle, red, yellow, green)"},
                     "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "100px", "600px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
+                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "500px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
                 }
             },
             {
@@ -51,13 +53,16 @@ package.app.main = function (me) {
                             ["Copy..."],
                             ["Delete"],
                             ["Properties"],
-                            ["Run...",undefined,{"separator":true}],
-                            ["Exit Windows...",undefined,{"separator":true}],
+                            ["Run...", undefined, {"separator": true}],
+                            ["Exit Windows...", undefined, {"separator": true}],
                         ]],
                     ["Options", [
                             ["Load on Startup", "app.main.check"]
                         ]],
-                    ["Window"],
+                    ["Window", [
+                            ["Games"],
+                            ["Programs"]
+                        ]],
                     ["Help", [
                             ["Contents"],
                             ["Search for Help on..."],
@@ -127,11 +132,11 @@ package.app.main = function (me) {
         alert("Hello!" + value);
     };
     me.check = {
-        get: function(object) {
-            var options = {"state":me.checked};
+        get: function (object) {
+            var options = {"state": me.checked};
             return options;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             me.checked = !me.checked;
         }
     }

@@ -20,13 +20,13 @@ package.ui.basic = function UIBasic(me) {
     me.src = {
         get: function (object) {
             if(object.icon) {
-                object = me.ui.element.to_object(object.icon);
+                object = object.icon;
             }
             return object.src;
         },
         set: function (object, value) {
             if(object.icon) {
-                object = me.ui.element.to_object(object.icon);
+                object = object.icon;
             }
             object.src = value;
         }
@@ -60,9 +60,9 @@ package.ui.basic = function UIBasic(me) {
             if (value) {
                 var parent = object.parentNode;
                 if(object.context) {
-                    parent = me.ui.element.to_object(object.context);
+                    parent = object.context;
                 }
-                parent[value] = me.ui.element.to_path(object);
+                parent[value] = object;
             }
         }
     };
@@ -72,7 +72,7 @@ package.ui.basic = function UIBasic(me) {
         },
         set: function (object, value) {
             if (value) {
-                object.context = me.ui.element.to_path(value);
+                object.context = value;
             }
         }
     };
@@ -100,7 +100,6 @@ package.ui.basic = function UIBasic(me) {
             return !object.getAttribute('disabled');
         },
         set : function(object, value) {
-            value = me.ui.element.get_value(object, value);
             if(value) {
                 object.removeAttribute('disabled');            
             }
@@ -120,13 +119,13 @@ package.ui.basic = function UIBasic(me) {
     me.text = {
         get : function(object) {
             if(object.label) {
-                object = me.ui.element.to_object(object.label);
+                object = object.label;
             }
             return object.innerHTML;
         },
         set : function(object, value) {
             if(object.label) {
-                object = me.ui.element.to_object(object.label);
+                object = object.label;
             }
             object.innerHTML = value;
         }

@@ -11,6 +11,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         "ui.basic.tag" : "div"
     };
     me.create = function (object) {
+        var ref = me.core.ref.gen();
         me.ui.element.create([{
                 "ui.basic.var": "input",
                 "ui.basic.tag": "input",
@@ -18,12 +19,12 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                 "ui.style.position": "relative",
                 "ui.style.opacity": 0,
                 "ui.theme.class": "widget.checkbox.original",
-                "ui.basic.elementId": me.ui.element.to_path(object)
+                "ui.basic.elementId": ref
             },
             {
                 "ui.basic.var": "checkbox",
                 "ui.basic.tag": "label",
-                "ui.basic.htmlFor": me.ui.element.to_path(object),
+                "ui.basic.htmlFor": ref,
                 "ui.style.position": "relative",
                 "ui.theme.class": "widget.checkbox.icon",
                 "ui.basic.elements": {
@@ -33,14 +34,14 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                     "ui.theme.class": "widget.checkbox.label"
                 }
             }], object);
-        me.ui.element.set(object, "ui.basic.label", me.ui.element.to_object(object.checkbox).label);
+        me.set(object, "ui.basic.label", object.checkbox.label);
     };
     me.state = {
         get : function(object) {
-            return me.ui.element.to_object(object.input).checked;
+            return object.input.checked;
         },
         set : function(object, value) {
-            me.ui.element.to_object(object.input).checked = value;
+            object.input.checked = value;
         }
     };
 };

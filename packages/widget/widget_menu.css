@@ -44,6 +44,7 @@
     background-color: white;
     box-shadow: 1px 1px 0px 0px #808080;
     z-index: 1;
+    margin-bottom:3px;
 }
 
 .widget-menu-vertical a {

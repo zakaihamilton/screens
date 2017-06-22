@@ -17,103 +17,85 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.left": "100px",
         "ui.style.top": "100px",
         "ui.rect.movable": true,
-        "ui.rect.resizable": true,
+        "ui.rect.resizable": true
     };
     me.class = ["widget.window.border"];
     me.create = function (object) {
-        var path = me.ui.element.to_path(object);
         me.ui.element.create([{
-                "ui.theme.class": "widget.window.left_bottom",
-                "ui.rect.resize": path
+                "ui.theme.class": "widget.window.bottom-left",
+                "ui.rect.resize": object
             },
             {
-                "ui.theme.class": "widget.window.right_bottom",
-                "ui.rect.resize": path
+                "ui.theme.class": "widget.window.bottom-right",
+                "ui.rect.resize": object
             },
             {
-                "ui.theme.class": "widget.window.left_top",
-                "ui.rect.resize": path
+                "ui.theme.class": "widget.window.top-left",
+                "ui.rect.resize": object
             },
             {
-                "ui.theme.class": "widget.window.right_top",
-                "ui.rect.resize": path
+                "ui.theme.class": "widget.window.top-right",
+                "ui.rect.resize": object
             },
             {
                 "ui.theme.class": "widget.window.margin",
-                "ui.theme.dynamic": true,
                 "ui.basic.elements": [
                     {
                         "ui.theme.class": "widget.window.content",
-                        "ui.basic.context": path,
+                        "ui.basic.context": object,
                         "ui.basic.var": "content"
                     },
                     {
-                        "ui.theme.class": "widget.window.title"
+                        "ui.theme.class": "widget.window.title",
+                        "ui.basic.context": object,
+                        "ui.basic.var": "title_back"
                     },
                     {
-                        "ui.basic.context": path,
+                        "ui.basic.context": object,
                         "ui.basic.var": "close",
                         "ui.theme.class": "widget.window.close",
                         "ui.event.click": "widget.window.context_menu",
                         "ui.event.dblclick": "widget.window.close",
-                        "ui.basic.window": path
                     },
                     {
-                        "ui.basic.context": path,
+                        "ui.basic.context": object,
                         "ui.basic.var": "title_label",
                         "ui.basic.text": "",
                         "ui.theme.class": "widget.window.label",
-                        "ui.theme.dynamic": true,
-                        "ui.rect.move": path,
-                        "ui.basic.window": path,
+                        "ui.rect.move": object,
                         "ui.event.dblclick": "widget.window.toggle"
                     },
                     {
-                        "ui.basic.context": path,
+                        "ui.basic.context": object,
                         "ui.basic.var": "minimize",
                         "ui.theme.class": "widget.window.action",
                         "ui.event.click": "widget.window.minimize",
                         "ui.style.right": "20px",
-                        "ui.basic.window": path,
                         "ui.basic.elements": {
                             "ui.theme.class": "widget.window.minimize",
                         }
                     },
                     {
-                        "ui.basic.context": path,
+                        "ui.basic.context": object,
                         "ui.basic.var": "maximize",
                         "ui.theme.class": "widget.window.action",
-                        "ui.event.click": "widget.window.maximize",
+                        "ui.event.click": "widget.window.toggle",
                         "ui.style.right": "1px",
-                        "ui.basic.window": path,
                         "ui.basic.elements": {
-                            "ui.theme.class": "widget.window.maximize",
-                        }
-                    },
-                    {
-                        "ui.basic.context": path,
-                        "ui.basic.var": "restore",
-                        "ui.theme.class": "widget.window.action",
-                        "ui.event.click": "widget.window.restore",
-                        "ui.style.right": "1px",
-                        "ui.style.display": "none",
-                        "ui.basic.window": path,
-                        "ui.basic.elements": {
-                            "ui.theme.class": "widget.window.restore",
+                            "ui.theme.class": "widget.window.maximize"
                         }
                     }
                 ]
             }
         ], object);
-        var parent = me.ui.element.parent(object, me.id);
+        var parent = me.parent(object);
         if (parent === null) {
-            me.ui.element.set(object.close, "ui.theme.add", "main");
+            me.set(object.close, "ui.theme.add", "main");
             parent = document.body;
         }
         if (!parent.tray) {
             me.ui.element.create({
                 "ui.basic.var": "tray",
-                "ui.style.left": "50px",
                 "ui.style.bottom": "0px",
                 "ui.style.position": "absolute"
             }, parent);
@@ -125,96 +107,116 @@ package.widget.window = function WidgetWindow(me) {
             "ui.event.click": "widget.window.context_menu",
             "ui.event.dblclick": "widget.window.restore",
             "ui.style.display": "none",
-            "ui.basic.window": path
+            "ui.basic.window": object
         }, parent.tray);
+        me.ui.property.broadcast(object, "ui.theme.add", "restore");
     };
-    me.is_root = {
-        get: function (object) {
-            return me.ui.element.parent(object, me.id) === null;
-        }
-    };
-    me.parent_region = function (object) {
+    me.parent = function (object) {
         var parent = object.parentNode;
+        console.log("parent starting point: " + parent);
         while (parent) {
+            console.log("parent: " + parent.component);
             if (parent === document.body) {
-                return me.ui.rect.viewport();
+                return null;
+            }
+            if (parent.window) {
+                return parent.window;
             }
             if (parent.component === me.id) {
-                return me.ui.rect.absolute_region(parent.content);
+                return parent;
             }
             parent = parent.parentNode;
         }
+        return null;
     };
-    me.draw = function (object) {
-        if (object.style.position !== "absolute") {
-            me.ui.element.set(object.title_label, "ui.style.right", "18px");
-            me.ui.element.set(object.minimize, "ui.style.right", "1px");
-            me.ui.element.set(object.maximize, "ui.style.display", "none");
-            me.ui.element.set(object.restore, "ui.style.display", "none");
+    me.window = function(object) {
+        var window = object;
+        console.log("window: " + window.component);
+        if(object) {
+            if(object.window) {
+                window = object.window;
+                console.log("found object window: " + window.component);
+            }
+            else if(object.component !== me.id) {
+                console.log("looking for parent window...");
+                window = me.parent(object);
+                if(window) {
+                    console.log("looking for parent window: " + window.component);
+                }
+            }
+        }
+        return window;
+    };
+    me.is_root = {
+        get: function (object) {
+            return me.parent(object) === null;
         }
     };
     me.close = {
         get: function (object) {
-            var window = me.ui.element.to_object(object.window);
+            var window = me.window(object);
             var enabled = me.is_visible(window.close) && me.is_visible(window);
             var options = {"enabled": enabled, "separator": true};
             return options;
         },
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            me.ui.element.set(window.icon, "ui.node.parent", null);
-            me.ui.element.set(window, "ui.node.parent", null);
+            var window = me.window(object);
+            var parent_window = me.parent(window);
+            me.detach(window, parent_window);
+            me.set(window.icon, "ui.node.parent", null);
+            me.set(window, "ui.node.parent", null);
         }
     };
     me.icon = {
         get: function (object) {
-            return me.ui.element.get(object.icon, "ui.basic.src");
+            return me.get(object.icon, "ui.basic.src");
         },
         set: function (object, value) {
-            me.ui.element.set(object.icon, "ui.basic.src", value);
+            me.set(object.icon, "ui.basic.src", value);
         }
     };
     me.update_title = function (object) {
-        var child_window = me.ui.element.last(object, me.id);
+        var window = me.window(object);
+        var child_window = me.ui.node.last(window, me.id);
         if (child_window) {
-            if (me.is_visible(child_window) && me.is_visible(child_window.restore)) {
-                me.ui.element.set(object.title_label, "ui.basic.text", object.window_title + " - " + child_window.window_title);
+            if (me.is_visible(child_window) && me.set(child_window, "ui.theme.contains", "maximize")) {
+                me.set(window.title_label, "ui.basic.text", window.window_title + " - " + child_window.window_title);
                 return;
             }
         }
-        me.ui.element.set(object.title_label, "ui.basic.text", object.window_title);
+        me.set(window.title_label, "ui.basic.text", window.window_title);
     };
     me.title = {
         get: function (object) {
-            return object.window_title;
+            var window = me.window(object);
+            return window.window_title;
         },
         set: function (object, value) {
-            object.window_title = value;
-            me.update_title(object);
-            var parent_window = me.ui.element.parent(window, me.id);
+            var window = me.window(object);
+            window.window_title = value;
+            me.update_title(window);
+            var parent_window = me.parent(window);
             if (parent_window) {
                 me.update_title(parent_window);
             }
-            me.ui.element.set(object.icon, "ui.basic.text", value);
+            me.set(window.icon, "ui.basic.text", value);
         }
     };
     me.background = {
         get: function (object) {
-            return me.ui.element.get(object.content, "ui.style.background");
+            var window = me.window(object);
+            return me.get(window.content, "ui.style.background");
         },
         set: function (object, value) {
-            me.ui.element.set(object.content, "ui.style.background", value);
+            var window = me.window(object);
+            me.set(window.content, "ui.style.background", value);
         }
     };
     me.context_menu = {
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            if (!window) {
-                return;
-            }
+            var window = me.window(object);
             var visible = me.is_visible(window);
             var region = me.ui.rect.relative_region(object);
-            var parent = object.parentNode;
             var menu = me.widget.menu.create_menu(object, region, [
                 ["Restore", "widget.window.restore"],
                 ["Move", ""],
@@ -223,105 +225,118 @@ package.widget.window = function WidgetWindow(me) {
                 ["Maximize", "widget.window.maximize"],
                 ["Close", "widget.window.close"],
                 ["Switch To", undefined, {"separator": true}]
-            ], parent);
+            ]);
             if (!visible) {
                 var body_region = me.ui.rect.viewport();
                 var icon_region = me.ui.rect.absolute_region(window.icon);
-                me.ui.element.set(menu, "ui.style.top", "");
-                me.ui.element.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + "px");
+                var icon_icon_region = me.ui.rect.absolute_region(window.icon.icon);
+                me.set(menu, "ui.style.left", icon_icon_region.left + "px");
+                me.set(menu, "ui.style.top", "");
+                me.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + "px");
             }
         }
     };
     me.is_visible = function (object) {
         if (object) {
-            var is_visible = me.ui.element.get(object, "ui.style.display");
+            var is_visible = me.get(object, "ui.style.display");
             return is_visible !== "none";
         }
     };
+    me.attach = function(window, parent_window) {
+        me.update_title(parent_window);
+        me.widget.menu.attach(parent_window, window);
+        me.ui.property.broadcast(window, "ui.theme.add", "attach");
+        me.set(window.title_label, "ui.style.display", "none");
+        me.set(window.menu, "ui.style.left", "19px");
+        me.set(window.menu, "ui.style.right", "38px");
+    };
+    me.detach = function(window, parent_window) {
+        me.widget.menu.detach(window, parent_window);
+        me.update_title(parent_window);
+        me.ui.property.broadcast(window, "ui.theme.remove", "attach");
+        me.set(parent_window.menu, "ui.style.right", "-1px");
+        me.set(parent_window.menu, "ui.style.left", "-1px");
+        me.set(window.title_label, "ui.style.display", "block");
+    };
     me.minimize = {
         get: function (object) {
-            var window = me.ui.element.to_object(object.window);
-            var enabled = me.is_visible(window.minimize) && me.is_visible(window);
+            var window = me.window(object);
+            var enabled = !me.set(window, "ui.theme.contains", "minimize");
             var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            me.ui.element.set(window, "ui.style.display", "none");
-            me.ui.element.set(window.icon, "ui.style.display", "block");
-            var parent_window = me.ui.element.parent(window, me.id);
+            var window = me.window(object);
+            me.ui.property.broadcast(window, "ui.theme.add", "minimize");
+            me.set(window.icon, "ui.style.display", "block");
+            var parent_window = me.parent(window);
             if (parent_window) {
-                me.update_title(parent_window);
-                me.ui.element.set(parent_window.menu, "ui.style.right", "-1px");
+                me.detach(window, parent_window);
             }
         }
     };
     me.maximize = {
         get: function (object) {
-            var window = me.ui.element.to_object(object.window);
-            var enabled = me.is_visible(window.maximize) && me.is_visible(window);
+            var window = me.window(object);
+            var enabled = !me.set(window, "ui.theme.contains", "maximize") && me.is_visible(window);
             var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            me.ui.element.set(window, "ui.style.display", "block");
-            me.ui.element.set(window.icon, "ui.style.display", "none");
-            me.ui.element.set(window.restore, "ui.style.display", "block");
-            me.ui.element.set(window.maximize, "ui.style.display", "none");
-            var parent_window = me.ui.element.parent(window, me.id);
+            var parent_region = null;
+            var window = me.window(object);
+            me.set(window, "ui.focus.active", true);
+            me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
+            me.ui.property.broadcast(window, "ui.theme.remove", "restore");
+            me.ui.property.broadcast(window, "ui.theme.add", "maximize");
+            me.set(window.icon, "ui.style.display", "none");
+            var parent_window = me.parent(window);
             if (parent_window) {
-                me.update_title(parent_window);
-                me.ui.element.set(window.title_label, "ui.style.display", "none");
-                me.ui.element.set(parent_window.menu, "ui.style.right", "38px");
+                me.attach(window, parent_window);
+                parent_region = me.ui.rect.absolute_region(parent_window.content);
             } else {
                 parent_window = document.body;
+                parent_region = me.ui.rect.absolute_region(parent_window);
             }
             window.restore_region = me.ui.rect.relative_region(window, parent_window);
-            me.ui.rect.set_absolute_region(window, me.parent_region(window));
+            me.ui.rect.set_absolute_region(window, parent_region);
             window.style.width = "";
             window.style.height = "";
             window.style.bottom = "-1px";
             window.style.right = "-1px";
-            me.ui.theme.change_class(window, null, "maximize", "focusable");
-            me.ui.element.set(window, "ui.rect.movable", false);
-            me.ui.element.set(window, "ui.rect.resizable", false);
+            me.set(window, "ui.rect.movable", false);
+            me.set(window, "ui.rect.resizable", false);
         }
     };
     me.restore = {
         get: function (object) {
-            var window = me.ui.element.to_object(object.window);
-            var enabled = me.is_visible(window.restore) || !me.is_visible(window);
+            var window = me.window(object);
+            var enabled = me.set(window, "ui.theme.contains", "maximize") || !me.is_visible(window);
             var options = {"enabled": enabled};
             return options;
         },
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            if (!me.is_visible(window)) {
-                me.ui.element.set(window, "ui.style.display", "block");
-                me.ui.element.set(window.icon, "ui.style.display", "none");
-                var parent_window = me.ui.element.parent(window, me.id);
-                if (parent_window && me.is_visible(window.restore)) {
-                    me.update_title(parent_window);
-                    me.ui.element.set(parent_window.menu, "ui.style.right", "38px");
-                }
-            } else {
-                me.ui.element.set(window.restore, "ui.style.display", "none");
-                me.ui.element.set(window.maximize, "ui.style.display", "block");
-                me.ui.element.set(window.title_label, "ui.style.display", "block");
-                var parent_window = me.ui.element.parent(window, me.id);
+            var window = me.window(object);
+            var parent_window = me.parent(window);
+            if(me.is_visible(window)) {
+                me.ui.property.broadcast(window, "ui.theme.remove", "maximize");
+                me.ui.property.broadcast(window, "ui.theme.add", "restore");
+                me.set(window.title_label, "ui.style.display", "block");
                 if (parent_window) {
-                    me.update_title(parent_window);
-                    me.ui.element.set(parent_window.menu, "ui.style.right", "-1px");
-                } else {
-                    parent_window = document.body;
+                    me.detach(window, parent_window);
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, parent_window);
-                me.ui.theme.change_class(window, "maximize", null, "focusable");
-                me.ui.element.set(window, "ui.rect.movable", true);
-                me.ui.element.set(window, "ui.rect.resizable", true);
+                me.set(window, "ui.rect.movable", true);
+                me.set(window, "ui.rect.resizable", true);
             }
-            me.ui.element.set(window, "ui.focus.active", true);
+            else {
+                me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
+                if(me.set(window, "ui.theme.contains", "maximize") && parent_window) {
+                    me.attach(window, parent_window);
+                }
+            }
+            me.set(window.icon, "ui.style.display", "none");
+            me.set(window, "ui.focus.active", true);
         }
     };
     me.toggle = {
@@ -329,11 +344,11 @@ package.widget.window = function WidgetWindow(me) {
             return true;
         },
         set: function (object, value) {
-            var window = me.ui.element.to_object(object.window);
-            if (me.is_visible(window.restore)) {
-                me.ui.element.set(object, "widget.window.restore");
+            var window = me.window(object);
+            if (me.set(window, "ui.theme.contains", "maximize")) {
+                me.set(window, "widget.window.restore");
             } else {
-                me.ui.element.set(object, "widget.window.maximize");
+                me.set(window, "widget.window.maximize");
             }
         }
     };

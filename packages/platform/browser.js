@@ -8,7 +8,8 @@ package.include({
         "type",
         "ref",
         "module",
-        "script"
+        "script",
+        "property"
     ],
     "ui": [
         "data",
@@ -21,7 +22,8 @@ package.include({
         "style",
         "basic",
         "focus",
-        "theme"
+        "theme",
+        "property"
     ],
     "widget": [
         "radio",

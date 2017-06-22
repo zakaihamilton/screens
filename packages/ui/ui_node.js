@@ -4,6 +4,45 @@
  */
 
 package.ui.node = function UINode(me) {
+    me.first = function(object, component_name) {
+        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+            var child = object.childNodes[childIndex];
+            if (child.component === component_name) {
+                return child;
+            }
+            var result = me.first(child, component_name);
+            if(result) {
+                return result;
+            }
+        }
+        return null;
+    };
+    me.last = function(object, component_name) {
+        for(var childIndex = object.childNodes.length - 1; childIndex >= 0; childIndex--) {
+            var child = object.childNodes[childIndex];
+            if (child.component === component_name) {
+                return child;
+            }
+            var result = me.last(child, component_name);
+            if(result) {
+                return result;
+            }
+        }
+        return null;
+    };
+    me.path = function(object) {
+        var array = [];
+        if(object) {
+            while(object) {
+                array.push(object);
+                if(object === document.body) {
+                    break;
+                }
+                object = object.parentNode;
+            }
+        }
+        return array;
+    };
     me.parent = {
         get : function(object) {
             return object.parentNode;
@@ -13,7 +52,6 @@ package.ui.node = function UINode(me) {
                 object.parentNode.removeChild(object);
             }
             if(value) {
-                value = me.ui.element.to_object(value);
                 value.appendChild(object);
             }
         }
@@ -24,7 +62,6 @@ package.ui.node = function UINode(me) {
                 object.parentNode.removeChild(object);
             }
             if(value) {
-                value = me.ui.element.to_object(value);
                 value.insertBefore(object, value.firstChild);
             }
         }

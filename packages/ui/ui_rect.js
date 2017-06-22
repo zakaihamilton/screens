@@ -22,21 +22,20 @@ package.ui.rect = function UIRect(me) {
     };
     me.move = {
         set: function (object, value) {
-            var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
-                if(!window.rect_movable) {
+                if(!value.rect_movable) {
                     e.preventDefault();
                     return;
                 }
-                me.ui.element.set(window, "ui.focus.active", true);
-                var window_region = me.ui.rect.absolute_region(window);
-                var info = {target: window,
+                me.set(value, "ui.focus.active", true);
+                var window_region = me.ui.rect.absolute_region(value);
+                var info = {target: value,
                     left: e.clientX-window_region.left,
                     top: e.clientY-window_region.top,
-                    width: window.offsetWidth,
-                    height: window.offsetHeight};
+                    width: value.offsetWidth,
+                    height: value.offsetHeight};
                 var move_method = function (e) {
-                    var window_region = me.ui.rect.absolute_region(window);
+                    var window_region = me.ui.rect.absolute_region(value);
                     var shift_region = {};
                     me.ui.rect.empty_region(shift_region);
                     window_region.left = e.clientX - info.left;
@@ -55,16 +54,15 @@ package.ui.rect = function UIRect(me) {
     };
     me.resize = {
         set: function (object, value) {
-            var window = me.ui.element.to_object(value);
             object.addEventListener('mousedown', function (e) {
-                if(!window.rect_resizable) {
+                if(!value.rect_resizable) {
                     e.preventDefault();
                     return;
                 }
-                me.ui.element.set(window, "ui.focus.active", true);
-                var info = {target: window, left: e.clientX, top: e.clientY, width: window.offsetWidth, height: window.offsetHeight};
+                me.set(value, "ui.focus.active", true);
+                var info = {target: value, left: e.clientX, top: e.clientY, width: value.offsetWidth, height: value.offsetHeight};
                 var move_method = function (e) {
-                    var window_region = me.ui.rect.absolute_region(window);
+                    var window_region = me.ui.rect.absolute_region(value);
                     var object_region = me.ui.rect.absolute_region(object);
                     var shift_region = {};
                     me.ui.rect.empty_region(shift_region);
@@ -100,7 +98,6 @@ package.ui.rect = function UIRect(me) {
         }
     };
     me.relative_region = function (object, parent=object.parentNode) {
-        object = me.ui.element.to_object(object);
         var parent_region = me.absolute_region(parent);
         var region = me.absolute_region(object);
         var xPos = region.left - parent_region.left;
@@ -117,7 +114,6 @@ package.ui.rect = function UIRect(me) {
         };
     };
     me.absolute_region = function (object) {
-        object = me.ui.element.to_object(object);
         var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
@@ -161,7 +157,9 @@ package.ui.rect = function UIRect(me) {
         region.height = 0;
     };
     me.set_relative_region = function(object, region, relative_to=null) {
-        object = me.ui.element.to_object(object);
+        if(!object || !region) {
+            return;
+        }
         var parent_region = me.absolute_region(object.parentNode);
         if(relative_to) {
             var relative_to_region = me.absolute_region(relative_to);
@@ -174,7 +172,6 @@ package.ui.rect = function UIRect(me) {
         object.style.height = region.height + "px";
     };
     me.set_absolute_region = function(object, region) {
-        object = me.ui.element.to_object(object);
         if(object.style.position === "absolute") {
             if(object.parentNode === document.body) {
                 object.style.left = region.left - object.clientLeft + "px";

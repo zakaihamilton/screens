@@ -5,8 +5,12 @@
     background-color: #c0c0c0;
 }
 
-.widget-window-border.over {
-    border: 1px dashed black;
+.widget-window-border.minimize {
+    display:none;
+}
+
+.widget-window-border.maximize {
+    background-color:transparent;
 }
 
 .widget-window-margin {
@@ -36,40 +40,61 @@
     overflow: hidden;
 }
 
-.widget-window-left-top {
+.widget-window-top-left {
     position: absolute;
     left:-1px;
     top:-1px;
     width:21px;
     height:21px;
     border: 1px solid black;
+    cursor:nwse-resize;
 }
 
-.widget-window-right-top {
+.widget-window-top-left.attach {
+    width:18px;
+    height:18px;
+}
+
+.widget-window-top-right {
     position: absolute;
     top:-1px;
     right:-1px;
     width:21px;
     height:21px;
     border: 1px solid black;
+    cursor:nesw-resize;
 }
 
-.widget-window-left-bottom {
+.widget-window-top-right.attach {
+    display:none;
+}
+
+.widget-window-bottom-left {
     position: absolute;
     left:-1px;
     bottom:-1px;
     width:21px;
     height:21px;
     border: 1px solid black;
+    cursor:nesw-resize;
 }
 
-.widget-window-right-bottom {
+.widget-window-bottom-left.attach {
+    display:none;
+}
+
+.widget-window-bottom-right {
     position: absolute;
     bottom:-1px;
     right:-1px;
     width:21px;
     height:21px;
     border: 1px solid black;
+    cursor:nwse-resize;
+}
+
+.widget-window-bottom-right.attach {
+    display:none;
 }
 
 .widget-window-title {
@@ -179,7 +204,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-maximize {
+.widget-window-maximize.restore {
     position: absolute;
     left:4px;
     top:6px;
@@ -188,7 +213,7 @@
     border-bottom: 4px solid black;
 }
 
-.widget-window-restore {
+.widget-window-maximize.maximize {
     position: absolute;
     left:4px;
     top:9px;
@@ -197,7 +222,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-restore::after {
+.widget-window-maximize.maximize::after {
     content: "";
     position: absolute;
     left:-3px;

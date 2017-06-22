@@ -1,18 +1,10 @@
 function package_path(object, path) {
-    var root = package;
     var items = path.split(".");
-    /* Check root */
-    if (object.component) {
-        /* Check if first parameter is a property of the object */
-        if (Reflect.has(object, items[0])) {
-            root = object;
-        }
-    }
-    var item = root;
+    var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
         if (!item) {
-            throw path + " not found relative to " + root.id;
+            throw path + " not found";
         }
     }
     return item;
@@ -159,9 +151,6 @@ function package_general(object, property) {
     }
     else if (property === "include") {
         return package_include;
-    }
-    else if (property === "remote") {
-        return package_remote;
     }
     else if(property in package) {
         return package[property];
