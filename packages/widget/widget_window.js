@@ -113,9 +113,7 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.parent = function (object) {
         var parent = object.parentNode;
-        console.log("parent starting point: " + parent);
         while (parent) {
-            console.log("parent: " + parent.component);
             if (parent === document.body) {
                 return null;
             }
@@ -131,18 +129,12 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.window = function(object) {
         var window = object;
-        console.log("window: " + window.component);
-        if(object) {
-            if(object.window) {
-                window = object.window;
-                console.log("found object window: " + window.component);
+        if(window) {
+            if(window.window) {
+                window = window.window;
             }
-            else if(object.component !== me.id) {
-                console.log("looking for parent window...");
-                window = me.parent(object);
-                if(window) {
-                    console.log("looking for parent window: " + window.component);
-                }
+            if(window.component !== me.id) {
+                window = me.parent(window);
             }
         }
         return window;
@@ -217,7 +209,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var visible = me.is_visible(window);
             var region = me.ui.rect.relative_region(object);
-            var menu = me.widget.menu.create_menu(object, region, [
+            var menu = me.widget.menu.create_menu(window, object, region, [
                 ["Restore", "widget.window.restore"],
                 ["Move", ""],
                 ["Size", ""],
@@ -225,7 +217,7 @@ package.widget.window = function WidgetWindow(me) {
                 ["Maximize", "widget.window.maximize"],
                 ["Close", "widget.window.close"],
                 ["Switch To", undefined, {"separator": true}]
-            ]);
+            ], object.parentNode);
             if (!visible) {
                 var body_region = me.ui.rect.viewport();
                 var icon_region = me.ui.rect.absolute_region(window.icon);

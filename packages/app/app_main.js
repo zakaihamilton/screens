@@ -61,7 +61,10 @@ package.app.main = function (me) {
                         ]],
                     ["Window", [
                             ["Games"],
-                            ["Programs"]
+                            ["Programs"],
+                            ["Maximize","widget.window.maximize"],
+                            ["Minimize","widget.window.minimize"],
+                            ["Restore","widget.window.restore"]
                         ]],
                     ["Help", [
                             ["Contents"],

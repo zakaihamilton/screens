@@ -77,22 +77,23 @@ package.widget.menu = function WidgetMenu(me) {
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
-                me.create_menu(object, me.ui.rect.relative_region(item), info);
+                me.create_menu(null, object, me.ui.rect.relative_region(item), info);
             }
         }
     };
-    me.create_menu = function (object, region, values) {
+    me.create_menu = function (window, object, region, values, parent=object) {
         var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.position": "absolute",
             "ui.style.left": region.left + "px",
             "ui.style.top": region.bottom + "px",
+            "ui.basic.window": window,
             "ui.group.data": {
                 "ui.data.keys": ["ui.basic.text", "select", "options"],
                 "ui.data.values": values
             }
-        }, object);
+        }, parent);
         if(object.component === "widget.menu") {
             me.set(menu.modal, "ui.style.display", "none");
         }
