@@ -23,7 +23,8 @@ package.include({
         "basic",
         "focus",
         "theme",
-        "property"
+        "property",
+        "scroll"
     ],
     "widget": [
         "radio",

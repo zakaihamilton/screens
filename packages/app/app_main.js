@@ -132,7 +132,7 @@ package.app.main = function (me) {
                 "ui.style.top": "200px",
                 "ui.style.width": "400px",
                 "ui.style.height": "300px"
-            },
+            }
         ]);
     };
     me.ok = {
@@ -151,5 +151,5 @@ package.app.main = function (me) {
         set: function (object, value) {
             me.checked = !me.checked;
         }
-    }
+    };
 };

@@ -40,6 +40,36 @@
     overflow: hidden;
 }
 
+.widget-window-content.menu {
+    top:39px;
+}
+
+.widget-window-content.menu.attach {
+    top:19px;
+}
+
+.widget-window-header {
+    position: absolute;
+    left:0px;
+    top:19px;
+    height:19px;
+    right:0px;
+    background: white;
+    border: 1px solid black;
+    display:none;
+}
+
+.widget-window-header.menu {
+    display:block;
+}
+
+.widget-window-header.menu.attach {
+    display:block;
+    top:-1px;
+    left:19px;
+    right:38px;
+}
+
 .widget-window-top-left {
     position: absolute;
     left:-1px;
@@ -124,6 +154,10 @@
 .widget-window-label.focus {
     color: white;
     background-color: #000080;
+}
+
+.widget-window-label.attach {
+    display:none;
 }
 
 .widget-window-close {

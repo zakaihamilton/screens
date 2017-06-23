@@ -13,30 +13,25 @@ package.widget.menu = function WidgetMenu(me) {
         }
     };
     me.class = ["widget.menu.horizontal"];
-    me.detach = function(source, target) {
+    me.attach = function(source, target) {
         if(source.menu) {
             var parent = target;
-            if(target.content) {
-                parent = target.content;
+            if(target.header) {
+                parent = target.header;
             }
             parent.appendChild(source.menu);
             target.menu = source.menu;
             source.menu = null;
-        }
-    };
-    me.attach = function(source, target) {
-        if(source.menu) {
-            target.appendChild(source.menu);
-            target.menu = source.menu;
-            source.menu = null;
+            me.ui.property.broadcast(target, "ui.theme.add", "menu");
+            me.ui.property.broadcast(source, "ui.theme.remove", "menu");
         }
     };
     me.items = {
         set: function (object, value) {
             if (!object.menu) {
                 var parent = object;
-                if(object.content) {
-                    parent = object.content;
+                if(object.header) {
+                    parent = object.header;
                 }
                 object.menu = me.ui.element.create({
                     "ui.element.component": "widget.menu",
@@ -46,6 +41,7 @@ package.widget.menu = function WidgetMenu(me) {
                         "ui.data.values": value
                     }
                 }, parent);
+                me.ui.property.broadcast(object, "ui.theme.add", "menu");
             }
         }
     };

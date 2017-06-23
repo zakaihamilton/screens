@@ -67,7 +67,7 @@ package.core.message = function CoreMessage(me) {
             callback = me[path];
         }
         catch(error) {
-            me.core.console.log(error);
+            //me.core.console.log(error);
             return undefined;
         }
         me.core.console.log("sending: " + path + " with: " + args);

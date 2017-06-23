@@ -9,10 +9,14 @@ package.core.property = function CoreProperty(me) {
         package.set = me.set;
     };
     me.fullname = function(object, name) {
-        var package_name = name.substr(0, name.indexOf("."));
-        if(!(package_name in package)) {
+        var separator = name.indexOf(".");
+        var package_name = null;
+        if(separator !== -1) {
+            package_name = name.substr(0, separator);
+        }
+        if(!package_name || !(package_name in package)) {
             if(!object.component) {
-                return undefined;
+                return null;
             }
             name = object.component + "." + name;
         }
@@ -32,7 +36,9 @@ package.core.property = function CoreProperty(me) {
         var result = undefined;
         if(object && name) {
             name = me.fullname(object, name);
-            result = me.send(name + ".set", object, value);
+            if(name) {
+                result = me.send(name + ".set", object, value);
+            }
         }
         return result;
     };

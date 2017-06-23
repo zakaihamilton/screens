@@ -18,4 +18,17 @@ package.ui.property = function UIProperty(me) {
             }
         }
     };
+    me.notify = function(object, name, value) {
+        if(object) {
+            if(object.component !== me.widget.window.id) {
+                object = me.widget.window.window(object);
+            }
+            me.broadcast(object, name, value);
+            object = me.widget.window.parent(object);
+            if(!object) {
+                object = document.body;
+            }
+            me.broadcast(object, name, value);
+        }
+    };
 };
