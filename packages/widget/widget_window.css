@@ -19,6 +19,7 @@
     top:2px;
     right:2px;
     bottom:2px;
+    box-shadow:inset 0px 0px 0px 1px black;
 }
 
 .widget-window-margin.maximize {
@@ -27,6 +28,7 @@
     top:-1px;
     right:-1px;
     bottom:-1px;
+    box-shadow: none;
 }
 
 .widget-window-content {
@@ -49,11 +51,11 @@
 }
 
 .widget-window-content.v-scroll {
-    right:16px;
+    right:17px;
 }
 
 .widget-window-content.h-scroll {
-    bottom:16px;
+    bottom:17px;
 }
 
 .widget-window-header {
