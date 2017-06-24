@@ -77,6 +77,7 @@ package.app.main = function (me) {
                 "ui.basic.elements": [{
                         "ui.basic.text": "This is some text",
                         "ui.style.left": "80px",
+                        "ui.style.width":"300px",
                         "ui.style.position": "relative",
                         "ui.style.top": "20px"
                     }, {

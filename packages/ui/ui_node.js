@@ -4,6 +4,17 @@
  */
 
 package.ui.node = function UINode(me) {
+    me.members = function(object, component_name) {
+        var members = [];
+        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+            var child = object.childNodes[childIndex];
+            if (child.component === component_name) {
+                continue;
+            }
+            members.push(child);
+        }
+        return members;
+    };
     me.first = function(object, component_name) {
         for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
             var child = object.childNodes[childIndex];

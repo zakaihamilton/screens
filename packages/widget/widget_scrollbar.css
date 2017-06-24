@@ -1,0 +1,45 @@
+.widget-scrollbar-vertical {
+    position:absolute;
+    display:none;
+    right:0px;
+    width:16px;
+    top:19px;
+    bottom:0px;
+    background: #c0c0c0;
+    border: 1px solid black;
+}
+
+.widget-scrollbar-vertical.menu {
+    top:39px;
+}
+
+.widget-scrollbar-vertical.menu.attach {
+    top:19px;
+}
+
+.widget-scrollbar-vertical.v-scroll {
+    display:block;
+}
+
+.widget-scrollbar-vertical.h-scroll {
+    bottom:16px;
+}
+
+.widget-scrollbar-horizontal {
+    position:absolute;
+    display:none;
+    left:0px;
+    right:0px;
+    height:16px;
+    bottom:0px;
+    background: #c0c0c0;
+    border: 1px solid black;
+}
+
+.widget-scrollbar-horizontal.h-scroll {
+    display:block;
+}
+
+.widget-scrollbar-horizontal.v-scroll {
+    right:16px;
+}

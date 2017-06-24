@@ -113,7 +113,7 @@ package.ui.element = function UIElement(me) {
             me.ui.theme.set_class(object, component.class);
         }
         if (component_name !== me.id) {
-            component.send(component.id + ".create", object);
+            me.set(object, "create", parent);
         }
         for (var key in properties) {
             me.set(object, key, properties[key]);
@@ -124,7 +124,9 @@ package.ui.element = function UIElement(me) {
             });
         }
         if (component_name !== me.id) {
-            component.send(component.id + ".draw", object);
+            setTimeout( function() {
+                me.set(object, "draw", parent);
+            }, 0);
         }
         return object;
     };

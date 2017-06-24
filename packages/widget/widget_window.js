@@ -20,114 +20,108 @@ package.widget.window = function WidgetWindow(me) {
         "ui.rect.resizable": true
     };
     me.class = ["widget.window.border"];
-    me.create = function (object) {
-        me.ui.element.create([{
-                "ui.theme.class": "widget.window.bottom-left",
-                "ui.rect.resize": object
-            },
-            {
-                "ui.theme.class": "widget.window.bottom-right",
-                "ui.rect.resize": object
-            },
-            {
-                "ui.theme.class": "widget.window.top-left",
-                "ui.rect.resize": object
-            },
-            {
-                "ui.theme.class": "widget.window.top-right",
-                "ui.rect.resize": object
-            },
-            {
-                "ui.theme.class": "widget.window.margin",
-                "ui.basic.elements": [
-                    {
-                        "ui.theme.class": "widget.window.content",
-                        "ui.basic.context": object,
-                        "ui.basic.var": "content"
-                    },
-                    {
-                        "ui.theme.class": "widget.window.title",
-                        "ui.basic.context": object,
-                        "ui.basic.var": "title_back"
-                    },
-                    {
-                        "ui.theme.class": "widget.window.header",
-                        "ui.basic.context": object,
-                        "ui.basic.var": "header"
-                    },
-                    {
-                        "ui.basic.context": object,
-                        "ui.basic.var": "close",
-                        "ui.theme.class": "widget.window.close",
-                        "ui.event.click": "widget.window.context_menu",
-                        "ui.event.dblclick": "widget.window.close",
-                    },
-                    {
-                        "ui.basic.context": object,
-                        "ui.basic.var": "title_label",
-                        "ui.basic.text": "",
-                        "ui.theme.class": "widget.window.label",
-                        "ui.rect.move": object,
-                        "ui.event.dblclick": "widget.window.toggle"
-                    },
-                    {
-                        "ui.basic.context": object,
-                        "ui.basic.var": "minimize",
-                        "ui.theme.class": "widget.window.action",
-                        "ui.event.click": "widget.window.minimize",
-                        "ui.style.right": "20px",
-                        "ui.basic.elements": {
-                            "ui.theme.class": "widget.window.minimize",
+    me.create = {
+        set: function (object) {
+            me.ui.element.create([{
+                    "ui.theme.class": "widget.window.bottom-left",
+                    "ui.rect.resize": object
+                },
+                {
+                    "ui.theme.class": "widget.window.bottom-right",
+                    "ui.rect.resize": object
+                },
+                {
+                    "ui.theme.class": "widget.window.top-left",
+                    "ui.rect.resize": object
+                },
+                {
+                    "ui.theme.class": "widget.window.top-right",
+                    "ui.rect.resize": object
+                },
+                {
+                    "ui.theme.class": "widget.window.margin",
+                    "ui.basic.elements": [
+                        {
+                            "ui.theme.class": "widget.window.content",
+                            "ui.basic.context": object,
+                            "ui.basic.var": "content"
+                        },
+                        {
+                            "ui.theme.class": "widget.window.title",
+                            "ui.basic.context": object,
+                            "ui.basic.var": "title_back"
+                        },
+                        {
+                            "ui.theme.class": "widget.window.header",
+                            "ui.basic.context": object,
+                            "ui.basic.var": "header"
+                        },
+                        {
+                            "ui.element.component": "widget.scrollbar.horizontal"
+                        },
+                        {
+                            "ui.element.component": "widget.scrollbar.vertical"
+                        },
+                        {
+                            "ui.basic.context": object,
+                            "ui.basic.var": "close",
+                            "ui.theme.class": "widget.window.close",
+                            "ui.event.click": "widget.window.context_menu",
+                            "ui.event.dblclick": "widget.window.close",
+                        },
+                        {
+                            "ui.basic.context": object,
+                            "ui.basic.var": "title_label",
+                            "ui.basic.text": "",
+                            "ui.theme.class": "widget.window.label",
+                            "ui.rect.move": object,
+                            "ui.event.dblclick": "widget.window.toggle"
+                        },
+                        {
+                            "ui.basic.context": object,
+                            "ui.basic.var": "minimize",
+                            "ui.theme.class": "widget.window.action",
+                            "ui.event.click": "widget.window.minimize",
+                            "ui.style.right": "20px",
+                            "ui.basic.elements": {
+                                "ui.theme.class": "widget.window.minimize",
+                            }
+                        },
+                        {
+                            "ui.basic.context": object,
+                            "ui.basic.var": "maximize",
+                            "ui.theme.class": "widget.window.action",
+                            "ui.event.click": "widget.window.toggle",
+                            "ui.style.right": "1px",
+                            "ui.basic.elements": {
+                                "ui.theme.class": "widget.window.maximize"
+                            }
                         }
-                    },
-                    {
-                        "ui.basic.context": object,
-                        "ui.basic.var": "maximize",
-                        "ui.theme.class": "widget.window.action",
-                        "ui.event.click": "widget.window.toggle",
-                        "ui.style.right": "1px",
-                        "ui.basic.elements": {
-                            "ui.theme.class": "widget.window.maximize"
-                        }
-                    }
-                ]
+                    ]
+                }
+            ], object);
+            var parent = me.parent(object);
+            if (parent === null) {
+                me.set(object.close, "ui.theme.add", "main");
+                parent = document.body;
             }
-        ], object);
-        var parent = me.parent(object);
-        if (parent === null) {
-            me.set(object.close, "ui.theme.add", "main");
-            parent = document.body;
-        }
-        if (!parent.tray) {
-            me.ui.element.create({
-                "ui.basic.var": "tray",
-                "ui.style.bottom": "0px",
-                "ui.style.position": "absolute"
-            }, parent);
-        }
-        object.icon = me.ui.element.create({
-            "text": "",
-            "ui.style.float": "left",
-            "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.event.click": "widget.window.context_menu",
-            "ui.event.dblclick": "widget.window.restore",
-            "ui.style.display": "none",
-            "ui.basic.window": object
-        }, parent.tray);
-        me.ui.property.broadcast(object, "ui.theme.add", "restore");
-    };
-    me.move = {
-        set: function(object, value) {
-            console.log("title: " + object.window_title);
-            console.log("has_vertical_scroll: " + me.ui.scroll.has_vertical_scroll(object.content));
-            console.log("has_horizontal_scroll: " + me.ui.scroll.has_horizontal_scroll(object.content));
-        }
-    };
-    me.resize = {
-        set: function(object, value) {
-            console.log("title: " + object.window_title);
-            console.log("has_vertical_scroll: " + me.ui.scroll.has_vertical_scroll(object));
-            console.log("has_horizontal_scroll: " + me.ui.scroll.has_horizontal_scroll(object));
+            if (!parent.tray) {
+                me.ui.element.create({
+                    "ui.basic.var": "tray",
+                    "ui.style.bottom": "0px",
+                    "ui.style.position": "absolute"
+                }, parent);
+            }
+            object.icon = me.ui.element.create({
+                "text": "",
+                "ui.style.float": "left",
+                "ui.basic.src": "/packages/res/icons/default.png",
+                "ui.event.click": "widget.window.context_menu",
+                "ui.event.dblclick": "widget.window.restore",
+                "ui.style.display": "none",
+                "ui.basic.window": object
+            }, parent.tray);
+            me.ui.property.broadcast(object, "ui.theme.add", "restore");
         }
     };
     me.parent = function (object) {
@@ -146,13 +140,13 @@ package.widget.window = function WidgetWindow(me) {
         }
         return null;
     };
-    me.window = function(object) {
+    me.window = function (object) {
         var window = object;
-        if(window) {
-            if(window.window) {
+        if (window) {
+            if (window.window) {
                 window = window.window;
             }
-            if(window.component !== me.id) {
+            if (window.component !== me.id) {
                 window = me.parent(window);
             }
         }
@@ -173,7 +167,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
-            if(parent_window) {
+            if (parent_window) {
                 me.detach(window, parent_window);
             }
             me.set(window.icon, "ui.node.parent", null);
@@ -255,12 +249,12 @@ package.widget.window = function WidgetWindow(me) {
             return is_visible !== "none";
         }
     };
-    me.attach = function(window, parent_window) {
+    me.attach = function (window, parent_window) {
         me.update_title(parent_window);
         me.widget.menu.attach(parent_window, window);
         me.ui.property.broadcast(window, "ui.theme.add", "attach");
     };
-    me.detach = function(window, parent_window) {
+    me.detach = function (window, parent_window) {
         me.ui.property.broadcast(window, "ui.theme.remove", "attach");
         me.widget.menu.attach(window, parent_window);
         me.update_title(parent_window);
@@ -325,7 +319,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
-            if(!me.set(window, "ui.theme.contains", "minimize")) {
+            if (!me.set(window, "ui.theme.contains", "minimize")) {
                 me.ui.property.broadcast(window, "ui.theme.remove", "maximize");
                 me.ui.property.broadcast(window, "ui.theme.add", "restore");
                 if (parent_window) {
@@ -334,10 +328,9 @@ package.widget.window = function WidgetWindow(me) {
                 me.ui.rect.set_relative_region(window, window.restore_region, parent_window);
                 me.set(window, "ui.rect.movable", true);
                 me.set(window, "ui.rect.resizable", true);
-            }
-            else {
+            } else {
                 me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
-                if(me.set(window, "ui.theme.contains", "maximize") && parent_window) {
+                if (me.set(window, "ui.theme.contains", "maximize") && parent_window) {
                     me.attach(window, parent_window);
                 }
             }

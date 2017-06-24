@@ -38,7 +38,8 @@ package.include({
         "modal",
         "menu",
         "icon",
-        "image"
+        "image",
+        "scrollbar"
     ],
     "app": [
         "main"

@@ -19,6 +19,7 @@ package.ui.theme = function UITheme(me) {
                 var class_name = me.to_class(value);
                 return object.classList.contains(class_name);
             }
+            return false;
         }
     };
     me.add = {
@@ -55,7 +56,7 @@ package.ui.theme = function UITheme(me) {
         link.rel = "stylesheet";
         link.media = "screen,print";
         document.getElementsByTagName("head")[0].appendChild(link);
-        console.log("Loaded css: " + path + "=" + link.href);
+        console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
     me.to_class = function (path) {

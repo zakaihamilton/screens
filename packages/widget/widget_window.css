@@ -48,6 +48,14 @@
     top:19px;
 }
 
+.widget-window-content.v-scroll {
+    right:16px;
+}
+
+.widget-window-content.h-scroll {
+    bottom:16px;
+}
+
 .widget-window-header {
     position: absolute;
     left:0px;

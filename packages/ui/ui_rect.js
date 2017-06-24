@@ -41,7 +41,7 @@ package.ui.rect = function UIRect(me) {
                     window_region.left = e.clientX - info.left;
                     window_region.top = e.clientY - info.top;
                     me.ui.rect.set_absolute_region(info.target, window_region);
-                    me.ui.property.notify(info.target, "move", info);
+                    me.ui.property.notify(info.target, "moved", info);
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', move_method);
@@ -87,7 +87,7 @@ package.ui.rect = function UIRect(me) {
                         window_region.height = e.clientY - info.top + info.height;
                     }
                     me.ui.rect.set_absolute_region(info.target, window_region);
-                    me.ui.property.notify(info.target, "resize", info);
+                    me.ui.property.notify(info.target, "resized", info);
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', move_method);
