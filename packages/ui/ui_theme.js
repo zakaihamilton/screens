@@ -16,7 +16,7 @@ package.ui.theme = function UITheme(me) {
     me.contains = {
         set: function(object, value) {
             if(value && object.classList) {
-                var class_name = me.to_class(value);
+                var class_name = me.to_class(object, value);
                 return object.classList.contains(class_name);
             }
             return false;
@@ -25,7 +25,7 @@ package.ui.theme = function UITheme(me) {
     me.add = {
         set: function(object, value) {
             if(value && object.classList) {
-                var class_name = me.to_class(value);
+                var class_name = me.to_class(object, value);
                 object.classList.add(class_name);
             }
         }
@@ -33,7 +33,7 @@ package.ui.theme = function UITheme(me) {
     me.remove = {
         set: function(object, value) {
             if(value && object.classList) {
-                var class_name = me.to_class(value);
+                var class_name = me.to_class(object, value);
                 object.classList.remove(class_name);
             }
         }
@@ -41,7 +41,7 @@ package.ui.theme = function UITheme(me) {
     me.toggle = {
         set: function(object, value) {
             if(value && object.classList) {
-                var class_name = me.to_class(value);
+                var class_name = me.to_class(object, value);
                 object.classList.toggle(class_name);
             }
         }
@@ -59,9 +59,20 @@ package.ui.theme = function UITheme(me) {
         console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
-    me.to_class = function (path) {
+    me.to_class = function (object, path) {
+        path = path.replace("@component", object.component);
         path = path.replace(/[\.\_]/g, "-");
         return path;
+    };
+    me.to_component = function(object, path) {
+        path = path.replace("@component", object.component);
+        var tokens = path.split(".");
+        if(tokens.length >= 2) {
+            var package_name = tokens[0];
+            var component_name = tokens[1];
+            return package_name + "." + component_name;
+        }
+        return null;
     };
     me.set_class = function (object, path, add=false) {
         if (Array.isArray(path)) {
@@ -71,11 +82,13 @@ package.ui.theme = function UITheme(me) {
             });
             return;
         }
-        var class_name = me.to_class(path);
-        var component_name = path.substring(0, path.lastIndexOf("."));
-        if (!me.stylesheets[component_name]) {
-            console.log("loading css stylesheet: " + component_name);
-            me.stylesheets[component_name] = me.load_css(component_name);
+        var class_name = me.to_class(object, path);
+        var component_name = me.to_component(object, path);
+        if(component_name) {
+            if (!me.stylesheets[component_name]) {
+                console.log("loading css stylesheet: " + component_name);
+                me.stylesheets[component_name] = me.load_css(component_name);
+            }
         }
         if(add || object.className === "") {
             object.className += " " + class_name;

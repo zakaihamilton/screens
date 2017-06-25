@@ -75,9 +75,31 @@
     box-shadow: inset -1px -1px 0px 0px #ffffff;
 }
 
-.widget-scrollbar-before {
+.widget-scrollbar-vertical-before {
     position: absolute;
     left:3px;
+    top:4px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 4px solid black;
+}
+
+.widget-scrollbar-vertical-after {
+    position: absolute;
+    left:3px;
+    top:5px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid black;
+}
+
+.widget-scrollbar-horizontal-before {
+    position: absolute;
+    left:4px;
     top:4px;
     width: 0;
     height: 0;
@@ -86,9 +108,9 @@
     border-bottom: 3px solid transparent;
 }
 
-.widget-scrollbar-after {
+.widget-scrollbar-horizontal-after {
     position: absolute;
-    right:4px;
+    left:4px;
     top:4px;
     width: 0;
     height: 0;

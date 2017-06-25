@@ -172,6 +172,9 @@ package.widget.window = function WidgetWindow(me) {
             }
             me.set(window.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
+            if (parent_window) {
+                me.ui.property.notify(parent_window, "draw", null);
+            }
         }
     };
     me.icon = {
@@ -274,6 +277,7 @@ package.widget.window = function WidgetWindow(me) {
             if (parent_window) {
                 me.detach(window, parent_window);
             }
+            me.ui.property.notify(window, "draw", null);
         }
     };
     me.maximize = {
@@ -307,6 +311,7 @@ package.widget.window = function WidgetWindow(me) {
             window.style.right = "-1px";
             me.set(window, "ui.rect.movable", false);
             me.set(window, "ui.rect.resizable", false);
+            me.ui.property.notify(window, "draw", null);
         }
     };
     me.restore = {
@@ -336,6 +341,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             me.set(window.icon, "ui.style.display", "none");
             me.set(window, "ui.focus.active", true);
+            me.ui.property.notify(window, "draw", null);
         }
     };
     me.toggle = {

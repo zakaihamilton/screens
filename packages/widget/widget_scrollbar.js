@@ -4,42 +4,47 @@
  */
 
 package.widget.scrollbar = function WidgetScrollbar(me) {
-    me.default = {
-        "ui.basic.tag": "div",
-        "ui.basic.elements": [
-            {
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.event.click": "before",
-                "ui.style.top": "0px",
-                "ui.style.left": "0px",
-                "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.before"
-                }
-            },
-            {
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.event.click": "after",
-                "ui.style.bottom": "0px",
-                "ui.style.right": "0px",
-                "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.after"
-                }
-            }
-/*            {
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.style.bottom": "0px",
-                "ui.style.right": "0px",
-                "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.after"
-                }
-            } */
-        ]
-    };
+
 };
 
-package.widget.scrollbar.horizontal = function WidgetScrollbarVertical(me) {
-    me.class = "widget.scrollbar.vertical";
-    me.default = me.widget.scrollbar.default;
+package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
+    me.class = "widget.scrollbar.horizontal";
+    me.create = {
+        set: function (object, value) {
+            me.ui.element.create({
+                "ui.basic.tag": "div",
+                "ui.basic.elements": [
+                    {
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.event.click": "before",
+                        "ui.style.position": "absolute",
+                        "ui.style.top": "0px",
+                        "ui.style.left": "0px",
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.scrollbar.horizontal.before"
+                        }
+                    },
+                    {
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.event.click": "after",
+                        "ui.style.position": "absolute",
+                        "ui.style.bottom": "0px",
+                        "ui.style.right": "0px",
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.scrollbar.horizontal.after"
+                        }
+                    },
+                    {
+                        "ui.basic.var": "scroll_pos",
+                        "ui.basic.context": object,
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.style.position": "absolute",
+                        "ui.style.left": "100px",
+                        "ui.style.top": "0px"
+                    }
+                ]}, object);
+        }
+    };
     me.update = function (object) {
         var window = me.widget.window.window(object);
         var h_scroll = me.ui.scroll.has_h_scroll(window.content);
@@ -55,31 +60,56 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarVertical(me) {
             me.update(object);
         }
     };
-    me.moved = {
-        set: function (object, value) {
-            me.update(object);
-        }
-    };
-    me.resized = {
-        set: function (object, value) {
-            me.update(object);
-        }
-    };
     me.before = {
-        set: function(object, value) {
-            
+        set: function (object, value) {
+
         }
     };
     me.after = {
-        set: function(object, value) {
-            
+        set: function (object, value) {
+
         }
     };
 };
 
-package.widget.scrollbar.vertical = function WidgetScrollbarHorizontal(me) {
-    me.class = "widget.scrollbar.horizontal";
-    me.default = me.widget.scrollbar.default;
+package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
+    me.class = "widget.scrollbar.vertical";
+    me.create = {
+        set: function (object, value) {
+            me.ui.element.create({
+                "ui.basic.tag": "div",
+                "ui.basic.elements": [
+                    {
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.event.click": "before",
+                        "ui.style.position": "absolute",
+                        "ui.style.top": "0px",
+                        "ui.style.left": "0px",
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.scrollbar.vertical.before"
+                        }
+                    },
+                    {
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.event.click": "after",
+                        "ui.style.position": "absolute",
+                        "ui.style.bottom": "0px",
+                        "ui.style.right": "0px",
+                        "ui.basic.elements": {
+                            "ui.theme.class": "widget.scrollbar.vertical.after"
+                        }
+                    },
+                    {
+                        "ui.basic.var": "scroll_pos",
+                        "ui.basic.context": object,
+                        "ui.theme.class": "widget.scrollbar.button",
+                        "ui.style.position": "absolute",
+                        "ui.style.left": "0px",
+                        "ui.style.top": "100px"
+                    }
+                ]}, object);
+        }
+    };
     me.update = function (object) {
         var window = me.widget.window.window(object);
         var v_scroll = me.ui.scroll.has_v_scroll(window.content);
@@ -95,24 +125,14 @@ package.widget.scrollbar.vertical = function WidgetScrollbarHorizontal(me) {
             me.update(object);
         }
     };
-    me.moved = {
-        set: function (object, value) {
-            me.update(object);
-        }
-    };
-    me.resized = {
-        set: function (object, value) {
-            me.update(object);
-        }
-    };
     me.before = {
-        set: function(object, value) {
-            
+        set: function (object, value) {
+
         }
     };
     me.after = {
-        set: function(object, value) {
-            
+        set: function (object, value) {
+
         }
     };
 };
