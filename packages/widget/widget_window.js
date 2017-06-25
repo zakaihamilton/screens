@@ -255,10 +255,12 @@ package.widget.window = function WidgetWindow(me) {
     me.attach = function (window, parent_window) {
         me.update_title(parent_window);
         me.widget.menu.attach(parent_window, window);
-        me.ui.property.broadcast(window, "ui.theme.add", "attach");
+        me.ui.property.broadcast(window, "ui.theme.add", "child");
+        me.ui.property.broadcast(parent_window, "ui.theme.add", "parent");
     };
     me.detach = function (window, parent_window) {
-        me.ui.property.broadcast(window, "ui.theme.remove", "attach");
+        me.ui.property.broadcast(parent_window, "ui.theme.remove", "parent");
+        me.ui.property.broadcast(window, "ui.theme.remove", "child");
         me.widget.menu.attach(window, parent_window);
         me.update_title(parent_window);
     };
