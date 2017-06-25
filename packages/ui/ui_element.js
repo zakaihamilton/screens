@@ -125,7 +125,7 @@ package.ui.element = function UIElement(me) {
         }
         if (component_name !== me.id) {
             setTimeout( function() {
-                me.set(object, "draw", parent);
+                me.set(object, "draw", null);
             }, 0);
         }
         return object;

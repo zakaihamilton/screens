@@ -9,10 +9,6 @@
     display:none;
 }
 
-.widget-window-border.maximize {
-    background-color:transparent;
-}
-
 .widget-window-margin {
     position: absolute;
     left:2px;
@@ -74,6 +70,20 @@
 
 .widget-window-header.menu {
     display:block;
+}
+
+.widget-window-header.maximize.menu {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.widget-window-header.maximize {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .widget-window-header.menu.attach {
