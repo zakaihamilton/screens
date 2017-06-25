@@ -1,20 +1,20 @@
 .widget-scrollbar-vertical {
     position:absolute;
     display:none;
-    right:0px;
+    right:-1px;
     width:16px;
-    top:19px;
+    top:18px;
     bottom:0px;
     background: #c0c0c0;
     border: 1px solid black;
 }
 
 .widget-scrollbar-vertical.menu {
-    top:39px;
+    top:37px;
 }
 
 .widget-scrollbar-vertical.menu.attach {
-    top:19px;
+    top:18px;
 }
 
 .widget-scrollbar-vertical.v-scroll {
@@ -22,16 +22,16 @@
 }
 
 .widget-scrollbar-vertical.h-scroll {
-    bottom:17px;
+    bottom:16px;
 }
 
 .widget-scrollbar-horizontal {
     position:absolute;
     display:none;
-    left:0px;
-    right:0px;
+    left:-1px;
+    right:-1px;
     height:16px;
-    bottom:0px;
+    bottom:-1px;
     background: #c0c0c0;
     border: 1px solid black;
 }
@@ -41,7 +41,7 @@
 }
 
 .widget-scrollbar-horizontal.v-scroll {
-    right:17px;
+    right:16px;
 }
 
 .widget-scrollbar-button {

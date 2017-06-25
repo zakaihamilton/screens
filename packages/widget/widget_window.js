@@ -82,7 +82,7 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.basic.var": "minimize",
                             "ui.theme.class": "widget.window.action",
                             "ui.event.click": "widget.window.minimize",
-                            "ui.style.right": "20px",
+                            "ui.style.right": "19px",
                             "ui.basic.elements": {
                                 "ui.theme.class": "widget.window.minimize",
                             }
@@ -92,7 +92,7 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.basic.var": "maximize",
                             "ui.theme.class": "widget.window.action",
                             "ui.event.click": "widget.window.toggle",
-                            "ui.style.right": "1px",
+                            "ui.style.right": "0px",
                             "ui.basic.elements": {
                                 "ui.theme.class": "widget.window.maximize"
                             }
@@ -307,8 +307,8 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.rect.set_absolute_region(window, parent_region);
             window.style.width = "";
             window.style.height = "";
-            window.style.bottom = "-1px";
-            window.style.right = "-1px";
+            window.style.bottom = "0px";
+            window.style.right = "0px";
             me.set(window, "ui.rect.movable", false);
             me.set(window, "ui.rect.resizable", false);
             me.ui.property.notify(window, "draw", null);
