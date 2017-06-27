@@ -36,7 +36,6 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
                     },
                     {
                         "ui.basic.var": "scroll_pos",
-                        "ui.basic.context": object,
                         "ui.theme.class": "widget.scrollbar.button",
                         "ui.style.position": "absolute",
                         "ui.style.left": "100px",
@@ -101,7 +100,6 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
                     },
                     {
                         "ui.basic.var": "scroll_pos",
-                        "ui.basic.context": object,
                         "ui.theme.class": "widget.scrollbar.button",
                         "ui.style.position": "absolute",
                         "ui.style.left": "0px",

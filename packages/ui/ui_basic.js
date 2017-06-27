@@ -83,7 +83,7 @@ package.ui.basic = function UIBasic(me) {
         set : function (object, value) {
             object.content = value;
         }
-    }
+    };
     me.elements = {
         set: function(object, value) {
             if (value) {
@@ -91,7 +91,7 @@ package.ui.basic = function UIBasic(me) {
                 if (!content) {
                     content = object;
                 }
-                me.ui.element.create(value, content);
+                me.ui.element.create(value, content, object.context);
             }
         }
     };

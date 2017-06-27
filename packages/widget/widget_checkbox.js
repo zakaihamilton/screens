@@ -35,7 +35,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                         "ui.theme.class": "widget.checkbox.label"
                     }
                 }], object);
-            me.set(object, "ui.basic.label", object.checkbox.label);
+            me.set(object, "ui.basic.label", object.label);
         }
     };
     me.state = {

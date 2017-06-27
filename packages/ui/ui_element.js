@@ -85,10 +85,10 @@ package.ui.element = function UIElement(me) {
         }
         return combined;
     };
-    me.create = function (properties, parent) {
+    me.create = function (properties, parent, context=null) {
         if (Array.isArray(properties)) {
             properties.map(function (item) {
-                me.create(item, parent);
+                me.create(item, parent, context);
             });
             return;
         }
@@ -105,6 +105,7 @@ package.ui.element = function UIElement(me) {
         console.log("creating element of " + component_name);
         object = document.createElement(properties['ui.basic.tag']);
         object.component = component_name;
+        object.context = context ? context : parent;
         if (!parent) {
             parent = me.body();
         }
@@ -123,6 +124,7 @@ package.ui.element = function UIElement(me) {
                 me.send(extension + ".extend", object);
             });
         }
+        object.context = null;
         if (component_name !== me.id) {
             setTimeout( function() {
                 me.set(object, "draw", null);

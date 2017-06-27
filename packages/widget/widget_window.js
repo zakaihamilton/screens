@@ -43,17 +43,14 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.basic.elements": [
                         {
                             "ui.theme.class": "widget.window.content",
-                            "ui.basic.context": object,
                             "ui.basic.var": "content"
                         },
                         {
                             "ui.theme.class": "widget.window.title",
-                            "ui.basic.context": object,
                             "ui.basic.var": "title_back"
                         },
                         {
                             "ui.theme.class": "widget.window.header",
-                            "ui.basic.context": object,
                             "ui.basic.var": "header"
                         },
                         {
@@ -63,14 +60,12 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.element.component": "widget.scrollbar.vertical"
                         },
                         {
-                            "ui.basic.context": object,
                             "ui.basic.var": "close",
                             "ui.theme.class": "widget.window.close",
                             "ui.event.click": "widget.window.context_menu",
                             "ui.event.dblclick": "widget.window.close",
                         },
                         {
-                            "ui.basic.context": object,
                             "ui.basic.var": "title_label",
                             "ui.basic.text": "",
                             "ui.theme.class": "widget.window.label",
@@ -78,17 +73,15 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.event.dblclick": "widget.window.toggle"
                         },
                         {
-                            "ui.basic.context": object,
                             "ui.basic.var": "minimize",
                             "ui.theme.class": "widget.window.action",
                             "ui.event.click": "widget.window.minimize",
                             "ui.style.right": "19px",
                             "ui.basic.elements": {
-                                "ui.theme.class": "widget.window.minimize",
+                                "ui.theme.class": "widget.window.minimize"
                             }
                         },
                         {
-                            "ui.basic.context": object,
                             "ui.basic.var": "maximize",
                             "ui.theme.class": "widget.window.action",
                             "ui.event.click": "widget.window.toggle",
