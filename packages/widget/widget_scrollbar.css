@@ -1,47 +1,42 @@
 .widget-scrollbar-vertical {
-    position:absolute;
+    overflow: hidden;
+    position: relative;
     display:none;
-    right:-1px;
     width:16px;
-    top:18px;
-    bottom:0px;
     background: #c0c0c0;
-    border: 1px solid black;
-}
-
-.widget-scrollbar-vertical.menu {
-    top:37px;
-}
-
-.widget-scrollbar-vertical.menu.child {
-    top:18px;
+    border-left: 1px solid black;
 }
 
 .widget-scrollbar-vertical.v-scroll {
-    display:block;
-}
-
-.widget-scrollbar-vertical.h-scroll {
-    bottom:16px;
+    display:flex;
 }
 
 .widget-scrollbar-horizontal {
-    position:absolute;
+    overflow: hidden;
+    position: relative;
+    flex:1;
     display:none;
-    left:-1px;
-    right:-1px;
     height:16px;
-    bottom:-1px;
     background: #c0c0c0;
-    border: 1px solid black;
+    border-top: 1px solid black;
 }
 
 .widget-scrollbar-horizontal.h-scroll {
-    display:block;
+    display:flex;
 }
 
-.widget-scrollbar-horizontal.v-scroll {
-    right:16px;
+.widget-scrollbar-corner {
+    width:16px;
+    height:16px;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    position:relative;
+    flex:none;
+    display:none;
+}
+
+.widget-scrollbar-corner.v-scroll.h-scroll {
+    display:flex;
 }
 
 .widget-scrollbar-button {

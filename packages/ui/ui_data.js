@@ -54,5 +54,5 @@ package.ui.data = function UIData(me) {
                 me.ui.element.create(properties, parent);
             }
         }
-    }
+    };
 };

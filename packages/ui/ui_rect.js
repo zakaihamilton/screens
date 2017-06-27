@@ -127,23 +127,24 @@ package.ui.rect = function UIRect(me) {
         if(!height) {
             height = clientRect.height;
         }
-        while (object) {
-            if (object.tagName === "BODY") {
+        var parent = object;
+        while (parent) {
+            if (parent.tagName === "BODY") {
                 // deal with browser quirks with body/window/document and page scroll
-                var xScroll = object.scrollLeft || document.documentElement.scrollLeft;
-                var yScroll = object.scrollTop || document.documentElement.scrollTop;
+                var xScroll = parent.scrollLeft || document.documentElement.scrollLeft;
+                var yScroll = parent.scrollTop || document.documentElement.scrollTop;
 
-                xPos += (object.offsetLeft - xScroll + object.clientLeft);
-                yPos += (object.offsetTop - yScroll + object.clientTop);
+                xPos += (parent.offsetLeft - xScroll + parent.clientLeft);
+                yPos += (parent.offsetTop - yScroll + parent.clientTop);
             } else {
                 // for all other non-BODY elements
-                xPos += (object.offsetLeft - object.scrollLeft + object.clientLeft);
-                yPos += (object.offsetTop - object.scrollTop + object.clientTop);
+                xPos += (parent.offsetLeft - parent.scrollLeft + parent.clientLeft);
+                yPos += (parent.offsetTop - parent.scrollTop + parent.clientTop);
             }
 
-            object = object.offsetParent;
+            parent = parent.offsetParent;
         }
-        return {
+        var absoluteRect = {
             left: xPos,
             top: yPos,
             width: width,
@@ -151,6 +152,7 @@ package.ui.rect = function UIRect(me) {
             right: xPos + width,
             bottom: yPos + height
         };
+        return absoluteRect;
     };
     me.empty_region = function(region) {
         region.left = 0;

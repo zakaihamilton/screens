@@ -46,7 +46,7 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
     };
     me.update = function (object) {
         var window = me.widget.window.window(object);
-        var h_scroll = me.ui.scroll.has_h_scroll(window.content);
+        var h_scroll = me.ui.scroll.has_h_scroll(window.var.content);
         var has_class = me.set(window, "ui.theme.contains", "h_scroll");
         if (h_scroll && !has_class) {
             me.ui.property.broadcast(window, "ui.theme.add", "h_scroll");
@@ -110,7 +110,7 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
     };
     me.update = function (object) {
         var window = me.widget.window.window(object);
-        var v_scroll = me.ui.scroll.has_v_scroll(window.content);
+        var v_scroll = me.ui.scroll.has_v_scroll(window.var.content);
         var has_class = me.set(window, "ui.theme.contains", "v_scroll");
         if (v_scroll && !has_class) {
             me.ui.property.broadcast(window, "ui.theme.add", "v_scroll");

@@ -62,7 +62,7 @@ package.ui.basic = function UIBasic(me) {
                 if(object.context) {
                     parent = object.context;
                 }
-                parent[value] = object;
+                parent.var[value] = object;
             }
         }
     };
@@ -78,10 +78,10 @@ package.ui.basic = function UIBasic(me) {
     };
     me.content = {
         get : function (object) {
-            return object.content;
+            return object.var.content;
         },
         set : function (object, value) {
-            object.content = value;
+            object.var.content = value;
         }
     };
     me.elements = {

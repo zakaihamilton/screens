@@ -1,8 +1,12 @@
 .widget-window-border {
-    position: relative;
-    float: left;
     border: 1px solid black;
     background-color: #c0c0c0;
+    min-width:150px;
+    min-height: 150px;
+}
+
+.widget-window-border.maximize {
+    border:none;
 }
 
 .widget-window-border.minimize {
@@ -15,6 +19,8 @@
     top:2px;
     right:2px;
     bottom:2px;
+    display:flex;
+    flex-direction:column;
     border:1px solid black;
 }
 
@@ -26,65 +32,41 @@
     bottom:-1px;
 }
 
+.widget-window-margin.child.maximize {
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    border:none;
+}
+
 .widget-window-content {
-    position: absolute;
-    left:-1px;
-    top:18px;
-    right:-1px;
-    bottom:-1px;
+    flex:1;
     background: white;
-    border: 1px solid black;
     overflow: hidden;
-}
-
-.widget-window-content.parent.maximize {
-    top:19px;
-}
-
-.widget-window-content.menu {
-    top:37px;
-}
-
-.widget-window-content.menu.child {
-    top:18px;
+    position: relative;
 }
 
 .widget-window-content.maximize {
     border:none;
 }
 
-.widget-window-content.v-scroll {
-    right:16px;
-}
-
-.widget-window-content.h-scroll {
-    bottom:16px;
-}
-
 .widget-window-header {
-    position: absolute;
-    left:-1px;
-    top:18px;
+    flex:none;
     height:18px;
-    right:-1px;
-    background: white;
-    border: 1px solid black;
     display:none;
+    background-color:white;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+    position: relative;
 }
 
 .widget-window-header.menu {
-    display:block;
+    display:flex;
 }
 
-.widget-window-header.maximize.menu {
-    border: 1px solid black;
-}
-
-.widget-window-header.menu.child {
-    display:block;
-    top:-1px;
-    left:18px;
-    right:36px;
+.widget-window-title.menu.child {
+    display:none;
 }
 
 .widget-window-top-left {
@@ -145,31 +127,23 @@
 }
 
 .widget-window-title {
-    position: absolute;
-    left:-1px;
-    top:-1px;
-    right:-1px;
+    flex:none;
+    display:flex;
     height:18px;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .widget-window-label {
-    position: absolute;
-    top:-1px;
-    left:18px;
-    right:37px;
     height:18px;
     color: black;
     text-align: center;
     background-color: white;
-    border: 1px solid black;
     font-family: "MS Sans Serif";
     font-size: 16px;
     line-height:18px;
-}
-
-.widget-window-label.maximize {
-    right:36px;
+    flex:1;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .widget-window-label.focus {
@@ -182,19 +156,11 @@
 }
 
 .widget-window-close {
-    position: absolute;
-    left:-1px;
-    top:-1px;
+    flex:none;
     width:18px;
     height:18px;
     background-color: #c0c0c0;
-    border:1px solid black;
-}
-
-.widget-window-close.main {
-    border:none;
-    left:0px;
-    top:0px;
+    border-right: 1px solid black;
 }
 
 .widget-window-close.main:after {
@@ -226,22 +192,18 @@
 }
 
 .widget-window-action {
-    position: absolute;
-    width: 18px;
-    height: 18px;
+    flex: none;
+    width:18px;
+    height:18px;
     border-left: 1px solid black;
     background-color: #c0c0c0;
-}
-
-.widget-window-action.maximize {
-    margin-right: -1px;
+    margin-left: auto;
 }
 
 .widget-window-action:after {
     content: "";
     position: absolute;
     top:0px;
-    left:0px;
     width:16px;
     height:16px;
     border-left: 1px solid #ffffff;
@@ -260,27 +222,33 @@
 }
 
 .widget-window-minimize {
-    position: absolute;
+    position: relative;
     left:5px;
     top:7px;
+    width:0px;
+    height:0px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     border-top: 4px solid black;
 }
 
 .widget-window-maximize.restore {
-    position: absolute;
+    position: relative;
     left:5px;
     top:6px;
+    width:0px;
+    height:0px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     border-bottom: 4px solid black;
 }
 
 .widget-window-maximize.maximize {
-    position: absolute;
+    position: relative;
     left:5px;
     top:9px;
+    width:0px;
+    height:0px;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     border-top: 4px solid black;

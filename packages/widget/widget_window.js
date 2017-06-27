@@ -42,70 +42,88 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.theme.class": "widget.window.margin",
                     "ui.basic.elements": [
                         {
-                            "ui.theme.class": "widget.window.content",
-                            "ui.basic.var": "content"
-                        },
-                        {
+                            "ui.basic.var": "title",
                             "ui.theme.class": "widget.window.title",
-                            "ui.basic.var": "title_back"
+                            "ui.basic.elements": [
+                                {
+                                    "ui.basic.var": "close",
+                                    "ui.theme.class": "widget.window.close",
+                                    "ui.event.click": "widget.window.context_menu",
+                                    "ui.event.dblclick": "widget.window.close",
+                                },
+                                {
+                                    "ui.basic.var": "label",
+                                    "ui.basic.text": "",
+                                    "ui.theme.class": "widget.window.label",
+                                    "ui.rect.move": object,
+                                    "ui.event.dblclick": "widget.window.toggle"
+                                },
+                                {
+                                    "ui.basic.var": "minimize",
+                                    "ui.theme.class": "widget.window.action",
+                                    "ui.event.click": "widget.window.minimize",
+                                    "ui.basic.elements": {
+                                        "ui.theme.class": "widget.window.minimize"
+                                    }
+                                },
+                                {
+                                    "ui.basic.var": "maximize",
+                                    "ui.theme.class": "widget.window.action",
+                                    "ui.event.click": "widget.window.toggle",
+                                    "ui.basic.elements": {
+                                        "ui.theme.class": "widget.window.maximize"
+                                    }
+                                }
+                            ]
                         },
                         {
                             "ui.theme.class": "widget.window.header",
                             "ui.basic.var": "header"
                         },
                         {
-                            "ui.element.component": "widget.scrollbar.horizontal"
+                            "ui.style.display": "flex",
+                            "ui.style.flex":"1",
+                            "ui.basic.elements": [
+                                {
+                                    "ui.theme.class": "widget.window.content",
+                                    "ui.basic.var": "content"
+                                },
+                                {
+                                    "ui.element.component": "widget.scrollbar.vertical"
+                                }
+                            ]
                         },
                         {
-                            "ui.element.component": "widget.scrollbar.vertical"
-                        },
-                        {
-                            "ui.basic.var": "close",
-                            "ui.theme.class": "widget.window.close",
-                            "ui.event.click": "widget.window.context_menu",
-                            "ui.event.dblclick": "widget.window.close",
-                        },
-                        {
-                            "ui.basic.var": "title_label",
-                            "ui.basic.text": "",
-                            "ui.theme.class": "widget.window.label",
-                            "ui.rect.move": object,
-                            "ui.event.dblclick": "widget.window.toggle"
-                        },
-                        {
-                            "ui.basic.var": "minimize",
-                            "ui.theme.class": "widget.window.action",
-                            "ui.event.click": "widget.window.minimize",
-                            "ui.style.right": "19px",
-                            "ui.basic.elements": {
-                                "ui.theme.class": "widget.window.minimize"
-                            }
-                        },
-                        {
-                            "ui.basic.var": "maximize",
-                            "ui.theme.class": "widget.window.action",
-                            "ui.event.click": "widget.window.toggle",
-                            "ui.style.right": "0px",
-                            "ui.basic.elements": {
-                                "ui.theme.class": "widget.window.maximize"
-                            }
+                            "ui.style.display": "flex",
+                            "ui.style.flex":"none",
+                            "ui.basic.elements": [
+                                {
+                                    "ui.element.component": "widget.scrollbar.horizontal"
+                                },
+                                {
+                                    "ui.theme.class": "widget.scrollbar.corner"
+                                }
+                            ]
                         }
                     ]
                 }
             ], object);
             var parent = me.parent(object);
             if (parent === null) {
-                me.set(object.close, "ui.theme.add", "main");
+                me.set(object.var.close, "ui.theme.add", "main");
                 parent = document.body;
+                if (!parent.var) {
+                    parent.var = {};
+                }
             }
-            if (!parent.tray) {
+            if (!parent.var.tray) {
                 me.ui.element.create({
                     "ui.basic.var": "tray",
                     "ui.style.bottom": "0px",
                     "ui.style.position": "absolute"
                 }, parent);
             }
-            object.icon = me.ui.element.create({
+            object.var.icon = me.ui.element.create({
                 "text": "",
                 "ui.style.float": "left",
                 "ui.basic.src": "/packages/res/icons/default.png",
@@ -113,7 +131,7 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.event.dblclick": "widget.window.restore",
                 "ui.style.display": "none",
                 "ui.basic.window": object
-            }, parent.tray);
+            }, parent.var.tray);
             me.ui.property.broadcast(object, "ui.theme.add", "restore");
         }
     };
@@ -153,7 +171,7 @@ package.widget.window = function WidgetWindow(me) {
     me.close = {
         get: function (object) {
             var window = me.window(object);
-            var enabled = me.is_visible(window.close) && !me.set(window, "ui.theme.contains", "minimize");
+            var enabled = me.is_visible(window.var.close) && !me.set(window, "ui.theme.contains", "minimize");
             var options = {"enabled": enabled, "separator": true};
             return options;
         },
@@ -163,7 +181,7 @@ package.widget.window = function WidgetWindow(me) {
             if (parent_window) {
                 me.detach(window, parent_window);
             }
-            me.set(window.icon, "ui.node.parent", null);
+            me.set(window.var.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
             if (parent_window) {
                 me.ui.property.notify(parent_window, "draw", null);
@@ -172,10 +190,10 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.icon = {
         get: function (object) {
-            return me.get(object.icon, "ui.basic.src");
+            return me.get(object.var.icon, "ui.basic.src");
         },
         set: function (object, value) {
-            me.set(object.icon, "ui.basic.src", value);
+            me.set(object.var.icon, "ui.basic.src", value);
         }
     };
     me.update_title = function (object) {
@@ -183,11 +201,11 @@ package.widget.window = function WidgetWindow(me) {
         var child_window = me.ui.node.last(window, me.id);
         if (child_window) {
             if (!me.set(child_window, "ui.theme.contains", "minimize") && me.set(child_window, "ui.theme.contains", "maximize")) {
-                me.set(window.title_label, "ui.basic.text", window.window_title + " - " + child_window.window_title);
+                me.set(window.var.label, "ui.basic.text", window.window_title + " - " + child_window.window_title);
                 return;
             }
         }
-        me.set(window.title_label, "ui.basic.text", window.window_title);
+        me.set(window.var.label, "ui.basic.text", window.window_title);
     };
     me.title = {
         get: function (object) {
@@ -202,17 +220,17 @@ package.widget.window = function WidgetWindow(me) {
             if (parent_window) {
                 me.update_title(parent_window);
             }
-            me.set(window.icon, "ui.basic.text", value);
+            me.set(window.var.icon, "ui.basic.text", value);
         }
     };
     me.background = {
         get: function (object) {
             var window = me.window(object);
-            return me.get(window.content, "ui.style.background");
+            return me.get(window.var.content, "ui.style.background");
         },
         set: function (object, value) {
             var window = me.window(object);
-            me.set(window.content, "ui.style.background", value);
+            me.set(window.var.content, "ui.style.background", value);
         }
     };
     me.context_menu = {
@@ -231,8 +249,8 @@ package.widget.window = function WidgetWindow(me) {
             ], object.parentNode);
             if (!visible) {
                 var body_region = me.ui.rect.viewport();
-                var icon_region = me.ui.rect.absolute_region(window.icon);
-                var icon_icon_region = me.ui.rect.absolute_region(window.icon.icon);
+                var icon_region = me.ui.rect.absolute_region(window.var.icon);
+                var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
                 me.set(menu, "ui.style.left", icon_icon_region.left + "px");
                 me.set(menu, "ui.style.top", "");
                 me.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + "px");
@@ -247,7 +265,10 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.attach = function (window, parent_window) {
         me.update_title(parent_window);
+        me.set(window.var.close, "ui.node.parent", window.var.header);
         me.widget.menu.attach(parent_window, window);
+        me.set(window.var.minimize, "ui.node.parent", window.var.header);
+        me.set(window.var.maximize, "ui.node.parent", window.var.header);
         me.ui.property.broadcast(window, "ui.theme.add", "child");
         me.ui.property.broadcast(parent_window, "ui.theme.add", "parent");
     };
@@ -255,6 +276,10 @@ package.widget.window = function WidgetWindow(me) {
         me.ui.property.broadcast(parent_window, "ui.theme.remove", "parent");
         me.ui.property.broadcast(window, "ui.theme.remove", "child");
         me.widget.menu.attach(window, parent_window);
+        me.set(window.var.close, "ui.node.parent", window.var.title);
+        me.set(window.var.label, "ui.node.parent", window.var.title);
+        me.set(window.var.minimize, "ui.node.parent", window.var.title);
+        me.set(window.var.maximize, "ui.node.parent", window.var.title);
         me.update_title(parent_window);
     };
     me.minimize = {
@@ -267,7 +292,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             me.ui.property.broadcast(window, "ui.theme.add", "minimize");
-            me.set(window.icon, "ui.style.display", "block");
+            me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(window, parent_window);
@@ -289,11 +314,11 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
             me.ui.property.broadcast(window, "ui.theme.remove", "restore");
             me.ui.property.broadcast(window, "ui.theme.add", "maximize");
-            me.set(window.icon, "ui.style.display", "none");
+            me.set(window.var.icon, "ui.style.display", "none");
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.attach(window, parent_window);
-                parent_region = me.ui.rect.absolute_region(parent_window.content);
+                parent_region = me.ui.rect.absolute_region(parent_window.var.content);
             } else {
                 parent_window = document.body;
                 parent_region = me.ui.rect.absolute_region(parent_window);
@@ -334,7 +359,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.attach(window, parent_window);
                 }
             }
-            me.set(window.icon, "ui.style.display", "none");
+            me.set(window.var.icon, "ui.style.display", "none");
             me.set(window, "ui.focus.active", true);
             me.ui.property.notify(window, "draw", null);
         }

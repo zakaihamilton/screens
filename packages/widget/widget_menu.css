@@ -1,8 +1,7 @@
 .widget-menu-horizontal {
-    position: absolute;
-    left:0px;
-    right:0px;
-    top:0px;
+    flex:1;
+    margin-left: auto;
+    margin-right: auto;
     background-color: white;
 }
 
@@ -16,7 +15,6 @@
     font-size: 14px;
     text-align: left;
     text-decoration: none;
-    border-right: 1px solid transparent;
 }
 
 .widget-menu-horizontal a.select {

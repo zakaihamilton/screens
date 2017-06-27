@@ -104,6 +104,7 @@ package.ui.element = function UIElement(me) {
         properties = me.combine(component.default, properties);
         console.log("creating element of " + component_name);
         object = document.createElement(properties['ui.basic.tag']);
+        object.var = {};
         object.component = component_name;
         object.context = context ? context : parent;
         if (!parent) {

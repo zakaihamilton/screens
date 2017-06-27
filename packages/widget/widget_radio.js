@@ -35,23 +35,23 @@ package.widget.radio = function WidgetRadio(me) {
                         "ui.theme.class": "widget.radio.label"
                     }
                 }], object);
-            me.set(object, "ui.basic.label", object.label);
+            me.set(object, "ui.basic.label", object.var.label);
         }
     };
     me.state = {
         get: function (object) {
-            return object.input.checked;
+            return object.var.input.checked;
         },
         set: function (object, value) {
-            object.input.checked = value;
+            object.var.input.checked = value;
         }
     };
     me.group = {
         get: function (object) {
-            return object.input.name;
+            return object.var.input.name;
         },
         set: function (object, value) {
-            object.input.name = value;
+            object.var.input.name = value;
         }
     };
 };

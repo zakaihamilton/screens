@@ -14,28 +14,28 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.class = ["widget.menu.horizontal"];
     me.attach = function(source, target) {
-        if(source.menu) {
+        if(source.var.menu) {
             var parent = target;
-            if(target.header) {
-                parent = target.header;
+            if(target.var.header) {
+                parent = target.var.header;
             }
-            parent.appendChild(source.menu);
-            target.menu = source.menu;
-            source.menu = null;
+            parent.appendChild(source.var.menu);
+            target.var.menu = source.var.menu;
+            source.var.menu = null;
             me.ui.property.broadcast(target, "ui.theme.add", "menu");
             me.ui.property.broadcast(source, "ui.theme.remove", "menu");
         }
     };
     me.items = {
         set: function (object, value) {
-            if (!object.menu) {
+            if (!object.var.menu) {
                 var parent = object;
-                if(object.header) {
-                    parent = object.header;
+                if(object.var.header) {
+                    parent = object.var.header;
                 }
-                object.menu = me.ui.element.create({
+                object.var.menu = me.ui.element.create({
                     "ui.element.component": "widget.menu",
-                    "ui.style.position": "absolute",
+                    "ui.style.position": "relative",
                     "ui.group.data": {
                         "ui.data.keys": ["ui.basic.text", "select", "options"],
                         "ui.data.values": value
@@ -48,8 +48,8 @@ package.widget.menu = function WidgetMenu(me) {
     me.back = {
         set: function (object, value) {
             me.set(object, "ui.style.z-index", "");
-            me.set(object.modal, "ui.style.display", "none");
-            me.set(object.menu, "ui.node.parent", null);
+            me.set(object.var.modal, "ui.style.display", "none");
+            me.set(object.var.menu, "ui.node.parent", null);
             me.ui.property.broadcast(object, "ui.theme.remove", "select");
             me.ui.property.broadcast(object, "ui.event.move", null);
             object.selected_item = null;
@@ -68,8 +68,8 @@ package.widget.menu = function WidgetMenu(me) {
             me.ui.property.broadcast(object, "ui.event.move", "focus");
             me.ui.property.broadcast(object, "ui.theme.remove", "select");
             me.set(item, "ui.theme.add", "select");
-            me.set(object.menu, "ui.node.parent", null);
-            me.set(object.modal, "ui.style.display", "initial");
+            me.set(object.var.menu, "ui.node.parent", null);
+            me.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
@@ -91,7 +91,7 @@ package.widget.menu = function WidgetMenu(me) {
             }
         }, parent);
         if(object.component === "widget.menu") {
-            me.set(menu.modal, "ui.style.display", "none");
+            me.set(menu.var.modal, "ui.style.display", "none");
         }
         return menu;
     };
