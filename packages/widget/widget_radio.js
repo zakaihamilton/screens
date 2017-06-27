@@ -35,7 +35,6 @@ package.widget.radio = function WidgetRadio(me) {
                         "ui.theme.class": "widget.radio.label"
                     }
                 }], object);
-            me.set(object, "ui.basic.label", object.var.label);
         }
     };
     me.state = {

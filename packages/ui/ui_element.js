@@ -106,10 +106,10 @@ package.ui.element = function UIElement(me) {
         object = document.createElement(properties['ui.basic.tag']);
         object.var = {};
         object.component = component_name;
-        object.context = context ? context : parent;
         if (!parent) {
             parent = me.body();
         }
+        object.context = context ? context : parent;
         me.set(object, "ui.node.parent", parent);
         if (component.class) {
             me.ui.theme.set_class(object, component.class);

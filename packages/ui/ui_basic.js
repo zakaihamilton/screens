@@ -19,14 +19,14 @@ package.ui.basic = function UIBasic(me) {
     };
     me.src = {
         get: function (object) {
-            if(object.icon) {
-                object = object.icon;
+            if(object.var.icon) {
+                object = object.var.icon;
             }
             return object.src;
         },
         set: function (object, value) {
-            if(object.icon) {
-                object = object.icon;
+            if(object.var.icon) {
+                object = object.var.icon;
             }
             object.src = value;
         }
@@ -62,6 +62,7 @@ package.ui.basic = function UIBasic(me) {
                 if(object.context) {
                     parent = object.context;
                 }
+                console.log("storing var component: " + parent.component + " context: " + object.context + " storing var: " + value);
                 parent.var[value] = object;
             }
         }
@@ -73,6 +74,9 @@ package.ui.basic = function UIBasic(me) {
         set: function (object, value) {
             if (value) {
                 object.context = value;
+            }
+            else {
+                object.context = object;
             }
         }
     };
@@ -108,24 +112,16 @@ package.ui.basic = function UIBasic(me) {
             }
         }
     };
-    me.label = {
-        get : function(object) {
-            return object.label;
-        },
-        set : function(object, value) {
-            object.label = value;
-        }
-    };
     me.text = {
         get : function(object) {
-            if(object.label) {
-                object = object.label;
+            if(object.var.label) {
+                object = object.var.label;
             }
             return object.innerHTML;
         },
         set : function(object, value) {
-            if(object.label) {
-                object = object.label;
+            if(object.var.label) {
+                object = object.var.label;
             }
             object.innerHTML = value;
         }
