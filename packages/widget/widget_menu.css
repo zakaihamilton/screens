@@ -15,6 +15,7 @@
     font-size: 14px;
     text-align: left;
     text-decoration: none;
+    border-right: 1px solid transparent;
 }
 
 .widget-menu-horizontal a.select {
