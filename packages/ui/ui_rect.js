@@ -22,6 +22,9 @@ package.ui.rect = function UIRect(me) {
     };
     me.move = {
         set: function (object, value) {
+            if(!value) {
+                value = object;
+            }
             object.addEventListener('mousedown', function (e) {
                 if(!value.rect_movable) {
                     e.preventDefault();
@@ -29,11 +32,13 @@ package.ui.rect = function UIRect(me) {
                 }
                 me.set(value, "ui.focus.active", true);
                 var window_region = me.ui.rect.absolute_region(value);
-                var info = {target: value,
+                var info = {
+                    target: value,
                     left: e.clientX-window_region.left,
                     top: e.clientY-window_region.top,
                     width: value.offsetWidth,
-                    height: value.offsetHeight};
+                    height: value.offsetHeight
+                };
                 var move_method = function (e) {
                     var window_region = me.ui.rect.absolute_region(value);
                     var shift_region = {};
@@ -55,33 +60,37 @@ package.ui.rect = function UIRect(me) {
     };
     me.resize = {
         set: function (object, value) {
+            if(!value) {
+                value = object;
+            }
             object.addEventListener('mousedown', function (e) {
                 if(!value.rect_resizable) {
                     e.preventDefault();
                     return;
                 }
                 me.set(value, "ui.focus.active", true);
-                var info = {target: value, left: e.clientX, top: e.clientY, width: value.offsetWidth, height: value.offsetHeight};
+                var info = {
+                    target: value,
+                    left: e.clientX,
+                    top: e.clientY,
+                    width: value.offsetWidth,
+                    height: value.offsetHeight
+                };
                 var move_method = function (e) {
                     var window_region = me.ui.rect.absolute_region(value);
                     var object_region = me.ui.rect.absolute_region(object);
                     var shift_region = {};
                     me.ui.rect.empty_region(shift_region);
-                    var is_absolute = info.target.style.position === "absolute";
                     if(object_region.left < window_region.left + (window_region.width / 2)) {
-                        if(is_absolute) {
-                            window_region.width = window_region.width + (window_region.left - e.clientX);
-                            window_region.left = e.clientX;
-                        }
+                        window_region.width = window_region.width + (window_region.left - e.clientX);
+                        window_region.left = e.clientX;
                     }
                     else {
                         window_region.width = e.clientX - info.left + info.width;
                     }
                     if(object_region.top < window_region.top + (window_region.height / 2)) {
-                        if(is_absolute) {
-                            window_region.height = window_region.height + (window_region.top - e.clientY);
-                            window_region.top = e.clientY;
-                        }
+                        window_region.height = window_region.height + (window_region.top - e.clientY);
+                        window_region.top = e.clientY;
                     }
                     else {
                         window_region.height = e.clientY - info.top + info.height;
@@ -176,20 +185,14 @@ package.ui.rect = function UIRect(me) {
         object.style.height = region.height + "px";
     };
     me.set_absolute_region = function(object, region) {
-        if(object.style.position === "absolute") {
-            if(object.parentNode === document.body) {
-                object.style.left = region.left - object.clientLeft + "px";
-                object.style.top = region.top - object.clientTop + "px";
-            }
-            else {
-                var parent_region = me.absolute_region(object.parentNode);
-                object.style.left = region.left - object.clientLeft - parent_region.left + "px";
-                object.style.top = region.top - object.clientLeft - parent_region.top + "px";
-            }
+        if(object.parentNode === document.body) {
+            object.style.left = region.left - object.clientLeft + "px";
+            object.style.top = region.top - object.clientTop + "px";
         }
-        else if(object.style.position === "relative") {
-            object.style.left = region.left + "px";
-            object.style.top = region.top + "px";
+        else {
+            var parent_region = me.absolute_region(object.parentNode);
+            object.style.left = region.left - object.clientLeft - parent_region.left + "px";
+            object.style.top = region.top - object.clientLeft - parent_region.top + "px";
         }
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";

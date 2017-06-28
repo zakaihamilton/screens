@@ -11,37 +11,36 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
     me.class = "widget.scrollbar.horizontal";
     me.default = {
         "ui.basic.tag": "div",
-        "ui.basic.context":null,
+        "ui.basic.context": null,
         "ui.basic.elements": [
             {
-                "ui.theme.class": "widget.scrollbar.button",
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.before"],
                 "ui.basic.var": "before",
                 "ui.event.click": "widget.scrollbar.horizontal.before",
-                "ui.style.position": "absolute",
-                "ui.style.top": "-1px",
-                "ui.style.left": "-1px",
+                "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.horizontal.before"
+                    "ui.theme.class": "widget.scrollbar.left.arrow"
                 }
             },
             {
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.event.click": "widget.scrollbar.horizontal.after",
+                "ui.basic.var":"track",
+                "ui.theme.class": "widget.scrollbar.horizontal.track",
+                "ui.basic.elements": {
+                    "ui.basic.var": "thumb",
+                    "ui.scroll.thumb": "h",
+                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.thumb"],
+                    "ui.style.position": "relative",
+                }
+            },
+            {
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.after"],
                 "ui.basic.var": "after",
-                "ui.style.position": "absolute",
-                "ui.style.bottom": "-1px",
-                "ui.style.right": "-1px",
+                "ui.event.click": "widget.scrollbar.horizontal.after",
+                "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.horizontal.after"
+                    "ui.theme.class": "widget.scrollbar.right.arrow"
                 }
             },
-            {
-                "ui.basic.var": "thumb",
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.style.position": "absolute",
-                "ui.style.top": "-1px",
-                "ui.style.left": "-1px"
-            }
         ]
     };
     me.update = function (object) {
@@ -54,16 +53,14 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
             me.ui.property.broadcast(window, "ui.theme.remove", "h_scroll");
         }
         var scroll_percent = me.ui.scroll.scroll_h_percent(window.var.content);
-        var before_region = me.ui.rect.relative_region(object.var.before);
-        var after_region = me.ui.rect.relative_region(object.var.after);
         var thumb_region = me.ui.rect.relative_region(object.var.thumb);
-        var left = before_region.left + before_region.width;
-        var right = after_region.left - thumb_region.width;
+        var track_region = me.ui.rect.relative_region(object.var.track);
         var position = 0;
         if (scroll_percent) {
-            position = scroll_percent * ((right - left - 2) / 100);
+            var length = track_region.width - thumb_region.width;
+            position = me.ui.scroll.percent_to_pos(length, scroll_percent);
         }
-        me.set(object.var.thumb, "ui.style.left", left + position + "px");
+        me.set(object.var.thumb, "ui.style.left", position + "px");
     };
     me.draw = {
         set: function (object, value) {
@@ -90,36 +87,35 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
     me.class = "widget.scrollbar.vertical";
     me.default = {
         "ui.basic.tag": "div",
-        "ui.basic.context":null,
+        "ui.basic.context": null,
         "ui.basic.elements": [
             {
-                "ui.theme.class": "widget.scrollbar.button",
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.before"],
                 "ui.basic.var": "before",
                 "ui.event.click": "widget.scrollbar.vertical.before",
-                "ui.style.position": "absolute",
-                "ui.style.top": "-1px",
-                "ui.style.left": "-1px",
+                "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.vertical.before"
+                    "ui.theme.class": "widget.scrollbar.top.arrow"
                 }
             },
             {
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.event.click": "widget.scrollbar.vertical.after",
+                "ui.basic.var":"track",
+                "ui.theme.class": "widget.scrollbar.vertical.track",
+                "ui.basic.elements": {
+                    "ui.basic.var": "thumb",
+                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.thumb"],
+                    "ui.scroll.thumb": "v",
+                    "ui.style.position": "relative"
+                }
+            },
+            {
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.after"],
                 "ui.basic.var": "after",
-                "ui.style.position": "absolute",
-                "ui.style.bottom": "-1px",
-                "ui.style.right": "-1px",
+                "ui.event.click": "widget.scrollbar.vertical.after",
+                "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.vertical.after"
+                    "ui.theme.class": "widget.scrollbar.bottom.arrow"
                 }
-            },
-            {
-                "ui.basic.var": "thumb",
-                "ui.theme.class": "widget.scrollbar.button",
-                "ui.style.position": "absolute",
-                "ui.style.top": "-1px",
-                "ui.style.left": "-1px"
             }
         ]
     };
@@ -133,16 +129,14 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
             me.ui.property.broadcast(window, "ui.theme.remove", "v_scroll");
         }
         var scroll_percent = me.ui.scroll.scroll_v_percent(window.var.content);
-        var before_region = me.ui.rect.relative_region(object.var.before);
-        var after_region = me.ui.rect.relative_region(object.var.after);
+        var track_region = me.ui.rect.relative_region(object.var.track);
         var thumb_region = me.ui.rect.relative_region(object.var.thumb);
-        var top = before_region.top + before_region.height;
-        var bottom = after_region.top - thumb_region.height;
         var position = 0;
         if (scroll_percent) {
-            position = scroll_percent * ((bottom - top - 2) / 100);
+            var length = track_region.height - thumb_region.height;
+            position = me.ui.scroll.percent_to_pos(length, scroll_percent);
         }
-        me.set(object.var.thumb, "ui.style.top", top + position + "px");
+        me.set(object.var.thumb, "ui.style.top", position + "px");
     };
     me.draw = {
         set: function (object, value) {

@@ -56,6 +56,12 @@ package.ui.focus = function UIFocus(me) {
             from = me.widget.window.parent(from);
         }
     };
+    me.shift = function(object, index) {
+        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+            var child = object.childNodes[childIndex];
+            child.style.zIndex = childIndex.toString();
+        }
+    };
     me.common = function(source, target) {
         if(!source || !target) {
             return me.ui.element.root;
