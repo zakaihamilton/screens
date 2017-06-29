@@ -248,12 +248,15 @@ package.widget.window = function WidgetWindow(me) {
                 ["Switch To", undefined, {"separator": true}]
             ], object.parentNode);
             if (!visible) {
-                var body_region = me.ui.rect.viewport();
+                var parent = me.parent(window);
+                if(!parent) {
+                    parent = document.body;
+                }
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
-                me.set(menu, "ui.style.left", icon_icon_region.left + "px");
                 me.set(menu, "ui.style.top", "");
-                me.set(menu, "ui.style.bottom", body_region.bottom - icon_region.top + "px");
+                me.set(menu, "ui.style.left", region.left + icon_icon_region.left - icon_region.left + "px");
+                me.set(menu, "ui.style.bottom", region.bottom + "px");
             }
         }
     };
