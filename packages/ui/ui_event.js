@@ -4,17 +4,9 @@
  */
 
 package.ui.event = function UIEvent(me) {
-    me.handle = function (object, type, method) {
-        if (!object.event_types) {
-            object.event_types = {};
-        }
-        var listener_callback = function (event) {
-            /* Because of double click that can interfere with single click
-             * if both double click and single click are on the same object
-             * then delay the single click for the double click to occur before
-             * the single click is sent
-             */
-            if (type === "click" && object.event_types["dblclick"]) {
+    me.handle = {
+        click : function (object, method, event) {
+            if (object.event_types["dblclick"]) {
                 object.event_dblclick = false;
                 setTimeout(function (object) {
                     if (object.event_dblclick) {
@@ -24,17 +16,32 @@ package.ui.event = function UIEvent(me) {
                         me.set(object, method, event);
                     }
                 }, 200, object);
-            } else {
-                if (type === "dblclick") {
-                    object.event_dblclick = true;
-                }
-                if (!object.getAttribute('disabled')) {
-                    me.set(object, method, event);
-                }
             }
+            else if (!object.getAttribute('disabled')) {
+                me.set(object, method, event);
+            }
+        },
+        dblclick : function(object, method, event) {
+            object.event_dblclick = true;
+            if (!object.getAttribute('disabled')) {
+                me.set(object, method, event);
+            }            
+        },
+        mousemove : function(object, method, event) {
+            if (!object.getAttribute('disabled')) {
+                me.set(object, method, event);
+            }            
+        }
+    };
+    me.register = function (object, type, method) {
+        if (!object.event_types) {
+            object.event_types = {};
+        }
+        var listener_callback = function (event) {
+            me.handle[type](object, method, event);
         };
         var listener = object.event_types[type];
-        if(listener) {
+        if (listener) {
             object.removeEventListener(type, listener);
         }
         if (method) {
@@ -44,21 +51,21 @@ package.ui.event = function UIEvent(me) {
     };
     me.move = {
         set: function (object, value) {
-            me.handle(object, "mousemove", value);
+            me.register(object, "mousemove", value);
         }
     };
     me.click = {
         set: function (object, value) {
-            me.handle(object, "click", value);
+            me.register(object, "click", value);
         }
     };
     me.dblclick = {
         set: function (object, value) {
-            me.handle(object, "dblclick", value);
+            me.register(object, "dblclick", value);
         }
     };
     me.repeat = {
-        set: function(object, value) {
+        set: function (object, value) {
             object.event_repeat = value;
         }
     };
