@@ -33,14 +33,17 @@ package.ui.event = function UIEvent(me) {
                     me.send_event(object, method, event);
                 }
             }, me.click_repeat);
+            event.preventDefault();
             return true;
         },
         repeatover: function(object, method, event) {
             object.repeat_interval = true;
+            event.preventDefault();
             return false;
         },
         repeatleave: function(object, method, event) {
             object.repeat_interval = false;
+            event.preventDefault();
             return false;
         },
         repeatup: function(object, method, event) {
@@ -48,6 +51,7 @@ package.ui.event = function UIEvent(me) {
                 clearInterval(object.click_repeat_interval);
                 object.click_repeat_interval = null;
             }
+            event.preventDefault();
             return false;
         }
     };
@@ -56,7 +60,7 @@ package.ui.event = function UIEvent(me) {
             me.set(object, method, event);
         }        
     };
-    me.register = function (object, type, method, name=type) {
+    me.register = function (object, type, method, name=type, target=object) {
         if (!object.event_types) {
             object.event_types = {};
         }
@@ -65,17 +69,17 @@ package.ui.event = function UIEvent(me) {
             if (name in me.handle) {
                 result = me.handle[name](object, method, event);
             }
-            if (result) {
+            if (result === true) {
                 me.send_event(object, method, event);
             }
         };
         var listener = object.event_types[name];
         if (listener) {
-            object.removeEventListener(type, listener);
+            target.removeEventListener(type, listener);
         }
         if (method) {
             object.event_types[name] = listener_callback;
-            object.addEventListener(type, listener_callback);
+            target.addEventListener(type, listener_callback);
         }
     };
     me.move = {
@@ -108,7 +112,7 @@ package.ui.event = function UIEvent(me) {
             me.register(object, "mousedown", value, "repeatdown");
             me.register(object, "mouseover", value, "repeatover");
             me.register(object, "mouseleave", value, "repeatleave");
-            me.register(object, "mouseup", value, "repeatup");
+            me.register(object, "mouseup", value, "repeatup", window);
         }
     };
 };
