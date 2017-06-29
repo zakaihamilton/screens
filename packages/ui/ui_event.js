@@ -11,8 +11,8 @@ package.ui.event = function UIEvent(me) {
             if (object.event_types["dblclick"]) {
                 object.event_dblclick = false;
                 object.click_timeout = setTimeout(function () {
-                    if (!object.getAttribute('disabled')) {
-                        me.set(object, method, event);
+                    if(!object.event_dblclick) {
+                        me.send_event(object, method, event);
                     }
                 }, me.click_delay);
                 return false;
@@ -20,10 +20,11 @@ package.ui.event = function UIEvent(me) {
             return true;
         },
         dblclick: function (object, method, event) {
-            if(object.click_timeout) {
+            if(object.click_timeout !== null) {
                 clearTimeout(object.click_timeout);
                 object.click_timeout = null;
             }
+            object.event_dblclick = true;
             return true;
         },
         repeatdown: function(object, method, event) {
@@ -47,7 +48,7 @@ package.ui.event = function UIEvent(me) {
             return false;
         },
         repeatup: function(object, method, event) {
-            if(object.click_repeat_interval) {
+            if(object.click_repeat_interval !== null) {
                 clearInterval(object.click_repeat_interval);
                 object.click_repeat_interval = null;
             }
