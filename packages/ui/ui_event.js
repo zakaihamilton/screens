@@ -4,48 +4,77 @@
  */
 
 package.ui.event = function UIEvent(me) {
+    me.click_delay = 200;
+    me.click_repeat = 50;
     me.handle = {
-        click : function (object, method, event) {
+        click: function (object, method, event) {
             if (object.event_types["dblclick"]) {
                 object.event_dblclick = false;
-                setTimeout(function (object) {
-                    if (object.event_dblclick) {
-                        return;
-                    }
+                object.click_timeout = setTimeout(function () {
                     if (!object.getAttribute('disabled')) {
                         me.set(object, method, event);
                     }
-                }, 200, object);
+                }, me.click_delay);
+                return false;
             }
-            else if (!object.getAttribute('disabled')) {
-                me.set(object, method, event);
+            return true;
+        },
+        dblclick: function (object, method, event) {
+            if(object.click_timeout) {
+                clearTimeout(object.click_timeout);
+                object.click_timeout = null;
             }
+            return true;
         },
-        dblclick : function(object, method, event) {
-            object.event_dblclick = true;
-            if (!object.getAttribute('disabled')) {
-                me.set(object, method, event);
-            }            
+        repeatdown: function(object, method, event) {
+            object.repeat_interval = true;
+            object.click_repeat_interval = setInterval(function() {
+                if(object.repeat_interval) {
+                    me.send_event(object, method, event);
+                }
+            }, me.click_repeat);
+            return true;
         },
-        mousemove : function(object, method, event) {
-            if (!object.getAttribute('disabled')) {
-                me.set(object, method, event);
-            }            
+        repeatover: function(object, method, event) {
+            object.repeat_interval = true;
+            return false;
+        },
+        repeatleave: function(object, method, event) {
+            object.repeat_interval = false;
+            return false;
+        },
+        repeatup: function(object, method, event) {
+            if(object.click_repeat_interval) {
+                clearInterval(object.click_repeat_interval);
+                object.click_repeat_interval = null;
+            }
+            return false;
         }
     };
-    me.register = function (object, type, method) {
+    me.send_event = function(object, method, event) {
+        if(!object.getAttribute('disabled')) {
+            me.set(object, method, event);
+        }        
+    };
+    me.register = function (object, type, method, name=type) {
         if (!object.event_types) {
             object.event_types = {};
         }
         var listener_callback = function (event) {
-            me.handle[type](object, method, event);
+            var result = true;
+            if (name in me.handle) {
+                result = me.handle[name](object, method, event);
+            }
+            if (result) {
+                me.send_event(object, method, event);
+            }
         };
-        var listener = object.event_types[type];
+        var listener = object.event_types[name];
         if (listener) {
             object.removeEventListener(type, listener);
         }
         if (method) {
-            object.event_types[type] = listener_callback;
+            object.event_types[name] = listener_callback;
             object.addEventListener(type, listener_callback);
         }
     };
@@ -64,9 +93,22 @@ package.ui.event = function UIEvent(me) {
             me.register(object, "dblclick", value);
         }
     };
+    me.down = {
+        set: function (object, value) {
+            me.register(object, "mousedown", value);
+        }
+    };
+    me.up = {
+        set: function (object, value) {
+            me.register(object, "mouseup", value);
+        }
+    };
     me.repeat = {
         set: function (object, value) {
-            object.event_repeat = value;
+            me.register(object, "mousedown", value, "repeatdown");
+            me.register(object, "mouseover", value, "repeatover");
+            me.register(object, "mouseleave", value, "repeatleave");
+            me.register(object, "mouseup", value, "repeatup");
         }
     };
 };

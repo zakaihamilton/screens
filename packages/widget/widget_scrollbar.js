@@ -17,6 +17,7 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
                 "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.before"],
                 "ui.basic.var": "before",
                 "ui.event.click": "widget.scrollbar.horizontal.before",
+                "ui.event.repeat": "widget.scrollbar.horizontal.before",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "widget.scrollbar.left.arrow"
@@ -36,6 +37,7 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
                 "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.after"],
                 "ui.basic.var": "after",
                 "ui.event.click": "widget.scrollbar.horizontal.after",
+                "ui.event.repeat": "widget.scrollbar.horizontal.after",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "widget.scrollbar.right.arrow"
@@ -93,6 +95,7 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
                 "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.before"],
                 "ui.basic.var": "before",
                 "ui.event.click": "widget.scrollbar.vertical.before",
+                "ui.event.repeat": "widget.scrollbar.vertical.before",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "widget.scrollbar.top.arrow"
@@ -112,6 +115,7 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
                 "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.after"],
                 "ui.basic.var": "after",
                 "ui.event.click": "widget.scrollbar.vertical.after",
+                "ui.event.repeat": "widget.scrollbar.vertical.after",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "widget.scrollbar.bottom.arrow"
