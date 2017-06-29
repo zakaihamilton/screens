@@ -57,4 +57,9 @@ package.ui.event = function UIEvent(me) {
             me.handle(object, "dblclick", value);
         }
     };
+    me.repeat = {
+        set: function(object, value) {
+            object.event_repeat = value;
+        }
+    };
 };

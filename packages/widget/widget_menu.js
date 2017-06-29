@@ -6,6 +6,7 @@
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
         "ui.basic.tag": "div",
+        "ui.basic.context":null,
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.style.display": "none",
@@ -47,7 +48,7 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object, "ui.style.z-index", "");
+            me.set(object, "ui.style.zIndex", "");
             me.set(object.var.modal, "ui.style.display", "none");
             me.set(object.var.menu, "ui.node.parent", null);
             me.ui.property.broadcast(object, "ui.theme.remove", "select");
@@ -64,7 +65,7 @@ package.widget.menu = function WidgetMenu(me) {
                 return;
             }
             object.selected_item = item;
-            me.set(object, "ui.style.z-index", "1");
+            me.set(object, "ui.style.zIndex", "1");
             me.ui.property.broadcast(object, "ui.event.move", "focus");
             me.ui.property.broadcast(object, "ui.theme.remove", "select");
             me.set(item, "ui.theme.add", "select");
@@ -73,7 +74,7 @@ package.widget.menu = function WidgetMenu(me) {
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
-                me.create_menu(null, object, me.ui.rect.relative_region(item), info);
+                object.var.menu = me.create_menu(null, object, me.ui.rect.relative_region(item), info);
             }
         }
     };
@@ -90,7 +91,11 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         }, parent);
-        if(object.component === "widget.menu") {
+        console.log("menu component: " + object.component);
+        if(object.component === me.id) {
+            console.log("menu: " + menu);
+            console.log("menu.var: " + menu.var);
+            console.log("menu.var.modal: " + menu.var.modal);
             me.set(menu.var.modal, "ui.style.display", "none");
         }
         return menu;
@@ -100,6 +105,7 @@ package.widget.menu = function WidgetMenu(me) {
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
         "ui.basic.tag": "div",
+        "ui.basic.context":null,
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"

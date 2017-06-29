@@ -13,7 +13,7 @@ package.ui.style = function UIStyle(me) {
                     return getComputedStyle(object)[property];
                 },
                 set: function (object, value) {
-                    if (object && typeof value !== "undefined") {
+                    if (object && typeof value !== "undefined" && object.style) {
                         object.style[property] = value;
                     }
                 }
