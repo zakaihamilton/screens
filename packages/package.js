@@ -66,7 +66,7 @@ function package_init(package_name, component_name, child_name=null, node=null) 
     else {
         Reflect.set(package[package_name], component_name, component_obj);
     }
-    node(component_obj);
+    node(component_obj, child_name);
     var init_method = component_obj.init;
     if(component_obj.forward) {
         component_obj.forward.enabled = true;

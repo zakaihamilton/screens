@@ -8,7 +8,7 @@
     flex-direction:column;
 }
 
-.widget-scrollbar-vertical.v-scroll {
+.widget-scrollbar-vertical.vertical-scroll {
     display:flex;
 }
 
@@ -22,7 +22,7 @@
     border-top: 1px solid black;
 }
 
-.widget-scrollbar-horizontal.h-scroll {
+.widget-scrollbar-horizontal.horizontal-scroll {
     display:flex;
 }
 
@@ -46,7 +46,7 @@
     display:none;
 }
 
-.widget-scrollbar-corner.v-scroll.h-scroll {
+.widget-scrollbar-corner.vertical-scroll.horizontal-scroll {
     display:flex;
 }
 
@@ -78,7 +78,7 @@
     box-shadow: inset -1px -1px 0px 0px #ffffff;
 }
 
-.widget-scrollbar-top-arrow {
+.widget-scrollbar-vertical-before-arrow {
     position: absolute;
     left:4px;
     top:4px;
@@ -89,7 +89,7 @@
     border-bottom: 4px solid black;
 }
 
-.widget-scrollbar-bottom-arrow {
+.widget-scrollbar-vertical-after-arrow {
     position: absolute;
     left:4px;
     top:7px;
@@ -100,7 +100,7 @@
     border-top: 4px solid black;
 }
 
-.widget-scrollbar-left-arrow {
+.widget-scrollbar-horizontal-before-arrow {
     position: absolute;
     left:4px;
     top:5px;
@@ -111,7 +111,7 @@
     border-bottom: 3px solid transparent;
 }
 
-.widget-scrollbar-right-arrow {
+.widget-scrollbar-horizontal-after-arrow {
     position: absolute;
     left:7px;
     top:5px;

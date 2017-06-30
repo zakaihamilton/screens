@@ -3,68 +3,66 @@
  @component WidgetScrollbar
  */
 
-package.widget.scrollbar = function WidgetScrollbar(me) {
-
-};
-
-package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
-    me.class = "widget.scrollbar.horizontal";
+function WidgetScrollbarTemplate(me, scroll_type) {
+    console.log("scrolling: " + scroll_type);
+    me.class = "widget.scrollbar." + scroll_type;
     me.default = {
         "ui.basic.tag": "div",
         "ui.basic.context": null,
         "ui.basic.elements": [
             {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.before"],
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".before"],
                 "ui.basic.var": "before",
-                "ui.event.click": "widget.scrollbar.horizontal.before",
-                "ui.event.repeat": "widget.scrollbar.horizontal.before",
+                "ui.event.click": "widget.scrollbar." + scroll_type + ".before",
+                "ui.event.repeat": "widget.scrollbar." + scroll_type+ ".before",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.left.arrow"
+                    "ui.theme.class": "widget.scrollbar." + scroll_type + ".before.arrow"
                 }
             },
             {
                 "ui.basic.var":"track",
-                "ui.theme.class": "widget.scrollbar.horizontal.track",
-                "ui.event.click":"widget.scrollbar.horizontal.track",
-                "ui.event.repeat":"widget.scrollbar.horizontal.track",
+                "ui.theme.class": "widget.scrollbar." + scroll_type + ".track",
+                "ui.event.click":"widget.scrollbar." + scroll_type + ".track",
+                "ui.event.repeat":"widget.scrollbar." + scroll_type + ".track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
-                    "ui.scroll.thumb": "h",
-                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.thumb"],
+                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".thumb"],
+                    "ui.scroll.thumb": scroll_type,
                     "ui.style.position": "relative"
                 }
             },
             {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.after"],
+                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".after"],
                 "ui.basic.var": "after",
-                "ui.event.click": "widget.scrollbar.horizontal.after",
-                "ui.event.repeat": "widget.scrollbar.horizontal.after",
+                "ui.event.click": "widget.scrollbar." + scroll_type + ".after",
+                "ui.event.repeat": "widget.scrollbar." + scroll_type + ".after",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.right.arrow"
+                    "ui.theme.class": "widget.scrollbar." + scroll_type + ".after.arrow"
                 }
-            },
+            }
         ]
     };
     me.update = function (object) {
         var window = me.widget.window.window(object);
-        var h_scroll = me.ui.scroll.has_h_scroll(window.var.content);
-        var has_class = me.set(window, "ui.theme.contains", "h_scroll");
-        if (h_scroll && !has_class) {
-            me.ui.property.broadcast(window, "ui.theme.add", "h_scroll");
-        } else if (!h_scroll && has_class) {
-            me.ui.property.broadcast(window, "ui.theme.remove", "h_scroll");
+        var has_scroll = me.ui.scroll.has_scroll(window.var.content, scroll_type);
+        var has_class = me.set(window, "ui.theme.contains", scroll_type + "_scroll");
+        if (has_scroll && !has_class) {
+            me.ui.property.broadcast(window, "ui.theme.add", scroll_type + "_scroll");
+        } else if (!has_scroll && has_class) {
+            me.ui.property.broadcast(window, "ui.theme.remove", scroll_type + "_scroll");
         }
-        var scroll_percent = me.ui.scroll.scroll_h_percent(window.var.content);
-        var thumb_region = me.ui.rect.relative_region(object.var.thumb);
+        var scroll_percent = me.ui.scroll.scroll_percent(window.var.content, scroll_type);
         var track_region = me.ui.rect.relative_region(object.var.track);
+        var thumb_region = me.ui.rect.relative_region(object.var.thumb);
         var position = 0;
         if (scroll_percent) {
-            var length = track_region.width - thumb_region.width;
+            var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
             position = me.ui.scroll.percent_to_pos(length, scroll_percent);
+            console.log("scroll_percent: " + scroll_percent + " position: " + position + " length:" + length);
         }
-        me.set(object.var.thumb, "ui.style.left", position + "px");
+        me.ui.scroll.set_pos(object.var.thumb, scroll_type, position);
     };
     me.draw = {
         set: function (object, value) {
@@ -74,14 +72,14 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
     me.before = {
         set: function (object, value) {
             var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, -10, 0);
+            me.ui.scroll.by(window.var.content, scroll_type, -10);
             me.update(object.parentNode);
         }
     };
     me.after = {
         set: function (object, value) {
             var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, 10, 0);
+            me.ui.scroll.by(window.var.content, scroll_type, 10);
             me.update(object.parentNode);
         }
     };
@@ -92,110 +90,21 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
             }
             var window = me.widget.window.window(object);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
-            if(value.clientX < thumb_region.left) {
-                me.ui.scroll.by(window.var.content, -10, 0);
+            var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
+            if(scroll_direction < 0) {
+                me.ui.scroll.by(window.var.content, scroll_type, -10);
             }
-            else if(value.clientX > thumb_region.right) {
-                me.ui.scroll.by(window.var.content, 10, 0);
+            if(scroll_direction > 0) {
+                me.ui.scroll.by(window.var.content, scroll_type, 10);
             }
             me.update(object.parentNode);
         }
-    };
+    };       
+}
+
+package.widget.scrollbar = function WidgetScroll(me) {
+    
 };
 
-package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
-    me.class = "widget.scrollbar.vertical";
-    me.default = {
-        "ui.basic.tag": "div",
-        "ui.basic.context": null,
-        "ui.basic.elements": [
-            {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.before"],
-                "ui.basic.var": "before",
-                "ui.event.click": "widget.scrollbar.vertical.before",
-                "ui.event.repeat": "widget.scrollbar.vertical.before",
-                "ui.style.position": "relative",
-                "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.top.arrow"
-                }
-            },
-            {
-                "ui.basic.var":"track",
-                "ui.theme.class": "widget.scrollbar.vertical.track",
-                "ui.event.click":"widget.scrollbar.vertical.track",
-                "ui.event.repeat":"widget.scrollbar.vertical.track",
-                "ui.basic.elements": {
-                    "ui.basic.var": "thumb",
-                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.thumb"],
-                    "ui.scroll.thumb": "v",
-                    "ui.style.position": "relative"
-                }
-            },
-            {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.after"],
-                "ui.basic.var": "after",
-                "ui.event.click": "widget.scrollbar.vertical.after",
-                "ui.event.repeat": "widget.scrollbar.vertical.after",
-                "ui.style.position": "relative",
-                "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar.bottom.arrow"
-                }
-            }
-        ]
-    };
-    me.update = function (object) {
-        var window = me.widget.window.window(object);
-        var v_scroll = me.ui.scroll.has_v_scroll(window.var.content);
-        var has_class = me.set(window, "ui.theme.contains", "v_scroll");
-        if (v_scroll && !has_class) {
-            me.ui.property.broadcast(window, "ui.theme.add", "v_scroll");
-        } else if (!v_scroll && has_class) {
-            me.ui.property.broadcast(window, "ui.theme.remove", "v_scroll");
-        }
-        var scroll_percent = me.ui.scroll.scroll_v_percent(window.var.content);
-        var track_region = me.ui.rect.relative_region(object.var.track);
-        var thumb_region = me.ui.rect.relative_region(object.var.thumb);
-        var position = 0;
-        if (scroll_percent) {
-            var length = track_region.height - thumb_region.height;
-            position = me.ui.scroll.percent_to_pos(length, scroll_percent);
-        }
-        me.set(object.var.thumb, "ui.style.top", position + "px");
-    };
-    me.draw = {
-        set: function (object, value) {
-            me.update(object);
-        }
-    };
-    me.before = {
-        set: function (object, value) {
-            var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, 0, -10);
-            me.update(object.parentNode);
-        }
-    };
-    me.after = {
-        set: function (object, value) {
-            var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, 0, 10);
-            me.update(object.parentNode);
-        }
-    };
-    me.track = {
-        set: function(object, value) {
-            if(value.target !== object.parentNode.var.track) {
-                return;
-            }
-            var window = me.widget.window.window(object);
-            var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
-            var position = 0;
-            if(value.clientY < thumb_region.top) {
-                me.ui.scroll.by(window.var.content, 0, -10);
-            }
-            else if(value.clientY > thumb_region.bottom) {
-                me.ui.scroll.by(window.var.content, 0, 10);
-            }
-            me.update(object.parentNode);
-        }
-    };
-};
+package.widget.scrollbar.horizontal = WidgetScrollbarTemplate;
+package.widget.scrollbar.vertical = WidgetScrollbarTemplate;
