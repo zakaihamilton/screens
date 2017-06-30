@@ -80,46 +80,90 @@
 
 .widget-scrollbar-vertical-before-arrow {
     position: absolute;
-    left:4px;
-    top:4px;
-    width: 0;
-    height: 0;
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-bottom: 4px solid black;
+    left:6px;
+    top:8px;
+    width: 3px;
+    height: 3px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-scrollbar-vertical-before-arrow:after {
+    content:"";
+    position: absolute;
+    left:-2px;
+    top:-4px;
+    width: 0px;
+    height: 0px;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-bottom: 3.5px solid black;
 }
 
 .widget-scrollbar-vertical-after-arrow {
     position: absolute;
-    left:4px;
-    top:7px;
-    width: 0;
-    height: 0;
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-top: 4px solid black;
+    left:6px;
+    top:5px;
+    width: 3px;
+    height: 3px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-scrollbar-vertical-after-arrow:after {
+    content:"";
+    position: absolute;
+    left:-2px;
+    top:3px;
+    width: 0px;
+    height: 0px;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 3.5px solid black;
 }
 
 .widget-scrollbar-horizontal-before-arrow {
     position: absolute;
-    left:4px;
-    top:5px;
-    width: 0;
-    height: 0;
-    border-top: 3px solid transparent;
-    border-right: 4px solid black;
-    border-bottom: 3px solid transparent;
+    left:8px;
+    top:6px;
+    width: 3px;
+    height: 3px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-scrollbar-horizontal-before-arrow:after {
+    content:"";
+    position: absolute;
+    left:-4px;
+    top:-2px;
+    width: 0px;
+    height: 0px;
+    border-top: 3.5px solid transparent;
+    border-right: 3.5px solid black;
+    border-bottom: 3.5px solid transparent;
 }
 
 .widget-scrollbar-horizontal-after-arrow {
     position: absolute;
-    left:7px;
-    top:5px;
-    width: 0;
-    height: 0;
-    border-top: 3px solid transparent;
-    border-left: 4px solid black;
-    border-bottom: 3px solid transparent;
+    left:5px;
+    top:6px;
+    width: 3px;
+    height: 3px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-scrollbar-horizontal-after-arrow:after {
+    content:"";
+    position: absolute;
+    left:3px;
+    top:-2px;
+    width: 0px;
+    height: 0px;
+    border-top: 3.5px solid transparent;
+    border-left: 3.5px solid black;
+    border-bottom: 3.5px solid transparent;
 }
 
 .widget-scrollbar-horizontal-before {

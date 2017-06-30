@@ -35,16 +35,16 @@ package.app.main = function (me) {
                     "ui.data.parent": me.ui.element.body(),
                     "ui.data.default": {"background": "radial-gradient(circle, red, yellow, green)"},
                     "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Gradient"], ["Root", "white", "300px", "100px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "500px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
+                    "ui.data.values": [["Root", "white", "330px", "80px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "550px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
                 }
             },
             {
                 "title": "Program Manager",
                 "icon": "/packages/res/icons/program_manager.png",
-                "ui.style.left": "500px",
-                "ui.style.top": "100px",
-                "ui.style.width": "700px",
-                "ui.style.height": "400px",
+                "ui.style.left": "550px",
+                "ui.style.top": "150px",
+                "ui.style.width": "300px",
+                "ui.style.height": "250px",
                 "widget.menu.items": [
                     ["File", [
                             ["New..."],
@@ -115,7 +115,7 @@ package.app.main = function (me) {
                         "ui.basic.text": "Grapefruit",
                         "ui.style.left": "100px"
                     }, {
-                        "ui.style.left": "300px",
+                        "ui.style.left": "250px",
                         "ui.style.top": "50px",
                         "title": "Main",
                         "background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
@@ -126,14 +126,14 @@ package.app.main = function (me) {
                         "background": "radial-gradient(circle, yellow, green, red)"
                     }]
             },
-            {
+/*            {
                 "title": "Convert",
                 "icon": "/packages/res/icons/convert.png",
                 "ui.style.left": "400px",
                 "ui.style.top": "200px",
                 "ui.style.width": "400px",
                 "ui.style.height": "300px"
-            }
+            }*/
         ]);
     };
     me.ok = {

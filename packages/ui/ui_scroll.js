@@ -12,7 +12,7 @@ package.ui.scroll = function UIScroll(me) {
             return object.scrollWidth > object.clientWidth;
         }
     };
-    me.direction = function(type, event, thumb_region) {
+    me.direction = function(event, type, thumb_region) {
         var direction = 0;
         if(type === "vertical") {
             if(event.clientY < thumb_region.top) {
