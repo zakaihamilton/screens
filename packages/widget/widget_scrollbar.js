@@ -26,11 +26,13 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
             {
                 "ui.basic.var":"track",
                 "ui.theme.class": "widget.scrollbar.horizontal.track",
+                "ui.event.click":"widget.scrollbar.horizontal.track",
+                "ui.event.repeat":"widget.scrollbar.horizontal.track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
                     "ui.scroll.thumb": "h",
                     "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.horizontal.thumb"],
-                    "ui.style.position": "relative",
+                    "ui.style.position": "relative"
                 }
             },
             {
@@ -83,6 +85,22 @@ package.widget.scrollbar.horizontal = function WidgetScrollbarHorizontal(me) {
             me.update(object.parentNode);
         }
     };
+    me.track = {
+        set: function(object, value) {
+            if(value.target !== object.parentNode.var.track) {
+                return;
+            }
+            var window = me.widget.window.window(object);
+            var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
+            if(value.clientX < thumb_region.left) {
+                me.ui.scroll.by(window.var.content, -10, 0);
+            }
+            else if(value.clientX > thumb_region.right) {
+                me.ui.scroll.by(window.var.content, 10, 0);
+            }
+            me.update(object.parentNode);
+        }
+    };
 };
 
 package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
@@ -104,6 +122,8 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
             {
                 "ui.basic.var":"track",
                 "ui.theme.class": "widget.scrollbar.vertical.track",
+                "ui.event.click":"widget.scrollbar.vertical.track",
+                "ui.event.repeat":"widget.scrollbar.vertical.track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
                     "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar.vertical.thumb"],
@@ -158,6 +178,23 @@ package.widget.scrollbar.vertical = function WidgetScrollbarVertical(me) {
         set: function (object, value) {
             var window = me.widget.window.window(object);
             me.ui.scroll.by(window.var.content, 0, 10);
+            me.update(object.parentNode);
+        }
+    };
+    me.track = {
+        set: function(object, value) {
+            if(value.target !== object.parentNode.var.track) {
+                return;
+            }
+            var window = me.widget.window.window(object);
+            var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
+            var position = 0;
+            if(value.clientY < thumb_region.top) {
+                me.ui.scroll.by(window.var.content, 0, -10);
+            }
+            else if(value.clientY > thumb_region.bottom) {
+                me.ui.scroll.by(window.var.content, 0, 10);
+            }
             me.update(object.parentNode);
         }
     };
