@@ -9,6 +9,9 @@ package.widget.window = function WidgetWindow(me) {
         properties: ["title"]
     };
     me.extend = ["ui.focus"];
+    me.alias = {
+        "ui.basic.text" : "widget.window.text"
+    };
     me.default = {
         "ui.basic.tag": "div",
         "ui.style.width": "150px",
@@ -166,6 +169,14 @@ package.widget.window = function WidgetWindow(me) {
     me.is_root = {
         get: function (object) {
             return me.parent(object) === null;
+        }
+    };
+    me.text = {
+        get: function (object) {
+            return object.var.label.innerHTML;
+        },
+        set: function(object, value) {
+            object.var.label.innerHTML = value;
         }
     };
     me.close = {

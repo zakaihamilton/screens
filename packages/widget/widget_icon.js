@@ -7,6 +7,10 @@ package.widget.icon = function WidgetIcon(me) {
     me.depends = {
         properties: ["ui.basic.src", "text"]
     };
+    me.alias = {
+        "ui.basic.text" : "widget.icon.text",
+        "ui.basic.src" : "widget.icon.src"
+    };
     me.extend = ["ui.drag"];
     me.default = {
         "ui.basic.tag": "figure",
@@ -26,4 +30,20 @@ package.widget.icon = function WidgetIcon(me) {
                 "ui.basic.var": "label"
             }]
     }
+    me.text = {
+        get: function (object) {
+            return object.var.label.innerHtml;
+        },
+        set: function(object, value) {
+            object.var.label.innerHtml = value;
+        }
+    };
+    me.src = {
+        get: function (object) {
+            return object.var.icon.src;
+        },
+        set: function (object, value) {
+            object.var.icon.src = value;
+        }
+    };
 };

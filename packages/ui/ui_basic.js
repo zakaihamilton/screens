@@ -19,15 +19,9 @@ package.ui.basic = function UIBasic(me) {
     };
     me.src = {
         get: function (object) {
-            if(object.var.icon) {
-                object = object.var.icon;
-            }
             return object.src;
         },
         set: function (object, value) {
-            if(object.var.icon) {
-                object = object.var.icon;
-            }
             object.src = value;
         }
     };
@@ -114,15 +108,9 @@ package.ui.basic = function UIBasic(me) {
     };
     me.text = {
         get : function(object) {
-            if(object.var.label) {
-                object = object.var.label;
-            }
             return object.innerHTML;
         },
         set : function(object, value) {
-            if(object.var.label) {
-                object = object.var.label;
-            }
             object.innerHTML = value;
         }
     };

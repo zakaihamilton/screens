@@ -7,6 +7,9 @@ package.widget.checkbox = function WidgetCheckBox(me) {
     me.depends = {
         properties: ["state"]
     };
+    me.alias = {
+        "ui.basic.text" : "widget.checkbox.text"
+    };
     me.default = {
         "ui.basic.tag": "div"
     };
@@ -43,6 +46,14 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         },
         set: function (object, value) {
             object.var.input.checked = value;
+        }
+    };
+    me.text = {
+        get: function (object) {
+            return object.var.label.innerHTML;
+        },
+        set: function(object, value) {
+            object.var.label.innerHTML = value;
         }
     };
 };

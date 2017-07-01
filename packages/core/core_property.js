@@ -20,6 +20,14 @@ package.core.property = function CoreProperty(me) {
             }
             name = object.component + "." + name;
         }
+        if(object.component) {
+            var alias = package[object.component].alias;
+            if(alias) {
+                if(name in alias) {
+                    name = alias[name];
+                }
+            }
+        }
         return name;
     };
     me.get = function(object, name) {

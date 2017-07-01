@@ -7,6 +7,9 @@ package.widget.radio = function WidgetRadio(me) {
     me.depends = {
         properties: ["state", "group"]
     };
+    me.alias = {
+        "ui.basic.text" : "widget.radio.text"
+    };
     me.default = {
         "ui.basic.tag": "div"
     };
@@ -51,6 +54,14 @@ package.widget.radio = function WidgetRadio(me) {
         },
         set: function (object, value) {
             object.var.input.name = value;
+        }
+    };
+    me.text = {
+        get: function (object) {
+            return object.var.label.innerHTML;
+        },
+        set: function(object, value) {
+            object.var.label.innerHTML = value;
         }
     };
 };
