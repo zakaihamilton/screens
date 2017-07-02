@@ -40,7 +40,7 @@ package.include({
         "icon",
         "image",
         "scrollbar",
-        "content"
+        "container"
     ],
     "app": [
         "main"

@@ -45,15 +45,16 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         ]
     };
     me.update = function (object) {
-        var window = me.widget.window.window(object);
-        var has_scroll = me.ui.scroll.has_scroll(window.var.content, scroll_type);
-        var has_class = me.set(window, "ui.theme.contains", scroll_type + "_scroll");
+        var container = me.widget.container.find(object);
+        var content = me.widget.container.content(container);
+        var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
+        var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
         if (has_scroll && !has_class) {
-            me.ui.property.broadcast(window, "ui.theme.add", scroll_type + "_scroll");
+            me.ui.property.broadcast(container, "ui.theme.add", scroll_type + "_scroll");
         } else if (!has_scroll && has_class) {
-            me.ui.property.broadcast(window, "ui.theme.remove", scroll_type + "_scroll");
+            me.ui.property.broadcast(container, "ui.theme.remove", scroll_type + "_scroll");
         }
-        var scroll_percent = me.ui.scroll.scroll_percent(window.var.content, scroll_type);
+        var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
         var track_region = me.ui.rect.relative_region(object.var.track);
         var thumb_region = me.ui.rect.relative_region(object.var.thumb);
         var position = 0;
@@ -71,15 +72,17 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.before = {
         set: function (object, value) {
-            var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, scroll_type, -10);
+            var container = me.widget.container.find(object);
+            var content = me.widget.container.content(container);
+            me.ui.scroll.by(content, scroll_type, -10);
             me.update(object.parentNode);
         }
     };
     me.after = {
         set: function (object, value) {
-            var window = me.widget.window.window(object);
-            me.ui.scroll.by(window.var.content, scroll_type, 10);
+            var container = me.widget.container.find(object);
+            var content = me.widget.container.content(container);
+            me.ui.scroll.by(content, scroll_type, 10);
             me.update(object.parentNode);
         }
     };
@@ -88,14 +91,15 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             if(value.target !== object.parentNode.var.track) {
                 return;
             }
-            var window = me.widget.window.window(object);
+            var container = me.widget.container.find(object);
+            var content = me.widget.container.content(container);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
             var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
             if(scroll_direction < 0) {
-                me.ui.scroll.by(window.var.content, scroll_type, -10);
+                me.ui.scroll.by(content, scroll_type, -10);
             }
             if(scroll_direction > 0) {
-                me.ui.scroll.by(window.var.content, scroll_type, 10);
+                me.ui.scroll.by(content, scroll_type, 10);
             }
             me.update(object.parentNode);
         }

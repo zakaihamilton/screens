@@ -74,22 +74,10 @@ package.ui.basic = function UIBasic(me) {
             }
         }
     };
-    me.content = {
-        get : function (object) {
-            return object.var.content;
-        },
-        set : function (object, value) {
-            object.var.content = value;
-        }
-    };
     me.elements = {
         set: function(object, value) {
             if (value) {
-                var content = me.content.get(object);
-                if (!content) {
-                    content = object;
-                }
-                me.ui.element.create(value, content, object.context);
+                me.ui.element.create(value, object, object.context);
             }
         }
     };

@@ -147,7 +147,7 @@ package.ui.scroll = function UIScroll(me) {
                     e.preventDefault();
                     return;
                 }
-                var window = me.widget.window.window(object);
+                var container = me.widget.container.find(object);
                 var thumb_region = me.ui.rect.absolute_region(object);
                 var info = {
                     target: object,
@@ -168,7 +168,7 @@ package.ui.scroll = function UIScroll(me) {
                         var thumb_pos = (e.clientX - info.left) - track_region.left;
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
-                    me.shift(window.var.content, value, percent);
+                    me.shift(me.widget.container.content(container), value, percent);
                     me.ui.property.notify(info.target, "draw", null);
                 };
                 var release_method = function (e) {

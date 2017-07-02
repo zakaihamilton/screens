@@ -11,7 +11,8 @@ package.widget.window = function WidgetWindow(me) {
     me.extend = ["ui.focus"];
     me.alias = {
         "ui.basic.text": "widget.window.text",
-        "ui.style.background" : "widget.window.background"
+        "ui.style.background" : "widget.window.background",
+        "ui.basic.elements":"widget.window.elements"
     };
     me.default = {
         "ui.basic.tag": "div",
@@ -85,7 +86,8 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.basic.var": "header"
                         },
                         {
-                            "ui.element.component":"widget.content"
+                            "ui.element.component":"widget.container",
+                            "ui.basic.var":"container"
                         }
                     ]
                 }
@@ -144,6 +146,15 @@ package.widget.window = function WidgetWindow(me) {
             }
         }
         return window;
+    };
+    me.elements = {
+        set: function(object, value) {
+            if (value) {
+                var window = me.window(object);
+                var content = me.widget.container.content(window.var.container);
+                me.ui.element.create(value, content, object.context);
+            }
+        }
     };
     me.is_root = {
         get: function (object) {
@@ -216,11 +227,14 @@ package.widget.window = function WidgetWindow(me) {
     me.background = {
         get: function (object) {
             var window = me.window(object);
-            return me.get(window.var.content, "ui.style.background");
+            var content = me.widget.container.content(window.var.container);
+            return me.get(content, "ui.style.background");
         },
         set: function (object, value) {
             var window = me.window(object);
-            me.set(window.var.content, "ui.style.background", value);
+            console.log("window: "  + window.component +  " container: " + window.var.container);
+            var content = me.widget.container.content(window.var.container);
+            me.set(content, "ui.style.background", value);
         }
     };
     me.context_menu = {
@@ -311,7 +325,9 @@ package.widget.window = function WidgetWindow(me) {
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.attach(window, parent_window);
-                parent_region = me.ui.rect.absolute_region(parent_window.var.content);
+                var container = window.var.container;
+                var content = me.widget.container.content(container);
+                parent_region = me.ui.rect.absolute_region(content);
             } else {
                 parent_window = document.body;
                 parent_region = me.ui.rect.absolute_region(parent_window);

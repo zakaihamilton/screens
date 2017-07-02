@@ -32,10 +32,10 @@ package.widget.icon = function WidgetIcon(me) {
     }
     me.text = {
         get: function (object) {
-            return object.var.label.innerHtml;
+            return object.var.label.innerHTML;
         },
         set: function(object, value) {
-            object.var.label.innerHtml = value;
+            object.var.label.innerHTML = value;
         }
     };
     me.src = {

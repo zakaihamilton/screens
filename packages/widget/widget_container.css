@@ -1,10 +1,10 @@
-.widget-content-border {
+.widget-container-border {
     flex:1;
     background: white;
     overflow: hidden;
     position: relative;
 }
 
-.widget-content-border.maximize {
+.widget-container-border.maximize {
     border:none;
 }
