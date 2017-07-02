@@ -7,7 +7,7 @@ package.widget.radio = function WidgetRadio(me) {
     me.depends = {
         properties: ["state", "group"]
     };
-    me.alias = {
+    me.redirect = {
         "ui.basic.text" : "widget.radio.text"
     };
     me.default = {

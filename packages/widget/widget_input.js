@@ -5,26 +5,30 @@
 
 package.widget.input = function WidgetInput(me) {
     me.depends = {
-        properties:["ui.basic.text","ui.element.edit","ui.element.rows"]
+        properties:["ui.basic.text","widget.input.maxlength"]
     };
+    me.redirect = {
+        "ui.basic.text":"widget.input.text"
+    };
+    me.class="widget.input.normal";
     me.default = {
-        "ui.basic.tag" : "textarea",
+        "ui.basic.tag" : "input",
         "ui.basic.type" : "text"
     };
-    me.rows = {
-        get : function(object) {
-            return object.rows;
+    me.text = {
+        get: function(object) {
+            return object.value;
         },
-        set : function(object, value) {
-            object.rows = value;
+        set: function(object, value) {
+            object.value = value;
         }
     };
-    me.columns = {
-        get : function(object) {
-            return object.cols;
+    me.maxlength = {
+        get: function(object) {
+            return object.maxlength;
         },
-        set : function(object, value) {
-            object.cols = value;
+        set: function(object, value) {
+            object.maxlength = value;
         }
     };
 };

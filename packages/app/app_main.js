@@ -76,44 +76,33 @@ package.app.main = function (me) {
                 ],
                 "ui.basic.elements": [{
                         "ui.basic.text": "This is some text",
-                        "ui.style.left": "80px",
-                        "ui.style.width":"300px",
-                        "ui.style.position": "relative",
-                        "ui.style.top": "20px"
+                        "ui.style.width":"200px",
+                        "widget.input.maxlength":50
+                    }, {
+                        "state": true,
+                        "ui.basic.text": "Apple"
                     }, {
                         "ui.basic.text": "Hello",
-                        "ui.event.click": "app.main.ok",
-                        "ui.style.position": "relative",
-                        "ui.style.left": "120px",
-                        "ui.style.top": "170px"
-                    }, {
-                        "state": true,
-                        "ui.basic.text": "Apple",
-                        "ui.style.left": "100px"
+                        "ui.event.click": "app.main.ok"
                     }, {
                         "state": false,
-                        "ui.basic.text": "Orange",
-                        "ui.style.left": "100px"
+                        "ui.basic.text": "Orange"
                     }, {
                         "state": false,
                         "group": "together",
-                        "ui.basic.text": "One",
-                        "ui.style.left": "100px"
+                        "ui.basic.text": "One"
                     }, {
                         "state": true,
                         "group": "together",
-                        "ui.basic.text": "Two",
-                        "ui.style.left": "100px"
+                        "ui.basic.text": "Two"
                     }, {
                         "state": false,
                         "group": "fruit",
-                        "ui.basic.text": "Banana",
-                        "ui.style.left": "100px"
+                        "ui.basic.text": "Banana"
                     }, {
                         "state": true,
                         "group": "fruit",
-                        "ui.basic.text": "Grapefruit",
-                        "ui.style.left": "100px"
+                        "ui.basic.text": "Grapefruit"
                     }, {
                         "ui.style.left": "250px",
                         "ui.style.top": "50px",

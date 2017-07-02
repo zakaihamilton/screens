@@ -7,7 +7,7 @@ package.widget.icon = function WidgetIcon(me) {
     me.depends = {
         properties: ["ui.basic.src", "text"]
     };
-    me.alias = {
+    me.redirect = {
         "ui.basic.text" : "widget.icon.text",
         "ui.basic.src" : "widget.icon.src"
     };

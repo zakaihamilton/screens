@@ -9,7 +9,7 @@ package.widget.window = function WidgetWindow(me) {
         properties: ["title"]
     };
     me.extend = ["ui.focus"];
-    me.alias = {
+    me.redirect = {
         "ui.basic.text": "widget.window.text",
         "ui.style.background" : "widget.window.background",
         "ui.basic.elements":"widget.window.elements"

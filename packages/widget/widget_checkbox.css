@@ -5,6 +5,10 @@
     font-family: "MS Sans Serif";
 }
 
+.widget-checkbox-original {
+    opacity: 0;
+}
+
 .widget-checkbox-original + .widget-checkbox-icon {
     display:inline-block;
     position: relative;

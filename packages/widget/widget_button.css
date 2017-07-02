@@ -1,8 +1,6 @@
 .widget-button-standard {
     border-radius: 1px;
     background-color: #c0c0c0;
-    margin-top: 5px;
-    margin-left: 5px;
     border-left: 2px solid #ffffff;
     border-top: 2px solid #ffffff;
     border-right: 2px solid #808080;
@@ -10,6 +8,13 @@
     box-shadow: 0 0 0 1px black;
     font-family: "MS Sans Serif";
     font-size: 16px;
+    text-align:center;
+    min-width:64px;
+    min-height:17px;
+    display:inline-block;
+    margin-left:18px;
+    margin-top:2px;
+    margin-bottom:2px;
 }
 
 .widget-button-standard:hover:active {

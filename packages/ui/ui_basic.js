@@ -102,6 +102,14 @@ package.ui.basic = function UIBasic(me) {
             object.innerHTML = value;
         }
     };
+    me.readOnly = {
+        get: function(object) {
+            return object.readOnly;
+        },
+        set: function(object, value) {
+            object.readOnly = value;
+        }
+    };
     me.draggable = {
         get : function(object) {
             return object.draggable;

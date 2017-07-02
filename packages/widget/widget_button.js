@@ -9,6 +9,6 @@ package.widget.button = function WidgetButton(me) {
         properties:["ui.basic.text","ui.event.click"]
     };
     me.default = {
-        "ui.basic.tag" : "button"
+        "ui.basic.tag" : "div"
     };
 };

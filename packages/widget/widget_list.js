@@ -10,20 +10,26 @@ package.widget.list = function WidgetList(me) {
     me.default = {
         "ui.basic.tag" : "select"
     };
-    me.get_selection = function(object) {
-        return object.options[object.selectedIndex].value;
+    me.selection = {
+        get :function(object) {
+            return object.options[object.selectedIndex].value;
+        }
     };
-    me.get_count = function(object) {
-        return object.size;
+    me.count = {
+        get: function(object) {
+            return object.size;
+        },
+        set: function(object, value) {
+            object.size = value;
+        }
     };
-    me.set_count = function(object, value) {
-        object.size = value;
-    };
-    me.get_multiple = function(object) {
-        return object.multiple;
-    };
-    me.set_multiple = function(object, value) {
-        object.multiple = value;
+    me.multiple = {
+        get: function(object) {
+            return object.multiple;
+        },
+        set : function(object, value) {
+            object.multiple = value;
+        }
     };
 };
 

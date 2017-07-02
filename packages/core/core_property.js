@@ -21,10 +21,10 @@ package.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if(object.component) {
-            var alias = package[object.component].alias;
-            if(alias) {
-                if(name in alias) {
-                    name = alias[name];
+            var redirect = package[object.component].redirect;
+            if(redirect) {
+                if(name in redirect) {
+                    name = redirect[name];
                 }
             }
         }
