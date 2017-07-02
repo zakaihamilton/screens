@@ -33,8 +33,8 @@ package.app.main = function (me) {
             {
                 "ui.group.data": {
                     "ui.data.parent": me.ui.element.body(),
-                    "ui.data.default": {"background": "radial-gradient(circle, red, yellow, green)"},
-                    "ui.data.keys": ["title", "background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
+                    "ui.data.default": {"ui.style.background": "radial-gradient(circle, red, yellow, green)"},
+                    "ui.data.keys": ["title", "ui.style.background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
                     "ui.data.values": [["Root", "white", "330px", "80px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "550px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
                 }
             },
@@ -118,12 +118,12 @@ package.app.main = function (me) {
                         "ui.style.left": "250px",
                         "ui.style.top": "50px",
                         "title": "Main",
-                        "background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
+                        "ui.style.background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
                     }, {
                         "ui.style.left": "500px",
                         "ui.style.top": "50px",
                         "title": "Games",
-                        "background": "radial-gradient(circle, yellow, green, red)"
+                        "ui.style.background": "radial-gradient(circle, yellow, green, red)"
                     }]
             },
 /*            {

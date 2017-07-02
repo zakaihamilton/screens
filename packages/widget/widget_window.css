@@ -41,17 +41,6 @@
     border:none;
 }
 
-.widget-window-content {
-    flex:1;
-    background: white;
-    overflow: hidden;
-    position: relative;
-}
-
-.widget-window-content.maximize {
-    border:none;
-}
-
 .widget-window-header {
     flex:none;
     height:18px;

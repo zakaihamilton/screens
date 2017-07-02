@@ -39,7 +39,8 @@ package.include({
         "menu",
         "icon",
         "image",
-        "scrollbar"
+        "scrollbar",
+        "content"
     ],
     "app": [
         "main"

@@ -10,7 +10,8 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.extend = ["ui.focus"];
     me.alias = {
-        "ui.basic.text" : "widget.window.text"
+        "ui.basic.text": "widget.window.text",
+        "ui.style.background" : "widget.window.background"
     };
     me.default = {
         "ui.basic.tag": "div",
@@ -84,29 +85,7 @@ package.widget.window = function WidgetWindow(me) {
                             "ui.basic.var": "header"
                         },
                         {
-                            "ui.style.display": "flex",
-                            "ui.style.flex":"1",
-                            "ui.basic.elements": [
-                                {
-                                    "ui.theme.class": "widget.window.content",
-                                    "ui.basic.var": "content"
-                                },
-                                {
-                                    "ui.element.component": "widget.scrollbar.vertical"
-                                }
-                            ]
-                        },
-                        {
-                            "ui.style.display": "flex",
-                            "ui.style.flex":"none",
-                            "ui.basic.elements": [
-                                {
-                                    "ui.element.component": "widget.scrollbar.horizontal"
-                                },
-                                {
-                                    "ui.theme.class": "widget.scrollbar.corner"
-                                }
-                            ]
+                            "ui.element.component":"widget.content"
                         }
                     ]
                 }
@@ -175,7 +154,7 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             return object.var.label.innerHTML;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.var.label.innerHTML = value;
         }
     };
@@ -260,7 +239,7 @@ package.widget.window = function WidgetWindow(me) {
             ], object.parentNode);
             if (!visible) {
                 var parent = me.parent(window);
-                if(!parent) {
+                if (!parent) {
                     parent = document.body;
                 }
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
