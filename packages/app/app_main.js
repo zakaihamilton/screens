@@ -25,7 +25,7 @@ package.app.main = function (me) {
         me.ui.element.update([
             {
                 "ui.style.background": "lightblue",
-                "ui.style.user-select" : "none",
+                "ui.style.user-select": "none",
                 "ui.style.cursor": "default"
             }
         ], me.ui.element.body());
@@ -62,9 +62,9 @@ package.app.main = function (me) {
                     ["Window", [
                             ["Games"],
                             ["Programs"],
-                            ["Maximize","widget.window.maximize"],
-                            ["Minimize","widget.window.minimize"],
-                            ["Restore","widget.window.restore"]
+                            ["Maximize", "widget.window.maximize"],
+                            ["Minimize", "widget.window.minimize"],
+                            ["Restore", "widget.window.restore"]
                         ]],
                     ["Help", [
                             ["Contents"],
@@ -74,55 +74,75 @@ package.app.main = function (me) {
                             ["About Program Manager..."],
                         ]]
                 ],
-                "ui.basic.elements": [{
+                "ui.basic.elements": [
+                    {
                         "ui.basic.text": "This is some text",
-                        "ui.style.width":"200px",
-                        "widget.input.maxlength":50
-                    }, {
+                        "ui.style.width": "200px",
+                        "ui.basic.type": "text"
+                    },
+                    {
                         "state": true,
                         "ui.basic.text": "Apple"
-                    }, {
+                    },
+                    {
                         "ui.basic.text": "Hello",
                         "ui.event.click": "app.main.ok"
-                    }, {
+                    },
+                    {
+                        "ui.basic.text": "Hello",
+                        "ui.style.width": "200px",
+                        "ui.element.count": 0,
+                        "ui.basic.readOnly": true,
+                        "ui.group.data": {
+                            "ui.data.keys": ["ui.basic.text"],
+                            "ui.data.values": [["Root"], ["First"], ["Second"], ["Third"], ["Fourth"]]
+                        }
+                    },
+                    {
                         "state": false,
                         "ui.basic.text": "Orange"
-                    }, {
+                    },
+                    {
                         "state": false,
                         "group": "together",
                         "ui.basic.text": "One"
-                    }, {
+                    },
+                    {
                         "state": true,
                         "group": "together",
                         "ui.basic.text": "Two"
-                    }, {
+                    },
+                    {
                         "state": false,
                         "group": "fruit",
                         "ui.basic.text": "Banana"
-                    }, {
+                    },
+                    {
                         "state": true,
                         "group": "fruit",
                         "ui.basic.text": "Grapefruit"
-                    }, {
+                    },
+                    {
                         "ui.style.left": "250px",
                         "ui.style.top": "50px",
                         "title": "Main",
                         "ui.style.background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
-                    }, {
+                    },
+                    {
                         "ui.style.left": "500px",
                         "ui.style.top": "50px",
                         "title": "Games",
                         "ui.style.background": "radial-gradient(circle, yellow, green, red)"
                     }]
             },
-/*            {
-                "title": "Convert",
-                "icon": "/packages/res/icons/convert.png",
-                "ui.style.left": "400px",
-                "ui.style.top": "200px",
-                "ui.style.width": "400px",
-                "ui.style.height": "300px"
-            }*/
+                    /*            {
+                     "title": "Convert",
+                     "icon": "/packages/res/icons/convert.png",
+                     "ui.style.left": "400px",
+                     "ui.style.top": "200px",
+                     "ui.style.width": "400px",
+                     "ui.style.height": "300px"
+                     }*/
         ]);
     };
     me.ok = {

@@ -4,6 +4,18 @@
  */
 
 package.ui.node = function UINode(me) {
+    me.container = function (object, component_name) {
+        while (object) {
+            if (object === document.body) {
+                return null;
+            }
+            if (object.component === component_name) {
+                return object;
+            }
+            object = object.parentNode;
+        }
+        return null;
+    };
     me.members = function(object, component_name) {
         var members = [];
         for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {

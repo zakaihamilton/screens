@@ -6,9 +6,7 @@
 package.widget.container = function WidgetContainer(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.style.display": "flex",
-        "ui.style.flex": "1",
-        "ui.style.flex-direction": "column"
+        "ui.theme.class":"widget.container.root"
     };
     me.create = {
         set: function (object) {
@@ -42,17 +40,5 @@ package.widget.container = function WidgetContainer(me) {
     };
     me.content = function (object) {
         return object.var.content;
-    };
-    me.find = function (object) {
-        while (object) {
-            if (object === document.body) {
-                return null;
-            }
-            if (object.component === me.id) {
-                return object;
-            }
-            object = object.parentNode;
-        }
-        return null;
     };
 };

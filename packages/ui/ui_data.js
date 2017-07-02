@@ -51,7 +51,7 @@ package.ui.data = function UIData(me) {
                     parent = object.data_parent;
                 }
                 properties = me.ui.element.combine(object.data_default, properties);
-                me.ui.element.create(properties, parent);
+                me.set(parent, "ui.basic.elements", properties);
             }
         }
     };

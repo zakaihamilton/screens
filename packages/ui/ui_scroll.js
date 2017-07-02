@@ -147,7 +147,7 @@ package.ui.scroll = function UIScroll(me) {
                     e.preventDefault();
                     return;
                 }
-                var container = me.widget.container.find(object);
+                var container = me.ui.node.container(object, me.widget.container.id);
                 var thumb_region = me.ui.rect.absolute_region(object);
                 var info = {
                     target: object,

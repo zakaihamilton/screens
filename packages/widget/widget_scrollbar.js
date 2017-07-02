@@ -45,7 +45,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         ]
     };
     me.update = function (object) {
-        var container = me.widget.container.find(object);
+        var container = me.ui.node.container(object, me.widget.container.id);
         var content = me.widget.container.content(container);
         var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
         var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
@@ -72,7 +72,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.before = {
         set: function (object, value) {
-            var container = me.widget.container.find(object);
+            var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             me.ui.scroll.by(content, scroll_type, -10);
             me.update(object.parentNode);
@@ -80,7 +80,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.after = {
         set: function (object, value) {
-            var container = me.widget.container.find(object);
+            var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             me.ui.scroll.by(content, scroll_type, 10);
             me.update(object.parentNode);
@@ -91,7 +91,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             if(value.target !== object.parentNode.var.track) {
                 return;
             }
-            var container = me.widget.container.find(object);
+            var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
             var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);

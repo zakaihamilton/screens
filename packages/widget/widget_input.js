@@ -5,15 +5,14 @@
 
 package.widget.input = function WidgetInput(me) {
     me.depends = {
-        properties:["ui.basic.text","widget.input.maxlength"]
+        properties:["ui.basic.text","ui.basic.type"]
     };
     me.redirect = {
         "ui.basic.text":"widget.input.text"
     };
     me.class="widget.input.normal";
     me.default = {
-        "ui.basic.tag" : "input",
-        "ui.basic.type" : "text"
+        "ui.basic.tag" : "input"
     };
     me.text = {
         get: function(object) {

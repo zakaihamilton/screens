@@ -325,7 +325,7 @@ package.widget.window = function WidgetWindow(me) {
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.attach(window, parent_window);
-                var container = window.var.container;
+                var container = parent_window.var.container;
                 var content = me.widget.container.content(container);
                 parent_region = me.ui.rect.absolute_region(content);
             } else {

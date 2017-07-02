@@ -1,0 +1,92 @@
+widget-list-group {
+    display:flex;
+    flex-direction:column;
+}
+
+.widget-list-selection {
+    margin-left:18px;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    text-align:left;
+    border:1px solid black;
+    margin-top:2px;
+    margin-bottom:2px;
+    position:relative;
+    flex:1;
+    height:19px;
+    width:100%;
+}
+
+.widget-list-button {
+    flex: none;
+    width:16px;
+    height:21px;
+    background-color: #c0c0c0;
+    position: relative;
+    border-top:1px solid black;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+.widget-list-button:after {
+    content: "";
+    position: absolute;
+    top:0px;
+    width:14px;
+    height:19px;
+    border-left: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    box-shadow: inset -1px -1px 0px 0px #808080;
+}
+
+.widget-list-button:hover:active:after {
+    border-left: 1px solid #808080;
+    border-top: 1px solid #808080;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    box-shadow: inset -1px -1px 0px 0px #ffffff;
+}
+
+.widget-list-button-arrow {
+    position: absolute;
+    left:6px;
+    top:6px;
+    width: 3px;
+    height: 3px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-list-button-arrow:after {
+    content:"";
+    position: absolute;
+    left:-2px;
+    top:3px;
+    width: 0px;
+    height: 0px;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 3.5px solid black;
+}
+
+.widget-list-button-line {
+    position: absolute;
+    left:4px;
+    top:14px;
+    width: 7px;
+    height: 1px;
+    background:black;
+    clip-path: inset(-3.5px);    
+}
+
+.widget-list-container {
+    display:none;
+    position:absolute;
+    background:white;
+    border:1px solid black;
+    margin-left:18px;
+}
