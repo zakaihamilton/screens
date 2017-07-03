@@ -65,6 +65,9 @@ package.ui.event = function UIEvent(me) {
         if (!object.event_types) {
             object.event_types = {};
         }
+        if(method) {
+            method = me.ui.element.to_full_name(object, method);
+        }
         var listener_callback = function (event) {
             var result = true;
             if (name in me.handle) {

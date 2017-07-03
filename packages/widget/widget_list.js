@@ -13,32 +13,28 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.redirect = {
         "ui.basic.text": "text",
-        "ui.basic.readOnly": "readOnly",
+        "ui.basic.readOnly": "readOnly"
     };
     me.default = {
         "ui.basic.tag": "div",
-        "ui.theme.class" : "group",
+        "ui.theme.class": "group",
+        "ui.style.display": "flex",
         "ui.basic.elements": [
             {
-                "ui.style.display": "flex",
+                "ui.basic.text": "",
+                "ui.basic.var": "selection",
+                "ui.theme.class": "selection",
+                "ui.basic.type":"text"
+            },
+            {
+                "ui.theme.class": "button",
+                "ui.event.click": "dropdown",
                 "ui.basic.elements": [
                     {
-                        "ui.basic.text": "",
-                        "ui.basic.var": "selection",
-                        "ui.theme.class": "selection",
-                        "ui.basic.type": "text"
+                        "ui.theme.class": "button.arrow"
                     },
                     {
-                        "ui.theme.class": "button",
-                        "ui.event.click": "dropdown",
-                        "ui.basic.elements": [
-                            {
-                                "ui.theme.class": "button.arrow"
-                            },
-                            {
-                                "ui.theme.class": "button.line"
-                            }
-                        ]
+                        "ui.theme.class": "button.line"
                     }
                 ]
             }
@@ -51,16 +47,14 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.ui.rect.absolute_region(object);
+            var region = me.ui.rect.relative_region(object.parentNode);
             me.ui.element.create({
                 "ui.basic.var": "list",
                 "ui.element.component": "widget.list.popup",
-                "ui.style.position": "absolute",
-                "ui.style.left": region.left + "px",
-                "ui.style.width": region.width + "px",
-                "ui.style.top": region.bottom + "px",
-                "ui.basic.elements": object.list_elements
-            }, object);
+                "ui.style.top": region.height + "px",
+                "ui.style.width": region.width - 2 + "px",
+                "ui.style.height": "100px"
+            }, object.parentNode);
         }
     };
     me.text = {
@@ -84,7 +78,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
 package.widget.list.popup = function WidgetListPopup(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.theme.class":"widget.list.popup",
+        "ui.theme.class": "widget.list.popup",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"

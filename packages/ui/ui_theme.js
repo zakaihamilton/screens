@@ -59,15 +59,6 @@ package.ui.theme = function UITheme(me) {
         console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
-    me.to_full_name = function( object, path) {
-        path = path.replace("@component", object.component);
-        var context = object;
-        if(object.context) {
-            context = object.context;
-        }
-        path = me.core.property.fullname(context, path, path);
-        return path;
-    };
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
         path = path.replace(/[\.\_]/g, "-");
@@ -91,7 +82,7 @@ package.ui.theme = function UITheme(me) {
             });
             return;
         }
-        path = me.to_full_name(object, path);
+        path = me.ui.element.to_full_name(object, path);
         var class_name = me.to_class(object, path);
         var component_name = me.to_component(object, path);
         if(component_name) {

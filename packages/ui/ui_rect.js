@@ -128,8 +128,8 @@ package.ui.rect = function UIRect(me) {
         var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
-        var width = object.clientWidth;
-        var height = object.clientHeight;
+        var width = object.offsetWidth;
+        var height = object.offsetHeight;
         if(!width) {
             width = clientRect.width;
         }

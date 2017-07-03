@@ -1,9 +1,10 @@
-widget-list-dropdown-group {
+.widget-list-dropdown-group {
     display:flex;
+    position:relative;
+    margin-left:18px;
 }
 
 .widget-list-dropdown-selection {
-    margin-left:18px;
     font-family: "MS Sans Serif";
     font-size: 16px;
     text-align:left;
@@ -82,12 +83,13 @@ widget-list-dropdown-group {
     clip-path: inset(-3.5px);    
 }
 
-.widget-list-dropdown-popup {
-    display:flex;
+.widget-list-popup {
+    display:block;
     position:absolute;
     background:white;
-    border:1px solid black;
-    margin-left:18px;
-    flex:1;
+    border-left:1px solid black;
+    border-right:1px solid black;
+    border-bottom:1px solid black;
     z-index:1;
+    margin-top:-2px;
 }

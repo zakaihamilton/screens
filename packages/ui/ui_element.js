@@ -85,6 +85,15 @@ package.ui.element = function UIElement(me) {
         }
         return combined;
     };
+    me.to_full_name = function( object, path) {
+        path = path.replace("@component", object.component);
+        var context = object;
+        if(object.context) {
+            context = object.context;
+        }
+        path = me.core.property.fullname(context, path, path);
+        return path;
+    };
     me.create = function (properties, parent, context=null) {
         if (Array.isArray(properties)) {
             properties.map(function (item) {
