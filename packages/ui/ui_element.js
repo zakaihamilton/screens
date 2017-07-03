@@ -127,11 +127,14 @@ package.ui.element = function UIElement(me) {
             me.set(object, "create", parent);
         }
         object.context = object;
+        var redirect = component.redirect;
+        component.redirect = null;
         if(component.default) {
             for (var key in component.default) {
                 me.set(object, key, component.default[key]);
             }
         }
+        component.redirect = redirect;
         object.context = context ? context : parent;
         for (var key in properties) {
             me.set(object, key, properties[key]);
@@ -140,6 +143,9 @@ package.ui.element = function UIElement(me) {
             component.extend.map(function (extension) {
                 me.send(extension + ".extend", object);
             });
+        }
+        if (component_name !== me.id) {
+            me.set(object, "beforeshow", parent);
         }
         object.context = null;
         if (component_name !== me.id) {

@@ -11,8 +11,8 @@ package.widget.window = function WidgetWindow(me) {
     me.extend = ["ui.focus"];
     me.redirect = {
         "ui.basic.text": "text",
-        "ui.style.background" : "background",
-        "ui.basic.elements":"elements"
+        "ui.style.background": "background",
+        "ui.basic.elements": "elements"
     };
     me.default = {
         "ui.basic.tag": "div",
@@ -23,78 +23,77 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.top": "100px",
         "ui.rect.movable": true,
         "ui.rect.resizable": true,
-        "ui.theme.class":"border"
+        "ui.theme.class": "border",
+        "ui.basic.elements": [{
+                "ui.theme.class": "bottom-left",
+                "ui.rect.resize": null
+            },
+            {
+                "ui.theme.class": "bottom-right",
+                "ui.rect.resize": null
+            },
+            {
+                "ui.theme.class": "top-left",
+                "ui.rect.resize": null
+            },
+            {
+                "ui.theme.class": "top-right",
+                "ui.rect.resize": null
+            },
+            {
+                "ui.theme.class": "margin",
+                "ui.basic.elements": [
+                    {
+                        "ui.basic.var": "title",
+                        "ui.theme.class": "title",
+                        "ui.basic.elements": [
+                            {
+                                "ui.basic.var": "close",
+                                "ui.theme.class": "close",
+                                "ui.event.click": "context_menu",
+                                "ui.event.dblclick": "close",
+                            },
+                            {
+                                "ui.basic.var": "label",
+                                "ui.basic.text": "",
+                                "ui.theme.class": "label",
+                                "ui.rect.move": null,
+                                "ui.event.dblclick": "toggle"
+                            },
+                            {
+                                "ui.basic.var": "minimize",
+                                "ui.theme.class": "action",
+                                "ui.event.click": "minimize",
+                                "ui.basic.elements": {
+                                    "ui.theme.class": "minimize"
+                                }
+                            },
+                            {
+                                "ui.basic.var": "maximize",
+                                "ui.theme.class": "action",
+                                "ui.event.click": "toggle",
+                                "ui.basic.elements": {
+                                    "ui.theme.class": "maximize"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "ui.theme.class": "widget.window.header",
+                        "ui.basic.var": "header"
+                    },
+                    {
+                        "ui.element.component": "widget.container",
+                        "ui.basic.var": "container"
+                    }
+                ]
+            }
+        ]
     };
     me.create = {
         set: function (object) {
-            me.ui.element.create([{
-                    "ui.theme.class": "widget.window.bottom-left",
-                    "ui.rect.resize": object
-                },
-                {
-                    "ui.theme.class": "widget.window.bottom-right",
-                    "ui.rect.resize": object
-                },
-                {
-                    "ui.theme.class": "widget.window.top-left",
-                    "ui.rect.resize": object
-                },
-                {
-                    "ui.theme.class": "widget.window.top-right",
-                    "ui.rect.resize": object
-                },
-                {
-                    "ui.theme.class": "widget.window.margin",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.var": "title",
-                            "ui.theme.class": "widget.window.title",
-                            "ui.basic.elements": [
-                                {
-                                    "ui.basic.var": "close",
-                                    "ui.theme.class": "widget.window.close",
-                                    "ui.event.click": "widget.window.context_menu",
-                                    "ui.event.dblclick": "widget.window.close",
-                                },
-                                {
-                                    "ui.basic.var": "label",
-                                    "ui.basic.text": "",
-                                    "ui.theme.class": "widget.window.label",
-                                    "ui.rect.move": object,
-                                    "ui.event.dblclick": "widget.window.toggle"
-                                },
-                                {
-                                    "ui.basic.var": "minimize",
-                                    "ui.theme.class": "widget.window.action",
-                                    "ui.event.click": "widget.window.minimize",
-                                    "ui.basic.elements": {
-                                        "ui.theme.class": "widget.window.minimize"
-                                    }
-                                },
-                                {
-                                    "ui.basic.var": "maximize",
-                                    "ui.theme.class": "widget.window.action",
-                                    "ui.event.click": "widget.window.toggle",
-                                    "ui.basic.elements": {
-                                        "ui.theme.class": "widget.window.maximize"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "ui.theme.class": "widget.window.header",
-                            "ui.basic.var": "header"
-                        },
-                        {
-                            "ui.element.component":"widget.container",
-                            "ui.basic.var":"container"
-                        }
-                    ]
-                }
-            ], object);
             var parent = me.parent(object);
             if (parent === null) {
-                me.set(object.var.close, "ui.theme.add", "main");
                 parent = document.body;
                 if (!parent.var) {
                     parent.var = {};
@@ -116,6 +115,14 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.style.display": "none",
                 "ui.basic.window": object
             }, parent.var.tray);
+        }
+    };
+    me.beforeshow = {
+        set: function (object) {
+            var parent = me.parent(object);
+            if (parent === null) {
+                me.set(object.var.close, "ui.theme.add", "main");
+            }
             me.ui.property.broadcast(object, "ui.theme.add", "restore");
         }
     };
@@ -148,7 +155,7 @@ package.widget.window = function WidgetWindow(me) {
         return window;
     };
     me.elements = {
-        set: function(object, value) {
+        set: function (object, value) {
             if (value) {
                 var window = me.window(object);
                 var content = me.widget.container.content(window.var.container);
@@ -232,7 +239,7 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
-            console.log("window: "  + window.component +  " container: " + window.var.container);
+            console.log("window: " + window.component + " container: " + window.var.container);
             var content = me.widget.container.content(window.var.container);
             me.set(content, "ui.style.background", value);
         }

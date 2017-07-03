@@ -23,7 +23,7 @@ package.ui.rect = function UIRect(me) {
     me.move = {
         set: function (object, value) {
             if(!value) {
-                value = object;
+                value = me.widget.window.window(object);
             }
             object.addEventListener('mousedown', function (e) {
                 if(!value.rect_movable) {
@@ -31,21 +31,21 @@ package.ui.rect = function UIRect(me) {
                     return;
                 }
                 me.set(value, "ui.focus.active", true);
-                var window_region = me.ui.rect.absolute_region(value);
+                var target_region = me.ui.rect.absolute_region(value);
                 var info = {
                     target: value,
-                    left: e.clientX-window_region.left,
-                    top: e.clientY-window_region.top,
+                    left: e.clientX-target_region.left,
+                    top: e.clientY-target_region.top,
                     width: value.offsetWidth,
                     height: value.offsetHeight
                 };
                 var move_method = function (e) {
-                    var window_region = me.ui.rect.absolute_region(value);
+                    var target_region = me.ui.rect.absolute_region(value);
                     var shift_region = {};
                     me.ui.rect.empty_region(shift_region);
-                    window_region.left = e.clientX - info.left;
-                    window_region.top = e.clientY - info.top;
-                    me.ui.rect.set_absolute_region(info.target, window_region);
+                    target_region.left = e.clientX - info.left;
+                    target_region.top = e.clientY - info.top;
+                    me.ui.rect.set_absolute_region(info.target, target_region);
                     me.ui.property.notify(info.target, "draw", null);
                 };
                 var release_method = function (e) {
@@ -61,7 +61,7 @@ package.ui.rect = function UIRect(me) {
     me.resize = {
         set: function (object, value) {
             if(!value) {
-                value = object;
+                value = me.widget.window.window(object);
             }
             object.addEventListener('mousedown', function (e) {
                 if(!value.rect_resizable) {
@@ -77,25 +77,25 @@ package.ui.rect = function UIRect(me) {
                     height: value.offsetHeight
                 };
                 var move_method = function (e) {
-                    var window_region = me.ui.rect.absolute_region(value);
+                    var target_region = me.ui.rect.absolute_region(value);
                     var object_region = me.ui.rect.absolute_region(object);
                     var shift_region = {};
                     me.ui.rect.empty_region(shift_region);
-                    if(object_region.left < window_region.left + (window_region.width / 2)) {
-                        window_region.width = window_region.width + (window_region.left - e.clientX);
-                        window_region.left = e.clientX;
+                    if(object_region.left < target_region.left + (target_region.width / 2)) {
+                        target_region.width = target_region.width + (target_region.left - e.clientX);
+                        target_region.left = e.clientX;
                     }
                     else {
-                        window_region.width = e.clientX - info.left + info.width;
+                        target_region.width = e.clientX - info.left + info.width;
                     }
-                    if(object_region.top < window_region.top + (window_region.height / 2)) {
-                        window_region.height = window_region.height + (window_region.top - e.clientY);
-                        window_region.top = e.clientY;
+                    if(object_region.top < target_region.top + (target_region.height / 2)) {
+                        target_region.height = target_region.height + (target_region.top - e.clientY);
+                        target_region.top = e.clientY;
                     }
                     else {
-                        window_region.height = e.clientY - info.top + info.height;
+                        target_region.height = e.clientY - info.top + info.height;
                     }
-                    me.ui.rect.set_absolute_region(info.target, window_region);
+                    me.ui.rect.set_absolute_region(info.target, target_region);
                     me.ui.property.notify(info.target, "draw", null);
                 };
                 var release_method = function (e) {
@@ -128,8 +128,8 @@ package.ui.rect = function UIRect(me) {
         var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
-        var width = object.offsetWidth;
-        var height = object.offsetHeight;
+        var width = object.clientWidth;
+        var height = object.clientHeight;
         if(!width) {
             width = clientRect.width;
         }
