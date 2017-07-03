@@ -4,63 +4,63 @@
  */
 
 package.widget.list = function WidgetList(me) {
+
+};
+
+package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.depends = {
         properties: ["ui.element.count"]
     };
     me.redirect = {
-        "ui.basic.text": "widget.list.text",
-        "ui.basic.readOnly": "widget.list.readOnly",
-        "ui.basic.elements": "widget.list.elements"
+        "ui.basic.text": "text",
+        "ui.basic.readOnly": "readOnly",
     };
-    me.class = "widget.list.group";
     me.default = {
-        "ui.basic.tag": "div"
+        "ui.basic.tag": "div",
+        "ui.theme.class" : "group",
+        "ui.basic.elements": [
+            {
+                "ui.style.display": "flex",
+                "ui.basic.elements": [
+                    {
+                        "ui.basic.text": "",
+                        "ui.basic.var": "selection",
+                        "ui.theme.class": "selection",
+                        "ui.basic.type": "text"
+                    },
+                    {
+                        "ui.theme.class": "button",
+                        "ui.event.click": "dropdown",
+                        "ui.basic.elements": [
+                            {
+                                "ui.theme.class": "button.arrow"
+                            },
+                            {
+                                "ui.theme.class": "button.line"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     };
-    me.create = {
-        set: function (object) {
-            me.ui.element.create([
-                {
-                    "ui.style.display": "flex",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.var": "selection",
-                            "ui.theme.class": "widget.list.selection",
-                            "ui.basic.type": "text"
-                        },
-                        {
-                            "ui.theme.class": "widget.list.button",
-                            "ui.event.click": "widget.list.dropdown",
-                            "ui.basic.elements": [
-                                {
-                                    "ui.theme.class": "widget.list.button.arrow"
-                                },
-                                {
-                                    "ui.theme.class": "widget.list.button.line"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.var": "list",
-                    "ui.theme.class": "widget.list.container",
-                    "ui.element.component": "widget.container"
-                }
-            ], object);
+    me.back = {
+        set: function (object, value) {
+            me.set(object.var.list, "ui.node.parent", null);
         }
     };
     me.dropdown = {
         set: function (object, value) {
-            var list = me.ui.node.container(object, me.id);
-            var display = me.get(list.var.list, "ui.style.display");
-            if (display === "none") {
-                me.set(list.var.list, "ui.style.display", "flex");
-                me.set(list.var.list, "ui.style.zIndex", "1");
-            } else {
-                me.set(list.var.list, "ui.style.display", "none");
-                me.set(list.var.list, "ui.style.zIndex", "0");
-            }
+            var region = me.ui.rect.absolute_region(object);
+            me.ui.element.create({
+                "ui.basic.var": "list",
+                "ui.element.component": "widget.list.popup",
+                "ui.style.position": "absolute",
+                "ui.style.left": region.left + "px",
+                "ui.style.width": region.width + "px",
+                "ui.style.top": region.bottom + "px",
+                "ui.basic.elements": object.list_elements
+            }, object);
         }
     };
     me.text = {
@@ -78,13 +78,30 @@ package.widget.list = function WidgetList(me) {
         set: function (object, value) {
             me.set(object.var.selection, "ui.basic.readOnly", value);
         }
-    }
-    me.elements = {
+    };
+};
+
+package.widget.list.popup = function WidgetListPopup(me) {
+    me.default = {
+        "ui.basic.tag": "div",
+        "ui.theme.class":"widget.list.popup",
+        "ui.basic.elements": {
+            "ui.basic.var": "modal",
+            "ui.element.component": "widget.modal"
+        }
+    };
+    me.back = {
         set: function (object, value) {
-            if (value) {
-                var content = me.widget.container.content(object.var.list);
-                me.ui.element.create(value, content);
-            }
+            me.set(object.parentNode, "back", value);
+            me.set(object, "ui.node.parent", null);
+        }
+    };
+    me.select = {
+        set: function (object, value) {
+            var item = value[0];
+            var info = value[1];
+            me.set(object, info, item);
+            me.set(object, "back", item);
         }
     };
 };

@@ -92,18 +92,21 @@ package.ui.element = function UIElement(me) {
             });
             return;
         }
-        var object = null;
+        var object = null, tag = null;
         var component_name = properties["ui.element.component"];
         if (!component_name) {
             component_name = me.matches(properties, parent);
         }
         if (!component_name) {
             component_name = "ui.element";
+            tag = properties['ui.basic.tag']
         }
         var component = me[component_name];
-        properties = me.combine(component.default, properties);
         console.log("creating element of " + component_name);
-        object = document.createElement(properties['ui.basic.tag']);
+        if(!tag) {
+            tag = component.default['ui.basic.tag'];
+        }
+        object = document.createElement(tag);
         object.var = {};
         object.component = component_name;
         if (!parent) {
@@ -111,12 +114,16 @@ package.ui.element = function UIElement(me) {
         }
         object.context = context ? context : parent;
         me.set(object, "ui.node.parent", parent);
-        if (component.class) {
-            me.ui.theme.set_class(object, component.class);
-        }
         if (component_name !== me.id) {
             me.set(object, "create", parent);
         }
+        object.context = object;
+        if(component.default) {
+            for (var key in component.default) {
+                me.set(object, key, component.default[key]);
+            }
+        }
+        object.context = context ? context : parent;
         for (var key in properties) {
             me.set(object, key, properties[key]);
         }

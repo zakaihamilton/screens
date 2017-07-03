@@ -22,9 +22,9 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.left": "100px",
         "ui.style.top": "100px",
         "ui.rect.movable": true,
-        "ui.rect.resizable": true
+        "ui.rect.resizable": true,
+        "ui.theme.class":"border"
     };
-    me.class = ["widget.window.border"];
     me.create = {
         set: function (object) {
             me.ui.element.create([{

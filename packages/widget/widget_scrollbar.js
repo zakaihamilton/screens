@@ -5,10 +5,9 @@
 
 function WidgetScrollbarTemplate(me, scroll_type) {
     console.log("scrolling: " + scroll_type);
-    me.class = "widget.scrollbar." + scroll_type;
     me.default = {
         "ui.basic.tag": "div",
-        "ui.basic.context": null,
+        "ui.theme.class" : "widget.scrollbar." + scroll_type,
         "ui.basic.elements": [
             {
                 "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".before"],

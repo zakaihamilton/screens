@@ -10,9 +10,9 @@ package.widget.input = function WidgetInput(me) {
     me.redirect = {
         "ui.basic.text":"widget.input.text"
     };
-    me.class="widget.input.normal";
     me.default = {
-        "ui.basic.tag" : "input"
+        "ui.basic.tag" : "input",
+        "ui.theme.class" : "widget.input.normal"
     };
     me.text = {
         get: function(object) {

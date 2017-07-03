@@ -4,10 +4,10 @@
  */
 
 package.widget.modal = function WidgetModal(me) {
-    me.class=["widget.modal.overlay"];
     me.default = {
         "ui.basic.tag" : "div",
-        "ui.event.click":"widget.modal.click"
+        "ui.event.click":"widget.modal.click",
+        "ui.theme.class" : "widget.modal.overlay"
     };
     me.click = {
         set: function(object, value) {

@@ -1,9 +1,8 @@
-widget-list-group {
+widget-list-dropdown-group {
     display:flex;
-    flex-direction:column;
 }
 
-.widget-list-selection {
+.widget-list-dropdown-selection {
     margin-left:18px;
     font-family: "MS Sans Serif";
     font-size: 16px;
@@ -17,7 +16,7 @@ widget-list-group {
     width:100%;
 }
 
-.widget-list-button {
+.widget-list-dropdown-button {
     flex: none;
     width:16px;
     height:21px;
@@ -30,7 +29,7 @@ widget-list-group {
     margin-bottom:2px;
 }
 
-.widget-list-button:after {
+.widget-list-dropdown-button:after {
     content: "";
     position: absolute;
     top:0px;
@@ -43,7 +42,7 @@ widget-list-group {
     box-shadow: inset -1px -1px 0px 0px #808080;
 }
 
-.widget-list-button:hover:active:after {
+.widget-list-dropdown-button:hover:active:after {
     border-left: 1px solid #808080;
     border-top: 1px solid #808080;
     border-right: 1px solid #ffffff;
@@ -51,7 +50,7 @@ widget-list-group {
     box-shadow: inset -1px -1px 0px 0px #ffffff;
 }
 
-.widget-list-button-arrow {
+.widget-list-dropdown-button-arrow {
     position: absolute;
     left:6px;
     top:6px;
@@ -61,7 +60,7 @@ widget-list-group {
     clip-path: inset(-3.5px);    
 }
 
-.widget-list-button-arrow:after {
+.widget-list-dropdown-button-arrow:after {
     content:"";
     position: absolute;
     left:-2px;
@@ -73,7 +72,7 @@ widget-list-group {
     border-top: 3.5px solid black;
 }
 
-.widget-list-button-line {
+.widget-list-dropdown-button-line {
     position: absolute;
     left:4px;
     top:14px;
@@ -83,10 +82,12 @@ widget-list-group {
     clip-path: inset(-3.5px);    
 }
 
-.widget-list-container {
-    display:none;
+.widget-list-dropdown-popup {
+    display:flex;
     position:absolute;
     background:white;
     border:1px solid black;
     margin-left:18px;
+    flex:1;
+    z-index:1;
 }

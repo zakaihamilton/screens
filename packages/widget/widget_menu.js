@@ -6,14 +6,13 @@
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.basic.context":null,
+        "ui.theme.class" : "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.style.display": "none",
             "ui.element.component": "widget.modal"
         }
     };
-    me.class = ["widget.menu.horizontal"];
     me.attach = function(source, target) {
         if(source.var.menu) {
             var parent = target;
@@ -91,11 +90,7 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         }, parent);
-        console.log("menu component: " + object.component);
         if(object.component === me.id) {
-            console.log("menu: " + menu);
-            console.log("menu.var: " + menu.var);
-            console.log("menu.var.modal: " + menu.var.modal);
             me.set(menu.var.modal, "ui.style.display", "none");
         }
         return menu;
@@ -105,13 +100,12 @@ package.widget.menu = function WidgetMenu(me) {
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.basic.context":null,
+        "ui.theme.class" : "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"
         }
     };
-    me.class = ["widget.menu.vertical"];
     me.back = {
         set: function (object, value) {
             me.set(object.parentNode, "back", value);

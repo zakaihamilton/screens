@@ -14,7 +14,6 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.drag"];
     me.default = {
         "ui.basic.tag": "figure",
-        "ui.basic.context":null,
         "ui.theme.class": "widget.icon.border",
         "ui.style.text-align": "center",
         "ui.basic.elements": [{

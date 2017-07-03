@@ -8,7 +8,7 @@ package.core.property = function CoreProperty(me) {
         package.get = me.get;
         package.set = me.set;
     };
-    me.fullname = function(object, name) {
+    me.fullname = function(object, name, default_name=null) {
         var separator = name.indexOf(".");
         var package_name = null;
         if(separator !== -1) {
@@ -16,7 +16,7 @@ package.core.property = function CoreProperty(me) {
         }
         if(!package_name || !(package_name in package)) {
             if(!object.component) {
-                return null;
+                return default_name;
             }
             name = object.component + "." + name;
         }
@@ -24,7 +24,7 @@ package.core.property = function CoreProperty(me) {
             var redirect = package[object.component].redirect;
             if(redirect) {
                 if(name in redirect) {
-                    name = redirect[name];
+                    name = me.fullname(object, redirect[name]);
                 }
             }
         }

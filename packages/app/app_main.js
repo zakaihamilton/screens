@@ -89,14 +89,10 @@ package.app.main = function (me) {
                         "ui.event.click": "app.main.ok"
                     },
                     {
-                        "ui.basic.text": "Hello",
+                        "ui.basic.text": "Selected Text",
                         "ui.style.width": "200px",
                         "ui.element.count": 0,
-                        "ui.basic.readOnly": true,
-                        "ui.group.data": {
-                            "ui.data.keys": ["ui.basic.text"],
-                            "ui.data.values": [["Root"], ["First"], ["Second"], ["Third"], ["Fourth"]]
-                        }
+                        "ui.basic.readOnly": true
                     },
                     {
                         "state": false,
