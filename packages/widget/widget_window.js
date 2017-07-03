@@ -10,9 +10,9 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.extend = ["ui.focus"];
     me.redirect = {
-        "ui.basic.text": "widget.window.text",
-        "ui.style.background" : "widget.window.background",
-        "ui.basic.elements":"widget.window.elements"
+        "ui.basic.text": "text",
+        "ui.style.background" : "background",
+        "ui.basic.elements":"elements"
     };
     me.default = {
         "ui.basic.tag": "div",
