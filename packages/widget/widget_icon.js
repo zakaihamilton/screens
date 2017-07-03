@@ -8,13 +8,13 @@ package.widget.icon = function WidgetIcon(me) {
         properties: ["ui.basic.src", "text"]
     };
     me.redirect = {
-        "ui.basic.text" : "widget.icon.text",
-        "ui.basic.src" : "widget.icon.src"
+        "ui.basic.text" : "text",
+        "ui.basic.src" : "src"
     };
     me.extend = ["ui.drag"];
     me.default = {
         "ui.basic.tag": "figure",
-        "ui.theme.class": "widget.icon.border",
+        "ui.theme.class": "border",
         "ui.style.text-align": "center",
         "ui.basic.elements": [{
                 "ui.basic.src": "",

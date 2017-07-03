@@ -6,7 +6,7 @@
 package.widget.container = function WidgetContainer(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.theme.class":"widget.container.root"
+        "ui.theme.class":"root"
     };
     me.create = {
         set: function (object) {
@@ -15,7 +15,7 @@ package.widget.container = function WidgetContainer(me) {
                     "ui.style.flex": "1",
                     "ui.basic.elements": [
                         {
-                            "ui.theme.class": "widget.container.border",
+                            "ui.theme.class": "border",
                             "ui.basic.var": "content"
                         },
                         {

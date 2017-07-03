@@ -79,7 +79,7 @@ package.widget.window = function WidgetWindow(me) {
                         ]
                     },
                     {
-                        "ui.theme.class": "widget.window.header",
+                        "ui.theme.class": "header",
                         "ui.basic.var": "header"
                     },
                     {

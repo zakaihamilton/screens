@@ -9,6 +9,6 @@ package.widget.button = function WidgetButton(me) {
     };
     me.default = {
         "ui.basic.tag" : "div",
-        "ui.theme.class" : "widget.button.standard"
+        "ui.theme.class" : "standard"
     };
 };

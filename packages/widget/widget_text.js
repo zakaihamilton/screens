@@ -9,6 +9,6 @@ package.widget.text = function WidgetText(me) {
     };
     me.default = {
         "ui.basic.tag" : "div",
-        "ui.theme.class":"widget.text.normal"
+        "ui.theme.class":"normal"
     };
 };

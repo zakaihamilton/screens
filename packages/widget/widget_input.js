@@ -8,11 +8,11 @@ package.widget.input = function WidgetInput(me) {
         properties:["ui.basic.text","ui.basic.type"]
     };
     me.redirect = {
-        "ui.basic.text":"widget.input.text"
+        "ui.basic.text":"text"
     };
     me.default = {
         "ui.basic.tag" : "input",
-        "ui.theme.class" : "widget.input.normal"
+        "ui.theme.class" : "normal"
     };
     me.text = {
         get: function(object) {

@@ -10,35 +10,35 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         "ui.theme.class" : "widget.scrollbar." + scroll_type,
         "ui.basic.elements": [
             {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".before"],
+                "ui.theme.class": ["widget.scrollbar.button","before"],
                 "ui.basic.var": "before",
-                "ui.event.click": "widget.scrollbar." + scroll_type + ".before",
-                "ui.event.repeat": "widget.scrollbar." + scroll_type+ ".before",
+                "ui.event.click": "before",
+                "ui.event.repeat": "before",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar." + scroll_type + ".before.arrow"
+                    "ui.theme.class": "before.arrow"
                 }
             },
             {
                 "ui.basic.var":"track",
-                "ui.theme.class": "widget.scrollbar." + scroll_type + ".track",
-                "ui.event.click":"widget.scrollbar." + scroll_type + ".track",
-                "ui.event.repeat":"widget.scrollbar." + scroll_type + ".track",
+                "ui.theme.class": "track",
+                "ui.event.click":"track",
+                "ui.event.repeat":"track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
-                    "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".thumb"],
+                    "ui.theme.class": ["widget.scrollbar.button","thumb"],
                     "ui.scroll.thumb": scroll_type,
                     "ui.style.position": "relative"
                 }
             },
             {
-                "ui.theme.class": ["widget.scrollbar.button","widget.scrollbar." + scroll_type + ".after"],
+                "ui.theme.class": ["widget.scrollbar.button","after"],
                 "ui.basic.var": "after",
-                "ui.event.click": "widget.scrollbar." + scroll_type + ".after",
-                "ui.event.repeat": "widget.scrollbar." + scroll_type + ".after",
+                "ui.event.click": "after",
+                "ui.event.repeat": "after",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
-                    "ui.theme.class": "widget.scrollbar." + scroll_type + ".after.arrow"
+                    "ui.theme.class": "after.arrow"
                 }
             }
         ]

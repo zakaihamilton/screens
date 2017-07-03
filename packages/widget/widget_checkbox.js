@@ -8,7 +8,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         properties: ["state"]
     };
     me.redirect = {
-        "ui.basic.text" : "widget.checkbox.text"
+        "ui.basic.text" : "text"
     };
     me.default = {
         "ui.basic.tag": "div"
@@ -20,18 +20,18 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                     "ui.basic.var": "input",
                     "ui.basic.tag": "input",
                     "ui.basic.type": "checkbox",
-                    "ui.theme.class": "widget.checkbox.original",
+                    "ui.theme.class": "original",
                     "ui.basic.elementId": ref
                 },
                 {
                     "ui.basic.var": "checkbox",
                     "ui.basic.tag": "label",
                     "ui.basic.htmlFor": ref,
-                    "ui.theme.class": "widget.checkbox.icon",
+                    "ui.theme.class": "icon",
                     "ui.basic.elements": {
                         "ui.basic.var": "label",
                         "ui.basic.tag": "span",
-                        "ui.theme.class": "widget.checkbox.label"
+                        "ui.theme.class": "label"
                     }
                 }], object);
         }

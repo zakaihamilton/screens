@@ -22,7 +22,7 @@ package.widget.radio = function WidgetRadio(me) {
                     "ui.basic.type": "radio",
                     "ui.style.position": "relative",
                     "ui.style.opacity": 0,
-                    "ui.theme.class": "widget.radio.original",
+                    "ui.theme.class": "original",
                     "ui.basic.elementId": ref
                 },
                 {
@@ -30,12 +30,12 @@ package.widget.radio = function WidgetRadio(me) {
                     "ui.basic.tag": "label",
                     "ui.basic.htmlFor": ref,
                     "ui.style.position": "relative",
-                    "ui.theme.class": "widget.radio.icon",
+                    "ui.theme.class": "icon",
                     "ui.basic.elements": {
                         "ui.basic.var": "label",
                         "ui.basic.tag": "span",
                         "ui.style.position": "relative",
-                        "ui.theme.class": "widget.radio.label"
+                        "ui.theme.class": "label"
                     }
                 }], object);
         }
