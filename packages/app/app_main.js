@@ -39,7 +39,7 @@ package.app.main = function (me) {
                 }
             },
             {
-                "title": "The Computer Chronicles - Windows 3.0 (1990)",
+                "title": "The Computer Chronicles",
                 "ui.style.left": "550px",
                 "ui.style.top": "200px",
                 "ui.style.width": "300px",

@@ -2,7 +2,7 @@
     border: 1px solid black;
     background-color: #c0c0c0;
     min-width:200px;
-    min-height: 200px;
+    min-height:200px;
 }
 
 .widget-window-border.maximize {

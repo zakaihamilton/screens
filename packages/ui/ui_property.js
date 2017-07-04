@@ -4,16 +4,17 @@
  */
 
 package.ui.property = function UIProperty(me) {
-    me.broadcast = function(object, name, value) {
+    me.broadcast = function(object, name, value, stopAtWindow=true) {
         if(object) {
             me.set(object, name, value);
-            if(object.childNodes) {
-                for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-                    var child = object.childNodes[childIndex];
-                    if(child.component === me.widget.window.id) {
+            var childList = me.ui.node.childList(object);
+            if(childList) {
+                for(var childIndex = 0; childIndex < childList.length; childIndex++) {
+                    var child = childList[childIndex];
+                    if(stopAtWindow && child.component === me.widget.window.id) {
                         continue;
                     }
-                    me.broadcast(child, name, value);
+                    me.broadcast(child, name, value, stopAtWindow);
                 }
             }
         }
@@ -33,4 +34,7 @@ package.ui.property = function UIProperty(me) {
             me.broadcast(object, name, value);
         }
     };
+    me.notifyAll = function(name, value) {
+        me.broadcast(document.body, name, value, false);
+    }
 };

@@ -4,6 +4,22 @@
  */
 
 package.ui.node = function UINode(me) {
+    me.childList = function(object) {
+        var childList = Array(object.childNodes.length).fill(null);
+        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
+            var child = object.childNodes[childIndex];
+            var order = "auto";
+            if(child.component) {
+                order = getComputedStyle(child).zIndex;
+            }
+            if(order === "auto" || order < 0 || order > object.childNodes.length) {
+                order = 0;
+            }
+            for(;childList[order] && order < object.childNodes.length - 1; order++);
+            childList[order] = child;
+        }
+        return childList;
+    };
     me.container = function (object, component_name) {
         while (object) {
             if (object === document.body) {
@@ -18,8 +34,9 @@ package.ui.node = function UINode(me) {
     };
     me.members = function(object, component_name) {
         var members = [];
-        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-            var child = object.childNodes[childIndex];
+        var childList = me.childList(object);
+        for(var childIndex = 0; childIndex < childList.length; childIndex++) {
+            var child = childList[childIndex];
             if (child.component === component_name) {
                 continue;
             }
@@ -28,8 +45,9 @@ package.ui.node = function UINode(me) {
         return members;
     };
     me.first = function(object, component_name) {
-        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-            var child = object.childNodes[childIndex];
+        var childList = me.childList(object);
+        for(var childIndex = 0; childIndex < childList.length; childIndex++) {
+            var child = childList[childIndex];
             if (child.component === component_name) {
                 return child;
             }
@@ -41,8 +59,9 @@ package.ui.node = function UINode(me) {
         return null;
     };
     me.last = function(object, component_name) {
-        for(var childIndex = object.childNodes.length - 1; childIndex >= 0; childIndex--) {
-            var child = object.childNodes[childIndex];
+        var childList = me.childList(object);
+        for(var childIndex = childList.length - 1; childIndex >= 0; childIndex--) {
+            var child = childList[childIndex];
             if (child.component === component_name) {
                 return child;
             }

@@ -26,8 +26,9 @@ package.ui.focus = function UIFocus(me) {
     };
     me.find_branch = function(object, x, y) {
         /* Find the lowest matching element on position */
-        for(var index = 0; index < object.childNodes.length; index++) {
-            var node = object.childNodes[index];
+        var childList = me.ui.node.childList(object);
+        for(var index = 0; index < childList.length; index++) {
+            var node = childList[index];
             if(!node.component) {
                 continue;
             }
@@ -56,24 +57,9 @@ package.ui.focus = function UIFocus(me) {
             from = me.widget.window.parent(from);
         }
     };
-    me.childList = function(object) {
-        var childList = Array(object.childNodes.length).fill(null);
-        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-            var child = object.childNodes[childIndex];
-            var order = 0;
-            if(child.component) {
-                order = me.get(child, "ui.style.zIndex");
-            }
-            if(!order) {
-                order = childIndex;
-            }
-            childList[order] = child;
-        }
-        return childList;
-    };
     me.updateOrder = function(parent, object=null, order=parent.childNodes.length-1) {
         var length = parent.childNodes.length;
-        var childList = me.childList(parent);
+        var childList = me.ui.node.childList(parent);
         if(object) {
             var prevOrder = me.get(object, "ui.style.zIndex");
             childList.splice(prevOrder, 1);
