@@ -88,20 +88,21 @@ package.ui.rect = function UIRect(me) {
                     var min_height = parseInt(getComputedStyle(value).minHeight, 10);
                     if(object_region.left < target_region.left + (target_region.width / 2)) {
                         target_region.width = target_region.width + (target_region.left - e.clientX);
-                        target_region.left = e.clientX;
+                        if(target_region.width >= min_width) {
+                            target_region.left = e.clientX;
+                        }
                     }
                     else {
                         target_region.width = e.clientX - info.left + info.width;
                     }
                     if(object_region.top < target_region.top + (target_region.height / 2)) {
                         target_region.height = target_region.height + (target_region.top - e.clientY);
-                        target_region.top = e.clientY;
+                        if(target_region.height >= min_height) {
+                            target_region.top = e.clientY;
+                        }
                     }
                     else {
                         target_region.height = e.clientY - info.top + info.height;
-                    }
-                    if(target_region.width < min_width || target_region.height < min_height) {
-                        return;
                     }
                     me.ui.rect.set_absolute_region(info.target, target_region);
                     me.ui.property.notify(info.target, "draw", null);
