@@ -16,9 +16,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
         "ui.basic.readOnly": "readOnly"
     };
     me.default = {
-        "ui.basic.tag": "div",
         "ui.theme.class": "group",
-        "ui.style.display": "flex",
         "ui.basic.elements": [
             {
                 "ui.basic.text": "",
@@ -77,7 +75,6 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
 
 package.widget.list.popup = function WidgetListPopup(me) {
     me.default = {
-        "ui.basic.tag": "div",
         "ui.theme.class": "widget.list.popup",
         "ui.basic.elements": {
             "ui.basic.var": "modal",

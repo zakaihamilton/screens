@@ -15,7 +15,6 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = {
-        "ui.basic.tag": "div",
         "ui.style.width": "150px",
         "ui.style.height": "150px",
         "ui.style.position": "absolute",

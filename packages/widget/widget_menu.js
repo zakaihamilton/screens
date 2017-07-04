@@ -5,7 +5,6 @@
 
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
-        "ui.basic.tag": "div",
         "ui.theme.class" : "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
@@ -99,7 +98,6 @@ package.widget.menu = function WidgetMenu(me) {
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
-        "ui.basic.tag": "div",
         "ui.theme.class" : "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",

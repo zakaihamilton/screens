@@ -10,9 +10,6 @@ package.widget.checkbox = function WidgetCheckBox(me) {
     me.redirect = {
         "ui.basic.text" : "text"
     };
-    me.default = {
-        "ui.basic.tag": "div"
-    };
     me.create = {
         set: function (object) {
             var ref = me.core.ref.gen();

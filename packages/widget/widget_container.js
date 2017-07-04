@@ -5,7 +5,6 @@
 
 package.widget.container = function WidgetContainer(me) {
     me.default = {
-        "ui.basic.tag": "div",
         "ui.theme.class":"root"
     };
     me.create = {

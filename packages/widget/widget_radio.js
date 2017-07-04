@@ -10,9 +10,6 @@ package.widget.radio = function WidgetRadio(me) {
     me.redirect = {
         "ui.basic.text" : "widget.radio.text"
     };
-    me.default = {
-        "ui.basic.tag": "div"
-    };
     me.create = {
         set: function (object) {
             var ref = me.core.ref.gen();

@@ -5,9 +5,6 @@
 
 package.ui.element = function UIElement(me) {
     me.require = {platform: "browser"};
-    me.default = {
-        "ui.basic.tag": "div"
-    };
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -112,8 +109,11 @@ package.ui.element = function UIElement(me) {
         }
         var component = me[component_name];
         console.log("creating element of " + component_name);
-        if(!tag) {
+        if(!tag && component.default && 'ui.basic.tag' in component.default) {
             tag = component.default['ui.basic.tag'];
+        }
+        if(!tag) {
+            tag = "div";
         }
         object = document.createElement(tag);
         object.var = {};
