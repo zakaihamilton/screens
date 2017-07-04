@@ -24,7 +24,8 @@ package.include({
         "focus",
         "theme",
         "property",
-        "scroll"
+        "scroll",
+        "attribute"
     ],
     "widget": [
         "radio",
@@ -40,7 +41,8 @@ package.include({
         "icon",
         "image",
         "scrollbar",
-        "container"
+        "container",
+        "embed"
     ],
     "app": [
         "main"

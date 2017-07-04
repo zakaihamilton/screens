@@ -39,9 +39,24 @@ package.app.main = function (me) {
                 }
             },
             {
+                "title": "The Computer Chronicles - Windows 3.0 (1990)",
+                "ui.style.left": "250px",
+                "ui.style.top": "100px",
+                "ui.style.width": "600px",
+                "ui.style.height": "600px",
+                "icon":"https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
+                "ui.basic.elements": [
+                    {
+                        "ui.element.component":"widget.embed",
+                        "ui.basic.src": "https://www.youtube.com/embed/YewNEAIkbG4?ecver=1",
+                        "ui.attribute.allowFullScreen":""
+                    }
+                ]
+            },
+            {
                 "title": "Program Manager",
                 "icon": "/packages/res/icons/program_manager.png",
-                "ui.style.left": "550px",
+                "ui.style.left": "950px",
                 "ui.style.top": "150px",
                 "ui.style.width": "300px",
                 "ui.style.height": "250px",
