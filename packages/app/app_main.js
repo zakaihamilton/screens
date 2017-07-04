@@ -40,10 +40,10 @@ package.app.main = function (me) {
             },
             {
                 "title": "The Computer Chronicles - Windows 3.0 (1990)",
-                "ui.style.left": "250px",
-                "ui.style.top": "100px",
-                "ui.style.width": "600px",
-                "ui.style.height": "600px",
+                "ui.style.left": "550px",
+                "ui.style.top": "200px",
+                "ui.style.width": "300px",
+                "ui.style.height": "300px",
                 "icon":"https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
                 "ui.basic.elements": [
                     {

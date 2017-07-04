@@ -9,3 +9,7 @@
     box-sizing: border-box;
     display: block;
 }
+
+.widget-embed-iframe.transition {
+    pointer-events: none;
+}
