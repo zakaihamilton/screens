@@ -83,6 +83,7 @@ package.widget.menu = function WidgetMenu(me) {
             "ui.style.left": region.left + "px",
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
+            "ui.basic.target": object,
             "ui.group.data": {
                 "ui.data.keys": ["ui.basic.text", "select", "options"],
                 "ui.data.values": values
@@ -90,7 +91,6 @@ package.widget.menu = function WidgetMenu(me) {
         }, document.body);
         if(object.component === me.id) {
             me.set(menu.var.modal, "ui.style.display", "none");
-            menu.var.parentMenu = object;
         }
         return menu;
     };
@@ -106,7 +106,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object.var.parentMenu, "back", value);
+            me.set(object.target, "back", value);
             me.set(object, "ui.node.parent", null);
         }
     };
@@ -114,7 +114,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
         set: function (object, value) {
             var item = value[0];
             var info = value[1];
-            me.set(object.var.parentMenu, info, item);
+            me.set(object.target, info, item);
             me.set(object, "back", item);
         }
     };
@@ -160,7 +160,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, value) {
             object.menu_select = value;
             if (value && !Array.isArray(value)) {
-                var options = me.get(object.parentNode, value);
+                var options = me.get(object.parentNode.target, value);
                 if (options) {
                     me.set(object, "options", options);
                 }

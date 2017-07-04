@@ -113,4 +113,12 @@ package.ui.basic = function UIBasic(me) {
             object.window = value;
         }
     };
+    me.target = {
+        get: function (object) {
+            return object.target;
+        },
+        set: function (object, value) {
+            object.target = value;
+        }
+    };
 };
