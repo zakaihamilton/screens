@@ -72,15 +72,14 @@ package.widget.menu = function WidgetMenu(me) {
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
-                object.var.menu = me.create_menu(null, object, me.ui.rect.relative_region(item), info);
+                object.var.menu = me.create_menu(null, object, me.ui.rect.absolute_region(item), info);
             }
         }
     };
-    me.create_menu = function (window, object, region, values, parent=object) {
+    me.create_menu = function (window, object, region, values) {
         var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
-            "ui.style.position": "absolute",
             "ui.style.left": region.left + "px",
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
@@ -88,9 +87,10 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.keys": ["ui.basic.text", "select", "options"],
                 "ui.data.values": values
             }
-        }, parent);
+        }, document.body);
         if(object.component === me.id) {
             me.set(menu.var.modal, "ui.style.display", "none");
+            menu.var.parentMenu = object;
         }
         return menu;
     };
@@ -106,7 +106,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object.parentNode, "back", value);
+            me.set(object.var.parentMenu, "back", value);
             me.set(object, "ui.node.parent", null);
         }
     };

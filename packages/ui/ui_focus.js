@@ -51,15 +51,36 @@ package.ui.focus = function UIFocus(me) {
     };
     me.activate = function(from, to) {
         while(from && from !== to) {
-            me.ui.property.broadcast(from, "ui.theme.add", "focus")
-            from.parentNode.appendChild(from);
+            me.ui.property.broadcast(from, "ui.theme.add", "focus");
+            me.updateOrder(from.parentNode, from);
             from = me.widget.window.parent(from);
         }
     };
-    me.shift = function(object, index) {
+    me.childList = function(object) {
+        var childList = Array(object.childNodes.length).fill(null);
         for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
             var child = object.childNodes[childIndex];
-            child.style.zIndex = childIndex.toString();
+            var order = 0;
+            if(child.component) {
+                order = me.get(child, "ui.style.zIndex");
+            }
+            if(!order) {
+                order = childIndex;
+            }
+            childList[order] = child;
+        }
+        return childList;
+    };
+    me.updateOrder = function(parent, object=null, order=parent.childNodes.length-1) {
+        var length = parent.childNodes.length;
+        var childList = me.childList(parent);
+        if(object) {
+            var prevOrder = me.get(object, "ui.style.zIndex");
+            childList.splice(prevOrder, 1);
+            childList.splice(order, 0, object);
+        }
+        for(var childOrder = 0; childOrder < childList.length; childOrder++) {
+            me.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
     };
     me.common = function(source, target) {

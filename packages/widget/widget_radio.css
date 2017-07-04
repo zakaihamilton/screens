@@ -1,28 +1,36 @@
+.widget-radio-container {
+    display:flex;
+    margin-top:2px;
+}
+
 .widget-radio-label {
     position:relative;
     left:30px;
-    top:-3px;
+    top:-1px;
     font-family: "MS Sans Serif";
 }
 
-.widget-radio-original + .widget-radio-icon {
-    display:inline-block;
+.widget-radio-original {
+    opacity: 0;
+}
+
+.widget-radio-group {
+    display:flex;
+    position: relative;
+}
+
+.widget-radio-icon {
+    display:flex;
     position: relative;
     width: 11px;
     height: 11px;
     border: 1px solid black;
-    background-color:white;
+    margin-top:1px;
     border-radius: 50%;
 }
 
 .widget-radio-original:checked + .widget-radio-icon {
-    display:inline-block;
-    position: relative;
-    width: 11px;
-    height: 11px;
-    border: 1px solid black;
-    border: 1px solid #fff;
-    background-color:black;
-    border-radius: 50%;
     box-shadow: 0px 0px 0px 1px black;
+    border: 1px solid white;
+    background-color:black;
 }

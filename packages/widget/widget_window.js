@@ -178,7 +178,7 @@ package.widget.window = function WidgetWindow(me) {
     me.close = {
         get: function (object) {
             var window = me.window(object);
-            var enabled = me.is_visible(window.var.close) && !me.set(window, "ui.theme.contains", "minimize");
+            var enabled = me.is_visible(window.var.close);
             var options = {"enabled": enabled, "separator": true};
             return options;
         },
@@ -247,7 +247,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             var visible = !me.set(window, "ui.theme.contains", "minimize");
-            var region = me.ui.rect.relative_region(object);
+            var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, [
                 ["Restore", "widget.window.restore"],
                 ["Move", ""],
@@ -256,17 +256,17 @@ package.widget.window = function WidgetWindow(me) {
                 ["Maximize", "widget.window.maximize"],
                 ["Close", "widget.window.close"],
                 ["Switch To", undefined, {"separator": true}]
-            ], object.parentNode);
+            ]);
             if (!visible) {
                 var parent = me.parent(window);
                 if (!parent) {
                     parent = document.body;
                 }
+                var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
-                me.set(menu, "ui.style.top", "");
-                me.set(menu, "ui.style.left", region.left + icon_icon_region.left - icon_region.left + "px");
-                me.set(menu, "ui.style.bottom", region.bottom + "px");
+                me.set(menu, "ui.style.left", icon_icon_region.left + "px");
+                me.set(menu, "ui.style.top", region.bottom - menu_region.height - icon_region.height + "px");
             }
         }
     };

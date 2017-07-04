@@ -129,6 +129,9 @@ package.ui.rect = function UIRect(me) {
         };
     };
     me.absolute_region = function (object) {
+        if(object === document.body) {
+            return me.viewport();
+        }
         var clientRect = object.getBoundingClientRect();
         var xPos = 0;
         var yPos = 0;
@@ -142,7 +145,7 @@ package.ui.rect = function UIRect(me) {
         }
         var parent = object;
         while (parent) {
-            if (parent.tagName === "BODY") {
+            if (parent === document.body) {
                 // deal with browser quirks with body/window/document and page scroll
                 var xScroll = parent.scrollLeft || document.documentElement.scrollLeft;
                 var yScroll = parent.scrollTop || document.documentElement.scrollTop;

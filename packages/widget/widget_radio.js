@@ -5,10 +5,13 @@
 
 package.widget.radio = function WidgetRadio(me) {
     me.depends = {
-        properties: ["state", "group"]
+        properties: ["state","group"]
     };
     me.redirect = {
-        "ui.basic.text" : "widget.radio.text"
+        "ui.basic.text": "text"
+    };
+    me.default = {
+        "ui.theme.class": "container"
     };
     me.create = {
         set: function (object) {
@@ -17,24 +20,20 @@ package.widget.radio = function WidgetRadio(me) {
                     "ui.basic.var": "input",
                     "ui.basic.tag": "input",
                     "ui.basic.type": "radio",
-                    "ui.style.position": "relative",
-                    "ui.style.opacity": 0,
                     "ui.theme.class": "original",
                     "ui.basic.elementId": ref
                 },
                 {
-                    "ui.basic.var": "radio",
                     "ui.basic.tag": "label",
                     "ui.basic.htmlFor": ref,
-                    "ui.style.position": "relative",
-                    "ui.theme.class": "icon",
-                    "ui.basic.elements": {
-                        "ui.basic.var": "label",
-                        "ui.basic.tag": "span",
-                        "ui.style.position": "relative",
-                        "ui.theme.class": "label"
-                    }
-                }], object);
+                    "ui.theme.class": "icon"
+                },
+                {
+                    "ui.basic.var": "label",
+                    "ui.theme.class": "label",
+                    "ui.event.click": "toggle"
+                }
+            ], object);
         }
     };
     me.state = {
@@ -45,20 +44,25 @@ package.widget.radio = function WidgetRadio(me) {
             object.var.input.checked = value;
         }
     };
+    me.toggle = {
+        set: function (object, value) {
+            object.parentNode.var.input.checked = !object.parentNode.var.input.checked;
+        }
+    }
+    me.text = {
+        get: function (object) {
+            return object.var.label.innerHTML;
+        },
+        set: function (object, value) {
+            object.var.label.innerHTML = value;
+        }
+    };
     me.group = {
         get: function (object) {
             return object.var.input.name;
         },
         set: function (object, value) {
             object.var.input.name = value;
-        }
-    };
-    me.text = {
-        get: function (object) {
-            return object.var.label.innerHTML;
-        },
-        set: function(object, value) {
-            object.var.label.innerHTML = value;
         }
     };
 };

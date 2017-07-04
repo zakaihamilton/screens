@@ -13,6 +13,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.redirect = {
         "ui.basic.text": "text",
+        "ui.basic.elements": "elements",
         "ui.basic.readOnly": "readOnly"
     };
     me.default = {
@@ -45,14 +46,16 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.ui.rect.relative_region(object.parentNode);
-            me.ui.element.create({
-                "ui.basic.var": "list",
+            var region = me.ui.rect.absolute_region(object.parentNode);
+            object.var.list = me.ui.element.create({
                 "ui.element.component": "widget.list.popup",
-                "ui.style.top": region.height + "px",
-                "ui.style.width": region.width - 2 + "px",
-                "ui.style.height": "100px"
-            }, object.parentNode);
+                "ui.style.left": region.left + "px",
+                "ui.style.top": region.bottom + "px",
+                "ui.style.width": region.width + "px",
+                "ui.style.height": "100px",
+                "ui.basic.elements": object.parentNode.listElements
+            }, document.body);
+            object.var.list.var.parentList = object.parentNode;
         }
     };
     me.text = {
@@ -71,19 +74,36 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
             me.set(object.var.selection, "ui.basic.readOnly", value);
         }
     };
+    me.elements = {
+        get: function (object) {
+            return object.listElements;
+        },
+        set: function (object, value) {
+            object.listElements = value;
+        }
+    };
 };
 
 package.widget.list.popup = function WidgetListPopup(me) {
+    me.redirect = {
+        "ui.basic.elements": "elements"
+    };
     me.default = {
-        "ui.theme.class": "widget.list.popup",
-        "ui.basic.elements": {
-            "ui.basic.var": "modal",
-            "ui.element.component": "widget.modal"
-        }
+        "ui.theme.class": "border",
+        "ui.basic.elements": [
+            {
+                "ui.basic.var": "modal",
+                "ui.element.component": "widget.modal"
+            },
+            {
+                "ui.basic.var":"container",
+                "ui.element.component":"widget.container"
+            }
+        ]
     };
     me.back = {
         set: function (object, value) {
-            me.set(object.parentNode, "back", value);
+            me.set(object.var.parentList, "back", value);
             me.set(object, "ui.node.parent", null);
         }
     };
@@ -93,6 +113,13 @@ package.widget.list.popup = function WidgetListPopup(me) {
             var info = value[1];
             me.set(object, info, item);
             me.set(object, "back", item);
+        }
+    };
+    me.elements = {
+        set: function (object, value) {
+            if (value) {
+                me.set(object.var.container, "ui.basic.elements", value);
+            }
         }
     };
 };

@@ -44,12 +44,12 @@ package.app.main = function (me) {
                 "ui.style.top": "200px",
                 "ui.style.width": "300px",
                 "ui.style.height": "300px",
-                "icon":"https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
+                "icon": "https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
                 "ui.basic.elements": [
                     {
-                        "ui.element.component":"widget.embed",
+                        "ui.element.component": "widget.embed",
                         "ui.basic.src": "https://www.youtube.com/embed/YewNEAIkbG4?ecver=1",
-                        "ui.attribute.allowFullScreen":""
+                        "ui.attribute.allowFullScreen": ""
                     }
                 ]
             },
@@ -97,17 +97,32 @@ package.app.main = function (me) {
                     },
                     {
                         "state": true,
-                        "ui.basic.text": "Apple"
+                        "ui.basic.text": "Two Words"
                     },
                     {
                         "ui.basic.text": "Hello",
                         "ui.event.click": "app.main.ok"
                     },
                     {
-                        "ui.basic.text": "Selected Text",
-                        "ui.style.width": "200px",
+                        "ui.basic.text": "Drop Down List",
+                        "ui.style.width": "300px",
                         "ui.element.count": 0,
-                        "ui.basic.readOnly": true
+                        "ui.basic.readOnly": true,
+                        "ui.group.data": {
+                            "ui.data.keys": ["state", "ui.basic.text"],
+                            "ui.data.values": [
+                                [false, "Option One"],
+                                [false, "Option Two"],
+                                [false, "Option Three"],
+                                [false, "Option Four"],
+                                [false, "Option Five"],
+                                [false, "Option Six"],
+                                [false, "Option Seven"],
+                                [false, "Option Eight"],
+                                [false, "Option Nine"],
+                                [false, "Option Ten"]
+                        ]
+                        }
                     },
                     {
                         "state": false,

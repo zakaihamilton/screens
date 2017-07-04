@@ -8,7 +8,10 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         properties: ["state"]
     };
     me.redirect = {
-        "ui.basic.text" : "text"
+        "ui.basic.text": "text"
+    };
+    me.default = {
+        "ui.theme.class": "container"
     };
     me.create = {
         set: function (object) {
@@ -21,16 +24,16 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                     "ui.basic.elementId": ref
                 },
                 {
-                    "ui.basic.var": "checkbox",
                     "ui.basic.tag": "label",
                     "ui.basic.htmlFor": ref,
-                    "ui.theme.class": "icon",
-                    "ui.basic.elements": {
-                        "ui.basic.var": "label",
-                        "ui.basic.tag": "span",
-                        "ui.theme.class": "label"
-                    }
-                }], object);
+                    "ui.theme.class": "icon"
+                },
+                {
+                    "ui.basic.var": "label",
+                    "ui.theme.class": "label",
+                    "ui.event.click": "toggle"
+                }
+            ], object);
         }
     };
     me.state = {
@@ -41,11 +44,16 @@ package.widget.checkbox = function WidgetCheckBox(me) {
             object.var.input.checked = value;
         }
     };
+    me.toggle = {
+        set: function (object, value) {
+            object.parentNode.var.input.checked = !object.parentNode.var.input.checked;
+        }
+    }
     me.text = {
         get: function (object) {
             return object.var.label.innerHTML;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.var.label.innerHTML = value;
         }
     };

@@ -9,10 +9,28 @@
     -webkit-user-drag: element;
 }
 
-.widget-icon-border {
+.widget-icon-figure {
     border: 1px solid transparent;
+    display:table;
+    padding-top: 4px;
 }
 
-.widget-icon-border.over {
+.widget-icon-figure.over {
     border: 1px dashed black;
+}
+
+.widget-icon-image {
+    pointer-events:none;
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.widget-icon-caption {
+    display: table-caption;
+    caption-side: bottom;
+    text-align: center;
+    margin-bottom:2px;
 }

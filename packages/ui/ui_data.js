@@ -38,6 +38,7 @@ package.ui.data = function UIData(me) {
     };
     me.group = function (object, value) {
         if (object.data_values) {
+            var elements = [];
             for (var item_index = 0; item_index < object.data_values.length; item_index++) {
                 var properties = {};
                 for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
@@ -46,13 +47,14 @@ package.ui.data = function UIData(me) {
                         properties[object.data_keys[data_key_index]] = data_value;
                     }
                 }
-                parent = object;
-                if(object.data_parent) {
-                    parent = object.data_parent;
-                }
                 properties = me.ui.element.combine(object.data_default, properties);
-                me.set(parent, "ui.basic.elements", properties);
+                elements.push(properties);
             }
+            parent = object;
+            if(object.data_parent) {
+                parent = object.data_parent;
+            }
+            me.set(parent, "ui.basic.elements", elements);
         }
     };
 };
