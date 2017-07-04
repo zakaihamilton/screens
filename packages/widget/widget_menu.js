@@ -114,7 +114,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
         set: function (object, value) {
             var item = value[0];
             var info = value[1];
-            me.set(object, info, item);
+            me.set(object.var.parentMenu, info, item);
             me.set(object, "back", item);
         }
     };

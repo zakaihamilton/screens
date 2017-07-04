@@ -105,7 +105,7 @@ package.app.main = function (me) {
                     },
                     {
                         "ui.basic.text": "Drop Down List",
-                        "ui.style.width": "300px",
+                        "ui.style.width": "200px",
                         "ui.element.count": 0,
                         "ui.basic.readOnly": true,
                         "ui.group.data": {
