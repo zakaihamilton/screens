@@ -31,7 +31,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                 {
                     "ui.basic.var": "label",
                     "ui.theme.class": "label",
-                    "ui.event.click": "toggle"
+                    "ui.touch.click": "toggle"
                 }
             ], object);
         }

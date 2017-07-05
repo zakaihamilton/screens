@@ -5,7 +5,7 @@
 
 package.widget.modal = function WidgetModal(me) {
     me.default = {
-        "ui.event.click":"click",
+        "ui.touch.click":"click",
         "ui.theme.class" : "overlay"
     };
     me.click = {

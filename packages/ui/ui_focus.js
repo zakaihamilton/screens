@@ -7,7 +7,7 @@ package.ui.focus = function UIFocus(me) {
     me.focus_window = null;
     me.extend = function(object) {
         me.set(object, "ui.focus.active", true);
-        object.addEventListener('click', function (e) {
+        object.addEventListener('mousedown', function (e) {
             var branch = me.find_branch(object, e.clientX, e.clientY);
             if(branch) {
                 me.set(branch, "ui.focus.active", true);

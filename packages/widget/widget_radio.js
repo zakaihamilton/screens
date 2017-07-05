@@ -31,7 +31,7 @@ package.widget.radio = function WidgetRadio(me) {
                 {
                     "ui.basic.var": "label",
                     "ui.theme.class": "label",
-                    "ui.event.click": "activate"
+                    "ui.touch.click": "activate"
                 }
             ], object);
         }

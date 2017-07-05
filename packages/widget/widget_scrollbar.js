@@ -11,8 +11,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             {
                 "ui.theme.class": ["widget.scrollbar.button","before"],
                 "ui.basic.var": "before",
-                "ui.event.click": "before",
-                "ui.event.repeat": "before",
+                "ui.touch.click": "before",
+                "ui.touch.repeat": "before",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "before.arrow"
@@ -21,8 +21,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             {
                 "ui.basic.var":"track",
                 "ui.theme.class": "track",
-                "ui.event.click":"track",
-                "ui.event.repeat":"track",
+                "ui.touch.click":"track",
+                "ui.touch.repeat":"track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
                     "ui.theme.class": ["widget.scrollbar.button","thumb"],
@@ -33,8 +33,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             {
                 "ui.theme.class": ["widget.scrollbar.button","after"],
                 "ui.basic.var": "after",
-                "ui.event.click": "after",
-                "ui.event.repeat": "after",
+                "ui.touch.click": "after",
+                "ui.touch.repeat": "after",
                 "ui.style.position": "relative",
                 "ui.basic.elements": {
                     "ui.theme.class": "after.arrow"

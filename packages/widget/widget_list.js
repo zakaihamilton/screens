@@ -23,11 +23,11 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.basic.text": "",
                 "ui.basic.var": "selection",
                 "ui.theme.class": "selection",
-                "ui.event.click": "dropdown"
+                "ui.touch.click": "dropdown"
             },
             {
                 "ui.theme.class": "button",
-                "ui.event.click": "dropdown",
+                "ui.touch.click": "dropdown",
                 "ui.basic.elements": [
                     {
                         "ui.theme.class": "button.arrow"

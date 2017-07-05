@@ -96,12 +96,15 @@ package.app.main = function (me) {
                         "ui.basic.type": "text"
                     },
                     {
+                        "ui.basic.text": "Two Words"
+                    },
+                    {
                         "state": true,
                         "ui.basic.text": "Two Words"
                     },
                     {
                         "ui.basic.text": "Hello",
-                        "ui.event.click": "app.main.ok"
+                        "ui.touch.click": "app.main.ok"
                     },
                     {
                         "ui.basic.text": "Drop Down List",
@@ -109,18 +112,22 @@ package.app.main = function (me) {
                         "ui.element.count": 0,
                         "ui.basic.readOnly": true,
                         "ui.group.data": {
-                            "ui.data.keys": ["state", "ui.basic.text"],
+                            "ui.data.keys": ["ui.basic.text"],
+                            "ui.data.default" : {
+                                "group" : "one",
+                                "state" : false
+                            },
                             "ui.data.values": [
-                                [false, "Option One"],
-                                [false, "Option Two"],
-                                [false, "Option Three"],
-                                [false, "Option Four"],
-                                [false, "Option Five"],
-                                [false, "Option Six"],
-                                [false, "Option Seven"],
-                                [false, "Option Eight"],
-                                [false, "Option Nine"],
-                                [false, "Option Ten"]
+                                ["Option One"],
+                                ["Option Two"],
+                                ["Option Three"],
+                                ["Option Four"],
+                                ["Option Five"],
+                                ["Option Six"],
+                                ["Option Seven"],
+                                ["Option Eight"],
+                                ["Option Nine"],
+                                ["Option Ten"]
                         ]
                         }
                     },

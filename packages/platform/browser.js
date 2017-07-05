@@ -19,6 +19,8 @@ package.include({
         "drag",
         "element",
         "event",
+        "touch",
+        "key",
         "style",
         "basic",
         "focus",

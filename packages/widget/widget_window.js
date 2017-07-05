@@ -49,20 +49,20 @@ package.widget.window = function WidgetWindow(me) {
                             {
                                 "ui.basic.var": "close",
                                 "ui.theme.class": "close",
-                                "ui.event.click": "context_menu",
-                                "ui.event.dblclick": "close",
+                                "ui.touch.click": "context_menu",
+                                "ui.touch.dblclick": "close",
                             },
                             {
                                 "ui.basic.var": "label",
                                 "ui.basic.text": "",
                                 "ui.theme.class": "label",
                                 "ui.rect.move": null,
-                                "ui.event.dblclick": "toggle"
+                                "ui.touch.dblclick": "toggle"
                             },
                             {
                                 "ui.basic.var": "minimize",
                                 "ui.theme.class": "action",
-                                "ui.event.click": "minimize",
+                                "ui.touch.click": "minimize",
                                 "ui.basic.elements": {
                                     "ui.theme.class": "minimize"
                                 }
@@ -70,7 +70,7 @@ package.widget.window = function WidgetWindow(me) {
                             {
                                 "ui.basic.var": "maximize",
                                 "ui.theme.class": "action",
-                                "ui.event.click": "toggle",
+                                "ui.touch.click": "toggle",
                                 "ui.basic.elements": {
                                     "ui.theme.class": "maximize"
                                 }
@@ -109,8 +109,8 @@ package.widget.window = function WidgetWindow(me) {
                 "text": "",
                 "ui.style.float": "left",
                 "ui.basic.src": "/packages/res/icons/default.png",
-                "ui.event.click": "widget.window.context_menu",
-                "ui.event.dblclick": "widget.window.restore",
+                "ui.touch.click": "widget.window.context_menu",
+                "ui.touch.dblclick": "widget.window.restore",
                 "ui.style.display": "none",
                 "ui.basic.window": object
             }, parent.var.tray);
