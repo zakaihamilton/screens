@@ -56,10 +56,10 @@ package.ui.scroll = function UIScroll(me) {
     };
     me.scroll_pos = function(object, type, percent) {
         if(type === "vertical") {
-            return me.percent_to_pos(object.scrollHeight, percent);
+            return me.percent_to_pos(object.scrollHeight - object.clientHeight, percent);
         }
         else if(type === "horizontal") {
-            return me.percent_to_pos(object.scrollWidth, percent);
+            return me.percent_to_pos(object.scrollWidth - object.clientWidth, percent);
         }
     };
     me.length = function(type, track_region, thumb_region) {
@@ -156,6 +156,7 @@ package.ui.scroll = function UIScroll(me) {
                     width: object.offsetWidth,
                     height: object.offsetHeight
                 };
+                me.ui.property.notifyAll("ui.theme.add", "transition");
                 var scroll_method = function (e) {
                     var track_region = me.ui.rect.absolute_region(object.parentNode);
                     var thumb_region = me.ui.rect.absolute_region(object);
@@ -174,6 +175,7 @@ package.ui.scroll = function UIScroll(me) {
                 var release_method = function (e) {
                     removeEventListener('mousemove', scroll_method);
                     removeEventListener('mouseup', release_method);
+                    me.ui.property.notifyAll("ui.theme.remove", "transition");
                 };
                 addEventListener('mousemove', scroll_method);
                 addEventListener('mouseup', release_method);

@@ -75,6 +75,7 @@ package.widget.terminal = function WidgetTerminal(me) {
             } else if (type === "input" && e.which !== 13) {
                 setTimeout(function () {
                     me.set(terminal.var.inputLine, "ui.basic.text", field.value);
+                    me.set(terminal, "scroll", null);
                 }, 1);
             }
         };
