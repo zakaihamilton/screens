@@ -44,7 +44,8 @@ package.include({
         "image",
         "scrollbar",
         "container",
-        "embed"
+        "embed",
+        "terminal"
     ],
     "app": [
         "main"

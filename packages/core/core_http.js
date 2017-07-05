@@ -71,7 +71,7 @@ package.core.http = function CoreHttp(me) {
             core.console.log("sending http: " + JSON.stringify(info));
             request.open(info.method, info.url, false);
             request.send(null);
-            if(request.status == 200) {
+            if(request.status === 200) {
                 return request.responseText;
             }
         }

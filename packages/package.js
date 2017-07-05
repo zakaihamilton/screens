@@ -114,6 +114,13 @@ function package_load(package_name, component_name, callback) {
 }
 
 function package_include(packages, callback) {
+    if(typeof packages === "string" && packages) {
+        var separator = packages.indexOf(".");
+        var package_name = packages.substr(0, separator);
+        var component_name = packages.substr(separator+1);
+        package_load(package_name, component_name, callback);
+        return;
+    }
     var load = function (package_index, component_index) {
         var package_keys = Object.keys(packages);
         if (package_index >= package_keys.length) {

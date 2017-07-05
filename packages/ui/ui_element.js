@@ -98,14 +98,14 @@ package.ui.element = function UIElement(me) {
             });
             return;
         }
-        var object = null, tag = null;
+        var object = null;
         var component_name = properties["ui.element.component"];
-        if (!component_name) {
+        var tag = properties['ui.basic.tag'];
+        if (!tag && !component_name) {
             component_name = me.matches(properties, parent);
         }
-        if (!component_name) {
+        if(!component_name) {
             component_name = "ui.element";
-            tag = properties['ui.basic.tag']
         }
         var component = me[component_name];
         console.log("creating element of " + component_name);

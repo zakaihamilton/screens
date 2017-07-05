@@ -177,6 +177,7 @@ package.app.main = function (me) {
                      "ui.style.height": "300px"
                      }*/
         ]);
+        package.include("app.terminal");
     };
     me.ok = {
         set: function (object, value) {
