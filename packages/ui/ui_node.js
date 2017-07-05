@@ -18,6 +18,7 @@ package.ui.node = function UINode(me) {
             for(;childList[order] && order < object.childNodes.length - 1; order++);
             childList[order] = child;
         }
+        childList = childList.filter(Boolean);
         return childList;
     };
     me.container = function (object, component_name) {

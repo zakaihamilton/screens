@@ -14,14 +14,21 @@ package.app.terminal = function (me) {
                 "ui.style.width": "300px",
                 "ui.style.height": "300px",
                 "icon": "/packages/res/icons/terminal.png",
+                "ui.style.background":"black",
                 "ui.basic.elements": [
                     {
                         "ui.element.component":"widget.terminal",
                         "widget.terminal.print":"Screens Terminal",
+                        "widget.terminal.response":"app.terminal.echo",
                         "widget.terminal.input":"C>"
                     }
                 ]
             }
         ]);
+    };
+    me.echo = {
+        set: function(object, value) {
+            me.set(object, "widget.terminal.input","C>");
+        }
     };
 };

@@ -6,14 +6,11 @@
 package.widget.terminal = function WidgetText(me) {
     me.default = {
         "ui.theme.class": "normal",
-        "ui.basic.tag":"div",
         "ui.basic.var": "terminal",
         "ui.style.background": "black",
         "ui.style.textColor": "white",
         "ui.style.textSize": "1em",
-        "ui.style.width": "100%",
-        "ui.style.height": "100%",
-        "ui.style.fontFamily": "Monaco, Courier",
+        "ui.style.fontFamily": "Courier New",
         "ui.style.margin": "0",
         "ui.basic.elements": [
             {
@@ -35,6 +32,11 @@ package.widget.terminal = function WidgetText(me) {
                         "ui.style.color":"white",
                         "ui.basic.elements": [
                             {
+                                "ui.basic.var": "prefix",
+                                "ui.style.display": "inline",
+                                "ui.basic.tag": "span"
+                            },
+                            {
                                 "ui.basic.var": "inputLine",
                                 "ui.basic.tag": "span"
                             },
@@ -55,7 +57,7 @@ package.widget.terminal = function WidgetText(me) {
     me.sendInput = function (terminal, message, type) {
         var field = me.ui.element.create({
             "ui.basic.tag": "input",
-            "ui.style.position": "absolute",
+            "ui.style.position": "relative",
             "ui.style.zIndex": "-100",
             "ui.style.outline": "none",
             "ui.style.border": "none",
@@ -66,7 +68,7 @@ package.widget.terminal = function WidgetText(me) {
         me.set(terminal.var.input, "ui.style.display", "block");
         me.blinkCursor(terminal, field);
         if (message.length) {
-            me.set(terminal, "print", message);
+            me.set(terminal.var.prefix, "ui.basic.text", message);
         }
         field.onblur = function () {
             me.set(terminal.var.cursor, "ui.style.display", "none");
@@ -134,6 +136,7 @@ package.widget.terminal = function WidgetText(me) {
                 "ui.basic.tag": "div",
                 "ui.basic.text": message,
             }, terminal.var.output);
+            me.ui.property.notify(terminal, "draw", null);
         }
     };
     me.input = {
