@@ -56,10 +56,10 @@ package.ui.scroll = function UIScroll(me) {
     };
     me.scroll_pos = function(object, type, percent) {
         if(type === "vertical") {
-            return me.percent_to_pos(object.scrollHeight - object.clientHeight, percent);
+            return me.percent_to_pos(object.scrollHeight, percent);
         }
         else if(type === "horizontal") {
-            return me.percent_to_pos(object.scrollWidth - object.clientWidth, percent);
+            return me.percent_to_pos(object.scrollWidth, percent);
         }
     };
     me.length = function(type, track_region, thumb_region) {

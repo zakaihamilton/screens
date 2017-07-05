@@ -18,7 +18,6 @@ package.app.terminal = function (me) {
                 "ui.basic.elements": [
                     {
                         "ui.element.component":"widget.terminal",
-                        "widget.terminal.print":"Screens Terminal",
                         "widget.terminal.response":"app.terminal.echo",
                         "widget.terminal.input":"C>"
                     }

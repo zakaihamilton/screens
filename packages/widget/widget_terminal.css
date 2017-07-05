@@ -1,0 +1,41 @@
+.widget-terminal-background {
+    color:white;
+    font-size:1em;
+    font-family:Courier New;
+    margin:0;
+    position:relative;
+}
+
+.widget-terminal-content {
+    padding:10px;
+}
+
+.widget-terminal-output {
+    margin:0;
+    color:white;
+}
+
+.widget-terminal-input {
+    margin:0;
+    color:white;
+    display:none;
+}
+
+.widget-terminal-prefix {
+    display:inline;
+}
+
+.widget-terminal-cursor {
+    background:white;
+    display:none;
+    color:white;
+}
+
+.widget-terminal-field {
+    position:relative;
+    z-index:-100;
+    outline:none;
+    border:none;
+    opacity:0;
+    font-size:0.2em;
+}

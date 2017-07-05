@@ -1,39 +1,31 @@
 /*
  @author Zakai Hamilton
- @component WidgetText
+ @component WidgetTerminal
  */
 
-package.widget.terminal = function WidgetText(me) {
+package.widget.terminal = function WidgetTerminal(me) {
     me.default = {
-        "ui.theme.class": "normal",
+        "ui.theme.class": "background",
         "ui.basic.var": "terminal",
-        "ui.style.background": "black",
-        "ui.style.textColor": "white",
-        "ui.style.textSize": "1em",
-        "ui.style.fontFamily": "Courier New",
-        "ui.style.margin": "0",
+        "ui.basic.tag":"div",
         "ui.basic.elements": [
             {
-                "ui.basic.var": "innerWindow",
                 "ui.basic.tag":"div",
-                "ui.style.padding": "10px",
+                "ui.theme.class": "content",
                 "ui.basic.elements": [
                     {
                         "ui.basic.var": "output",
                         "ui.basic.tag": "p",
-                        "ui.style.margin": "0",
-                        "ui.style.color":"white"
+                        "ui.theme.class": "output",
                     },
                     {
                         "ui.basic.var": "input",
                         "ui.basic.tag": "p",
-                        "ui.style.margin": "0",
-                        "ui.style.display": "none",
-                        "ui.style.color":"white",
+                        "ui.theme.class": "input",
                         "ui.basic.elements": [
                             {
                                 "ui.basic.var": "prefix",
-                                "ui.style.display": "inline",
+                                "ui.theme.class": "prefix",
                                 "ui.basic.tag": "span"
                             },
                             {
@@ -43,10 +35,8 @@ package.widget.terminal = function WidgetText(me) {
                             {
                                 "ui.basic.var": "cursor",
                                 "ui.basic.tag": "span",
-                                "ui.style.background": "white",
+                                "ui.theme.class": "cursor",
                                 "ui.basic.text": "C",
-                                "ui.style.display": "none",
-                                "ui.style.color":"white"
                             }
                         ]
                     }
@@ -55,29 +45,28 @@ package.widget.terminal = function WidgetText(me) {
         ]
     };
     me.sendInput = function (terminal, message, type) {
+        var window = me.widget.window.window(terminal);
         var field = me.ui.element.create({
             "ui.basic.tag": "input",
-            "ui.style.position": "relative",
-            "ui.style.zIndex": "-100",
-            "ui.style.outline": "none",
-            "ui.style.border": "none",
-            "ui.style.opacity": "0",
-            "ui.style.fontSize": "0.2em"
-        }, terminal);
+            "ui.theme.class":"widget.terminal.field"
+        }, window);
         me.set(terminal.var.inputLine, "ui.basic.text", "");
         me.set(terminal.var.input, "ui.style.display", "block");
-        me.blinkCursor(terminal, field);
+        clearTimeout(terminal.cursorTimeout);
+        me.set(terminal, "scroll", null);
         if (message.length) {
             me.set(terminal.var.prefix, "ui.basic.text", message);
         }
         field.onblur = function () {
             me.set(terminal.var.cursor, "ui.style.display", "none");
+            clearTimeout(terminal.cursorTimeout);
         };
         field.onfocus = function () {
             field.value = me.get(terminal.var.inputLine, "ui.basic.text");
             me.set(terminal.var.cursor, "ui.style.display", "inline");
+            me.blinkCursor(terminal, field);
         };
-        terminal.onclick = function () {
+        window.onclick = function () {
             field.focus();
         };
         field.onkeydown = function (e) {
@@ -93,7 +82,7 @@ package.widget.terminal = function WidgetText(me) {
             if (e.which === 13) {
                 me.set(terminal.var.input, "ui.style.display", "none");
                 if (type === "input") {
-                    me.set(terminal, "print", field.value);
+                    me.set(terminal, "print", message + field.value);
                 }
                 me.set(field, "ui.node.parent", null);
                 me.set(terminal, terminal.response, field.value);
@@ -110,7 +99,7 @@ package.widget.terminal = function WidgetText(me) {
     };
     me.blinkCursor = function (terminal, field) {
         var cursor = terminal.var.cursor;
-        setTimeout(function () {
+        terminal.cursorTimeout = setTimeout(function () {
             if (field.parentElement) {
                 var visibility = me.get(cursor, "ui.style.visibility");
                 me.set(cursor, "ui.style.visibility", visibility === "visible" ? "hidden" : "visible");
@@ -132,11 +121,19 @@ package.widget.terminal = function WidgetText(me) {
     };
     me.print = {
         set: function (terminal, message) {
-            me.ui.element.create({
+            var print = me.ui.element.create({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message,
             }, terminal.var.output);
-            me.ui.property.notify(terminal, "draw", null);
+            me.set(terminal, "scroll", null);
+        }
+    };
+    me.scroll = {
+        set: function(terminal) {
+            var container = me.ui.node.container(terminal, me.widget.container.id);
+            var content = me.widget.container.content(container);
+            content.scrollTop = content.scrollHeight;
+            me.ui.property.broadcast(container, "draw", null);
         }
     };
     me.input = {

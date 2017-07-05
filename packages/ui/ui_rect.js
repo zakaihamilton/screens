@@ -30,7 +30,6 @@ package.ui.rect = function UIRect(me) {
                     e.preventDefault();
                     return;
                 }
-                me.set(value, "ui.focus.active", true);
                 var target_region = me.ui.rect.absolute_region(value);
                 var info = {
                     target: value,
@@ -56,7 +55,6 @@ package.ui.rect = function UIRect(me) {
                 };
                 addEventListener('mousemove', move_method);
                 addEventListener('mouseup', release_method);
-                e.preventDefault();
             });
         }
     };
@@ -70,7 +68,6 @@ package.ui.rect = function UIRect(me) {
                     e.preventDefault();
                     return;
                 }
-                me.set(value, "ui.focus.active", true);
                 var info = {
                     target: value,
                     left: e.clientX,

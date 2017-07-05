@@ -59,7 +59,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         if (scroll_percent) {
             var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
             position = me.ui.scroll.percent_to_pos(length, scroll_percent);
-            console.log("scroll_percent: " + scroll_percent + " position: " + position + " length:" + length);
         }
         me.ui.scroll.set_pos(object.var.thumb, scroll_type, position);
     };

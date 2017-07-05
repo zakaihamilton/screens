@@ -23,7 +23,6 @@ package.ui.drag = function UIDrag(me) {
                 }
                 return;
             }
-            me.set(target, "ui.focus.active", true);
             if (target.drag_element) {
                 var rect = me.ui.rect.absolute_region(target.drag_element);
                 var in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
