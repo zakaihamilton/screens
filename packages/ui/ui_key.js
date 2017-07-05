@@ -17,12 +17,12 @@ package.ui.key = function UIKey(me) {
     };
     me.down = {
         set: function (object, value) {
-            me.register(object, "keydown", value);
+            me.register(me.handle, object, "keydown", value);
         }
     };
     me.up = {
         set: function (object, value) {
-            me.register(object, "keyup", value);
+            me.register(me.handle, object, "keyup", value);
         }
     };
 };
