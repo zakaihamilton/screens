@@ -9,7 +9,7 @@ package.ui.element = function UIElement(me) {
         /* Find matching components */
         var with_parent_dependency = false;
         var matches = me["widget"].components.map(function (component_name) {
-            component = me[component_name];
+            var component = me[component_name];
             if (component.depends) {
                 var depends = component.depends;
                 if (depends.parent) {
