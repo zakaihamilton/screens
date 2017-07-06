@@ -23,7 +23,7 @@ package.core.module = function CoreModule(me) {
             core.console.log("serving text file: " + filePath);
             if(err) {
                 core.console.log(JSON.stringify(err));
-                callback(JSON.stringify(err));
+                callback(null);
             }
             else {
                 callback(data);
@@ -72,10 +72,12 @@ package.core.module = function CoreModule(me) {
                         file_path = "packages/remote.js";
                     }
                     info["content-type"] = "application/javascript";
-                    me.loadTextFile(info.job, file_path, function(data) {
-                        info.vars = {"component":component_path,"platform":target_platform};
-                        info.body = data;
-                        core.event.send(core.module.id, "parse", info);
+                    me.loadTextFile(info.job, file_path.replace(".js", ".json"), function(jsonData) {
+                        me.loadTextFile(info.job, file_path, function(data) {
+                            info.vars = {"component":component_path,"platform":target_platform,"json":jsonData};
+                            info.body = data;
+                            core.event.send(core.module.id, "parse", info);
+                        });
                     });
                 }
                 else if(file_path.endsWith(".css")) {

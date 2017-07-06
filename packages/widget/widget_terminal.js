@@ -4,46 +4,7 @@
  */
 
 package.widget.terminal = function WidgetTerminal(me) {
-    me.default = {
-        "ui.theme.class": "background",
-        "ui.basic.var": "terminal",
-        "ui.basic.tag":"div",
-        "ui.basic.elements": [
-            {
-                "ui.basic.tag":"div",
-                "ui.theme.class": "content",
-                "ui.basic.elements": [
-                    {
-                        "ui.basic.var": "output",
-                        "ui.basic.tag": "p",
-                        "ui.theme.class": "output",
-                    },
-                    {
-                        "ui.basic.var": "input",
-                        "ui.basic.tag": "p",
-                        "ui.theme.class": "input",
-                        "ui.basic.elements": [
-                            {
-                                "ui.basic.var": "prefix",
-                                "ui.theme.class": "prefix",
-                                "ui.basic.tag": "span"
-                            },
-                            {
-                                "ui.basic.var": "inputLine",
-                                "ui.basic.tag": "span"
-                            },
-                            {
-                                "ui.basic.var": "cursor",
-                                "ui.basic.tag": "span",
-                                "ui.theme.class": "cursor",
-                                "ui.basic.text": "C",
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    };
+    me.default = @json;
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window.window(terminal);
         var field = me.ui.element.create({
