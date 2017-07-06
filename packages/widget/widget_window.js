@@ -14,7 +14,7 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.background": "background",
         "ui.basic.elements": "elements"
     };
-    me.default = @json;
+    me.default = __json__;
     me.create = {
         set: function (object) {
             var parent = me.parent(object);

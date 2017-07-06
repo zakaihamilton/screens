@@ -1,75 +1,75 @@
 {
-        "ui.style.width": "150px",
-        "ui.style.height": "150px",
-        "ui.style.position": "absolute",
-        "ui.style.left": "100px",
-        "ui.style.top": "100px",
-        "ui.rect.movable": true,
-        "ui.rect.resizable": true,
-        "ui.theme.class": "border",
-        "ui.basic.elements": [{
-                "ui.theme.class": "bottom-left",
-                "ui.rect.resize": null
-            },
-            {
-                "ui.theme.class": "bottom-right",
-                "ui.rect.resize": null
-            },
-            {
-                "ui.theme.class": "top-left",
-                "ui.rect.resize": null
-            },
-            {
-                "ui.theme.class": "top-right",
-                "ui.rect.resize": null
-            },
-            {
-                "ui.theme.class": "margin",
-                "ui.basic.elements": [
-                    {
-                        "ui.basic.var": "title",
-                        "ui.theme.class": "title",
-                        "ui.basic.elements": [
-                            {
-                                "ui.basic.var": "close",
-                                "ui.theme.class": "close",
-                                "ui.touch.click": "context_menu",
-                                "ui.touch.dblclick": "close",
-                            },
-                            {
-                                "ui.basic.var": "label",
-                                "ui.basic.text": "",
-                                "ui.theme.class": "label",
-                                "ui.rect.move": null,
-                                "ui.touch.dblclick": "toggle"
-                            },
-                            {
-                                "ui.basic.var": "minimize",
-                                "ui.theme.class": "action",
-                                "ui.touch.click": "minimize",
-                                "ui.basic.elements": {
-                                    "ui.theme.class": "minimize"
-                                }
-                            },
-                            {
-                                "ui.basic.var": "maximize",
-                                "ui.theme.class": "action",
-                                "ui.touch.click": "toggle",
-                                "ui.basic.elements": {
-                                    "ui.theme.class": "maximize"
-                                }
+    "ui.style.width": "150px",
+    "ui.style.height": "150px",
+    "ui.style.position": "absolute",
+    "ui.style.left": "100px",
+    "ui.style.top": "100px",
+    "ui.rect.movable": true,
+    "ui.rect.resizable": true,
+    "ui.theme.class": "border",
+    "ui.basic.elements": [{
+            "ui.theme.class": "bottom-left",
+            "ui.rect.resize": null
+        },
+        {
+            "ui.theme.class": "bottom-right",
+            "ui.rect.resize": null
+        },
+        {
+            "ui.theme.class": "top-left",
+            "ui.rect.resize": null
+        },
+        {
+            "ui.theme.class": "top-right",
+            "ui.rect.resize": null
+        },
+        {
+            "ui.theme.class": "margin",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.var": "title",
+                    "ui.theme.class": "title",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.var": "close",
+                            "ui.theme.class": "close",
+                            "ui.touch.click": "context_menu",
+                            "ui.touch.dblclick": "close"
+                        },
+                        {
+                            "ui.basic.var": "label",
+                            "ui.basic.text": "",
+                            "ui.theme.class": "label",
+                            "ui.rect.move": null,
+                            "ui.touch.dblclick": "toggle"
+                        },
+                        {
+                            "ui.basic.var": "minimize",
+                            "ui.theme.class": "action",
+                            "ui.touch.click": "minimize",
+                            "ui.basic.elements": {
+                                "ui.theme.class": "minimize"
                             }
-                        ]
-                    },
-                    {
-                        "ui.theme.class": "header",
-                        "ui.basic.var": "header"
-                    },
-                    {
-                        "ui.element.component": "widget.container",
-                        "ui.basic.var": "container"
-                    }
-                ]
-            }
-        ]
-    }
+                        },
+                        {
+                            "ui.basic.var": "maximize",
+                            "ui.theme.class": "action",
+                            "ui.touch.click": "toggle",
+                            "ui.basic.elements": {
+                                "ui.theme.class": "maximize"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ui.theme.class": "header",
+                    "ui.basic.var": "header"
+                },
+                {
+                    "ui.element.component": "widget.container",
+                    "ui.basic.var": "container"
+                }
+            ]
+        }
+    ]
+}

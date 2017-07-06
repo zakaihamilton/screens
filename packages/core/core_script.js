@@ -12,7 +12,7 @@ package.core.script = function CoreScript(me) {
         if(info.vars) {
             for(var key in info.vars) {
                 if(info.vars.hasOwnProperty(key)) {
-                    data = data.split("@" + key).join(info.vars[key]);
+                    data = data.split("__" + key + "__").join(info.vars[key]);
                 }
             }
         }

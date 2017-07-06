@@ -194,4 +194,5 @@ var package = new Proxy({}, {
 
 if (typeof require !== 'undefined') {
     global.package = package;
+    global.__json__ = {};
 }
