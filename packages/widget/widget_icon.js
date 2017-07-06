@@ -26,7 +26,7 @@ package.widget.icon = function WidgetIcon(me) {
                 "ui.theme.class": "caption",
                 "ui.basic.var": "label"
             }]
-    }
+    };
     me.text = {
         get: function (object) {
             return object.var.label.innerHTML;

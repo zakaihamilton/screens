@@ -93,7 +93,7 @@ package.widget.terminal = function WidgetTerminal(me) {
             terminal.running = true;
             setTimeout(function () {
                 field.focus();
-            }, 50);
+            }, 500);
         } else {
             field.focus();
         }
@@ -124,7 +124,7 @@ package.widget.terminal = function WidgetTerminal(me) {
         set: function (terminal, message) {
             var print = me.ui.element.create({
                 "ui.basic.tag": "div",
-                "ui.basic.text": message,
+                "ui.basic.text": message
             }, terminal.var.output);
             me.set(terminal, "scroll", null);
         }

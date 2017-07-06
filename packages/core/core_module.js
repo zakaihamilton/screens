@@ -99,6 +99,20 @@ package.core.module = function CoreModule(me) {
                         core.job.end(task);
                     });
                 }
+                else if(file_path.endsWith(".json")) {
+                    var task = core.job.begin(info.job);
+                    fs.readFile(file_path, 'utf8', function (err,data) {
+                        core.console.log("serving file: " + info.url);
+                        info["content-type"] = "application/json";
+                        if(err) {
+                            info.body = JSON.stringify(err);
+                        }
+                        else {
+                            info.body = data;
+                        }
+                        core.job.end(task);
+                    });
+                }
             }
         }
     };

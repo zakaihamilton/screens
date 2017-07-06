@@ -36,7 +36,6 @@ package.include({
         "button",
         "input",
         "text",
-        "header",
         "window",
         "modal",
         "menu",

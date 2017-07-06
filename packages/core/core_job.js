@@ -37,7 +37,7 @@ package.core.job = function CoreJob(me) {
             var job_info = me.jobs[task_info.job];
             job_info.tasks.splice(job_info.tasks.indexOf(task), 1);
             me.tasks.splice(me.tasks.indexOf(task), 1);
-            if(job_info.state == false && job_info.tasks.length == 0) {
+            if(job_info.state === false && job_info.tasks.length === 0) {
                 job_info.callback(task_info.job);
                 me.jobs.splice(me.jobs.indexOf(task_info.job), 1);
             }

@@ -22,7 +22,7 @@ package.core.http = function CoreHttp(me) {
                     var url = request.url;
                     var query = "";
                     var query_offset = url.lastIndexOf("?");
-                    if(query_offset != -1) {
+                    if(query_offset !== -1) {
                         url = request.url.substring(0, query_offset);
                         query = request.url.substring(query_offset+1);
                     }
@@ -79,10 +79,13 @@ package.core.http = function CoreHttp(me) {
     me.send_async = function(info) {
         if(me.platform !== "server") {
             var request = new XMLHttpRequest();
+            if(info.mimeType) {
+                request.overrideMimeType(info.mimeType);
+            }
             request.open(info.method, info.url, true);
             request.onreadystatechange = function(e) {
-                if (request.readyState == 4) {
-                    if(request.status == 200 || request.status == 201) {
+                if (request.readyState === 4) {
+                    if(request.status === 200 || request.status === 201) {
                         var response = JSON.parse(request.responseText);
                         info.success(response);
                     }
