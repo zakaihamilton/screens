@@ -6,7 +6,7 @@
 package.app.terminal = function (me) {
     me.require = {platform: "browser"};
     me.init = function () {
-        me.ui.element.create([
+        var terminal = me.ui.element.create([
             {
                 "title": "Terminal",
                 "ui.style.left": "350px",
@@ -18,16 +18,16 @@ package.app.terminal = function (me) {
                 "ui.basic.elements": [
                     {
                         "ui.element.component":"widget.terminal",
-                        "widget.terminal.response":"app.terminal.echo",
+                        "widget.terminal.response":"app.terminal.response",
                         "widget.terminal.input":"C>"
                     }
                 ]
             }
         ]);
     };
-    me.echo = {
+    me.response = {
         set: function(object, value) {
-            me.set(object, "widget.terminal.input","C>");
+            me.core.cmd.handle(object, value);
         }
     };
 };

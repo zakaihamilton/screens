@@ -9,7 +9,7 @@ package.core.script = function CoreScript(me) {
     me.parse = function(info) {
         var data = info.body;
         /* Apply variables */
-        if(info.vars) {
+        if(info.vars && data) {
             for(var key in info.vars) {
                 if(info.vars.hasOwnProperty(key)) {
                     data = data.split("__" + key + "__").join(info.vars[key]);

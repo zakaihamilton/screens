@@ -9,7 +9,8 @@ package.include({
         "ref",
         "module",
         "script",
-        "property"
+        "property",
+        "cmd"
     ],
     "ui": [
         "data",
@@ -51,10 +52,9 @@ package.include({
     ]
 },
         function (failure) {
-            if(failure) {
+            if (failure) {
                 alert("Cannot load " + failure);
-            }
-            else {
+            } else {
                 package.send_browser("app.main.browser");
             }
         });

@@ -33,7 +33,6 @@ function package_init(package_name, component_name, child_name = null, node = nu
     } else {
         /* Check if there are any child components */
         for (var key in node) {
-            console.log("child component: " + key);
             children.push(key);
         }
     }
@@ -64,6 +63,9 @@ function package_init(package_name, component_name, child_name = null, node = nu
     } else {
         Reflect.set(package[package_name], component_name, component_obj);
     }
+    if(typeof node !== "function") {
+        throw "Component " + id + " not found";
+    }
     node(component_obj, child_name);
     var init_method = component_obj.init;
     if (component_obj.forward) {
@@ -83,7 +85,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
 function package_prepare(package_name, component_name, callback) {
     var component = package_init(package_name, component_name);
     if (callback) {
-        callback(component);
+        callback(null);
     }
     return component;
 }
@@ -92,6 +94,7 @@ function package_load(package_name, component_name, callback) {
     var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
     try {
+        
         if (package.platform === "browser") {
             var ref = document.getElementsByTagName("script")[ 0 ];
             var script = document.createElement("script");
@@ -101,8 +104,9 @@ function package_load(package_name, component_name, callback) {
                     package_prepare(package_name, component_name, callback);
                 }
                 catch(err) {
+                    console.log("Found error: " + err + " stack: " + err.stack);
                     if (callback) {
-                        callback(null);
+                        callback(package_name + "." + component_name);
                     }
                 }
             };
@@ -117,8 +121,9 @@ function package_load(package_name, component_name, callback) {
         }
     }
     catch(err) {
+        console.log("Found error: " + err + " stack: " + err.stack);
         if (callback) {
-            callback(null);
+            callback(package_name + "." + component_name);
         }
     }
     return result;
@@ -144,9 +149,9 @@ function package_include(packages, callback) {
         var components = packages[package_name];
         var component_name = components[component_index];
         package_load(package_name, component_name, function (component) {
-            if(!component) {
+            if(component) {
                 if (callback) {
-                    callback(package_name + "." + component_name);
+                    callback(component);
                 }
                 return;
             }
