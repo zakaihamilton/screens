@@ -230,6 +230,7 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
+            me.set(window, "ui.focus.active", false);
             me.ui.property.broadcast(window, "ui.theme.add", "minimize");
             me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);

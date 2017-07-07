@@ -47,12 +47,14 @@ package.ui.focus = function UIFocus(me) {
     me.deactivate = function(from, to) {
         while(from && from !== to) {
             me.ui.property.broadcast(from, "ui.theme.remove", "focus")
+            me.ui.property.broadcast(from, "blur", from);
             from = me.widget.window.parent(from);
         }
     };
     me.activate = function(from, to) {
         while(from && from !== to) {
             me.ui.property.broadcast(from, "ui.theme.add", "focus");
+            me.ui.property.broadcast(from, "focus", from);
             me.updateOrder(from.parentNode, from);
             from = me.widget.window.parent(from);
         }
@@ -97,15 +99,23 @@ package.ui.focus = function UIFocus(me) {
         },
         set: function(object, value) {
             var window = me.widget.window.window(object);
-            if(!me.is_active(window)) {
-                /* Find common window between previous and new window */
-                var common = me.common(me.focus_window, window);
-                /* Deactivate previous windows */
-                me.deactivate(me.focus_window, common);
-                /* Activate new window */
-                me.activate(window, common);
-                me.focus_window = window;
+            var is_active = me.is_active(window);
+            if(!is_active && value) {
+                me.focus(window);
+            }
+            else if(is_active && !value) {
+                var parent = me.widget.window.parent(object);
+                me.focus(parent);
             }
         }
+    };
+    me.focus = function(window) {
+        /* Find common window between previous and new window */
+        var common = me.common(me.focus_window, window);
+        /* Deactivate previous windows */
+        me.deactivate(me.focus_window, common);
+        /* Activate new window */
+        me.activate(window, common);
+        me.focus_window = window;
     };
 };

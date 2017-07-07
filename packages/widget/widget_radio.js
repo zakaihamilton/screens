@@ -31,7 +31,7 @@ package.widget.radio = function WidgetRadio(me) {
                 {
                     "ui.basic.var": "label",
                     "ui.theme.class": "label",
-                    "ui.touch.click": "activate"
+                    "ui.touch.click": "check"
                 }
             ], object);
         }
@@ -44,7 +44,7 @@ package.widget.radio = function WidgetRadio(me) {
             object.var.input.checked = value;
         }
     };
-    me.activate = {
+    me.check = {
         set: function (object, value) {
             object.parentNode.var.input.checked = true;
         }

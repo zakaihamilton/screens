@@ -11,6 +11,7 @@ package.widget.terminal = function WidgetTerminal(me) {
             "ui.basic.tag": "input",
             "ui.theme.class":"widget.terminal.field"
         }, window);
+        terminal.field = field;
         me.set(terminal.var.inputLine, "ui.basic.text", "");
         me.set(terminal.var.input, "ui.style.display", "block");
         clearTimeout(terminal.cursorTimeout);
@@ -108,4 +109,11 @@ package.widget.terminal = function WidgetTerminal(me) {
             me.sendInput(terminal, message, "password");
         }
     };
+    me.focus = {
+        set: function(terminal) {
+            if(terminal.field) {
+                terminal.field.focus();
+            }
+        }
+    }
 };

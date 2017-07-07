@@ -64,7 +64,7 @@ package.widget.menu = function WidgetMenu(me) {
             }
             object.selected_item = item;
             me.set(object, "ui.style.zIndex", "1");
-            me.ui.property.broadcast(object, "ui.touch.move", "focus");
+            me.ui.property.broadcast(object, "ui.touch.move", "hover");
             me.ui.property.broadcast(object, "ui.theme.remove", "select");
             me.set(item, "ui.theme.add", "select");
             me.set(object.var.menu, "ui.node.parent", null);
@@ -167,7 +167,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
             }
         }
     };
-    me.focus = {
+    me.hover = {
         set: function (object, value) {
             if (object.parentNode.selected_item !== object) {
                 me.set(object.parentNode, "select", [object, object.menu_select]);
