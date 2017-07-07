@@ -8,8 +8,13 @@
     padding:0;
     box-sizing: border-box;
     display: block;
+    pointer-events: none;
 }
 
-.widget-embed-iframe.transition {
+.widget-embed-iframe.focus.transition {
     pointer-events: none;
+}
+
+.widget-embed-iframe.focus {
+    pointer-events: auto;
 }
