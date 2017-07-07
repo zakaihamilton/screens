@@ -59,9 +59,16 @@ package.core.module = function CoreModule(me) {
                     var target_platform = null;
                     if(component_path) {
                         console.log("component_path: " + component_path);
-                        var requirements = me[component_path].require;
-                        if(requirements) {
-                            target_platform = requirements.platform;
+                        try {
+                            var requirements = me[component_path].require;
+                            if(requirements) {
+                                target_platform = requirements.platform;
+                            }
+                        }
+                        catch(err) {
+                            console.log("error: " + err);
+                            info.body = null;
+                            return;
                         }
                     }
                     var source_platform = info.query["platform"];

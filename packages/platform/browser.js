@@ -50,6 +50,11 @@ package.include({
         "main"
     ]
 },
-        function () {
-            package.send_browser("app.main.browser");
+        function (failure) {
+            if(failure) {
+                alert("Cannot load " + failure);
+            }
+            else {
+                package.send_browser("app.main.browser");
+            }
         });

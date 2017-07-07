@@ -83,7 +83,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
 function package_prepare(package_name, component_name, callback) {
     var component = package_init(package_name, component_name);
     if (callback) {
-        callback();
+        callback(component);
     }
     return component;
 }
@@ -91,21 +91,35 @@ function package_prepare(package_name, component_name, callback) {
 function package_load(package_name, component_name, callback) {
     var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
-    if (package.platform === "browser") {
-        var ref = document.getElementsByTagName("script")[ 0 ];
-        var script = document.createElement("script");
-        script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
-        script.onload = function () {
-            package_prepare(package_name, component_name, callback);
-        };
-        ref.parentNode.insertBefore(script, ref);
-    } else if (package.platform === "server") {
-        path = "./" + package_name + "/" + package_name + "_" + component_name;
-        require(path);
-        result = package_prepare(package_name, component_name, callback);
-    } else if (package.platform === "client") {
-        importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
-        result = package_prepare(package_name, component_name, callback);
+    try {
+        if (package.platform === "browser") {
+            var ref = document.getElementsByTagName("script")[ 0 ];
+            var script = document.createElement("script");
+            script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
+            script.onload = function () {
+                try {
+                    package_prepare(package_name, component_name, callback);
+                }
+                catch(err) {
+                    if (callback) {
+                        callback(null);
+                    }
+                }
+            };
+            ref.parentNode.insertBefore(script, ref);
+        } else if (package.platform === "server") {
+            path = "./" + package_name + "/" + package_name + "_" + component_name;
+            require(path);
+            result = package_prepare(package_name, component_name, callback);
+        } else if (package.platform === "client") {
+            importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
+            result = package_prepare(package_name, component_name, callback);
+        }
+    }
+    catch(err) {
+        if (callback) {
+            callback(null);
+        }
     }
     return result;
 }
@@ -122,14 +136,20 @@ function package_include(packages, callback) {
         var package_keys = Object.keys(packages);
         if (package_index >= package_keys.length) {
             if (callback) {
-                callback();
+                callback(null);
             }
             return;
         }
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        package_load(package_name, component_name, function () {
+        package_load(package_name, component_name, function (component) {
+            if(!component) {
+                if (callback) {
+                    callback(package_name + "." + component_name);
+                }
+                return;
+            }
             /* Load next component */
             component_index++;
             if (component_index >= components.length) {
@@ -166,7 +186,7 @@ function package_general(object, property) {
 var package = new Proxy({}, {
     get: function (object, property) {
         result = package_general(object, property);
-        if (result) {
+        if (typeof result !== "undefined") {
             return result;
         }
         if (property === "id") {
@@ -181,6 +201,7 @@ var package = new Proxy({}, {
                 }
                 /* Load component */
                 var package_name = Reflect.get(object, "id");
+                Reflect.set(object, property, [""]);
                 return package_load(package_name, property);
             },
             set: function (object, property, value) {
