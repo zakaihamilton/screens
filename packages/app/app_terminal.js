@@ -3,10 +3,10 @@
  @component AppTerminal
  */
 
-package.app.terminal = function (me) {
+package.app.terminal = function AppTerminal(me) {
     me.require = {platform: "browser"};
-    me.init = function () {
-        var terminal = me.ui.element.create([
+    me.launch = function () {
+        me.ui.element.create([
             {
                 "title": "Terminal",
                 "ui.style.left": "350px",

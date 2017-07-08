@@ -54,41 +54,11 @@ package.app.main = function (me) {
                 ]
             },
             {
-                "title": "Program Manager",
-                "icon": "/packages/res/icons/program_manager.png",
-                "ui.style.left": "950px",
-                "ui.style.top": "150px",
+                "title": "Controls",
+                "ui.style.left": "450px",
+                "ui.style.top": "450px",
                 "ui.style.width": "300px",
                 "ui.style.height": "250px",
-                "widget.menu.items": [
-                    ["File", [
-                            ["New..."],
-                            ["Open"],
-                            ["Move..."],
-                            ["Copy..."],
-                            ["Delete"],
-                            ["Properties"],
-                            ["Run...", undefined, {"separator": true}],
-                            ["Exit Windows...", undefined, {"separator": true}],
-                        ]],
-                    ["Options", [
-                            ["Load on Startup", "app.main.check"]
-                        ]],
-                    ["Window", [
-                            ["Games"],
-                            ["Programs"],
-                            ["Maximize", "widget.window.maximize"],
-                            ["Minimize", "widget.window.minimize"],
-                            ["Restore", "widget.window.restore"]
-                        ]],
-                    ["Help", [
-                            ["Contents"],
-                            ["Search for Help on..."],
-                            ["How to Use Help"],
-                            ["Windows Tutorial"],
-                            ["About Program Manager..."],
-                        ]]
-                ],
                 "ui.basic.elements": [
                     {
                         "ui.basic.text": "This is some text",
@@ -169,7 +139,11 @@ package.app.main = function (me) {
                     }]
             }
         ]);
-        package.include("app.terminal");
+        package.include("app.terminal", function(failure) {
+            if(!failure) {
+                me.send("app.terminal.launch");
+            }
+        });
     };
     me.ok = {
         set: function (object, value) {
@@ -178,14 +152,5 @@ package.app.main = function (me) {
     };
     me.test = function (value) {
         alert("Hello!" + value);
-    };
-    me.check = {
-        get: function (object) {
-            var options = {"state": me.checked};
-            return options;
-        },
-        set: function (object, value) {
-            me.checked = !me.checked;
-        }
     };
 };
