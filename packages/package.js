@@ -93,8 +93,22 @@ function package_prepare(package_name, component_name, callback) {
 function package_load(package_name, component_name, callback) {
     var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
+    if(package[package_name]) {
+        var id = package_name + "." + component_name;
+        package[package_name].components.map(function(name) {
+            if(id !== name) {
+                return;
+            }
+            result = package[id];
+            if(callback) {
+                callback(null);
+            }
+        });
+    }
+    if(result) {
+        return result;
+    }
     try {
-        
         if (package.platform === "browser") {
             var ref = document.getElementsByTagName("script")[ 0 ];
             var script = document.createElement("script");

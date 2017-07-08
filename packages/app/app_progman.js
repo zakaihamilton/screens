@@ -6,7 +6,12 @@
 package.app.progman = function AppProgman(me) {
     me.require = {platform: "browser"};
     me.launch = function () {
-        me.ui.element.create([
+        console.log("me.progman:" + me.progman);
+        if(me.progman) {
+            me.set(me.progman, "ui.focus.active", true);
+            return;
+        }
+        me.progman = me.ui.element.create(
             {
                 "title": "Program Manager",
                 "icon": "/packages/res/icons/program_manager.png",
@@ -45,7 +50,8 @@ package.app.progman = function AppProgman(me) {
                 ],
                 "ui.basic.elements": []
             }
-        ]);
+        );
+        console.log("me.progman: " + me.progman);
     };
     me.check = {
         get: function (object) {

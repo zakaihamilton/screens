@@ -24,22 +24,7 @@ package.core.cmd = function CoreCmd(me) {
             me.send(terminal.application + ".cmd", terminal, args);
             return;
         }
-        var cmd = args[0];
-        var application = null;
-        if(me["cmd"]) {
-            me["cmd"].components.map(function(name) {
-                if(cmd !== name) {
-                    return;
-                }
-                application = name;
-            });
-        }
-        if(application) {
-            terminal.application = application;
-            me.send(application + ".cmd", terminal, args);
-            return;
-        }
-        application = "cmd." + cmd;
+        application = "cmd." + args[0];
         package.include(application, function (failure) {
             if (failure) {
                 me.set(terminal, "print", "Error: Command not found!");
