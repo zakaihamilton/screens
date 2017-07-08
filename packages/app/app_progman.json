@@ -1,0 +1,42 @@
+{
+    "title": "Program Manager",
+    "icon": "/packages/res/icons/program_manager.png",
+    "ui.style.left": "950px",
+    "ui.style.top": "150px",
+    "ui.style.width": "300px",
+    "ui.style.height": "250px",
+    "widget.menu.items": [
+        ["File", [
+                ["New..."],
+                ["Open"],
+                ["Move..."],
+                ["Copy..."],
+                ["Delete"],
+                ["Properties"],
+                ["Run...", null, {
+                        "separator": true
+                    }],
+                ["Exit Windows...", null, {
+                        "separator": true
+                    }]
+            ]],
+        ["Options", [
+                ["Load on Startup", "app.progman.check"]
+            ]],
+        ["Window", [
+                ["Games"],
+                ["Programs"],
+                ["Maximize", "widget.window.maximize"],
+                ["Minimize", "widget.window.minimize"],
+                ["Restore", "widget.window.restore"]
+            ]],
+        ["Help", [
+                ["Contents"],
+                ["Search for Help on..."],
+                ["How to Use Help"],
+                ["Windows Tutorial"],
+                ["About Program Manager..."]
+            ]]
+    ],
+    "ui.basic.elements": []
+}

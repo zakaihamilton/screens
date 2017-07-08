@@ -6,24 +6,7 @@
 package.app.terminal = function AppTerminal(me) {
     me.require = {platform: "browser"};
     me.launch = function () {
-        me.ui.element.create([
-            {
-                "title": "Terminal",
-                "ui.style.left": "350px",
-                "ui.style.top": "100px",
-                "ui.style.width": "300px",
-                "ui.style.height": "300px",
-                "icon": "/packages/res/icons/terminal.png",
-                "ui.style.background":"black",
-                "ui.basic.elements": [
-                    {
-                        "ui.element.component":"widget.terminal",
-                        "widget.terminal.response":"app.terminal.response",
-                        "widget.terminal.input":"C>"
-                    }
-                ]
-            }
-        ]);
+        me.ui.element.create(__json__);
     };
     me.response = {
         set: function(object, value) {
