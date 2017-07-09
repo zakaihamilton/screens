@@ -306,8 +306,3 @@
 .widget-window-minimize.popup {
     display:none;
 }
-
-.widget-window-icon {
-    float:left;
-    display:none;
-}

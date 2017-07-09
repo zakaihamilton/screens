@@ -13,10 +13,7 @@
     border: 1px solid transparent;
     display:table;
     padding-top: 4px;
-}
-
-.widget-icon-figure.over {
-    border: 1px dashed black;
+    float:left;
 }
 
 .widget-icon-image {

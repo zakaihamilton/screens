@@ -33,7 +33,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             object.var.icon = me.ui.element.create({
                 "text": "",
-                "ui.theme.class":"widget.window.icon",
+                "ui.style.display":"none",
                 "ui.basic.src": "/packages/res/icons/default.png",
                 "ui.touch.click": "widget.window.context_menu",
                 "ui.touch.dblclick": "widget.window.restore",
@@ -227,7 +227,7 @@ package.widget.window = function WidgetWindow(me) {
                 ["Minimize", "widget.window.minimize", {"enabled":"widget.window.minimize"}],
                 ["Maximize", "widget.window.maximize", {"enabled":"widget.window.maximize"}],
                 ["Close", "widget.window.close", {"separator": true, "enabled":"widget.window.close"}],
-                ["Switch To", null, {"separator": true}]
+                ["Switch To...", null, {"separator": true}]
             ]);
             if (!visible) {
                 var parent = me.parent(window);
