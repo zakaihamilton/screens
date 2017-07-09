@@ -17,8 +17,7 @@ package.app.progman = function AppProgman(me) {
     };
     me.check = {
         get: function (object) {
-            var options = {"state": me.checked};
-            return options;
+            return me.checked;
         },
         set: function (object, value) {
             me.checked = !me.checked;

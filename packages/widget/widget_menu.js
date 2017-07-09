@@ -130,26 +130,36 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
     };
+    me.handleValue = function(object, values, key, callback) {
+        if(key in values) {
+            var value = values[key];
+            if(typeof value === "string") {
+                value = me.get(object.parentNode.target, value);
+            }
+            callback(value);
+        }
+    };
     me.options = {
-        set: function (object, value) {
-            if (value) {
-                if ("enabled" in value) {
-                    me.set(object, "ui.basic.enabled", value["enabled"]);
-                }
-                if ("state" in value) {
-                    if (value["state"]) {
+        set: function (object, options) {
+            if (options) {
+                console.log("options: " + JSON.stringify(options));
+                me.handleValue(object, options, "enabled", function(value) {
+                    me.set(object, "ui.basic.enabled", value);
+                });
+                me.handleValue(object, options, "state", function(value) {
+                    if (value) {
                         me.set(object, "ui.theme.add", "checked");
                     } else {
                         me.set(object, "ui.theme.remove", "checked");
                     }
-                }
-                if ("separator" in value) {
-                    if (value["separator"]) {
+                });
+                me.handleValue(object, options, "separator", function(value) {
+                    if (value) {
                         me.set(object, "ui.theme.add", "separator");
                     } else {
                         me.set(object, "ui.theme.remove", "separator");
                     }
-                }
+                });
             }
         }
     };
@@ -159,12 +169,6 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         },
         set: function (object, value) {
             object.menu_select = value;
-            if (value && !Array.isArray(value)) {
-                var options = me.get(object.parentNode.target, value);
-                if (options) {
-                    me.set(object, "options", options);
-                }
-            }
         }
     };
     me.hover = {

@@ -30,22 +30,22 @@ package.core.property = function CoreProperty(me) {
         }
         return name;
     };
-    me.get = function(object, name) {
+    me.get = function(object, name, method="get") {
         var result = undefined;
         if(object && name) {
             name = me.fullname(object, name);
             if(name) {
-                result = me.send(name + ".get", object);
+                result = me.send(name + "." + method, object);
             }
         }
         return result;
     };
-    me.set = function(object, name, value) {
+    me.set = function(object, name, value, method="set") {
         var result = undefined;
         if(object && name) {
             name = me.fullname(object, name);
             if(name) {
-                result = me.send(name + ".set", object, value);
+                result = me.send(name + "." + method, object, value);
             }
         }
         return result;

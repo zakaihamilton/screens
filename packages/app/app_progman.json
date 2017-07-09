@@ -1,10 +1,10 @@
 {
     "title": "Program Manager",
     "icon": "/packages/res/icons/program_manager.png",
-    "ui.style.left": "950px",
+    "ui.style.left": "750px",
     "ui.style.top": "150px",
-    "ui.style.width": "300px",
-    "ui.style.height": "250px",
+    "ui.style.width": "500px",
+    "ui.style.height": "500px",
     "widget.menu.items": [
         ["File", [
                 ["New..."],
@@ -21,7 +21,9 @@
                     }]
             ]],
         ["Options", [
-                ["Load on Startup", "app.progman.check"]
+                ["Load on Startup", "app.progman.check", {
+                        "state": "app.progman.check"
+                    }]
             ]],
         ["Window", [
                 ["Games"],
@@ -38,5 +40,14 @@
                 ["About Program Manager..."]
             ]]
     ],
-    "ui.basic.elements": []
+    "ui.group.data": {
+        "ui.data.default": {
+            "icon": "/packages/res/icons/group.png",
+            "maximize": null,
+            "minimize": null,
+            "static": true
+        },
+        "ui.data.keys": ["title", "ui.basic.elements"],
+        "ui.data.values": [["Main", []], ["Accessories", []], ["Utilities", []]]
+    }
 }

@@ -48,7 +48,9 @@ package.widget.window = function WidgetWindow(me) {
             if (parent === null) {
                 me.set(object.var.close, "ui.theme.add", "main");
             }
-            me.ui.property.broadcast(object, "ui.theme.add", "restore");
+            if(!me.set(object, "ui.theme.contains", "maximize")) {
+                me.ui.property.broadcast(object, "ui.theme.add", "restore");
+            }
         }
     };
     me.parent = function (object) {
@@ -102,14 +104,11 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.close = {
-        get: function (object) {
-            var window = me.window(object);
-            var enabled = me.is_visible(window.var.close);
-            var options = {"enabled": enabled, "separator": true};
-            return options;
-        },
         set: function (object, value) {
             var window = me.window(object);
+            if(window.static) {
+                return;
+            }
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(window, parent_window);
@@ -169,19 +168,31 @@ package.widget.window = function WidgetWindow(me) {
             me.set(content, "ui.style.background", value);
         }
     };
+    me.static = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.static;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            window.static = value;
+        }
+    };
     me.context_menu = {
         set: function (object, value) {
             var window = me.window(object);
             var visible = !me.set(window, "ui.theme.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
+            var minimized = me.set(window, "ui.theme.contains", "minimize");
+            var maximized = me.set(window, "ui.theme.contains", "maximize");
             var menu = me.widget.menu.create_menu(window, object, region, [
-                ["Restore", "widget.window.restore"],
+                ["Restore", "widget.window.restore", {"enabled":maximized || minimized}],
                 ["Move", ""],
                 ["Size", ""],
-                ["Minimize", "widget.window.minimize"],
-                ["Maximize", "widget.window.maximize"],
-                ["Close", "widget.window.close"],
-                ["Switch To", undefined, {"separator": true}]
+                ["Minimize", "widget.window.minimize", {"enabled":!minimized}],
+                ["Maximize", "widget.window.maximize", {"enabled":!maximized && !minimized}],
+                ["Close", "widget.window.close", {"separator": true, "enabled":!window.static}],
+                ["Switch To", null, {"separator": true}]
             ]);
             if (!visible) {
                 var parent = me.parent(window);
@@ -222,12 +233,6 @@ package.widget.window = function WidgetWindow(me) {
         me.update_title(parent_window);
     };
     me.minimize = {
-        get: function (object) {
-            var window = me.window(object);
-            var enabled = !me.set(window, "ui.theme.contains", "minimize");
-            var options = {"enabled": enabled};
-            return options;
-        },
         set: function (object, value) {
             var window = me.window(object);
             me.set(window, "ui.focus.active", false);
@@ -241,12 +246,6 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.maximize = {
-        get: function (object) {
-            var window = me.window(object);
-            var enabled = !me.set(window, "ui.theme.contains", "maximize") && !me.set(window, "ui.theme.contains", "minimize");
-            var options = {"enabled": enabled};
-            return options;
-        },
         set: function (object, value) {
             var parent_region = null;
             var window = me.window(object);
@@ -289,12 +288,6 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.restore = {
-        get: function (object) {
-            var window = me.window(object);
-            var enabled = me.set(window, "ui.theme.contains", "maximize") || me.set(window, "ui.theme.contains", "minimize");
-            var options = {"enabled": enabled};
-            return options;
-        },
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
@@ -319,9 +312,6 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.toggle = {
-        get: function (object) {
-            return true;
-        },
         set: function (object, value) {
             var window = me.window(object);
             if (me.set(window, "ui.theme.contains", "maximize")) {
