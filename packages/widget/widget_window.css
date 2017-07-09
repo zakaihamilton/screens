@@ -13,6 +13,14 @@
     display:none;
 }
 
+.widget-window-border.popup.focus {
+    background:#000080;
+}
+
+.widget-window-border.popup {
+    background:white;
+}
+
 .widget-window-margin {
     position: absolute;
     left:2px;
@@ -39,6 +47,14 @@
     right:0px;
     bottom:0px;
     border:none;
+}
+
+.widget-window-margin.popup {
+    border:1px solid white;
+    left:4px;
+    top:3px;
+    right:4px;
+    bottom:4px;
 }
 
 .widget-window-header {
@@ -73,6 +89,10 @@
     height:18px;
 }
 
+.widget-window-top-left.fixed {
+    display:none;
+}
+
 .widget-window-top-right {
     position: absolute;
     top:-1px;
@@ -84,6 +104,10 @@
 }
 
 .widget-window-top-right.child {
+    display:none;
+}
+
+.widget-window-top-right.fixed {
     display:none;
 }
 
@@ -101,6 +125,10 @@
     display:none;
 }
 
+.widget-window-bottom-left.fixed {
+    display:none;
+}
+
 .widget-window-bottom-right {
     position: absolute;
     bottom:-1px;
@@ -112,6 +140,10 @@
 }
 
 .widget-window-bottom-right.child {
+    display:none;
+}
+
+.widget-window-bottom-right.fixed {
     display:none;
 }
 
@@ -142,6 +174,16 @@
 
 .widget-window-label.child {
     display:none;
+}
+
+.widget-window-label.popup {
+    color: black;
+    background-color: white;
+}
+
+.widget-window-label.popup.focus {
+    color: white;
+    background-color: #000080;
 }
 
 .widget-window-close {
@@ -210,7 +252,7 @@
     box-shadow: inset -1px -1px 0px 0px #ffffff;
 }
 
-.widget-window-minimize {
+.widget-window-minimize-arrow {
     position: relative;
     left:5px;
     top:7px;
@@ -221,7 +263,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-maximize.restore {
+.widget-window-maximize-arrow.restore {
     position: relative;
     left:5px;
     top:6px;
@@ -232,7 +274,7 @@
     border-bottom: 4px solid black;
 }
 
-.widget-window-maximize.maximize {
+.widget-window-maximize-arrow.maximize {
     position: relative;
     left:5px;
     top:9px;
@@ -243,7 +285,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-maximize.maximize::after {
+.widget-window-maximize-arrow.maximize::after {
     content: "";
     position: absolute;
     left:-3px;
@@ -251,4 +293,16 @@
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     border-bottom: 4px solid black;
+}
+
+.widget-window-maximize.fixed {
+    display:none;
+}
+
+.widget-window-maximize.popup {
+    display:none;
+}
+
+.widget-window-minimize.popup {
+    display:none;
 }

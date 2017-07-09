@@ -28,9 +28,15 @@
         ["Window", [
                 ["Games"],
                 ["Programs"],
-                ["Maximize", "widget.window.maximize"],
-                ["Minimize", "widget.window.minimize"],
-                ["Restore", "widget.window.restore"]
+                ["Maximize", "widget.window.maximize", {
+                        "enabled": "widget.window.maximize"
+                    }],
+                ["Minimize", "widget.window.minimize", {
+                        "enabled": "widget.window.minimize"
+                    }],
+                ["Restore", "widget.window.restore", {
+                        "enabled": "widget.window.restore"
+                    }]
             ]],
         ["Help", [
                 ["Contents"],

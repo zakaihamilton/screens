@@ -45,18 +45,18 @@
                         },
                         {
                             "ui.basic.var": "minimize",
-                            "ui.theme.class": "action",
+                            "ui.theme.class": ["action", "minimize"],
                             "ui.touch.click": "minimize",
                             "ui.basic.elements": {
-                                "ui.theme.class": "minimize"
+                                "ui.theme.class": "minimize.arrow"
                             }
                         },
                         {
                             "ui.basic.var": "maximize",
-                            "ui.theme.class": "action",
+                            "ui.theme.class": ["action", "maximize"],
                             "ui.touch.click": "toggle",
                             "ui.basic.elements": {
-                                "ui.theme.class": "maximize"
+                                "ui.theme.class": "maximize.arrow"
                             }
                         }
                     ]

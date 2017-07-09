@@ -178,6 +178,40 @@ package.widget.window = function WidgetWindow(me) {
             window.static = value;
         }
     };
+    me.fixed = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.fixed;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            var maximized = me.set(window, "ui.theme.contains", "maximize");
+            window.fixed = value;
+            me.set(window, "ui.rect.resizable", !window.fixed && !maximized);
+            if(window.fixed) {
+                me.ui.property.broadcast(window, "ui.theme.add", "fixed");
+            }
+            else {
+                me.ui.property.broadcast(window, "ui.theme.remove", "fixed");
+            }
+        }
+    };
+    me.popup = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.popup;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            window.popup = value;
+            if(window.popup) {
+                me.ui.property.broadcast(window, "ui.theme.add", "popup");
+            }
+            else {
+                me.ui.property.broadcast(window, "ui.theme.remove", "popup");
+            }
+        }
+    };
     me.context_menu = {
         set: function (object, value) {
             var window = me.window(object);
@@ -190,7 +224,7 @@ package.widget.window = function WidgetWindow(me) {
                 ["Move", ""],
                 ["Size", ""],
                 ["Minimize", "widget.window.minimize", {"enabled":!minimized}],
-                ["Maximize", "widget.window.maximize", {"enabled":!maximized && !minimized}],
+                ["Maximize", "widget.window.maximize", {"enabled":!window.fixed && !maximized && !minimized}],
                 ["Close", "widget.window.close", {"separator": true, "enabled":!window.static}],
                 ["Switch To", null, {"separator": true}]
             ]);
@@ -299,7 +333,7 @@ package.widget.window = function WidgetWindow(me) {
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, parent_window);
                 me.set(window, "ui.rect.movable", true);
-                me.set(window, "ui.rect.resizable", true);
+                me.set(window, "ui.rect.resizable", !window.fixed);
             } else {
                 me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
                 if (me.set(window, "ui.theme.contains", "maximize") && parent_window) {
