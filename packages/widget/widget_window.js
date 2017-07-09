@@ -104,12 +104,12 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.close = {
         get: function(object) {
-            var window = me.window(object);
-            return !window.static;
+            return true;
         },
         set: function (object, value) {
             var window = me.window(object);
             if(window.static) {
+                me.set(window, "minimize", null);
                 return;
             }
             var parent_window = me.parent(window);

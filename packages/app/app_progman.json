@@ -13,7 +13,7 @@
                 ["Move..."],
                 ["Copy..."],
                 ["Delete"],
-                ["Properties"],
+                ["Properties..."],
                 ["Run...", null, {
                         "separator": true
                     }],
@@ -22,8 +22,14 @@
                     }]
             ]],
         ["Options", [
-                ["Load on Startup", "app.progman.check", {
-                        "state": "app.progman.check"
+                ["Auto Arrange", "app.progman.auto_arrange", {
+                        "state": "app.progman.auto_arrange"
+                    }],
+                ["Minimize on Use", "app.progman.minimize_on_use", {
+                        "state": "app.progman.minimize_on_use"
+                    }],
+                ["Save Settings on Exit", "app.progman.save_on_exit", {
+                        "state": "app.progman.save_on_exit"
                     }]
             ]],
         ["Window", [
@@ -54,20 +60,20 @@
             ["Utilities", [{
                         "text": "Terminal",
                         "ui.basic.src": "/packages/res/icons/terminal.png",
-                        "core.cmd.args": "terminal",
-                        "ui.touch.dblclick": "core.cmd.shell"
+                        "app.progman.args": "terminal",
+                        "ui.touch.dblclick": "app.progman.shell"
                     },
                     {
                         "text": "Controls",
                         "ui.basic.src": "/packages/res/icons/controls.png",
-                        "core.cmd.args": "controls",
-                        "ui.touch.dblclick": "core.cmd.shell"
+                        "app.progman.args": "controls",
+                        "ui.touch.dblclick": "app.progman.shell"
                     },
                     {
                         "text": "Phases",
                         "ui.basic.src": "/packages/res/icons/phases.png",
-                        "core.cmd.args": "phases",
-                        "ui.touch.dblclick": "core.cmd.shell"
+                        "app.progman.args": "phases",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]]]
     }
