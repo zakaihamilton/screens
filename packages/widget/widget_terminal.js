@@ -115,5 +115,5 @@ package.widget.terminal = function WidgetTerminal(me) {
                 terminal.field.focus();
             }
         }
-    }
+    };
 };

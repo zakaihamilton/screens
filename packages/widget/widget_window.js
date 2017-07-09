@@ -276,6 +276,18 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.property.notify(window, "draw", null);
         }
     };
+    me.show = {
+        set: function(object, value) {
+            var window = me.window(object);
+            var minimized = me.set(window, "ui.theme.contains", "minimize");
+            if(value && minimized) {
+                me.set(window, "restore", null);
+            }
+            else if(!value && !minimized) {
+                me.set(window, "minimize", null);
+            }
+        }
+    };
     me.restore = {
         get: function (object) {
             var window = me.window(object);

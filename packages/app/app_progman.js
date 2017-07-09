@@ -7,50 +7,12 @@ package.app.progman = function AppProgman(me) {
     me.require = {platform: "browser"};
     me.launch = function () {
         console.log("me.progman:" + me.progman);
-        if(me.progman) {
+        if(me.get(me.progman, "ui.node.parent")) {
             me.set(me.progman, "ui.focus.active", true);
+            me.set(me.progman, "widget.window.show", true);
             return;
         }
-        me.progman = me.ui.element.create(
-            {
-                "title": "Program Manager",
-                "icon": "/packages/res/icons/program_manager.png",
-                "ui.style.left": "950px",
-                "ui.style.top": "150px",
-                "ui.style.width": "300px",
-                "ui.style.height": "250px",
-                "widget.menu.items": [
-                    ["File", [
-                            ["New..."],
-                            ["Open"],
-                            ["Move..."],
-                            ["Copy..."],
-                            ["Delete"],
-                            ["Properties"],
-                            ["Run...", undefined, {"separator": true}],
-                            ["Exit Windows...", undefined, {"separator": true}],
-                        ]],
-                    ["Options", [
-                            ["Load on Startup", "app.progman.check"]
-                        ]],
-                    ["Window", [
-                            ["Games"],
-                            ["Programs"],
-                            ["Maximize", "widget.window.maximize"],
-                            ["Minimize", "widget.window.minimize"],
-                            ["Restore", "widget.window.restore"]
-                        ]],
-                    ["Help", [
-                            ["Contents"],
-                            ["Search for Help on..."],
-                            ["How to Use Help"],
-                            ["Windows Tutorial"],
-                            ["About Program Manager..."],
-                        ]]
-                ],
-                "ui.basic.elements": []
-            }
-        );
+        me.progman = me.ui.element.create(__json__);
         console.log("me.progman: " + me.progman);
     };
     me.check = {
