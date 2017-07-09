@@ -104,6 +104,10 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.close = {
+        get: function(object) {
+            var window = me.window(object);
+            return !window.static;
+        },
         set: function (object, value) {
             var window = me.window(object);
             if(window.static) {
@@ -217,15 +221,13 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var visible = !me.set(window, "ui.theme.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
-            var minimized = me.set(window, "ui.theme.contains", "minimize");
-            var maximized = me.set(window, "ui.theme.contains", "maximize");
             var menu = me.widget.menu.create_menu(window, object, region, [
-                ["Restore", "widget.window.restore", {"enabled":maximized || minimized}],
+                ["Restore", "widget.window.restore", {"enabled":"widget.window.restore"}],
                 ["Move", ""],
                 ["Size", ""],
-                ["Minimize", "widget.window.minimize", {"enabled":!minimized}],
-                ["Maximize", "widget.window.maximize", {"enabled":!window.fixed && !maximized && !minimized}],
-                ["Close", "widget.window.close", {"separator": true, "enabled":!window.static}],
+                ["Minimize", "widget.window.minimize", {"enabled":"widget.window.minimize"}],
+                ["Maximize", "widget.window.maximize", {"enabled":"widget.window.maximize"}],
+                ["Close", "widget.window.close", {"separator": true, "enabled":"widget.window.close"}],
                 ["Switch To", null, {"separator": true}]
             ]);
             if (!visible) {
@@ -267,6 +269,11 @@ package.widget.window = function WidgetWindow(me) {
         me.update_title(parent_window);
     };
     me.minimize = {
+        get: function(object) {
+            var window = me.window(object);
+            var minimized = me.set(window, "ui.theme.contains", "minimize");
+            return !minimized;
+        },
         set: function (object, value) {
             var window = me.window(object);
             me.set(window, "ui.focus.active", false);
@@ -280,6 +287,12 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.maximize = {
+        get: function(object) {
+            var window = me.window(object);
+            var minimized = me.set(window, "ui.theme.contains", "minimize");
+            var maximized = me.set(window, "ui.theme.contains", "maximize");
+            return !window.fixed && !maximized && !minimized;
+        },
         set: function (object, value) {
             var parent_region = null;
             var window = me.window(object);
@@ -322,6 +335,12 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.restore = {
+        get: function(object) {
+            var window = me.window(object);
+            var minimized = me.set(window, "ui.theme.contains", "minimize");
+            var maximized = me.set(window, "ui.theme.contains", "maximize");
+            return maximized || minimized;
+        },
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
