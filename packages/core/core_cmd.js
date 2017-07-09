@@ -39,4 +39,24 @@ package.core.cmd = function CoreCmd(me) {
         terminal.application = null;
         me.set(terminal, "input", "C>");
     };
+    me.args = {
+        set: function(object, value) {
+            object.args = value;
+        }
+    };
+    me.shell = {
+        set: function(object, value) {
+            var args = me.splitArguments(object.args);
+            if(args) {
+                package.include("app." + args[0], function(failure) {
+                    if(failure) {
+                        //todo raise error dialog
+                    }
+                    else {
+                        me.send("app." + args[0] + ".launch", args.slice(1));
+                    }
+                });
+            }
+        }
+    };
 };

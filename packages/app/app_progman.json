@@ -5,6 +5,7 @@
     "ui.style.top": "150px",
     "ui.style.width": "500px",
     "ui.style.height": "500px",
+    "widget.window.static": true,
     "widget.menu.items": [
         ["File", [
                 ["New..."],
@@ -26,17 +27,9 @@
                     }]
             ]],
         ["Window", [
-                ["Games"],
-                ["Programs"],
-                ["Maximize", "widget.window.maximize", {
-                        "enabled": "widget.window.maximize"
-                    }],
-                ["Minimize", "widget.window.minimize", {
-                        "enabled": "widget.window.minimize"
-                    }],
-                ["Restore", "widget.window.restore", {
-                        "enabled": "widget.window.restore"
-                    }]
+                ["Cascade"],
+                ["Tile"],
+                ["Arrange Icons"]
             ]],
         ["Help", [
                 ["Contents"],
@@ -54,6 +47,28 @@
             "static": true
         },
         "ui.data.keys": ["title", "ui.basic.elements"],
-        "ui.data.values": [["Main", []], ["Accessories", []], ["Utilities", []]]
+        "ui.data.values": [["Main", [
+                ]],
+            ["Accessories", [
+                ]],
+            ["Utilities", [{
+                        "text": "Terminal",
+                        "ui.basic.src": "/packages/res/icons/terminal.png",
+                        "core.cmd.args": "terminal",
+                        "ui.touch.dblclick": "core.cmd.shell"
+                    },
+                    {
+                        "text": "Controls",
+                        "ui.basic.src": "/packages/res/icons/controls.png",
+                        "core.cmd.args": "controls",
+                        "ui.touch.dblclick": "core.cmd.shell"
+                    },
+                    {
+                        "text": "Phases",
+                        "ui.basic.src": "/packages/res/icons/phases.png",
+                        "core.cmd.args": "phases",
+                        "ui.touch.dblclick": "core.cmd.shell"
+                    }
+                ]]]
     }
 }

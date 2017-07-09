@@ -33,11 +33,10 @@ package.widget.window = function WidgetWindow(me) {
             }
             object.var.icon = me.ui.element.create({
                 "text": "",
-                "ui.style.float": "left",
+                "ui.theme.class":"widget.window.icon",
                 "ui.basic.src": "/packages/res/icons/default.png",
                 "ui.touch.click": "widget.window.context_menu",
                 "ui.touch.dblclick": "widget.window.restore",
-                "ui.style.display": "none",
                 "ui.basic.window": object
             }, parent.var.tray);
         }

@@ -31,14 +31,6 @@ package.app.main = function (me) {
         ], me.ui.element.body());
         me.ui.element.create([
             {
-                "ui.group.data": {
-                    "ui.data.parent": me.ui.element.body(),
-                    "ui.data.default": {"ui.style.background": "radial-gradient(circle, red, yellow, green)"},
-                    "ui.data.keys": ["title", "ui.style.background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-                    "ui.data.values": [["Root", "white", "330px", "80px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "550px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
-                }
-            },
-            {
                 "title": "The Computer Chronicles",
                 "ui.style.left": "550px",
                 "ui.style.top": "200px",
@@ -52,96 +44,11 @@ package.app.main = function (me) {
                         "ui.attribute.allowFullScreen": ""
                     }
                 ]
-            },
-            {
-                "title": "Controls",
-                "ui.style.left": "450px",
-                "ui.style.top": "450px",
-                "ui.style.width": "300px",
-                "ui.style.height": "250px",
-                "ui.basic.elements": [
-                    {
-                        "ui.basic.text": "This is some text",
-                        "ui.style.width": "200px",
-                        "ui.basic.type": "text"
-                    },
-                    {
-                        "ui.basic.text": "Two Words"
-                    },
-                    {
-                        "state": true,
-                        "ui.basic.text": "Two Words"
-                    },
-                    {
-                        "ui.basic.text": "Hello",
-                        "ui.touch.click": "app.main.ok"
-                    },
-                    {
-                        "ui.basic.text": "Drop Down List",
-                        "ui.style.width": "200px",
-                        "ui.element.count": 0,
-                        "ui.basic.readOnly": true,
-                        "ui.group.data": {
-                            "ui.data.keys": ["ui.basic.text"],
-                            "ui.data.default" : {
-                                "group" : "one",
-                                "state" : false
-                            },
-                            "ui.data.values": [
-                                ["Option One"],
-                                ["Option Two"],
-                                ["Option Three"],
-                                ["Option Four"],
-                                ["Option Five"],
-                                ["Option Six"],
-                                ["Option Seven"],
-                                ["Option Eight"],
-                                ["Option Nine"],
-                                ["Option Ten"]
-                        ]
-                        }
-                    },
-                    {
-                        "state": false,
-                        "ui.basic.text": "Orange"
-                    },
-                    {
-                        "state": false,
-                        "group": "together",
-                        "ui.basic.text": "One"
-                    },
-                    {
-                        "state": true,
-                        "group": "together",
-                        "ui.basic.text": "Two"
-                    },
-                    {
-                        "state": false,
-                        "group": "fruit",
-                        "ui.basic.text": "Banana"
-                    },
-                    {
-                        "state": true,
-                        "group": "fruit",
-                        "ui.basic.text": "Grapefruit"
-                    },
-                    {
-                        "ui.style.left": "250px",
-                        "ui.style.top": "50px",
-                        "title": "Main",
-                        "ui.style.background": "repeating-linear-gradient(white, gray 30%, black 50%, white)"
-                    },
-                    {
-                        "ui.style.left": "500px",
-                        "ui.style.top": "50px",
-                        "title": "Games",
-                        "ui.style.background": "radial-gradient(circle, yellow, green, red)"
-                    }]
             }
         ]);
-        package.include("app.terminal", function(failure) {
+        package.include("app.progman", function(failure) {
             if(!failure) {
-                me.send("app.terminal.launch");
+                me.send("app.progman.launch");
             }
         });
     };
