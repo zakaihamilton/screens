@@ -1,3 +1,9 @@
+.widget-list-border {
+    background:white;
+    border:1px solid black;
+    display:flex;
+}
+
 .widget-list-dropdown-group {
     display:flex;
     position:relative;

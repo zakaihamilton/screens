@@ -3,24 +3,40 @@
     "fixed": true,
     "popup": true,
     "temp":true,
-    "ui.style.width": "290px",
-    "ui.style.height": "203px",
+    "ui.style.width": "288px",
+    "ui.style.height": "205px",
     "ui.basic.elements": [
-        ""
+        {
+            "ui.element.count":8,
+            "ui.style.marginLeft":"4px",
+            "ui.style.marginTop":"4px",
+            "ui.style.marginRight":"3px",
+            "ui.style.marginBottom":"7px",
+            "ui.basic.elements": [{
+                "state":true,
+                "ui.basic.text":"Hello"
+            },
+            {
+                "state":true,
+                "ui.basic.text":"Hello"
+            }]
+        }
     ],
     "ui.group.data": {
         "ui.data.default": {
-            "ui.style.marginLeft": "10px",
-            "ui.style.float": "left"
+            "ui.style.marginLeft": "2px",
+            "ui.style.marginRight": "10px",
+            "ui.style.float": "left",
+            "ui.style.width":"73px"
         },
-        "ui.data.keys": ["ui.basic.text", "ui.touch.click"],
+        "ui.data.keys": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
         "ui.data.values": [
             ["Switch to", ""],
             ["End Task", ""],
-            ["Cancel", ""],
+            ["Cancel", "", "90px", "0px"],
             ["Cascade", ""],
             ["Tile", ""],
-            ["Arrange Icons", ""]
+            ["Arrange Icons", "", "90px", "0px"]
         ]
     }
 }

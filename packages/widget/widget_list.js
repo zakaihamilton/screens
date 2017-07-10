@@ -4,12 +4,33 @@
  */
 
 package.widget.list = function WidgetList(me) {
-
+    me.depends = {
+        properties: ["ui.element.count"]
+    };
+    me.redirect = {
+        "ui.basic.elements": "elements"
+    };
+    me.default = {
+        "ui.theme.class": "border",
+        "ui.basic.elements": [
+            {
+                "ui.basic.var":"container",
+                "ui.element.component":"widget.container"
+            }
+        ]
+    };
+    me.elements = {
+        set: function (object, value) {
+            if (value) {
+                me.set(object.var.container, "ui.basic.elements", value);
+            }
+        }
+    };
 };
 
 package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.depends = {
-        properties: ["ui.element.count"]
+        properties: ["ui.element.count", "ui.basic.text"]
     };
     me.redirect = {
         "ui.basic.text": "text",
