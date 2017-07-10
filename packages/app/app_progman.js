@@ -19,30 +19,9 @@ package.app.progman = function AppProgman(me) {
         "minimize_on_use": true,
         "save_on_exit": true
     };
-    me.auto_arrange = {
-        get: function (object) {
-            return me.options["auto_arrange"];
-        },
-        set: function (object, value) {
-            me.options["auto_arrange"] = !me.options["auto_arrange"];
-        }
-    };
-    me.minimize_on_use = {
-        get: function (object) {
-            return me.options["minimize_on_use"];
-        },
-        set: function (object, value) {
-            me.options["minimize_on_use"] = !me.options["minimize_on_use"];
-        }
-    };
-    me.save_on_exit = {
-        get: function (object) {
-            return me.options["save_on_exit"];
-        },
-        set: function (object, value) {
-            me.options["save_on_exit"] = !me.options["save_on_exit"];
-        }
-    };
+    me.auto_arrange = me.ui.property.toggleOptionSet(me, "auto_arrange");
+    me.minimize_on_use = me.ui.property.toggleOptionSet(me, "minimize_on_use");
+    me.save_on_exit = me.ui.property.toggleOptionSet(me, "save_on_exit");
     me.args = {
         set: function (object, value) {
             object.args = value;

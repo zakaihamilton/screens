@@ -171,56 +171,12 @@ package.widget.window = function WidgetWindow(me) {
             me.set(content, "ui.style.background", value);
         }
     };
-    me.static = {
-        get: function(object) {
-            var window = me.window(object);
-            return window.static;
-        },
-        set: function(object, value) {
-            var window = me.window(object);
-            window.static = value;
-            if(window.static) {
-                me.ui.property.broadcast(window, "ui.theme.add", "static");
-            }
-            else {
-                me.ui.property.broadcast(window, "ui.theme.remove", "static");
-            }
-        }
-    };
-    me.fixed = {
-        get: function(object) {
-            var window = me.window(object);
-            return window.fixed;
-        },
-        set: function(object, value) {
-            var window = me.window(object);
-            var maximized = me.set(window, "ui.theme.contains", "maximize");
-            window.fixed = value;
-            me.set(window, "ui.rect.resizable", !window.fixed && !maximized);
-            if(window.fixed) {
-                me.ui.property.broadcast(window, "ui.theme.add", "fixed");
-            }
-            else {
-                me.ui.property.broadcast(window, "ui.theme.remove", "fixed");
-            }
-        }
-    };
-    me.popup = {
-        get: function(object) {
-            var window = me.window(object);
-            return window.popup;
-        },
-        set: function(object, value) {
-            var window = me.window(object);
-            window.popup = value;
-            if(window.popup) {
-                me.ui.property.broadcast(window, "ui.theme.add", "popup");
-            }
-            else {
-                me.ui.property.broadcast(window, "ui.theme.remove", "popup");
-            }
-        }
-    };
+    me.static = me.ui.property.attributeSet("static");
+    me.fixed = me.ui.property.attributeSet("fixed", function(object, value) {
+        var maximized = me.set(object, "ui.theme.contains", "maximize");
+        me.set(object, "ui.rect.resizable", !value && !maximized);
+    });
+    me.popup = me.ui.property.attributeSet("popup");
     me.context_menu = {
         set: function (object, value) {
             var window = me.window(object);
