@@ -1,35 +1,38 @@
 .widget-menu-horizontal {
+    display:flex;
     flex:1;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
+    flex-direction:row;
 }
 
-.widget-menu-horizontal a {
+.widget-menu-horizontal span {
     color: black;
     padding-top: 1px;
     padding-left: 4px;
-    padding-right: 4px;
+    padding-right:4px;
     padding-bottom: 0px;
     font-family: "MS Sans Serif";
     font-size: 14px;
     text-align: left;
-    text-decoration: none;
     border-right: 1px solid transparent;
+    flex:0;
+    cursor:default;
 }
 
-.widget-menu-horizontal a.select {
+.widget-menu-horizontal span.select {
     background-color: #000080;
     color:white;
     border-right: 1px solid black;
 }
 
-.widget-menu-horizontal a[disabled="true"] {
+.widget-menu-horizontal span[disabled="true"] {
     background-color: white;
     color:lightgray;
 }
 
-.widget-menu-border a[disabled="true"]:hover {
+.widget-menu-border span[disabled="true"]:hover {
     background-color: white;
     color:lightgray;
 }
@@ -43,7 +46,7 @@
     z-index: 100;
 }
 
-.widget-menu-vertical a {
+.widget-menu-vertical span {
     background-color: white;
     color: black;
     height:18px;
@@ -52,32 +55,32 @@
     font-family: "MS Sans Serif";
     font-size: 14px;
     text-align: left;
-    text-decoration: none;
     display: block;
+    cursor:default;
 }
 
-.widget-menu-vertical a:hover {
+.widget-menu-vertical span:hover {
     background-color: #000080;
     color:white;
 }
 
-.widget-menu-vertical a[disabled="true"] {
+.widget-menu-vertical span[disabled="true"] {
     background-color: white;
     color:lightgray;
 }
 
-.widget-menu-vertical a[disabled="true"]:hover {
+.widget-menu-vertical span[disabled="true"]:hover {
     background-color: #000080;
     color:lightgray;
 }
 
-.widget-menu-vertical a.checked:after {
+.widget-menu-vertical span.checked:after {
     content:'\2713';
     position:absolute;
     left:3px;
 }
 
-.widget-menu-vertical a.separator {
+.widget-menu-vertical span.separator {
     margin-top: 3px;
     border-top: 3px solid white;
     box-shadow: 0px -1px 0px 0px black;

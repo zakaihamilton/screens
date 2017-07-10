@@ -8,7 +8,6 @@ package.widget.menu = function WidgetMenu(me) {
         "ui.theme.class" : "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
-            "ui.style.display": "none",
             "ui.element.component": "widget.modal"
         }
     };
@@ -122,9 +121,8 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
 
 package.widget.menu.item = function WidgetMenuItem(me) {
     me.default = {
-        "ui.basic.tag": "a",
-        "ui.touch.click": "click",
-        "ui.basic.href": "#"
+        "ui.basic.tag": "span",
+        "ui.touch.click": "click"
     };
     me.depends = {
         parent: ["widget.menu", "widget.menu.popup"],
