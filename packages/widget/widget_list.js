@@ -34,8 +34,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.redirect = {
         "ui.basic.text": "text",
-        "ui.basic.elements": "elements",
-        "ui.basic.readOnly": "readOnly"
+        "ui.basic.elements": "elements"
     };
     me.default = {
         "ui.theme.class": "group",
@@ -78,6 +77,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "100px",
                 "ui.basic.elements": object.parentNode.listElements,
+                "widget.list.popup.selection":me.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
             }, document.body);
         }
@@ -88,14 +88,6 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
         },
         set: function (object, value) {
             me.set(object.var.selection, "ui.basic.text", value);
-        }
-    };
-    me.readOnly = {
-        get: function (object) {
-            return me.get(object.var.selection, "ui.basic.readOnly");
-        },
-        set: function (object, value) {
-            me.set(object.var.selection, "ui.basic.readOnly", value);
         }
     };
     me.elements = {
@@ -136,6 +128,21 @@ package.widget.list.popup = function WidgetListPopup(me) {
             me.set(object, "back", value);
         }
     };
+    me.selection = {
+        set: function(object, value) {
+            var childList = me.ui.node.childList(me.widget.container.content(object.var.container));
+            if (childList) {
+                for (var childIndex = 0; childIndex < childList.length; childIndex++) {
+                    var child = childList[childIndex];
+                    var label = me.get(child, "ui.basic.text");
+                    if(label === value) {
+                        me.set(child, "ui.theme.add", "selected");
+                        break;
+                    }
+                }
+            }
+        }
+    };
     me.elements = {
         set: function (object, value) {
             if (value) {
@@ -172,18 +179,17 @@ package.widget.list.item = function WidgetMenuItem(me) {
     me.state = {
         set: function (object, value) {
             value = me.value(object, value);
-            console.log("state: " + value);
             if (value) {
-                me.set(object, "ui.theme.add", "checked");
+                me.set(object, "ui.theme.add", "selected");
             } else {
-                me.set(object, "ui.theme.remove", "checked");
+                me.set(object, "ui.theme.remove", "selected");
             }
         }
     };
     me.click = {
         set: function (object) {
             if (object.group) {
-                me.set(object, "ui.theme.add", "checked");
+                me.set(object, "ui.theme.add", "selected");
                 var childList = me.ui.node.childList(object.parentNode);
                 if (childList) {
                     for (var childIndex = 0; childIndex < childList.length; childIndex++) {
@@ -191,14 +197,14 @@ package.widget.list.item = function WidgetMenuItem(me) {
                         if (child.group !== object.group || object === child) {
                             continue;
                         }
-                        me.set(child, "ui.theme.remove", "checked");
+                        me.set(child, "ui.theme.remove", "selected");
                     }
                 }
                 var popup = me.ui.node.container(object, "widget.list.popup");
                 me.set(popup, "select", object);
             }
             else {
-                me.set(object, "ui.theme.toggle", "checked");
+                me.set(object, "ui.theme.toggle", "selected");
             }
         }
     };

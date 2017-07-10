@@ -23,6 +23,7 @@
     height:21px;
     width:100%;
     user-select:none;
+    cursor:default;
 }
 
 .widget-list-dropdown-button {
@@ -114,7 +115,7 @@
     user-select:none;
 }
 
-.widget-list-item.checked {
+.widget-list-item.selected {
     background-color: #000080;
     color:white;
 }
