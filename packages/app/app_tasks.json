@@ -2,22 +2,30 @@
     "title": "Task List",
     "fixed": true,
     "popup": true,
-    "temp":true,
+    "temp": true,
     "ui.style.width": "288px",
     "ui.style.height": "205px",
     "ui.basic.elements": [
         {
-            "ui.element.count":8,
-            "ui.style.marginLeft":"4px",
-            "ui.style.marginTop":"4px",
-            "ui.style.marginRight":"3px",
-            "ui.style.marginBottom":"7px",
-            "ui.basic.elements": [{
-                "ui.basic.text":"This is the first line"
-            },
-            {
-                "ui.basic.text":"This is the second line"
-            }]
+            "ui.element.count": 8,
+            "ui.style.marginLeft": "4px",
+            "ui.style.marginTop": "4px",
+            "ui.style.marginRight": "3px",
+            "ui.style.marginBottom": "7px",
+            "ui.group.data": {
+                "ui.data.default": {
+                    "group":"programs"
+                },
+                "ui.data.keys": ["ui.basic.text"],
+                "ui.data.values": [
+                    ["First app"],
+                    ["Second app"],
+                    ["Third app"],
+                    ["Fourth app"],
+                    ["Fifth app"],
+                    ["Sixth app"]
+                ]
+            }
         }
     ],
     "ui.group.data": {
@@ -25,13 +33,13 @@
             "ui.style.marginLeft": "2px",
             "ui.style.marginRight": "10px",
             "ui.style.float": "left",
-            "ui.style.width":"73px"
+            "ui.style.width": "73px"
         },
         "ui.data.keys": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
         "ui.data.values": [
             ["Switch to", ""],
             ["End Task", ""],
-            ["Cancel", "", "90px", "0px"],
+            ["Cancel", "widget.window.close", "90px", "0px"],
             ["Cascade", ""],
             ["Tile", ""],
             ["Arrange Icons", "", "90px", "0px"]

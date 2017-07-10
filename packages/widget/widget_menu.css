@@ -19,6 +19,7 @@
     border-right: 1px solid transparent;
     flex:0;
     cursor:default;
+    user-select:none;
 }
 
 .widget-menu-horizontal span.select {
@@ -57,6 +58,7 @@
     text-align: left;
     display: block;
     cursor:default;
+    user-select:none;
 }
 
 .widget-menu-vertical span:hover {
