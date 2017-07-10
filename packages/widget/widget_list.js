@@ -14,8 +14,8 @@ package.widget.list = function WidgetList(me) {
         "ui.theme.class": "border",
         "ui.basic.elements": [
             {
-                "ui.basic.var":"container",
-                "ui.element.component":"widget.container"
+                "ui.basic.var": "container",
+                "ui.element.component": "widget.container"
             }
         ]
     };
@@ -62,7 +62,10 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object.var.list, "ui.node.parent", null);
+            if(value) {
+                var label = me.get(value, "ui.basic.text");
+                me.set(object, "ui.basic.text", label);
+            }
         }
     };
     me.dropdown = {
@@ -74,9 +77,9 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.top": region.bottom + "px",
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "100px",
-                "ui.basic.elements": object.parentNode.listElements
+                "ui.basic.elements": object.parentNode.listElements,
+                "ui.var.parentList":object.parentNode
             }, document.body);
-            object.var.list.var.parentList = object.parentNode;
         }
     };
     me.text = {
@@ -117,8 +120,8 @@ package.widget.list.popup = function WidgetListPopup(me) {
                 "ui.element.component": "widget.modal"
             },
             {
-                "ui.basic.var":"container",
-                "ui.element.component":"widget.container"
+                "ui.basic.var": "container",
+                "ui.element.component": "widget.container"
             }
         ]
     };
@@ -130,16 +133,72 @@ package.widget.list.popup = function WidgetListPopup(me) {
     };
     me.select = {
         set: function (object, value) {
-            var item = value[0];
-            var info = value[1];
-            me.set(object, info, item);
-            me.set(object, "back", item);
+            me.set(object, "back", value);
         }
     };
     me.elements = {
         set: function (object, value) {
             if (value) {
                 me.set(object.var.container, "ui.basic.elements", value);
+            }
+        }
+    };
+};
+
+package.widget.list.item = function WidgetMenuItem(me) {
+    me.default = {
+        "ui.basic.tag": "span",
+        "ui.touch.click": "click",
+        "ui.theme.class": "widget.list.item"
+    };
+    me.depends = {
+        parent: ["widget.list", "widget.list.popup"],
+        properties: ["ui.basic.text"]
+    };
+    me.value = function (object, value) {
+        if (typeof value === "string") {
+            value = me.get(object.parentNode.target, value);
+        }
+        return value;
+    };
+    me.group = {
+        get: function (object) {
+            return object.group;
+        },
+        set: function (object, value) {
+            object.group = value;
+        }
+    };
+    me.state = {
+        set: function (object, value) {
+            value = me.value(object, value);
+            console.log("state: " + value);
+            if (value) {
+                me.set(object, "ui.theme.add", "checked");
+            } else {
+                me.set(object, "ui.theme.remove", "checked");
+            }
+        }
+    };
+    me.click = {
+        set: function (object) {
+            if (object.group) {
+                me.set(object, "ui.theme.add", "checked");
+                var childList = me.ui.node.childList(object.parentNode);
+                if (childList) {
+                    for (var childIndex = 0; childIndex < childList.length; childIndex++) {
+                        var child = childList[childIndex];
+                        if (child.group !== object.group || object === child) {
+                            continue;
+                        }
+                        me.set(child, "ui.theme.remove", "checked");
+                    }
+                }
+                var popup = me.ui.node.container(object, "widget.list.popup");
+                me.set(popup, "select", object);
+            }
+            else {
+                me.set(object, "ui.theme.toggle", "checked");
             }
         }
     };

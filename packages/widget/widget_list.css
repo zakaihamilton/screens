@@ -22,6 +22,7 @@
     flex:1;
     height:21px;
     width:100%;
+    user-select:none;
 }
 
 .widget-list-dropdown-button {
@@ -96,6 +97,30 @@
     z-index:100;
     margin-top:-3px;
     box-sizing: border-box;
-    padding-left:3px;
     display:flex;
+}
+
+.widget-list-item {
+    background-color: white;
+    color: black;
+    height:18px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align: left;
+    display: block;
+    cursor:default;
+    user-select:none;
+}
+
+.widget-list-item.checked {
+    background-color: #000080;
+    color:white;
+}
+
+.widget-list-item.separator {
+    margin-top: 3px;
+    border-top: 3px solid white;
+    box-shadow: 0px -1px 0px 0px black;
 }

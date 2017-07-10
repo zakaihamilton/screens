@@ -28,7 +28,8 @@ package.include({
         "theme",
         "property",
         "scroll",
-        "attribute"
+        "attribute",
+        "var"
     ],
     "widget": [
         "radio",

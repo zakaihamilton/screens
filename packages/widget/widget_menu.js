@@ -140,7 +140,6 @@ package.widget.menu.item = function WidgetMenuItem(me) {
     me.options = {
         set: function (object, options) {
             if (options) {
-                console.log("options: " + JSON.stringify(options));
                 me.handleValue(object, options, "enabled", function(value) {
                     me.set(object, "ui.basic.enabled", value);
                 });

@@ -16,7 +16,7 @@ package.ui.element = function UIElement(me) {
                     if (parent) {
                         var match = false;
                         for (var depend_index = 0; depend_index < depends.parent.length; depend_index++) {
-                            if (depends.parent[depend_index] === parent.component) {
+                            if (me.ui.node.container(parent, depends.parent[depend_index])) {
                                 match = true;
                             }
                         }

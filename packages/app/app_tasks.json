@@ -13,12 +13,10 @@
             "ui.style.marginRight":"3px",
             "ui.style.marginBottom":"7px",
             "ui.basic.elements": [{
-                "state":true,
-                "ui.basic.text":"Hello"
+                "ui.basic.text":"This is the first line"
             },
             {
-                "state":true,
-                "ui.basic.text":"Hello"
+                "ui.basic.text":"This is the second line"
             }]
         }
     ],

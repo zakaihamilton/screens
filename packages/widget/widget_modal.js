@@ -10,7 +10,7 @@ package.widget.modal = function WidgetModal(me) {
     };
     me.click = {
         set: function(object, value) {
-            me.set(object.parentNode, "back", value);
+            me.set(object.parentNode, "back", null);
             value.stopPropagation();
         }
     };
