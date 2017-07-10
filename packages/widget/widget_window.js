@@ -179,6 +179,12 @@ package.widget.window = function WidgetWindow(me) {
         set: function(object, value) {
             var window = me.window(object);
             window.static = value;
+            if(window.static) {
+                me.ui.property.broadcast(window, "ui.theme.add", "static");
+            }
+            else {
+                me.ui.property.broadcast(window, "ui.theme.remove", "static");
+            }
         }
     };
     me.fixed = {

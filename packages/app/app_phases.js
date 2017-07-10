@@ -6,6 +6,6 @@
 package.app.phases = function AppPhases(me) {
     me.require = {platform: "browser"};
     me.launch = function () {
-        me.ui.element.create(__json__);
+        me.ui.element.update(__json__, me.ui.element.body());
     };
 };

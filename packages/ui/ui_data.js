@@ -50,7 +50,7 @@ package.ui.data = function UIData(me) {
                 properties = me.ui.element.combine(object.data_default, properties);
                 elements.push(properties);
             }
-            parent = object;
+            var parent = object;
             if(object.data_parent) {
                 parent = object.data_parent;
             }

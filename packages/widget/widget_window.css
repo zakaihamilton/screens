@@ -306,3 +306,7 @@
 .widget-window-minimize.popup {
     display:none;
 }
+
+.widget-window-minimize.child {
+    display:none;
+}
