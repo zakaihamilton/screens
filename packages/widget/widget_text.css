@@ -2,4 +2,6 @@
     margin-left:18px;
     font-family: "MS Sans Serif";
     text-align:left;
+    user-select: none;
+    cursor:default;
 }
