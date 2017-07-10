@@ -27,7 +27,7 @@ package.ui.focus = function UIFocus(me) {
     me.find_branch = function(object, x, y) {
         /* Find the lowest matching element on position */
         var childList = me.ui.node.childList(object);
-        for(var index = 0; index < childList.length; index++) {
+        for(var index = childList.length-1; index >= 0; index--) {
             var node = childList[index];
             if(!node.component) {
                 continue;
