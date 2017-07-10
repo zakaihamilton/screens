@@ -22,14 +22,10 @@ package.app.main = function (me) {
         me.core.message.send_browser("app.main.ready");
     };
     me.ready = function () {
-        me.ui.element.update([
-            {
-                "ui.style.background": "lightblue",
-                "ui.style.user-select": "none",
-                "ui.style.cursor": "default"
-            }
-        ], me.ui.element.body());
         me.ui.element.create([
+            {
+                "ui.element.component":"widget.desktop"
+            },
             {
                 "title": "The Computer Chronicles",
                 "ui.style.left": "550px",

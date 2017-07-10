@@ -45,7 +45,8 @@ package.include({
         "scrollbar",
         "container",
         "embed",
-        "terminal"
+        "terminal",
+        "desktop"
     ],
     "app": [
         "main"

@@ -33,7 +33,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             object.var.icon = me.ui.element.create({
                 "text": "",
-                "ui.style.display":"none",
+                "ui.style.display": "none",
                 "ui.basic.src": "/packages/res/icons/default.png",
                 "ui.touch.click": "widget.window.context_menu",
                 "ui.touch.dblclick": "widget.window.restore",
@@ -47,7 +47,7 @@ package.widget.window = function WidgetWindow(me) {
             if (parent === null) {
                 me.set(object.var.close, "ui.theme.add", "main");
             }
-            if(!me.set(object, "ui.theme.contains", "maximize")) {
+            if (!me.set(object, "ui.theme.contains", "maximize")) {
                 me.ui.property.broadcast(object, "ui.theme.add", "restore");
             }
         }
@@ -103,12 +103,12 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.close = {
-        get: function(object) {
+        get: function (object) {
             return true;
         },
         set: function (object, value) {
             var window = me.window(object);
-            if(window.static) {
+            if (window.static) {
                 me.set(window, "minimize", null);
                 return;
             }
@@ -172,24 +172,25 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.static = me.ui.property.attributeSet("static");
-    me.fixed = me.ui.property.attributeSet("fixed", function(object, value) {
+    me.fixed = me.ui.property.attributeSet("fixed", function (object, value) {
         var maximized = me.set(object, "ui.theme.contains", "maximize");
         me.set(object, "ui.rect.resizable", !value && !maximized);
     });
     me.popup = me.ui.property.attributeSet("popup");
+    me.temp = me.ui.property.attributeSet("temp");
     me.context_menu = {
         set: function (object, value) {
             var window = me.window(object);
             var visible = !me.set(window, "ui.theme.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, [
-                ["Restore", "widget.window.restore", {"enabled":"widget.window.restore"}],
+                ["Restore", "widget.window.restore", {"enabled": "widget.window.restore"}],
                 ["Move", ""],
                 ["Size", ""],
-                ["Minimize", "widget.window.minimize", {"enabled":"widget.window.minimize"}],
-                ["Maximize", "widget.window.maximize", {"enabled":"widget.window.maximize"}],
-                ["Close", "widget.window.close", {"separator": true, "enabled":"widget.window.close"}],
-                ["Switch To...", null, {"separator": true}]
+                ["Minimize", "widget.window.minimize", {"enabled": "widget.window.minimize"}],
+                ["Maximize", "widget.window.maximize", {"enabled": "widget.window.maximize"}],
+                ["Close", "widget.window.close", {"separator": true, "enabled": "widget.window.close"}],
+                ["Switch To...", "widget.window.tasks", {"separator": true}]
             ]);
             if (!visible) {
                 var parent = me.parent(window);
@@ -230,7 +231,7 @@ package.widget.window = function WidgetWindow(me) {
         me.update_title(parent_window);
     };
     me.minimize = {
-        get: function(object) {
+        get: function (object) {
             var window = me.window(object);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             return !minimized;
@@ -248,7 +249,7 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.maximize = {
-        get: function(object) {
+        get: function (object) {
             var window = me.window(object);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
@@ -284,19 +285,18 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.show = {
-        set: function(object, value) {
+        set: function (object, value) {
             var window = me.window(object);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
-            if(value && minimized) {
+            if (value && minimized) {
                 me.set(window, "restore", null);
-            }
-            else if(!value && !minimized) {
+            } else if (!value && !minimized) {
                 me.set(window, "minimize", null);
             }
         }
     };
     me.restore = {
-        get: function(object) {
+        get: function (object) {
             var window = me.window(object);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
@@ -333,6 +333,23 @@ package.widget.window = function WidgetWindow(me) {
             } else {
                 me.set(window, "widget.window.maximize");
             }
+        }
+    };
+    me.blur = {
+        set: function (object) {
+            var window = me.window(object);
+            if (window.temp) {
+                me.set(window, "close", null);
+            }
+        }
+    };
+    me.tasks = {
+        set: function (object, value) {
+            package.include("app.tasks", function (failure) {
+                if (!failure) {
+                    me.send("app.tasks.launch");
+                }
+            });
         }
     };
 };

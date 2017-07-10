@@ -1,0 +1,26 @@
+{
+    "title": "Task List",
+    "fixed": true,
+    "popup": true,
+    "temp":true,
+    "ui.style.width": "290px",
+    "ui.style.height": "203px",
+    "ui.basic.elements": [
+        ""
+    ],
+    "ui.group.data": {
+        "ui.data.default": {
+            "ui.style.marginLeft": "10px",
+            "ui.style.float": "left"
+        },
+        "ui.data.keys": ["ui.basic.text", "ui.touch.click"],
+        "ui.data.values": [
+            ["Switch to", ""],
+            ["End Task", ""],
+            ["Cancel", ""],
+            ["Cascade", ""],
+            ["Tile", ""],
+            ["Arrange Icons", ""]
+        ]
+    }
+}

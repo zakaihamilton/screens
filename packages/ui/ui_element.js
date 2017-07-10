@@ -28,7 +28,7 @@ package.ui.element = function UIElement(me) {
                         return null;
                     }
                 }
-                if (depends.properties) {
+                if (depends.properties && properties) {
                     for (var depend_index = 0; depend_index < depends.properties.length; depend_index++) {
                         if (!(depends.properties[depend_index] in properties)) {
                             return null;
