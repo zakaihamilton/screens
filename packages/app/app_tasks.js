@@ -17,20 +17,14 @@ package.app.tasks = function AppTasks(me) {
         get: function(object) {
             var isFirst = true;
             var tasks = me.ui.node.members(document.body, me.widget.window.id);
-            var items = tasks.map(function(window) {
+            var items = tasks.reverse().map(function(window) {
                 var title = me.get(window, "title");
                 if(title === "Task List") {
                     return null;
                 }
                 var item = [
                     title,
-                    function() {
-                        me.set(window, "widget.window.show", true);
-                        me.set(window, "ui.focus.active", true);
-                    },
-                    {
-                        "seperator":isFirst
-                    }
+                    isFirst
                 ];
                 isFirst = false;
                 return item;

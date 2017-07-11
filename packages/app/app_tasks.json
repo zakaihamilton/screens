@@ -4,19 +4,20 @@
     "popup": true,
     "temp": true,
     "ui.style.width": "288px",
-    "ui.style.height": "205px",
+    "ui.style.height": "201px",
     "ui.basic.elements": [
         {
             "ui.element.count": 8,
             "ui.style.marginLeft": "4px",
             "ui.style.marginTop": "4px",
             "ui.style.marginRight": "3px",
-            "ui.style.marginBottom": "7px",
+            "ui.style.marginBottom": "9px",
+            "ui.style.height":"91px",
             "ui.group.data": {
                 "ui.data.default": {
-                    "group":"programs"
+                    "group":"tasks"
                 },
-                "ui.data.keys": ["ui.basic.text"],
+                "ui.data.keys": ["ui.basic.text", "state"],
                 "ui.data.values": [
                     "app.tasks.tasks"
                 ]
@@ -27,6 +28,7 @@
         "ui.data.default": {
             "ui.style.marginLeft": "2px",
             "ui.style.marginRight": "10px",
+            "ui.style.marginTop": "9px",
             "ui.style.float": "left",
             "ui.style.width": "73px"
         },
