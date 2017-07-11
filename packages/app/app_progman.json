@@ -35,7 +35,8 @@
         ["Window", [
                 ["Cascade"],
                 ["Tile"],
-                ["Arrange Icons"]
+                ["Arrange Icons"],
+                "app.progman.windows"
             ]],
         ["Help", [
                 ["Contents"],

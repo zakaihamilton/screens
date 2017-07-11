@@ -18,12 +18,7 @@
                 },
                 "ui.data.keys": ["ui.basic.text"],
                 "ui.data.values": [
-                    ["First app"],
-                    ["Second app"],
-                    ["Third app"],
-                    ["Fourth app"],
-                    ["Fifth app"],
-                    ["Sixth app"]
+                    "app.tasks.tasks"
                 ]
             }
         }

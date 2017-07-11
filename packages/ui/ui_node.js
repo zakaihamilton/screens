@@ -38,7 +38,7 @@ package.ui.node = function UINode(me) {
         var childList = me.childList(object);
         for(var childIndex = 0; childIndex < childList.length; childIndex++) {
             var child = childList[childIndex];
-            if (child.component === component_name) {
+            if (component_name && child.component !== component_name) {
                 continue;
             }
             members.push(child);
@@ -49,7 +49,7 @@ package.ui.node = function UINode(me) {
         var childList = me.childList(object);
         for(var childIndex = 0; childIndex < childList.length; childIndex++) {
             var child = childList[childIndex];
-            if (child.component === component_name) {
+            if (component_name && child.component === component_name) {
                 return child;
             }
             var result = me.first(child, component_name);
@@ -63,7 +63,7 @@ package.ui.node = function UINode(me) {
         var childList = me.childList(object);
         for(var childIndex = childList.length - 1; childIndex >= 0; childIndex--) {
             var child = childList[childIndex];
-            if (child.component === component_name) {
+            if (component_name && child.component === component_name) {
                 return child;
             }
             var result = me.last(child, component_name);

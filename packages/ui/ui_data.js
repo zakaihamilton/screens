@@ -39,22 +39,38 @@ package.ui.data = function UIData(me) {
     me.group = function (object, value) {
         if (object.data_values) {
             var elements = [];
-            for (var item_index = 0; item_index < object.data_values.length; item_index++) {
-                var properties = {};
-                for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
-                    var data_value = object.data_values[item_index][data_key_index];
-                    if (typeof data_value !== "undefined") {
-                        properties[object.data_keys[data_key_index]] = data_value;
-                    }
-                }
-                properties = me.ui.element.combine(object.data_default, properties);
-                elements.push(properties);
-            }
+            me.collect(object, elements, object.data_values);
             var parent = object;
             if(object.data_parent) {
                 parent = object.data_parent;
             }
             me.set(parent, "ui.basic.elements", elements);
+        }
+    };
+    me.collect = function(object, elements, items) {
+        for (var item_index = 0; item_index < items.length; item_index++) {
+            var properties = {};
+            var values = items[item_index];
+            var data_value = null;
+            if(typeof values === "string") {
+                values = me.get(object, values);
+                if(Array.isArray(values)) {
+                    me.collect(object, elements, values);
+                }
+                continue;
+            }
+            if(!values) {
+                continue;
+            }
+            for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
+                var data_value = values[data_key_index];
+                console.log("data_value: " + JSON.stringify(data_value));
+                if (typeof data_value !== "undefined") {
+                    properties[object.data_keys[data_key_index]] = data_value;
+                }
+            }
+            properties = me.ui.element.combine(object.data_default, properties);
+            elements.push(properties);
         }
     };
 };

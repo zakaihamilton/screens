@@ -33,9 +33,14 @@ package.core.property = function CoreProperty(me) {
     me.get = function(object, name, method="get") {
         var result = undefined;
         if(object && name) {
-            name = me.fullname(object, name);
-            if(name) {
-                result = me.send(name + "." + method, object);
+            if(typeof name === "function") {
+                result = name(object);
+            }
+            else {
+                name = me.fullname(object, name);
+                if(name) {
+                    result = me.send(name + "." + method, object);
+                }
             }
         }
         return result;
@@ -43,9 +48,14 @@ package.core.property = function CoreProperty(me) {
     me.set = function(object, name, value, method="set") {
         var result = undefined;
         if(object && name) {
-            name = me.fullname(object, name);
-            if(name) {
-                result = me.send(name + "." + method, object, value);
+            if(typeof name === "function") {
+                result = name(object, value);
+            }
+            else {
+                name = me.fullname(object, name);
+                if(name) {
+                    result = me.send(name + "." + method, object, value);
+                }
             }
         }
         return result;

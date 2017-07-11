@@ -12,7 +12,6 @@ package.app.progman = function AppProgman(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__);
-        console.log("me.progman: " + me.singleton);
     };
     me.options = {
         "auto_arrange": false,
@@ -43,5 +42,31 @@ package.app.progman = function AppProgman(me) {
                 });
             }
         }
-    }
+    };
+    me.windows = {
+        get: function(object) {
+            var isFirst = true;
+            var windows = me.get(me.singleton, "widget.window.windows");
+            windows.sort(function(a, b){
+              var a_title = me.get(a, "title");
+              var b_title = me.get(b, "title");
+              return a_title === b_title ? 0 : +(a_title > b_title) || -1;
+            });
+            var items = windows.map(function(window) {
+                var result = [
+                    me.get(window, "title"),
+                    function() {
+                        me.set(window, "widget.window.show", true);
+                        me.set(window, "ui.focus.active", true);
+                    },
+                    {
+                        "separator":isFirst
+                    }
+                ];
+                isFirst = false;
+                return result;
+            });
+            return items;
+        }
+    };
 };
