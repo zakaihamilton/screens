@@ -49,12 +49,12 @@ package.ui.rect = function UIRect(me) {
                     me.set(info.target, "ui.property.notify", {"draw": null});
                 };
                 var release_method = function (e) {
-                    removeEventListener('mousemove', move_method);
-                    removeEventListener('mouseup', release_method);
+                    window.removeEventListener('mousemove', move_method);
+                    window.removeEventListener('mouseup', release_method);
                     me.set(value, "ui.property.broadcast", {"ui.theme.remove": "transition"});
                 };
-                addEventListener('mousemove', move_method);
-                addEventListener('mouseup', release_method);
+                window.addEventListener('mousemove', move_method);
+                window.addEventListener('mouseup', release_method);
             });
         }
     };
@@ -105,12 +105,12 @@ package.ui.rect = function UIRect(me) {
                     me.set(info.target, "ui.property.notify", {"draw" : null});
                 };
                 var release_method = function (e) {
-                    removeEventListener('mousemove', move_method);
-                    removeEventListener('mouseup', release_method);
+                    window.removeEventListener('mousemove', move_method);
+                    window.removeEventListener('mouseup', release_method);
                     me.set(value, "ui.property.broadcast", {"ui.theme.remove": "transition"});
                 };
-                addEventListener('mousemove', move_method);
-                addEventListener('mouseup', release_method);
+                window.addEventListener('mousemove', move_method);
+                window.addEventListener('mouseup', release_method);
                 e.preventDefault();
             });
         }

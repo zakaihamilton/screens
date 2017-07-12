@@ -16,7 +16,7 @@ package.ui.var = function UIVar(me) {
                         object.var[property] = value;
                     }
                 }
-            }
+            };
         }
     };
 };

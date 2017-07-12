@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component UITouch
+ @component UIKey
  */
 
 package.ui.key = function UIKey(me) {

@@ -23,17 +23,15 @@ package.ui.property = function UIProperty(me) {
     };
     me.notify = {
         set: function(object, properties) {
-            if(object.component !== me.widget.window.id) {
-                object = me.widget.window.window(object);
+            var window = me.widget.window.window(object);
+            if(window) {
+                me.broadcast.set(window, properties);
             }
-            if(object) {
-                me.broadcast.set(object, properties);
-                object = me.widget.window.parent(object);
+            var parent = me.widget.window.parent(window);
+            if(!parent) {
+                parent = document.body;
             }
-            if(!object) {
-                object = document.body;
-            }
-            me.broadcast.set(object, properties);
+            me.broadcast.set(parent, properties);
         }
     };
     me.toggleOptionSet = function(source, option) {
@@ -44,8 +42,8 @@ package.ui.property = function UIProperty(me) {
             set: function (object, value) {
                 source.options[option] = !source.options[option];
             }
-        }
-    }
+        };
+    };
     me.attributeSet = function(attribute, callback) {
         return {
             get: function(object) {

@@ -19,7 +19,8 @@ package.widget.container = function WidgetContainer(me) {
                         "ui.basic.var": "content"
                     },
                     {
-                        "ui.element.component": "widget.scrollbar.vertical"
+                        "ui.element.component": "widget.scrollbar.vertical",
+                        "ui.basic.var":"vertical"
                     }
                 ]
             },
@@ -28,7 +29,8 @@ package.widget.container = function WidgetContainer(me) {
                 "ui.style.flex": "none",
                 "ui.basic.elements": [
                     {
-                        "ui.element.component": "widget.scrollbar.horizontal"
+                        "ui.element.component": "widget.scrollbar.horizontal",
+                        "ui.basic.var":"horizontal"
                     },
                     {
                         "ui.theme.class": "widget.scrollbar.corner"

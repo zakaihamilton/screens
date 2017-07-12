@@ -148,9 +148,6 @@ package.ui.element = function UIElement(me) {
                 me.send(extension + ".extend", object);
             });
         }
-        if (component_name !== me.id) {
-            me.set(object, "beforeshow", parent);
-        }
         object.context = null;
         if (component_name !== me.id) {
             setTimeout( function() {

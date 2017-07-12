@@ -15,11 +15,15 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
-    me.beforeshow = {
-        set: function (object) {
-            var parent = me.parent(object);
+    me.mainClass = {
+        get: function(object) {
+            var window = me.window(object);
+            var parent = me.parent(window);
             if (parent === null) {
-                me.set(object.var.close, "ui.theme.add", "main");
+                return "main";
+            }
+            else {
+                return null;
             }
         }
     };
@@ -73,11 +77,6 @@ package.widget.window = function WidgetWindow(me) {
                 var content = me.widget.container.content(window.var.container);
                 me.ui.element.create(value, content, object.context);
             }
-        }
-    };
-    me.is_root = {
-        get: function (object) {
-            return me.parent(object) === null;
         }
     };
     me.text = {

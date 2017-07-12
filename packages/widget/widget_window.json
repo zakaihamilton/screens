@@ -45,7 +45,8 @@
                             "ui.basic.var": "close",
                             "ui.theme.class": "close",
                             "ui.touch.click": "context_menu",
-                            "ui.touch.dblclick": "close"
+                            "ui.touch.dblclick": "close",
+                            "ui.theme.add" : "@widget.window.mainClass"
                         },
                         {
                             "ui.basic.var": "label",
