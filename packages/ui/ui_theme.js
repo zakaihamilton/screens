@@ -24,6 +24,12 @@ package.ui.theme = function UITheme(me) {
     };
     me.add = {
         set: function(object, value) {
+            if (Array.isArray(value)) {
+                value.map(function (item) {
+                    me.add.set(object, item);
+                });
+                return;
+            }
             if(value && object.classList) {
                 var class_name = me.to_class(object, value);
                 object.classList.add(class_name);
@@ -32,6 +38,12 @@ package.ui.theme = function UITheme(me) {
     };
     me.remove = {
         set: function(object, value) {
+            if (Array.isArray(value)) {
+                value.map(function (item) {
+                    me.remove.set(object, item);
+                });
+                return;
+            }
             if(value && object.classList) {
                 var class_name = me.to_class(object, value);
                 object.classList.remove(class_name);
@@ -40,6 +52,12 @@ package.ui.theme = function UITheme(me) {
     };
     me.toggle = {
         set: function(object, value) {
+            if (Array.isArray(value)) {
+                value.map(function (item) {
+                    me.toggle.set(object, item);
+                });
+                return;
+            }
             if(value && object.classList) {
                 var class_name = me.to_class(object, value);
                 object.classList.toggle(class_name);

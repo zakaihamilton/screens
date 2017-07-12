@@ -21,9 +21,6 @@ package.widget.window = function WidgetWindow(me) {
             if (parent === null) {
                 me.set(object.var.close, "ui.theme.add", "main");
             }
-            if (!me.set(object, "ui.theme.contains", "maximize")) {
-                me.ui.property.broadcast(object, "ui.theme.add", "restore");
-            }
         }
     };
     me.parent = function (object) {
@@ -57,7 +54,7 @@ package.widget.window = function WidgetWindow(me) {
     me.windows = {
         get: function (object) {
             var content = document.body;
-            if(object !== document.body) {
+            if (object !== document.body) {
                 var window = me.window(object);
                 content = me.widget.container.content(window.var.container);
             }
@@ -108,10 +105,9 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
             if (parent_window) {
-                me.ui.property.notify(parent_window, "draw", null);
+                me.set(parent_window, "ui.property.notify", {"draw": null});
                 me.set(parent_window, "widget.window.refocus");
-            }
-            else {
+            } else {
                 me.set(document.body, "widget.window.refocus");
             }
         }
@@ -219,12 +215,12 @@ package.widget.window = function WidgetWindow(me) {
         me.widget.menu.attach(parent_window, window);
         me.set(window.var.minimize, "ui.node.parent", window.var.header);
         me.set(window.var.maximize, "ui.node.parent", window.var.header);
-        me.ui.property.broadcast(window, "ui.theme.add", "child");
-        me.ui.property.broadcast(parent_window, "ui.theme.add", "parent");
+        me.set(window, "ui.property.broadcast", {"ui.theme.add": "child"});
+        me.set(parent_window, "ui.property.broadcast", {"ui.theme.add": "parent"});
     };
     me.detach = function (window, parent_window) {
-        me.ui.property.broadcast(parent_window, "ui.theme.remove", "parent");
-        me.ui.property.broadcast(window, "ui.theme.remove", "child");
+        me.set(parent_window, "ui.property.broadcast", {"ui.theme.remove": "parent"});
+        me.set(window, "ui.property.broadcast", {"ui.theme.remove": "child"});
         me.widget.menu.attach(window, parent_window);
         me.set(window.var.close, "ui.node.parent", window.var.title);
         me.set(window.var.label, "ui.node.parent", window.var.title);
@@ -242,17 +238,16 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             me.set(window, "ui.focus.active", false);
-            me.ui.property.broadcast(window, "ui.theme.add", "minimize");
+            me.set(window, "ui.property.broadcast", {"ui.theme.add": "minimize"});
             me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(window, parent_window);
                 me.set(parent_window, "widget.window.refocus");
-            }
-            else {
+            } else {
                 me.set(document.body, "widget.window.refocus");
             }
-            me.ui.property.notify(window, "draw", null);
+            me.set(window, "ui.property.notify", {"draw": null});
         }
     };
     me.maximize = {
@@ -267,9 +262,10 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             me.set(window, "ui.focus.active", true);
             var wasMaximized = me.set(window, "ui.theme.contains", "maximize");
-            me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
-            me.ui.property.broadcast(window, "ui.theme.remove", "restore");
-            me.ui.property.broadcast(window, "ui.theme.add", "maximize");
+            me.set(window, "ui.property.broadcast", {
+                "ui.theme.remove": ["minimize", "restore"],
+                "ui.theme.add": "maximize"
+            });
             me.set(window.var.icon, "ui.style.display", "none");
             var parent_window = me.parent(window);
             var content = null;
@@ -291,7 +287,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.set(window, "ui.rect.movable", false);
                 me.set(window, "ui.rect.resizable", false);
             }
-            me.ui.property.notify(window, "draw", null);
+            me.set(window, "ui.property.notify", {"draw": null});
         }
     };
     me.show = {
@@ -328,7 +324,7 @@ package.widget.window = function WidgetWindow(me) {
                 if (maximized) {
                     me.set(window, "maximize", null);
                 } else {
-                    me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
+                    me.set(window, "ui.property.broadcast", {"ui.theme.remove": "minimize"});
                 }
             } else {
                 var content = null;
@@ -339,8 +335,10 @@ package.widget.window = function WidgetWindow(me) {
                     content = document.body;
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
-                me.ui.property.broadcast(window, "ui.theme.remove", "maximize");
-                me.ui.property.broadcast(window, "ui.theme.add", "restore");
+                me.set(window, "ui.property.broadcast", {
+                    "ui.theme.remove": "maximize",
+                    "ui.theme.add": "restore"
+                });
                 if (parent_window) {
                     me.detach(window, parent_window);
                 }
@@ -349,7 +347,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             me.set(window.var.icon, "ui.style.display", "none");
             me.set(window, "ui.focus.active", true);
-            me.ui.property.notify(window, "draw", null);
+            me.set(window, "ui.property.notify", {"draw": null});
         }
     };
     me.unmaximize = {
@@ -365,7 +363,7 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
             if (minimized) {
-                me.ui.property.broadcast(window, "ui.theme.remove", "minimize");
+                me.set(window, "ui.property.broadcast", {"ui.theme.remove": "minimize"});
                 me.set(window.var.icon, "ui.style.display", "none");
             }
             if (maximized) {
@@ -380,13 +378,15 @@ package.widget.window = function WidgetWindow(me) {
                     content = document.body;
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
-                me.ui.property.broadcast(window, "ui.theme.remove", "maximize");
-                me.ui.property.broadcast(window, "ui.theme.add", "restore");
+                me.set(window, "ui.property.broadcast", {
+                    "ui.theme.remove": "maximize",
+                    "ui.theme.add": "restore"
+                });
                 me.set(window, "ui.rect.movable", true);
                 me.set(window, "ui.rect.resizable", !window.fixed);
             }
             me.set(window, "ui.focus.active", true);
-            me.ui.property.notify(window, "draw", null);
+            me.set(window, "ui.property.notify", {"draw": null});
         }
     };
     me.toggle = {
@@ -417,25 +417,25 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.visibleWindows = {
-        get: function(object, value) {
+        get: function (object, value) {
             var content = document.body;
-            if(object !== document.body) {
+            if (object !== document.body) {
                 var window = me.window(object);
                 content = me.widget.container.content(window.var.container);
             }
             var members = me.ui.node.members(content, me.id);
-            members = members.filter(function(member) {
+            members = members.filter(function (member) {
                 return !me.set(member, "ui.theme.contains", "minimize");
             });
             return members;
         }
     };
     me.refocus = {
-        set: function(object, value) {
+        set: function (object, value) {
             var windows = me.get(object, "widget.window.visibleWindows");
-            if(windows && windows.length) {
-                var last = windows[windows.length-1];
-                if(last) {
+            if (windows && windows.length) {
+                var last = windows[windows.length - 1];
+                if (last) {
                     me.set(last, "ui.focus.active", true);
                 }
             }

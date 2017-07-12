@@ -82,5 +82,8 @@
                 }
             ]
         }
-    ]
+    ],
+    "ui.property.broadcast" : {
+        "ui.theme.add" : "restore"
+    }
 }

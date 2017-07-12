@@ -38,7 +38,7 @@ package.ui.rect = function UIRect(me) {
                     width: value.offsetWidth,
                     height: value.offsetHeight
                 };
-                me.ui.property.broadcast(value, "ui.theme.add", "transition");
+                me.set(value, "ui.property.broadcast", {"ui.theme.add": "transition"});
                 var move_method = function (e) {
                     var target_region = me.ui.rect.absolute_region(value);
                     var shift_region = {};
@@ -46,12 +46,12 @@ package.ui.rect = function UIRect(me) {
                     target_region.left = e.clientX - info.left;
                     target_region.top = e.clientY - info.top;
                     me.ui.rect.set_absolute_region(info.target, target_region);
-                    me.ui.property.notify(info.target, "draw", null);
+                    me.set(info.target, "ui.property.notify", {"draw": null});
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', move_method);
                     removeEventListener('mouseup', release_method);
-                    me.ui.property.broadcast(value, "ui.theme.remove", "transition");
+                    me.set(value, "ui.property.broadcast", {"ui.theme.remove": "transition"});
                 };
                 addEventListener('mousemove', move_method);
                 addEventListener('mouseup', release_method);
@@ -75,7 +75,7 @@ package.ui.rect = function UIRect(me) {
                     width: value.offsetWidth,
                     height: value.offsetHeight
                 };
-                me.ui.property.broadcast(value, "ui.theme.add", "transition");
+                me.set(value, "ui.property.broadcast", {"ui.theme.add": "transition"});
                 var move_method = function (e) {
                     var target_region = me.ui.rect.absolute_region(value);
                     var object_region = me.ui.rect.absolute_region(object);
@@ -102,12 +102,12 @@ package.ui.rect = function UIRect(me) {
                         target_region.height = e.clientY - info.top + info.height;
                     }
                     me.ui.rect.set_absolute_region(info.target, target_region);
-                    me.ui.property.notify(info.target, "draw", null);
+                    me.set(info.target, "ui.property.notify", {"draw" : null});
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', move_method);
                     removeEventListener('mouseup', release_method);
-                    me.ui.property.broadcast(value, "ui.theme.remove", "transition");
+                    me.set(value, "ui.property.broadcast", {"ui.theme.remove": "transition"});
                 };
                 addEventListener('mousemove', move_method);
                 addEventListener('mouseup', release_method);

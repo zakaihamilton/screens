@@ -6,10 +6,10 @@
 function WidgetScrollbarTemplate(me, scroll_type) {
     console.log("scrolling: " + scroll_type);
     me.default = {
-        "ui.theme.class" : "widget.scrollbar." + scroll_type,
+        "ui.theme.class": "widget.scrollbar." + scroll_type,
         "ui.basic.elements": [
             {
-                "ui.theme.class": ["widget.scrollbar.button","before"],
+                "ui.theme.class": ["widget.scrollbar.button", "before"],
                 "ui.basic.var": "before",
                 "ui.touch.click": "before",
                 "ui.touch.repeat": "before",
@@ -19,19 +19,19 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 }
             },
             {
-                "ui.basic.var":"track",
+                "ui.basic.var": "track",
                 "ui.theme.class": "track",
-                "ui.touch.click":"track",
-                "ui.touch.repeat":"track",
+                "ui.touch.click": "track",
+                "ui.touch.repeat": "track",
                 "ui.basic.elements": {
                     "ui.basic.var": "thumb",
-                    "ui.theme.class": ["widget.scrollbar.button","thumb"],
+                    "ui.theme.class": ["widget.scrollbar.button", "thumb"],
                     "ui.scroll.thumb": scroll_type,
                     "ui.style.position": "relative"
                 }
             },
             {
-                "ui.theme.class": ["widget.scrollbar.button","after"],
+                "ui.theme.class": ["widget.scrollbar.button", "after"],
                 "ui.basic.var": "after",
                 "ui.touch.click": "after",
                 "ui.touch.repeat": "after",
@@ -48,9 +48,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
         var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
         if (has_scroll && !has_class) {
-            me.ui.property.broadcast(container, "ui.theme.add", scroll_type + "_scroll");
+            me.set(container, "ui.property.broadcast", {"ui.theme.add": scroll_type + "_scroll"});
         } else if (!has_scroll && has_class) {
-            me.ui.property.broadcast(container, "ui.theme.remove", scroll_type + "_scroll");
+            me.set(container, "ui.property.broadcast", {"ui.theme.remove": scroll_type + "_scroll"});
         }
         var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
         var track_region = me.ui.rect.relative_region(object.var.track);
@@ -84,27 +84,27 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
     };
     me.track = {
-        set: function(object, value) {
-            if(value.target !== object.parentNode.var.track) {
+        set: function (object, value) {
+            if (value.target !== object.parentNode.var.track) {
                 return;
             }
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
             var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
-            if(scroll_direction < 0) {
+            if (scroll_direction < 0) {
                 me.ui.scroll.by(content, scroll_type, -10);
             }
-            if(scroll_direction > 0) {
+            if (scroll_direction > 0) {
                 me.ui.scroll.by(content, scroll_type, 10);
             }
             me.update(object.parentNode);
         }
-    };       
+    };
 }
 
 package.widget.scrollbar = function WidgetScroll(me) {
-    
+
 };
 
 package.widget.scrollbar.horizontal = WidgetScrollbarTemplate;

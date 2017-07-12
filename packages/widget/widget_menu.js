@@ -5,30 +5,30 @@
 
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
-        "ui.theme.class" : "horizontal",
+        "ui.theme.class": "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"
         }
     };
-    me.attach = function(source, target) {
-        if(source.var.menu) {
+    me.attach = function (source, target) {
+        if (source.var.menu) {
             var parent = target;
-            if(target.var.header) {
+            if (target.var.header) {
                 parent = target.var.header;
             }
             parent.appendChild(source.var.menu);
             target.var.menu = source.var.menu;
             source.var.menu = null;
-            me.ui.property.broadcast(target, "ui.theme.add", "menu");
-            me.ui.property.broadcast(source, "ui.theme.remove", "menu");
+            me.set(target, "ui.property.broadcast", {"ui.theme.add": "menu"});
+            me.set(source, "ui.property.broadcast", {"ui.theme.remove": "menu"});
         }
     };
     me.items = {
         set: function (object, value) {
             if (!object.var.menu) {
                 var parent = object;
-                if(object.var.header) {
+                if (object.var.header) {
                     parent = object.var.header;
                 }
                 object.var.menu = me.ui.element.create({
@@ -39,7 +39,7 @@ package.widget.menu = function WidgetMenu(me) {
                         "ui.data.values": value
                     }
                 }, parent);
-                me.ui.property.broadcast(object, "ui.theme.add", "menu");
+                me.set(object, "ui.property.broadcast", {"ui.theme.add": "menu"});
             }
         }
     };
@@ -48,8 +48,8 @@ package.widget.menu = function WidgetMenu(me) {
             me.set(object, "ui.style.zIndex", "");
             me.set(object.var.modal, "ui.style.display", "none");
             me.set(object.var.menu, "ui.node.parent", null);
-            me.ui.property.broadcast(object, "ui.theme.remove", "select");
-            me.ui.property.broadcast(object, "ui.touch.move", null);
+            me.set(object, "ui.property.broadcast", {"ui.theme.remove": "select"});
+            me.set(object, "ui.property.broadcast", {"ui.touch.move": null});
             object.selected_item = null;
         }
     };
@@ -63,8 +63,10 @@ package.widget.menu = function WidgetMenu(me) {
             }
             object.selected_item = item;
             me.set(object, "ui.style.zIndex", "1");
-            me.ui.property.broadcast(object, "ui.touch.move", "hover");
-            me.ui.property.broadcast(object, "ui.theme.remove", "select");
+            me.set(object, "ui.property.broadcast", {
+                "ui.touch.move": "hover",
+                "ui.theme.remove": "select"
+            });
             me.set(item, "ui.theme.add", "select");
             me.set(object.var.menu, "ui.node.parent", null);
             me.set(object.var.modal, "ui.style.display", "initial");
@@ -88,7 +90,7 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         }, document.body);
-        if(object.component === me.id) {
+        if (object.component === me.id) {
             me.set(menu.var.modal, "ui.style.display", "none");
         }
         return menu;
@@ -97,7 +99,7 @@ package.widget.menu = function WidgetMenu(me) {
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
-        "ui.theme.class" : "widget.menu.vertical",
+        "ui.theme.class": "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"
@@ -128,10 +130,10 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
     };
-    me.handleValue = function(object, values, key, callback) {
-        if(key in values) {
+    me.handleValue = function (object, values, key, callback) {
+        if (key in values) {
             var value = values[key];
-            if(typeof value === "string") {
+            if (typeof value === "string") {
                 value = me.get(object.parentNode.target, value);
             }
             callback(value);
@@ -140,17 +142,17 @@ package.widget.menu.item = function WidgetMenuItem(me) {
     me.options = {
         set: function (object, options) {
             if (options) {
-                me.handleValue(object, options, "enabled", function(value) {
+                me.handleValue(object, options, "enabled", function (value) {
                     me.set(object, "ui.basic.enabled", value);
                 });
-                me.handleValue(object, options, "state", function(value) {
+                me.handleValue(object, options, "state", function (value) {
                     if (value) {
                         me.set(object, "ui.theme.add", "checked");
                     } else {
                         me.set(object, "ui.theme.remove", "checked");
                     }
                 });
-                me.handleValue(object, options, "separator", function(value) {
+                me.handleValue(object, options, "separator", function (value) {
                     if (value) {
                         me.set(object, "ui.theme.add", "separator");
                     } else {

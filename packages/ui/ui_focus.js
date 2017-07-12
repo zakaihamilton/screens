@@ -46,15 +46,15 @@ package.ui.focus = function UIFocus(me) {
     };
     me.deactivate = function(from, to) {
         while(from && from !== to) {
-            me.ui.property.broadcast(from, "ui.theme.remove", "focus")
-            me.ui.property.broadcast(from, "blur", from);
+            me.set(from, "ui.property.broadcast", {"ui.theme.remove": "focus"});
+            me.set(from, "ui.property.broadcast", {"blur": from});
             from = me.widget.window.parent(from);
         }
     };
     me.activate = function(from, to) {
         while(from && from !== to) {
-            me.ui.property.broadcast(from, "ui.theme.add", "focus");
-            me.ui.property.broadcast(from, "focus", from);
+            me.set(from, "ui.property.broadcast", {"ui.theme.add": "focus"});
+            me.set(from, "ui.property.broadcast", {"focus": from});
             me.updateOrder(from.parentNode, from);
             from = me.widget.window.parent(from);
         }
