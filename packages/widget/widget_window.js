@@ -82,8 +82,11 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.windows = {
         get: function (object) {
-            var window = me.window(object);
-            var content = me.widget.container.content(window.var.container);
+            var content = document.body;
+            if(object !== document.body) {
+                var window = me.window(object);
+                content = me.widget.container.content(window.var.container);
+            }
             return me.ui.node.members(content, me.id);
         }
     };
@@ -132,6 +135,10 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.node.parent", null);
             if (parent_window) {
                 me.ui.property.notify(parent_window, "draw", null);
+                me.set(parent_window, "widget.window.refocus");
+            }
+            else {
+                me.set(document.body, "widget.window.refocus");
             }
         }
     };
@@ -184,7 +191,6 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
-            console.log("window: " + window.component + " container: " + window.var.container);
             var content = me.widget.container.content(window.var.container);
             me.set(content, "ui.style.background", value);
         }
@@ -267,6 +273,10 @@ package.widget.window = function WidgetWindow(me) {
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(window, parent_window);
+                me.set(parent_window, "widget.window.refocus");
+            }
+            else {
+                me.set(document.body, "widget.window.refocus");
             }
             me.ui.property.notify(window, "draw", null);
         }
@@ -418,7 +428,7 @@ package.widget.window = function WidgetWindow(me) {
     me.blur = {
         set: function (object) {
             var window = me.window(object);
-            if (window.temp) {
+            if (window.temp && window.parentNode) {
                 me.set(window, "close", null);
             }
         }
@@ -430,6 +440,31 @@ package.widget.window = function WidgetWindow(me) {
                     me.send("app.tasks.launch");
                 }
             });
+        }
+    };
+    me.visibleWindows = {
+        get: function(object, value) {
+            var content = document.body;
+            if(object !== document.body) {
+                var window = me.window(object);
+                content = me.widget.container.content(window.var.container);
+            }
+            var members = me.ui.node.members(content, me.id);
+            members = members.filter(function(member) {
+                return !me.set(member, "ui.theme.contains", "minimize");
+            });
+            return members;
+        }
+    };
+    me.refocus = {
+        set: function(object, value) {
+            var windows = me.get(object, "widget.window.visibleWindows");
+            if(windows && windows.length) {
+                var last = windows[windows.length-1];
+                if(last) {
+                    me.set(last, "ui.focus.active", true);
+                }
+            }
         }
     };
 };
