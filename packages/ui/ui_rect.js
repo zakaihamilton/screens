@@ -55,6 +55,7 @@ package.ui.rect = function UIRect(me) {
                 };
                 window.addEventListener('mousemove', move_method);
                 window.addEventListener('mouseup', release_method);
+                e.preventDefault();
             });
         }
     };
