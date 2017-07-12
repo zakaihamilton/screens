@@ -45,7 +45,7 @@ package.core.property = function CoreProperty(me) {
         }
         return result;
     };
-    me.set = function(object, name, value, method="set") {
+    me.set = function(object, name, value=null, method="set") {
         var result = undefined;
         if(object && name) {
             if(typeof name === "function") {

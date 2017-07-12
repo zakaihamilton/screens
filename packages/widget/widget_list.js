@@ -177,6 +177,7 @@ package.widget.list.item = function WidgetMenuItem(me) {
     me.default = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",
+        "ui.touch.default": "dblclick",
         "ui.theme.class": "widget.list.item"
     };
     me.depends = {
@@ -208,6 +209,12 @@ package.widget.list.item = function WidgetMenuItem(me) {
             } else {
                 me.set(object, "ui.theme.remove", "selected");
             }
+        }
+    };
+    me.dblclick = {
+        set: function(object) {
+            me.set(object, "click");
+            /*TODO: call default button on window */
         }
     };
     me.click = {

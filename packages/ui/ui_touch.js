@@ -91,4 +91,9 @@ package.ui.touch = function UIEvent(me) {
             me.register(me.handle, object, "mouseup", value, "repeatup", window);
         }
     };
+    me.default = {
+        set: function(object, value) {
+            me.register(me.handle, object, "dblclick", value, "default");
+        }
+    };
 };

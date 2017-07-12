@@ -17,7 +17,7 @@
             "ui.group.data": {
                 "ui.data.default": {
                     "group":"tasks",
-                    "ui.touch.dblclick":"app.tasks.switchTo"
+                    "ui.touch.default":"app.tasks.switchTo"
                 },
                 "ui.data.keys": ["ui.basic.text", "state"],
                 "ui.data.values": [
