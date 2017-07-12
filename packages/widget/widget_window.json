@@ -16,7 +16,7 @@
             "ui.touch.click": "widget.window.context_menu",
             "ui.touch.dblclick": "widget.window.restore",
             "ui.basic.window":null,
-            "ui.node.parent":"widget.tray.tray",
+            "ui.node.parent":"@widget.tray.tray"
         },
         {
             "ui.theme.class": "bottom-left",

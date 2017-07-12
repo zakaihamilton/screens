@@ -64,7 +64,6 @@ package.ui.data = function UIData(me) {
             }
             for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
                 var data_value = values[data_key_index];
-                console.log("data_value: " + JSON.stringify(data_value));
                 if (typeof data_value !== "undefined") {
                     properties[object.data_keys[data_key_index]] = data_value;
                 }
