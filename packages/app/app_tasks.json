@@ -7,6 +7,7 @@
     "ui.style.height": "201px",
     "ui.basic.elements": [
         {
+            "ui.basic.var": "tasks",
             "ui.element.count": 8,
             "ui.style.marginLeft": "4px",
             "ui.style.marginTop": "4px",
@@ -15,7 +16,8 @@
             "ui.style.height":"91px",
             "ui.group.data": {
                 "ui.data.default": {
-                    "group":"tasks"
+                    "group":"tasks",
+                    "ui.touch.dblclick":"app.tasks.switchTo"
                 },
                 "ui.data.keys": ["ui.basic.text", "state"],
                 "ui.data.values": [
@@ -34,7 +36,7 @@
         },
         "ui.data.keys": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
         "ui.data.values": [
-            ["Switch to", ""],
+            ["Switch to", "app.tasks.switchTo"],
             ["End Task", ""],
             ["Cancel", "widget.window.close", "90px", "0px"],
             ["Cascade", ""],

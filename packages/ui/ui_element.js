@@ -98,6 +98,9 @@ package.ui.element = function UIElement(me) {
             });
             return;
         }
+        if (!parent || parent==="body") {
+            parent = me.body();
+        }
         var object = null;
         var component_name = properties["ui.element.component"];
         var tag = properties['ui.basic.tag'];
@@ -118,8 +121,9 @@ package.ui.element = function UIElement(me) {
         object = document.createElement(tag);
         object.var = {};
         object.component = component_name;
-        if (!parent) {
-            parent = me.body();
+        if(context === "self") {
+            console.log("using self context");
+            context = object;
         }
         object.context = context ? context : parent;
         me.set(object, "ui.node.parent", parent);

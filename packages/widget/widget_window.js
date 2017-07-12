@@ -154,6 +154,12 @@ package.widget.window = function WidgetWindow(me) {
         }
         me.set(window.var.label, "ui.basic.text", window.window_title);
     };
+    me.label = {
+        get: function (object) {
+            var window = me.window(object);
+            return me.get(window.var.label, "ui.basic.text");
+        }
+    };
     me.title = {
         get: function (object) {
             var window = me.window(object);
@@ -310,7 +316,7 @@ package.widget.window = function WidgetWindow(me) {
             var parent_window = me.parent(window);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             if (value) {
-                if (parent_window.child_window && parent_window.child_window !== window) {
+                if (parent_window && parent_window.child_window && parent_window.child_window !== window) {
                     me.set(window, "maximize", null);
                 } else if (minimized) {
                     me.set(window, "unmaximize", null);

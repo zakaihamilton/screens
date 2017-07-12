@@ -12,10 +12,10 @@ package.ui.node = function UINode(me) {
             if(child.component) {
                 order = getComputedStyle(child).zIndex;
             }
-            if(order === "auto" || order < 0 || order >= object.childNodes.length) {
+            if(!order || order === "auto" || order < 0 || order >= object.childNodes.length) {
                 order = 0;
             }
-            for(;childList[order] && order < object.childNodes.length - 1; order++);
+            for(;childList[order] && order < object.childNodes.length; order++);
             childList[order] = child;
         }
         childList = childList.filter(Boolean);

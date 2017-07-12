@@ -26,6 +26,27 @@ package.widget.list = function WidgetList(me) {
             }
         }
     };
+    me.selection = {
+        get: function (object, value) {
+            var selection = [];
+            var content = me.widget.container.content(object.var.container);
+            var childList = me.ui.node.childList(content);
+            if (childList) {
+                console.log("childList.length: " + childList.length + " actual list: " + content.childNodes.length);
+                for (var childIndex = 0; childIndex < childList.length; childIndex++) {
+                    var child = childList[childIndex];
+                    var state = me.get(child, "state");
+                    var label = me.get(child, "ui.basic.text");
+                    console.log("state: " + state + " label: " + label);
+                    if(state) {
+                        selection.push(label);
+                        break;
+                    }
+                }
+            }
+            return selection;
+        }
+    };
 };
 
 package.widget.list.dropdown = function WidgetDropDownList(me) {
@@ -177,6 +198,9 @@ package.widget.list.item = function WidgetMenuItem(me) {
         }
     };
     me.state = {
+        get: function (object) {
+            return me.set(object, "ui.theme.contains", "selected");
+        },
         set: function (object, value) {
             value = me.value(object, value);
             if (value) {

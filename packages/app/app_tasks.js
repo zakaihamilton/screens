@@ -8,28 +8,43 @@ package.app.tasks = function AppTasks(me) {
     me.launch = function () {
         if (me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);
-            me.set(me.singleton, "ui.focus.active", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__);
+        me.singleton = me.ui.element.create(__json__, "body", "self");
     };
     me.tasks = {
         get: function(object) {
             var isFirst = true;
-            var tasks = me.ui.node.members(document.body, me.widget.window.id);
-            var items = tasks.reverse().map(function(window) {
-                var title = me.get(window, "title");
-                if(title === "Task List") {
+            var windows = me.ui.node.members(document.body, me.widget.window.id);
+            var items = windows.reverse().map(function(window) {
+                var label = me.get(window, "label");
+                if(label === "Task List") {
                     return null;
                 }
                 var item = [
-                    title,
+                    label,
                     isFirst
                 ];
                 isFirst = false;
                 return item;
             });
             return items;
+        }
+    };
+    me.switchTo = {
+        set: function(object, value) {
+            var windows = me.ui.node.members(document.body, me.widget.window.id);
+            me.set(me.singleton, "widget.window.close", null);
+            var tasks = me.get(me.singleton.var.tasks, "selection");
+            if(tasks.length) {
+                var task = tasks[0];
+                windows.map(function(window) {
+                    var label = me.get(window, "label");
+                    if(label === task) {
+                        me.set(window, "widget.window.show", true);
+                    }
+                });
+            }
         }
     };
 };
