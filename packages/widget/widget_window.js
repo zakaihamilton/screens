@@ -310,7 +310,7 @@ package.widget.window = function WidgetWindow(me) {
             var parent_window = me.parent(window);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             if (value) {
-                if (parent_window.child_window) {
+                if (parent_window.child_window && parent_window.child_window !== window) {
                     me.set(window, "maximize", null);
                 } else if (minimized) {
                     me.set(window, "unmaximize", null);
