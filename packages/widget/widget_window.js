@@ -15,32 +15,6 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
-    me.create = {
-        set: function (object) {
-            var parent = me.parent(object);
-            if (parent === null) {
-                parent = document.body;
-                if (!parent.var) {
-                    parent.var = {};
-                }
-            }
-            if (!parent.var.tray) {
-                me.ui.element.create({
-                    "ui.basic.var": "tray",
-                    "ui.style.bottom": "0px",
-                    "ui.style.position": "absolute"
-                }, parent);
-            }
-            object.var.icon = me.ui.element.create({
-                "text": "",
-                "ui.style.display": "none",
-                "ui.basic.src": "/packages/res/icons/default.png",
-                "ui.touch.click": "widget.window.context_menu",
-                "ui.touch.dblclick": "widget.window.restore",
-                "ui.basic.window": object
-            }, parent.var.tray);
-        }
-    };
     me.beforeshow = {
         set: function (object) {
             var parent = me.parent(object);
@@ -155,7 +129,7 @@ package.widget.window = function WidgetWindow(me) {
         var child_window = window.child_window;
         if (child_window) {
             if (!me.set(child_window, "ui.theme.contains", "minimize") && me.set(child_window, "ui.theme.contains", "maximize")) {
-                me.set(window.var.label, "ui.basic.text", window.window_title + " - " + child_window.window_title);
+                me.set(window.var.label, "ui.basic.text", window.window_title + " - [" + child_window.window_title + "]");
                 return;
             }
         }

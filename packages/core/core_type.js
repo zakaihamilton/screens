@@ -12,10 +12,10 @@ package.core.type = function CoreType(me) {
         if(wrapped_data.value !== undefined) {
             var unwrapped_data = JSON.parse(wrapped_data.value);
             var type = wrapped_data.type;
-            if(type == "integer") {
+            if(type === "integer") {
                 unwrapped_data = Number(unwrapped_data);
             }
-            else if(type == "string") {
+            else if(type === "string") {
                 unwrapped_data = String(unwrapped_data);
             }
             return unwrapped_data;

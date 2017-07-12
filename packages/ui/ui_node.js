@@ -91,6 +91,9 @@ package.ui.node = function UINode(me) {
             return object.parentNode;
         },
         set : function(object, value) {
+            if(typeof value === "string") {
+                value = me.get(object, value);
+            }
             if(object.parentNode) {
                 object.parentNode.removeChild(object);
             }

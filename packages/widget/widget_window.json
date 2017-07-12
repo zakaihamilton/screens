@@ -7,7 +7,18 @@
     "ui.rect.movable": true,
     "ui.rect.resizable": true,
     "ui.theme.class": "border",
-    "ui.basic.elements": [{
+    "ui.basic.elements": [
+        {
+            "ui.basic.var":"icon",
+            "text": "",
+            "ui.style.display": "none",
+            "ui.basic.src": "/packages/res/icons/default.png",
+            "ui.touch.click": "widget.window.context_menu",
+            "ui.touch.dblclick": "widget.window.restore",
+            "ui.basic.window":null,
+            "ui.node.parent":"widget.tray.tray",
+        },
+        {
             "ui.theme.class": "bottom-left",
             "ui.rect.resize": null
         },

@@ -110,7 +110,10 @@ package.ui.basic = function UIBasic(me) {
             return object.window;
         },
         set: function (object, value) {
-            object.window = value;
+            if(!value) {
+                value = object;
+            }
+            object.window = me.widget.window.window(value);
         }
     };
     me.target = {
