@@ -38,7 +38,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.draw = {
         set: function (object, value) {
-            me.update.set(object);
+            setTimeout( function() {
+                me.update.set(object);
+            }, 0);
         }
     };
     me.before = {

@@ -8,7 +8,8 @@ package.widget.menu = function WidgetMenu(me) {
         "ui.theme.class": "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
-            "ui.element.component": "widget.modal"
+            "ui.element.component": "widget.modal",
+            "ui.style.display":"none"
         }
     };
     me.attach = function (source, target) {
