@@ -4,8 +4,8 @@
     "ui.style.position": "absolute",
     "ui.style.left": "100px",
     "ui.style.top": "100px",
-    "ui.rect.movable": true,
-    "ui.rect.resizable": true,
+    "ui.move.enabled": true,
+    "ui.resize.enabled": true,
     "ui.theme.class": "border",
     "ui.basic.elements": [
         {
@@ -20,19 +20,19 @@
         },
         {
             "ui.theme.class": "bottom-left",
-            "ui.rect.resize": null
+            "ui.resize.extend":null
         },
         {
             "ui.theme.class": "bottom-right",
-            "ui.rect.resize": null
+            "ui.resize.extend":null
         },
         {
             "ui.theme.class": "top-left",
-            "ui.rect.resize": null
+            "ui.resize.extend":null
         },
         {
             "ui.theme.class": "top-right",
-            "ui.rect.resize": null
+            "ui.resize.extend":null
         },
         {
             "ui.theme.class": "margin",
@@ -52,7 +52,7 @@
                             "ui.basic.var": "label",
                             "ui.basic.text": "",
                             "ui.theme.class": "label",
-                            "ui.rect.move": null,
+                            "ui.move.extend": null,
                             "ui.touch.dblclick": "toggle"
                         },
                         {

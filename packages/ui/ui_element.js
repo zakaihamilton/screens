@@ -144,7 +144,7 @@ package.ui.element = function UIElement(me) {
         }
         if (component.extend) {
             component.extend.map(function (extension) {
-                me.send(extension + ".extend", object);
+                me.set(object, extension + ".extend");
             });
         }
         object.context = null;

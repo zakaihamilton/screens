@@ -53,17 +53,19 @@ package.ui.drag.icon = function UIDragIcon(me) {
             }
         }
     };
-    me.extend = function (object) {
-        object.setAttribute("draggable", true);
-        me.set(object, "ui.property.group", {
-            "ui.drag.start": "ui.drag.icon.start",
-            "ui.drag.enter": "ui.drag.icon.enter",
-            "ui.drag.over": "ui.drag.icon.over",
-            "ui.drag.leave": "ui.drag.icon.leave",
-            "ui.drag.drop": "ui.drag.icon.drop",
-            "ui.drag.end": "ui.drag.icon.end",
-            "ui.drag.drag": "ui.drag.icon.drag"
-        });
+    me.extend = {
+        set: function (object) {
+            object.setAttribute("draggable", true);
+            me.set(object, "ui.property.group", {
+                "ui.drag.start": "ui.drag.icon.start",
+                "ui.drag.enter": "ui.drag.icon.enter",
+                "ui.drag.over": "ui.drag.icon.over",
+                "ui.drag.leave": "ui.drag.icon.leave",
+                "ui.drag.drop": "ui.drag.icon.drop",
+                "ui.drag.end": "ui.drag.icon.end",
+                "ui.drag.drag": "ui.drag.icon.drag"
+            });
+        }
     };
     me.start = {
         set: function (object, event) {

@@ -60,7 +60,7 @@ package.ui.touch = function UIEvent(me) {
     };
     me.move = {
         set: function (object, value) {
-            me.register(me.handle, object, "mousemove", value);
+            me.register(me.handle, object, "mousemove", value, "mousemove", window);
         }
     };
     me.click = {
@@ -80,7 +80,7 @@ package.ui.touch = function UIEvent(me) {
     };
     me.up = {
         set: function (object, value) {
-            me.register(me.handle, object, "mouseup", value);
+            me.register(me.handle, object, "mouseup", value, "mouseup", window);
         }
     };
     me.repeat = {

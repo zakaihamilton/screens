@@ -31,7 +31,9 @@ package.include({
         "scroll",
         "attribute",
         "var",
-        "set"
+        "set",
+        "move",
+        "resize"
     ],
     "widget": [
         "radio",

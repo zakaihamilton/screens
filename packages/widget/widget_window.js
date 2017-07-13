@@ -176,7 +176,7 @@ package.widget.window = function WidgetWindow(me) {
     me.static = me.ui.set.attribute("static");
     me.fixed = me.ui.set.attribute("fixed", function (object, value) {
         var maximized = me.set(object, "ui.theme.contains", "maximize");
-        me.set(object, "ui.rect.resizable", !value && !maximized);
+        me.set(object, "ui.resize.enabled", !value && !maximized);
     });
     me.context_menu = {
         set: function (object, value) {
@@ -325,8 +325,8 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.style.height": "",
                     "ui.style.bottom": "0px",
                     "ui.style.right": "0px",
-                    "ui.rect.movable": false,
-                    "ui.rect.resizable": false
+                    "ui.move.enabled": false,
+                    "ui.resize.enabled": false
                 });
             }
             me.set(window, "ui.property.notify", {
@@ -389,8 +389,8 @@ package.widget.window = function WidgetWindow(me) {
                     me.detach(window, parent_window);
                 }
                 me.set(window, "ui.property.group", {
-                    "ui.rect.movable": true,
-                    "ui.rect.resizable": !window.fixed
+                    "ui.move.enabled": true,
+                    "ui.resize.enabled": !window.fixed
                 });
             }
             me.set(window.var.icon, "ui.style.display", "none");
@@ -437,8 +437,8 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.theme.remove": "maximize",
                         "ui.theme.add": "restore"
                     },
-                    "ui.rect.movable": true,
-                    "ui.rect.resizable": !window.fixed
+                    "ui.move.enabled": true,
+                    "ui.resize.enabled": !window.fixed
                 });
             }
             me.set(window, "ui.property.group", {
