@@ -18,7 +18,7 @@ package.ui.event = function UIEvent(me) {
         }
         var listener_callback = function (event) {
             var result = true;
-            if (name in handlers) {
+            if (handlers && name in handlers) {
                 result = handlers[name](object, method, event);
             }
             if (result === true) {

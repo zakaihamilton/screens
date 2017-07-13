@@ -4,6 +4,46 @@
  */
 
 package.ui.drag = function UIDrag(me) {
+    me.register = me.ui.event.register;
+    me.handle = {};
+    me.start = {
+        set: function (object, value) {
+            me.register(me.handle, object, "dragstart", value);
+        }
+    };
+    me.enter = {
+        set: function (object, value) {
+            me.register(me.handle, object, "dragenter", value);
+        }
+    };
+    me.over = {
+        set: function (object, value) {
+            me.register(me.handle, object, "dragover", value);
+        }
+    };
+    me.leave = {
+        set: function (object, value) {
+            me.register(me.handle, object, "dragleave", value);
+        }
+    };
+    me.drop = {
+        set: function (object, value) {
+            me.register(me.handle, object, "drop", value);
+        }
+    };
+    me.end = {
+        set: function (object, value) {
+            me.register(me.handle, object, "dragend", value);
+        }
+    };
+    me.drag = {
+        set: function (object, value) {
+            me.register(me.handle, object, "drag", value);
+        }
+    };
+}
+
+package.ui.drag.icon = function UIDragIcon(me) {
     me.source = null;
     me.target = null;
     me.element = {
@@ -15,91 +55,112 @@ package.ui.drag = function UIDrag(me) {
     };
     me.extend = function (object) {
         object.setAttribute("draggable", true);
-        object.addEventListener('dragstart', function (e) {
-            var target = me.parent_draggable(e.target);
+        me.set(object, "ui.property.group", {
+            "ui.drag.start": "ui.drag.icon.start",
+            "ui.drag.enter": "ui.drag.icon.enter",
+            "ui.drag.over": "ui.drag.icon.over",
+            "ui.drag.leave": "ui.drag.icon.leave",
+            "ui.drag.drop": "ui.drag.icon.drop",
+            "ui.drag.end": "ui.drag.icon.end",
+            "ui.drag.drag": "ui.drag.icon.drag"
+        });
+    };
+    me.start = {
+        set: function (object, event) {
+            var target = me.parent_draggable(event.target);
             if (!target) {
-                if (e.preventDefault) {
-                    e.preventDefault();
+                if (event.preventDefault) {
+                    event.preventDefault();
                 }
                 return;
             }
             if (target.drag_element) {
                 var rect = me.ui.rect.absolute_region(target.drag_element);
-                var in_rect = me.ui.rect.in_region(rect, e.clientX, e.clientY);
+                var in_rect = me.ui.rect.in_region(rect, event.clientX, event.clientY);
                 if (!in_rect) {
-                    if (e.preventDefault) {
-                        e.preventDefault();
+                    if (event.preventDefault) {
+                        event.preventDefault();
                     }
                     return false;
                 }
             }
             me.source = target;
             var source_rect = me.ui.rect.absolute_region(target);
-            me.drag_offset = {x: e.clientX - source_rect.left, y: e.clientY - source_rect.top};
-            target.style.opacity = '0.5';
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', target.innerHTML);
-        }, false);
-        object.addEventListener('dragenter', function (e) {
+            me.drag_offset = {x: event.clientX - source_rect.left, y: event.clientY - source_rect.top};
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.dropEffect = 'move';
+            event.dataTransfer.setData('text/html', target.innerHTML);
+        }
+    };
+    me.enter = {
+        set: function (object, event) {
             if (me.source && me.source.style.position !== "absolute") {
-                var target = me.parent_draggable(e.target);
+                var target = me.parent_draggable(event.target);
                 me.target = target;
                 me.set(target, "ui.theme.add", "over");
             }
-        }, false);
-        object.addEventListener('dragover', function (e) {
-            if (e.preventDefault) {
-                e.preventDefault();
+        }
+    };
+    me.over = {
+        set: function (object, event) {
+            if (event.preventDefault) {
+                event.preventDefault();
             }
             if (me.source && me.source.style.position !== "absolute") {
-                var target = me.parent_draggable(e.target);
-                e.dataTransfer.dropEffect = 'move';
+                var target = me.parent_draggable(event.target);
                 me.target = target;
                 me.set(target, "ui.theme.add", "over");
             }
             return false;
-        }, false);
-        object.addEventListener('dragleave', function (e) {
+        }
+    };
+    me.leave = {
+        set: function (object, event) {
             if (me.source && me.source.style.position !== "absolute") {
-                var target = me.parent_draggable(e.target);
+                var target = me.parent_draggable(event.target);
                 me.set(target, "ui.theme.remove", "over");
                 me.target = null;
             }
-        }, false);
-        object.addEventListener('drop', function (e) {
+        }
+    };
+    me.drop = {
+        set: function (object, event) {
             if (me.source && me.source.style.position !== "absolute") {
-                var target = me.parent_draggable(e.target);
-                if (e.stopPropagation) {
-                    e.stopPropagation();
+                var target = me.parent_draggable(event.target);
+                if (event.stopPropagation) {
+                    event.stopPropagation();
                 }
                 if (me.source.style.position !== "absolute") {
                     me.ui.node.shift(me.source, target);
                 }
             }
             return false;
-        }, false);
-        object.addEventListener('dragend', function (e) {
+        }
+    };
+    me.end = {
+        set: function (object, event) {
             if (me.source) {
                 if (me.source.style.position !== "absolute") {
-                    var target = me.parent_draggable(e.target);
+                    var target = me.parent_draggable(event.target);
                     me.set(me.target, "ui.theme.remove", "over");
                     me.set(target, "ui.theme.remove", "over");
                 }
-                me.source.style.opacity = '1.0';
                 me.source = me.target = null;
             }
-        }, false);
-        object.addEventListener('drag', function (e) {
+        }
+    };
+    me.drag = {
+        set: function (object, event) {
             if (me.source && me.source.style.position === "absolute") {
-                if (e.clientX && e.clientY) {
-                    me.drag_pos = {x: e.clientX, y: e.clientY};
+                if (event.clientX && event.clientY) {
+                    me.drag_pos = {x: event.clientX, y: event.clientY};
                 }
                 var region = me.ui.rect.relative_region(me.source);
                 region.left = me.drag_pos.x - me.drag_offset.x;
                 region.top = me.drag_pos.y - me.drag_offset.y;
                 me.ui.rect.set_relative_region(me.source, region);
             }
-        });
+        }
     };
     me.parent_draggable = function (object) {
         while (object) {

@@ -14,13 +14,13 @@ package.include({
         "app"
     ],
     "ui": [
+        "event",
         "data",
         "group",
         "node",
         "rect",
         "drag",
         "element",
-        "event",
         "touch",
         "key",
         "style",
