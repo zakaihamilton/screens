@@ -62,17 +62,21 @@ package.ui.resize = function UIResize(me) {
             var min_width = parseInt(getComputedStyle(me.info.target).minWidth, 10);
             var min_height = parseInt(getComputedStyle(me.info.target).minHeight, 10);
             if (object_region.left < target_region.left + (target_region.width / 2)) {
-                target_region.width = target_region.width + (target_region.left - event.clientX);
-                if (target_region.width >= min_width) {
-                    target_region.left = event.clientX;
+                if (object_region.right < target_region.left + (target_region.width / 2)) {
+                    target_region.width = target_region.width + (target_region.left - event.clientX);
+                    if (target_region.width >= min_width) {
+                        target_region.left = event.clientX;
+                    }
                 }
             } else {
                 target_region.width = event.clientX - target_region.left;
             }
             if (object_region.top < target_region.top + (target_region.height / 2)) {
-                target_region.height = target_region.height + (target_region.top - event.clientY);
-                if (target_region.height >= min_height) {
-                    target_region.top = event.clientY;
+                if (object_region.bottom < target_region.top + (target_region.height / 2)) {
+                    target_region.height = target_region.height + (target_region.top - event.clientY);
+                    if (target_region.height >= min_height) {
+                        target_region.top = event.clientY;
+                    }
                 }
             } else {
                 target_region.height = event.clientY - target_region.top;

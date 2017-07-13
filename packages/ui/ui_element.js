@@ -91,14 +91,29 @@ package.ui.element = function UIElement(me) {
         return path;
     };
     me.create = function (properties, parent, context=null) {
+        if(!properties) {
+            return;
+        }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
                 me.create(item, parent, context);
             });
             return;
         }
+        if(!Object.keys(properties).length) {
+            return;
+        }
         if (!parent || parent==="body") {
             parent = me.body();
+        }
+        if("ui.element.update" in properties) {
+            var update = properties["ui.element.update"];
+            for (var key in update) {
+                me.set(parent, key, update[key]);
+            }
+            if(Object.keys(properties).length === 1) {
+                return;
+            }
         }
         var object = null;
         var component_name = properties["ui.element.component"];

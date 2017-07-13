@@ -19,20 +19,24 @@
             "ui.node.parent":"@widget.tray.tray"
         },
         {
-            "ui.theme.class": "bottom-left",
-            "ui.resize.extend":null
-        },
-        {
-            "ui.theme.class": "bottom-right",
-            "ui.resize.extend":null
-        },
-        {
-            "ui.theme.class": "top-left",
-            "ui.resize.extend":null
-        },
-        {
-            "ui.theme.class": "top-right",
-            "ui.resize.extend":null
+            "ui.element.update": {
+                "ui.group.data": {
+                    "ui.data.keys": ["ui.theme.class"],
+                    "ui.data.default": {
+                        "ui.resize.extend":null
+                    },
+                    "ui.data.values":[
+                        ["left"],
+                        ["right"],
+                        ["top"],
+                        ["bottom"],
+                        ["bottom-left"],
+                        ["bottom-right"],
+                        ["top-left"],
+                        ["top-right"]
+                    ]
+                }
+            }
         },
         {
             "ui.theme.class": "margin",
