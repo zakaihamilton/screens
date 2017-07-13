@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component WidgetContent
+ @component WidgetContainer
  */
 
 package.widget.container = function WidgetContainer(me) {
@@ -15,7 +15,7 @@ package.widget.container = function WidgetContainer(me) {
                 "ui.style.flex": "1",
                 "ui.basic.elements": [
                     {
-                        "ui.theme.class": "border",
+                        "ui.element.component":"widget.content",
                         "ui.basic.var": "content"
                     },
                     {

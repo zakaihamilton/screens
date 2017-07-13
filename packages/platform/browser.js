@@ -48,7 +48,8 @@ package.include({
         "embed",
         "terminal",
         "desktop",
-        "tray"
+        "tray",
+        "content"
     ],
     "app": [
         "main"

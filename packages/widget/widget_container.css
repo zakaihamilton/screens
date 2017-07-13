@@ -3,10 +3,3 @@
     flex:1;
     flex-direction:column;
 }
-
-.widget-container-border {
-    flex:1;
-    background: white;
-    overflow: hidden;
-    position: relative;
-}

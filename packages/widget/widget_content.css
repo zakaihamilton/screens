@@ -1,0 +1,6 @@
+.widget-content-border {
+    flex:1;
+    background: white;
+    overflow: hidden;
+    position: relative;
+}

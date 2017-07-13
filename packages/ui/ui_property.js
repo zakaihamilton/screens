@@ -13,7 +13,7 @@ package.ui.property = function UIProperty(me) {
             if(childList) {
                 for(var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    if(child.component === me.widget.window.id) {
+                    if(child.component === me.widget.content.id) {
                         continue;
                     }
                     me.broadcast.set(child, properties);
