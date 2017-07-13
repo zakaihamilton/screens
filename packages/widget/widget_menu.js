@@ -12,22 +12,16 @@ package.widget.menu = function WidgetMenu(me) {
             "ui.style.display":"none"
         }
     };
-    me.attach = function (source, target) {
-        if (source.var.menu) {
-            var parent = target;
-            if (target.var.header) {
-                parent = target.var.header;
-            }
-            parent.appendChild(source.var.menu);
-            target.var.menu = source.var.menu;
-            source.var.menu = null;
-            me.set(target, "ui.property.broadcast", {
-                "ui.theme.add": "menu"
-            });
-            me.set(source, "ui.property.broadcast", {
-                "ui.theme.remove": "menu"
-            });
-        }
+    me.switch = function (source, target) {
+        var target_menu = target.var.menu;
+        target.var.menu = source.var.menu;
+        source.var.menu = target_menu;
+        me.set(target, "ui.property.broadcast", {
+            "ui.theme.toggle": "menu"
+        });
+        me.set(source, "ui.property.broadcast", {
+            "ui.theme.toggle": "menu"
+        });
     };
     me.items = {
         set: function (object, value) {

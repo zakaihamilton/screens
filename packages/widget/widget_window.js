@@ -105,7 +105,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             var parent_window = me.parent(window);
             if (parent_window) {
-                me.detach(window, parent_window);
+                me.detach(parent_window);
             }
             me.set(window.var.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
@@ -229,41 +229,42 @@ package.widget.window = function WidgetWindow(me) {
             return is_visible !== "none";
         }
     };
+    me.switch = function (parent, child) {
+        me.update_title(parent);
+        me.widget.menu.switch(parent, child);
+        me.set(child, "ui.property.broadcast", {
+            "ui.theme.toggle": "child"
+        });
+        me.set(parent, "ui.property.broadcast", {
+            "ui.theme.toggle": "parent"
+        });
+    }
     me.attach = function (window, parent_window) {
         if (parent_window.child_window) {
             me.set(parent_window.child_window, "unmaximize", null);
         }
         parent_window.child_window = window;
-        me.update_title(parent_window);
-        me.set(window.var.close, "ui.node.parent", window.var.header);
-        me.widget.menu.attach(parent_window, window);
+        me.switch(parent_window, window);
         me.set([
+            window.var.close,
+            window.var.menu,
             window.var.minimize,
             window.var.maximize
         ], "ui.node.parent", window.var.header);
-        me.set(window, "ui.property.broadcast", {
-            "ui.theme.add": "child"
-        });
-        me.set(parent_window, "ui.property.broadcast", {
-            "ui.theme.add": "parent"
-        });
     };
-    me.detach = function (window, parent_window) {
-        me.set(parent_window, "ui.property.broadcast", {
-            "ui.theme.remove": "parent"
-        });
-        me.set(window, "ui.property.broadcast", {
-            "ui.theme.remove": "child"
-        });
-        me.widget.menu.attach(window, parent_window);
-        me.set([
-            window.var.close,
-            window.var.label,
-            window.var.minimize,
-            window.var.maximize
-        ], "ui.node.parent", window.var.title);
-        parent_window.child_window = null;
-        me.update_title(parent_window);
+    me.detach = function (parent_window) {
+        if(parent_window && parent_window.child_window) {
+            var window = parent_window.child_window;
+            parent_window.child_window = null;
+            me.set(window.var.menu, "ui.node.parent", parent_window.var.header);
+            me.switch(parent_window, window);
+            me.set([
+                window.var.close,
+                window.var.label,
+                window.var.minimize,
+                window.var.maximize
+            ], "ui.node.parent", window.var.title);
+        }
     };
     me.minimize = {
         get: function (object) {
@@ -280,7 +281,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);
             if (parent_window) {
-                me.detach(window, parent_window);
+                me.detach(parent_window);
                 me.set(parent_window, "widget.window.refocus");
             } else {
                 me.set(document.body, "widget.window.refocus");
@@ -386,7 +387,7 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.theme.add": "restore"
                 });
                 if (parent_window) {
-                    me.detach(window, parent_window);
+                    me.detach(parent_window);
                 }
                 me.set(window, "ui.property.group", {
                     "ui.move.enabled": true,
@@ -422,7 +423,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             if (maximized) {
                 if (parent_window) {
-                    me.detach(window, parent_window);
+                    me.detach(parent_window);
                 }
                 var content = null;
                 if (parent_window) {
