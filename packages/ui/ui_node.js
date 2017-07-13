@@ -45,6 +45,30 @@ package.ui.node = function UINode(me) {
         }
         return members;
     };
+    me.previous = function(object, component_name) {
+        var childList = me.childList(object.parentNode);
+        var last = null;
+        var found = null;
+        for(var childIndex = childList.length-1; childIndex >= 0; childIndex--) {
+            var child = childList[childIndex];
+            if (!component_name || child.component !== component_name) {
+                continue;
+            }
+            if(!last) {
+                last = child;
+            }
+            if(child === object) {
+                found = true;
+            }
+            else if(found) {
+                return child;
+            }
+        }
+        if(last && found) {
+            return last;
+        }
+        return null;
+    };
     me.next = function(object, component_name) {
         var childList = me.childList(object.parentNode);
         var first = null;

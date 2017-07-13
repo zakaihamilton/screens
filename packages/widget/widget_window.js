@@ -190,8 +190,11 @@ package.widget.window = function WidgetWindow(me) {
     me.next = {
         set: function (object) {
             var window = me.window(object);
-            var next = me.ui.node.next(window, me.widget.window.id);
+            var next = me.ui.node.previous(window, me.widget.window.id);
             me.set(next, "widget.window.show", true);
+            if(next !== window) {
+                me.ui.focus.updateOrder(window.parentNode, window, 0);
+            }
         }
     };
     me.popup = me.ui.set.attribute("popup");
