@@ -141,7 +141,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
     me.back = {
         set: function (object, value) {
             me.set(object.var.parentList, "back", value);
-            me.set(object, "ui.node.parent", null);
+            me.set(object, "ui.node.parent");
         }
     };
     me.select = {

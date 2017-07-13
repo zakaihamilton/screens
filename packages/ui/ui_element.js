@@ -164,7 +164,7 @@ package.ui.element = function UIElement(me) {
         }
         object.context = null;
         if (component_name !== me.id) {
-            me.set(object, "draw", null);
+            me.set(object, "draw");
         }
         return object;
     };

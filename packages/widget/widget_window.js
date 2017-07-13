@@ -97,15 +97,15 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             if (window.static) {
-                me.set(window, "minimize", null);
+                me.set(window, "minimize");
                 return;
             }
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(parent_window);
             }
-            me.set(window.var.icon, "ui.node.parent", null);
-            me.set(window, "ui.node.parent", null);
+            me.set(window.var.icon, "ui.node.parent");
+            me.set(window, "ui.node.parent");
             if (parent_window) {
                 me.set(parent_window, "ui.property.group", {
                     "ui.property.bubble": {
@@ -166,6 +166,34 @@ package.widget.window = function WidgetWindow(me) {
             me.set(content, "ui.style.background", value);
         }
     };
+    me.resizable = {
+        get: function (object) {
+            var window = me.window(object);
+            return !window.fixed;
+        }
+    };
+    me.switchable = {
+        get: function (object) {
+            var window = me.window(object);
+            var parent = me.parent(window);
+            return !window.temp && !parent;
+        }
+    };
+    me.isChild = {
+        get: function (object) {
+            var window = me.window(object);
+            var parent = me.parent(window);
+            console.log("isChild: " + window.window_title + " parent: " + parent);
+            return parent;
+        }
+    };
+    me.next = {
+        set: function (object) {
+            var window = me.window(object);
+            var next = me.ui.node.next(window, me.widget.window.id);
+            me.set(next, "widget.window.show", true);
+        }
+    };
     me.popup = me.ui.set.attribute("popup");
     me.temp = me.ui.set.attribute("temp");
     me.static = me.ui.set.attribute("static");
@@ -180,26 +208,42 @@ package.widget.window = function WidgetWindow(me) {
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, [
                 ["Restore", "widget.window.restore", {
-                        "enabled": "widget.window.restore"
+                        "enabled": "widget.window.restore",
+                        "visible": "widget.window.resizable"
                     }
                 ],
-                ["Move", ""],
-                ["Size", ""],
+                ["Move", "", {
+                        "enabled": false
+                    }
+                ],
+                ["Size", "", {
+                        "enabled": false,
+                        "visible": "widget.window.resizable"
+                    }
+                ],
                 ["Minimize", "widget.window.minimize", {
-                        "enabled": "widget.window.minimize"
+                        "enabled": "widget.window.minimize",
+                        "visible": "widget.window.resizable"
                     }
                 ],
                 ["Maximize", "widget.window.maximize", {
-                        "enabled": "widget.window.maximize"
+                        "enabled": "widget.window.maximize",
+                        "visible": "widget.window.resizable"
                     }
                 ],
                 ["Close", "widget.window.close", {
-                        "separator": true,
+                        "separator": "widget.window.resizable",
                         "enabled": "widget.window.close"
                     }
                 ],
+                ["Next", "widget.window.next", {
+                        "separator": true,
+                        "visible": "widget.window.isChild"
+                    }
+                ],
                 ["Switch To...", "core.app.tasks", {
-                        "separator": true
+                        "separator": true,
+                        "visible": "widget.window.switchable"
                     }
                 ]
             ]);
@@ -230,7 +274,8 @@ package.widget.window = function WidgetWindow(me) {
     }
     me.attach = function (window, parent_window) {
         if (parent_window.child_window) {
-            me.set(parent_window.child_window, "unmaximize", null);
+            me.set(parent_window.child_window, "unmaximize");
+            me.set(window, "ui.focus.active", true);
         }
         parent_window.child_window = window;
         me.switch(parent_window, window);
@@ -332,14 +377,14 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             if (value) {
                 if (parent_window && parent_window.child_window && parent_window.child_window !== window) {
-                    me.set(window, "maximize", null);
+                    me.set(window, "maximize");
                 } else if (minimized) {
-                    me.set(window, "unmaximize", null);
+                    me.set(window, "unmaximize");
                 } else {
                     me.set(window, "ui.focus.active", true);
                 }
             } else if (!minimized) {
-                me.set(window, "minimize", null);
+                me.set(window, "minimize");
             }
         }
     };
@@ -356,7 +401,7 @@ package.widget.window = function WidgetWindow(me) {
             if (minimized) {
                 var maximized = me.set(window, "ui.theme.contains", "maximize");
                 if (maximized) {
-                    me.set(window, "maximize", null);
+                    me.set(window, "maximize");
                 } else {
                     me.set(window.var.icon, "ui.style.display", "none");
                     me.set(window, "ui.property.group", {
@@ -368,7 +413,7 @@ package.widget.window = function WidgetWindow(me) {
                     });
                 }
             } else {
-                me.set(window, "unmaximize", null);
+                me.set(window, "unmaximize");
             }
         }
     };
@@ -430,7 +475,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object) {
             var window = me.window(object);
             if (window.temp && window.parentNode) {
-                me.set(window, "close", null);
+                me.set(window, "close");
             }
         }
     };

@@ -45,31 +45,27 @@ package.ui.node = function UINode(me) {
         }
         return members;
     };
-    me.first = function(object, component_name) {
-        var childList = me.childList(object);
+    me.next = function(object, component_name) {
+        var childList = me.childList(object.parentNode);
+        var first = null;
+        var found = null;
         for(var childIndex = 0; childIndex < childList.length; childIndex++) {
             var child = childList[childIndex];
-            if (component_name && child.component === component_name) {
-                return child;
+            if (!component_name || child.component !== component_name) {
+                continue;
             }
-            var result = me.first(child, component_name);
-            if(result) {
-                return result;
+            if(!first) {
+                first = child;
+            }
+            if(child === object) {
+                found = true;
+            }
+            else if(found) {
+                return child;
             }
         }
-        return null;
-    };
-    me.last = function(object, component_name) {
-        var childList = me.childList(object);
-        for(var childIndex = childList.length - 1; childIndex >= 0; childIndex--) {
-            var child = childList[childIndex];
-            if (component_name && child.component === component_name) {
-                return child;
-            }
-            var result = me.last(child, component_name);
-            if(result) {
-                return result;
-            }
+        if(first && found) {
+            return first;
         }
         return null;
     };

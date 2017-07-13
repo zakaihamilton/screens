@@ -34,7 +34,7 @@ package.app.tasks = function AppTasks(me) {
     me.switchTo = {
         set: function(object, value) {
             var windows = me.ui.node.members(document.body, me.widget.window.id);
-            me.set(me.singleton, "widget.window.close", null);
+            me.set(me.singleton, "widget.window.close");
             var tasks = me.get(me.singleton.var.tasks, "selection");
             if(tasks.length) {
                 var task = tasks[0];

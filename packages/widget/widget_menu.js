@@ -48,7 +48,7 @@ package.widget.menu = function WidgetMenu(me) {
         set: function (object, value) {
             me.set(object, "ui.style.zIndex", "");
             me.set(object.var.modal, "ui.style.display", "none");
-            me.set(object.var.menu, "ui.node.parent", null);
+            me.set(object.var.menu, "ui.node.parent");
             me.set(object, "ui.property.broadcast", {
                 "ui.theme.remove": "select"
             });
@@ -73,7 +73,7 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.theme.remove": "select"
             });
             me.set(item, "ui.theme.add", "select");
-            me.set(object.var.menu, "ui.node.parent", null);
+            me.set(object.var.menu, "ui.node.parent");
             me.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
                 me.set(object, info, item);
@@ -113,7 +113,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.back = {
         set: function (object, value) {
             me.set(object.target, "back", value);
-            me.set(object, "ui.node.parent", null);
+            me.set(object, "ui.node.parent");
         }
     };
     me.select = {
@@ -149,6 +149,9 @@ package.widget.menu.item = function WidgetMenuItem(me) {
             if (options) {
                 me.handleValue(object, options, "enabled", function (value) {
                     me.set(object, "ui.basic.enabled", value);
+                });
+                me.handleValue(object, options, "visible", function (value) {
+                    me.set(object, "ui.style.display", value ? "block" : "none");
                 });
                 me.handleValue(object, options, "state", function (value) {
                     if (value) {

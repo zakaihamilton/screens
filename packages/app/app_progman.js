@@ -36,7 +36,7 @@ package.app.progman = function AppProgman(me) {
                         me.send("app." + args[0] + ".launch", args.slice(1));
                     }
                     if (me.options["minimize_on_use"]) {
-                        me.set(me.singleton, "minimize", null);
+                        me.set(me.singleton, "minimize");
                     }
                 });
             }

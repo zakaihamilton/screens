@@ -15,7 +15,7 @@ package.widget.terminal = function WidgetTerminal(me) {
         me.set(terminal.var.inputLine, "ui.basic.text", "");
         me.set(terminal.var.input, "ui.style.display", "block");
         clearTimeout(terminal.cursorTimeout);
-        me.set(terminal, "scroll", null);
+        me.set(terminal, "scroll");
         if (message.length) {
             me.set(terminal.var.prefix, "ui.basic.text", message);
         }
@@ -37,7 +37,7 @@ package.widget.terminal = function WidgetTerminal(me) {
             } else if (type === "input" && e.which !== 13) {
                 setTimeout(function () {
                     me.set(terminal.var.inputLine, "ui.basic.text", field.value);
-                    me.set(terminal, "scroll", null);
+                    me.set(terminal, "scroll");
                 }, 1);
             }
         };
@@ -47,7 +47,7 @@ package.widget.terminal = function WidgetTerminal(me) {
                 if (type === "input") {
                     me.set(terminal, "print", message + field.value);
                 }
-                me.set(field, "ui.node.parent", null);
+                me.set(field, "ui.node.parent");
                 me.set(terminal, terminal.response, field.value);
             }
         };
@@ -88,7 +88,7 @@ package.widget.terminal = function WidgetTerminal(me) {
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);
-            me.set(terminal, "scroll", null);
+            me.set(terminal, "scroll");
         }
     };
     me.scroll = {
