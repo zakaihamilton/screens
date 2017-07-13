@@ -54,7 +54,6 @@
     "ui.group.data": {
         "ui.data.default": {
             "icon": "/packages/res/icons/group.png",
-            "maximize": null,
             "minimize": null,
             "static": true
         },

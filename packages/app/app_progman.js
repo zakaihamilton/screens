@@ -8,7 +8,6 @@ package.app.progman = function AppProgman(me) {
     me.launch = function () {
         if (me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);
-            me.set(me.singleton, "ui.focus.active", true);
             return;
         }
         me.singleton = me.ui.element.create(__json__);
@@ -57,7 +56,6 @@ package.app.progman = function AppProgman(me) {
                     me.get(window, "title"),
                     function() {
                         me.set(window, "widget.window.show", true);
-                        me.set(window, "ui.focus.active", true);
                     },
                     {
                         "separator":isFirst
