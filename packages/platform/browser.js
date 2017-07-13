@@ -10,7 +10,8 @@ package.include({
         "module",
         "script",
         "property",
-        "cmd"
+        "cmd",
+        "app"
     ],
     "ui": [
         "data",
@@ -29,7 +30,8 @@ package.include({
         "property",
         "scroll",
         "attribute",
-        "var"
+        "var",
+        "set"
     ],
     "widget": [
         "radio",

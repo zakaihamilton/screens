@@ -156,7 +156,9 @@ package.ui.scroll = function UIScroll(me) {
                     width: object.offsetWidth,
                     height: object.offsetHeight
                 };
-                me.set(object, "ui.property.broadcast", {"ui.theme.add": "transition"});
+                me.set(object, "ui.property.broadcast", {
+                    "ui.theme.add": "transition"
+                });
                 var scroll_method = function (e) {
                     var track_region = me.ui.rect.absolute_region(object.parentNode);
                     var thumb_region = me.ui.rect.absolute_region(object);
@@ -175,7 +177,9 @@ package.ui.scroll = function UIScroll(me) {
                 var release_method = function (e) {
                     removeEventListener('mousemove', scroll_method);
                     removeEventListener('mouseup', release_method);
-                    me.set(object, "ui.property.broadcast", {"ui.theme.remove": "transition"});
+                    me.set(object, "ui.property.broadcast", {
+                        "ui.theme.remove": "transition"
+                    });
                 };
                 addEventListener('mousemove', scroll_method);
                 addEventListener('mouseup', release_method);

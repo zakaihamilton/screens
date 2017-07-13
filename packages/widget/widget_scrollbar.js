@@ -49,9 +49,13 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
             if (has_scroll && !has_class) {
-                me.set(container, "ui.property.broadcast", {"ui.theme.add": scroll_type + "_scroll"});
+                me.set(container, "ui.property.broadcast", {
+                    "ui.theme.add": scroll_type + "_scroll"
+                });
             } else if (!has_scroll && has_class) {
-                me.set(container, "ui.property.broadcast", {"ui.theme.remove": scroll_type + "_scroll"});
+                me.set(container, "ui.property.broadcast", {
+                    "ui.theme.remove": scroll_type + "_scroll"
+                });
             }
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
             var track_region = me.ui.rect.relative_region(object.var.track);

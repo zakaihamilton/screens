@@ -121,14 +121,11 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.update_title = function (object) {
         var window = me.window(object);
-        var child_window = window.child_window;
-        if (child_window) {
-            if (!me.set(child_window, "ui.theme.contains", "minimize") && me.set(child_window, "ui.theme.contains", "maximize")) {
-                me.set(window.var.label, "ui.basic.text", window.window_title + " - [" + child_window.window_title + "]");
-                return;
-            }
+        var title = window.window_title;
+        if (window.child_window) {
+            title += " - [" + window.child_window.window_title + "]";
         }
-        me.set(window.var.label, "ui.basic.text", window.window_title);
+        me.set(window.var.label, "ui.basic.text", title);
     };
     me.label = {
         get: function (object) {
@@ -164,13 +161,13 @@ package.widget.window = function WidgetWindow(me) {
             me.set(content, "ui.style.background", value);
         }
     };
-    me.static = me.ui.property.attributeSet("static");
-    me.fixed = me.ui.property.attributeSet("fixed", function (object, value) {
+    me.popup = me.ui.set.attribute("popup");
+    me.temp = me.ui.set.attribute("temp");
+    me.static = me.ui.set.attribute("static");
+    me.fixed = me.ui.set.attribute("fixed", function (object, value) {
         var maximized = me.set(object, "ui.theme.contains", "maximize");
         me.set(object, "ui.rect.resizable", !value && !maximized);
     });
-    me.popup = me.ui.property.attributeSet("popup");
-    me.temp = me.ui.property.attributeSet("temp");
     me.context_menu = {
         set: function (object, value) {
             var window = me.window(object);
@@ -183,7 +180,7 @@ package.widget.window = function WidgetWindow(me) {
                 ["Minimize", "widget.window.minimize", {"enabled": "widget.window.minimize"}],
                 ["Maximize", "widget.window.maximize", {"enabled": "widget.window.maximize"}],
                 ["Close", "widget.window.close", {"separator": true, "enabled": "widget.window.close"}],
-                ["Switch To...", "widget.window.tasks", {"separator": true}]
+                ["Switch To...", "core.app.tasks", {"separator": true}]
             ]);
             if (!visible) {
                 var parent = me.parent(window);
@@ -214,19 +211,27 @@ package.widget.window = function WidgetWindow(me) {
         me.widget.menu.attach(parent_window, window);
         me.set(window.var.minimize, "ui.node.parent", window.var.header);
         me.set(window.var.maximize, "ui.node.parent", window.var.header);
-        me.set(window, "ui.property.broadcast", {"ui.theme.add": "child"});
-        me.set(parent_window, "ui.property.broadcast", {"ui.theme.add": "parent"});
+        me.set(window, "ui.property.broadcast", {
+            "ui.theme.add": "child"
+        });
+        me.set(parent_window, "ui.property.broadcast", {
+            "ui.theme.add": "parent"
+        });
     };
     me.detach = function (window, parent_window) {
-        me.set(parent_window, "ui.property.broadcast", {"ui.theme.remove": "parent"});
-        me.set(window, "ui.property.broadcast", {"ui.theme.remove": "child"});
+        me.set(parent_window, "ui.property.broadcast", {
+            "ui.theme.remove": "parent"
+        });
+        me.set(window, "ui.property.broadcast", {
+            "ui.theme.remove": "child"
+        });
         me.widget.menu.attach(window, parent_window);
         me.set(window.var.close, "ui.node.parent", window.var.title);
         me.set(window.var.label, "ui.node.parent", window.var.title);
         me.set(window.var.minimize, "ui.node.parent", window.var.title);
         me.set(window.var.maximize, "ui.node.parent", window.var.title);
-        me.update_title(parent_window);
         parent_window.child_window = null;
+        me.update_title(parent_window);
     };
     me.minimize = {
         get: function (object) {
@@ -237,7 +242,9 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             me.set(window, "ui.focus.active", false);
-            me.set(window, "ui.property.broadcast", {"ui.theme.add": "minimize"});
+            me.set(window, "ui.property.broadcast", {
+                "ui.theme.add": "minimize"
+            });
             me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);
             if (parent_window) {
@@ -323,7 +330,9 @@ package.widget.window = function WidgetWindow(me) {
                 if (maximized) {
                     me.set(window, "maximize", null);
                 } else {
-                    me.set(window, "ui.property.broadcast", {"ui.theme.remove": "minimize"});
+                    me.set(window, "ui.property.broadcast", {
+                        "ui.theme.remove": "minimize"
+                    });
                 }
             } else {
                 var content = null;
@@ -362,7 +371,9 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
             if (minimized) {
-                me.set(window, "ui.property.broadcast", {"ui.theme.remove": "minimize"});
+                me.set(window, "ui.property.broadcast", {
+                    "ui.theme.remove": "minimize"
+                });
                 me.set(window.var.icon, "ui.style.display", "none");
             }
             if (maximized) {
@@ -404,15 +415,6 @@ package.widget.window = function WidgetWindow(me) {
             if (window.temp && window.parentNode) {
                 me.set(window, "close", null);
             }
-        }
-    };
-    me.tasks = {
-        set: function (object, value) {
-            package.include("app.tasks", function (failure) {
-                if (!failure) {
-                    me.send("app.tasks.launch");
-                }
-            });
         }
     };
     me.visibleWindows = {

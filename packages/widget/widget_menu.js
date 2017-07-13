@@ -20,8 +20,12 @@ package.widget.menu = function WidgetMenu(me) {
             parent.appendChild(source.var.menu);
             target.var.menu = source.var.menu;
             source.var.menu = null;
-            me.set(target, "ui.property.broadcast", {"ui.theme.add": "menu"});
-            me.set(source, "ui.property.broadcast", {"ui.theme.remove": "menu"});
+            me.set(target, "ui.property.broadcast", {
+                "ui.theme.add": "menu"
+            });
+            me.set(source, "ui.property.broadcast", {
+                "ui.theme.remove": "menu"
+            });
         }
     };
     me.items = {
@@ -39,7 +43,9 @@ package.widget.menu = function WidgetMenu(me) {
                         "ui.data.values": value
                     }
                 }, parent);
-                me.set(object, "ui.property.broadcast", {"ui.theme.add": "menu"});
+                me.set(object, "ui.property.broadcast", {
+                    "ui.theme.add": "menu"
+                });
             }
         }
     };
@@ -48,8 +54,12 @@ package.widget.menu = function WidgetMenu(me) {
             me.set(object, "ui.style.zIndex", "");
             me.set(object.var.modal, "ui.style.display", "none");
             me.set(object.var.menu, "ui.node.parent", null);
-            me.set(object, "ui.property.broadcast", {"ui.theme.remove": "select"});
-            me.set(object, "ui.property.broadcast", {"ui.touch.move": null});
+            me.set(object, "ui.property.broadcast", {
+                "ui.theme.remove": "select"
+            });
+            me.set(object, "ui.property.broadcast", {
+                "ui.touch.move": null
+            });
             object.selected_item = null;
         }
     };
