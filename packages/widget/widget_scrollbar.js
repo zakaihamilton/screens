@@ -4,43 +4,11 @@
  */
 
 function WidgetScrollbarTemplate(me, scroll_type) {
-    console.log("scrolling: " + scroll_type);
-    me.default = {
-        "ui.theme.class": "widget.scrollbar." + scroll_type,
-        "ui.basic.elements": [
-            {
-                "ui.theme.class": ["widget.scrollbar.button", "before"],
-                "ui.basic.var": "before",
-                "ui.touch.click": "before",
-                "ui.touch.repeat": "before",
-                "ui.style.position": "relative",
-                "ui.basic.elements": {
-                    "ui.theme.class": "before.arrow"
-                }
-            },
-            {
-                "ui.basic.var": "track",
-                "ui.theme.class": "track",
-                "ui.touch.click": "track",
-                "ui.touch.repeat": "track",
-                "ui.basic.elements": {
-                    "ui.basic.var": "thumb",
-                    "ui.theme.class": ["widget.scrollbar.button", "thumb"],
-                    "ui.scroll.thumb": scroll_type,
-                    "ui.style.position": "relative"
-                }
-            },
-            {
-                "ui.theme.class": ["widget.scrollbar.button", "after"],
-                "ui.basic.var": "after",
-                "ui.touch.click": "after",
-                "ui.touch.repeat": "after",
-                "ui.style.position": "relative",
-                "ui.basic.elements": {
-                    "ui.theme.class": "after.arrow"
-                }
-            }
-        ]
+    me.default = __json__;
+    me.scrollType = {
+        get: function(object) {
+            return scroll_type;
+        }
     };
     me.update = {
         set: function (object) {

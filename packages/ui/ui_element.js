@@ -84,11 +84,10 @@ package.ui.element = function UIElement(me) {
     };
     me.to_full_name = function( object, path) {
         path = path.replace("@component", object.component);
-        var context = object;
         if(object.context) {
-            context = object.context;
+            object = object.context;
         }
-        path = me.core.property.fullname(context, path, path);
+        path = me.core.property.fullname(object, path, path);
         return path;
     };
     me.create = function (properties, parent, context=null) {

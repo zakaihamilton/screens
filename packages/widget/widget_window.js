@@ -16,13 +16,12 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.default = __json__;
     me.mainClass = {
-        get: function(object) {
+        get: function (object) {
             var window = me.window(object);
             var parent = me.parent(window);
             if (parent === null) {
                 return "main";
-            }
-            else {
+            } else {
                 return null;
             }
         }
@@ -54,6 +53,13 @@ package.widget.window = function WidgetWindow(me) {
             }
         }
         return window;
+    };
+    me.content = {
+        get: function (object) {
+            var window = me.window(object);
+            var content = me.widget.container.content(window.var.container);
+            return content;
+        }
     };
     me.windows = {
         get: function (object) {
@@ -104,8 +110,12 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.icon, "ui.node.parent", null);
             me.set(window, "ui.node.parent", null);
             if (parent_window) {
-                me.set(parent_window, "ui.property.notify", {"draw": null});
-                me.set(parent_window, "widget.window.refocus");
+                me.set(parent_window, "ui.property.group", {
+                    "ui.property.notify": {
+                        "draw": null
+                    },
+                    "widget.window.refocus": null
+                });
             } else {
                 me.set(document.body, "widget.window.refocus");
             }
@@ -174,13 +184,29 @@ package.widget.window = function WidgetWindow(me) {
             var visible = !me.set(window, "ui.theme.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, [
-                ["Restore", "widget.window.restore", {"enabled": "widget.window.restore"}],
+                ["Restore", "widget.window.restore", {
+                        "enabled": "widget.window.restore"
+                    }
+                ],
                 ["Move", ""],
                 ["Size", ""],
-                ["Minimize", "widget.window.minimize", {"enabled": "widget.window.minimize"}],
-                ["Maximize", "widget.window.maximize", {"enabled": "widget.window.maximize"}],
-                ["Close", "widget.window.close", {"separator": true, "enabled": "widget.window.close"}],
-                ["Switch To...", "core.app.tasks", {"separator": true}]
+                ["Minimize", "widget.window.minimize", {
+                        "enabled": "widget.window.minimize"
+                    }
+                ],
+                ["Maximize", "widget.window.maximize", {
+                        "enabled": "widget.window.maximize"
+                    }
+                ],
+                ["Close", "widget.window.close", {
+                        "separator": true,
+                        "enabled": "widget.window.close"
+                    }
+                ],
+                ["Switch To...", "core.app.tasks", {
+                        "separator": true
+                    }
+                ]
             ]);
             if (!visible) {
                 var parent = me.parent(window);
@@ -190,8 +216,10 @@ package.widget.window = function WidgetWindow(me) {
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
-                me.set(menu, "ui.style.left", icon_icon_region.left + "px");
-                me.set(menu, "ui.style.top", region.bottom - menu_region.height - icon_region.height + "px");
+                me.set(menu, "ui.property.group", {
+                    "ui.style.left": icon_icon_region.left + "px",
+                    "ui.style.top": region.bottom - menu_region.height - icon_region.height + "px"
+                });
             }
         }
     };
@@ -209,8 +237,10 @@ package.widget.window = function WidgetWindow(me) {
         me.update_title(parent_window);
         me.set(window.var.close, "ui.node.parent", window.var.header);
         me.widget.menu.attach(parent_window, window);
-        me.set(window.var.minimize, "ui.node.parent", window.var.header);
-        me.set(window.var.maximize, "ui.node.parent", window.var.header);
+        me.set([
+            window.var.minimize,
+            window.var.maximize
+        ], "ui.node.parent", window.var.header);
         me.set(window, "ui.property.broadcast", {
             "ui.theme.add": "child"
         });
@@ -226,10 +256,12 @@ package.widget.window = function WidgetWindow(me) {
             "ui.theme.remove": "child"
         });
         me.widget.menu.attach(window, parent_window);
-        me.set(window.var.close, "ui.node.parent", window.var.title);
-        me.set(window.var.label, "ui.node.parent", window.var.title);
-        me.set(window.var.minimize, "ui.node.parent", window.var.title);
-        me.set(window.var.maximize, "ui.node.parent", window.var.title);
+        me.set([
+            window.var.close,
+            window.var.label,
+            window.var.minimize,
+            window.var.maximize
+        ], "ui.node.parent", window.var.title);
         parent_window.child_window = null;
         me.update_title(parent_window);
     };
@@ -286,14 +318,18 @@ package.widget.window = function WidgetWindow(me) {
             if (!wasMaximized) {
                 window.restore_region = me.ui.rect.relative_region(window, content);
                 me.ui.rect.set_absolute_region(window, parent_region);
-                window.style.width = "";
-                window.style.height = "";
-                window.style.bottom = "0px";
-                window.style.right = "0px";
-                me.set(window, "ui.rect.movable", false);
-                me.set(window, "ui.rect.resizable", false);
+                me.set(window, "ui.property.group", {
+                    "ui.style.width": "",
+                    "ui.style.height": "",
+                    "ui.style.bottom": "0px",
+                    "ui.style.right": "0px",
+                    "ui.rect.movable": false,
+                    "ui.rect.resizable": false
+                });
             }
-            me.set(window, "ui.property.notify", {"draw": null});
+            me.set(window, "ui.property.notify", {
+                "draw": null
+            });
         }
     };
     me.show = {
@@ -350,12 +386,18 @@ package.widget.window = function WidgetWindow(me) {
                 if (parent_window) {
                     me.detach(window, parent_window);
                 }
-                me.set(window, "ui.rect.movable", true);
-                me.set(window, "ui.rect.resizable", !window.fixed);
+                me.set(window, "ui.property.group", {
+                    "ui.rect.movable": true,
+                    "ui.rect.resizable": !window.fixed
+                });
             }
             me.set(window.var.icon, "ui.style.display", "none");
-            me.set(window, "ui.focus.active", true);
-            me.set(window, "ui.property.notify", {"draw": null});
+            me.set(window, "ui.property.group", {
+                "ui.focus.active": true,
+                "ui.property.notify": {
+                    "draw": null
+                }
+            });
         }
     };
     me.unmaximize = {
@@ -388,15 +430,21 @@ package.widget.window = function WidgetWindow(me) {
                     content = document.body;
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
-                me.set(window, "ui.property.broadcast", {
-                    "ui.theme.remove": "maximize",
-                    "ui.theme.add": "restore"
+                me.set(window, "ui.property.group", {
+                    "ui.property.broadcast": {
+                        "ui.theme.remove": "maximize",
+                        "ui.theme.add": "restore"
+                    },
+                    "ui.rect.movable": true,
+                    "ui.rect.resizable": !window.fixed
                 });
-                me.set(window, "ui.rect.movable", true);
-                me.set(window, "ui.rect.resizable", !window.fixed);
             }
-            me.set(window, "ui.focus.active", true);
-            me.set(window, "ui.property.notify", {"draw": null});
+            me.set(window, "ui.property.group", {
+                "ui.focus.active": true,
+                "ui.property.notify": {
+                    "draw": null
+                }
+            });
         }
     };
     me.toggle = {

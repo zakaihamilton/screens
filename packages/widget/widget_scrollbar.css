@@ -1,4 +1,4 @@
-.widget-scrollbar-vertical {
+.widget-scrollbar-vertical-border {
     overflow: hidden;
     position: relative;
     display:none;
@@ -8,11 +8,11 @@
     flex-direction:column;
 }
 
-.widget-scrollbar-vertical.vertical-scroll {
+.widget-scrollbar-vertical-border.vertical-scroll {
     display:flex;
 }
 
-.widget-scrollbar-horizontal {
+.widget-scrollbar-horizontal-border {
     overflow: hidden;
     position: relative;
     flex:1;
@@ -22,7 +22,7 @@
     border-top: 1px solid black;
 }
 
-.widget-scrollbar-horizontal.horizontal-scroll {
+.widget-scrollbar-horizontal-border.horizontal-scroll {
     display:flex;
 }
 

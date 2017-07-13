@@ -3,8 +3,8 @@
     "icon": "/packages/res/icons/program_manager.png",
     "ui.style.left": "750px",
     "ui.style.top": "150px",
-    "ui.style.width": "500px",
-    "ui.style.height": "500px",
+    "ui.style.width": "400px",
+    "ui.style.height": "400px",
     "widget.window.static": true,
     "widget.menu.items": [
         ["File", [
@@ -16,21 +16,26 @@
                 ["Properties..."],
                 ["Run...", null, {
                         "separator": true
-                    }],
+                    }
+                ],
                 ["Exit Windows...", null, {
                         "separator": true
-                    }]
+                    }
+                ]
             ]],
         ["Options", [
                 ["Auto Arrange", "app.progman.auto_arrange", {
                         "state": "app.progman.auto_arrange"
-                    }],
+                    }
+                ],
                 ["Minimize on Use", "app.progman.minimize_on_use", {
                         "state": "app.progman.minimize_on_use"
-                    }],
+                    }
+                ],
                 ["Save Settings on Exit", "app.progman.save_on_exit", {
                         "state": "app.progman.save_on_exit"
-                    }]
+                    }
+                ]
             ]],
         ["Window", [
                 ["Cascade"],
@@ -53,12 +58,20 @@
             "minimize": null,
             "static": true
         },
-        "ui.data.keys": ["title", "ui.basic.elements"],
-        "ui.data.values": [["Main", [
-                ]],
-            ["Accessories", [
-                ]],
-            ["Utilities", [{
+        "ui.data.keys": [
+            "title",
+            "ui.basic.elements"
+        ],
+        "ui.data.values": [
+            [
+                "Main", []
+            ],
+            [
+                "Accessories", []
+            ],
+            [
+                "Utilities", [
+                    {
                         "text": "Terminal",
                         "ui.basic.src": "/packages/res/icons/terminal.png",
                         "app.progman.args": "terminal",
@@ -76,6 +89,8 @@
                         "app.progman.args": "phases",
                         "ui.touch.dblclick": "app.progman.shell"
                     }
-                ]]]
+                ]
+            ]
+        ]
     }
 }

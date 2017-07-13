@@ -11,7 +11,10 @@ package.widget.tray = function WidgetTray(me) {
         get: function(object) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
-            if(!parent) {
+            if(parent) {
+                parent = me.get(parent, "content");
+            }
+            else {
                 parent = document.body;
             }
             if(!parent.var) {

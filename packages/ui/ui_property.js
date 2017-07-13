@@ -4,6 +4,13 @@
  */
 
 package.ui.property = function UIProperty(me) {
+    me.group = {
+        set: function(object, properties) {
+            for (var key in properties) {
+                me.set(object, key, properties[key]);
+            }
+        }
+    };
     me.broadcast = {
         set: function(object, properties) {
             for (var key in properties) {

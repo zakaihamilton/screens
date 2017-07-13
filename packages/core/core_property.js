@@ -47,6 +47,12 @@ package.core.property = function CoreProperty(me) {
     };
     me.set = function(object, name, value=null, method="set") {
         var result = undefined;
+        if (Array.isArray(object)) {
+            var results = object.map(function (item) {
+                return me.set(item, name, value, method);
+            });
+            return results;
+        }
         if(object && name) {
             if(typeof value === "string" && value.startsWith("@")) {
                 value = me.get(object, value.substring(1));

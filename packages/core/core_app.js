@@ -14,7 +14,7 @@ package.core.app = function CoreApp(me) {
                         }
                     });
                 }
-            }
+            };
         }
     };
 };
