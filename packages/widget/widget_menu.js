@@ -59,7 +59,7 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.theme.remove": "select"
             });
             me.set(object, "ui.property.broadcast", {
-                "ui.touch.move": null
+                "ui.touch.over": null
             });
             object.selected_item = null;
         }
@@ -75,7 +75,7 @@ package.widget.menu = function WidgetMenu(me) {
             object.selected_item = item;
             me.set(object, "ui.style.zIndex", "1");
             me.set(object, "ui.property.broadcast", {
-                "ui.touch.move": "hover",
+                "ui.touch.over": "hover",
                 "ui.theme.remove": "select"
             });
             me.set(item, "ui.theme.add", "select");

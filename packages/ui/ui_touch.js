@@ -63,6 +63,11 @@ package.ui.touch = function UIEvent(me) {
             me.register(me.handle, object, "mousemove", value, "mousemove", window);
         }
     };
+    me.over = {
+        set: function (object, value) {
+            me.register(me.handle, object, "mouseover", value);
+        }
+    };
     me.click = {
         set: function (object, value) {
             me.register(me.handle, object, "click", value);

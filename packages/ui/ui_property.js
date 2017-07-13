@@ -20,6 +20,9 @@ package.ui.property = function UIProperty(me) {
             if(childList) {
                 for(var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
+                    if(!child.component) {
+                        continue;
+                    }
                     if(child.component === me.widget.window.id) {
                         continue;
                     }

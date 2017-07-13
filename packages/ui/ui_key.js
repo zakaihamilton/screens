@@ -9,10 +9,10 @@ package.ui.key = function UIKey(me) {
     me.keys = [];
     me.handle = {
         keydown: function(object, method, event) {
-            
+            return true;
         },
         keyup: function(object, method, event) {
-            
+            return true;
         }
     };
     me.down = {
