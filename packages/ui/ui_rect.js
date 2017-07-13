@@ -5,41 +5,41 @@
 
 package.ui.rect = function UIRect(me) {
     me.movable = {
-        get: function(object) {
+        get: function (object) {
             return object.rect_movable;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.rect_movable = value;
         }
     };
     me.resizable = {
-        get: function(object) {
+        get: function (object) {
             return object.rect_resizable;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.rect_resizable = value;
         }
     };
     me.move = {
         set: function (object, value) {
-            if(!value) {
+            if (!value) {
                 value = me.widget.window.window(object);
             }
             object.addEventListener('mousedown', function (e) {
-                if(!value.rect_movable) {
+                if (!value.rect_movable) {
                     e.preventDefault();
                     return;
                 }
                 var target_region = me.ui.rect.absolute_region(value);
                 var info = {
                     target: value,
-                    left: e.clientX-target_region.left,
-                    top: e.clientY-target_region.top,
+                    left: e.clientX - target_region.left,
+                    top: e.clientY - target_region.top,
                     width: value.offsetWidth,
                     height: value.offsetHeight
                 };
                 me.set(value, "ui.property.broadcast", {
-                    "ui.theme.add": "transition"
+                    "transition": true
                 });
                 var move_method = function (e) {
                     var target_region = me.ui.rect.absolute_region(value);
@@ -48,13 +48,15 @@ package.ui.rect = function UIRect(me) {
                     target_region.left = e.clientX - info.left;
                     target_region.top = e.clientY - info.top;
                     me.ui.rect.set_absolute_region(info.target, target_region);
-                    me.set(info.target, "ui.property.notify", {"draw": null});
+                    me.set(info.target, "ui.property.notify", {
+                        "draw": null
+                    });
                 };
                 var release_method = function (e) {
                     window.removeEventListener('mousemove', move_method);
                     window.removeEventListener('mouseup', release_method);
                     me.set(value, "ui.property.broadcast", {
-                        "ui.theme.remove": "transition"
+                        "transition": false
                     });
                 };
                 window.addEventListener('mousemove', move_method);
@@ -65,11 +67,11 @@ package.ui.rect = function UIRect(me) {
     };
     me.resize = {
         set: function (object, value) {
-            if(!value) {
+            if (!value) {
                 value = me.widget.window.window(object);
             }
             object.addEventListener('mousedown', function (e) {
-                if(!value.rect_resizable) {
+                if (!value.rect_resizable) {
                     e.preventDefault();
                     return;
                 }
@@ -81,7 +83,7 @@ package.ui.rect = function UIRect(me) {
                     height: value.offsetHeight
                 };
                 me.set(value, "ui.property.broadcast", {
-                    "ui.theme.add": "transition"
+                    "transition": true
                 });
                 var move_method = function (e) {
                     var target_region = me.ui.rect.absolute_region(value);
@@ -90,32 +92,32 @@ package.ui.rect = function UIRect(me) {
                     me.ui.rect.empty_region(shift_region);
                     var min_width = parseInt(getComputedStyle(value).minWidth, 10);
                     var min_height = parseInt(getComputedStyle(value).minHeight, 10);
-                    if(object_region.left < target_region.left + (target_region.width / 2)) {
+                    if (object_region.left < target_region.left + (target_region.width / 2)) {
                         target_region.width = target_region.width + (target_region.left - e.clientX);
-                        if(target_region.width >= min_width) {
+                        if (target_region.width >= min_width) {
                             target_region.left = e.clientX;
                         }
-                    }
-                    else {
+                    } else {
                         target_region.width = e.clientX - info.left + info.width;
                     }
-                    if(object_region.top < target_region.top + (target_region.height / 2)) {
+                    if (object_region.top < target_region.top + (target_region.height / 2)) {
                         target_region.height = target_region.height + (target_region.top - e.clientY);
-                        if(target_region.height >= min_height) {
+                        if (target_region.height >= min_height) {
                             target_region.top = e.clientY;
                         }
-                    }
-                    else {
+                    } else {
                         target_region.height = e.clientY - info.top + info.height;
                     }
                     me.ui.rect.set_absolute_region(info.target, target_region);
-                    me.set(info.target, "ui.property.notify", {"draw" : null});
+                    me.set(info.target, "ui.property.notify", {
+                        "draw": null
+                    });
                 };
                 var release_method = function (e) {
                     window.removeEventListener('mousemove', move_method);
                     window.removeEventListener('mouseup', release_method);
                     me.set(value, "ui.property.broadcast", {
-                        "ui.theme.remove": "transition"
+                        "transition": false
                     });
                 };
                 window.addEventListener('mousemove', move_method);
@@ -124,7 +126,7 @@ package.ui.rect = function UIRect(me) {
             });
         }
     };
-    me.relative_region = function (object, parent=object.parentNode) {
+    me.relative_region = function (object, parent = object.parentNode) {
         var parent_region = me.absolute_region(parent);
         var region = me.absolute_region(object);
         var xPos = region.left - parent_region.left;
@@ -141,7 +143,7 @@ package.ui.rect = function UIRect(me) {
         };
     };
     me.absolute_region = function (object) {
-        if(object === document.body) {
+        if (object === document.body) {
             return me.viewport();
         }
         var clientRect = object.getBoundingClientRect();
@@ -149,10 +151,10 @@ package.ui.rect = function UIRect(me) {
         var yPos = 0;
         var width = object.clientWidth;
         var height = object.clientHeight;
-        if(!width) {
+        if (!width) {
             width = clientRect.width;
         }
-        if(!height) {
+        if (!height) {
             height = clientRect.height;
         }
         var parent = object;
@@ -182,18 +184,18 @@ package.ui.rect = function UIRect(me) {
         };
         return absoluteRect;
     };
-    me.empty_region = function(region) {
+    me.empty_region = function (region) {
         region.left = 0;
         region.top = 0;
         region.width = 0;
         region.height = 0;
     };
-    me.set_relative_region = function(object, region, relative_to=null) {
-        if(!object || !region) {
+    me.set_relative_region = function (object, region, relative_to = null) {
+        if (!object || !region) {
             return;
         }
         var parent_region = me.absolute_region(object.parentNode);
-        if(relative_to) {
+        if (relative_to) {
             var relative_to_region = me.absolute_region(relative_to);
             parent_region.left -= relative_to_region.left;
             parent_region.top -= relative_to_region.top;
@@ -203,12 +205,11 @@ package.ui.rect = function UIRect(me) {
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";
     };
-    me.set_absolute_region = function(object, region) {
-        if(object.parentNode === document.body) {
+    me.set_absolute_region = function (object, region) {
+        if (object.parentNode === document.body) {
             object.style.left = region.left - object.clientLeft + "px";
             object.style.top = region.top - object.clientTop + "px";
-        }
-        else {
+        } else {
             var parent_region = me.absolute_region(object.parentNode);
             object.style.left = region.left - object.clientLeft - parent_region.left + "px";
             object.style.top = region.top - object.clientLeft - parent_region.top + "px";
@@ -219,7 +220,7 @@ package.ui.rect = function UIRect(me) {
     me.in_region = function (region, x, y) {
         return !(x < region.left || y < region.top || x > region.right || y > region.bottom);
     };
-    me.in_view_bounds = function(region) {
+    me.in_view_bounds = function (region) {
         var view = me.viewport();
         return !(region.left < view.left || region.top < view.top || region.right > view.right || region.bottom > view.bottom);
     };
@@ -232,6 +233,6 @@ package.ui.rect = function UIRect(me) {
         }
         var width = e[ a + 'Width' ];
         var height = e[ a + 'Height' ];
-        return {left:0,top:0,width:width,height:height,right:width,bottom:height};
+        return {left: 0, top: 0, width: width, height: height, right: width, bottom: height};
     };
 };

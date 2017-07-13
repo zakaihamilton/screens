@@ -111,7 +111,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.node.parent", null);
             if (parent_window) {
                 me.set(parent_window, "ui.property.group", {
-                    "ui.property.notify": {
+                    "ui.property.bubble": {
                         "draw": null
                     },
                     "widget.window.refocus": null
@@ -285,7 +285,9 @@ package.widget.window = function WidgetWindow(me) {
             } else {
                 me.set(document.body, "widget.window.refocus");
             }
-            me.set(window, "ui.property.notify", {"draw": null});
+            me.set(window, "ui.property.bubble", {
+                "draw": null
+            });
         }
     };
     me.maximize = {
