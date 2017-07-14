@@ -1,0 +1,41 @@
+[
+    ["Restore", "widget.window.restore", {
+            "enabled": "widget.window.restore",
+            "visible": "menu.context.resizable"
+        }
+    ],
+    ["Move", "", {
+            "enabled": false
+        }
+    ],
+    ["Size", "", {
+            "enabled": false,
+            "visible": "menu.context.resizable"
+        }
+    ],
+    ["Minimize", "widget.window.minimize", {
+            "enabled": "widget.window.minimize",
+            "visible": "menu.context.resizable"
+        }
+    ],
+    ["Maximize", "widget.window.maximize", {
+            "enabled": "widget.window.maximize",
+            "visible": "menu.context.resizable"
+        }
+    ],
+    ["Close", "widget.window.close", {
+            "separator": "menu.context.resizable",
+            "enabled": "widget.window.close"
+        }
+    ],
+    ["Next", "menu.context.next", {
+            "separator": true,
+            "visible": "menu.context.isChild"
+        }
+    ],
+    ["Switch To...", "core.app.tasks", {
+            "separator": true,
+            "visible": "menu.context.switchable"
+        }
+    ]
+]

@@ -13,7 +13,7 @@
             "text": "",
             "ui.style.display": "none",
             "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.touch.click": "widget.window.context_menu",
+            "ui.touch.click": "menu.context.show",
             "ui.touch.dblclick": "widget.window.restore",
             "ui.basic.window":null,
             "ui.node.parent":"@widget.tray.tray"
@@ -48,7 +48,7 @@
                         {
                             "ui.basic.var": "close",
                             "ui.theme.class": "close",
-                            "ui.touch.click": "context_menu",
+                            "ui.touch.click": "menu.context.show",
                             "ui.touch.dblclick": "close",
                             "ui.theme.add" : "@widget.window.mainClass"
                         },

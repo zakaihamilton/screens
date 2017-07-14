@@ -15,6 +15,13 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
+    me.popup = me.ui.set.attribute("popup");
+    me.temp = me.ui.set.attribute("temp");
+    me.static = me.ui.set.attribute("static");
+    me.fixed = me.ui.set.attribute("fixed", function (object, value) {
+        var maximized = me.set(object, "ui.theme.contains", "maximize");
+        me.set(object, "ui.resize.enabled", !value && !maximized);
+    });
     me.mainClass = {
         get: function (object) {
             var window = me.window(object);
@@ -164,105 +171,6 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var content = me.get(object, "widget.window.content");
             me.set(content, "ui.style.background", value);
-        }
-    };
-    me.resizable = {
-        get: function (object) {
-            var window = me.window(object);
-            return !window.fixed;
-        }
-    };
-    me.switchable = {
-        get: function (object) {
-            var window = me.window(object);
-            var parent = me.parent(window);
-            return !window.temp && !parent;
-        }
-    };
-    me.isChild = {
-        get: function (object) {
-            var window = me.window(object);
-            var parent = me.parent(window);
-            console.log("isChild: " + window.window_title + " parent: " + parent);
-            return parent;
-        }
-    };
-    me.next = {
-        set: function (object) {
-            var window = me.window(object);
-            var next = me.ui.node.previous(window, me.widget.window.id);
-            me.set(next, "widget.window.show", true);
-            if(next !== window) {
-                me.ui.focus.updateOrder(window.parentNode, window, 0);
-            }
-        }
-    };
-    me.popup = me.ui.set.attribute("popup");
-    me.temp = me.ui.set.attribute("temp");
-    me.static = me.ui.set.attribute("static");
-    me.fixed = me.ui.set.attribute("fixed", function (object, value) {
-        var maximized = me.set(object, "ui.theme.contains", "maximize");
-        me.set(object, "ui.resize.enabled", !value && !maximized);
-    });
-    me.context_menu = {
-        set: function (object, value) {
-            var window = me.window(object);
-            var visible = !me.set(window, "ui.theme.contains", "minimize");
-            var region = me.ui.rect.absolute_region(object);
-            var menu = me.widget.menu.create_menu(window, object, region, [
-                ["Restore", "widget.window.restore", {
-                        "enabled": "widget.window.restore",
-                        "visible": "widget.window.resizable"
-                    }
-                ],
-                ["Move", "", {
-                        "enabled": false
-                    }
-                ],
-                ["Size", "", {
-                        "enabled": false,
-                        "visible": "widget.window.resizable"
-                    }
-                ],
-                ["Minimize", "widget.window.minimize", {
-                        "enabled": "widget.window.minimize",
-                        "visible": "widget.window.resizable"
-                    }
-                ],
-                ["Maximize", "widget.window.maximize", {
-                        "enabled": "widget.window.maximize",
-                        "visible": "widget.window.resizable"
-                    }
-                ],
-                ["Close", "widget.window.close", {
-                        "separator": "widget.window.resizable",
-                        "enabled": "widget.window.close"
-                    }
-                ],
-                ["Next", "widget.window.next", {
-                        "separator": true,
-                        "visible": "widget.window.isChild"
-                    }
-                ],
-                ["Switch To...", "core.app.tasks", {
-                        "separator": true,
-                        "visible": "widget.window.switchable"
-                    }
-                ]
-            ]);
-            if (!visible) {
-                var parent = me.parent(window);
-                if (!parent) {
-                    parent = document.body;
-                }
-                var menu_region = me.ui.rect.absolute_region(menu);
-                var icon_region = me.ui.rect.absolute_region(window.var.icon);
-                var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
-                me.set(menu, "ui.property.group", {
-                    "ui.style.left": icon_icon_region.left + "px",
-                    "ui.style.top": region.bottom - menu_region.height - icon_region.height + "px"
-                });
-            }
         }
     };
     me.switch = function (parent, child) {

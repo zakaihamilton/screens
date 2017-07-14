@@ -35,6 +35,9 @@ package.include({
         "move",
         "resize"
     ],
+    "menu" : [
+        "context"
+    ],
     "widget": [
         "radio",
         "checkbox",
