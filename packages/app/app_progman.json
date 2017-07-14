@@ -63,7 +63,14 @@
         ],
         "ui.data.values": [
             [
-                "Main", []
+                "Main", [
+                    {
+                        "text": "Editor",
+                        "ui.basic.src": "/packages/res/icons/editor.png",
+                        "app.progman.args": "editor",
+                        "ui.touch.dblclick": "app.progman.shell"
+                    }
+                ]
             ],
             [
                 "Accessories", []

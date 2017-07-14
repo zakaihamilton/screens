@@ -56,7 +56,8 @@ package.include({
         "terminal",
         "desktop",
         "tray",
-        "content"
+        "content",
+        "editor"
     ],
     "app": [
         "main"
