@@ -11,6 +11,12 @@ package.menu.context = function MenuContext(me) {
             return !window.fixed;
         }
     };
+    me.notPopup = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            return !window.popup;
+        }
+    };
     me.switchable = {
         get: function (object) {
             var window = me.widget.window.window(object);

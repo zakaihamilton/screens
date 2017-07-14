@@ -1,0 +1,13 @@
+{
+    "title": "Editor",
+    "icon": "/packages/res/icons/editor.png",
+    "ui.style.left": "50px",
+    "ui.style.top": "50px",
+    "ui.style.width": "500px",
+    "ui.style.height": "500px",
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.editor"
+        }
+        ]
+}
