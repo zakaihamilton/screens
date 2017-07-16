@@ -40,6 +40,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         set: function (object, value) {
             setTimeout( function() {
                 me.update.set(object);
+                me.update.set(object);
             }, 0);
         }
     };

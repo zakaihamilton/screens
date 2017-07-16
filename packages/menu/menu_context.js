@@ -8,13 +8,13 @@ package.menu.context = function MenuContext(me) {
     me.resizable = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            return !window.fixed;
+            return !me.get(window, "fixed");
         }
     };
     me.notPopup = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            return !window.popup;
+            return !me.get(window, "popup");
         }
     };
     me.switchable = {

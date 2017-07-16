@@ -69,9 +69,12 @@ package.ui.focus = function UIFocus(me) {
             from = me.widget.window.parent(from);
         }
     };
-    me.updateOrder = function (parent, object = null, order = parent.childNodes.length - 1) {
+    me.updateOrder = function (parent, object = null, order = -1) {
         var childList = me.ui.node.childList(parent);
         if (object) {
+            if(order === -1) {
+                order = childList.length-1;
+            }
             var prevOrder = childList.indexOf(object);
             childList.splice(prevOrder, 1);
             childList.splice(order, 0, object);

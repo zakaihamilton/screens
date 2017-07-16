@@ -1,6 +1,7 @@
 .widget-editor-border {
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
+    left:0px;
+    top:0px;
+    position:relative;
+    overflow:hidden;
+    display: block;
 }

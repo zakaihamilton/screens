@@ -16,8 +16,7 @@
             ]
         },
         {
-            "ui.style.display": "flex",
-            "ui.style.flex": "none",
+            "ui.theme.class":"footer",
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.scrollbar.horizontal",

@@ -1,6 +1,7 @@
 package.include({
     "core": [
         "console",
+        "object",
         "remote",
         "event",
         "http",
@@ -35,7 +36,7 @@ package.include({
         "move",
         "resize"
     ],
-    "menu" : [
+    "menu": [
         "context"
     ],
     "widget": [
@@ -58,6 +59,10 @@ package.include({
         "tray",
         "content",
         "editor"
+    ],
+    "canvas": [
+        "node",
+        "grid"
     ],
     "app": [
         "main"

@@ -5,6 +5,6 @@
 
 package.widget.content = function WidgetContent(me) {
     me.default = {
-        "ui.theme.class": "border"
+        "ui.theme.class": "base"
     };
 };

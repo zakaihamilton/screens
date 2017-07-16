@@ -70,7 +70,11 @@
     display:flex;
 }
 
-.widget-window-title.menu.child {
+.widget-window-header.child {
+    display:flex;
+}
+
+.widget-window-title.child {
     display:none;
 }
 

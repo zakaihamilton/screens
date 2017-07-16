@@ -12,16 +12,24 @@ package.widget.menu = function WidgetMenu(me) {
             "ui.style.display":"none"
         }
     };
+    me.updateTheme = function(object) {
+        if(object.var.menu) {
+            me.set(object, "ui.property.broadcast", {
+                "ui.theme.add": "menu"
+            });
+        }
+        else {
+            me.set(object, "ui.property.broadcast", {
+                "ui.theme.remove": "menu"
+            });
+        }
+    };
     me.switch = function (source, target) {
         var target_menu = target.var.menu;
         target.var.menu = source.var.menu;
         source.var.menu = target_menu;
-        me.set(target, "ui.property.broadcast", {
-            "ui.theme.toggle": "menu"
-        });
-        me.set(source, "ui.property.broadcast", {
-            "ui.theme.toggle": "menu"
-        });
+        me.updateTheme(source);
+        me.updateTheme(target);
     };
     me.items = {
         set: function (object, value) {

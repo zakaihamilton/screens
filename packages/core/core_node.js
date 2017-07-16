@@ -4,10 +4,7 @@
 */
 
 package.core.node = function CoreNode(me) {
-    me.test = function() {
-        return "Test";
-    };
-    me.print = function(text) {
-        me.core.console.log(text);
-    };
+    me.parent = me.core.object.property("parent", {
+        
+    });
 };

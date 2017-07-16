@@ -3,3 +3,12 @@
     flex:1;
     flex-direction:column;
 }
+
+.widget-container-footer {
+    display:none;
+    flex:none;
+}
+
+.widget-container-footer.horizontal-scroll {
+    display:flex;
+}

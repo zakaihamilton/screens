@@ -47,6 +47,11 @@ package.app.main = function (me) {
                 me.send("app.progman.launch");
             }
         });
+        package.include("app.editor", function(failure) {
+            if(!failure) {
+                me.send("app.editor.launch");
+            }
+        });
     };
     me.ok = {
         set: function (object, value) {

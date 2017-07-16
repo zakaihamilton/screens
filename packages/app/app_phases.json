@@ -4,6 +4,12 @@
             "ui.style.background": "radial-gradient(circle, red, yellow, green)"
         },
         "ui.data.keys": ["title", "ui.style.background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
-        "ui.data.values": [["Root", "white", "330px", "80px"], ["First", "yellow", "300px", "300px"], ["Second", "blue", "500px", "600px"], ["Third", "red", "200px", "550px"], ["Fourth", "green", "900px", "550px", "200px", "200px"]]
+        "ui.data.values": [
+            ["Root", "white", "330px", "80px"],
+            ["First", "yellow", "300px", "300px"],
+            ["Second", "blue", "500px", "600px"],
+            ["Third", "red", "200px", "550px"],
+            ["Fourth", "green", "900px", "550px", "200px", "200px"]
+        ]
     }
 }

@@ -17,9 +17,9 @@ package.app.progman = function AppProgman(me) {
         "minimize_on_use": true,
         "save_on_exit": true
     };
-    me.auto_arrange = me.ui.set.toggle(me.options, "auto_arrange");
-    me.minimize_on_use = me.ui.set.toggle(me.options, "minimize_on_use");
-    me.save_on_exit = me.ui.set.toggle(me.options, "save_on_exit");
+    me.auto_arrange = me.ui.set.toggleOption(me.options, "auto_arrange");
+    me.minimize_on_use = me.ui.set.toggleOption(me.options, "minimize_on_use");
+    me.save_on_exit = me.ui.set.toggleOption(me.options, "save_on_exit");
     me.args = {
         set: function (object, value) {
             object.args = value;

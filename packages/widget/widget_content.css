@@ -1,6 +1,7 @@
-.widget-content-border {
+.widget-content-base {
     flex:1;
     background: white;
     overflow: hidden;
     position: relative;
+    display:block;
 }

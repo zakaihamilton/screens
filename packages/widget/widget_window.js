@@ -15,10 +15,10 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
-    me.popup = me.ui.set.attribute("popup");
-    me.temp = me.ui.set.attribute("temp");
-    me.static = me.ui.set.attribute("static");
-    me.fixed = me.ui.set.attribute("fixed", function (object, value) {
+    me.popup = me.ui.set.themedProperty("popup");
+    me.temp = me.ui.set.themedProperty("temp");
+    me.static = me.ui.set.themedProperty("static");
+    me.fixed = me.ui.set.themedProperty("fixed", function (object, name, value) {
         var maximized = me.set(object, "ui.theme.contains", "maximize");
         me.set(object, "ui.resize.enabled", !value && !maximized);
     });
@@ -103,7 +103,7 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
-            if (window.static) {
+            if (me.get(window, "static")) {
                 me.set(window, "minimize");
                 return;
             }
@@ -241,7 +241,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
-            return !window.fixed && !maximized && !minimized;
+            return !me.get(window, "fixed") && !maximized && !minimized;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -361,7 +361,7 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.theme.add": "restore"
                     },
                     "ui.move.enabled": true,
-                    "ui.resize.enabled": !window.fixed
+                    "ui.resize.enabled": !me.get(window, "fixed")
                 });
             }
             me.set(window, "ui.property.group", {
@@ -385,7 +385,7 @@ package.widget.window = function WidgetWindow(me) {
     me.blur = {
         set: function (object) {
             var window = me.window(object);
-            if (window.temp && window.parentNode) {
+            if (me.get(window, "temp") && window.parentNode) {
                 me.set(window, "close");
             }
         }

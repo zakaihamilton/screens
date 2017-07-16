@@ -4,7 +4,7 @@
  */
 
 package.ui.set = function UISet(me) {
-    me.toggle = function(options, key) {
+    me.toggleOption = function (options, key) {
         return {
             get: function (object) {
                 return options[key];
@@ -14,27 +14,22 @@ package.ui.set = function UISet(me) {
             }
         };
     };
-    me.attribute = function(attribute, callback) {
-        return {
-            get: function(object) {
-                return object[attribute];
-            },
-            set: function(object, value) {
-                object[attribute] = value;
-                if(value) {
+    me.themedProperty = function (name, callback) {
+        return me.core.object.property(name, {
+            "set": function (object, name, value) {
+                if (value) {
                     me.set(object, "ui.property.broadcast", {
-                        "ui.theme.add": attribute
+                        "ui.theme.add": name
+                    });
+                } else {
+                    me.set(object, "ui.property.broadcast", {
+                        "ui.theme.remove": name
                     });
                 }
-                else {
-                    me.set(object, "ui.property.broadcast", {
-                        "ui.theme.remove": attribute
-                    });
-                }
-                if(callback) {
-                    callback(object, value);
+                if (callback) {
+                    callback(object, name, value);
                 }
             }
-        };
+        });
     };
 };

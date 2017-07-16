@@ -7,6 +7,7 @@ package.core.property = function CoreProperty(me) {
     me.init = function() {
         package.get = me.get;
         package.set = me.set;
+        package.dirty = me.dirty;
     };
     me.fullname = function(object, name, default_name=null) {
         var separator = name.indexOf(".");
@@ -69,4 +70,8 @@ package.core.property = function CoreProperty(me) {
         }
         return result;
     };
+    me.dirty = function(object, name) {
+        me.get(object, name, "dirty");
+    }
+    
 };
