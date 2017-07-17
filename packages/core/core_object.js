@@ -4,11 +4,20 @@
 */
 
 package.core.object = function CoreObject(me) {
-    me.create = function () {
-        var object = {values:{},dirty:{}};
+    me.create = function (component) {
+        var object = {
+            values:{},
+            dirty:{},
+            component:component.id
+        };
         return object;
     };
-    me.property = function (name, callbacks=null) {
+    me.attach = function(data, component) {
+        data.values = {};
+        data.dirty = {};
+        data.component = component.id;
+    };
+    me.property = function (name, options=null) {
         return {
             get: function (object) {
                 var dirty = true;
@@ -17,9 +26,9 @@ package.core.object = function CoreObject(me) {
                 if(!object) {
                     return null;
                 }
-                if(callbacks) {
-                    if("dirty" in callbacks) {
-                        var callback = callbacks["dirty"];
+                if(options) {
+                    if("dirty" in options) {
+                        var callback = options["dirty"];
                         if(object.dirty && name in object.dirty) {
                             dirty = object.dirty[name];
                         }
@@ -27,11 +36,13 @@ package.core.object = function CoreObject(me) {
                             value = callback(object, name);
                             if(typeof value !== "undefined") {
                                 dynamic = true;
+                                object.values[name] = value;
+                                object.dirty[name] = false;
                             }
                         }
                     }
-                    if(!dynamic && callbacks && "get" in callbacks) {
-                        var callback = callbacks["get"];
+                    if(!dynamic && options && "get" in options) {
+                        var callback = options["get"];
                         if(callback) {
                             value = callback(object, name);
                             if(typeof value !== "undefined") {
@@ -49,18 +60,26 @@ package.core.object = function CoreObject(me) {
                 if(!object) {
                     return;
                 }
+                if(options && options.readOnly) {
+                    return;
+                }
                 if(!object.values) {
                     object.values = {};
                 }
                 if(!object.dirty) {
                     object.dirty = {};
                 }
+                var oldValue = object.values[name];
+                if(oldValue === value) {
+                    object.dirty[name] = false;
+                    return;
+                }
                 object.values[name] = value;
                 object.dirty[name] = false;
-                if(callbacks && "set" in callbacks) {
-                    var callback = callbacks["set"];
+                if(options && "set" in options) {
+                    var callback = options["set"];
                     if(callback) {
-                        callback(object, name, value);
+                        callback(object, name, value, oldValue);
                     }
                 }
             },

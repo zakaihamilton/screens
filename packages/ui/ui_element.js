@@ -133,8 +133,8 @@ package.ui.element = function UIElement(me) {
             tag = "div";
         }
         object = document.createElement(tag);
+        me.core.object.attach(object, component);
         object.var = {};
-        object.component = component_name;
         if(context === "self") {
             console.log("using self context");
             context = object;
