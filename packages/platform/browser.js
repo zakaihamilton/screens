@@ -61,7 +61,6 @@ package.include({
         "editor"
     ],
     "canvas": [
-        "node",
         "grid"
     ],
     "app": [

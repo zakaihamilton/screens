@@ -4,7 +4,10 @@
 */
 
 package.canvas.grid = function CanvasGrid(me) {
-    
+    me.create = function() {
+        return me.core.object.create(me);
+    };
+    me.rows = me.core.object.property("rows");
 };
 
 package.canvas.grid.row = function CanvasGridRow(me) {
@@ -35,7 +38,8 @@ package.canvas.grid.row = function CanvasGridRow(me) {
 
 package.canvas.grid.cell = function CanvasGridCell(me) {
     me.create = function() {
-        return me.core.object.create(me);
+        var cell = me.core.object.create(me);
+        return cell;
     };
     me.row = me.core.object.property("row", {
         set: function(object, name, row, oldRow) {
@@ -43,10 +47,14 @@ package.canvas.grid.cell = function CanvasGridCell(me) {
                 var oldItems = me.get(oldRow, "items");
                 var index = oldItems.indexOf(object);
                 oldItems.splice(index, 1);
+                me.dirty(oldRow, "width");
+                me.dirty(oldRow, "height");
             }
             if(row) {
                 var items = me.get(row, "items");
                 items.splice(-1, 0, object);
+                me.dirty(row, "width");
+                me.dirty(row, "height");
             }
         }
     });
@@ -59,13 +67,7 @@ package.canvas.grid.cell = function CanvasGridCell(me) {
     me.height = me.core.object.property("height", {
         set: function(object, name, length) {
             var row = me.get(object, "row");
-            var rowLength = me.get(row, name);
-            if(rowLength < length) {
-                me.set(row, name, length);
-            }
-            else {
-                me.dirty(row, name);
-            }
+            me.dirty(row, name);
         }
     });
 };

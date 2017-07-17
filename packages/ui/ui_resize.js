@@ -59,8 +59,8 @@ package.ui.resize = function UIResize(me) {
             var object_region = me.ui.rect.absolute_region(object);
             var shift_region = {};
             me.ui.rect.empty_region(shift_region);
-            var min_width = parseInt(getComputedStyle(me.info.target).minWidth, 10);
-            var min_height = parseInt(getComputedStyle(me.info.target).minHeight, 10);
+            var min_width = parseInt(me.get(me.info.target, "ui.style.minWidth"), 10);
+            var min_height = parseInt(me.get(me.info.target, "ui.style.minHeight"), 10);
             if (object_region.left < target_region.left + (target_region.width / 2)) {
                 if (object_region.right < target_region.left + (target_region.width / 2)) {
                     target_region.width = target_region.width + (target_region.left - event.clientX);

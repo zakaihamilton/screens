@@ -10,7 +10,7 @@ package.ui.node = function UINode(me) {
             var child = object.childNodes[childIndex];
             var order = "auto";
             if(child.component) {
-                order = getComputedStyle(child).zIndex;
+                order = me.get(child, "ui.style.zIndex");
             }
             if(!order || order === "auto" || order < 0 || order >= object.childNodes.length) {
                 order = 0;
