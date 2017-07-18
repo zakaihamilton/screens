@@ -25,6 +25,7 @@ package.canvas.dirty = function CanvasDirty(me) {
     };
     me.draw = function (object, canvas) {
         if (object !== canvas) {
+            me.canvas.background.draw(object, canvas);
             me.canvas.border.draw(object, canvas);
         }
         var childList = me.ui.node.childList(object);

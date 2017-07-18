@@ -10,12 +10,23 @@
             "ui.element.component": "widget.canvas",
             "ui.basic.elements": [
                 {
-                    "ui.style.position":"relative",
+                    "ui.style.position": "relative",
                     "ui.style.left": "50px",
                     "ui.style.top": "50px",
                     "ui.style.width": "100px",
                     "ui.style.height": "100px",
-                    "ui.style.border": "3px solid red"
+                    "ui.style.border": "3px solid black",
+                    "ui.basic.elements": [
+                        {
+                            "ui.style.position": "relative",
+                            "ui.style.left": "50px",
+                            "ui.style.top": "50px",
+                            "ui.style.width": "100px",
+                            "ui.style.height": "100px",
+                            "ui.style.border": "3px solid red",
+                            "ui.style.background": "yellow"
+                        }
+                    ]
                 }
             ]
         }

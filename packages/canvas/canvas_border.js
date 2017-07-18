@@ -5,10 +5,7 @@
 
 package.canvas.border = function CanvasBorder(me) {
     me.attach = function(object) {
-        object.borderLeft = 0;
-        object.borderTop = 0;
-        object.borderWidth = 0;
-        object.borerHeight = 0;
+
     };
     me.draw = function(object, canvas) {
         var context = me.get(canvas, "context");

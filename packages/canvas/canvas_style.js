@@ -7,6 +7,7 @@ package.canvas.style = function CanvasStyle(me) {
     me.attach = function(object) {
         object.style = {"display":"inline"};
         object._getComputedStyle = me.getComputedStyle;
+        object.style.borderWidth = 0;
         Object.defineProperty(object.style, "border", {
             set: function (value) {
                 var args = value.split(" ");

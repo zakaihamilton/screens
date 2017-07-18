@@ -10,22 +10,22 @@ package.canvas.rect = function CanvasStyle(me) {
         };
         Object.defineProperty(object, "clientLeft", {
             get: function () {
-                return object.borderLeft;
+                return parseInt(object.style.borderWidth);
             }
         });
         Object.defineProperty(object, "clientTop", {
             get: function () {
-                return object.borderTop;
+                return parseInt(object.style.borderWidth);
             }
         });
         Object.defineProperty(object, "clientWidth", {
             get: function () {
-                return object.borderWidth;
+                return object.offsetWidth - (parseInt(object.style.borderWidth) * 2);
             }
         });
         Object.defineProperty(object, "clientHeight", {
             get: function () {
-                return object.borderHeight;
+                return object.offsetHeight - (parseInt(object.style.borderWidth) * 2);
             }
         });
         Object.defineProperty(object, "scrollLeft", {
@@ -40,12 +40,12 @@ package.canvas.rect = function CanvasStyle(me) {
         });        
         Object.defineProperty(object, "scrollWidth", {
             get: function () {
-                return object.borderWidth;
+                return object.offsetWidth - (object.style.borderWidth * 2);
             }
         });
         Object.defineProperty(object, "scrollHeight", {
             get: function () {
-                return object.borderHeight;
+                return object.offsetHeight - (object.style.borderWidth * 2);
             }
         });
         object.offsetLeft = 0;

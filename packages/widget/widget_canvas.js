@@ -37,9 +37,11 @@ package.widget.canvas = function WidgetCanvas(me) {
     me.draw = {
         set: function (object) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            object.width = region.width;
-            object.height = region.height;
-            me.canvas.dirty.draw(object, object);
+            if(object.width !== region.width || object.height !== region.height) {
+                object.width = region.width;
+                object.height = region.height;
+                me.canvas.dirty.draw(object, object);
+            }
         }
     };
     me.context = {
