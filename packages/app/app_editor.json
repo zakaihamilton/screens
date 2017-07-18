@@ -16,6 +16,7 @@
                     "ui.style.width": "100px",
                     "ui.style.height": "100px",
                     "ui.style.border": "3px solid black",
+                    "ui.basic.text":"Hello World!",
                     "ui.basic.elements": [
                         {
                             "ui.style.position": "relative",

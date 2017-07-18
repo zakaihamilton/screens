@@ -13,21 +13,19 @@ package.canvas.border = function CanvasBorder(me) {
             var region = me.ui.rect.relative_region(object, canvas);
             var colors = me.ui.style.values(object.style.borderColor);
             var widths = me.ui.style.values(object.style.borderWidth);
-            console.log("colors: " + JSON.stringify(colors));
-            console.log("widths: " + JSON.stringify(widths));
             context.save();
             context.lineJoin = "miter";
             var lineWidth = parseInt(widths.left);
-            console.log("lineWidth:" + lineWidth);
-            var left = region.left - (lineWidth/2);
-            var right = region.left + (lineWidth/2);
-            var top = region.top - (lineWidth/2);
-            var bottom = region.top + (lineWidth/2);
+            region.left -= lineWidth / 2;
+            region.top -= lineWidth / 2;
+            region.width += lineWidth;
+            region.height += lineWidth;
+            var left = region.left - (lineWidth / 2);
+            var right = region.left + (lineWidth / 2);
+            var top = region.top - (lineWidth / 2);
+            var bottom = region.top + (lineWidth / 2);
             var width = region.width;
             var height = region.height;
-            
-            console.log("left: " + left + " top: " + top + " right: " + right + " bottom: " + bottom);
-            
             me.trapezoid(context, colors.top, left, top, right + width, top, left + width, bottom, right, bottom);
             me.trapezoid(context, colors.right, right + width, top, right + width, bottom + height, left + width, top + height, left + width, bottom);
             me.trapezoid(context, colors.bottom, right + width, bottom + height, left, bottom + height, right, top + height, left + width, top + height);

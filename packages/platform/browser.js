@@ -69,7 +69,8 @@ package.include({
         "style",
         "rect",
         "border",
-        "background"
+        "background",
+        "text"
     ],
     "app": [
         "main"
