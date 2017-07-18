@@ -37,7 +37,7 @@ package.widget.canvas = function WidgetCanvas(me) {
     me.draw = {
         set: function (object) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            if (object.width !== region.width || object.height !== region.height) {
+            if (parseInt(object.style.width) !== region.width || parseInt(object.style.height) !== region.height) {
                 object.width = region.width;
                 object.height = region.height;
                 object.style.width = region.width + 'px';
