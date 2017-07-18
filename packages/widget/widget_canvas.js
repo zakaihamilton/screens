@@ -37,11 +37,33 @@ package.widget.canvas = function WidgetCanvas(me) {
     me.draw = {
         set: function (object) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            if(object.width !== region.width || object.height !== region.height) {
+            if (object.width !== region.width || object.height !== region.height) {
                 object.width = region.width;
                 object.height = region.height;
+                object.style.width = region.width + 'px';
+                object.style.height = region.height + 'px';
+                me.scale(object);
                 me.canvas.dirty.draw(object, object);
             }
+        }
+    };
+    me.scale = function (object) {
+        var context = object.getContext('2d'),
+        devicePixelRatio = window.devicePixelRatio || 1,
+        backingStoreRatio = context.webkitBackingStorePixelRatio ||
+        context.mozBackingStorePixelRatio ||
+        context.msBackingStorePixelRatio ||
+        context.oBackingStorePixelRatio ||
+        context.backingStorePixelRatio || 1,
+        ratio = devicePixelRatio / backingStoreRatio;
+        if (devicePixelRatio !== backingStoreRatio) {
+            var oldWidth = object.width;
+            var oldHeight = object.height;
+            object.width = oldWidth * ratio;
+            object.height = oldHeight * ratio;
+            object.style.width = oldWidth + 'px';
+            object.style.height = oldHeight + 'px';
+            context.scale(ratio, ratio);
         }
     };
     me.context = {
@@ -52,8 +74,8 @@ package.widget.canvas = function WidgetCanvas(me) {
     };
     me.createElement = function (tag) {
         var element = {
-            tagName:tag,
-            virtual:true
+            tagName: tag,
+            virtual: true
         };
         me["canvas"].components.map(function (component_name) {
             var component = me[component_name];
