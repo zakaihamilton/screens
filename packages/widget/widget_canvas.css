@@ -1,0 +1,7 @@
+.widget-canvas-border {
+    left:0px;
+    top:0px;
+    position:relative;
+    overflow:hidden;
+    display:block;
+}

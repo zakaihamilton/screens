@@ -32,7 +32,6 @@ package.widget.list = function WidgetList(me) {
             var content = me.widget.container.content(object.var.container);
             var childList = me.ui.node.childList(content);
             if (childList) {
-                console.log("childList.length: " + childList.length + " actual list: " + content.childNodes.length);
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
                     var state = me.get(child, "state");

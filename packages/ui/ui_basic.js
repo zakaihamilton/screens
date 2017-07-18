@@ -6,7 +6,7 @@
 package.ui.basic = function UIBasic(me) {
     me.tag = {
         get: function (object) {
-            return object.tag;
+            return object.tagName;
         }
     };
     me.elementId = {

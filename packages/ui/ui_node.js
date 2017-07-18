@@ -5,17 +5,18 @@
 
 package.ui.node = function UINode(me) {
     me.childList = function(object) {
-        var childList = Array(object.childNodes.length).fill(null);
-        for(var childIndex = 0; childIndex < object.childNodes.length; childIndex++) {
-            var child = object.childNodes[childIndex];
+        var childNodes = me.childNodes(object);
+        var childList = Array(childNodes.length).fill(null);
+        for(var childIndex = 0; childIndex < childNodes.length; childIndex++) {
+            var child = childNodes[childIndex];
             var order = "auto";
             if(child.component) {
                 order = me.get(child, "ui.style.zIndex");
             }
-            if(!order || order === "auto" || order < 0 || order >= object.childNodes.length) {
+            if(!order || order === "auto" || order < 0 || order >= childNodes.length) {
                 order = 0;
             }
-            for(;childList[order] && order < object.childNodes.length; order++);
+            for(;childList[order] && order < childNodes.length; order++);
             childList[order] = child;
         }
         childList = childList.filter(Boolean);
@@ -106,31 +107,79 @@ package.ui.node = function UINode(me) {
         }
         return array;
     };
+    me.appendChild = function(parent, child) {
+        if("_appendChild" in parent) {
+            return parent._appendChild(child);
+        }
+        else {
+            return parent.appendChild(child);
+        }
+    };
+    me.insertBefore = function(parent, child, sibling) {
+        if("_insertBefore" in parent) {
+            return parent._insertBefore(child, sibling);
+        }
+        else {
+            return parent.insertBefore(child, sibling);
+        }
+    };
+    me.removeChild = function(parent, child) {
+        if("_removeChild" in parent) {
+            return parent._removeChild(child);
+        }
+        else {
+            return parent.removeChild(child);
+        }
+    };
+    me.firstChild = function(parent) {
+        if("_firstChild" in parent) {
+            return parent._firstChild;
+        }
+        else {
+            parent.firstChild;
+        }
+    };
+    me.lastChild = function(parent) {
+        if("_lastChild" in parent) {
+            return parent._lastChild;
+        }
+        else {
+            parent.firstChild;
+        }
+    };
+    me.childNodes = function(parent) {
+        if("_childNodes" in parent) {
+            return parent._childNodes;
+        }
+        else {
+            return parent.childNodes;
+        }
+    };
     me.parent = {
         get : function(object) {
             return object.parentNode;
         },
         set : function(object, value) {
             if(object.parentNode) {
-                object.parentNode.removeChild(object);
+                me.removeChild(object.parentNode, object);
             }
             if(value) {
-                value.appendChild(object);
+                me.appendChild(value, object);
             }
         }
     };
     me.unshift = {
         set: function(object, value) {
             if(object.parentNode) {
-                object.parentNode.removeChild(object);
+                me.removeChild(object.parentNode, object);
             }
             if(value) {
-                value.insertBefore(object, value.firstChild);
+                me.insertBefore(value, object, me.firstChild(value));
             }
         }
     };
     me.index = function(object) {
-        for (var index = 0; (object = object.previousElementSibling); index++);
+        for (var index = 0; (object = object.previousSibling); index++);
         return index;
     };
     me.shift = function(object, target) {
@@ -138,16 +187,16 @@ package.ui.node = function UINode(me) {
             var object_index = me.index(object);
             var target_index = me.index(target);
             if(!target.nextSibling) {
-                object.parentNode.appendChild(object);
+                me.appendChild(object.parentNode, object);
             }
             else if(!target.previousSibling) {
-                object.parentNode.insertBefore(object, target);
+                me.insertBefore(object.parentNode, object, target);
             }
             else if(object_index > target_index) {
-                object.parentNode.insertBefore(object, target);
+                me.insertBefore(object.parentNode, object, target);
             }
             else {
-                object.parentNode.insertBefore(object, target.nextSibling);
+                me.insertBefore(object.parentNode, object, target.nextSibling);
             }
         }
     };

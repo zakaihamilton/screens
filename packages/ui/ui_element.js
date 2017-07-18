@@ -90,6 +90,19 @@ package.ui.element = function UIElement(me) {
         path = me.core.property.fullname(object, path, path);
         return path;
     };
+    me.find = function(object, name) {
+        var member = null;
+        while(object) {
+            if(object.component) {
+                var component = me[object.component];
+                if(name in component) {
+                    member = component[name];
+                }
+            }
+            object = object.parentNode;
+        }
+        return member;
+    };
     me.create = function (properties, parent, context=null) {
         if(!properties) {
             return;
@@ -132,10 +145,16 @@ package.ui.element = function UIElement(me) {
         if(!tag) {
             tag = "div";
         }
-        object = document.createElement(tag);
+        var creationMethod = me.find(parent, "createElement");
+        if(creationMethod) {
+            object = creationMethod(tag);
+        }
+        else {
+            object = document.createElement(tag);
+        }
         me.core.object.attach(object, component);
         object.var = {};
-        if(context === "self") {
+            if(context === "self") {
             console.log("using self context");
             context = object;
         }

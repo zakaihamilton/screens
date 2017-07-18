@@ -58,10 +58,17 @@ package.include({
         "desktop",
         "tray",
         "content",
-        "editor"
+        "editor",
+        "canvas"
     ],
     "canvas": [
-        "grid"
+        "dirty",
+        "node",
+        "element",
+        "attribute",
+        "style",
+        "rect",
+        "border"
     ],
     "app": [
         "main"
