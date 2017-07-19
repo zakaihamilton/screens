@@ -7,25 +7,29 @@
     "ui.style.height": "500px",
     "ui.basic.elements": [
         {
+            "ui.theme.class":"app.editor.canvas",
             "ui.element.component": "widget.canvas",
             "ui.basic.elements": [
                 {
-                    "ui.style.position": "relative",
+                    "ui.basic.tag":"div",
+                    "ui.style.position": "absolute",
                     "ui.style.left": "50px",
                     "ui.style.top": "50px",
                     "ui.style.width": "100px",
                     "ui.style.height": "100px",
                     "ui.style.border": "3px solid black",
-                    "ui.basic.text":"Hello World!",
+                    "ui.basic.text":"@app.editor.pos",
                     "ui.basic.elements": [
                         {
-                            "ui.style.position": "relative",
+                            "ui.basic.tag":"div",
+                            "ui.style.position": "absolute",
                             "ui.style.left": "50px",
                             "ui.style.top": "50px",
                             "ui.style.width": "100px",
                             "ui.style.height": "100px",
                             "ui.style.border": "3px solid red",
-                            "ui.style.background": "yellow"
+                            "ui.style.background": "yellow",
+                            "ui.basic.text":"@app.editor.pos"
                         }
                     ]
                 }

@@ -103,6 +103,11 @@ package.ui.element = function UIElement(me) {
         }
         return member;
     };
+    me.component = {
+        get: function(object) {
+            return object.component;
+        }
+    };
     me.create = function (properties, parent, context=null) {
         if(!properties) {
             return;
