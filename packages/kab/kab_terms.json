@@ -14,6 +14,54 @@
         },
         "Tabur" : {
             "translation" : "Navel"
+        },
+        "Keter" : {
+            "translation" : "Crown"
+        },
+        "ABYA" : {
+            "expansion" : ["Atzilut", "Beria", "Yetzira", "Assiya"]
+        },
+        "AA" : {
+            "expansion" : ["Arich Anpin"]
+        },
+        "Arich Anpin" : {
+            "translation" : "Long Face"
+        },
+        "Atzilut" : {
+            "translation" : "Emanation"
+        },
+        "Beria" : {
+            "translation" : "Creation"
+        },
+        "Yetzira" : {
+            "translation" : "Formation"
+        },
+        "Assiya" : {
+            "translation" : "Action"
+        },
+        "Olam" : {
+            "translation" : "World"
+        },
+        "Chazeh" : {
+            "translation" : "Chest"
+        },
+        "Peh" : {
+            "translation" : "Mouth"
+        },
+        "Taburit" : {
+            "translation" : "Navel"
+        },
+        "Partzufim" : {
+            "translation" : "Faces"
+        },
+        "Partzuf" : {
+            "translation" : "Face"
+        },
+        "Eser" : {
+            "translation" : "Ten"
+        },
+        "Sefirot" : {
+            "translation" : "Emanations"
         }
     }
 }

@@ -1,9 +1,9 @@
 {
     "title": "Transform",
-    "ui.style.left": "350px",
+    "ui.style.left": "250px",
     "ui.style.top": "100px",
-    "ui.style.width": "600px",
-    "ui.style.height": "300px",
+    "ui.style.width": "800px",
+    "ui.style.height": "500px",
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
     "widget.menu.items": [

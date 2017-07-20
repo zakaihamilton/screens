@@ -31,18 +31,17 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if(me.options.translation) {
                 text = text.split(".").map(function(sentence) {
-                    var words = sentence.split(" ");
-                    me.translate(words);
-                    return words.join(" ");
+                    return sentence.split(",").map(function(fragment) {
+                        var words = fragment.split(" ");
+                        me.translate(words);
+                        return words.join(" ");
+                    }).join(",");
                 }).join(".");
             }
             me.set(me.singleton.var.output, "ui.basic.text", text);
         }
     };
     me.translate = function(words) {
-        var index = 0;
-        do {
-            index = me.kab.terms.parse(words, index, me.options.keepSource);
-        } while(index);
+        me.kab.terms.parse(words, me.options.keepSource);
     };
 };
