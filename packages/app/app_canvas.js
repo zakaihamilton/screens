@@ -3,7 +3,7 @@
  @component AppEditor
  */
 
-package.app.editor = function AppEditor(me) {
+package.app.canvas = function AppEditor(me) {
     me.require = {platform: "browser"};
     me.launch = function () {
         if(me.get(me.singleton, "ui.node.parent")) {

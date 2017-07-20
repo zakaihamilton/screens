@@ -1,35 +1,36 @@
 {
-    "title": "Editor",
-    "icon": "/packages/res/icons/editor.png",
+    "title": "Canvas",
+    "icon": "/packages/res/icons/default.png",
     "ui.style.left": "50px",
     "ui.style.top": "50px",
     "ui.style.width": "500px",
     "ui.style.height": "500px",
     "ui.basic.elements": [
         {
-            "ui.theme.class":"app.editor.canvas",
-            "ui.element.component": "widget.canvas",
+            "ui.theme.class": "app.canvas.canvas",
+            "!ui.element.component": "widget.canvas",
             "ui.basic.elements": [
                 {
-                    "ui.basic.tag":"div",
+                    "ui.basic.tag": "div",
                     "ui.style.position": "absolute",
                     "ui.style.left": "50px",
                     "ui.style.top": "50px",
-                    "ui.style.width": "100px",
-                    "ui.style.height": "100px",
+                    "ui.style.width": "200px",
+                    "ui.style.height": "200px",
                     "ui.style.border": "3px solid black",
-                    "ui.basic.text":"@app.editor.pos",
+                    "ui.style.background": "white",
+                    "ui.basic.text": "@app.canvas.pos",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.tag":"div",
+                            "ui.basic.tag": "div",
                             "ui.style.position": "absolute",
                             "ui.style.left": "50px",
                             "ui.style.top": "50px",
-                            "ui.style.width": "100px",
-                            "ui.style.height": "100px",
+                            "ui.style.width": "300px",
+                            "ui.style.height": "300px",
                             "ui.style.border": "3px solid red",
-                            "ui.style.background": "yellow",
-                            "ui.basic.text":"@app.editor.pos"
+                            "ui.style.background": "white",
+                            "ui.basic.text": "@app.canvas.pos"
                         }
                     ]
                 }
