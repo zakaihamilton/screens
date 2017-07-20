@@ -4,7 +4,6 @@
  */
 
 package.ui.var = function UIVar(me) {
-    me.require = {platform: "browser"};
     me.forward = {
         get : function(object, property) {
             return {

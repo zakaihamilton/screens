@@ -4,7 +4,6 @@
  */
 
 package.app.terminal = function AppTerminal(me) {
-    me.require = {platform: "browser"};
     me.launch = function () {
         me.ui.element.create(__json__);
     };

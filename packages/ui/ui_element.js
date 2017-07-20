@@ -4,7 +4,6 @@
  */
 
 package.ui.element = function UIElement(me) {
-    me.require = {platform: "browser"};
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;

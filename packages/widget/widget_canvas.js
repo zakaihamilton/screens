@@ -4,7 +4,6 @@
  */
 
 package.widget.canvas = function WidgetCanvas(me) {
-    me.require = {platform: "browser"};
     me.default = {
         "ui.basic.tag": "canvas",
         "ui.theme.class": "border"

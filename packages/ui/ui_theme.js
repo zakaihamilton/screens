@@ -4,7 +4,6 @@
  */
 
 package.ui.theme = function UITheme(me) {
-    me.require = {platform: "browser"};
     me.stylesheets = {};
     me.class = {
         set: function (object, value) {

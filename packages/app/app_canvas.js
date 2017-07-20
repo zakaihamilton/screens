@@ -4,7 +4,6 @@
  */
 
 package.app.canvas = function AppEditor(me) {
-    me.require = {platform: "browser"};
     me.launch = function () {
         if(me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);

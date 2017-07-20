@@ -54,4 +54,32 @@ package.ui.property = function UIProperty(me) {
             me.broadcast.set(parent, properties);
         }
     };
+    me.toggleOptionSet = function (options, key) {
+        return {
+            get: function (object) {
+                return options[key];
+            },
+            set: function (object, value) {
+                options[key] = !options[key];
+            }
+        };
+    };
+    me.themedPropertySet = function (name, callback) {
+        return me.core.object.property(name, {
+            "set": function (object, name, value) {
+                if (value) {
+                    me.set(object, "ui.property.broadcast", {
+                        "ui.theme.add": name
+                    });
+                } else {
+                    me.set(object, "ui.property.broadcast", {
+                        "ui.theme.remove": name
+                    });
+                }
+                if (callback) {
+                    callback(object, name, value);
+                }
+            }
+        });
+    };
 };

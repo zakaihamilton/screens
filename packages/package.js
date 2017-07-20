@@ -20,6 +20,14 @@ function package_platform() {
     return platform;
 }
 
+function package_require(id, platform) {
+    if(typeof platform !== "undefined") {
+        /* Register requirement in package */
+        package.requirements[id] = platform;
+    }
+    return package.requirements[id];
+}
+
 function package_init(package_name, component_name, child_name = null, node = null) {
     var children = [];
     /* Retrieve component function */
@@ -64,15 +72,18 @@ function package_init(package_name, component_name, child_name = null, node = nu
         Reflect.set(package[package_name], component_name, component_obj);
     }
     if(typeof node !== "function") {
-        throw "Component " + id + " not found";
+        throw "Component " + id + " cannot be loaded";
     }
-    node(component_obj, child_name);
-    var init_method = component_obj.init;
-    if (component_obj.forward) {
-        component_obj.forward.enabled = true;
-    }
-    if ((!component_obj.require || component_obj.require.platform === package.platform) && init_method) {
-        init_method();
+    var requirement_platform = package.require(id);
+    if(!requirement_platform || requirement_platform === package.platform) {
+        node(component_obj, child_name);
+        var init_method = component_obj.init;
+        if (component_obj.forward) {
+            component_obj.forward.enabled = true;
+        }
+        if (init_method) {
+            init_method();
+        }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
@@ -189,6 +200,8 @@ function package_general(object, property) {
         return package_path(object, property);
     } else if (property === "platform") {
         return package_platform();
+    } else if (property === "require") {
+        return package_require;
     } else if (property === "include") {
         return package_include;
     } else if (property in package) {
@@ -202,7 +215,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({}, {
+var package = new Proxy({requirements:{}}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {

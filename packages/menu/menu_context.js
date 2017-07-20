@@ -4,7 +4,6 @@
  */
 
 package.menu.context = function MenuContext(me) {
-    me.require = {platform: "browser"};
     me.resizable = {
         get: function (object) {
             var window = me.widget.window.window(object);

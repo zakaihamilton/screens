@@ -4,7 +4,6 @@
  */
 
 package.app.progman = function AppProgman(me) {
-    me.require = {platform: "browser"};
     me.launch = function () {
         if (me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);
@@ -17,9 +16,9 @@ package.app.progman = function AppProgman(me) {
         "minimize_on_use": true,
         "save_on_exit": true
     };
-    me.auto_arrange = me.ui.set.toggleOption(me.options, "auto_arrange");
-    me.minimize_on_use = me.ui.set.toggleOption(me.options, "minimize_on_use");
-    me.save_on_exit = me.ui.set.toggleOption(me.options, "save_on_exit");
+    me.auto_arrange = me.ui.property.toggleOptionSet(me.options, "auto_arrange");
+    me.minimize_on_use = me.ui.property.toggleOptionSet(me.options, "minimize_on_use");
+    me.save_on_exit = me.ui.property.toggleOptionSet(me.options, "save_on_exit");
     me.args = {
         set: function (object, value) {
             object.args = value;

@@ -3,8 +3,9 @@
  @component WidgetWindow
  */
 
+package.require("widget.window", "browser");
+
 package.widget.window = function WidgetWindow(me) {
-    me.require = {platform: "browser"};
     me.depends = {
         properties: ["title"]
     };
@@ -15,10 +16,10 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
-    me.popup = me.ui.set.themedProperty("popup");
-    me.temp = me.ui.set.themedProperty("temp");
-    me.static = me.ui.set.themedProperty("static");
-    me.fixed = me.ui.set.themedProperty("fixed", function (object, name, value) {
+    me.popup = me.ui.property.themedPropertySet("popup");
+    me.temp = me.ui.property.themedPropertySet("temp");
+    me.static = me.ui.property.themedPropertySet("static");
+    me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {
         var maximized = me.set(object, "ui.theme.contains", "maximize");
         me.set(object, "ui.resize.enabled", !value && !maximized);
     });

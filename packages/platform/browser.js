@@ -32,7 +32,6 @@ package.include({
         "scroll",
         "attribute",
         "var",
-        "set",
         "move",
         "resize"
     ],

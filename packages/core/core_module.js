@@ -60,9 +60,9 @@ package.core.module = function CoreModule(me) {
                     if(component_path) {
                         console.log("component_path: " + component_path);
                         try {
-                            var requirements = me[component_path].require;
-                            if(requirements) {
-                                target_platform = requirements.platform;
+                            var requirement_platform = me[component_path].require(component_path);
+                            if(requirement_platform) {
+                                target_platform = requirement_platform;
                             }
                         }
                         catch(err) {

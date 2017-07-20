@@ -4,7 +4,6 @@
  */
 
 package.ui.style = function UIStyle(me) {
-    me.require = {platform: "browser"};
     me.stylesheets = {};
     me.forward = {
         get : function(object, property) {
