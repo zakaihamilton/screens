@@ -33,7 +33,7 @@ package.core.property = function CoreProperty(me) {
     };
     me.get = function(object, name, method="get") {
         var result = undefined;
-        if(object && name && !name.includes("!")) {
+        if(object && name && (typeof name !== "string" || !name.includes("!"))) {
             if(typeof name === "function") {
                 result = name(object);
             }
@@ -54,7 +54,7 @@ package.core.property = function CoreProperty(me) {
             });
             return results;
         }
-        if(object && name && !name.includes("!")) {
+        if(object && name && (typeof name !== "string" || !name.includes("!"))) {
             if(typeof value === "string" && value.startsWith("@")) {
                 value = me.get(object, value.substring(1));
             }

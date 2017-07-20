@@ -71,9 +71,12 @@ package.include({
         "background",
         "text"
     ],
+    "kab" : [
+        "terms"
+    ],
     "app": [
         "main"
-    ]
+    ],
 },
         function (failure) {
             if (failure) {

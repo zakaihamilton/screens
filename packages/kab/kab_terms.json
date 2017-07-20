@@ -1,0 +1,19 @@
+{
+    "terms" : {
+        "Rosh" : {
+            "translation" : "Head"
+        },
+        "Guf" : {
+            "translation" : "Body"
+        },
+        "de" : {
+            "translation" : "of"
+        },
+        "Adam Kadmon" : {
+            "translation" : "Primordial Man"
+        },
+        "Tabur" : {
+            "translation" : "Navel"
+        }
+    }
+}

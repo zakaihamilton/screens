@@ -9,23 +9,23 @@
     "ui.theme.class": "border",
     "ui.basic.elements": [
         {
-            "ui.basic.var":"icon",
+            "ui.basic.var": "icon",
             "text": "",
             "ui.style.display": "none",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.touch.click": "menu.context.show",
             "ui.touch.dblclick": "widget.window.restore",
-            "ui.basic.window":null,
-            "ui.node.parent":"@widget.tray.tray"
+            "ui.basic.window": null,
+            "ui.node.parent": "@widget.tray.tray"
         },
         {
             "ui.element.update": {
                 "ui.group.data": {
                     "ui.data.keys": ["ui.theme.class"],
                     "ui.data.default": {
-                        "ui.resize.extend":null
+                        "ui.resize.extend": null
                     },
-                    "ui.data.values":[
+                    "ui.data.values": [
                         ["left"],
                         ["right"],
                         ["top"],
@@ -50,7 +50,7 @@
                             "ui.theme.class": "close",
                             "ui.touch.click": "menu.context.show",
                             "ui.touch.dblclick": "close",
-                            "ui.theme.add" : "@widget.window.mainClass"
+                            "ui.theme.add": "@widget.window.mainClass"
                         },
                         {
                             "ui.basic.var": "label",
@@ -88,7 +88,7 @@
             ]
         }
     ],
-    "ui.property.broadcast" : {
-        "ui.theme.add" : "restore"
+    "ui.property.broadcast": {
+        "ui.theme.add": "restore"
     }
 }
