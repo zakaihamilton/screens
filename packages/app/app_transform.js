@@ -5,7 +5,7 @@
 
 package.app.transform = function AppTransform(me) {
     me.launch = function () {
-        if(me.get(me.singleton, "ui.node.parent")) {
+        if (me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
@@ -20,23 +20,25 @@ package.app.transform = function AppTransform(me) {
     me.styles = me.ui.property.toggleOptionSet(me.options, "styles");
     me.keepSource = me.ui.property.toggleOptionSet(me.options, "keepSource");
     me.new = {
-        set: function(object) {
+        set: function (object) {
             console.log("me.singleton.var.input: " + me.singleton.var.input);
             me.set(me.singleton.var.input, "ui.basic.text", "");
-            me.set(me.singleton.var.output, "ui.basic.text", "");
+            me.set(me.singleton.var.output, "ui.basic.html", "");
         }
     };
     me.convert = {
-        set: function(object) {
+        set: function (object) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
-            if(me.options.translation) {
-                text = text.split(".").map(function(sentence) {
-                    return sentence.split(",").map(function(fragment) {
-                        var words = fragment.split(" ");
-                        me.kab.terms.parse(words, me.options);
-                        return words.join(" ");
-                    }).join(",");
-                }).join(".");
+            if (me.options.translation) {
+                text = text.split("\n").map(function (paragraph) {
+                    return paragraph.split(".").map(function (sentence) {
+                        return sentence.split(",").map(function (fragment) {
+                            var words = fragment.split(" ");
+                            me.kab.terms.parse(words, me.options);
+                            return words.join(" ");
+                        }).join(",");
+                    }).join(".");
+                }).join("<br>");
             }
             me.set(me.singleton.var.output, "ui.basic.html", text);
         }

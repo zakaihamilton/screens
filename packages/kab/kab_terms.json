@@ -4,16 +4,20 @@
             "border":"1px solid black"
         },
         "phase-one" : {
-            "background":"#FFF3CA"
+            "background":"#FFF3CA",
+            "border":"1px solid black"
         },
         "phase-two" : {
-            "background":"#C8D9F9"
+            "background":"#C8D9F9",
+            "border":"1px solid black"
         },
         "phase-three" : {
-            "background" : "#F5CCCB"
+            "background" : "#F5CCCB",
+            "border":"1px solid black"
         },
         "phase-four" : {
-            "background" : "#D9EAD2"            
+            "background" : "#D9EAD2",
+            "border":"1px solid black"
         }
     },
     "terms" : {
@@ -33,7 +37,24 @@
             "translation" : "Navel"
         },
         "Keter" : {
-            "translation" : "Crown"
+            "translation" : "Crown",
+            "style":"root-phase"
+        },
+        "Hochma" : {
+            "translation" : "Wisdom",
+            "style":"phase-one"
+        },
+        "Bina" : {
+            "translation" : "Understanding",
+            "style":"phase-two"
+        },
+        "Tifferet" : {
+            "translation" : "Beauty",
+            "style":"phase-three"
+        },
+        "Malchut" : {
+            "translation" : "Kingdom",
+            "style":"phase-four"
         },
         "ABYA" : {
             "expansion" : ["Atzilut", "Beria", "Yetzira", "Assiya"]
