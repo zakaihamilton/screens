@@ -65,9 +65,9 @@
             [
                 "Main", [
                     {
-                        "text": "Editor",
-                        "ui.basic.src": "/packages/res/icons/editor.png",
-                        "app.progman.args": "editor",
+                        "text": "Transform",
+                        "ui.basic.src": "/packages/res/icons/transform.png",
+                        "app.progman.args": "transform",
                         "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
