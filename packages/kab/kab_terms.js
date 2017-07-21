@@ -5,7 +5,7 @@
 
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
-    me.parse = function (words, addStyles=true, keepSource=true) {
+    me.parse = function (words, addStyles=true, keepSource=true, doTranslation=true) {
         for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
             for (var term in me.terms.terms) {
                 var termWords = term.split(" ");
@@ -28,20 +28,20 @@ package.kab.terms = function KabTerms(me) {
                     var expansion = item.expansion;
                     if (expansion) {
                         expansion = [].concat(expansion);
-                        me.parse(expansion, addStyles, keepSource);
+                        me.parse(expansion, addStyles, keepSource, doTranslation);
                         if (expansion.length > 1) {
                             expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1);
                         } else {
                             expansion = expansion.slice(-1);
                         }
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " (", expansion, ")", addStyles, keepSource);
+                        me.modify(words, wordIndex, item, term, " (", expansion, ")", addStyles, keepSource, true);
                     }
                     var translation = item.translation;
                     if (translation) {
                         translation = me.parse(translation.split(" "), false, keepSource).join(" ");
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " [", translation, "]", addStyles, keepSource);
+                        me.modify(words, wordIndex, item, term, " [", translation, "]", addStyles, keepSource, doTranslation);
                     }
                     break;
                 }
@@ -49,8 +49,11 @@ package.kab.terms = function KabTerms(me) {
         }
         return words;
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, addStyles, keepSource) {
-        if (keepSource) {
+    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, addStyles, keepSource, doTranslation) {
+        if (!doTranslation) {
+            replacement = term;
+        }
+        else if (keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
         if (addStyles && item.style) {

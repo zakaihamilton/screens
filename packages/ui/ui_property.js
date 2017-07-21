@@ -54,13 +54,16 @@ package.ui.property = function UIProperty(me) {
             me.broadcast.set(parent, properties);
         }
     };
-    me.toggleOptionSet = function (options, key) {
+    me.toggleOptionSet = function (options, key, callback) {
         return {
             get: function (object) {
                 return options[key];
             },
             set: function (object, value) {
                 options[key] = !options[key];
+                if(callback) {
+                    callback(options, key, options[key]);
+                }
             }
         };
     };

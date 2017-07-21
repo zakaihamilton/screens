@@ -1,19 +1,24 @@
 
-.app-transform-input {
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:45%;
+.app-transform-container {
+    position:relative;
+    flex:1;
+    display:flex;
     height:90%;
+    top:10px;
+    left:0px;
+    width:100%;
+}
+
+.app-transform-input {
+    margin-left:10px;
     background:white;
+    flex:1;
 }
 
 .app-transform-output {
-    position:relative;
-    top:10px;
-    left:50%;
-    width:45%;
-    height:90%;
+    margin-left:10px;
+    margin-right:10px;
     background:white;
     line-height:120%;
+    flex:1;
 }

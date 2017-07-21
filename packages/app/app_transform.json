@@ -28,22 +28,32 @@
                         "state": "app.transform.keepSource"
                     }
                 ],
-                ["Show HTML", "app.transform.showHtml", {
-                        "state": "app.transform.showHtml"
+                ["HTML", "app.transform.showHtml", {
+                        "state": "app.transform.showHtml",
+                        "separator":true
+                    }
+                ],
+                ["Input", "app.transform.showInput", {
+                        "state": "app.transform.showInput"
                     }
                 ]
             ]]
     ],
     "ui.basic.elements": [
         {
-            "ui.element.component": "widget.editor",
-            "ui.theme.class":"app.transform.input",
-            "ui.basic.var": "input"
-        },
-        {
-            "ui.basic.tag":"div",
-            "ui.theme.class":"app.transform.output",
-            "ui.basic.var": "output"
+            "ui.theme.class": "app.transform.container",
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.editor",
+                    "ui.theme.class": "app.transform.input",
+                    "ui.basic.var": "input"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.output",
+                    "ui.basic.var": "output"
+                }
+            ]
         }
     ]
 }
