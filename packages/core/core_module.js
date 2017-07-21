@@ -53,6 +53,9 @@ package.core.module = function CoreModule(me) {
         if(me.platform === "server") {
             var fs = require("fs");
             if(info.method === "GET") {
+                if(info.url === "/") {
+                    info.url = "/main.html";
+                }
                 var file_path = info.url.substring(1);
                 if(file_path.endsWith(".js")) {
                     var component_path = core.module.path_file_to_component(file_path);
