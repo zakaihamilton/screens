@@ -43,7 +43,8 @@
     },
     "terms": {
         "Ohr Ein Sof": {
-            "translation":"Light of Infinity"
+            "translation":"Light of Infinity",
+            "style":["world","root-phase"]
         },
         "Ohr Nefesh": {
             "translation": "Light of Relaxation",
@@ -328,7 +329,8 @@
             "translation":"Line"
         },
         "Ein Sof":{
-            "translation":"Infinity"
+            "translation":"Infinity",
+            "style":["world","root-phase"]
         },
         "Igulim": {
             "translation":"Circles"
