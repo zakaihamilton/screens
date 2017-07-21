@@ -81,14 +81,71 @@
             "translation": "Vessel of Kingdom",
             "style": "phase-four"
         },
+        "Kli ZA": {
+            "translation": "Vessel of ZA",
+            "style": "phase-three"
+        },
+        "Behinat Shoresh": {
+            "translation": "Root Phase",
+            "style": "root-phase"
+        },
+        "Behina Aleph": {
+            "translation": "Phase One",
+            "style": "phase-one"
+        },
+        "Behina Bet": {
+            "translation": "Phase Two",
+            "style": "phase-two"
+        },
+        "Behina Gimel": {
+            "translation": "Phase Three",
+            "style": "phase-three"
+        },
+        "Behina Dalet": {
+            "translation": "Phase Four",
+            "style": "phase-four"
+        },
+        "Aviut Shoresh": {
+            "translation": "Root Phase Coarseness",
+            "style": "root-phase"
+        },
+        "Aviut Aleph": {
+            "translation": "Phase One Coarseness",
+            "style": "phase-one"
+        },
+        "Aviut Bet": {
+            "translation": "Phase Two Coarseness",
+            "style": "phase-two"
+        },
+        "Aviut Gimel": {
+            "translation": "Phase Three Coarseness",
+            "style": "phase-three"
+        },
+        "Aviut Dalet": {
+            "translation": "Phase Four Coarseness",
+            "style": "phase-four"
+        },
+        "Maatzil" : {
+            "translation" : "Emanator"
+        },
+        "Ne’etzal" : {
+            "translation" : "Emanated"
+        },
         "Rosh": {
             "translation": "Head"
+        },
+        "Toch": {
+            "translation": "Interior"
         },
         "Guf": {
             "translation": "Body"
         },
+        "of": {
+            "ignore":true
+        },
         "de": {
-            "translation": "of"
+            "translation": "of",
+            "ignore":true
         },
         "Adam Kadmon": {
             "translation": "Primordial Man"
@@ -119,26 +176,6 @@
         },
         "Masach": {
             "translation": "Screen"
-        },
-        "Behinat Shoresh": {
-            "translation": "Root Phase",
-            "style": "root-phase"
-        },
-        "Behina Aleph": {
-            "translation": "Phase One",
-            "style": "phase-one"
-        },
-        "Behina Bet": {
-            "translation": "Phase Two",
-            "style": "phase-two"
-        },
-        "Behina Gimel": {
-            "translation": "Phase Three",
-            "style": "phase-three"
-        },
-        "Behina Dalet": {
-            "translation": "Phase Four",
-            "style": "phase-four"
         },
         "Keter": {
             "translation": "Crown",

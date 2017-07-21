@@ -14,8 +14,8 @@ package.app.transform = function AppTransform(me) {
     me.options = {
         "translation": true,
         "styles": true,
-        "keepSource": true,
-        "showHtml":false,
+        "keepSource": false,
+        "showHtml":false
     };
     me.translation = me.ui.property.toggleOptionSet(me.options, "translation");
     me.styles = me.ui.property.toggleOptionSet(me.options, "styles");
@@ -36,7 +36,7 @@ package.app.transform = function AppTransform(me) {
                     return paragraph.split(".").map(function (sentence) {
                         return sentence.split(",").map(function (fragment) {
                             var words = fragment.split(" ");
-                            me.kab.terms.parse(words, me.options);
+                            me.kab.terms.parse(words, me.options.styles, me.options.keepSource);
                             return words.join(" ");
                         }).join(",");
                     }).join(".");

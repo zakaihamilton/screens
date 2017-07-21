@@ -5,7 +5,7 @@
 
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
-    me.parse = function (words, options) {
+    me.parse = function (words, addStyles=true, keepSource=true) {
         for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
             for (var term in me.terms.terms) {
                 var termWords = term.split(" ");
@@ -15,37 +15,45 @@ package.kab.terms = function KabTerms(me) {
                     if (wordIndex + numTermWords > words.length) {
                         break;
                     }
-                    collectedWords += " " + words[wordIndex + termWordIndex].toLowerCase();
+                    var word = words[wordIndex + termWordIndex];
+                    var matchingTerm = me.terms.terms[word];
+                    if(matchingTerm && matchingTerm.ignore) {
+                        numTermWords++;
+                        continue;
+                    }
+                    collectedWords += " " + word.toLowerCase();
                 }
                 if (term.toLowerCase() === collectedWords) {
                     var item = me.terms.terms[term];
                     var expansion = item.expansion;
                     if (expansion) {
                         expansion = [].concat(expansion);
-                        me.parse(expansion, options);
+                        me.parse(expansion, addStyles, keepSource);
                         if (expansion.length > 1) {
                             expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1);
                         } else {
                             expansion = expansion.slice(-1);
                         }
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " (", expansion, ")", options);
+                        me.modify(words, wordIndex, item, term, " (", expansion, ")", addStyles, keepSource);
                     }
                     var translation = item.translation;
                     if (translation) {
+                        translation = me.parse(translation.split(" "), false, keepSource).join(" ");
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " [", translation, "]", options);
+                        me.modify(words, wordIndex, item, term, " [", translation, "]", addStyles, keepSource);
                     }
                     break;
                 }
             }
         }
+        return words;
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options) {
-        if (options.keepSource) {
+    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, addStyles, keepSource) {
+        if (keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
-        if (options.styles && item.style) {
+        if (addStyles && item.style) {
             var styles = me.terms.styles[item.style];
             if(styles) {
                 var html = "<span style=\"";
