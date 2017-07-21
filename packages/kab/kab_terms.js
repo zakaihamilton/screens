@@ -72,17 +72,18 @@ package.kab.terms = function KabTerms(me) {
             replacement = term + prefix + replacement + suffix;
         }
         if (!noFormatting && options.addStyles && item.style) {
-            var styles = me.terms.styles[item.style];
-            if(styles) {
-                if(Array.isArray(styles)) {
-                    styles.map(function(style) {
-                        replacement = me.applyStyles(styles, replacement);
-                    });
-                }
-                else {
-                    replacement = me.applyStyles(styles, replacement);
-                }
+            var styles = null, html = "";
+            if(Array.isArray(item.style)) {
+                item.style.map(function(style) {
+                    var styles = me.terms.styles[style];
+                    html += me.applyStyles(styles, replacement);
+                });
             }
+            else {
+                var styles = me.terms.styles[item.style];
+                html += me.applyStyles(styles, replacement);
+            }
+            replacement = html;
         }
         words.splice(wordIndex, 0, replacement);
     };

@@ -5,7 +5,8 @@
         },
         "phase-one": {
             "background": "#FFF3CA",
-            "border": "1px solid black"
+            "border": "1px solid black",
+            "height":"20px"
         },
         "phase-two": {
             "background": "#C8D9F9",
@@ -18,6 +19,26 @@
         "phase-four": {
             "background": "#D9EAD2",
             "border": "1px solid black"
+        },
+        "world":{
+            "position":"absolute",
+            "content":"World",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
+        },
+        "vessel":{
+            "position":"absolute",
+            "content":"Vessel",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
         }
     },
     "terms": {
@@ -66,27 +87,27 @@
         },
         "Kli Keter": {
             "translation": "Vessel of Crown",
-            "style": "root-phase"
+            "style": ["vessel","root-phase"]
         },
         "Kli Hochma": {
             "translation": "Vessel of Wisdom",
-            "style": "phase-one"
+            "style": ["vessel","phase-one"]
         },
         "Kli Bina": {
             "translation": "Vessel of Understanding",
-            "style": "phase-two"
+            "style": ["vessel","phase-two"]
         },
         "Kli Tifferet": {
             "translation": "Vessel of Beauty",
-            "style": "phase-three"
+            "style": ["vessel","phase-three"]
         },
         "Kli Malchut": {
             "translation": "Vessel of Kingdom",
-            "style": "phase-four"
+            "style": ["vessel","phase-four"]
         },
         "Kli ZA": {
             "translation": "Vessel of ZA",
-            "style": "phase-three"
+            "style": ["vessel","phase-three"]
         },
         "Behinat Shoresh": {
             "translation": "Root Phase",
@@ -150,9 +171,6 @@
             "translation": "of",
             "ignore":true
         },
-        "Adam Kadmon": {
-            "translation": "Primordial Man"
-        },
         "Tabur": {
             "translation": "Navel"
         },
@@ -182,43 +200,43 @@
         },
         "Keter": {
             "translation": "Crown",
-            "style": "root-phase"
+            "style": ["vessel","root-phase"]
         },
         "Hochma": {
             "translation": "Wisdom",
-            "style": "phase-one"
+            "style": ["vessel","phase-one"]
         },
         "Bina": {
             "translation": "Understanding",
-            "style": "phase-two"
+            "style": ["vessel","phase-two"]
         },
         "Tifferet": {
             "translation": "Beauty",
-            "style": "phase-three"
+            "style": ["vessel","phase-three"]
         },
         "Malchut": {
             "translation": "Kingdom",
-            "style": "phase-four"
+            "style": ["vessel","phase-four"]
         },
         "Nefesh": {
             "translation": "Relaxation",
-            "style": "phase-four"
+            "style": ["light","phase-four"]
         },
         "Ruach": {
             "translation": "Modulation",
-            "style": "phase-three"
+            "style": ["light","phase-three"]
         },
         "Neshama": {
             "translation": "Protection",
-            "style": "phase-two"
+            "style": ["light","phase-two"]
         },
         "Haya": {
             "translation": "Expression",
-            "style": "phase-one"
+            "style": ["light","phase-one"]
         },
         "Yechida": {
             "translation": "Singularity",
-            "style": "root-phase"
+            "style": ["light","root-phase"]
         },
         "NRNHY": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
@@ -244,23 +262,27 @@
         },
         "Zeir Anpin": {
             "translation": "Small Face",
-            "style": "phase-three"
+            "style": ["vessel","phase-three"]
+        },
+        "Adam Kadmon": {
+            "translation": "Primordial Man",
+            "style": ["world","root-phase"]
         },
         "Atzilut": {
             "translation": "Emanation",
-            "style": "phase-one"
+            "style": ["world","phase-one"]
         },
         "Beria": {
             "translation": "Creation",
-            "style": "phase-two"
+            "style": ["world","phase-two"]
         },
         "Yetzira": {
             "translation": "Formation",
-            "style": "phase-three"
+            "style": ["world","phase-three"]
         },
         "Assiya": {
             "translation": "Action",
-            "style": "phase-four"
+            "style": ["world","phase-four"]
         },
         "Olam": {
             "translation": "World"
@@ -321,7 +343,8 @@
             "translation":"Inner Reflection"
         },
         "Nukva":{
-            "translation":"Female"
+            "translation":"Female",
+            "style":["vessel","phase-four"]
         },
         "Halon":{
             "translation":"Window"
@@ -330,6 +353,9 @@
             "expansion":["Zeir Anpin", "Nukva"]
         },
         "Hitlabshut":{
+            "translation":"Clothing"
+        },
+        "Levush":{
             "translation":"Clothing"
         },
         "Hitpashtut":{
