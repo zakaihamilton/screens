@@ -14,11 +14,13 @@ package.app.transform = function AppTransform(me) {
     me.options = {
         "translation": true,
         "styles": true,
-        "keepSource": true
+        "keepSource": true,
+        "showHtml":false,
     };
     me.translation = me.ui.property.toggleOptionSet(me.options, "translation");
     me.styles = me.ui.property.toggleOptionSet(me.options, "styles");
     me.keepSource = me.ui.property.toggleOptionSet(me.options, "keepSource");
+    me.showHtml = me.ui.property.toggleOptionSet(me.options, "showHtml");
     me.new = {
         set: function (object) {
             console.log("me.singleton.var.input: " + me.singleton.var.input);
@@ -40,7 +42,12 @@ package.app.transform = function AppTransform(me) {
                     }).join(".");
                 }).join("<br>");
             }
-            me.set(me.singleton.var.output, "ui.basic.html", text);
+            if(me.options.showHtml) {
+                me.set(me.singleton.var.output, "ui.basic.text", text);
+            }
+            else {
+                me.set(me.singleton.var.output, "ui.basic.html", text);
+            }
         }
     };
 };

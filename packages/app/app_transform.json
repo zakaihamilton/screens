@@ -27,6 +27,10 @@
                 ["Keep Source", "app.transform.keepSource", {
                         "state": "app.transform.keepSource"
                     }
+                ],
+                ["Show HTML", "app.transform.showHtml", {
+                        "state": "app.transform.showHtml"
+                    }
                 ]
             ]]
     ],

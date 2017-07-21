@@ -1,111 +1,257 @@
 {
-    "styles" : {
-        "root-phase" : {
-            "border":"1px solid black"
+    "styles": {
+        "root-phase": {
+            "border": "1px solid black"
         },
-        "phase-one" : {
-            "background":"#FFF3CA",
-            "border":"1px solid black"
+        "phase-one": {
+            "background": "#FFF3CA",
+            "border": "1px solid black"
         },
-        "phase-two" : {
-            "background":"#C8D9F9",
-            "border":"1px solid black"
+        "phase-two": {
+            "background": "#C8D9F9",
+            "border": "1px solid black"
         },
-        "phase-three" : {
-            "background" : "#F5CCCB",
-            "border":"1px solid black"
+        "phase-three": {
+            "background": "#F5CCCB",
+            "border": "1px solid black"
         },
-        "phase-four" : {
-            "background" : "#D9EAD2",
-            "border":"1px solid black"
+        "phase-four": {
+            "background": "#D9EAD2",
+            "border": "1px solid black"
         }
     },
-    "terms" : {
-        "Rosh" : {
-            "translation" : "Head"
-        },
-        "Guf" : {
-            "translation" : "Body"
-        },
-        "de" : {
-            "translation" : "of"
-        },
-        "Adam Kadmon" : {
-            "translation" : "Primordial Man"
-        },
-        "Tabur" : {
-            "translation" : "Navel"
-        },
-        "Keter" : {
-            "translation" : "Crown",
-            "style":"root-phase"
-        },
-        "Hochma" : {
-            "translation" : "Wisdom",
-            "style":"phase-one"
-        },
-        "Bina" : {
-            "translation" : "Understanding",
-            "style":"phase-two"
-        },
-        "Tifferet" : {
-            "translation" : "Beauty",
-            "style":"phase-three"
-        },
-        "Malchut" : {
-            "translation" : "Kingdom",
-            "style":"phase-four"
-        },
-        "ABYA" : {
-            "expansion" : ["Atzilut", "Beria", "Yetzira", "Assiya"]
-        },
-        "AA" : {
-            "expansion" : ["Arich Anpin"],
-            "style":"root-phase"
-        },
-        "Arich Anpin" : {
-            "translation" : "Long Face"
-        },
-        "Atzilut" : {
-            "translation" : "Emanation",
-            "style" : "phase-one"
-        },
-        "Beria" : {
-            "translation" : "Creation",
-            "style" : "phase-two"
-        },
-        "Yetzira" : {
-            "translation" : "Formation",
-            "style": "phase-three"
-        },
-        "Assiya" : {
-            "translation" : "Action",
+    "terms": {
+        "Ohr Nefesh": {
+            "translation": "Light of Relaxation",
             "style": "phase-four"
         },
-        "Olam" : {
-            "translation" : "World"
+        "Ohr Ruach": {
+            "translation": "Light of Modulation",
+            "style": "phase-three"
         },
-        "Chazeh" : {
-            "translation" : "Chest"
+        "Ohr Neshama": {
+            "translation": "Light of Protection",
+            "style": "phase-two"
         },
-        "Peh" : {
-            "translation" : "Mouth",
-            "style":"phase-four"
+        "Ohr Haya": {
+            "translation": "Light of Expression",
+            "style": "phase-one"
         },
-        "Taburit" : {
-            "translation" : "Navel"
+        "Ohr Yechida": {
+            "translation": "Light of Singularity",
+            "style": "root-phase"
         },
-        "Partzufim" : {
-            "translation" : "Faces"
+        "Ohr Keter": {
+            "translation": "Light of Crown",
+            "style": "root-phase"
         },
-        "Partzuf" : {
-            "translation" : "Face"
+        "Ohr Hochma": {
+            "translation": "Light of Wisdom",
+            "style": "phase-one"
         },
-        "Eser" : {
-            "translation" : "Ten"
+        "Ohr Bina": {
+            "translation": "Light of Understanding",
+            "style": "phase-two"
         },
-        "Sefirot" : {
-            "translation" : "Emanations"
+        "Ohr Tifferet": {
+            "translation": "Light of Beauty",
+            "style": "phase-three"
+        },
+        "Ohr Malchut": {
+            "translation": "Light of Kingdom",
+            "style": "phase-four"
+        },
+        "Kli Keter": {
+            "translation": "Vessel of Crown",
+            "style": "root-phase"
+        },
+        "Kli Hochma": {
+            "translation": "Vessel of Wisdom",
+            "style": "phase-one"
+        },
+        "Kli Bina": {
+            "translation": "Vessel of Understanding",
+            "style": "phase-two"
+        },
+        "Kli Tifferet": {
+            "translation": "Vessel of Beauty",
+            "style": "phase-three"
+        },
+        "Kli Malchut": {
+            "translation": "Vessel of Kingdom",
+            "style": "phase-four"
+        },
+        "Rosh": {
+            "translation": "Head"
+        },
+        "Guf": {
+            "translation": "Body"
+        },
+        "de": {
+            "translation": "of"
+        },
+        "Adam Kadmon": {
+            "translation": "Primordial Man"
+        },
+        "Tabur": {
+            "translation": "Navel"
+        },
+        "Kli": {
+            "translation": "Vessel"
+        },
+        "Ohr Elyon": {
+            "translation": "Upper Light"
+        },
+        "Ohr": {
+            "translation": "Light"
+        },
+        "Av": {
+            "translation": "Coarse"
+        },
+        "Aviut": {
+            "translation": "Coarseness"
+        },
+        "Zach": {
+            "translation": "Pure"
+        },
+        "Zachut": {
+            "translation": "Purity"
+        },
+        "Masach": {
+            "translation": "Screen"
+        },
+        "Behinat Shoresh": {
+            "translation": "Root Phase",
+            "style": "root-phase"
+        },
+        "Behina Aleph": {
+            "translation": "Phase One",
+            "style": "phase-one"
+        },
+        "Behina Bet": {
+            "translation": "Phase Two",
+            "style": "phase-two"
+        },
+        "Behina Gimel": {
+            "translation": "Phase Three",
+            "style": "phase-three"
+        },
+        "Behina Dalet": {
+            "translation": "Phase Four",
+            "style": "phase-four"
+        },
+        "Keter": {
+            "translation": "Crown",
+            "style": "root-phase"
+        },
+        "Hochma": {
+            "translation": "Wisdom",
+            "style": "phase-one"
+        },
+        "Bina": {
+            "translation": "Understanding",
+            "style": "phase-two"
+        },
+        "Tifferet": {
+            "translation": "Beauty",
+            "style": "phase-three"
+        },
+        "Malchut": {
+            "translation": "Kingdom",
+            "style": "phase-four"
+        },
+        "Nefesh": {
+            "translation": "Relaxation",
+            "style": "phase-four"
+        },
+        "Ruach": {
+            "translation": "Modulation",
+            "style": "phase-three"
+        },
+        "Neshama": {
+            "translation": "Protection",
+            "style": "phase-two"
+        },
+        "Haya": {
+            "translation": "Expression",
+            "style": "phase-one"
+        },
+        "Yechida": {
+            "translation": "Singularity",
+            "style": "root-phase"
+        },
+        "NRNHY": {
+            "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
+        },
+        "KHBTM": {
+            "expansion": ["Keter", "Hochma", "Bina", "Tifferet", "Malchut"]
+        },
+        "ABYA": {
+            "expansion": ["Atzilut", "Beria", "Yetzira", "Assiya"]
+        },
+        "AA": {
+            "expansion": ["Arich Anpin"]
+        },
+        "ZA": {
+            "expansion": ["Zeir Anpin"]
+        },
+        "Arich Anpin": {
+            "translation": "Long Face",
+            "style": "root-phase"
+        },
+        "Zeir Anpin": {
+            "translation": "Small Face",
+            "style": "phase-three"
+        },
+        "Atzilut": {
+            "translation": "Emanation",
+            "style": "phase-one"
+        },
+        "Beria": {
+            "translation": "Creation",
+            "style": "phase-two"
+        },
+        "Yetzira": {
+            "translation": "Formation",
+            "style": "phase-three"
+        },
+        "Assiya": {
+            "translation": "Action",
+            "style": "phase-four"
+        },
+        "Olam": {
+            "translation": "World"
+        },
+        "Chazeh": {
+            "translation": "Chest"
+        },
+        "Peh": {
+            "translation": "Mouth",
+            "style": "phase-four"
+        },
+        "Taburit": {
+            "translation": "Navel"
+        },
+        "Partzufim": {
+            "translation": "Faces"
+        },
+        "Partzuf": {
+            "translation": "Face"
+        },
+        "Eser": {
+            "translation": "Ten"
+        },
+        "Sefira": {
+            "translation": "Emanation"
+        },
+        "Sefirot": {
+            "translation": "Emanations"
+        },
+        "Behina": {
+            "translation": "Phase"
+        },
+        "Behinot": {
+            "translation": "Phases"
         }
     }
 }

@@ -9,7 +9,7 @@ package.app.progman = function AppProgman(me) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__);
+        return me.singleton = me.ui.element.create(__json__);
     };
     me.options = {
         "auto_arrange": false,

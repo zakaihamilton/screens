@@ -25,26 +25,11 @@ package.app.main = function (me) {
         me.ui.element.create([
             {
                 "ui.element.component":"widget.desktop"
-            },
-            {
-                "title": "The Computer Chronicles",
-                "ui.style.left": "550px",
-                "ui.style.top": "200px",
-                "ui.style.width": "300px",
-                "ui.style.height": "300px",
-                "icon": "https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
-                "ui.basic.elements": [
-                    {
-                        "ui.element.component": "widget.embed",
-                        "ui.basic.src": "https://www.youtube.com/embed/YewNEAIkbG4?ecver=1",
-                        "ui.attribute.allowFullScreen": ""
-                    }
-                ]
             }
         ]);
         package.include("app.progman", function(failure) {
             if(!failure) {
-                me.send("app.progman.launch");
+                me.set(me.send("app.progman.launch"), "minimize", true);
             }
         });
         package.include("app.transform", function(failure) {
