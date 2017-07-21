@@ -5,7 +5,12 @@
 
 package.core.http = function CoreHttp(me) {
     var core = me.core;
-    me.port = 8080;
+    if(package.platform === "server") {
+        me.port = process.env.PORT || 8080;
+    }
+    else {
+        me.port = 80;
+    }
     me.listeners = [];
     me.init = function() {
         if(me.platform === "server") {
