@@ -226,6 +226,9 @@
         "ABYA": {
             "expansion": ["Atzilut", "Beria", "Yetzira", "Assiya"]
         },
+        "BYA": {
+            "expansion": ["Beria", "Yetzira", "Assiya"]
+        },
         "AA": {
             "expansion": ["Arich Anpin"]
         },
@@ -289,6 +292,30 @@
         },
         "Behinot": {
             "translation": "Phases"
+        },
+        "Shinui Tzura" : {
+            "translation": "Change of form"
+        },
+        "Igul" : {
+            "translation": "Circle"
+        },
+        "Kav" : {
+            "translation":"Line"
+        },
+        "Ein Sof":{
+            "translation":"Infinity"
+        },
+        "Igulim": {
+            "translation":"Circles"
+        },
+        "Kavim":{
+            "translation":"Lines"
+        },
+        "Shoresh":{
+            "translation":"Root"
+        },
+        "Histaklut Pnimit":{
+            "translation":"Inner Reflection"
         }
     }
 }
