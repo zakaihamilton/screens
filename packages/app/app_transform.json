@@ -20,8 +20,8 @@
                         "state": "app.transform.translation"
                     }
                 ],
-                ["Styles", "app.transform.styles", {
-                        "state": "app.transform.styles"
+                ["Styles", "app.transform.addStyles", {
+                        "state": "app.transform.addStyles"
                     }
                 ],
                 ["Keep Source", "app.transform.keepSource", {

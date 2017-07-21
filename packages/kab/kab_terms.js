@@ -5,14 +5,15 @@
 
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
-    me.parse = function (words, addStyles=true, keepSource=true, doTranslation=true) {
+    me.parse = function (wordsString, options) {
+        var words = wordsString.split(" ");
         for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
             for (var term in me.terms.terms) {
                 var termWords = term.split(" ");
                 var numTermWords = termWords.length;
                 var collectedWords = words[wordIndex].toLowerCase();
                 for (var termWordIndex = 1; termWordIndex < numTermWords; termWordIndex++) {
-                    if (wordIndex + numTermWords > words.length) {
+                    if (wordIndex + termWordIndex >= words.length) {
                         break;
                     }
                     var word = words[wordIndex + termWordIndex];
@@ -28,45 +29,73 @@ package.kab.terms = function KabTerms(me) {
                     var expansion = item.expansion;
                     if (expansion) {
                         expansion = [].concat(expansion);
-                        me.parse(expansion, addStyles, keepSource, doTranslation);
+                        expansion = expansion.map(function(item) {
+                            return me.parse(item, options);
+                        });
                         if (expansion.length > 1) {
-                            expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1);
+                            expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1).toString();
                         } else {
-                            expansion = expansion.slice(-1);
+                            expansion = expansion.slice(-1).toString();
                         }
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " (", expansion, ")", addStyles, keepSource, true);
+                        me.modify(words, wordIndex, item, term, " (", expansion, ")", options);
                     }
                     var translation = item.translation;
                     if (translation) {
-                        translation = me.parse(translation.split(" "), false, keepSource).join(" ");
+                        translation = me.parse(translation, me.duplicateOptions(options, {"addStyles":false}));
                         words.splice(wordIndex, numTermWords);
-                        me.modify(words, wordIndex, item, term, " [", translation, "]", addStyles, keepSource, doTranslation);
+                        me.modify(words, wordIndex, item, term, " [", translation, "]", options);
                     }
                     break;
                 }
             }
         }
-        return words;
+        return words.join(" ");
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, addStyles, keepSource, doTranslation) {
-        if (!doTranslation) {
+    me.duplicateOptions = function(options, overrides) {
+        var duplicate = {};
+        for(var key in options) {
+            duplicate[key] = options[key];
+        }
+        if(overrides) {
+            for(var key in overrides) {
+                duplicate[key] = overrides[key];
+            }
+        }
+        return duplicate;
+    };
+    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options, noFormatting) {
+        if (!options.doTranslation) {
             replacement = term;
         }
-        else if (keepSource) {
+        else if (options.keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
-        if (addStyles && item.style) {
+        if (!noFormatting && options.addStyles && item.style) {
             var styles = me.terms.styles[item.style];
             if(styles) {
-                var html = "<span style=\"";
-                for(var style in styles) {
-                    html += style + ":" + styles[style] + ";";
+                if(Array.isArray(styles)) {
+                    styles.map(function(style) {
+                        replacement = me.applyStyles(styles, replacement);
+                    });
                 }
-                html += "\">" + replacement + "</span>";
-                replacement = html;
+                else {
+                    replacement = me.applyStyles(styles, replacement);
+                }
             }
         }
         words.splice(wordIndex, 0, replacement);
     };
+    me.applyStyles = function(styles, text) {
+        var html = "<span style=\"";
+        for(var style in styles) {
+            if(style === "content") {
+                text = styles[style];
+                continue;
+            }
+            html += style + ":" + styles[style] + ";";
+        }
+        html += "\">" + text + "</span>";
+        return html;
+    }
 };

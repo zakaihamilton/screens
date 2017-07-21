@@ -21,6 +21,9 @@
         }
     },
     "terms": {
+        "Ohr Ein Sof": {
+            "translation":"Light of Infinity"
+        },
         "Ohr Nefesh": {
             "translation": "Light of Relaxation",
             "style": "phase-four"
@@ -316,6 +319,21 @@
         },
         "Histaklut Pnimit":{
             "translation":"Inner Reflection"
+        },
+        "Nukva":{
+            "translation":"Female"
+        },
+        "Halon":{
+            "translation":"Window"
+        },
+        "ZON":{
+            "expansion":["Zeir Anpin", "Nukva"]
+        },
+        "Hitlabshut":{
+            "translation":"Clothing"
+        },
+        "Hitpashtut":{
+            "translation":"Expansion"
         }
     }
 }
