@@ -1,4 +1,21 @@
 {
+    "styles" : {
+        "root-phase" : {
+            "border":"1px solid black"
+        },
+        "phase-one" : {
+            "background":"#FFF3CA"
+        },
+        "phase-two" : {
+            "background":"#C8D9F9"
+        },
+        "phase-three" : {
+            "background" : "#F5CCCB"
+        },
+        "phase-four" : {
+            "background" : "#D9EAD2"            
+        }
+    },
     "terms" : {
         "Rosh" : {
             "translation" : "Head"
@@ -22,22 +39,27 @@
             "expansion" : ["Atzilut", "Beria", "Yetzira", "Assiya"]
         },
         "AA" : {
-            "expansion" : ["Arich Anpin"]
+            "expansion" : ["Arich Anpin"],
+            "style":"root-phase"
         },
         "Arich Anpin" : {
             "translation" : "Long Face"
         },
         "Atzilut" : {
-            "translation" : "Emanation"
+            "translation" : "Emanation",
+            "style" : "phase-one"
         },
         "Beria" : {
-            "translation" : "Creation"
+            "translation" : "Creation",
+            "style" : "phase-two"
         },
         "Yetzira" : {
-            "translation" : "Formation"
+            "translation" : "Formation",
+            "style": "phase-three"
         },
         "Assiya" : {
-            "translation" : "Action"
+            "translation" : "Action",
+            "style": "phase-four"
         },
         "Olam" : {
             "translation" : "World"
@@ -46,7 +68,8 @@
             "translation" : "Chest"
         },
         "Peh" : {
-            "translation" : "Mouth"
+            "translation" : "Mouth",
+            "style":"phase-four"
         },
         "Taburit" : {
             "translation" : "Navel"

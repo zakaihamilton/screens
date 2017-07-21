@@ -2,7 +2,7 @@
     "title": "Transform",
     "ui.style.left": "250px",
     "ui.style.top": "100px",
-    "ui.style.width": "800px",
+    "ui.style.width": "1000px",
     "ui.style.height": "500px",
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
@@ -20,8 +20,8 @@
                         "state": "app.transform.translation"
                     }
                 ],
-                ["Colors", "app.transform.colors", {
-                        "state": "app.transform.colors"
+                ["Styles", "app.transform.styles", {
+                        "state": "app.transform.styles"
                     }
                 ],
                 ["Keep Source", "app.transform.keepSource", {
@@ -33,23 +33,12 @@
     "ui.basic.elements": [
         {
             "ui.element.component": "widget.editor",
-            "ui.style.position": "absolute",
-            "ui.style.top": "10px",
-            "ui.style.left": "10px",
-            "ui.style.width": "45%",
-            "ui.style.height": "90%",
-            "ui.style.background": "white",
+            "ui.theme.class":"app.transform.input",
             "ui.basic.var": "input"
         },
         {
-            "ui.element.component": "widget.editor",
-            "ui.style.position": "absoute",
-            "ui.style.top": "10px",
-            "ui.style.left": "50%",
-            "ui.style.width": "45%",
-            "ui.style.height": "90%",
-            "ui.style.background": "lightgray",
-            "ui.basic.readOnly": true,
+            "ui.basic.tag":"div",
+            "ui.theme.class":"app.transform.output",
             "ui.basic.var": "output"
         }
     ]

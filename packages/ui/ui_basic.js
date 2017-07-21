@@ -89,6 +89,14 @@ package.ui.basic = function UIBasic(me) {
             object.textContent = value;
         }
     };
+    me.html = {
+        get : function(object) {
+            return object.innerHTML;
+        },
+        set : function(object, value) {
+            object.innerHTML = value;
+        }
+    };
     me.readOnly = {
         get: function(object) {
             return object.readOnly;

@@ -13,11 +13,11 @@ package.app.transform = function AppTransform(me) {
     };
     me.options = {
         "translation": true,
-        "colors": true,
+        "styles": true,
         "keepSource": true
     };
     me.translation = me.ui.property.toggleOptionSet(me.options, "translation");
-    me.colors = me.ui.property.toggleOptionSet(me.options, "colors");
+    me.styles = me.ui.property.toggleOptionSet(me.options, "styles");
     me.keepSource = me.ui.property.toggleOptionSet(me.options, "keepSource");
     me.new = {
         set: function(object) {
@@ -33,15 +33,12 @@ package.app.transform = function AppTransform(me) {
                 text = text.split(".").map(function(sentence) {
                     return sentence.split(",").map(function(fragment) {
                         var words = fragment.split(" ");
-                        me.translate(words);
+                        me.kab.terms.parse(words, me.options);
                         return words.join(" ");
                     }).join(",");
                 }).join(".");
             }
-            me.set(me.singleton.var.output, "ui.basic.text", text);
+            me.set(me.singleton.var.output, "ui.basic.html", text);
         }
-    };
-    me.translate = function(words) {
-        me.kab.terms.parse(words, me.options.keepSource);
     };
 };

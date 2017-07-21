@@ -1,0 +1,18 @@
+
+.app-transform-input {
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:45%;
+    height:90%;
+    background:white;
+}
+
+.app-transform-output {
+    position:relative;
+    top:10px;
+    left:50%;
+    width:45%;
+    height:90%;
+    background:white;
+}
