@@ -50,6 +50,9 @@ package.app.transform = function AppTransform(me) {
             else {
                 me.set(me.singleton.var.output, "ui.basic.html", text);
             }
+            me.set(me.singleton, "ui.property.notify", {
+                "draw": null
+            });
         }
     };
 };
