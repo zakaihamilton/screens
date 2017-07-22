@@ -40,7 +40,9 @@ package.app.transform = function AppTransform(me) {
             text = text.split("\n").map(function (paragraph) {
                 return paragraph.split(".").map(function (sentence) {
                     return sentence.split(",").map(function (fragment) {
-                        return me.kab.terms.parse(fragment, me.options);
+                        return fragment.split("—").map(function(parts) {
+                            return me.kab.terms.parse(parts, me.options);
+                        }).join("—");
                     }).join(", ");
                 }).join(". ");
             }).join("<br>");

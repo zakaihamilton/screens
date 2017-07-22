@@ -1,24 +1,28 @@
 {
     "styles": {
         "root-phase": {
-            "border": "1px solid black"
+            "border": "1px solid gray"
         },
         "phase-one": {
             "background": "#FFF3CA",
-            "border": "1px solid black",
+            "border": "1px solid lightyellow",
             "height":"20px"
         },
         "phase-two": {
             "background": "#C8D9F9",
-            "border": "1px solid black"
+            "border": "1px solid lightblue"
         },
         "phase-three": {
             "background": "#F5CCCB",
-            "border": "1px solid black"
+            "border": "1px solid lightred"
         },
         "phase-four": {
             "background": "#D9EAD2",
-            "border": "1px solid black"
+            "border": "1px solid lightgreen"
+        },
+        "phase-collective": {
+            "background": "Plum",
+            "border": "1px solid MediumPurple"
         },
         "world":{
             "position":"absolute",
@@ -33,6 +37,16 @@
         "vessel":{
             "position":"absolute",
             "content":"Vessel",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
+        },
+        "light":{
+            "position":"absolute",
+            "content":"Light",
             "text-align":"middle",
             "margin-top":"-4px",
             "font-weight":"bold",
@@ -172,6 +186,9 @@
             "translation": "of",
             "ignore":true
         },
+        "Hizdakchut" : {
+            "translation":"Purification"
+        },
         "Tabur": {
             "translation": "Navel"
         },
@@ -180,6 +197,12 @@
         },
         "Ohr Elyon": {
             "translation": "Upper Light"
+        },
+        "Ohr Hozer": {
+            "translation": "Reflected Light"
+        },
+        "Ohr Makif" : {
+            "translation": "Surrounding Light"
         },
         "Ohr": {
             "translation": "Light"
@@ -218,6 +241,26 @@
         "Malchut": {
             "translation": "Kingdom",
             "style": ["vessel","phase-four"]
+        },
+        "Hesed" : {
+            "translation":"Kindness",
+            "style": ["vessel","root-phase"]
+        },
+        "Gevura" : {
+            "translation":"Judgement",
+            "style": ["vessel","phase-one"]
+        },
+        "Netsach" : {
+            "translation":"Eternity",
+            "style": ["vessel","phase-three"]
+        },
+        "Hod" : {
+            "translation":"Majesty",
+            "style": ["vessel","phase-four"]
+        },
+        "Yesod" : {
+            "translation":"Foundation",
+            "style": ["vessel","phase-collective"]
         },
         "Nefesh": {
             "translation": "Relaxation",
@@ -287,6 +330,9 @@
         },
         "Olam": {
             "translation": "World"
+        },
+        "Olamot" : {
+            "translation": "Worlds"
         },
         "Chazeh": {
             "translation": "Chest"
@@ -362,6 +408,9 @@
         },
         "Hitpashtut":{
             "translation":"Expansion"
+        },
+        "Sitra Achra":{
+            "translation":"Other Side"
         }
     }
 }
