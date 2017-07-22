@@ -34,6 +34,16 @@
             "text-transform":"uppercase",
             "line-height": "10px"
         },
+        "face":{
+            "position":"absolute",
+            "content":"Face",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
+        },
         "vessel":{
             "position":"absolute",
             "content":"Vessel",
@@ -56,6 +66,14 @@
         }
     },
     "terms": {
+        "Partzuf Galgalta" : {
+            "translation":"Skull Face",
+            "style":["face","root-phase"]
+        },
+        "Galgalta" :{
+            "translation":"Skull",
+            "style":["face","root-phase"]
+        },
         "Ohr Ein Sof": {
             "translation":"Light of Infinity",
             "style":["world","root-phase"]
@@ -411,6 +429,24 @@
         },
         "Sitra Achra":{
             "translation":"Other Side"
+        },
+        "AK":{
+            "expansion":"Adam Kadmon"
+        },
+        "Zivug":{
+            "translation":"Mating"
+        },
+        "AB":{
+            "style":["face","phase-one"]
+        },
+        "SAG":{
+            "style":["face","phase-two"]
+        },
+        "MA":{
+            "style":["face","phase-three"]
+        },
+        "BON":{
+            "style":["face","phase-four"]
         }
     }
 }

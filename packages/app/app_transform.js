@@ -25,11 +25,13 @@ package.app.transform = function AppTransform(me) {
         me.showHtml = me.ui.property.toggleOptionSet(me.options, "showHtml", me.convert.set);
         me.showInput = me.ui.property.toggleOptionSet(me.options, "showInput", function(options, key, value) {
             me.set(me.singleton.var.input, "ui.style.display", value ? "block" : "none");
+            me.set(me.singleton, "ui.property.notify", {
+                "draw": null
+            });
         });
-    }
+    };
     me.new = {
         set: function (object) {
-            console.log("me.singleton.var.input: " + me.singleton.var.input);
             me.set(me.singleton.var.input, "ui.basic.text", "");
             me.set(me.singleton.var.output, "ui.basic.html", "");
         }
@@ -45,7 +47,8 @@ package.app.transform = function AppTransform(me) {
                         }).join("—");
                     }).join(", ");
                 }).join(". ");
-            }).join("<br>");
+            }).join("</p><p>");
+            text = "<p>"+ text;
             if(me.options.showHtml) {
                 me.set(me.singleton.var.output, "ui.basic.text", text);
             }

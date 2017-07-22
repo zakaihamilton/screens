@@ -46,6 +46,10 @@ package.kab.terms = function KabTerms(me) {
                         words.splice(wordIndex, numTermWords);
                         me.modify(words, wordIndex, item, term, " [", translation, "]", options);
                     }
+                    if(options.addStyles && !translation && !expansion) {
+                        words.splice(wordIndex, numTermWords);
+                        me.modify(words, wordIndex, item, term, "", term, "", me.duplicateOptions(options, {"keepSource":false}));
+                    }
                     break;
                 }
             }
@@ -64,14 +68,14 @@ package.kab.terms = function KabTerms(me) {
         }
         return duplicate;
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options, noFormatting) {
+    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options) {
         if (!options.doTranslation) {
             replacement = term;
         }
         else if (options.keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
-        if (!noFormatting && options.addStyles && item.style) {
+        if (options.addStyles && item.style) {
             var styles = null, html = "";
             if(Array.isArray(item.style)) {
                 item.style.map(function(style) {
@@ -98,5 +102,5 @@ package.kab.terms = function KabTerms(me) {
         }
         html += "\">" + text + "</span>";
         return html;
-    }
+    };
 };
