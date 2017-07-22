@@ -63,6 +63,26 @@
             "font-size":"9px",
             "text-transform":"uppercase",
             "line-height": "10px"
+        },
+        "element":{
+            "position":"absolute",
+            "content":"Element",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
+        },
+        "clothing":{
+            "position":"absolute",
+            "content":"Clothing",
+            "text-align":"middle",
+            "margin-top":"-4px",
+            "font-weight":"bold",
+            "font-size":"9px",
+            "text-transform":"uppercase",
+            "line-height": "10px"
         }
     },
     "terms": {
@@ -306,6 +326,9 @@
         "KHBTM": {
             "expansion": ["Keter", "Hochma", "Bina", "Tifferet", "Malchut"]
         },
+        "HBTM": {
+            "expansion": ["Hochma", "Bina", "Tifferet", "Malchut"]
+        },
         "ABYA": {
             "expansion": ["Atzilut", "Beria", "Yetzira", "Assiya"]
         },
@@ -433,6 +456,9 @@
         "AK":{
             "expansion":"Adam Kadmon"
         },
+        "Zivug Hakaa":{
+            "translation":"Mating by Striking"
+        },
         "Zivug":{
             "translation":"Mating"
         },
@@ -447,6 +473,99 @@
         },
         "BON":{
             "style":["face","phase-four"]
+        },
+        "AVI":{
+            "expansion":["Abba","Imma"],
+            "style":["face","phase-two"]
+        },
+        "Abba":{
+            "translation":"Father"
+        },
+        "Imma":{
+            "translation":"Mother"
+        },
+        "Tzimtzum Aleph":{
+            "translation":"First Restriction"
+        },
+        "Tzimtzum Bet":{
+            "translation":"Second Restriction"
+        },
+        "Tzimtzum":{
+            "translation":"Restriction"
+        },
+        "Moach":{
+            "translation":"Marrow",
+            "style":["vessel","root-phase"]
+        },
+        "Atzamot":{
+            "translation":"Bones",
+            "style":["vessel","phase-one"]
+        },
+        "Gidin":{
+            "translation":"Tendons",
+            "style":["vessel","phase-two"]
+        },
+        "Bassar":{
+            "translation":"Flesh",
+            "style":["vessel","phase-three"]
+        },
+        "Or":{
+            "translation":"Skin",
+            "style":["vessel","phase-four"]
+        },
+        "Malbushim":{
+            "translation":"Clothings"
+        },
+        "Ktonet":{
+            "translation":"Shirt",
+            "style":["clothing","phase-one"]
+        },
+        "Michnasayim":{
+            "translation":"Trousers",
+            "style":["clothing","phase-two"]
+        },
+        "Mitznefet":{
+            "translation":"Miter",
+            "style":["clothing","phase-three"]
+        },
+        "Avnet":{
+            "translation":"Belt",
+            "style":["clothing","phase-four"]
+        },
+        "Bait":{
+            "translation":"House",
+            "style":["vessel","phase-one"]
+        },
+        "Hatzer":{
+            "translation":"Yard",
+            "style":["vessel","phase-two"]
+        },
+        "Sadeh":{
+            "translation":"Field",
+            "style":["vessel","phase-three"]
+        },
+        "Midbar":{
+            "translation":"Desert",
+            "style":["vessel","phase-four"]
+        },
+        "Mayim":{
+            "translation":"Water",
+            "style":["element","phase-one"]
+        },
+        "Esh":{
+            "translation":"Fire",
+            "style":["element","phase-two"]
+        },
+        "Ruach":{
+            "translation":"Wind",
+            "style":["element","phase-three"]
+        },
+        "Affar":{
+            "translation":"Dust",
+            "style":["element","phase-four"]
+        },
+        "Nitzotz":{
+            "translation":"Spark"
         }
     }
 }

@@ -2,25 +2,30 @@
 .app-transform-container {
     position:relative;
     flex:1;
-    display:flex;
+    flex-direction:column;
+    display:block;
     height:90%;
+    width:95%;
     top:10px;
-    left:0px;
-    width:100%;
+    left:10px;
+    right:10px;
 }
 
 .app-transform-input {
-    margin-left:10px;
     background:white;
-    flex:1;
+    resize: none;
+    overflow: auto;
+    margin-right:20px;
+    height:300px;
+    width:100%;
 }
 
 .app-transform-output {
-    margin-left:10px;
-    margin-right:10px;
     background:white;
     line-height:200%;
     font-size:24px;
     flex:1;
-    text-align:justify
+    text-align:justify;
+    top:300px;
+    bottom:10px;
 }
