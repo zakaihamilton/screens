@@ -14,6 +14,9 @@ package.kab.terms = function KabTerms(me) {
         return me.core.string.parseWords(wordsString, function(words) {
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                 for (var term in me.terms.terms) {
+                    if(term.startsWith("!")) {
+                        continue;
+                    }
                     var item = me.terms.terms[term];
                     var termWords = term.split(" ");
                     var numTermWords = termWords.length;

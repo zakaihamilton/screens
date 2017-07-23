@@ -156,6 +156,9 @@
         "Ohr Makif" : {
             "translation": "Surrounding Light"
         },
+        "Ohr Pnimi":{
+            "translation":"Inner Light"
+        },
         "Ohr": {
             "translation": "Light"
         },
@@ -220,7 +223,7 @@
         },
         "Ruach": {
             "translation": "Modulation",
-            "style": {"heading":"light","phase":"three"}
+            "style": {"heading":"light","phase":"three","alt":"Wind/Spirit"}
         },
         "Neshama": {
             "translation": "Protection",
@@ -278,11 +281,11 @@
         },
         "Arich Anpin": {
             "translation": "Long Face",
-            "style": {"phase":"root"}
+            "style": {"heading":"face","phase":"root"}
         },
         "Zeir Anpin": {
             "translation": "Small Face",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"vessel/face","phase":"three"}
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
@@ -360,7 +363,7 @@
         },
         "Ein Sof":{
             "translation":"Infinity",
-            "style":{"heading":"world","phase":"root"}
+            "style":{"heading":"world","phase":"root","alt":"Before the Barrier"}
         },
         "Igulim": {
             "translation":"Circles"
@@ -500,7 +503,7 @@
             "translation":"Fire",
             "style":{"heading":"element","phase":"two"}
         },
-        "Ruach":{
+        "!Ruach":{
             "translation":"Wind",
             "style":{"heading":"element","phase":"three"}
         },
@@ -540,6 +543,61 @@
         },
         "Sium":{
             "translation":"End"
+        },
+        "Revi’it Dam":{
+            "translation":"Quarter of Blood"
+        },
+        "Dam":{
+            "translation":"Blood"
+        },
+        "Tzipornaim":{
+            "translation":"Nails"
+        },
+        "Se’arot":{
+            "translation":"Hairs"
+        },
+        "Ohalim":{
+            "translation":"Tents"
+        },
+        "Ne’etzalim":{
+            "translation":"Emanated"
+        },
+        "Atik":{
+            "translation":"Ancient",
+            "style":{"heading":"face","phase":"root"}
+        },
+        "Tohu":{
+            "translation":"Unformed",
+            "style":{"heading":"phase","phase":"one"}
+        },
+        "Bohu":{
+            "translation":"Chaos",
+            "style":{"heading":"phase","phase":"two"}
+        },
+        "Daat":{
+            "translation":"Knowledge",
+            "style":{"heading":"vessel","phase":"three","alt":"Connection"}
+        },
+        "Sefer":{
+            "translation":"Book"
+        },
+        "Hiuli":{
+            "translation":"Formless"
+        },
+        "Tzura":{
+            "translation":"Form"
+        },
+        "Kelim":{
+            "translation":"Vessels"
+        },
+        "Hakaa":{
+            "translation":"Striking"
+        },
+        "Elyonim":{
+            "translation":"Uppers"
+        },
+        "ERMA":{
+            "expansion":["Esh", "Ruach", "Mayim", "Afar"]
         }
     }
 }
