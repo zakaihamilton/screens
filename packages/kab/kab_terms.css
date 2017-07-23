@@ -1,0 +1,100 @@
+[kab-term-tooltip] {
+    position: relative;
+}
+
+[kab-term-tooltip]:after {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.18s ease-out 0.18s;
+    bottom: -1px;
+    left: 50%;
+    position: absolute;
+    line-height:100%;
+    z-index: 10;
+    transform: translate(-50%, 10px);
+    transform-origin: top;
+    color: black;
+    content: attr(kab-term-tooltip);
+    text-align:center;
+    white-space: normal;
+    min-width: 100%;
+    min-height: 100%;
+    padding-top:1px;
+    vertical-align: middle;
+}
+
+[kab-term-tooltip]:hover:after {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+}
+
+.kab-term-phase-root {
+    background:white;
+    border:1px solid gray;
+}
+
+.kab-term-phase-root:hover:after {
+    background:white;
+    border:2px solid black;
+}
+
+.kab-term-phase-one {
+    background:#FFF3CA;
+    border:1px solid lightyellow;
+}
+
+.kab-term-phase-one:hover:after {
+    background:#FFF3CA;
+    border:2px solid black;
+}
+
+.kab-term-phase-two {
+    background:#C8D9F9;
+    border:1px solid lightblue;
+}
+
+.kab-term-phase-two:hover:after {
+    background:#C8D9F9;
+    border:2px solid black;
+}
+
+.kab-term-phase-three {
+    background:#F5CCCB;
+    border:1px solid coral;
+}
+
+.kab-term-phase-three:hover:after {
+    background:#F5CCCB;
+    border:2px solid black;
+}
+
+.kab-term-phase-four {
+    background:#D9EAD2;
+    border:1px solid lightgreen;
+}
+
+.kab-term-phase-four:hover:after {
+    background:#D9EAD2;
+    border:2px solid black;
+}
+
+.kab-term-phase-collective {
+    background:Plum;
+    border:1px solid MediumPurple;
+}
+
+.kab-term-phase-collective:hover:after {
+    background:Plum;
+    border:2px solid black;
+}
+
+.kab-term-title {
+    position:absolute;
+    margin-left:4px;
+    margin-top:-4px;
+    font-weight:bold;
+    font-size:9px;
+    text-transform:uppercase;
+    line-height:10px;
+}

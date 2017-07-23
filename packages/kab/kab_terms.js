@@ -3,8 +3,13 @@
  @component KabTerms
  */
 
+package.require("kab.terms", "browser");
+
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
+    me.init = function() {
+        me.ui.theme.useStylesheet("kab.terms");
+    };
     me.parse = function (wordsString, options) {
         return me.core.string.parseWords(wordsString, function(words) {
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
@@ -82,31 +87,30 @@ package.kab.terms = function KabTerms(me) {
             replacement = term + prefix + replacement + suffix;
         }
         if (options.addStyles && item.style) {
-            var styles = null, html = "";
-            if(Array.isArray(item.style)) {
-                item.style.map(function(style) {
-                    var styles = me.terms.styles[style];
-                    html += me.applyStyles(styles, replacement);
-                });
-            }
-            else {
-                var styles = me.terms.styles[item.style];
-                html += me.applyStyles(styles, replacement);
-            }
-            replacement = html;
+            replacement = me.applyStyles(item.style, replacement);
         }
         words.splice(wordIndex, 0, replacement);
     };
     me.applyStyles = function(styles, text) {
-        var html = "<span style=\"";
+        var html = "", tooltip = "";
+        var phaseClass = null;
         for(var style in styles) {
-            if(style === "content") {
-                text = styles[style];
-                continue;
+            if(style === "heading") {
+                html += "<span class=\"kab-term-title\">" + styles[style] + "</span>";
             }
-            html += style + ":" + styles[style] + ";";
         }
-        html += "\">" + text + "</span>";
+        if(styles.phase) {
+            html += "<span class=\"kab-term-phase-" + styles.phase;
+            html += "\" ";
+            if(styles.alt) {
+                tooltip += styles.alt;
+                html += " kab-term-tooltip=\"" + tooltip + "\"";
+            }
+            html += ">" + text + "</span>";
+        }
+        else {
+            html += text;
+        }
         return html;
     };
 };

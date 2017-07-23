@@ -103,16 +103,19 @@ package.ui.theme = function UITheme(me) {
         var class_name = me.to_class(object, path);
         var component_name = me.to_component(object, path);
         if(component_name) {
-            if (!me.stylesheets[component_name]) {
-                console.log("loading css stylesheet: " + component_name);
-                me.stylesheets[component_name] = me.load_css(component_name);
-            }
+            me.useStylesheet(component_name);
         }
         if(add || object.className === "") {
             object.className += " " + class_name;
         }
         else {
             object.className = class_name;
+        }
+    };
+    me.useStylesheet = function(component_name) {
+        if (!me.stylesheets[component_name]) {
+            console.log("loading css stylesheet: " + component_name);
+            me.stylesheets[component_name] = me.load_css(component_name);
         }
     };
 };

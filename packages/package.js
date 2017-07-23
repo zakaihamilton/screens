@@ -206,7 +206,7 @@ function package_include(packages, callback) {
             }
             setTimeout(function () {
                 load(package_index, component_index);
-            }, 10);
+            }, 0);
         });
     };
     load(0, 0);
