@@ -27,13 +27,13 @@ package.app.main = function (me) {
                 "ui.element.component":"widget.desktop"
             }
         ]);
-        package.include("app.progman", function(failure) {
-            if(!failure) {
+        package.include("app.progman", function(info) {
+            if(info.complete) {
                 me.set(me.send("app.progman.launch"), "minimize", true);
             }
         });
-        package.include("app.transform", function(failure) {
-            if(!failure) {
+        package.include("app.transform", function(info) {
+            if(info.complete) {
                 me.send("app.transform.launch");
             }
         });

@@ -5,11 +5,11 @@
 
 package.cmd.shell = function CmdShell(me) {
     me.cmd = function(terminal, args) {
-        package.include("app." + args[1], function(failure) {
-            if(failure) {
+        package.include("app." + args[1], function(info) {
+            if(info.failure) {
                 me.set(terminal, "print", "Cannot launch " + args[1] + " application");
             }
-            else {
+            else if(info.complete) {
                 me.send("app." + args[1] + ".launch", args.slice(2));
             }
         });

@@ -28,10 +28,8 @@ package.app.progman = function AppProgman(me) {
         set: function (object, value) {
             var args = me.core.cmd.splitArguments(object.args);
             if (args) {
-                package.include("app." + args[0], function (failure) {
-                    if (failure) {
-                        //todo raise error dialog
-                    } else {
+                package.include("app." + args[0], function (info) {
+                    if (info.complete) {
                         me.send("app." + args[0] + ".launch", args.slice(1));
                     }
                     if (me.options["minimize_on_use"]) {

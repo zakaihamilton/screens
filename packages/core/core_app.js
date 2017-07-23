@@ -8,8 +8,8 @@ package.core.app = function CoreApp(me) {
         get : function(object, property) {
             return {
                 set: function (object, value) {
-                    package.include("app." + property, function (failure) {
-                        if (!failure) {
+                    package.include("app." + property, function (info) {
+                        if (info.complete) {
                             me.send("app." + property + ".launch");
                         }
                     });

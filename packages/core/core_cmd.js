@@ -25,11 +25,11 @@ package.core.cmd = function CoreCmd(me) {
             return;
         }
         application = "cmd." + args[0];
-        package.include(application, function (failure) {
-            if (failure) {
+        package.include(application, function (info) {
+            if (info.failure) {
                 me.set(terminal, "print", "Error: Command not found!");
                 me.exit(terminal);
-            } else {
+            } else if(info.complete) {
                 terminal.application = application;
                 me.send(application + ".cmd", terminal, args);
             }

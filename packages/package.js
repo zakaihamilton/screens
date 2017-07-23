@@ -21,7 +21,7 @@ function package_platform() {
 }
 
 function package_require(id, platform) {
-    if(typeof platform !== "undefined") {
+    if (typeof platform !== "undefined") {
         /* Register requirement in package */
         package.requirements[id] = platform;
     }
@@ -71,11 +71,11 @@ function package_init(package_name, component_name, child_name = null, node = nu
     } else {
         Reflect.set(package[package_name], component_name, component_obj);
     }
-    if(typeof node !== "function") {
+    if (typeof node !== "function") {
         throw "Component " + id + " cannot be loaded";
     }
     var requirement_platform = package.require(id);
-    if(!requirement_platform || requirement_platform === package.platform) {
+    if (!requirement_platform || requirement_platform === package.platform) {
         node(component_obj, child_name);
         var init_method = component_obj.init;
         if (component_obj.forward) {
@@ -96,7 +96,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
 function package_prepare(package_name, component_name, callback) {
     var component = package_init(package_name, component_name);
     if (callback) {
-        callback(null);
+        callback({loaded: {package: package_name, component: component_name}});
     }
     return component;
 }
@@ -104,19 +104,19 @@ function package_prepare(package_name, component_name, callback) {
 function package_load(package_name, component_name, callback) {
     var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
-    if(package[package_name]) {
+    if (package[package_name]) {
         var id = package_name + "." + component_name;
-        package[package_name].components.map(function(name) {
-            if(id !== name) {
+        package[package_name].components.map(function (name) {
+            if (id !== name) {
                 return;
             }
             result = package[id];
-            if(callback) {
-                callback(null);
+            if (callback) {
+                callback({loaded: {package: package_name, component: component_name}});
             }
         });
     }
-    if(result) {
+    if (result) {
         return result;
     }
     try {
@@ -127,11 +127,10 @@ function package_load(package_name, component_name, callback) {
             script.onload = function () {
                 try {
                     package_prepare(package_name, component_name, callback);
-                }
-                catch(err) {
+                } catch (err) {
                     console.log("Found error: " + err + " stack: " + err.stack);
                     if (callback) {
-                        callback(package_name + "." + component_name);
+                        callback({failure: {package: package_name, component: component_name}});
                     }
                 }
             };
@@ -144,11 +143,10 @@ function package_load(package_name, component_name, callback) {
             importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
             result = package_prepare(package_name, component_name, callback);
         }
-    }
-    catch(err) {
+    } catch (err) {
         console.log("Found error: " + err + " stack: " + err.stack);
         if (callback) {
-            callback(package_name + "." + component_name);
+            callback({failure: {package: package_name, component: component_name}});
         }
     }
     return result;
@@ -159,24 +157,44 @@ function package_include(packages, callback) {
         var separator = packages.indexOf(".");
         var package_name = packages.substr(0, separator);
         var component_name = packages.substr(separator + 1);
-        package_load(package_name, component_name, callback);
+        package_load(package_name, component_name, function(info) {
+            if(info.loaded) {
+                info.complete = true;
+            }
+            callback(info);
+        });
         return;
     }
     var load = function (package_index, component_index) {
         var package_keys = Object.keys(packages);
         if (package_index >= package_keys.length) {
             if (callback) {
-                callback(null);
+                callback({complete: true});
             }
             return;
         }
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        package_load(package_name, component_name, function (component) {
-            if(component) {
+        var component_progress = (component_index / components.length) * 100;
+        var package_progress = (package_index / package_keys.length) * 100;
+        var info = {
+            loading: {
+                package: package_name,
+                component: component_name
+            },
+            progress: {
+                package: package_progress,
+                component: component_progress
+            }
+        };
+        if (callback) {
+            callback(info);
+        }
+        package_load(package_name, component_name, function (info) {
+            if (info.failure) {
                 if (callback) {
-                    callback(component);
+                    callback(info);
                 }
                 return;
             }
@@ -186,7 +204,9 @@ function package_include(packages, callback) {
                 package_index++;
                 component_index = 0;
             }
-            load(package_index, component_index);
+            setTimeout(function () {
+                load(package_index, component_index);
+            }, 10);
         });
     };
     load(0, 0);
@@ -215,7 +235,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({requirements:{}}, {
+var package = new Proxy({requirements: {}}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {
