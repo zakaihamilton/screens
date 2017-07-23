@@ -29,6 +29,16 @@
     transform: translate(-50%, 0);
 }
 
+.kab-term-phase-none {
+    background:white;
+    border:1px solid transparent;
+}
+
+.kab-term-phase-none:hover:after {
+    background:white;
+    border:2px solid black;
+}
+
 .kab-term-phase-root {
     background:white;
     border:1px solid gray;

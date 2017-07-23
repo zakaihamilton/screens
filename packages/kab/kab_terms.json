@@ -150,6 +150,9 @@
         "Ohr Elyon": {
             "translation": "Upper Light"
         },
+        "Ohr Yashar": {
+            "translation": "Direct Light"
+        },
         "Ohr Hozer": {
             "translation": "Reflected Light"
         },
@@ -237,8 +240,17 @@
             "translation": "Singularity",
             "style": {"heading":"light","phase":"root"}
         },
+        "ERMA":{
+            "expansion":["Esh", "Ruach", "Mayim", "Afar"]
+        },
         "NRNHY": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
+        },
+        "NRN": {
+            "expansion": ["Nefesh", "Ruach", "Neshama"]
+        },
+        "NR": {
+            "expansion": ["Nefesh", "Ruach"]
         },
         "KHBTM": {
             "expansion": ["Keter", "Hochma", "Bina", "Tifferet", "Malchut"]
@@ -596,8 +608,8 @@
         "Elyonim":{
             "translation":"Uppers"
         },
-        "ERMA":{
-            "expansion":["Esh", "Ruach", "Mayim", "Afar"]
+        "Atzmut":{
+            "translation":"Light"
         }
     }
 }
