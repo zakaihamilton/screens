@@ -46,7 +46,7 @@ package.kab.terms = function KabTerms(me) {
                                 expansion = expansion.slice(-1).toString();
                             }
                             words.splice(wordIndex, numTermWords);
-                            me.modify(words, wordIndex, item, term, " (", expansion, ")", options);
+                            me.modify(words, wordIndex, item, term, " (", expansion, ")", options, true);
                         }
                         var translation = item.translation;
                         if (translation) {
@@ -82,33 +82,37 @@ package.kab.terms = function KabTerms(me) {
         }
         return duplicate;
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options) {
+    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options, expansion) {
         if (!options.doTranslation) {
             replacement = term;
         }
         else if (options.keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
-        if (options.addStyles && item.style) {
-            replacement = me.applyStyles(item.style, replacement);
+        if (options.addStyles && (item.style || replacement !== term)) {
+            replacement = me.applyStyles(term, item.style, replacement, options, expansion);
         }
         words.splice(wordIndex, 0, replacement);
     };
-    me.applyStyles = function(styles, text) {
-        var html = "", tooltip = "";
-        var phaseClass = null;
+    me.applyStyles = function(term, styles, text, options, expansion) {
+        var html = "";
         for(var style in styles) {
             if(style === "heading") {
                 html += "<span class=\"kab-term-title\">" + styles[style] + "</span>";
             }
         }
-        if(styles.phase) {
+        if(styles && styles.phase) {
             html += "<span class=\"kab-term-phase-" + styles.phase;
             html += "\" ";
-            if(styles.alt) {
-                tooltip += styles.alt;
-                html += " kab-term-tooltip=\"" + tooltip + "\"";
+            if(!options.keepSource && !expansion) {
+                html += " kab-term-tooltip=\"" + term + "\"";
             }
+            html += ">" + text + "</span>";
+        }
+        else if(!options.keepSource && !expansion) {
+            html += "<span class=\"kab-term-phase-none";
+            html += "\" ";
+            html += " kab-term-tooltip=\"" + term + "\"";
             html += ">" + text + "</span>";
         }
         else {

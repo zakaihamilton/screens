@@ -32,6 +32,7 @@
 .kab-term-phase-none {
     background:white;
     border:1px solid transparent;
+    border-bottom:1px dashed darkgray;
 }
 
 .kab-term-phase-none:hover:after {

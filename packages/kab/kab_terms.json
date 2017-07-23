@@ -511,6 +511,10 @@
             "translation":"Water",
             "style":{"heading":"element","phase":"one"}
         },
+        "Afar":{
+            "translation":"Dust",
+            "style":{"heading":"element","phase":"four"}
+        },
         "Esh":{
             "translation":"Fire",
             "style":{"heading":"element","phase":"two"}
