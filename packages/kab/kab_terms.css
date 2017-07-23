@@ -16,7 +16,7 @@
     color: black;
     content: attr(kab-term-tooltip);
     text-align:center;
-    white-space: normal;
+    white-space: nowrap;
     min-width: 100%;
     min-height: 100%;
     padding-top:1px;
