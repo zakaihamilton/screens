@@ -329,17 +329,38 @@
         "HBTM": {
             "expansion": ["Hochma", "Bina", "Tifferet", "Malchut"]
         },
+        "KHB": {
+            "expansion": ["Keter", "Hochma", "Bina"]
+        },
+        "HB": {
+            "expansion": ["Hochma", "Bina"]
+        },
+        "TM": {
+            "expansion": ["Tifferet", "Malchut"]
+        },
         "ABYA": {
             "expansion": ["Atzilut", "Beria", "Yetzira", "Assiya"]
         },
         "BYA": {
             "expansion": ["Beria", "Yetzira", "Assiya"]
         },
+        "HGT": {
+            "expansion": ["Hesed", "Gevurah", "Tifferet"]
+        },
+        "HGTNHY": {
+            "expansion": ["Hesed", "Gevurah", "Tifferet", "Netsach","Hod","Yesod"]
+        },
         "AA": {
             "expansion": ["Arich Anpin"]
         },
         "ZA": {
             "expansion": ["Zeir Anpin"]
+        },
+        "NHY": {
+            "expansion": ["Netsach","Hod","Yesod"]
+        },
+        "NHYM": {
+            "expansion": ["Netsach","Hod","Yesod","Malchut"]
         },
         "Arich Anpin": {
             "translation": "Long Face",
@@ -368,6 +389,14 @@
         "Assiya": {
             "translation": "Action",
             "style": ["world","phase-four"]
+        },
+        "Olam Ha Zeh": {
+            "translation": "This World",
+            "style": ["world","phase-four"]
+        },
+        "Olam Ha Ba": {
+            "translation": "Next World",
+            "style": ["world","phase-one"]
         },
         "Olam": {
             "translation": "World"
@@ -510,6 +539,7 @@
             "style":["vessel","phase-three"]
         },
         "Or":{
+            "case":"sensitive",
             "translation":"Skin",
             "style":["vessel","phase-four"]
         },
@@ -566,6 +596,36 @@
         },
         "Nitzotz":{
             "translation":"Spark"
+        },
+        "Tzimtzumim":{
+            "translation":"Restrictions"
+        },
+        "Taamim":{
+            "translation":"Tastes"
+        },
+        "Nekudot":{
+            "translation":"Points"
+        },
+        "Tagin":{
+            "translation":"Crowns"
+        },
+        "Ot":{
+            "translation":"Letter"
+        },
+        "Otiot":{
+            "translation":"Letters"
+        },
+        "Parsa":{
+            "translation":"Diaphragm"
+        },
+        "Sium Ralgin":{
+            "translation":"End of Legs"
+        },
+        "Sium Parsa":{
+            "translation":"End of Diaphragm"
+        },
+        "Sium":{
+            "translation":"End"
         }
     }
 }

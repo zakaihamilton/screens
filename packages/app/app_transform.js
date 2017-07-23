@@ -15,15 +15,15 @@ package.app.transform = function AppTransform(me) {
         "doTranslation": true,
         "addStyles": true,
         "keepSource": false,
-        "showHtml":false,
-        "showInput":true
+        "showHtml": false,
+        "showInput": true
     };
-    me.init = function() {
+    me.init = function () {
         me.translation = me.ui.property.toggleOptionSet(me.options, "doTranslation", me.convert.set);
         me.addStyles = me.ui.property.toggleOptionSet(me.options, "addStyles", me.convert.set);
         me.keepSource = me.ui.property.toggleOptionSet(me.options, "keepSource", me.convert.set);
         me.showHtml = me.ui.property.toggleOptionSet(me.options, "showHtml", me.convert.set);
-        me.showInput = me.ui.property.toggleOptionSet(me.options, "showInput", function(options, key, value) {
+        me.showInput = me.ui.property.toggleOptionSet(me.options, "showInput", function (options, key, value) {
             me.set(me.singleton.var.input, "ui.style.display", value ? "block" : "none");
             me.set(me.singleton, "ui.property.notify", {
                 "draw": null
@@ -39,20 +39,12 @@ package.app.transform = function AppTransform(me) {
     me.convert = {
         set: function (object) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
-            text = text.split("\n").map(function (paragraph) {
-                return paragraph.split(".").map(function (sentence) {
-                    return sentence.split(",").map(function (fragment) {
-                        return fragment.split("—").map(function(parts) {
-                            return me.kab.terms.parse(parts, me.options);
-                        }).join("—");
-                    }).join(", ");
-                }).join(". ");
+            text = "<p>" + text.split("\n").map(function (paragraph) {
+                return me.kab.terms.parse(paragraph, me.options);
             }).join("</p><p>");
-            text = "<p>"+ text;
-            if(me.options.showHtml) {
+            if (me.options.showHtml) {
                 me.set(me.singleton.var.output, "ui.basic.text", text);
-            }
-            else {
+            } else {
                 me.set(me.singleton.var.output, "ui.basic.html", text);
             }
             me.set(me.singleton, "ui.property.notify", {

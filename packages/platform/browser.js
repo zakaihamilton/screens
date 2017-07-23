@@ -12,7 +12,8 @@ package.include({
         "script",
         "property",
         "cmd",
-        "app"
+        "app",
+        "string"
     ],
     "ui": [
         "event",
