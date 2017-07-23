@@ -13,7 +13,33 @@ and open the template in the editor.
         </script>
         <script src="packages/platform/browser.js">
         </script>
+        <style>
+            .progress {
+                position:relative;
+                left:30px;
+                width: 500px;
+                background-color: white;
+                border:1px solid black;
+                margin-top:30px;
+            }
+            .bar {
+                width: 1%;
+                height: 20px;
+                background-color: green;
+                text-align:left;
+                color:white;
+                padding-left:30px;
+            }
+        </style>
     </head>
-    <body>
+    <body style="background:lightblue;">
+        <div id="progress">
+            <div class="progress">
+                <div id="package_progress" class="bar"></div>
+            </div>
+            <div class="progress">
+                <div id="component_progress" class="bar"></div>
+            </div>
+        </div>
     </body>
 </html>
