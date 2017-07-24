@@ -1,0 +1,62 @@
+{
+    "title": "Storage",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "400px",
+    "ui.style.height": "250px",
+    "ui.basic.elements": [
+        {
+            "ui.basic.text": "Source:"
+        },
+        {
+            "ui.basic.var":"storage",
+            "ui.basic.text": "Local",
+            "ui.style.width": "200px",
+            "ui.element.count": 0,
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false
+                },
+                "ui.data.values": [
+                    ["Local"],
+                    ["Session"]
+                ]
+            }
+        },
+        {
+            "ui.basic.text": "Key:"
+        },
+        {
+            "ui.basic.var":"key",
+            "ui.basic.text": "",
+            "ui.basic.readOnly": false,
+            "ui.style.width": "200px",
+            "ui.element.count": 0,
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false
+                },
+                "ui.data.values": [
+                    "app.storage.keyList"
+                ]
+            }
+        },
+        {
+            "ui.basic.text": "Value:"
+        },
+        {
+            "ui.basic.var":"value",
+            "ui.basic.text": "",
+            "ui.style.width": "195px",
+            "ui.basic.type": "text"
+        },
+        {
+            "ui.basic.text": "Set",
+            "ui.touch.click": "app.storage.store"
+        }
+    ]
+}

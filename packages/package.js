@@ -58,7 +58,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
         set: function (object, property, value) {
             if (property !== "forward" && Reflect.has(object, "forward")) {
                 var forward = Reflect.get(object, "forward");
-                if (forward.enabled && forward.set) {
+                if (forward && forward.enabled && forward.set) {
                     forward.set(object, property, value);
                     return;
                 }
@@ -228,7 +228,7 @@ function package_general(object, property) {
         return package[property];
     } else if (property !== "forward" && Reflect.has(object, "forward")) {
         var forward = Reflect.get(object, "forward");
-        if (forward.enabled && forward.get) {
+        if (forward && forward.enabled && forward.get) {
             return forward.get(object, property);
         }
     }

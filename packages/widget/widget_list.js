@@ -36,7 +36,6 @@ package.widget.list = function WidgetList(me) {
                     var child = childList[childIndex];
                     var state = me.get(child, "state");
                     var label = me.get(child, "ui.basic.text");
-                    console.log("state: " + state + " label: " + label);
                     if(state) {
                         selection.push(label);
                         break;
@@ -54,15 +53,19 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.redirect = {
         "ui.basic.text": "text",
+        "ui.basic.readOnly": "readOnly",
         "ui.basic.elements": "elements"
     };
     me.default = {
         "ui.theme.class": "group",
         "ui.basic.elements": [
             {
+                "ui.element.component":"widget.input",
                 "ui.basic.text": "",
+                "ui.basic.type":"text",
                 "ui.basic.var": "selection",
                 "ui.theme.class": "selection",
+                "ui.basic.readOnly":true,
                 "ui.touch.click": "dropdown"
             },
             {
@@ -100,6 +103,15 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "widget.list.popup.selection":me.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
             }, document.body);
+        }
+    };
+    me.readOnly = {
+        get: function (object) {
+            return me.get(object.var.selection, "ui.basic.readOnly");
+        },
+        set: function (object, value) {
+            me.set(object.var.selection, "ui.basic.readOnly", value);
+            me.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {

@@ -12,11 +12,11 @@ package.ui.attribute = function UIAttribute(me) {
                     return object.getAttribute(property);
                 },
                 set: function (object, value) {
-                    if (object && typeof value !== "undefined") {
+                    if (typeof value !== "undefined") {
                         object.setAttribute(property, value);
                     }
                 }
-            }
+            };
         }
     };
 };

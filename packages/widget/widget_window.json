@@ -21,7 +21,7 @@
         {
             "ui.element.update": {
                 "ui.group.data": {
-                    "ui.data.keys": ["ui.theme.class"],
+                    "ui.data.keyList": ["ui.theme.class"],
                     "ui.data.default": {
                         "ui.resize.extend": null
                     },

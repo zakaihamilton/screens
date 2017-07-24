@@ -42,7 +42,7 @@ package.widget.menu = function WidgetMenu(me) {
                     "ui.element.component": "widget.menu",
                     "ui.style.position": "relative",
                     "ui.group.data": {
-                        "ui.data.keys": ["ui.basic.text", "select", "options"],
+                        "ui.data.keyList": ["ui.basic.text", "select", "options"],
                         "ui.data.values": value
                     }
                 }, parent);
@@ -99,7 +99,7 @@ package.widget.menu = function WidgetMenu(me) {
             "ui.basic.window": window,
             "ui.basic.target": object,
             "ui.group.data": {
-                "ui.data.keys": ["ui.basic.text", "select", "options"],
+                "ui.data.keyList": ["ui.basic.text", "select", "options"],
                 "ui.data.values": values
             }
         }, document.body);

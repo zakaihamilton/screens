@@ -10,6 +10,9 @@ package.core.property = function CoreProperty(me) {
         package.dirty = me.dirty;
     };
     me.fullname = function(object, name, default_name=null) {
+        if(typeof name !== "string") {
+            throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;
+        }
         var separator = name.indexOf(".");
         var package_name = null;
         if(separator !== -1) {
@@ -72,6 +75,5 @@ package.core.property = function CoreProperty(me) {
     };
     me.dirty = function(object, name) {
         me.get(object, name, "dirty");
-    }
-    
+    };
 };

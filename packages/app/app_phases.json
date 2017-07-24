@@ -3,7 +3,7 @@
         "ui.data.default": {
             "ui.style.background": "radial-gradient(circle, red, yellow, green)"
         },
-        "ui.data.keys": ["title", "ui.style.background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
+        "ui.data.keyList": ["title", "ui.style.background", "ui.style.left", "ui.style.top", "ui.style.width", "ui.style.height"],
         "ui.data.values": [
             ["Root", "white", "330px", "80px"],
             ["First", "yellow", "300px", "300px"],

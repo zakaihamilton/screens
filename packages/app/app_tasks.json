@@ -19,7 +19,7 @@
                     "group":"tasks",
                     "ui.touch.default":"app.tasks.switchTo"
                 },
-                "ui.data.keys": ["ui.basic.text", "state"],
+                "ui.data.keyList": ["ui.basic.text", "state"],
                 "ui.data.values": [
                     "app.tasks.tasks"
                 ]
@@ -34,7 +34,7 @@
             "ui.style.float": "left",
             "ui.style.width": "73px"
         },
-        "ui.data.keys": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
+        "ui.data.keyList": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
         "ui.data.values": [
             ["Switch to", "app.tasks.switchTo"],
             ["End Task", ""],

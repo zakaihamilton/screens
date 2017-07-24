@@ -15,6 +15,9 @@ package.include({
         "app",
         "string"
     ],
+    "storage" : [
+        "cache"
+    ],
     "ui": [
         "event",
         "data",

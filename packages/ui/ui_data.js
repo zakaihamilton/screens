@@ -20,7 +20,7 @@ package.ui.data = function UIData(me) {
             object.data_parent = value;
         }
     };
-    me.keys = {
+    me.keyList = {
         get: function(object) {
             return object.data_keys;
         },
