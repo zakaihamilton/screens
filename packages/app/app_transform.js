@@ -41,7 +41,7 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             text = "<p>" + text.split("\n").map(function (paragraph) {
                 return me.kab.terms.parse(paragraph, me.options);
-            }).join("</p><p>");
+            }).join("</p><p>") + "<br><br>";
             if (me.options.showHtml) {
                 me.set(me.singleton.var.output, "ui.basic.text", text);
             } else {

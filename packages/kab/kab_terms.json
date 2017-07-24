@@ -1,5 +1,8 @@
 {
     "terms": {
+        "Malchut ha Mesayemet":{
+            "translation":"The Ending Kingdom"
+        },
         "Partzuf Galgalta" : {
             "translation":"Skull Face",
             "style":{"heading":"face","phase":"root"}
@@ -147,6 +150,9 @@
         "Kli": {
             "translation": "Vessel"
         },
+        "Ohr Panim":{
+            "translation":"Facial Light"
+        },
         "Ohr Elyon": {
             "translation": "Upper Light"
         },
@@ -291,6 +297,18 @@
         "NHYM": {
             "expansion": ["Netsach","Hod","Yesod","Malchut"]
         },
+        "GE": {
+            "expansion": ["Galgalta","Enayim"]
+        },
+        "AHP": {
+            "expansion": ["Awyzen","Hotem","Peh"]
+        },
+        "Gadlut":{
+            "translation":"Greatness"
+        },
+        "Katnut":{
+            "translation":"Smallness"
+        },
         "Arich Anpin": {
             "translation": "Long Face",
             "style": {"heading":"face","phase":"root"}
@@ -335,6 +353,30 @@
         },
         "Chazeh": {
             "translation": "Chest"
+        },
+        "Ayin": {
+            "translation": "Eye",
+            "style": {"phase":"one"}
+        },
+        "Eynayim": {
+            "translation": "Eyes",
+            "style": {"phase":"one"}
+        },
+        "Awyzen": {
+            "translation": "Ear",
+            "style": {"phase":"two"}
+        },
+        "Awznayim": {
+            "translation": "Ears",
+            "style": {"phase":"two"}
+        },
+        "Oznayim": {
+            "translation": "Ears",
+            "style": {"phase":"two"}
+        },
+        "Hotem": {
+            "translation": "Nose",
+            "style": {"phase":"three"}
         },
         "Peh": {
             "translation": "Mouth",
@@ -512,6 +554,7 @@
             "style":{"heading":"element","phase":"one"}
         },
         "Afar":{
+            "case":"sensitive",
             "translation":"Dust",
             "style":{"heading":"element","phase":"four"}
         },
@@ -590,6 +633,10 @@
             "translation":"Chaos",
             "style":{"heading":"phase","phase":"two"}
         },
+        "Choshech":{
+            "translation":"Darkness",
+            "style":{"heading":"phase","phase":"three"}
+        },
         "Daat":{
             "translation":"Knowledge",
             "style":{"heading":"vessel","phase":"three","alt":"Connection"}
@@ -621,6 +668,90 @@
         "HaVaYaH":{
             "translation":"Tetragrammaton",
             "style":{"heading":"י-ה-ו-ה"}
+        },
+        "Haita":{
+            "translation":"was"
+        },
+        "Al":{
+            "translation":"on"
+        },
+        "Pnei":{
+            "translation":"face"
+        },
+        "Tehom":{
+            "translation":"deep"
+        },
+        "Shlomo":{
+            "translation":"Solomon"
+        },
+        "Orot":{
+            "translation":"Lights"
+        },
+        "Hitabut":{
+            "translation":"Coarsening"
+        },
+        "Harchaka":{
+            "translation":"Remoteness"
+        },
+        "Nekev":{
+            "translation":"Puncture"
+        },
+        "He’elem":{
+            "translation":"Concealment"
+        },
+        "ha":{
+            "translation":"the"
+        },
+        "Mesayemet":{
+            "translation":"ending"
+        },
+        "Tikun":{
+            "translation":"Correction"
+        },
+        "Malbush":{
+            "translation":"Clothing"
+        },
+        "Elyon":{
+            "translation":"Upper"
+        },
+        "Tachton":{
+            "translation":"Lower"
+        },
+        "Pargod":{
+            "translation":"Curtain"
+        },
+        "Gevul":{
+            "translation":"Border"
+        },
+        "Shefa":{
+            "translation":"Abundance"
+        },
+        "Hitgabrut":{
+            "translation":"Overcoming"
+        },
+        "Ratzon":{
+            "translation":"Desire"
+        },
+        "Hassadim":{
+            "translation":"Mercy"
+        },
+        "Dinim":{
+            "translation":"Judgements"
+        },
+        "He’arat":{
+            "translation":"Enlightened"
+        },
+        "Hitkalelut":{
+            "translation":"Integration"
+        },
+        "Masachim":{
+            "translation":"Screens"
+        },
+        "Din":{
+            "translation":"Judgement"
+        },
+        "He’arah":{
+            "translation":"Enlightenment"
         }
     }
 }
