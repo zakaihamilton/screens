@@ -11,7 +11,7 @@ package.ui.property = function UIProperty(me) {
             }
         }
     };
-    me.broadcast = {
+    me.trickle = {
         set: function(object, properties) {
             for (var key in properties) {
                 me.set(object, key, properties[key]);
@@ -26,7 +26,7 @@ package.ui.property = function UIProperty(me) {
                     if(child.component === me.widget.window.id) {
                         continue;
                     }
-                    me.broadcast.set(child, properties);
+                    me.trickle.set(child, properties);
                 }
             }
         }
@@ -36,7 +36,7 @@ package.ui.property = function UIProperty(me) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
             if(parent) {
-                me.broadcast.set(parent, properties);
+                me.trickle.set(parent, properties);
                 me.bubble.set(parent, properties);
             }
         }
@@ -45,13 +45,13 @@ package.ui.property = function UIProperty(me) {
         set: function(object, properties) {
             var window = me.widget.window.window(object);
             if(window) {
-                me.broadcast.set(window, properties);
+                me.trickle.set(window, properties);
             }
             var parent = me.widget.window.parent(window);
             if(!parent) {
                 parent = document.body;
             }
-            me.broadcast.set(parent, properties);
+            me.trickle.set(parent, properties);
         }
     };
     me.toggleOptionSet = function (options, key, callback) {
@@ -71,11 +71,11 @@ package.ui.property = function UIProperty(me) {
         return me.core.object.property(name, {
             "set": function (object, name, value) {
                 if (value) {
-                    me.set(object, "ui.property.broadcast", {
+                    me.set(object, "ui.property.trickle", {
                         "ui.theme.add": name
                     });
                 } else {
-                    me.set(object, "ui.property.broadcast", {
+                    me.set(object, "ui.property.trickle", {
                         "ui.theme.remove": name
                     });
                 }

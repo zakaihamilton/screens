@@ -18,4 +18,12 @@ package.widget.container = function WidgetContainer(me) {
             }
         }
     };
+    me.update = {
+        set: function(object, value) {
+            setTimeout( function() {
+                me.set(object.var.vertical, "update");
+                me.set(object.var.horizontal, "update");
+            }, 0);
+        }
+    };
 };

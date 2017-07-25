@@ -17,11 +17,11 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
             if (has_scroll && !has_class) {
-                me.set(container, "ui.property.broadcast", {
+                me.set(container, "ui.property.trickle", {
                     "ui.theme.add": scroll_type + "_scroll"
                 });
             } else if (!has_scroll && has_class) {
-                me.set(container, "ui.property.broadcast", {
+                me.set(container, "ui.property.trickle", {
                     "ui.theme.remove": scroll_type + "_scroll"
                 });
             }

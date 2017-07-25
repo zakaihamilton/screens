@@ -116,11 +116,9 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.node.parent");
             if (parent_window) {
                 me.set(parent_window, "ui.property.group", {
-                    "ui.property.bubble": {
-                        "draw": null
-                    },
                     "widget.window.refocus": null
                 });
+                me.broadcast(parent_window, "update");
             } else {
                 me.set(document.body, "widget.window.refocus");
             }
@@ -177,10 +175,10 @@ package.widget.window = function WidgetWindow(me) {
     me.switch = function (parent, child) {
         me.update_title(parent);
         me.widget.menu.switch(parent, child);
-        me.set(child, "ui.property.broadcast", {
+        me.set(child, "ui.property.trickle", {
             "ui.theme.toggle": "child"
         });
-        me.set(parent, "ui.property.broadcast", {
+        me.set(parent, "ui.property.trickle", {
             "ui.theme.toggle": "parent"
         });
     }
@@ -233,7 +231,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.set(document.body, "widget.window.refocus");
             }
             me.set(window, "ui.property.bubble", {
-                "draw": null
+                "update": null
             });
         }
     };
@@ -250,7 +248,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.property.group", {
                 "ui.theme.remove": "minimize",
                 "ui.focus.active": true,
-                "ui.property.broadcast": {
+                "ui.property.trickle": {
                     "ui.theme.remove": "restore",
                     "ui.theme.add": "maximize"
                 }
@@ -277,9 +275,8 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.resize.enabled": false
                 });
             }
-            me.set(window, "ui.property.notify", {
-                "draw": null
-            });
+            me.broadcast(window, "update");
+            me.broadcast(parent_window, "update");
         }
     };
     me.show = {
@@ -319,10 +316,10 @@ package.widget.window = function WidgetWindow(me) {
                     me.set(window, "ui.property.group", {
                         "ui.theme.remove": "minimize",
                         "ui.focus.active": true,
-                        "ui.property.notify": {
-                            "draw": null
-                        }
                     });
+                    me.broadcast(window, "update");
+                    var parent_window = me.parent(window);
+                    me.broadcast(parent_window, "update");
                 }
             } else {
                 me.set(window, "unmaximize");
@@ -342,7 +339,7 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.set(window, "ui.theme.contains", "minimize");
             var maximized = me.set(window, "ui.theme.contains", "maximize");
             if (minimized) {
-                me.set(window, "ui.property.broadcast", {
+                me.set(window, "ui.property.trickle", {
                     "ui.theme.remove": "minimize"
                 });
                 me.set(window.var.icon, "ui.style.display", "none");
@@ -357,7 +354,7 @@ package.widget.window = function WidgetWindow(me) {
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
                 me.set(window, "ui.property.group", {
-                    "ui.property.broadcast": {
+                    "ui.property.trickle": {
                         "ui.theme.remove": "maximize",
                         "ui.theme.add": "restore"
                     },
@@ -367,10 +364,9 @@ package.widget.window = function WidgetWindow(me) {
             }
             me.set(window, "ui.property.group", {
                 "ui.focus.active": true,
-                "ui.property.notify": {
-                    "draw": null
-                }
             });
+            me.broadcast(window, "update");
+            me.broadcast(parent_window, "update");
         }
     };
     me.toggle = {
@@ -389,6 +385,12 @@ package.widget.window = function WidgetWindow(me) {
             if (me.get(window, "temp") && window.parentNode) {
                 me.set(window, "close");
             }
+        }
+    };
+    me.update = {
+        set: function(object) {
+            var window = me.window(object);
+            me.broadcast(window.var.container, "update");
         }
     };
     me.visibleWindows = {

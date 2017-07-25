@@ -72,7 +72,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
         Reflect.set(package[package_name], component_name, component_obj);
     }
     if (typeof node !== "function") {
-        throw "Component " + id + " cannot be loaded";
+        throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var requirement_platform = package.require(id);
     if (!requirement_platform || requirement_platform === package.platform) {

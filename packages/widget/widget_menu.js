@@ -14,12 +14,12 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.updateTheme = function(object) {
         if(object.var.menu) {
-            me.set(object, "ui.property.broadcast", {
+            me.set(object, "ui.property.trickle", {
                 "ui.theme.add": "menu"
             });
         }
         else {
-            me.set(object, "ui.property.broadcast", {
+            me.set(object, "ui.property.trickle", {
                 "ui.theme.remove": "menu"
             });
         }
@@ -46,7 +46,7 @@ package.widget.menu = function WidgetMenu(me) {
                         "ui.data.values": value
                     }
                 }, parent);
-                me.set(object, "ui.property.broadcast", {
+                me.set(object, "ui.property.trickle", {
                     "ui.theme.add": "menu"
                 });
             }
@@ -57,10 +57,10 @@ package.widget.menu = function WidgetMenu(me) {
             me.set(object, "ui.style.zIndex", "");
             me.set(object.var.modal, "ui.style.display", "none");
             me.set(object.var.menu, "ui.node.parent");
-            me.set(object, "ui.property.broadcast", {
+            me.set(object, "ui.property.trickle", {
                 "ui.theme.remove": "select"
             });
-            me.set(object, "ui.property.broadcast", {
+            me.set(object, "ui.property.trickle", {
                 "ui.touch.over": null
             });
             object.selected_item = null;
@@ -76,7 +76,7 @@ package.widget.menu = function WidgetMenu(me) {
             }
             object.selected_item = item;
             me.set(object, "ui.style.zIndex", "1");
-            me.set(object, "ui.property.broadcast", {
+            me.set(object, "ui.property.trickle", {
                 "ui.touch.over": "hover",
                 "ui.theme.remove": "select"
             });

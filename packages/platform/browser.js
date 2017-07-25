@@ -2,6 +2,7 @@ package.include({
     "core": [
         "console",
         "object",
+        "property",
         "remote",
         "event",
         "http",
@@ -10,7 +11,6 @@ package.include({
         "ref",
         "module",
         "script",
-        "property",
         "cmd",
         "app",
         "string"

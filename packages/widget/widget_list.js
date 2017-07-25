@@ -87,6 +87,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
             if(value) {
                 var label = me.get(value, "ui.basic.text");
                 me.set(object, "ui.basic.text", label);
+                me.broadcast(object, "onChange", label);
             }
         }
     };

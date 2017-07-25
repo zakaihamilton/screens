@@ -96,7 +96,8 @@ package.widget.terminal = function WidgetTerminal(me) {
             var container = me.ui.node.container(terminal, me.widget.container.id);
             var content = me.widget.container.content(container);
             content.scrollTop = content.scrollHeight;
-            me.set(container, "ui.property.broadcast", {
+            me.broadcast(container, "update");
+            me.set(container, "ui.property.trickle", {
                 "draw": null
             });
         }

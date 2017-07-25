@@ -43,7 +43,7 @@ package.ui.move = function UIMove(me) {
                 width: target.offsetWidth,
                 height: target.offsetHeight
             };
-            me.set(target, "ui.property.broadcast", {
+            me.set(target, "ui.property.trickle", {
                 "transition": true
             });
             event.preventDefault();
@@ -61,9 +61,9 @@ package.ui.move = function UIMove(me) {
             target_region.left = event.clientX - me.info.left;
             target_region.top = event.clientY - me.info.top;
             me.ui.rect.set_absolute_region(me.info.target, target_region);
-            me.set(me.info.target, "ui.property.notify", {
-                "draw": null
-            });
+            me.broadcast(me.info.target, "update");
+            var parent = me.widget.window.parent(me.info.target);
+            me.broadcast(parent, "update");
         }
     };
     me.up = {
@@ -72,7 +72,7 @@ package.ui.move = function UIMove(me) {
                 "ui.touch.move":null,
                 "ui.touch.up":null
             });
-            me.set(me.info.target, "ui.property.broadcast", {
+            me.set(me.info.target, "ui.property.trickle", {
                 "transition": false
             });
         }
