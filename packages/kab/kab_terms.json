@@ -168,6 +168,12 @@
         "Ohr Pnimi":{
             "translation":"Inner Light"
         },
+        "Ohr Hochma":{
+            "translation":"Light of Wisdom"
+        },
+        "Ohr Hassadim":{
+            "translation":"Light of Mercy"
+        },
         "Ohr": {
             "translation": "Light"
         },
@@ -663,7 +669,7 @@
             "translation":"Uppers"
         },
         "Atzmut":{
-            "translation":"Light"
+            "translation":"Essence"
         },
         "HaVaYaH":{
             "translation":"Tetragrammaton",
