@@ -34,6 +34,14 @@ package.widget.window = function WidgetWindow(me) {
             }
         }
     };
+    me.visible = {
+        get: function (object) {
+            var window = me.window(object);
+            var hasParent = me.get(window, "ui.node.parent");
+            var minimized = me.get(window, "ui.theme.contains", "minimize");
+            return !minimized && hasParent;
+        }
+    };
     me.parent = function (object) {
         var parent = object.parentNode;
         while (parent) {

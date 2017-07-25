@@ -30,22 +30,9 @@ package.app.transform = function AppTransform(me) {
             me.set(me.singleton, "update");
         });
         me.autoScroll = me.ui.property.toggleOptionSet(me.options, "autoScroll", function (options, key, value) {
-            if(me.timer) {
-                clearInterval(me.timer);
-                me.timer = null;
-            }
-            if(value) {
-                me.timer = setInterval(function() {
-                    if (!me.get(me.singleton, "ui.node.parent")) {
-                        clearInterval(me.timer);
-                        return;
-                    }
-                    var scrollbar = me.singleton.var.container.var.vertical;
-                    console.log("scrolling..." + scrollbar);
-                    if(scrollbar) {
-                        me.set(scrollbar, "after");
-                    }
-                }, 1000);
+            var scrollbar = me.singleton.var.container.var.vertical;
+            if(scrollbar) {
+                me.set(scrollbar, "autoScroll", value);
             }
         });
     };

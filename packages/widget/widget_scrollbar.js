@@ -79,6 +79,34 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             me.update.set(object.parentNode);
         }
     };
+    me.autoScroll = {
+        get: function (object) {
+            return object.autoScrollTimer!==null;
+        },
+        set: function (object, value) {
+            if(object.autoScrollTimer) {
+                clearInterval(object.autoScrollTimer);
+                object.autoScrollTimer = null;
+            }
+            if(value) {
+                object.autoScrollTimer = setInterval(function() {
+                    var window = me.widget.window.window(object);
+                    var hasParent = me.get(window, "ui.node.parent");
+                    if (!hasParent) {
+                        clearInterval(object.autoScrollTimer);
+                        return;
+                    }
+                    if(!me.get(window, "visible")) {
+                        return;
+                    }
+                    var container = me.ui.node.container(object, me.widget.container.id);
+                    var content = me.widget.container.content(container);
+                    me.ui.scroll.by(content, scroll_type, 1);
+                    me.update.set(container);
+                }, 75);
+            }
+        }
+    };
 }
 
 package.widget.scrollbar = function WidgetScroll(me) {
