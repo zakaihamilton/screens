@@ -10,6 +10,7 @@ package.app.transform = function AppTransform(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__, "body", "self");
+        me.set(me.singleton, "app.transform.convert");
     };
     me.options = {
         "doTranslation": true,

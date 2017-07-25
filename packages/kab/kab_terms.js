@@ -104,7 +104,7 @@ package.kab.terms = function KabTerms(me) {
         if(styles && styles.phase) {
             html += "<span class=\"kab-term-phase-" + styles.phase;
             html += "\" ";
-            if(!options.keepSource && !expansion) {
+            if(!options.keepSource && !expansion && options.doTranslation) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
             html += ">" + text + "</span>";
