@@ -37,6 +37,8 @@
             "ui.basic.readOnly": false,
             "ui.style.width": "200px",
             "ui.element.count": 0,
+            "core.property.onChange":"app.storage.onChangeKey",
+            "ui.monitor.change":"app.storage.onChangeKey",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {

@@ -36,7 +36,8 @@ package.include({
         "attribute",
         "var",
         "move",
-        "resize"
+        "resize",
+        "monitor"
     ],
     "menu": [
         "context"

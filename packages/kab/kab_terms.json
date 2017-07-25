@@ -752,6 +752,108 @@
         },
         "He’arah":{
             "translation":"Enlightenment"
+        },
+        "Shoreshim":{
+            "translation":"Roots"
+        },
+        "Histalkut":{
+            "translation":"Departure"
+        },
+        "Halbasha":{
+            "translation":"Clothing"
+        },
+        "Anaf":{
+            "translation":"Branch"
+        },
+        "Anafim":{
+            "translation":"Branches"
+        },
+        "Akudim":{
+            "translation":"Binding"
+        },
+        "Behinat":{
+            "translation":"Discernment of"
+        },
+        "Reshimo":{
+            "translation":"Memory"
+        },
+        "Panim be Panim" :{
+            "translation":"Face to Face"
+        },
+        "Panim":{
+            "translation":"Face"
+        },
+        "Achor":{
+            "translation":"Back"
+        },
+        "Achoriam":{
+            "translation":"Backside"
+        },
+        "Pnimiut":{
+            "translation":"Internality"
+        },
+        "Zachar":{
+            "translation":"Male"
+        },
+        "Nekeva":{
+            "translation":"Female"
+        },
+        "Koma":{
+            "translation":"Height"
+        },
+        "He'arot":{
+            "translation":"Illumination"
+        },
+        "Dechura":{
+            "translation":"Male"
+        },
+        "GAR":{
+            "expansion":["Gimel","Rishonot"]
+        },
+        "VAK":{
+            "expansion":["Vav","Kzavot"]
+        },
+        "Gimel Rishonot":{
+            "translation":"First Three"
+        },
+        "Aleph":{
+            "translation":"One"
+        },
+        "Bet":{
+            "translation":"Two"
+        },
+        "Gimel":{
+            "translation":"Three"
+        },
+        "Dalet":{
+            "translation":"Four"
+        },
+        "Hey":{
+            "translation":"Five"
+        },
+        "Vav":{
+            "translation":"Six"
+        },
+        "Sheva":{
+            "translation":"Seven"
+        },
+        "Shmone":{
+            "translation":"Eight"
+        },
+        "Tesha":{
+            "translation":"Nine"
+        },
+        "Kzavot":{
+            "translation":"Sides"
+        },
+        "Pashut":{
+            "translation":"Simple"
+        },
+        "Malchuyot":{
+            "translation":"Kingdoms"
+        },
+        "Pshutim":{
+            "translation":"Simple"
         }
     }
 }

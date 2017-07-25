@@ -48,7 +48,16 @@ package.app.storage = function AppStorage(me) {
     };
     me.onChangeStorage = {
         set: function(object, string) {
-            console.log("Changed storage to: " + string);
+            me.set(me.singleton.var.key, "ui.basic.text", "");
+            me.set(me.singleton.var.value, "ui.basic.text", "");
+        }
+    };
+    me.onChangeKey = {
+        set: function(object) {
+            var cache = me.cache();
+            var key = me.get(me.singleton.var.key, "ui.basic.text");
+            var value = me.get(cache, key);
+            me.set(me.singleton.var.value, "ui.basic.text", value);
         }
     };
 };

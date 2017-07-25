@@ -54,7 +54,9 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.redirect = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",
-        "ui.basic.elements": "elements"
+        "ui.basic.elements": "elements",
+        "ui.group.data": "data",
+        "ui.monitor.change":"monitorChange"
     };
     me.default = {
         "ui.theme.class": "group",
@@ -101,6 +103,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "100px",
                 "ui.basic.elements": object.parentNode.listElements,
+                "ui.group.data":object.parentNode.listData,
                 "widget.list.popup.selection":me.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
             }, document.body);
@@ -123,12 +126,25 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
             me.set(object.var.selection, "ui.basic.text", value);
         }
     };
+    me.monitorChange = {
+        set: function (object, value) {
+            me.set(object.var.selection, "ui.monitor.change", value);
+        }
+    };
     me.elements = {
         get: function (object) {
             return object.listElements;
         },
         set: function (object, value) {
             object.listElements = value;
+        }
+    };
+    me.data = {
+        get: function(object) {
+            return object.listData;
+        },
+        set: function(object, value) {
+            object.listData = value;
         }
     };
 };
