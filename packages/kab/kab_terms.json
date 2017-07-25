@@ -854,6 +854,39 @@
         },
         "Pshutim":{
             "translation":"Simple"
+        },
+        "Tzinor":{
+            "translation":"Pipe"
+        },
+        "Halal":{
+            "translation":"Space"
+        },
+        "Avir":{
+            "translation":"Air"
+        },
+        "Nimshachim":{
+            "translation":"Extends"
+        },
+        "Yosher":{
+            "translation":"Lines"
+        },
+        "Tzinorot":{
+            "translation":"Pipes"
+        },
+        "Tzedek":{
+            "translation":"Justice"
+        },
+        "Midat":{
+            "translation":"Measure"
+        },
+        "Rachamim":{
+            "translation":"Mercy"
+        },
+        "OhrElyon":{
+            "translation":"Upper Light"
+        },
+        "Galgal":{
+            "translation":"Wheel"
         }
     }
 }

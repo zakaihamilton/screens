@@ -14,12 +14,31 @@ package.storage.cache = function StorageCache(me) {
             me.local.storage = localStorage;
             me.session.storage = sessionStorage;
         }
+        me.key = me.core.object.property("storage.cache.key");
     };
     me.isSupported = function () {
         try {
             return "localStorage" in window && window["localStorage"] !== null;
         } catch (e) {
             return false;
+        }
+    };
+    me.storeLocal = {
+        set: function(object) {
+            var key = me.get(object, "storage.cache.key");
+            if(key) {
+                var value = me.get(object, "ui.basic.text");
+                me.set(me.local, key, value);
+            }
+        }
+    };
+    me.restoreLocal = {
+        set: function(object) {
+            var key = me.get(object, "storage.cache.key");
+            if(key) {
+                var value = me.get(me.local, key);
+                me.set(object, "ui.basic.text", value);
+            }
         }
     };
     me.keyList = function (object) {
@@ -41,6 +60,7 @@ package.storage.cache = function StorageCache(me) {
                     }
                 },
                 set: function (object, value) {
+                    console.log("storeLocal property:" + property + " value: " + value + "storage:" + object.storage);
                     if (object.storage && typeof value !== "undefined") {
                         if(value) {
                             object.storage.setItem(property, value);

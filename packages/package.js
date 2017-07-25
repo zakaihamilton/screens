@@ -157,8 +157,8 @@ function package_include(packages, callback) {
         var separator = packages.indexOf(".");
         var package_name = packages.substr(0, separator);
         var component_name = packages.substr(separator + 1);
-        package_load(package_name, component_name, function(info) {
-            if(info.loaded) {
+        package_load(package_name, component_name, function (info) {
+            if (info.loaded) {
                 info.complete = true;
             }
             callback(info);

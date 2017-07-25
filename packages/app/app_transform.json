@@ -46,6 +46,9 @@
                 {
                     "ui.element.component": "widget.editor",
                     "ui.theme.class": "app.transform.input",
+                    "storage.cache.key":"app-transform-input",
+                    "storage.cache.restoreLocal":null,
+                    "ui.monitor.change":"storage.cache.storeLocal",
                     "ui.basic.var": "input"
                 },
                 {
