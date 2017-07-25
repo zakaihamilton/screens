@@ -2,10 +2,12 @@
     "title": "Storage",
     "ui.style.left": "150px",
     "ui.style.top": "150px",
-    "ui.style.width": "400px",
-    "ui.style.height": "250px",
+    "ui.style.width": "330px",
+    "ui.style.height": "200px",
+    "fixed":true,
     "ui.basic.elements": [
         {
+            "ui.style.marginTop":"15px",
             "ui.basic.text": "Source:"
         },
         {

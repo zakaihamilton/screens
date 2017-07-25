@@ -12,17 +12,17 @@ package.core.event = function CoreEvent(me) {
         }
         me._forwarding_list[source][target] = enabled;
     };
-    me.send = function (component, name, params) {
-        forwarding_list = me._forwarding_list[component];
-        if (forwarding_list !== undefined) {
+    me.send = function (object, name, value) {
+        if(!object) {
+            return;
+        }
+        var source_method = me.core.property.fullname(object, name);
+        var forwarding_list = me._forwarding_list[source_method];
+        if (forwarding_list) {
             for (var target in forwarding_list) {
                 var enabled = forwarding_list[target];
                 if(enabled) {
-                    target = me[target];
-                    if (typeof target[name] === "function") {
-                        var args = Array.prototype.slice.call(arguments, 2);
-                        target[name].apply(target, args);
-                    }
+                    me.set(object, target, value);
                 }
             }
         }

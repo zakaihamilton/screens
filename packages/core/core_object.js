@@ -16,6 +16,7 @@ package.core.object = function CoreObject(me) {
         data.values = {};
         data.dirty = {};
         data.component = component.id;
+        return data;
     };
     me.property = function (name, options=null) {
         return {

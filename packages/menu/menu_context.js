@@ -20,7 +20,7 @@ package.menu.context = function MenuContext(me) {
         get: function (object) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
-            return !window.temp && !parent;
+            return !me.get(window, "temp") && !parent;
         }
     };
     me.isChild = {

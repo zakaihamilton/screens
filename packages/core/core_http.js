@@ -41,8 +41,9 @@ package.core.http = function CoreHttp(me) {
                         body:"",
                         job:job
                     };
+                    core.object.attach(info, me);
                     core.console.log("Received request: " + JSON.stringify(info));
-                    core.event.send(core.http.id, "receive", info);
+                    core.event.send(info, "receive");
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
                             "Content-Type": info["content-type"],
@@ -61,7 +62,7 @@ package.core.http = function CoreHttp(me) {
     };
     me.parse_query = function(query) {
         var array = {};
-        if(query != "") {
+        if(query !== "") {
             var a = (query[0] === '?' ? query.substr(1) : query).split('&');
             for (var i = 0; i < a.length; i++) {
                 var b = a[i].split('=');
