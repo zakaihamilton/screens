@@ -6,7 +6,7 @@
 package.core.script = function CoreScript(me) {
     var core = me.core;
     me.init = function() {
-        core.event.link("core.http.parse", "core.script.parse", true);
+        core.property.link("core.http.parse", "core.script.parse", true);
     };
     me.parse = {
         set: function (info) {

@@ -118,7 +118,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.set(parent_window, "ui.property.group", {
                     "widget.window.refocus": null
                 });
-                me.broadcast(parent_window, "update");
+                me.set(parent_window, "update");
             } else {
                 me.set(document.body, "widget.window.refocus");
             }
@@ -275,8 +275,8 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.resize.enabled": false
                 });
             }
-            me.broadcast(window, "update");
-            me.broadcast(parent_window, "update");
+            me.set(window, "update");
+            me.set(parent_window, "update");
         }
     };
     me.show = {
@@ -317,9 +317,9 @@ package.widget.window = function WidgetWindow(me) {
                         "ui.theme.remove": "minimize",
                         "ui.focus.active": true,
                     });
-                    me.broadcast(window, "update");
+                    me.set(window, "update");
                     var parent_window = me.parent(window);
-                    me.broadcast(parent_window, "update");
+                    me.set(parent_window, "update");
                 }
             } else {
                 me.set(window, "unmaximize");
@@ -365,8 +365,8 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.property.group", {
                 "ui.focus.active": true,
             });
-            me.broadcast(window, "update");
-            me.broadcast(parent_window, "update");
+            me.set(window, "update");
+            me.set(parent_window, "update");
         }
     };
     me.toggle = {
@@ -390,7 +390,7 @@ package.widget.window = function WidgetWindow(me) {
     me.update = {
         set: function(object) {
             var window = me.window(object);
-            me.broadcast(window.var.container, "update");
+            me.set(window.var.container, "update");
         }
     };
     me.visibleWindows = {

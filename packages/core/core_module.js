@@ -6,7 +6,7 @@
 package.core.module = function CoreModule(me) {
     var core = me.core;
     me.init = function() {
-        core.event.link("core.http.receive", "core.module.receive", true);
+        core.property.link("core.http.receive", "core.module.receive", true);
     };
     me.path_file_to_component = function (file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
@@ -86,7 +86,7 @@ package.core.module = function CoreModule(me) {
                             me.loadTextFile(info.job, file_path, function (data) {
                                 info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
                                 info.body = data;
-                                core.event.broadcast(info, "parse");
+                                core.property.broadcast(info, "parse");
                             });
                         });
                     } else if (file_path.endsWith(".css")) {

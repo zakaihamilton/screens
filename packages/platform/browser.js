@@ -4,7 +4,6 @@ package.include({
         "object",
         "property",
         "remote",
-        "event",
         "http",
         "message",
         "type",

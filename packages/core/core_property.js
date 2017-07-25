@@ -5,6 +5,7 @@
 
 package.core.property = function CoreProperty(me) {
     me.init = function() {
+        me._forwarding_list = {};
         package.get = me.get;
         package.set = me.set;
         package.dirty = me.dirty;
@@ -49,11 +50,11 @@ package.core.property = function CoreProperty(me) {
         }
         return result;
     };
-    me.set = function(object, name, value=null, method="set") {
+    me.setSingle = function(object, name, value=null, method="set") {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.set(item, name, value, method);
+                return me.setSingle(item, name, value, method);
             });
             return results;
         }
@@ -72,6 +73,59 @@ package.core.property = function CoreProperty(me) {
             }
         }
         return result;
+    };
+    me.forward = {
+        get : function(object, property) {
+            return {
+                set: function (object, value) {
+                    if (typeof value !== "undefined") {
+                        me.link(property, value, true, object);
+                    }
+                }
+            };
+        }
+    };
+    me.link = function (source, target, enabled, object) {
+        if(!object) {
+            object=me;
+        }
+        if(object !== me) {
+            source = me.core.property.fullname(object, source);
+            target = me.core.property.fullname(object, target);
+        }
+        var source_list = object._forwarding_list[source];
+        if (!source_list) {
+            object._forwarding_list[source] = {};
+        }
+        object._forwarding_list[source][target] = enabled;
+    };
+    me.set = function (object, name, value) {
+        if(!object) {
+            return;
+        }
+        if (Array.isArray(object)) {
+            var results = object.map(function (item) {
+                return me.set(item, name, value);
+            });
+            return results;
+        }
+        var source_method = me.core.property.fullname(object, name);
+        me.setTo(me._forwarding_list, object, source_method, value);
+        me.setTo(object._forwarding_list, object, source_method, value);
+        me.setSingle(object, name, value);
+    };
+    me.setTo = function(list, object, name, value) {
+        if(list) {
+            var forwarding_list = list[name];
+            if (forwarding_list) {
+                for (var target in forwarding_list) {
+                    var enabled = forwarding_list[target];
+                    if(enabled) {
+                        me.set(object, target, value);
+                    }
+                }
+            }
+        }
     };
     me.dirty = function(object, name) {
         me.get(object, name, "dirty");

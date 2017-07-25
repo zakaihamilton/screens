@@ -43,7 +43,7 @@ package.core.http = function CoreHttp(me) {
                     };
                     core.object.attach(info, me);
                     core.console.log("Received request: " + JSON.stringify(info));
-                    core.event.broadcast(info, "receive");
+                    core.property.broadcast(info, "receive");
                     core.job.close(job, function() {
                         response.writeHead(info.code, {
                             "Content-Type": info["content-type"],
