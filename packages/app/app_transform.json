@@ -16,8 +16,13 @@
             ]
         ],
         ["Options", [
+                ["Auto Scroll", "app.transform.autoScroll", {
+                        "state": "app.transform.autoScroll"
+                    }
+                ],
                 ["Translation", "app.transform.translation", {
-                        "state": "app.transform.translation"
+                        "state": "app.transform.translation",
+                        "separator":true
                     }
                 ],
                 ["Styles", "app.transform.addStyles", {
@@ -36,11 +41,6 @@
                 ["Input", "app.transform.showInput", {
                         "state": "app.transform.showInput"
                     }
-                ],
-                ["Auto Scroll", "app.transform.autoScroll", {
-                        "state": "app.transform.autoScroll",
-                        "separator":true
-                    }
                 ]
             ]]
     ],
@@ -55,6 +55,10 @@
                     "storage.cache.restoreLocal":null,
                     "ui.monitor.change":"storage.cache.storeLocal",
                     "ui.basic.var": "input"
+                },
+                {
+                    "ui.basic.text":"Convert",
+                    "ui.touch.click":"app.transform.convert"
                 },
                 {
                     "ui.basic.tag": "div",

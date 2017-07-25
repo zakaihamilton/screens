@@ -280,10 +280,10 @@
             "expansion": ["Beria", "Yetzira", "Assiya"]
         },
         "HGT": {
-            "expansion": ["Hesed", "Gevurah", "Tifferet"]
+            "expansion": ["Hesed", "Gevura", "Tifferet"]
         },
         "HGTNHY": {
-            "expansion": ["Hesed", "Gevurah", "Tifferet", "Netsach","Hod","Yesod"]
+            "expansion": ["Hesed", "Gevura", "Tifferet", "Netsach","Hod","Yesod"]
         },
         "AA": {
             "expansion": ["Arich Anpin"]
@@ -887,6 +887,12 @@
         },
         "Galgal":{
             "translation":"Wheel"
+        },
+        "Zakut":{
+            "translation":"Purity"
+        },
+        "Tachtonim":{
+            "translation":"Lower Ones"
         }
     }
 }
