@@ -132,4 +132,12 @@ package.ui.basic = function UIBasic(me) {
             object.target = value;
         }
     };
+    me.editable = {
+        get: function (object) {
+            return object.contentEditable;
+        },
+        set: function (object, value) {
+            object.contentEditable = value;
+        }
+    }
 };

@@ -11,6 +11,7 @@
     position: absolute;
     line-height:100%;
     z-index: 10;
+    padding: 0px 5px;
     transform: translate(-50%, 10px);
     transform-origin: top;
     color: black;
@@ -21,6 +22,7 @@
     min-height: 100%;
     padding-top:1px;
     vertical-align: middle;
+    box-shadow: 10px 10px 5px grey;
 }
 
 [kab-term-tooltip]:hover:after {
@@ -38,7 +40,6 @@
 .kab-term-phase-none:hover:after {
     background:white;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-root {
@@ -49,7 +50,6 @@
 .kab-term-phase-root:hover:after {
     background:white;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-one {
@@ -60,7 +60,6 @@
 .kab-term-phase-one:hover:after {
     background:#FFF3CA;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-two {
@@ -71,7 +70,6 @@
 .kab-term-phase-two:hover:after {
     background:#C8D9F9;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-three {
@@ -82,7 +80,6 @@
 .kab-term-phase-three:hover:after {
     background:#F5CCCB;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-four {
@@ -93,7 +90,6 @@
 .kab-term-phase-four:hover:after {
     background:#D9EAD2;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-phase-collective {
@@ -104,7 +100,6 @@
 .kab-term-phase-collective:hover:after {
     background:Plum;
     border:2px solid black;
-    box-shadow: 10px 10px 5px grey;
 }
 
 .kab-term-title {
