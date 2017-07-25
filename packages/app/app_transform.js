@@ -17,7 +17,8 @@ package.app.transform = function AppTransform(me) {
         "addStyles": true,
         "keepSource": false,
         "showHtml": false,
-        "showInput": true
+        "showInput": true,
+        "autoScroll": false
     };
     me.init = function () {
         me.translation = me.ui.property.toggleOptionSet(me.options, "doTranslation", me.convert.set);
@@ -27,6 +28,25 @@ package.app.transform = function AppTransform(me) {
         me.showInput = me.ui.property.toggleOptionSet(me.options, "showInput", function (options, key, value) {
             me.set(me.singleton.var.input, "ui.style.display", value ? "block" : "none");
             me.set(me.singleton, "update");
+        });
+        me.autoScroll = me.ui.property.toggleOptionSet(me.options, "autoScroll", function (options, key, value) {
+            if(me.timer) {
+                clearInterval(me.timer);
+                me.timer = null;
+            }
+            if(value) {
+                me.timer = setInterval(function() {
+                    if (!me.get(me.singleton, "ui.node.parent")) {
+                        clearInterval(me.timer);
+                        return;
+                    }
+                    var scrollbar = me.singleton.var.container.var.vertical;
+                    console.log("scrolling..." + scrollbar);
+                    if(scrollbar) {
+                        me.set(scrollbar, "after");
+                    }
+                }, 1000);
+            }
         });
     };
     me.new = {

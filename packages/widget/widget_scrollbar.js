@@ -13,6 +13,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     me.update = {
         set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
+            var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
@@ -26,14 +27,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 });
             }
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
-            var track_region = me.ui.rect.relative_region(object.var.track);
-            var thumb_region = me.ui.rect.relative_region(object.var.thumb);
+            var track_region = me.ui.rect.relative_region(scrollbar.var.track);
+            var thumb_region = me.ui.rect.relative_region(scrollbar.var.thumb);
             var position = 0;
             if (scroll_percent) {
                 var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
                 position = me.ui.scroll.percent_to_pos(length, scroll_percent);
             }
-            me.ui.scroll.set_pos(object.var.thumb, scroll_type, position);
+            me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
         }
     };
     me.draw = {
@@ -49,7 +50,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             me.ui.scroll.by(content, scroll_type, -10);
-            me.update.set(object.parentNode);
+            me.update.set(container);
         }
     };
     me.after = {
@@ -57,7 +58,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             me.ui.scroll.by(content, scroll_type, 10);
-            me.update.set(object.parentNode);
+            me.update.set(container);
         }
     };
     me.track = {

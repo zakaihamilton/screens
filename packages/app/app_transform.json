@@ -36,6 +36,11 @@
                 ["Input", "app.transform.showInput", {
                         "state": "app.transform.showInput"
                     }
+                ],
+                ["Auto Scroll", "app.transform.autoScroll", {
+                        "state": "app.transform.autoScroll",
+                        "separator":true
+                    }
                 ]
             ]]
     ],
