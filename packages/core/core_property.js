@@ -93,6 +93,9 @@ package.core.property = function CoreProperty(me) {
             source = me.core.property.fullname(object, source);
             target = me.core.property.fullname(object, target);
         }
+        if(!object._forwarding_list) {
+            object._forwarding_list = {};
+        }
         var source_list = object._forwarding_list[source];
         if (!source_list) {
             object._forwarding_list[source] = {};

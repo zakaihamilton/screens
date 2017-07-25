@@ -46,4 +46,9 @@ package.app.storage = function AppStorage(me) {
             }
         }
     };
+    me.onChangeStorage = {
+        set: function(object, string) {
+            console.log("Changed storage to: " + string);
+        }
+    };
 };

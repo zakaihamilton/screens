@@ -15,6 +15,7 @@
             "ui.basic.text": "Local",
             "ui.style.width": "200px",
             "ui.element.count": 0,
+            "core.property.onChange":"app.storage.onChangeStorage",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
