@@ -212,7 +212,7 @@ package.widget.list.item = function WidgetMenuItem(me) {
     };
     me.state = {
         get: function (object) {
-            return me.set(object, "ui.theme.contains", "selected");
+            return me.get(object, "ui.theme.contains", "selected");
         },
         set: function (object, value) {
             value = me.value(object, value);

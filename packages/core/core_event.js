@@ -37,6 +37,12 @@ package.core.event = function CoreEvent(me) {
         if(!object) {
             return;
         }
+        if (Array.isArray(object)) {
+            var results = object.map(function (item) {
+                return me.broadcast(item, name, value);
+            });
+            return results;
+        }
         var source_method = me.core.property.fullname(object, name);
         me.broadcastTo(me._forwarding_list, object, source_method, value);
         me.broadcastTo(object._forwarding_list, object, source_method, value);

@@ -34,16 +34,16 @@ package.core.property = function CoreProperty(me) {
         }
         return name;
     };
-    me.get = function(object, name, method="get") {
+    me.get = function(object, name, value=null, method="get") {
         var result = undefined;
         if(object && name && (typeof name !== "string" || !name.includes("!"))) {
             if(typeof name === "function") {
-                result = name(object);
+                result = name(object, value);
             }
             else {
                 name = me.fullname(object, name);
                 if(name) {
-                    result = me.send(name + "." + method, object);
+                    result = me.send(name + "." + method, object, value);
                 }
             }
         }

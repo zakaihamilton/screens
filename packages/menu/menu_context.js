@@ -43,7 +43,7 @@ package.menu.context = function MenuContext(me) {
     me.show = {
         set: function (object, value) {
             var window = me.widget.window.window(object);
-            var visible = !me.set(window, "ui.theme.contains", "minimize");
+            var visible = !me.get(window, "ui.theme.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, __json__);
             if (!visible) {

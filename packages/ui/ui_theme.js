@@ -13,7 +13,7 @@ package.ui.theme = function UITheme(me) {
         }
     };
     me.contains = {
-        set: function(object, value) {
+        get: function(object, value) {
             if(value && object.classList) {
                 var class_name = me.to_class(object, value);
                 return object.classList.contains(class_name);

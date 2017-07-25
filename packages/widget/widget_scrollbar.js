@@ -15,7 +15,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
-            var has_class = me.set(container, "ui.theme.contains", scroll_type + "_scroll");
+            var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
             if (has_scroll && !has_class) {
                 me.set(container, "ui.property.trickle", {
                     "ui.theme.add": scroll_type + "_scroll"
