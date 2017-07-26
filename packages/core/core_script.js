@@ -3,6 +3,8 @@
  @component CoreScript
  */
 
+package.require("core.script", "server");
+
 package.core.script = function CoreScript(me) {
     var core = me.core;
     me.init = function() {

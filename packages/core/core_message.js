@@ -10,7 +10,9 @@ package.core.message = function CoreMessage(me) {
         package.send_client = me.send_client;
         package.send_browser = me.send_browser;
         package.send = me.send;
-        core.property.link("core.http.receive", "core.message.receive", true);
+        if(package.platform === "server") {
+            core.property.link("core.http.receive", "core.message.receive", true);
+        }
     };
     me.send_server = function (path, callback, params) {
         if (me.platform !== "server") {
