@@ -7,14 +7,18 @@ package.require("kab.terms", "browser");
 
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
-    me.init = function() {
+    me.init = function () {
         me.ui.theme.useStylesheet("kab.terms");
     };
     me.parse = function (wordsString, options) {
-        return me.core.string.parseWords(wordsString, function(words) {
+        return me.core.string.parseWords(wordsString, function (words) {
+            var terms = Object.keys(me.terms.terms).sort(function (source, target) {
+                return target.length - source.length;
+            });
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-                for (var term in me.terms.terms) {
-                    if(term.startsWith("!")) {
+                for (var termIndex = 0; termIndex < terms.length; termIndex++) {
+                    var term = terms[termIndex];
+                    if (term.startsWith("!")) {
                         continue;
                     }
                     var item = me.terms.terms[term];
@@ -27,7 +31,7 @@ package.kab.terms = function KabTerms(me) {
                         }
                         var word = words[wordIndex + termWordIndex];
                         var matchingTerm = me.terms.terms[word];
-                        if(matchingTerm && matchingTerm.ignore) {
+                        if (matchingTerm && matchingTerm.ignore) {
                             numTermWords++;
                             continue;
                         }
@@ -37,7 +41,7 @@ package.kab.terms = function KabTerms(me) {
                         var expansion = item.expansion;
                         if (expansion) {
                             expansion = [].concat(expansion);
-                            expansion = expansion.map(function(item) {
+                            expansion = expansion.map(function (item) {
                                 return me.parse(item, options);
                             });
                             if (expansion.length > 1) {
@@ -50,13 +54,13 @@ package.kab.terms = function KabTerms(me) {
                         }
                         var translation = item.translation;
                         if (translation) {
-                            translation = me.parse(translation, me.duplicateOptions(options, {"addStyles":false}));
+                            translation = me.parse(translation, me.duplicateOptions(options, {"addStyles": false}));
                             words.splice(wordIndex, numTermWords);
                             me.modify(words, wordIndex, item, term, " [", translation, "]", options);
                         }
-                        if(options.addStyles && !translation && !expansion) {
+                        if (options.addStyles && !translation && !expansion) {
                             words.splice(wordIndex, numTermWords);
-                            me.modify(words, wordIndex, item, term, "", term, "", me.duplicateOptions(options, {"keepSource":false}));
+                            me.modify(words, wordIndex, item, term, "", term, "", me.duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
                     }
@@ -64,19 +68,19 @@ package.kab.terms = function KabTerms(me) {
             }
         });
     };
-    me.toCase = function(item, string) {
-        if(item.case !== "sensitive") {
+    me.toCase = function (item, string) {
+        if (item.case !== "sensitive") {
             string = string.toLowerCase();
         }
         return string;
     }
-    me.duplicateOptions = function(options, overrides) {
+    me.duplicateOptions = function (options, overrides) {
         var duplicate = {};
-        for(var key in options) {
+        for (var key in options) {
             duplicate[key] = options[key];
         }
-        if(overrides) {
-            for(var key in overrides) {
+        if (overrides) {
+            for (var key in overrides) {
                 duplicate[key] = overrides[key];
             }
         }
@@ -85,8 +89,7 @@ package.kab.terms = function KabTerms(me) {
     me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options, expansion) {
         if (!options.doTranslation) {
             replacement = term;
-        }
-        else if (options.keepSource) {
+        } else if (options.keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
         if (options.addStyles && (item.style || replacement !== term)) {
@@ -94,28 +97,26 @@ package.kab.terms = function KabTerms(me) {
         }
         words.splice(wordIndex, 0, replacement);
     };
-    me.applyStyles = function(term, styles, text, options, expansion) {
+    me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        for(var style in styles) {
-            if(style === "heading") {
+        for (var style in styles) {
+            if (style === "heading") {
                 html += "<span class=\"kab-term-title\">" + styles[style] + "</span>";
             }
         }
-        if(styles && styles.phase) {
+        if (styles && styles.phase) {
             html += "<span class=\"kab-term-phase-" + styles.phase;
             html += "\" ";
-            if(!options.keepSource && !expansion && options.doTranslation) {
+            if (!options.keepSource && !expansion && options.doTranslation) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
             html += ">" + text + "</span>";
-        }
-        else if(!options.keepSource && !expansion) {
+        } else if (!options.keepSource && !expansion) {
             html += "<span class=\"kab-term-phase-none";
             html += "\" ";
             html += " kab-term-tooltip=\"" + term + "\"";
             html += ">" + text + "</span>";
-        }
-        else {
+        } else {
             html += text;
         }
         return html;
