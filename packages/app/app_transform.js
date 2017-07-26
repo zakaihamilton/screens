@@ -26,7 +26,8 @@ package.app.transform = function AppTransform(me) {
         me.keepSource = me.ui.property.toggleOptionSet(me.options, "keepSource", me.convert.set);
         me.showHtml = me.ui.property.toggleOptionSet(me.options, "showHtml", me.convert.set);
         me.showInput = me.ui.property.toggleOptionSet(me.options, "showInput", function (options, key, value) {
-            me.set(me.singleton.var.input, "ui.style.display", value ? "block" : "none");
+            me.set(me.singleton.var.input, "ui.style.display", value ? "initial" : "none");
+            me.set(me.singleton.var.convert, "ui.style.display", value ? "initial" : "none");
             me.set(me.singleton, "update");
         });
         me.autoScroll = me.ui.property.toggleOptionSet(me.options, "autoScroll", function (options, key, value) {

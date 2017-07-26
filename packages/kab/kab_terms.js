@@ -54,7 +54,9 @@ package.kab.terms = function KabTerms(me) {
                         }
                         var translation = item.translation;
                         if (translation) {
-                            translation = me.parse(translation, me.duplicateOptions(options, {"addStyles": false}));
+                            if(!item.name) {
+                                translation = me.parse(translation, me.duplicateOptions(options, {"addStyles": false}));
+                            }
                             words.splice(wordIndex, numTermWords);
                             me.modify(words, wordIndex, item, term, " [", translation, "]", options);
                         }
@@ -101,7 +103,7 @@ package.kab.terms = function KabTerms(me) {
         var html = "";
         for (var style in styles) {
             if (style === "heading") {
-                html += "<span class=\"kab-term-title\">" + styles[style] + "</span>";
+                html += "<span class=\"kab-term-heading\">" + styles[style] + "</span>";
             }
         }
         if (styles && styles.phase) {

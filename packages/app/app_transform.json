@@ -58,7 +58,8 @@
                 },
                 {
                     "ui.basic.text":"Convert",
-                    "ui.touch.click":"app.transform.convert"
+                    "ui.touch.click":"app.transform.convert",
+                    "ui.basic.var": "convert"
                 },
                 {
                     "ui.basic.tag": "div",

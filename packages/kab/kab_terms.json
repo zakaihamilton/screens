@@ -220,7 +220,7 @@
             "translation":"Judgement",
             "style": {"heading":"vessel","phase":"one"}
         },
-        "Netsach" : {
+        "Netzah" : {
             "translation":"Eternity",
             "style": {"heading":"vessel","phase":"three"}
         },
@@ -289,7 +289,7 @@
             "expansion": ["Hesed", "Gevura", "Tifferet"]
         },
         "HGTNHY": {
-            "expansion": ["Hesed", "Gevura", "Tifferet", "Netsach","Hod","Yesod"]
+            "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod","Yesod"]
         },
         "AA": {
             "expansion": ["Arich Anpin"]
@@ -298,10 +298,10 @@
             "expansion": ["Zeir Anpin"]
         },
         "NHY": {
-            "expansion": ["Netsach","Hod","Yesod"]
+            "expansion": ["Netzah","Hod","Yesod"]
         },
         "NHYM": {
-            "expansion": ["Netsach","Hod","Yesod","Malchut"]
+            "expansion": ["Netzah","Hod","Yesod","Malchut"]
         },
         "GE": {
             "expansion": ["Galgalta","Enayim"]
@@ -481,14 +481,15 @@
             "style":{"heading":"face","phase":"four"}
         },
         "AVI":{
-            "expansion":["Abba","Imma"],
-            "style":{"heading":"face","phase":"two"}
+            "expansion":["Aba","Imma"]
         },
-        "Abba":{
-            "translation":"Father"
+        "Aba":{
+            "translation":"Father",
+            "style":{"heading":"face","phase":"one"}
         },
         "Imma":{
-            "translation":"Mother"
+            "translation":"Mother",
+            "style":{"heading":"face","phase":"two"}
         },
         "Tzimtzum Aleph":{
             "translation":"First Restriction"
@@ -899,6 +900,147 @@
         },
         "Tachtonim":{
             "translation":"Lower Ones"
+        },
+        "Sefer Yetzirah":{
+            "translation":"Book of Formation"
+        },
+        "Panim Masbirot":{
+            "translation":"A Welcoming Face"
+        },
+        "Tikkuney Zohar":{
+            "translation":"Corrections of The Zohar"
+        },
+        "Ohr Atzmut":{
+            "translation":"Light of Essence"
+        },
+        "Hitaabut":{
+            "translation":"Coarsening"
+        },
+        "Eynaim":{
+            "translation":"Eyes"
+        },
+        "Awznaim":{
+            "translation":"Ears"
+        },
+        "ve":{
+            "translation":"And"
+        },
+        "Nukvaot":{
+            "translation":"Females"
+        },
+        "TANTA":{
+            "expansion":["Taamim","Nekudot","Tagin","Otiot"]
+        },
+        "Etzem":{
+            "translation":"Bone"
+        },
+        "Bitush":{
+            "translation":"Beating"
+        },
+        "Shaar":{
+            "translation":"Gate"
+        },
+        "Shaar Akudim":{
+            "translation":"Gate of Binding"
+        },
+        "Heichal":{
+            "translation":"Palace"
+        },
+        "Taam":{
+            "translation":"Taste"
+        },
+        "Achor be Achor":{
+            "translation":"Back to Back"
+        },
+        "Achor be Panim":{
+            "translation":"Back to Face"
+        },
+        "Panim be Achor":{
+            "translation":"Face to Back"
+        },
+        "PBP":{
+            "expansion":["Panim","be","Panim"]
+        },
+        "PBA":{
+            "expansion":["Panim","be","Achor"]
+        },
+        "ABP":{
+            "expansion":["Achor","be","Panim"]
+        },
+        "Achoraim":{
+            "translation":"Backside"
+        },
+        "Nitzotzin":{
+            "translation":"Sparks"
+        },
+        "Nekudim":{
+            "translation":"Points"
+        },
+        "Nitzotzin":{
+            "translation":"Sparks"
+        },
+        "Hitnotzetzut":{
+            "translation":"Sparkling"
+        },
+        "Natzatzin":{
+            "translation":"Glitter"
+        },
+        "Nehorin":{
+            "translation":"Flowing"
+        },
+        "Zikin":{
+            "translation":"Sparks"
+        },
+        "MAN":{
+            "case":"sensitive",
+            "expansion":["Mayin","Nukvin"]
+        },
+        "Mayin Nukvin":{
+            "translation":"Female Waters"
+        },
+        "MAD":{
+            "case":"sensitive",
+            "expansion":["Mayin","Duchrin"]
+        },
+        "Mayin Nukvin":{
+            "translation":"Male Waters"
+        },
+        "Reshimot":{
+            "translation":"Memories"
+        },
+        "HBZON":{
+            "expansion":["Hochma","Bina","Zeir Anpin","Nukva"]
+        },
+        "YESHSUT":{
+            "expansion":["Yisrael Saba","Tevuna"]
+        },
+        "Yisrael Saba":{
+            "translation":"Grandfather of Israel"
+        },
+        "Tevuna":{
+            "translation":"Comprehension"
+        },
+        "Rabbi Aba":{
+            "name":true,
+            "translation":"Aba the Teacher"
+        },
+        "HaDaat":{
+            "translation":"The Knowledge"
+        },
+        "Kedusha":{
+            "translation":"Holiness"
+        },
+        "OhrHassadim":{
+            "translation":"Light of Mercy"
+        },
+        "Gevurot":{
+            "translation":"Judgements"
+        },
+        "Tikkun":{
+            "translation":"Correction"
+        },
+        "Heichal Adam Kadmon":{
+            "translation":"Hall of Primordial Man"
         }
     }
 }
