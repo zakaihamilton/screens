@@ -57,6 +57,9 @@ package.ui.element = function UIElement(me) {
     me.body = function () {
         return document.getElementsByTagName("body")[0];
     };
+    me.desktop = function() {
+        return document.body;
+    }
     me.update = function (properties, object) {
         if (Array.isArray(properties)) {
             properties.map(function (item) {
@@ -120,8 +123,8 @@ package.ui.element = function UIElement(me) {
         if(!Object.keys(properties).length) {
             return;
         }
-        if (!parent || parent==="body") {
-            parent = me.body();
+        if (!parent || parent==="desktop") {
+            parent = me.desktop();
         }
         if("ui.element.update" in properties) {
             var update = properties["ui.element.update"];

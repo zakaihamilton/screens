@@ -24,7 +24,7 @@ package.ui.node = function UINode(me) {
     };
     me.container = function (object, component_name) {
         while (object) {
-            if (object === document.body) {
+            if (object === me.ui.element.desktop()) {
                 return null;
             }
             if (object.component === component_name) {
@@ -99,7 +99,7 @@ package.ui.node = function UINode(me) {
         if(object) {
             while(object) {
                 array.push(object);
-                if(object === document.body) {
+                if(object === me.ui.element.desktop()) {
                     break;
                 }
                 object = object.parentNode;

@@ -15,7 +15,7 @@ package.widget.tray = function WidgetTray(me) {
                 parent = me.get(parent, "content");
             }
             else {
-                parent = document.body;
+                parent = me.ui.element.desktop();
             }
             if(!parent.var) {
                 parent.var = {};

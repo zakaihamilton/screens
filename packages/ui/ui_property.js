@@ -49,7 +49,7 @@ package.ui.property = function UIProperty(me) {
             }
             var parent = me.widget.window.parent(window);
             if(!parent) {
-                parent = document.body;
+                parent = me.ui.element.desktop();
             }
             me.trickle.set(parent, properties);
         }

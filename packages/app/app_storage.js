@@ -9,7 +9,7 @@ package.app.storage = function AppStorage(me) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "body", "self");
+        me.singleton = me.ui.element.create(__json__, "desktop", "self");
     };
     me.cache = function() {
         if(!me.singleton) {

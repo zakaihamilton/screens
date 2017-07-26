@@ -102,7 +102,7 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.keyList": ["ui.basic.text", "select", "options"],
                 "ui.data.values": values
             }
-        }, document.body);
+        });
         if (object.component === me.id) {
             me.set(menu.var.modal, "ui.style.display", "none");
         }

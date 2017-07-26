@@ -49,7 +49,7 @@ package.menu.context = function MenuContext(me) {
             if (!visible) {
                 var parent = me.widget.window.parent(window);
                 if (!parent) {
-                    parent = document.body;
+                    parent = me.ui.element.desktop();
                 }
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);

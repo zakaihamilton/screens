@@ -106,7 +106,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.group.data":object.parentNode.listData,
                 "widget.list.popup.selection":me.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
-            }, document.body);
+            });
         }
     };
     me.readOnly = {

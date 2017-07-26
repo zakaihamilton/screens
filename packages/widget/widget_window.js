@@ -45,7 +45,7 @@ package.widget.window = function WidgetWindow(me) {
     me.parent = function (object) {
         var parent = object.parentNode;
         while (parent) {
-            if (parent === document.body) {
+            if (parent === me.ui.element.desktop()) {
                 return null;
             }
             if (parent.window) {
@@ -79,8 +79,8 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.windows = {
         get: function (object) {
-            var content = document.body;
-            if (object !== document.body) {
+            var content = me.ui.element.desktop();
+            if (object !== me.ui.element.desktop()) {
                 content = me.get(object, "widget.window.content");
             }
             return me.ui.node.members(content, me.id);
@@ -128,7 +128,7 @@ package.widget.window = function WidgetWindow(me) {
                 });
                 me.set(parent_window, "update");
             } else {
-                me.set(document.body, "widget.window.refocus");
+                me.set(me.ui.element.desktop(), "widget.window.refocus");
             }
         }
     };
@@ -236,7 +236,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.detach(parent_window);
                 me.set(parent_window, "widget.window.refocus");
             } else {
-                me.set(document.body, "widget.window.refocus");
+                me.set(me.ui.element.desktop(), "widget.window.refocus");
             }
             me.set(window, "ui.property.bubble", {
                 "update": null
@@ -268,7 +268,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.attach(window, parent_window);
                 content = me.get(parent_window, "widget.window.content");
             } else {
-                content = document.body;
+                content = me.ui.element.desktop();
             }
             if (!wasMaximized) {
                 window.restore_region = me.ui.rect.relative_region(window, content);
@@ -358,7 +358,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.detach(parent_window);
                     content = me.get(parent_window, "widget.window.content");
                 } else {
-                    content = document.body;
+                    content = me.ui.element.desktop();
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
                 me.set(window, "ui.property.group", {
@@ -403,8 +403,8 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.visibleWindows = {
         get: function (object, value) {
-            var content = document.body;
-            if (object !== document.body) {
+            var content = me.ui.element.desktop();
+            if (object !== me.ui.element.desktop()) {
                 content = me.get(object, "widget.window.content");
             }
             var members = me.ui.node.members(content, me.id);

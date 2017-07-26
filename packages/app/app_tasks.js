@@ -9,12 +9,12 @@ package.app.tasks = function AppTasks(me) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "body", "self");
+        me.singleton = me.ui.element.create(__json__, "desktop", "self");
     };
     me.tasks = {
         get: function(object) {
             var isFirst = true;
-            var windows = me.ui.node.members(document.body, me.widget.window.id);
+            var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
             var items = windows.reverse().map(function(window) {
                 var label = me.get(window, "label");
                 if(label === "Task List") {
@@ -32,7 +32,7 @@ package.app.tasks = function AppTasks(me) {
     };
     me.switchTo = {
         set: function(object, value) {
-            var windows = me.ui.node.members(document.body, me.widget.window.id);
+            var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
             me.set(me.singleton, "widget.window.close");
             var tasks = me.get(me.singleton.var.tasks, "selection");
             if(tasks.length) {
