@@ -1044,6 +1044,21 @@
         },
         "Ibuy":{
             "translation":"Coarsening"
+        },
+        "Dvekut":{
+            "translation":"Adhesion"
+        },
+        "Mitzva":{
+            "translation":"Precept"
+        },
+        "Mitzvot":{
+            "translation":"Precepts"
+        },
+        "Klipa":{
+            "translation":"Shell"
+        },
+        "Klipot":{
+            "translation":"Shells"
         }
     }
 }

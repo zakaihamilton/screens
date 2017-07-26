@@ -71,36 +71,35 @@ package.core.http = function CoreHttp(me) {
         }
         return array;
     };
-    me.send = function(info) {
-        if(me.platform !== "server") {
-            var request = new XMLHttpRequest();
-            core.console.log("sending http: " + JSON.stringify(info));
-            request.open(info.method, info.url, false);
-            request.send(null);
-            if(request.status === 200) {
-                return request.responseText;
-            }
-        }
-    };
-    me.send_async = function(info) {
+    me.send = function(info, async=true) {
         if(me.platform !== "server") {
             var request = new XMLHttpRequest();
             if(info.mimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            request.open(info.method, info.url, true);
-            request.onreadystatechange = function(e) {
-                if (request.readyState === 4) {
-                    if(request.status === 200 || request.status === 201) {
-                        var response = JSON.parse(request.responseText);
-                        info.success(response);
+            request.open(info.method, info.url, async);
+            if(async) {
+                request.onreadystatechange = function(e) {
+                    if (request.readyState === 4) {
+                        if(request.status === 200 || request.status === 201) {
+                            if(info.callback) {
+                                info.response = request.responseText;
+                                info.callback(info);
+                            }
+                        }
+                        else if(info.hasOwnProperty("failure")) {
+                            if(info.callback) {
+                                info.status = request.status;
+                                info.callback(info);
+                            }
+                        }
                     }
-                    else if(info.hasOwnProperty("failure")) {
-                        info.failure(request.status);
-                    }
-                }
-            };
+                };
+            }
             request.send(null);
+            if(!async && request.status === 200) {
+                return request.responseText;
+            }
         }
     };
 };

@@ -22,10 +22,16 @@ function package_platform() {
 
 function package_require(id, platform) {
     if (typeof platform !== "undefined") {
-        /* Register requirement in package */
-        package.requirements[id] = platform;
+        package.requireComponents[id] = platform;
     }
-    return package.requirements[id];
+    return package.requireComponents[id];
+}
+
+function package_remote(id, platform) {
+    if (typeof platform !== "undefined") {
+        package.remoteComponents[id] = platform;
+    }
+    return package.remoteComponents[id];
 }
 
 function package_init(package_name, component_name, child_name = null, node = null) {
@@ -222,6 +228,8 @@ function package_general(object, property) {
         return package_platform();
     } else if (property === "require") {
         return package_require;
+    } else if (property === "remote") {
+        return package_remote;
     } else if (property === "include") {
         return package_include;
     } else if (property in package) {
@@ -235,7 +243,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({requirements: {}}, {
+var package = new Proxy({requireComponents: {}, remoteComponents:{}}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {

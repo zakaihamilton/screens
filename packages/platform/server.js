@@ -3,7 +3,7 @@ require("../package.js");
 package.include({
     "core": [
         "console",
-        "remote",
+        "test",
         "http",
         "message",
         "type",
@@ -12,3 +12,6 @@ package.include({
         "script",
         "job"
     ]});
+
+package.remote("core.test", "server");
+package.remote("kab.terms", "client");

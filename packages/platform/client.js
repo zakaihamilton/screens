@@ -3,7 +3,7 @@ importScripts("/packages/package.js?platform=client");
 package.include({
     "core": [
         "console",
-        "remote",
+        "test",
         "http",
         "message",
         "type",

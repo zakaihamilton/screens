@@ -12,13 +12,12 @@ package.app.main = function (me) {
     me.client = function () {
         /* run on the client */
         me.core.console.log("application is started");
-        me.core.console.log(me.core.remote.test("a", "b", "c"));
-        me.core.console.log(me.core.remote.return_number(5));
-        me.core.console.log(me.core.remote.return_string("testing 1, 2, 3"));
-        me.core.console.log(me.core.remote.return_map({a: 1, b: 2, c: 3}));
-        me.core.console.log(me.core.remote.return_array([5, 6, 7, 8]));
-        me.core.console.log(package["core.remote.return_array"]([5, 6, 7, 8]));
-        me.core.message.send_server("core.node.print", "Hello World!");
+        me.core.test.test(me.core.console.log, "a", "b", "c");
+        me.core.test.return_number(me.core.console.log, 5);
+        me.core.test.return_string(me.core.console.log, "testing 1, 2, 3");
+        me.core.test.return_map(me.core.console.log, {a: 1, b: 2, c: 3});
+        me.core.test.return_array(me.core.console.log, [5, 6, 7, 8]);
+        package["core.test.return_array"](me.core.console.log, [5, 6, 7, 8]);
         me.core.message.send_browser("app.main.ready");
     };
     me.ready = function () {

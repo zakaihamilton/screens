@@ -3,7 +3,7 @@ package.include({
         "console",
         "object",
         "property",
-        "remote",
+        "test",
         "http",
         "message",
         "type",
@@ -12,7 +12,8 @@ package.include({
         "script",
         "cmd",
         "app",
-        "string"
+        "string",
+        "handle"
     ],
     "storage" : [
         "cache"

@@ -3,18 +3,13 @@
  @component KabTerms
  */
 
-package.require("kab.terms", "browser");
-
 package.kab.terms = function KabTerms(me) {
     me.terms = __json__;
-    me.init = function () {
-        me.ui.theme.useStylesheet("kab.terms");
-    };
-    me.parse = function (wordsString, options) {
+    me.parse = function (callback, wordsString, options) {
         var terms = Object.keys(me.terms.terms).sort(function (source, target) {
             return target.length - source.length;
         });
-        return me.core.string.parseWords(wordsString, function (words) {
+        var result =  me.core.string.parseWords(wordsString, function (words) {
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                 for (var termIndex = 0; termIndex < terms.length; termIndex++) {
                     var term = terms[termIndex];
@@ -42,7 +37,7 @@ package.kab.terms = function KabTerms(me) {
                         if (expansion) {
                             expansion = [].concat(expansion);
                             expansion = expansion.map(function (item) {
-                                return me.parse(item, options);
+                                return me.parse(null, item, options);
                             });
                             if (expansion.length > 1) {
                                 expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1).toString();
@@ -55,7 +50,7 @@ package.kab.terms = function KabTerms(me) {
                         var translation = item.translation;
                         if (translation) {
                             if(!item.name) {
-                                translation = me.parse(translation, me.duplicateOptions(options, {"addStyles": false}));
+                                translation = me.parse(null, translation, me.duplicateOptions(options, {"addStyles": false}));
                             }
                             words.splice(wordIndex, numTermWords);
                             me.modify(words, wordIndex, item, term, " [", translation, "]", options);
@@ -69,6 +64,12 @@ package.kab.terms = function KabTerms(me) {
                 }
             }
         });
+        if(callback) {
+            callback(result);
+        }
+        else {
+            return result;
+        }
     };
     me.toCase = function (item, string) {
         if (item.case !== "sensitive") {

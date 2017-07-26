@@ -26,35 +26,48 @@ package.app.transform = function AppTransform(me) {
         me.keepSource = me.ui.property.toggleOptionSet(me, "keepSource", me.convert.set);
         me.showHtml = me.ui.property.toggleOptionSet(me, "showHtml", me.convert.set);
         me.showInput = me.ui.property.toggleOptionSet(me, "showInput", function (options, key, value) {
-            me.set(me.singleton.var.input, "ui.style.display", value ? "initial" : "none");
-            me.set(me.singleton.var.convert, "ui.style.display", value ? "initial" : "none");
+            if(!me.get(me.singleton.var.output, "ui.basic.text")) {
+                value = true;
+            }
+            me.set(me.singleton.var.input, "ui.style.display", value ? "inline-block" : "none");
+            me.set(me.singleton.var.convert, "ui.style.display", value ? "inline-block" : "none");
             me.set(me.singleton, "update");
         });
         me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", function (options, key, value) {
             var scrollbar = me.singleton.var.container.var.vertical;
-            if(scrollbar) {
+            if (scrollbar) {
                 me.set(scrollbar, "autoScroll", value);
             }
         });
+        me.ui.theme.useStylesheet("kab.terms");
     };
     me.new = {
         set: function (object) {
             me.set(me.singleton.var.input, "ui.basic.text", "");
+            me.set(me.singleton.var.input, "storage.cache.storeLocal");
             me.set(me.singleton.var.output, "ui.basic.html", "");
+            me.set(me.singleton.var.input, "ui.style.display", "inline-block");
+            me.set(me.singleton.var.convert, "ui.style.display", "inline-block");
         }
     };
     me.convert = {
         set: function (object) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
-            text = "<p>" + text.split("\n").map(function (paragraph) {
-                return me.kab.terms.parse(paragraph, me.options);
-            }).join("</p><p>") + "<br><br>";
-            if (me.options.showHtml) {
-                me.set(me.singleton.var.output, "ui.basic.text", text);
-            } else {
-                me.set(me.singleton.var.output, "ui.basic.html", text);
+            if(text) {
+                if(!me.options.showInput) {
+                    me.set(me.singleton.var.input, "ui.style.display", "none");
+                    me.set(me.singleton.var.convert, "ui.style.display", "none");
+                }
+                me.kab.terms.parse(function (text) {
+                    text = "<p>" + text.split("\n").join("</p><p>") + "<br><br>";
+                    if (me.options.showHtml) {
+                        me.set(me.singleton.var.output, "ui.basic.text", text);
+                    } else {
+                        me.set(me.singleton.var.output, "ui.basic.html", text);
+                    }
+                    me.set(me.singleton, "update");
+                }, text, me.options);
             }
-            me.set(me.singleton, "update");
         }
     };
 };
