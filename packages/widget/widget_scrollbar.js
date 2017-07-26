@@ -103,7 +103,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, 1);
                     me.update.set(container);
-                }, 100);
+                }, 150);
             }
         }
     };

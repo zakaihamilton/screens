@@ -38,7 +38,7 @@ package.app.transform = function AppTransform(me) {
             if (scrollbar) {
                 me.set(scrollbar, "autoScroll", value);
             }
-        });
+        }, null);
         me.ui.theme.useStylesheet("kab.terms");
     };
     me.new = {

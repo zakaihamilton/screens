@@ -72,8 +72,10 @@ package.ui.property = function UIProperty(me) {
                 if(callback) {
                     callback(component.options, key, component.options[key]);
                 }
-                var validKey = me.storage.cache.validKey(component.id + ".options");
-                me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
+                if(storage) {
+                    var validKey = me.storage.cache.validKey(component.id + ".options");
+                    me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
+                }
             }
         };
     };
