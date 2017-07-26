@@ -23,8 +23,11 @@ package.core.handle = function CoreHandle(me) {
         return result;
     };
     me.push = function(object) {
-        var ref = me.core.ref.gen();
-        me.handles[ref] = object;
+        var ref = null;
+        if(object) {
+            var ref = me.core.ref.gen();
+            me.handles[ref] = object;
+        }
         return ref;
     };
 };

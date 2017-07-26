@@ -10,8 +10,19 @@ package.core.message = function CoreMessage(me) {
         package.send_client = me.send_client;
         package.send_browser = me.send_browser;
         package.send = me.send;
-        if(package.platform === "server") {
+        if (package.platform === "server") {
             core.property.link("core.http.receive", "core.message.receive", true);
+        } else if (me.platform === "browser") {
+            package.worker.onmessage = function (event) {
+                me.core.console.log("Receiving message");
+                me.handleLocal(package.worker, event.data);
+            };
+            package.worker.postMessage(null);
+        } else if (me.platform === "client") {
+            self.onmessage = function (event) {
+                me.core.console.log("Receiving message");
+                me.handleLocal(null, event.data);
+            };
         }
     };
     me.send_server = function (path, callback, params) {
@@ -21,7 +32,7 @@ package.core.message = function CoreMessage(me) {
             var info = {method: "GET",
                 url: "/method/" + path + me.core.type.wrap_args(args),
                 callback: me.handleRemote,
-                altCallback:callback
+                altCallback: callback
             };
             core.http.send(info);
         } else if (me.platform === "server") {
@@ -33,9 +44,9 @@ package.core.message = function CoreMessage(me) {
         if (me.platform === "browser") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
-            var info = {path: path, params: args, callback:me.core.handle.push(callback)};
+            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
             me.core.console.log(JSON.stringify(info));
-            me.worker.postMessage(info);
+            package.worker.postMessage(info);
         } else if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 0);
             me.send.apply(null, args);
@@ -45,7 +56,7 @@ package.core.message = function CoreMessage(me) {
         if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
-            var info = {path: path, params: args, callback:me.core.handle.push(callback)};
+            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
             me.core.console.log(JSON.stringify(info));
             postMessage(info);
         } else if (me.platform === "browser") {
@@ -62,7 +73,7 @@ package.core.message = function CoreMessage(me) {
                 var args = core.type.unwrap_args(info.query);
                 args.unshift(path);
                 var task = core.job.begin(info.job);
-                args[1] = function(response) {
+                args[1] = function (response) {
                     info.body = core.type.wrap(response);
                     core.job.end(task);
                 };
@@ -87,26 +98,19 @@ package.core.message = function CoreMessage(me) {
             me.core.console.log("callback is not a function but rather " + JSON.stringify(callback));
         }
     };
-    if (me.platform === "browser") {
-        me.worker = new Worker("packages/platform/client.js");
-        me.worker.onmessage = function (event) {
-            me.handleLocal(me.worker, event.data);
-        };
-    } else if (me.platform === "client") {
-        self.onmessage = function (event) {
-            me.handleLocal(null, event.data);
-        };
-    }
-    me.handleRemote = function(info) {
-        if(info.altCallback) {
+    me.handleRemote = function (info) {
+        if (info.altCallback) {
             info.response = core.type.unwrap(info.response);
             info.altCallback(info.response);
         }
     };
-    me.handleLocal = function(context, info) {
-        if(typeof info.response !== "undefined") {
+    me.handleLocal = function (context, info) {
+        if(!info) {
+            return;
+        }
+        if (typeof info.response !== "undefined") {
             var callback = me.core.handle.pop(info.callback);
-            if(callback) {
+            if (callback) {
                 callback(info.response);
             }
             return;
@@ -115,10 +119,9 @@ package.core.message = function CoreMessage(me) {
         args.unshift(info.path);
         var response = me.send.apply(null, args);
         info.response = response ? response : null;
-        if(context) {
+        if (context) {
             context.postMessage(info);
-        }
-        else {
+        } else {
             self.postMessage(info);
         }
     };

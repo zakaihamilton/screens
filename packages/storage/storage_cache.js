@@ -7,7 +7,6 @@ package.require("storage.cache", "browser");
 
 package.storage.cache = function StorageCache(me) {
     me.init = function () {
-        console.log("storage cache");
         me.local = me.core.object.create(me);
         me.session = me.core.object.create(me);
         if (me.isSupported()) {

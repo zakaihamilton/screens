@@ -1,3 +1,5 @@
+package.worker = new Worker("packages/platform/client.js");
+
 package.include({
     "core": [
         "console",
@@ -15,7 +17,7 @@ package.include({
         "string",
         "handle"
     ],
-    "storage" : [
+    "storage": [
         "cache"
     ],
     "ui": [
@@ -76,26 +78,27 @@ package.include({
         "background",
         "text"
     ],
-    "kab" : [
+    "kab": [
         "terms"
     ],
-    "app": [
-        "main"
-    ]
 },
         function (info) {
             if (info.failure) {
                 console.log("Cannot load " + info.failure.package + "." + info.failure.component);
-            } else if(info.progress && info.loaded) {
+            } else if (info.progress && info.loaded) {
                 var progress_width = (500 / 100) * info.progress;
                 var progress = document.getElementById("progress");
-                if(progress) {
+                if (progress) {
                     progress.style.width = progress_width + "px";
-                    progress.innerHTML=info.loaded.package + "." + info.loaded.component;
+                    progress.innerHTML = info.loaded.package + "." + info.loaded.component;
                 }
             }
             if (info.complete) {
                 document.getElementById("bar").style.display = "none";
-                package.send_browser("app.main.browser");
+                package.include("app.main", function (appInfo) {
+                    if (appInfo.complete) {
+                        package.send_browser("app.main.browser");
+                    }
+                });
             }
         });
