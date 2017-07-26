@@ -25,15 +25,15 @@
             ]],
         ["Options", [
                 ["Auto Arrange", "app.progman.auto_arrange", {
-                        "state": "app.progman.auto_arrange"
+                        "state": "select"
                     }
                 ],
                 ["Minimize on Use", "app.progman.minimize_on_use", {
-                        "state": "app.progman.minimize_on_use"
+                        "state": "select"
                     }
                 ],
                 ["Save Settings on Exit", "app.progman.save_on_exit", {
-                        "state": "app.progman.save_on_exit"
+                        "state": "select"
                     }
                 ]
             ]],

@@ -1,6 +1,6 @@
 [
     ["Restore", "widget.window.restore", {
-            "enabled": "widget.window.restore",
+            "enabled": "select",
             "visible": "menu.context.resizable"
         }
     ],
@@ -14,18 +14,18 @@
         }
     ],
     ["Minimize", "widget.window.minimize", {
-            "enabled": "widget.window.minimize",
+            "enabled": "select",
             "visible": "menu.context.notPopup"
         }
     ],
     ["Maximize", "widget.window.maximize", {
-            "enabled": "widget.window.maximize",
+            "enabled": "select",
             "visible": "menu.context.resizable"
         }
     ],
     ["Close", "widget.window.close", {
             "separator": "menu.context.resizable",
-            "enabled": "widget.window.close"
+            "enabled": "select"
         }
     ],
     ["Next", "menu.context.next", {

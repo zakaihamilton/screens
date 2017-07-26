@@ -11,10 +11,10 @@ package.kab.terms = function KabTerms(me) {
         me.ui.theme.useStylesheet("kab.terms");
     };
     me.parse = function (wordsString, options) {
+        var terms = Object.keys(me.terms.terms).sort(function (source, target) {
+            return target.length - source.length;
+        });
         return me.core.string.parseWords(wordsString, function (words) {
-            var terms = Object.keys(me.terms.terms).sort(function (source, target) {
-                return target.length - source.length;
-            });
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                 for (var termIndex = 0; termIndex < terms.length; termIndex++) {
                     var term = terms[termIndex];

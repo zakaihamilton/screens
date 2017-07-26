@@ -147,6 +147,9 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         if (key in values) {
             var value = values[key];
             if (typeof value === "string") {
+                if(value === "select") {
+                    value = object.menu_select;
+                }
                 value = me.get(object.parentNode.target, value);
             }
             callback(value);

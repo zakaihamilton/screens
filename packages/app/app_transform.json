@@ -17,29 +17,29 @@
         ],
         ["Options", [
                 ["Auto Scroll", "app.transform.autoScroll", {
-                        "state": "app.transform.autoScroll"
+                        "state": "select"
                     }
                 ],
                 ["Translation", "app.transform.translation", {
-                        "state": "app.transform.translation",
+                        "state": "select",
                         "separator":true
                     }
                 ],
                 ["Styles", "app.transform.addStyles", {
-                        "state": "app.transform.addStyles"
+                        "state": "select"
                     }
                 ],
                 ["Keep Source", "app.transform.keepSource", {
-                        "state": "app.transform.keepSource"
+                        "state": "select"
                     }
                 ],
                 ["HTML", "app.transform.showHtml", {
-                        "state": "app.transform.showHtml",
+                        "state": "select",
                         "separator":true
                     }
                 ],
                 ["Input", "app.transform.showInput", {
-                        "state": "app.transform.showInput"
+                        "state": "select"
                     }
                 ]
             ]]
