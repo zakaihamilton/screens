@@ -4,7 +4,9 @@
  */
 
 package.ui.drag = function UIDrag(me) {
-    me.register = me.ui.event.register;
+    me.init = function() {
+        me.register = me.ui.event.register;
+    }
     me.handle = {};
     me.start = {
         set: function (object, value) {

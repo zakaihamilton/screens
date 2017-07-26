@@ -4,8 +4,10 @@
  */
 
 package.ui.key = function UIKey(me) {
-    me.send_event = me.ui.event.send_event;
-    me.register = me.ui.event.register;
+    me.init = function() {
+        me.send_event = me.ui.event.send_event;
+        me.register = me.ui.event.register;
+    }
     me.keys = [];
     me.handle = {
         keydown: function(object, method, event) {

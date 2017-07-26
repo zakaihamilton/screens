@@ -6,8 +6,10 @@
 package.ui.touch = function UIEvent(me) {
     me.click_delay = 200;
     me.click_repeat = 50;
-    me.send_event = me.ui.event.send_event;
-    me.register = me.ui.event.register;
+    me.init = function() {
+        me.send_event = me.ui.event.send_event;
+        me.register = me.ui.event.register;
+    }
     me.handle = {
         click: function (object, method, event) {
             if (object.event_types["dblclick"]) {
