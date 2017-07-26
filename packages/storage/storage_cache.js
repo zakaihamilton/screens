@@ -23,6 +23,10 @@ package.storage.cache = function StorageCache(me) {
             return false;
         }
     };
+    me.validKey = function(key) {
+        key = key.replace(/[.]/g, "-");
+        return key;
+    };
     me.storeLocal = {
         set: function(object) {
             var key = me.get(object, "storage.cache.key");

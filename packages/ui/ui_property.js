@@ -54,16 +54,26 @@ package.ui.property = function UIProperty(me) {
             me.trickle.set(parent, properties);
         }
     };
-    me.toggleOptionSet = function (options, key, callback) {
+    me.initToggleOptions = function(component, defaults, storage="local") {
+        var validKey = me.storage.cache.validKey(component.id + ".options");
+        var value = me.get(me.storage.cache[storage], validKey);
+        component.options = value ? JSON.parse(value) : defaults;
+    };
+    me.toggleOptionSet = function (component, key, callback, storage="local") {
+        if(!component.options) {
+            component.options = {};
+        }
         return {
             get: function (object) {
-                return options[key];
+                return component.options[key];
             },
             set: function (object, value) {
-                options[key] = !options[key];
+                component.options[key] = !component.options[key];
                 if(callback) {
-                    callback(options, key, options[key]);
+                    callback(component.options, key, component.options[key]);
                 }
+                var validKey = me.storage.cache.validKey(component.id + ".options");
+                me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
             }
         };
     };

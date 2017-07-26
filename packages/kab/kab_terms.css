@@ -1,5 +1,6 @@
 [kab-term-tooltip] {
     position: relative;
+    white-space:nowrap;
 }
 
 [kab-term-tooltip]:after {

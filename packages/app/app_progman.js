@@ -11,14 +11,16 @@ package.app.progman = function AppProgman(me) {
         }
         return me.singleton = me.ui.element.create(__json__);
     };
-    me.options = {
-        "auto_arrange": false,
-        "minimize_on_use": true,
-        "save_on_exit": true
+    me.init = function() {
+        me.ui.property.initToggleOptions(me, {
+            "auto_arrange": false,
+            "minimize_on_use": true,
+            "save_on_exit": true
+        });
+        me.auto_arrange = me.ui.property.toggleOptionSet(me, "auto_arrange");
+        me.minimize_on_use = me.ui.property.toggleOptionSet(me, "minimize_on_use");
+        me.save_on_exit = me.ui.property.toggleOptionSet(me, "save_on_exit");
     };
-    me.auto_arrange = me.ui.property.toggleOptionSet(me.options, "auto_arrange");
-    me.minimize_on_use = me.ui.property.toggleOptionSet(me.options, "minimize_on_use");
-    me.save_on_exit = me.ui.property.toggleOptionSet(me.options, "save_on_exit");
     me.args = {
         set: function (object, value) {
             object.args = value;
