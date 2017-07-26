@@ -239,9 +239,7 @@ function package_include(packages, callback) {
             package_index++;
             component_index = 0;
         }
-        setTimeout(function () {
-            load(package_index, component_index);
-        }, 0);
+        load(package_index, component_index);
     };
     load(0, 0);
 }
