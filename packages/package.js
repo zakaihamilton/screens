@@ -221,6 +221,9 @@ function package_include(packages, callback) {
                 return;
             }
             info.progress = (loadedComponents / numComponents) * 100;
+            if(info.progress > 100) {
+                info.progress = 100;
+            }
             if (callback) {
                 callback(info);
             }

@@ -3,6 +3,8 @@
  @component CoreModule
  */
 
+package.require("core.module", "server");
+
 package.core.module = function CoreModule(me) {
     var core = me.core;
     me.init = function() {
