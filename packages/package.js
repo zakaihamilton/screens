@@ -34,7 +34,7 @@ function package_remote(id, platform) {
     return package.remoteComponents[id];
 }
 
-function package_init(package_name, component_name, child_name = null, node = null) {
+function package_init(package_name, component_name, callback, child_name = null, node = null) {
     var children = [];
     /* Retrieve component function */
     var id = package_name + "." + component_name;
@@ -88,19 +88,24 @@ function package_init(package_name, component_name, child_name = null, node = nu
             component_obj.forward.enabled = true;
         }
         if (init_method) {
-            package.initComponents.push(init_method);
+            if(callback) {
+                package.initComponents.push(init_method);
+            }
+            else {
+                init_method();
+            }
         }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
     children.map(function (child) {
-        package_init(package_name, component_name, child, node);
+        package_init(package_name, component_name, callback, child, node);
     });
     return component_obj;
 }
 
 function package_prepare(package_name, component_name, callback) {
-    var component = package_init(package_name, component_name);
+    var component = package_init(package_name, component_name, callback);
     if (callback) {
         callback({loaded: {package: package_name, component: component_name}});
     }
@@ -278,7 +283,6 @@ var package = new Proxy({requireComponents: {}, remoteComponents: {}, initCompon
                 var package_name = Reflect.get(object, "id");
                 Reflect.set(object, property, [""]);
                 var result = package_load(package_name, property);
-                package_complete(null, null);
                 return result;
             },
             set: function (object, property, value) {
