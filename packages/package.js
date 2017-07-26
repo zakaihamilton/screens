@@ -171,32 +171,23 @@ function package_include(packages, callback) {
         });
         return;
     }
+    var numComponents = 0;
+    var loadedComponents = 0;
+    var status = {};
+    for (var package in packages) {
+        packages[package].map(function (component) {
+            status[package + "." + component] = false;
+            numComponents++;
+        });
+    }
     var load = function (package_index, component_index) {
         var package_keys = Object.keys(packages);
         if (package_index >= package_keys.length) {
-            if (callback) {
-                callback({complete: true});
-            }
             return;
         }
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        var component_progress = (component_index / components.length) * 100;
-        var package_progress = (package_index / package_keys.length) * 100;
-        var info = {
-            loading: {
-                package: package_name,
-                component: component_name
-            },
-            progress: {
-                package: package_progress,
-                component: component_progress
-            }
-        };
-        if (callback) {
-            callback(info);
-        }
         package_load(package_name, component_name, function (info) {
             if (info.failure) {
                 if (callback) {
@@ -204,16 +195,28 @@ function package_include(packages, callback) {
                 }
                 return;
             }
-            /* Load next component */
-            component_index++;
-            if (component_index >= components.length) {
-                package_index++;
-                component_index = 0;
+            status[info.package + "." + info.component] = true;
+            loadedComponents++;
+            if (loadedComponents >= numComponents) {
+                if (callback) {
+                    callback({complete: true});
+                }
+                return;
             }
-            setTimeout(function () {
-                load(package_index, component_index);
-            }, 0);
+            info.progress = (loadedComponents / numComponents) * 100;
+            if (callback) {
+                callback(info);
+            }
         });
+        /* Load next component */
+        component_index++;
+        if (component_index >= components.length) {
+            package_index++;
+            component_index = 0;
+        }
+        setTimeout(function () {
+            load(package_index, component_index);
+        }, 0);
     };
     load(0, 0);
 }
@@ -243,7 +246,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({requireComponents: {}, remoteComponents:{}}, {
+var package = new Proxy({requireComponents: {}, remoteComponents: {}}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {

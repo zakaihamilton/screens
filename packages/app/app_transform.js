@@ -48,6 +48,7 @@ package.app.transform = function AppTransform(me) {
             me.set(me.singleton.var.output, "ui.basic.html", "");
             me.set(me.singleton.var.input, "ui.style.display", "inline-block");
             me.set(me.singleton.var.convert, "ui.style.display", "inline-block");
+            me.set(me.singleton, "update");
         }
     };
     me.convert = {

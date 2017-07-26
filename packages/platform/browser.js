@@ -86,18 +86,18 @@ package.include({
         function (info) {
             if (info.failure) {
                 alert("Cannot load " + info.failure.package + "." + info.failure.component);
-            } else if(info.progress && info.loading) {
+            } else if(info.progress && info.loaded) {
                 var package_width = (500 / 100) * info.progress.package;
                 var component_width = (500 / 100) * info.progress.component;
                 var package_progress = document.getElementById("package_progress");
                 if(package_progress) {
                     package_progress.style.width = package_width + "px";
-                    package_progress.innerHTML=info.loading.package;
+                    package_progress.innerHTML=info.loaded.package;
                 }
                 var component_progress = document.getElementById("component_progress");
                 if(component_progress) {
                     component_progress.style.width = component_width + "px";
-                    component_progress.innerHTML=info.loading.component;
+                    component_progress.innerHTML=info.loaded.component;
                 }
             }
             if (info.complete) {
