@@ -1,7 +1,7 @@
 [
     ["Restore", "widget.window.restore", {
             "enabled": "select",
-            "visible": "menu.context.resizable"
+            "visible": "menu.context.notPopup"
         }
     ],
     ["Move", "", {
