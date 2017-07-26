@@ -88,7 +88,7 @@ function package_init(package_name, component_name, child_name = null, node = nu
             component_obj.forward.enabled = true;
         }
         if (init_method) {
-            init_method();
+            package.initComponents.push(init_method);
         }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
@@ -158,16 +158,30 @@ function package_load(package_name, component_name, callback) {
     return result;
 }
 
+function package_complete(info, callback) {
+    do {
+        var method = package.initComponents.shift();
+        if(method) {
+            method();
+        }
+    } while(method);
+    if(info) {
+        if (info.loaded) {
+            info.complete = true;
+        }
+        if(callback) {
+            callback(info);
+        }
+    }
+}
+
 function package_include(packages, callback) {
     if (typeof packages === "string" && packages) {
         var separator = packages.indexOf(".");
         var package_name = packages.substr(0, separator);
         var component_name = packages.substr(separator + 1);
         package_load(package_name, component_name, function (info) {
-            if (info.loaded) {
-                info.complete = true;
-            }
-            callback(info);
+            package_complete(info, callback);
         });
         return;
     }
@@ -198,9 +212,7 @@ function package_include(packages, callback) {
             status[info.package + "." + info.component] = true;
             loadedComponents++;
             if (loadedComponents >= numComponents) {
-                if (callback) {
-                    callback({complete: true});
-                }
+                package_complete(info, callback);
                 return;
             }
             info.progress = (loadedComponents / numComponents) * 100;
@@ -246,7 +258,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({requireComponents: {}, remoteComponents: {}}, {
+var package = new Proxy({requireComponents: {}, remoteComponents: {}, initComponents:[]}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {
@@ -265,7 +277,9 @@ var package = new Proxy({requireComponents: {}, remoteComponents: {}}, {
                 /* Load component */
                 var package_name = Reflect.get(object, "id");
                 Reflect.set(object, property, [""]);
-                return package_load(package_name, property);
+                var result = package_load(package_name, property);
+                package_complete(null, null);
+                return result;
             },
             set: function (object, property, value) {
                 Reflect.set(object, property, value);
