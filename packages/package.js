@@ -164,6 +164,11 @@ function package_load(package_name, component_name, callback) {
 }
 
 function package_complete(info, callback) {
+    if(info) {
+        if(callback) {
+            callback(info);
+        }
+    }
     do {
         var method = package.initComponents.shift();
         if(method) {
@@ -216,13 +221,13 @@ function package_include(packages, callback) {
             }
             status[info.package + "." + info.component] = true;
             loadedComponents++;
-            if (loadedComponents >= numComponents) {
-                package_complete(info, callback);
-                return;
-            }
             info.progress = (loadedComponents / numComponents) * 100;
             if(info.progress > 100) {
                 info.progress = 100;
+            }
+            if (loadedComponents >= numComponents) {
+                package_complete(info, callback);
+                return;
             }
             if (callback) {
                 callback(info);
