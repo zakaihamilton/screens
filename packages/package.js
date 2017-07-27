@@ -281,9 +281,8 @@ var package = new Proxy({requireComponents: {}, remoteComponents: {}, initCompon
         /* Create package proxy */
         package_obj = new Proxy({id: property, package: property, components: []}, {
             get: function (object, property) {
-                result = package_general(object, property);
-                if (result) {
-                    return result;
+                if (Reflect.has(object, property)) {
+                    return Reflect.get(object, property);
                 }
                 /* Load component */
                 var package_name = Reflect.get(object, "id");
