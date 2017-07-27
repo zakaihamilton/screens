@@ -103,4 +103,9 @@ package.ui.touch = function UIEvent(me) {
             me.register(me.handle, object, "dblclick", value, "default");
         }
     };
+    me.wheel = {
+        set: function(object, value) {
+            me.register(me.handle, object, "wheel", value);
+        }
+    };
 };

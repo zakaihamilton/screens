@@ -5,8 +5,13 @@
 
 function WidgetScrollbarTemplate(me, scroll_type) {
     me.default = __json__;
+    me.create = {
+        set: function(object) {
+            object.scrollSpeed = 150;
+        }
+    };
     me.scrollType = {
-        get: function(object) {
+        get: function (object) {
             return scroll_type;
         }
     };
@@ -39,7 +44,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.draw = {
         set: function (object, value) {
-            setTimeout( function() {
+            setTimeout(function () {
                 me.update.set(object);
                 me.update.set(object);
             }, 0);
@@ -81,30 +86,38 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.autoScroll = {
         get: function (object) {
-            return object.autoScrollTimer!==null;
+            return object.autoScrollTimer !== null;
         },
         set: function (object, value) {
-            if(object.autoScrollTimer) {
+            if (object.autoScrollTimer) {
                 clearInterval(object.autoScrollTimer);
                 object.autoScrollTimer = null;
             }
-            if(value) {
-                object.autoScrollTimer = setInterval(function() {
+            if (value) {
+                object.autoScrollTimer = setInterval(function () {
                     var window = me.widget.window.window(object);
                     var hasParent = me.get(window, "ui.node.parent");
                     if (!hasParent) {
                         clearInterval(object.autoScrollTimer);
                         return;
                     }
-                    if(!me.get(window, "visible")) {
+                    if (!me.get(window, "visible")) {
                         return;
                     }
                     var container = me.ui.node.container(object, me.widget.container.id);
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, 1);
                     me.update.set(container);
-                }, 150);
+                }, object.scrollSpeed);
             }
+        }
+    };
+    me.scrollSpeed = {
+        get: function (object) {
+            return object.scrollSpeed;
+        },
+        set: function (object, value) {
+            object.scrollSpeed = value;
         }
     };
 }
