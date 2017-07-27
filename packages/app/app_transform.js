@@ -13,13 +13,15 @@ package.app.transform = function AppTransform(me) {
         me.set(me.singleton, "app.transform.convert");
     };
     me.init = function () {
-        me.ui.property.initToggleOptions(me, {
-            "doTranslation": true,
-            "addStyles": true,
-            "keepSource": false,
-            "showHtml": false,
-            "showInput": true,
-            "autoScroll": false
+        me.prevLanguage = null;
+        me.ui.property.initOptions(me, {
+            doTranslation: true,
+            addStyles: true,
+            keepSource: false,
+            showHtml: false,
+            showInput: false,
+            autoScroll: false,
+            language:"Auto"
         });
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.convert.set);
         me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.convert.set);
@@ -29,25 +31,30 @@ package.app.transform = function AppTransform(me) {
             if(!me.get(me.singleton.var.output, "ui.basic.text")) {
                 value = true;
             }
-            me.set(me.singleton.var.input, "ui.style.display", value ? "inline-block" : "none");
-            me.set(me.singleton.var.convert, "ui.style.display", value ? "inline-block" : "none");
-            me.set(me.singleton, "update");
+            me.updateWidgets(value);
         });
         me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", function (options, key, value) {
-            var scrollbar = me.singleton.var.container.var.vertical;
+            var scrollbar = me.singleton.var.output_container.var.vertical;
             if (scrollbar) {
                 me.set(scrollbar, "autoScroll", value);
             }
         }, null);
+        me.language = me.ui.property.choiceOptionSet(me, "language", me.convert.set);
         me.ui.theme.useStylesheet("kab.terms");
+    };
+    me.updateWidgets = function(showInput) {
+        me.set(me.singleton.var.input, "ui.style.display", showInput ? "inline-block" : "none");
+        me.set(me.singleton.var.convert, "ui.style.display", showInput ? "inline-block" : "none");
+        me.set(me.singleton.var.output_container, "ui.style.top", showInput ? "250px" : "0px");
+        me.set(me.singleton.var.output_container, "ui.style.borderTop", showInput ? "1px solid black" : "none");
+        me.set(me.singleton, "update");
     };
     me.new = {
         set: function (object) {
             me.set(me.singleton.var.input, "ui.basic.text", "");
             me.set(me.singleton.var.input, "storage.cache.storeLocal");
             me.set(me.singleton.var.output, "ui.basic.html", "");
-            me.set(me.singleton.var.input, "ui.style.display", "inline-block");
-            me.set(me.singleton.var.convert, "ui.style.display", "inline-block");
+            me.updateWidgets(true);
             me.set(me.singleton, "update");
         }
     };
@@ -55,19 +62,30 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if(text) {
-                if(!me.options.showInput) {
-                    me.set(me.singleton.var.input, "ui.style.display", "none");
-                    me.set(me.singleton.var.convert, "ui.style.display", "none");
+                me.updateWidgets(me.options.showInput);
+                var language = me.options.language;
+                if(language.toLowerCase() === "auto") {
+                    language = me.core.string.language(text);
+                    console.log("detected language: " + language);
                 }
-                me.kab.terms.parse(function (text) {
-                    text = "<p>" + text.split("\n").join("</p><p>") + "<br><br>";
-                    if (me.options.showHtml) {
-                        me.set(me.singleton.var.output, "ui.basic.text", text);
-                    } else {
-                        me.set(me.singleton.var.output, "ui.basic.html", text);
-                    }
-                    me.set(me.singleton, "update");
-                }, text, me.options);
+                me.kab.terms.setLanguage(function() {
+                    me.kab.terms.parse(function (text) {
+                        if(text) {
+                            text = "<p>" + text.split("\n").join("</p><p>") + "<br><br>";
+                        }
+                        if(me.prevLanguage) {
+                            me.set(me.singleton.var.output, "ui.theme.remove", me.prevLanguage);
+                        }
+                        me.set(me.singleton.var.output, "ui.theme.add", language);
+                        me.prevLanguage = language;
+                        if (me.options.showHtml) {
+                            me.set(me.singleton.var.output, "ui.basic.text", text);
+                        } else {
+                            me.set(me.singleton.var.output, "ui.basic.html", text);
+                        }
+                        me.set(me.singleton, "update");
+                    }, text, me.options);
+                }, language);
             }
         }
     };

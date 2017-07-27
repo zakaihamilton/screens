@@ -4,6 +4,11 @@
     flex-direction:column;
 }
 
+.widget-container-center {
+    display:flex;
+    flex:1;
+}
+
 .widget-container-footer {
     display:none;
     flex:none;

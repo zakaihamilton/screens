@@ -108,6 +108,7 @@ package.core.message = function CoreMessage(me) {
         if(!info) {
             return;
         }
+        info = Object.assign({}, info);
         if (typeof info.response !== "undefined") {
             var callback = me.core.handle.pop(info.callback);
             if (callback) {
@@ -115,14 +116,22 @@ package.core.message = function CoreMessage(me) {
             }
             return;
         }
+        me.core.console.log("info: " + JSON.stringify(info));
         var args = info.params;
         args.unshift(info.path);
-        var response = me.send.apply(null, args);
-        info.response = response ? response : null;
-        if (context) {
-            context.postMessage(info);
-        } else {
-            self.postMessage(info);
+        var responseCallback = info.callback;
+        if(responseCallback) {
+            args[1] = function(result) {
+                info.params = null;
+                info.response = result ? result : null;
+                info.callback = responseCallback;
+                if (context) {
+                    context.postMessage(info);
+                } else {
+                    self.postMessage(info);
+                }
+            };
         }
+        me.send.apply(null, args);
     };
 };

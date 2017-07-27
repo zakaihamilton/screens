@@ -4,35 +4,60 @@
  */
 
 package.kab.terms = function KabTerms(me) {
-    me.terms = __json__;
+    me.init = function () {
+        me.json = null;
+    };
+    me.setLanguage = function (callback, language) {
+        me.core.json.load(function (json) {
+            if (json) {
+                me.json = json;
+                me.core.console.log("using language: " + language + " with " + Object.keys(me.json.terms).length + " terms");
+                me.core.console.log("load me.json:" + me.json);
+                me.core.console.log("Calling callback: " + callback);
+                if(callback) {
+                    callback();
+                }
+            }
+        }, "kab.terms_" + language.toLowerCase());
+    };
     me.parse = function (callback, wordsString, options) {
-        var terms = Object.keys(me.terms.terms).sort(function (source, target) {
+        me.core.console.log("parse me.json:" + me.json);
+        var result = null;
+        if(!me.json) {
+            if(callback) {
+                callback(wordsString);
+                return;
+            }
+            return wordsString;
+        }
+        var terms = me.json.terms;
+        var termNames = Object.keys(terms).sort(function (source, target) {
             return target.length - source.length;
         });
-        var result =  me.core.string.parseWords(wordsString, function (words) {
+        result = me.core.string.parseWords(function (words) {
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-                for (var termIndex = 0; termIndex < terms.length; termIndex++) {
-                    var term = terms[termIndex];
+                for (var termIndex = 0; termIndex < termNames.length; termIndex++) {
+                    var term = termNames[termIndex];
                     if (term.startsWith("!")) {
                         continue;
                     }
-                    var item = me.terms.terms[term];
+                    var item = terms[term];
                     var termWords = term.split(" ");
                     var numTermWords = termWords.length;
-                    var collectedWords = me.toCase(item, words[wordIndex]);
+                    var collectedWords = words[wordIndex];
                     for (var termWordIndex = 1; termWordIndex < numTermWords; termWordIndex++) {
                         if (wordIndex + termWordIndex >= words.length) {
                             break;
                         }
                         var word = words[wordIndex + termWordIndex];
-                        var matchingTerm = me.terms.terms[word];
+                        var matchingTerm = terms[word];
                         if (matchingTerm && matchingTerm.ignore) {
                             numTermWords++;
                             continue;
                         }
-                        collectedWords += " " + word.toLowerCase();
+                        collectedWords += " " + word;
                     }
-                    if (me.toCase(item, term) === collectedWords) {
+                    if (me.toCase(item, term) === me.toCase(item, me.core.string.clean(collectedWords))) {
                         var expansion = item.expansion;
                         if (expansion) {
                             expansion = [].concat(expansion);
@@ -45,31 +70,30 @@ package.kab.terms = function KabTerms(me) {
                                 expansion = expansion.slice(-1).toString();
                             }
                             words.splice(wordIndex, numTermWords);
-                            me.modify(words, wordIndex, item, term, " (", expansion, ")", options, true);
+                            me.modify(words, wordIndex, item, collectedWords, " (", expansion, ")", options, true);
                         }
                         var translation = item.translation;
                         if (translation) {
-                            if(!item.name) {
+                            if (!item.name) {
                                 translation = me.parse(null, translation, me.duplicateOptions(options, {"addStyles": false}));
                             }
                             words.splice(wordIndex, numTermWords);
-                            me.modify(words, wordIndex, item, term, " [", translation, "]", options);
+                            me.modify(words, wordIndex, item, collectedWords, " [", translation, "]", options);
                         }
                         if (options.addStyles && !translation && !expansion) {
                             words.splice(wordIndex, numTermWords);
-                            me.modify(words, wordIndex, item, term, "", term, "", me.duplicateOptions(options, {"keepSource": false}));
+                            me.modify(words, wordIndex, item, collectedWords, "", collectedWords, "", me.duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
                     }
                 }
             }
-        });
-        if(callback) {
+        }, wordsString);
+        if (callback) {
             callback(result);
+            return;
         }
-        else {
-            return result;
-        }
+        return result;
     };
     me.toCase = function (item, string) {
         if (item.case !== "sensitive") {

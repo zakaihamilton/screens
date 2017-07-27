@@ -129,7 +129,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
             var item = value[0];
             var info = value[1];
             me.set(object, "back", item);
-            me.set(object.target, info, item);
+            me.set(object.target, info, me.get(item, "ui.basic.text"), item);
         }
     };
 };
@@ -150,7 +150,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
                 if(value === "select") {
                     value = object.menu_select;
                 }
-                value = me.get(object.parentNode.target, value);
+                value = me.get(object.parentNode.target, value, me.get(object, "ui.basic.text"));
             }
             callback(value);
         }

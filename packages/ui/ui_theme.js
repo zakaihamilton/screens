@@ -63,7 +63,7 @@ package.ui.theme = function UITheme(me) {
             }
         }
     };
-    me.load_css = function (path) {
+    me.load = function (path) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
@@ -115,7 +115,7 @@ package.ui.theme = function UITheme(me) {
     me.useStylesheet = function(component_name) {
         if (!me.stylesheets[component_name]) {
             console.log("loading css stylesheet: " + component_name);
-            me.stylesheets[component_name] = me.load_css(component_name);
+            me.stylesheets[component_name] = me.load(component_name);
         }
     };
 };

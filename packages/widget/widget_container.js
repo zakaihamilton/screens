@@ -5,7 +5,9 @@
 
 package.widget.container = function WidgetContainer(me) {
     me.redirect = {
-        "ui.basic.elements": "elements"
+        "ui.basic.elements": "elements",
+        "ui.basic.text": "text",
+        "ui.basic.html": "html"
     };
     me.default = __json__;
     me.content = function (object) {
@@ -24,6 +26,27 @@ package.widget.container = function WidgetContainer(me) {
                 me.set(object.var.vertical, "update");
                 me.set(object.var.horizontal, "update");
             }, 0);
+            var containers = me.ui.node.members(object.var.content, me.id);
+            console.log("updating child containers " + containers.length);
+            containers.map(function(container) {
+                me.set(container, "update");
+            });
+        }
+    };
+    me.text = {
+        get: function (object) {
+            return me.get(object.var.content, "ui.basic.text");
+        },
+        set: function (object, value) {
+            me.set(object.var.content, "ui.basic.text", value);
+        }
+    };
+    me.html = {
+        get: function (object) {
+            return me.get(object.var.content, "ui.basic.html");
+        },
+        set: function (object, value) {
+            me.set(object.var.content, "ui.basic.html", value);
         }
     };
 };

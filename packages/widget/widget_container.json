@@ -2,8 +2,7 @@
     "ui.theme.class": "root",
     "ui.basic.elements": [
         {
-            "ui.style.display": "flex",
-            "ui.style.flex": "1",
+            "ui.theme.class":"center",
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.content",

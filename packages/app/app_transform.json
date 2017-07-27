@@ -22,7 +22,7 @@
                 ],
                 ["Translation", "app.transform.translation", {
                         "state": "select",
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 ["Styles", "app.transform.addStyles", {
@@ -35,32 +35,52 @@
                 ],
                 ["HTML", "app.transform.showHtml", {
                         "state": "select",
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 ["Input", "app.transform.showInput", {
                         "state": "select"
                     }
                 ]
-            ]]
+            ]
+        ],
+        ["Language", [
+                ["Auto", "app.transform.language", {
+                        "state": "select"
+                    }
+                ],
+                ["English", "app.transform.language", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["Hebrew", "app.transform.language", {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ]
     ],
     "ui.basic.elements": [
         {
-            "ui.theme.class": "app.transform.container",
+            "ui.element.component": "widget.editor",
+            "ui.theme.class": "app.transform.input",
+            "storage.cache.key": "app-transform-input",
+            "storage.cache.restoreLocal": null,
+            "ui.monitor.change": "storage.cache.storeLocal",
+            "ui.basic.var": "input"
+        },
+        {
+            "ui.basic.text": "Convert",
+            "ui.touch.click": "app.transform.convert",
+            "ui.basic.var": "convert",
+            "ui.theme.add": "app.transform.convert"
+        },
+        {
+            "ui.element.component": "widget.container",
+            "ui.basic.var": "output_container",
+            "ui.theme.class": "app.transform.output-container",
             "ui.basic.elements": [
-                {
-                    "ui.element.component": "widget.editor",
-                    "ui.theme.class": "app.transform.input",
-                    "storage.cache.key":"app-transform-input",
-                    "storage.cache.restoreLocal":null,
-                    "ui.monitor.change":"storage.cache.storeLocal",
-                    "ui.basic.var": "input"
-                },
-                {
-                    "ui.basic.text":"Convert",
-                    "ui.touch.click":"app.transform.convert",
-                    "ui.basic.var": "convert"
-                },
                 {
                     "ui.basic.tag": "div",
                     "ui.theme.class": "app.transform.output",

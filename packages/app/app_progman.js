@@ -12,7 +12,7 @@ package.app.progman = function AppProgman(me) {
         return me.singleton = me.ui.element.create(__json__);
     };
     me.init = function() {
-        me.ui.property.initToggleOptions(me, {
+        me.ui.property.initOptions(me, {
             "auto_arrange": false,
             "minimize_on_use": true,
             "save_on_exit": true

@@ -15,7 +15,8 @@ package.include({
         "cmd",
         "app",
         "string",
-        "handle"
+        "handle",
+        "json"
     ],
     "storage": [
         "cache"

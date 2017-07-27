@@ -1,31 +1,36 @@
-
-.app-transform-container {
-    position:relative;
-    flex:1;
-    flex-direction:column;
-    display:block;
-    height:90%;
-    width:95%;
-    top:10px;
-    left:10px;
-    right:10px;
-}
-
 .app-transform-input {
     background:white;
     resize: none;
     overflow: auto;
-    margin-right:20px;
-    height:200px;
-    width:100%;
+    font-size:16px;
+    height:180px;
+    width:97%;
+    margin:10px 10px 10px 10px;
+}
+
+.app-transform-convert {
+   width:100px;
+}
+
+.app-transform-output-container {
+    position: absolute;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
 }
 
 .app-transform-output {
-    background:white;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     line-height:200%;
     font-size:24px;
-    flex:1;
     text-align:justify;
-    top:300px;
-    bottom:10px;
+    margin:10px 10px 10px 10px;
+    direction: ltr;
+}
+
+.app-transform-output.hebrew {
+    direction: rtl;
 }
