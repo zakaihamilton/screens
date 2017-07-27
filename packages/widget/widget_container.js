@@ -27,7 +27,6 @@ package.widget.container = function WidgetContainer(me) {
                 me.set(object.var.horizontal, "update");
             }, 0);
             var containers = me.ui.node.members(object.var.content, me.id);
-            console.log("updating child containers " + containers.length);
             containers.map(function(container) {
                 me.set(container, "update");
             });

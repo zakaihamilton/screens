@@ -20,24 +20,48 @@ function package_platform() {
     return platform;
 }
 
-function package_require(id, platform) {
-    if (typeof platform !== "undefined") {
-        package.requireComponents[id] = platform;
+function package_order(id) {
+    var found = false;
+    for (var index = 0; index < package.order; index++) {
+        if (package.order[index] === id) {
+            found = true;
+            break;
+        }
     }
-    return package.requireComponents[id];
+    if (!found) {
+        package.order.push(id);
+    }
+}
+
+function package_component(id) {
+    var item = package.components[id];
+    if (!item) {
+        item = package.components[id] = {};
+    }
+    return item;
+}
+
+function package_require(id, platform) {
+    var component = package_component(id);
+    if (typeof platform !== "undefined") {
+        component.require = platform;
+    }
+    return component.require;
 }
 
 function package_remote(id, platform) {
+    var component = package_component(id);
     if (typeof platform !== "undefined") {
-        package.remoteComponents[id] = platform;
+        component.remote = platform;
     }
-    return package.remoteComponents[id];
+    return component.remote;
 }
 
 function package_init(package_name, component_name, callback, child_name = null, node = null) {
     var children = [];
     /* Retrieve component function */
     var id = package_name + "." + component_name;
+    var component_id = id;
     if (!node) {
         node = package[id];
     }
@@ -88,10 +112,13 @@ function package_init(package_name, component_name, callback, child_name = null,
             component_obj.forward.enabled = true;
         }
         if (init_method) {
-            if(callback) {
-                package.initComponents.push(init_method);
-            }
-            else {
+            if (callback) {
+                var component = package_component(component_id);
+                if (!component.init) {
+                    component.init = [];
+                }
+                component.init.push(init_method);
+            } else {
                 init_method();
             }
         }
@@ -164,22 +191,27 @@ function package_load(package_name, component_name, callback) {
 }
 
 function package_complete(info, callback) {
-    if(info) {
-        if(callback) {
+    if (info) {
+        if (callback) {
             callback(info);
         }
     }
-    do {
-        var method = package.initComponents.shift();
-        if(method) {
-            method();
+    package.order.map(function (id) {
+        var component = package_component(id);
+        if (component.init) {
+            do {
+                var init = component.init.shift();
+                if (init) {
+                    init();
+                }
+            } while (init);
         }
-    } while(method);
-    if(info) {
+    });
+    if (info) {
         if (info.loaded) {
             info.complete = true;
         }
-        if(callback) {
+        if (callback) {
             callback(info);
         }
     }
@@ -190,6 +222,7 @@ function package_include(packages, callback) {
         var separator = packages.indexOf(".");
         var package_name = packages.substr(0, separator);
         var component_name = packages.substr(separator + 1);
+        package_order(package_name + "." + component_name);
         package_load(package_name, component_name, function (info) {
             package_complete(info, callback);
         });
@@ -197,10 +230,12 @@ function package_include(packages, callback) {
     }
     var numComponents = 0;
     var loadedComponents = 0;
-    var status = {};
-    for (var package in packages) {
-        packages[package].map(function (component) {
-            status[package + "." + component] = false;
+    for (var package_name in packages) {
+        packages[package_name].map(function (component_name) {
+            var id = package_name + "." + component_name;
+            package_order(id);
+            var component = package_component(id);
+            component.status = false;
             numComponents++;
         });
     }
@@ -219,10 +254,11 @@ function package_include(packages, callback) {
                 }
                 return;
             }
-            status[info.package + "." + info.component] = true;
+            var component = package_component(info.package + "." + info.component);
+            component.status = true;
             loadedComponents++;
             info.progress = (loadedComponents / numComponents) * 100;
-            if(info.progress > 100) {
+            if (info.progress > 100) {
                 info.progress = 100;
             }
             if (loadedComponents >= numComponents) {
@@ -269,7 +305,7 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({requireComponents: {}, remoteComponents: {}, initComponents:[]}, {
+var package = new Proxy({components: {}, order: []}, {
     get: function (object, property) {
         result = package_general(object, property);
         if (typeof result !== "undefined") {
