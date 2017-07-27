@@ -27,6 +27,9 @@ package.kab.terms = function KabTerms(me) {
             }
             return wordsString;
         }
+        if(callback) {
+            me.diagrams = {};
+        }
         var terms = me.json.terms;
         var termNames = Object.keys(terms).sort(function (source, target) {
             return target.length - source.length;
@@ -123,10 +126,17 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        for (var style in styles) {
-            if (style === "heading") {
-                html += "<span class=\"kab-term-heading\">" + styles[style] + "</span>";
+        if(styles && styles.heading) {
+            html += "<span class=\"kab-term-heading\">" + styles.heading + "</span>";
+        }
+        if(styles && styles.diagram) {
+            if(!me.diagrams[styles.diagram]) {
+                var diagram = me.json.diagrams[styles.diagram];
+                if(diagram) {
+                    html += "<" + (diagram.tag ? diagram.tag : "span") + " class=\"kab-term-" + diagram.class + "\" " + diagram.attributes + ">" + diagram.html + "</span>";
+                }
             }
+            me.diagrams[styles.diagram] = true;
         }
         if (styles && styles.phase) {
             html += "<span class=\"kab-term-phase-" + styles.phase;

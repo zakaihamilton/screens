@@ -456,6 +456,12 @@
         "Hitpashtut":{
             "translation":"Expansion"
         },
+        "Hitpashtut Aleph":{
+            "translation":"First Expansion"
+        },
+        "Hitpashtut Bet":{
+            "translation":"Second Expansion"
+        },
         "Sitra Achra":{
             "translation":"Other Side"
         },
@@ -649,7 +655,8 @@
             "style":{"heading":"vessel","phase":"three","alt":"Connection"}
         },
         "Sefer HaBahir":{
-            "translation":"Book of the Bright"
+            "translation":"Book of the Bright",
+            "style":{"heading":"Book"}
         },
         "Sefer":{
             "translation":"Book"
@@ -901,8 +908,9 @@
         "Tachtonim":{
             "translation":"Lower Ones"
         },
-        "Sefer Yetzirah":{
-            "translation":"Book of Formation"
+        "Sefer Yetzira":{
+            "translation":"Book of Formation",
+            "style":{"heading":"Book"}
         },
         "Panim Masbirot":{
             "translation":"A Welcoming Face"
@@ -1065,6 +1073,25 @@
         },
         "Hamshacha":{
             "translation":"Attraction"
+        },
+        "Talmud Eser Sefirot":{
+            "translation":"The Study of the Ten Emanations",
+            "style":{"heading":"Book"}
+        },
+        "Etz Chayim":{
+            "translation":"The Tree of Life"
+        },
+        "Melech":{
+            "translation":"King"
+        },
+        "Melachim":{
+            "translation":"Kings"
+        },
+        "Reshima":{
+            "translation":"Memory"
+        },
+        "Aspaklaria":{
+            "translation":"Mirror"
         }
     }
 }
