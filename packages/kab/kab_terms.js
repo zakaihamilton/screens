@@ -12,8 +12,6 @@ package.kab.terms = function KabTerms(me) {
             if (json) {
                 me.json = json;
                 me.core.console.log("using language: " + language + " with " + Object.keys(me.json.terms).length + " terms");
-                me.core.console.log("load me.json:" + me.json);
-                me.core.console.log("Calling callback: " + callback);
                 if(callback) {
                     callback();
                 }
@@ -21,7 +19,6 @@ package.kab.terms = function KabTerms(me) {
         }, "kab.terms_" + language.toLowerCase());
     };
     me.parse = function (callback, wordsString, options) {
-        me.core.console.log("parse me.json:" + me.json);
         var result = null;
         if(!me.json) {
             if(callback) {
