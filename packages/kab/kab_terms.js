@@ -102,23 +102,35 @@ package.kab.terms = function KabTerms(me) {
         }
         return wordsString;
     };
+    me.regex = function(string) {
+        if (string.startsWith("/")) {
+            string = string.slice(1);
+            string = new RegExp(string);
+        }
+        return string;
+    };
     me.format = function (wordsString) {
         var format = me.json.format;
         if (format) {
             format.map(function (item) {
+                if (item.match) {
+                    wordsString = wordsString.split(me.regex(item.separator)).map(function(selection) {
+                        var matches = selection.match(item.match);
+                        if(matches) {
+                            selection = item.prefix + selection + item.suffix;
+                        }
+                        return selection;
+                    }).join(item.separator);
+                }
                 var find = item.find;
                 if (find) {
-                    if (find.startsWith("/")) {
-                        find = find.slice(1);
-                        find = new RegExp(find);
+                    wordsString = wordsString.split(me.regex(find)).join(item.replace);
+                    if (item.prefix) {
+                        wordsString = item.prefix + wordsString;
                     }
-                    wordsString = wordsString.split(find).join(item.replace);
-                }
-                if (item.prefix) {
-                    wordsString = item.prefix + wordsString;
-                }
-                if (item.suffix) {
-                    wordsString = wordsString + item.suffix;
+                    if (item.suffix) {
+                        wordsString = wordsString + item.suffix;
+                    }
                 }
             });
         }

@@ -8,8 +8,16 @@
     },
     "format": [
         {
-            "find":"\nOhr Pnimi\n",
-            "replace":"<h3>Ohr Pnimi</h3>"
+            "separator":"\n",
+            "match":"(\\(\\d+\\))",
+            "prefix":"<b>",
+            "suffix":"</b>"
+        },
+        {
+            "separator":"\n",
+            "match":"^Ohr Pnimi$",
+            "prefix":"<h3>",
+            "suffix":"</h3>"
         },
         {
             "prefix":"<p>",
