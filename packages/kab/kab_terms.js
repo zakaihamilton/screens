@@ -128,7 +128,12 @@ package.kab.terms = function KabTerms(me) {
                     wordsString = wordsString.split(itemSplit).map(function(selection) {
                         var matches = selection.match(me.regex(item.match));
                         if(matches) {
-                            selection = item.prefix + selection + item.suffix;
+                            if(item.prefix) {
+                                selection = item.prefix + selection;
+                            }
+                            if(item.suffix) {
+                                selection += item.suffix;
+                            }
                         }
                         return selection;
                     }).join(itemJoin);

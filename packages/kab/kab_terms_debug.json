@@ -5,8 +5,8 @@
             "replace": "\\\""
         },
         {
-            "find": " ",
-            "replace": "  "
+            "find": "  ",
+            "replace": " "
         },
         {
             "prefix": "\"",
