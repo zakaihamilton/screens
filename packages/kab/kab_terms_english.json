@@ -286,6 +286,9 @@
         "NRNHY": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
         },
+        "NRNH": {
+            "expansion": ["Nefesh", "Ruach", "Neshama", "Haya"]
+        },
         "NRN": {
             "expansion": ["Nefesh", "Ruach", "Neshama"]
         },
@@ -306,6 +309,9 @@
         },
         "TM": {
             "expansion": ["Tifferet", "Malchut"]
+        },
+        "ASMB": {
+            "expansion": ["AB", "SAG", "MA", "BON"]
         },
         "ABYA": {
             "expansion": ["Atzilut", "Beria", "Yetzira", "Assiya"]
@@ -1120,6 +1126,36 @@
         },
         "Aspaklaria":{
             "translation":"Mirror"
+        },
+        "Neshamot":{
+            "translation":"Souls"
+        },
+        "Gufim":{
+            "translation":"Bodies"
+        },
+        "Heichalot":{
+            "translation":"Palaces"
+        },
+        "Levushim":{
+            "translation":"Clothings"
+        },
+        "Mador":{
+            "translation":"Section"
+        },
+        "Mador ha Klipot":{
+            "translation":"Shell Section"
+        },
+        "Hitzon": {
+            "translation":"External"
+        },
+        "Gufot":{
+            "translation":"Bodies"
+        },
+        "Makifim":{
+            "translation":"Surroundings"
+        },
+        "Kelim Makifim":{
+            "translation":"Surrounding Vessels"
         }
     }
 }
