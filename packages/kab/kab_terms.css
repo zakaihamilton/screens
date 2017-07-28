@@ -114,12 +114,17 @@
 }
 
 .kab-term-polaroid-left {
-    float:right;
+    float:left;
     background:white;
     margin:10px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 250px;
     text-align: center;
+    line-height:100%
+}
+
+.kab-term-polaroid-left:hover {
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }
 
 .kab-term-polaroid-right {
@@ -129,8 +134,11 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 250px;
     text-align: center;
+    line-height:100%;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 
 .kab-term-polaroid-right:hover {
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 green;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }

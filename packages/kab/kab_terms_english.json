@@ -1,4 +1,11 @@
 {
+    "diagrams":{
+        "Tetragrammaton":{
+            "class":"polaroid-right",
+            "title":"Tetragrammaton",
+            "img":"Tetragrammaton"
+        }
+    },
     "terms": {
         "Malchut ha Mesayemet":{
             "translation":"The Ending Kingdom"
@@ -681,7 +688,7 @@
         },
         "HaVaYaH":{
             "translation":"Tetragrammaton",
-            "style":{"heading":"י-ה-ו-ה"}
+            "style":{"heading":"י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Haita":{
             "translation":"was"
