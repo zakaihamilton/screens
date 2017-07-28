@@ -63,16 +63,13 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if(text) {
                 me.updateWidgets(me.options.showInput);
-                var language = me.options.language;
-                if(language.toLowerCase() === "auto") {
+                var language = me.options.language.toLowerCase();
+                if(language === "auto") {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
                 me.kab.terms.setLanguage(function() {
                     me.kab.terms.parse(function (text) {
-                        if(text) {
-                            text = "<p>" + text.split("\n").join("</p><p>") + "<br><br>";
-                        }
                         if(me.prevLanguage) {
                             me.set(me.singleton.var.output, "ui.theme.remove", me.prevLanguage);
                         }

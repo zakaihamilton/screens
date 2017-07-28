@@ -6,6 +6,18 @@
             "img":"tetragrammaton.png"
         }
     },
+    "format": [
+        {
+            "find":"\nOhr Pnimi\n",
+            "replace":"<h3>Ohr Pnimi</h3>"
+        },
+        {
+            "prefix":"<p>",
+            "find":"\n",
+            "replace":"</p><p>",
+            "suffix":"<br/><br/>"
+        }
+    ],
     "terms": {
         "Malchut ha Mesayemet":{
             "translation":"The Ending Kingdom"

@@ -6,21 +6,9 @@
 package.core.string = function CoreString(me) {
     me.parseWords = function (callback, string) {
         var result = me.splitBy(callback, string, [
-            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?"
+            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\"
         ], 0);
         return result;
-    };
-    me.clean = function(word) {
-        if(word.startsWith("“")) {
-            word = word.slice(1);
-        }
-        if(word.startsWith("ֿֿֿ\"")) {
-            word = word.slice(1);
-        }
-        if(word.endsWith("ֿֿֿ\"")) {
-            word = word.slice(0, -1);
-        }
-        return word;
     };
     me.splitBy = function(callback, string, arrayOfDelimiters, index) {
         if(index >= arrayOfDelimiters.length) {

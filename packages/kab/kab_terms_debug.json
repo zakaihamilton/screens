@@ -1,0 +1,22 @@
+{
+    "format": [
+        {
+            "find": "\"",
+            "replace": "\\\""
+        },
+        {
+            "prefix": "\"",
+            "find": ":",
+            "replace": "\":{</br>\"expansion\":[\"",
+            "suffix":"\"]</br>}"
+        },
+        {
+            "find": ". ",
+            "replace": "\"]</br>},</br>\""
+        },
+        {
+            "find": "\" ",
+            "replace": "\""
+        }
+    ]
+}
