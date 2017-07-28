@@ -68,6 +68,8 @@ package.app.transform = function AppTransform(me) {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
+                var spinner = "<div class=\"app-transform-spinner\"></div>";
+                me.set(me.singleton.var.output, "ui.basic.html", spinner);
                 me.kab.terms.setLanguage(function() {
                     me.kab.terms.parse(function (text) {
                         if(me.prevLanguage) {

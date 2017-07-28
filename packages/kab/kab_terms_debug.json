@@ -5,6 +5,10 @@
             "replace": "\\\""
         },
         {
+            "find": " ",
+            "replace": "  "
+        },
+        {
             "prefix": "\"",
             "find": ":",
             "replace": "\":{</br>\"expansion\":[\"",
