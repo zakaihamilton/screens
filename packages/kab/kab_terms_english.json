@@ -8,14 +8,15 @@
     },
     "format": [
         {
-            "separator":"\n",
-            "match":"(\\(\\d+\\))",
+            "enabled":true,
+            "split":"/(\\d\\..*)",
+            "join":"",
+            "match":"/\\(\\d+\\)",
             "prefix":"<b>",
             "suffix":"</b>"
         },
         {
-            "separator":"\n",
-            "match":"^Ohr Pnimi$",
+            "match":"/^Ohr Pnimi$",
             "prefix":"<h3>",
             "suffix":"</h3>"
         },

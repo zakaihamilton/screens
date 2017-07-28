@@ -113,14 +113,25 @@ package.kab.terms = function KabTerms(me) {
         var format = me.json.format;
         if (format) {
             format.map(function (item) {
+                if("enabled" in item && !item.enabled) {
+                    return;
+                }
                 if (item.match) {
-                    wordsString = wordsString.split(me.regex(item.separator)).map(function(selection) {
-                        var matches = selection.match(item.match);
+                    var itemSplit = "\n";
+                    if("split" in item) {
+                        itemSplit = me.regex(item.split);
+                    }
+                    var itemJoin = "\n";
+                    if("join" in item) {
+                        itemJoin = item.join;
+                    }
+                    wordsString = wordsString.split(itemSplit).map(function(selection) {
+                        var matches = selection.match(me.regex(item.match));
                         if(matches) {
                             selection = item.prefix + selection + item.suffix;
                         }
                         return selection;
-                    }).join(item.separator);
+                    }).join(itemJoin);
                 }
                 var find = item.find;
                 if (find) {

@@ -4,6 +4,7 @@
     "ui.style.top": "100px",
     "ui.style.width": "1000px",
     "ui.style.height": "500px",
+    "maximize":null,
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
     "widget.menu.items": [
