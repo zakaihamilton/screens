@@ -21,10 +21,10 @@ package.core.string = function CoreString(me) {
         }).join(arrayOfDelimiters[index]);
     };
     me.language = function(string) {
-        var position = string.search(/[\u0590-\u05FF]/);
+        var position = string.search(/[A-Z]/);
         if(position >= 0){
-            return "hebrew";
+            return "english";
         }
-        return "english";
+        return "hebrew";
     };
 };
