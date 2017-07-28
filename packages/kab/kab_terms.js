@@ -133,7 +133,7 @@ package.kab.terms = function KabTerms(me) {
             if(!me.diagrams[styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
                 html += "<span class=\"kab-term-" + diagram.class + "\" " + diagram.attributes + ">";
-                html += "<img src=\"packages/res/diagrams/" + diagram.img.toLowerCase() + ".png\" style=\"width:100%;padding-bottom:15px;border-bottom:1px solid black;\"></img><span>" + diagram.title + "</span>";
+                html += "<img src=\"packages/res/diagrams/" + diagram.img.toLowerCase() + "\" style=\"width:100%;padding-bottom:15px;border-bottom:1px solid black;\"></img><span>" + diagram.title + "</span>";
                 html += "</span>";
             }
             me.diagrams[styles.diagram] = true;
