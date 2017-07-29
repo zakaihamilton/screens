@@ -20,10 +20,20 @@ package.widget.list = function WidgetList(me) {
         ]
     };
     me.elements = {
+        get: function (object) {
+            return object.listElements;
+        },
         set: function (object, value) {
             if (value) {
+                object.listElements = value;
                 me.set(object.var.container, "ui.basic.elements", value);
             }
+        }
+    };
+    me.refresh = {
+        set: function(object) {
+            me.set(object.var.container, "empty");
+            me.set(object, "elements", object.listElements);
         }
     };
     me.selection = {

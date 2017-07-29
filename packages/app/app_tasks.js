@@ -30,20 +30,33 @@ package.app.tasks = function AppTasks(me) {
             return items;
         }
     };
+    me.findSelectedTask = function() {
+        var selectedTask = null;
+        var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
+        var tasks = me.get(me.singleton.var.tasks, "selection");
+        if(tasks.length) {
+            var task = tasks[0];
+            windows.map(function(window) {
+                var label = me.get(window, "label");
+                if(label === task) {
+                    selectedTask = window;
+                }
+            });
+        }
+        return selectedTask;
+    };
     me.switchTo = {
         set: function(object, value) {
-            var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
             me.set(me.singleton, "widget.window.close");
-            var tasks = me.get(me.singleton.var.tasks, "selection");
-            if(tasks.length) {
-                var task = tasks[0];
-                windows.map(function(window) {
-                    var label = me.get(window, "label");
-                    if(label === task) {
-                        me.set(window, "widget.window.show", true);
-                    }
-                });
-            }
+            var task = me.findSelectedTask();
+            me.set(task, "widget.window.show", true);
         }
     };
+    me.closeTask = {
+        set: function(object, value) {
+            var task = me.findSelectedTask();
+            me.set(task, "widget.window.close");
+            me.set(me.singleton.var.tasks, "refresh");
+        }
+    }
 };

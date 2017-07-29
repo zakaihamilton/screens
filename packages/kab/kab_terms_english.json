@@ -8,7 +8,26 @@
     },
     "format": [
         {
-            "enabled":true,
+            "find":"Table of content\n",
+            "replace":""
+        },
+        {
+            "find":"Download version\n",
+            "replace":""
+        },
+        {
+            "find":"Translation List\n",
+            "replace":""
+        },
+        {
+            "find":"Services\n",
+            "replace":""
+        },
+        {
+            "find":"/(\\d+\\.)",
+            "replace":"<b>$1</b>"
+        },
+        {
             "split":"/(\\d\\..*)",
             "join":"",
             "match":"/\\(\\d+\\)",
@@ -21,9 +40,9 @@
             "suffix":"</h3>"
         },
         {
-            "prefix":"<p>",
             "find":"\n",
             "replace":"</p><p>",
+            "prefix":"<p>",
             "suffix":"<br/><br/>"
         }
     ],
@@ -385,6 +404,12 @@
             "translation": "Next World",
             "style": {"heading":"world","phase":"one"}
         },
+        "Olam ha Nekudim": {
+            "translation": "The World of Deficiencies"
+        },
+        "Olam Nekudim": {
+            "translation": "The World of Deficiencies"
+        },
         "Olam": {
             "translation": "World"
         },
@@ -532,10 +557,10 @@
             "style":{"heading":"face","phase":"two"}
         },
         "Tzimtzum Aleph":{
-            "translation":"First Restriction"
+            "translation":"the First Restriction"
         },
         "Tzimtzum Bet":{
-            "translation":"Second Restriction"
+            "translation":"the Second Restriction"
         },
         "Tzimtzum":{
             "translation":"Restriction"
@@ -927,6 +952,24 @@
         "Midat":{
             "translation":"Measure"
         },
+        "Midat ha Din":{
+            "translation":"the Measure of Judgement"
+        },
+        "Midat ha Rachamim":{
+            "translation":"the Measure of Mercy"
+        },
+        "Midot ha Din":{
+            "translation":"the Measures of Judgement"
+        },
+        "Midot ha Rachamim":{
+            "translation":"the Measures of Mercy"
+        },
+        "Midat":{
+            "translation":"Measure"
+        },
+        "Midot":{
+            "translation":"Measures"
+        },
         "Rachamim":{
             "translation":"Mercy"
         },
@@ -1082,7 +1125,7 @@
             "translation":"Correction"
         },
         "Heichal Adam Kadmon":{
-            "translation":"Hall of Primordial Man"
+            "translation":"the Hall of Primordial Man"
         },
         "Ibuy":{
             "translation":"Coarsening"
@@ -1143,7 +1186,7 @@
             "translation":"Section"
         },
         "Mador ha Klipot":{
-            "translation":"Shell Section"
+            "translation":"the Shell Section"
         },
         "Hitzon": {
             "translation":"External"
@@ -1156,6 +1199,50 @@
         },
         "Kelim Makifim":{
             "translation":"Surrounding Vessels"
+        },
+        "Hey HaVaYaH":{
+            "translation":"the Hey of Tetragrammaton"
+        },
+        "Vav HaVaYaH":{
+            "translation":"the Vav of Tetragrammaton"
+        },
+        "Abba":{
+            "translation":"Father",
+            "style":{"heading":"Face","phase":"one"}
+        },
+        "Ima":{
+            "translation":"Mother",
+            "style":{"heading":"Face","phase":"two"}
+        },
+        "Ruchot":{
+            "translation":"Spirits",
+            "style":{"heading":"Angels","phase":"two"}
+        },
+        "Ofanim":{
+            "translation":"Wheels",
+            "style":{"heading":"Angels","phase":"four"}
+        },
+        "Mala'achim":{
+            "translation":"Angels",
+            "style":{"heading":"Angels","phase":"three"}
+        },
+        "Kashiut":{
+            "translation":"Hardness"
+        },
+        "Nekuda":{
+            "translation":"Point"
+        },
+        "Malchuiot":{
+            "translation":"Kingdoms"
+        },
+        "Pnimi":{
+            "translation":"Interior"
+        },
+        "Makif":{
+            "translation":"Surrounding"
+        },
+        "Gimatria":{
+            "translation":"Numerology"
         }
     }
 }

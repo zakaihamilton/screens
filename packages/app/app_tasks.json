@@ -37,7 +37,7 @@
         "ui.data.keyList": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
         "ui.data.values": [
             ["Switch to", "app.tasks.switchTo"],
-            ["End Task", ""],
+            ["End Task", "app.tasks.closeTask"],
             ["Cancel", "widget.window.close", "90px", "0px"],
             ["Cascade", ""],
             ["Tile", ""],

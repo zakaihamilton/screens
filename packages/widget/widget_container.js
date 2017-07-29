@@ -48,4 +48,10 @@ package.widget.container = function WidgetContainer(me) {
             me.set(object.var.content, "ui.basic.html", value);
         }
     };
+    me.empty = {
+        set: function(object) {
+            me.ui.node.empty(object.var.content);
+            me.set(object, "update");
+        }
+    };
 };

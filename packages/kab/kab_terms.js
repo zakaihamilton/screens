@@ -105,7 +105,7 @@ package.kab.terms = function KabTerms(me) {
     me.regex = function(string) {
         if (string.startsWith("/")) {
             string = string.slice(1);
-            string = new RegExp(string);
+            string = new RegExp(string, 'g');
         }
         return string;
     };
@@ -139,7 +139,7 @@ package.kab.terms = function KabTerms(me) {
                     }).join(itemJoin);
                 }
                 var find = item.find;
-                if (find) {
+                if (find && (item.prefix || item.suffix)) {
                     wordsString = wordsString.split(me.regex(find)).join(item.replace);
                     if (item.prefix) {
                         wordsString = item.prefix + wordsString;
@@ -147,6 +147,9 @@ package.kab.terms = function KabTerms(me) {
                     if (item.suffix) {
                         wordsString = wordsString + item.suffix;
                     }
+                }
+                else if(find) {
+                    wordsString = wordsString.replace(me.regex(find), me.regex(item.replace));
                 }
             });
         }
