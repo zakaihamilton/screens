@@ -24,7 +24,11 @@
             "replace":""
         },
         {
-            "find":"/(\\d+\\.)",
+            "find":"/(\n\\d+\\.)",
+            "replace":"<b>$1</b>"
+        },
+        {
+            "find":"/(\n\\d+\\))",
             "replace":"<b>$1</b>"
         },
         {
@@ -675,7 +679,7 @@
         "Parsa":{
             "translation":"Diaphragm"
         },
-        "Sium Ralgin":{
+        "Sium Raglin":{
             "translation":"End of Legs"
         },
         "Sium Parsa":{
@@ -999,7 +1003,8 @@
             "style":{"heading":"Book"}
         },
         "Panim Masbirot":{
-            "translation":"A Welcoming Face"
+            "translation":"A Welcoming Face",
+            "style":{"heading":"Book"}
         },
         "Tikkuney Zohar":{
             "translation":"Corrections of The Zohar"
@@ -1087,7 +1092,7 @@
         },
         "MAN":{
             "case":"sensitive",
-            "expansion":["Mayin","Nukvin"]
+            "expansion":["Mayin Nukvin"]
         },
         "Mayin Nukvin":{
             "translation":"Female Waters"
