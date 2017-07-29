@@ -1301,6 +1301,19 @@
         "Igul Abba":{
             "translation":"the Circle of Father",
             "style":{"heading":"Face","phase":"one"}
+        },
+        "HBD":{
+            "expansion":["Hochma","Bina","Daat"]
+        },
+        "Awzen":{
+            "translation":"Ear",
+            "style": {"phase":"two"}
+        },
+        "Zakan":{
+            "translation":"Beard"
+        },
+        "Dikna":{
+            "translation":"Beard"
         }
     }
 }
