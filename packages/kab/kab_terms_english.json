@@ -377,6 +377,10 @@
             "translation": "Long Face",
             "style": {"heading":"face","phase":"root"}
         },
+        "Arich": {
+            "translation": "Long",
+            "style": {"heading":"face","phase":"root"}
+        },
         "Zeir Anpin": {
             "translation": "Small Face",
             "style": {"heading":"vessel/face","phase":"three"}
@@ -886,10 +890,10 @@
             "translation":"Male"
         },
         "GAR":{
-            "expansion":["Gimel","Rishonot"]
+            "expansion":["Gimel Rishonot"]
         },
         "VAK":{
-            "expansion":["Vav","Kzavot"]
+            "expansion":["Vav Kzavot"]
         },
         "Gimel Rishonot":{
             "translation":"First Three"
@@ -1251,6 +1255,39 @@
         },
         "Hitzoniut":{
             "translation":"Externality"
+        },
+        "Kli Hitzon":{
+            "translation":"External Vessel"
+        },
+        "Kli Pnimi":{
+            "translation":"Internal Vessel"
+        },
+        "Halonot":{
+            "translation":"Windows"
+        },
+        "Nimshach":{
+            "translation":"Extends"
+        },
+        "Gag":{
+            "translation":"Roof"
+        },
+        "Adam":{
+            "translation":"Man"
+        },
+        "Tzelem":{
+            "translation":"Image"
+        },
+        "Mochin":{
+            "translation":"Mind"
+        },
+        "Tzel":{
+            "translation":"Shade"
+        },
+        "Knisat Makifin":{
+            "translation":"Entrance of Surrounding Light"
+        },
+        "Kelim Tachton":{
+            "translation":"Vessels of the Lower"
         }
     }
 }
