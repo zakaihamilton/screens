@@ -1288,6 +1288,14 @@
         },
         "Kelim Tachton":{
             "translation":"Vessels of the Lower"
+        },
+        "Igul Ima":{
+            "translation":"the Circle of Mother",
+            "style":{"heading":"Face","phase":"two"}
+        },
+        "Igul Abba":{
+            "translation":"the Circle of Father",
+            "style":{"heading":"Face","phase":"one"}
         }
     }
 }
