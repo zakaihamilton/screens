@@ -28,6 +28,11 @@
             "replace":"<b>$1</b>"
         },
         {
+            "match":"/^Part \\d+$",
+            "prefix":"<h2>",
+            "suffix":"</h2>"
+        },
+        {
             "split":"/(\\d\\..*)",
             "join":"",
             "match":"/\\(\\d+\\)",
@@ -1243,6 +1248,9 @@
         },
         "Gimatria":{
             "translation":"Numerology"
+        },
+        "Hitzoniut":{
+            "translation":"Externality"
         }
     }
 }
