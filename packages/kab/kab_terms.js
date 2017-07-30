@@ -6,8 +6,10 @@
 package.kab.terms = function KabTerms(me) {
     me.init = function () {
         me.json = null;
+        me.language = "english";
     };
     me.setLanguage = function (callback, language) {
+        me.language = language.toLowerCase();
         me.core.json.load(function (json) {
             if (json) {
                 me.json = json;
@@ -15,12 +17,12 @@ package.kab.terms = function KabTerms(me) {
                 if (me.json.terms) {
                     numTerms = Object.keys(me.json.terms).length;
                 }
-                me.core.console.log("using language: " + language + " with " + numTerms + " terms");
+                me.core.console.log("using language: " + me.language + " with " + numTerms + " terms");
                 if (callback) {
                     callback();
                 }
             }
-        }, "kab.terms_" + language.toLowerCase());
+        }, "kab.terms_" + me.language);
     };
     me.parse = function (callback, wordsString, options) {
         var result = null;
@@ -97,8 +99,10 @@ package.kab.terms = function KabTerms(me) {
             }, wordsString);
         }
         if (callback) {
-            wordsString = me.removeDuplicates(wordsString);
-            wordsString = me.cleanText(wordsString);
+            if(me.language !== "debug") {
+                wordsString = me.removeDuplicates(wordsString);
+                wordsString = me.cleanText(wordsString);
+            }
             callback(wordsString);
             return;
         }
