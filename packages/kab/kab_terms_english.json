@@ -190,6 +190,15 @@
         "Guf": {
             "translation": "Body"
         },
+        "an":{
+            "ignore":true
+        },
+        "a":{
+            "ignore":true
+        },
+        "the":{
+            "ignore":true
+        },
         "of": {
             "ignore":true
         },
@@ -858,7 +867,7 @@
             "translation":"Binding"
         },
         "Behinat":{
-            "translation":"Discernment of"
+            "translation":"the Discernment of"
         },
         "Reshimo":{
             "translation":"Memory"
@@ -901,33 +910,6 @@
         },
         "Gimel Rishonot":{
             "translation":"First Three"
-        },
-        "Aleph":{
-            "translation":"One"
-        },
-        "Bet":{
-            "translation":"Two"
-        },
-        "Gimel":{
-            "translation":"Three"
-        },
-        "Dalet":{
-            "translation":"Four"
-        },
-        "Hey":{
-            "translation":"Five"
-        },
-        "Vav":{
-            "translation":"Six"
-        },
-        "Sheva":{
-            "translation":"Seven"
-        },
-        "Shmone":{
-            "translation":"Eight"
-        },
-        "Tesha":{
-            "translation":"Nine"
         },
         "Kzavot":{
             "translation":"Sides"
@@ -1214,11 +1196,21 @@
         "Kelim Makifim":{
             "translation":"Surrounding Vessels"
         },
+        "Yud HaVaYaH":{
+            "name":true,
+            "translation":"the Yud [י] of Tetragrammaton"
+        },
+        "Yod HaVaYaH":{
+            "name":true,
+            "translation":"the Yod [י] of Tetragrammaton"
+        },
         "Hey HaVaYaH":{
-            "translation":"the Hey of Tetragrammaton"
+            "name":true,
+            "translation":"the Hey [ה] of Tetragrammaton"
         },
         "Vav HaVaYaH":{
-            "translation":"the Vav of Tetragrammaton"
+            "name":true,
+            "translation":"the Vav [ו] of Tetragrammaton"
         },
         "Abba":{
             "translation":"Father",
@@ -1228,12 +1220,20 @@
             "translation":"Mother",
             "style":{"heading":"Face","phase":"two"}
         },
+        "Ruchin":{
+            "translation":"Spirits",
+            "style":{"heading":"Angels","phase":"two"}
+        },
         "Ruchot":{
             "translation":"Spirits",
             "style":{"heading":"Angels","phase":"two"}
         },
         "Ofanim":{
             "translation":"Wheels",
+            "style":{"heading":"Angels","phase":"four"}
+        },
+        "Ofan":{
+            "translation":"Wheel",
             "style":{"heading":"Angels","phase":"four"}
         },
         "Mala'achim":{

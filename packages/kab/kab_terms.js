@@ -97,9 +97,35 @@ package.kab.terms = function KabTerms(me) {
             }, wordsString);
         }
         if (callback) {
+            wordsString = me.removeDuplicates(wordsString);
             callback(wordsString);
             return;
         }
+        return wordsString;
+    };
+    me.removeFormatting = function(string) {
+        string = string.replace(/\ kab-term-tooltip=".*?"/g, "");
+        string = string.replace(/<span class="kab-term-heading">.*?<\/span>/g, "");
+        string = string.replace(/\ class=".*?"/g, "");
+        string = string.replace(/<\/?p>/g, "");
+        string = string.replace(/<\/?span>/g, "");
+        string = string.replace(/ and/g, ",");
+        return string;
+    };
+    me.removeDuplicates = function(wordsString) {
+        var parts = wordsString.split(/(\(.*?\))/);
+        for(var i = 0; i < parts.length - 1; i++) {
+            var fragment = parts[i+1];
+            if(fragment.startsWith("(") && fragment.endsWith(")")) {
+                var fragment = fragment.slice(1, -1);
+                if(me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
+                    parts.splice(i+1, 1);
+                    i--;
+                    continue;
+                }
+            }
+        }
+        wordsString = parts.join("");
         return wordsString;
     };
     me.regex = function(string) {
@@ -239,15 +265,13 @@ package.kab.terms = function KabTerms(me) {
             html += "<b>";
         }
         if (styles && styles.phase) {
-            html += "<span class=\"kab-term-phase-" + styles.phase;
-            html += "\" ";
+            html += "<span class=\"kab-term-phase-" + styles.phase + "\"";
             if (!options.keepSource && !expansion && options.doTranslation && term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
             html += ">" + text + "</span>";
         } else if (!options.keepSource && !expansion) {
-            html += "<span class=\"kab-term-phase-none";
-            html += "\" ";
+            html += "<span class=\"kab-term-phase-none\"";
             if(term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
