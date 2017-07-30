@@ -115,6 +115,7 @@ package.kab.terms = function KabTerms(me) {
         string = string.replace(/<\/?p>/g, "");
         string = string.replace(/<\/?span>/g, "");
         string = string.replace(/ and/g, ",");
+        string = string.toLowerCase();
         return string;
     };
     me.removeDuplicates = function(wordsString) {

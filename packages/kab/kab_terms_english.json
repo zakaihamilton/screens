@@ -1279,7 +1279,7 @@
             "translation":"Hardness"
         },
         "Nekuda":{
-            "translation":"Point"
+            "translation":"a Point"
         },
         "Malchuiot":{
             "translation":"Kingdoms"
@@ -1349,6 +1349,12 @@
         },
         "Dikna":{
             "translation":"Beard"
+        },
+        "Shechina":{
+            "translation":"Divinity"
+        },
+        "Matronita":{
+            "translation":"Mistress"
         }
     }
 }
