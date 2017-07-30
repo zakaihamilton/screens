@@ -29,6 +29,8 @@
     text-align:justify;
     margin:20px 20px 20px 20px;
     direction: ltr;
+    display: flex;
+    flex-direction: column;
 }
 
 .app-transform-output.hebrew {

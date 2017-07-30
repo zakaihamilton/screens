@@ -24,17 +24,27 @@
             "replace":""
         },
         {
-            "find":"/(\n\\d+\\.)",
-            "replace":"<b>$1</b>"
+            "find":"/\n(\\d+\\.)",
+            "replace":"<br/><b>$1</b>"
         },
         {
-            "find":"/(\n\\d+\\))",
-            "replace":"<b>$1</b>"
+            "find":"/\n(\\d+\\))",
+            "replace":"<br/><b>$1</b>"
         },
         {
-            "match":"/^Part \\d+$",
-            "prefix":"<h2>",
-            "suffix":"</h2>"
+            "match":"/^Talmud .*?$",
+            "prefix":"<h4 style=\"order:-3\">",
+            "suffix":"</h4>"
+        },
+        {
+            "match":"/^Chapter .*?$",
+            "prefix":"<h4 style=\"order:-1\">",
+            "suffix":"</h4>"
+        },
+        {
+            "match":"/^Part .*?$",
+            "prefix":"<h4 style=\"order:-2\">",
+            "suffix":"</h4>"
         },
         {
             "split":"/(\\d\\..*)",
@@ -49,10 +59,14 @@
             "suffix":"</h3>"
         },
         {
-            "find":"\n",
-            "replace":"</p><p>",
-            "prefix":"<p>",
-            "suffix":"<br/><br/>"
+            "find":"/\\\n",
+            "replace":"</span><span>",
+            "prefix":"<span>",
+            "suffix":"</span><br/><br/>"
+        },
+        {
+            "find":"/<span>\\s?<\\/span>",
+            "replace":""
         }
     ],
     "terms": {
@@ -1355,6 +1369,12 @@
         },
         "Matronita":{
             "translation":"Mistress"
+        },
+        "Yehuda Leib HaLevi Ashlag":{
+            "style":{"heading":"Author"}
+        },
+        "Sium Raglaim":{
+            "translation":"End of Legs"
         }
     }
 }
