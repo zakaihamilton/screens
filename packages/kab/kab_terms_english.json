@@ -457,16 +457,20 @@
             "translation": "the World of Deficiencies"
         },
         "Olam Atzilut": {
-            "translation": "the World of Emanation"
+            "translation": "the World of Emanation",
+            "style": {"heading":"world","phase":"one"}
         },
         "Olam Beria": {
-            "translation": "the World of Creation"
+            "translation": "the World of Creation",
+            "style": {"heading":"world","phase":"two"}
         },
         "Olam Yetzira": {
-            "translation": "the World of Formation"
+            "translation": "the World of Formation",
+            "style": {"heading":"world","phase":"three"}
         },
         "Olam Assiya": {
-            "translation": "the World of Action"
+            "translation": "the World of Action",
+            "style": {"heading":"world","phase":"four"}
         },
         "Olam Nekudim": {
             "translation": "the World of Deficiencies"

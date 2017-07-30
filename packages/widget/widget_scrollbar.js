@@ -129,6 +129,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.scrollSpeed = value;
         }
     };
+    me.delta = {
+        set: function (object, value) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var content = me.widget.container.content(container);
+            me.ui.scroll.by(content, scroll_type, 0-(value*10));
+            me.update.set(container);
+        }
+    };
 }
 
 package.widget.scrollbar = function WidgetScroll(me) {

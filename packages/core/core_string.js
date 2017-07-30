@@ -6,7 +6,7 @@
 package.core.string = function CoreString(me) {
     me.parseWords = function (callback, string) {
         var result = me.splitBy(callback, string, [
-            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\"
+            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”"
         ], 0);
         return result;
     };
