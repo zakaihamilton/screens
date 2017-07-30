@@ -78,7 +78,7 @@
             "replace":"</$1>"
         },
         {
-            "find":"/<p>\\s?<\\/p>",
+            "find":"/<p><\\/p>",
             "replace":""
         }
     ],
@@ -95,47 +95,47 @@
             "style":{"heading":"face","phase":"root"}
         },
         "Ohr Ein Sof": {
-            "translation":"Light of Infinity",
+            "translation":"the Light of Infinity",
             "style":{"heading":"world","phase":"root"}
         },
         "Ohr Nefesh": {
-            "translation": "Light of Relaxation",
+            "translation": "the Light of Relaxation",
             "style": {"phase":"four"}
         },
         "Ohr Ruach": {
-            "translation": "Light of Modulation",
+            "translation": "the Light of Modulation",
             "style": {"phase":"three"}
         },
         "Ohr Neshama": {
-            "translation": "Light of Protection",
+            "translation": "the Light of Protection",
             "style": {"phase":"two"}
         },
         "Ohr Haya": {
-            "translation": "Light of Expression",
+            "translation": "the Light of Expression",
             "style": {"phase":"one"}
         },
         "Ohr Yechida": {
-            "translation": "Light of Singularity",
+            "translation": "the Light of Singularity",
             "style": {"phase":"root"}
         },
         "Ohr Keter": {
-            "translation": "Light of Crown",
+            "translation": "the Light of Crown",
             "style": {"phase":"root"}
         },
         "Ohr Hochma": {
-            "translation": "Light of Wisdom",
+            "translation": "the Light of Wisdom",
             "style": {"phase":"one"}
         },
         "Ohr Bina": {
-            "translation": "Light of Understanding",
+            "translation": "the Light of Understanding",
             "style": {"phase":"two"}
         },
         "Ohr Tifferet": {
-            "translation": "Light of Beauty",
+            "translation": "the Light of Beauty",
             "style": {"phase":"three"}
         },
         "Ohr Malchut": {
-            "translation": "Light of Kingdom",
+            "translation": "the Light of Kingdom",
             "style": {"phase":"four"}
         },
         "Kli Keter": {
