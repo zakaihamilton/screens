@@ -15,6 +15,7 @@
             ]
         },
         {
+            "ui.basic.var": "footer",
             "ui.theme.class":"footer",
             "ui.basic.elements": [
                 {
