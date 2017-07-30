@@ -98,6 +98,7 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             wordsString = me.removeDuplicates(wordsString);
+            wordsString = me.cleanText(wordsString);
             callback(wordsString);
             return;
         }
@@ -116,6 +117,10 @@ package.kab.terms = function KabTerms(me) {
         var parts = wordsString.split(/(\(.*?\))/);
         for(var i = 0; i < parts.length - 1; i++) {
             var fragment = parts[i+1];
+            if(fragment.match(/\(\d+\)/)) {
+                i++;
+                continue;
+            }
             if(fragment.startsWith("(") && fragment.endsWith(")")) {
                 var fragment = fragment.slice(1, -1);
                 if(me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
@@ -126,6 +131,10 @@ package.kab.terms = function KabTerms(me) {
             }
         }
         wordsString = parts.join("");
+        return wordsString;
+    };
+    me.cleanText = function(wordsString) {
+        wordsString = wordsString.replace(" .", ".");
         return wordsString;
     };
     me.regex = function(string) {
@@ -143,17 +152,20 @@ package.kab.terms = function KabTerms(me) {
                     return;
                 }
                 if (item.match) {
+                    var checkInSplit = false;
                     var itemSplit = "\n";
                     if("split" in item) {
                         itemSplit = me.regex(item.split);
+                        checkInSplit = true;
                     }
                     var itemJoin = "\n";
                     if("join" in item) {
                         itemJoin = item.join;
                     }
                     wordsString = wordsString.split(itemSplit).map(function(selection) {
+                        var inSplit = selection.match(itemSplit);
                         var matches = selection.match(me.regex(item.match));
-                        if(matches) {
+                        if(matches && (inSplit || !checkInSplit)) {
                             if(item.prefix) {
                                 selection = item.prefix + selection;
                             }

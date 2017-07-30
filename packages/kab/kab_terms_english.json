@@ -1196,21 +1196,53 @@
         "Kelim Makifim":{
             "translation":"Surrounding Vessels"
         },
-        "Yud HaVaYaH":{
+        "Yud":{
             "name":true,
-            "translation":"the Yud [י] of Tetragrammaton"
+            "translation":"Yud [י]"
+        },
+        "Yod":{
+            "name":true,
+            "translation":"Yod [י]"
+        },
+        "Hey":{
+            "name":true,
+            "translation":"Hey [ה]"
+        },
+        "Vav":{
+            "name":true,
+            "translation":"Vav [ו]"
+        },
+        "Viv":{
+            "name":true,
+            "translation":"Vav [ו]"
+        },
+        "Yodin":{
+            "name":true,
+            "translation":"Yodin [י]"
+        },
+        "Yudin":{
+            "name":true,
+            "translation":"Yudin [י]"
+        },
+        "Alephin":{
+            "name":true,
+            "translation":"Alephin [א]"
+        },
+        "Heyin":{
+            "name":true,
+            "translation":"Heyin [ה]"
+        },
+        "Yud HaVaYaH":{
+            "translation":"the Yud of Tetragrammaton"
         },
         "Yod HaVaYaH":{
-            "name":true,
-            "translation":"the Yod [י] of Tetragrammaton"
+            "translation":"the Yod of Tetragrammaton"
         },
         "Hey HaVaYaH":{
-            "name":true,
-            "translation":"the Hey [ה] of Tetragrammaton"
+            "translation":"the Hey of Tetragrammaton"
         },
         "Vav HaVaYaH":{
-            "name":true,
-            "translation":"the Vav [ו] of Tetragrammaton"
+            "translation":"the Vav of Tetragrammaton"
         },
         "Abba":{
             "translation":"Father",
