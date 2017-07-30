@@ -24,26 +24,23 @@
             "replace":""
         },
         {
-            "find":"/\n(\\d+\\.)",
-            "replace":"<br/><b>$1</b>"
-        },
-        {
-            "find":"/\n(\\d+\\))",
-            "replace":"<br/><b>$1</b>"
-        },
-        {
             "match":"/^Talmud .*?$",
+            "prefix":"<h4 style=\"order:-4\">",
+            "suffix":"</h4>"
+        },
+        {
+            "match":"/^Part .*?$",
             "prefix":"<h4 style=\"order:-3\">",
             "suffix":"</h4>"
         },
         {
             "match":"/^Chapter .*?$",
-            "prefix":"<h4 style=\"order:-1\">",
+            "prefix":"<h4 style=\"order:-2\">",
             "suffix":"</h4>"
         },
         {
-            "match":"/^Part .*?$",
-            "prefix":"<h4 style=\"order:-2\">",
+            "match":"/^Yehuda Leib HaLevi Ashlag \\(Baal HaSulam\\)$",
+            "prefix":"<h4 style=\"order:-1\">",
             "suffix":"</h4>"
         },
         {
@@ -54,18 +51,34 @@
             "suffix":"</b>"
         },
         {
+            "find":"/(\\d+\\.)",
+            "replace":"<b>$1</b>"
+        },
+        {
+            "find":"/(\\(\\d+\\))",
+            "replace":"<b>$1</b>"
+        },
+        {
             "match":"/^Ohr Pnimi$",
             "prefix":"<h3>",
             "suffix":"</h3>"
         },
         {
             "find":"/\\\n",
-            "replace":"</span><span>",
-            "prefix":"<span>",
-            "suffix":"</span><br/><br/>"
+            "replace":"</p><p>",
+            "prefix":"<p>",
+            "suffix":"</p><br/><br/>"
         },
         {
-            "find":"/<span>\\s?<\\/span>",
+            "find":"/<p><(h\\d)",
+            "replace":"<$1"
+        },
+        {
+            "find":"/<\\/(h\\d)><\\/p>",
+            "replace":"</$1>"
+        },
+        {
+            "find":"/<p>\\s?<\\/p>",
             "replace":""
         }
     ],
@@ -126,27 +139,27 @@
             "style": {"phase":"four"}
         },
         "Kli Keter": {
-            "translation": "Vessel of Crown",
+            "translation": "the Vessel of Crown",
             "style": {"heading":"vessel","phase":"root"}
         },
         "Kli Hochma": {
-            "translation": "Vessel of Wisdom",
+            "translation": "the Vessel of Wisdom",
             "style": {"heading":"vessel","phase":"one"}
         },
         "Kli Bina": {
-            "translation": "Vessel of Understanding",
+            "translation": "the Vessel of Understanding",
             "style": {"heading":"vessel","phase":"two"}
         },
         "Kli Tifferet": {
-            "translation": "Vessel of Beauty",
+            "translation": "the Vessel of Beauty",
             "style": {"heading":"vessel","phase":"three"}
         },
         "Kli Malchut": {
-            "translation": "Vessel of Kingdom",
+            "translation": "the Vessel of Kingdom",
             "style": {"heading":"vessel","phase":"four"}
         },
         "Kli ZA": {
-            "translation": "Vessel of ZA",
+            "translation": "the Vessel of ZA",
             "style": {"heading":"vessel","phase":"three"}
         },
         "Behinat Shoresh": {
@@ -437,17 +450,29 @@
             "style": {"heading":"world","phase":"four","alt":"Effort"}
         },
         "Olam Ha Ba": {
-            "translation": "Next World",
+            "translation": "the Next World",
             "style": {"heading":"world","phase":"one"}
         },
         "Olam ha Nekudim": {
-            "translation": "The World of Deficiencies"
+            "translation": "the World of Deficiencies"
+        },
+        "Olam Atzilut": {
+            "translation": "the World of Emanation"
+        },
+        "Olam Beria": {
+            "translation": "the World of Creation"
+        },
+        "Olam Yetzira": {
+            "translation": "the World of Formation"
+        },
+        "Olam Assiya": {
+            "translation": "the World of Action"
         },
         "Olam Nekudim": {
-            "translation": "The World of Deficiencies"
+            "translation": "the World of Deficiencies"
         },
         "Olam": {
-            "translation": "World"
+            "translation": "the World"
         },
         "Olamot" : {
             "translation": "Worlds"
@@ -1075,7 +1100,7 @@
             "translation":"Sparks"
         },
         "Hitnotzetzut":{
-            "translation":"Sparkling"
+            "translation":"Glittering"
         },
         "Natzatzin":{
             "translation":"Glitter"
