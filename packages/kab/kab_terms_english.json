@@ -1400,10 +1400,23 @@
             "translation":"Mistress"
         },
         "Yehuda Leib HaLevi Ashlag":{
+            "translation":"Baal HaSulam",
             "style":{"heading":"Author"}
         },
         "Sium Raglaim":{
             "translation":"End of Legs"
+        },
+        "Zivugim":{
+            "translations":"Matings"
+        },
+        "Gmar Tikkun":{
+            "translation":"End of Correction"
+        },
+        "Ibur":{
+            "translation":"Conception"
+        },
+        "Yenika":{
+            "translation":"Suckling"
         }
     }
 }

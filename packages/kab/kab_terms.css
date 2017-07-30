@@ -8,12 +8,12 @@
     pointer-events: none;
     transition: all 0.18s ease-out 0.18s;
     bottom: -1px;
-    left: 50%;
+    left: -1px;
     position: absolute;
     line-height:100%;
     z-index: 10;
     padding: 0px 5px;
-    transform: translate(-50%, 10px);
+    transform: translate(0%, 10px);
     transform-origin: top;
     color: black;
     content: attr(kab-term-tooltip);
@@ -30,7 +30,7 @@
 [kab-term-tooltip]:hover:after {
     opacity: 1;
     pointer-events: auto;
-    transform: translate(-50%, 0);
+    transform: translate(0%, 0);
 }
 
 .kab-term-phase-none {
