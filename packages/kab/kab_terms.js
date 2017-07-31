@@ -49,21 +49,33 @@ package.kab.terms = function KabTerms(me) {
                         if (term.startsWith("!")) {
                             continue;
                         }
+                        var prefixWord = null;
                         var item = terms[term];
                         var termWords = term.split(" ");
                         var numTermWords = termWords.length;
-                        var collectedWords = words[wordIndex];
-                        for (var termWordIndex = 1; termWordIndex < numTermWords; termWordIndex++) {
+                        var collectedWords = "";
+                        for (var termWordIndex = 0; termWordIndex < numTermWords; termWordIndex++) {
                             if (wordIndex + termWordIndex >= words.length) {
                                 break;
                             }
                             var word = words[wordIndex + termWordIndex];
                             var matchingTerm = terms[word];
-                            if (matchingTerm && matchingTerm.ignore) {
-                                numTermWords++;
-                                continue;
+                            if (matchingTerm) {
+                                if (matchingTerm.ignore || matchingTerm.prefix) {
+                                    if (collectedWords || matchingTerm.prefix) {
+                                        if(matchingTerm.prefix) {
+                                            prefixWord = word;
+                                        }
+                                        numTermWords++;
+                                        continue;
+                                    }
+                                }
                             }
-                            collectedWords += " " + word;
+                            if (collectedWords) {
+                                collectedWords += " " + word;
+                            } else {
+                                collectedWords = word;
+                            }
                         }
                         if (me.match(item, term, collectedWords)) {
                             var expansion = item.expansion;
@@ -78,7 +90,8 @@ package.kab.terms = function KabTerms(me) {
                                     expansion = expansion.slice(-1).toString();
                                 }
                                 words.splice(wordIndex, numTermWords);
-                                me.modify(words, wordIndex, item, collectedWords, " (", expansion, ")", options, true);
+                                var text = me.modify(words, wordIndex, item, collectedWords, " (", expansion, ")", options, true);
+                                me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             var translation = item.translation;
                             if (translation) {
@@ -86,11 +99,13 @@ package.kab.terms = function KabTerms(me) {
                                     translation = me.parse(null, translation, me.duplicateOptions(options, {"addStyles": false}));
                                 }
                                 words.splice(wordIndex, numTermWords);
-                                me.modify(words, wordIndex, item, collectedWords, " [", translation, "]", options);
+                                var text = me.modify(words, wordIndex, item, collectedWords, " [", translation, "]", options);
+                                me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             if (options.addStyles && !translation && !expansion) {
                                 words.splice(wordIndex, numTermWords);
-                                    me.modify(words, wordIndex, item, collectedWords, "", collectedWords, "", me.duplicateOptions(options, {"keepSource": false}));
+                                var text = me.modify(words, wordIndex, item, collectedWords, "", collectedWords, "", me.duplicateOptions(options, {"keepSource": false}));
+                                me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             break;
                         }
@@ -99,7 +114,7 @@ package.kab.terms = function KabTerms(me) {
             }, wordsString);
         }
         if (callback) {
-            if(me.language !== "debug") {
+            if (me.language !== "debug") {
                 wordsString = me.removeDuplicates(wordsString);
                 wordsString = me.cleanText(wordsString);
             }
@@ -108,7 +123,28 @@ package.kab.terms = function KabTerms(me) {
         }
         return wordsString;
     };
-    me.removeFormatting = function(string) {
+    me.prefix = function(words, wordIndex, item, prefixWord, text, options) {
+        var prefixInsert = item.prefix;
+        if(!prefixInsert && me.json.prefixes) {
+            var prefix = null;
+            for(prefix in me.json.prefixes) {
+                if(prefix === prefixWord) {
+                    for(prefix in me.json.prefixes) {
+                        var prefixItem = me.json.prefixes[prefix];
+                        if(prefixItem.match && text.match(me.regex(prefixItem.match))) {
+                            prefixInsert = prefix;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (prefixInsert) {
+            words.splice(wordIndex, 0, prefixInsert);
+        }
+    };
+    me.removeFormatting = function (string) {
         string = string.replace(/\ kab-term-tooltip=".*?"/g, "");
         string = string.replace(/<span class="kab-term-heading">.*?<\/span>/g, "");
         string = string.replace(/\ class=".*?"/g, "");
@@ -118,18 +154,18 @@ package.kab.terms = function KabTerms(me) {
         string = string.toLowerCase();
         return string;
     };
-    me.removeDuplicates = function(wordsString) {
+    me.removeDuplicates = function (wordsString) {
         var parts = wordsString.split(/(\(.*?\))/);
-        for(var i = 0; i < parts.length - 1; i++) {
-            var fragment = parts[i+1];
-            if(fragment.match(/\(\d+\)/)) {
+        for (var i = 0; i < parts.length - 1; i++) {
+            var fragment = parts[i + 1];
+            if (fragment.match(/\(\d+\)/)) {
                 i++;
                 continue;
             }
-            if(fragment.startsWith("(") && fragment.endsWith(")")) {
+            if (fragment.startsWith("(") && fragment.endsWith(")")) {
                 var fragment = fragment.slice(1, -1);
-                if(me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
-                    parts.splice(i+1, 1);
+                if (me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
+                    parts.splice(i + 1, 1);
                     i--;
                     continue;
                 }
@@ -138,11 +174,11 @@ package.kab.terms = function KabTerms(me) {
         wordsString = parts.join("");
         return wordsString;
     };
-    me.cleanText = function(wordsString) {
+    me.cleanText = function (wordsString) {
         wordsString = wordsString.replace(" .", ".");
         return wordsString;
     };
-    me.regex = function(string) {
+    me.regex = function (string) {
         if (string.startsWith("/")) {
             string = string.slice(1);
             string = new RegExp(string, 'g');
@@ -153,28 +189,28 @@ package.kab.terms = function KabTerms(me) {
         var format = me.json.format;
         if (format) {
             format.map(function (item) {
-                if("enabled" in item && !item.enabled) {
+                if ("enabled" in item && !item.enabled) {
                     return;
                 }
                 if (item.match) {
                     var checkInSplit = false;
                     var itemSplit = "\n";
-                    if("split" in item) {
+                    if ("split" in item) {
                         itemSplit = me.regex(item.split);
                         checkInSplit = true;
                     }
                     var itemJoin = "\n";
-                    if("join" in item) {
+                    if ("join" in item) {
                         itemJoin = item.join;
                     }
-                    wordsString = wordsString.split(itemSplit).map(function(selection) {
+                    wordsString = wordsString.split(itemSplit).map(function (selection) {
                         var inSplit = selection.match(itemSplit);
                         var matches = selection.match(me.regex(item.match));
-                        if(matches && (inSplit || !checkInSplit)) {
-                            if(item.prefix) {
+                        if (matches && (inSplit || !checkInSplit)) {
+                            if (item.prefix) {
                                 selection = item.prefix + selection;
                             }
-                            if(item.suffix) {
+                            if (item.suffix) {
                                 selection += item.suffix;
                             }
                         }
@@ -190,8 +226,7 @@ package.kab.terms = function KabTerms(me) {
                     if (item.suffix) {
                         wordsString = wordsString + item.suffix;
                     }
-                }
-                else if(find) {
+                } else if (find) {
                     wordsString = wordsString.replace(me.regex(find), me.regex(item.replace));
                 }
             });
@@ -259,10 +294,12 @@ package.kab.terms = function KabTerms(me) {
         } else if (options.keepSource) {
             replacement = term + prefix + replacement + suffix;
         }
+        var text = replacement;
         if (options.addStyles && (item.style || replacement !== term)) {
             replacement = me.applyStyles(term, item.style, replacement, options, expansion);
         }
         words.splice(wordIndex, 0, replacement);
+        return text;
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
@@ -289,7 +326,7 @@ package.kab.terms = function KabTerms(me) {
             html += ">" + text + "</span>";
         } else if (!options.keepSource && !expansion) {
             html += "<span class=\"kab-term-phase-none\"";
-            if(term !== text) {
+            if (term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
             html += ">" + text + "</span>";

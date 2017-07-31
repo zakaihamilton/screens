@@ -6,6 +6,14 @@
             "img":"tetragrammaton.png"
         }
     },
+    "prefixes":{
+        "a":{
+            "match":"/^[^aeiouAEIOU]"
+        },
+        "an":{
+            "match":"/^[aeiouAEIOU]"
+        }
+    },
     "format": [
         {
             "find":"Table of content\n",
@@ -31,6 +39,11 @@
         {
             "match":"/^Part .*?$",
             "prefix":"<h4 style=\"order:-3\">",
+            "suffix":"</h4>"
+        },
+        {
+            "match":"/^Chapter .*?$",
+            "prefix":"<h4 style=\"order:-2\">",
             "suffix":"</h4>"
         },
         {
@@ -78,7 +91,8 @@
     ],
     "terms": {
         "Malchut ha Mesayemet":{
-            "translation":"The Ending Kingdom"
+            "prefix":"The",
+            "translation":"Ending Kingdom"
         },
         "Partzuf Galgalta" : {
             "translation":"Skull Face",
@@ -89,71 +103,88 @@
             "style":{"heading":"face","phase":"root"}
         },
         "Ohr Ein Sof": {
-            "translation":"the Light of Infinity",
+            "prefix":"The",
+            "translation":"Light of Infinity",
             "style":{"heading":"world","phase":"root"}
         },
         "Ohr Nefesh": {
-            "translation": "the Light of Relaxation",
+            "prefix":"The",
+            "translation": "Light of Relaxation",
             "style": {"phase":"four"}
         },
         "Ohr Ruach": {
-            "translation": "the Light of Modulation",
+            "prefix":"The",
+            "translation": "Light of Modulation",
             "style": {"phase":"three"}
         },
         "Ohr Neshama": {
-            "translation": "the Light of Protection",
+            "prefix":"The",
+            "translation": "Light of Protection",
             "style": {"phase":"two"}
         },
         "Ohr Haya": {
-            "translation": "the Light of Expression",
+            "prefix":"The",
+            "translation": "Light of Expression",
             "style": {"phase":"one"}
         },
         "Ohr Yechida": {
-            "translation": "the Light of Singularity",
+            "prefix":"The",
+            "translation": "Light of Singularity",
             "style": {"phase":"root"}
         },
         "Ohr Keter": {
-            "translation": "the Light of Crown",
+            "prefix":"The",
+            "translation": "Light of Crown",
             "style": {"phase":"root"}
         },
         "Ohr Hochma": {
-            "translation": "the Light of Wisdom",
+            "prefix":"The",
+            "translation": "Light of Wisdom",
             "style": {"phase":"one"}
         },
         "Ohr Bina": {
-            "translation": "the Light of Understanding",
+            "prefix":"The",
+            "translation": "Light of Understanding",
             "style": {"phase":"two"}
         },
         "Ohr Tifferet": {
-            "translation": "the Light of Beauty",
+            "prefix":"The",
+            "translation": "Light of Beauty",
             "style": {"phase":"three"}
         },
         "Ohr Malchut": {
-            "translation": "the Light of Kingdom",
+            "prefix":"The",
+            "translation": "Light of Kingdom",
             "style": {"phase":"four"}
         },
         "Kli Keter": {
-            "translation": "the Vessel of Crown",
+            "prefix":"The",
+            "translation": "Vessel of Crown",
             "style": {"heading":"vessel","phase":"root"}
         },
         "Kli Hochma": {
-            "translation": "the Vessel of Wisdom",
+            "prefix":"The",
+            "translation": "Vessel of Wisdom",
             "style": {"heading":"vessel","phase":"one"}
         },
         "Kli Bina": {
-            "translation": "the Vessel of Understanding",
+            "prefix":"The",
+            "translation": "Vessel of Understanding",
             "style": {"heading":"vessel","phase":"two"}
         },
         "Kli Tifferet": {
-            "translation": "the Vessel of Beauty",
+            "prefix":"The",
+            "translation": "Vessel of Beauty",
             "style": {"heading":"vessel","phase":"three"}
         },
         "Kli Malchut": {
-            "translation": "the Vessel of Kingdom",
+            "prefix":"The",
+            "translation": "Vessel of Kingdom",
             "style": {"heading":"vessel","phase":"four"}
         },
         "Kli ZA": {
-            "translation": "the Vessel of ZA",
+            "prefix":"The",
+            "translation": "Vessel of ZA",
             "style": {"heading":"vessel","phase":"three"}
         },
         "Behinat Shoresh": {
@@ -212,13 +243,13 @@
             "translation": "Body"
         },
         "an":{
-            "ignore":true
+            "prefix":true
         },
         "a":{
-            "ignore":true
+            "prefix":true
         },
         "the":{
-            "ignore":true
+            "prefix":true
         },
         "of": {
             "ignore":true
@@ -444,33 +475,41 @@
             "style": {"heading":"world","phase":"four","alt":"Effort"}
         },
         "Olam Ha Ba": {
-            "translation": "the Next World",
+            "prefix":"The",
+            "translation": "Next World",
             "style": {"heading":"world","phase":"one"}
         },
         "Olam ha Nekudim": {
-            "translation": "the World of Deficiencies"
+            "prefix":"The",
+            "translation": "World of Deficiencies"
         },
         "Olam Atzilut": {
-            "translation": "the World of Emanation",
+            "prefix":"The",
+            "translation": "World of Emanation",
             "style": {"heading":"world","phase":"one"}
         },
         "Olam Beria": {
-            "translation": "the World of Creation",
+            "prefix":"The",
+            "translation": "World of Creation",
             "style": {"heading":"world","phase":"two"}
         },
         "Olam Yetzira": {
-            "translation": "the World of Formation",
+            "prefix":"The",
+            "translation": "World of Formation",
             "style": {"heading":"world","phase":"three"}
         },
         "Olam Assiya": {
-            "translation": "the World of Action",
+            "prefix":"The",
+            "translation": "World of Action",
             "style": {"heading":"world","phase":"four"}
         },
         "Olam Nekudim": {
-            "translation": "the World of Deficiencies"
+            "prefix":"The",
+            "translation": "World of Deficiencies"
         },
         "Olam": {
-            "translation": "the World"
+            "prefix":"The",
+            "translation": "World"
         },
         "Olamot" : {
             "translation": "Worlds"
@@ -616,10 +655,12 @@
             "style":{"heading":"face","phase":"two"}
         },
         "Tzimtzum Aleph":{
-            "translation":"the First Restriction"
+            "prefix":"The",
+            "translation":"First Restriction"
         },
         "Tzimtzum Bet":{
-            "translation":"the Second Restriction"
+            "prefix":"The",
+            "translation":"Second Restriction"
         },
         "Tzimtzum":{
             "translation":"Restriction"
@@ -904,7 +945,8 @@
             "translation":"Binding"
         },
         "Behinat":{
-            "translation":"the Discernment of"
+            "prefix":"the",
+            "translation":"discernment of"
         },
         "Reshimo":{
             "translation":"Memory"
@@ -985,16 +1027,20 @@
             "translation":"Measure"
         },
         "Midat ha Din":{
-            "translation":"the Measure of Judgement"
+            "prefix":"The",
+            "translation":"Measure of Judgement"
         },
         "Midat ha Rachamim":{
-            "translation":"the Measure of Mercy"
+            "prefix":"The",
+            "translation":"Measure of Mercy"
         },
         "Midot ha Din":{
-            "translation":"the Measures of Judgement"
+            "prefix":"The",
+            "translation":"Measures of Judgement"
         },
         "Midot ha Rachamim":{
-            "translation":"the Measures of Mercy"
+            "prefix":"The",
+            "translation":"Measures of Mercy"
         },
         "Midat":{
             "translation":"Measure"
@@ -1158,7 +1204,8 @@
             "translation":"Correction"
         },
         "Heichal Adam Kadmon":{
-            "translation":"the Hall of Primordial Man"
+            "prefix":"The",
+            "translation":"Hall of Primordial Man"
         },
         "Ibuy":{
             "translation":"Coarsening"
@@ -1185,11 +1232,13 @@
             "translation":"Attraction"
         },
         "Talmud Eser Sefirot":{
-            "translation":"The Study of the Ten Emanations",
+            "prefix":"The",
+            "translation":"Study of the Ten Emanations",
             "style":{"heading":"Book"}
         },
         "Etz Chayim":{
-            "translation":"The Tree of Life"
+            "prefix":"The",
+            "translation":"Tree of Life"
         },
         "Melech":{
             "translation":"King"
@@ -1222,7 +1271,8 @@
             "translation":"Section"
         },
         "Mador ha Klipot":{
-            "translation":"the Shell Section"
+            "prefix":"The",
+            "translation":"Shell Section"
         },
         "Hitzon": {
             "translation":"External"
@@ -1273,16 +1323,20 @@
             "translation":"Heyin [ה]"
         },
         "Yud HaVaYaH":{
-            "translation":"the Yud of Tetragrammaton"
+            "prefix":"The",
+            "translation":"Yud of Tetragrammaton"
         },
         "Yod HaVaYaH":{
-            "translation":"the Yod of Tetragrammaton"
+            "prefix":"The",
+            "translation":"Yod of Tetragrammaton"
         },
         "Hey HaVaYaH":{
-            "translation":"the Hey of Tetragrammaton"
+            "prefix":"The",
+            "translation":"Hey of Tetragrammaton"
         },
         "Vav HaVaYaH":{
-            "translation":"the Vav of Tetragrammaton"
+            "prefix":"The",
+            "translation":"Vav of Tetragrammaton"
         },
         "Abba":{
             "translation":"Father",
@@ -1367,11 +1421,13 @@
             "translation":"Vessels of the Lower"
         },
         "Igul Ima":{
-            "translation":"the Circle of Mother",
+            "prefix":"The",
+            "translation":"Circle of Mother",
             "style":{"heading":"Face","phase":"two"}
         },
         "Igul Abba":{
-            "translation":"the Circle of Father",
+            "prefix":"The",
+            "translation":"Circle of Father",
             "style":{"heading":"Face","phase":"one"}
         },
         "HBD":{
