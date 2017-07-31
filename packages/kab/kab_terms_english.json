@@ -14,6 +14,9 @@
             "match":"/^[aeiouAEIOU]"
         }
     },
+    "spelling": {
+        "Hakaaof":"Hakaa of"
+    },
     "format": [
         {
             "find":"Table of content\n",

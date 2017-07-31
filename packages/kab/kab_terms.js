@@ -35,6 +35,7 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             me.diagrams = {};
+            wordsString = me.fixSpelling(wordsString);
             wordsString = me.format(wordsString);
         }
         var terms = me.json.terms;
@@ -184,6 +185,16 @@ package.kab.terms = function KabTerms(me) {
             string = new RegExp(string, 'g');
         }
         return string;
+    };
+    me.fixSpelling = function(wordsString) {
+        var spelling = me.json.spelling;
+        if(spelling) {
+            for(var incorrect in spelling) {
+                var correct = spelling[incorrect];
+                wordsString = wordsString.split(incorrect).join(correct);
+            }
+        }
+        return wordsString;
     };
     me.format = function (wordsString) {
         var format = me.json.format;
