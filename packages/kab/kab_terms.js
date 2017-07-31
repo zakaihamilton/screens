@@ -38,6 +38,7 @@ package.kab.terms = function KabTerms(me) {
             wordsString = me.fixSpelling(wordsString);
             wordsString = me.format(wordsString);
         }
+        var prefixes = me.json.prefixes;
         var terms = me.json.terms;
         if (terms) {
             var termNames = Object.keys(terms).sort(function (source, target) {
@@ -61,10 +62,11 @@ package.kab.terms = function KabTerms(me) {
                             }
                             var word = words[wordIndex + termWordIndex];
                             var matchingTerm = terms[word];
-                            if (matchingTerm) {
-                                if (matchingTerm.ignore || matchingTerm.prefix) {
-                                    if (collectedWords || matchingTerm.prefix) {
-                                        if(matchingTerm.prefix) {
+                            var prefixTerm = prefixes ? word in prefixes : false;
+                            if (prefixTerm || matchingTerm) {
+                                if (prefixTerm || matchingTerm.ignore) {
+                                    if (prefixTerm || collectedWords) {
+                                        if(prefixTerm) {
                                             prefixWord = word;
                                         }
                                         numTermWords++;

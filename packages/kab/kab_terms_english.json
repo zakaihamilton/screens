@@ -12,6 +12,9 @@
         },
         "an":{
             "match":"/^[aeiouAEIOU]"
+        },
+        "the":{
+            
         }
     },
     "spelling": {
@@ -244,15 +247,6 @@
         },
         "Guf": {
             "translation": "Body"
-        },
-        "an":{
-            "prefix":true
-        },
-        "a":{
-            "prefix":true
-        },
-        "the":{
-            "prefix":true
         },
         "of": {
             "ignore":true
