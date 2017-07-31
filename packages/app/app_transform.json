@@ -4,7 +4,7 @@
     "ui.style.top": "100px",
     "ui.style.width": "1000px",
     "ui.style.height": "500px",
-    "maximize":null,
+    "maximize": null,
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
     "widget.menu.items": [
@@ -40,6 +40,33 @@
                     }
                 ],
                 ["Input", "app.transform.showInput", {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ],
+        ["Font", [
+                ["12px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["14px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["16px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["18px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["24px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["32px", "app.transform.fontSize", {
                         "state": "select"
                     }
                 ]

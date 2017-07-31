@@ -21,7 +21,8 @@ package.app.transform = function AppTransform(me) {
             showHtml: false,
             showInput: false,
             autoScroll: false,
-            language:"Auto"
+            language:"Auto",
+            "fontSize":"24px"
         });
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.convert.set);
         me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.convert.set);
@@ -40,6 +41,9 @@ package.app.transform = function AppTransform(me) {
             }
         }, null);
         me.language = me.ui.property.choiceOptionSet(me, "language", me.convert.set);
+        me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function(options, key, value) {
+            me.set(me.singleton.var.output, "ui.style.fontSize", value);
+        });
         me.ui.theme.useStylesheet("kab.terms");
     };
     me.updateWidgets = function(showInput) {
@@ -47,6 +51,7 @@ package.app.transform = function AppTransform(me) {
         me.set(me.singleton.var.convert, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(me.singleton.var.output_container, "ui.style.top", showInput ? "250px" : "0px");
         me.set(me.singleton.var.output_container, "ui.style.borderTop", showInput ? "1px solid black" : "none");
+        me.set(me.singleton.var.output, "ui.style.fontSize", me.options.fontSize);
         me.set(me.singleton, "update");
     };
     me.new = {
