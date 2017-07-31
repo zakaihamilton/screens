@@ -34,7 +34,7 @@
             "suffix":"</h4>"
         },
         {
-            "match":"/^Chapter .*?$",
+            "match":"/Chapter [0-9,I]$",
             "prefix":"<h4 style=\"order:-2\">",
             "suffix":"</h4>"
         },
@@ -44,19 +44,13 @@
             "suffix":"</h4>"
         },
         {
-            "split":"/(\\d\\..*)",
-            "join":"",
             "match":"/\\(\\d+\\)",
             "prefix":"<b>",
             "suffix":"</b>"
         },
         {
-            "find":"/(\\d+\\.)",
-            "replace":"<b>$1</b>"
-        },
-        {
-            "find":"/(\\(\\d+\\))",
-            "replace":"<b>$1</b>"
+            "find":"/\\\n(\\d+\\.)",
+            "replace":"\n<b>$1</b>"
         },
         {
             "match":"/^Ohr Pnimi$",
@@ -1417,6 +1411,9 @@
         },
         "Yenika":{
             "translation":"Suckling"
+        },
+        "Agol":{
+            "translation":"Round"
         }
     }
 }
