@@ -82,7 +82,6 @@ package.ui.resize = function UIResize(me) {
                 target_region.height = event.clientY - target_region.top;
             }
             me.ui.rect.set_absolute_region(me.info.target, target_region);
-            me.set(me.info.target, "update");
             var parent = me.widget.window.parent(me.info.target);
             me.set(parent, "update");
         }
@@ -96,6 +95,7 @@ package.ui.resize = function UIResize(me) {
             me.set(me.info.target, "ui.property.trickle", {
                 "transition": false
             });
+            me.set(me.info.target, "update");
         }
     };
 };

@@ -8,7 +8,7 @@ package.require("core.module", "server");
 package.core.module = function CoreModule(me) {
     var core = me.core;
     me.init = function() {
-        core.property.link("core.http.receive", "core.module.receive", true);
+        me.link("core.http.receive", "core.module.receive", true);
     };
     me.path_file_to_component = function (file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/") + 1);

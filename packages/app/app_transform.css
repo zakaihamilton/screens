@@ -12,38 +12,36 @@
     width:100px;
 }
 
-.app-transform-output-container {
-    position: absolute;
-    left:0px;
-    right:0px;
-    bottom:0px;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
+.app-transform-output {
+    display:none;
 }
 
-.app-transform-output {
+.app-transform-layout {
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    overflow:hidden;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     line-height:200%;
     font-size:24px;
-    text-align:justify;
-    margin:20px 20px 20px 20px;
     direction: ltr;
-    display: flex;
-    flex-direction: column;
+    display:flex;
+    flex:1;
+    flex-direction:column;
 }
 
-.app-transform-output.hebrew {
+.app-transform-layout.hebrew {
     direction: rtl;
 }
 
 .app-transform-spinner {
+    flex:0;
     position: absolute;
     left: 50%;
     top: 50%;
     z-index: 1;
-    width: 150px;
-    height: 150px;
     margin: -75px 0 0 -75px;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
@@ -51,9 +49,20 @@
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
+    display:none;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.app-transform-page {
+    position:relative;
+    border-top:1px solid black;
+    margin:20px 20px;
+    padding:10px 10px;
+    text-align:justify;
+    display:flex;
+    flex-direction:column;
 }

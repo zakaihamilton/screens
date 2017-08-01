@@ -2,6 +2,7 @@ require("../package.js");
 
 package.include({
     "core": [
+        "property",
         "console",
         "test",
         "http",

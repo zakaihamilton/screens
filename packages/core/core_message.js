@@ -11,7 +11,7 @@ package.core.message = function CoreMessage(me) {
         package.send_browser = me.send_browser;
         package.send = me.send;
         if (package.platform === "server") {
-            core.property.link("core.http.receive", "core.message.receive", true);
+            me.link("core.http.receive", "core.message.receive", true);
         } else if (me.platform === "browser") {
             package.worker.onmessage = function (event) {
                 me.core.console.log("Receiving message");

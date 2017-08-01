@@ -34,6 +34,15 @@
                         "state": "select"
                     }
                 ],
+                ["Headings", "app.transform.headings", {
+                        "state": "select"
+                    }
+                ],
+                ["Pages", "app.transform.pages", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
                 ["HTML", "app.transform.showHtml", {
                         "state": "select",
                         "separator": true
@@ -110,16 +119,19 @@
             "ui.theme.add": "app.transform.convert"
         },
         {
+            "ui.basic.tag": "div",
+            "ui.theme.class": "app.transform.output",
+            "ui.basic.var": "output"
+        },
+        {
             "ui.element.component": "widget.container",
-            "ui.basic.var": "output_container",
-            "ui.theme.class": "app.transform.output-container",
-            "ui.basic.elements": [
-                {
-                    "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.output",
-                    "ui.basic.var": "output"
-                }
-            ]
+            "ui.basic.var": "layout",
+            "ui.theme.class": "app.transform.layout"
+        },
+        {
+            "ui.basic.tag":"div",
+            "ui.theme.class":"app.transform.spinner",
+            "ui.basic.var": "spinner"
         }
     ]
 }

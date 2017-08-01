@@ -9,6 +9,7 @@ package.core.property = function CoreProperty(me) {
         package.get = me.get;
         package.set = me.set;
         package.dirty = me.dirty;
+        package.link = me.link;
     };
     me.fullname = function(object, name, default_name=null) {
         if(typeof name !== "string") {
@@ -89,18 +90,21 @@ package.core.property = function CoreProperty(me) {
         if(!object) {
             object=me;
         }
-        if(object !== me) {
+        if(object && object !== me) {
             source = me.core.property.fullname(object, source);
             target = me.core.property.fullname(object, target);
         }
-        if(!object._forwarding_list) {
-            object._forwarding_list = {};
+        var forwarding_list = object._forwarding_list;
+        if(!forwarding_list) {
+            forwarding_list = {};
+            object._forwarding_list = forwarding_list;
         }
-        var source_list = object._forwarding_list[source];
+        var source_list = forwarding_list[source];
         if (!source_list) {
-            object._forwarding_list[source] = {};
+            source_list = {};
+            forwarding_list[source] = source_list;
         }
-        object._forwarding_list[source][target] = enabled;
+        source_list[target] = enabled;
     };
     me.set = function (object, name, value) {
         if(!object) {

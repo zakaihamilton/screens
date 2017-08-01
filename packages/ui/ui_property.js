@@ -83,7 +83,7 @@ package.ui.property = function UIProperty(me) {
         if(!component.options) {
             component.options = {};
         }
-        return {
+        var methods = {
             get: function (object, value) {
                 return component.options[key] === value;
             },
@@ -98,6 +98,7 @@ package.ui.property = function UIProperty(me) {
                 }
             }
         };
+        return methods;
     };
     me.themedPropertySet = function (name, callback) {
         return me.core.object.property(name, {

@@ -316,7 +316,7 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        if (styles && styles.heading) {
+        if (styles && styles.heading && options.headings) {
             html += "<span class=\"kab-term-heading\">" + styles.heading + "</span>";
         }
         if (styles && styles.diagram) {

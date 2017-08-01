@@ -80,7 +80,7 @@
             "find":"/\\\n",
             "replace":"</p><p>",
             "prefix":"<p>",
-            "suffix":"</p><br/><br/>"
+            "suffix":"</p>"
         },
         {
             "find":"/<p><(h\\d)",
@@ -91,7 +91,7 @@
             "replace":"</$1>"
         },
         {
-            "find":"/<p><\\/p>",
+            "find":"/<p>[\\s]?<\\/p>",
             "replace":""
         }
     ],
@@ -564,6 +564,7 @@
             "translation": "Phase"
         },
         "Behinot": {
+            "prefix":"The",
             "translation": "Phases"
         },
         "Shinui Tzura" : {

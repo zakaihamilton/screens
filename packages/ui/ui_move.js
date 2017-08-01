@@ -61,7 +61,6 @@ package.ui.move = function UIMove(me) {
             target_region.left = event.clientX - me.info.left;
             target_region.top = event.clientY - me.info.top;
             me.ui.rect.set_absolute_region(me.info.target, target_region);
-            me.set(me.info.target, "update");
             var parent = me.widget.window.parent(me.info.target);
             me.set(parent, "update");
         }

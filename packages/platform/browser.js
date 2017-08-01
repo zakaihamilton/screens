@@ -2,9 +2,9 @@ package.worker = new Worker("packages/platform/client.js");
 
 package.include({
     "core": [
+        "property",
         "console",
         "object",
-        "property",
         "test",
         "http",
         "message",
@@ -41,7 +41,8 @@ package.include({
         "var",
         "move",
         "resize",
-        "monitor"
+        "monitor",
+        "layout"
     ],
     "menu": [
         "context"
