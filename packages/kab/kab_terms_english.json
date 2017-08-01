@@ -63,6 +63,8 @@
             "suffix":"</h4>"
         },
         {
+            "split":"/(\\d\\..*)",
+            "join":"",
             "match":"/\\(\\d+\\)",
             "prefix":"<b>",
             "suffix":"</b>"
