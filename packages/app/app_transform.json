@@ -43,6 +43,11 @@
                         "separator": true
                     }
                 ],
+                ["Columns", "app.transform.columns", {
+                        "state": "select",
+                        "enabled":"app.transform.pages"
+                    }
+                ],
                 ["HTML", "app.transform.showHtml", {
                         "state": "select",
                         "separator": true

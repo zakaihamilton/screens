@@ -56,7 +56,7 @@ package.ui.layout = function UILayout(me) {
         var pageWidth = container.offsetWidth - 80;
         return {width:pageWidth,height:pageHeight};
     };
-    me.reflow = function(source, target, pageClass) {
+    me.reflow = function(source, target, pageClass, columnCount=1) {
         target = me.content(target);
         me.prepare(source, target);
         var pageSize = me.pageSize(target);
@@ -64,7 +64,7 @@ package.ui.layout = function UILayout(me) {
             return;
         }
         var pageIndex = 1;
-        var page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex);
+        var page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
         for(;;) {
             var widget = source.firstChild;
             if(!widget) {
@@ -73,7 +73,7 @@ package.ui.layout = function UILayout(me) {
             page.appendChild(widget);
             var newPage = false;
             var tagName = widget.tagName.toLowerCase();
-            if(page.scrollHeight > page.clientHeight) {
+            if(page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
                 page.removeChild(widget);
                 newPage = true;
             }
@@ -83,7 +83,7 @@ package.ui.layout = function UILayout(me) {
             }
             if(newPage) {
                 pageIndex++;
-                page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex);
+                page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
                 if(widget) {
                     page.appendChild(widget);
                 }
@@ -92,13 +92,16 @@ package.ui.layout = function UILayout(me) {
         me.createBreak(target);
         me.createBreak(target);
     };
-    me.createPage = function(target, pageClass, pageWidth, pageHeight, pageIndex) {
+    me.createPage = function(target, pageClass, pageWidth, pageHeight, pageIndex, columnCount) {
         target = me.content(target);
         var page = me.ui.element.create({
             "ui.basic.tag":"div",
             "ui.theme.class":pageClass,
             "ui.style.width":pageWidth + "px",
-            "ui.style.height":pageHeight + "px"
+            "ui.style.height":pageHeight + "px",
+            "ui.style.display":"block",
+            "ui.style.columns":"" + (pageWidth / 3) + "px " + columnCount,
+            "ui.style.columnGap":"40px"
         }, target);
         return page;
     };
