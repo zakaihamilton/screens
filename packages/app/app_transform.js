@@ -49,7 +49,7 @@ package.app.transform = function AppTransform(me) {
             me.set(me.singleton.var.layout, "ui.style.fontSize", value);
         });
         me.pages = me.ui.property.toggleOptionSet(me, "pages", me.convert.set);
-        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.update.set);
+        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.convert.set);
         me.headings = me.ui.property.toggleOptionSet(me, "headings", me.convert.set);
         me.ui.theme.useStylesheet("kab.terms");
     };
@@ -108,7 +108,7 @@ package.app.transform = function AppTransform(me) {
             if(me.options.pages) {
                 target.style.margin = "";
                 setTimeout(function () {
-                    columnCount = me.options.columns ? 2 : 1;
+                    var columnCount = me.options.columns ? 2 : 1;
                     me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, "app.transform.page", columnCount);
                 }, 0);
             }
