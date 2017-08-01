@@ -131,11 +131,12 @@ package.kab.terms = function KabTerms(me) {
         if(!prefixInsert && me.json.prefixes) {
             var prefix = null;
             for(prefix in me.json.prefixes) {
-                if(prefix === prefixWord) {
-                    for(prefix in me.json.prefixes) {
-                        var prefixItem = me.json.prefixes[prefix];
-                        if(prefixItem.match && text.match(me.regex(prefixItem.match))) {
-                            prefixInsert = prefix;
+                var prefixItem = me.json.prefixes[prefix];
+                if(prefix === prefixWord && prefixItem.match) {
+                    for(var altPrefix in me.json.prefixes) {
+                        var altPrefixItem = me.json.prefixes[altPrefix];
+                        if(altPrefixItem.match && text.match(me.regex(altPrefixItem.match))) {
+                            prefixInsert = altPrefix;
                             break;
                         }
                     }
@@ -145,6 +146,9 @@ package.kab.terms = function KabTerms(me) {
         }
         if (prefixInsert) {
             words.splice(wordIndex, 0, prefixInsert);
+        }
+        else if(prefixWord) {
+            words.splice(wordIndex, 0, prefixWord);
         }
     };
     me.removeFormatting = function (string) {
