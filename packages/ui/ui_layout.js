@@ -73,8 +73,12 @@ package.ui.layout = function UILayout(me) {
             page.appendChild(widget);
             var newPage = false;
             var tagName = widget.tagName.toLowerCase();
-            if(page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
+            if(tagName === "br") {
                 page.removeChild(widget);
+                widget = null;
+                newPage = true;
+            }
+            if(page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
                 newPage = true;
             }
             if(!(widget.innerHTML || widget.firstChild)) {
@@ -82,6 +86,9 @@ package.ui.layout = function UILayout(me) {
                 widget = null;
             }
             if(newPage) {
+                if(widget) {
+                    page.removeChild(widget);
+                }
                 pageIndex++;
                 page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
                 if(widget) {
