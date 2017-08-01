@@ -16,13 +16,15 @@ package.widget.window = function WidgetWindow(me) {
         "ui.basic.elements": "elements"
     };
     me.default = __json__;
-    me.popup = me.ui.property.themedPropertySet("popup");
-    me.temp = me.ui.property.themedPropertySet("temp");
-    me.static = me.ui.property.themedPropertySet("static");
-    me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {
-        var maximized = me.get(object, "ui.theme.contains", "maximize");
-        me.set(object, "ui.resize.enabled", !value && !maximized);
-    });
+    me.init = function() {
+        me.popup = me.ui.property.themedPropertySet("popup");
+        me.temp = me.ui.property.themedPropertySet("temp");
+        me.static = me.ui.property.themedPropertySet("static");
+        me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {
+            var maximized = me.get(object, "ui.theme.contains", "maximize");
+            me.set(object, "ui.resize.enabled", !value && !maximized);
+        });
+    };
     me.mainClass = {
         get: function (object) {
             var window = me.window(object);
