@@ -24,7 +24,7 @@ package.app.transform = function AppTransform(me) {
             autoScroll: false,
             headings: true,
             pages: true,
-            columns: false,
+            columns: true,
             language: "Auto",
             "fontSize": "24px"
         });
