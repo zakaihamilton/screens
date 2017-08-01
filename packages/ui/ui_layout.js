@@ -65,6 +65,7 @@ package.ui.layout = function UILayout(me) {
         }
         var pageIndex = 1;
         var page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+        var previousWidget = null;
         for(;;) {
             var widget = source.firstChild;
             if(!widget) {
@@ -72,12 +73,6 @@ package.ui.layout = function UILayout(me) {
             }
             page.appendChild(widget);
             var newPage = false;
-            var tagName = widget.tagName.toLowerCase();
-            if(tagName === "br") {
-                page.removeChild(widget);
-                widget = null;
-                newPage = true;
-            }
             if(page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
                 newPage = true;
             }
@@ -91,9 +86,16 @@ package.ui.layout = function UILayout(me) {
                 }
                 pageIndex++;
                 page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+                if(previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
+                    page.appendChild(previousWidget);
+                }
                 if(widget) {
                     page.appendChild(widget);
                 }
+                previousWidget = null;
+            }
+            else if(widget) {
+                previousWidget = widget;
             }
         }
         me.createBreak(target);
