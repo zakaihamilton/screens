@@ -7,8 +7,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     me.default = __json__;
     me.create = {
         set: function (object) {
-            object.delta = 0;
-            object.scrollSpeed = 10;
+            object.autoScrollSpeed = 1000;
             object.deltaSpeed = 50;
             object.snapToScrollWait = 150;
             object.snapToPageUnits = 50;
@@ -142,7 +141,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, scrollbar.scrollSize);
                     me.update.set(container);
-                }, scrollbar.scrollSpeed);
+                }, scrollbar.autoScrollSpeed);
             }
         }
     };
@@ -170,12 +169,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.scrollSize = value;
         }
     };
-    me.scrollSpeed = {
+    me.autoScrollSpeed = {
         get: function (object) {
-            return object.scrollSpeed;
+            return object.autoScrollSpeed;
         },
         set: function (object, value) {
-            object.scrollSpeed = value;
+            object.autoScrollSpeed = value;
         }
     };
     me.delta = {

@@ -469,11 +469,11 @@
             "translation": "Action",
             "style": {"heading":"world","phase":"four","alt":"Action"}
         },
-        "Olam Ha Zeh": {
+        "Olam ha Zeh": {
             "translation": "This World",
             "style": {"heading":"world","phase":"four","alt":"Effort"}
         },
-        "Olam Ha Ba": {
+        "Olam ha Ba": {
             "prefix":"The",
             "translation": "Next World",
             "style": {"heading":"world","phase":"one"}
@@ -1468,6 +1468,9 @@
         },
         "Agol":{
             "translation":"Round"
+        },
+        "Tikunim":{
+            "translation":"Corrections"
         }
     }
 }
