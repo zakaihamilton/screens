@@ -56,7 +56,7 @@ package.ui.layout = function UILayout(me) {
         var pageWidth = container.offsetWidth - 80;
         return {width:pageWidth,height:pageHeight};
     };
-    me.reflow = function(source, target, pageClass, columnCount=1) {
+    me.reflow = function(source, target, usePages, pageClass, columnCount=1) {
         target = me.content(target);
         me.prepare(source, target);
         var pageSize = me.pageSize(target);
@@ -64,14 +64,23 @@ package.ui.layout = function UILayout(me) {
             return;
         }
         var pageIndex = 1;
-        var page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+        var page = null;
+        if(usePages) {
+            page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+        }
         var previousWidget = null;
         for(;;) {
             var widget = source.firstChild;
             if(!widget) {
                 break;
             }
-            page.appendChild(widget);
+            if(page) {
+                page.appendChild(widget);
+            }
+            else {
+                target.appendChild(widget);
+                continue;
+            }
             var newPage = false;
             if(page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
                 newPage = true;
@@ -109,14 +118,13 @@ package.ui.layout = function UILayout(me) {
             "ui.style.width":pageWidth + "px",
             "ui.style.height":pageHeight + "px",
             "ui.style.display":"block",
-            "ui.style.columns":"" + (pageWidth / 3) + "px " + columnCount,
-            "ui.style.columnGap":"40px"
+            "ui.style.columnCount":columnCount
         }, target);
         return page;
     };
     me.createBreak = function(target) {
         var page = me.ui.element.create({
-            "ui.basic.tag":"br",
+            "ui.basic.tag":"br"
         }, target);
         return page;
     };

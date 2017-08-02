@@ -48,8 +48,8 @@ package.app.transform = function AppTransform(me) {
         me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {
             me.set(me.singleton.var.layout, "ui.style.fontSize", value);
         });
-        me.pages = me.ui.property.toggleOptionSet(me, "pages", me.convert.set);
-        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.convert.set);
+        me.pages = me.ui.property.toggleOptionSet(me, "pages", me.update.set);
+        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.update.set);
         me.headings = me.ui.property.toggleOptionSet(me, "headings", me.convert.set);
         me.ui.theme.useStylesheet("kab.terms");
     };
@@ -107,14 +107,14 @@ package.app.transform = function AppTransform(me) {
             var target = me.widget.container.content(me.singleton.var.layout);
             if(me.options.pages) {
                 target.style.margin = "";
-                setTimeout(function () {
-                    var columnCount = me.options.columns ? 2 : 1;
-                    me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, "app.transform.page", columnCount);
-                }, 0);
             }
             else {
                 target.style.margin = "20px 20px";
             }
+            setTimeout(function () {
+                var columnCount = me.options.columns ? 2 : 1;
+                me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
+            }, 0);
         }
     };
 };
