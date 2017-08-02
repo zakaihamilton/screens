@@ -22,7 +22,7 @@ package.app.transform = function AppTransform(me) {
             showHtml: false,
             showInput: false,
             autoScroll: false,
-            snapToPage:false,
+            snapToPage:true,
             headings: true,
             pages: true,
             columns: true,
