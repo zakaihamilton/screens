@@ -70,6 +70,7 @@ package.app.transform = function AppTransform(me) {
         me.set(scrollbar, "snapToPage", snapToPage);
         me.set(scrollbar, "pageSize", pageSize.height);
         me.set(scrollbar, "autoScroll", me.options.autoScroll);
+        me.set(scrollbar, "snap");
     };
     me.new = {
         set: function (object) {

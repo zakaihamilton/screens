@@ -7,7 +7,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     me.default = __json__;
     me.create = {
         set: function (object) {
-            object.autoScrollSpeed = 1000;
+            object.autoScrollSpeed = 500;
+            object.autoScrollSize = 2;
             object.deltaSpeed = 50;
             object.snapToScrollWait = 150;
             object.snapToPageUnits = 50;
@@ -139,7 +140,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     }
                     var container = me.ui.node.container(object, me.widget.container.id);
                     var content = me.widget.container.content(container);
-                    me.ui.scroll.by(content, scroll_type, scrollbar.scrollSize);
+                    me.ui.scroll.by(content, scroll_type, scrollbar.autoScrollSize);
                     me.update.set(container);
                 }, scrollbar.autoScrollSpeed);
             }
