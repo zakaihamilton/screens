@@ -47,9 +47,10 @@ package.app.transform = function AppTransform(me) {
         me.language = me.ui.property.choiceOptionSet(me, "language", me.convert.set);
         me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {
             me.set(me.singleton.var.layout, "ui.style.fontSize", value);
+            me.set(me.singleton, "update");
         });
-        me.pages = me.ui.property.toggleOptionSet(me, "pages", me.update.set);
-        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.update.set);
+        me.pages = me.ui.property.toggleOptionSet(me, "pages", me.reflow.set);
+        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.reflow.set);
         me.headings = me.ui.property.toggleOptionSet(me, "headings", me.convert.set);
         me.ui.theme.useStylesheet("kab.terms");
     };
@@ -102,6 +103,11 @@ package.app.transform = function AppTransform(me) {
             }
         }
     };
+    me.reflow = {
+        set: function(object) {
+            me.set(me.singleton, "update");
+        }
+    };
     me.update = {
         set: function (object) {
             var target = me.widget.container.content(me.singleton.var.layout);
@@ -111,10 +117,8 @@ package.app.transform = function AppTransform(me) {
             else {
                 target.style.margin = "20px 20px";
             }
-            setTimeout(function () {
-                var columnCount = me.options.columns ? 2 : 1;
-                me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
-            }, 0);
+            var columnCount = me.options.columns ? 2 : 1;
+            me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
         }
     };
 };
