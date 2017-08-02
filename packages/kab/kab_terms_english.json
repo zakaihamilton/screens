@@ -482,6 +482,11 @@
             "prefix":"The",
             "translation": "World of Deficiencies"
         },
+        "Olam Adam Kadmon": {
+            "prefix":"The",
+            "translation": "World of Primordial Man",
+            "style": {"heading":"world","phase":"root"}
+        },
         "Olam Atzilut": {
             "prefix":"The",
             "translation": "World of Emanation",
@@ -1471,6 +1476,15 @@
         },
         "Tikunim":{
             "translation":"Corrections"
+        },
+        "Rakia":{
+            "translation":"Firmament"
+        },
+        "Gimel Kavim":{
+            "translation":"Three Lines"
+        },
+        "Kli Kabbalah":{
+            "translation":"Vessel of Reception"
         }
     }
 }

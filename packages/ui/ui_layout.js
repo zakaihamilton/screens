@@ -118,7 +118,8 @@ package.ui.layout = function UILayout(me) {
             "ui.style.width":pageWidth + "px",
             "ui.style.height":pageHeight + "px",
             "ui.style.display":"block",
-            "ui.style.columnCount":columnCount
+            "ui.style.columnCount":columnCount,
+            "ui.style.columnGap":"100px"
         }, target);
         return page;
     };
