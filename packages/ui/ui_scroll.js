@@ -70,6 +70,13 @@ package.ui.scroll = function UIScroll(me) {
     me.percent_to_pos = function (length, percent) {
         return (length / 100) * percent;
     };
+    me.current_pos = function(object, type) {
+        if (type === "vertical") {
+            return object.scrollTop;
+        } else if (type === "horizontal") {
+            return object.scrollLeft;
+        }
+    };
     me.by = function (object, type, distance) {
         if (type === "vertical") {
             if (object.scrollTop + distance < 0) {
@@ -157,6 +164,7 @@ package.ui.scroll = function UIScroll(me) {
                 var release_method = function (e) {
                     removeEventListener('mousemove', scroll_method);
                     removeEventListener('mouseup', release_method);
+                    me.set(object.parentNode.parentNode, "snap");
                 };
                 addEventListener('mousemove', scroll_method);
                 addEventListener('mouseup', release_method);

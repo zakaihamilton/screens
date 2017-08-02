@@ -22,6 +22,7 @@ package.app.transform = function AppTransform(me) {
             showHtml: false,
             showInput: false,
             autoScroll: false,
+            snapToPage:false,
             headings: true,
             pages: true,
             columns: true,
@@ -38,12 +39,8 @@ package.app.transform = function AppTransform(me) {
             }
             me.updateWidgets(value);
         });
-        me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", function (options, key, value) {
-            var scrollbar = me.singleton.var.layout.var.vertical;
-            if (scrollbar) {
-                me.set(scrollbar, "autoScroll", value);
-            }
-        }, null);
+        me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", me.updateScrolling, null);
+        me.snapToPage = me.ui.property.toggleOptionSet(me, "snapToPage", me.updateScrolling);
         me.language = me.ui.property.choiceOptionSet(me, "language", me.convert.set);
         me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {
             me.set(me.singleton.var.layout, "ui.style.fontSize", value);
@@ -61,6 +58,18 @@ package.app.transform = function AppTransform(me) {
         me.set(me.singleton.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(me.singleton.var.layout, "ui.style.fontSize", me.options.fontSize);
         me.set(me.singleton, "update");
+        me.updateScrolling();
+    };
+    me.updateScrolling = function() {
+        var scrollbar = me.singleton.var.layout.var.vertical;
+        var pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
+        var snapToPage = me.options.snapToPage;
+        if(!me.options.pages) {
+            snapToPage = false;
+        }
+        me.set(scrollbar, "snapToPage", snapToPage);
+        me.set(scrollbar, "pageSize", pageSize.height);
+        me.set(scrollbar, "autoScroll", me.options.autoScroll);
     };
     me.new = {
         set: function (object) {
@@ -115,10 +124,11 @@ package.app.transform = function AppTransform(me) {
                 target.style.margin = "";
             }
             else {
-                target.style.margin = "20px 20px";
+                target.style.margin = "20px 40px";
             }
             var columnCount = me.options.columns ? 2 : 1;
             me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
+            me.updateScrolling();
         }
     };
 };

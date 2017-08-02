@@ -19,8 +19,7 @@
             "ui.basic.elements": {
                 "ui.basic.var": "thumb",
                 "ui.theme.class": ["widget.scrollbar.button", "thumb"],
-                "ui.scroll.thumb": "scrollType",
-                "ui.style.position": "relative"
+                "ui.scroll.thumb": "scrollType"
             }
         },
         {

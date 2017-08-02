@@ -6,8 +6,13 @@
 function WidgetScrollbarTemplate(me, scroll_type) {
     me.default = __json__;
     me.create = {
-        set: function(object) {
-            object.scrollSpeed = 150;
+        set: function (object) {
+            object.delta = 0;
+            object.scrollSpeed = 10;
+            object.deltaSpeed = 50;
+            object.snapToScrollWait = 150;
+            object.snapToPageUnits = 50;
+            object.scrollSize = 10;
         }
     };
     me.scrollType = {
@@ -63,16 +68,28 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         set: function (object, value) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
-            me.ui.scroll.by(content, scroll_type, -10);
+            var scrollbar = container.var[scroll_type];
+            var scrollSize = scrollbar.scrollSize;
+            if(scrollbar.snapToPage) {
+                scrollSize = scrollbar.pageSize;
+            }
+            me.ui.scroll.by(content, scroll_type, -scrollSize);
             me.update.set(container);
+            me.set(scrollbar, "snap");
         }
     };
     me.after = {
         set: function (object, value) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
-            me.ui.scroll.by(content, scroll_type, 10);
+            var scrollbar = container.var[scroll_type];
+            var scrollSize = scrollbar.scrollSize;
+            if(scrollbar.snapToPage) {
+                scrollSize = scrollbar.pageSize;
+            }
+            me.ui.scroll.by(content, scroll_type, scrollSize);
             me.update.set(container);
+            me.set(scrollbar, "snap");
         }
     };
     me.track = {
@@ -84,13 +101,19 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var content = me.widget.container.content(container);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
             var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
+            var scrollbar = container.var[scroll_type];
+            var scrollSize = scrollbar.scrollSize;
+            if(scrollbar.snapToPage) {
+                scrollSize = scrollbar.pageSize;
+            }
             if (scroll_direction < 0) {
-                me.ui.scroll.by(content, scroll_type, -10);
+                me.ui.scroll.by(content, scroll_type, 0 - scrollSize);
             }
             if (scroll_direction > 0) {
-                me.ui.scroll.by(content, scroll_type, 10);
+                me.ui.scroll.by(content, scroll_type, scrollSize);
             }
-            me.update.set(object.parentNode);
+            me.update.set(container);
+            me.set(scrollbar, "snap");
         }
     };
     me.autoScroll = {
@@ -98,6 +121,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             return object.autoScrollTimer !== null;
         },
         set: function (object, value) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var scrollbar = container.var[scroll_type];
             if (object.autoScrollTimer) {
                 clearInterval(object.autoScrollTimer);
                 object.autoScrollTimer = null;
@@ -115,10 +140,34 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     }
                     var container = me.ui.node.container(object, me.widget.container.id);
                     var content = me.widget.container.content(container);
-                    me.ui.scroll.by(content, scroll_type, 1);
+                    me.ui.scroll.by(content, scroll_type, scrollbar.scrollSize);
                     me.update.set(container);
-                }, object.scrollSpeed);
+                }, scrollbar.scrollSpeed);
             }
+        }
+    };
+    me.pageSize = {
+        get: function (object) {
+            return object.pageSize;
+        },
+        set: function (object, value) {
+            object.pageSize = value;
+        }
+    };
+    me.snapToPage = {
+        get: function (object) {
+            return object.snapToPage;
+        },
+        set: function (object, value) {
+            object.snapToPage = value;
+        }
+    };
+    me.scrollSize = {
+        get: function (object) {
+            return object.scrollSize;
+        },
+        set: function (object, value) {
+            object.scrollSize = value;
         }
     };
     me.scrollSpeed = {
@@ -133,8 +182,69 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         set: function (object, value) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
-            me.ui.scroll.by(content, scroll_type, 0-(value*10));
+            var scrollbar = container.var[scroll_type];
+            var distance = 0 - (value * 10);
+            me.ui.scroll.by(content, scroll_type, distance);
             me.update.set(container);
+            me.set(scrollbar, "snap");
+        }
+    };
+    me.snap = {
+        set: function(object, value) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var content = me.widget.container.content(container);
+            var scrollbar = container.var[scroll_type];
+            if(!scrollbar.snapToPage) {
+                return;
+            }
+            var pageSize = scrollbar.pageSize;
+            if (scrollbar.deltaTimeout) {
+                clearTimeout(scrollbar.deltaTimeout);
+                scrollbar.deltaTimeout = null;
+            }
+            if (scrollbar.deltaInterval) {
+                clearInterval(scrollbar.deltaInterval);
+                scrollbar.deltaInterval = null;
+            }
+            scrollbar.deltaTimeout = setTimeout(function () {
+                var currentPos = me.ui.scroll.current_pos(content, scroll_type);
+                var targetPos = currentPos;
+                var delta = currentPos % pageSize;
+                var direction = 0;
+                if(delta) {
+                    targetPos = Math.round(currentPos / pageSize) * pageSize;
+                }
+                if(currentPos < targetPos) {
+                    direction = 1;
+                }
+                else if(currentPos > targetPos) {
+                    direction = -1;
+                }
+                scrollbar.deltaInterval = setInterval(function () {
+                    currentPos = me.ui.scroll.current_pos(content, scroll_type);
+                    var scrollBy = 0;
+                    if(direction > 0) {
+                        scrollBy = scrollbar.snapToPageUnits;
+                        if(currentPos + scrollBy > targetPos) {
+                            scrollBy = targetPos - currentPos;
+                        }
+                    }
+                    else if(direction < 0) {
+                        scrollBy = 0 - scrollbar.snapToPageUnits;
+                        if(currentPos + scrollBy < targetPos) {
+                            scrollBy = targetPos - currentPos;
+                        }
+                    }
+                    if(scrollBy) {
+                        me.ui.scroll.by(content, scroll_type, scrollBy);
+                        me.update.set(container);
+                    }
+                    else {
+                        clearInterval(scrollbar.deltaInterval);
+                        scrollbar.deltaInterval = null;
+                    }
+                }, scrollbar.deltaSpeed);
+            }, scrollbar.snapToScrollWait);
         }
     };
 }

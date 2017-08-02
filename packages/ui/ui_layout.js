@@ -52,8 +52,8 @@ package.ui.layout = function UILayout(me) {
     me.pageSize = function(target) {
         var container = me.ui.node.container(target, me.widget.container.id).parentNode;
         var region = me.ui.rect.relative_region(container);
-        var pageHeight = container.offsetHeight - region.top - 50;
-        var pageWidth = container.offsetWidth - 80;
+        var pageHeight = container.offsetHeight - region.top;
+        var pageWidth = container.offsetWidth;
         return {width:pageWidth,height:pageHeight};
     };
     me.reflow = function(source, target, usePages, pageClass, columnCount=1) {

@@ -44,6 +44,7 @@
     position:relative;
     flex:none;
     display:none;
+    background:#c0c0c0;
 }
 
 .widget-scrollbar-corner.vertical-scroll.horizontal-scroll {
@@ -185,9 +186,11 @@
 .widget-scrollbar-horizontal-thumb {
     border-left:1px solid black;
     border-right:1px solid black;
+    position:relative;
 }
 
 .widget-scrollbar-vertical-thumb {
     border-top:1px solid black;
     border-bottom:1px solid black;
+    position:relative;
 }

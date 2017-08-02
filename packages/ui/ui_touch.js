@@ -5,17 +5,18 @@
 
 package.ui.touch = function UIEvent(me) {
     me.click_delay = 200;
-    me.click_repeat = 50;
-    me.init = function() {
+    me.click_repeat_delay = 250;
+    me.click_repeat_interval = 50;
+    me.init = function () {
         me.send_event = me.ui.event.send_event;
         me.register = me.ui.event.register;
-    }
+    };
     me.handle = {
         click: function (object, method, event) {
             if (object.event_types["dblclick"]) {
                 object.event_dblclick = false;
                 object.click_timeout = setTimeout(function () {
-                    if(!object.event_dblclick) {
+                    if (!object.event_dblclick) {
                         me.send_event(object, method, event);
                     }
                 }, me.click_delay);
@@ -24,35 +25,41 @@ package.ui.touch = function UIEvent(me) {
             return true;
         },
         dblclick: function (object, method, event) {
-            if(object.click_timeout !== null) {
+            if (object.click_timeout !== null) {
                 clearTimeout(object.click_timeout);
                 object.click_timeout = null;
             }
             object.event_dblclick = true;
             return true;
         },
-        repeatdown: function(object, method, event) {
+        repeatdown: function (object, method, event) {
             object.repeat_interval = true;
-            object.click_repeat_interval = setInterval(function() {
-                if(object.repeat_interval) {
-                    me.send_event(object, method, event);
-                }
-            }, me.click_repeat);
+            object.click_repeat_delay = setTimeout(function () {
+                object.click_repeat_interval = setInterval(function () {
+                    if (object.repeat_interval) {
+                        me.send_event(object, method, event);
+                    }
+                }, me.click_repeat_interval);
+            }, me.click_repeat_delay);
             event.preventDefault();
-            return true;
+            return false;
         },
-        repeatover: function(object, method, event) {
+        repeatover: function (object, method, event) {
             object.repeat_interval = true;
             event.preventDefault();
             return false;
         },
-        repeatleave: function(object, method, event) {
+        repeatleave: function (object, method, event) {
             object.repeat_interval = false;
             event.preventDefault();
             return false;
         },
-        repeatup: function(object, method, event) {
-            if(object.click_repeat_interval !== null) {
+        repeatup: function (object, method, event) {
+            if (object.click_repeat_delay) {
+                clearTimeout(object.click_repeat_delay);
+                object.click_repeat_delay = null;
+            }
+            if (object.click_repeat_interval) {
                 clearInterval(object.click_repeat_interval);
                 object.click_repeat_interval = null;
             }
@@ -99,12 +106,12 @@ package.ui.touch = function UIEvent(me) {
         }
     };
     me.default = {
-        set: function(object, value) {
+        set: function (object, value) {
             me.register(me.handle, object, "dblclick", value, "default");
         }
     };
     me.wheel = {
-        set: function(object, value) {
+        set: function (object, value) {
             me.register(me.handle, object, "wheel", value);
         }
     };

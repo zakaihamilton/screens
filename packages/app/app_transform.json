@@ -21,6 +21,11 @@
                         "state": "select"
                     }
                 ],
+                ["Snap to Page", "app.transform.snapToPage", {
+                        "state": "select",
+                        "enabled":"app.transform.pages"
+                    }
+                ],
                 ["Translation", "app.transform.translation", {
                         "state": "select",
                         "separator": true
