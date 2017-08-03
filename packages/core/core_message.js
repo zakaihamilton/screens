@@ -84,6 +84,13 @@ package.core.message = function CoreMessage(me) {
     me.send = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 1);
         var callback = null;
+        if(!path) {
+            return undefined;
+        }
+        if (typeof path === "function") {
+            var result = path.apply(null, args);
+            return result;
+        }
         try {
             callback = me[path];
         } catch (error) {

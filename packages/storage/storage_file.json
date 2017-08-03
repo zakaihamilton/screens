@@ -1,0 +1,13 @@
+{
+    "name":"storage",
+    "members":[
+        {
+            "name":"local",
+            "members":"storage.cache.local.members"
+        },
+        {
+            "name":"session",
+            "members":"storage.cache.session.members"
+        }
+    ]
+}

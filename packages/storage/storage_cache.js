@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component DataStorage
+ @component StorageCache
  */
 
 package.require("storage.cache", "browser");
@@ -11,7 +11,13 @@ package.storage.cache = function StorageCache(me) {
         me.session = me.core.object.create(me);
         if (me.isSupported()) {
             me.local.storage = localStorage;
+            me.local.members = function() {
+                return me.keyList(me.local);
+            };
             me.session.storage = sessionStorage;
+            me.session.members = function() {
+                return me.keyList(me.session);
+            };
         }
         me.key = me.core.object.property("storage.cache.key");
     };

@@ -7,7 +7,7 @@ package.core.handle = function CoreHandle(me) {
     me.init = function() {
         me.handles = {};
     };
-    me.lookup = function(ref) {
+    me.find = function(ref) {
         var result = null;
         if(ref) {
             result = me.handles[ref];

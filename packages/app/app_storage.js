@@ -27,7 +27,7 @@ package.app.storage = function AppStorage(me) {
         get: function(object) {
             var cache = me.cache();
             if(cache) {
-                var keys = me.storage.cache.keyList(cache);
+                var keys = cache.members();
                 return keys.map(function(item) {
                     return [item];
                 });

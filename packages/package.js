@@ -79,6 +79,14 @@ function package_init(package_name, component_name, callback, child_name = null,
     /* Create component proxy */
     var component_obj = new Proxy({id: id, package: package_name, component: component_name, child: child_name}, {
         get: function (object, property) {
+            var result = undefined;
+            var lookup = Reflect.get(object, "lookup");
+            if(lookup) {
+                result = lookup(property);
+                if(typeof result !== "undefined") {
+                    return result;
+                }
+            }
             result = package_general(object, property);
             if (result) {
                 return result;
