@@ -49,10 +49,10 @@ package.ui.layout = function UILayout(me) {
         } while (widget);
     };
     me.pageSize = function (target) {
-        var container = me.ui.node.container(target, me.widget.container.id).parentNode;
+        var container = me.ui.node.container(target, me.widget.container.id);
         var region = me.ui.rect.relative_region(container);
-        var pageHeight = container.offsetHeight - region.top;
-        var pageWidth = container.offsetWidth;
+        var pageHeight = container.parentNode.offsetHeight - region.top;
+        var pageWidth = container.parentNode.offsetWidth;
         return {width: pageWidth, height: pageHeight};
     };
     me.reflow = function (source, target, usePages, pageClass, columnCount = 1) {
