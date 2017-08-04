@@ -111,13 +111,16 @@ package.ui.element = function UIElement(me) {
         }
     };
     me.create = function (properties, parent, context=null) {
-        if(!properties) {
-            return;
+        if(typeof properties === "string") {
+            properties = me.send(properties, parent, context);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
                 me.create(item, parent, context);
             });
+            return;
+        }
+        if(!properties) {
             return;
         }
         if(!Object.keys(properties).length) {

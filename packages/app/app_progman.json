@@ -76,6 +76,9 @@
                 "Accessories", []
             ],
             [
+                "Storage", "storage.file./storage.items"
+            ],
+            [
                 "Utilities", [
                     {
                         "text": "Terminal",

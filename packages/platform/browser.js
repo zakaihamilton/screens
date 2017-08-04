@@ -19,7 +19,8 @@ package.include({
         "json"
     ],
     "storage": [
-        "cache"
+        "cache",
+        "file"
     ],
     "ui": [
         "event",
