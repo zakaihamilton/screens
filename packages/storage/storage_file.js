@@ -35,18 +35,6 @@ package.storage.file = function StorageFile(me) {
         }
         return item;
     };
-    me.items = function(object) {
-        var items = object.members.map(function(member) {
-            var item = {
-                "text": member.name,
-                "ui.basic.src": "/packages/res/icons/default.png",
-                "app.progman.args": member.name,
-                "ui.touch.dblclick": "app.progman.shell"
-            };
-            return item;
-        });
-        return items;
-    };
     me.members = function(object) {
         var members = object.members;
         if(Array.isArray(members)) {

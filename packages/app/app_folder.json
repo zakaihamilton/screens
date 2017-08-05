@@ -1,0 +1,12 @@
+{
+    "icon": "/packages/res/icons/folder.png",
+    "ui.style.left": "350px",
+    "ui.style.top": "350px",
+    "ui.style.width": "400px",
+    "ui.style.height": "400px",
+    "widget.menu.items": [
+        ["File", [
+                ["Open"]
+            ]]
+    ]
+}

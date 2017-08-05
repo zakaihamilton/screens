@@ -112,7 +112,7 @@ package.ui.element = function UIElement(me) {
     };
     me.create = function (properties, parent, context=null) {
         if(typeof properties === "string") {
-            properties = me.send(properties, parent, context);
+            properties = me.get(parent, properties, context);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
