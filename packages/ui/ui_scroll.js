@@ -42,11 +42,22 @@ package.ui.scroll = function UIScroll(me) {
     }
     };
     me.set_pos = function (object, type, pos) {
+        pos += "px";
+        var changed = false;
         if (type === "vertical") {
-            me.set(object, "ui.style.top", pos + "px");
+            var top = me.get(object, "ui.style.top");
+            if(top !== pos) {
+                me.set(object, "ui.style.top", pos);
+                changed = true;
+            }
         } else if (type === "horizontal") {
-            me.set(object, "ui.style.left", pos + "px");
+            var left = me.get(object, "ui.style.left");
+            if(left !== pos) {
+                me.set(object, "ui.style.left", pos);
+                changed = true;
+            }
         }
+        return changed;
     };
     me.scroll_pos = function (object, type, percent) {
         if (type === "vertical") {
@@ -75,6 +86,13 @@ package.ui.scroll = function UIScroll(me) {
             return object.scrollTop;
         } else if (type === "horizontal") {
             return object.scrollLeft;
+        }
+    };
+    me.set_current_pos = function(object, type, value) {
+        if (type === "vertical") {
+            object.scrollTop = value;
+        } else if (type === "horizontal") {
+            object.scrollLeft = value;
         }
     };
     me.by = function (object, type, distance) {

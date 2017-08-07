@@ -53,7 +53,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
                 position = me.ui.scroll.percent_to_pos(length, scroll_percent);
             }
-            me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
+            var changed = me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
+            if(changed) {
+                var scrolledInfo = {};
+                scrolledInfo[scroll_type] = me.ui.scroll.current_pos(content, scroll_type);
+                me.set(container, "scrolled", scrolledInfo);
+            }
         }
     };
     me.draw = {
@@ -90,6 +95,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             me.ui.scroll.by(content, scroll_type, scrollSize);
             me.update.set(container);
             me.set(scrollbar, "snap");
+        }
+    };
+    me.scrollTo = {
+        set: function (object, value) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var content = me.widget.container.content(container);
+            me.ui.scroll.set_current_pos(content, scroll_type, value);
+            me.update.set(container);
         }
     };
     me.track = {

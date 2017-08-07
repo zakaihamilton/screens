@@ -11,6 +11,7 @@ package.app.transform = function AppTransform(me) {
         }
         me.singleton = me.ui.element.create(__json__, "desktop", "self");
         me.link("update", "app.transform.update", true, me.singleton);
+        me.link("scrolled", "app.transform.scrolled", true, me.singleton.var.layout);
         me.set(me.singleton, "app.transform.convert");
     };
     me.init = function () {
@@ -27,7 +28,8 @@ package.app.transform = function AppTransform(me) {
             pages: true,
             columns: true,
             language: "Auto",
-            "fontSize": "24px"
+            fontSize: "24px",
+            scrollPos:0
         });
         me.options.autoScroll = false;
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.convert.set);
@@ -50,6 +52,7 @@ package.app.transform = function AppTransform(me) {
         me.pages = me.ui.property.toggleOptionSet(me, "pages", me.reflow.set);
         me.columns = me.ui.property.toggleOptionSet(me, "columns", me.reflow.set);
         me.headings = me.ui.property.toggleOptionSet(me, "headings", me.convert.set);
+        me.scrollPos = me.ui.property.choiceOptionSet(me, "scrollPos");
         me.ui.theme.useStylesheet("kab.terms");
     };
     me.updateWidgets = function (showInput) {
@@ -59,7 +62,6 @@ package.app.transform = function AppTransform(me) {
         me.set(me.singleton.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(me.singleton.var.layout, "ui.style.fontSize", me.options.fontSize);
         me.set(me.singleton, "update");
-        me.updateScrolling();
     };
     me.updateScrolling = function() {
         var scrollbar = me.singleton.var.layout.var.vertical;
@@ -71,6 +73,7 @@ package.app.transform = function AppTransform(me) {
         me.set(scrollbar, "snapToPage", snapToPage);
         me.set(scrollbar, "pageSize", pageSize.height);
         me.set(scrollbar, "autoScroll", me.options.autoScroll);
+        me.set(scrollbar, "scrollTo", me.options.scrollPos);
         me.set(scrollbar, "snap");
     };
     me.new = {
@@ -84,6 +87,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.convert = {
         set: function (object) {
+            var scrollPos = me.options.scrollPos;
             me.ui.layout.clear(me.singleton.var.layout);
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if (text) {
@@ -108,6 +112,7 @@ package.app.transform = function AppTransform(me) {
                             me.set(me.singleton.var.output, "ui.basic.html", text);
                         }
                         me.ui.layout.move(me.singleton.var.output, me.singleton.var.layout);
+                        me.options.scrollPos = scrollPos;
                         me.set(me.singleton, "update");
                     }, text, me.options);
                 }, language);
@@ -131,6 +136,13 @@ package.app.transform = function AppTransform(me) {
             var columnCount = me.options.columns ? 2 : 1;
             me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
             me.updateScrolling();
+        }
+    };
+    me.scrolled = {
+        set: function(object, value) {
+            if("vertical" in value) {
+                me.set(me.singleton, "app.transform.scrollPos", value.vertical);
+            }
         }
     };
 };
