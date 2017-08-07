@@ -1,5 +1,7 @@
 function package_path(object, path) {
-    var items = path.split(".");
+    var items = [].concat.apply([], path.split('"').map(function (v, i) {
+        return i % 2 ? v : v.split('.');
+    })).filter(Boolean);
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
@@ -81,9 +83,9 @@ function package_init(package_name, component_name, callback, child_name = null,
         get: function (object, property) {
             var result = undefined;
             var lookup = Reflect.get(object, "lookup");
-            if(lookup) {
+            if (lookup) {
                 result = lookup(property);
-                if(typeof result !== "undefined") {
+                if (typeof result !== "undefined") {
                     return result;
                 }
             }

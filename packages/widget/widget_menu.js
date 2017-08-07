@@ -75,7 +75,7 @@ package.widget.menu = function WidgetMenu(me) {
                 return;
             }
             object.selected_item = item;
-            me.set(object, "ui.style.zIndex", "1");
+            me.set(object, "ui.style.zIndex", "10");
             me.set(object, "ui.property.trickle", {
                 "ui.touch.over": "hover",
                 "ui.theme.remove": "select"

@@ -320,9 +320,6 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        if (styles && styles.heading && options.headings) {
-            html += "<span class=\"kab-term-heading\">" + styles.heading + "</span>";
-        }
         if (styles && styles.diagram) {
             if (!me.diagrams[styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
@@ -337,6 +334,9 @@ package.kab.terms = function KabTerms(me) {
         }
         if (styles && styles.phase) {
             html += "<span class=\"kab-term-phase-" + styles.phase + "\"";
+            if (styles && styles.heading && options.headings) {
+                html += " kab-term-heading=\"" + styles.heading + "\"";
+            }
             if (!options.keepSource && !expansion && options.doTranslation && term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }
@@ -345,6 +345,9 @@ package.kab.terms = function KabTerms(me) {
             html += "<span class=\"kab-term-phase-none\"";
             if (term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
+            }
+            if (styles && styles.heading && options.headings) {
+                html += " kab-term-heading=\"" + styles.heading + "\"";
             }
             html += ">" + text + "</span>";
         } else {

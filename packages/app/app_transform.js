@@ -29,6 +29,7 @@ package.app.transform = function AppTransform(me) {
             language: "Auto",
             "fontSize": "24px"
         });
+        me.options.autoScroll = false;
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.convert.set);
         me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.convert.set);
         me.keepSource = me.ui.property.toggleOptionSet(me, "keepSource", me.convert.set);
@@ -39,7 +40,7 @@ package.app.transform = function AppTransform(me) {
             }
             me.updateWidgets(value);
         });
-        me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", me.updateScrolling, null);
+        me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", me.updateScrolling);
         me.snapToPage = me.ui.property.toggleOptionSet(me, "snapToPage", me.updateScrolling);
         me.language = me.ui.property.choiceOptionSet(me, "language", me.convert.set);
         me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {

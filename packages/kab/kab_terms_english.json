@@ -71,6 +71,10 @@
             "suffix":"</b>"
         },
         {
+            "find":"/\\\n(\\d+\\))",
+            "replace":"\n<b>$1</b>"
+        },
+        {
             "find":"/\\\n(\\d+\\.)",
             "replace":"\n<b>$1</b>"
         },
@@ -92,6 +96,10 @@
         {
             "find":"/<\\/(h\\d)><\\/p>",
             "replace":"</$1>"
+        },
+        {
+            "find":"/\\s?\\[\\s?\\]",
+            "replace":""
         },
         {
             "find":"/<p>[\\s]?<\\/p>",
@@ -844,7 +852,7 @@
         },
         "HaVaYaH":{
             "translation":"Tetragrammaton",
-            "style":{"heading":"י-ה-ו-ה","diagram":"Tetragrammaton"}
+            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Haita":{
             "translation":"was"
@@ -1170,7 +1178,7 @@
             "case":"sensitive",
             "expansion":["Mayin","Duchrin"]
         },
-        "Mayin Nukvin":{
+        "Mayin Duchrin":{
             "translation":"Male Waters"
         },
         "Reshimot":{
@@ -1306,6 +1314,10 @@
             "name":true,
             "translation":"Vav [ו]"
         },
+        "Aleph":{
+            "name":true,
+            "translation":"Aleph [א]"
+        },
         "Viv":{
             "name":true,
             "translation":"Vav [ו]"
@@ -1328,19 +1340,23 @@
         },
         "Yud HaVaYaH":{
             "prefix":"The",
-            "translation":"Yud of Tetragrammaton"
+            "translation":"Yud of Tetragrammaton",
+            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Yod HaVaYaH":{
             "prefix":"The",
-            "translation":"Yod of Tetragrammaton"
+            "translation":"Yod of Tetragrammaton",
+            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Hey HaVaYaH":{
             "prefix":"The",
-            "translation":"Hey of Tetragrammaton"
+            "translation":"Hey of Tetragrammaton",
+            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Vav HaVaYaH":{
             "prefix":"The",
-            "translation":"Vav of Tetragrammaton"
+            "translation":"Vav of Tetragrammaton",
+            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
         },
         "Abba":{
             "translation":"Father",
@@ -1486,6 +1502,36 @@
         },
         "Kli Kabbalah":{
             "translation":"Vessel of Reception"
+        },
+        "YAHDONHY":{
+            "translation":"Combined Tetragrammaton",
+            "style":{"heading":"Y-A-H-D-O-N-H-Y י-א-ה-ד-ו-נ-ה-י"}
+        },
+        "Sof":{
+            "translation":"End"
+        },
+        "Hochmot":{
+            "translation":"Wisdoms"
+        },
+        "HS":{
+            "expansion":"Hochma Stimaa"
+        },
+        "Hochma Stimaa":{
+            "translation":"Blocked Wisdom",
+            "style":{"heading":"Vessel"}
+        },
+        "Yetzirot":{
+            "translation":"Formations",
+            "style":{"heading":"World","phase":"three"}
+        },
+        "Harut":{
+            "translation":"Engraved"
+        },
+        "Herut":{
+            "translation":"Freedom"
+        },
+        "SAM":{
+            "translation":"The Other Side (Impure)"
         }
     }
 }

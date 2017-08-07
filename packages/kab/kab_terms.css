@@ -1,12 +1,24 @@
+[kab-term-heading]:before {
+    position:absolute;
+    bottom:1em;
+    z-index:1;
+    vertical-align:top;
+    font-weight:bold;
+    font-size:40%;
+    text-transform:uppercase;
+    content: attr(kab-term-heading);
+    opacity: 1;
+}
+
 [kab-term-tooltip] {
     position: relative;
     white-space:nowrap;
 }
 
 [kab-term-tooltip]:after {
-    opacity: 0;
+    visibility:hidden;
     pointer-events: none;
-    transition: all 0.18s ease-out 0.18s;
+    transition: border 0.10s ease-in;
     bottom: -1px;
     left: -1px;
     position: absolute;
@@ -20,17 +32,18 @@
     min-height: 100%;
     padding-top:1px;
     vertical-align: middle;
-    box-shadow: 10px 10px 5px grey;
-    border:2px solid black;
+    box-shadow: 5px 5px 5px grey;
 }
 
 [kab-term-tooltip]:hover:after {
-    opacity: 1;
+    visibility:visible;
     pointer-events: auto;
     z-index: 100;
+    border:2px solid black;
 }
 
 .kab-term-phase-none {
+    position:relative;
     background:white;
     border:1px solid transparent;
     border-bottom:1px dashed darkgray;
@@ -41,6 +54,7 @@
 }
 
 .kab-term-phase-root {
+    position:relative;
     background:white;
     border:1px solid gray;
 }
@@ -50,6 +64,7 @@
 }
 
 .kab-term-phase-one {
+    position:relative;
     background:#FFF3CA;
     border:1px solid lightyellow;
 }
@@ -59,6 +74,7 @@
 }
 
 .kab-term-phase-two {
+    position:relative;
     background:#C8D9F9;
     border:1px solid lightblue;
 }
@@ -68,6 +84,7 @@
 }
 
 .kab-term-phase-three {
+    position:relative;
     background:#F5CCCB;
     border:1px solid coral;
 }
@@ -77,6 +94,7 @@
 }
 
 .kab-term-phase-four {
+    position:relative;
     background:#D9EAD2;
     border:1px solid lightgreen;
 }
@@ -86,22 +104,13 @@
 }
 
 .kab-term-phase-collective {
+    position:relative;
     background:Plum;
     border:1px solid MediumPurple;
 }
 
 .kab-term-phase-collective:hover:after {
     background:Plum;
-}
-
-.kab-term-heading {
-    position:absolute;
-    margin-left:0px;
-    margin-top:-4px;
-    font-weight:bold;
-    font-size:50%;
-    text-transform:uppercase;
-    line-height:10px;
 }
 
 .kab-term-polaroid-left {
