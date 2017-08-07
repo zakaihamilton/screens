@@ -33,7 +33,7 @@ package.ui.layout = function UILayout(me) {
         do {
             var widget = target.firstChild;
             if (widget) {
-                var tagName = widget.tagName.toLowerCase();
+                var tagName = widget.tagName ? widget.tagName.toLowerCase() : "";
                 if (tagName === "div") {
                     do {
                         var childWidget = widget.firstChild;
@@ -77,7 +77,7 @@ package.ui.layout = function UILayout(me) {
             if(!location) {
                 location = target;
             }
-            if (widget.style.order) {
+            if (widget.style && widget.style.order) {
                 location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
             } else {
                 location.appendChild(widget);

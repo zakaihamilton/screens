@@ -85,7 +85,13 @@ package.kab.terms = function KabTerms(me) {
                             if (expansion) {
                                 expansion = [].concat(expansion);
                                 expansion = expansion.map(function (item) {
-                                    return me.parse(null, item, options);
+                                    if(item.includes(term)) {
+                                        return item;
+                                    }
+                                    else {
+                                        console.log("parsing: " + item + " in term: " + term);
+                                        return me.parse(null, item, options);
+                                    }
                                 });
                                 if (expansion.length > 1) {
                                     expansion = expansion.slice(0, -1).join(", ") + " and " + expansion.slice(-1).toString();

@@ -4,21 +4,22 @@
  */
 
 package.core.string = function CoreString(me) {
-    me.parseWords = function (callback, string) {
-        var result = me.splitBy(callback, string, [
-            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”"
-        ], 0);
-        return result;
-    };
-    me.splitBy = function(callback, string, arrayOfDelimiters, index) {
-        if(index >= arrayOfDelimiters.length) {
-            var words = string.split(" ");
-            callback(words);
-            return words.join(" ");
+    me.parseWords = function(callback, string) {
+        var delimiters = [
+            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”","!"
+        ];
+        for(var index = 0; index < delimiters.length; index++) {
+            var delimiter = delimiters[index];
+            string = string.split(delimiter).join(" " + delimiter + " ");
         }
-        return string.split(arrayOfDelimiters[index]).map(function(parts) {
-            return me.splitBy(callback, parts, arrayOfDelimiters, index+1);
-        }).join(arrayOfDelimiters[index]);
+        var words = string.split(" ");
+        callback(words);
+        string = words.join(" ");
+        for(index = 0; index < delimiters.length; index++) {
+            var delimiter = delimiters[index];
+            string = string.split(" " + delimiter + " ").join(delimiter);
+        }
+        return string;
     };
     me.language = function(string) {
         var position = string.search(/[A-Z]/);

@@ -19,7 +19,8 @@
     },
     "spelling": {
         "Hakaaof":"Hakaa of",
-        "onionskins":"onion skins"
+        "onionskins":"onion skins",
+        "OhrZA":"Ohr ZA"
     },
     "format": [
         {
@@ -202,6 +203,11 @@
         "Kli ZA": {
             "prefix":"The",
             "translation": "Vessel of ZA",
+            "style": {"heading":"vessel","phase":"three"}
+        },
+        "Ohr ZA": {
+            "prefix":"The",
+            "translation": "Light of ZA",
             "style": {"heading":"vessel","phase":"three"}
         },
         "Behinat Shoresh": {
@@ -941,8 +947,23 @@
         "Shoreshim":{
             "translation":"Roots"
         },
+        "Histaklut":{
+            "translation":"Observation"
+        },
+        "Histaklut Aleph":{
+            "translation":"First Observation"
+        },
+        "Histaklut Bet":{
+            "translation":"Second Observation"
+        },
         "Histalkut":{
             "translation":"Departure"
+        },
+        "Histalkut Aleph":{
+            "translation":"First Departure"
+        },
+        "Histalkut Bet":{
+            "translation":"Second Departure"
         },
         "Halbasha":{
             "translation":"Clothing"
@@ -1532,6 +1553,22 @@
         },
         "SAM":{
             "translation":"The Other Side (Impure)"
+        },
+        "Parashat":{
+            "prefix":"The",
+            "translation":"Portion of"
+        },
+        "Chap":{
+            "expansion":"Chapter"
+        },
+        "Lo Nahara":{
+            "translation":"No Light"
+        },
+        "Ohr Av":{
+            "translation":"Coarse Light"
+        },
+        "Ohr Zach":{
+            "translation":"Pure Light"
         }
     }
 }
