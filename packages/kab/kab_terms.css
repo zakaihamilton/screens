@@ -1,13 +1,15 @@
 [kab-term-heading]:before {
     position:absolute;
-    bottom:1em;
+    margin-top:0em;
+    vertical-align:middle;
+    height:1em;
+    line-height: 100%;
     z-index:1;
-    vertical-align:top;
     font-weight:bold;
     font-size:40%;
     text-transform:uppercase;
     content: attr(kab-term-heading);
-    opacity: 1;
+    pointer-events: none;
 }
 
 [kab-term-tooltip] {
@@ -40,6 +42,7 @@
     pointer-events: auto;
     z-index: 100;
     border:2px solid black;
+    font-weight:bold;
 }
 
 .kab-term-phase-none {
