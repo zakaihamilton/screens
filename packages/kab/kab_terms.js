@@ -124,7 +124,8 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             if (me.language !== "debug") {
-                wordsString = me.removeDuplicates(wordsString);
+                wordsString = me.removeDuplicates(wordsString, "(", ")");
+                wordsString = me.removeDuplicates(wordsString, "[", "]");
                 wordsString = me.cleanText(wordsString);
             }
             callback(wordsString);
@@ -159,7 +160,7 @@ package.kab.terms = function KabTerms(me) {
     };
     me.removeFormatting = function (string) {
         string = string.replace(/\ kab-term-tooltip=".*?"/g, "");
-        string = string.replace(/<span class="kab-term-heading">.*?<\/span>/g, "");
+        string = string.replace(/\ kab-term-heading=".*?"/g, "");
         string = string.replace(/\ class=".*?"/g, "");
         string = string.replace(/<\/?p>/g, "");
         string = string.replace(/<\/?span>/g, "");
@@ -167,15 +168,16 @@ package.kab.terms = function KabTerms(me) {
         string = string.toLowerCase();
         return string;
     };
-    me.removeDuplicates = function (wordsString) {
-        var parts = wordsString.split(/(\(.*?\))/);
+    me.removeDuplicates = function (wordsString, openChar, closeChar) {
+        var parts = wordsString.split(me.regex("/(\\" + openChar + ".*?\\" + closeChar + ")"));
         for (var i = 0; i < parts.length - 1; i++) {
             var fragment = parts[i + 1];
-            if (fragment.match(/\(\d+\)/)) {
+            if (fragment.match(me.regex("/\\" + openChar + "\\d+\\" + closeChar))) {
                 i++;
                 continue;
             }
-            if (fragment.startsWith("(") && fragment.endsWith(")")) {
+            var checkFragment = false;
+            if (fragment.startsWith(openChar) && fragment.endsWith(closeChar)) {
                 var fragment = fragment.slice(1, -1);
                 if (me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
                     parts.splice(i + 1, 1);
@@ -189,6 +191,7 @@ package.kab.terms = function KabTerms(me) {
     };
     me.cleanText = function (wordsString) {
         wordsString = wordsString.replace(" .", ".");
+        wordsString = wordsString.replace(" ,", ",");
         return wordsString;
     };
     me.regex = function (string) {
