@@ -19,7 +19,7 @@ package.kab.terms = function KabTerms(me) {
                 }
                 me.core.console.log("using language: " + me.language + " with " + numTerms + " terms");
                 if (callback) {
-                    callback();
+                    callback(numTerms);
                 }
             }
         }, "kab.terms_" + me.language);

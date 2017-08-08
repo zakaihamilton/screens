@@ -101,7 +101,7 @@ package.app.transform = function AppTransform(me) {
                 var beforeConversion = performance.now();
                 me.set(me.singleton.var.footer, "ui.style.display", "block");
                 me.set(me.singleton.var.footer, "ui.basic.text", "Transforming...");
-                me.kab.terms.setLanguage(function () {
+                me.kab.terms.setLanguage(function (numTerms) {
                     me.kab.terms.parse(function (text) {
                         if (me.prevLanguage) {
                             me.set(me.singleton.var.output, "ui.theme.remove", me.prevLanguage);
@@ -118,7 +118,7 @@ package.app.transform = function AppTransform(me) {
                         me.set(me.singleton, "update");
                         me.set(me.singleton.var.spinner, "ui.style.visibility", "hidden");
                         var afterConversion = performance.now();
-                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds");
+                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds for " + numTerms + " terms in " + language);
                         setTimeout(function() {
                             me.set(me.singleton.var.footer, "ui.basic.text", "");
                         }, 5000);

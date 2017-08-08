@@ -1569,6 +1569,34 @@
         },
         "Ohr Zach":{
             "translation":"Pure Light"
+        },
+        "Ohr Pashut":{
+            "translation":"Simple Light"
+        },
+        "Hidush Tzura":{
+            "translation":"Renewal of Form"
+        },
+        "Hishtavut Tzura":{
+            "translation":"Equivalence of Form"
+        },
+        "Lo Efshar":{
+            "case":"insensitive",
+            "translation":"Not Possible"
+        },
+        "Efshar":{
+            "case":"insensitive",
+            "translation":"Possible"
+        },
+        "Lo ka Mekavein":{
+            "case":"insensitive",
+            "translation":"Without Intention"
+        },
+        "ka Mekavein":{
+            "case":"insensitive",
+            "translation":"With Intention"
+        },
+        "Haiut":{
+            "translation":"Sustenance"
         }
     }
 }
