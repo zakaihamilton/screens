@@ -59,11 +59,25 @@
 
 .app-transform-page {
     position:relative;
-    border-top:1px solid gray;
-    margin:0px -20px;
-    padding:40px 40px;
-    text-align:justify;
     display:flex;
     flex-direction:column;
     box-sizing:border-box;
+    margin:0px -20px;
+    border-top:1px solid gray;
+}
+
+.app-transform-page-content {
+    padding:40px 40px;
+    position:relative;
+    text-align:justify;
+    box-sizing:border-box;
+}
+
+.app-transform-page-number {
+    text-align:center;
+    vertical-align:bottom;
+    color:gray;
+    position:absolute;
+    left:50%;
+    font-size:50%;
 }

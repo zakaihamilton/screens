@@ -98,6 +98,11 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
     };
     me.scrollTo = {
+        get: function (object) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var content = me.widget.container.content(container);
+            return me.ui.scroll.current_pos(content, scroll_type);
+        },
         set: function (object, value) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);

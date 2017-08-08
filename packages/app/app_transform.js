@@ -134,7 +134,14 @@ package.app.transform = function AppTransform(me) {
                 target.style.margin = "20px 40px";
             }
             var columnCount = me.options.columns ? 2 : 1;
-            me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, me.options.pages, "app.transform.page", columnCount);
+            var reflowOptions = {
+                pageClass:"app.transform.page",
+                contentClass:"app.transform.page.content",
+                pageNumberClass:"app.transform.page.number",
+                usePages:me.options.pages,
+                columnCount:columnCount
+            };
+            me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, reflowOptions);
             me.updateScrolling();
         }
     };

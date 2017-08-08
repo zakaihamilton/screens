@@ -35,12 +35,15 @@ package.ui.layout = function UILayout(me) {
             if (widget) {
                 var tagName = widget.tagName ? widget.tagName.toLowerCase() : "";
                 if (tagName === "div") {
+                    var content = widget.var.content;
                     do {
-                        var childWidget = widget.firstChild;
+                        var childWidget = content.firstChild;
                         if (childWidget) {
                             source.appendChild(childWidget);
                         }
                     } while (childWidget);
+                    widget.removeChild(widget.var.content);
+                    widget.var.content = null;
                     target.removeChild(widget);
                 } else {
                     source.appendChild(widget);
@@ -55,7 +58,7 @@ package.ui.layout = function UILayout(me) {
         var pageWidth = container.parentNode.offsetWidth;
         return {width: pageWidth, height: pageHeight};
     };
-    me.reflow = function (source, target, usePages, pageClass, columnCount = 1) {
+    me.reflow = function (source, target, options) {
         target = me.content(target);
         me.prepare(source, target);
         var pageSize = me.pageSize(target);
@@ -63,9 +66,10 @@ package.ui.layout = function UILayout(me) {
             return;
         }
         var pageIndex = 1;
-        var page = null;
-        if (usePages) {
-            page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+        var page = null, content = null;
+        if (options.usePages) {
+            page = me.createPage(target, pageSize.width, pageSize.height, pageIndex, options);
+            content = page.var.content;
         }
         var previousWidget = null;
         for (; ; ) {
@@ -73,37 +77,35 @@ package.ui.layout = function UILayout(me) {
             if (!widget) {
                 break;
             }
-            var location = page;
-            if(!location) {
-                location = target;
-            }
+            var location = content ? content : target;
             if (widget.style && widget.style.order) {
                 location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
             } else {
                 location.appendChild(widget);
             }
-            if(!page) {
+            if (!page) {
                 continue;
             }
             var newPage = false;
-            if (page.scrollHeight > page.clientHeight || page.scrollWidth > page.clientWidth) {
+            if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
                 newPage = true;
             }
             if (!(widget.innerHTML || widget.firstChild)) {
-                page.removeChild(widget);
+                content.removeChild(widget);
                 widget = null;
             }
             if (newPage) {
                 if (widget) {
-                    page.removeChild(widget);
+                    content.removeChild(widget);
                 }
                 pageIndex++;
-                page = me.createPage(target, pageClass, pageSize.width, pageSize.height, pageIndex, columnCount);
+                page = me.createPage(target, pageSize.width, pageSize.height, pageIndex, options);
+                content = page.var.content;
                 if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
-                    page.appendChild(previousWidget);
+                    content.appendChild(previousWidget);
                 }
                 if (widget) {
-                    page.appendChild(widget);
+                    content.appendChild(widget);
                 }
                 previousWidget = null;
             } else if (widget) {
@@ -130,17 +132,31 @@ package.ui.layout = function UILayout(me) {
         }
         return match;
     };
-    me.createPage = function (target, pageClass, pageWidth, pageHeight, pageIndex, columnCount) {
+    me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
         target = me.content(target);
         var page = me.ui.element.create({
             "ui.basic.tag": "div",
-            "ui.theme.class": pageClass,
+            "ui.theme.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
-            "ui.style.display": "block",
-            "ui.style.columnCount": columnCount,
-            "ui.style.columnGap": "100px"
-        }, target);
+            "ui.attribute.pageNumber": pageIndex,
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag":"div",
+                    "ui.theme.class": options.pageNumberClass,
+                    "ui.basic.var": "pageNumber",
+                    "ui.basic.text":pageIndex
+                },
+                {
+                    "ui.basic.tag":"div",
+                    "ui.theme.class": options.contentClass,
+                    "ui.style.columnCount": options.columnCount,
+                    "ui.style.columnGap": "100px",
+                    "ui.basic.var": "content",
+                    "ui.style.overflow": "hidden"
+                }
+            ]
+        }, target, "self");
         return page;
     };
     me.createBreak = function (target) {
