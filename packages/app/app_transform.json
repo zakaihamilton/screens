@@ -10,7 +10,7 @@
     "widget.menu.items": [
         ["File", [
                 ["New", "app.transform.new"],
-                ["Convert", "app.transform.convert", {
+                ["Transform", "app.transform.transform", {
                         "separator": true
                     }
                 ]
@@ -123,10 +123,10 @@
             "ui.basic.var": "input"
         },
         {
-            "ui.basic.text": "Convert",
-            "ui.touch.click": "app.transform.convert",
-            "ui.basic.var": "convert",
-            "ui.theme.add": "app.transform.convert"
+            "ui.basic.text": "Transform",
+            "ui.touch.click": "app.transform.transform",
+            "ui.basic.var": "transform",
+            "ui.theme.add": "app.transform.transform"
         },
         {
             "ui.basic.tag": "div",

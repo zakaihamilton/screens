@@ -74,6 +74,21 @@
     display:flex;
 }
 
+.widget-window-footer {
+    flex:none;
+    height:18px;
+    display:none;
+    color:black;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    line-height:18px;
+    background-color:#C0C0C0;
+    border-top: 1px solid black;
+    position: relative;
+    padding-top:2px;
+    padding-left: 2px;
+}
+
 .widget-window-title.child {
     display:none;
 }

@@ -49,7 +49,7 @@
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
-    display:none;
+    visibility:hidden;
 }
 
 @keyframes spin {
