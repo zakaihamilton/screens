@@ -40,6 +40,9 @@ package.ui.layout = function UILayout(me) {
                         var childWidget = content.firstChild;
                         if (childWidget) {
                             source.appendChild(childWidget);
+                            if(childWidget.style) {
+                                childWidget.style.fontSize = "";
+                            }
                         }
                     } while (childWidget);
                     widget.removeChild(widget.var.content);
@@ -47,6 +50,9 @@ package.ui.layout = function UILayout(me) {
                     target.removeChild(widget);
                 } else {
                     source.appendChild(widget);
+                    if(widget.style) {
+                        widget.style.fontSize = "";
+                    }
                 }
             }
         } while (widget);
@@ -106,6 +112,14 @@ package.ui.layout = function UILayout(me) {
                 }
                 if (widget) {
                     content.appendChild(widget);
+                }
+                for(var fontSize = 100; fontSize >= 25; fontSize--) {
+                    if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
+                        widget.style.fontSize = fontSize + "%";
+                    }
+                    else {
+                        break;
+                    }
                 }
                 previousWidget = null;
             } else if (widget) {
