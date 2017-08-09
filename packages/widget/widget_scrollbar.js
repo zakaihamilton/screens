@@ -13,6 +13,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.snapToScrollWait = 150;
             object.snapToPageUnits = 50;
             object.scrollSize = 10;
+            object.delayTimeout = 0;
+            object.deltaDistance = 0;
         }
     };
     me.scrollType = {
@@ -61,12 +63,22 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             }
         }
     };
+    me.refresh = {
+        set: function(object) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var scrollbar = container.var[scroll_type];
+            if(scrollbar.refresh_timer) {
+                clearTimeout(scrollbar.refresh_timer);
+            }
+            scrollbar.refresh_timer = setTimeout(function() {
+                me.update.set(object);
+                me.update.set(object);
+            }, scrollbar.delayTimeout);
+        }
+    };
     me.draw = {
         set: function (object, value) {
-            setTimeout(function () {
-                me.update.set(object);
-                me.update.set(object);
-            }, 0);
+            me.refresh.set(object);
         }
     };
     me.before = {
@@ -79,7 +91,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 scrollSize = scrollbar.pageSize;
             }
             me.ui.scroll.by(content, scroll_type, -scrollSize);
-            me.update.set(container);
+            me.refresh.set(container);
             me.set(scrollbar, "snap");
         }
     };
@@ -93,7 +105,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 scrollSize = scrollbar.pageSize;
             }
             me.ui.scroll.by(content, scroll_type, scrollSize);
-            me.update.set(container);
+            me.refresh.set(container);
             me.set(scrollbar, "snap");
         }
     };
@@ -107,7 +119,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             me.ui.scroll.set_current_pos(content, scroll_type, value);
-            me.update.set(container);
+            me.refresh.set(container);
         }
     };
     me.track = {
@@ -130,7 +142,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             if (scroll_direction > 0) {
                 me.ui.scroll.by(content, scroll_type, scrollSize);
             }
-            me.update.set(container);
+            me.refresh.set(container);
             me.set(scrollbar, "snap");
         }
     };
@@ -159,7 +171,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     var container = me.ui.node.container(object, me.widget.container.id);
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, scrollbar.autoScrollSize);
-                    me.update.set(container);
+                    me.refresh.set(container);
                 }, scrollbar.autoScrollSpeed);
             }
         }
@@ -202,9 +214,16 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             var distance = 0 - (value * 10);
-            me.ui.scroll.by(content, scroll_type, distance);
-            me.update.set(container);
-            me.set(scrollbar, "snap");
+            scrollbar.deltaDistance += distance;
+            if(scrollbar.delta_timer) {
+                clearTimeout(scrollbar.delta_timer);
+            }
+            scrollbar.delta_timer = setTimeout(function() {
+                me.ui.scroll.by(content, scroll_type, scrollbar.deltaDistance);
+                me.refresh.set(container);
+                me.set(scrollbar, "snap");
+                scrollbar.deltaDistance = 0;
+            }, scrollbar.delayTimeout);
         }
     };
     me.snap = {
@@ -255,7 +274,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     }
                     if(scrollBy) {
                         me.ui.scroll.by(content, scroll_type, scrollBy);
-                        me.update.set(container);
+                        me.refresh.set(container);
                     }
                     else {
                         clearInterval(scrollbar.deltaInterval);
