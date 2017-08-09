@@ -25,6 +25,17 @@ package.widget.window = function WidgetWindow(me) {
             me.set(object, "ui.resize.enabled", !value && !maximized);
         });
     };
+    me.storeRegion = function(object) {
+        var window = me.window(object);
+        var parent_window = me.parent(window);
+        var content = null;
+        if (parent_window) {
+            content = me.get(parent_window, "widget.window.content");
+        } else {
+            content = me.ui.element.desktop();
+        }
+        window.restore_region = me.ui.rect.relative_region(window, content);
+    };
     me.mainClass = {
         get: function (object) {
             var window = me.window(object);
@@ -234,14 +245,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             var maximized = me.get(window, "ui.theme.contains", "maximize");
             if(!maximized) {
-                var parent_window = me.parent(window);
-                var content = null;
-                if (parent_window) {
-                    content = me.get(parent_window, "widget.window.content");
-                } else {
-                    content = me.ui.element.desktop();
-                }
-                window.restore_region = me.ui.rect.relative_region(window, content);
+                me.storeRegion(window);
             }
             me.set(window, "ui.property.group", {
                 "ui.theme.add": "minimize",
@@ -285,15 +289,8 @@ package.widget.window = function WidgetWindow(me) {
             });
             me.set(window.var.icon, "ui.style.display", "none");
             var parent_window = me.parent(window);
-            var content = null;
-            if (parent_window) {
-                me.attach(window, parent_window);
-                content = me.get(parent_window, "widget.window.content");
-            } else {
-                content = me.ui.element.desktop();
-            }
             if (!wasMaximized) {
-                window.restore_region = me.ui.rect.relative_region(window, content);
+                me.storeRegion(window);
                 me.set(window, "ui.property.group", {
                     "ui.style.left": "0px",
                     "ui.style.top": "0px",
