@@ -99,13 +99,7 @@ package.core.message = function CoreMessage(me) {
         }
         me.core.console.log("sending: " + path + " with: " + args);
         if (typeof callback === "function") {
-            var before = performance.now();
             var result = callback.apply(null, args);
-            var after = performance.now();
-            var msec = (after - before).toFixed();
-            if(msec > 0) {
-                me.core.console.log(path + " took " + msec + " msec");
-            }
             return result;
         } else {
             me.core.console.log("callback is not a function but rather " + JSON.stringify(callback));
