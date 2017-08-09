@@ -62,7 +62,7 @@ package.kab.terms = function KabTerms(me) {
                             }
                             var word = words[wordIndex + termWordIndex];
                             var matchingTerm = terms[word];
-                            var prefixTerm = prefixes ? word in prefixes : false;
+                            var prefixTerm = prefixes ? word.toLowerCase() in prefixes : false;
                             if (prefixTerm || matchingTerm) {
                                 if (prefixTerm || matchingTerm.ignore) {
                                     if (prefixTerm || collectedWords) {
@@ -135,15 +135,18 @@ package.kab.terms = function KabTerms(me) {
     };
     me.prefix = function(words, wordIndex, item, prefixWord, text, options) {
         var prefixInsert = item.prefix;
-        if(!prefixInsert && me.json.prefixes) {
+        if(!prefixInsert && me.json.prefixes && prefixWord) {
             var prefix = null;
             for(prefix in me.json.prefixes) {
                 var prefixItem = me.json.prefixes[prefix];
-                if(prefix === prefixWord && prefixItem.match) {
+                if(prefix === prefixWord.toLowerCase() && prefixItem.match) {
                     for(var altPrefix in me.json.prefixes) {
                         var altPrefixItem = me.json.prefixes[altPrefix];
                         if(altPrefixItem.match && text.match(me.regex(altPrefixItem.match))) {
                             prefixInsert = altPrefix;
+                            if(prefixWord[0] === prefixWord[0].toUpperCase()) {
+                                prefixInsert = prefixInsert.charAt(0).toUpperCase() + prefixInsert.slice(1);
+                            }
                             break;
                         }
                     }
