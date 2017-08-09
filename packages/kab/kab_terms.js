@@ -17,7 +17,6 @@ package.kab.terms = function KabTerms(me) {
                 if (me.json.terms) {
                     numTerms = Object.keys(me.json.terms).length;
                 }
-                me.core.console.log("using language: " + me.language + " with " + numTerms + " terms");
                 if (callback) {
                     callback(numTerms);
                 }
@@ -35,8 +34,8 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             me.diagrams = {};
-            wordsString = me.fixSpelling(wordsString);
-            wordsString = me.format(wordsString);
+            wordsString = me.send("kab.terms.fixSpelling", wordsString);
+            wordsString = me.send("kab.terms.format", wordsString);
         }
         var prefixes = me.json.prefixes;
         var terms = me.json.terms;
@@ -89,7 +88,6 @@ package.kab.terms = function KabTerms(me) {
                                         return item;
                                     }
                                     else {
-                                        console.log("parsing: " + item + " in term: " + term);
                                         return me.parse(null, item, options);
                                     }
                                 });
@@ -124,9 +122,9 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             if (me.language !== "debug") {
-                wordsString = me.removeDuplicates(wordsString, "(", ")");
-                wordsString = me.removeDuplicates(wordsString, "[", "]");
-                wordsString = me.cleanText(wordsString);
+                wordsString = me.send("kab.terms.removeDuplicates", wordsString, "(", ")");
+                wordsString = me.send("kab.terms.removeDuplicates", wordsString, "[", "]");
+                wordsString = me.send("kab.terms.cleanText", wordsString);
             }
             callback(wordsString);
             return;

@@ -16,7 +16,8 @@ package.include({
         "app",
         "string",
         "handle",
-        "json"
+        "json",
+        "performance"
     ],
     "storage": [
         "cache",

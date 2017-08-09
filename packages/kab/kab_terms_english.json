@@ -20,7 +20,9 @@
     "spelling": {
         "Hakaaof":"Hakaa of",
         "onionskins":"onion skins",
-        "OhrZA":"Ohr ZA"
+        "OhrZA":"Ohr ZA",
+        "OlamTzimtzum":"Olam Tzimtzum",
+        "Hochmade":"Hochma de"
     },
     "format": [
         {
@@ -1597,6 +1599,9 @@
         },
         "Haiut":{
             "translation":"Sustenance"
+        },
+        "Mesabev":{
+            "translation":"Surrounds"
         }
     }
 }
