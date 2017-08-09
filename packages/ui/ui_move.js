@@ -69,11 +69,13 @@ package.ui.move = function UIMove(me) {
         set: function(object, event) {
             me.set(object, "ui.property.group", {
                 "ui.touch.move":null,
-                "ui.touch.up":null
+                "ui.touch.up":null,
             });
             me.set(me.info.target, "ui.property.trickle", {
                 "transition": false
             });
+            var window = me.widget.window.window(me.info.target);
+            me.set(window, "update");
         }
     };
 };

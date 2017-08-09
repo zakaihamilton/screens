@@ -4,9 +4,9 @@
     "ui.style.top": "100px",
     "ui.style.width": "1000px",
     "ui.style.height": "500px",
-    "maximize": null,
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
+    "maximize":null,
     "widget.menu.items": [
         ["File", [
                 ["New", "app.transform.new"],
@@ -118,8 +118,9 @@
             "ui.element.component": "widget.editor",
             "ui.theme.class": "app.transform.input",
             "storage.cache.key": "app-transform-input",
-            "storage.cache.restoreLocal": null,
-            "ui.monitor.change": "storage.cache.storeLocal",
+            "storage.cache.location":"local",
+            "storage.cache.restore": "ui.basic.text",
+            "ui.monitor.change": "app.transform.save",
             "ui.basic.var": "input"
         },
         {
@@ -143,5 +144,8 @@
             "ui.theme.class":"app.transform.spinner",
             "ui.basic.var": "spinner"
         }
-    ]
+    ],
+    "storage.cache.key": "app-transform-window",
+    "storage.cache.location":"local",
+    "storage.cache.restore": "widget.window.store"
 }

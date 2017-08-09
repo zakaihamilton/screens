@@ -20,6 +20,7 @@ package.storage.cache = function StorageCache(me) {
             };
         }
         me.key = me.core.object.property("storage.cache.key");
+        me.location = me.core.object.property("storage.cache.location");
     };
     me.isSupported = function () {
         try {
@@ -32,21 +33,23 @@ package.storage.cache = function StorageCache(me) {
         key = key.replace(/[.]/g, "-");
         return key;
     };
-    me.storeLocal = {
-        set: function(object) {
+    me.store = {
+        set: function(object, value) {
             var key = me.get(object, "storage.cache.key");
-            if(key) {
-                var value = me.get(object, "ui.basic.text");
-                me.set(me.local, key, value);
+            var location = me.get(object, "storage.cache.location");
+            if(key && location) {
+                me.set(me[location], key, value);
             }
         }
     };
-    me.restoreLocal = {
-        set: function(object) {
+    me.restore = {
+        set: function(object, value) {
             var key = me.get(object, "storage.cache.key");
-            if(key) {
-                var value = me.get(me.local, key);
-                me.set(object, "ui.basic.text", value);
+            var location = me.get(object, "storage.cache.location");
+            console.log("restore key: "+ key + " location: " + location + " value: " + value);
+            if(key && location) {
+                var store = me.get(me[location], key);
+                me.set(object, value, store);
             }
         }
     };

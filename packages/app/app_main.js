@@ -28,7 +28,7 @@ package.app.main = function (me) {
         ]);
         package.include("app.progman", function(info) {
             if(info.complete) {
-                me.set(me.send("app.progman.launch"), "minimize", true);
+                me.send("app.progman.launch");
             }
         });
         package.include("app.transform", function(info) {

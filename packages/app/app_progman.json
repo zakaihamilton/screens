@@ -113,5 +113,8 @@
                 ]
             ]
         ]
-    }
+    },
+    "storage.cache.key": "app-progman-window",
+    "storage.cache.location":"local",
+    "storage.cache.restore": "widget.window.store"
 }

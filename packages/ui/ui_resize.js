@@ -95,7 +95,8 @@ package.ui.resize = function UIResize(me) {
             me.set(me.info.target, "ui.property.trickle", {
                 "transition": false
             });
-            me.set(me.info.target, "update");
+            var window = me.widget.window.window(me.info.target);
+            me.set(window, "update");
         }
     };
 };

@@ -10,6 +10,8 @@ package.app.transform = function AppTransform(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__, "desktop", "self");
+        me.singleton.inTransition = 0;
+        console.log("me.singleton.inTransition set to " + me.singleton.inTransition);
         me.link("update", "app.transform.update", true, me.singleton);
         me.link("scrolled", "app.transform.scrolled", true, me.singleton.var.layout);
         me.set(me.singleton, "app.transform.transform");
@@ -76,10 +78,16 @@ package.app.transform = function AppTransform(me) {
         me.set(scrollbar, "scrollTo", me.options.scrollPos);
         me.set(scrollbar, "snap");
     };
+    me.save = {
+        set: function(object, value) {
+            var input = me.singleton.var.input;
+            me.set(input, "storage.cache.store", me.get(input, "ui.basic.text"));
+        }
+    };
     me.new = {
         set: function (object) {
             me.set(me.singleton.var.input, "ui.basic.text", "");
-            me.set(me.singleton.var.input, "storage.cache.storeLocal");
+            me.set(me.singleton.var.input, "storage.cache.store", "");
             me.set(me.singleton.var.output, "ui.basic.html", "");
             me.ui.layout.clear(me.singleton.var.layout);
             me.updateWidgets(true);
@@ -87,10 +95,11 @@ package.app.transform = function AppTransform(me) {
     };
     me.transform = {
         set: function (object) {
-            var scrollPos = me.options.scrollPos;
             me.ui.layout.clear(me.singleton.var.layout);
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if (text) {
+                me.singleton.inTransition++;
+                console.log("me.singleton.inTransition: transform start" + me.singleton.inTransition);
                 me.updateWidgets(me.options.showInput);
                 var language = me.options.language.toLowerCase();
                 if (language === "auto") {
@@ -114,7 +123,6 @@ package.app.transform = function AppTransform(me) {
                             me.set(me.singleton.var.output, "ui.basic.html", text);
                         }
                         me.ui.layout.move(me.singleton.var.output, me.singleton.var.layout);
-                        me.options.scrollPos = scrollPos;
                         me.set(me.singleton, "update");
                         me.set(me.singleton.var.spinner, "ui.style.visibility", "hidden");
                         var afterConversion = performance.now();
@@ -122,6 +130,8 @@ package.app.transform = function AppTransform(me) {
                         setTimeout(function() {
                             me.set(me.singleton.var.footer, "ui.basic.text", "");
                         }, 5000);
+                        me.singleton.inTransition--;
+                        console.log("me.singleton.inTransition: transform end" + me.singleton.inTransition);
                     }, text, me.options);
                 }, language);
             }
@@ -134,7 +144,10 @@ package.app.transform = function AppTransform(me) {
     };
     me.update = {
         set: function (object) {
+            me.singleton.inTransition++;
+            console.log("me.singleton.inTransition: update" + me.singleton.inTransition);
             var target = me.widget.container.content(me.singleton.var.layout);
+            target.style.opacity = 0;
             if(me.options.pages) {
                 target.style.margin = "";
             }
@@ -149,12 +162,20 @@ package.app.transform = function AppTransform(me) {
                 usePages:me.options.pages,
                 columnCount:columnCount
             };
-            me.ui.layout.reflow(me.singleton.var.output, me.singleton.var.layout, reflowOptions);
-            me.updateScrolling();
+            me.ui.layout.reflow(function() {
+                me.singleton.inTransition--;
+                console.log("me.singleton.inTransition: reflow" + me.singleton.inTransition);
+                me.updateScrolling();
+                target.style.opacity = 1;
+            }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
         }
     };
     me.scrolled = {
         set: function(object, value) {
+            if(me.singleton.inTransition > 0) {
+                console.log("me.singleton.inTransition: ignoring scrolling");
+                return;
+            }
             if("vertical" in value) {
                 me.set(me.singleton, "app.transform.scrollPos", value.vertical);
             }

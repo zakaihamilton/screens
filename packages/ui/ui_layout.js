@@ -64,11 +64,21 @@ package.ui.layout = function UILayout(me) {
         var pageWidth = container.parentNode.offsetWidth;
         return {width: pageWidth, height: pageHeight};
     };
-    me.reflow = function (source, target, options) {
+    me.reflow = function (callback, source, target, options) {
         target = me.content(target);
+        if(target.interval) {
+            clearInterval(target.interval);
+            target.interval = null;
+            if(callback) {
+                callback(false);
+            }
+        }
         me.prepare(source, target);
         var pageSize = me.pageSize(target);
         if (!source.firstChild) {
+            if(callback) {
+                callback();
+            }
             return;
         }
         var pageIndex = 1;
@@ -78,10 +88,17 @@ package.ui.layout = function UILayout(me) {
             content = page.var.content;
         }
         var previousWidget = null;
-        for (; ; ) {
+        target.interval = setInterval(function() {
             var widget = source.firstChild;
             if (!widget) {
-                break;
+                clearInterval(target.interval);
+                target.interval = null;
+                me.createBreak(target);
+                me.createBreak(target);
+                if(callback) {
+                    callback(true);
+                }
+                return;
             }
             var location = content ? content : target;
             if (widget.style && widget.style.order) {
@@ -90,7 +107,7 @@ package.ui.layout = function UILayout(me) {
                 location.appendChild(widget);
             }
             if (!page) {
-                continue;
+                return;
             }
             var newPage = false;
             if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
@@ -113,7 +130,7 @@ package.ui.layout = function UILayout(me) {
                 if (widget) {
                     content.appendChild(widget);
                 }
-                for(var fontSize = 100; fontSize >= 25; fontSize--) {
+                for(var fontSize = 100; fontSize >= 25; fontSize-=5) {
                     if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
                         widget.style.fontSize = fontSize + "%";
                     }
@@ -125,9 +142,7 @@ package.ui.layout = function UILayout(me) {
             } else if (widget) {
                 previousWidget = widget;
             }
-        }
-        me.createBreak(target);
-        me.createBreak(target);
+        }, 0);
     };
     me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
