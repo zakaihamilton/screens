@@ -1,7 +1,13 @@
-function package_path(object, path) {
-    var items = [].concat.apply([], path.split('"').map(function (v, i) {
-        return i % 2 ? v : v.split('.');
-    })).filter(Boolean);
+function package_path(path) {
+    var items = null;
+    if(path.includes("\"")) {
+        items = [].concat.apply([], path.split("\"").map(function (v, i) {
+            return i % 2 ? v : v.split(".");
+        })).filter(Boolean);
+    }
+    else {
+        items = path.split(".");
+    }
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
@@ -82,13 +88,6 @@ function package_init(package_name, component_name, callback, child_name = null,
     var component_obj = new Proxy({id: id, package: package_name, component: component_name, child: child_name}, {
         get: function (object, property) {
             var result = undefined;
-            var lookup = Reflect.get(object, "lookup");
-            if (lookup) {
-                result = lookup(property);
-                if (typeof result !== "undefined") {
-                    return result;
-                }
-            }
             result = package_general(object, property);
             if (result) {
                 return result;
@@ -295,7 +294,7 @@ function package_general(object, property) {
     if (Reflect.has(object, property)) {
         return Reflect.get(object, property);
     } else if (typeof property === "string" && property.includes(".")) {
-        return package_path(object, property);
+        return package_path(property);
     } else if (property === "platform") {
         return package_platform();
     } else if (property === "require") {
