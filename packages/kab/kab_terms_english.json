@@ -391,6 +391,9 @@
         "NRNHY": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
         },
+        "YHNRN": {
+            "expansion": ["Yechida", "Haya", "Neshama", "Ruach", "Nefesh"]
+        },
         "NRNH": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya"]
         },
@@ -1019,11 +1022,17 @@
         "GAR":{
             "expansion":["Gimel Rishonot"]
         },
+        "ZAT":{
+            "expansion":["Zayin Tachtonot"]
+        },
         "VAK":{
             "expansion":["Vav Kzavot"]
         },
         "Gimel Rishonot":{
             "translation":"First Three"
+        },
+        "Zayin Tachtonot":{
+            "translation":"Lower Seven"
         },
         "Kzavot":{
             "translation":"Sides"
@@ -1091,6 +1100,9 @@
         },
         "Galgal":{
             "translation":"Wheel"
+        },
+        "Galgalim":{
+            "translation":"Wheels"
         },
         "Zakut":{
             "translation":"Purity"
@@ -1601,7 +1613,46 @@
             "translation":"Sustenance"
         },
         "Mesabev":{
+            "translation":"Revolving"
+        },
+        "Orech":{
+            "translation":"Length"
+        },
+        "Sovev":{
             "translation":"Surrounds"
+        },
+        "Harkanat Rosh":{
+            "translation":"Bowed Head"
+        },
+        "Hitkashrut":{
+            "translation":"Connection"
+        },
+        "Karka":{
+            "translation":"Floor"
+        },
+        "Yashar":{
+            "translation":"Straight"
+        },
+        "Hofchiut":{
+            "translation":"Inverse"
+        },
+        "Hofchiut Tzura":{
+            "translation":"Inversion of Form"
+        },
+        "Sefirat":{
+            "translation":"Emanation of"
+        },
+        "Machtir":{
+            "translation":"Crowning"
+        },
+        "Kitzba":{
+            "translation":"Allowance"
+        },
+        "Homer":{
+            "translation":"Matter"
+        },
+        "Neshima":{
+            "translation":"Breathing"
         }
     }
 }
