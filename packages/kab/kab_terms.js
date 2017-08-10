@@ -273,10 +273,6 @@ package.kab.terms = function KabTerms(me) {
     me.match = function (item, source, target) {
         source = me.toCase(item, source);
         target = me.toCase(item, target);
-        if (source.startsWith("/")) {
-            source = source.slice(1);
-            return new RegExp(source).test(target);
-        }
         var wordStyle = "whole";
         if (item.word) {
             wordStyle = item.word;
@@ -288,7 +284,7 @@ package.kab.terms = function KabTerms(me) {
         } else if (wordStyle === "suffix") {
             return target.endsWith(source);
         } else {
-            return target.search(source) !== -1;
+            return target.includes(source);
         }
     };
     me.duplicateOptions = function (options, overrides) {
