@@ -33,6 +33,7 @@ package.app.transform = function AppTransform(me) {
             fontSize: "24px",
             scrollPos:0
         });
+        me.pageSize = {width:0,height:0};
         me.options.autoScroll = false;
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.transform.set);
         me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.transform.set);
@@ -64,6 +65,27 @@ package.app.transform = function AppTransform(me) {
         me.set(me.singleton.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(me.singleton.var.layout, "ui.style.fontSize", me.options.fontSize);
         me.set(me.singleton, "update");
+    };
+    me.shouldReflow = function() {
+        var reflow = false;
+        var pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
+        if(me.get(me.singleton, "visible")) {
+            if(pageSize.height !== me.pageSize.height || pageSize.width !== me.pageSize.width) {
+                reflow = true;
+            }
+            if(me.forceReflow) {
+                reflow = true;
+            }
+        }
+        return reflow;
+    };
+    me.updateSpinner = function() {
+        if(me.singleton.inTransition > 0) {
+            me.set(me.singleton.var.spinner, "ui.style.visibility", "visible");
+        }
+        else {
+            me.set(me.singleton.var.spinner, "ui.style.visibility", "hidden");
+        }
     };
     me.updateScrolling = function() {
         var scrollbar = me.singleton.var.layout.var.vertical;
@@ -99,14 +121,13 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if (text) {
                 me.singleton.inTransition++;
-                console.log("me.singleton.inTransition: transform start" + me.singleton.inTransition);
+                me.updateSpinner();
                 me.updateWidgets(me.options.showInput);
                 var language = me.options.language.toLowerCase();
                 if (language === "auto") {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
-                me.set(me.singleton.var.spinner, "ui.style.visibility", "visible");
                 var beforeConversion = performance.now();
                 me.set(me.singleton.var.footer, "ui.style.display", "block");
                 me.set(me.singleton.var.footer, "ui.basic.text", "Transforming...");
@@ -123,15 +144,16 @@ package.app.transform = function AppTransform(me) {
                             me.set(me.singleton.var.output, "ui.basic.html", text);
                         }
                         me.ui.layout.move(me.singleton.var.output, me.singleton.var.layout);
+                        me.forceReflow = true;
                         me.set(me.singleton, "update");
-                        me.set(me.singleton.var.spinner, "ui.style.visibility", "hidden");
+                        me.updateSpinner();
                         var afterConversion = performance.now();
                         me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds for " + numTerms + " terms in " + language);
                         setTimeout(function() {
                             me.set(me.singleton.var.footer, "ui.basic.text", "");
                         }, 5000);
                         me.singleton.inTransition--;
-                        console.log("me.singleton.inTransition: transform end" + me.singleton.inTransition);
+                        me.updateSpinner();
                     }, text, me.options);
                 }, language);
             }
@@ -139,13 +161,19 @@ package.app.transform = function AppTransform(me) {
     };
     me.reflow = {
         set: function(object) {
+            me.forceReflow = true;
             me.set(me.singleton, "update");
         }
     };
     me.update = {
         set: function (object) {
+            if(!me.shouldReflow(object)) {
+                return;
+            }
+            me.forceReflow = false;
+            me.pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
             me.singleton.inTransition++;
-            console.log("me.singleton.inTransition: update" + me.singleton.inTransition);
+            me.updateSpinner();
             var target = me.widget.container.content(me.singleton.var.layout);
             target.style.opacity = 0;
             if(me.options.pages) {
@@ -164,7 +192,7 @@ package.app.transform = function AppTransform(me) {
             };
             me.ui.layout.reflow(function() {
                 me.singleton.inTransition--;
-                console.log("me.singleton.inTransition: reflow" + me.singleton.inTransition);
+                me.updateSpinner();
                 me.updateScrolling();
                 target.style.opacity = 1;
             }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
@@ -173,7 +201,6 @@ package.app.transform = function AppTransform(me) {
     me.scrolled = {
         set: function(object, value) {
             if(me.singleton.inTransition > 0) {
-                console.log("me.singleton.inTransition: ignoring scrolling");
                 return;
             }
             if("vertical" in value) {
