@@ -43,13 +43,13 @@ package.kab.terms = function KabTerms(me) {
             var termNames = Object.keys(terms).sort(function (source, target) {
                 return target.length - source.length;
             });
+            termNames = termNames.filter(function(term) {
+                return !term.startsWith("!");
+            });
             wordsString = me.core.string.parseWords(function (words) {
                 for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                     for (var termIndex = 0; termIndex < termNames.length; termIndex++) {
                         var term = termNames[termIndex];
-                        if (term.startsWith("!")) {
-                            continue;
-                        }
                         var prefixWord = null;
                         var item = terms[term];
                         var termWords = term.split(" ");
@@ -79,7 +79,9 @@ package.kab.terms = function KabTerms(me) {
                                 collectedWords = word;
                             }
                         }
-                        if (me.match(item, term, collectedWords)) {
+                        var source = collectedWords;
+                        var target = term;
+                        if (me.match(item, target, source)) {
                             var expansion = item.expansion;
                             if (expansion) {
                                 expansion = [].concat(expansion);
@@ -97,7 +99,7 @@ package.kab.terms = function KabTerms(me) {
                                     expansion = expansion.slice(-1).toString();
                                 }
                                 words.splice(wordIndex, numTermWords);
-                                var text = me.modify(words, wordIndex, item, collectedWords, " (", expansion, ")", options, true);
+                                var text = me.modify(words, wordIndex, item, source, " (", expansion, ")", options, true);
                                 me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             var translation = item.translation;
@@ -106,12 +108,12 @@ package.kab.terms = function KabTerms(me) {
                                     translation = me.parse(null, translation, me.duplicateOptions(options, {"addStyles": false}));
                                 }
                                 words.splice(wordIndex, numTermWords);
-                                var text = me.modify(words, wordIndex, item, collectedWords, " [", translation, "]", options);
+                                var text = me.modify(words, wordIndex, item, source, " [", translation, "]", options);
                                 me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             if (options.addStyles && !translation && !expansion) {
                                 words.splice(wordIndex, numTermWords);
-                                var text = me.modify(words, wordIndex, item, collectedWords, "", collectedWords, "", me.duplicateOptions(options, {"keepSource": false}));
+                                var text = me.modify(words, wordIndex, item, source, "", source, "", me.duplicateOptions(options, {"keepSource": false}));
                                 me.prefix(words, wordIndex, item, prefixWord, text, options);
                             }
                             break;
