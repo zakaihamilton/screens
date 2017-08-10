@@ -2,7 +2,7 @@
     "format": [
         {
             "find": "/\"",
-            "replace": "\\\""
+            "replace": " \\\" "
         },
         {
             "enabled":false,

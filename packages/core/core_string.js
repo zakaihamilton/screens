@@ -6,7 +6,7 @@
 package.core.string = function CoreString(me) {
     me.parseWords = function(callback, string) {
         var delimiters = [
-            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”","!"
+            "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”","“","!","\""
         ];
         for(var index = 0; index < delimiters.length; index++) {
             var delimiter = delimiters[index];
