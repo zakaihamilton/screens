@@ -134,9 +134,9 @@ package.app.transform = function AppTransform(me) {
                 me.kab.terms.setLanguage(function (numTerms) {
                     me.kab.terms.parse(function (text) {
                         if (me.prevLanguage) {
-                            me.set(me.singleton.var.output, "ui.theme.remove", me.prevLanguage);
+                            me.set(me.singleton.var.layout, "ui.theme.remove", me.prevLanguage);
                         }
-                        me.set(me.singleton.var.output, "ui.theme.add", language);
+                        me.set(me.singleton.var.layout, "ui.theme.add", language);
                         me.prevLanguage = language;
                         if (me.options.showHtml) {
                             me.set(me.singleton.var.output, "ui.basic.text", text);
