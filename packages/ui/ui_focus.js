@@ -121,6 +121,10 @@ package.ui.focus = function UIFocus(me) {
         }
     };
     me.focus = function (window) {
+        /* Check if window is visible */
+        if(!me.get(window, "visible")) {
+            return;
+        }
         /* Find common window between previous and new window */
         var common = me.common(me.focus_window, window);
         /* Deactivate previous windows */

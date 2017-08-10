@@ -277,6 +277,9 @@
         "Hizdakchut" : {
             "translation":"Purification"
         },
+        "Hizdakchut Masach" : {
+            "translation":"Purification of the Screen"
+        },
         "Tabur": {
             "translation": "Navel"
         },
@@ -938,7 +941,12 @@
             "translation":"Enlightened"
         },
         "Hitkalelut":{
+            "prefix":"The",
             "translation":"Integration"
+        },
+        "Hitkalelut Sefirot":{
+            "prefix":"The",
+            "translation":"Integration of Emanations"
         },
         "Masachim":{
             "translation":"Screens"
@@ -947,6 +955,7 @@
             "translation":"Judgement"
         },
         "He’arah":{
+            "prefix":"an",
             "translation":"Enlightenment"
         },
         "Shoreshim":{
