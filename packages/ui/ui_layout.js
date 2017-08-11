@@ -95,6 +95,9 @@ package.ui.layout = function UILayout(me) {
                 target.interval = null;
                 me.createBreak(target);
                 me.createBreak(target);
+                if(options.usePages) {
+                    me.applyNumPages(target, pageIndex);
+                }
                 if(callback) {
                     callback(true);
                 }
@@ -147,10 +150,7 @@ package.ui.layout = function UILayout(me) {
     me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
         var match = null;
-        for (; ; ) {
-            if (!widget) {
-                break;
-            }
+        while(widget) {
             if (widget.style.order) {
                 if (parseInt(widget.style.order) > parseInt(order)) {
                     match = widget;
@@ -168,7 +168,6 @@ package.ui.layout = function UILayout(me) {
             "ui.theme.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
-            "ui.attribute.pageNumber": pageIndex,
             "ui.basic.elements": [
                 {
                     "ui.basic.tag":"div",
@@ -193,5 +192,14 @@ package.ui.layout = function UILayout(me) {
             "ui.basic.tag": "br"
         }, target);
         return page;
+    };
+    me.applyNumPages = function(target, numPages) {
+        var widget = target.firstChild;
+        while(widget) {
+            if(widget.var && widget.var.pageNumber) {
+                me.set(widget.var.pageNumber, "ui.attribute.numPages", "/" + numPages);
+            }
+            widget = widget.nextSibling;
+        }
     };
 };

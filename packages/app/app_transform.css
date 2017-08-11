@@ -75,9 +75,22 @@
 
 .app-transform-page-number {
     text-align:center;
-    vertical-align:bottom;
     color:gray;
-    position:absolute;
-    left:50%;
+    background:white;
     font-size:50%;
+    user-select:none;
+    cursor:default;
+    height:100px;
+    vertical-align: middle;
+}
+
+.app-transform-page-number:hover {
+    color:black;
+    font-weight: bold;
+}
+
+.app-transform-page-number:hover:after {
+    color:black;
+    font-weight: bold;
+    content:attr(numPages)
 }
