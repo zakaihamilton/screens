@@ -24,7 +24,15 @@
         "OlamTzimtzum":"Olam Tzimtzum",
         "Hochmade":"Hochma de",
         "Agolon":"Agol on",
-        "Aviutfrom":"Aviut from"
+        "Aviutfrom":"Aviut from",
+        "deTvuna":"de Tvuna",
+        "NHYde":"NHY de",
+        "AVIut":"Aviut",
+        "aviut":"Aviut",
+        "veEynaim":"ve Eynaim",
+        "AHPde":"AHP de",
+        "KlipatNoga":"Klipat Noga",
+        "Roshde":"Rosh de"
     },
     "format": [
         {
@@ -432,8 +440,17 @@
         "BYA": {
             "expansion": ["Beria", "Yetzira", "Assiya"]
         },
+        "DHGT": {
+            "expansion": ["Daat","Hesed", "Gevura", "Tifferet"]
+        },
         "HGT": {
             "expansion": ["Hesed", "Gevura", "Tifferet"]
+        },
+        "HG": {
+            "expansion": ["Hesed", "Gevura"]
+        },
+        "HGTNH": {
+            "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod"]
         },
         "HGTNHY": {
             "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod","Yesod"]
@@ -596,6 +613,9 @@
         },
         "Behinot": {
             "translation": "Phases"
+        },
+        "Hey Behinot": {
+            "translation": "Five Phases"
         },
         "Shinui Tzura" : {
             "translation": "Change of Form"
@@ -970,12 +990,19 @@
             "translation":"Roots"
         },
         "Histaklut":{
+            "prefix":"The",
             "translation":"Observation"
         },
+        "Histaklut Eynaim":{
+            "prefix":"The",
+            "translation":"Observation of Eyes"
+        },
         "Histaklut Aleph":{
+            "prefix":"The",
             "translation":"First Observation"
         },
         "Histaklut Bet":{
+            "prefix":"The",
             "translation":"Second Observation"
         },
         "Histalkut":{
@@ -1029,6 +1056,9 @@
         },
         "Koma":{
             "translation":"Height"
+        },
+        "Komot":{
+            "translation":"Heights"
         },
         "He'arot":{
             "translation":"Illuminations"
@@ -1243,12 +1273,17 @@
             "expansion":["Hochma","Bina","Zeir Anpin","Nukva"]
         },
         "YESHSUT":{
-            "expansion":["Yisrael Saba","Tevuna"]
+            "expansion":["Yisrael Saba","Tvuna"]
         },
         "Yisrael Saba":{
+            "style":{"heading":"Face","phase":"two"},
             "translation":"Grandfather of Israel"
         },
-        "Tevuna":{
+        "YESH":{
+            "expansion":["Yisrael Saba"]
+        },
+        "Tvuna":{
+            "style":{"heading":"Face","phase":"two"},
             "translation":"Comprehension"
         },
         "Rabbi Aba":{
@@ -1263,6 +1298,15 @@
         },
         "OhrHassadim":{
             "translation":"Light of Mercy"
+        },
+        "Hey Hassadim":{
+            "translation":"Five Mercies"
+        },
+        "Hey Gevurot":{
+            "translation":"Five Judgements"
+        },
+        "Hey Tata'a":{
+            "translation":"Lower Hey"
         },
         "Gevurot":{
             "translation":"Judgements"
@@ -1306,6 +1350,18 @@
         "Etz Chayim":{
             "prefix":"The",
             "translation":"Tree of Life"
+        },
+        "Etz Daat":{
+            "prefix":"The",
+            "translation":"Tree of Knowledge"
+        },
+        "Etz ha Chayim":{
+            "prefix":"The",
+            "translation":"Tree of Life"
+        },
+        "Etz ha Daat":{
+            "prefix":"The",
+            "translation":"Tree of Knowledge"
         },
         "Melech":{
             "translation":"King"
@@ -1894,6 +1950,53 @@
         },
         "Makom":{
             "translation":"Place"
+        },
+        "Klipat":{
+            "translation":"Shell of"
+        },
+        "Etz":{
+            "translation":"Tree"
+        },
+        "Roshim":{
+            "translation":"Heads"
+        },
+        "Rosh ha Gimel":{
+            "prefix":"The",
+            "translation":"Third Head"
+        },
+        "Rosh ha Aleph":{
+            "prefix":"The",
+            "translation":"First Head"
+        },
+        "Rosh ha Bet":{
+            "prefix":"The",
+            "translation":"Second Head"
+        },
+        "Rosh ha Gimel":{
+            "prefix":"The",
+            "translation":"Third Head"
+        },
+        "Rosh ha Dalet":{
+            "prefix":"The",
+            "translation":"Fourth Head"
+        },
+        "Binot":{
+            "translation": "Understandings",
+            "style": {"heading":"vessel","phase":"two"}
+        },
+        "RTS":{
+            "prefix":"The",
+            "expansion":["Rosh","Toch","Sof"]
+        },
+        "Sigim":{
+            "translation":"Admixtures"
+        },
+        "Mishcha Hivia":{
+            "translation":"The Serpent's Skin"
+        },
+        "Adam ha Rishon":{
+            "prefix":"The",
+            "translation":"First Man"
         }
     }
 }
