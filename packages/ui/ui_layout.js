@@ -168,6 +168,7 @@ package.ui.layout = function UILayout(me) {
             "ui.theme.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
+            "ui.attribute.pageNumber":pageIndex,
             "ui.basic.elements": [
                 {
                     "ui.basic.tag":"div",
@@ -197,7 +198,8 @@ package.ui.layout = function UILayout(me) {
         var widget = target.firstChild;
         while(widget) {
             if(widget.var && widget.var.pageNumber) {
-                me.set(widget.var.pageNumber, "ui.attribute.numPages", "/" + numPages);
+                var pageNumber = me.get(widget, "ui.attribute.pageNumber");
+                me.set(widget.var.pageNumber, "ui.attribute.fullPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextSibling;
         }

@@ -67,7 +67,8 @@
 }
 
 .app-transform-page-content {
-    padding:40px 40px;
+    padding-left:40px;
+    padding-right:40px;
     position:relative;
     text-align:justify;
     box-sizing:border-box;
@@ -80,17 +81,22 @@
     font-size:50%;
     user-select:none;
     cursor:default;
-    height:100px;
     vertical-align: middle;
-}
-
-.app-transform-page-number:hover {
-    color:black;
-    font-weight: bold;
+    position: relative;
 }
 
 .app-transform-page-number:hover:after {
+    position:absolute;
+    font-size:200%;
     color:black;
+    background:white;
+    z-index: 100;
     font-weight: bold;
-    content:attr(numPages)
+    content:"";
+    content:attr(fullPageNumberText);
+    left:0px;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    vertical-align:middle;
 }
