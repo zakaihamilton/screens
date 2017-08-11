@@ -23,7 +23,8 @@
         "OhrZA":"Ohr ZA",
         "OlamTzimtzum":"Olam Tzimtzum",
         "Hochmade":"Hochma de",
-        "Agolon":"Agol on"
+        "Agolon":"Agol on",
+        "Aviutfrom":"Aviut from"
     },
     "format": [
         {
@@ -814,6 +815,12 @@
         "Se’arot":{
             "translation":"Hairs"
         },
+        "Se’arot Rosh":{
+            "translation":"Hairs of the Head"
+        },
+        "Se’arot Dikna":{
+            "translation":"Hairs of the Head"
+        },
         "Ohalim":{
             "translation":"Tents"
         },
@@ -939,7 +946,7 @@
             "translation":"Judgements"
         },
         "He’arat":{
-            "translation":"Enlightened"
+            "translation":"Illumination of"
         },
         "Hitkalelut":{
             "prefix":"The",
@@ -957,7 +964,7 @@
         },
         "He’arah":{
             "prefix":"an",
-            "translation":"Enlightenment"
+            "translation":"Illumination"
         },
         "Shoreshim":{
             "translation":"Roots"
@@ -1024,7 +1031,10 @@
             "translation":"Height"
         },
         "He'arot":{
-            "translation":"Illumination"
+            "translation":"Illuminations"
+        },
+        "He’arot":{
+            "translation":"Illuminations"
         },
         "Dechura":{
             "translation":"Male"
@@ -1307,7 +1317,12 @@
             "translation":"Memory"
         },
         "Aspaklaria":{
+            "prefix":"The",
             "translation":"Mirror"
+        },
+        "Aspaklaria Lo Nahara":{
+            "prefix":"The",
+            "translation":"Mirror That Does Not Shine"
         },
         "Neshamot":{
             "translation":"Souls"
@@ -1322,7 +1337,7 @@
             "translation":"Palaces"
         },
         "Levushim":{
-            "translation":"Clothings"
+            "translation":"Clothes"
         },
         "Mador":{
             "translation":"Section"
@@ -1355,6 +1370,10 @@
             "name":true,
             "translation":"Hey [ה]"
         },
+        "Hey ה":{
+            "name":true,
+            "translation":"Hey [ה]"
+        },
         "Vav":{
             "name":true,
             "translation":"Vav [ו]"
@@ -1362,6 +1381,10 @@
         "Aleph":{
             "name":true,
             "translation":"Aleph [א]"
+        },
+        "Tav":{
+            "name":true,
+            "translation":"Tav [ת]"
         },
         "Viv":{
             "name":true,
@@ -1495,6 +1518,9 @@
             "translation":"Circle of Father",
             "style":{"heading":"Face","phase":"one"}
         },
+        "KHBD":{
+            "expansion":["Keter","Hochma","Bina","Daat"]
+        },
         "HBD":{
             "expansion":["Hochma","Bina","Daat"]
         },
@@ -1586,7 +1612,7 @@
             "expansion":"Chapter"
         },
         "Lo Nahara":{
-            "translation":"No Light"
+            "translation":"That Does Not Shine"
         },
         "Ohr Av":{
             "translation":"Coarse Light"
@@ -1681,6 +1707,193 @@
         },
         "Hitgabrut Bet":{
             "translation":"Second Overcoming"
+        },
+        "Kursaya":{
+            "translation":"Chair"
+        },
+        "Evar":{
+            "translation":"Organ"
+        },
+        "Evarim":{
+            "translation":"Organs"
+        },
+        "Tzurot":{
+            "translation":"Forms"
+        },
+        "Dibur":{
+            "translation":"Speech"
+        },
+        "Beki’a":{
+            "translation":"Breaching"
+        },
+        "Hevel":{
+            "translation":"Vapor"
+        },
+        "AT":{
+            "style":{"heading":"א-ת"}
+        },
+        "Hotam":{
+            "translation":"Seal"
+        },
+        "Hakika":{
+            "translation":"Engraving"
+        },
+        "Yesodot":{
+            "translation":"Foundations"
+        },
+        "Kisse":{
+            "translation":"Chair"
+        },
+        "Samuch":{
+            "translation":"Adjacent"
+        },
+        "Revieet":{
+            "prefix":"a",
+            "translation":"Quarter of"
+        },
+        "Reiah":{
+            "translation":"Sight"
+        },
+        "Kadosh":{
+            "translation":"Holy"
+        },
+        "Kodesh":{
+            "translation":"Holy"
+        },
+        "Kodesh Kodashim":{
+            "prefix":"The",
+            "translation":"Holy of Holies"
+        },
+        "Tolada":{
+            "translation":"Offspring"
+        },
+        "Ohr Tolada":{
+            "translation":"Consequential Light"
+        },
+        "Kisui":{
+            "translation":"Cover"
+        },
+        "Ktzavot":{
+            "translation":"Sides"
+        },
+        "Loven":{
+            "translation":"White"
+        },
+        "Nitzotzot":{
+            "translation":"Sparks"
+        },
+        "Roshem":{
+            "translation":"Impression"
+        },
+        "Roshem Hotam":{
+            "translation":"Impression of a Seal"
+        },
+        "NH":{
+            "expansion":["Netzah","Hod"]
+        },
+        "Betisha":{
+            "translation":"Beating"
+        },
+        "Shorashim":{
+            "translation":"Roots"
+        },
+        "Shorashim Elyonim":{
+            "translation":"Upper Roots"
+        },
+        "Habata":{
+            "translation":"Glance"
+        },
+        "Matei":{
+            "translation":"Expansion"
+        },
+        "Lo Matei":{
+            "translation":"Departure"
+        },
+        "Taffel":{
+            "translation":"Adjunct"
+        },
+        "Enayim":{
+            "translation":"Eyes"
+        },
+        "Tikkunim":{
+            "translation":"Corrections"
+        },
+        "Butzina":{
+            "translation":"Illumination"
+        },
+        "Kardinuta":{
+            "translation":"Hardness"
+        },
+        "YHV":{
+            "expansion":["Yod","Hey","Vav"]
+        },
+        "Holam":{
+            "translation":"The Punctuation Above Letters"
+        },
+        "Melafom":{
+            "translation":"The Punctuation in the Letters"
+        },
+        "Shuruk":{
+            "translation":"The Punctuation in the Letters"
+        },
+        "Kamatz":{
+            "name":true,
+            "style":{"heading":"אָ","phase":"root"},
+            "translation":"Punctuation of Crown"
+        },
+        "Nikvey Eynaim":{
+            "style":{"phase":"one"},
+            "translation":"Eye Sockets"
+        },
+        "Mazla":{
+            "translation":"Luck"
+        },
+        "Raglaim":{
+            "translation":"Legs"
+        },
+        "Nikvey Awzen":{
+            "style":{"phase":"two"},
+            "translation":"Ear Sockets"
+        },
+        "Heys":{
+            "name":true,
+            "translation":"Heys [ה]"
+        },
+        "Nekavim":{
+            "translation":"Foramens"
+        },
+        "Etzbaot":{
+            "translation":"Fingers"
+        },
+        "Etzbaot Raglaim":{
+            "translation":"Feet"
+        },
+        "Shibolet ha Zakan":{
+            "translation":"End of the Beard"
+        },
+        "Kisseh HaKavod":{
+            "translation":"Throne of Honor"
+        },
+        "Kisseh Rachamim":{
+            "translation":"Throne of Mercy"
+        },
+        "Knafaim":{
+            "translation":"Wings"
+        },
+        "Knesset Israel":{
+            "translation":"Assembly of Israel"
+        },
+        "Koach":{
+            "translation":"Strength"
+        },
+        "Kotel":{
+            "translation":"Wall"
+        },
+        "LeAtid Lavo":{
+            "translation":"In the distant future"
+        },
+        "Makom":{
+            "translation":"Place"
         }
     }
 }

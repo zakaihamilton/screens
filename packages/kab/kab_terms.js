@@ -121,7 +121,7 @@ package.kab.terms = function KabTerms(me) {
                             var text = modify(words, wordIndex, item, source, " [", translation, "]", options);
                             prefix(words, wordIndex, item, prefixWord, text, options);
                         }
-                        else if (options.addStyles && item.styles) {
+                        else if (options.addStyles && item.style) {
                             words.splice(wordIndex, span);
                             var text = modify(words, wordIndex, item, source, "", source, "", duplicateOptions(options, {"keepSource": false}));
                             prefix(words, wordIndex, item, prefixWord, text, options);
