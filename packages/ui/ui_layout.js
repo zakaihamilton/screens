@@ -64,6 +64,41 @@ package.ui.layout = function UILayout(me) {
         var pageWidth = container.parentNode.offsetWidth;
         return {width: pageWidth, height: pageHeight};
     };
+    me.firstVisiblePage = function(target) {
+        target = me.content(target);
+        var page = null;
+        var widget = target.firstChild;
+        while(widget) {
+            if(widget.offsetTop >= target.scrollTop) {
+                page = widget;
+                break;
+            }
+            widget = widget.nextSibling;
+        }
+        return page;
+    };
+    me.firstVisibleWidget = function(target) {
+        var page = me.firstVisiblePage(target);
+        if(page && page.tagName) {
+            if(page.tagName.toLowerCase() === "div") {
+                return page.var.content.firstChild;
+            }
+        }
+        return page;
+    };
+    me.scrollToWidget = function(widget, target) {
+        if(widget) {
+            target = me.content(target);
+            var parent = widget.parentNode;
+            while(parent) {
+                if(parent.parentNode === target) {
+                    target.scrollTop = parent.offsetTop;
+                    break;
+                }
+                parent = parent.parentNode;
+            }
+        }
+    };
     me.reflow = function (callback, source, target, options) {
         target = me.content(target);
         if(target.interval) {
