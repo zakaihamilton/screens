@@ -10,10 +10,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.autoScrollSpeed = 250;
             object.autoScrollSize = 1;
             object.deltaSpeed = 50;
-            object.snapToScrollWait = 150;
+            object.snapToScrollWait = 250;
             object.snapToPageUnits = 50;
             object.scrollSize = 10;
-            object.delayTimeout = 0;
+            object.delayTimeout = 100;
             object.deltaDistance = 0;
         }
     };
@@ -67,13 +67,8 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         set: function(object) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var scrollbar = container.var[scroll_type];
-            if(scrollbar.refresh_timer) {
-                clearTimeout(scrollbar.refresh_timer);
-            }
-            scrollbar.refresh_timer = setTimeout(function() {
-                me.update.set(object);
-                me.update.set(object);
-            }, scrollbar.delayTimeout);
+            me.update.set(object);
+            me.update.set(object);
         }
     };
     me.draw = {
@@ -216,13 +211,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var distance = 0 - (value * 10);
             scrollbar.deltaDistance += distance;
             if(scrollbar.delta_timer) {
-                clearTimeout(scrollbar.delta_timer);
+                return;
             }
             scrollbar.delta_timer = setTimeout(function() {
                 me.ui.scroll.by(content, scroll_type, scrollbar.deltaDistance);
                 me.refresh.set(container);
                 me.set(scrollbar, "snap");
                 scrollbar.deltaDistance = 0;
+                scrollbar.delta_timer = null;
             }, scrollbar.delayTimeout);
         }
     };

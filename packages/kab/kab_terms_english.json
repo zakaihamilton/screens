@@ -22,7 +22,8 @@
         "onionskins":"onion skins",
         "OhrZA":"Ohr ZA",
         "OlamTzimtzum":"Olam Tzimtzum",
-        "Hochmade":"Hochma de"
+        "Hochmade":"Hochma de",
+        "Agolon":"Agol on"
     },
     "format": [
         {
@@ -1665,6 +1666,21 @@
         },
         "Pirkey Avot":{
             "translation":"Ethics of the Fathers"
+        },
+        "Meruba":{
+            "translation":"Square"
+        },
+        "Meshulash":{
+            "translation":"Triangle"
+        },
+        "Hitgabruiot":{
+            "translation":"Overcomings"
+        },
+        "Hitagbrut Aleph":{
+            "translation":"First Overcoming"
+        },
+        "Hitgabrut Bet":{
+            "translation":"Second Overcoming"
         }
     }
 }

@@ -289,6 +289,9 @@ package.widget.window = function WidgetWindow(me) {
             });
             me.set(window.var.icon, "ui.style.display", "none");
             var parent_window = me.parent(window);
+            if (parent_window) {
+                me.attach(window, parent_window);
+            }
             if (!wasMaximized) {
                 me.storeRegion(window);
                 me.set(window, "ui.property.group", {
