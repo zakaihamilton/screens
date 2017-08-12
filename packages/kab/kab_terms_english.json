@@ -1997,6 +1997,34 @@
         "Adam ha Rishon":{
             "prefix":"The",
             "translation":"First Man"
+        },
+        "Nekevot":{
+            "translation":"Females"
+        },
+        "Zechut":{
+            "translation":"Merit"
+        },
+        "Sanhedrin":{
+            "translation":"Council"
+        },
+        "Hitah":{
+            "translation":"Wheat"
+        },
+        "Hataaim":{
+            "translation":"Sins"
+        },
+        "ADNI":{
+            "translation":"Tetragrammaton",
+            "style":{"heading":"ADNI א-ד-נ-י","diagram":"Tetragrammaton"}
+        },
+        "Tractate":{
+            "translation":"Masechet"
+        },
+        "Adnei ha Sadeh":{
+            "translation":"Ledges of the Field"
+        },
+        "Revi’it":{
+            "translation":"Quarter"
         }
     }
 }

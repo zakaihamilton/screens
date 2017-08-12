@@ -100,10 +100,6 @@ package.app.transform = function AppTransform(me) {
         me.set(scrollbar, "scrollTo", me.options.scrollPos);
         me.set(scrollbar, "snap");
     };
-    me.storeScrollPos = function() {
-        var content = me.singleton.var.layout.var.content;
-        me.set(me.singleton, "app.transform.scrollPos",content.scrollTop);
-    };
     me.save = {
         set: function(object, value) {
             var input = me.singleton.var.input;
@@ -204,7 +200,6 @@ package.app.transform = function AppTransform(me) {
                 me.updateScrolling();
                 if(visibleWidget) {
                     me.ui.layout.scrollToWidget(visibleWidget, me.singleton.var.layout);
-                    me.storeScrollPos();
                 }
                 target.style.opacity = 1;
             }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);

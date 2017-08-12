@@ -92,7 +92,7 @@ package.ui.layout = function UILayout(me) {
             var parent = widget.parentNode;
             while(parent) {
                 if(parent.parentNode === target) {
-                    target.scrollTop = parent.offsetTop;
+                    me.set(target, "widget.scrollbar.vertical.scrollTo", parent.offsetTop);
                     break;
                 }
                 parent = parent.parentNode;
@@ -228,6 +228,12 @@ package.ui.layout = function UILayout(me) {
             "ui.basic.tag": "br"
         }, target);
         return page;
+    };
+    me.scrollToTop = {
+        set: function(object) {
+            var target = me.content(object);
+            me.set(target, "widget.scrollbar.vertical.scrollTo", 0);
+        }
     };
     me.applyNumPages = function(target, numPages) {
         var widget = target.firstChild;
