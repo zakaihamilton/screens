@@ -98,10 +98,10 @@
     color:transparent;
 }
 
-.app-transform-page-number:hover:after {
+.app-transform-page-number:after {
     position:absolute;
     font-size:200%;
-    color:black;
+    color:transparent;
     z-index: 100;
     font-weight: bold;
     content:"";
@@ -110,6 +110,10 @@
     text-align:center;
     left:40%;
     width:20%;
+}
+
+.app-transform-page-number:hover:after {
+    color:black;
 }
 
 .app-transfer-page-scrolltotop {
@@ -125,14 +129,15 @@
     border-style: dotted;
     content: '';
     position: absolute;
+    left:50%;
+    top:0.25em;
+    margin-left: -0.25em;
     transform: rotate(-45deg);
     text-align:center;
-    top:0.25em;
     border-width: 0.15em 0.15em 0 0;
     width: 0.35em;
     height: 0.35em;
     color:gray;
-    left:48%;
 }
 
 .app-transfer-page-scrolltotop:hover:after{
