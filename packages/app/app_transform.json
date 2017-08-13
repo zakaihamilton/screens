@@ -31,12 +31,13 @@
                         "separator": true
                     }
                 ],
-                ["Styles", "app.transform.addStyles", {
+                ["Keep Source", "app.transform.keepSource", {
                         "state": "select"
                     }
                 ],
-                ["Keep Source", "app.transform.keepSource", {
-                        "state": "select"
+                ["Styles", "app.transform.addStyles", {
+                        "state": "select",
+                        "separator": true
                     }
                 ],
                 ["Headings", "app.transform.headings", {

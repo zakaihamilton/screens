@@ -113,7 +113,7 @@ package.kab.terms = function KabTerms(me) {
                             var text = modify(words, wordIndex, item, source, " (", expansions, ")", options, true);
                             prefix(words, wordIndex, item, prefixWord, text, options);
                         }
-                        else if (translation) {
+                        else if (options.doTranslation && translation) {
                             if (!item.name) {
                                 translation = me.parse(null, translation, duplicateOptions(options, {"addStyles": false}));
                             }

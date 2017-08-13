@@ -32,7 +32,8 @@
         "veEynaim":"ve Eynaim",
         "AHPde":"AHP de",
         "KlipatNoga":"Klipat Noga",
-        "Roshde":"Rosh de"
+        "Roshde":"Rosh de",
+        "retuned":"returned"
     },
     "format": [
         {
@@ -489,7 +490,7 @@
         },
         "Zeir Anpin": {
             "translation": "Small Face",
-            "style": {"heading":"vessel/face","phase":"three"}
+            "style": {"heading":"face/vessel","phase":"three"}
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
@@ -644,7 +645,7 @@
         },
         "Nukva":{
             "translation":"Female",
-            "style":{"heading":"vessel","phase":"four","alt":"Deficiency"}
+            "style":{"heading":"face/vessel","phase":"four"}
         },
         "Halon":{
             "translation":"Window"
@@ -2051,6 +2052,9 @@
         "Aba and Imma":{
             "style":{"heading":"face","phase":"one"},
             "translation":"Father and Mother"
+        },
+        "Vav Kzavot":{
+            "translation":"Six Sides"
         }
     }
 }
