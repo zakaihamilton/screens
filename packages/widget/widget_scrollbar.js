@@ -10,7 +10,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.autoScrollSpeed = 250;
             object.autoScrollSize = 1;
             object.deltaSpeed = 50;
-            object.snapToScrollWait = 250;
+            object.snapToScrollWait = 500;
             object.snapToPageUnits = 50;
             object.scrollSize = 10;
             object.delayTimeout = 100;
@@ -214,8 +214,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
-            var distance = 0 - (value * 10);
-            scrollbar.deltaDistance += distance;
+            scrollbar.deltaDistance += value;
             if(scrollbar.delta_timer) {
                 return;
             }

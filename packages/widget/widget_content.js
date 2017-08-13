@@ -13,7 +13,7 @@ package.widget.content = function WidgetContent(me) {
             var container = me.ui.node.container(object, me.widget.container.id);
             if(container) {
                 var scrollbar = container.var.vertical;
-                var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+                var delta = event.deltaY;
                 me.set(scrollbar, "delta", delta);
             }
         }
