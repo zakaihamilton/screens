@@ -692,7 +692,7 @@
             "style":{"heading":"face","phase":"four"}
         },
         "AVI":{
-            "expansion":["Aba","Imma"]
+            "expansion":["Aba and Imma"]
         },
         "Aba":{
             "translation":"Father",
@@ -1273,18 +1273,22 @@
             "expansion":["Hochma","Bina","Zeir Anpin","Nukva"]
         },
         "YESHSUT":{
-            "expansion":["Yisrael Saba","Tvuna"]
+            "expansion":["Yisrael Saba ve Tvuna"]
+        },
+        "Yisrael Saba ve Tvuna":{
+            "style":{"heading":"Face","phase":"two"},
+            "translation":"Grandfather of Israel and Comprehension"
         },
         "Yisrael Saba":{
             "style":{"heading":"Face","phase":"two"},
             "translation":"Grandfather of Israel"
         },
-        "YESH":{
-            "expansion":["Yisrael Saba"]
-        },
         "Tvuna":{
             "style":{"heading":"Face","phase":"two"},
             "translation":"Comprehension"
+        },
+        "YESH":{
+            "expansion":["Yisrael Saba"]
         },
         "Rabbi Aba":{
             "name":true,
@@ -1294,7 +1298,7 @@
             "translation":"The Knowledge"
         },
         "Kedusha":{
-            "translation":"Holiness"
+            "translation":"Sanctity"
         },
         "OhrHassadim":{
             "translation":"Light of Mercy"
@@ -1641,9 +1645,9 @@
             "translation":"Wisdoms"
         },
         "HS":{
-            "expansion":"Hochma Stimaa"
+            "expansion":"Hochma Stima'a"
         },
-        "Hochma Stimaa":{
+        "Hochma Stima'a":{
             "translation":"Blocked Wisdom",
             "style":{"heading":"Vessel"}
         },
@@ -2025,6 +2029,28 @@
         },
         "Revi’it":{
             "translation":"Quarter"
+        },
+        "Beresheet":{
+            "translation":"Genesis"
+        },
+        "Tuma’a":{
+            "translation":"Impurity"
+        },
+        "MS":{
+            "expansion":["Mocha Stima'a"]
+        },
+        "Mocha":{
+            "translation":"Mind"
+        },
+        "Stima'a":{
+            "translation":"Blocked"
+        },
+        "Mocha Stima'a":{
+            "translation":"Blocked Mind"
+        },
+        "Aba and Imma":{
+            "style":{"heading":"face","phase":"one"},
+            "translation":"Father and Mother"
         }
     }
 }
