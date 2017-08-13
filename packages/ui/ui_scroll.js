@@ -28,6 +28,13 @@ package.ui.scroll = function UIScroll(me) {
         }
         return direction;
     };
+    me.thumb_percent = function (object, type) {
+        if (type === "vertical") {
+            return 100 / (object.scrollHeight / object.clientHeight);
+        } else if (type === "horizontal") {
+            return 100 / (object.scrollWidth / object.clientWidth);
+        }
+    };
     me.scroll_percent = function (object, type, pos = - 1) {
         if (type === "vertical") {
             if (pos === -1) {
@@ -39,21 +46,42 @@ package.ui.scroll = function UIScroll(me) {
                 pos = object.scrollLeft;
             }
             return me.pos_to_percent(object.scrollWidth - object.clientWidth, pos);
-    }
+        }
+    };
+    me.scroll_size = function(object, type, pos = -1) {
+        
     };
     me.set_pos = function (object, type, pos) {
         pos += "px";
         var changed = false;
         if (type === "vertical") {
             var top = me.get(object, "ui.style.top");
-            if(top !== pos) {
+            if (top !== pos) {
                 me.set(object, "ui.style.top", pos);
                 changed = true;
             }
         } else if (type === "horizontal") {
             var left = me.get(object, "ui.style.left");
-            if(left !== pos) {
+            if (left !== pos) {
                 me.set(object, "ui.style.left", pos);
+                changed = true;
+            }
+        }
+        return changed;
+    };
+    me.set_size = function (object, type, size) {
+        size += "px";
+        var changed = false;
+        if (type === "vertical") {
+            var top = me.get(object, "ui.style.height");
+            if (top !== size) {
+                me.set(object, "ui.style.height", size);
+                changed = true;
+            }
+        } else if (type === "horizontal") {
+            var width = me.get(object, "ui.style.width");
+            if (width !== size) {
+                me.set(object, "ui.style.width", size);
                 changed = true;
             }
         }
@@ -66,12 +94,18 @@ package.ui.scroll = function UIScroll(me) {
             return me.percent_to_pos(object.scrollWidth - object.clientWidth, percent);
         }
     };
-    me.length = function (type, track_region, thumb_region) {
+    me.length = function (type, track_region, thumb_region=null) {
         var length = null;
         if (type === "vertical") {
-            length = track_region.height - thumb_region.height;
+            length = track_region.height;
+            if(thumb_region) {
+                length -= thumb_region.height;
+            }
         } else if (type === "horizontal") {
-            length = track_region.width - thumb_region.width;
+            length = track_region.width;
+            if(thumb_region) {
+                length -= thumb_region.width;
+            }
         }
         return length;
     };
@@ -81,14 +115,14 @@ package.ui.scroll = function UIScroll(me) {
     me.percent_to_pos = function (length, percent) {
         return (length / 100) * percent;
     };
-    me.current_pos = function(object, type) {
+    me.current_pos = function (object, type) {
         if (type === "vertical") {
             return object.scrollTop;
         } else if (type === "horizontal") {
             return object.scrollLeft;
         }
     };
-    me.set_current_pos = function(object, type, value) {
+    me.set_current_pos = function (object, type, value) {
         if (type === "vertical") {
             object.scrollTop = value;
         } else if (type === "horizontal") {

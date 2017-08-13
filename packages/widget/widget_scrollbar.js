@@ -48,13 +48,19 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 });
             }
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
+            var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
             var track_region = me.ui.rect.relative_region(scrollbar.var.track);
             var thumb_region = me.ui.rect.relative_region(scrollbar.var.thumb);
-            var position = 0;
+            var position = 0, size = 0;
             if (scroll_percent) {
                 var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
                 position = me.ui.scroll.percent_to_pos(length, scroll_percent);
             }
+            if(thumb_percent) {
+                var length = me.ui.scroll.length(scroll_type, track_region, null);
+                size = me.ui.scroll.percent_to_pos(length, thumb_percent);
+            }
+            me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
             var changed = me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
             if(changed) {
                 var scrolledInfo = {};
