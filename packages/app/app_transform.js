@@ -50,6 +50,7 @@ package.app.transform = function AppTransform(me) {
         me.language = me.ui.property.choiceOptionSet(me, "language", me.transform.set);
         me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {
             me.set(me.singleton.var.layout, "ui.style.fontSize", value);
+            me.forceReflow = true;
             me.set(me.singleton, "update");
         });
         me.pages = me.ui.property.toggleOptionSet(me, "pages", me.reflow.set);
