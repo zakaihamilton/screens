@@ -41,7 +41,8 @@
                     }
                 ],
                 ["Headings", "app.transform.headings", {
-                        "state": "select"
+                        "state": "select",
+                        "enabled":"app.transform.addStyles"
                     }
                 ],
                 ["Pages", "app.transform.pages", {
