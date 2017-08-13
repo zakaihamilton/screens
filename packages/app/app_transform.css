@@ -74,29 +74,71 @@
     box-sizing:border-box;
 }
 
-.app-transform-page-number {
+.app-transform-page-header {
+    height:50px;
+}
+
+.app-transform-page-number{
+    width:20%;
+    height:30px;
+    left:40%;
+    top: 10px;
+    margin-top: 10px;
     text-align:center;
     color:gray;
     background:white;
     font-size:50%;
     user-select:none;
     cursor:default;
-    vertical-align: middle;
     position: relative;
+    line-height:2.5em;
+}
+
+.app-transform-page-number:hover{
+    color:transparent;
 }
 
 .app-transform-page-number:hover:after {
     position:absolute;
     font-size:200%;
     color:black;
-    background:white;
     z-index: 100;
     font-weight: bold;
     content:"";
     content:attr(fullPageNumberText);
-    left:0px;
-    top:0px;
-    bottom:0px;
-    right:0px;
     vertical-align:middle;
+    text-align:center;
+    left:40%;
+    width:20%;
+}
+
+.app-transfer-page-scrolltotop {
+    position: absolute;
+    width:20%;
+    height:20px;
+    left:40%;
+    top: 0px;
+    background:white;
+}
+
+.app-transfer-page-scrolltotop:after {
+    border-style: dotted;
+    content: '';
+    position: absolute;
+    transform: rotate(-45deg);
+    text-align:center;
+    top:0.25em;
+    border-width: 0.15em 0.15em 0 0;
+    width: 0.35em;
+    height: 0.35em;
+    color:gray;
+    left:48%;
+}
+
+.app-transfer-page-scrolltotop:hover:after{
+    color:black;
+    border-style: solid;
+    border-width: 0.15em 0.15em 0 0;
+    width: 0.45em;
+    height: 0.45em;
 }
