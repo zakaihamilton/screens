@@ -88,12 +88,12 @@
     background:white;
     font-size:50%;
     text-align:center;
+    color:gray;
 }
 
 .app-transform-page-number:after{
     position: absolute;
     left:50%;
-    color:gray;
     background:white;
     user-select:none;
     cursor:default;
