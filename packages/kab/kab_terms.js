@@ -235,9 +235,9 @@ package.kab.terms = function KabTerms(me) {
                     var itemSplit = "\n";
                     if ("split" in item) {
                         itemSplit = me.regex(item.split);
-                        checkInSplit = true;
+                        checkInSplit = item.split.startsWith("/");
                     }
-                    var itemJoin = "\n";
+                    var itemJoin = itemSplit;
                     if ("join" in item) {
                         itemJoin = item.join;
                     }
@@ -251,9 +251,16 @@ package.kab.terms = function KabTerms(me) {
                             if (item.suffix) {
                                 selection += item.suffix;
                             }
+                            var find = item.find;
+                            if (find) {
+                                console.log("selection before: " + selection);
+                                selection = selection.replace(me.regex(find), me.regex(item.replace));
+                                console.log("selection after: " + selection);
+                            }
                         }
                         return selection;
                     }).join(itemJoin);
+                    return;
                 }
                 var find = item.find;
                 if (find && (item.prefix || item.suffix)) {
@@ -343,7 +350,7 @@ package.kab.terms = function KabTerms(me) {
             html += "<b>";
         }
         if (styles && styles.phase) {
-            html += "<span class=\"kab-term-phase-" + styles.phase + "\"";
+            html += "<span class=\"kab-term-phase kab-term-phase-" + styles.phase + "\"";
             if (styles && styles.heading && options.headings) {
                 html += " kab-term-heading=\"" + styles.heading + "\"";
             }
@@ -352,7 +359,7 @@ package.kab.terms = function KabTerms(me) {
             }
             html += ">" + text + "</span>";
         } else if (!options.keepSource && !expansion) {
-            html += "<span class=\"kab-term-phase-none\"";
+            html += "<span class=\"kab-term-phase kab-term-phase-none\"";
             if (term !== text) {
                 html += " kab-term-tooltip=\"" + term + "\"";
             }

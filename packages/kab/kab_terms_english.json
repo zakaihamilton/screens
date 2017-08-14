@@ -1,11 +1,4 @@
 {
-    "diagrams":{
-        "Tetragrammaton":{
-            "class":"polaroid-right",
-            "title":"Tetragrammaton",
-            "img":"tetragrammaton.png"
-        }
-    },
     "prefixes":{
         "a":{
             "match":"/^[^aeiouAEIOU]"
@@ -33,7 +26,9 @@
         "AHPde":"AHP de",
         "KlipatNoga":"Klipat Noga",
         "Roshde":"Rosh de",
-        "retuned":"returned"
+        "retuned":"returned",
+        "Neshamain":"Neshama in",
+        "TMde":"TM de"
     },
     "format": [
         {
@@ -225,43 +220,43 @@
         },
         "Behinat Shoresh": {
             "translation": "Root Phase",
-            "style": {"phase":"root"}
+            "style": {"phase":"root","heading":"phase"}
         },
         "Behina Aleph": {
             "translation": "Phase One",
-            "style": {"phase":"one"}
+            "style": {"phase":"one","heading":"phase"}
         },
         "Behina Bet": {
             "translation": "Phase Two",
-            "style": {"phase":"two"}
+            "style": {"phase":"two","heading":"phase"}
         },
         "Behina Gimel": {
             "translation": "Phase Three",
-            "style": {"phase":"three"}
+            "style": {"phase":"three","heading":"phase"}
         },
         "Behina Dalet": {
             "translation": "Phase Four",
-            "style": {"phase":"four"}
+            "style": {"phase":"four","heading":"phase"}
         },
         "Aviut Shoresh": {
             "translation": "Root Phase Coarseness",
-            "style": {"phase":"root"}
+            "style": {"phase":"root","heading":"coarseness"}
         },
         "Aviut Aleph": {
             "translation": "Phase One Coarseness",
-            "style": {"phase":"one"}
+            "style": {"phase":"one","heading":"coarseness"}
         },
         "Aviut Bet": {
             "translation": "Phase Two Coarseness",
-            "style": {"phase":"two"}
+            "style": {"phase":"two","heading":"coarseness"}
         },
         "Aviut Gimel": {
             "translation": "Phase Three Coarseness",
-            "style": {"phase":"three"}
+            "style": {"phase":"three","heading":"coarseness"}
         },
         "Aviut Dalet": {
             "translation": "Phase Four Coarseness",
-            "style": {"phase":"four"}
+            "style": {"phase":"four","heading":"coarseness"}
         },
         "Maatzil" : {
             "translation" : "Emanator"
@@ -895,7 +890,7 @@
         },
         "HaVaYaH":{
             "translation":"Tetragrammaton",
-            "style":{"heading":"HaVaYaH י-ה-ו-ה","diagram":"Tetragrammaton"}
+            "style":{"heading":"HaVaYaH י-ה-ו-ה"}
         },
         "Haita":{
             "translation":"was"
@@ -2077,7 +2072,7 @@
             "translation":"Parasangs"
         },
         "Pirkey":{
-            "translation":"Measure of"
+            "translation":"Chapter of"
         },
         "Haluk":{
             "translation":"Robe"
