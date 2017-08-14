@@ -213,15 +213,14 @@ package.ui.layout = function UILayout(me) {
                         {
                             "ui.basic.tag": "div",
                             "ui.theme.class": options.pageNumberClass,
-                            "ui.basic.var": "pageNumber",
-                            "ui.basic.text": pageIndex
+                            "ui.basic.var": "pageNumber"
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.theme.class": options.scrollToTopClass,
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "ui.layout.scrollToTop",
-                            "ui.style.opacity":pageIndex-1
+                            "ui.style.opacity":pageIndex-1?"1.0":"0.0"
                         }
                     ]
                 },
@@ -254,7 +253,8 @@ package.ui.layout = function UILayout(me) {
         while (widget) {
             if (widget.var && widget.var.pageNumber) {
                 var pageNumber = me.get(widget, "ui.attribute.pageNumber");
-                me.set(widget.var.pageNumber, "ui.attribute.fullPageNumberText", pageNumber + "/" + numPages);
+                me.set(widget.var.pageNumber, "ui.attribute.shortPageNumberText", pageNumber);
+                me.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextSibling;
         }

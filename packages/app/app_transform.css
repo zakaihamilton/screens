@@ -62,7 +62,6 @@
     display:flex;
     flex-direction:column;
     box-sizing:border-box;
-    margin:0px -20px;
     border-top:1px solid gray;
 }
 
@@ -86,40 +85,27 @@
     left:40%;
     top: 20px;
     background:white;
-    font-size:50%;
-    text-align:center;
-    color:gray;
 }
 
 .app-transform-page-number:after{
-    position: absolute;
-    left:50%;
-    background:white;
-    user-select:none;
-    cursor:default;
-}
-
-.app-transform-page-number:hover{
-    color:transparent;
-}
-
-.app-transform-page-number:hover:after {
     position:absolute;
-    font-size:200%;
-    line-height:1;
-    color:transparent;
+    font-size:50%;
+    line-height:100%;
+    color:gray;
     z-index: 100;
-    font-weight: bold;
-    content:attr(fullPageNumberText);
+    content:attr(shortPageNumberText);
     vertical-align:middle;
     text-align:center;
-    padding-top:-20px;
+    top:0px;
     left:40%;
     width:20%;
     height:30px;
 }
 
 .app-transform-page-number:hover:after {
+    font-size:100%;
+    font-weight: bold;
+    content:attr(longPageNumberText);
     color:black;
 }
 
