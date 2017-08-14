@@ -80,37 +80,43 @@
 }
 
 .app-transform-page-number{
+    position: absolute;
     width:20%;
     height:30px;
     left:40%;
-    top: 10px;
-    margin-top: 10px;
-    text-align:center;
-    color:gray;
+    top: 20px;
     background:white;
     font-size:50%;
+    text-align:center;
+}
+
+.app-transform-page-number:after{
+    position: absolute;
+    left:50%;
+    color:gray;
+    background:white;
     user-select:none;
     cursor:default;
-    position: relative;
-    line-height:2.5;
 }
 
 .app-transform-page-number:hover{
     color:transparent;
 }
 
-.app-transform-page-number:after {
+.app-transform-page-number:hover:after {
     position:absolute;
     font-size:200%;
+    line-height:1;
     color:transparent;
     z-index: 100;
     font-weight: bold;
-    content:"";
     content:attr(fullPageNumberText);
     vertical-align:middle;
     text-align:center;
+    padding-top:-20px;
     left:40%;
     width:20%;
+    height:30px;
 }
 
 .app-transform-page-number:hover:after {
