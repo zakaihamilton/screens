@@ -1137,7 +1137,7 @@
             "prefix":"The",
             "translation":"Measures of Mercy"
         },
-        "Midat":{
+        "Mida":{
             "translation":"Measure"
         },
         "Midot":{
@@ -2055,6 +2055,44 @@
         },
         "Vav Kzavot":{
             "translation":"Six Sides"
+        },
+        "Zanav la Araiot":{
+            "prefix":"a",
+            "translation":"tail for the lions"
+        },
+        "Zanav":{
+            "translation":"Tail"
+        },
+        "Rosh la Shualim":{
+            "prefix":"a",
+            "translation":"head for the foxes"
+        },
+        "Ani":{
+            "translation":"I"
+        },
+        "Ein":{
+            "translation":"Absence"
+        },
+        "Parsas":{
+            "translation":"Parasangs"
+        },
+        "Pirkey":{
+            "translation":"Measure of"
+        },
+        "Haluk":{
+            "translation":"Robe"
+        },
+        "Batim":{
+            "translation":"Houses"
+        },
+        "NGLH":{
+            "expansion":["Neshama","Guf","Levush","Heichal"]
+        },
+        "Nechtam":{
+            "translation":"Stamped"
+        },
+        "Zahariel":{
+            "style":{"heading":"Angel"}
         }
     }
 }
