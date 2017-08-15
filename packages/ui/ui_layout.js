@@ -220,7 +220,7 @@ package.ui.layout = function UILayout(me) {
                             "ui.theme.class": options.scrollToTopClass,
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "ui.layout.scrollToTop",
-                            "ui.style.opacity":pageIndex-1?"1.0":"0.0"
+                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         }
                     ]
                 },

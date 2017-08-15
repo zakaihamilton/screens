@@ -94,7 +94,6 @@
     color:gray;
     z-index: 100;
     content:attr(shortPageNumberText);
-    vertical-align:middle;
     text-align:center;
     top:0px;
     left:40%;
