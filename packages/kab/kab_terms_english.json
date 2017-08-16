@@ -35,7 +35,9 @@
         "Hassadimon":"Hassadim on",
         "SefirotHGT":"Sefirot HGT",
         "KelimKHB":"Kelim KHB",
-        "OhrYashar":"Ohr Yashar"
+        "OhrYashar":"Ohr Yashar",
+        "OhrHozer":"Ohr Hozer",
+        "deHakaa":"de Hakaa"
     },
     "format": [
         {
@@ -2140,6 +2142,9 @@
             "translation":"Key"
         },
         "Man’ula":{
+            "translation":"Lock"
+        },
+        "Manula":{
             "translation":"Lock"
         },
         "Kitra":{
