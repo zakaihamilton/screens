@@ -4,6 +4,13 @@
  */
 
 package.ui.scroll = function UIScroll(me) {
+    me.other_scroll = function(type) {
+        if (type === "vertical") {
+            return "horizontal";
+        } else if (type === "horizontal") {
+            return "vertical";
+        }
+    };
     me.has_scroll = function (object, type) {
         if (type === "vertical") {
             return object.scrollHeight > object.clientHeight;
@@ -48,9 +55,6 @@ package.ui.scroll = function UIScroll(me) {
             return me.pos_to_percent(object.scrollWidth - object.clientWidth, pos);
         }
     };
-    me.scroll_size = function(object, type, pos = -1) {
-        
-    };
     me.set_pos = function (object, type, pos) {
         pos += "px";
         var changed = false;
@@ -73,8 +77,8 @@ package.ui.scroll = function UIScroll(me) {
         size += "px";
         var changed = false;
         if (type === "vertical") {
-            var top = me.get(object, "ui.style.height");
-            if (top !== size) {
+            var height = me.get(object, "ui.style.height");
+            if (height !== size) {
                 me.set(object, "ui.style.height", size);
                 changed = true;
             }

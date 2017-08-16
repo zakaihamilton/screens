@@ -161,7 +161,6 @@ package.kab.terms = function KabTerms(me) {
         return wordsString;
     };
     me.insert = function(words, wordIndex, collection, defaultWord, wordToInsert, text) {
-        console.log("text: " + text + " defaultWord:" + defaultWord + " wordToInsert:" + wordToInsert);
         if(collection && wordToInsert) {
             for(var itemName in collection) {
                 var item = collection[itemName];
@@ -195,11 +194,9 @@ package.kab.terms = function KabTerms(me) {
         }
         if(wordToInsert) {
             words.splice(wordIndex, 0, wordToInsert);
-            console.log("text: " + text + " defaultWord:" + defaultWord + " inserted: " + wordToInsert);
         }
         else if (defaultWord) {
             words.splice(wordIndex, 0, defaultWord);
-            console.log("text: " + text + " defaultWord:" + defaultWord + " inserted: " + defaultWord);
         }
     };
     me.removeFormatting = function (string) {
@@ -285,9 +282,7 @@ package.kab.terms = function KabTerms(me) {
                             }
                             var find = item.find;
                             if (find) {
-                                console.log("selection before: " + selection);
                                 selection = selection.replace(me.regex(find), me.regex(item.replace));
-                                console.log("selection after: " + selection);
                             }
                         }
                         return selection;
@@ -360,6 +355,7 @@ package.kab.terms = function KabTerms(me) {
         }
         words.splice(wordIndex, 0, replacement);
         me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
+        me.insert(words, wordIndex+1, me.json.suffix, item.suffix, suffixWord, text);
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";

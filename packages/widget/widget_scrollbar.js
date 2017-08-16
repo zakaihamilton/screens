@@ -22,31 +22,53 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             return scroll_type;
         }
     };
+    me.alwaysShow = {
+        get: function (object) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var scrollbar = container.var[scroll_type];
+            return scrollbar.alwaysShow;
+        },
+        set: function (object, value) {
+            var container = me.ui.node.container(object, me.widget.container.id);
+            var scrollbar = container.var[scroll_type];
+            scrollbar.alwaysShow = value;
+        }
+    };
+    me.update_scroll_class = function(container, scroll_type) {
+        var scrollbar = container.var[scroll_type];
+        if(!scrollbar) {
+            return;
+        }
+        var content = me.widget.container.content(container);
+        var has_scroll = me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow;
+        var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
+        var class_name = scroll_type + "_scroll";
+        if (has_scroll && !has_class) {
+            me.set(container, "ui.theme.add", class_name);
+            me.set(container.var.vertical, "ui.property.trickle", {
+                "ui.theme.add": class_name
+            });
+            me.set(container.var.footer, "ui.property.trickle", {
+                "ui.theme.add": class_name
+            });
+        } else if (!has_scroll && has_class) {
+            me.set(container, "ui.theme.remove", class_name);
+            me.set(container.var.vertical, "ui.property.trickle", {
+                "ui.theme.remove": class_name
+            });
+            me.set(container.var.footer, "ui.property.trickle", {
+                "ui.theme.remove": class_name
+            });
+        }
+    };
     me.update = {
         set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
-            var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
-            var class_name = scroll_type + "_scroll";
-            if (has_scroll && !has_class) {
-                me.set(container, "ui.theme.add", class_name);
-                me.set(container.var.vertical, "ui.property.trickle", {
-                    "ui.theme.add": class_name
-                });
-                me.set(container.var.footer, "ui.property.trickle", {
-                    "ui.theme.add": class_name
-                });
-            } else if (!has_scroll && has_class) {
-                me.set(container, "ui.theme.remove", class_name);
-                me.set(container.var.vertical, "ui.property.trickle", {
-                    "ui.theme.remove": class_name
-                });
-                me.set(container.var.footer, "ui.property.trickle", {
-                    "ui.theme.remove": class_name
-                });
-            }
+            me.update_scroll_class(container, "vertical");
+            me.update_scroll_class(container, "horizontal");
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
             var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
             var track_region = me.ui.rect.relative_region(scrollbar.var.track);
@@ -60,7 +82,13 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 var length = me.ui.scroll.length(scroll_type, track_region, null);
                 size = me.ui.scroll.percent_to_pos(length, thumb_percent);
             }
-            me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
+            if(has_scroll) {
+                me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
+                me.set(scrollbar.var.thumb, "visibility", "visible");
+            }
+            else {
+                me.set(scrollbar.var.thumb, "visibility", "hidden");
+            }
             var changed = me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
             if(changed) {
                 var scrolledInfo = {};

@@ -139,7 +139,8 @@
         {
             "ui.element.component": "widget.container",
             "ui.basic.var": "layout",
-            "ui.theme.class": "app.transform.layout"
+            "ui.theme.class": "app.transform.layout",
+            "widget.scrollbar.vertical.alwaysShow":true
         },
         {
             "ui.basic.tag":"div",

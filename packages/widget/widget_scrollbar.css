@@ -52,7 +52,7 @@
 }
 
 .widget-scrollbar-button {
-    flex: none;
+    flex:none;
     min-width:16px;
     min-height:16px;
     background-color: #c0c0c0;
