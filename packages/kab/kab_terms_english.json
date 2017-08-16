@@ -1,5 +1,5 @@
 {
-    "prefixes":{
+    "prefix":{
         "a":{
             "match":"/^[^aeiouAEIOU]"
         },
@@ -10,6 +10,7 @@
             
         }
     },
+    "ignore":["of", "de", "De", "OF", "DE"],
     "spelling": {
         "Hakaaof":"Hakaa of",
         "onionskins":"onion skins",
@@ -28,7 +29,10 @@
         "Roshde":"Rosh de",
         "retuned":"returned",
         "Neshamain":"Neshama in",
-        "TMde":"TM de"
+        "TMde":"TM de",
+        "Hassadimon":"Hassadim on",
+        "SefirotHGT":"Sefirot HGT",
+        "KelimKHB":"Kelim KHB"
     },
     "format": [
         {
@@ -273,12 +277,8 @@
         "Guf": {
             "translation": "Body"
         },
-        "of": {
-            "ignore":true
-        },
         "de": {
-            "translation": "of",
-            "ignore":true
+            "translation": "of"
         },
         "Hizdakchut" : {
             "translation":"Purification"
@@ -1174,9 +1174,11 @@
             "translation":"Coarsening"
         },
         "Eynaim":{
+            "style":{"phase":"one"},
             "translation":"Eyes"
         },
         "Awznaim":{
+            "style":{"phase":"two"},
             "translation":"Ears"
         },
         "ve":{
@@ -1647,6 +1649,10 @@
             "translation":"Blocked Wisdom",
             "style":{"heading":"Vessel"}
         },
+        "Hochma Stimaa":{
+            "translation":"Blocked Wisdom",
+            "style":{"heading":"Vessel"}
+        },
         "Yetzirot":{
             "translation":"Formations",
             "style":{"heading":"World","phase":"three"}
@@ -1686,11 +1692,9 @@
             "translation":"Equivalence of Form"
         },
         "Lo Efshar":{
-            "case":"insensitive",
             "translation":"Not Possible"
         },
         "Efshar":{
-            "case":"insensitive",
             "translation":"Possible"
         },
         "Lo ka Mekavein":{
@@ -2051,6 +2055,12 @@
         "Vav Kzavot":{
             "translation":"Six Sides"
         },
+        "Vav  ( six )":{
+            "translation":"Six"
+        },
+        "Vav Ktzavot":{
+            "translation":"Six Sides"
+        },
         "Zanav la Araiot":{
             "prefix":"a",
             "translation":"tail for the lions"
@@ -2088,6 +2098,24 @@
         },
         "Zahariel":{
             "style":{"heading":"Angel"}
+        },
+        "Miftacha":{
+            "translation":"Key"
+        },
+        "Man’ula":{
+            "translation":"Lock"
+        },
+        "Kitra":{
+            "translation": "Crown",
+            "style": {"heading":"vessel","phase":"root"}
+        },
+        "Metzach":{
+            "style":{"phase":"root"},
+            "translation":"Forehead"
+        },
+        "Malchut’s":{
+            "translation": "Kingdom's",
+            "style": {"heading":"vessel","phase":"four"}
         }
     }
 }
