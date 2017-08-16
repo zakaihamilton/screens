@@ -32,7 +32,8 @@
         "TMde":"TM de",
         "Hassadimon":"Hassadim on",
         "SefirotHGT":"Sefirot HGT",
-        "KelimKHB":"Kelim KHB"
+        "KelimKHB":"Kelim KHB",
+        "OhrYashar":"Ohr Yashar"
     },
     "format": [
         {
@@ -74,6 +75,11 @@
         {
             "match":"/^Yehuda Leib HaLevi Ashlag \\(Baal HaSulam\\)$",
             "prefix":"<h4 style=\"order:-1\">",
+            "suffix":"</h4>"
+        },
+        {
+            "match":"/^[^a-z]*$",
+            "prefix":"<h4>",
             "suffix":"</h4>"
         },
         {
