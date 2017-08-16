@@ -2073,7 +2073,15 @@
             "style":{"heading":"face","phase":"one"},
             "translation":"Father and Mother"
         },
+        "Abba and Imma":{
+            "style":{"heading":"face","phase":"one"},
+            "translation":"Father and Mother"
+        },
         "Aba ve Imma":{
+            "style":{"heading":"face","phase":"one"},
+            "translation":"Father and Mother"
+        },
+        "Aba and Imma":{
             "style":{"heading":"face","phase":"one"},
             "translation":"Father and Mother"
         },
