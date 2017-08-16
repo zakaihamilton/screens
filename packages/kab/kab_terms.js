@@ -44,6 +44,7 @@ package.kab.terms = function KabTerms(me) {
             wordsString = me.send("kab.terms.format", wordsString);
         }
         var prefix = me.json.prefix;
+        var suffix = me.json.suffix;
         var ignore = me.json.ignore;
         var terms = me.json.terms;
         if (terms) {
@@ -60,9 +61,13 @@ package.kab.terms = function KabTerms(me) {
                         var term = termNames[termIndex];
                         var item = terms[term];
                         var prefixWord = null;
+                        var suffixWord = null;
                         var numTermWords = item.numWords;
                         if(!item.numWords) {
                             numTermWords = item.numWords = term.split(" ").length;
+                        }
+                        if(item.suffix) {
+                            numTermWords++;
                         }
                         var collectedWords = "";
                         for (var termWordIndex = 0; termWordIndex < numTermWords; termWordIndex++) {
@@ -71,11 +76,15 @@ package.kab.terms = function KabTerms(me) {
                             }
                             var word = words[wordIndex + termWordIndex];
                             var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
+                            var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
                             var ignoreTerm = ignore ? ignore.includes(word) : false;
-                            if (prefixTerm || ignoreTerm) {
-                                if (prefixTerm || collectedWords) {
+                            if (prefixTerm || ignoreTerm || suffixTerm) {
+                                if (prefixTerm || suffixTerm || collectedWords) {
                                     if(prefixTerm) {
                                         prefixWord = word;
+                                    }
+                                    if(suffixTerm) {
+                                        suffixWord = word;
                                     }
                                     numTermWords++;
                                     continue;
@@ -121,9 +130,7 @@ package.kab.terms = function KabTerms(me) {
                             else {
                                 expansion = parse(null, expansion, options);
                             }
-                            words.splice(wordIndex, span);
-                            var text = modify(words, wordIndex, item, source, " (", expansion, ")", options, true);
-                            addPrefix(words, wordIndex, item, prefixWord, text, options);
+                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " (", expansion, ")", options, true);
                         }
                         else if (options.doTranslation && translation) {
                             if (!item.name) {
@@ -132,14 +139,10 @@ package.kab.terms = function KabTerms(me) {
                             if(upperCase) {
                                 translation = translation.toUpperCase();
                             }
-                            words.splice(wordIndex, span);
-                            var text = modify(words, wordIndex, item, source, " [", translation, "]", options);
-                            addPrefix(words, wordIndex, item, prefixWord, text, options);
+                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " [", translation, "]", options);
                         }
                         else if (options.addStyles && item.style) {
-                            words.splice(wordIndex, span);
-                            var text = modify(words, wordIndex, item, source, "", source, "", duplicateOptions(options, {"keepSource": false}));
-                            addPrefix(words, wordIndex, item, prefixWord, text, options);
+                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, "", duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
                     }
@@ -157,32 +160,46 @@ package.kab.terms = function KabTerms(me) {
         }
         return wordsString;
     };
-    me.addPrefix = function(words, wordIndex, item, prefixWord, text, options) {
-        var prefixInsert = item.prefix;
-        if(!prefixInsert && me.json.prefix && prefixWord) {
-            var prefix = null;
-            for(prefix in me.json.prefix) {
-                var prefixItem = me.json.prefix[prefix];
-                if(prefix === prefixWord.toLowerCase() && prefixItem.match) {
-                    for(var altPrefix in me.json.prefix) {
-                        var altPrefixItem = me.json.prefix[altPrefix];
+    me.insert = function(words, wordIndex, collection, defaultWord, wordToInsert, text) {
+        console.log("text: " + text + " defaultWord:" + defaultWord + " wordToInsert:" + wordToInsert);
+        if(collection && wordToInsert) {
+            for(var itemName in collection) {
+                var item = collection[itemName];
+                if(!item.match) {
+                    continue;
+                }
+                if(itemName !== wordToInsert.toLowerCase()) {
+                    continue;
+                }
+                if(!defaultWord) {
+                    for(var altPrefix in collection) {
+                        var altPrefixItem = collection[altPrefix];
                         if(altPrefixItem.match && text.match(me.regex(altPrefixItem.match))) {
-                            prefixInsert = altPrefix;
-                            if(prefixWord[0] === prefixWord[0].toUpperCase()) {
-                                prefixInsert = prefixInsert.charAt(0).toUpperCase() + prefixInsert.slice(1);
+                            defaultWord = altPrefix;
+                            if(wordToInsert[0] === wordToInsert[0].toUpperCase()) {
+                                defaultWord = defaultWord.charAt(0).toUpperCase() + defaultWord.slice(1);
                             }
+                            wordToInsert = null;
                             break;
                         }
                     }
-                    break;
                 }
+                break;
             }
         }
-        if (prefixInsert) {
-            words.splice(wordIndex, 0, prefixInsert);
+        if(defaultWord && !wordToInsert) {
+            var item = collection[defaultWord.toLowerCase()];
+            if(item && item.replaceOnly) {
+                defaultWord = null;
+            }
         }
-        else if(prefixWord) {
-            words.splice(wordIndex, 0, prefixWord);
+        if(wordToInsert) {
+            words.splice(wordIndex, 0, wordToInsert);
+            console.log("text: " + text + " defaultWord:" + defaultWord + " inserted: " + wordToInsert);
+        }
+        else if (defaultWord) {
+            words.splice(wordIndex, 0, defaultWord);
+            console.log("text: " + text + " defaultWord:" + defaultWord + " inserted: " + defaultWord);
         }
     };
     me.removeFormatting = function (string) {
@@ -330,7 +347,8 @@ package.kab.terms = function KabTerms(me) {
         }
         return duplicate;
     };
-    me.modify = function (words, wordIndex, item, term, prefix, replacement, suffix, options, expansion) {
+    me.modify = function (words, wordIndex, sourceLength, prefixWord, suffixWord, item, term, prefix, replacement, suffix, options, expansion) {
+        words.splice(wordIndex, sourceLength);
         if (!options.doTranslation) {
             replacement = term;
         } else if (options.keepSource) {
@@ -341,7 +359,7 @@ package.kab.terms = function KabTerms(me) {
             replacement = me.applyStyles(term, item.style, replacement, options, expansion);
         }
         words.splice(wordIndex, 0, replacement);
-        return text;
+        me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
