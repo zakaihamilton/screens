@@ -369,6 +369,9 @@ package.kab.terms = function KabTerms(me) {
     };
     me.modify = function (words, wordIndex, sourceLength, prefixWord, suffixWord, item, term, prefix, replacement, suffix, options, expansion) {
         words.splice(wordIndex, sourceLength);
+        if(item.source) {
+            term = item.source;
+        }
         if (!options.doTranslation) {
             replacement = term;
         } else if (options.keepSource) {

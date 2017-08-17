@@ -1930,6 +1930,9 @@
         "Shuruk":{
             "translation":"The Punctuation in the Letters"
         },
+        "Hirik":{
+            "translation":"The Punctuation below the Letters"
+        },
         "Kamatz":{
             "name":true,
             "style":{"heading":"אָ","phase":"root"},
@@ -2190,6 +2193,19 @@
         },
         "’s":{
             
+        },
+        "lo":{
+            "translation":"don't"
+        },
+        "Etyada":{
+            "translation":"Unknown"
+        },
+        "Reisha":{
+            "translation":"Head"
+        },
+        "Reisha lo Etyada":{
+            "translation":"The Unknown Head",
+            "source":"Reisha de lo Etyada"
         }
     }
 }
