@@ -101,16 +101,16 @@ package.ui.layout = function UILayout(me) {
         }
     };
     me.reflow = function (callback, source, target, options) {
-        target = me.content(target);
-        if (target.interval) {
-            clearInterval(target.interval);
-            target.interval = null;
+        var layoutContent = me.content(target);
+        if (target.reflowInterval) {
+            clearInterval(target.reflowInterval);
+            target.reflowInterval = null;
             if (callback) {
                 callback(false);
             }
         }
-        me.prepare(source, target);
-        var pageSize = me.pageSize(target);
+        me.prepare(source, layoutContent);
+        var pageSize = me.pageSize(layoutContent);
         if (!source.firstChild) {
             if (callback) {
                 callback();
@@ -118,28 +118,45 @@ package.ui.layout = function UILayout(me) {
             return;
         }
         var pageIndex = 1;
-        var page = null, content = null;
+        var page = null, pageContent = null;
         if (options.usePages) {
-            page = me.createPage(target, pageSize.width, pageSize.height, pageIndex, options);
-            content = page.var.content;
+            page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+            pageContent = page.var.content;
         }
-        var previousWidget = null;
-        target.interval = setInterval(function () {
+        var previousWidget = null, visibleWidget = null;
+        var notified = false;
+        target.reflowInterval = setInterval(function () {
             var widget = source.firstChild;
             if (!widget) {
-                clearInterval(target.interval);
-                target.interval = null;
-                me.createBreak(target);
-                me.createBreak(target);
+                clearInterval(target.reflowInterval);
+                target.reflowInterval = null;
+                me.createBreak(layoutContent);
+                me.createBreak(layoutContent);
                 if (options.usePages) {
-                    me.applyNumPages(target, pageIndex);
+                    me.applyNumPages(layoutContent, pageIndex);
                 }
-                if (callback) {
+                if (!notified && callback) {
                     callback(true);
+                    notified = true;
                 }
                 return;
             }
-            var location = content ? content : target;
+            if(options.scrollWidget) {
+                if(visibleWidget === options.scrollWidget) {
+                    me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+                    if (!notified && callback) {
+                        callback(true);
+                        notified = true;
+                    }
+                }
+            }
+            else if(options.scrollPos < layoutContent.scrollHeight) {
+                if (!notified && callback) {
+                    callback(true);
+                    notified = true;
+                }
+            }
+            var location = pageContent ? pageContent : layoutContent;
             if (widget.style && widget.style.order) {
                 location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
             } else {
@@ -149,28 +166,31 @@ package.ui.layout = function UILayout(me) {
                 return;
             }
             var newPage = false;
-            if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
+            if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
                 newPage = true;
             }
             if (!(widget.innerHTML || widget.firstChild)) {
-                content.removeChild(widget);
+                pageContent.removeChild(widget);
                 widget = null;
+            }
+            else {
+                visibleWidget = widget;
             }
             if (newPage) {
                 if (widget) {
-                    content.removeChild(widget);
+                    pageContent.removeChild(widget);
                 }
                 pageIndex++;
-                page = me.createPage(target, pageSize.width, pageSize.height, pageIndex, options);
-                content = page.var.content;
+                page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                pageContent = page.var.content;
                 if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
-                    content.appendChild(previousWidget);
+                    pageContent.appendChild(previousWidget);
                 }
                 if (widget) {
-                    content.appendChild(widget);
+                    pageContent.appendChild(widget);
                 }
                 for (var fontSize = 100; fontSize >= 25; fontSize -= 5) {
-                    if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
+                    if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
                         widget.style.fontSize = fontSize + "%";
                     } else {
                         break;
@@ -180,6 +200,7 @@ package.ui.layout = function UILayout(me) {
             } else if (widget) {
                 previousWidget = widget;
             }
+            me.set(target, "update");
         }, 0);
     };
     me.widgetByOrder = function (page, order) {
@@ -214,7 +235,9 @@ package.ui.layout = function UILayout(me) {
                         {
                             "ui.basic.tag": "div",
                             "ui.theme.class": options.pageNumberClass,
-                            "ui.basic.var": "pageNumber"
+                            "ui.basic.var": "pageNumber",
+                            "ui.attribute.shortPageNumberText": pageIndex,
+                            "ui.attribute.longPageNumberText": pageIndex
                         },
                         {
                             "ui.basic.tag": "div",
@@ -254,7 +277,6 @@ package.ui.layout = function UILayout(me) {
         while (widget) {
             if (widget.var && widget.var.pageNumber) {
                 var pageNumber = me.get(widget, "ui.attribute.pageNumber");
-                me.set(widget.var.pageNumber, "ui.attribute.shortPageNumberText", pageNumber);
                 me.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextSibling;

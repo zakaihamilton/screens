@@ -149,7 +149,7 @@ package.app.transform = function AppTransform(me) {
                         me.set(me.singleton, "update");
                         me.updateSpinner();
                         var afterConversion = performance.now();
-                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds for " + numTerms + " terms in " + language);
+                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " terms in " + language);
                         setTimeout(function() {
                             me.set(me.singleton.var.footer, "ui.basic.text", "");
                         }, 5000);
@@ -195,15 +195,14 @@ package.app.transform = function AppTransform(me) {
                 pageNumberClass:"app.transform.page.number",
                 scrollToTopClass:"app.transfer.page.scrolltotop",
                 usePages:me.options.pages,
-                columnCount:columnCount
+                columnCount:columnCount,
+                scrollWidget:visibleWidget,
+                scrollPos:me.options.scrollPos
             };
             me.ui.layout.reflow(function() {
                 me.singleton.inTransition--;
                 me.updateSpinner();
                 me.updateScrolling();
-                if(visibleWidget) {
-                    me.ui.layout.scrollToWidget(visibleWidget, me.singleton.var.layout);
-                }
                 target.style.opacity = 1;
             }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
         }
