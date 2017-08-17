@@ -2206,6 +2206,15 @@
         "Reisha lo Etyada":{
             "translation":"The Unknown Head",
             "source":"Reisha de lo Etyada"
+        },
+        "Kruma":{
+            "translation":"Crust"
+        },
+        "Idra Zuta":{
+            "style":{"heading":"Zohar Portion"}
+        },
+        "Idra Raba":{
+            "style":{"heading":"Zohar Portion"}
         }
     }
 }
