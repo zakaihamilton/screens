@@ -6,6 +6,7 @@
 package.kab.terms = function KabTerms(me) {
     me.init = function () {
         me.json = null;
+        me.terms = null;
         me.language = "english";
     };
     me.setLanguage = function (callback, language) {
@@ -24,13 +25,6 @@ package.kab.terms = function KabTerms(me) {
         }, "kab.terms_" + me.language);
     };
     me.parse = function (callback, wordsString, options) {
-        var match = me.match;
-        var addPrefix = me.addPrefix;
-        var modify = me.modify;
-        var toCase = me.toCase;
-        var duplicateOptions = me.duplicateOptions;
-        var parse = me.parse;
-        var result = null;
         if (!me.json) {
             if (callback) {
                 callback(wordsString);
@@ -38,33 +32,47 @@ package.kab.terms = function KabTerms(me) {
             }
             return wordsString;
         }
+        var match = me.match;
+        var modify = me.modify;
+        var duplicateOptions = me.duplicateOptions;
+        var parse = me.parse;
+        var prefix = me.json.prefix;
+        var suffix = me.json.suffix;
+        var ignore = me.json.ignore;
         if (callback) {
             me.diagrams = {};
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
             wordsString = me.send("kab.terms.format", wordsString);
+            me.terms = me.send("kab.terms.prepare", me.json.terms);
         }
-        var prefix = me.json.prefix;
-        var suffix = me.json.suffix;
-        var ignore = me.json.ignore;
-        var terms = me.json.terms;
+        var terms = me.terms;
         if (terms) {
-            var termNames = Object.keys(terms);
-            termNames = termNames.sort(function (source, target) {
-                return target.length - source.length;
-            });
-            termNames = termNames.filter(function(term) {
-                return !term.startsWith("!");
-            });
+            var termNames = terms["*"];
             wordsString = me.core.string.parseWords(function (words) {
+                var prefixWord = null;
                 for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-                    for (var termIndex = 0; termIndex < termNames.length; termIndex++) {
-                        var term = termNames[termIndex];
-                        var item = terms[term];
-                        var prefixWord = null;
+                    var word = words[wordIndex];
+                    var prefixItem = prefix ? prefix[word.toLowerCase()] : null;
+                    if(prefixItem) {
+                        prefixWord = prefixItem;
+                    }
+                    word = word.toUpperCase();
+                    if(!termNames.includes(word)) {
+                        prefixWord = null;
+                        continue;
+                    }
+                    var termLookup = terms[word];
+                    var subTermNames = termLookup["*"];
+                    for (var subTermIndex = 0; subTermIndex < subTermNames.length; subTermIndex++) {
+                        var term = subTermNames[subTermIndex];
+                        var item = termLookup[term];
                         var suffixWord = null;
                         var numTermWords = item.numWords;
                         if(!item.numWords) {
                             numTermWords = item.numWords = term.split(" ").length;
+                        }
+                        if(prefixWord) {
+                            numTermWords++;
                         }
                         if(item.suffix) {
                             numTermWords++;
@@ -75,14 +83,10 @@ package.kab.terms = function KabTerms(me) {
                                 break;
                             }
                             var word = words[wordIndex + termWordIndex];
-                            var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
                             var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
                             var ignoreTerm = ignore ? ignore.includes(word) : false;
-                            if (prefixTerm || ignoreTerm || suffixTerm) {
-                                if (prefixTerm || suffixTerm || collectedWords) {
-                                    if(prefixTerm) {
-                                        prefixWord = word;
-                                    }
+                            if (ignoreTerm || suffixTerm) {
+                                if (suffixTerm || collectedWords) {
                                     if(suffixTerm) {
                                         suffixWord = word;
                                     }
@@ -105,7 +109,9 @@ package.kab.terms = function KabTerms(me) {
                                 if (!match(item, source, target.toUpperCase())) {
                                     continue;
                                 }
-                                upperCase = true;
+                                else {
+                                    upperCase = true;
+                                }
                             }
                             else {
                                 continue;
@@ -396,5 +402,34 @@ package.kab.terms = function KabTerms(me) {
             html += "</b>";
         }
         return html;
+    };
+    me.prepare = function(terms) {
+        var result = new Map();
+        for(var term in terms) {
+            var info = terms[term];
+            var words = term.split(" ");
+            var lookup = result[words[0]];
+            if(!lookup) {
+                lookup = new Map();
+                result[words[0].toUpperCase()] = lookup;
+            }
+            lookup[term] = info;
+        }
+        for(var term in result) {
+            var lookup = result[term];
+            me.sortKeys(lookup);
+        }
+        me.sortKeys(result);
+        return result;
+    };
+    me.sortKeys = function(dict) {
+        var keys = Object.keys(dict);
+        keys = keys.sort(function (source, target) {
+            return target.length - source.length;
+        });
+        keys = keys.filter(function(key) {
+            return !key.startsWith("!");
+        });
+        dict["*"] = keys;
     };
 };
