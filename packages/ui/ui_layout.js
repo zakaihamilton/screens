@@ -60,11 +60,9 @@ package.ui.layout = function UILayout(me) {
     me.pageSize = function (target) {
         var container = me.ui.node.container(target, me.widget.container.id);
         var scrollbar = container.var.vertical;
-        var region = me.ui.rect.relative_region(container);
-        var pageHeight = container.parentNode.offsetHeight - region.top;
-        var pageWidth = container.parentNode.offsetWidth - region.left;
-        var scrollbar_region = me.ui.rect.relative_region(scrollbar);
-        pageWidth -= scrollbar_region.width + 1;
+        var pageHeight = container.parentNode.offsetHeight;
+        var pageWidth = container.parentNode.offsetWidth;
+        pageWidth -= scrollbar.offsetWidth + 1;
         return {width: pageWidth, height: pageHeight};
     };
     me.firstVisiblePage = function (target) {

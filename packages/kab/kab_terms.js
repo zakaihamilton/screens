@@ -47,32 +47,34 @@ package.kab.terms = function KabTerms(me) {
         }
         var terms = me.terms;
         if (terms) {
-            var termNames = terms["*"];
             wordsString = me.core.string.parseWords(function (words) {
-                var prefixWord = null;
+                var wasPrefix = false;
                 for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                     var word = words[wordIndex];
-                    var prefixItem = prefix ? prefix[word.toLowerCase()] : null;
-                    if(prefixItem) {
-                        prefixWord = prefixItem;
-                    }
-                    word = word.toUpperCase();
-                    if(!termNames.includes(word)) {
-                        prefixWord = null;
+                    var isPrefix = prefix ? word.toLowerCase() in prefix : null;
+                    if(isPrefix) {
+                        wasPrefix = true;
                         continue;
                     }
+                    word = word.toUpperCase();
                     var termLookup = terms[word];
+                    if(!termLookup) {
+                        wasPrefix = false;
+                        continue;
+                    }
+                    if(wasPrefix) {
+                        wordIndex--;
+                        wasPrefix = false;
+                    }
                     var subTermNames = termLookup["*"];
                     for (var subTermIndex = 0; subTermIndex < subTermNames.length; subTermIndex++) {
                         var term = subTermNames[subTermIndex];
                         var item = termLookup[term];
+                        var prefixWord = null;
                         var suffixWord = null;
                         var numTermWords = item.numWords;
                         if(!item.numWords) {
                             numTermWords = item.numWords = term.split(" ").length;
-                        }
-                        if(prefixWord) {
-                            numTermWords++;
                         }
                         if(item.suffix) {
                             numTermWords++;
@@ -83,10 +85,14 @@ package.kab.terms = function KabTerms(me) {
                                 break;
                             }
                             var word = words[wordIndex + termWordIndex];
+                            var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
                             var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
                             var ignoreTerm = ignore ? ignore.includes(word) : false;
-                            if (ignoreTerm || suffixTerm) {
-                                if (suffixTerm || collectedWords) {
+                            if (prefixTerm || ignoreTerm || suffixTerm) {
+                                if (prefixTerm || suffixTerm || collectedWords) {
+                                    if(prefixTerm) {
+                                        prefixWord = word;
+                                    }
                                     if(suffixTerm) {
                                         suffixWord = word;
                                     }
@@ -408,10 +414,11 @@ package.kab.terms = function KabTerms(me) {
         for(var term in terms) {
             var info = terms[term];
             var words = term.split(" ");
-            var lookup = result[words[0]];
+            var key = words[0].toUpperCase();
+            var lookup = result[key];
             if(!lookup) {
                 lookup = new Map();
-                result[words[0].toUpperCase()] = lookup;
+                result[key] = lookup;
             }
             lookup[term] = info;
         }
