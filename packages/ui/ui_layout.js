@@ -105,26 +105,28 @@ package.ui.layout = function UILayout(me) {
         if (target.reflowInterval) {
             clearInterval(target.reflowInterval);
             target.reflowInterval = null;
-            if (callback) {
+            me.move(source, me.page ? me.page.var.content : layoutContent);
+            if (!target.notified && callback) {
                 callback(false);
             }
         }
+        me.page = null;
         me.prepare(source, layoutContent);
         var pageSize = me.pageSize(layoutContent);
         if (!source.firstChild) {
             if (callback) {
-                callback();
+                callback(true);
             }
             return;
         }
+        target.notified = false;
         var pageIndex = 1;
-        var page = null, pageContent = null;
+        var pageContent = null;
         if (options.usePages) {
-            page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-            pageContent = page.var.content;
+            me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+            pageContent = me.page.var.content;
         }
         var previousWidget = null, visibleWidget = null;
-        var notified = false;
         target.reflowInterval = setInterval(function () {
             var widget = source.firstChild;
             if (!widget) {
@@ -135,25 +137,28 @@ package.ui.layout = function UILayout(me) {
                 if (options.usePages) {
                     me.applyNumPages(layoutContent, pageIndex);
                 }
-                if (!notified && callback) {
+                if (!target.notified && callback) {
                     callback(true);
-                    notified = true;
+                    target.notified = true;
                 }
+                me.set(target, "update");
                 return;
             }
             if(options.scrollWidget) {
-                if(visibleWidget === options.scrollWidget) {
-                    me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
-                    if (!notified && callback) {
+                if(previousWidget !== visibleWidget && visibleWidget === options.scrollWidget) {
+                    if (!target.notified && callback) {
                         callback(true);
-                        notified = true;
+                        target.notified = true;
                     }
+                    me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+                    me.set(target, "update");
                 }
             }
             else if(options.scrollPos < layoutContent.scrollHeight) {
-                if (!notified && callback) {
+                if (!target.notified && callback) {
                     callback(true);
-                    notified = true;
+                    target.notified = true;
+                    me.set(target, "update");
                 }
             }
             var location = pageContent ? pageContent : layoutContent;
@@ -162,7 +167,8 @@ package.ui.layout = function UILayout(me) {
             } else {
                 location.appendChild(widget);
             }
-            if (!page) {
+            visibleWidget = widget;
+            if (!me.page) {
                 return;
             }
             var newPage = false;
@@ -173,16 +179,13 @@ package.ui.layout = function UILayout(me) {
                 pageContent.removeChild(widget);
                 widget = null;
             }
-            else {
-                visibleWidget = widget;
-            }
             if (newPage) {
                 if (widget) {
                     pageContent.removeChild(widget);
                 }
                 pageIndex++;
-                page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-                pageContent = page.var.content;
+                me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                pageContent = me.page.var.content;
                 if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
                     pageContent.appendChild(previousWidget);
                 }
@@ -200,7 +203,6 @@ package.ui.layout = function UILayout(me) {
             } else if (widget) {
                 previousWidget = widget;
             }
-            me.set(target, "update");
         }, 0);
     };
     me.widgetByOrder = function (page, order) {

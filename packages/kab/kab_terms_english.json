@@ -2158,6 +2158,9 @@
         "Malchut’s":{
             "translation": "Kingdom's",
             "style": {"heading":"vessel","phase":"four"}
+        },
+        "SVAS":{
+            "expansion":["Still","Vegatative","Animal","Speaking"]
         }
     }
 }

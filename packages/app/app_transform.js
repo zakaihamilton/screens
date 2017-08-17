@@ -201,9 +201,11 @@ package.app.transform = function AppTransform(me) {
             };
             me.ui.layout.reflow(function() {
                 me.singleton.inTransition--;
-                me.updateSpinner();
-                me.updateScrolling();
-                target.style.opacity = 1;
+                if(!me.singleton.inTransition) {
+                    me.updateSpinner();
+                    me.updateScrolling();
+                    target.style.opacity = 1;
+                }
             }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
         }
     };
