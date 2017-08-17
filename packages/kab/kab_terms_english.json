@@ -16,30 +16,16 @@
     "spelling": {
         "Hakaaof":"Hakaa of",
         "onionskins":"onion skins",
-        "OhrZA":"Ohr ZA",
-        "OlamTzimtzum":"Olam Tzimtzum",
-        "Hochmade":"Hochma de",
         "Agolon":"Agol on",
         "Aviutfrom":"Aviut from",
-        "deTvuna":"de Tvuna",
-        "NHYde":"NHY de",
         "AVIut":"Aviut",
         "aviut":"Aviut",
-        "veEynaim":"ve Eynaim",
-        "AHPde":"AHP de",
-        "KlipatNoga":"Klipat Noga",
-        "Roshde":"Rosh de",
         "retuned":"returned",
         "Neshamain":"Neshama in",
-        "TMde":"TM de",
         "Hassadimon":"Hassadim on",
-        "SefirotHGT":"Sefirot HGT",
-        "KelimKHB":"Kelim KHB",
-        "OhrYashar":"Ohr Yashar",
-        "OhrHozer":"Ohr Hozer",
-        "deHakaa":"de Hakaa"
+        "Zoharonly":"Zohar only"
     },
-    "format": [
+    "pre": [
         {
             "find":"Table of content\n",
             "replace":""
@@ -127,6 +113,20 @@
         {
             "find":"/<p>[\\s]?<\\/p>",
             "replace":""
+        }
+    ],
+    "post":[
+        {
+            "find":" ’s",
+            "replace":"’s"
+        },
+        {
+            "find":" .",
+            "replace":"."
+        },
+        {
+            "find":" ,",
+            "replace":","
         }
     ],
     "terms": {
@@ -725,7 +725,7 @@
             "translation":"Restriction"
         },
         "Moach":{
-            "translation":"Marrow",
+            "translation":"Mind",
             "style":{"heading":"vessel","phase":"root"}
         },
         "Atzamot":{
@@ -1099,6 +1099,9 @@
         "Zayin Tachtonot":{
             "translation":"Lower Seven"
         },
+        "Tachtonot":{
+            "translation":"Lower"
+        },
         "Kzavot":{
             "translation":"Sides"
         },
@@ -1316,7 +1319,7 @@
         },
         "Rabbi Aba":{
             "name":true,
-            "translation":"Aba the Teacher"
+            "translation":"Rabbi Aba"
         },
         "HaDaat":{
             "translation":"The Knowledge"
@@ -1585,7 +1588,7 @@
             "translation":"Image"
         },
         "Mochin":{
-            "translation":"Mind"
+            "translation":"Minds"
         },
         "Tzel":{
             "translation":"Shade"
@@ -2181,6 +2184,12 @@
         },
         "Hochma Ilaa":{
             "translation":"Upper Wisdom"
+        },
+        "have":{
+            
+        },
+        "’s":{
+            
         }
     }
 }

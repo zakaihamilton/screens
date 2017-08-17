@@ -42,13 +42,33 @@ package.kab.terms = function KabTerms(me) {
         if (callback) {
             me.diagrams = {};
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
-            wordsString = me.send("kab.terms.format", wordsString);
+            wordsString = me.send("kab.terms.format", wordsString, me.json.pre);
             me.terms = me.send("kab.terms.prepare", me.json.terms);
         }
         var terms = me.terms;
         if (terms) {
             wordsString = me.core.string.parseWords(function (words) {
                 var wasPrefix = false;
+                if(callback) {
+                    for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
+                        var word = words[wordIndex];
+                        if(terms[word.toUpperCase()]) {
+                            continue;
+                        }
+                        for(var letterIndex = word.length - 2; letterIndex > 1; letterIndex--) {
+                            var firstSlice = word.slice(0, letterIndex);
+                            var secondSlice = word.slice(letterIndex);
+                            if(terms[firstSlice] && terms[secondSlice]) {
+                                if(letterIndex < word.length) {
+                                    words.splice(wordIndex, 1);
+                                    words.splice(wordIndex, 0, firstSlice);
+                                    words.splice(wordIndex+1, 0, secondSlice);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
                 for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                     var word = words[wordIndex];
                     var isPrefix = prefix ? word.toLowerCase() in prefix : null;
@@ -163,9 +183,9 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             if (me.language !== "debug") {
+                wordsString = me.send("kab.terms.format", wordsString, me.json.post);
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "(", ")");
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "[", "]");
-                wordsString = me.send("kab.terms.cleanText", wordsString);
             }
             callback(wordsString);
             return;
@@ -229,7 +249,6 @@ package.kab.terms = function KabTerms(me) {
                 i++;
                 continue;
             }
-            var checkFragment = false;
             if (fragment.startsWith(openChar) && fragment.endsWith(closeChar)) {
                 var fragment = fragment.slice(1, -1);
                 if (me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
@@ -240,11 +259,6 @@ package.kab.terms = function KabTerms(me) {
             }
         }
         wordsString = parts.join("");
-        return wordsString;
-    };
-    me.cleanText = function (wordsString) {
-        wordsString = wordsString.replace(" .", ".");
-        wordsString = wordsString.replace(" ,", ",");
         return wordsString;
     };
     me.regex = function (string) {
@@ -264,10 +278,9 @@ package.kab.terms = function KabTerms(me) {
         }
         return wordsString;
     };
-    me.format = function (wordsString) {
-        var format = me.json.format;
-        if (format) {
-            format.map(function (item) {
+    me.format = function (wordsString, dict) {
+        if (dict) {
+            dict.map(function (item) {
                 if ("enabled" in item && !item.enabled) {
                     return;
                 }
@@ -419,6 +432,7 @@ package.kab.terms = function KabTerms(me) {
             if(!lookup) {
                 lookup = new Map();
                 result[key] = lookup;
+                result[words[0]] = lookup;
             }
             lookup[term] = info;
         }

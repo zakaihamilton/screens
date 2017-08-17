@@ -140,7 +140,8 @@
             "ui.element.component": "widget.container",
             "ui.basic.var": "layout",
             "ui.theme.class": "app.transform.layout",
-            "widget.scrollbar.vertical.alwaysShow":true
+            "widget.scrollbar.vertical.alwaysShow":true,
+            "widget.scrollbar.horizontal.alwaysHide":true
         },
         {
             "ui.basic.tag":"div",
