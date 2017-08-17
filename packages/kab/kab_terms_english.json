@@ -117,15 +117,15 @@
     ],
     "post":[
         {
-            "find":" ’s",
+            "find":"/ ’s",
             "replace":"’s"
         },
         {
-            "find":" .",
+            "find":"/ \\.",
             "replace":"."
         },
         {
-            "find":" ,",
+            "find":"/ ,",
             "replace":","
         }
     ],
