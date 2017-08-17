@@ -463,6 +463,9 @@
         "HGTNHY": {
             "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod","Yesod"]
         },
+        "TNHY": {
+            "expansion": ["Tifferet", "Netzah","Hod","Yesod"]
+        },
         "AA": {
             "expansion": ["Arich Anpin"]
         },
@@ -925,6 +928,9 @@
         "Hitabut":{
             "translation":"Coarsening"
         },
+        "Hit’abbut":{
+            "translation":"Coarsening"
+        },
         "Harchaka":{
             "translation":"Remoteness"
         },
@@ -1166,6 +1172,9 @@
         "Zakut":{
             "translation":"Purity"
         },
+        "Zakkut":{
+            "translation":"Purity"
+        },
         "Tachtonim":{
             "translation":"Lower Ones"
         },
@@ -1332,6 +1341,9 @@
         },
         "Tikkun":{
             "translation":"Correction"
+        },
+        "Tikkun Kavim":{
+            "translation":"Correction of Lines"
         },
         "Heichal Adam Kadmon":{
             "prefix":"the",
@@ -2155,12 +2167,20 @@
             "style":{"phase":"root"},
             "translation":"Forehead"
         },
-        "Malchut’s":{
-            "translation": "Kingdom's",
-            "style": {"heading":"vessel","phase":"four"}
-        },
         "SVAS":{
             "expansion":["Still","Vegatative","Animal","Speaking"]
+        },
+        "Tov Ohr":{
+            "translation":"Good Light"
+        },
+        "MLTz":{
+            "expansion":["Mem","Lamed","Tzadik"]
+        },
+        "Hochma Tataa":{
+            "translation":"Lower Wisdom"
+        },
+        "Hochma Ilaa":{
+            "translation":"Upper Wisdom"
         }
     }
 }
