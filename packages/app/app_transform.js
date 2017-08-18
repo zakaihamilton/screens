@@ -35,6 +35,7 @@ package.app.transform = function AppTransform(me) {
         });
         me.pageSize = {width:0,height:0};
         me.options.autoScroll = false;
+        me.contentChanged = false;
         me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.transform.set);
         me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.transform.set);
         me.keepSource = me.ui.property.toggleOptionSet(me, "keepSource", me.transform.set);
@@ -59,13 +60,15 @@ package.app.transform = function AppTransform(me) {
         me.scrollPos = me.ui.property.choiceOptionSet(me, "scrollPos");
         me.ui.theme.useStylesheet("kab.terms");
     };
-    me.updateWidgets = function (showInput) {
+    me.updateWidgets = function (showInput, update=true) {
         me.set(me.singleton.var.input, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(me.singleton.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(me.singleton.var.layout, "ui.style.top", showInput ? "250px" : "0px");
         me.set(me.singleton.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(me.singleton.var.layout, "ui.style.fontSize", me.options.fontSize);
-        me.set(me.singleton, "update");
+        if(update) {
+            me.set(me.singleton, "update");
+        }
     };
     me.shouldReflow = function() {
         var reflow = false;
@@ -122,8 +125,9 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(me.singleton.var.input, "ui.basic.text");
             if (text) {
                 me.singleton.inTransition++;
+                me.contentChanged = true;
                 me.updateSpinner();
-                me.updateWidgets(me.options.showInput);
+                me.updateWidgets(me.options.showInput, false);
                 var language = me.options.language.toLowerCase();
                 if (language === "auto") {
                     language = me.core.string.language(text);
@@ -172,10 +176,11 @@ package.app.transform = function AppTransform(me) {
                 return;
             }
             var visibleWidget = null;
-            if(!me.forceReflow) {
+            if(!me.contentChanged) {
                 visibleWidget = me.ui.layout.firstVisibleWidget(me.singleton.var.layout);
             }
             me.forceReflow = false;
+            me.contentChanged = false;
             me.pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
             me.singleton.inTransition++;
             me.updateSpinner();

@@ -101,6 +101,7 @@ package.ui.layout = function UILayout(me) {
         }
     };
     me.reflow = function (callback, source, target, options) {
+        console.log("options.scrollWidget: " + options.scrollWidget);
         var layoutContent = me.content(target);
         if (target.reflowInterval) {
             clearInterval(target.reflowInterval);
@@ -145,7 +146,7 @@ package.ui.layout = function UILayout(me) {
                 return;
             }
             if(options.scrollWidget) {
-                if(previousWidget !== visibleWidget && visibleWidget === options.scrollWidget) {
+                if(visibleWidget === options.scrollWidget) {
                     if (!target.notified && callback) {
                         callback(true);
                         target.notified = true;
