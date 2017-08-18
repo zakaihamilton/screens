@@ -2265,6 +2265,18 @@
             "style":{"heading":"World"},
             "prefix":"The",
             "translation":"World of Correction"
+        },
+        "Zivug Elyon":{
+            "translation":"Upper Mating"
+        },
+        "Shoresh Keter Elyon":{
+            "reorder":["Elyon","Shoresh","Keter"]
+        },
+        "Klalut":{
+            "translation":"Generality"
+        },
+        "Kolel":{
+            "translation":"Containing"
         }
     }
 }
