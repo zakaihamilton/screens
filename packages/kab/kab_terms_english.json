@@ -23,7 +23,8 @@
         "retuned":"returned",
         "Neshamain":"Neshama in",
         "Hassadimon":"Hassadim on",
-        "Zoharonly":"Zohar only"
+        "Zoharonly":"Zohar only",
+        "Nunof":"Nun of"
     },
     "pre": [
         {
@@ -996,6 +997,9 @@
         "Dinim":{
             "translation":"Judgements"
         },
+        "He’ara":{
+            "translation":"Illumination"
+        },
         "He’arat":{
             "translation":"Illumination of"
         },
@@ -1325,6 +1329,14 @@
         "Yisrael Saba ve Tvuna":{
             "style":{"heading":"Face","phase":"two"},
             "translation":"Grandfather of Israel and Comprehension"
+        },
+        "Yisrael":{
+            "translation":"Israel"
+        },
+        "Israel Saba":{
+            "style":{"heading":"Face","phase":"two"},
+            "translation":"Grandfather of Israel",
+            "source":"Yisrael Saba"
         },
         "Yisrael Saba":{
             "style":{"heading":"Face","phase":"two"},
@@ -2117,6 +2129,10 @@
             "style":{"heading":"face","phase":"one"},
             "translation":"Father and Mother"
         },
+        "Abba ve Ima":{
+            "style":{"heading":"face","phase":"one"},
+            "translation":"Father and Mother"
+        },
         "Abba and Imma":{
             "style":{"heading":"face","phase":"one"},
             "translation":"Father and Mother"
@@ -2315,6 +2331,14 @@
         },
         "Havalim":{
             "translation":"Vapors"
+        },
+        "Bereshit":{
+            "translation":"Genesis"
+        },
+        "Etzem Hochma":{
+            "prefix":"The",
+            "translation":"Core of Wisdom",
+            "style": {"phase":"one"}
         }
     }
 }
