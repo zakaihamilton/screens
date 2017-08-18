@@ -185,7 +185,7 @@ package.app.transform = function AppTransform(me) {
             me.singleton.inTransition++;
             me.updateSpinner();
             var target = me.widget.container.content(me.singleton.var.layout);
-            target.style.opacity = 0;
+            me.singleton.var.layout.style.opacity = 0;
             if(me.options.pages) {
                 target.style.margin = "";
             }
@@ -209,7 +209,7 @@ package.app.transform = function AppTransform(me) {
                 if(!me.singleton.inTransition) {
                     me.updateSpinner();
                     me.updateScrolling();
-                    target.style.opacity = 1;
+                    me.singleton.var.layout.style.opacity = 1;
                 }
             }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
         }

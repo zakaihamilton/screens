@@ -1135,6 +1135,9 @@
         "Tzedek":{
             "translation":"Justice"
         },
+        "Midah":{
+            "translation":"Measure"
+        },
         "Midat":{
             "translation":"Measure"
         },
@@ -2215,6 +2218,9 @@
         },
         "Idra Raba":{
             "style":{"heading":"Zohar Portion"}
+        },
+        "Mitpaer":{
+            "translation":"Boasts"
         }
     }
 }
