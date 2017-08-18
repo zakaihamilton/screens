@@ -43,6 +43,14 @@
             "replace":""
         },
         {
+            "find":" Previous pageNext page \n",
+            "replace":""
+        },
+        {
+            "find":"Back to top\n",
+            "replace":""
+        },
+        {
             "match":"/^Talmud .*?$",
             "prefix":"<h4 style=\"order:-4\">",
             "suffix":"</h4>"
@@ -91,6 +99,11 @@
             "match":"/^Ohr Pnimi$",
             "prefix":"<h3>",
             "suffix":"</h3>"
+        },
+        {
+            "match":"/^[^.?!:;,]*$",
+            "prefix":"<h4 style=\"text-align:center\">",
+            "suffix":"</h4>"
         },
         {
             "find":"/\\\n",
@@ -905,6 +918,10 @@
         },
         "HaVaYaH":{
             "translation":"Tetragrammaton",
+            "style":{"heading":"HaVaYaH י-ה-ו-ה"}
+        },
+        "HaVaYot":{
+            "translation":"Tetragrammatons",
             "style":{"heading":"HaVaYaH י-ה-ו-ה"}
         },
         "Haita":{
@@ -2221,6 +2238,33 @@
         },
         "Mitpaer":{
             "translation":"Boasts"
+        },
+        "Akud":{
+            "translation":"Tied"
+        },
+        "Yaakov":{
+            "style":{"heading":"Patriarch"},
+            "translation":"Jacob"
+        },
+        "Bershit Raba":{
+            "style":{"heading":"Book"},
+            "translation":"Genesis Rabba"
+        },
+        "Avot":{
+            "translation":"Fathers"
+        },
+        "Brudim":{
+            "translation":"Grizzled"
+        },
+        "Olam ha Brudim":{
+            "style":{"heading":"World"},
+            "prefix":"The",
+            "translation":"World of Correction"
+        },
+        "Olam ha Tikun":{
+            "style":{"heading":"World"},
+            "prefix":"The",
+            "translation":"World of Correction"
         }
     }
 }
