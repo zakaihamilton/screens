@@ -129,81 +129,84 @@ package.ui.layout = function UILayout(me) {
         }
         var previousWidget = null, visibleWidget = null;
         target.reflowInterval = setInterval(function () {
-            var widget = source.firstChild;
-            if (!widget) {
-                clearInterval(target.reflowInterval);
-                target.reflowInterval = null;
-                me.createBreak(layoutContent);
-                me.createBreak(layoutContent);
-                if (options.usePages) {
-                    me.applyNumPages(layoutContent, pageIndex);
-                }
-                if (!target.notified && callback) {
-                    callback(true);
-                    target.notified = true;
-                }
-                me.set(target, "update");
-                return;
-            }
-            if(options.scrollWidget) {
-                if(visibleWidget === options.scrollWidget) {
+            for(;;) {
+                var widget = source.firstChild;
+                if (!widget) {
+                    clearInterval(target.reflowInterval);
+                    target.reflowInterval = null;
+                    me.createBreak(layoutContent);
+                    me.createBreak(layoutContent);
+                    if (options.usePages) {
+                        me.applyNumPages(layoutContent, pageIndex);
+                    }
                     if (!target.notified && callback) {
                         callback(true);
                         target.notified = true;
                     }
-                    me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
                     me.set(target, "update");
+                    break;
                 }
-            }
-            else if(options.scrollPos < layoutContent.scrollHeight) {
-                if (!target.notified && callback) {
-                    callback(true);
-                    target.notified = true;
-                    me.set(target, "update");
-                }
-            }
-            var location = pageContent ? pageContent : layoutContent;
-            if (widget.style && widget.style.order) {
-                location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
-            } else {
-                location.appendChild(widget);
-            }
-            visibleWidget = widget;
-            if (!me.page) {
-                return;
-            }
-            var newPage = false;
-            if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
-                newPage = true;
-            }
-            if (!(widget.innerHTML || widget.firstChild)) {
-                pageContent.removeChild(widget);
-                widget = null;
-            }
-            if (newPage) {
-                if (widget) {
-                    pageContent.removeChild(widget);
-                }
-                pageIndex++;
-                me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-                pageContent = me.page.var.content;
-                if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
-                    pageContent.appendChild(previousWidget);
-                }
-                if (widget) {
-                    pageContent.appendChild(widget);
-                }
-                for (var fontSize = 100; fontSize >= 25; fontSize -= 5) {
-                    if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
-                        widget.style.fontSize = fontSize + "%";
-                    } else {
-                        break;
+                if(options.scrollWidget) {
+                    if(visibleWidget === options.scrollWidget) {
+                        if (!target.notified && callback) {
+                            callback(true);
+                            target.notified = true;
+                        }
+                        me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+                        me.set(target, "update");
                     }
                 }
-                previousWidget = null;
-                me.set(target, "update");
-            } else if (widget) {
-                previousWidget = widget;
+                else if(options.scrollPos < layoutContent.scrollHeight) {
+                    if (!target.notified && callback) {
+                        callback(true);
+                        target.notified = true;
+                        me.set(target, "update");
+                    }
+                }
+                var location = pageContent ? pageContent : layoutContent;
+                if (widget.style && widget.style.order) {
+                    location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
+                } else {
+                    location.appendChild(widget);
+                }
+                visibleWidget = widget;
+                if (!me.page) {
+                    break;
+                }
+                var newPage = false;
+                if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
+                    newPage = true;
+                }
+                if (!(widget.innerHTML || widget.firstChild)) {
+                    pageContent.removeChild(widget);
+                    widget = null;
+                }
+                if (newPage) {
+                    if (widget) {
+                        pageContent.removeChild(widget);
+                    }
+                    pageIndex++;
+                    me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                    pageContent = me.page.var.content;
+                    if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
+                        pageContent.appendChild(previousWidget);
+                    }
+                    if (widget) {
+                        pageContent.appendChild(widget);
+                    }
+                    for (var fontSize = 100; fontSize >= 25; fontSize -= 5) {
+                        if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
+                            widget.style.fontSize = fontSize + "%";
+                        } else {
+                            break;
+                        }
+                    }
+                    previousWidget = null;
+                    me.set(target, "update");
+                    break;
+                } else if (widget) {
+                    previousWidget = widget;
+                }
             }
         }, 0);
     };

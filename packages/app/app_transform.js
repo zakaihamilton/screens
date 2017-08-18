@@ -153,7 +153,7 @@ package.app.transform = function AppTransform(me) {
                         me.set(me.singleton, "update");
                         me.updateSpinner();
                         var afterConversion = performance.now();
-                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " terms in " + language);
+                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " term combinations in " + language);
                         setTimeout(function() {
                             me.set(me.singleton.var.footer, "ui.basic.text", "");
                         }, 5000);

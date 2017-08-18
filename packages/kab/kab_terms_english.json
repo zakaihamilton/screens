@@ -2270,13 +2270,51 @@
             "translation":"Upper Mating"
         },
         "Shoresh Keter Elyon":{
-            "reorder":["Elyon","Shoresh","Keter"]
+            "reorder":["the","Elyon","Shoresh","Keter"]
         },
         "Klalut":{
             "translation":"Generality"
         },
         "Kolel":{
             "translation":"Containing"
+        },
+        "Truma":{
+            "translation":"Donation"
+        },
+        "AHaVaH":{
+            "style":{"heading":"A-Ha-Va-H א-ה-ב-ה"},
+            "translation":"Love"
+        },
+        "AhaVaH":{
+            "style":{"heading":"A-Ha-Va-H א-ה-ב-ה"},
+            "translation":"Love"
+        },
+        "Neshikin":{
+            "translation":"Kissing"
+        },
+        "Partzuf Aleph" : {
+            "translation":"First Face"
+        },
+        "Partzuf Bet" : {
+            "translation":"Second Face"
+        },
+        "Partzuf Gimel" : {
+            "translation":"Third Face"
+        },
+        "Atzmuto":{
+            "translation":"His Essence"
+        },
+        "Keter Elyon":{
+            "reorder":["Elyon","Keter"]
+        },
+        "Ohr Keter Elyon":{
+            "reorder":["the","Elyon","Ohr","Keter"]
+        },
+        "Eruv":{
+            "translation":"Mixture"
+        },
+        "Havalim":{
+            "translation":"Vapors"
         }
     }
 }

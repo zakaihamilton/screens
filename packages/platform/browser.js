@@ -90,7 +90,7 @@ package.include({
             if (info.failure) {
                 console.log("Cannot load " + info.failure.package + "." + info.failure.component);
             } else if (info.progress && info.loaded) {
-                var progress_width = (500 / 100) * info.progress;
+                var progress_width = (300 / 100) * info.progress;
                 var progress = document.getElementById("progress");
                 if (progress) {
                     progress.style.width = progress_width + "px";
