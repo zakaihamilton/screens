@@ -201,6 +201,7 @@ package.ui.layout = function UILayout(me) {
                     }
                 }
                 previousWidget = null;
+                me.set(target, "update");
             } else if (widget) {
                 previousWidget = widget;
             }
