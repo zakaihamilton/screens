@@ -86,7 +86,8 @@ package.widget.menu = function WidgetMenu(me) {
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
-                object.var.menu = me.create_menu(null, object, me.ui.rect.absolute_region(item), info);
+                var window = me.widget.window.window(object);
+                object.var.menu = me.create_menu(window, object, me.ui.rect.absolute_region(item), info);
             }
         }
     };

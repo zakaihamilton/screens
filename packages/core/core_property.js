@@ -116,9 +116,11 @@ package.core.property = function CoreProperty(me) {
             });
             return results;
         }
-        var source_method = me.core.property.fullname(object, name);
-        me.setTo(me._forwarding_list, object, source_method, value);
-        me.setTo(object._forwarding_list, object, source_method, value);
+        if(typeof name !== "function") {
+            var source_method = me.core.property.fullname(object, name);
+            me.setTo(me._forwarding_list, object, source_method, value);
+            me.setTo(object._forwarding_list, object, source_method, value);
+        }
         me.setSingle(object, name, value);
     };
     me.setTo = function(list, object, name, value) {

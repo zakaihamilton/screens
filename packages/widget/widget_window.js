@@ -56,6 +56,9 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.parent = function (object) {
+        if(!object) {
+            return null;
+        }
         var parent = object.parentNode;
         while (parent) {
             if (parent === me.ui.element.desktop()) {
@@ -516,6 +519,36 @@ package.widget.window = function WidgetWindow(me) {
                     me.set(last, "ui.focus.active", true);
                 }
             }
+        }
+    };
+    me.childMenuList = {
+        get: function(object) {
+            var isFirst = true;
+            var window = me.window (object);
+            var parent = me.parent(window);
+            if(parent) {
+                window = parent;
+            }
+            var windows = me.get(window, "widget.window.windows");
+            windows.sort(function(a, b){
+              var a_title = me.get(a, "title");
+              var b_title = me.get(b, "title");
+              return a_title === b_title ? 0 : +(a_title > b_title) || -1;
+            });
+            var items = windows.map(function(child) {
+                var result = [
+                    me.get(child, "title"),
+                    function() {
+                        me.set(child, "widget.window.show", true);
+                    },
+                    {
+                        "separator":isFirst
+                    }
+                ];
+                isFirst = false;
+                return result;
+            });
+            return items;
         }
     };
 };

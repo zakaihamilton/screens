@@ -41,7 +41,7 @@
                 ["Cascade"],
                 ["Tile"],
                 ["Arrange Icons"],
-                "app.progman.windows"
+                "widget.window.childMenuList"
             ]],
         ["Help", [
                 ["Contents"],
