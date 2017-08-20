@@ -170,6 +170,19 @@ package.widget.window = function WidgetWindow(me) {
             return me.get(window.var.label, "ui.basic.text");
         }
     };
+    me.key = {
+        get: function (object) {
+            var window = me.window(object);
+            if(!window.window_key) {
+                return me.get(window, "title");
+            }
+            return window.window_key;
+        },
+        set: function (object, value) {
+            var window = me.window(object);
+            window.window_key = value;
+        }        
+    };
     me.title = {
         get: function (object) {
             var window = me.window(object);
@@ -279,6 +292,9 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var wasMinimized = me.get(window, "ui.theme.contains", "minimize");
             var wasMaximized = me.get(window, "ui.theme.contains", "maximize");
+            if(wasMaximized && !wasMinimized) {
+                return;
+            }
             if(me.get(window, "fixed")) {
                 return;
             }
@@ -510,6 +526,19 @@ package.widget.window = function WidgetWindow(me) {
             return members;
         }
     };
+    me.active = {
+        get: function(object) {
+            var windows = me.get(object, "widget.window.visibleWindows");
+            if (windows && windows.length) {
+                var last = windows[windows.length - 1];
+                if (last) {
+                    return last;
+                }
+            }
+            var window = me.window(object);
+            return window;
+        }
+    };
     me.refocus = {
         set: function (object, value) {
             var windows = me.get(object, "widget.window.visibleWindows");
@@ -549,6 +578,21 @@ package.widget.window = function WidgetWindow(me) {
                 return result;
             });
             return items;
+        }
+    };
+    me.cascade = {
+        set: function(object) {
+            
+        }
+    };
+    me.tile = {
+        set: function(object) {
+            
+        }
+    };
+    me.arrangeIcons = {
+        set: function(object) {
+            
         }
     };
 };

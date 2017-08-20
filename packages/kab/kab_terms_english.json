@@ -24,7 +24,9 @@
         "Neshamain":"Neshama in",
         "Hassadimon":"Hassadim on",
         "Zoharonly":"Zohar only",
-        "Nunof":"Nun of"
+        "Nunof":"Nun of",
+        "Elyonis":"Elyon is",
+        "Sefirotbe":"Sefirot be"
     },
     "pre": [
         {
@@ -366,7 +368,7 @@
         },
         "Hochma": {
             "translation": "Wisdom",
-            "style": {"heading":"vessel","phase":"one"}
+            "style": {"heading":"vessel/light","phase":"one"}
         },
         "Bina": {
             "translation": "Understanding",
@@ -992,6 +994,7 @@
             "translation":"Desire"
         },
         "Hassadim":{
+            "style": {"heading":"light","phase":"two"},
             "translation":"Mercy"
         },
         "Dinim":{

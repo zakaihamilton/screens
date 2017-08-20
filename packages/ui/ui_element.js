@@ -191,7 +191,6 @@ package.ui.element = function UIElement(me) {
                 me.set(object, extension + ".extend");
             });
         }
-        object.context = null;
         if (component_name !== me.id) {
             me.set(object, "draw");
         }

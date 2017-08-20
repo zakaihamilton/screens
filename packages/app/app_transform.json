@@ -6,7 +6,7 @@
     "ui.style.height": "500px",
     "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
-    "maximize":null,
+    "maximize": null,
     "widget.menu.items": [
         ["File", [
                 ["New", "app.transform.new"],
@@ -23,7 +23,7 @@
                 ],
                 ["Snap to Page", "app.transform.snapToPage", {
                         "state": "select",
-                        "enabled":"app.transform.pages"
+                        "enabled": "app.transform.pages"
                     }
                 ],
                 ["Translation", "app.transform.translation", {
@@ -42,7 +42,7 @@
                 ],
                 ["Headings", "app.transform.headings", {
                         "state": "select",
-                        "enabled":"app.transform.addStyles"
+                        "enabled": "app.transform.addStyles"
                     }
                 ],
                 ["Pages", "app.transform.pages", {
@@ -52,7 +52,7 @@
                 ],
                 ["Columns", "app.transform.columns", {
                         "state": "select",
-                        "enabled":"app.transform.pages"
+                        "enabled": "app.transform.pages"
                     }
                 ],
                 ["HTML", "app.transform.showHtml", {
@@ -113,43 +113,81 @@
                     }
                 ]
             ]
+        ],
+        ["Window", [
+                ["Cascade", "widget.window.cascade"],
+                ["Tile", "widget.window.tile"],
+                ["Arrange Icons", "widget.window.arrangeIcons"],
+                "widget.window.childMenuList"
+            ]]
+    ],
+    "ui.group.data": {
+        "ui.data.default": {
+            "ui.basic.context":"self",
+            "static": true,
+            "ui.style.width": "500px",
+            "ui.style.height": "500px",
+            "maximize": true,
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.editor",
+                    "ui.theme.class": "app.transform.input",
+                    "ui.property.after":{
+                        "storage.cache.key": "@app.transform.inputCacheKey",
+                        "storage.cache.location": "local",
+                        "storage.cache.restore": "ui.basic.text"
+                    },
+                    "ui.monitor.change": "app.transform.save",
+                    "ui.basic.var": "input"
+                },
+                {
+                    "ui.basic.text": "Transform",
+                    "ui.touch.click": "app.transform.transform",
+                    "ui.basic.var": "transform",
+                    "ui.theme.add": "app.transform.transform"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.output",
+                    "ui.basic.var": "output"
+                },
+                {
+                    "ui.element.component": "widget.container",
+                    "ui.basic.var": "layout",
+                    "ui.theme.class": "app.transform.layout",
+                    "widget.scrollbar.vertical.alwaysShow": true,
+                    "widget.scrollbar.horizontal.alwaysHide": true,
+                    "scrolled": "app.transform.scrolled"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.spinner",
+                    "ui.basic.var": "spinner"
+                }
+            ],
+            "core.property.update": "app.transform.update",
+            "core.property.work":"app.transform.work",
+            "ui.property.after":{
+                "storage.cache.key": "@app.transform.windowCacheKey",
+                "storage.cache.location": "local",
+                "storage.cache.restore": "widget.window.store",
+                "app.transform.initOptions":null,
+                "app.transform.transform":null
+            }
+        },
+        "ui.data.keyList": [
+            "title"
+        ],
+        "ui.data.values": [
+            [
+                "Document 1"
+            ],
+            [
+                "Document 2"
+            ]
         ]
-    ],
-    "ui.basic.elements": [
-        {
-            "ui.element.component": "widget.editor",
-            "ui.theme.class": "app.transform.input",
-            "storage.cache.key": "app-transform-input",
-            "storage.cache.location":"local",
-            "storage.cache.restore": "ui.basic.text",
-            "ui.monitor.change": "app.transform.save",
-            "ui.basic.var": "input"
-        },
-        {
-            "ui.basic.text": "Transform",
-            "ui.touch.click": "app.transform.transform",
-            "ui.basic.var": "transform",
-            "ui.theme.add": "app.transform.transform"
-        },
-        {
-            "ui.basic.tag": "div",
-            "ui.theme.class": "app.transform.output",
-            "ui.basic.var": "output"
-        },
-        {
-            "ui.element.component": "widget.container",
-            "ui.basic.var": "layout",
-            "ui.theme.class": "app.transform.layout",
-            "widget.scrollbar.vertical.alwaysShow":true,
-            "widget.scrollbar.horizontal.alwaysHide":true
-        },
-        {
-            "ui.basic.tag":"div",
-            "ui.theme.class":"app.transform.spinner",
-            "ui.basic.var": "spinner"
-        }
-    ],
+    },
     "storage.cache.key": "app-transform-window",
-    "storage.cache.location":"local",
+    "storage.cache.location": "local",
     "storage.cache.restore": "widget.window.store"
 }

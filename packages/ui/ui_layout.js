@@ -111,7 +111,7 @@ package.ui.layout = function UILayout(me) {
                 callback(false);
             }
         }
-        me.page = null;
+        target.page = null;
         me.prepare(source, layoutContent);
         var pageSize = me.pageSize(layoutContent);
         if (!source.firstChild) {
@@ -124,8 +124,8 @@ package.ui.layout = function UILayout(me) {
         var pageIndex = 1;
         var pageContent = null;
         if (options.usePages) {
-            me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-            pageContent = me.page.var.content;
+            target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+            pageContent = target.page.var.content;
         }
         var previousWidget = null, visibleWidget = null;
         target.reflowInterval = setInterval(function () {
@@ -170,7 +170,7 @@ package.ui.layout = function UILayout(me) {
                     location.appendChild(widget);
                 }
                 visibleWidget = widget;
-                if (!me.page) {
+                if (!target.page) {
                     break;
                 }
                 var newPage = false;
@@ -186,8 +186,8 @@ package.ui.layout = function UILayout(me) {
                         pageContent.removeChild(widget);
                     }
                     pageIndex++;
-                    me.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-                    pageContent = me.page.var.content;
+                    target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                    pageContent = target.page.var.content;
                     if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
                         pageContent.appendChild(previousWidget);
                     }

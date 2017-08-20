@@ -10,218 +10,235 @@ package.app.transform = function AppTransform(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__, "desktop", "self");
-        me.singleton.inTransition = 0;
-        console.log("me.singleton.inTransition set to " + me.singleton.inTransition);
-        me.link("update", "app.transform.update", true, me.singleton);
-        me.link("scrolled", "app.transform.scrolled", true, me.singleton.var.layout);
-        me.set(me.singleton, "app.transform.transform");
     };
-    me.init = function () {
-        me.prevLanguage = null;
-        me.ui.property.initOptions(me, {
-            doTranslation: true,
-            addStyles: true,
-            keepSource: false,
-            showHtml: false,
-            showInput: false,
-            autoScroll: false,
-            snapToPage:true,
-            headings: true,
-            pages: true,
-            columns: true,
-            language: "Auto",
-            fontSize: "24px",
-            scrollPos:0
-        });
-        me.pageSize = {width:0,height:0};
-        me.options.autoScroll = false;
-        me.contentChanged = false;
-        me.translation = me.ui.property.toggleOptionSet(me, "doTranslation", me.transform.set);
-        me.addStyles = me.ui.property.toggleOptionSet(me, "addStyles", me.transform.set);
-        me.keepSource = me.ui.property.toggleOptionSet(me, "keepSource", me.transform.set);
-        me.showHtml = me.ui.property.toggleOptionSet(me, "showHtml", me.transform.set);
-        me.showInput = me.ui.property.toggleOptionSet(me, "showInput", function (options, key, value) {
-            if (!me.get(me.singleton.var.layout, "ui.basic.text")) {
-                value = true;
-            }
-            me.updateWidgets(value);
-        });
-        me.autoScroll = me.ui.property.toggleOptionSet(me, "autoScroll", me.updateScrolling);
-        me.snapToPage = me.ui.property.toggleOptionSet(me, "snapToPage", me.updateScrolling);
-        me.language = me.ui.property.choiceOptionSet(me, "language", me.transform.set);
-        me.fontSize = me.ui.property.choiceOptionSet(me, "fontSize", function (options, key, value) {
-            me.set(me.singleton.var.layout, "ui.style.fontSize", value);
-            me.forceReflow = true;
-            me.set(me.singleton, "update");
-        });
-        me.pages = me.ui.property.toggleOptionSet(me, "pages", me.reflow.set);
-        me.columns = me.ui.property.toggleOptionSet(me, "columns", me.reflow.set);
-        me.headings = me.ui.property.toggleOptionSet(me, "headings", me.transform.set);
-        me.scrollPos = me.ui.property.choiceOptionSet(me, "scrollPos");
-        me.ui.theme.useStylesheet("kab.terms");
-    };
-    me.updateWidgets = function (showInput, update=true) {
-        me.set(me.singleton.var.input, "ui.style.display", showInput ? "inline-block" : "none");
-        me.set(me.singleton.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
-        me.set(me.singleton.var.layout, "ui.style.top", showInput ? "250px" : "0px");
-        me.set(me.singleton.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
-        me.set(me.singleton.var.layout, "ui.style.fontSize", me.options.fontSize);
-        if(update) {
-            me.set(me.singleton, "update");
+    me.initOptions = {
+        set: function (object) {
+            var window = me.widget.window.window(object);
+            window.prevLanguage = null;
+            me.ui.options.load(me, window, {
+                doTranslation: true,
+                addStyles: true,
+                keepSource: false,
+                showHtml: false,
+                showInput: false,
+                autoScroll: false,
+                snapToPage: true,
+                headings: true,
+                pages: true,
+                columns: true,
+                language: "Auto",
+                fontSize: "24px",
+                scrollPos: 0
+            });
+            window.pageSize = {width: 0, height: 0};
+            window.options.autoScroll = false;
+            me.translation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
+            me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
+            me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);
+            me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
+            me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
+                var window = me.widget.window.window(object);
+                if (!me.get(window.var.layout, "ui.basic.text")) {
+                    value = true;
+                }
+                me.updateWidgets(window, value);
+            });
+            me.autoScroll = me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
+            me.snapToPage = me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
+            me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
+            me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
+                var window = me.widget.window.window(object);
+                me.set(window.var.layout, "ui.style.fontSize", value);
+                window.forceReflow = true;
+                me.set(window, "update");
+            });
+            me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
+            me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
+            me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
+            me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
+            me.ui.theme.useStylesheet("kab.terms");
         }
     };
-    me.shouldReflow = function() {
+    me.updateWidgets = function (object, showInput, update = true) {
+        var window = me.widget.window.window(object);
+        me.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
+        me.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
+        me.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
+        me.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
+        me.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
+        if (update) {
+            me.set(window, "update");
+    }
+    };
+    me.shouldReflow = function (object) {
+        var window = me.widget.window.window(object);
         var reflow = false;
-        var pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
-        if(me.get(me.singleton, "visible")) {
-            if(pageSize.height !== me.pageSize.height || pageSize.width !== me.pageSize.width) {
+        var pageSize = me.ui.layout.pageSize(window.var.layout);
+        if (me.get(window, "visible") && me.get(window, "ui.focus.active")) {
+            if (window.pageSize && (pageSize.height !== window.pageSize.height || pageSize.width !== window.pageSize.width)) {
                 reflow = true;
             }
-            if(me.forceReflow) {
+            if (window.forceReflow) {
                 reflow = true;
             }
         }
         return reflow;
     };
-    me.updateSpinner = function() {
-        if(me.singleton.inTransition > 0) {
-            me.set(me.singleton.var.spinner, "ui.style.visibility", "visible");
-        }
-        else {
-            me.set(me.singleton.var.spinner, "ui.style.visibility", "hidden");
+    me.work = {
+        set: function (object, value) {
+            if (value) {
+                me.set(object.var.spinner, "ui.style.visibility", "visible");
+                object.var.layout.style.opacity = 0;
+            } else {
+                me.set(object.var.spinner, "ui.style.visibility", "hidden");
+                object.var.layout.style.opacity = 1;
+                me.updateScrolling(object);
+            }
         }
     };
-    me.updateScrolling = function() {
-        var scrollbar = me.singleton.var.layout.var.vertical;
-        var pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
-        var snapToPage = me.options.snapToPage;
-        if(!me.options.pages) {
+    me.updateScrolling = function (object) {
+        var window = me.widget.window.window(object);
+        var scrollbar = window.var.layout.var.vertical;
+        var pageSize = me.ui.layout.pageSize(window.var.layout);
+        var snapToPage = window.options.snapToPage;
+        if (!window.options.pages) {
             snapToPage = false;
         }
         me.set(scrollbar, "snapToPage", snapToPage);
         me.set(scrollbar, "pageSize", pageSize.height);
-        me.set(scrollbar, "autoScroll", me.options.autoScroll);
-        me.set(scrollbar, "scrollTo", me.options.scrollPos);
+        me.set(scrollbar, "autoScroll", window.options.autoScroll);
+        me.set(scrollbar, "scrollTo", window.options.scrollPos);
         me.set(scrollbar, "snap");
     };
     me.save = {
-        set: function(object, value) {
-            var input = me.singleton.var.input;
+        set: function (object, value) {
+            var window = me.widget.window.window(object);
+            var input = window.var.input;
             me.set(input, "storage.cache.store", me.get(input, "ui.basic.text"));
         }
     };
     me.new = {
         set: function (object) {
-            me.set(me.singleton.var.input, "ui.basic.text", "");
-            me.set(me.singleton.var.input, "storage.cache.store", "");
-            me.set(me.singleton.var.output, "ui.basic.html", "");
-            me.ui.layout.clear(me.singleton.var.layout);
-            me.updateWidgets(true);
+            var window = me.widget.window.window(object);
+            me.set(window.var.input, "ui.basic.text", "");
+            me.set(window.var.input, "storage.cache.store", "");
+            me.set(window.var.output, "ui.basic.html", "");
+            me.ui.layout.clear(window.var.layout);
+            me.updateWidgets(window, true);
+            window.options.scrollPos = 0;
         }
     };
     me.transform = {
         set: function (object) {
-            me.ui.layout.clear(me.singleton.var.layout);
-            var text = me.get(me.singleton.var.input, "ui.basic.text");
+            var window = me.widget.window.window(object);
+            me.ui.layout.clear(window.var.layout);
+            var text = me.get(window.var.input, "ui.basic.text");
             if (text) {
-                me.singleton.inTransition++;
-                me.contentChanged = true;
-                me.updateSpinner();
-                me.updateWidgets(me.options.showInput, false);
-                var language = me.options.language.toLowerCase();
+                me.set(window, "ui.work.state", true);
+                window.contentChanged = true;
+                me.updateWidgets(window, window.options.showInput, false);
+                var language = window.options.language.toLowerCase();
                 if (language === "auto") {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
                 var beforeConversion = performance.now();
-                me.set(me.singleton.var.footer, "ui.style.display", "block");
-                me.set(me.singleton.var.footer, "ui.basic.text", "Transforming...");
+                me.set(window.var.footer, "ui.style.display", "block");
+                me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
                     me.kab.terms.parse(function (text) {
-                        if (me.prevLanguage) {
-                            me.set(me.singleton.var.layout, "ui.theme.remove", me.prevLanguage);
+                        if (window.prevLanguage) {
+                            me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
                         }
-                        me.set(me.singleton.var.layout, "ui.theme.add", language);
-                        me.prevLanguage = language;
-                        if (me.options.showHtml) {
-                            me.set(me.singleton.var.output, "ui.basic.text", text);
+                        me.set(window.var.layout, "ui.theme.add", language);
+                        window.prevLanguage = language;
+                        if (window.options.showHtml) {
+                            me.set(window.var.output, "ui.basic.text", text);
                         } else {
-                            me.set(me.singleton.var.output, "ui.basic.html", text);
+                            me.set(window.var.output, "ui.basic.html", text);
                         }
-                        me.ui.layout.move(me.singleton.var.output, me.singleton.var.layout);
-                        me.forceReflow = true;
-                        me.set(me.singleton, "update");
-                        me.updateSpinner();
+                        me.ui.layout.move(window.var.output, window.var.layout);
+                        window.forceReflow = true;
+                        me.set(window, "update");
                         var afterConversion = performance.now();
-                        me.set(me.singleton.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " term combinations in " + language);
-                        setTimeout(function() {
-                            me.set(me.singleton.var.footer, "ui.basic.text", "");
+                        me.set(window.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " term combinations in " + language);
+                        setTimeout(function () {
+                            me.set(window.var.footer, "ui.basic.text", "");
                         }, 5000);
-                        me.singleton.inTransition--;
-                        me.updateSpinner();
-                    }, text, me.options);
+                        me.set(window, "ui.work.state", false);
+                    }, text, window.options);
                 }, language);
             }
         }
     };
     me.reflow = {
-        set: function(object) {
-            me.forceReflow = true;
-            me.set(me.singleton, "update");
+        set: function (object) {
+            var window = me.widget.window.window(object);
+            window.forceReflow = true;
+            me.set(window, "update");
         }
     };
     me.update = {
         set: function (object) {
-            if(!me.shouldReflow(object)) {
+            var window = me.widget.window.window(object);
+            if (!me.shouldReflow(object)) {
                 return;
             }
             var visibleWidget = null;
-            if(!me.contentChanged) {
-                visibleWidget = me.ui.layout.firstVisibleWidget(me.singleton.var.layout);
+            if (!window.contentChanged) {
+                visibleWidget = me.ui.layout.firstVisibleWidget(window.var.layout);
             }
-            me.forceReflow = false;
-            me.contentChanged = false;
-            me.pageSize = me.ui.layout.pageSize(me.singleton.var.layout);
-            me.singleton.inTransition++;
-            me.updateSpinner();
-            var target = me.widget.container.content(me.singleton.var.layout);
-            me.singleton.var.layout.style.opacity = 0;
-            if(me.options.pages) {
+            window.forceReflow = false;
+            window.contentChanged = false;
+            window.pageSize = me.ui.layout.pageSize(window.var.layout);
+            me.set(window, "ui.work.state", true);
+            var target = me.widget.container.content(window.var.layout);
+            window.var.layout.style.opacity = 0;
+            if (window.options.pages) {
                 target.style.margin = "";
-            }
-            else {
+            } else {
                 target.style.margin = "20px 40px";
             }
-            var columnCount = me.options.columns ? 2 : 1;
+            var columnCount = window.options.columns ? 2 : 1;
             var reflowOptions = {
-                pageClass:"app.transform.page",
-                contentClass:"app.transform.page.content",
-                headerClass:"app.transform.page.header",
-                pageNumberClass:"app.transform.page.number",
-                scrollToTopClass:"app.transfer.page.scrolltotop",
-                usePages:me.options.pages,
-                columnCount:columnCount,
-                scrollWidget:visibleWidget,
-                scrollPos:me.options.scrollPos
+                pageClass: "app.transform.page",
+                contentClass: "app.transform.page.content",
+                headerClass: "app.transform.page.header",
+                pageNumberClass: "app.transform.page.number",
+                scrollToTopClass: "app.transfer.page.scrolltotop",
+                usePages: window.options.pages,
+                columnCount: columnCount,
+                scrollWidget: visibleWidget,
+                scrollPos: window.options.scrollPos
             };
-            me.ui.layout.reflow(function() {
-                me.singleton.inTransition--;
-                if(!me.singleton.inTransition) {
-                    me.updateSpinner();
-                    me.updateScrolling();
-                    me.singleton.var.layout.style.opacity = 1;
-                }
-            }, me.singleton.var.output, me.singleton.var.layout, reflowOptions);
+            me.ui.layout.reflow(function () {
+                me.set(window, "ui.work.state", false);
+            }, window.var.output, window.var.layout, reflowOptions);
         }
     };
     me.scrolled = {
-        set: function(object, value) {
-            if(me.singleton.inTransition > 0) {
+        set: function (object, value) {
+            var window = me.widget.window.window(object);
+            if (me.get(window, "ui.work.state")) {
                 return;
             }
-            if("vertical" in value) {
-                me.set(me.singleton, "app.transform.scrollPos", value.vertical);
+            if ("vertical" in value) {
+                me.set(window, "app.transform.scrollPos", value.vertical);
             }
+        }
+    };
+    me.inputCacheKey = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            var key = me.get(window, "key");
+            return "app-transform-" + key + "-input";
+        }
+    };
+    me.windowCacheKey = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            var key = me.get(window, "key");
+            return "app-transform-" + key + "-window";
         }
     };
 };

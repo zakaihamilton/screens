@@ -2,7 +2,7 @@
     "title": "Storage",
     "ui.style.left": "150px",
     "ui.style.top": "150px",
-    "ui.style.width": "330px",
+    "ui.style.width": "530px",
     "ui.style.height": "200px",
     "fixed":true,
     "ui.basic.elements": [
@@ -13,7 +13,7 @@
         {
             "ui.basic.var":"storage",
             "ui.basic.text": "Local",
-            "ui.style.width": "200px",
+            "ui.style.width": "400px",
             "ui.element.count": 0,
             "core.property.onChange":"app.storage.onChangeStorage",
             "ui.group.data": {
@@ -35,7 +35,7 @@
             "ui.basic.var":"key",
             "ui.basic.text": "",
             "ui.basic.readOnly": false,
-            "ui.style.width": "200px",
+            "ui.style.width": "400px",
             "ui.element.count": 0,
             "core.property.onChange":"app.storage.onChangeKey",
             "ui.monitor.change":"app.storage.onChangeKey",
@@ -56,7 +56,7 @@
         {
             "ui.basic.var":"value",
             "ui.basic.text": "",
-            "ui.style.width": "195px",
+            "ui.style.width": "395px",
             "ui.basic.type": "text"
         },
         {

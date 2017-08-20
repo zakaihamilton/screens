@@ -38,13 +38,15 @@ package.include({
         "focus",
         "theme",
         "property",
+        "options",
         "scroll",
         "attribute",
         "var",
         "move",
         "resize",
         "monitor",
-        "layout"
+        "layout",
+        "work",
     ],
     "menu": [
         "context"

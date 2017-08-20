@@ -61,6 +61,19 @@ package.ui.basic = function UIBasic(me) {
             }
         }
     };
+    me.context = {
+        get: function(object) {
+            return object.context;
+        },
+        set: function(object, value) {
+            if(value === "self") {
+                object.context = object;
+            }
+            else {
+                object.context = value;
+            }
+        }
+    };
     me.elements = {
         set: function(object, value) {
             if (value) {

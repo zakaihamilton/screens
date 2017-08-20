@@ -38,9 +38,9 @@
                 ]
             ]],
         ["Window", [
-                ["Cascade"],
-                ["Tile"],
-                ["Arrange Icons"],
+                ["Cascade", "widget.window.cascade"],
+                ["Tile", "widget.window.tile"],
+                ["Arrange Icons", "widget.window.arrangeIcons"],
                 "widget.window.childMenuList"
             ]],
         ["Help", [

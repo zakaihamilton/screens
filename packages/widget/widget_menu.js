@@ -86,7 +86,7 @@ package.widget.menu = function WidgetMenu(me) {
             if (typeof info === "string") {
                 me.set(object, info, item);
             } else if (Array.isArray(info)) {
-                var window = me.widget.window.window(object);
+                var window = me.get(object, "widget.window.active");
                 object.var.menu = me.create_menu(window, object, me.ui.rect.absolute_region(item), info);
             }
         }
@@ -130,7 +130,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
             var item = value[0];
             var info = value[1];
             me.set(object, "back", item);
-            me.set(object.target, info, me.get(item, "ui.basic.text"), item);
+            me.set(object.window, info, me.get(item, "ui.basic.text"), item);
         }
     };
 };

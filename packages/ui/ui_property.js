@@ -11,6 +11,15 @@ package.ui.property = function UIProperty(me) {
             }
         }
     };
+    me.after = {
+        set: function(object, properties) {
+            setTimeout(function() {
+                for (var key in properties) {
+                    me.set(object, key, properties[key]);
+                }
+            }, 0);
+        }
+    };
     me.trickle = {
         set: function(object, properties) {
             for (var key in properties) {
@@ -53,52 +62,6 @@ package.ui.property = function UIProperty(me) {
             }
             me.trickle.set(parent, properties);
         }
-    };
-    me.initOptions = function(component, defaults, storage="local") {
-        var validKey = me.storage.cache.validKey(component.id + ".options");
-        var value = me.get(me.storage.cache[storage], validKey);
-        component.options = Object.assign({}, defaults, JSON.parse(value));
-    };
-    me.toggleOptionSet = function (component, key, callback, storage="local") {
-        if(!component.options) {
-            component.options = {};
-        }
-        return {
-            get: function (object) {
-                return component.options[key];
-            },
-            set: function (object, value) {
-                component.options[key] = !component.options[key];
-                if(callback) {
-                    callback(component.options, key, component.options[key]);
-                }
-                if(storage) {
-                    var validKey = me.storage.cache.validKey(component.id + ".options");
-                    me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
-                }
-            }
-        };
-    };
-    me.choiceOptionSet = function (component, key, callback, storage="local") {
-        if(!component.options) {
-            component.options = {};
-        }
-        var methods = {
-            get: function (object, value) {
-                return component.options[key] === value;
-            },
-            set: function (object, value) {
-                component.options[key] = value;
-                if(callback) {
-                    callback(component.options, key, component.options[key]);
-                }
-                if(storage) {
-                    var validKey = me.storage.cache.validKey(component.id + ".options");
-                    me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
-                }
-            }
-        };
-        return methods;
     };
     me.themedPropertySet = function (name, callback) {
         return me.core.object.property(name, {
