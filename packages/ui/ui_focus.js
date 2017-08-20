@@ -69,11 +69,11 @@ package.ui.focus = function UIFocus(me) {
             from = me.widget.window.parent(from);
         }
     };
-    me.updateOrder = function (parent, object = null, order = -1) {
+    me.updateOrder = function (parent, object = null, order = - 1) {
         var childList = me.ui.node.childList(parent);
         if (object) {
-            if(order === -1) {
-                order = childList.length-1;
+            if (order === -1) {
+                order = childList.length - 1;
             }
             var prevOrder = childList.indexOf(object);
             childList.splice(prevOrder, 1);
@@ -81,7 +81,10 @@ package.ui.focus = function UIFocus(me) {
         }
         for (var childOrder = 0; childOrder < childList.length; childOrder++) {
             me.set(childList[childOrder], "ui.style.zIndex", childOrder);
-    }
+        }
+        if(object) {
+            me.set(object, "update");
+        }
     };
     me.common = function (source, target) {
         if (!source || !target) {
@@ -122,7 +125,7 @@ package.ui.focus = function UIFocus(me) {
     };
     me.focus = function (window) {
         /* Check if window is visible */
-        if(!me.get(window, "visible")) {
+        if (!me.get(window, "visible")) {
             return;
         }
         /* Find common window between previous and new window */
@@ -130,7 +133,7 @@ package.ui.focus = function UIFocus(me) {
         /* Deactivate previous windows */
         me.deactivate(me.focus_window, common);
         /* Activate new window */
-        me.activate(window, common);
         me.focus_window = window;
+        me.activate(window, common);
     };
 };

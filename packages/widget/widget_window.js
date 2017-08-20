@@ -487,7 +487,8 @@ package.widget.window = function WidgetWindow(me) {
     me.store = {
         get: function (object) {
             var options = {
-                "region": me.get(object, "region")
+                "region": me.get(object, "region"),
+                "titleOrder": me.get(object, "titleOrder")
             };
             var keys = ["maximize", "restore", "minimize"];
             keys.map(function (key) {
@@ -511,6 +512,34 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             me.set(window.var.container, "update");
             me.set(window, "storage.cache.store", me.get(window, "store"));
+        }
+    };
+    me.findWindowByTitle = function(object, title) {
+        var windows = me.get(object, "widget.window.visibleWindows");
+        var result = null;
+        windows.map(function(window) {
+            var label = me.get(window, "title");
+            if(label === title) {
+                result = window;
+            }
+        });
+        return result;
+    };
+    me.titleOrder = {
+        get: function(object) {
+            return me.get(object, "widget.window.visibleWindows").map(function(window) {
+                return me.get(window, "title");
+            });
+        },
+        set: function(object, titles) {
+            if(titles) {
+                titles.map(function(title) {
+                    var window = me.findWindowByTitle(object, title);
+                    if(window) {
+                        me.set(window, "ui.focus.active", true);
+                    }
+                });
+            }
         }
     };
     me.visibleWindows = {

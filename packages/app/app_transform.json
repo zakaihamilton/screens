@@ -201,7 +201,9 @@
             ]
         ]
     },
-    "storage.cache.key": "app-transform-window",
-    "storage.cache.location": "local",
-    "storage.cache.restore": "widget.window.store"
+    "ui.property.after":{
+        "storage.cache.key": "app-transform-window",
+        "storage.cache.location": "local",
+        "storage.cache.restore": "widget.window.store"
+    }
 }
