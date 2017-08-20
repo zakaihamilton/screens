@@ -52,6 +52,8 @@ package.ui.rect = function UIRect(me) {
 
             parent = parent.offsetParent;
         }
+        xPos -= object.clientLeft;
+        yPos -= object.clientTop;
         var absoluteRect = {
             left: xPos,
             top: yPos,

@@ -25,7 +25,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(object, "ui.resize.enabled", !value && !maximized);
         });
     };
-    me.storeRegion = function(object) {
+    me.storeRegion = function (object) {
         var window = me.window(object);
         var parent_window = me.parent(window);
         var content = null;
@@ -56,7 +56,7 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.parent = function (object) {
-        if(!object) {
+        if (!object) {
             return null;
         }
         var parent = object.parentNode;
@@ -173,7 +173,7 @@ package.widget.window = function WidgetWindow(me) {
     me.key = {
         get: function (object) {
             var window = me.window(object);
-            if(!window.window_key) {
+            if (!window.window_key) {
                 return me.get(window, "title");
             }
             return window.window_key;
@@ -181,7 +181,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             window.window_key = value;
-        }        
+        }
     };
     me.title = {
         get: function (object) {
@@ -256,11 +256,11 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.theme.contains", "minimize");
-            if(minimized) {
+            if (minimized) {
                 return;
             }
             var maximized = me.get(window, "ui.theme.contains", "maximize");
-            if(!maximized) {
+            if (!maximized) {
                 me.storeRegion(window);
             }
             me.set(window, "ui.property.group", {
@@ -292,10 +292,10 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var wasMinimized = me.get(window, "ui.theme.contains", "minimize");
             var wasMaximized = me.get(window, "ui.theme.contains", "maximize");
-            if(wasMaximized && !wasMinimized) {
+            if (wasMaximized && !wasMinimized) {
                 return;
             }
-            if(me.get(window, "fixed")) {
+            if (me.get(window, "fixed")) {
                 return;
             }
             me.set(window, "ui.property.group", {
@@ -357,7 +357,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.theme.contains", "minimize");
             var maximized = me.get(window, "ui.theme.contains", "maximize");
-            if(!minimized && !maximized) {
+            if (!minimized && !maximized) {
                 return;
             }
             if (minimized) {
@@ -478,7 +478,7 @@ package.widget.window = function WidgetWindow(me) {
             } else {
                 content = me.ui.element.desktop();
             }
-            if(!maximized && !minimized) {
+            if (!maximized && !minimized) {
                 me.ui.rect.set_relative_region(window, value, content);
             }
             window.restore_region = value;
@@ -527,7 +527,7 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.active = {
-        get: function(object) {
+        get: function (object) {
             var windows = me.get(object, "widget.window.visibleWindows");
             if (windows && windows.length) {
                 var last = windows[windows.length - 1];
@@ -551,27 +551,30 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.childMenuList = {
-        get: function(object) {
+        get: function (object) {
             var isFirst = true;
-            var window = me.window (object);
+            var window = me.window(object);
             var parent = me.parent(window);
-            if(parent) {
+            if (parent) {
                 window = parent;
             }
             var windows = me.get(window, "widget.window.windows");
-            windows.sort(function(a, b){
-              var a_title = me.get(a, "title");
-              var b_title = me.get(b, "title");
-              return a_title === b_title ? 0 : +(a_title > b_title) || -1;
+            windows.sort(function (a, b) {
+                var a_title = me.get(a, "title");
+                var b_title = me.get(b, "title");
+                return a_title === b_title ? 0 : +(a_title > b_title) || -1;
             });
-            var items = windows.map(function(child) {
+            var items = windows.map(function (child) {
                 var result = [
                     me.get(child, "title"),
-                    function() {
+                    function () {
                         me.set(child, "widget.window.show", true);
                     },
                     {
-                        "separator":isFirst
+                        "state": function () {
+                            return me.get(child, "ui.focus.active");
+                        },
+                        "separator": isFirst
                     }
                 ];
                 isFirst = false;
@@ -581,18 +584,80 @@ package.widget.window = function WidgetWindow(me) {
         }
     };
     me.cascade = {
-        set: function(object) {
-            
+        set: function (object) {
+
         }
     };
-    me.tile = {
-        set: function(object) {
-            
+    me.clientRegion = {
+        get: function(object) {
+            var window = me.window(object);
+            var content = me.get(window, "widget.window.content");
+            var region = me.ui.rect.relative_region(content);
+            return region;
+        }
+    };
+    me.alignToLeft = {
+        set: function (object) {
+            var window = me.window(object);
+            me.set(window, "unmaximize");
+            var parent = me.parent(window);
+            var content = null;
+            if (parent) {
+                content = me.get(parent, "widget.window.content");
+            }
+            else {
+                content = me.ui.element.desktop();
+            }
+            var parent_region = me.ui.rect.relative_region(content);
+            parent_region.width /= 2;
+            parent_region.width -= 2;
+            parent_region.height -= 2;
+            me.ui.rect.set_relative_region(window, parent_region, content);
+            me.set(window, "update");
+            me.set(parent, "update");
+        }
+    };
+    me.alignToRight = {
+        set: function (object) {
+            var window = me.window(object);
+            me.set(window, "unmaximize");
+            var parent = me.parent(window);
+            var content = null;
+            if (parent) {
+                content = me.get(parent, "widget.window.content");
+            }
+            else {
+                content = me.ui.element.desktop();
+            }
+            var parent_region = me.ui.rect.relative_region(content);
+            parent_region.width /= 2;
+            parent_region.left += parent_region.width;
+            parent_region.width -= 2;
+            parent_region.height -= 2;
+            me.ui.rect.set_relative_region(window, parent_region, content);
+            me.set(window, "update");
+            me.set(parent, "update");
+        }
+    };
+    me.sideBySide = {
+        set: function (object) {
+            var window = me.window(object);
+            var parent = me.parent(window);
+            if (parent) {
+                window = parent;
+            }
+            var windows = me.get(window, "widget.window.visibleWindows");
+            if (windows && windows.length > 1) {
+                var left = windows[windows.length - 1];
+                var right = windows[windows.length - 2];
+                me.set(left, "alignToLeft");
+                me.set(right, "alignToRight");
+            }
         }
     };
     me.arrangeIcons = {
-        set: function(object) {
-            
+        set: function (object) {
+
         }
     };
 };

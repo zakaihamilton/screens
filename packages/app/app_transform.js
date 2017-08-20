@@ -231,14 +231,14 @@ package.app.transform = function AppTransform(me) {
         get: function (object) {
             var window = me.widget.window.window(object);
             var key = me.get(window, "key");
-            return "app-transform-" + key + "-input";
+            return "app-transform-input-" + key;
         }
     };
     me.windowCacheKey = {
         get: function (object) {
             var window = me.widget.window.window(object);
             var key = me.get(window, "key");
-            return "app-transform-" + key + "-window";
+            return "app-transform-window-" + key;
         }
     };
 };

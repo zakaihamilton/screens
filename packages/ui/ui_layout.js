@@ -101,7 +101,6 @@ package.ui.layout = function UILayout(me) {
         }
     };
     me.reflow = function (callback, source, target, options) {
-        console.log("options.scrollWidget: " + options.scrollWidget);
         var layoutContent = me.content(target);
         if (target.reflowInterval) {
             clearInterval(target.reflowInterval);

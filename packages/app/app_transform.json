@@ -116,7 +116,7 @@
         ],
         ["Window", [
                 ["Cascade", "widget.window.cascade"],
-                ["Tile", "widget.window.tile"],
+                ["Side by Side", "widget.window.sideBySide"],
                 ["Arrange Icons", "widget.window.arrangeIcons"],
                 "widget.window.childMenuList"
             ]]

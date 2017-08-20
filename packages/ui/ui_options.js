@@ -26,15 +26,17 @@ package.ui.options = function UIOptions(me) {
         return {
             get: function (object) {
                 var options = component.options;
-                if(object.options) {
-                    options = object.options;
+                var window = me.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
                 }
                 return options[key];
             },
             set: function (object, value) {
                 var options = component.options;
-                if(object.options) {
-                    options = object.options;
+                var window = me.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
                 }
                 options[key] = !options[key];
                 if(callback) {
@@ -46,7 +48,7 @@ package.ui.options = function UIOptions(me) {
                         storageKey += "." + me.get(object, "key");
                     }
                     var validKey = me.storage.cache.validKey(storageKey);
-                    me.set(me.storage.cache[storage], validKey, JSON.stringify(component.options));
+                    me.set(me.storage.cache[storage], validKey, JSON.stringify(options));
                 }
             }
         };
@@ -58,15 +60,17 @@ package.ui.options = function UIOptions(me) {
         var methods = {
             get: function (object, value) {
                 var options = component.options;
-                if(object.options) {
-                    options = object.options;
+                var window = me.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
                 }
                 return options[key] === value;
             },
             set: function (object, value) {
                 var options = component.options;
-                if(object.options) {
-                    options = object.options;
+                var window = me.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
                 }
                 options[key] = value;
                 if(callback) {
