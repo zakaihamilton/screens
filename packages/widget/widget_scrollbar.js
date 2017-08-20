@@ -46,24 +46,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             scrollbar.alwaysHide = value;
         }
     };
-    me.update_scroll_class = function(container, scroll_type) {
+    me.remove_scroll_class = function(container, scroll_type) {
         var scrollbar = container.var[scroll_type];
         if(!scrollbar) {
             return;
         }
-        var content = me.widget.container.content(container);
-        var has_scroll = (me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
         var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
         var class_name = scroll_type + "_scroll";
-        if (has_scroll && !has_class) {
-            me.set(container, "ui.theme.add", class_name);
-            me.set(container.var.vertical, "ui.property.trickle", {
-                "ui.theme.add": class_name
-            });
-            me.set(container.var.footer, "ui.property.trickle", {
-                "ui.theme.add": class_name
-            });
-        } else if (!has_scroll && has_class) {
+        if (has_class) {
             me.set(container, "ui.theme.remove", class_name);
             me.set(container.var.vertical, "ui.property.trickle", {
                 "ui.theme.remove": class_name
@@ -73,14 +63,34 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             });
         }
     };
+    me.update_scroll_class = function(container, scroll_type) {
+        var scrollbar = container.var[scroll_type];
+        if(!scrollbar) {
+            return;
+        }
+        var content = me.widget.container.content(container);
+        var has_scroll = (me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
+        var class_name = scroll_type + "_scroll";
+        if (has_scroll) {
+            me.set(container, "ui.theme.add", class_name);
+            me.set(container.var.vertical, "ui.property.trickle", {
+                "ui.theme.add": class_name
+            });
+            me.set(container.var.footer, "ui.property.trickle", {
+                "ui.theme.add": class_name
+            });
+        }
+    };
     me.update = {
         set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
-            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
-            me.update_scroll_class(container, "vertical");
+            me.remove_scroll_class(container, "horizontal");
+            me.remove_scroll_class(container, "vertical");
             me.update_scroll_class(container, "horizontal");
+            me.update_scroll_class(container, "vertical");
+            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
             var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
             var track_region = me.ui.rect.relative_region(scrollbar.var.track);

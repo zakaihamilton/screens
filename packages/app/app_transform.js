@@ -133,10 +133,10 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.window(object);
             me.ui.layout.clear(window.var.layout);
             var text = me.get(window.var.input, "ui.basic.text");
+            me.updateWidgets(window, window.options.showInput || !text, false);
             if (text) {
                 me.set(window, "ui.work.state", true);
                 window.contentChanged = true;
-                me.updateWidgets(window, window.options.showInput, false);
                 var language = window.options.language.toLowerCase();
                 if (language === "auto") {
                     language = me.core.string.language(text);
