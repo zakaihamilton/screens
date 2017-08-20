@@ -12,9 +12,11 @@ package.widget.content = function WidgetContent(me) {
         set: function(object, event) {
             var container = me.ui.node.container(object, me.widget.container.id);
             if(container) {
-                var scrollbar = container.var.vertical;
-                var delta = event.deltaY;
-                me.set(scrollbar, "delta", delta);
+                if(!me.widget.container.isChild(container)) {
+                    var scrollbar = container.var.vertical;
+                    var delta = event.deltaY;
+                    me.set(scrollbar, "delta", delta);
+                }
             }
         }
     };

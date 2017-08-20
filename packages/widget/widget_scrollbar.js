@@ -70,6 +70,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
         var content = me.widget.container.content(container);
         var has_scroll = (me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
+        has_scroll = has_scroll && !me.widget.container.isChild(container);
         var class_name = scroll_type + "_scroll";
         if (has_scroll) {
             me.set(container, "ui.theme.add", class_name);

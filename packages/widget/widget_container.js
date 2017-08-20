@@ -13,6 +13,17 @@ package.widget.container = function WidgetContainer(me) {
     me.content = function (object) {
         return object.var.content;
     };
+    me.isChild = function(container) {
+        var isChild = false;
+        var window = me.widget.window.window(container);
+        if(window.var.container === container) {
+            var parent = me.widget.window.parent(window);
+            if(!parent && window.child_window) {
+                isChild = true;
+            }
+        }
+        return isChild;
+    };
     me.elements = {
         set: function (object, value) {
             if (value) {
