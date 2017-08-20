@@ -87,12 +87,12 @@ package.ui.rect = function UIRect(me) {
     };
     me.set_absolute_region = function (object, region) {
         if (object.parentNode === document.body) {
-            object.style.left = region.left - object.clientLeft + "px";
-            object.style.top = region.top - object.clientTop + "px";
+            object.style.left = region.left + "px";
+            object.style.top = region.top + "px";
         } else {
             var parent_region = me.absolute_region(object.parentNode);
-            object.style.left = region.left - object.clientLeft - parent_region.left + "px";
-            object.style.top = region.top - object.clientLeft - parent_region.top + "px";
+            object.style.left = region.left - parent_region.left + "px";
+            object.style.top = region.top - parent_region.top + "px";
         }
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";

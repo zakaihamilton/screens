@@ -602,16 +602,20 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "unmaximize");
             var parent = me.parent(window);
             var content = null;
+            var container = null;
             if (parent) {
-                content = me.get(parent, "widget.window.content");
+                container = parent.var.container;
+                content = container.var.content;
             }
             else {
-                content = me.ui.element.desktop();
+                container = content = me.ui.element.desktop();
             }
-            var parent_region = me.ui.rect.relative_region(content);
+            var parent_region = me.ui.rect.relative_region(container);
+            parent_region.left = 0;
+            parent_region.top = 0;
             parent_region.width /= 2;
-            parent_region.width -= 2;
-            parent_region.height -= 2;
+            parent_region.width -= 4;
+            parent_region.height -= 4;
             me.ui.rect.set_relative_region(window, parent_region, content);
             me.set(window, "update");
             me.set(parent, "update");
@@ -623,17 +627,21 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "unmaximize");
             var parent = me.parent(window);
             var content = null;
+            var container = null;
             if (parent) {
-                content = me.get(parent, "widget.window.content");
+                container = parent.var.container;
+                content = container.var.content;
             }
             else {
-                content = me.ui.element.desktop();
+                container = content = me.ui.element.desktop();
             }
-            var parent_region = me.ui.rect.relative_region(content);
+            var parent_region = me.ui.rect.relative_region(container);
+            parent_region.left = 0;
+            parent_region.top = 0;
             parent_region.width /= 2;
             parent_region.left += parent_region.width;
-            parent_region.width -= 2;
-            parent_region.height -= 2;
+            parent_region.width -= 4;
+            parent_region.height -= 4;
             me.ui.rect.set_relative_region(window, parent_region, content);
             me.set(window, "update");
             me.set(parent, "update");
