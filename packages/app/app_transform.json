@@ -157,7 +157,8 @@
                     "ui.theme.class": "app.transform.layout",
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
-                    "scrolled": "app.transform.scrolled"
+                    "scrolled": "app.transform.scrolled",
+                    "ui.attribute.noTrickle":true
                 },
                 {
                     "ui.basic.tag": "div",

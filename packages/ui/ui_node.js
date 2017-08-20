@@ -10,8 +10,8 @@ package.ui.node = function UINode(me) {
         for(var childIndex = 0; childIndex < childNodes.length; childIndex++) {
             var child = childNodes[childIndex];
             var order = "auto";
-            if(child.component) {
-                order = me.get(child, "ui.style.zIndex");
+            if(child.component && child.style) {
+                order = child.style.zIndex;
             }
             if(!order || order === "auto" || order < 0 || order >= childNodes.length) {
                 order = 0;

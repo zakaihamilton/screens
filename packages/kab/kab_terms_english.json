@@ -2342,6 +2342,9 @@
             "prefix":"The",
             "translation":"Core of Wisdom",
             "style": {"phase":"one"}
+        },
+        "Hayim":{
+            "translation":"Life"
         }
     }
 }

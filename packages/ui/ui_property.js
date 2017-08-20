@@ -35,6 +35,9 @@ package.ui.property = function UIProperty(me) {
                     if(child.component === me.widget.window.id) {
                         continue;
                     }
+                    if(child.getAttribute("noTrickle")) {
+                        continue;
+                    }
                     me.trickle.set(child, properties);
                 }
             }
