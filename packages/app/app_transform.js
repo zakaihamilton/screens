@@ -74,7 +74,7 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.window(object);
         var reflow = false;
         var pageSize = me.ui.layout.pageSize(window.var.layout);
-        if (me.get(window, "visible") && me.get(window, "ui.focus.active")) {
+        if (me.get(window, "visible")) {
             if (window.pageSize && (pageSize.height !== window.pageSize.height || pageSize.width !== window.pageSize.width)) {
                 reflow = true;
             }

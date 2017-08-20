@@ -115,9 +115,13 @@
             ]
         ],
         ["Window", [
-                ["Cascade", "widget.window.cascade"],
+                ["Cascade", "widget.window.cascade", {
+                        "enabled":false
+                }],
                 ["Side by Side", "widget.window.sideBySide"],
-                ["Arrange Icons", "widget.window.arrangeIcons"],
+                ["Arrange Icons", "widget.window.arrangeIcons", {
+                        "enabled":false
+                }],
                 "widget.window.childMenuList"
             ]]
     ],
