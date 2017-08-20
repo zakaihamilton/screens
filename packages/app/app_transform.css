@@ -93,7 +93,6 @@
     font-size:50%;
     line-height:100%;
     color:gray;
-    z-index: 100;
     content:attr(shortPageNumberText);
     text-align:center;
     top:0px;

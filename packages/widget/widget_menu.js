@@ -77,7 +77,9 @@ package.widget.menu = function WidgetMenu(me) {
             object.selected_item = item;
             me.set(object, "ui.style.zIndex", "10");
             me.set(object, "ui.property.trickle", {
-                "ui.touch.over": "hover",
+                "ui.touch.over": "widget.menu.item.hover"
+            });
+            me.set(object, "ui.property.trickle", {
                 "ui.theme.remove": "select"
             });
             me.set(item, "ui.theme.add", "select");
@@ -192,7 +194,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
     };
     me.hover = {
         set: function (object, value) {
-            if (object.parentNode.selected_item !== object) {
+            if (object.parentNode.selected_item !== object && object.menu_select) {
                 me.set(object.parentNode, "select", [object, object.menu_select]);
             }
         }

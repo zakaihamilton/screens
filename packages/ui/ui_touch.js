@@ -77,6 +77,11 @@ package.ui.touch = function UIEvent(me) {
             me.register(me.handle, object, "mouseover", value);
         }
     };
+    me.enter = {
+        set: function (object, value) {
+            me.register(me.handle, object, "mouseenter", value);
+        }
+    };
     me.click = {
         set: function (object, value) {
             me.register(me.handle, object, "click", value);
