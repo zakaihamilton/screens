@@ -26,7 +26,8 @@
         "Zoharonly":"Zohar only",
         "Nunof":"Nun of",
         "Elyonis":"Elyon is",
-        "Sefirotbe":"Sefirot be"
+        "Sefirotbe":"Sefirot be",
+        "judgments":"judgements"
     },
     "pre": [
         {
@@ -2345,6 +2346,10 @@
         },
         "Hayim":{
             "translation":"Life"
+        },
+        "Malchuts":{
+            "translation":"Kingdoms",
+            "style": {"heading":"vessel","phase":"four"}
         }
     }
 }
