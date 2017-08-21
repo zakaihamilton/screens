@@ -29,9 +29,14 @@ package.app.main = function (me) {
         package.include("app.progman", function(info) {
             if(info.complete) {
                 me.send("app.progman.launch");
-                package.include("app.transform", function(info) {
+                package.include("app.storage", function(info) {
                     if(info.complete) {
-                        me.send("app.transform.launch");
+                        me.send("app.storage.launch");
+                        package.include("app.transform", function(info) {
+                            if(info.complete) {
+                                me.send("app.transform.launch");
+                            }
+                        });
                     }
                 });
             }

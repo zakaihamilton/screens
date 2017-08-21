@@ -69,5 +69,10 @@
             "ui.basic.text": "Set",
             "ui.touch.click": "app.storage.store"
         }
-    ]
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-storage-window",
+        "storage.cache.location": "local",
+        "storage.cache.restore": "widget.window.store"
+    }
 }
