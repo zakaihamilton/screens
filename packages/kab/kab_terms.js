@@ -211,7 +211,7 @@ package.kab.terms = function KabTerms(me) {
                 if(!defaultWord) {
                     for(var altPrefix in collection) {
                         var altPrefixItem = collection[altPrefix];
-                        if(altPrefixItem.match && text.match(me.regex(altPrefixItem.match))) {
+                        if(altPrefixItem.match && text.match(me.core.string.regex(altPrefixItem.match))) {
                             defaultWord = altPrefix;
                             if(wordToInsert[0] === wordToInsert[0].toUpperCase()) {
                                 defaultWord = defaultWord.charAt(0).toUpperCase() + defaultWord.slice(1);
@@ -248,10 +248,10 @@ package.kab.terms = function KabTerms(me) {
         return string;
     };
     me.removeDuplicates = function (wordsString, openChar, closeChar) {
-        var parts = wordsString.split(me.regex("/(\\" + openChar + ".*?\\" + closeChar + ")"));
+        var parts = wordsString.split(me.core.string.regex("/(\\" + openChar + ".*?\\" + closeChar + ")"));
         for (var i = 0; i < parts.length - 1; i++) {
             var fragment = parts[i + 1];
-            if (fragment.match(me.regex("/\\" + openChar + "\\d+\\" + closeChar))) {
+            if (fragment.match(me.core.string.regex("/\\" + openChar + "\\d+\\" + closeChar))) {
                 i++;
                 continue;
             }
@@ -266,13 +266,6 @@ package.kab.terms = function KabTerms(me) {
         }
         wordsString = parts.join("");
         return wordsString;
-    };
-    me.regex = function (string) {
-        if (string.startsWith("/")) {
-            string = string.slice(1);
-            string = new RegExp(string, 'g');
-        }
-        return string;
     };
     me.fixSpelling = function(wordsString) {
         var spelling = me.json.spelling;
@@ -294,7 +287,7 @@ package.kab.terms = function KabTerms(me) {
                     var checkInSplit = false;
                     var itemSplit = "\n";
                     if ("split" in item) {
-                        itemSplit = me.regex(item.split);
+                        itemSplit = me.core.string.regex(item.split);
                         checkInSplit = item.split.startsWith("/");
                     }
                     var itemJoin = itemSplit;
@@ -303,7 +296,7 @@ package.kab.terms = function KabTerms(me) {
                     }
                     wordsString = wordsString.split(itemSplit).map(function (selection) {
                         var inSplit = selection.match(itemSplit);
-                        var matches = selection.match(me.regex(item.match));
+                        var matches = selection.match(me.core.string.regex(item.match));
                         if (matches && (inSplit || !checkInSplit)) {
                             if (item.prefix) {
                                 selection = item.prefix + selection;
@@ -313,7 +306,7 @@ package.kab.terms = function KabTerms(me) {
                             }
                             var find = item.find;
                             if (find) {
-                                selection = selection.replace(me.regex(find), me.regex(item.replace));
+                                selection = selection.replace(me.core.string.regex(find), me.core.string.regex(item.replace));
                             }
                         }
                         return selection;
@@ -322,7 +315,7 @@ package.kab.terms = function KabTerms(me) {
                 }
                 var find = item.find;
                 if (find && (item.prefix || item.suffix)) {
-                    wordsString = wordsString.split(me.regex(find)).join(item.replace);
+                    wordsString = wordsString.split(me.core.string.regex(find)).join(item.replace);
                     if (item.prefix) {
                         wordsString = item.prefix + wordsString;
                     }
@@ -330,7 +323,7 @@ package.kab.terms = function KabTerms(me) {
                         wordsString = wordsString + item.suffix;
                     }
                 } else if (find) {
-                    wordsString = wordsString.replace(me.regex(find), me.regex(item.replace));
+                    wordsString = wordsString.replace(me.core.string.regex(find), me.core.string.regex(item.replace));
                 }
             });
         }

@@ -161,13 +161,25 @@
                     "ui.theme.class": "app.transform.layout",
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
-                    "scrolled": "app.transform.scrolled",
+                    "core.property.scrolled": "app.transform.scrolled",
                     "ui.attribute.noTrickle":true
                 },
                 {
                     "ui.basic.tag": "div",
                     "ui.theme.class": "app.transform.spinner",
                     "ui.basic.var": "spinner"
+                },
+                {
+                    "ui.theme.class":"app.transform.filter",
+                    "ui.basic.text": "",
+                    "ui.basic.type": "text",
+                    "ui.basic.var": "filter",
+                    "ui.property.after":{
+                        "storage.cache.key": "@app.transform.filterCacheKey",
+                        "storage.cache.location": "local",
+                        "storage.cache.restore": "ui.basic.text"
+                    },
+                    "ui.monitor.change":"app.transform.filterChange"
                 }
             ],
             "core.property.update": "app.transform.update",

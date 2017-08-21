@@ -44,4 +44,11 @@ package.core.string = function CoreString(me) {
         }
         return "hebrew";
     };
+    me.regex = function (string, options='g') {
+        if (string.startsWith("/")) {
+            string = string.slice(1);
+            string = new RegExp(string, options);
+        }
+        return string;
+    };
 };

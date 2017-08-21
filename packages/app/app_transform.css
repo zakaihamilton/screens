@@ -140,3 +140,11 @@
     width: 0.45em;
     height: 0.45em;
 }
+
+.app-transform-filter {
+    position: absolute;
+    right:30px;
+    width:150px;
+    border: 1px solid black;
+    z-index: 10;
+}

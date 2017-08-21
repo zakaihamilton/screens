@@ -127,6 +127,7 @@ package.ui.layout = function UILayout(me) {
             pageContent = target.page.var.content;
         }
         var previousWidget = null, visibleWidget = null;
+        var showInProgress = false;
         target.reflowInterval = setInterval(function () {
             for(;;) {
                 var widget = source.firstChild;
@@ -142,25 +143,17 @@ package.ui.layout = function UILayout(me) {
                         callback(true);
                         target.notified = true;
                     }
+                    me.completePage(target.page, options);
                     me.set(target, "update");
                     break;
                 }
                 if(options.scrollWidget) {
                     if(visibleWidget === options.scrollWidget) {
-                        if (!target.notified && callback) {
-                            callback(true);
-                            target.notified = true;
-                        }
-                        me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
-                        me.set(target, "update");
+                        showInProgress = true;
                     }
                 }
                 else if(options.scrollPos < layoutContent.scrollHeight) {
-                    if (!target.notified && callback) {
-                        callback(true);
-                        target.notified = true;
-                        me.set(target, "update");
-                    }
+                    showInProgress = true;
                 }
                 var location = pageContent ? pageContent : layoutContent;
                 if (widget.style && widget.style.order) {
@@ -169,11 +162,15 @@ package.ui.layout = function UILayout(me) {
                     location.appendChild(widget);
                 }
                 visibleWidget = widget;
+                me.styleParagraph(widget, options);
                 if (!target.page) {
+                    if(showInProgress) {
+                        me.completeReflow(callback, target, options);
+                    }
                     break;
                 }
                 var newPage = false;
-                if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
+                if (pageContent.scrollHeight > pageContent.clientHeight) {
                     newPage = true;
                 }
                 if (!(widget.innerHTML || widget.firstChild)) {
@@ -185,6 +182,7 @@ package.ui.layout = function UILayout(me) {
                         pageContent.removeChild(widget);
                     }
                     pageIndex++;
+                    me.completePage(target.page, options);
                     target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
                     pageContent = target.page.var.content;
                     if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
@@ -201,6 +199,9 @@ package.ui.layout = function UILayout(me) {
                         }
                     }
                     previousWidget = null;
+                    if(showInProgress) {
+                        me.completeReflow(callback, target, options);
+                    }
                     me.set(target, "update");
                     break;
                 } else if (widget) {
@@ -208,6 +209,16 @@ package.ui.layout = function UILayout(me) {
                 }
             }
         }, 0);
+    };
+    me.completeReflow = function(callback, target, options) {
+        var layoutContent = me.content(target);
+        if (!target.notified && callback) {
+            callback(true);
+            target.notified = true;
+            if(options.scrollWidget) {
+                me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+            }
+        }
     };
     me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
@@ -230,6 +241,7 @@ package.ui.layout = function UILayout(me) {
             "ui.theme.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
+            "ui.style.visibility":"hidden",
             "ui.attribute.pageNumber": pageIndex,
             "ui.basic.elements": [
                 {
@@ -286,6 +298,56 @@ package.ui.layout = function UILayout(me) {
                 me.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextSibling;
+        }
+    };
+    me.paragraphMatch = function(widget, options) {
+        var match = false;
+        if(!options.filter) {
+            return false;
+        }
+        match = widget.textContent.toUpperCase().includes(options.filter.toUpperCase());
+        return match;
+    };
+    me.styleParagraph = function(widget, options) {
+        widget.style.display = "flex-inline";
+        if(!options.usePages) {
+            if(options.filter && !me.paragraphMatch(widget, options)) {
+                widget.style.display = "none";
+            }
+        }
+        widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
+        widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
+        if(options.filter) {
+            var find = me.core.string.regex("/(" + options.filter + ")", 'gi');
+            var replace = "<mark>$1</mark>";
+            widget.innerHTML = widget.innerHTML.replace(find, replace);
+        }
+    };
+    me.completePage = function(page, options) {
+        var showPage = true;
+        if(!page) {
+            return;
+        }
+        if(options.filter) {
+            var widget = page.var.content.firstChild;
+            var found = false;
+            while(widget) {
+                if(me.paragraphMatch(widget, options)) {
+                   found = true;
+                    break;
+                }
+                widget = widget.nextSibling;
+            }
+            if(!found) {
+                showPage = false;
+            }
+        }
+        if(showPage) {
+            page.style.display = "flex-inline";
+            page.style.visibility = "visible";
+        }
+        else {
+            page.style.display = "none";
         }
     };
 };

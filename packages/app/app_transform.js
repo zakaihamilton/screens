@@ -63,6 +63,7 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.window(object);
         me.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
+        me.set(window.var.filter, "ui.style.top", showInput ? "250px" : "0px");
         me.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
         me.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
@@ -113,8 +114,7 @@ package.app.transform = function AppTransform(me) {
     me.save = {
         set: function (object, value) {
             var window = me.widget.window.window(object);
-            var input = window.var.input;
-            me.set(input, "storage.cache.store", me.get(input, "ui.basic.text"));
+            me.set(window.var.input, "storage.cache.store", me.get(window.var.input, "ui.basic.text"));
         }
     };
     me.new = {
@@ -136,7 +136,6 @@ package.app.transform = function AppTransform(me) {
             me.updateWidgets(window, window.options.showInput || !text, false);
             if (text) {
                 me.set(window, "ui.work.state", true);
-                window.contentChanged = true;
                 var language = window.options.language.toLowerCase();
                 if (language === "auto") {
                     language = me.core.string.language(text);
@@ -159,6 +158,7 @@ package.app.transform = function AppTransform(me) {
                         }
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
+                        window.contentChanged = true;
                         me.set(window, "update");
                         var afterConversion = performance.now();
                         me.set(window.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " term combinations in " + language);
@@ -209,7 +209,8 @@ package.app.transform = function AppTransform(me) {
                 usePages: window.options.pages,
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
-                scrollPos: window.options.scrollPos
+                scrollPos: window.options.scrollPos,
+                filter:me.get(window.var.filter, "ui.basic.text")
             };
             me.ui.layout.reflow(function () {
                 me.set(window, "ui.work.state", false);
@@ -234,11 +235,25 @@ package.app.transform = function AppTransform(me) {
             return "app-transform-input-" + key;
         }
     };
+    me.filterCacheKey = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            var key = me.get(window, "key");
+            return "app-transform-filter-" + key;
+        }
+    };
     me.windowCacheKey = {
         get: function (object) {
             var window = me.widget.window.window(object);
             var key = me.get(window, "key");
             return "app-transform-window-" + key;
+        }
+    };
+    me.filterChange = {
+        set: function(object) {
+            var window = me.widget.window.window(object);
+            me.set(window.var.filter, "storage.cache.store", me.get(window.var.filter, "ui.basic.text"));
+            me.set(window, "app.transform.reflow");
         }
     };
 };
