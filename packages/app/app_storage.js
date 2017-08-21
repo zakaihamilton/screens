@@ -46,6 +46,14 @@ package.app.storage = function AppStorage(me) {
             }
         }
     };
+    me.clear = {
+        set: function(object) {
+            var cache = me.cache();
+            if(cache) {
+                cache.clear();
+            }
+        }
+    };
     me.onChangeStorage = {
         set: function(object, string) {
             me.set(me.singleton.var.key, "ui.basic.text", "");

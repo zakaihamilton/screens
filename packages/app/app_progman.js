@@ -41,4 +41,11 @@ package.app.progman = function AppProgman(me) {
             }
         }
     };
+    me.windowCacheKey = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            var key = me.get(window, "key");
+            return "app-progman-window-" + key;
+        }
+    };
 };

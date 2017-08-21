@@ -432,6 +432,9 @@
         "YHNRN": {
             "expansion": ["Yechida", "Haya", "Neshama", "Ruach", "Nefesh"]
         },
+        "HNRN": {
+            "expansion": ["Haya", "Neshama", "Ruach", "Nefesh"]
+        },
         "NRNH": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya"]
         },

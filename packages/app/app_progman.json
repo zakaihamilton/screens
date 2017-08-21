@@ -55,7 +55,12 @@
         "ui.data.default": {
             "icon": "/packages/res/icons/group.png",
             "minimize": null,
-            "static": true
+            "static": true,
+            "ui.property.after":{
+                "storage.cache.key": "@app.progman.windowCacheKey",
+                "storage.cache.location": "local",
+                "storage.cache.restore": "widget.window.store"
+            }
         },
         "ui.data.keyList": [
             "title",
@@ -114,7 +119,9 @@
             ]
         ]
     },
-    "storage.cache.key": "app-progman-window",
-    "storage.cache.location":"local",
-    "storage.cache.restore": "widget.window.store"
+    "ui.property.after":{
+        "storage.cache.key": "app-progman-window",
+        "storage.cache.location": "local",
+        "storage.cache.restore": "widget.window.store"
+    }
 }

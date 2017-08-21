@@ -14,9 +14,15 @@ package.storage.cache = function StorageCache(me) {
             me.local.members = function() {
                 return me.keyList(me.local);
             };
+            me.local.clear = function() {
+                me.local.storage.clear();
+            };
             me.session.storage = sessionStorage;
             me.session.members = function() {
                 return me.keyList(me.session);
+            };
+            me.session.clear = function() {
+                me.session.storage.clear();
             };
         }
         me.key = me.core.object.property("storage.cache.key");

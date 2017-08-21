@@ -2,20 +2,26 @@
     "title": "Storage",
     "ui.style.left": "150px",
     "ui.style.top": "150px",
-    "ui.style.width": "530px",
-    "ui.style.height": "200px",
-    "fixed":true,
+    "ui.style.width": "550px",
+    "ui.style.height": "220px",
+    "fixed": true,
+    "widget.menu.items": [
+        ["Special", [
+                ["Clear Cache", "app.storage.clear"]
+            ]
+        ]
+    ],
     "ui.basic.elements": [
         {
-            "ui.style.marginTop":"15px",
+            "ui.style.marginTop": "15px",
             "ui.basic.text": "Source:"
         },
         {
-            "ui.basic.var":"storage",
+            "ui.basic.var": "storage",
             "ui.basic.text": "Local",
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange":"app.storage.onChangeStorage",
+            "core.property.onChange": "app.storage.onChangeStorage",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
@@ -32,13 +38,13 @@
             "ui.basic.text": "Key:"
         },
         {
-            "ui.basic.var":"key",
+            "ui.basic.var": "key",
             "ui.basic.text": "",
             "ui.basic.readOnly": false,
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange":"app.storage.onChangeKey",
-            "ui.monitor.change":"app.storage.onChangeKey",
+            "core.property.onChange": "app.storage.onChangeKey",
+            "ui.monitor.change": "app.storage.onChangeKey",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
@@ -54,7 +60,7 @@
             "ui.basic.text": "Value:"
         },
         {
-            "ui.basic.var":"value",
+            "ui.basic.var": "value",
             "ui.basic.text": "",
             "ui.style.width": "395px",
             "ui.basic.type": "text"
