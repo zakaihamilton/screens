@@ -181,7 +181,7 @@ package.kab.terms = function KabTerms(me) {
                                     usedTerm.label = item.label;
                                 }
                                 else {
-                                    usedTerm.label = source;
+                                    usedTerm.label = term;
                                 }
                             }
                             if(upperCase) {
