@@ -149,7 +149,7 @@
 
 .app-transform-filter {
     position: absolute;
-    right:100px;
+    left:50px;
     width:250px;
     border: 1px solid black;
     z-index: 10;

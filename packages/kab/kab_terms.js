@@ -177,6 +177,12 @@ package.kab.terms = function KabTerms(me) {
                                     usedTerm = me.searchTerms[translation] = {count:0};
                                 }
                                 usedTerm.count++;
+                                if(item.label) {
+                                    usedTerm.label = item.label;
+                                }
+                                else {
+                                    usedTerm.label = source;
+                                }
                             }
                             if(upperCase) {
                                 translation = translation.toUpperCase();

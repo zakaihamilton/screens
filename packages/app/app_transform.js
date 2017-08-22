@@ -168,6 +168,9 @@ package.app.transform = function AppTransform(me) {
                             var info = searchItem[1];
                             var option = document.createElement("option");
                             option.textContent = term;
+                            if(info.label) {
+                                option.setAttribute("label", info.label);
+                            }
                             window.var.filterList.appendChild(option);
                         });
                         me.ui.layout.move(window.var.output, window.var.layout);
