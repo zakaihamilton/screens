@@ -184,7 +184,6 @@
                     "ui.monitor.change":"app.transform.filterChange"
                 },
                 {
-                    "ui.theme.class":"app.transform.filterList",
                     "ui.basic.tag":"datalist",
                     "ui.basic.var": "filterList",
                     "ui.property.after":{

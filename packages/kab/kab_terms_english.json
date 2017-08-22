@@ -163,12 +163,8 @@
             "replace":"’s"
         },
         {
-            "find":"/ \\.",
-            "replace":"."
-        },
-        {
-            "find":"/ ,",
-            "replace":","
+            "find":"/ ([.,])",
+            "replace":"$1"
         }
     ],
     "terms": {

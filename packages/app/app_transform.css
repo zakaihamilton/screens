@@ -75,6 +75,11 @@
     box-sizing:border-box;
 }
 
+.app-transform-page-content h4 {
+    margin:0;
+    padding:0;
+}
+
 .app-transform-page-content p {
     margin-bottom:1em;
     padding:0;
@@ -159,13 +164,9 @@
 .app-transform-separator {
     position:absolute;
     left:100px;
-    bottom:20px;
     right:100px;
+    bottom:50px;
     height:5px;
     background:darkgray;
     box-shadow: 5px 5px 5px lightgray;
-}
-
-.app-transform-filterList {
-    max-height: 250px;
 }
