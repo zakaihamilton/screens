@@ -237,13 +237,18 @@ package.app.transform = function AppTransform(me) {
     };
     me.scrolled = {
         set: function (object, value) {
-            var window = me.widget.window.window(object);
-            if (me.get(window, "ui.work.state")) {
-                return;
+            if(object.scrolledTimer) {
+                clearTimeout(object.scrolledTimer);
             }
-            if ("vertical" in value) {
-                me.set(window, "app.transform.scrollPos", value.vertical);
-            }
+            object.scrolledTimer = setTimeout(function() {
+                var window = me.widget.window.window(object);
+                if (me.get(window, "ui.work.state")) {
+                    return;
+                }
+                if ("vertical" in value) {
+                        me.set(window, "app.transform.scrollPos", value.vertical);
+                }
+            }, 2000);
         }
     };
     me.inputCacheKey = {

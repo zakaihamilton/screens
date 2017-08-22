@@ -15,6 +15,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.scrollSize = 10;
             object.delayTimeout = 100;
             object.deltaDistance = 0;
+            object.has_scroll = false;
         }
     };
     me.scrollType = {
@@ -87,10 +88,13 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.ui.node.container(object, me.widget.container.id);
             var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
-            me.remove_scroll_class(container, "horizontal");
-            me.remove_scroll_class(container, "vertical");
-            me.update_scroll_class(container, "horizontal");
-            me.update_scroll_class(container, "vertical");
+            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
+            if(scrollbar.has_scroll !== has_scroll) {
+                me.remove_scroll_class(container, scroll_type);
+                me.update_scroll_class(container, scroll_type);
+                me.set(scrollbar, "ui.style.visibility", has_scroll ? "visible" : "hidden");
+                scrollbar.has_scroll = has_scroll;
+            }
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
             var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
@@ -107,10 +111,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             }
             if(has_scroll) {
                 me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
-                me.set(scrollbar, "ui.style.visibility", "visible");
-            }
-            else {
-                me.set(scrollbar, "ui.style.visibility", "hidden");
             }
             var changed = me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
             if(changed) {

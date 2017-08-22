@@ -27,7 +27,8 @@
         "Nunof":"Nun of",
         "Elyonis":"Elyon is",
         "Sefirotbe":"Sefirot be",
-        "judgments":"judgements"
+        "judgments":"judgements",
+        "He’arahis":"He’arah is"
     },
     "pre": [
         {
@@ -1784,6 +1785,9 @@
         },
         "Ohr Pashut":{
             "translation":"Simple Light"
+        },
+        "Hidush":{
+            "translation":"Renewal"
         },
         "Hidush Tzura":{
             "translation":"Renewal of Form"
