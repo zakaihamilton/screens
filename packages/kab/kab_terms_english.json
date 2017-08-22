@@ -125,6 +125,10 @@
             "suffix":"</h3>"
         },
         {
+            "find":"/([.?!:;,]) \n",
+            "replace":"$1\n"
+        },
+        {
             "match":"/[^.?!:;,\\\"'”]$",
             "prefix":"<h4 style=\"text-align:center\">",
             "suffix":"</h4>"
