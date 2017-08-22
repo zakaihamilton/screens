@@ -172,14 +172,24 @@
                 {
                     "ui.theme.class":"app.transform.filter",
                     "ui.basic.text": "",
-                    "ui.basic.type": "text",
+                    "ui.basic.type": "search",
                     "ui.basic.var": "filter",
+                    "ui.attribute.placeholder":"Search...",
                     "ui.property.after":{
                         "storage.cache.key": "@app.transform.filterCacheKey",
                         "storage.cache.location": "local",
-                        "storage.cache.restore": "ui.basic.text"
+                        "storage.cache.restore": "ui.basic.text",
+                        "ui.attribute.list":"@app.transform.filterCacheKey"
                     },
                     "ui.monitor.change":"app.transform.filterChange"
+                },
+                {
+                    "ui.theme.class":"app.transform.filterList",
+                    "ui.basic.tag":"datalist",
+                    "ui.basic.var": "filterList",
+                    "ui.property.after":{
+                        "ui.basic.elementId":"@app.transform.filterCacheKey"
+                    }
                 }
             ],
             "core.property.update": "app.transform.update",

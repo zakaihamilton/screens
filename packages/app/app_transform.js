@@ -145,7 +145,7 @@ package.app.transform = function AppTransform(me) {
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
-                    me.kab.terms.parse(function (text) {
+                    me.kab.terms.parse(function (text, searchTerms) {
                         if (window.prevLanguage) {
                             me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
                         }
@@ -156,6 +156,20 @@ package.app.transform = function AppTransform(me) {
                         } else {
                             me.set(window.var.output, "ui.basic.html", text);
                         }
+                        me.ui.node.removeChildren(window.var.filterList);
+                        var searchItems = Object.keys(searchTerms).map(function (key) {
+                            return [key, searchTerms[key]];
+                        });
+                        searchItems.sort(function (first, second) {
+                            return second[1].count - first[1].count;
+                        });
+                        searchItems.map(function(searchItem) {
+                            var term = searchItem[0];
+                            var info = searchItem[1];
+                            var option = document.createElement("option");
+                            option.textContent = term;
+                            window.var.filterList.appendChild(option);
+                        });
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
                         window.contentChanged = true;
@@ -206,11 +220,12 @@ package.app.transform = function AppTransform(me) {
                 headerClass: "app.transform.page.header",
                 pageNumberClass: "app.transform.page.number",
                 scrollToTopClass: "app.transfer.page.scrolltotop",
+                separatorClass: "app.transform.separator",
                 usePages: window.options.pages,
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
                 scrollPos: window.options.scrollPos,
-                filter:me.get(window.var.filter, "ui.basic.text")
+                filter: me.get(window.var.filter, "ui.basic.text")
             };
             me.ui.layout.reflow(function () {
                 me.set(window, "ui.work.state", false);
@@ -250,7 +265,7 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.filterChange = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             me.set(window.var.filter, "storage.cache.store", me.get(window.var.filter, "ui.basic.text"));
             me.set(window, "app.transform.reflow");

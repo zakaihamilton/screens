@@ -107,10 +107,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             }
             if(has_scroll) {
                 me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
-                me.set(scrollbar.var.thumb, "visibility", "visible");
+                me.set(scrollbar, "ui.style.visibility", "visible");
             }
             else {
-                me.set(scrollbar.var.thumb, "visibility", "hidden");
+                me.set(scrollbar, "ui.style.visibility", "hidden");
             }
             var changed = me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
             if(changed) {

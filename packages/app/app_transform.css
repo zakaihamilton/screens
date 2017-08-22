@@ -75,6 +75,11 @@
     box-sizing:border-box;
 }
 
+.app-transform-page-content p {
+    margin-bottom:1em;
+    padding:0;
+}
+
 .app-transform-page-header {
     height:50px;
 }
@@ -85,6 +90,7 @@
     height:30px;
     left:40%;
     top: 20px;
+    text-align: center;
     background:white;
 }
 
@@ -96,8 +102,8 @@
     content:attr(shortPageNumberText);
     text-align:center;
     top:0px;
-    left:40%;
-    width:20%;
+    left:0%;
+    width:100%;
     height:30px;
 }
 
@@ -143,8 +149,22 @@
 
 .app-transform-filter {
     position: absolute;
-    right:30px;
-    width:150px;
+    right:100px;
+    width:250px;
     border: 1px solid black;
     z-index: 10;
+}
+
+.app-transform-separator {
+    position:absolute;
+    left:100px;
+    bottom:20px;
+    right:100px;
+    height:5px;
+    background:darkgray;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+.app-transform-filterList {
+    max-height: 250px;
 }

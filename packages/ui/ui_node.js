@@ -4,19 +4,20 @@
  */
 
 package.ui.node = function UINode(me) {
-    me.childList = function(object) {
+    me.childList = function (object) {
         var childNodes = me.childNodes(object);
         var childList = Array(childNodes.length).fill(null);
-        for(var childIndex = 0; childIndex < childNodes.length; childIndex++) {
+        for (var childIndex = 0; childIndex < childNodes.length; childIndex++) {
             var child = childNodes[childIndex];
             var order = "auto";
-            if(child.component && child.style) {
+            if (child.component && child.style) {
                 order = child.style.zIndex;
             }
-            if(!order || order === "auto" || order < 0 || order >= childNodes.length) {
+            if (!order || order === "auto" || order < 0 || order >= childNodes.length) {
                 order = 0;
             }
-            for(;childList[order] && order < childNodes.length; order++);
+            for (; childList[order] && order < childNodes.length; order++)
+                ;
             childList[order] = child;
         }
         childList = childList.filter(Boolean);
@@ -34,10 +35,10 @@ package.ui.node = function UINode(me) {
         }
         return null;
     };
-    me.members = function(object, component_name) {
+    me.members = function (object, component_name) {
         var members = [];
         var childList = me.childList(object);
-        for(var childIndex = 0; childIndex < childList.length; childIndex++) {
+        for (var childIndex = 0; childIndex < childList.length; childIndex++) {
             var child = childList[childIndex];
             if (component_name && child.component !== component_name) {
                 continue;
@@ -46,60 +47,58 @@ package.ui.node = function UINode(me) {
         }
         return members;
     };
-    me.previous = function(object, component_name) {
+    me.previous = function (object, component_name) {
         var childList = me.childList(object.parentNode);
         var last = null;
         var found = null;
-        for(var childIndex = childList.length-1; childIndex >= 0; childIndex--) {
+        for (var childIndex = childList.length - 1; childIndex >= 0; childIndex--) {
             var child = childList[childIndex];
             if (!component_name || child.component !== component_name) {
                 continue;
             }
-            if(!last) {
+            if (!last) {
                 last = child;
             }
-            if(child === object) {
+            if (child === object) {
                 found = true;
-            }
-            else if(found) {
+            } else if (found) {
                 return child;
             }
         }
-        if(last && found) {
+        if (last && found) {
             return last;
         }
         return null;
     };
-    me.next = function(object, component_name) {
+    me.next = function (object, component_name) {
         var childList = me.childList(object.parentNode);
         var first = null;
         var found = null;
-        for(var childIndex = 0; childIndex < childList.length; childIndex++) {
+        for (var childIndex = 0; childIndex < childList.length; childIndex++) {
             var child = childList[childIndex];
             if (!component_name || child.component !== component_name) {
                 continue;
             }
-            if(!first) {
+            if (!first) {
                 first = child;
             }
-            if(child === object) {
+            if (child === object) {
                 found = true;
-            }
-            else if(found) {
+            } else if (found) {
                 return child;
             }
         }
-        if(first && found) {
+        if (first && found) {
             return first;
         }
         return null;
     };
-    me.path = function(object) {
+    me.path = function (object) {
         var array = [];
-        if(object) {
-            while(object) {
+        if (object) {
+            while (object) {
                 array.push(object);
-                if(object === me.ui.element.desktop()) {
+                if (object === me.ui.element.desktop()) {
                     break;
                 }
                 object = object.parentNode;
@@ -107,100 +106,97 @@ package.ui.node = function UINode(me) {
         }
         return array;
     };
-    me.appendChild = function(parent, child) {
-        if("_appendChild" in parent) {
+    me.appendChild = function (parent, child) {
+        if ("_appendChild" in parent) {
             return parent._appendChild(child);
-        }
-        else {
+        } else {
             return parent.appendChild(child);
         }
     };
-    me.insertBefore = function(parent, child, sibling) {
-        if("_insertBefore" in parent) {
+    me.insertBefore = function (parent, child, sibling) {
+        if ("_insertBefore" in parent) {
             return parent._insertBefore(child, sibling);
-        }
-        else {
+        } else {
             return parent.insertBefore(child, sibling);
         }
     };
-    me.removeChild = function(parent, child) {
-        if("_removeChild" in parent) {
-            return parent._removeChild(child);
+    me.removeChildren = function (parent) {
+        while (parent.lastChild) {
+            me.removeChild(parent, parent.lastChild);
         }
-        else {
+    };
+    me.removeChild = function (parent, child) {
+        if ("_removeChild" in parent) {
+            return parent._removeChild(child);
+        } else {
             return parent.removeChild(child);
         }
     };
-    me.firstChild = function(parent) {
-        if("_firstChild" in parent) {
+    me.firstChild = function (parent) {
+        if ("_firstChild" in parent) {
             return parent._firstChild;
-        }
-        else {
+        } else {
             parent.firstChild;
         }
     };
-    me.lastChild = function(parent) {
-        if("_lastChild" in parent) {
+    me.lastChild = function (parent) {
+        if ("_lastChild" in parent) {
             return parent._lastChild;
-        }
-        else {
+        } else {
             parent.firstChild;
         }
     };
-    me.childNodes = function(parent) {
-        if("_childNodes" in parent) {
+    me.childNodes = function (parent) {
+        if ("_childNodes" in parent) {
             return parent._childNodes;
-        }
-        else {
+        } else {
             return parent.childNodes;
         }
     };
     me.parent = {
-        get : function(object) {
+        get: function (object) {
             return object.parentNode;
         },
-        set : function(object, value) {
-            if(object.parentNode) {
+        set: function (object, value) {
+            if (object.parentNode) {
                 me.removeChild(object.parentNode, object);
             }
-            if(value) {
+            if (value) {
                 me.appendChild(value, object);
             }
         }
     };
     me.unshift = {
-        set: function(object, value) {
-            if(object.parentNode) {
+        set: function (object, value) {
+            if (object.parentNode) {
                 me.removeChild(object.parentNode, object);
             }
-            if(value) {
+            if (value) {
                 me.insertBefore(value, object, me.firstChild(value));
             }
         }
     };
-    me.index = function(object) {
-        for (var index = 0; (object = object.previousSibling); index++);
+    me.index = function (object) {
+        for (var index = 0; (object = object.previousSibling); index++)
+            ;
         return index;
     };
-    me.shift = function(object, target) {
-        if(object && target && object !== target && object.parentNode && object.parentNode === target.parentNode) {
+    me.shift = function (object, target) {
+        if (object && target && object !== target && object.parentNode && object.parentNode === target.parentNode) {
             var object_index = me.index(object);
             var target_index = me.index(target);
-            if(!target.nextSibling) {
+            if (!target.nextSibling) {
                 me.appendChild(object.parentNode, object);
-            }
-            else if(!target.previousSibling) {
+            } else if (!target.previousSibling) {
                 me.insertBefore(object.parentNode, object, target);
-            }
-            else if(object_index > target_index) {
+            } else if (object_index > target_index) {
                 me.insertBefore(object.parentNode, object, target);
-            }
-            else {
+            } else {
                 me.insertBefore(object.parentNode, object, target.nextSibling);
             }
         }
     };
-    me.empty = function(object) {
+    me.empty = function (object) {
         while (object.firstChild) {
             object.removeChild(object.firstChild);
         }

@@ -119,7 +119,7 @@ package.core.message = function CoreMessage(me) {
         if (typeof info.response !== "undefined") {
             var callback = me.core.handle.pop(info.callback);
             if (callback) {
-                callback(info.response);
+                callback.apply(null, info.response);
             }
             return;
         }
@@ -129,8 +129,9 @@ package.core.message = function CoreMessage(me) {
         var responseCallback = info.callback;
         if(responseCallback) {
             args[1] = function(result) {
+                var args = Array.prototype.slice.call(arguments, 0);
                 info.params = null;
-                info.response = result ? result : null;
+                info.response = args;
                 info.callback = responseCallback;
                 if (context) {
                     context.postMessage(info);

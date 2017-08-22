@@ -47,6 +47,22 @@
             "replace":""
         },
         {
+            "find":"Powered by Zapatec",
+            "replace":""
+        },
+        {
+            "find":"Archive\t| Kabbalah Home\t| Free Kabbalah Course",
+            "replace":""
+        },
+        {
+            "find":"/^You are here: Kabbalah Library Home.*?\n",
+            "replace":""
+        },
+        {
+            "find":"Copyright © 2014. Bnei Baruch. All rights reserved.",
+            "replace":""
+        },
+        {
             "find":" Previous pageNext page \n",
             "replace":""
         },
@@ -293,7 +309,8 @@
             "translation": "Body"
         },
         "de": {
-            "translation": "of"
+            "translation": "of",
+            "search":false
         },
         "Hizdakchut" : {
             "translation":"Purification"
@@ -844,6 +861,9 @@
         },
         "Parsa":{
             "translation":"Diaphragm"
+        },
+        "Raglin":{
+            "translation":"Legs"
         },
         "Sium Raglin":{
             "translation":"End of Legs"
@@ -1999,10 +2019,10 @@
             "translation":"Foramens"
         },
         "Etzbaot":{
-            "translation":"Fingers"
+            "translation":"Fingers/Toes"
         },
         "Etzbaot Raglaim":{
-            "translation":"Feet"
+            "translation":"Toes of the Feet"
         },
         "Shibolet ha Zakan":{
             "translation":"End of the Beard"

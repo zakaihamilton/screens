@@ -7,6 +7,7 @@ package.kab.terms = function KabTerms(me) {
     me.init = function () {
         me.json = null;
         me.terms = null;
+        me.searchTerms = [];
         me.language = "english";
     };
     me.setLanguage = function (callback, language) {
@@ -41,6 +42,7 @@ package.kab.terms = function KabTerms(me) {
         var ignore = me.json.ignore;
         if (callback) {
             me.diagrams = {};
+            me.searchTerms = {};
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
             wordsString = me.send("kab.terms.format", wordsString, me.json.pre);
             me.terms = me.send("kab.terms.prepare", me.json.terms);
@@ -169,6 +171,13 @@ package.kab.terms = function KabTerms(me) {
                             if (!item.name) {
                                 translation = me.parse(null, translation, duplicateOptions(options, {"addStyles": false}));
                             }
+                            if(!("search" in item) || item.search === true) {
+                                var usedTerm = me.searchTerms[translation];
+                                if(!usedTerm) {
+                                    usedTerm = me.searchTerms[translation] = {count:0};
+                                }
+                                usedTerm.count++;
+                            }
                             if(upperCase) {
                                 translation = translation.toUpperCase();
                             }
@@ -193,7 +202,7 @@ package.kab.terms = function KabTerms(me) {
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "(", ")");
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "[", "]");
             }
-            callback(wordsString);
+            callback(wordsString, me.searchTerms);
             return;
         }
         return wordsString;

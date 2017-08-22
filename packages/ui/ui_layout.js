@@ -139,11 +139,14 @@ package.ui.layout = function UILayout(me) {
                     if (options.usePages) {
                         me.applyNumPages(layoutContent, pageIndex);
                     }
+                    me.completePage(target.page, options);
+                    if(target.page) {
+                        target.page.var.separator.style.display = "block";
+                    }
                     if (!target.notified && callback) {
                         callback(true);
                         target.notified = true;
                     }
-                    me.completePage(target.page, options);
                     me.set(target, "update");
                     break;
                 }
@@ -273,6 +276,12 @@ package.ui.layout = function UILayout(me) {
                     "ui.style.columnGap": "100px",
                     "ui.basic.var": "content",
                     "ui.style.overflow": "hidden"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": options.separatorClass,
+                    "ui.basic.var": "separator",
+                    "ui.style.display":"none"
                 }
             ]
         }, target, "self");
