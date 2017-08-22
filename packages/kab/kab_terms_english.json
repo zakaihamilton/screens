@@ -67,6 +67,10 @@
             "replace":""
         },
         {
+            "find":"Next page \n",
+            "replace":""
+        },
+        {
             "find":"Back to top\n",
             "replace":""
         },

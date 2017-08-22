@@ -134,8 +134,6 @@ package.ui.layout = function UILayout(me) {
                 if (!widget) {
                     clearInterval(target.reflowInterval);
                     target.reflowInterval = null;
-                    me.createBreak(layoutContent);
-                    me.createBreak(layoutContent);
                     if (options.usePages) {
                         me.applyNumPages(layoutContent, pageIndex);
                     }
