@@ -118,7 +118,8 @@
                 ["Cascade", "widget.window.cascade", {
                         "enabled":false
                 }],
-                ["Side by Side", "widget.window.sideBySide"],
+                ["Tile Horizontally", "widget.window.tileHorizontally"],
+                ["Tile Vertically", "widget.window.tileVertically"],
                 ["Arrange Icons", "widget.window.arrangeIcons", {
                         "enabled":false
                 }],

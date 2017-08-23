@@ -39,7 +39,8 @@
             ]],
         ["Window", [
                 ["Cascade", "widget.window.cascade"],
-                ["Side by Side", "widget.window.sideBySide"],
+                ["Tile Horizontally", "widget.window.tileHorizontally"],
+                ["Tile Vertically", "widget.window.tileVertically"],
                 ["Arrange Icons", "widget.window.arrangeIcons"],
                 "widget.window.childMenuList"
             ]],
