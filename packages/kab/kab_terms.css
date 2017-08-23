@@ -5,7 +5,6 @@
     vertical-align:middle;
     height:1em;
     line-height: 1;
-    z-index:1;
     font-weight:bold;
     font-size:40%;
     text-transform:uppercase;
@@ -52,6 +51,26 @@
     position:relative;
 }
 
+.kab-term-phase-number:after {
+    position:absolute;
+    bottom:3.2em;
+    right:-0.8em;
+    vertical-align:middle;
+    height:1em;
+    line-height: 1;
+    font-weight:bold;
+    font-size:30%;
+    text-transform:uppercase;
+    border-radius: 50%;
+
+    width: 0.8em;
+    height: 0.8em;
+    padding: 0.2em;
+
+    color: black;
+    text-align: center;
+}
+
 .kab-term-phase-none {
     background:white;
 }
@@ -69,6 +88,12 @@
     background:white;
 }
 
+.kab-term-phase-number-root:after {
+    background:white;
+    border:1px solid gray;
+    content:"0";
+}
+
 .kab-term-phase-one {
     background:#FFF3CA;
     outline:1px solid lightyellow;
@@ -76,6 +101,12 @@
 
 .kab-term-phase-one:hover:after {
     background:#FFF3CA;
+}
+
+.kab-term-phase-number-one:after {
+    background:#FFF3CA;
+    border:1px solid lightyellow;
+    content:"1";
 }
 
 .kab-term-phase-two {
@@ -87,6 +118,12 @@
     background:#C8D9F9;
 }
 
+.kab-term-phase-number-two:after {
+    background:#C8D9F9;
+    border:1px solid lightblue;
+    content:"2";
+}
+
 .kab-term-phase-three {
     background:#F5CCCB;
     outline:1px solid coral;
@@ -94,6 +131,12 @@
 
 .kab-term-phase-three:hover:after {
     background:#F5CCCB;
+}
+
+.kab-term-phase-number-three:after {
+    background:#F5CCCB;
+    border:1px solid coral;
+    content:"3";
 }
 
 .kab-term-phase-four {
@@ -105,6 +148,12 @@
     background:#D9EAD2;
 }
 
+.kab-term-phase-number-four:after {
+    background:#D9EAD2;
+    border:1px solid lightgreen;
+    content:"4";
+}
+
 .kab-term-phase-collective {
     background:Plum;
     outline:1px solid MediumPurple;
@@ -112,6 +161,10 @@
 
 .kab-term-phase-collective:hover:after {
     background:Plum;
+}
+
+.kab-term-phase-number-collective:after {
+    display:none;
 }
 
 .kab-term-polaroid-left {
