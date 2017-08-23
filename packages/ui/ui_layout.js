@@ -271,7 +271,6 @@ package.ui.layout = function UILayout(me) {
                     "ui.basic.tag": "div",
                     "ui.theme.class": options.contentClass,
                     "ui.style.columnCount": options.columnCount,
-                    "ui.style.columnGap": "100px",
                     "ui.basic.var": "content",
                     "ui.style.overflow": "hidden"
                 },

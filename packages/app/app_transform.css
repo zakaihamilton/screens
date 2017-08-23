@@ -73,6 +73,7 @@
     position:relative;
     text-align:justify;
     box-sizing:border-box;
+    column-gap: 4em;
 }
 
 .app-transform-page-content h4 {
