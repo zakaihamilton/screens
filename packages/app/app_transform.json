@@ -100,6 +100,18 @@
                         "state": "select"
                     }
                 ],
+                ["26px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["28px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["30px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
                 ["32px", "app.transform.fontSize", {
                         "state": "select"
                     }
