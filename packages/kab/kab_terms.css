@@ -49,23 +49,26 @@
 
 .kab-term-phase {
     position:relative;
+    white-space: nowrap;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
 }
 
 .kab-term-phase-number:after {
     position:absolute;
-    bottom:3.2em;
-    right:-0.8em;
+    bottom:2em;
+    right:-0.5em;
     vertical-align:middle;
     height:1em;
     line-height: 1;
     font-weight:bold;
-    font-size:30%;
+    font-size:50%;
     text-transform:uppercase;
     border-radius: 50%;
 
-    width: 0.8em;
-    height: 0.8em;
-    padding: 0.2em;
+    width: 1em;
+    height: 1em;
+    padding: 0em;
 
     color: black;
     text-align: center;
@@ -96,7 +99,7 @@
 
 .kab-term-phase-one {
     background:#FFF3CA;
-    outline:1px solid lightyellow;
+    outline:1px solid orange;
 }
 
 .kab-term-phase-one:hover:after {
@@ -105,13 +108,13 @@
 
 .kab-term-phase-number-one:after {
     background:#FFF3CA;
-    border:1px solid lightyellow;
+    border:1px solid orange;
     content:"1";
 }
 
 .kab-term-phase-two {
     background:#C8D9F9;
-    outline:1px solid lightblue;
+    outline:1px solid darkblue;
 }
 
 .kab-term-phase-two:hover:after {
@@ -120,7 +123,7 @@
 
 .kab-term-phase-number-two:after {
     background:#C8D9F9;
-    border:1px solid lightblue;
+    border:1px solid darkblue;
     content:"2";
 }
 
@@ -141,7 +144,7 @@
 
 .kab-term-phase-four {
     background:#D9EAD2;
-    outline:1px solid lightgreen;
+    outline:1px solid green;
 }
 
 .kab-term-phase-four:hover:after {
@@ -150,7 +153,7 @@
 
 .kab-term-phase-number-four:after {
     background:#D9EAD2;
-    border:1px solid lightgreen;
+    border:1px solid green;
     content:"4";
 }
 
