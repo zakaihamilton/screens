@@ -328,6 +328,9 @@ package.widget.window = function WidgetWindow(me) {
             }
             me.set(window, "update");
             me.set(parent_window, "update");
+            if(window.child_window) {
+                me.set(window.child_window, "update");
+            }
         }
     };
     me.show = {
@@ -431,6 +434,9 @@ package.widget.window = function WidgetWindow(me) {
             });
             me.set(window, "update");
             me.set(parent_window, "update");
+            if(window.child_window) {
+                me.set(window.child_window, "update");
+            }
         }
     };
     me.toggle = {

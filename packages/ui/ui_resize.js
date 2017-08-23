@@ -97,6 +97,9 @@ package.ui.resize = function UIResize(me) {
             me.set(window, "update");
             var parent = me.widget.window.parent(me.info.target);
             me.set(parent, "update");
+            if(window.child_window) {
+                me.set(window.child_window, "update");
+            }
         }
     };
 };
