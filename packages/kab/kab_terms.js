@@ -189,7 +189,7 @@ package.kab.terms = function KabTerms(me) {
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " (", expansion, ")", options, true);
                         }
                         else if (options.doTranslation && translation) {
-                            if (!item.name) {
+                            if (!item.name && translation !== term) {
                                 translation = me.parse(null, translation, duplicateOptions(options, {"addStyles": false}));
                             }
                             me.useTerm(item, term, translation);
@@ -417,6 +417,9 @@ package.kab.terms = function KabTerms(me) {
         if(item.source) {
             term = item.source;
         }
+        if(item.includePrefix && !options.keepSource) {
+            replacement = item.prefix + " " + replacement;
+        }
         if (!options.doTranslation) {
             replacement = term;
         } else if (options.keepSource) {
@@ -427,7 +430,9 @@ package.kab.terms = function KabTerms(me) {
             replacement = me.applyStyles(term, item.style, replacement, options, expansion);
         }
         words.splice(wordIndex, 0, replacement);
-        me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
+        if(!item.includePrefix) {
+            me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
+        }
         me.insert(words, wordIndex+1, me.json.suffix, item.suffix, suffixWord, text);
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
@@ -461,6 +466,9 @@ package.kab.terms = function KabTerms(me) {
             if (styles && styles.heading && options.headings) {
                 heading = styles.heading;
             }
+        }
+        if(styles && styles.tooltip) {
+            tooltip = styles.tooltip;
         }
         if(phase) {
             html += "<span class=\"kab-term-phase kab-term-phase-" + phase + "\"";

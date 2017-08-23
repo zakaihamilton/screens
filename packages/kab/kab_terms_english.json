@@ -306,7 +306,8 @@
             "translation" : "Emanated"
         },
         "Rosh": {
-            "translation": "Head"
+            "translation": "Head",
+            "style": {"phase":"root","heading":"Location"}
         },
         "Toch": {
             "translation": "Interior"
@@ -325,7 +326,8 @@
             "translation":"Purification of the Screen"
         },
         "Tabur": {
-            "translation": "Navel"
+            "translation": "Navel",
+            "style": {"phase":"three","heading":"Location"}
         },
         "Kli": {
             "prefix":"a",
@@ -619,7 +621,8 @@
             "translation": "Worlds"
         },
         "Chazeh": {
-            "translation": "Chest"
+            "translation": "Chest",
+            "style": {"phase":"two","heading":"Location"}
         },
         "Ayin": {
             "translation": "Eye",
@@ -650,7 +653,8 @@
             "style": {"phase":"four"}
         },
         "Taburit": {
-            "translation": "Navel"
+            "translation": "Navel",
+            "style": {"phase":"three","heading":"Location"}
         },
         "Partzufim": {
             "translation": "Faces"
@@ -739,16 +743,16 @@
             "translation":"Mating"
         },
         "AB":{
-            "style":{"heading":"face","phase":"one"}
+            "style":{"heading":"face","phase":"one","tooltip":"72"}
         },
         "SAG":{
-            "style":{"heading":"face","phase":"two"}
+            "style":{"heading":"face","phase":"two","tooltip":"63"}
         },
         "MA":{
-            "style":{"heading":"face","phase":"three"}
+            "style":{"heading":"face","phase":"three","tooltip":"45"}
         },
         "BON":{
-            "style":{"heading":"face","phase":"four"}
+            "style":{"heading":"face","phase":"four","tooltip":"52"}
         },
         "AVI":{
             "expansion":["Aba ve Imma"]
@@ -872,13 +876,15 @@
             "translation":"Letters"
         },
         "Parsa":{
-            "translation":"Diaphragm"
+            "translation":"Diaphragm",
+            "style": {"phase":"two","heading":"Location"}
         },
         "Raglin":{
             "translation":"Legs"
         },
         "Sium Raglin":{
-            "translation":"End of Legs"
+            "translation":"End of Legs",
+            "style": {"phase":"four","heading":"Location"}
         },
         "Sium Parsa":{
             "translation":"End of Diaphragm"
@@ -2390,54 +2396,89 @@
             "style": {"heading":"vessel","phase":"four"}
         },
         "sides":{
+            "translation":"Sides",
             "source":"Tsdadim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"root","heading":"Sea"}
         },
         "streams":{
+            "translation":"Streams",
             "source":"Nechalim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"one","heading":"Sea"}
         },
         "rivers":{
+            "translation":"Rivers",
             "source":"Neharot",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"two","heading":"Sea"}
         },
         "paths":{
+            "translation":"Paths",
             "source":"Orchot",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"three","heading":"Sea"}
         },
         "trails":{
+            "translation":"Trails",
             "source":"Shevilim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"four","heading":"Sea"}
         },
         "side":{
+            "translation":"Side",
             "source":"Tsad",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"root","heading":"Sea"}
         },
         "stream":{
+            "translation":"Stream",
             "source":"Nachal",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"one","heading":"Sea"}
         },
         "river":{
+            "translation":"River",
             "source":"Nahar",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"two","heading":"Sea"}
         },
         "path":{
+            "translation":"Path",
             "source":"Orach",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"three","heading":"Sea"}
         },
         "trail":{
+            "translation":"Trail",
             "source":"Shevil",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"four","heading":"Sea"}
+        },
+        "upper sea":{
+            "prefix":"The",
+            "includePrefix":true,
+            "translation":"Upper Sea",
+            "source":"HaYam HaElyon",
+            "style":{"phase":"root","heading":"Vessel"}
+        },
+        "bottom sea":{
+            "prefix":"The",
+            "includePrefix":true,
+            "translation":"Bottom Sea",
+            "source":"HaYam HaTachton",
+            "style":{"phase":"four","heading":"Vessel"}
+        },
+        "upper light":{
+            "translation":"Upper Light",
+            "source":"Ohr HaElyon"
+        },
+        "sea":{
+            "prefix":"The",
+            "includePrefix":true,
+            "translation":"Sea",
+            "source":"Hayam",
+            "style":{"phase":"four","heading":"Vessel"}
         }
     }
 }
