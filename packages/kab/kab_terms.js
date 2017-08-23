@@ -192,19 +192,7 @@ package.kab.terms = function KabTerms(me) {
                             if (!item.name) {
                                 translation = me.parse(null, translation, duplicateOptions(options, {"addStyles": false}));
                             }
-                            if(!("search" in item) || item.search === true) {
-                                var usedTerm = me.searchTerms[translation];
-                                if(!usedTerm) {
-                                    usedTerm = me.searchTerms[translation] = {count:0};
-                                }
-                                usedTerm.count++;
-                                if(item.label) {
-                                    usedTerm.label = item.label;
-                                }
-                                else {
-                                    usedTerm.label = term;
-                                }
-                            }
+                            me.useTerm(item, term, translation);
                             if(upperCase) {
                                 translation = translation.toUpperCase();
                             }
@@ -216,6 +204,9 @@ package.kab.terms = function KabTerms(me) {
                             wordIndex--;
                         }
                         else if (options.addStyles && item.style) {
+                            if(item.source) {
+                                me.useTerm(item, item.source, term);
+                            }
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, "", duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
@@ -233,6 +224,21 @@ package.kab.terms = function KabTerms(me) {
             return;
         }
         return wordsString;
+    };
+    me.useTerm = function(item, source, translation) {
+        if(!("search" in item) || item.search === true) {
+            var usedTerm = me.searchTerms[translation];
+            if(!usedTerm) {
+                usedTerm = me.searchTerms[translation] = {count:0};
+            }
+            usedTerm.count++;
+            if(item.label) {
+                usedTerm.label = item.label;
+            }
+            else {
+                usedTerm.label = source;
+            }
+        }
     };
     me.insert = function(words, wordIndex, collection, defaultWord, wordToInsert, text) {
         if(collection && wordToInsert) {
