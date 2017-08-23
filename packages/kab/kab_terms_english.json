@@ -401,6 +401,11 @@
             "translation": "Beauty",
             "style": {"heading":"vessel","phase":"three"}
         },
+        "Tifferet2": {
+            "source":"Tifferet",
+            "translation": "Beauty",
+            "style": {"heading":"vessel","phase":"two"}
+        },
         "Malchut": {
             "translation": "Kingdom",
             "style": {"heading":"vessel","phase":"four"}
@@ -491,22 +496,22 @@
             "expansion": ["Beria", "Yetzira", "Assiya"]
         },
         "DHGT": {
-            "expansion": ["Daat","Hesed", "Gevura", "Tifferet"]
+            "expansion": ["Daat","Hesed", "Gevura", "Tifferet2"]
         },
         "HGT": {
-            "expansion": ["Hesed", "Gevura", "Tifferet"]
+            "expansion": ["Hesed", "Gevura", "Tifferet2"]
         },
         "HG": {
             "expansion": ["Hesed", "Gevura"]
         },
         "HGTNH": {
-            "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod"]
+            "expansion": ["Hesed", "Gevura", "Tifferet2", "Netzah","Hod"]
         },
         "HGTNHY": {
-            "expansion": ["Hesed", "Gevura", "Tifferet", "Netzah","Hod","Yesod"]
+            "expansion": ["Hesed", "Gevura", "Tifferet2", "Netzah","Hod","Yesod"]
         },
         "TNHY": {
-            "expansion": ["Tifferet", "Netzah","Hod","Yesod"]
+            "expansion": ["Tifferet2", "Netzah","Hod","Yesod"]
         },
         "AA": {
             "expansion": ["Arich Anpin"]
