@@ -2479,6 +2479,9 @@
             "translation":"Sea",
             "source":"Hayam",
             "style":{"phase":"four","heading":"Vessel"}
+        },
+        "TNTO":{
+            "expansion":["Taamim","Nekudot","Tagim","Otiot"]
         }
     }
 }
