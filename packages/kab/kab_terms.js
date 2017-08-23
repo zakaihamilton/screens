@@ -275,10 +275,14 @@ package.kab.terms = function KabTerms(me) {
     };
     me.removeFormatting = function (string) {
         string = string.replace(/\ kab-term-tooltip=".*?"/g, "");
-        string = string.replace(/\ kab-term-heading=".*?"/g, "");
+        string = string.replace(/<span class=\"kab-term-heading\">.*?<\/span>/g, "");
+        string = string.replace(/<span class=".*?" /g, "");
         string = string.replace(/\ class=".*?"/g, "");
+        string = string.replace(/<h4 style=".*?">/g, "");
         string = string.replace(/<\/?p>/g, "");
         string = string.replace(/<\/?span>/g, "");
+        string = string.replace(/<\/?h\d>/g, "");
+        string = string.replace(/>/g, "");
         string = string.replace(/ and/g, ",");
         string = string.toLowerCase();
         return string;
