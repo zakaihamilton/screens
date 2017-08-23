@@ -28,12 +28,14 @@ package.app.transform = function AppTransform(me) {
                 columns: true,
                 language: "Auto",
                 fontSize: "24px",
-                scrollPos: 0
+                scrollPos: 0,
+                phaseNumbers:true
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
             me.translation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
             me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
+            me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);
             me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
             me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {

@@ -464,7 +464,7 @@ package.kab.terms = function KabTerms(me) {
         if(heading) {
             html += "<span class=\"kab-term-heading\">" + heading + "</span>";
         }
-        if(phase && phase !== "none") {
+        if(phase && phase !== "none" && options.phaseNumbers) {
             html += "<span class=\"kab-term-phase-number kab-term-phase-number-" + phase + "\"></span>";
         }
         html += text;

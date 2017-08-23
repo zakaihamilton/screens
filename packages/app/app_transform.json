@@ -45,6 +45,11 @@
                         "enabled": "app.transform.addStyles"
                     }
                 ],
+                ["Phase Numbers", "app.transform.phaseNumbers", {
+                        "state": "select",
+                        "enabled": "app.transform.addStyles"
+                    }
+                ],
                 ["Pages", "app.transform.pages", {
                         "state": "select",
                         "separator": true
@@ -80,6 +85,14 @@
                     }
                 ],
                 ["18px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["20px", "app.transform.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["22px", "app.transform.fontSize", {
                         "state": "select"
                     }
                 ],
