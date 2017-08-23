@@ -2460,7 +2460,7 @@
             "includePrefix":true,
             "translation":"Upper Sea",
             "source":"HaYam HaElyon",
-            "style":{"phase":"root","heading":"Vessel"}
+            "style":{"phase":"four","heading":"Vessel"}
         },
         "bottom sea":{
             "prefix":"The",
