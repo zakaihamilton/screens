@@ -2386,6 +2386,46 @@
         "Malchuts":{
             "translation":"Kingdoms",
             "style": {"heading":"vessel","phase":"four"}
+        },
+        "sides":{
+            "context":["sides","streams","rivers","paths","trails"],
+            "style":{"phase":"root","heading":"Sea"}
+        },
+        "streams":{
+            "context":["sides","streams","rivers","paths","trails"],
+            "style":{"phase":"one","heading":"Sea"}
+        },
+        "rivers":{
+            "context":["sides","streams","rivers","paths","trails"],
+            "style":{"phase":"two","heading":"Sea"}
+        },
+        "paths":{
+            "context":["sides","streams","rivers","paths","trails"],
+            "style":{"phase":"three","heading":"Sea"}
+        },
+        "trails":{
+            "context":["sides","streams","rivers","paths","trails"],
+            "style":{"phase":"four","heading":"Sea"}
+        },
+        "side":{
+            "context":["side","stream","river","path","trail"],
+            "style":{"phase":"root","heading":"Sea"}
+        },
+        "stream":{
+            "context":["side","stream","river","path","trail"],
+            "style":{"phase":"one","heading":"Sea"}
+        },
+        "river":{
+            "context":["side","stream","river","path","trail"],
+            "style":{"phase":"two","heading":"Sea"}
+        },
+        "path":{
+            "context":["side","stream","river","path","trail"],
+            "style":{"phase":"three","heading":"Sea"}
+        },
+        "trail":{
+            "context":["side","stream","river","path","trail"],
+            "style":{"phase":"four","heading":"Sea"}
         }
     }
 }

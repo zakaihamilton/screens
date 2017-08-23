@@ -8,6 +8,7 @@ package.kab.terms = function KabTerms(me) {
         me.json = null;
         me.terms = null;
         me.searchTerms = [];
+        me.content = null;
         me.language = "english";
     };
     me.setLanguage = function (callback, language) {
@@ -46,6 +47,7 @@ package.kab.terms = function KabTerms(me) {
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
             wordsString = me.send("kab.terms.format", wordsString, me.json.pre);
             me.terms = me.send("kab.terms.prepare", me.json.terms);
+            me.content = wordsString;
         }
         var terms = me.terms;
         if (terms) {
@@ -148,6 +150,25 @@ package.kab.terms = function KabTerms(me) {
                         var expansion = item.expansion;
                         var translation = item.translation;
                         var reorder = item.reorder;
+                        var context = item.context;
+                        if(context) {
+                            var contextMatch = true;
+                            if(typeof context === "string") {
+                                if(!me.content.includes(context)) {
+                                    contextMatch = false;
+                                }
+                            }
+                            else if(Array.isArray(context)) {
+                                context.map(function(entry) {
+                                    if(!me.content.includes(entry)) {
+                                        contextMatch = false;
+                                    }
+                                });
+                            }
+                            if(!contextMatch) {
+                                continue;
+                            }
+                        }
                         if (expansion) {
                             if(Array.isArray(expansion)) {
                                 expansion = expansion.map(function (text) {
