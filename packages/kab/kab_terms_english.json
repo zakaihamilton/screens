@@ -28,7 +28,8 @@
         "Elyonis":"Elyon is",
         "Sefirotbe":"Sefirot be",
         "judgments":"judgements",
-        "He’arahis":"He’arah is"
+        "He’arahis":"He’arah is",
+        "Esh, Ruach":"Esh, Ruach2"
     },
     "pre": [
         {
@@ -436,7 +437,7 @@
         },
         "Ruach": {
             "translation": "Modulation",
-            "style": {"heading":"light","phase":"three","alt":"Wind/Spirit"}
+            "style": {"heading":"light","phase":"three"}
         },
         "Neshama": {
             "translation": "Protection",
@@ -451,7 +452,7 @@
             "style": {"heading":"light","phase":"root"}
         },
         "ERMA":{
-            "expansion":["Esh", "Ruach", "Mayim", "Afar"]
+            "expansion":["Esh", "Ruach2", "Mayim", "Afar"]
         },
         "NRNHY": {
             "expansion": ["Nefesh", "Ruach", "Neshama", "Haya", "Yechida"]
@@ -551,27 +552,27 @@
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
-            "style": {"heading":"world","phase":"root","alt":"Providence"}
+            "style": {"heading":"world","phase":"root"}
         },
         "Atzilut": {
             "translation": "Emanation",
-            "style": {"heading":"world","phase":"one","alt":"Control"}
+            "style": {"heading":"world","phase":"one"}
         },
         "Beria": {
             "translation": "Creation",
-            "style": {"heading":"world","phase":"two","alt":"Affinity"}
+            "style": {"heading":"world","phase":"two"}
         },
         "Yetzira": {
             "translation": "Formation",
-            "style": {"heading":"world","phase":"three","alt":"Communication"}
+            "style": {"heading":"world","phase":"three"}
         },
         "Assiya": {
             "translation": "Action",
-            "style": {"heading":"world","phase":"four","alt":"Action"}
+            "style": {"heading":"world","phase":"four"}
         },
         "Olam ha Zeh": {
             "translation": "This World",
-            "style": {"heading":"world","phase":"four","alt":"Effort"}
+            "style": {"heading":"world","phase":"four"}
         },
         "Olam ha Ba": {
             "prefix":"the",
@@ -686,7 +687,7 @@
         },
         "Ein Sof":{
             "translation":"Infinity",
-            "style":{"heading":"world","phase":"root","alt":"Before the Barrier"}
+            "style":{"heading":"world","phase":"root"}
         },
         "Igulim": {
             "translation":"Circles"
@@ -840,7 +841,8 @@
             "translation":"Fire",
             "style":{"heading":"element","phase":"two"}
         },
-        "!Ruach":{
+        "Ruach2":{
+            "source":"Ruach",
             "translation":"Wind",
             "style":{"heading":"element","phase":"three"}
         },
@@ -926,7 +928,7 @@
         },
         "Daat":{
             "translation":"Knowledge",
-            "style":{"heading":"vessel","phase":"three","alt":"Connection"}
+            "style":{"heading":"vessel","phase":"three"}
         },
         "Sefer HaBahir":{
             "translation":"Book of the Bright",

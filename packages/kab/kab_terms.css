@@ -9,6 +9,7 @@
     font-size:40%;
     text-transform:uppercase;
     pointer-events: none;
+    background:white;
 }
 
 [kab-term-tooltip] {
