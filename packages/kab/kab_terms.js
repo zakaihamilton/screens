@@ -227,6 +227,9 @@ package.kab.terms = function KabTerms(me) {
     };
     me.useTerm = function(item, source, translation) {
         if(!("search" in item) || item.search === true) {
+            if(item.includePrefix) {
+                translation = item.prefix + " " + translation;
+            }
             var usedTerm = me.searchTerms[translation];
             if(!usedTerm) {
                 usedTerm = me.searchTerms[translation] = {count:0};
@@ -236,7 +239,7 @@ package.kab.terms = function KabTerms(me) {
                 usedTerm.label = item.label;
             }
             else {
-                usedTerm.label = source;
+                usedTerm.label = item.source ? item.source : source;
             }
             if(item.style) {
                 usedTerm.heading = item.style.heading;

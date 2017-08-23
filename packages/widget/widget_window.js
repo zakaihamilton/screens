@@ -660,10 +660,9 @@ package.widget.window = function WidgetWindow(me) {
     me.alignToRight = {
         set: function (object) {
             me.alignToSide(object, function(parent_region) {
-                parent_region.left = 0;
                 parent_region.top = 0;
                 parent_region.width /= 2;
-                parent_region.left += parent_region.width;
+                parent_region.left = parent_region.width;
                 parent_region.width -= 4;
                 parent_region.height -= 4;
                 return parent_region;
@@ -686,9 +685,8 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object) {
             me.alignToSide(object, function(parent_region) {
                 parent_region.left = 0;
-                parent_region.top = 0;
                 parent_region.height /= 2;
-                parent_region.top += parent_region.height;
+                parent_region.top = parent_region.height;
                 parent_region.height -= 4;
                 parent_region.width -= 4;
                 return parent_region;
@@ -720,10 +718,10 @@ package.widget.window = function WidgetWindow(me) {
             }
             var windows = me.get(window, "widget.window.visibleWindows");
             if (windows && windows.length > 1) {
-                var left = windows[windows.length - 1];
-                var right = windows[windows.length - 2];
-                me.set(left, "alignToTop");
-                me.set(right, "alignToBottom");
+                var top = windows[windows.length - 1];
+                var bottom = windows[windows.length - 2];
+                me.set(top, "alignToTop");
+                me.set(bottom, "alignToBottom");
             }
         }
     };

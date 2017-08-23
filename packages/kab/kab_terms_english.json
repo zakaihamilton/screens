@@ -2474,10 +2474,13 @@
             "source":"Ohr HaElyon"
         },
         "sea":{
-            "prefix":"The",
-            "includePrefix":true,
             "translation":"Sea",
-            "source":"Hayam",
+            "source":"Yam",
+            "style":{"phase":"four","heading":"Vessel"}
+        },
+        "seas":{
+            "translation":"Seas",
+            "source":"Yamim",
             "style":{"phase":"four","heading":"Vessel"}
         },
         "TNTO":{
