@@ -270,7 +270,9 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.icon, "ui.style.display", "block");
             var parent_window = me.parent(window);
             if (parent_window) {
-                me.detach(parent_window);
+                if(maximized) {
+                    me.detach(parent_window);
+                }
                 me.set(parent_window, "widget.window.refocus");
             } else {
                 me.set(me.ui.element.desktop(), "widget.window.refocus");

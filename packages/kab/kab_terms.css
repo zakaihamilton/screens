@@ -50,8 +50,6 @@
 .kab-term-phase {
     position:relative;
     white-space: nowrap;
-    padding-left: 0.1em;
-    padding-right: 0.1em;
 }
 
 .kab-term-phase-number:after {

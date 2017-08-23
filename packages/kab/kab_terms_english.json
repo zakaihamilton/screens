@@ -1940,7 +1940,7 @@
             "translation":"Cover"
         },
         "Ktzavot":{
-            "translation":"Sides"
+            "translation":"Edges"
         },
         "Loven":{
             "translation":"White"
@@ -2186,13 +2186,13 @@
             "translation":"Father and Mother"
         },
         "Vav Kzavot":{
-            "translation":"Six Sides"
+            "translation":"Six Edges"
         },
         "Vav  ( six )":{
             "translation":"Six"
         },
         "Vav Ktzavot":{
-            "translation":"Six Sides"
+            "translation":"Six Edges"
         },
         "Zanav la Araiot":{
             "prefix":"a",
@@ -2388,42 +2388,52 @@
             "style": {"heading":"vessel","phase":"four"}
         },
         "sides":{
+            "source":"Tsdadim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"root","heading":"Sea"}
         },
         "streams":{
+            "source":"Nechalim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"one","heading":"Sea"}
         },
         "rivers":{
+            "source":"Neharot",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"two","heading":"Sea"}
         },
         "paths":{
+            "source":"Orchot",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"three","heading":"Sea"}
         },
         "trails":{
+            "source":"Shevilim",
             "context":["sides","streams","rivers","paths","trails"],
             "style":{"phase":"four","heading":"Sea"}
         },
         "side":{
+            "source":"Tsad",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"root","heading":"Sea"}
         },
         "stream":{
+            "source":"Nachal",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"one","heading":"Sea"}
         },
         "river":{
+            "source":"Nahar",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"two","heading":"Sea"}
         },
         "path":{
+            "source":"Orach",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"three","heading":"Sea"}
         },
         "trail":{
+            "source":"Shevil",
             "context":["side","stream","river","path","trail"],
             "style":{"phase":"four","heading":"Sea"}
         }
