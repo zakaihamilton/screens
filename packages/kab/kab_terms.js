@@ -422,6 +422,7 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
+        var phase = null, heading = null, tooltip = null;
         if (styles && styles.diagram && me.json.diagrams) {
             if (!me.diagrams[styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
@@ -435,25 +436,37 @@ package.kab.terms = function KabTerms(me) {
             html += "<b>";
         }
         if (styles && styles.phase) {
-            html += "<span class=\"kab-term-phase kab-term-phase-" + styles.phase + "\"";
+            phase = styles.phase;
             if (styles && styles.heading && options.headings) {
-                html += " kab-term-heading=\"" + styles.heading + "\"";
+                heading = styles.heading;
             }
             if (!options.keepSource && !expansion && options.doTranslation && term !== text) {
-                html += " kab-term-tooltip=\"" + term + "\"";
+                tooltip = term;
             }
-            html += ">" + text + "</span>";
         } else if (!options.keepSource && !expansion) {
-            html += "<span class=\"kab-term-phase kab-term-phase-none\"";
+            phase = "none";
             if (term !== text) {
-                html += " kab-term-tooltip=\"" + term + "\"";
+                tooltip = term;
             }
             if (styles && styles.heading && options.headings) {
-                html += " kab-term-heading=\"" + styles.heading + "\"";
+                heading = styles.heading;
             }
-            html += ">" + text + "</span>";
-        } else {
-            html += text;
+        }
+        if(phase) {
+            html += "<span class=\"kab-term-phase kab-term-phase-" + phase + "\"";
+        }
+        if(tooltip) {
+            html += " kab-term-tooltip=\"" + tooltip + "\"";
+        }
+        if(phase || tooltip || heading) {
+            html += ">";
+        }
+        if(heading) {
+            html += "<span class=\"kab-term-heading\">" + heading + "</span>";
+        }
+        html += text;
+        if(phase || tooltip || heading) {
+            html += "</span>";
         }
         if (styles && styles.bold) {
             html += "</b>";

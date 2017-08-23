@@ -1,8 +1,4 @@
-[kab-term-heading] {
-    white-space:nowrap;
-}
-
-[kab-term-heading]:before {
+.kab-term-heading {
     position:absolute;
     bottom:3.2em;
     left:0em;
@@ -13,7 +9,6 @@
     font-weight:bold;
     font-size:40%;
     text-transform:uppercase;
-    content: attr(kab-term-heading);
     pointer-events: none;
 }
 
