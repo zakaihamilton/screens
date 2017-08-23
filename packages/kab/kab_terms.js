@@ -238,6 +238,10 @@ package.kab.terms = function KabTerms(me) {
             else {
                 usedTerm.label = source;
             }
+            if(item.style) {
+                usedTerm.heading = item.style.heading;
+                usedTerm.phase = item.style.phase;
+            }
         }
     };
     me.insert = function(words, wordIndex, collection, defaultWord, wordToInsert, text) {

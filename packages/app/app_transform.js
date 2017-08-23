@@ -125,9 +125,73 @@ package.app.transform = function AppTransform(me) {
             me.set(window.var.input, "ui.basic.text", "");
             me.set(window.var.input, "storage.cache.store", "");
             me.set(window.var.output, "ui.basic.html", "");
+            me.ui.node.removeChildren(window.var.filterList);
+            me.ui.node.removeChildren(window.var.TermTable);
             me.ui.layout.clear(window.var.layout);
             me.updateWidgets(window, true);
             window.options.scrollPos = 0;
+        }
+    };
+    me.updateFilterList = function(window, terms) {
+        me.ui.node.removeChildren(window.var.filterList);
+        var searchItems = Object.keys(terms).map(function (key) {
+            return [key, terms[key]];
+        });
+        searchItems.sort(function (first, second) {
+            return second[1].count - first[1].count;
+        });
+        searchItems.map(function(searchItem) {
+            var term = searchItem[0];
+            var info = searchItem[1];
+            var option = document.createElement("option");
+            option.textContent = term;
+            if(info.label) {
+                option.setAttribute("label", info.label);
+            }
+            window.var.filterList.appendChild(option);
+        });
+    };
+    me.updateTermTable = function(window, terms) {
+        return;
+        me.ui.node.removeChildren(window.var.TermTable);
+        var table = {};
+        for(var termName in terms) {
+            var term = terms[termName];
+            if(term.heading && term.phase) {
+                var column = table[term.heading];
+                if(!column) {
+                    column = table[term.heading] = {};
+                }
+                var row = column[term.phase];
+                if(!row) {
+                    row = table[term.phase] = [];
+                }
+                term.name = termName;
+                row.push(term);
+            }
+        }
+        for(var heading in table) {
+            var column = table[heading];
+            var container = document.createElement('div');
+            container.className = "app-transform-term-column";
+            var list = document.createElement('ul');
+            list.className = "app-transform-term-list";
+            container.appendChild(list);
+            var item = document.createElement('li');
+            item.className = "app-transform-term-header";
+            item.textContent = heading;
+            list.appendChild(item);
+            for(var phase in column) {
+                var row = column[phase];
+                var phaseList = document.createElement('ul');
+                row.map(function(item) {
+                    var entry = document.createElement('li');
+                    entry.textContent = item.name;
+                    phaseList.appendChild(entry);
+                });
+                list.appendChild(phaseList);
+            }
+            window.var.termTable.appendChild(container);
         }
     };
     me.transform = {
@@ -147,7 +211,7 @@ package.app.transform = function AppTransform(me) {
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
-                    me.kab.terms.parse(function (text, searchTerms) {
+                    me.kab.terms.parse(function (text, usedTerms) {
                         if (window.prevLanguage) {
                             me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
                         }
@@ -158,23 +222,8 @@ package.app.transform = function AppTransform(me) {
                         } else {
                             me.set(window.var.output, "ui.basic.html", text);
                         }
-                        me.ui.node.removeChildren(window.var.filterList);
-                        var searchItems = Object.keys(searchTerms).map(function (key) {
-                            return [key, searchTerms[key]];
-                        });
-                        searchItems.sort(function (first, second) {
-                            return second[1].count - first[1].count;
-                        });
-                        searchItems.map(function(searchItem) {
-                            var term = searchItem[0];
-                            var info = searchItem[1];
-                            var option = document.createElement("option");
-                            option.textContent = term;
-                            if(info.label) {
-                                option.setAttribute("label", info.label);
-                            }
-                            window.var.filterList.appendChild(option);
-                        });
+                        me.updateFilterList(window, usedTerms);
+                        me.updateTermTable(window, usedTerms);
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
                         window.contentChanged = true;
@@ -279,6 +328,12 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.window(object);
             me.set(window.var.filter, "storage.cache.store", me.get(window.var.filter, "ui.basic.text"));
             me.set(window, "app.transform.reflow");
+        }
+    };
+    me.toggleTerms = {
+        set: function (object) {
+            var window = me.widget.window.window(object);
+            me.set(window.var.termTable, "ui.theme.toggle", "show");
         }
     };
 };

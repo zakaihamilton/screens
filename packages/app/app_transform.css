@@ -171,3 +171,57 @@
     background:darkgray;
     box-shadow: 5px 5px 5px lightgray;
 }
+
+.app-transform-toggleTerms {
+    position:absolute;
+    right:30px;
+    bottom:30px;
+    color:black;
+    padding:10px;
+    cursor:default;
+    user-select:none;
+    border:1px solid transparent;
+    display: none;
+}
+
+.app-transform-toggleTerms:hover{
+    border:1px solid black;
+}
+
+.app-transform-toggleTerms:hover:active {
+    background:black;
+    color:white;
+}
+
+.app-transform-termTable {
+    display:none;
+    border:1px solid black;
+    left:100px;
+    top:100px;
+    right:100px;
+    bottom:100px;
+    background:white;
+    position:absolute;
+}
+
+.app-transform-termTable.show {
+    display:block;
+}
+
+.app-transform-term-column {
+    float: left;
+    width: 33.3%;
+    padding: 8px;
+}
+
+.app-transform-term-list {
+list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+}
+
+.app-transform-term-header {
+    background:black;
+    color:white;
+}

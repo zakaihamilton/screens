@@ -121,8 +121,10 @@ package.ui.node = function UINode(me) {
         }
     };
     me.removeChildren = function (parent) {
-        while (parent.lastChild) {
-            me.removeChild(parent, parent.lastChild);
+        if(parent) {
+            while (parent.lastChild) {
+                me.removeChild(parent, parent.lastChild);
+            }
         }
     };
     me.removeChild = function (parent, child) {

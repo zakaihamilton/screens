@@ -196,6 +196,18 @@
                     "ui.basic.var": "spinner"
                 },
                 {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.toggleTerms",
+                    "ui.basic.text":"\u2636",
+                    "ui.basic.var": "toggleTerms",
+                    "ui.touch.click":"app.transform.toggleTerms"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.termTable",
+                    "ui.basic.var": "termTable"
+                },
+                {
                     "ui.theme.class":"app.transform.filter",
                     "ui.basic.text": "",
                     "ui.basic.type": "search",
