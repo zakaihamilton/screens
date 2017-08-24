@@ -34,6 +34,7 @@ package.widget.window = function WidgetWindow(me) {
         } else {
             content = me.ui.element.desktop();
         }
+        me.set(window, "ui.theme.remove", "concealed");
         window.restore_region = me.ui.rect.relative_region(window, content);
     };
     me.mainClass = {

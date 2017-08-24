@@ -14,7 +14,7 @@
 }
 
 .widget-window-border.concealed {
-    display:none;
+    visibility:hidden;
 }
 
 .widget-window-border.popup.focus {

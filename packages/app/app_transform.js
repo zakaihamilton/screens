@@ -194,11 +194,18 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (column[phase]) {
                     properties["ui.basic.elements"] = column[phase].map(function (item) {
-                        return {
-                            "ui.theme.add":"kab.term.phase." + phase,
-                            "ui.attribute.app-transform-tooltip":item.source,
-                            "ui.basic.text": item.name
+                        var itemProperties = {
+                            "ui.theme.class":"app.transform.termItem",
+                            "ui.theme.add":"kab.term.phase." + phase
                         };
+                        if(window.options.keepSource) {
+                            itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
+                        }
+                        else {
+                            itemProperties["ui.basic.text"] = item.name;
+                            itemProperties["ui.attribute.app-transform-tooltip"] = item.source;
+                        }
+                        return itemProperties;
                     });
                 }
                 properties["ui.theme.add"] = "kab.term.phase." + phase;
