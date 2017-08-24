@@ -13,6 +13,10 @@
     display:none;
 }
 
+.widget-window-border.concealed {
+    display:none;
+}
+
 .widget-window-border.popup.focus {
     background:#000080;
 }

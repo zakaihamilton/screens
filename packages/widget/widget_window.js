@@ -219,11 +219,32 @@ package.widget.window = function WidgetWindow(me) {
             "ui.theme.toggle": "parent"
         });
     };
+    me.siblings = {
+        set: function(object, properties) {
+            var window = me.window(object);
+            var parent_window = me.parent(window);
+            var content = me.ui.element.desktop();
+            if(parent_window) {
+                content = me.get(parent_window, "widget.window.content");
+            }
+            var members = me.ui.node.members(content, me.id);
+            members.map(function(member) {
+                if(member === window) {
+                    return;
+                }
+                for (var key in properties) {
+                    me.set(member, key, properties[key]);
+                }
+            });
+        }
+    };
     me.attach = function (window, parent_window) {
         if (parent_window.child_window) {
             me.set(parent_window.child_window, "unmaximize");
-            me.set(window, "ui.focus.active", true);
         }
+        me.set(window, "siblings", {
+            "ui.theme.add":"concealed"
+        });
         parent_window.child_window = window;
         me.switch(parent_window, window);
         me.set([
@@ -239,6 +260,9 @@ package.widget.window = function WidgetWindow(me) {
             parent_window.child_window = null;
             me.set(window.var.menu, "ui.node.parent", parent_window.var.header);
             me.switch(parent_window, window);
+            me.set(window, "siblings", {
+                "ui.theme.remove":"concealed"
+            });
             me.set([
                 window.var.close,
                 window.var.label,
@@ -429,9 +453,6 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.resize.enabled": !me.get(window, "fixed")
                 });
             }
-            me.set(window, "ui.property.group", {
-                "ui.focus.active": true
-            });
             me.set(window, "update");
             me.set(parent_window, "update");
             if(window.child_window) {
