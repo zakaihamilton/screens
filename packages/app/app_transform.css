@@ -191,6 +191,22 @@
     color:white;
 }
 
+.app-transform-toggleTerms:after{
+    position:absolute;
+    right:0px;
+    top:10px;
+    width:200px;
+    height:100%;
+    text-align:center;
+    content:"Table of Phases";
+    opacity:0;
+    color:black;
+}
+
+.app-transform-toggleTerms:hover:after {
+    opacity:1;
+}
+
 .app-transform-termPopup {
     display:none;
     border:1px solid black;

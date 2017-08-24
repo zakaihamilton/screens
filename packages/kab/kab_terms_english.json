@@ -315,12 +315,14 @@
         },
         "Rosh": {
             "translation": "Head",
-            "style": {"phase":"root","heading":"Location"}
+            "style": {"heading":"Location"}
         },
         "Toch": {
+            "style":{"heading":"location"},
             "translation": "Interior"
         },
         "Guf": {
+            "style":{"heading":"location"},
             "translation": "Body"
         },
         "de": {
@@ -1762,6 +1764,7 @@
             "style":{"heading":"Y-A-H-D-O-N-H-Y י-א-ה-ד-ו-נ-ה-י"}
         },
         "Sof":{
+            "style": {"heading":"Location"},
             "translation":"End"
         },
         "Hochmot":{
@@ -2498,6 +2501,11 @@
             "source":"Yamim",
             "style":{"phase":"four","heading":"Vessel"}
         },
+        "upper seas":{
+            "translation":"Upper Seas",
+            "source":"Yamim Elyonim",
+            "style":{"phase":"four","heading":"Vessel"}
+        },
         "TNTO":{
             "expansion":["Taamim","Nekudot","Tagim","Otiot"]
         },
@@ -2510,6 +2518,7 @@
             "translation":"Measure of Mercy"
         },
         "Zivug Lo Pasik":{
+            "source":"Zivug de Lo Pasik",
             "translation":"Never Ending Mating"
         }
     }
