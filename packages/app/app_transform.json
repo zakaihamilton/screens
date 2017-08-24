@@ -196,26 +196,6 @@
                     "ui.basic.var": "spinner"
                 },
                 {
-                    "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.toggleTerms",
-                    "ui.basic.text": "\u2636",
-                    "ui.basic.var": "toggleTerms",
-                    "ui.touch.click": "app.transform.toggleTerms"
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.termPopup",
-                    "ui.basic.var": "termPopup",
-                    "ui.element.component": "widget.container",
-                    "ui.basic.elements": [
-                        {
-                            "ui.element.component": "widget.table",
-                            "ui.theme.class": "app.transform.termTable",
-                            "ui.basic.var": "termTable"
-                        }
-                    ]
-                },
-                {
                     "ui.theme.class": "app.transform.filter",
                     "ui.basic.text": "",
                     "ui.basic.type": "search",
@@ -235,6 +215,26 @@
                     "ui.property.after": {
                         "ui.basic.elementId": "@app.transform.filterCacheKey"
                     }
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.toggleTerms",
+                    "ui.basic.text": "\u2636",
+                    "ui.basic.var": "toggleTerms",
+                    "ui.touch.click": "app.transform.toggleTerms"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.termPopup",
+                    "ui.basic.var": "termPopup",
+                    "ui.element.component": "widget.container",
+                    "ui.basic.elements": [
+                        {
+                            "ui.element.component": "widget.table",
+                            "ui.theme.class": "app.transform.termTable",
+                            "ui.basic.var": "termTable"
+                        }
+                    ]
                 }
             ],
             "core.property.update": "app.transform.update",

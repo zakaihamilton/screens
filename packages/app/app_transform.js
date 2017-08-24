@@ -132,7 +132,7 @@ package.app.transform = function AppTransform(me) {
             me.set(window.var.input, "storage.cache.store", "");
             me.set(window.var.output, "ui.basic.html", "");
             me.ui.node.removeChildren(window.var.filterList);
-            me.ui.node.removeChildren(window.var.TermTable);
+            me.ui.node.removeChildren(window.var.termTable);
             me.ui.layout.clear(window.var.layout);
             me.updateWidgets(window, true);
             window.options.scrollPos = 0;

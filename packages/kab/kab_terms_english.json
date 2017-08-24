@@ -69,6 +69,14 @@
             "replace":""
         },
         {
+            "find":"Word version\n",
+            "replace":""
+        },
+        {
+            "find":"PDF version\n",
+            "replace":""
+        },
+        {
             "find":"Next page \n",
             "replace":""
         },
@@ -2500,6 +2508,9 @@
         "Midatha Rachamim":{
             "prefix":"The",
             "translation":"Measure of Mercy"
+        },
+        "Zivug Lo Pasik":{
+            "translation":"Never Ending Mating"
         }
     }
 }
