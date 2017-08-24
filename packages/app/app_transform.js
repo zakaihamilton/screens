@@ -51,6 +51,7 @@ package.app.transform = function AppTransform(me) {
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
                 var window = me.widget.window.window(object);
                 me.set(window.var.layout, "ui.style.fontSize", value);
+                me.set(window.var.termTable, "ui.style.fontSize", value);
                 window.forceReflow = true;
                 me.set(window, "update");
             });
@@ -69,6 +70,7 @@ package.app.transform = function AppTransform(me) {
         me.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
         me.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
+        me.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
             me.set(window, "update");
     }
@@ -92,9 +94,13 @@ package.app.transform = function AppTransform(me) {
             if (value) {
                 me.set(object.var.spinner, "ui.style.visibility", "visible");
                 object.var.layout.style.opacity = 0;
+                object.var.toggleTerms.style.opacity = 0;
+                object.var.termPopup.style.opacity = 0;
             } else {
                 me.set(object.var.spinner, "ui.style.visibility", "hidden");
                 object.var.layout.style.opacity = 1;
+                object.var.toggleTerms.style.opacity = 1;
+                object.var.termPopup.style.opacity = 1;
                 me.updateScrolling(object);
             }
         }
@@ -172,12 +178,12 @@ package.app.transform = function AppTransform(me) {
         }
         var data = [
             [
-                {"ui.basic.html": ""},
-                {"ui.basic.html": "Root Phase"},
-                {"ui.basic.html": "Phase One"},
-                {"ui.basic.html": "Phase Two"},
-                {"ui.basic.html": "Phase Three"},
-                {"ui.basic.html": "Phase Four"}
+                {"ui.basic.text": ""},
+                {"ui.basic.text": "Root Phase"},
+                {"ui.basic.text": "Phase One"},
+                {"ui.basic.text": "Phase Two"},
+                {"ui.basic.text": "Phase Three"},
+                {"ui.basic.text": "Phase Four"}
             ]
         ];
         for (var heading in table) {
@@ -189,8 +195,9 @@ package.app.transform = function AppTransform(me) {
                 if (column[phase]) {
                     properties["ui.basic.elements"] = column[phase].map(function (item) {
                         return {
-                            "ui.basic.html": "<b>" + item.source + "</b> " + item.name + "<br>",
-                            "ui.style.textAlign": "left"
+                            "ui.theme.add":"kab.term.phase." + phase,
+                            "ui.attribute.app-transform-tooltip":item.source,
+                            "ui.basic.text": item.name
                         };
                     });
                 }
@@ -341,6 +348,9 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.set(window.var.termPopup, "ui.theme.toggle", "show");
+            me.set(window.var.termPopup, "ui.property.trickle", {
+                "update": null
+            });
         }
     };
 };
