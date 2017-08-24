@@ -214,4 +214,6 @@
     top:10px;
     bottom:10px;
     text-align: center;
+    table-layout:fixed;
+    white-space: nowrap;
 }

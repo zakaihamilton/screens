@@ -170,16 +170,28 @@ package.app.transform = function AppTransform(me) {
                 });
             }
         }
-        var data = [];
+        var data = [
+            [
+                {"ui.basic.html": ""},
+                {"ui.basic.html": "Root Phase"},
+                {"ui.basic.html": "Phase One"},
+                {"ui.basic.html": "Phase Two"},
+                {"ui.basic.html": "Phase Three"},
+                {"ui.basic.html": "Phase Four"}
+            ]
+        ];
         for (var heading in table) {
             var column = table[heading];
-            var list = [{"ui.basic.text": heading}];
+            var list = [{"ui.basic.text": heading, "ui.element.component": "widget.table.header"}];
             var order = ["root", "one", "two", "three", "four"];
             order.map(function (phase) {
                 var properties = {};
                 if (column[phase]) {
                     properties["ui.basic.elements"] = column[phase].map(function (item) {
-                        return {"ui.basic.html": "<b>" + item.source + "</b> " + item.name + "<br>"};
+                        return {
+                            "ui.basic.html": "<b>" + item.source + "</b> " + item.name + "<br>",
+                            "ui.style.textAlign": "left"
+                        };
                     });
                 }
                 properties["ui.theme.add"] = "kab.term.phase." + phase;
@@ -187,7 +199,7 @@ package.app.transform = function AppTransform(me) {
             });
             data.push(list);
         }
-        me.set(window.var.termTable, "dataByColumns", data);
+        me.set(window.var.termTable, "dataByRows", data);
     };
     me.transform = {
         set: function (object) {

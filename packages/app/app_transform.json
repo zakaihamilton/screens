@@ -203,14 +203,19 @@
                     "ui.touch.click": "app.transform.toggleTerms"
                 },
                 {
-                    "ui.element.component": "widget.container",
+                    "ui.basic.tag":"div",
                     "ui.theme.class": "app.transform.termPopup",
                     "ui.basic.var": "termPopup",
                     "ui.basic.elements": [
                         {
-                            "ui.element.component": "widget.table",
-                            "ui.theme.class": "app.transform.termTable",
-                            "ui.basic.var": "termTable"
+                            "ui.element.component": "widget.container",
+                            "ui.basic.elements": [
+                                {
+                                    "ui.element.component": "widget.table",
+                                    "ui.theme.class": "app.transform.termTable",
+                                    "ui.basic.var": "termTable"
+                                }
+                            ]
                         }
                     ],
                     "ui.attribute.noTrickle": true

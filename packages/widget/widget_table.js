@@ -42,7 +42,9 @@ package.widget.table = function WidgetTable(me) {
                         "ui.element.component": "widget.table.row",
                         "ui.basic.elements": row.map(function (item) {
                             var properties = Object.assign({}, item);
-                            properties["ui.element.component"] = firstRowHeader && !index ? "widget.table.header" : "widget.table.data";
+                            if(!("ui.element.component" in properties)) {
+                                properties["ui.element.component"] = firstRowHeader && !index ? "widget.table.header" : "widget.table.data";
+                            }
                             return properties;
                         })
                     }, object);
