@@ -195,10 +195,10 @@
 .app-transform-termPopup {
     display:none;
     border:1px solid black;
-    left:100px;
-    top:100px;
-    right:100px;
-    bottom:100px;
+    left:10%;
+    top:10%;
+    right:10%;
+    bottom:10%;
     background:white;
     position:absolute;
 }

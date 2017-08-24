@@ -236,10 +236,10 @@ package.kab.terms = function KabTerms(me) {
             }
             usedTerm.count++;
             if(item.label) {
-                usedTerm.label = item.label;
+                usedTerm.source = item.label;
             }
             else {
-                usedTerm.label = item.source ? item.source : source;
+                usedTerm.source = item.source ? item.source : source;
             }
             if(item.style) {
                 usedTerm.heading = item.style.heading;

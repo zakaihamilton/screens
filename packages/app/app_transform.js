@@ -145,8 +145,8 @@ package.app.transform = function AppTransform(me) {
             var info = searchItem[1];
             var option = document.createElement("option");
             option.textContent = term;
-            if (info.label) {
-                option.setAttribute("label", info.label);
+            if (info.source) {
+                option.setAttribute("label", info.source);
             }
             window.var.filterList.appendChild(option);
         });
@@ -179,7 +179,7 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (column[phase]) {
                     properties["ui.basic.elements"] = column[phase].map(function (item) {
-                        return {"ui.basic.text": item.name};
+                        return {"ui.basic.html": "<b>" + item.source + "</b> " + item.name + "<br>"};
                     });
                 }
                 properties["ui.theme.add"] = "kab.term.phase." + phase;

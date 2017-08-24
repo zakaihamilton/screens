@@ -516,6 +516,9 @@
         "TNHY": {
             "expansion": ["Tifferet2", "Netzah","Hod","Yesod"]
         },
+        "TNHYM": {
+            "expansion": ["Tifferet2", "Netzah","Hod","Yesod","Malchut"]
+        },
         "AA": {
             "expansion": ["Arich Anpin"]
         },
@@ -2489,6 +2492,14 @@
         },
         "TNTO":{
             "expansion":["Taamim","Nekudot","Tagim","Otiot"]
+        },
+        "Midatha Rachamim":{
+            "prefix":"The",
+            "translation":"Measure of Mercy"
+        },
+        "Midatha Rachamim":{
+            "prefix":"The",
+            "translation":"Measure of Mercy"
         }
     }
 }
