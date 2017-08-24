@@ -596,11 +596,17 @@
         },
         "Olam ha Nekudim": {
             "prefix":"the",
-            "translation": "World of Deficiencies"
+            "translation": "World of Deficiencies",
+            "style": {"heading":"World"}
         },
         "Olam Adam Kadmon": {
             "prefix":"the",
             "translation": "World of Primordial Man",
+            "style": {"heading":"World","phase":"root"}
+        },
+        "Olam Akudim": {
+            "prefix":"the",
+            "translation": "World of Binding",
             "style": {"heading":"World","phase":"root"}
         },
         "Olam Atzilut": {
@@ -683,6 +689,12 @@
         },
         "Sefirot": {
             "translation": "Emanations"
+        },
+        "Yod Sefirot": {
+            "translation": "Ten Emanations"
+        },
+        "Yud Sefirot": {
+            "translation": "Ten Emanations"
         },
         "Behina": {
             "translation": "Phase"
@@ -2336,7 +2348,7 @@
             "translation":"Grizzled"
         },
         "Olam ha Brudim":{
-            "style":{"heading":"World"},
+            "style":{"heading":"World","phase":"one"},
             "prefix":"The",
             "translation":"World of Correction"
         },
@@ -2526,6 +2538,10 @@
         },
         "Kilaim":{
             "translation":"Mixture"
+        },
+        "Olam ha Akudim":{
+            "translation":"The World of Binding",
+            "style":{"heading":"World","phase":"root"}
         }
     }
 }

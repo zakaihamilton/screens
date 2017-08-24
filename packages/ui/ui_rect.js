@@ -114,4 +114,13 @@ package.ui.rect = function UIRect(me) {
         var height = e[ a + 'Height' ];
         return {left: 0, top: 0, width: width, height: height, right: width, bottom: height};
     };
+    me.inView = function (object) {
+        let parentTop = object.parentNode.scrollTop;
+        let parentBottom = parentTop + object.parentNode.clientHeight;
+        let childTop = object.offsetTop;
+        let childBottom = childTop + object.clientHeight;
+        let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
+        let isPartial = ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
+        return  (isTotal || isPartial);
+    };
 };

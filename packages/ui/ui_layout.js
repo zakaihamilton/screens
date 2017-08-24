@@ -351,9 +351,39 @@ package.ui.layout = function UILayout(me) {
         if(showPage) {
             page.style.display = "flex-inline";
             page.style.visibility = "visible";
+            page.pageOffset = page.offsetTop;
+            page.pageSize = page.clientHeight;
         }
         else {
             page.style.display = "none";
+        }
+    };
+    me.pageInView = function (page) {
+        let parentTop = page.parentNode.scrollTop;
+        let parentBottom = parentTop + page.parentNode.clientHeight;
+        let childTop = page.pageOffset;
+        let childBottom = childTop + page.pageSize;
+        let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
+        let isPartial = ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
+        return  (isTotal || isPartial);
+    };
+    me.scrolled = function(target) {
+        target = me.content(target);
+        var child = target.firstChild;
+        while(child) {
+            if(child.pageSize) {
+                var pageInView = me.pageInView(child);
+                if(pageInView !== child.inView) {
+                    if(pageInView) {
+                        child.var.content.style.display = "";
+                    }
+                    else {
+                        child.var.content.style.display = "none";
+                    }
+                    child.inView = pageInView;
+                }
+            }
+            child = child.nextSibling;
         }
     };
 };

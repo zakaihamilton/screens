@@ -309,11 +309,15 @@ package.app.transform = function AppTransform(me) {
     };
     me.scrolled = {
         set: function (object, value) {
+            if (me.get(window, "ui.work.state")) {
+                return;
+            }
+            var window = me.widget.window.window(object);
+            me.ui.layout.scrolled(window.var.layout);
             if (object.scrolledTimer) {
                 clearTimeout(object.scrolledTimer);
             }
             object.scrolledTimer = setTimeout(function () {
-                var window = me.widget.window.window(object);
                 if (me.get(window, "ui.work.state")) {
                     return;
                 }
