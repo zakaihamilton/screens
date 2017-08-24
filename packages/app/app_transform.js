@@ -179,11 +179,11 @@ package.app.transform = function AppTransform(me) {
         var data = [
             [
                 {"ui.basic.text": ""},
-                {"ui.basic.text": "Root Phase"},
-                {"ui.basic.text": "Phase One"},
-                {"ui.basic.text": "Phase Two"},
-                {"ui.basic.text": "Phase Three"},
-                {"ui.basic.text": "Phase Four"}
+                {"ui.basic.text": "Root Phase", "ui.style.height":"1em"},
+                {"ui.basic.text": "Phase One", "ui.style.height":"1em"},
+                {"ui.basic.text": "Phase Two", "ui.style.height":"1em"},
+                {"ui.basic.text": "Phase Three", "ui.style.height":"1em"},
+                {"ui.basic.text": "Phase Four", "ui.style.height":"1em"}
             ]
         ];
         for (var heading in table) {
