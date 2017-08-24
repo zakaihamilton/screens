@@ -141,19 +141,19 @@
         ],
         ["Window", [
                 ["Cascade", "widget.window.cascade", {
-                        "enabled":false
-                }],
+                        "enabled": false
+                    }],
                 ["Tile Horizontally", "widget.window.tileHorizontally"],
                 ["Tile Vertically", "widget.window.tileVertically"],
                 ["Arrange Icons", "widget.window.arrangeIcons", {
-                        "enabled":false
-                }],
+                        "enabled": false
+                    }],
                 "widget.window.childMenuList"
             ]]
     ],
     "ui.group.data": {
         "ui.data.default": {
-            "ui.basic.context":"self",
+            "ui.basic.context": "self",
             "static": true,
             "ui.style.width": "500px",
             "ui.style.height": "500px",
@@ -162,7 +162,7 @@
                 {
                     "ui.element.component": "widget.editor",
                     "ui.theme.class": "app.transform.input",
-                    "ui.property.after":{
+                    "ui.property.after": {
                         "storage.cache.key": "@app.transform.inputCacheKey",
                         "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text"
@@ -188,7 +188,7 @@
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
                     "core.property.scrolled": "app.transform.scrolled",
-                    "ui.attribute.noTrickle":true
+                    "ui.attribute.noTrickle": true
                 },
                 {
                     "ui.basic.tag": "div",
@@ -198,45 +198,53 @@
                 {
                     "ui.basic.tag": "div",
                     "ui.theme.class": "app.transform.toggleTerms",
-                    "ui.basic.text":"\u2636",
+                    "ui.basic.text": "\u2636",
                     "ui.basic.var": "toggleTerms",
-                    "ui.touch.click":"app.transform.toggleTerms"
+                    "ui.touch.click": "app.transform.toggleTerms"
                 },
                 {
-                    "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.termTable",
-                    "ui.basic.var": "termTable"
+                    "ui.element.component": "widget.container",
+                    "ui.theme.class": "app.transform.termPopup",
+                    "ui.basic.var": "termPopup",
+                    "ui.basic.elements": [
+                        {
+                            "ui.element.component": "widget.table",
+                            "ui.theme.class": "app.transform.termTable",
+                            "ui.basic.var": "termTable"
+                        }
+                    ],
+                    "ui.attribute.noTrickle": true
                 },
                 {
-                    "ui.theme.class":"app.transform.filter",
+                    "ui.theme.class": "app.transform.filter",
                     "ui.basic.text": "",
                     "ui.basic.type": "search",
                     "ui.basic.var": "filter",
-                    "ui.attribute.placeholder":"Search...",
-                    "ui.property.after":{
+                    "ui.attribute.placeholder": "Search...",
+                    "ui.property.after": {
                         "storage.cache.key": "@app.transform.filterCacheKey",
                         "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text",
-                        "ui.attribute.list":"@app.transform.filterCacheKey"
+                        "ui.attribute.list": "@app.transform.filterCacheKey"
                     },
-                    "ui.monitor.change":"app.transform.filterChange"
+                    "ui.monitor.change": "app.transform.filterChange"
                 },
                 {
-                    "ui.basic.tag":"datalist",
+                    "ui.basic.tag": "datalist",
                     "ui.basic.var": "filterList",
-                    "ui.property.after":{
-                        "ui.basic.elementId":"@app.transform.filterCacheKey"
+                    "ui.property.after": {
+                        "ui.basic.elementId": "@app.transform.filterCacheKey"
                     }
                 }
             ],
             "core.property.update": "app.transform.update",
-            "core.property.work":"app.transform.work",
-            "ui.property.after":{
+            "core.property.work": "app.transform.work",
+            "ui.property.after": {
                 "storage.cache.key": "@app.transform.windowCacheKey",
                 "storage.cache.location": "local",
                 "storage.cache.restore": "widget.window.store",
-                "app.transform.initOptions":null,
-                "app.transform.transform":null
+                "app.transform.initOptions": null,
+                "app.transform.transform": null
             }
         },
         "ui.data.keyList": [
@@ -260,7 +268,7 @@
             ]
         ]
     },
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.cache.key": "app-transform-window",
         "storage.cache.location": "local",
         "storage.cache.restore": "widget.window.store"

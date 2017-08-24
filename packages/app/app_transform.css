@@ -181,7 +181,6 @@
     cursor:default;
     user-select:none;
     border:1px solid transparent;
-    display: none;
 }
 
 .app-transform-toggleTerms:hover{
@@ -193,7 +192,7 @@
     color:white;
 }
 
-.app-transform-termTable {
+.app-transform-termPopup {
     display:none;
     border:1px solid black;
     left:100px;
@@ -204,24 +203,15 @@
     position:absolute;
 }
 
-.app-transform-termTable.show {
-    display:block;
+.app-transform-termPopup.show {
+    display:flex;
 }
 
-.app-transform-term-column {
-    float: left;
-    width: 33.3%;
-    padding: 8px;
-}
-
-.app-transform-term-list {
-list-style-type: none;
-    border: 1px solid #eee;
-    margin: 0;
-    padding: 0;
-}
-
-.app-transform-term-header {
-    background:black;
-    color:white;
+.app-transform-termTable {
+    position: absolute;
+    left:10px;
+    right:10px;
+    top:10px;
+    bottom:10px;
+    text-align: center;
 }

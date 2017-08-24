@@ -83,7 +83,7 @@
 
 .kab-term-phase-root {
     background:white;
-    border:1px solid gray;
+    outline:1px solid gray;
 }
 
 .kab-term-phase-root:hover:after {

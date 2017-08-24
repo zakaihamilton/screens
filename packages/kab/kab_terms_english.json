@@ -175,16 +175,16 @@
         },
         "Partzuf Galgalta" : {
             "translation":"Skull Face",
-            "style":{"heading":"face","phase":"root"}
+            "style":{"heading":"Face","phase":"root"}
         },
         "Galgalta" :{
             "translation":"Skull",
-            "style":{"heading":"face","phase":"root"}
+            "style":{"heading":"Face","phase":"root"}
         },
         "Ohr Ein Sof": {
             "prefix":"the",
             "translation":"Light of Infinity",
-            "style":{"heading":"world","phase":"root"}
+            "style":{"heading":"World","phase":"root"}
         },
         "Ohr Nefesh": {
             "prefix":"the",
@@ -233,51 +233,51 @@
         },
         "Kli Keter": {
             "translation": "Vessel of Crown",
-            "style": {"heading":"vessel","phase":"root"}
+            "style": {"heading":"Vessel","phase":"root"}
         },
         "Kli Hochma": {
             "translation": "Vessel of Wisdom",
-            "style": {"heading":"vessel","phase":"one"}
+            "style": {"heading":"Vessel","phase":"one"}
         },
         "Kli Bina": {
             "translation": "Vessel of Understanding",
-            "style": {"heading":"vessel","phase":"two"}
+            "style": {"heading":"Vessel","phase":"two"}
         },
         "Kli Tifferet": {
             "translation": "Vessel of Beauty",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"Vessel","phase":"three"}
         },
         "Kli Malchut": {
             "translation": "Vessel of Kingdom",
-            "style": {"heading":"vessel","phase":"four"}
+            "style": {"heading":"Vessel","phase":"four"}
         },
         "Kli ZA": {
             "translation": "Vessel of ZA",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"Vessel","phase":"three"}
         },
         "Ohr ZA": {
             "translation": "Light of ZA",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"Vessel","phase":"three"}
         },
         "Behinat Shoresh": {
             "translation": "Root Phase",
-            "style": {"phase":"root","heading":"phase"}
+            "style": {"phase":"root","heading":"Phase"}
         },
         "Behina Aleph": {
             "translation": "Phase One",
-            "style": {"phase":"one","heading":"phase"}
+            "style": {"phase":"one","heading":"Phase"}
         },
         "Behina Bet": {
             "translation": "Phase Two",
-            "style": {"phase":"two","heading":"phase"}
+            "style": {"phase":"two","heading":"Phase"}
         },
         "Behina Gimel": {
             "translation": "Phase Three",
-            "style": {"phase":"three","heading":"phase"}
+            "style": {"phase":"three","heading":"Phase"}
         },
         "Behina Dalet": {
             "translation": "Phase Four",
-            "style": {"phase":"four","heading":"phase"}
+            "style": {"phase":"four","heading":"Phase"}
         },
         "Aviut Shoresh": {
             "translation": "Root Phase Coarseness",
@@ -390,68 +390,68 @@
         },
         "Keter": {
             "translation": "Crown",
-            "style": {"heading":"vessel","phase":"root"}
+            "style": {"heading":"Vessel","phase":"root"}
         },
         "Hochma": {
             "translation": "Wisdom",
-            "style": {"heading":"vessel/light","phase":"one"}
+            "style": {"heading":"Vessel","phase":"one"}
         },
         "Bina": {
             "translation": "Understanding",
-            "style": {"heading":"vessel","phase":"two"}
+            "style": {"heading":"Vessel","phase":"two"}
         },
         "Tifferet": {
             "translation": "Beauty",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"Vessel","phase":"three"}
         },
         "Tifferet2": {
             "source":"Tifferet",
             "translation": "Beauty",
-            "style": {"heading":"vessel","phase":"two"}
+            "style": {"heading":"Vessel","phase":"two"}
         },
         "Malchut": {
             "translation": "Kingdom",
-            "style": {"heading":"vessel","phase":"four"}
+            "style": {"heading":"Vessel","phase":"four"}
         },
         "Hesed" : {
             "translation":"Kindness",
-            "style": {"heading":"vessel","phase":"root"}
+            "style": {"heading":"Vessel","phase":"root"}
         },
         "Gevura" : {
             "translation":"Judgement",
-            "style": {"heading":"vessel","phase":"one"}
+            "style": {"heading":"Vessel","phase":"one"}
         },
         "Netzah" : {
             "translation":"Eternity",
-            "style": {"heading":"vessel","phase":"three"}
+            "style": {"heading":"Vessel","phase":"three"}
         },
         "Hod" : {
             "translation":"Majesty",
-            "style": {"heading":"vessel","phase":"four"}
+            "style": {"heading":"Vessel","phase":"four"}
         },
         "Yesod" : {
             "translation":"Foundation",
-            "style": {"heading":"vessel","phase":"collective"}
+            "style": {"heading":"Vessel","phase":"collective"}
         },
         "Nefesh": {
             "translation": "Relaxation",
-            "style": {"heading":"light","phase":"four"}
+            "style": {"heading":"Light","phase":"four"}
         },
         "Ruach": {
             "translation": "Modulation",
-            "style": {"heading":"light","phase":"three"}
+            "style": {"heading":"Light","phase":"three"}
         },
         "Neshama": {
             "translation": "Protection",
-            "style": {"heading":"light","phase":"two"}
+            "style": {"heading":"Light","phase":"two"}
         },
         "Haya": {
             "translation": "Expression",
-            "style": {"heading":"light","phase":"one"}
+            "style": {"heading":"Light","phase":"one"}
         },
         "Yechida": {
             "translation": "Singularity",
-            "style": {"heading":"light","phase":"root"}
+            "style": {"heading":"Light","phase":"root"}
         },
         "ERMA":{
             "expansion":["Esh", "Ruach2", "Mayim", "Afar"]
@@ -542,44 +542,44 @@
         },
         "Arich Anpin": {
             "translation": "Long Face",
-            "style": {"heading":"face","phase":"root"}
+            "style": {"heading":"Face","phase":"root"}
         },
         "Arich": {
             "translation": "Long",
-            "style": {"heading":"face","phase":"root"}
+            "style": {"heading":"Face","phase":"root"}
         },
         "Zeir Anpin": {
             "translation": "Small Face",
-            "style": {"heading":"face/vessel","phase":"three"}
+            "style": {"heading":"Face/Vessel","phase":"three"}
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
-            "style": {"heading":"world","phase":"root"}
+            "style": {"heading":"World","phase":"root"}
         },
         "Atzilut": {
             "translation": "Emanation",
-            "style": {"heading":"world","phase":"one"}
+            "style": {"heading":"World","phase":"one"}
         },
         "Beria": {
             "translation": "Creation",
-            "style": {"heading":"world","phase":"two"}
+            "style": {"heading":"World","phase":"two"}
         },
         "Yetzira": {
             "translation": "Formation",
-            "style": {"heading":"world","phase":"three"}
+            "style": {"heading":"World","phase":"three"}
         },
         "Assiya": {
             "translation": "Action",
-            "style": {"heading":"world","phase":"four"}
+            "style": {"heading":"World","phase":"four"}
         },
         "Olam ha Zeh": {
             "translation": "This World",
-            "style": {"heading":"world","phase":"four"}
+            "style": {"heading":"World","phase":"four"}
         },
         "Olam ha Ba": {
             "prefix":"the",
             "translation": "Next World",
-            "style": {"heading":"world","phase":"one"}
+            "style": {"heading":"World","phase":"one"}
         },
         "Olam ha Nekudim": {
             "prefix":"the",
@@ -588,27 +588,27 @@
         "Olam Adam Kadmon": {
             "prefix":"the",
             "translation": "World of Primordial Man",
-            "style": {"heading":"world","phase":"root"}
+            "style": {"heading":"World","phase":"root"}
         },
         "Olam Atzilut": {
             "prefix":"the",
             "translation": "World of Emanation",
-            "style": {"heading":"world","phase":"one"}
+            "style": {"heading":"World","phase":"one"}
         },
         "Olam Beria": {
             "prefix":"the",
             "translation": "World of Creation",
-            "style": {"heading":"world","phase":"two"}
+            "style": {"heading":"World","phase":"two"}
         },
         "Olam Yetzira": {
             "prefix":"the",
             "translation": "World of Formation",
-            "style": {"heading":"world","phase":"three"}
+            "style": {"heading":"World","phase":"three"}
         },
         "Olam Assiya": {
             "prefix":"the",
             "translation": "World of Action",
-            "style": {"heading":"world","phase":"four"}
+            "style": {"heading":"World","phase":"four"}
         },
         "Olam Nekudim": {
             "prefix":"the",
@@ -691,7 +691,7 @@
         },
         "Ein Sof":{
             "translation":"Infinity",
-            "style":{"heading":"world","phase":"root"}
+            "style":{"heading":"World","phase":"root"}
         },
         "Igulim": {
             "translation":"Circles"
@@ -707,7 +707,7 @@
         },
         "Nukva":{
             "translation":"Female",
-            "style":{"heading":"face/vessel","phase":"four"}
+            "style":{"heading":"Face/Vessel","phase":"four"}
         },
         "Halon":{
             "translation":"Window"
@@ -743,27 +743,27 @@
             "translation":"Mating"
         },
         "AB":{
-            "style":{"heading":"face","phase":"one","tooltip":"72"}
+            "style":{"heading":"Face","phase":"one","tooltip":"72"}
         },
         "SAG":{
-            "style":{"heading":"face","phase":"two","tooltip":"63"}
+            "style":{"heading":"Face","phase":"two","tooltip":"63"}
         },
         "MA":{
-            "style":{"heading":"face","phase":"three","tooltip":"45"}
+            "style":{"heading":"Face","phase":"three","tooltip":"45"}
         },
         "BON":{
-            "style":{"heading":"face","phase":"four","tooltip":"52"}
+            "style":{"heading":"Face","phase":"four","tooltip":"52"}
         },
         "AVI":{
             "expansion":["Aba ve Imma"]
         },
         "Aba":{
             "translation":"Father",
-            "style":{"heading":"face","phase":"one"}
+            "style":{"heading":"Face","phase":"one"}
         },
         "Imma":{
             "translation":"Mother",
-            "style":{"heading":"face","phase":"two"}
+            "style":{"heading":"Face","phase":"two"}
         },
         "Tzimtzum Aleph":{
             "prefix":"the",
@@ -778,81 +778,81 @@
         },
         "Moach":{
             "translation":"Mind",
-            "style":{"heading":"vessel","phase":"root"}
+            "style":{"heading":"Body","phase":"root"}
         },
         "Atzamot":{
             "translation":"Bones",
-            "style":{"heading":"vessel","phase":"one"}
+            "style":{"heading":"Body","phase":"one"}
         },
         "Gidin":{
             "translation":"Tendons",
-            "style":{"heading":"vessel","phase":"two"}
+            "style":{"heading":"Body","phase":"two"}
         },
         "Bassar":{
             "translation":"Flesh",
-            "style":{"heading":"vessel","phase":"three"}
+            "style":{"heading":"Body","phase":"three"}
         },
         "Or":{
             "case":"sensitive",
             "translation":"Skin",
-            "style":{"heading":"vessel","phase":"four"}
+            "style":{"heading":"Body","phase":"four"}
         },
         "Malbushim":{
             "translation":"Clothings"
         },
         "Ktonet":{
             "translation":"Shirt",
-            "style":{"heading":"clothing","phase":"one"}
+            "style":{"heading":"Clothing","phase":"one"}
         },
         "Michnasayim":{
             "translation":"Trousers",
-            "style":{"heading":"clothing","phase":"two"}
+            "style":{"heading":"Clothing","phase":"two"}
         },
         "Mitznefet":{
             "translation":"Miter",
-            "style":{"heading":"clothing","phase":"three"}
+            "style":{"heading":"Clothing","phase":"three"}
         },
         "Avnet":{
             "translation":"Belt",
-            "style":{"heading":"clothing","phase":"four"}
+            "style":{"heading":"Clothing","phase":"four"}
         },
         "Bait":{
             "translation":"House",
-            "style":{"heading":"vessel","phase":"one"}
+            "style":{"heading":"House","phase":"one"}
         },
         "Hatzer":{
             "translation":"Yard",
-            "style":{"heading":"vessel","phase":"two"}
+            "style":{"heading":"House","phase":"two"}
         },
         "Sadeh":{
             "translation":"Field",
-            "style":{"heading":"vessel","phase":"three"}
+            "style":{"heading":"House","phase":"three"}
         },
         "Midbar":{
             "translation":"Desert",
-            "style":{"heading":"vessel","phase":"four"}
+            "style":{"heading":"House","phase":"four"}
         },
         "Mayim":{
             "translation":"Water",
-            "style":{"heading":"element","phase":"one"}
+            "style":{"heading":"Element","phase":"one"}
         },
         "Afar":{
             "case":"sensitive",
             "translation":"Dust",
-            "style":{"heading":"element","phase":"four"}
+            "style":{"heading":"Element","phase":"four"}
         },
         "Esh":{
             "translation":"Fire",
-            "style":{"heading":"element","phase":"two"}
+            "style":{"heading":"Element","phase":"two"}
         },
         "Ruach2":{
             "source":"Ruach",
             "translation":"Wind",
-            "style":{"heading":"element","phase":"three"}
+            "style":{"heading":"Element","phase":"three"}
         },
         "Affar":{
             "translation":"Dust",
-            "style":{"heading":"element","phase":"four"}
+            "style":{"heading":"Element","phase":"four"}
         },
         "Nitzotz":{
             "translation":"Spark"
@@ -861,19 +861,23 @@
             "translation":"Restrictions"
         },
         "Taamim":{
-            "translation":"Tastes"
+            "translation":"Tastes",
+            "style": {"phase":"one","heading":"Flow"}
         },
         "Nekudot":{
-            "translation":"Points"
+            "translation":"Points",
+            "style": {"phase":"two","heading":"Flow"}
         },
         "Tagin":{
-            "translation":"Crowns"
+            "translation":"Crowns",
+            "style": {"phase":"three","heading":"Flow"}
         },
         "Ot":{
             "translation":"Letter"
         },
         "Otiot":{
-            "translation":"Letters"
+            "translation":"Letters",
+            "style": {"phase":"four","heading":"Flow"}
         },
         "Parsa":{
             "translation":"Diaphragm",
@@ -918,23 +922,23 @@
         },
         "Atik":{
             "translation":"Ancient",
-            "style":{"heading":"face","phase":"root"}
+            "style":{"heading":"Face","phase":"root"}
         },
         "Tohu":{
             "translation":"Unformed",
-            "style":{"heading":"phase","phase":"one"}
+            "style":{"heading":"Phase","phase":"one"}
         },
         "Bohu":{
             "translation":"Chaos",
-            "style":{"heading":"phase","phase":"two"}
+            "style":{"heading":"Phase","phase":"two"}
         },
         "Choshech":{
             "translation":"Darkness",
-            "style":{"heading":"phase","phase":"three"}
+            "style":{"heading":"Phase","phase":"three"}
         },
         "Daat":{
             "translation":"Knowledge",
-            "style":{"heading":"vessel","phase":"three"}
+            "style":{"heading":"Vessel","phase":"three"}
         },
         "Sefer HaBahir":{
             "translation":"Book of the Bright",
@@ -1036,7 +1040,7 @@
             "translation":"Desire"
         },
         "Hassadim":{
-            "style": {"heading":"light","phase":"two"},
+            "style": {"heading":"Light","phase":"two"},
             "translation":"Mercy"
         },
         "Dinim":{
@@ -2103,7 +2107,7 @@
         },
         "Binot":{
             "translation": "Understandings",
-            "style": {"heading":"vessel","phase":"two"}
+            "style": {"heading":"Vessel","phase":"two"}
         },
         "RTS":{
             "prefix":"the",
@@ -2166,31 +2170,31 @@
             "translation":"Blocked Mind"
         },
         "Abba Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Aba Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Abba ve Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Abba ve Ima":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Abba and Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Aba ve Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Aba and Imma":{
-            "style":{"heading":"face","phase":"one"},
+            "style":{"heading":"Face","phase":"one"},
             "translation":"Father and Mother"
         },
         "Vav Kzavot":{
@@ -2251,7 +2255,7 @@
         },
         "Kitra":{
             "translation": "Crown",
-            "style": {"heading":"vessel","phase":"root"}
+            "style": {"heading":"Vessel","phase":"root"}
         },
         "Metzach":{
             "style":{"phase":"root"},
@@ -2393,7 +2397,7 @@
         },
         "Malchuts":{
             "translation":"Kingdoms",
-            "style": {"heading":"vessel","phase":"four"}
+            "style": {"heading":"Vessel","phase":"four"}
         },
         "sides":{
             "translation":"Sides",

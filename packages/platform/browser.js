@@ -71,7 +71,8 @@ package.include({
         "tray",
         "content",
         "editor",
-        "canvas"
+        "canvas",
+        "table"
     ],
     "canvas": [
         "dirty",

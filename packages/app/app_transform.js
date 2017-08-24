@@ -29,7 +29,7 @@ package.app.transform = function AppTransform(me) {
                 language: "Auto",
                 fontSize: "24px",
                 scrollPos: 0,
-                phaseNumbers:true
+                phaseNumbers: true
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -132,7 +132,7 @@ package.app.transform = function AppTransform(me) {
             window.options.scrollPos = 0;
         }
     };
-    me.updateFilterList = function(window, terms) {
+    me.updateFilterList = function (window, terms) {
         me.ui.node.removeChildren(window.var.filterList);
         var searchItems = Object.keys(terms).map(function (key) {
             return [key, terms[key]];
@@ -140,59 +140,54 @@ package.app.transform = function AppTransform(me) {
         searchItems.sort(function (first, second) {
             return second[1].count - first[1].count;
         });
-        searchItems.map(function(searchItem) {
+        searchItems.map(function (searchItem) {
             var term = searchItem[0];
             var info = searchItem[1];
             var option = document.createElement("option");
             option.textContent = term;
-            if(info.label) {
+            if (info.label) {
                 option.setAttribute("label", info.label);
             }
             window.var.filterList.appendChild(option);
         });
     };
-    me.updateTermTable = function(window, terms) {
-        return;
-        me.ui.node.removeChildren(window.var.TermTable);
+    me.updateTermTable = function (window, terms) {
         var table = {};
-        for(var termName in terms) {
+        for (var termName in terms) {
             var term = terms[termName];
-            if(term.heading && term.phase) {
-                var column = table[term.heading];
-                if(!column) {
-                    column = table[term.heading] = {};
-                }
-                var row = column[term.phase];
-                if(!row) {
-                    row = table[term.phase] = [];
-                }
-                term.name = termName;
-                row.push(term);
-            }
-        }
-        for(var heading in table) {
-            var column = table[heading];
-            var container = document.createElement('div');
-            container.className = "app-transform-term-column";
-            var list = document.createElement('ul');
-            list.className = "app-transform-term-list";
-            container.appendChild(list);
-            var item = document.createElement('li');
-            item.className = "app-transform-term-header";
-            item.textContent = heading;
-            list.appendChild(item);
-            for(var phase in column) {
-                var row = column[phase];
-                var phaseList = document.createElement('ul');
-                row.map(function(item) {
-                    var entry = document.createElement('li');
-                    entry.textContent = item.name;
-                    phaseList.appendChild(entry);
+            if (term.heading && term.phase) {
+                term.heading.split("/").map(function (subHeading) {
+                    var column = table[subHeading];
+                    if (!column) {
+                        column = table[subHeading] = {};
+                    }
+                    var row = column[term.phase];
+                    if (!row) {
+                        row = column[term.phase] = [];
+                    }
+                    term.name = termName;
+                    row.push(term);
                 });
-                list.appendChild(phaseList);
             }
-            window.var.termTable.appendChild(container);
         }
+        var data = [];
+        for (var heading in table) {
+            var column = table[heading];
+            var list = [{"ui.basic.text": heading}];
+            var order = ["root", "one", "two", "three", "four"];
+            order.map(function (phase) {
+                var properties = {};
+                if (column[phase]) {
+                    properties["ui.basic.elements"] = column[phase].map(function (item) {
+                        return {"ui.basic.text": item.name};
+                    });
+                }
+                properties["ui.theme.add"] = "kab.term.phase." + phase;
+                list.push(properties);
+            });
+            data.push(list);
+        }
+        me.set(window.var.termTable, "dataByColumns", data);
     };
     me.transform = {
         set: function (object) {
@@ -288,16 +283,16 @@ package.app.transform = function AppTransform(me) {
     };
     me.scrolled = {
         set: function (object, value) {
-            if(object.scrolledTimer) {
+            if (object.scrolledTimer) {
                 clearTimeout(object.scrolledTimer);
             }
-            object.scrolledTimer = setTimeout(function() {
+            object.scrolledTimer = setTimeout(function () {
                 var window = me.widget.window.window(object);
                 if (me.get(window, "ui.work.state")) {
                     return;
                 }
                 if ("vertical" in value) {
-                        me.set(window, "app.transform.scrollPos", value.vertical);
+                    me.set(window, "app.transform.scrollPos", value.vertical);
                 }
             }, 2000);
         }
@@ -333,7 +328,7 @@ package.app.transform = function AppTransform(me) {
     me.toggleTerms = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            me.set(window.var.termTable, "ui.theme.toggle", "show");
+            me.set(window.var.termPopup, "ui.theme.toggle", "show");
         }
     };
 };
