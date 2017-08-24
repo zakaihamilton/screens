@@ -5,8 +5,7 @@
 
 package.widget.table = function WidgetTable(me) {
     me.default = {
-        "ui.basic.tag": "table",
-        "ui.theme.class": "container"
+        "ui.basic.tag": "table"
     };
     me.init = function () {
         me.firstRowHeader = me.core.object.property("widge.table.firstRowHeader");
@@ -56,21 +55,18 @@ package.widget.table = function WidgetTable(me) {
 
 package.widget.table.header = function WidgetTableHeader(me) {
     me.default = {
-        "ui.basic.tag": "th",
-        "ui.theme.class": "widget.table.header"
+        "ui.basic.tag": "th"
     };
 };
 
 package.widget.table.row = function WidgetTableRow(me) {
     me.default = {
-        "ui.basic.tag": "tr",
-        "ui.theme.class": "widget.table.row"
+        "ui.basic.tag": "tr"
     };
 };
 
 package.widget.table.data = function WidgetTableData(me) {
     me.default = {
-        "ui.basic.tag": "td",
-        "ui.theme.class": "widget.table.data"
+        "ui.basic.tag": "td"
     };
 };
