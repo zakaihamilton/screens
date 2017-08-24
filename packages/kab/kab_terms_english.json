@@ -2156,9 +2156,6 @@
             "translation":"Tetragrammaton",
             "style":{"heading":"ADNI א-ד-נ-י","diagram":"Tetragrammaton"}
         },
-        "Tractate":{
-            "translation":"Masechet"
-        },
         "Adnei ha Sadeh":{
             "translation":"Ledges of the Field"
         },
@@ -2520,6 +2517,15 @@
         "Zivug Lo Pasik":{
             "source":"Zivug de Lo Pasik",
             "translation":"Never Ending Mating"
+        },
+        "Cohen":{
+            "translation":"Priest"
+        },
+        "Masechet":{
+            "translation":"Tractate"
+        },
+        "Kilaim":{
+            "translation":"Mixture"
         }
     }
 }
