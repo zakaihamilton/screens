@@ -49,7 +49,6 @@ package.ui.rect = function UIRect(me) {
                 xPos += (parent.offsetLeft - parent.scrollLeft + parent.clientLeft);
                 yPos += (parent.offsetTop - parent.scrollTop + parent.clientTop);
             }
-
             parent = parent.offsetParent;
         }
         xPos -= object.clientLeft;
