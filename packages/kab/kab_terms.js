@@ -448,7 +448,7 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        var phase = null, heading = null, tooltip = null, description = null;
+        var phase = null, heading = null, tooltip = null, short = null, long = null;
         if (styles && styles.diagram && me.json.diagrams) {
             if (!me.diagrams[styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
@@ -478,8 +478,11 @@ package.kab.terms = function KabTerms(me) {
                 heading = styles.heading;
             }
         }
-        if(styles && styles.description) {
-            description = styles.description;
+        if(styles && styles.short) {
+            short = styles.short;
+        }
+        if(styles && styles.long) {
+            long = styles.long;
         }
         if(styles && styles.tooltip) {
             tooltip = styles.tooltip;
@@ -487,13 +490,13 @@ package.kab.terms = function KabTerms(me) {
         if(phase) {
             html += "<span class=\"kab-terms-phase kab-terms-phase-" + phase + "\"";
         }
-        if(description) {
+        if(short || long) {
             html += " kab-terms-toast";
         }
         if(tooltip) {
             html += " kab-terms-tooltip=\"" + tooltip + "\"";
         }
-        if(phase || tooltip || heading || description) {
+        if(phase || tooltip || heading || short || long) {
             html += ">";
         }
         if(phase && phase !== "none" && options.phaseNumbers) {
@@ -502,11 +505,19 @@ package.kab.terms = function KabTerms(me) {
         if(heading) {
             html += "<span class=\"kab-terms-heading\">" + heading + "</span>";
         }
-        if(description) {
-            html += "<span class=\"kab-terms-description\"><b>" + text + "</b>: " + description + "[]" + "</span>";
+        if(short || long) {
+            html += "<span class=\"kab-terms-description-box kab-terms-phase kab-terms-phase-" + phase + "\">";
+            html += "<span class=\"kab-terms-description-title kab-terms-phase kab-terms-phase-" + phase + "\"></span>";
+            if(short) {
+                html += "<span class=\"kab-terms-short\"><b>" + text + ":</b> " + short + "[]" + "</span>";
+            }
+            if(long) {
+                html += "<span class=\"kab-terms-long\">" + long + "[]" + "</span>";
+            }
+            html+= "</span>";
         }
         html += text;
-        if(phase || tooltip || heading || description) {
+        if(phase || tooltip || heading || short || long) {
             html += "</span>";
         }
         if (styles && styles.bold) {

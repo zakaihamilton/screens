@@ -185,11 +185,11 @@
         },
         "Partzuf Galgalta" : {
             "translation":"Skull Face",
-            "style":{"heading":"Face","phase":"root","description":"First Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"root","short":"First Face in the World of Primordial Man"}
         },
         "Galgalta" :{
             "translation":"Skull",
-            "style":{"heading":"Face","phase":"root","description":"First Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"root","short":"First Face in the World of Primordial Man"}
         },
         "Ohr Ein Sof": {
             "prefix":"the",
@@ -569,7 +569,7 @@
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
-            "style": {"heading":"World","phase":"root","description":"First World after Infinity"}
+            "style": {"heading":"World","phase":"root","short":"First World after Infinity"}
         },
         "Atzilut": {
             "translation": "Emanation",
@@ -643,7 +643,12 @@
         },
         "Chazeh": {
             "translation": "Chest",
-            "style": {"phase":"two","heading":"Location","description":"The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)"}
+            "style": {
+                "phase":"two",
+                "heading":"Location",
+                "short":"The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
+                "long":"When a Face is in smallness, the upper part including the vessels of Crown and Wisdom are kept intact while the lower part including the vessels Understanding Beauty and Kingdom are detached to the face below. The division between them is called the Chest."
+            }
         },
         "Ayin": {
             "translation": "Eye",
@@ -770,16 +775,16 @@
             "translation":"Mating"
         },
         "AB":{
-            "style":{"heading":"Face","phase":"one","tooltip":"72","description":"Second Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"one","tooltip":"72","short":"Second Face in the World of Primordial Man"}
         },
         "SAG":{
-            "style":{"heading":"Face","phase":"two","tooltip":"63","description":"Third Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"two","tooltip":"63","short":"Third Face in the World of Primordial Man"}
         },
         "MA":{
-            "style":{"heading":"Face","phase":"three","tooltip":"45","description":"Fourth Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"three","tooltip":"45","short":"Fourth Face in the World of Primordial Man"}
         },
         "BON":{
-            "style":{"heading":"Face","phase":"four","tooltip":"52","description":"Fifth Face in the World of Primordial Man"}
+            "style":{"heading":"Face","phase":"four","tooltip":"52","short":"Fifth Face in the World of Primordial Man"}
         },
         "AVI":{
             "expansion":["Aba ve Imma"]
@@ -2505,7 +2510,7 @@
         "sea":{
             "translation":"Sea",
             "source":"Yam",
-            "style":{"phase":"four","heading":"Vessel"}
+            "style":{"phase":"four","heading":"Vessel","short":"When the Female (Desire) receives Wisdom"}
         },
         "seas":{
             "translation":"Seas",

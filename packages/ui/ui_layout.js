@@ -33,8 +33,7 @@ package.ui.layout = function UILayout(me) {
         do {
             var widget = target.firstChild;
             if (widget) {
-                var tagName = widget.tagName ? widget.tagName.toLowerCase() : "";
-                if (tagName === "div") {
+                if (widget.var && widget.var.content) {
                     var content = widget.var.content;
                     do {
                         var childWidget = content.firstChild;

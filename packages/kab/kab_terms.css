@@ -201,25 +201,60 @@
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }
 
-.kab-terms-description {
-    position:fixed;
-    left:50px;
-    bottom:1em;
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    text-align: center;
-    height:2em;
-    background:black;
-    color:white;
+.kab-terms-description-box {
+    position: fixed;
+    bottom: 0px;
+    left:10%;
+    right:10%;
+    height:5em;
     z-index: 10;
-    box-shadow: 5px 5px 5px grey;
-    display:block;
-    opacity:0.0;
-    transition: opacity 0.5s linear 1s;
+    background-color: white;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    display:none;
 }
 
-[kab-terms-toast]:hover .kab-terms-description{
-    opacity:1.0;
+.kab-terms-description-title {
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:2em;
+    right:0px;
+    outline-style:hidden;
+}
+
+.kab-terms-short {
+    padding-left:1em;
+    position:absolute;
+    top:-0.3em;
+}
+
+.kab-terms-long {
+    padding-left:2em;
+    padding-right:2em;
+    position:absolute;
+    top:4em;
+    left:0px;
+    right:0px;
+    height:5em;
+    font-size:50%;
+    display: inline;
+    margin: 0 auto;
+    white-space:normal;
+}
+
+[kab-terms-toast]:hover .kab-terms-description-box{
+    display:block;
+}
+
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
 }
