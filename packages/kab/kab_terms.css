@@ -232,17 +232,19 @@
 }
 
 .kab-terms-long {
-    padding-left:2em;
+    padding-left:1.5em;
     padding-right:2em;
+    padding-bottom:0.05em;
     position:absolute;
-    top:4em;
+    top:3.5em;
     left:0px;
     right:0px;
     height:5em;
-    font-size:50%;
+    font-size:75%;
     display: inline;
     margin: 0 auto;
     white-space:normal;
+    line-height: 100%;
 }
 
 [kab-terms-toast]:hover .kab-terms-description-box{
