@@ -2553,6 +2553,87 @@
         },
         "Yetzurim":{
             "translation":"Creations"
+        },
+        "units":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Yechidot",
+            "translation":"Units",
+            "style":{"heading":"Amount","phase":"four"}
+        },
+        "tens":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Asarot",
+            "translation":"Tens",
+            "style":{"heading":"Amount","phase":"three"}
+        },
+        "hundreds":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Meot",
+            "translation":"Hundreds",
+            "style":{"heading":"Amount","phase":"two"}
+        },
+        "thousands":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Alaphim",
+            "translation":"Thousands",
+            "style":{"heading":"Amount","phase":"one"}
+        },
+        "tens thousands":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Revavot",
+            "translation":"Tens of Thousands",
+            "style":{"heading":"Amount","phase":"root"}
+        },
+        "ten":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Eser",
+            "translation":"Ten",
+            "style":{"heading":"Amount","phase":"three"}
+        },
+        "one hundred":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Me'ah",
+            "translation":"One Hundred",
+            "style":{"heading":"Amount","phase":"two"}
+        },
+        "one thousand":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Eleph",
+            "translation":"One Thousand",
+            "style":{"heading":"Amount","phase":"one"}
+        },
+        "100": {
+            "context":["tens","hundreds","thousands"],
+            "source":"Me'ah",
+            "translation":"One Hundred",
+            "style":{"heading":"Amount","phase":"two"}
+        },
+        "1 , 000":{
+            "prefix":"a",
+            "context":["tens","hundreds","thousands"],
+            "source":"Eleph",
+            "translation":"One Thousand",
+            "style":{"heading":"Amount","phase":"one"}
+        },
+        "10 , 000":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Eser Eleph",
+            "translation":"Ten Thousand",
+            "style":{"heading":"Amount","phase":"root"}
+        },
+        "100 , 000":{
+            "context":["tens","hundreds","thousands"],
+            "source":"Me'ah Eleph",
+            "translation":"One Hundred Thousand",
+            "style":{"heading":"Amount","phase":"root"}
+        },
+        "ten times":{
+            "source":"Eser Paamim",
+            "translation":"Ten Times"
+        },
+        "ten Sefirot":{
+            "translation":"Ten Emanations",
+            "source":"Eser Sefirot"
         }
     }
 }
