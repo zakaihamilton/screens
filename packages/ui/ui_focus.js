@@ -83,7 +83,7 @@ package.ui.focus = function UIFocus(me) {
             me.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
         if(object) {
-            me.set(object, "update");
+            me.notify(object, "update");
         }
     };
     me.common = function (source, target) {

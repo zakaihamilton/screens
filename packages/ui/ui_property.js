@@ -53,19 +53,6 @@ package.ui.property = function UIProperty(me) {
             }
         }
     };
-    me.notify = {
-        set: function(object, properties) {
-            var window = me.widget.window.window(object);
-            if(window) {
-                me.trickle.set(window, properties);
-            }
-            var parent = me.widget.window.parent(window);
-            if(!parent) {
-                parent = me.ui.element.desktop();
-            }
-            me.trickle.set(parent, properties);
-        }
-    };
     me.themedPropertySet = function (name, callback) {
         return me.core.object.property(name, {
             "set": function (object, name, value) {

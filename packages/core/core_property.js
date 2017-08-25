@@ -10,6 +10,7 @@ package.core.property = function CoreProperty(me) {
         package.set = me.set;
         package.dirty = me.dirty;
         package.link = me.link;
+        package.notify = me.notify;
     };
     me.fullname = function(object, name, default_name=null) {
         if(typeof name !== "string") {
@@ -105,6 +106,21 @@ package.core.property = function CoreProperty(me) {
             forwarding_list[source] = source_list;
         }
         source_list[target] = enabled;
+    };
+    me.notify = function (object, name) {
+        if(!object) {
+            return;
+        }
+        if(!object.notifications) {
+            object.notifications = {};
+        }
+        if(object.notifications[name]) {
+            return;
+        }
+        object.notifications[name] = setTimeout(function() {
+            object.notifications[name] = null;
+            me.set(object, name);
+        }, 0);
     };
     me.set = function (object, name, value) {
         if(!object) {

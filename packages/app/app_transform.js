@@ -53,7 +53,7 @@ package.app.transform = function AppTransform(me) {
                 me.set(window.var.layout, "ui.style.fontSize", value);
                 me.set(window.var.termTable, "ui.style.fontSize", value);
                 window.forceReflow = true;
-                me.set(window, "update");
+                me.notify(window, "update");
             });
             me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
@@ -72,7 +72,7 @@ package.app.transform = function AppTransform(me) {
         me.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
         me.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
-            me.set(window, "update");
+            me.notify(window, "update");
     }
     };
     me.shouldReflow = function (object) {
@@ -228,7 +228,6 @@ package.app.transform = function AppTransform(me) {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
-                var beforeConversion = performance.now();
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
@@ -249,8 +248,7 @@ package.app.transform = function AppTransform(me) {
                         window.forceReflow = true;
                         window.contentChanged = true;
                         me.set(window, "update");
-                        var afterConversion = performance.now();
-                        me.set(window.var.footer, "ui.basic.text", "Transformation took " + (afterConversion - beforeConversion).toFixed() + " milliseconds. Using " + numTerms + " term combinations in " + language);
+                        me.set(window.var.footer, "ui.basic.text", "Transformation using " + Object.keys(usedTerms).length + " out of " + numTerms + " term combinations in " + language);
                         setTimeout(function () {
                             me.set(window.var.footer, "ui.basic.text", "");
                         }, 5000);
@@ -264,7 +262,7 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             window.forceReflow = true;
-            me.set(window, "update");
+            me.notify(window, "update");
         }
     };
     me.update = {

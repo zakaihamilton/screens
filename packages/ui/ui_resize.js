@@ -94,11 +94,11 @@ package.ui.resize = function UIResize(me) {
                 "transition": false
             });
             var window = me.widget.window.window(me.info.target);
-            me.set(window, "update");
+            me.notify(window, "update");
             var parent = me.widget.window.parent(me.info.target);
-            me.set(parent, "update");
+            me.notify(parent, "update");
             if(window.child_window) {
-                me.set(window.child_window, "update");
+                me.notify(window.child_window, "update");
             }
         }
     };

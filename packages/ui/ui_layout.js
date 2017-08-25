@@ -145,7 +145,7 @@ package.ui.layout = function UILayout(me) {
                         callback(true);
                         target.notified = true;
                     }
-                    me.set(target, "update");
+                    me.notify(target, "update");
                     break;
                 }
                 if(options.scrollWidget) {
@@ -203,7 +203,7 @@ package.ui.layout = function UILayout(me) {
                     if(showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
-                    me.set(target, "update");
+                    me.notify(target, "update");
                     break;
                 } else if (widget) {
                     previousWidget = widget;

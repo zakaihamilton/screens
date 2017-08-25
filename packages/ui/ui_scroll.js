@@ -215,7 +215,7 @@ package.ui.scroll = function UIScroll(me) {
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
                     me.shift(me.widget.container.content(container), type, percent);
-                    me.set(container, "update");
+                    me.notify(container, "update");
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', scroll_method);

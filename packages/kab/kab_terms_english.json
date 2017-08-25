@@ -29,7 +29,9 @@
         "Sefirotbe":"Sefirot be",
         "judgments":"judgements",
         "He’arahis":"He’arah is",
-        "Esh, Ruach":"Esh, Ruach2"
+        "Esh, Ruach":"Esh, Ruach2",
+        "Yetzufim":"Yetzurim",
+        "Nukvais":"Nukva is"
     },
     "pre": [
         {
@@ -2542,6 +2544,15 @@
         "Olam ha Akudim":{
             "translation":"The World of Binding",
             "style":{"heading":"World","phase":"root"}
+        },
+        "Nivraim":{
+            "translation":"Creatures"
+        },
+        "Naasim":{
+            "translation":"Formed"
+        },
+        "Yetzurim":{
+            "translation":"Creations"
         }
     }
 }

@@ -206,7 +206,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
         set: function (object, value) {
             if (value) {
                 me.set(object.var.container, "ui.basic.elements", value);
-                me.set(object.var.container, "update");
+                me.notify(object.var.container, "update");
             }
         }
     };

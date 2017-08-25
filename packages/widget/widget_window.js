@@ -142,7 +142,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.set(parent_window, "ui.property.group", {
                     "widget.window.refocus": null
                 });
-                me.set(parent_window, "update");
+                me.notify(parent_window, "update");
             } else {
                 me.set(me.ui.element.desktop(), "widget.window.refocus");
             }
@@ -301,10 +301,8 @@ package.widget.window = function WidgetWindow(me) {
             } else {
                 me.set(me.ui.element.desktop(), "widget.window.refocus");
             }
-            me.set(window, "ui.property.bubble", {
-                "update": null
-            });
-            me.set(window, "update");
+            me.notify(parent_window, "update");
+            me.notify(window, "update");
         }
     };
     me.maximize = {
@@ -350,11 +348,9 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.resize.enabled": false
                 });
             }
-            me.set(window, "update");
-            me.set(parent_window, "update");
-            if(window.child_window) {
-                me.set(window.child_window, "update");
-            }
+            me.notify(window, "update");
+            me.notify(parent_window, "update");
+            me.notify(window.child_window, "update");
         }
     };
     me.show = {
@@ -406,8 +402,8 @@ package.widget.window = function WidgetWindow(me) {
                         content = me.ui.element.desktop();
                     }
                     me.ui.rect.set_relative_region(window, window.restore_region, content);
-                    me.set(window, "update");
-                    me.set(parent_window, "update");
+                    me.notify(window, "update");
+                    me.notify(parent_window, "update");
                 }
             } else {
                 me.set(window, "unmaximize");
@@ -453,11 +449,9 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.resize.enabled": !me.get(window, "fixed")
                 });
             }
-            me.set(window, "update");
-            me.set(parent_window, "update");
-            if(window.child_window) {
-                me.set(window.child_window, "update");
-            }
+            me.notify(window, "update");
+            me.notify(parent_window, "update");
+            me.notify(window.child_window, "update");
         }
     };
     me.toggle = {
@@ -539,7 +533,7 @@ package.widget.window = function WidgetWindow(me) {
     me.update = {
         set: function (object) {
             var window = me.window(object);
-            me.set(window.var.container, "update");
+            me.notify(window.var.container, "update");
             me.set(window, "storage.cache.store", me.get(window, "store"));
         }
     };
@@ -669,8 +663,8 @@ package.widget.window = function WidgetWindow(me) {
         var parent_region = me.ui.rect.relative_region(container);
         callback(parent_region);
         me.ui.rect.set_relative_region(window, parent_region, content);
-        me.set(window, "update");
-        me.set(parent, "update");
+        me.notify(window, "update");
+        me.notify(parent, "update");
     };
     me.alignToLeft = {
         set: function (object) {

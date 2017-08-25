@@ -62,7 +62,7 @@ package.ui.move = function UIMove(me) {
             target_region.top = event.clientY - me.info.top;
             me.ui.rect.set_absolute_region(me.info.target, target_region);
             var parent = me.widget.window.parent(me.info.target);
-            me.set(parent, "update");
+            me.notify(parent, "update");
         }
     };
     me.up = {
@@ -75,7 +75,7 @@ package.ui.move = function UIMove(me) {
                 "transition": false
             });
             var window = me.widget.window.window(me.info.target);
-            me.set(window, "update");
+            me.notify(window, "update");
         }
     };
 };
