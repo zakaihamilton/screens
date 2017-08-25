@@ -287,8 +287,11 @@ package.kab.terms = function KabTerms(me) {
         }
     };
     me.removeFormatting = function (string) {
-        string = string.replace(/\ kab-term-tooltip=".*?"/g, "");
-        string = string.replace(/<span class=\"kab-term-heading\">.*?<\/span>/g, "");
+        string = string.replace(/\ kab-terms-tooltip=".*?"/g, "");
+        string = string.replace(/\ kab-terms-description=".*?"/g, "");
+        string = string.replace(/<span class=\"kab-terms-description\">.*?<\/span>/g, "");
+        string = string.replace(/<span class=\"kab-terms-heading\">.*?<\/span>/g, "");
+        string = string.replace(/<span class=\"kab-terms-phase-number kab-terms-phase-number-.*?\"><\/span>/g, "");
         string = string.replace(/<span class=".*?" /g, "");
         string = string.replace(/\ class=".*?"/g, "");
         string = string.replace(/<h4 style=".*?">/g, "");
@@ -309,8 +312,9 @@ package.kab.terms = function KabTerms(me) {
                 continue;
             }
             if (fragment.startsWith(openChar) && fragment.endsWith(closeChar)) {
-                var fragment = fragment.slice(1, -1);
-                if (me.removeFormatting(parts[i]).includes(me.removeFormatting(fragment))) {
+                var fragment = me.removeFormatting(fragment.slice(1, -1));
+                var part = me.removeFormatting(parts[i]);
+                if (part.includes(fragment)) {
                     parts.splice(i + 1, 1);
                     i--;
                     continue;
@@ -444,11 +448,11 @@ package.kab.terms = function KabTerms(me) {
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
-        var phase = null, heading = null, tooltip = null;
+        var phase = null, heading = null, tooltip = null, description = null;
         if (styles && styles.diagram && me.json.diagrams) {
             if (!me.diagrams[styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
-                html += "<span class=\"kab-term-" + diagram.class + "\" " + diagram.attributes + ">";
+                html += "<span class=\"kab-terms-" + diagram.class + "\" " + diagram.attributes + ">";
                 html += "<img src=\"packages/res/diagrams/" + diagram.img.toLowerCase() + "\" style=\"width:100%;padding-bottom:15px;border-bottom:1px solid black;\"></img><span>" + diagram.title + "</span>";
                 html += "</span>";
             }
@@ -474,26 +478,35 @@ package.kab.terms = function KabTerms(me) {
                 heading = styles.heading;
             }
         }
+        if(styles && styles.description) {
+            description = styles.description;
+        }
         if(styles && styles.tooltip) {
             tooltip = styles.tooltip;
         }
         if(phase) {
-            html += "<span class=\"kab-term-phase kab-term-phase-" + phase + "\"";
+            html += "<span class=\"kab-terms-phase kab-terms-phase-" + phase + "\"";
+        }
+        if(description) {
+            html += " kab-terms-toast";
         }
         if(tooltip) {
-            html += " kab-term-tooltip=\"" + tooltip + "\"";
+            html += " kab-terms-tooltip=\"" + tooltip + "\"";
         }
-        if(phase || tooltip || heading) {
+        if(phase || tooltip || heading || description) {
             html += ">";
         }
         if(phase && phase !== "none" && options.phaseNumbers) {
-            html += "<span class=\"kab-term-phase-number kab-term-phase-number-" + phase + "\"></span>";
+            html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + "\"></span>";
         }
         if(heading) {
-            html += "<span class=\"kab-term-heading\">" + heading + "</span>";
+            html += "<span class=\"kab-terms-heading\">" + heading + "</span>";
+        }
+        if(description) {
+            html += "<span class=\"kab-terms-description\"><b>" + text + "</b>: " + description + "[]" + "</span>";
         }
         html += text;
-        if(phase || tooltip || heading) {
+        if(phase || tooltip || heading || description) {
             html += "</span>";
         }
         if (styles && styles.bold) {

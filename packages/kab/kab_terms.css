@@ -1,4 +1,4 @@
-.kab-term-heading {
+.kab-terms-heading {
     position:absolute;
     bottom:3.2em;
     left:0em;
@@ -12,16 +12,16 @@
     background:white;
 }
 
-[kab-term-tooltip] {
+[kab-terms-tooltip] {
     position: relative;
     white-space:nowrap;
 }
 
-[kab-term-tooltip].kab-term-phase-none {
+[kab-terms-tooltip].kab-terms-phase-none {
     border-bottom:1px dashed darkgray;
 }
 
-[kab-term-tooltip]:after {
+[kab-terms-tooltip]:after {
     visibility: hidden;
     pointer-events: none;
     transition: border 0.10s ease-in;
@@ -30,7 +30,7 @@
     position: absolute;
     line-height:1;
     padding: 0px 5px;
-    content: attr(kab-term-tooltip);
+    content: attr(kab-terms-tooltip);
     text-align:center;
     white-space: nowrap;
     min-width: 100%;
@@ -40,7 +40,7 @@
     box-shadow: 5px 5px 5px grey;
 }
 
-[kab-term-tooltip]:hover:after {
+[kab-terms-tooltip]:hover:after {
     visibility: visible;
     pointer-events: auto;
     z-index: 100;
@@ -48,12 +48,12 @@
     font-weight:bold;
 }
 
-.kab-term-phase {
+.kab-terms-phase {
     position:relative;
     white-space: nowrap;
 }
 
-.kab-term-phase-number:after {
+.kab-terms-phase-number:after {
     position:absolute;
     bottom:2em;
     right:-0.5em;
@@ -73,103 +73,103 @@
     text-align: center;
 }
 
-.kab-term-phase-none {
+.kab-terms-phase-none {
     background:white;
 }
 
-.kab-term-phase-none:hover:after {
+.kab-terms-phase-none:hover:after {
     background:white;
 }
 
-.kab-term-phase-root {
+.kab-terms-phase-root {
     background:white;
     outline:1px solid gray;
 }
 
-.kab-term-phase-root:hover:after {
+.kab-terms-phase-root:hover:after {
     background:white;
 }
 
-.kab-term-phase-number-root:after {
+.kab-terms-phase-number-root:after {
     background:white;
     border:1px solid gray;
     content:"0";
 }
 
-.kab-term-phase-one {
+.kab-terms-phase-one {
     background:#FFF3CA;
     outline:1px solid orange;
 }
 
-.kab-term-phase-one:hover:after {
+.kab-terms-phase-one:hover:after {
     background:#FFF3CA;
 }
 
-.kab-term-phase-number-one:after {
+.kab-terms-phase-number-one:after {
     background:#FFF3CA;
     border:1px solid orange;
     content:"1";
 }
 
-.kab-term-phase-two {
+.kab-terms-phase-two {
     background:#C8D9F9;
     outline:1px solid darkblue;
 }
 
-.kab-term-phase-two:hover:after {
+.kab-terms-phase-two:hover:after {
     background:#C8D9F9;
 }
 
-.kab-term-phase-number-two:after {
+.kab-terms-phase-number-two:after {
     background:#C8D9F9;
     border:1px solid darkblue;
     content:"2";
 }
 
-.kab-term-phase-three {
+.kab-terms-phase-three {
     background:#F5CCCB;
     outline:1px solid coral;
 }
 
-.kab-term-phase-three:hover:after {
+.kab-terms-phase-three:hover:after {
     background:#F5CCCB;
 }
 
-.kab-term-phase-number-three:after {
+.kab-terms-phase-number-three:after {
     background:#F5CCCB;
     border:1px solid coral;
     content:"3";
 }
 
-.kab-term-phase-four {
+.kab-terms-phase-four {
     background:#D9EAD2;
     outline:1px solid green;
 }
 
-.kab-term-phase-four:hover:after {
+.kab-terms-phase-four:hover:after {
     background:#D9EAD2;
 }
 
-.kab-term-phase-number-four:after {
+.kab-terms-phase-number-four:after {
     background:#D9EAD2;
     border:1px solid green;
     content:"4";
 }
 
-.kab-term-phase-collective {
+.kab-terms-phase-collective {
     background:Plum;
     outline:1px solid MediumPurple;
 }
 
-.kab-term-phase-collective:hover:after {
+.kab-terms-phase-collective:hover:after {
     background:Plum;
 }
 
-.kab-term-phase-number-collective:after {
+.kab-terms-phase-number-collective:after {
     display:none;
 }
 
-.kab-term-polaroid-left {
+.kab-terms-polaroid-left {
     float:left;
     background:white;
     margin:10px 10px;
@@ -181,11 +181,11 @@
     padding-bottom:5px;
 }
 
-.kab-term-polaroid-left:hover {
+.kab-terms-polaroid-left:hover {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }
 
-.kab-term-polaroid-right {
+.kab-terms-polaroid-right {
     float:right;
     background:white;
     margin:10px 10px;
@@ -197,6 +197,29 @@
     padding-bottom:5px;
 }
 
-.kab-term-polaroid-right:hover {
+.kab-terms-polaroid-right:hover {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
+}
+
+.kab-terms-description {
+    position:fixed;
+    left:50px;
+    bottom:1em;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    text-align: center;
+    height:2em;
+    background:black;
+    color:white;
+    z-index: 10;
+    box-shadow: 5px 5px 5px grey;
+    display:block;
+    opacity:0.0;
+    transition: opacity 0.5s linear 1s;
+}
+
+[kab-terms-toast]:hover .kab-terms-description{
+    opacity:1.0;
 }

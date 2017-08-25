@@ -235,6 +235,11 @@
                             "ui.basic.var": "termTable"
                         }
                     ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.theme.class": "app.transform.description",
+                    "ui.basic.var": "description"
                 }
             ],
             "core.property.update": "app.transform.update",

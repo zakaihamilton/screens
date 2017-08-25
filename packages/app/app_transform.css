@@ -30,6 +30,7 @@
     display:flex;
     flex:1;
     flex-direction:column;
+    transform: rotate(0deg);
 }
 
 .app-transform-layout.hebrew {
@@ -69,7 +70,7 @@
 .app-transform-page-content {
     padding-left:4em;
     padding-right:4em;
-    padding-bottom:40px;
+    padding-bottom:4em;
     position:relative;
     text-align:justify;
     box-sizing:border-box;
