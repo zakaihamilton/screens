@@ -3012,11 +3012,7 @@
         "sea": {
             "translation": "Sea",
             "source": "Yam",
-            "style": {
-                "phase": "four",
-                "heading": "Vessel",
-                "short": "When the Female (Desire) receives Wisdom"
-            }
+            "style":"sea"
         },
         "seas": {
             "translation": "Seas",
@@ -3176,7 +3172,7 @@
         },
         "100 , 000": {
             "context": ["tens", "hundreds", "thousands"],
-            "source": "Revava",
+            "source": "Eser Revavot",
             "translation": "One Hundred Thousand",
             "style": {
                 "heading": "Amount",
@@ -3206,6 +3202,11 @@
             "heading": "Face",
             "phase": "root",
             "short": "First Face in the World of Primordial Man"
+        },
+        "sea": {
+            "phase": "four",
+            "heading": "Vessel",
+            "short": "When the Female (Desire) receives Wisdom"
         }
     }
 }
