@@ -196,7 +196,7 @@ package.app.transform = function AppTransform(me) {
                     properties["ui.basic.elements"] = column[phase].map(function (item) {
                         var itemProperties = {
                             "ui.theme.class":"app.transform.termItem",
-                            "ui.theme.add":"kab.term.phase." + phase
+                            "ui.theme.add":["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline"]
                         };
                         if(window.options.keepSource) {
                             itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
@@ -208,7 +208,7 @@ package.app.transform = function AppTransform(me) {
                         return itemProperties;
                     });
                 }
-                properties["ui.theme.add"] = "kab.term.phase." + phase;
+                properties["ui.theme.add"] = "kab.terms.phase." + phase;
                 list.push(properties);
             });
             data.push(list);

@@ -7,6 +7,8 @@ package.kab.terms = function KabTerms(me) {
     me.init = function () {
         me.json = null;
         me.terms = null;
+        me.diagrams = null;
+        me.styles = null;
         me.searchTerms = [];
         me.content = null;
         me.language = "english";
@@ -17,8 +19,8 @@ package.kab.terms = function KabTerms(me) {
             if (json) {
                 me.json = json;
                 var numTerms = 0;
-                if (me.json.terms) {
-                    numTerms = Object.keys(me.json.terms).length;
+                if (me.json.term) {
+                    numTerms = Object.keys(me.json.term).length;
                 }
                 if (callback) {
                     callback(numTerms);
@@ -43,10 +45,12 @@ package.kab.terms = function KabTerms(me) {
         var ignore = me.json.ignore;
         if (callback) {
             me.diagrams = {};
+            me.styles = {};
             me.searchTerms = {};
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
             wordsString = me.send("kab.terms.format", wordsString, me.json.pre);
-            me.terms = me.send("kab.terms.prepare", me.json.terms);
+            me.terms = me.send("kab.terms.prepare", me.json.term);
+            me.styles = me.json.style;
             me.content = wordsString;
         }
         var terms = me.terms;
@@ -449,8 +453,17 @@ package.kab.terms = function KabTerms(me) {
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
         var phase = null, heading = null, tooltip = null, short = null, long = null;
+        if(typeof styles === "string") {
+            if(me.styles) {
+                styles = me.styles[styles];
+            }
+            else {
+                styles = null;
+            }
+        }
         if (styles && styles.diagram && me.json.diagrams) {
-            if (!me.diagrams[styles.diagram]) {
+            if (!me.diagrams
+            [styles.diagram]) {
                 var diagram = me.json.diagrams[styles.diagram];
                 html += "<span class=\"kab-terms-" + diagram.class + "\" " + diagram.attributes + ">";
                 html += "<img src=\"packages/res/diagrams/" + diagram.img.toLowerCase() + "\" style=\"width:100%;padding-bottom:15px;border-bottom:1px solid black;\"></img><span>" + diagram.title + "</span>";
@@ -488,7 +501,7 @@ package.kab.terms = function KabTerms(me) {
             tooltip = styles.tooltip;
         }
         if(phase) {
-            html += "<span class=\"kab-terms-phase kab-terms-phase-" + phase + "\"";
+            html += "<span class=\"kab-terms-phase-inline kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-outline\"";
         }
         if(short || long) {
             html += " kab-terms-toast";
@@ -506,10 +519,9 @@ package.kab.terms = function KabTerms(me) {
             html += "<span class=\"kab-terms-heading\">" + heading + "</span>";
         }
         if(short || long) {
-            html += "<span class=\"kab-terms-description-box kab-terms-phase kab-terms-phase-" + phase + "\">";
-            html += "<span class=\"kab-terms-description-title kab-terms-phase kab-terms-phase-" + phase + "\"></span>";
+            html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
             if(short) {
-                html += "<span class=\"kab-terms-short\"><b>" + text + ":</b> " + short + "[]" + "</span>";
+                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + "\"><b>" + text + ":</b> " + short + "[]</span>";
             }
             if(long) {
                 html += "<span class=\"kab-terms-long\">" + long + "[]" + "</span>";

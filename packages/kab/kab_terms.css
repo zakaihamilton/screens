@@ -48,9 +48,10 @@
     font-weight:bold;
 }
 
-.kab-terms-phase {
+.kab-terms-phase-inline {
     position:relative;
     white-space: nowrap;
+    border-style:hidden;
 }
 
 .kab-terms-phase-number:after {
@@ -81,9 +82,16 @@
     background:white;
 }
 
+.kab-terms-phase-root-outline {
+    outline:1px solid gray;
+}
+
+.kab-terms-phase-root-border {
+    border:1px solid gray;
+}
+
 .kab-terms-phase-root {
     background:white;
-    outline:1px solid gray;
 }
 
 .kab-terms-phase-root:hover:after {
@@ -98,7 +106,14 @@
 
 .kab-terms-phase-one {
     background:#FFF3CA;
+}
+
+.kab-terms-phase-one-outline {
     outline:1px solid orange;
+}
+
+.kab-terms-phase-one-border {
+    border:1px solid orange;
 }
 
 .kab-terms-phase-one:hover:after {
@@ -113,7 +128,14 @@
 
 .kab-terms-phase-two {
     background:#C8D9F9;
+}
+
+.kab-terms-phase-two-outline {
     outline:1px solid darkblue;
+}
+
+.kab-terms-phase-two-border {
+    border:1px solid darkblue;
 }
 
 .kab-terms-phase-two:hover:after {
@@ -128,7 +150,14 @@
 
 .kab-terms-phase-three {
     background:#F5CCCB;
+}
+
+.kab-terms-phase-three-outline {
     outline:1px solid coral;
+}
+
+.kab-terms-phase-three-border {
+    border:1px solid coral;
 }
 
 .kab-terms-phase-three:hover:after {
@@ -143,7 +172,14 @@
 
 .kab-terms-phase-four {
     background:#D9EAD2;
+}
+
+.kab-terms-phase-four-outline {
     outline:1px solid green;
+}
+
+.kab-terms-phase-four-border {
+    border:1px solid green;
 }
 
 .kab-terms-phase-four:hover:after {
@@ -158,7 +194,14 @@
 
 .kab-terms-phase-collective {
     background:Plum;
+}
+
+.kab-terms-phase-collective-outline {
     outline:1px solid MediumPurple;
+}
+
+.kab-terms-phase-collective-border {
+    border:1px solid MediumPurple;
 }
 
 .kab-terms-phase-collective:hover:after {
@@ -203,9 +246,9 @@
 
 .kab-terms-description-box {
     position: fixed;
-    bottom: 0px;
-    left:10%;
-    right:10%;
+    bottom: -1px;
+    left:5%;
+    right:5%;
     height:5em;
     z-index: 10;
     background-color: white;
@@ -214,21 +257,20 @@
     animation-name: slideIn;
     animation-duration: 0.4s;
     display:none;
-}
-
-.kab-terms-description-title {
-    position:absolute;
-    left:0px;
-    top:0px;
-    height:2em;
-    right:0px;
-    outline-style:hidden;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .kab-terms-short {
-    padding-left:1em;
     position:absolute;
-    top:-0.3em;
+    left:0px;
+    top:0px;
+    height:1.5em;
+    right:0px;
+    padding-left:1em;
+    padding-top:0.5em;
+    line-height:100%;
+    border-radius: 5px 5px 0px 0px;
+    border-bottom:1px solid black;
 }
 
 .kab-terms-long {
@@ -236,7 +278,7 @@
     padding-right:2em;
     padding-bottom:0.05em;
     position:absolute;
-    top:3.5em;
+    top:3.25em;
     left:0px;
     right:0px;
     height:5em;
@@ -252,11 +294,11 @@
 }
 
 @-webkit-keyframes slideIn {
-    from {bottom: -300px; opacity: 0} 
+    from {bottom: -5em; opacity: 0} 
     to {bottom: 0; opacity: 1}
 }
 
 @keyframes slideIn {
-    from {bottom: -300px; opacity: 0}
+    from {bottom: -5em; opacity: 0}
     to {bottom: 0; opacity: 1}
 }
