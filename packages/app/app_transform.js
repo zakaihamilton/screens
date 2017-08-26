@@ -27,7 +27,7 @@ package.app.transform = function AppTransform(me) {
                 pages: true,
                 columns: true,
                 language: "Auto",
-                fontSize: "24px",
+                fontSize: "22px",
                 scrollPos: 0,
                 phaseNumbers: true
             });

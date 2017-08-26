@@ -3167,7 +3167,7 @@
         },
         "10 , 000": {
             "context": ["tens", "hundreds", "thousands"],
-            "source": "Eser Eleph",
+            "source": "Revava",
             "translation": "Ten Thousand",
             "style": {
                 "heading": "Amount",
@@ -3176,7 +3176,7 @@
         },
         "100 , 000": {
             "context": ["tens", "hundreds", "thousands"],
-            "source": "Me'ah Eleph",
+            "source": "Revava",
             "translation": "One Hundred Thousand",
             "style": {
                 "heading": "Amount",
