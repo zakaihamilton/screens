@@ -23,6 +23,13 @@
             "suffix": "<br/><br/>"
         }
     ],
+    "phaseNumber": {
+        "root":"ש",
+        "one":"א",
+        "two":"ב",
+        "three":"ג",
+        "four":"ד"
+    },
     "term": {
         "או \" א": {
             "expansion": [

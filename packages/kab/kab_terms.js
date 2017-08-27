@@ -211,6 +211,7 @@ package.kab.terms = function KabTerms(me) {
                             if(item.source) {
                                 me.useTerm(item, item.source, term);
                             }
+                            me.useTerm(item, term, term);
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, "", duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
@@ -512,11 +513,11 @@ package.kab.terms = function KabTerms(me) {
         if(phase || tooltip || heading || short || long) {
             html += ">";
         }
-        if(phase && phase !== "none" && options.phaseNumbers) {
-            html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + "\"></span>";
+        if(phase && phase !== "none" && options.phaseNumbers && me.json.phaseNumber) {
+            html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + me.language + "\">" + me.json.phaseNumber[phase] + "</span>";
         }
         if(heading) {
-            html += "<span class=\"kab-terms-heading\">" + heading + "</span>";
+            html += "<span class=\"kab-terms-heading kab-terms-" + me.language + "\">" + heading + "</span>";
         }
         if(short || long) {
             html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
