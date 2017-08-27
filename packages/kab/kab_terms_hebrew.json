@@ -2229,6 +2229,87 @@
         },
         "לג \" ר": {
             "expansion": ["לשלוש ראשונות"]
+        },
+        "כתר":{
+            "style":{"heading":"כלי","phase":"root"}
+        },
+        "חכמה":{
+            "style":{"heading":"כלי","phase":"one"}
+        },
+        "בחכמה":{
+            "style":{"heading":"כלי","phase":"one"}
+        },
+        "בינה":{
+            "style":{"heading":"כלי","phase":"two"}
+        },
+        "תפארת":{
+            "style":{"heading":"כלי","phase":"three"}
+        },
+        "מלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "שבמלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "הכתר":{
+            "style":{"heading":"כלי","phase":"root"}
+        },
+        "החכמה":{
+            "style":{"heading":"כלי","phase":"one"}
+        },
+        "הבינה":{
+            "style":{"heading":"כלי","phase":"two"}
+        },
+        "התפארת":{
+            "style":{"heading":"כלי","phase":"three"}
+        },
+        "המלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "ממלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "ומלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "ובמלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "דמלכות":{
+            "style":{"heading":"כלי","phase":"four"}
+        },
+        "אריך אנפין":{
+            "style":{"heading":"פרצוף","phase":"root"}
+        },
+        "אבא ואמא":{
+            "style":{"heading":"פרצוף","phase":"one"}
+        },
+        "לאבא ואמא":{
+            "style":{"heading":"פרצוף","phase":"one"}
+        },
+        "ישראל סבא ותבונה":{
+            "style":{"heading":"פרצוף","phase":"two"}
+        },
+        "זעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "וזעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "בזעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "מזעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "דזעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "לזעיר אנפין":{
+            "style":{"heading":"פרצוף","phase":"three"}
+        },
+        "נוקבא":{
+            "style":{"heading":"פרצוף","phase":"four"}
         }
     }
 }
