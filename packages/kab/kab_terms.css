@@ -276,6 +276,7 @@
     height:1.5em;
     right:0px;
     padding-left:1em;
+    padding-right:1em;
     padding-top:0.5em;
     line-height:100%;
     border-radius: 5px 5px 0px 0px;
@@ -286,7 +287,7 @@
 
 .kab-terms-long {
     padding-left:1.5em;
-    padding-right:2em;
+    padding-right:1.5em;
     padding-bottom:0.05em;
     position:absolute;
     top:3.25em;

@@ -189,18 +189,29 @@
 .app-transform-toggleTerms:hover:active {
     background:black;
     color:white;
+    border:1px solid white;
+}
+
+.app-transform-toggleTerms:hover:active:after {
+    background:black;
+    color:white;
+    border:1px solid white;
 }
 
 .app-transform-toggleTerms:after{
     position:absolute;
-    right:0px;
-    top:10px;
-    width:200px;
-    height:100%;
+    right:30px;
+    top:-1px;
+    padding-top:10px;
+    width:150px;
+    height:calc(100% - 10px);
     text-align:center;
     content:"Table of Phases";
     opacity:0;
     color:black;
+    background:white;
+    border:1px solid black;
+    border-radius: 10px 0px 0px 10px;
 }
 
 .app-transform-toggleTerms:hover:after {
