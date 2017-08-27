@@ -212,6 +212,7 @@ package.app.transform = function AppTransform(me) {
             var text = me.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
             if (text) {
+                me.set(window.var.spinner, "ui.style.borderTop", "16px solid purple");
                 me.set(window, "ui.work.state", true);
                 var language = window.options.language.toLowerCase();
                 if (language === "auto") {
@@ -270,6 +271,7 @@ package.app.transform = function AppTransform(me) {
             window.forceReflow = false;
             window.contentChanged = false;
             window.pageSize = me.ui.layout.pageSize(window.var.layout);
+            me.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
             me.set(window, "ui.work.state", true);
             var target = me.widget.container.content(window.var.layout);
             window.var.layout.style.opacity = 0;
