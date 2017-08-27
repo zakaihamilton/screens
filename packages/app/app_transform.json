@@ -228,6 +228,7 @@
                     "ui.theme.add": "app.transform.termPopup",
                     "ui.basic.var": "termPopup",
                     "ui.element.component": "widget.container",
+                    "title":"Tables of Phases",
                     "ui.basic.elements": [
                         {
                             "ui.element.component": "widget.table",

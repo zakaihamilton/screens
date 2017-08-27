@@ -57,7 +57,7 @@ package.kab.terms = function KabTerms(me) {
         if (terms) {
             wordsString = me.core.string.parseWords(function (words) {
                 var wasPrefix = false;
-                if(callback) {
+                if(callback && me.json.options && me.json.options.splitPartial) {
                     for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                         var word = words[wordIndex];
                         if(terms[word.toUpperCase()]) {

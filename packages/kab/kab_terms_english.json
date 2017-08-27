@@ -1,4 +1,7 @@
 {
+    "options": {
+        "splitPartial":true
+    },
     "prefix": {
         "a": {
             "replaceOnly": true,
@@ -3189,6 +3192,9 @@
         },
         "Ubar": {
             "translation": "Embryo"
+        },
+        "Emet":{
+            "translation":"Truth"
         }
     },
     "style": {

@@ -357,9 +357,7 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.set(window.var.termPopup, "ui.theme.toggle", "show");
-            me.set(window.var.termPopup, "ui.property.trickle", {
-                "update": null
-            });
+            me.notify(window.var.termPopup, "update");
         }
     };
 };
