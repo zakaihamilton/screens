@@ -225,7 +225,7 @@ package.kab.terms = function KabTerms(me) {
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "(", ")");
                 wordsString = me.send("kab.terms.removeDuplicates", wordsString, "[", "]");
             }
-            callback(wordsString, me.searchTerms);
+            callback(wordsString, me.searchTerms, me.json.termTableData);
             return;
         }
         return wordsString;

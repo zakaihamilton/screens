@@ -1,6 +1,6 @@
 {
     "options": {
-        "splitPartial":true
+        "splitPartial": true
     },
     "prefix": {
         "a": {
@@ -15,12 +15,39 @@
 
         }
     },
+    "termTableData": [
+        [
+            {
+                "ui.basic.text": ""
+            },
+            {
+                "ui.basic.text": "Root Phase",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "Phase One",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "Phase Two",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "Phase Three",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "Phase Four",
+                "ui.style.height": "1em"
+            }
+        ]
+    ],
     "phaseNumber": {
-        "root":"0",
-        "one":"1",
-        "two":"2",
-        "three":"3",
-        "four":"4"
+        "root": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4"
     },
     "ignore": ["of", "de", "De", "OF", "DE"],
     "spelling": {
@@ -3022,7 +3049,7 @@
         "sea": {
             "translation": "Sea",
             "source": "Yam",
-            "style":"sea"
+            "style": "sea"
         },
         "seas": {
             "translation": "Seas",
@@ -3200,8 +3227,8 @@
         "Ubar": {
             "translation": "Embryo"
         },
-        "Emet":{
-            "translation":"Truth"
+        "Emet": {
+            "translation": "Truth"
         }
     },
     "style": {

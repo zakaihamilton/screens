@@ -157,7 +157,7 @@ package.app.transform = function AppTransform(me) {
             window.var.filterList.appendChild(option);
         });
     };
-    me.updateTermTable = function (window, terms) {
+    me.updateTermTable = function (window, terms, data) {
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
@@ -176,16 +176,6 @@ package.app.transform = function AppTransform(me) {
                 });
             }
         }
-        var data = [
-            [
-                {"ui.basic.text": ""},
-                {"ui.basic.text": "Root Phase", "ui.style.height":"1em"},
-                {"ui.basic.text": "Phase One", "ui.style.height":"1em"},
-                {"ui.basic.text": "Phase Two", "ui.style.height":"1em"},
-                {"ui.basic.text": "Phase Three", "ui.style.height":"1em"},
-                {"ui.basic.text": "Phase Four", "ui.style.height":"1em"}
-            ]
-        ];
         for (var heading in table) {
             var column = table[heading];
             var list = [{"ui.basic.text": heading, "ui.element.component": "widget.table.header"}];
@@ -231,11 +221,13 @@ package.app.transform = function AppTransform(me) {
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
-                    me.kab.terms.parse(function (text, usedTerms) {
+                    me.kab.terms.parse(function (text, usedTerms, termTableData) {
                         if (window.prevLanguage) {
                             me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
+                            me.set(window.var.termTable, "ui.theme.remove", window.prevLanguage);
                         }
                         me.set(window.var.layout, "ui.theme.add", language);
+                        me.set(window.var.termTable, "ui.theme.add", language);
                         window.prevLanguage = language;
                         if (window.options.showHtml) {
                             me.set(window.var.output, "ui.basic.text", text);
@@ -243,7 +235,7 @@ package.app.transform = function AppTransform(me) {
                             me.set(window.var.output, "ui.basic.html", text);
                         }
                         me.updateFilterList(window, usedTerms);
-                        me.updateTermTable(window, usedTerms);
+                        me.updateTermTable(window, usedTerms, termTableData);
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
                         window.contentChanged = true;

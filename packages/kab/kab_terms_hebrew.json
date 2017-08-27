@@ -24,12 +24,39 @@
         }
     ],
     "phaseNumber": {
-        "root":"ש",
-        "one":"א",
-        "two":"ב",
-        "three":"ג",
-        "four":"ד"
+        "root": "ש",
+        "one": "א",
+        "two": "ב",
+        "three": "ג",
+        "four": "ד"
     },
+    "termTableData": [
+        [
+            {
+                "ui.basic.text": ""
+            },
+            {
+                "ui.basic.text": "בחינת שורש",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "בחינה א",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "בחינה ב",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "בחינה ג",
+                "ui.style.height": "1em"
+            },
+            {
+                "ui.basic.text": "בחינה ד",
+                "ui.style.height": "1em"
+            }
+        ]
+    ],
     "term": {
         "או \" א": {
             "expansion": [
@@ -2228,7 +2255,7 @@
         "ת \" ת": {
             "expansion": ["תפארת"]
         },
-        "ואח \" כ" : {
+        "ואח \" כ": {
             "expansion": ["ואחר כך"]
         },
         "וג \" ר": {
@@ -2237,86 +2264,167 @@
         "לג \" ר": {
             "expansion": ["לשלוש ראשונות"]
         },
-        "כתר":{
-            "style":{"heading":"כלי","phase":"root"}
+        "כתר": {
+            "style": {
+                "heading": "כלי",
+                "phase": "root"
+            }
         },
-        "חכמה":{
-            "style":{"heading":"כלי","phase":"one"}
+        "חכמה": {
+            "style": {
+                "heading": "כלי",
+                "phase": "one"
+            }
         },
-        "בחכמה":{
-            "style":{"heading":"כלי","phase":"one"}
+        "בחכמה": {
+            "style": {
+                "heading": "כלי",
+                "phase": "one"
+            }
         },
-        "בינה":{
-            "style":{"heading":"כלי","phase":"two"}
+        "בינה": {
+            "style": {
+                "heading": "כלי",
+                "phase": "two"
+            }
         },
-        "תפארת":{
-            "style":{"heading":"כלי","phase":"three"}
+        "תפארת": {
+            "style": {
+                "heading": "כלי",
+                "phase": "three"
+            }
         },
-        "מלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "מלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "שבמלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "שבמלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "הכתר":{
-            "style":{"heading":"כלי","phase":"root"}
+        "הכתר": {
+            "style": {
+                "heading": "כלי",
+                "phase": "root"
+            }
         },
-        "החכמה":{
-            "style":{"heading":"כלי","phase":"one"}
+        "החכמה": {
+            "style": {
+                "heading": "כלי",
+                "phase": "one"
+            }
         },
-        "הבינה":{
-            "style":{"heading":"כלי","phase":"two"}
+        "הבינה": {
+            "style": {
+                "heading": "כלי",
+                "phase": "two"
+            }
         },
-        "התפארת":{
-            "style":{"heading":"כלי","phase":"three"}
+        "התפארת": {
+            "style": {
+                "heading": "כלי",
+                "phase": "three"
+            }
         },
-        "המלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "המלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "ממלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "ממלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "ומלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "ומלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "ובמלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "ובמלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "דמלכות":{
-            "style":{"heading":"כלי","phase":"four"}
+        "דמלכות": {
+            "style": {
+                "heading": "כלי",
+                "phase": "four"
+            }
         },
-        "אריך אנפין":{
-            "style":{"heading":"פרצוף","phase":"root"}
+        "אריך אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "root"
+            }
         },
-        "אבא ואמא":{
-            "style":{"heading":"פרצוף","phase":"one"}
+        "אבא ואמא": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "one"
+            }
         },
-        "לאבא ואמא":{
-            "style":{"heading":"פרצוף","phase":"one"}
+        "לאבא ואמא": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "one"
+            }
         },
-        "ישראל סבא ותבונה":{
-            "style":{"heading":"פרצוף","phase":"two"}
+        "ישראל סבא ותבונה": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "two"
+            }
         },
-        "זעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "זעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "וזעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "וזעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "בזעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "בזעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "מזעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "מזעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "דזעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "דזעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "לזעיר אנפין":{
-            "style":{"heading":"פרצוף","phase":"three"}
+        "לזעיר אנפין": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "three"
+            }
         },
-        "נוקבא":{
-            "style":{"heading":"פרצוף","phase":"four"}
+        "נוקבא": {
+            "style": {
+                "heading": "פרצוף",
+                "phase": "four"
+            }
         }
     }
 }

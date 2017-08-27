@@ -235,6 +235,11 @@
     padding-bottom:1.5%;
 }
 
+.app-transform-termTable.hebrew {
+    direction: rtl;
+}
+
+
 .app-transform-termTable th {
     background: black;
     color:white;
