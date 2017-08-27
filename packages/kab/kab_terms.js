@@ -519,7 +519,7 @@ package.kab.terms = function KabTerms(me) {
         if(phase) {
             html += "<span class=\"kab-terms-phase-inline kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-outline\"";
         }
-        if(short || long) {
+        if(phase || short || long) {
             html += " kab-terms-toast";
         }
         if(tooltip) {
@@ -529,15 +529,24 @@ package.kab.terms = function KabTerms(me) {
             html += ">";
         }
         if(phase && phase !== "none" && options.phaseNumbers && me.json.phaseNumber) {
-            html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + me.language + "\">" + me.json.phaseNumber[phase] + "</span>";
+            var phaseNumber = me.json.phaseNumber[phase];
+            if(phaseNumber) {
+                html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + me.language + "\">" + phaseNumber + "</span>";
+            }
         }
         if(heading) {
             html += "<span class=\"kab-terms-heading kab-terms-" + me.language + "\">" + heading + "</span>";
         }
-        if(short || long) {
+        if(phase || short || long) {
+            if(phase === "none") {
+                phase = "root";
+            }
             html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
             if(short) {
                 html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + "\"><b>" + text + ":</b> " + short + "[]</span>";
+            }
+            else {
+                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + "\"><b>" + text + ":</b>[]</span>";
             }
             if(long) {
                 html += "<span class=\"kab-terms-long\">" + long + "[]" + "</span>";

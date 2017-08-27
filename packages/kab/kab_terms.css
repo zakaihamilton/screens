@@ -255,18 +255,18 @@
 
 .kab-terms-description-box {
     position: fixed;
-    bottom: -1px;
+    bottom: -2px;
     left:5%;
     right:5%;
     height:5em;
     z-index: 10;
     background-color: white;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s;
-    display:none;
+    max-height: 0;
     border-radius: 5px 5px 0px 0px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.5s;
+    overflow-y: hidden;
 }
 
 .kab-terms-short {
@@ -301,15 +301,5 @@
 }
 
 [kab-terms-toast]:hover .kab-terms-description-box{
-    display:block;
-}
-
-@-webkit-keyframes slideIn {
-    from {bottom: -5em; opacity: 0} 
-    to {bottom: 0; opacity: 1}
-}
-
-@keyframes slideIn {
-    from {bottom: -5em; opacity: 0}
-    to {bottom: 0; opacity: 1}
+    max-height: 500px; /* approximate max height */
 }
