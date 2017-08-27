@@ -5,6 +5,7 @@
 
 package.kab.terms = function KabTerms(me) {
     me.init = function () {
+        me.jsons = {};
         me.json = null;
         me.terms = null;
         me.diagrams = null;
@@ -14,21 +15,35 @@ package.kab.terms = function KabTerms(me) {
         me.language = "english";
     };
     me.setLanguage = function (callback, language) {
-        me.language = language.toLowerCase();
-        me.core.json.load(function (json) {
-            if (json) {
-                me.json = json;
-                var numTerms = 0;
-                if (me.json.term) {
-                    numTerms = Object.keys(me.json.term).length;
-                }
-                if (callback) {
-                    callback(numTerms);
-                }
+        language = language.toLowerCase();
+        if(me.jsons[language]) {
+            var json = me.jsons[language];
+            var numTerms = 0;
+            if (json.term) {
+                numTerms = Object.keys(json.term).length;
             }
-        }, "kab.terms_" + me.language);
+            if (callback) {
+                callback(numTerms);
+            }
+        }
+        else {
+            me.core.json.load(function (json) {
+                if (json) {
+                    me.jsons[language] = json;
+                    var numTerms = 0;
+                    if (json.term) {
+                        numTerms = Object.keys(json.term).length;
+                    }
+                    if (callback) {
+                        callback(numTerms);
+                    }
+                }
+            }, "kab.terms_" + language);
+        }
     };
-    me.parse = function (callback, wordsString, options) {
+    me.parse = function (callback, language, wordsString, options) {
+        me.language = language.toLowerCase();
+        me.json = me.jsons[me.language];
         if (!me.json) {
             if (callback) {
                 callback(wordsString);
@@ -177,7 +192,7 @@ package.kab.terms = function KabTerms(me) {
                             if(Array.isArray(expansion)) {
                                 expansion = expansion.map(function (text) {
                                     if(!text.includes(term)) {
-                                        text = parse(null, text, options);
+                                        text = parse(null, me.language, text, options);
                                     }
                                     return text;
                                 });
@@ -188,13 +203,13 @@ package.kab.terms = function KabTerms(me) {
                                 }
                             }
                             else {
-                                expansion = parse(null, expansion, options);
+                                expansion = parse(null, me.language, expansion, options);
                             }
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " (", expansion, ")", options, true);
                         }
                         else if (options.doTranslation && translation) {
                             if (!item.name && translation !== term) {
-                                translation = me.parse(null, translation, duplicateOptions(options, {"addStyles": false}));
+                                translation = parse(null, me.language, translation, duplicateOptions(options, {"addStyles": false}));
                             }
                             me.useTerm(item, term, translation);
                             if(upperCase) {

@@ -245,7 +245,7 @@ package.app.transform = function AppTransform(me) {
                             me.set(window.var.footer, "ui.basic.text", "");
                         }, 5000);
                         me.set(window, "ui.work.state", false);
-                    }, text, window.options);
+                    }, language, text, window.options);
                 }, language);
             }
         }
