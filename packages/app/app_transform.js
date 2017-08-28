@@ -226,9 +226,11 @@ package.app.transform = function AppTransform(me) {
                         if (window.prevLanguage) {
                             me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
                             me.set(window.var.termTable, "ui.theme.remove", window.prevLanguage);
+                            me.set(window.var.toggleTerms, "ui.theme.remove", window.prevLanguage);
                         }
                         me.set(window.var.layout, "ui.theme.add", language);
                         me.set(window.var.termTable, "ui.theme.add", language);
+                        me.set(window.var.toggleTerms, "ui.theme.add", language);
                         window.prevLanguage = language;
                         if (window.options.showHtml) {
                             me.set(window.var.output, "ui.basic.text", text);

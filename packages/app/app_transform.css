@@ -173,13 +173,20 @@
 
 .app-transform-toggleTerms {
     position:absolute;
-    right:30px;
     bottom:30px;
     color:black;
     padding:10px;
     cursor:default;
     user-select:none;
     border:1px solid transparent;
+}
+
+.app-transform-toggleTerms.english {
+    left:30px;
+}
+
+.app-transform-toggleTerms.hebrew {
+    right:30px;
 }
 
 .app-transform-toggleTerms:hover{
@@ -200,18 +207,28 @@
 
 .app-transform-toggleTerms:after{
     position:absolute;
-    right:30px;
     top:-1px;
     padding-top:10px;
     width:150px;
     height:calc(100% - 10px);
     text-align:center;
-    content:"Table of Phases";
     opacity:0;
     color:black;
     background:white;
     border:1px solid black;
+    content:"";
+}
+
+.app-transform-toggleTerms.english:after {
+    border-radius: 0px 10px 10px 0px;
+    left:30px;
+    content:"Table of Phases";
+}
+
+.app-transform-toggleTerms.hebrew:after {
     border-radius: 10px 0px 0px 10px;
+    right:30px;
+    content:"טבלת בחינות";
 }
 
 .app-transform-toggleTerms:hover:after {
