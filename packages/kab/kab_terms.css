@@ -302,5 +302,5 @@
 }
 
 [kab-terms-toast]:hover .kab-terms-description-box{
-    max-height: 500px; /* approximate max height */
+    max-height: 5em; /* approximate max height */
 }
