@@ -237,8 +237,6 @@ package.kab.terms = function KabTerms(me) {
         if (callback) {
             if (me.language !== "debug") {
                 wordsString = me.send("kab.terms.format", wordsString, me.json.post);
-                wordsString = me.send("kab.terms.removeDuplicates", wordsString, "(", ")");
-                wordsString = me.send("kab.terms.removeDuplicates", wordsString, "[", "]");
             }
             callback(wordsString, me.searchTerms, me.json.termTableData);
             return;
@@ -305,44 +303,6 @@ package.kab.terms = function KabTerms(me) {
         else if (defaultWord) {
             words.splice(wordIndex, 0, defaultWord);
         }
-    };
-    me.removeFormatting = function (string) {
-        string = string.replace(/\ kab-terms-tooltip=".*?"/g, "");
-        string = string.replace(/\ kab-terms-description=".*?"/g, "");
-        string = string.replace(/<span class=\"kab-terms-description\">.*?<\/span>/g, "");
-        string = string.replace(/<span class=\"kab-terms-heading\">.*?<\/span>/g, "");
-        string = string.replace(/<span class=\"kab-terms-phase-number kab-terms-phase-number-.*?\"><\/span>/g, "");
-        string = string.replace(/<span class=".*?" /g, "");
-        string = string.replace(/\ class=".*?"/g, "");
-        string = string.replace(/<h4 style=".*?">/g, "");
-        string = string.replace(/<\/?p>/g, "");
-        string = string.replace(/<\/?span>/g, "");
-        string = string.replace(/<\/?h\d>/g, "");
-        string = string.replace(/>/g, "");
-        string = string.replace(/ and/g, ",");
-        string = string.toLowerCase();
-        return string;
-    };
-    me.removeDuplicates = function (wordsString, openChar, closeChar) {
-        var parts = wordsString.split(me.core.string.regex("/(\\" + openChar + ".*?\\" + closeChar + ")"));
-        for (var i = 0; i < parts.length - 1; i++) {
-            var fragment = parts[i + 1];
-            if (fragment.match(me.core.string.regex("/\\" + openChar + "\\d+\\" + closeChar))) {
-                i++;
-                continue;
-            }
-            if (fragment.startsWith(openChar) && fragment.endsWith(closeChar)) {
-                var fragment = me.removeFormatting(fragment.slice(1, -1));
-                var part = me.removeFormatting(parts[i]);
-                if (part.includes(fragment)) {
-                    parts.splice(i + 1, 1);
-                    i--;
-                    continue;
-                }
-            }
-        }
-        wordsString = parts.join("");
-        return wordsString;
     };
     me.fixSpelling = function(wordsString) {
         var spelling = me.json.spelling;
@@ -543,13 +503,13 @@ package.kab.terms = function KabTerms(me) {
             }
             html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
             if(short) {
-                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + "\"><b>" + text + ":</b> " + short + "[]</span>";
+                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
             }
             else {
-                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + "\"><b>" + text + ":</b>[]</span>";
+                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b></span>";
             }
             if(long) {
-                html += "<span class=\"kab-terms-long\">" + long + "[]" + "</span>";
+                html += "<span class=\"kab-terms-long\">" + long + "</span>";
             }
             html+= "</span>";
         }

@@ -104,6 +104,10 @@
     border:1px solid gray;
 }
 
+.kab-terms-phase-root-underline {
+    border-bottom:1px solid gray;
+}
+
 .kab-terms-phase-root {
     background:white;
 }
@@ -129,6 +133,10 @@
     border:1px solid orange;
 }
 
+.kab-terms-phase-one-underline {
+    border-bottom:1px solid orange;
+}
+
 .kab-terms-phase-one:hover:after {
     background:#FFF3CA;
 }
@@ -148,6 +156,10 @@
 
 .kab-terms-phase-two-border {
     border:1px solid darkblue;
+}
+
+.kab-terms-phase-two-underline {
+    border-bottom:1px solid darkblue;
 }
 
 .kab-terms-phase-two:hover:after {
@@ -171,6 +183,10 @@
     border:1px solid coral;
 }
 
+.kab-terms-phase-three-underline {
+    border-bottom:1px solid coral;
+}
+
 .kab-terms-phase-three:hover:after {
     background:#F5CCCB;
 }
@@ -190,6 +206,10 @@
 
 .kab-terms-phase-four-border {
     border:1px solid green;
+}
+
+.kab-terms-phase-four-underline {
+    border-bottom:1px solid green;
 }
 
 .kab-terms-phase-four:hover:after {
@@ -280,7 +300,6 @@
     padding-top:0.5em;
     line-height:100%;
     border-radius: 5px 5px 0px 0px;
-    border-bottom:1px solid black;
     overflow:hidden;
     text-overflow: ellipsis;
 }
