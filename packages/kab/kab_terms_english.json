@@ -3229,6 +3229,18 @@
         },
         "Emet": {
             "translation": "Truth"
+        },
+        "RADLA":{
+            "expansion":["Reisha lo Etyada"]
+        },
+        "Tzadikim":{
+            "translation":"Righteous"
+        },
+        "Ateret":{
+            "translation":"Encirclement"
+        },
+        "Ateret Yesod":{
+            "translation":"Encirclement of Foundation"
         }
     },
     "style": {
