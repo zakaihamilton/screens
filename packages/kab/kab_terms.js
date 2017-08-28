@@ -99,17 +99,34 @@ package.kab.terms = function KabTerms(me) {
                         wasPrefix = true;
                         continue;
                     }
+                    if(!word) {
+                        continue;
+                    }
                     word = word.toUpperCase();
                     var termLookup = terms[word];
                     if(!termLookup) {
-                        wasPrefix = false;
-                        continue;
+                        if(word.length > 2) {
+                            term = terms["*"].find(function(term) {
+                                return match(null, word, term);
+                            });
+                            if(term) {
+                                termLookup = terms[term];
+                            }
+                        }
+                        if(!termLookup) {
+                            wasPrefix = false;
+                            continue;
+                        }
+                        console.log("found ending word:" + word + " as: " + termLookup);
                     }
                     if(wasPrefix) {
                         wordIndex--;
                         wasPrefix = false;
                     }
                     var subTermNames = termLookup["*"];
+                    if(!subTermNames) {
+                        continue;
+                    }
                     for (var subTermIndex = 0; subTermIndex < subTermNames.length; subTermIndex++) {
                         var term = subTermNames[subTermIndex];
                         var item = termLookup[term];
@@ -378,7 +395,10 @@ package.kab.terms = function KabTerms(me) {
     };
     me.match = function (item, source, target) {
         var wordStyle = "whole";
-        if (item.word) {
+        if (me.json.options && me.json.options.wordStyle) {
+            wordStyle = me.json.options.wordStyle;
+        }
+        if (item && item.word) {
             wordStyle = item.word;
         }
         if (wordStyle === "whole") {

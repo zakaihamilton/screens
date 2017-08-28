@@ -17,7 +17,8 @@ package.include({
         "string",
         "handle",
         "json",
-        "performance"
+        "performance",
+        "util"
     ],
     "storage": [
         "cache",
