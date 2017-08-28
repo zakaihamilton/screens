@@ -243,7 +243,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(parent_window.child_window, "unmaximize");
         }
         me.set(window, "siblings", {
-            "ui.theme.add":"concealed"
+            "conceal":true
         });
         parent_window.child_window = window;
         me.switch(parent_window, window);
@@ -261,7 +261,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.menu, "ui.node.parent", parent_window.var.header);
             me.switch(parent_window, window);
             me.set(window, "siblings", {
-                "ui.theme.remove":"concealed"
+                "conceal":false
             });
             me.set([
                 window.var.close,
@@ -749,6 +749,19 @@ package.widget.window = function WidgetWindow(me) {
     me.arrangeIcons = {
         set: function (object) {
 
+        }
+    };
+    me.conceal = {
+        get: function(object) {
+            var window = me.window(object);
+            return me.get(window.var.container, "ui.style.display") === "none";
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            me.set(window.var.container, "ui.style.display", value ? "none" : "");
+            if(!value) {
+                me.notify(window, "update");
+            }
         }
     };
 };

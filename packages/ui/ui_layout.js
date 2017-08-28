@@ -128,9 +128,11 @@ package.ui.layout = function UILayout(me) {
         var previousWidget = null, visibleWidget = null;
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
+            var window = me.widget.window.window(target);
             for(;;) {
+                var concealed = me.get(window, "conceal");
                 var widget = source.firstChild;
-                if (!widget) {
+                if (!widget || concealed) {
                     clearInterval(target.reflowInterval);
                     target.reflowInterval = null;
                     if (options.usePages) {

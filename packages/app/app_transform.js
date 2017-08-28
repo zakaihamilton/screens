@@ -79,7 +79,7 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.window(object);
         var reflow = false;
         var pageSize = me.ui.layout.pageSize(window.var.layout);
-        if (me.get(window, "visible")) {
+        if (me.get(window, "visible") && !me.get(window, "conceal")) {
             if (window.pageSize && (pageSize.height !== window.pageSize.height || pageSize.width !== window.pageSize.width)) {
                 reflow = true;
             }
@@ -303,16 +303,16 @@ package.app.transform = function AppTransform(me) {
     };
     me.scrolled = {
         set: function (object, value) {
-            if (me.get(window, "ui.work.state")) {
+            var window = me.widget.window.window(object);
+            if (me.get(window, "ui.work.state") || me.get(window, "conceal")) {
                 return;
             }
-            var window = me.widget.window.window(object);
             me.ui.layout.scrolled(window.var.layout);
             if (object.scrolledTimer) {
                 clearTimeout(object.scrolledTimer);
             }
             object.scrolledTimer = setTimeout(function () {
-                if (me.get(window, "ui.work.state")) {
+                if (me.get(window, "ui.work.state") || me.get(window, "conceal")) {
                     return;
                 }
                 if ("vertical" in value) {
