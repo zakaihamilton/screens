@@ -292,11 +292,13 @@
     white-space:nowrap;
     display:inline-block;
     outline-color: transparent;
-    text-align:left;
-    float: left;
-    clear: left;
+    text-align:center;
     margin:3px;
     color:black;
+}
+
+.app-transform-termItem.app-transform-placeholder {
+    outline-style:dashed;
 }
 
 [app-transform-tooltip]:after {

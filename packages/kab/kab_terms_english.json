@@ -765,6 +765,7 @@
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
+            "defaultTerm":true,
             "style": {
                 "heading": "World",
                 "phase": "root",

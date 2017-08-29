@@ -606,7 +606,9 @@ package.kab.terms = function KabTerms(me) {
             var key = words[0].toUpperCase();
             var lookup = result[key];
             info.term = term;
-            me.setSearchTerm(options, info, null, null, null, false);
+            if(info.defaultTerm) {
+                me.setSearchTerm(options, info, null, null, null, false);
+            }
             if (!lookup) {
                 lookup = new Map();
                 result[key] = lookup;

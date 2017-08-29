@@ -166,7 +166,7 @@ package.app.transform = function AppTransform(me) {
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
-            if (term.heading && term.phase && term.used) {
+            if (term.heading && term.phase) {
                 term.heading.split("/").map(function (subHeading) {
                     var column = table[subHeading];
                     if (!column) {
@@ -182,16 +182,46 @@ package.app.transform = function AppTransform(me) {
             }
         }
         for (var heading in table) {
-            var column = table[heading];
+            var row = table[heading];
+            var usedRow = false;
+            for(var phase in row) {
+                var usedColumn = false;
+                var column = row[phase];
+                for(var name in column) {
+                    var item = column[name];
+                    if(item.used) {
+                        usedRow = true;
+                        usedColumn = true;
+                    }
+                }
+                if(usedColumn) {
+                    for(var name in column) {
+                        var item = column[name];
+                        if(!item.used) {
+                            delete column[name];
+                        }
+                    }
+                }
+            }
+            if(!usedRow) {
+                delete table[heading];
+            }
+        }
+        for (var heading in table) {
+            var row = table[heading];
             var list = [{"ui.basic.text": heading, "ui.element.component": "widget.table.header"}];
             var order = ["root", "one", "two", "three", "four"];
             order.map(function (phase) {
                 var properties = {};
-                if (column[phase]) {
-                    properties["ui.basic.elements"] = column[phase].map(function (item) {
+                if (row[phase]) {
+                    properties["ui.basic.elements"] = row[phase].map(function (item) {
+                        var styles = ["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline"];
+                        if(!item.used) {
+                            styles.push("app.transform.placeholder");
+                        }
                         var itemProperties = {
                             "ui.theme.class":"app.transform.termItem",
-                            "ui.theme.add":["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline"]
+                            "ui.theme.add":styles
                         };
                         if(window.options.keepSource) {
                             itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
@@ -225,9 +255,8 @@ package.app.transform = function AppTransform(me) {
                     console.log("detected language: " + language);
                 }
                 me.set(window.var.footer, "ui.style.display", "block");
-                me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
-                    me.kab.terms.parse(function (text, usedTerms, data) {
+                    me.kab.terms.parse(function (text, terms, data) {
                         if(data) {
                             me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                         }
@@ -247,18 +276,14 @@ package.app.transform = function AppTransform(me) {
                         } else {
                             me.set(window.var.output, "ui.basic.html", text);
                         }
-                        me.updateFilterList(window, usedTerms);
+                        me.updateFilterList(window, terms);
                         if(data) {
-                            me.updateTermTable(window, usedTerms, data.termTable);
+                            me.updateTermTable(window, terms, data.termTable);
                         }
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
                         window.contentChanged = true;
                         me.set(window, "update");
-                        me.set(window.var.footer, "ui.basic.text", "Transformation using " + Object.keys(usedTerms).length + " out of " + numTerms + " term combinations in " + language);
-                        setTimeout(function () {
-                            me.set(window.var.footer, "ui.basic.text", "");
-                        }, 5000);
                         me.set(window, "ui.work.state", false);
                     }, language, text, window.options);
                 }, language);
