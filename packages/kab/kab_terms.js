@@ -281,11 +281,14 @@ package.kab.terms = function KabTerms(me) {
             if (item.includePrefix) {
                 translation = item.prefix + " " + translation;
             }
-            var term = translation;
+            var term = source;
             if (explanation && translation) {
                 term = translation + " (" + explanation + ")";
             } else if (explanation) {
                 term = explanation;
+            }
+            else if(translation) {
+                term = translation;
             }
             var searchTerm = me.searchTerms[term];
             if (!searchTerm) {
