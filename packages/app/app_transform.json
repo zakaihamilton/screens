@@ -204,7 +204,6 @@
                     "ui.basic.text": "",
                     "ui.basic.type": "search",
                     "ui.basic.var": "filter",
-                    "ui.attribute.placeholder": "Search...",
                     "ui.property.after": {
                         "storage.cache.key": "@app.transform.filterCacheKey",
                         "storage.cache.location": "local",

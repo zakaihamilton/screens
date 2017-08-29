@@ -155,16 +155,24 @@
 
 .app-transform-filter {
     position: absolute;
-    left:20px;
     width:30%;
     margin-top:5px;
     border: 1px solid black;
 }
 
+.app-transform-filter.english {
+    left:20px;
+}
+
+.app-transform-filter.hebrew {
+    right:20px;
+    direction: rtl;
+}
+
 .app-transform-separator {
     position:absolute;
-    left:100px;
-    right:100px;
+    left:20%;
+    right:20%;
     bottom:30px;
     height:5px;
     background:darkgray;

@@ -33,33 +33,36 @@
         "three": "ג",
         "four": "ד"
     },
-    "termTableData": [
-        [
-            {
-                "ui.basic.text": ""
-            },
-            {
-                "ui.basic.text": "בחינת שורש",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "בחינה א",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "בחינה ב",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "בחינה ג",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "בחינה ד",
-                "ui.style.height": "1em"
-            }
+    "data": {
+        "filterPlaceholder": "חיפוש...",
+        "termTable": [
+            [
+                {
+                    "ui.basic.text": ""
+                },
+                {
+                    "ui.basic.text": "בחינת שורש",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "בחינה א",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "בחינה ב",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "בחינה ג",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "בחינה ד",
+                    "ui.style.height": "1em"
+                }
+            ]
         ]
-    ],
+    },
     "term": {
         "או \" א": {
             "expansion": [

@@ -15,33 +15,36 @@
 
         }
     },
-    "termTableData": [
-        [
-            {
-                "ui.basic.text": ""
-            },
-            {
-                "ui.basic.text": "Root Phase",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "Phase One",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "Phase Two",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "Phase Three",
-                "ui.style.height": "1em"
-            },
-            {
-                "ui.basic.text": "Phase Four",
-                "ui.style.height": "1em"
-            }
+    "data": {
+        "filterPlaceholder":"Search...",
+        "termTable": [
+            [
+                {
+                    "ui.basic.text": ""
+                },
+                {
+                    "ui.basic.text": "Root Phase",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase One",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Two",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Three",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Four",
+                    "ui.style.height": "1em"
+                }
+            ]
         ]
-    ],
+    },
     "phaseNumber": {
         "root": "0",
         "one": "1",
@@ -69,8 +72,8 @@
         "Esh, Ruach": "Esh, Ruach2",
         "Yetzufim": "Yetzurim",
         "Nukvais": "Nukva is",
-        "Abba":"Aba",
-        "Imma":"Ima"
+        "Abba": "Aba",
+        "Imma": "Ima"
     },
     "pre": [
         {
@@ -535,7 +538,7 @@
         },
         "Hochma": {
             "translation": "Wisdom",
-            "explanation":"Decree",
+            "explanation": "Decree",
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -543,7 +546,7 @@
         },
         "Bina": {
             "translation": "Understanding",
-            "explanation":"Execution",
+            "explanation": "Execution",
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -559,7 +562,7 @@
         "Tifferet2": {
             "source": "Tifferet",
             "translation": "Beauty",
-            "explanation":"Knowledge",
+            "explanation": "Knowledge",
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -567,7 +570,7 @@
         },
         "Malchut": {
             "translation": "Kingdom",
-            "explanation":"Desire",
+            "explanation": "Desire",
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -575,7 +578,7 @@
         },
         "Hesed": {
             "translation": "Kindness",
-            "explanation":"Responsibility",
+            "explanation": "Responsibility",
             "style": {
                 "heading": "Vessel",
                 "phase": "root"
@@ -583,7 +586,7 @@
         },
         "Gevura": {
             "translation": "Judgement",
-            "explanation":"Control",
+            "explanation": "Control",
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -591,7 +594,7 @@
         },
         "Netzah": {
             "translation": "Eternity",
-            "explanation":"Affinity",
+            "explanation": "Affinity",
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -599,7 +602,7 @@
         },
         "Hod": {
             "translation": "Majesty",
-            "explanation":"Communication",
+            "explanation": "Communication",
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -607,7 +610,7 @@
         },
         "Yesod": {
             "translation": "Foundation",
-            "explanation":"Agreement",
+            "explanation": "Agreement",
             "style": {
                 "heading": "Vessel",
                 "phase": "collective"
@@ -754,7 +757,7 @@
         },
         "Zeir Anpin": {
             "translation": "Small Face",
-            "explanation":"Intention",
+            "explanation": "Intention",
             "style": {
                 "heading": "Face/Vessel",
                 "phase": "three"
@@ -770,7 +773,7 @@
         },
         "Atzilut": {
             "translation": "Emanation",
-            "explanation":"Control",
+            "explanation": "Control",
             "style": {
                 "heading": "World",
                 "phase": "one"
@@ -778,7 +781,7 @@
         },
         "Beria": {
             "translation": "Creation",
-            "explanation":"Affinity",
+            "explanation": "Affinity",
             "style": {
                 "heading": "World",
                 "phase": "two"
@@ -786,7 +789,7 @@
         },
         "Yetzira": {
             "translation": "Formation",
-            "explanation":"Communication",
+            "explanation": "Communication",
             "style": {
                 "heading": "World",
                 "phase": "three"
@@ -794,7 +797,7 @@
         },
         "Assiya": {
             "translation": "Action",
-            "explanation":"Agreement",
+            "explanation": "Agreement",
             "style": {
                 "heading": "World",
                 "phase": "four"
@@ -802,7 +805,7 @@
         },
         "Olam ha Zeh": {
             "translation": "This World",
-            "explanation":"Reality",
+            "explanation": "Reality",
             "style": {
                 "heading": "World",
                 "phase": "four"
@@ -811,7 +814,7 @@
         "Olam ha Ba": {
             "prefix": "the",
             "translation": "Next World",
-            "explanation":"Inner Reality",
+            "explanation": "Inner Reality",
             "style": {
                 "heading": "World",
                 "phase": "one"
@@ -995,7 +998,7 @@
         },
         "Nukva": {
             "translation": "Female",
-            "explanation":"Desire",
+            "explanation": "Desire",
             "style": {
                 "heading": "Face/Vessel",
                 "phase": "four"
@@ -1024,7 +1027,7 @@
         },
         "Sitra Achra": {
             "translation": "Other Side",
-            "explanation":"Opposing Intent"
+            "explanation": "Opposing Intent"
         },
         "AK": {
             "expansion": "Adam Kadmon"
@@ -1072,7 +1075,7 @@
         },
         "Aba": {
             "translation": "Father",
-            "explanation":"Decree",
+            "explanation": "Decree",
             "style": {
                 "heading": "Face",
                 "phase": "one"
@@ -1080,7 +1083,7 @@
         },
         "Ima": {
             "translation": "Mother",
-            "explanation":"Execution",
+            "explanation": "Execution",
             "style": {
                 "heading": "Face",
                 "phase": "two"
@@ -1365,7 +1368,7 @@
         },
         "Kelim": {
             "translation": "Vessels",
-            "explanation":"Contexts"
+            "explanation": "Contexts"
         },
         "Hakaa": {
             "translation": "Striking"
@@ -1780,7 +1783,7 @@
         },
         "Mayin Nukvin": {
             "translation": "Female Waters",
-            "explanation":"Raising Deficiencies"
+            "explanation": "Raising Deficiencies"
         },
         "MAD": {
             "case": "sensitive",
@@ -1788,7 +1791,7 @@
         },
         "Mayin Duchrin": {
             "translation": "Male Waters",
-            "explanation":"Filling Deficiencies"
+            "explanation": "Filling Deficiencies"
         },
         "Reshimot": {
             "translation": "Memories"
@@ -1805,7 +1808,7 @@
                 "phase": "two"
             },
             "translation": "Grandfather of Israel and Comprehension",
-            "explanation":"Execution"
+            "explanation": "Execution"
         },
         "Yisrael Saba ve Tvuna": {
             "style": {
@@ -1813,7 +1816,7 @@
                 "phase": "two"
             },
             "translation": "Grandfather of Israel and Comprehension",
-            "explanation":"Execution"
+            "explanation": "Execution"
         },
         "Yisrael": {
             "translation": "Israel"
@@ -1852,7 +1855,7 @@
         },
         "Kedusha": {
             "translation": "Holiness",
-            "explanation":"Advancement"
+            "explanation": "Advancement"
         },
         "OhrHassadim": {
             "translation": "Light of Mercy"
@@ -1896,7 +1899,7 @@
         },
         "Klipot": {
             "translation": "Shells",
-            "explanation":"Superficial Attitude"
+            "explanation": "Superficial Attitude"
         },
         "Komat": {
             "translation": "Height of"
@@ -2658,7 +2661,7 @@
         },
         "Tuma’a": {
             "translation": "Impurity",
-            "explanation":"Fulfillment"
+            "explanation": "Fulfillment"
         },
         "MS": {
             "expansion": ["Mocha Stima'a"]
@@ -2678,7 +2681,7 @@
                 "phase": "one"
             },
             "translation": "Father and Mother",
-            "explanation":"Decree"
+            "explanation": "Decree"
         },
         "Aba ve Ima": {
             "style": {
@@ -2686,7 +2689,7 @@
                 "phase": "one"
             },
             "translation": "Father and Mother",
-            "explanation":"Decree"
+            "explanation": "Decree"
         },
         "Vav Kzavot": {
             "translation": "Six Edges"
@@ -3217,149 +3220,149 @@
         "Emet": {
             "translation": "Truth"
         },
-        "RADLA":{
-            "expansion":["Reisha lo Etyada"]
+        "RADLA": {
+            "expansion": ["Reisha lo Etyada"]
         },
-        "Tzadikim":{
-            "translation":"Righteous"
+        "Tzadikim": {
+            "translation": "Righteous"
         },
-        "Ateret":{
-            "translation":"Encirclement"
+        "Ateret": {
+            "translation": "Encirclement"
         },
-        "Ateret Yesod":{
-            "translation":"Encirclement of Foundation"
+        "Ateret Yesod": {
+            "translation": "Encirclement of Foundation"
         },
-        "Beresheet Barah Elokim Et":{
-            "translation":"In the beginning God created the",
-            "quote":true,
-            "fixed":true
+        "Beresheet Barah Elokim Et": {
+            "translation": "In the beginning God created the",
+            "quote": true,
+            "fixed": true
         },
-        "Beresheet Barah":{
-            "translation":"In the beginning it was created",
-            "quote":true,
-            "fixed":true
+        "Beresheet Barah": {
+            "translation": "In the beginning it was created",
+            "quote": true,
+            "fixed": true
         },
-        "Elokim Et":{
-            "translation":"The Creator and",
-            "quote":true,
-            "fixed":true
+        "Elokim Et": {
+            "translation": "The Creator and",
+            "quote": true,
+            "fixed": true
         },
-        "Bet":{
-            "source":"Bet [ב]"
+        "Bet": {
+            "source": "Bet [ב]"
         },
-        "Gimel":{
-            "source":"Gimel [ג]"
+        "Gimel": {
+            "source": "Gimel [ג]"
         },
-        "Dalet":{
-            "source":"Dalet [ד]"
+        "Dalet": {
+            "source": "Dalet [ד]"
         },
-        "Zayin":{
-            "source":"Dalet [ז]"
+        "Zayin": {
+            "source": "Dalet [ז]"
         },
-        "Het":{
-            "source":"Het [ח]"
+        "Het": {
+            "source": "Het [ח]"
         },
-        "Tet":{
-            "source":"Tet [ט]"
+        "Tet": {
+            "source": "Tet [ט]"
         },
-        "Kaf":{
-            "source":"Kaf [כ]"
+        "Kaf": {
+            "source": "Kaf [כ]"
         },
-        "Lamed":{
-            "source":"Lamed [ל]"
+        "Lamed": {
+            "source": "Lamed [ל]"
         },
-        "Mem":{
-            "source":"Mem [מ]"
+        "Mem": {
+            "source": "Mem [מ]"
         },
-        "Nun":{
-            "source":"Nun [נ]"
+        "Nun": {
+            "source": "Nun [נ]"
         },
-        "Samech":{
-            "source":"Samech [ס]"
+        "Samech": {
+            "source": "Samech [ס]"
         },
-        "Ayin":{
-            "source":"Ayin [ע]"
+        "Ayin": {
+            "source": "Ayin [ע]"
         },
-        "Pey":{
-            "source":"Pey [פ]"
+        "Pey": {
+            "source": "Pey [פ]"
         },
-        "Tzadi":{
-            "source":"Tzadi [צ]"
+        "Tzadi": {
+            "source": "Tzadi [צ]"
         },
-        "Kof":{
-            "source":"Kof [ק]"
+        "Kof": {
+            "source": "Kof [ק]"
         },
-        "Reish":{
-            "source":"Reish [ר]"
+        "Reish": {
+            "source": "Reish [ר]"
         },
-        "Shin":{
-            "source":"Shin [ש]"
+        "Shin": {
+            "source": "Shin [ש]"
         },
-        "Tav":{
-            "source":"Tav [ת]"
+        "Tav": {
+            "source": "Tav [ת]"
         },
-        "Aleph - Bet":{
-            "source":["Aleph","and","Bet"]
+        "Aleph - Bet": {
+            "source": ["Aleph", "and", "Bet"]
         },
-        "Aleph - Bet - Gimel":{
-            "source":["Aleph",", ","Bet","and","Gimel"]
+        "Aleph - Bet - Gimel": {
+            "source": ["Aleph", ", ", "Bet", "and", "Gimel"]
         },
-        "Kof - Reish - Shin - Tav":{
-            "source":["Kof",", ","Reish",", ","Shin","and","Tav"]
+        "Kof - Reish - Shin - Tav": {
+            "source": ["Kof", ", ", "Reish", ", ", "Shin", "and", "Tav"]
         },
-        "Kof - Reish":{
-            "source":["Kof","and","Reish"]
+        "Kof - Reish": {
+            "source": ["Kof", "and", "Reish"]
         },
-        "Reish - Kof":{
-            "source":["Reish","and","Kof"]
+        "Reish - Kof": {
+            "source": ["Reish", "and", "Kof"]
         },
-        "Shin - Tav":{
-            "source":["Shin","and","Tav"]
+        "Shin - Tav": {
+            "source": ["Shin", "and", "Tav"]
         },
-        "Tav - Shin":{
-            "source":["Tav","and","Shin"]
+        "Tav - Shin": {
+            "source": ["Tav", "and", "Shin"]
         },
-        "Mavet":{
-            "translation":"Death",
-            "explanation":"No Internal Power"
+        "Mavet": {
+            "translation": "Death",
+            "explanation": "No Internal Power"
         },
-        "death":{
-            "explanation":"No Internal Power"
+        "death": {
+            "explanation": "No Internal Power"
         },
-        "Beracha":{
-            "translation":"Blessing",
-            "explanation":"Multiplicity"
+        "Beracha": {
+            "translation": "Blessing",
+            "explanation": "Multiplicity"
         },
-        "Merkavot":{
-            "translation":"Chariots",
-            "explanation":"Vehicles"
+        "Merkavot": {
+            "translation": "Chariots",
+            "explanation": "Vehicles"
         },
-        "God":{
-            "prefix":"The",
-            "translation":"Creator"
+        "God": {
+            "prefix": "The",
+            "translation": "Creator"
         },
-        "another god":{
-            "explanation":"victim mentality"
+        "another god": {
+            "explanation": "victim mentality"
         },
-        "spiritual fruits":{
-            "explanation":"Internal Control"
+        "spiritual fruits": {
+            "explanation": "Internal Control"
         },
-        "blessed":{
-            "explanation":"multiplied"
+        "blessed": {
+            "explanation": "multiplied"
         },
-        "Creator":{
-            "translation":"Creator",
-            "explanation":"System"
+        "Creator": {
+            "translation": "Creator",
+            "explanation": "System"
         },
-        "end correction":{
-            "source":"End of Correction",
-            "explanation":"Completion of the Training Tier"
+        "end correction": {
+            "source": "End of Correction",
+            "explanation": "Completion of the Training Tier"
         },
-        "good":{
-            "explanation":"Maturity"
+        "good": {
+            "explanation": "Maturity"
         },
-        "evil":{
-            "explanation":"Immaturity"
+        "evil": {
+            "explanation": "Immaturity"
         }
     },
     "style": {

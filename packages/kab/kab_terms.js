@@ -117,7 +117,6 @@ package.kab.terms = function KabTerms(me) {
                             wasPrefix = false;
                             continue;
                         }
-                        console.log("found ending word:" + word + " as: " + termLookup);
                     }
                     if(wasPrefix) {
                         wordIndex--;
@@ -283,7 +282,7 @@ package.kab.terms = function KabTerms(me) {
             if (me.language !== "debug") {
                 wordsString = me.send("kab.terms.format", wordsString, me.json.post);
             }
-            callback(wordsString, me.searchTerms, me.json.termTableData);
+            callback(wordsString, me.searchTerms, me.json.data);
             return;
         }
         return wordsString;

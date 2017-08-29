@@ -224,13 +224,18 @@ package.app.transform = function AppTransform(me) {
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.set(window.var.footer, "ui.basic.text", "Transforming...");
                 me.kab.terms.setLanguage(function (numTerms) {
-                    me.kab.terms.parse(function (text, usedTerms, termTableData) {
+                    me.kab.terms.parse(function (text, usedTerms, data) {
+                        if(data) {
+                            me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+                        }
                         if (window.prevLanguage) {
                             me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
+                            me.set(window.var.filter, "ui.theme.remove", window.prevLanguage);
                             me.set(window.var.termTable, "ui.theme.remove", window.prevLanguage);
                             me.set(window.var.toggleTerms, "ui.theme.remove", window.prevLanguage);
                         }
                         me.set(window.var.layout, "ui.theme.add", language);
+                        me.set(window.var.filter, "ui.theme.add", language);
                         me.set(window.var.termTable, "ui.theme.add", language);
                         me.set(window.var.toggleTerms, "ui.theme.add", language);
                         window.prevLanguage = language;
@@ -240,7 +245,9 @@ package.app.transform = function AppTransform(me) {
                             me.set(window.var.output, "ui.basic.html", text);
                         }
                         me.updateFilterList(window, usedTerms);
-                        me.updateTermTable(window, usedTerms, termTableData);
+                        if(data) {
+                            me.updateTermTable(window, usedTerms, data.termTable);
+                        }
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;
                         window.contentChanged = true;
