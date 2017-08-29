@@ -185,7 +185,7 @@ package.kab.terms = function KabTerms(me) {
                         }
                         var expansion = item.expansion;
                         var translation = item.translation;
-                        var source = item.source;
+                        var overrideSource = item.source;
                         var context = item.context;
                         if(context) {
                             var contextMatch = true;
@@ -234,13 +234,13 @@ package.kab.terms = function KabTerms(me) {
                             }
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " [", translation, "]", options);
                         }
-                        else if(options.doTranslation && !options.keepSource && source) {
+                        else if(options.doTranslation && !options.keepSource && overrideSource) {
                             words.splice(wordIndex, span);
-                            if(Array.isArray(source)) {
-                                words.splice(wordIndex, 0, ...source);
+                            if(Array.isArray(overrideSource)) {
+                                words.splice(wordIndex, 0, ...overrideSource);
                             }
                             else {
-                                words.splice(wordIndex, 0, source);
+                                words.splice(wordIndex, 0, overrideSource);
                             }
                             wordIndex--;
                         }
@@ -527,12 +527,10 @@ package.kab.terms = function KabTerms(me) {
                 phase = "root";
             }
             html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
-            if(short) {
-                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
+            if(!short) {
+                short = "";
             }
-            else {
-                html += "<span class=\"kab-terms-short kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b></span>";
-            }
+            html += "<span class=\"kab-terms-short kab-terms-" + me.language + " kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
             if(long) {
                 html += "<span class=\"kab-terms-long\">" + long + "</span>";
             }
