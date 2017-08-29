@@ -301,6 +301,10 @@
     outline-style:dashed;
 }
 
+.app-transform-termItem.app-transform-placeholder:hover:after {
+    border-style:dashed;
+}
+
 [app-transform-tooltip]:after {
     visibility: hidden;
     pointer-events: none;
