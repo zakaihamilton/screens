@@ -185,7 +185,7 @@ package.kab.terms = function KabTerms(me) {
                         }
                         var expansion = item.expansion;
                         var translation = item.translation;
-                        var reorder = item.reorder;
+                        var source = item.source;
                         var context = item.context;
                         if(context) {
                             var contextMatch = true;
@@ -234,9 +234,14 @@ package.kab.terms = function KabTerms(me) {
                             }
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " [", translation, "]", options);
                         }
-                        else if(options.doTranslation && !options.keepSource && reorder) {
+                        else if(options.doTranslation && !options.keepSource && source) {
                             words.splice(wordIndex, span);
-                            words.splice(wordIndex, 0, ...reorder);
+                            if(Array.isArray(source)) {
+                                words.splice(wordIndex, 0, ...source);
+                            }
+                            else {
+                                words.splice(wordIndex, 0, source);
+                            }
                             wordIndex--;
                         }
                         else if (options.addStyles && item.style) {

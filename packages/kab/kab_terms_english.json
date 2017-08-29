@@ -203,6 +203,10 @@
         {
             "find": "/<p>[\\s]?<\\/p>",
             "replace": ""
+        },
+        {
+            "find": "/(\\d+\\))",
+            "replace": "<br><b>$1</b>"
         }
     ],
     "post": [
@@ -1756,7 +1760,7 @@
         },
         "MAD": {
             "case": "sensitive",
-            "expansion": ["Mayin", "Duchrin"]
+            "expansion": "Mayin Duchrin"
         },
         "Mayin Duchrin": {
             "translation": "Male Waters"
@@ -1956,43 +1960,43 @@
         },
         "Hey": {
             "name": true,
-            "translation": "Hey [ה]"
+            "source": "Hey [ה]"
         },
         "Hey ה": {
             "name": true,
-            "translation": "Hey [ה]"
+            "source": "Hey [ה]"
         },
         "Vav": {
             "name": true,
-            "translation": "Vav [ו]"
+            "source": "Vav [ו]"
         },
         "Aleph": {
             "name": true,
-            "translation": "Aleph [א]"
+            "source": "Aleph [א]"
         },
         "Tav": {
             "name": true,
-            "translation": "Tav [ת]"
+            "source": "Tav [ת]"
         },
         "Viv": {
             "name": true,
-            "translation": "Vav [ו]"
+            "source": "Vav [ו]"
         },
         "Yodin": {
             "name": true,
-            "translation": "Yodin [י]"
+            "source": "Yodin [י]"
         },
         "Yudin": {
             "name": true,
-            "translation": "Yudin [י]"
+            "source": "Yudin [י]"
         },
         "Alephin": {
             "name": true,
-            "translation": "Alephin [א]"
+            "source": "Alephin [א]"
         },
         "Heyin": {
             "name": true,
-            "translation": "Heyin [ה]"
+            "source": "Heyin [ה]"
         },
         "Yud HaVaYaH": {
             "prefix": "the",
@@ -2862,7 +2866,7 @@
             "translation": "Upper Mating"
         },
         "Shoresh Keter Elyon": {
-            "reorder": ["the", "Elyon", "Shoresh", "Keter"]
+            "source": ["the", "Elyon", "Shoresh", "Keter"]
         },
         "Klalut": {
             "translation": "Generality"
@@ -2901,10 +2905,10 @@
             "translation": "His Essence"
         },
         "Keter Elyon": {
-            "reorder": ["Elyon", "Keter"]
+            "source": ["Elyon", "Keter"]
         },
         "Ohr Keter Elyon": {
-            "reorder": ["the", "Elyon", "Ohr", "Keter"]
+            "source": ["the", "Elyon", "Ohr", "Keter"]
         },
         "Eruv": {
             "translation": "Mixture"
@@ -3108,7 +3112,7 @@
             "translation": "Creations"
         },
         "units": {
-            "context": ["tens", "hundreds", "thousands"],
+            "context": ["units", "tens", "hundreds"],
             "source": "Yechidot",
             "translation": "Units",
             "style": {
@@ -3117,7 +3121,7 @@
             }
         },
         "tens": {
-            "context": ["tens", "hundreds", "thousands"],
+            "context": ["units", "tens", "hundreds"],
             "source": "Asarot",
             "translation": "Tens",
             "style": {
@@ -3126,7 +3130,7 @@
             }
         },
         "hundreds": {
-            "context": ["tens", "hundreds", "thousands"],
+            "context": ["units", "tens", "hundreds"],
             "source": "Meot",
             "translation": "Hundreds",
             "style": {
@@ -3241,6 +3245,84 @@
         },
         "Ateret Yesod":{
             "translation":"Encirclement of Foundation"
+        },
+        "Beresheet Barah Elokim Et":{
+            "translation":"In the beginning God created the"
+        },
+        "Beresheet Barah":{
+            "translation":"\"In the beginning it was created\""
+        },
+        "Elokim Et":{
+            "translation":"\"The Creator and\""
+        },
+        "Bet":{
+            "source":"Bet [ב]"
+        },
+        "Gimel":{
+            "source":"Gimel [ג]"
+        },
+        "Dalet":{
+            "source":"Dalet [ד]"
+        },
+        "Zayin":{
+            "source":"Dalet [ז]"
+        },
+        "Het":{
+            "source":"Het [ח]"
+        },
+        "Tet":{
+            "source":"Tet [ט]"
+        },
+        "Kaf":{
+            "source":"Kaf [כ]"
+        },
+        "Lamed":{
+            "source":"Lamed [ל]"
+        },
+        "Mem":{
+            "source":"Mem [מ]"
+        },
+        "Nun":{
+            "source":"Nun [נ]"
+        },
+        "Samech":{
+            "source":"Samech [ס]"
+        },
+        "Ayin":{
+            "source":"Ayin [ע]"
+        },
+        "Pey":{
+            "source":"Pey [פ]"
+        },
+        "Tzadi":{
+            "source":"Tzadi [צ]"
+        },
+        "Kof":{
+            "source":"Kof [ק]"
+        },
+        "Reish":{
+            "source":"Reish [ר]"
+        },
+        "Shin":{
+            "source":"Shin [ש]"
+        },
+        "Tav":{
+            "source":"Tav [ת]"
+        },
+        "Aleph - Bet":{
+            "source":["Aleph","and","Bet"]
+        },
+        "Aleph - Bet - Gimel":{
+            "source":["Aleph",", ","Bet","and","Gimel"]
+        },
+        "Kof - Reish - Shin - Tav":{
+            "source":["Kof",", ","Reish",", ","Shin","and","Tav"]
+        },
+        "Kof - Reish":{
+            "source":["Kof","and","Reish"]
+        },
+        "Shin - Tav":{
+            "source":["Shin","and","Tav"]
         }
     },
     "style": {
