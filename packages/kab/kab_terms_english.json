@@ -1824,7 +1824,7 @@
             "translation": "The Knowledge"
         },
         "Kedusha": {
-            "translation": "Sanctity"
+            "translation": "Holiness"
         },
         "OhrHassadim": {
             "translation": "Light of Mercy"
@@ -3321,8 +3321,23 @@
         "Kof - Reish":{
             "source":["Kof","and","Reish"]
         },
+        "Reish - Kof":{
+            "source":["Reish","and","Kof"]
+        },
         "Shin - Tav":{
             "source":["Shin","and","Tav"]
+        },
+        "Tav - Shin":{
+            "source":["Tav","and","Shin"]
+        },
+        "Mavet":{
+            "translation":"Death"
+        },
+        "Beracha":{
+            "translation":"Blessing"
+        },
+        "Merkavot":{
+            "translation":"Chariots"
         }
     },
     "style": {

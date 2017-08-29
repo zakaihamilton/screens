@@ -442,14 +442,44 @@ package.kab.terms = function KabTerms(me) {
             replacement = term + prefix + replacement + suffix;
         }
         var text = replacement;
+        var replacementWithStyles = replacement;
         if (options.addStyles && (item.style || replacement !== term)) {
-            replacement = me.applyStyles(term, item.style, replacement, options, expansion);
+            replacementWithStyles = me.applyStyles(term, item.style, replacement, options, expansion);
         }
-        words.splice(wordIndex, 0, replacement);
+        me.replaceDuplicate(words, wordIndex, replacement);
+        words.splice(wordIndex, 0, replacementWithStyles);
         if(!item.includePrefix) {
             me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
         }
         me.insert(words, wordIndex+1, me.json.suffix, item.suffix, suffixWord, text);
+    };
+    me.findNext = function(words, wordIndex, find) {
+        
+    };
+    me.replaceDuplicate = function(words, wordIndex, replacement) {
+        var collectIndex = wordIndex+1;
+        var next = words[collectIndex++];
+        if(next === "(" || next === "[") {
+            var duplicate = "";
+            for(;;) {
+                if(collectIndex > words.length) {
+                    break;
+                }
+                var next = words[collectIndex++];
+                if(next === ")" || next === "]") {
+                    if(replacement.toLowerCase() === duplicate.toLowerCase()) {
+                        words.splice(wordIndex+1, collectIndex - wordIndex);
+                    }
+                    break;
+                }
+                if(duplicate) {
+                    duplicate += " " + next;
+                }
+                else {
+                    duplicate = next;
+                }
+            }
+        }
     };
     me.applyStyles = function (term, styles, text, options, expansion) {
         var html = "";
