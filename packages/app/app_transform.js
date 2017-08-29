@@ -162,7 +162,7 @@ package.app.transform = function AppTransform(me) {
             window.var.filterList.appendChild(option);
         });
     };
-    me.updateTermTable = function (window, terms, data) {
+    me.updateTermTable = function (window, terms, data, language) {
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
@@ -215,7 +215,7 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (row[phase]) {
                     properties["ui.basic.elements"] = row[phase].map(function (item) {
-                        var styles = ["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline"];
+                        var styles = ["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline",language];
                         if(!item.used) {
                             styles.push("app.transform.placeholder");
                         }
@@ -278,7 +278,7 @@ package.app.transform = function AppTransform(me) {
                         }
                         me.updateFilterList(window, terms);
                         if(data) {
-                            me.updateTermTable(window, terms, data.termTable);
+                            me.updateTermTable(window, terms, data.termTable, language);
                         }
                         me.ui.layout.move(window.var.output, window.var.layout);
                         window.forceReflow = true;

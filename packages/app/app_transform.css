@@ -292,9 +292,20 @@
     white-space:nowrap;
     display:inline-block;
     outline-color: transparent;
-    text-align:center;
     margin:3px;
     color:black;
+}
+
+.app-transform-termItem.hebrew {
+    float:right;
+    clear:right;
+    text-align: right;
+}
+
+.app-transform-termItem.english {
+    float:left;
+    clear:left;
+    text-align: left;
 }
 
 .app-transform-termItem.app-transform-placeholder {
