@@ -2271,66 +2271,77 @@
             "expansion": ["לשלוש ראשונות"]
         },
         "כתר": {
+            "defaultTerm":true,
             "style": {
                 "heading": "כלי",
                 "phase": "root"
             }
         },
         "חכמה": {
+            "defaultTerm":true,
             "style": {
                 "heading": "כלי/אור",
                 "phase": "one"
             }
         },
         "חסדים": {
+            "defaultTerm":true,
             "style": {
                 "heading": "אור",
                 "phase": "two"
             }
         },
         "בינה": {
+            "defaultTerm":true,
             "style": {
                 "heading": "כלי",
                 "phase": "two"
             }
         },
         "תפארת": {
+            "defaultTerm":true,
             "style": {
                 "heading": "כלי",
                 "phase": "three"
             }
         },
         "מלכות": {
+            "defaultTerm":true,
             "style": {
                 "heading": "כלי",
                 "phase": "four"
             }
         },
         "אריך אנפין": {
+            "defaultTerm":true,
             "style": {
                 "heading": "פרצוף",
                 "phase": "root"
             }
         },
         "אבא ואמא": {
+            "defaultTerm":true,
             "style": {
                 "heading": "פרצוף",
                 "phase": "one"
             }
         },
         "ישראל סבא ותבונה": {
+            "defaultTerm":true,
             "style": {
                 "heading": "פרצוף",
                 "phase": "two"
             }
         },
         "זעיר אנפין": {
+            "defaultTerm":true,
             "style": {
                 "heading": "פרצוף",
                 "phase": "three"
             }
         },
         "נוקבא": {
+            "defaultTerm":true,
             "style": {
                 "heading": "פרצוף",
                 "phase": "four"

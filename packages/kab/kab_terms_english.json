@@ -531,6 +531,7 @@
         },
         "Keter": {
             "translation": "Crown",
+            "defaultTerm":true,
             "style": {
                 "heading": "Vessel",
                 "phase": "root"
@@ -539,6 +540,7 @@
         "Hochma": {
             "translation": "Wisdom",
             "explanation": "Decree",
+            "defaultTerm":true,
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -547,6 +549,7 @@
         "Bina": {
             "translation": "Understanding",
             "explanation": "Execution",
+            "defaultTerm":true,
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -554,6 +557,7 @@
         },
         "Tifferet": {
             "translation": "Beauty",
+            "defaultTerm":true,
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -563,14 +567,16 @@
             "source": "Tifferet",
             "translation": "Beauty",
             "explanation": "Knowledge",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "two"
             }
         },
         "Malchut": {
             "translation": "Kingdom",
             "explanation": "Desire",
+            "defaultTerm":true,
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -579,40 +585,45 @@
         "Hesed": {
             "translation": "Kindness",
             "explanation": "Responsibility",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "root"
             }
         },
         "Gevura": {
             "translation": "Judgement",
             "explanation": "Control",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "one"
             }
         },
         "Netzah": {
             "translation": "Eternity",
             "explanation": "Affinity",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "three"
             }
         },
         "Hod": {
             "translation": "Majesty",
             "explanation": "Communication",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "four"
             }
         },
         "Yesod": {
             "translation": "Foundation",
             "explanation": "Agreement",
+            "defaultTerm":true,
             "style": {
-                "heading": "Vessel",
+                "heading": "Six Sides",
                 "phase": "collective"
             }
         },
@@ -743,6 +754,7 @@
         },
         "Arich Anpin": {
             "translation": "Long Face",
+            "defaultTerm":true,
             "style": {
                 "heading": "Face",
                 "phase": "root"
@@ -1241,6 +1253,7 @@
         },
         "Taamim": {
             "translation": "Tastes",
+            "defaultTerm":true,
             "style": {
                 "phase": "one",
                 "heading": "Flow"
@@ -1248,6 +1261,7 @@
         },
         "Nekudot": {
             "translation": "Points",
+            "defaultTerm":true,
             "style": {
                 "phase": "two",
                 "heading": "Flow"
@@ -1255,6 +1269,7 @@
         },
         "Tagin": {
             "translation": "Crowns",
+            "defaultTerm":true,
             "style": {
                 "phase": "three",
                 "heading": "Flow"
@@ -1265,6 +1280,7 @@
         },
         "Otiot": {
             "translation": "Letters",
+            "defaultTerm":true,
             "style": {
                 "phase": "four",
                 "heading": "Flow"
@@ -3129,6 +3145,7 @@
             "context": ["tens", "hundreds", "thousands"],
             "source": "Alaphim",
             "translation": "Thousands",
+            "defaultTerm":true,
             "style": {
                 "heading": "Amount",
                 "phase": "one"
@@ -3138,6 +3155,7 @@
             "context": ["tens", "hundreds", "thousands"],
             "source": "Revavot",
             "translation": "Tens of Thousands",
+            "defaultTerm":true,
             "style": {
                 "heading": "Amount",
                 "phase": "root"
