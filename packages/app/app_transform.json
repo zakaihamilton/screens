@@ -26,9 +26,13 @@
                         "enabled": "app.transform.pages"
                     }
                 ],
-                ["Translation", "app.transform.translation", {
+                ["Translation", "app.transform.doTranslation", {
                         "state": "select",
                         "separator": true
+                    }
+                ],
+                ["Explanation", "app.transform.doExplanation", {
+                        "state": "select"
                     }
                 ],
                 ["Keep Source", "app.transform.keepSource", {

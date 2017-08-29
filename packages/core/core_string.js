@@ -51,4 +51,7 @@ package.core.string = function CoreString(me) {
         }
         return string;
     };
+    me.escape = function(string) {
+        return string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
+    };
 };

@@ -17,6 +17,7 @@ package.app.transform = function AppTransform(me) {
             window.prevLanguage = null;
             me.ui.options.load(me, window, {
                 doTranslation: true,
+                doExplanation: false,
                 addStyles: true,
                 keepSource: false,
                 showHtml: false,
@@ -33,7 +34,8 @@ package.app.transform = function AppTransform(me) {
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
-            me.translation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
+            me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
+            me.doExplanation = me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
             me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
             me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);

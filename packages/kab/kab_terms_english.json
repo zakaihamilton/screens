@@ -68,7 +68,9 @@
         "He’arahis": "He’arah is",
         "Esh, Ruach": "Esh, Ruach2",
         "Yetzufim": "Yetzurim",
-        "Nukvais": "Nukva is"
+        "Nukvais": "Nukva is",
+        "Abba":"Aba",
+        "Imma":"Ima"
     },
     "pre": [
         {
@@ -533,6 +535,7 @@
         },
         "Hochma": {
             "translation": "Wisdom",
+            "explanation":"Decree",
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -540,6 +543,7 @@
         },
         "Bina": {
             "translation": "Understanding",
+            "explanation":"Execution",
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -555,6 +559,7 @@
         "Tifferet2": {
             "source": "Tifferet",
             "translation": "Beauty",
+            "explanation":"Knowledge",
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -562,6 +567,7 @@
         },
         "Malchut": {
             "translation": "Kingdom",
+            "explanation":"Desire",
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -569,6 +575,7 @@
         },
         "Hesed": {
             "translation": "Kindness",
+            "explanation":"Responsibility",
             "style": {
                 "heading": "Vessel",
                 "phase": "root"
@@ -576,6 +583,7 @@
         },
         "Gevura": {
             "translation": "Judgement",
+            "explanation":"Control",
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -583,6 +591,7 @@
         },
         "Netzah": {
             "translation": "Eternity",
+            "explanation":"Affinity",
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -590,6 +599,7 @@
         },
         "Hod": {
             "translation": "Majesty",
+            "explanation":"Communication",
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -597,6 +607,7 @@
         },
         "Yesod": {
             "translation": "Foundation",
+            "explanation":"Agreement",
             "style": {
                 "heading": "Vessel",
                 "phase": "collective"
@@ -743,6 +754,7 @@
         },
         "Zeir Anpin": {
             "translation": "Small Face",
+            "explanation":"Intention",
             "style": {
                 "heading": "Face/Vessel",
                 "phase": "three"
@@ -758,6 +770,7 @@
         },
         "Atzilut": {
             "translation": "Emanation",
+            "explanation":"Control",
             "style": {
                 "heading": "World",
                 "phase": "one"
@@ -765,6 +778,7 @@
         },
         "Beria": {
             "translation": "Creation",
+            "explanation":"Affinity",
             "style": {
                 "heading": "World",
                 "phase": "two"
@@ -772,6 +786,7 @@
         },
         "Yetzira": {
             "translation": "Formation",
+            "explanation":"Communication",
             "style": {
                 "heading": "World",
                 "phase": "three"
@@ -779,6 +794,7 @@
         },
         "Assiya": {
             "translation": "Action",
+            "explanation":"Agreement",
             "style": {
                 "heading": "World",
                 "phase": "four"
@@ -786,6 +802,7 @@
         },
         "Olam ha Zeh": {
             "translation": "This World",
+            "explanation":"Reality",
             "style": {
                 "heading": "World",
                 "phase": "four"
@@ -794,6 +811,7 @@
         "Olam ha Ba": {
             "prefix": "the",
             "translation": "Next World",
+            "explanation":"Inner Reality",
             "style": {
                 "heading": "World",
                 "phase": "one"
@@ -977,6 +995,7 @@
         },
         "Nukva": {
             "translation": "Female",
+            "explanation":"Desire",
             "style": {
                 "heading": "Face/Vessel",
                 "phase": "four"
@@ -1004,7 +1023,8 @@
             "translation": "the Second Expansion"
         },
         "Sitra Achra": {
-            "translation": "Other Side"
+            "translation": "Other Side",
+            "explanation":"Opposing Intent"
         },
         "AK": {
             "expansion": "Adam Kadmon"
@@ -1048,17 +1068,19 @@
             }
         },
         "AVI": {
-            "expansion": ["Aba ve Imma"]
+            "expansion": ["Aba ve Ima"]
         },
         "Aba": {
             "translation": "Father",
+            "explanation":"Decree",
             "style": {
                 "heading": "Face",
                 "phase": "one"
             }
         },
-        "Imma": {
+        "Ima": {
             "translation": "Mother",
+            "explanation":"Execution",
             "style": {
                 "heading": "Face",
                 "phase": "two"
@@ -1342,7 +1364,8 @@
             "translation": "Form"
         },
         "Kelim": {
-            "translation": "Vessels"
+            "translation": "Vessels",
+            "explanation":"Contexts"
         },
         "Hakaa": {
             "translation": "Striking"
@@ -1756,14 +1779,16 @@
             "expansion": ["Mayin Nukvin"]
         },
         "Mayin Nukvin": {
-            "translation": "Female Waters"
+            "translation": "Female Waters",
+            "explanation":"Raising Deficiencies"
         },
         "MAD": {
             "case": "sensitive",
             "expansion": "Mayin Duchrin"
         },
         "Mayin Duchrin": {
-            "translation": "Male Waters"
+            "translation": "Male Waters",
+            "explanation":"Filling Deficiencies"
         },
         "Reshimot": {
             "translation": "Memories"
@@ -1779,14 +1804,16 @@
                 "heading": "Face",
                 "phase": "two"
             },
-            "translation": "Grandfather of Israel and Comprehension"
+            "translation": "Grandfather of Israel and Comprehension",
+            "explanation":"Execution"
         },
         "Yisrael Saba ve Tvuna": {
             "style": {
                 "heading": "Face",
                 "phase": "two"
             },
-            "translation": "Grandfather of Israel and Comprehension"
+            "translation": "Grandfather of Israel and Comprehension",
+            "explanation":"Execution"
         },
         "Yisrael": {
             "translation": "Israel"
@@ -1817,14 +1844,15 @@
             "expansion": ["Yisrael Saba"]
         },
         "Rabbi Aba": {
-            "name": true,
+            "fixed": true,
             "translation": "Rabbi Aba"
         },
         "HaDaat": {
             "translation": "The Knowledge"
         },
         "Kedusha": {
-            "translation": "Holiness"
+            "translation": "Holiness",
+            "explanation":"Advancement"
         },
         "OhrHassadim": {
             "translation": "Light of Mercy"
@@ -1867,7 +1895,8 @@
             "translation": "Shell"
         },
         "Klipot": {
-            "translation": "Shells"
+            "translation": "Shells",
+            "explanation":"Superficial Attitude"
         },
         "Komat": {
             "translation": "Height of"
@@ -1951,51 +1980,51 @@
             "translation": "Surrounding Vessels"
         },
         "Yud": {
-            "name": true,
+            "fixed": true,
             "translation": "Yud [י]"
         },
         "Yod": {
-            "name": true,
+            "fixed": true,
             "translation": "Yod [י]"
         },
         "Hey": {
-            "name": true,
+            "fixed": true,
             "source": "Hey [ה]"
         },
         "Hey ה": {
-            "name": true,
+            "fixed": true,
             "source": "Hey [ה]"
         },
         "Vav": {
-            "name": true,
+            "fixed": true,
             "source": "Vav [ו]"
         },
         "Aleph": {
-            "name": true,
+            "fixed": true,
             "source": "Aleph [א]"
         },
         "Tav": {
-            "name": true,
+            "fixed": true,
             "source": "Tav [ת]"
         },
         "Viv": {
-            "name": true,
+            "fixed": true,
             "source": "Vav [ו]"
         },
         "Yodin": {
-            "name": true,
+            "fixed": true,
             "source": "Yodin [י]"
         },
         "Yudin": {
-            "name": true,
+            "fixed": true,
             "source": "Yudin [י]"
         },
         "Alephin": {
-            "name": true,
+            "fixed": true,
             "source": "Alephin [א]"
         },
         "Heyin": {
-            "name": true,
+            "fixed": true,
             "source": "Heyin [ה]"
         },
         "Yud HaVaYaH": {
@@ -2028,20 +2057,6 @@
             "style": {
                 "heading": "HaVaYaH י-ה-ו-ה",
                 "diagram": "Tetragrammaton"
-            }
-        },
-        "Abba": {
-            "translation": "Father",
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            }
-        },
-        "Ima": {
-            "translation": "Mother",
-            "style": {
-                "heading": "Face",
-                "phase": "two"
             }
         },
         "Ruchin": {
@@ -2495,7 +2510,7 @@
             "translation": "The Punctuation below the Letters"
         },
         "Kamatz": {
-            "name": true,
+            "fixed": true,
             "style": {
                 "heading": "אָ",
                 "phase": "root"
@@ -2521,7 +2536,7 @@
             "translation": "Ear Sockets"
         },
         "Heys": {
-            "name": true,
+            "fixed": true,
             "translation": "Heys [ה]"
         },
         "Nekavim": {
@@ -2642,7 +2657,8 @@
             "translation": "Genesis"
         },
         "Tuma’a": {
-            "translation": "Impurity"
+            "translation": "Impurity",
+            "explanation":"Fulfillment"
         },
         "MS": {
             "expansion": ["Mocha Stima'a"]
@@ -2656,54 +2672,21 @@
         "Mocha Stima'a": {
             "translation": "Blocked Mind"
         },
-        "Abba Imma": {
+        "Aba Ima": {
             "style": {
                 "heading": "Face",
                 "phase": "one"
             },
-            "translation": "Father and Mother"
+            "translation": "Father and Mother",
+            "explanation":"Decree"
         },
-        "Aba Imma": {
+        "Aba ve Ima": {
             "style": {
                 "heading": "Face",
                 "phase": "one"
             },
-            "translation": "Father and Mother"
-        },
-        "Abba ve Imma": {
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            },
-            "translation": "Father and Mother"
-        },
-        "Abba ve Ima": {
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            },
-            "translation": "Father and Mother"
-        },
-        "Abba and Imma": {
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            },
-            "translation": "Father and Mother"
-        },
-        "Aba ve Imma": {
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            },
-            "translation": "Father and Mother"
-        },
-        "Aba and Imma": {
-            "style": {
-                "heading": "Face",
-                "phase": "one"
-            },
-            "translation": "Father and Mother"
+            "translation": "Father and Mother",
+            "explanation":"Decree"
         },
         "Vav Kzavot": {
             "translation": "Six Edges"
@@ -3247,13 +3230,19 @@
             "translation":"Encirclement of Foundation"
         },
         "Beresheet Barah Elokim Et":{
-            "translation":"In the beginning God created the"
+            "translation":"In the beginning God created the",
+            "quote":true,
+            "fixed":true
         },
         "Beresheet Barah":{
-            "translation":"\"In the beginning it was created\""
+            "translation":"In the beginning it was created",
+            "quote":true,
+            "fixed":true
         },
         "Elokim Et":{
-            "translation":"\"The Creator and\""
+            "translation":"The Creator and",
+            "quote":true,
+            "fixed":true
         },
         "Bet":{
             "source":"Bet [ב]"
@@ -3331,13 +3320,46 @@
             "source":["Tav","and","Shin"]
         },
         "Mavet":{
-            "translation":"Death"
+            "translation":"Death",
+            "explanation":"No Internal Power"
+        },
+        "death":{
+            "explanation":"No Internal Power"
         },
         "Beracha":{
-            "translation":"Blessing"
+            "translation":"Blessing",
+            "explanation":"Multiplicity"
         },
         "Merkavot":{
-            "translation":"Chariots"
+            "translation":"Chariots",
+            "explanation":"Vehicles"
+        },
+        "God":{
+            "prefix":"The",
+            "translation":"Creator"
+        },
+        "another god":{
+            "explanation":"victim mentality"
+        },
+        "spiritual fruits":{
+            "explanation":"Internal Control"
+        },
+        "blessed":{
+            "explanation":"multiplied"
+        },
+        "Creator":{
+            "translation":"Creator",
+            "explanation":"System"
+        },
+        "end correction":{
+            "source":"End of Correction",
+            "explanation":"Completion of the Training Tier"
+        },
+        "good":{
+            "explanation":"Maturity"
+        },
+        "evil":{
+            "explanation":"Immaturity"
         }
     },
     "style": {

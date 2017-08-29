@@ -193,7 +193,7 @@ package.ui.layout = function UILayout(me) {
                     if (widget) {
                         pageContent.appendChild(widget);
                     }
-                    for (var fontSize = 100; fontSize >= 25; fontSize -= 5) {
+                    for (var fontSize = 100; fontSize >= 20; fontSize -= 2) {
                         if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
                             widget.style.fontSize = fontSize + "%";
                         } else {
@@ -325,7 +325,7 @@ package.ui.layout = function UILayout(me) {
         widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
         widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
         if(options.filter) {
-            var find = me.core.string.regex("/(" + options.filter + ")", 'gi');
+            var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
             var replace = "<mark>$1</mark>";
             widget.innerHTML = widget.innerHTML.replace(find, replace);
         }
