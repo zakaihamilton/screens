@@ -151,6 +151,9 @@ package.app.transform = function AppTransform(me) {
         searchItems.map(function (searchItem) {
             var term = searchItem[0];
             var info = searchItem[1];
+            if(!info.used) {
+                return;
+            }
             var option = document.createElement("option");
             option.textContent = term;
             if (info.source) {
@@ -163,7 +166,7 @@ package.app.transform = function AppTransform(me) {
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
-            if (term.heading && term.phase) {
+            if (term.heading && term.phase && term.used) {
                 term.heading.split("/").map(function (subHeading) {
                     var column = table[subHeading];
                     if (!column) {
