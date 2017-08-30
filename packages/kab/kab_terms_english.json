@@ -72,7 +72,7 @@
         "Esh, Ruach": "Esh, Ruach2",
         "Yetzufim": "Yetzurim",
         "Nukvais": "Nukva is",
-        "Abba": "Aba",
+        "Aba": "Abba",
         "Imma": "Ima"
     },
     "pre": [
@@ -208,10 +208,6 @@
         {
             "find": "/<p>[\\s]?<\\/p>",
             "replace": ""
-        },
-        {
-            "find": "/(\\d+\\))",
-            "replace": "<br><b>$1</b>"
         }
     ],
     "post": [
@@ -448,8 +444,12 @@
             "translation": "Interior"
         },
         "Guf": {
+            "translation": "Body"
+        },
+        "Guf2": {
             "style": {
-                "heading": "location"
+                "heading": "Layers",
+                "phase":"two"
             },
             "translation": "Body"
         },
@@ -646,6 +646,13 @@
             "style": {
                 "heading": "Light",
                 "phase": "two"
+            }
+        },
+        "Neshama2": {
+            "translation": "Soul",
+            "style": {
+                "heading": "Layers",
+                "phase": "one"
             }
         },
         "Haya": {
@@ -1003,6 +1010,13 @@
         "Kavim": {
             "translation": "Lines"
         },
+        "Shoresh2": {
+            "translation":"Root",
+            "style":{
+                "phase":"root",
+                "heading":"Layers"
+            }
+        },
         "Shoresh": {
             "translation": "Root"
         },
@@ -1028,6 +1042,13 @@
         },
         "Levush": {
             "translation": "Clothing"
+        },
+        "Levush2": {
+            "translation": "Clothing",
+            "style":{
+                "phase":"three",
+                "heading":"Layers"
+            }
         },
         "Hitpashtut": {
             "translation": "Expansion"
@@ -1084,9 +1105,9 @@
             }
         },
         "AVI": {
-            "expansion": ["Aba ve Ima"]
+            "expansion": ["Abba ve Ima"]
         },
-        "Aba": {
+        "Abba": {
             "translation": "Father",
             "explanation": "Decree",
             "style": {
@@ -1748,6 +1769,13 @@
         },
         "Heichal": {
             "translation": "Palace"
+        },
+        "Heichal2": {
+            "translation": "Palace",
+            "style":{
+                "phase":"four",
+                "heading":"Layers"
+            }
         },
         "Taam": {
             "translation": "Taste"
@@ -2693,7 +2721,7 @@
         "Mocha Stima'a": {
             "translation": "Blocked Mind"
         },
-        "Aba Ima": {
+        "Abba Ima": {
             "style": {
                 "heading": "Face",
                 "phase": "one"
@@ -2701,7 +2729,7 @@
             "translation": "Father and Mother",
             "explanation": "Decree"
         },
-        "Aba ve Ima": {
+        "Abba ve Ima": {
             "style": {
                 "heading": "Face",
                 "phase": "one"
@@ -2748,7 +2776,7 @@
             "translation": "Houses"
         },
         "NGLH": {
-            "expansion": ["Neshama", "Guf", "Levush", "Heichal"]
+            "expansion": ["Neshama2", "Guf2", "Levush2", "Heichal2"]
         },
         "Nechtam": {
             "translation": "Stamped"
@@ -3389,6 +3417,21 @@
         },
         "evil": {
             "explanation": "Immaturity"
+        },
+        "SNGLH":{
+            "expansion":["Shoresh2","Neshama2","Guf2","Levush2","Heichal2"]
+        },
+        "Dalet Behinot":{
+            "translation":"Four Phases"
+        },
+        "AYA": {
+            "expansion": ["Atzilut", "Yetzira", "Assiya"]
+        },
+        "ABA": {
+            "expansion": ["Atzilut", "Beria", "Assiya"]
+        },
+        "ABY": {
+            "expansion": ["Atzilut", "Beria", "Yetzira"]
         }
     },
     "style": {
