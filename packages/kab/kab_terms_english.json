@@ -208,6 +208,10 @@
         {
             "find": "/<p>[\\s]?<\\/p>",
             "replace": ""
+        },
+        {
+            "find":"(The Study of the Ten Sefirot)",
+            "replace":""
         }
     ],
     "post": [
