@@ -3383,7 +3383,7 @@
             "explanation": "No Internal Power"
         },
         "death": {
-            "translation": "death",
+            "translation": "Death",
             "explanation": "No Internal Power"
         },
         "Beracha": {
@@ -3409,7 +3409,7 @@
             "explanation": "Internal Control"
         },
         "blessed": {
-            "translation":"blessed",
+            "translation":"Blessed",
             "explanation": "multiplied"
         },
         "Creator": {
@@ -3424,11 +3424,11 @@
             "explanation": "Completion of the Training Tier"
         },
         "good": {
-            "translation":"good",
+            "translation":"Good",
             "explanation": "Maturity"
         },
         "evil": {
-            "translation":"evil",
+            "translation":"Evil",
             "explanation": "Immaturity"
         },
         "SNGLH":{
