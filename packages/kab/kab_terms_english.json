@@ -3347,6 +3347,7 @@
             "explanation": "No Internal Power"
         },
         "death": {
+            "translation": "death",
             "explanation": "No Internal Power"
         },
         "Beracha": {
@@ -3380,6 +3381,7 @@
         },
         "end correction": {
             "source": "End of Correction",
+            "translation": "End of Correction",
             "explanation": "Completion of the Training Tier"
         },
         "good": {

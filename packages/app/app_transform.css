@@ -246,9 +246,9 @@
 .app-transform-termPopup {
     display:none;
     border:1px solid black;
-    left:50px;
+    left:25px;
     top:50px;
-    right:50px;
+    right:25px;
     bottom:100px;
     background:white;
     position:absolute;
