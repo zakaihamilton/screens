@@ -1820,6 +1820,7 @@
             "expansion": ["Yisrael Saba ve Tvuna"]
         },
         "Yisrael Saba Tvuna": {
+            "defaultTerm":true,
             "style": {
                 "heading": "Face",
                 "phase": "two"
@@ -3357,8 +3358,10 @@
             "explanation": "Vehicles"
         },
         "God": {
-            "prefix": "the",
-            "translation": "Creator"
+            "fixed":true,
+            "prefix":"The",
+            "translation": "Creator",
+            "explanation": "System"
         },
         "another god": {
             "explanation": "victim mentality"
@@ -3370,6 +3373,8 @@
             "explanation": "multiplied"
         },
         "Creator": {
+            "includePrefix":true,
+            "prefix":"The",
             "translation": "Creator",
             "explanation": "System"
         },

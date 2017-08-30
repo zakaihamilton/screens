@@ -18,6 +18,7 @@ package.app.transform = function AppTransform(me) {
             me.ui.options.load(me, window, {
                 doTranslation: true,
                 doExplanation: false,
+                prioritizeExplanation:false,
                 addStyles: true,
                 keepSource: false,
                 showHtml: false,
@@ -36,6 +37,7 @@ package.app.transform = function AppTransform(me) {
             window.options.autoScroll = false;
             me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
             me.doExplanation = me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
+            me.prioritizeExplanation = me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
             me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
             me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);

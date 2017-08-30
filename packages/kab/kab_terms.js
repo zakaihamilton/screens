@@ -283,7 +283,12 @@ package.kab.terms = function KabTerms(me) {
             }
             var term = source;
             if (explanation && translation) {
-                term = translation + " (" + explanation + ")";
+                if(options.prioritizeExplanation) {
+                    term = explanation + " (" + translation + ")";
+                }
+                else {
+                    term = translation + " (" + explanation + ")";
+                }
             } else if (explanation) {
                 term = explanation;
             }
@@ -450,7 +455,12 @@ package.kab.terms = function KabTerms(me) {
     me.modify = function (words, wordIndex, sourceLength, prefixWord, suffixWord, item, term, prefix, translation, explanation, suffix, options, expansion) {
         var replacement = translation;
         if (explanation && translation) {
-            replacement = translation + " (" + explanation + ")";
+            if(options.prioritizeExplanation) {
+                replacement = explanation + " (" + translation + ")";
+            }
+            else {
+                replacement = translation + " (" + explanation + ")";
+            }
         } else if (explanation) {
             replacement = explanation;
         }

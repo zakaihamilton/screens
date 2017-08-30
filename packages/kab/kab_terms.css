@@ -291,7 +291,7 @@
     border-radius: 5px 5px 0px 0px;
     transition-property: all;
     transition-duration: 1s;
-    transition-delay: 0.5s;
+    transition-delay: 1s;
     overflow-y: hidden;
 }
 

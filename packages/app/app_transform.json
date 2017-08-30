@@ -39,6 +39,10 @@
                         "state": "select"
                     }
                 ],
+                ["Prioritize Explanation", "app.transform.prioritizeExplanation", {
+                        "state": "select"
+                    }
+                ],
                 ["Styles", "app.transform.addStyles", {
                         "state": "select",
                         "separator": true
