@@ -3404,9 +3404,11 @@
             "explanation": "victim mentality"
         },
         "spiritual fruits": {
+            "translation":"spiritual fruits",
             "explanation": "Internal Control"
         },
         "blessed": {
+            "translation":"blessed",
             "explanation": "multiplied"
         },
         "Creator": {
@@ -3421,9 +3423,11 @@
             "explanation": "Completion of the Training Tier"
         },
         "good": {
+            "translation":"good",
             "explanation": "Maturity"
         },
         "evil": {
+            "translation":"evil",
             "explanation": "Immaturity"
         },
         "SNGLH":{
