@@ -482,7 +482,7 @@ package.kab.terms = function KabTerms(me) {
         me.replaceDuplicate(words, wordIndex, replacement);
         var text = replacement;
         var replacementWithStyles = replacement;
-        if (options.addStyles && (item.style || translation !== term)) {
+        if (options.addStyles && (item.style || translation.toLowerCase() !== term.toLowerCase())) {
             replacementWithStyles = me.applyStyles(term, item.style, replacement, options, expansion);
         }
         words.splice(wordIndex, 0, replacementWithStyles);
