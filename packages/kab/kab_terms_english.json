@@ -170,6 +170,10 @@
             "replace": "\n<b>$1</b>"
         },
         {
+            "find": "/\\? (\\d+\\))",
+            "replace": "?\n$1"
+        },
+        {
             "find": "/\\\n(\\d+\\.)",
             "replace": "\n<b>$1</b>"
         },
@@ -3436,6 +3440,9 @@
         },
         "ABY": {
             "expansion": ["Atzilut", "Beria", "Yetzira"]
+        },
+        "Ketarim":{
+            "translation":"Crowns"
         }
     },
     "style": {
