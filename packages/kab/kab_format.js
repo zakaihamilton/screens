@@ -94,4 +94,37 @@ package.kab.format = function KabFormat(me) {
             words.splice(wordIndex, 0, defaultWord);
         }
     };
+    me.spelling = function (wordsString, spelling) {
+        if (spelling) {
+            for (var incorrect in spelling) {
+                var correct = spelling[incorrect];
+                wordsString = wordsString.split(incorrect).join(correct);
+            }
+        }
+        return wordsString;
+    };
+    me.replaceDuplicate = function (words, wordIndex, replacement) {
+        var collectIndex = wordIndex + 1;
+        var next = words[collectIndex++];
+        if (next === "(" || next === "[") {
+            var duplicate = "";
+            for (; ; ) {
+                if (collectIndex > words.length) {
+                    break;
+                }
+                var next = words[collectIndex++];
+                if (next === ")" || next === "]") {
+                    if (replacement.toLowerCase().includes(duplicate.toLowerCase())) {
+                        words.splice(wordIndex + 1, collectIndex - wordIndex);
+                    }
+                    break;
+                }
+                if (duplicate) {
+                    duplicate += " " + next;
+                } else {
+                    duplicate = next;
+                }
+            }
+        }
+    };
 };
