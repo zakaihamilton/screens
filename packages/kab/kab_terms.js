@@ -8,8 +8,6 @@ package.kab.terms = function KabTerms(me) {
         me.jsons = {};
         me.json = null;
         me.terms = null;
-        me.diagrams = null;
-        me.styles = null;
         me.searchTerms = [];
         me.content = null;
         me.language = "english";
@@ -58,13 +56,10 @@ package.kab.terms = function KabTerms(me) {
         var suffix = me.json.suffix;
         var ignore = me.json.ignore;
         if (callback) {
-            me.diagrams = {};
-            me.styles = {};
             me.searchTerms = {};
             wordsString = me.send("kab.terms.fixSpelling", wordsString);
-            wordsString = me.send("kab.terms.format", wordsString, me.json.pre);
+            wordsString = me.send("kab.format.process", wordsString, me.json.pre);
             me.terms = me.send("kab.terms.prepare", me.json.term, options);
-            me.styles = me.json.style;
             me.content = wordsString;
         }
         var terms = me.terms;
@@ -260,7 +255,7 @@ package.kab.terms = function KabTerms(me) {
         }
         if (callback) {
             if (me.language !== "debug") {
-                wordsString = me.send("kab.terms.format", wordsString, me.json.post);
+                wordsString = me.send("kab.format.process", wordsString, me.json.post);
             }
             callback(wordsString, me.searchTerms, me.json.data);
             return;
@@ -312,44 +307,6 @@ package.kab.terms = function KabTerms(me) {
             }
     }
     };
-    me.insert = function (words, wordIndex, collection, defaultWord, wordToInsert, text) {
-        if (collection && wordToInsert) {
-            for (var itemName in collection) {
-                var item = collection[itemName];
-                if (!item.match) {
-                    continue;
-                }
-                if (itemName !== wordToInsert.toLowerCase()) {
-                    continue;
-                }
-                if (!defaultWord) {
-                    for (var altPrefix in collection) {
-                        var altPrefixItem = collection[altPrefix];
-                        if (altPrefixItem.match && text.match(me.core.string.regex(altPrefixItem.match))) {
-                            defaultWord = altPrefix;
-                            if (wordToInsert[0] === wordToInsert[0].toUpperCase()) {
-                                defaultWord = defaultWord.charAt(0).toUpperCase() + defaultWord.slice(1);
-                            }
-                            wordToInsert = null;
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-        }
-        if (defaultWord && !wordToInsert) {
-            var item = collection[defaultWord.toLowerCase()];
-            if (item && item.replaceOnly) {
-                defaultWord = null;
-            }
-        }
-        if (wordToInsert) {
-            words.splice(wordIndex, 0, wordToInsert);
-        } else if (defaultWord) {
-            words.splice(wordIndex, 0, defaultWord);
-        }
-    };
     me.fixSpelling = function (wordsString) {
         var spelling = me.json.spelling;
         if (spelling) {
@@ -357,58 +314,6 @@ package.kab.terms = function KabTerms(me) {
                 var correct = spelling[incorrect];
                 wordsString = wordsString.split(incorrect).join(correct);
             }
-        }
-        return wordsString;
-    };
-    me.format = function (wordsString, dict) {
-        if (dict) {
-            dict.map(function (item) {
-                if ("enabled" in item && !item.enabled) {
-                    return;
-                }
-                if (item.match) {
-                    var checkInSplit = false;
-                    var itemSplit = "\n";
-                    if ("split" in item) {
-                        itemSplit = me.core.string.regex(item.split);
-                        checkInSplit = item.split.startsWith("/");
-                    }
-                    var itemJoin = itemSplit;
-                    if ("join" in item) {
-                        itemJoin = item.join;
-                    }
-                    wordsString = wordsString.split(itemSplit).map(function (selection) {
-                        var inSplit = selection.match(itemSplit);
-                        var matches = selection.match(me.core.string.regex(item.match));
-                        if (matches && (inSplit || !checkInSplit)) {
-                            if (item.prefix) {
-                                selection = item.prefix + selection;
-                            }
-                            if (item.suffix) {
-                                selection += item.suffix;
-                            }
-                            var find = item.find;
-                            if (find) {
-                                selection = selection.replace(me.core.string.regex(find), me.core.string.regex(item.replace));
-                            }
-                        }
-                        return selection;
-                    }).join(itemJoin);
-                    return;
-                }
-                var find = item.find;
-                if (find && (item.prefix || item.suffix)) {
-                    wordsString = wordsString.split(me.core.string.regex(find)).join(item.replace);
-                    if (item.prefix) {
-                        wordsString = item.prefix + wordsString;
-                    }
-                    if (item.suffix) {
-                        wordsString = wordsString + item.suffix;
-                    }
-                } else if (find) {
-                    wordsString = wordsString.replace(me.core.string.regex(find), me.core.string.regex(item.replace));
-                }
-            });
         }
         return wordsString;
     };
@@ -483,13 +388,13 @@ package.kab.terms = function KabTerms(me) {
         var text = replacement;
         var replacementWithStyles = replacement;
         if (options.addStyles && (item.style || translation.toLowerCase() !== term.toLowerCase())) {
-            replacementWithStyles = me.applyStyles(term, item.style, replacement, options, expansion);
+            replacementWithStyles = me.kab.style.process(term, item.style, replacement, options, expansion, me.json, me.language);
         }
         words.splice(wordIndex, 0, replacementWithStyles);
         if (!item.includePrefix) {
-            me.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
+            me.kab.format.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
         }
-        me.insert(words, wordIndex + 1, me.json.suffix, item.suffix, suffixWord, text);
+        me.kab.format.insert(words, wordIndex + 1, me.json.suffix, item.suffix, suffixWord, text);
     };
     me.replaceDuplicate = function (words, wordIndex, replacement) {
         var collectIndex = wordIndex + 1;
@@ -514,99 +419,6 @@ package.kab.terms = function KabTerms(me) {
                 }
             }
         }
-    };
-    me.applyStyles = function (term, styles, text, options, expansion) {
-        var html = "";
-        var phase = null, heading = null, tooltip = null, short = null, long = null;
-        if (typeof styles === "string") {
-            if (me.styles) {
-                styles = me.styles[styles];
-            } else {
-                styles = null;
-            }
-        }
-        if (styles && styles.diagram && me.json.diagrams) {
-            if (!me.diagrams
-            [styles.diagram]) {
-                var diagram = me.json.diagrams[styles.diagram];
-                html += "<span class=\"kab-terms-" + diagram.class + "\" " + diagram.attributes + ">";
-                html += "<img src=\"packages/res/diagrams/" + diagram.img.toLowerCase() + "\" style=\"width:100%;padding-bottom:15px;border-bottom:1px solid black;\"></img><span>" + diagram.title + "</span>";
-                html += "</span>";
-            }
-            me.diagrams[styles.diagram] = true;
-        }
-        if (styles && styles.bold) {
-            html += "<b>";
-        }
-        if (styles && styles.phase) {
-            phase = styles.phase;
-            if (styles && styles.heading && options.headings) {
-                heading = styles.heading;
-            }
-            if (!options.keepSource && !expansion && options.doTranslation && term !== text) {
-                tooltip = term;
-            }
-        } else if (!options.keepSource && !expansion) {
-            phase = "none";
-            if (term !== text) {
-                tooltip = term;
-            }
-            if (styles && styles.heading && options.headings) {
-                heading = styles.heading;
-            }
-        }
-        if (styles && styles.short) {
-            short = styles.short;
-        }
-        if (styles && styles.long) {
-            long = styles.long;
-        }
-        if (styles && styles.tooltip) {
-            tooltip = styles.tooltip;
-        }
-        if (phase) {
-            html += "<span class=\"kab-terms-phase-inline kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-outline\"";
-        }
-        if (phase || short || long) {
-            html += " kab-terms-toast";
-        }
-        if (tooltip) {
-            html += " kab-terms-tooltip=\"" + tooltip + "\"";
-        }
-        if (phase || tooltip || heading || short || long) {
-            html += ">";
-        }
-        if (phase && phase !== "none" && options.phaseNumbers && me.json.phaseNumber) {
-            var phaseNumber = me.json.phaseNumber[phase];
-            if (phaseNumber) {
-                html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + me.language + "\">" + phaseNumber + "</span>";
-            }
-        }
-        if (heading) {
-            html += "<span class=\"kab-terms-heading kab-terms-" + me.language + "\">" + heading + "</span>";
-        }
-        if (phase || short || long) {
-            if (phase === "none") {
-                phase = "root";
-            }
-            html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
-            if (!short) {
-                short = "";
-            }
-            html += "<span class=\"kab-terms-short kab-terms-" + me.language + " kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
-            if (long) {
-                html += "<span class=\"kab-terms-long\">" + long + "</span>";
-            }
-            html += "</span>";
-        }
-        html += text;
-        if (phase || tooltip || heading || short || long) {
-            html += "</span>";
-        }
-        if (styles && styles.bold) {
-            html += "</b>";
-        }
-        return html;
     };
     me.prepare = function (terms, options) {
         var result = new Map();

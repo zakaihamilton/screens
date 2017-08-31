@@ -2089,32 +2089,28 @@
             "prefix": "the",
             "translation": "Yud of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה",
-                "diagram": "Tetragrammaton"
+                "heading": "HaVaYaH י-ה-ו-ה"
             }
         },
         "Yod HaVaYaH": {
             "prefix": "the",
             "translation": "Yod of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה",
-                "diagram": "Tetragrammaton"
+                "heading": "HaVaYaH י-ה-ו-ה"
             }
         },
         "Hey HaVaYaH": {
             "prefix": "the",
             "translation": "Hey of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה",
-                "diagram": "Tetragrammaton"
+                "heading": "HaVaYaH י-ה-ו-ה"
             }
         },
         "Vav HaVaYaH": {
             "prefix": "the",
             "translation": "Vav of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה",
-                "diagram": "Tetragrammaton"
+                "heading": "HaVaYaH י-ה-ו-ה"
             }
         },
         "Ruchin": {
@@ -2701,8 +2697,7 @@
         "ADNI": {
             "translation": "Tetragrammaton",
             "style": {
-                "heading": "ADNI א-ד-נ-י",
-                "diagram": "Tetragrammaton"
+                "heading": "ADNI א-ד-נ-י"
             }
         },
         "Adnei ha Sadeh": {
