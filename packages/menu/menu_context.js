@@ -10,6 +10,12 @@ package.menu.context = function MenuContext(me) {
             return !me.get(window, "fixed");
         }
     };
+    me.maximizable = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            return !me.get(window, "fixed") && !me.get(window, "popup");
+        }
+    };
     me.notPopup = {
         get: function (object) {
             var window = me.widget.window.window(object);
@@ -20,12 +26,15 @@ package.menu.context = function MenuContext(me) {
         get: function (object) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
-            return !me.get(window, "temp") && !parent;
+            return !me.get(window, "temp") && !me.get(window, "popup") && !parent;
         }
     };
     me.isChild = {
         get: function (object) {
             var window = me.widget.window.window(object);
+            if(me.get(window, "popup")) {
+                return false;
+            }
             var parent = me.widget.window.parent(window);
             return parent;
         }

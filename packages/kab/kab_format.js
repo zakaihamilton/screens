@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component MenuContext
+ @component KabFormat
  */
 
 package.kab.format = function KabFormat(me) {

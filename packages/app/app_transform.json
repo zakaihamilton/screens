@@ -5,7 +5,7 @@
     "ui.style.width": "1000px",
     "ui.style.height": "500px",
     "icon": "/packages/res/icons/transform.png",
-    "ui.style.background": "white",
+    "ui.style.background": "purple",
     "maximize": null,
     "widget.menu.items": [
         ["File", [
@@ -234,8 +234,11 @@
                     "ui.basic.tag": "div",
                     "ui.theme.add": "app.transform.termPopup",
                     "ui.basic.var": "termPopup",
-                    "ui.element.component": "widget.container",
-                    "title":"Tables of Phases",
+                    "ui.element.component": "widget.window",
+                    "title": "Tables of Phases",
+                    "popup": true,
+                    "static": true,
+                    "minimize": true,
                     "ui.basic.elements": [
                         {
                             "ui.element.component": "widget.table",
@@ -253,6 +256,8 @@
             "core.property.update": "app.transform.update",
             "core.property.work": "app.transform.work",
             "ui.property.after": {
+                "widget.scrollbar.vertical.alwaysHide": true,
+                "widget.scrollbar.horizontal.alwaysHide": true,
                 "storage.cache.key": "@ui.cachekey.app-transform-window-",
                 "storage.cache.location": "local",
                 "storage.cache.restore": "widget.window.store",

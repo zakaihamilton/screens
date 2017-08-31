@@ -23,26 +23,36 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             return scroll_type;
         }
     };
+    me.container = function(object) {
+        var container = null;
+        if(object.component === me.widget.window.id) {
+            container = object.var.container;
+        }
+        else {
+            container = me.ui.node.container(object, me.widget.container.id);
+        }
+        return container;
+    };
     me.alwaysShow = {
         get: function (object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             return scrollbar.alwaysShow;
         },
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             scrollbar.alwaysShow = value;
         }
     };
     me.alwaysHide = {
         get: function (object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             return scrollbar.alwaysHide;
         },
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             scrollbar.alwaysHide = value;
         }
@@ -85,7 +95,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.update = {
         set: function (object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
             var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
@@ -122,8 +132,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.refresh = {
         set: function(object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
-            var scrollbar = container.var[scroll_type];
             me.update.set(object);
             me.update.set(object);
         }
@@ -135,7 +143,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.before = {
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             var scrollSize = scrollbar.scrollSize;
@@ -149,7 +157,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.after = {
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             var scrollSize = scrollbar.scrollSize;
@@ -163,12 +171,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.scrollTo = {
         get: function (object) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             return me.ui.scroll.current_pos(content, scroll_type);
         },
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             me.ui.scroll.set_current_pos(content, scroll_type, value);
             me.refresh.set(container);
@@ -176,10 +184,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.track = {
         set: function (object, value) {
-            if (value.target !== object.parentNode.var.track) {
+            if (!object.parentNode || value.target !== object.parentNode.var.track) {
                 return;
             }
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
             var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
@@ -203,7 +211,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             return object.autoScrollTimer !== null;
         },
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             if (object.autoScrollTimer) {
                 clearInterval(object.autoScrollTimer);
@@ -220,7 +228,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     if (!me.get(window, "visible")) {
                         return;
                     }
-                    var container = me.ui.node.container(object, me.widget.container.id);
+                    var container = me.container(object);
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, scrollbar.autoScrollSize);
                     me.refresh.set(container);
@@ -262,7 +270,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.delta = {
         set: function (object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             scrollbar.deltaDistance += value;
@@ -280,7 +288,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
     me.snap = {
         set: function(object, value) {
-            var container = me.ui.node.container(object, me.widget.container.id);
+            var container = me.container(object);
             var content = me.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             if(!scrollbar.snapToPage) {

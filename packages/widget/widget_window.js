@@ -74,6 +74,17 @@ package.widget.window = function WidgetWindow(me) {
         }
         return null;
     };
+    me.mainWindow = function(object) {
+        var window = me.window(object);
+        for(;;) {
+            var isPopup = me.get(window, "popup");
+            if(!isPopup) {
+                break;
+            }
+            window = me.parent(window);
+        }
+        return window;
+    };
     me.window = function (object) {
         var window = object;
         if (window) {
@@ -291,7 +302,9 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.theme.add": "minimize",
                 "ui.focus.active": false
             });
-            me.set(window.var.icon, "ui.style.display", "block");
+            if(!me.get(window, "popup")) {
+                me.set(window.var.icon, "ui.style.display", "block");
+            }
             var parent_window = me.parent(window);
             if (parent_window) {
                 if(maximized) {
@@ -310,7 +323,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.theme.contains", "minimize");
             var maximized = me.get(window, "ui.theme.contains", "maximize");
-            return !me.get(window, "fixed") && !maximized && !minimized;
+            return !me.get(window, "fixed") && !me.get(window, "popup") && !maximized && !minimized;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -319,7 +332,7 @@ package.widget.window = function WidgetWindow(me) {
             if (wasMaximized && !wasMinimized) {
                 return;
             }
-            if (me.get(window, "fixed")) {
+            if (me.get(window, "fixed") || me.get(window, "popup")) {
                 return;
             }
             me.set(window, "ui.property.group", {
@@ -330,7 +343,9 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.theme.add": "maximize"
                 }
             });
-            me.set(window.var.icon, "ui.style.display", "none");
+            if(!me.get(window, "popup")) {
+                me.set(window.var.icon, "ui.style.display", "none");
+            }
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.attach(window, parent_window);
@@ -389,7 +404,9 @@ package.widget.window = function WidgetWindow(me) {
                 if (maximized) {
                     me.set(window, "maximize");
                 } else {
-                    me.set(window.var.icon, "ui.style.display", "none");
+                    if(!me.get(window, "popup")) {
+                        me.set(window.var.icon, "ui.style.display", "none");
+                    }
                     me.set(window, "ui.property.group", {
                         "ui.theme.remove": "minimize",
                         "ui.focus.active": true
@@ -427,9 +444,12 @@ package.widget.window = function WidgetWindow(me) {
             }
             if (minimized) {
                 me.set(window, "ui.property.trickle", {
-                    "ui.theme.remove": "minimize"
+                    "ui.theme.remove": "minimize",
+                    "ui.focus.active": true
                 });
-                me.set(window.var.icon, "ui.style.display", "none");
+                if(!me.get(window, "popup")) {
+                    me.set(window.var.icon, "ui.style.display", "none");
+                }
             }
             if (maximized) {
                 var content = null;
@@ -605,7 +625,7 @@ package.widget.window = function WidgetWindow(me) {
     me.childMenuList = {
         get: function (object) {
             var isFirst = true;
-            var window = me.window(object);
+            var window = me.mainWindow(object);
             var parent = me.parent(window);
             if (parent) {
                 window = parent;
@@ -716,7 +736,7 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.tileHorizontally = {
         set: function (object) {
-            var window = me.window(object);
+            var window = me.mainWindow(object);
             var parent = me.parent(window);
             if (parent) {
                 window = parent;
@@ -732,7 +752,7 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.tileVertically = {
         set: function (object) {
-            var window = me.window(object);
+            var window = me.mainWindow(object);
             var parent = me.parent(window);
             if (parent) {
                 window = parent;

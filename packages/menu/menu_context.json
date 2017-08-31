@@ -20,7 +20,7 @@
     ],
     ["Maximize", "widget.window.maximize", {
             "enabled": "select",
-            "visible": "menu.context.resizable"
+            "visible": "menu.context.maximizable"
         }
     ],
     ["Close", "widget.window.close", {

@@ -13,7 +13,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             window.prevLanguage = null;
             me.ui.options.load(me, window, {
                 doTranslation: true,
@@ -43,7 +43,7 @@ package.app.transform = function AppTransform(me) {
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);
             me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
             me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
-                var window = me.widget.window.window(object);
+                var window = me.widget.window.mainWindow(object);
                 if (!me.get(window.var.layout, "ui.basic.text")) {
                     value = true;
                 }
@@ -53,7 +53,7 @@ package.app.transform = function AppTransform(me) {
             me.snapToPage = me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
             me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
-                var window = me.widget.window.window(object);
+                var window = me.widget.window.mainWindow(object);
                 me.set(window.var.layout, "ui.style.fontSize", value);
                 me.set(window.var.termTable, "ui.style.fontSize", value);
                 window.forceReflow = true;
@@ -67,7 +67,7 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window.mainWindow(object);
         me.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
         me.set(window.var.filter, "ui.style.top", showInput ? "250px" : "0px");
@@ -80,7 +80,7 @@ package.app.transform = function AppTransform(me) {
     }
     };
     me.shouldReflow = function (object) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window.mainWindow(object);
         var reflow = false;
         var pageSize = me.ui.layout.pageSize(window.var.layout);
         if (me.get(window, "visible") && !me.get(window, "conceal")) {
@@ -110,7 +110,7 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.updateScrolling = function (object) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window.mainWindow(object);
         var scrollbar = window.var.layout.var.vertical;
         var pageSize = me.ui.layout.pageSize(window.var.layout);
         var snapToPage = window.options.snapToPage;
@@ -125,13 +125,13 @@ package.app.transform = function AppTransform(me) {
     };
     me.save = {
         set: function (object, value) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             me.set(window.var.input, "storage.cache.store", me.get(window.var.input, "ui.basic.text"));
         }
     };
     me.new = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             me.set(window.var.input, "ui.basic.text", "");
             me.set(window.var.input, "storage.cache.store", "");
             me.set(window.var.output, "ui.basic.html", "");
@@ -244,7 +244,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.transform = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             me.ui.layout.clear(window.var.layout);
             var text = me.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
@@ -294,14 +294,14 @@ package.app.transform = function AppTransform(me) {
     };
     me.reflow = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             window.forceReflow = true;
             me.notify(window, "update");
         }
     };
     me.update = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             if (!me.shouldReflow(object)) {
                 return;
             }
@@ -342,7 +342,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.scrolled = {
         set: function (object, value) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             if (me.get(window, "ui.work.state") || me.get(window, "conceal")) {
                 return;
             }
@@ -362,16 +362,23 @@ package.app.transform = function AppTransform(me) {
     };
     me.filterChange = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window.mainWindow(object);
             me.set(window.var.filter, "storage.cache.store", me.get(window.var.filter, "ui.basic.text"));
             me.set(window, "app.transform.reflow");
         }
     };
     me.toggleTerms = {
         set: function (object) {
-            var window = me.widget.window.window(object);
-            me.set(window.var.termPopup, "ui.theme.toggle", "show");
-            me.notify(window.var.termPopup, "update");
+            var window = me.widget.window.mainWindow(object);
+            me.set(window.var.termPopup, "show", !me.get(window.var.termPopup, "minimize"));
+            me.set(window.var.termPopup, "ui.property.group", {
+                "ui.style.left": "25px",
+                "ui.style.top": "50px",
+                "ui.style.right": "25px",
+                "ui.style.bottom": "100px",
+                "ui.style.width": "",
+                "ui.style.height": ""
+            });
         }
     };
 };
