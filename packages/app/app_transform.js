@@ -270,6 +270,7 @@ package.app.transform = function AppTransform(me) {
                         }
                         me.set(window.var.layout, "ui.theme.add", language);
                         me.set(window.var.filter, "ui.theme.add", language);
+                        me.set(window.var.termPopup, "title", data.termTableTitle);
                         me.set(window.var.termTable, "ui.theme.add", language);
                         me.set(window.var.toggleTerms, "ui.theme.add", language);
                         window.prevLanguage = language;
