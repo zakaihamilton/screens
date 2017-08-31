@@ -171,7 +171,7 @@
                     "ui.element.component": "widget.editor",
                     "ui.theme.class": "app.transform.input",
                     "ui.property.after": {
-                        "storage.cache.key": "@app.transform.inputCacheKey",
+                        "storage.cache.key": "@ui.cachekey.app-transform-input-",
                         "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text"
                     },
@@ -209,10 +209,10 @@
                     "ui.basic.type": "search",
                     "ui.basic.var": "filter",
                     "ui.property.after": {
-                        "storage.cache.key": "@app.transform.filterCacheKey",
+                        "storage.cache.key": "@ui.cachekey.app-transform-filter-",
                         "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text",
-                        "ui.attribute.list": "@app.transform.filterCacheKey"
+                        "ui.attribute.list": "@ui.cachekey.app-transform-filter-"
                     },
                     "ui.monitor.change": "app.transform.filterChange"
                 },
@@ -220,7 +220,7 @@
                     "ui.basic.tag": "datalist",
                     "ui.basic.var": "filterList",
                     "ui.property.after": {
-                        "ui.basic.elementId": "@app.transform.filterCacheKey"
+                        "ui.basic.elementId": "@ui.cachekey.app-transform-filter-"
                     }
                 },
                 {
@@ -253,7 +253,7 @@
             "core.property.update": "app.transform.update",
             "core.property.work": "app.transform.work",
             "ui.property.after": {
-                "storage.cache.key": "@app.transform.windowCacheKey",
+                "storage.cache.key": "@ui.cachekey.app-transform-window-",
                 "storage.cache.location": "local",
                 "storage.cache.restore": "widget.window.store",
                 "app.transform.initOptions": null,

@@ -58,7 +58,7 @@
             "minimize": null,
             "static": true,
             "ui.property.after":{
-                "storage.cache.key": "@app.progman.windowCacheKey",
+                "storage.cache.key": "@ui.cachekey.app-progman-window-",
                 "storage.cache.location": "local",
                 "storage.cache.restore": "widget.window.store"
             }

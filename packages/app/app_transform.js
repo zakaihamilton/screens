@@ -360,27 +360,6 @@ package.app.transform = function AppTransform(me) {
             }, 2000);
         }
     };
-    me.inputCacheKey = {
-        get: function (object) {
-            var window = me.widget.window.window(object);
-            var key = me.get(window, "key");
-            return "app-transform-input-" + key;
-        }
-    };
-    me.filterCacheKey = {
-        get: function (object) {
-            var window = me.widget.window.window(object);
-            var key = me.get(window, "key");
-            return "app-transform-filter-" + key;
-        }
-    };
-    me.windowCacheKey = {
-        get: function (object) {
-            var window = me.widget.window.window(object);
-            var key = me.get(window, "key");
-            return "app-transform-window-" + key;
-        }
-    };
     me.filterChange = {
         set: function (object) {
             var window = me.widget.window.window(object);

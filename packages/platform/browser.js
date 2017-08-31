@@ -48,6 +48,7 @@ package.include({
         "monitor",
         "layout",
         "work",
+        "cachekey"
     ],
     "menu": [
         "context"
