@@ -35,11 +35,11 @@
                         "state": "select"
                     }
                 ],
-                ["Keep Source", "app.transform.keepSource", {
+                ["Prioritize Explanation", "app.transform.prioritizeExplanation", {
                         "state": "select"
                     }
                 ],
-                ["Prioritize Explanation", "app.transform.prioritizeExplanation", {
+                ["Keep Source", "app.transform.keepSource", {
                         "state": "select"
                     }
                 ],

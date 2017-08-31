@@ -657,6 +657,7 @@
             }
         },
         "Neshama2": {
+            "source":"Neshama",
             "translation": "Soul",
             "style": {
                 "heading": "Layers",
