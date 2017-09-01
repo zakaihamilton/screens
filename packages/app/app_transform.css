@@ -155,18 +155,26 @@
 
 .app-transform-filter {
     position: absolute;
-    width:30%;
+    width:10%;
     margin-top:5px;
     border: 1px solid black;
+    transition: width 0.4s ease-in-out;
+    display:none;
 }
 
 .app-transform-filter.english {
     left:20px;
+    display:block;
 }
 
 .app-transform-filter.hebrew {
     right:20px;
     direction: rtl;
+    display:block;
+}
+
+.app-transform-filter:focus {
+    width:40%;
 }
 
 .app-transform-separator {

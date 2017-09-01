@@ -6,7 +6,7 @@
 package.kab.style = function KabStyle(me) {
     me.process = function (term, styles, text, options, expansion, json, language) {
         var html = "";
-        var phase = null, heading = null, tooltip = null, short = null, long = null;
+        var phase = null, heading = null, tooltip = null, descriptions = {};
         if (typeof styles === "string") {
             if (json.style) {
                 styles = json.style[styles];
@@ -34,61 +34,70 @@ package.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
         }
-        var description = null;
         if(styles) {
-            description = styles.technical;
             if(options.prioritizeExplanation) {
-                description = styles.explanation;
-            }
-            if(description) {
-                if (description.short) {
-                    short = description.short;
+                if(styles.explanation) {
+                    descriptions["explanation"] = styles.explanation;
                 }
-                if (styles && description.long) {
-                    long = description.long;
+                if(styles.technical) {
+                    descriptions["technical"] = styles.technical;
+                }
+            }
+            else {
+                if(styles.technical) {
+                    descriptions["technical"] = styles.technical;
+                }
+                if(styles.explanation) {
+                    descriptions["explanation"] = styles.explanation;
                 }
             }
         }
+        descriptions["related"] = {};
+        var numDescriptions = Object.keys(descriptions).length;
         if (styles && styles.tooltip) {
             tooltip = styles.tooltip;
         }
         if (phase) {
             html += "<span class=\"kab-terms-phase-inline kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-outline\"";
-        }
-        if (phase || short || long) {
-            html += " kab-terms-toast";
-        }
-        if (tooltip) {
-            html += " kab-terms-tooltip=\"" + tooltip + "\"";
-        }
-        if (phase || tooltip || heading || short || long) {
+            if (numDescriptions) {
+                html += " kab-terms-toast";
+            }
+            if (tooltip) {
+                html += " kab-terms-tooltip=\"" + tooltip + "\"";
+            }
             html += ">";
-        }
-        if (phase && phase !== "none" && options.phaseNumbers && json.phaseNumber) {
-            var phaseNumber = json.phaseNumber[phase];
-            if (phaseNumber) {
-                html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + language + "\">" + phaseNumber + "</span>";
+            if (phase !== "none" && options.phaseNumbers && json.phaseNumber) {
+                var phaseNumber = json.phaseNumber[phase];
+                if (phaseNumber) {
+                    html += "<span class=\"kab-terms-phase-number kab-terms-phase-number-" + phase + " kab-terms-" + language + "\">" + phaseNumber + "</span>";
+                }
             }
-        }
-        if (heading) {
-            html += "<span class=\"kab-terms-heading kab-terms-" + language + "\">" + heading + "</span>";
-        }
-        if (phase || short || long) {
-            if (phase === "none") {
-                phase = "root";
+            if (heading) {
+                html += "<span class=\"kab-terms-heading kab-terms-" + language + "\">" + heading + "</span>";
             }
-            html += "<span class=\"kab-terms-description-box kab-terms-phase-" + phase + "-border\">";
-            if (!short) {
-                short = "";
+            if (numDescriptions) {
+                if (phase === "none") {
+                    phase = "root";
+                }
+                for(var descriptionType in descriptions) {
+                    var description = descriptions[descriptionType];
+                    html += "<span class=\"kab-terms-description-box kab-terms-" + descriptionType + " kab-terms-phase-" + phase + "-border\">";
+                    var short = description.short;
+                    if (!short) {
+                        short = "";
+                    }
+                    html += "<span class=\"kab-terms-short kab-terms-" + language + " kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
+                    var long = description.long;
+                    if (long) {
+                        html += "<span class=\"kab-terms-long\">" + long + "</span>";
+                    }
+                    html += "</span>";
+                    break;
+                }
             }
-            html += "<span class=\"kab-terms-short kab-terms-" + language + " kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
-            if (long) {
-                html += "<span class=\"kab-terms-long\">" + long + "</span>";
-            }
-            html += "</span>";
         }
         html += text;
-        if (phase || tooltip || heading || short || long) {
+        if (phase) {
             html += "</span>";
         }
         if (styles && styles.bold) {
