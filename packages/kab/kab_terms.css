@@ -282,8 +282,8 @@
 .kab-terms-description-box {
     position: fixed;
     bottom: -2px;
-    left:5%;
-    right:5%;
+    left:10%;
+    right:10%;
     height:5em;
     z-index: 10;
     background-color: white;

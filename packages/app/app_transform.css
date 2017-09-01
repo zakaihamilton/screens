@@ -226,11 +226,11 @@
 }
 
 .app-transform-toggleGlossary.english {
-    left:120px;
+    right:20px;
 }
 
 .app-transform-toggleGlossary.hebrew {
-    right:120px;
+    left:20px;
 }
 
 .app-transform-toggleGlossary:hover{
