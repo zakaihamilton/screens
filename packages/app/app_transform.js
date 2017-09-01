@@ -258,6 +258,8 @@ package.app.transform = function AppTransform(me) {
                 }
                 me.set(window.var.footer, "ui.style.display", "block");
                 me.kab.terms.setLanguage(function (numTerms) {
+                    window.options.hoverCallback = "package.app.transform.hoverDescription";
+                    window.options.toggleCallback = "package.app.transform.cycleDescription";
                     me.kab.terms.parse(function (text, terms, data) {
                         if(data) {
                             me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
@@ -381,5 +383,50 @@ package.app.transform = function AppTransform(me) {
                 "ui.style.height": ""
             });
         }
+    };
+    me.resetDescription = function(object) {
+        var descriptionTypes = ["explanation","technical","related"];
+        descriptionTypes.map(function(descriptionType) {
+            var descriptionBox = me.ui.node.findById(object, descriptionType);
+            me.set(descriptionBox, "ui.theme.remove", "show");
+        });
+    };
+    me.hoverDescription = function(object, state) {
+        var window = me.widget.window.mainWindow(object);
+        var descriptionType = window.options.prioritizeExplanation ? "explanation": "technical";
+        var descriptionBox = me.ui.node.findById(object, descriptionType);
+        if(!descriptionBox) {
+            descriptionBox = me.ui.node.findById(object, "related");
+        }
+        object.descriptionType = null;
+        if(object.hoverTimer) {
+            clearTimeout(object.hoverTimer);
+        }
+        object.hoverTimer = setTimeout(function() {
+            object.descriptionType = descriptionType;
+            me.resetDescription(object);
+            if(state) {
+                me.set(descriptionBox, "ui.theme.add", "show");
+            }
+        }, 1000);
+    };
+    me.cycleDescription = function(object) {
+        if(!object.descriptionType) {
+            return;
+        }
+        var descriptionTypes = ["explanation","technical","related"];
+        var descriptionIndex = descriptionTypes.indexOf(object.descriptionType);
+        descriptionIndex++;
+        if(descriptionIndex >= descriptionTypes.length) {
+            descriptionIndex = 0;
+        }
+        var descriptionType = descriptionTypes[descriptionIndex];
+        var descriptionBox = me.ui.node.findById(object, descriptionType);
+        if(!descriptionBox) {
+            descriptionBox = me.ui.node.findById(object, "related");
+        }
+        object.descriptionType = descriptionType;
+        me.resetDescription(object);
+        me.set(descriptionBox, "ui.theme.add", "show");
     };
 };

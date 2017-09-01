@@ -23,6 +23,16 @@ package.ui.node = function UINode(me) {
         childList = childList.filter(Boolean);
         return childList;
     };
+    me.findById = function(object, id) {
+        var element = object.firstChild;
+        while(element) {
+            if(element.id === id) {
+                break;
+            }
+            element = element.nextSibling;
+        }
+        return element;
+    };
     me.container = function (object, component_name) {
         while (object) {
             if (object === me.ui.element.desktop()) {

@@ -291,8 +291,33 @@
     border-radius: 5px 5px 0px 0px;
     transition-property: all;
     transition-duration: 1s;
-    transition-delay: 1s;
     overflow-y: hidden;
+}
+
+.kab-terms-description-box.show {
+    max-height:5em;
+}
+
+.kab-terms-description-type {
+    position:absolute;
+    top:0px;
+    height:1.5em;
+    right:0px;
+    padding-left:1em;
+    padding-right:1em;
+    padding-top:0.5em;
+    line-height:100%;
+    font-size:50%;
+    font-weight: bold;
+    text-transform:uppercase;
+}
+
+.kab-terms-description-type.kab-terms-english {
+    right:0px;
+}
+
+.kab-terms-description-type.kab-terms-hebrew {
+    left:0px;
 }
 
 .kab-terms-short {
@@ -332,8 +357,4 @@
     margin: 0 auto;
     white-space:normal;
     line-height: 100%;
-}
-
-[kab-terms-toast]:hover .kab-terms-description-box{
-    max-height: 5em; /* approximate max height */
 }

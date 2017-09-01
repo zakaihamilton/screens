@@ -65,6 +65,12 @@ package.kab.style = function KabStyle(me) {
             if (tooltip) {
                 html += " kab-terms-tooltip=\"" + tooltip + "\"";
             }
+            if(options.hoverCallback) {
+                html += " onmouseover=\"" + options.hoverCallback + "(this,true)\" onmouseout=\"" + options.hoverCallback + "(this,false)\"";
+            }
+            if(options.toggleCallback) {
+                html += " onclick=\"" + options.toggleCallback + "(this)\"";
+            }
             html += ">";
             if (phase !== "none" && options.phaseNumbers && json.phaseNumber) {
                 var phaseNumber = json.phaseNumber[phase];
@@ -81,18 +87,18 @@ package.kab.style = function KabStyle(me) {
                 }
                 for(var descriptionType in descriptions) {
                     var description = descriptions[descriptionType];
-                    html += "<span class=\"kab-terms-description-box kab-terms-" + descriptionType + " kab-terms-phase-" + phase + "-border\">";
+                    html += "<span id=\"" + descriptionType + "\" class=\"kab-terms-description-box kab-terms-" + descriptionType + " kab-terms-phase-" + phase + "-border\">";
                     var short = description.short;
                     if (!short) {
                         short = "";
                     }
                     html += "<span class=\"kab-terms-short kab-terms-" + language + " kab-terms-phase-" + phase + " kab-terms-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
+                    html += "<span class=\"kab-terms-description-type kab-terms-" + language + "\">" + descriptionType + "</span>";
                     var long = description.long;
                     if (long) {
                         html += "<span class=\"kab-terms-long\">" + long + "</span>";
                     }
                     html += "</span>";
-                    break;
                 }
             }
         }
