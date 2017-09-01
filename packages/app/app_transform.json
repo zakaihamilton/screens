@@ -225,11 +225,18 @@
                     }
                 },
                 {
-                    "ui.basic.tag": "div",
+                    "ui.element.component":"widget.icon",
                     "ui.theme.class": "app.transform.toggleTerms",
-                    "ui.basic.text": "\u2636",
+                    "ui.basic.src": "/packages/res/icons/terms.png",
                     "ui.basic.var": "toggleTerms",
                     "ui.touch.click": "app.transform.toggleTerms"
+                },
+                {
+                    "ui.element.component":"widget.icon",
+                    "ui.theme.class":"app.transform.toggleGlossary",
+                    "ui.basic.src": "/packages/res/icons/glossary.png",
+                    "ui.basic.var": "toggleGlossary",
+                    "ui.touch.click": "app.transform.toggleGlossary"
                 },
                 {
                     "ui.basic.tag": "div",

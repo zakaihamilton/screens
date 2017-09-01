@@ -99,11 +99,13 @@ package.app.transform = function AppTransform(me) {
                 me.set(object.var.spinner, "ui.style.visibility", "visible");
                 object.var.layout.style.opacity = 0;
                 object.var.toggleTerms.style.opacity = 0;
+                object.var.toggleGlossary.style.opacity = 0;
                 object.var.termPopup.style.opacity = 0;
             } else {
                 me.set(object.var.spinner, "ui.style.visibility", "hidden");
                 object.var.layout.style.opacity = 1;
                 object.var.toggleTerms.style.opacity = 1;
+                object.var.toggleGlossary.style.opacity = 1;
                 object.var.termPopup.style.opacity = 1;
                 me.updateScrolling(object);
             }
@@ -269,12 +271,16 @@ package.app.transform = function AppTransform(me) {
                             me.set(window.var.filter, "ui.theme.remove", window.prevLanguage);
                             me.set(window.var.termTable, "ui.theme.remove", window.prevLanguage);
                             me.set(window.var.toggleTerms, "ui.theme.remove", window.prevLanguage);
+                            me.set(window.var.toggleGlossary, "ui.theme.remove", window.prevLanguage);
                         }
                         me.set(window.var.layout, "ui.theme.add", language);
                         me.set(window.var.filter, "ui.theme.add", language);
                         me.set(window.var.termPopup, "title", data.termTableTitle);
                         me.set(window.var.termTable, "ui.theme.add", language);
                         me.set(window.var.toggleTerms, "ui.theme.add", language);
+                        me.set(window.var.toggleGlossary, "ui.theme.add", language);
+                        me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
+                        me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                         window.prevLanguage = language;
                         if (window.options.showHtml) {
                             me.set(window.var.output, "ui.basic.text", text);
