@@ -3333,8 +3333,8 @@
         "Samech": {
             "source": "Samech [ס]"
         },
-        "Ayin": {
-            "source": "Ayin [ע]"
+        "Eyin": {
+            "source": "Eyin [ע]"
         },
         "Pey": {
             "source": "Pey [פ]"
@@ -3445,6 +3445,15 @@
         },
         "Ketarim":{
             "translation":"Crowns"
+        },
+        "Shmiah":{
+            "translation":"Sound"
+        },
+        "Reiach":{
+            "translation":"Scent"
+        },
+        "RSRD":{
+            "expansion":["Reiah","Shmiah","Reiach","Dibur"]
         }
     },
     "style": {
