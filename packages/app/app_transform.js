@@ -390,6 +390,11 @@ package.app.transform = function AppTransform(me) {
             });
         }
     };
+    me.toggleGlossary = {
+        set: function (object) {
+            var window = me.widget.window.mainWindow(object);
+        }
+    };
     me.resetDescription = function(object) {
         var descriptionTypes = ["explanation","technical","related"];
         descriptionTypes.map(function(descriptionType) {
