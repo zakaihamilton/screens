@@ -795,11 +795,7 @@
         "Adam Kadmon": {
             "translation": "Primordial Man",
             "defaultTerm":true,
-            "style": {
-                "heading": "World",
-                "phase": "root",
-                "short": "First World after Infinity"
-            }
+            "style":"primordial man"
         },
         "Atzilut": {
             "translation": "Emanation",
@@ -3460,18 +3456,38 @@
         "chest": {
             "phase": "two",
             "heading": "Location",
-            "short": "The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
-            "long": "When a Face is in a state of smallness, the upper part including the vessels Crown and Wisdom are kept intact while the lower part including the vessels Understanding, Beauty and Kingdom are detached to the face below. The division between them is called the Chest."
+            "technical":{
+                "short": "The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
+                "long": "When a Face is in a state of smallness, the upper part including the vessels Crown and Wisdom are kept intact while the lower part including the vessels Understanding, Beauty and Kingdom are detached to the face below. The division between them is called the Chest."
+            },
+            "explanation":{
+                "short":"",
+                "long":""
+            }
         },
         "skull": {
             "heading": "Face",
             "phase": "root",
-            "short": "First Face in the World of Primordial Man"
+            "technical":{
+                "short": "First Face in the World of Primordial Man"
+            }
         },
         "sea": {
             "phase": "four",
             "heading": "Vessel",
-            "short": "When the Female (Desire) receives Wisdom"
+            "technical":{
+                "short": "When the Female (Desire) receives Wisdom"
+            }
+        },
+        "primordial man": {
+            "heading": "World",
+            "phase": "root",
+            "technical":{
+                "short": "First World after Infinity"
+            },
+            "explanation":{
+                "short":"First Spiritual World After Crossing the Barrier"
+            }
         }
     }
 }

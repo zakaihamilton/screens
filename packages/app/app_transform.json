@@ -31,15 +31,16 @@
                         "separator": true
                     }
                 ],
-                ["Explanation", "app.transform.doExplanation", {
+                ["Keep Source", "app.transform.keepSource", {
                         "state": "select"
+                    }
+                ],
+                ["Explanation", "app.transform.doExplanation", {
+                        "state": "select",
+                        "separator": true
                     }
                 ],
                 ["Prioritize Explanation", "app.transform.prioritizeExplanation", {
-                        "state": "select"
-                    }
-                ],
-                ["Keep Source", "app.transform.keepSource", {
                         "state": "select"
                     }
                 ],

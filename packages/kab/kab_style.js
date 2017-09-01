@@ -34,11 +34,20 @@ package.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
         }
-        if (styles && styles.short) {
-            short = styles.short;
-        }
-        if (styles && styles.long) {
-            long = styles.long;
+        var description = null;
+        if(styles) {
+            description = styles.technical;
+            if(options.prioritizeExplanation) {
+                description = styles.explanation;
+            }
+            if(description) {
+                if (description.short) {
+                    short = description.short;
+                }
+                if (styles && description.long) {
+                    long = description.long;
+                }
+            }
         }
         if (styles && styles.tooltip) {
             tooltip = styles.tooltip;
