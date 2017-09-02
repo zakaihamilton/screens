@@ -325,7 +325,7 @@ package.kab.terms = function KabTerms(me) {
         }
         if (!options.doTranslation && !options.doExplanation) {
             replacement = term;
-        } else if (options.keepSource) {
+        } else if (options.keepSource && term.toLowerCase() !== replacement.toLowerCase()) {
             replacement = term + prefix + replacement + suffix;
         }
         me.kab.format.replaceDuplicate(words, wordIndex, replacement);
