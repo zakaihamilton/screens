@@ -227,7 +227,7 @@ package.kab.terms = function KabTerms(me) {
                                     translation = parse(null, me.language, translation, duplicateOptions(options, {"addStyles": false}));
                                 }
                             }
-                            me.kab.search.setTerm(options, item, null, translation, explanation);
+                            me.kab.search.setTerm(options, me.json.style, item, null, translation, explanation);
                             if (translation && upperCase) {
                                 translation = translation.toUpperCase();
                             }
@@ -244,7 +244,7 @@ package.kab.terms = function KabTerms(me) {
                             }
                             wordIndex--;
                         } else if (options.addStyles && item.style) {
-                            me.kab.search.setTerm(options, item);
+                            me.kab.search.setTerm(options, me.json.style, item);
                             modify(words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, null, "", duplicateOptions(options, {"keepSource": false}));
                         }
                         break;
@@ -349,7 +349,7 @@ package.kab.terms = function KabTerms(me) {
             var lookup = result[key];
             info.term = term;
             if(info.defaultTerm) {
-                me.kab.search.setTerm(options, info, null, null, null, false);
+                me.kab.search.setTerm(options, me.json.style, info, null, null, null, false);
             }
             if (!lookup) {
                 lookup = new Map();

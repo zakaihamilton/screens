@@ -4,13 +4,13 @@
  */
 
 package.kab.search = function KabSearch(me) {
-    me.init = function() {
+    me.init = function () {
         me.terms = {};
     };
-    me.clear = function() {
+    me.clear = function () {
         me.terms = {};
     };
-    me.setTerm = function (options, item, source, translation, explanation, used = true) {
+    me.setTerm = function (options, styles, item, source, translation, explanation, used = true) {
         if (!("search" in item) || item.search === true) {
             if (!source) {
                 source = item.source ? item.source : item.term;
@@ -48,10 +48,14 @@ package.kab.search = function KabSearch(me) {
                 searchTerm.source = item.source ? item.source : source;
             }
             if (item.style) {
-                searchTerm.heading = item.style.heading;
-                searchTerm.phase = item.style.phase;
+                var style = item.style;
+                if (typeof style === "string" && styles) {
+                    style = styles[style];
+                }
+                searchTerm.heading = style.heading;
+                searchTerm.phase = style.phase;
             }
     }
     };
-    
+
 };
