@@ -223,6 +223,7 @@
     cursor:default;
     user-select:none;
     border:1px solid transparent;
+    display:none;
 }
 
 .app-transform-toggleGlossary.english {
