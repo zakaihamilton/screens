@@ -175,6 +175,9 @@ package.ui.layout = function UILayout(me) {
                 if (pageContent.scrollHeight > pageContent.clientHeight) {
                     newPage = true;
                 }
+                if(widget.tagName && widget.tagName.toLowerCase() === "br") {
+                    newPage = true;
+                }
                 if (!(widget.innerHTML || widget.firstChild)) {
                     pageContent.removeChild(widget);
                     widget = null;

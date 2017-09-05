@@ -200,6 +200,10 @@
             "suffix": "</p>"
         },
         {
+            "find": "/<h4 style=\"text-align:center\"><br><\\/h4>",
+            "replace": "<br>"
+        },
+        {
             "find": "/<p><(h\\d)",
             "replace": "<$1"
         },
@@ -3454,6 +3458,24 @@
         },
         "RSRD":{
             "expansion":["Reiah","Shmiah","Reiach","Dibur"]
+        },
+        "Emtzai":{
+            "translation":"Medial"
+        },
+        "Malaachim":{
+            "translation":"Angels"
+        },
+        "Ribua":{
+            "translation":"Square"
+        },
+        "Drush":{
+            "translation":"Homily"
+        },
+        "Shmia":{
+            "translation":"Sound"
+        },
+        "Et":{
+            "translation":"The"
         }
     },
     "style": {

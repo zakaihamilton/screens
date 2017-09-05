@@ -56,6 +56,9 @@ package.ui.basic = function UIBasic(me) {
                 if(object.context) {
                     parent = object.context;
                 }
+                if(!parent.var) {
+                    parent.var = {};
+                }
                 console.log("storing var component: " + parent.component + " context: " + object.context + " storing var: " + value);
                 parent.var[value] = object;
             }
