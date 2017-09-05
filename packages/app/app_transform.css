@@ -81,8 +81,12 @@
     padding:0;
 }
 
+.app-transform-page-content br {
+    display:none;
+}
+
 .app-transform-page-content p {
-    margin-bottom:1em;
+    margin-bottom:0.5em;
     padding:0;
 }
 
