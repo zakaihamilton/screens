@@ -200,7 +200,7 @@
             "suffix": "</p>"
         },
         {
-            "find": "/<h4 style=\"text-align:center\"><br><\\/h4>",
+            "find": "/<p><h4 style=\"text-align:center\"><br><\\/h4><\\/p>",
             "replace": "<br>"
         },
         {
