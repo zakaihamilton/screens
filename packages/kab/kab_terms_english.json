@@ -75,7 +75,8 @@
         "Yetzufim": "Yetzurim",
         "Nukvais": "Nukva is",
         "Aba": "Abba",
-        "Imma": "Ima"
+        "Imma": "Ima",
+        "histaklut":"Histaklut"
     },
     "pre": [
         {
@@ -1001,6 +1002,9 @@
         },
         "Shinui Tzura": {
             "translation": "Change of Form"
+        },
+        "Shinui":{
+            "translation":"Change"
         },
         "Igul": {
             "translation": "Circle"
@@ -2739,6 +2743,7 @@
             "explanation": "Decree"
         },
         "Abba ve Ima": {
+            "defaultTerm":true,
             "style": {
                 "heading": "Face",
                 "phase": "one"
@@ -3476,6 +3481,12 @@
         },
         "Et":{
             "translation":"The"
+        },
+        "GASMB":{
+            "expansion":["Galgalta","AB","SAG","MA","BON"]
+        },
+        "Dalet Partzufim":{
+            "translation":"Four Faces"
         }
     },
     "style": {
