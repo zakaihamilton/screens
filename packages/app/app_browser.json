@@ -1,0 +1,35 @@
+{
+    "title": "Browser",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "640px",
+    "ui.style.height": "480px",
+    "ui.basic.elements": [
+        {
+            "ui.element.update":{
+                "ui.style.display":"flex",
+                "ui.style.flexWrap":"wrap",
+                "ui.style.alignItems":"flex-start"
+            }
+        },
+        {
+            "ui.basic.var": "url",
+            "ui.basic.text": "",
+            "ui.style.flex":"1",
+            "ui.basic.type": "text"
+        },
+        {
+            "ui.basic.text": "Load",
+            "ui.touch.click": "app.browser.load",
+            "ui.style.marginRight":"10px"
+        },
+        {
+            "ui.basic.var": "embed",
+            "ui.element.component": "widget.embed",
+            "ui.attribute.allowFullScreen": "",
+            "ui.style.width":"100%",
+            "ui.style.height":"90%",
+            "ui.attribute.sandbox":"allow-scripts allow-popups allow-forms allow-pointer-lock"
+        }
+    ]
+}

@@ -79,7 +79,14 @@
                 ]
             ],
             [
-                "Accessories", []
+                "Accessories", [
+                    {
+                        "text": "Browser",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "browser",
+                        "ui.touch.dblclick": "app.progman.shell"
+                    }
+                ]
             ],
             [
                 "Storage", "storage.file./storage.items"

@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component AppEditor
+ @component AppCanvas
  */
 
-package.app.canvas = function AppEditor(me) {
+package.app.canvas = function AppCanvas(me) {
     me.launch = function () {
         if(me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);

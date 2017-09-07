@@ -22,7 +22,9 @@ package.cmd.youtube = function CmdYoutube(me) {
                     {
                         "ui.element.component": "widget.embed",
                         "ui.basic.src": "https://www.youtube.com/embed/" + args[2] + "?ecver=1",
-                        "ui.attribute.allowFullScreen": ""
+                        "ui.attribute.allowFullScreen": "",
+                        "ui.style.width":"100%",
+                        "ui.style.height":"100%"
                     }
                 ]
             });
