@@ -61,7 +61,7 @@ package.app.folder = function AppFolder(me) {
     };
     me.shell = {
         set: function(object) {
-            var args = me.core.cmd.splitArguments(object.args);
+            var args = me.core.cmd.split(object.args);
             if (args) {
                 me.launch(args);
             }

@@ -7,14 +7,14 @@ package.core.cmd = function CoreCmd(me) {
     me.application = function(terminal) {
         return terminal.application;
     };
-    me.splitArguments = function(args) {
+    me.split = function(args, separator=' ') {
         return [].concat.apply([], args.split('"').map(function(v,i){
-           return i%2 ? v : v.split(' ');
+           return i%2 ? v : v.split(separator);
         })).filter(Boolean);
     };
     me.handle = function(terminal, args) {
         if(!Array.isArray(args)) {
-            args = me.splitArguments(args);
+            args = me.split(args);
         }
         if(!args.length) {
             me.exit(terminal);

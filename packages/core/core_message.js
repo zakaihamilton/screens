@@ -74,7 +74,8 @@ package.core.message = function CoreMessage(me) {
                 args.unshift(path);
                 var task = core.job.begin(info.job);
                 args[1] = function (response) {
-                    info.body = core.type.wrap(response);
+                    var args = Array.prototype.slice.call(arguments, 0);
+                    info.body = core.type.wrap_args(args);
                     core.job.end(task);
                 };
                 core.message.send.apply(null, args);
@@ -107,8 +108,9 @@ package.core.message = function CoreMessage(me) {
     };
     me.handleRemote = function (info) {
         if (info.altCallback) {
-            info.response = core.type.unwrap(info.response);
-            info.altCallback(info.response);
+            var args = core.http.parse_query(info.response);
+            info.response = core.type.unwrap_args(args);
+            info.altCallback.apply(null, info.response);
         }
     };
     me.handleLocal = function (context, info) {

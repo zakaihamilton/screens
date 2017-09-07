@@ -25,7 +25,7 @@ package.core.type = function CoreType(me) {
         var query = "";
         for(var i = 0; i < unwrapped_args.length; i++) {
             var value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
-            if(i == 0) {
+            if(i === 0) {
                 query = "?" + i + "=" + value;
             }
             else {

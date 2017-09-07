@@ -28,7 +28,7 @@ package.app.progman = function AppProgman(me) {
     };
     me.shell = {
         set: function (object, value) {
-            var args = me.core.cmd.splitArguments(object.args);
+            var args = me.core.cmd.split(object.args);
             if (args) {
                 package.include("app." + args[0], function (info) {
                     if (info.complete) {
