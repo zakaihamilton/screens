@@ -58,11 +58,11 @@ package.ui.property = function UIProperty(me) {
             "set": function (object, name, value) {
                 if (value) {
                     me.set(object, "ui.property.trickle", {
-                        "ui.theme.add": name
+                        "ui.class.add": name
                     });
                 } else {
                     me.set(object, "ui.property.trickle", {
-                        "ui.theme.remove": name
+                        "ui.class.remove": name
                     });
                 }
                 if (callback) {

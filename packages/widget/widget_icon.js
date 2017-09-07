@@ -14,16 +14,16 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.drag.icon"];
     me.default = {
         "ui.basic.tag": "figure",
-        "ui.theme.class": "figure",
+        "ui.class.class": "figure",
         "ui.basic.elements": [{
                 "ui.basic.src": "",
-                "ui.theme.class": "image",
+                "ui.class.class": "image",
                 "ui.drag.element": null,
                 "ui.basic.var": "icon"
             },
             {
                 "ui.basic.tag": "figcaption",
-                "ui.theme.class": "caption",
+                "ui.class.class": "caption",
                 "ui.basic.var": "label"
             }]
     };

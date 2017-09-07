@@ -5,7 +5,7 @@
 
 package.widget.clock = function WidgetClock(me) {
     me.default = {
-        "ui.theme.class": "container"
+        "ui.class.class": "container"
     };
     me.create = {
         set: function (object) {

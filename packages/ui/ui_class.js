@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UITheme
+ @component UIClass
  */
 
-package.ui.theme = function UITheme(me) {
+package.ui.class = function UIClass(me) {
     me.stylesheets = {};
     me.class = {
         set: function (object, value) {

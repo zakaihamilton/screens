@@ -6,7 +6,7 @@
 package.widget.editor = function WidgetEditor(me) {
     me.default = {
         "ui.basic.tag": "textarea",
-        "ui.theme.class": "border"
+        "ui.class.class": "border"
     };
     me.redirect = {
         "ui.basic.text":"text"

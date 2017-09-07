@@ -6,15 +6,15 @@
 package.widget.embed = function WidgetEmbed(me) {
     me.default = {
         "ui.basic.tag": "iframe",
-        "ui.theme.class": "iframe"
+        "ui.class.class": "iframe"
     };
     me.transition = {
         set: function(object, value) {
             if(value) {
-                me.set(object, "ui.theme.add", "transition");
+                me.set(object, "ui.class.add", "transition");
             }
             else {
-                me.set(object, "ui.theme.remove", "transition");
+                me.set(object, "ui.class.remove", "transition");
             }
         }
     };

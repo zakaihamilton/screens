@@ -9,7 +9,7 @@ package.widget.terminal = function WidgetTerminal(me) {
         var window = me.widget.window.window(terminal);
         var field = me.ui.element.create({
             "ui.basic.tag": "input",
-            "ui.theme.class":"widget.terminal.field"
+            "ui.class.class":"widget.terminal.field"
         }, window);
         terminal.field = field;
         me.set(terminal.var.inputLine, "ui.basic.text", "");

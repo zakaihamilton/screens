@@ -37,7 +37,7 @@ package.include({
         "style",
         "basic",
         "focus",
-        "theme",
+        "class",
         "property",
         "options",
         "scroll",

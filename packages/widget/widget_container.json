@@ -1,8 +1,8 @@
 {
-    "ui.theme.class": "root",
+    "ui.class.class": "root",
     "ui.basic.elements": [
         {
-            "ui.theme.class":"center",
+            "ui.class.class":"center",
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.content",
@@ -16,14 +16,14 @@
         },
         {
             "ui.basic.var": "footer",
-            "ui.theme.class":"footer",
+            "ui.class.class":"footer",
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.scrollbar.horizontal",
                     "ui.basic.var": "horizontal"
                 },
                 {
-                    "ui.theme.class": "widget.scrollbar.corner"
+                    "ui.class.class": "widget.scrollbar.corner"
                 }
             ]
         }

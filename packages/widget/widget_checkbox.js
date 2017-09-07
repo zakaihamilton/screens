@@ -11,7 +11,7 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         "ui.basic.text": "text"
     };
     me.default = {
-        "ui.theme.class": "container"
+        "ui.class.class": "container"
     };
     me.create = {
         set: function (object) {
@@ -20,17 +20,17 @@ package.widget.checkbox = function WidgetCheckBox(me) {
                     "ui.basic.var": "input",
                     "ui.basic.tag": "input",
                     "ui.basic.type": "checkbox",
-                    "ui.theme.class": "original",
+                    "ui.class.class": "original",
                     "ui.basic.elementId": ref
                 },
                 {
                     "ui.basic.tag": "label",
                     "ui.basic.htmlFor": ref,
-                    "ui.theme.class": "icon"
+                    "ui.class.class": "icon"
                 },
                 {
                     "ui.basic.var": "label",
-                    "ui.theme.class": "label",
+                    "ui.class.class": "label",
                     "ui.touch.click": "toggle"
                 }
             ], object);

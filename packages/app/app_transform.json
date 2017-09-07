@@ -170,7 +170,7 @@
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.editor",
-                    "ui.theme.class": "app.transform.input",
+                    "ui.class.class": "app.transform.input",
                     "ui.property.after": {
                         "storage.cache.key": "@ui.cachekey.app-transform-input-",
                         "storage.cache.location": "local",
@@ -183,17 +183,17 @@
                     "ui.basic.text": "Transform",
                     "ui.touch.click": "app.transform.transform",
                     "ui.basic.var": "transform",
-                    "ui.theme.add": "app.transform.transform"
+                    "ui.class.add": "app.transform.transform"
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.output",
+                    "ui.class.class": "app.transform.output",
                     "ui.basic.var": "output"
                 },
                 {
                     "ui.element.component": "widget.container",
                     "ui.basic.var": "layout",
-                    "ui.theme.class": "app.transform.layout",
+                    "ui.class.class": "app.transform.layout",
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
                     "core.property.scrolled": "app.transform.scrolled",
@@ -201,11 +201,11 @@
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.spinner",
+                    "ui.class.class": "app.transform.spinner",
                     "ui.basic.var": "spinner"
                 },
                 {
-                    "ui.theme.class": "app.transform.filter",
+                    "ui.class.class": "app.transform.filter",
                     "ui.basic.text": "",
                     "ui.basic.type": "search",
                     "ui.basic.var": "filter",
@@ -226,21 +226,21 @@
                 },
                 {
                     "ui.element.component":"widget.icon",
-                    "ui.theme.add": "app.transform.toggleTerms",
+                    "ui.class.add": "app.transform.toggleTerms",
                     "ui.basic.src": "/packages/res/icons/terms.png",
                     "ui.basic.var": "toggleTerms",
                     "ui.touch.click": "app.transform.toggleTerms"
                 },
                 {
                     "ui.element.component":"widget.icon",
-                    "ui.theme.add":"app.transform.toggleGlossary",
+                    "ui.class.add":"app.transform.toggleGlossary",
                     "ui.basic.src": "/packages/res/icons/glossary.png",
                     "ui.basic.var": "toggleGlossary",
                     "ui.touch.click": "app.transform.toggleGlossary"
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.add": "app.transform.termPopup",
+                    "ui.class.add": "app.transform.termPopup",
                     "ui.basic.var": "termPopup",
                     "ui.element.component": "widget.window",
                     "title": "Tables of Phases",
@@ -256,14 +256,14 @@
                     "ui.basic.elements": [
                         {
                             "ui.element.component": "widget.table",
-                            "ui.theme.class": "app.transform.termTable",
+                            "ui.class.class": "app.transform.termTable",
                             "ui.basic.var": "termTable"
                         }
                     ]
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": "app.transform.description",
+                    "ui.class.class": "app.transform.description",
                     "ui.basic.var": "description"
                 }
             ],

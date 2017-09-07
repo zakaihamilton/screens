@@ -5,7 +5,7 @@
 
 package.widget.menu = function WidgetMenu(me) {
     me.default = {
-        "ui.theme.class": "horizontal",
+        "ui.class.class": "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal",
@@ -15,12 +15,12 @@ package.widget.menu = function WidgetMenu(me) {
     me.updateTheme = function(object) {
         if(object.var.menu) {
             me.set(object, "ui.property.trickle", {
-                "ui.theme.add": "menu"
+                "ui.class.add": "menu"
             });
         }
         else {
             me.set(object, "ui.property.trickle", {
-                "ui.theme.remove": "menu"
+                "ui.class.remove": "menu"
             });
         }
     };
@@ -47,7 +47,7 @@ package.widget.menu = function WidgetMenu(me) {
                     }
                 }, parent);
                 me.set(object, "ui.property.trickle", {
-                    "ui.theme.add": "menu"
+                    "ui.class.add": "menu"
                 });
             }
         }
@@ -58,7 +58,7 @@ package.widget.menu = function WidgetMenu(me) {
             me.set(object.var.modal, "ui.style.display", "none");
             me.set(object.var.menu, "ui.node.parent");
             me.set(object, "ui.property.trickle", {
-                "ui.theme.remove": "select"
+                "ui.class.remove": "select"
             });
             me.set(object, "ui.property.trickle", {
                 "ui.touch.over": null
@@ -80,9 +80,9 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.touch.over": "widget.menu.item.hover"
             });
             me.set(object, "ui.property.trickle", {
-                "ui.theme.remove": "select"
+                "ui.class.remove": "select"
             });
-            me.set(item, "ui.theme.add", "select");
+            me.set(item, "ui.class.add", "select");
             me.set(object.var.menu, "ui.node.parent");
             me.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
@@ -115,7 +115,7 @@ package.widget.menu = function WidgetMenu(me) {
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.default = {
-        "ui.theme.class": "widget.menu.vertical",
+        "ui.class.class": "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal"
@@ -169,16 +169,16 @@ package.widget.menu.item = function WidgetMenuItem(me) {
                 });
                 me.handleValue(object, options, "state", function (value) {
                     if (value) {
-                        me.set(object, "ui.theme.add", "checked");
+                        me.set(object, "ui.class.add", "checked");
                     } else {
-                        me.set(object, "ui.theme.remove", "checked");
+                        me.set(object, "ui.class.remove", "checked");
                     }
                 });
                 me.handleValue(object, options, "separator", function (value) {
                     if (value) {
-                        me.set(object, "ui.theme.add", "separator");
+                        me.set(object, "ui.class.add", "separator");
                     } else {
-                        me.set(object, "ui.theme.remove", "separator");
+                        me.set(object, "ui.class.remove", "separator");
                     }
                 });
             }

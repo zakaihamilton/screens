@@ -101,7 +101,7 @@ package.ui.drag.icon = function UIDragIcon(me) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
                 me.target = target;
-                me.set(target, "ui.theme.add", "over");
+                me.set(target, "ui.class.add", "over");
             }
         }
     };
@@ -113,7 +113,7 @@ package.ui.drag.icon = function UIDragIcon(me) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
                 me.target = target;
-                me.set(target, "ui.theme.add", "over");
+                me.set(target, "ui.class.add", "over");
             }
             return false;
         }
@@ -122,7 +122,7 @@ package.ui.drag.icon = function UIDragIcon(me) {
         set: function (object, event) {
             if (me.source && me.source.style.position !== "absolute") {
                 var target = me.parent_draggable(event.target);
-                me.set(target, "ui.theme.remove", "over");
+                me.set(target, "ui.class.remove", "over");
                 me.target = null;
             }
         }
@@ -146,8 +146,8 @@ package.ui.drag.icon = function UIDragIcon(me) {
             if (me.source) {
                 if (me.source.style.position !== "absolute") {
                     var target = me.parent_draggable(event.target);
-                    me.set(me.target, "ui.theme.remove", "over");
-                    me.set(target, "ui.theme.remove", "over");
+                    me.set(me.target, "ui.class.remove", "over");
+                    me.set(target, "ui.class.remove", "over");
                 }
                 me.source = me.target = null;
             }

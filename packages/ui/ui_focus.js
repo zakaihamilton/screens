@@ -49,7 +49,7 @@ package.ui.focus = function UIFocus(me) {
     me.deactivate = function (from, to) {
         while (from && from !== to) {
             me.set(from, "ui.property.trickle", {
-                "ui.theme.remove": "focus"
+                "ui.class.remove": "focus"
             });
             me.set(from, "ui.property.trickle", {
                 "blur": from
@@ -60,7 +60,7 @@ package.ui.focus = function UIFocus(me) {
     me.activate = function (from, to) {
         while (from && from !== to) {
             me.set(from, "ui.property.trickle", {
-                "ui.theme.add": "focus"
+                "ui.class.add": "focus"
             });
             me.set(from, "ui.property.trickle", {
                 "focus": from

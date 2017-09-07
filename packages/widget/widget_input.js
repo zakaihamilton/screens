@@ -12,7 +12,7 @@ package.widget.input = function WidgetInput(me) {
     };
     me.default = {
         "ui.basic.tag" : "input",
-        "ui.theme.class" : "normal"
+        "ui.class.class" : "normal"
     };
     me.text = {
         get: function(object) {

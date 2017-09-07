@@ -11,7 +11,7 @@ package.widget.list = function WidgetList(me) {
         "ui.basic.elements": "elements"
     };
     me.default = {
-        "ui.theme.class": "border",
+        "ui.class.class": "border",
         "ui.basic.elements": [
             {
                 "ui.basic.var": "container",
@@ -69,26 +69,26 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
         "ui.monitor.change":"monitorChange"
     };
     me.default = {
-        "ui.theme.class": "group",
+        "ui.class.class": "group",
         "ui.basic.elements": [
             {
                 "ui.element.component":"widget.input",
                 "ui.basic.text": "",
                 "ui.basic.type":"text",
                 "ui.basic.var": "selection",
-                "ui.theme.class": "selection",
+                "ui.class.class": "selection",
                 "ui.basic.readOnly":true,
                 "ui.touch.click": "dropdown"
             },
             {
-                "ui.theme.class": "button",
+                "ui.class.class": "button",
                 "ui.touch.click": "dropdown",
                 "ui.basic.elements": [
                     {
-                        "ui.theme.class": "button.arrow"
+                        "ui.class.class": "button.arrow"
                     },
                     {
-                        "ui.theme.class": "button.line"
+                        "ui.class.class": "button.line"
                     }
                 ]
             }
@@ -164,7 +164,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
         "ui.basic.elements": "elements"
     };
     me.default = {
-        "ui.theme.class": "border",
+        "ui.class.class": "border",
         "ui.basic.elements": [
             {
                 "ui.basic.var": "modal",
@@ -195,7 +195,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
                     var child = childList[childIndex];
                     var label = me.get(child, "ui.basic.text");
                     if(label === value) {
-                        me.set(child, "ui.theme.add", "selected");
+                        me.set(child, "ui.class.add", "selected");
                         break;
                     }
                 }
@@ -217,7 +217,7 @@ package.widget.list.item = function WidgetMenuItem(me) {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",
         "ui.touch.default": "dblclick",
-        "ui.theme.class": "widget.list.item"
+        "ui.class.class": "widget.list.item"
     };
     me.depends = {
         parent: ["widget.list", "widget.list.popup"],
@@ -239,14 +239,14 @@ package.widget.list.item = function WidgetMenuItem(me) {
     };
     me.state = {
         get: function (object) {
-            return me.get(object, "ui.theme.contains", "selected");
+            return me.get(object, "ui.class.contains", "selected");
         },
         set: function (object, value) {
             value = me.value(object, value);
             if (value) {
-                me.set(object, "ui.theme.add", "selected");
+                me.set(object, "ui.class.add", "selected");
             } else {
-                me.set(object, "ui.theme.remove", "selected");
+                me.set(object, "ui.class.remove", "selected");
             }
         }
     };
@@ -259,7 +259,7 @@ package.widget.list.item = function WidgetMenuItem(me) {
     me.click = {
         set: function (object) {
             if (object.group) {
-                me.set(object, "ui.theme.add", "selected");
+                me.set(object, "ui.class.add", "selected");
                 var childList = me.ui.node.childList(object.parentNode);
                 if (childList) {
                     for (var childIndex = 0; childIndex < childList.length; childIndex++) {
@@ -267,14 +267,14 @@ package.widget.list.item = function WidgetMenuItem(me) {
                         if (child.group !== object.group || object === child) {
                             continue;
                         }
-                        me.set(child, "ui.theme.remove", "selected");
+                        me.set(child, "ui.class.remove", "selected");
                     }
                 }
                 var popup = me.ui.node.container(object, "widget.list.popup");
                 me.set(popup, "select", object);
             }
             else {
-                me.set(object, "ui.theme.toggle", "selected");
+                me.set(object, "ui.class.toggle", "selected");
             }
         }
     };

@@ -6,7 +6,7 @@
     "ui.style.top": "100px",
     "ui.move.enabled": true,
     "ui.resize.enabled": true,
-    "ui.theme.class": "border",
+    "ui.class.class": "border",
     "ui.basic.elements": [
         {
             "ui.basic.var": "icon",
@@ -21,7 +21,7 @@
         {
             "ui.element.update": {
                 "ui.group.data": {
-                    "ui.data.keyList": ["ui.theme.class"],
+                    "ui.data.keyList": ["ui.class.class"],
                     "ui.data.default": {
                         "ui.resize.extend": null
                     },
@@ -39,46 +39,46 @@
             }
         },
         {
-            "ui.theme.class": "margin",
+            "ui.class.class": "margin",
             "ui.basic.elements": [
                 {
                     "ui.basic.var": "title",
-                    "ui.theme.class": "title",
+                    "ui.class.class": "title",
                     "ui.basic.elements": [
                         {
                             "ui.basic.var": "close",
-                            "ui.theme.class": "close",
+                            "ui.class.class": "close",
                             "ui.touch.click": "menu.context.show",
                             "ui.touch.dblclick": "close",
-                            "ui.theme.add": "@widget.window.mainClass"
+                            "ui.class.add": "@widget.window.mainClass"
                         },
                         {
                             "ui.basic.var": "label",
                             "ui.basic.text": "",
-                            "ui.theme.class": "label",
+                            "ui.class.class": "label",
                             "ui.move.extend": null,
                             "ui.touch.dblclick": "toggle"
                         },
                         {
                             "ui.basic.var": "minimize",
-                            "ui.theme.class": ["action", "minimize"],
+                            "ui.class.class": ["action", "minimize"],
                             "ui.touch.click": "minimize",
                             "ui.basic.elements": {
-                                "ui.theme.class": "minimize.arrow"
+                                "ui.class.class": "minimize.arrow"
                             }
                         },
                         {
                             "ui.basic.var": "maximize",
-                            "ui.theme.class": ["action", "maximize"],
+                            "ui.class.class": ["action", "maximize"],
                             "ui.touch.click": "toggle",
                             "ui.basic.elements": {
-                                "ui.theme.class": "maximize.arrow"
+                                "ui.class.class": "maximize.arrow"
                             }
                         }
                     ]
                 },
                 {
-                    "ui.theme.class": "header",
+                    "ui.class.class": "header",
                     "ui.basic.var": "header"
                 },
                 {
@@ -86,13 +86,13 @@
                     "ui.basic.var": "container"
                 },
                 {
-                    "ui.theme.class": "footer",
+                    "ui.class.class": "footer",
                     "ui.basic.var": "footer"
                 }
             ]
         }
     ],
     "ui.property.trickle": {
-        "ui.theme.add": "restore"
+        "ui.class.add": "restore"
     }
 }

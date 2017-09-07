@@ -6,7 +6,7 @@
 package.widget.desktop = function WidgetDesktop(me) {
     me.default = {
         "ui.basic.tag": "div",
-        "ui.theme.class": "background",
+        "ui.class.class": "background",
         "ui.touch.dblclick": "core.app.tasks"
     };
 };

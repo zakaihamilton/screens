@@ -62,15 +62,15 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         if(!scrollbar) {
             return;
         }
-        var has_class = me.get(container, "ui.theme.contains", scroll_type + "_scroll");
+        var has_class = me.get(container, "ui.class.contains", scroll_type + "_scroll");
         var class_name = scroll_type + "_scroll";
         if (has_class) {
-            me.set(container, "ui.theme.remove", class_name);
+            me.set(container, "ui.class.remove", class_name);
             me.set(container.var.vertical, "ui.property.trickle", {
-                "ui.theme.remove": class_name
+                "ui.class.remove": class_name
             });
             me.set(container.var.footer, "ui.property.trickle", {
-                "ui.theme.remove": class_name
+                "ui.class.remove": class_name
             });
         }
     };
@@ -84,12 +84,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         has_scroll = has_scroll && !me.widget.container.isChild(container);
         var class_name = scroll_type + "_scroll";
         if (has_scroll) {
-            me.set(container, "ui.theme.add", class_name);
+            me.set(container, "ui.class.add", class_name);
             me.set(container.var.vertical, "ui.property.trickle", {
-                "ui.theme.add": class_name
+                "ui.class.add": class_name
             });
             me.set(container.var.footer, "ui.property.trickle", {
-                "ui.theme.add": class_name
+                "ui.class.add": class_name
             });
         }
     };

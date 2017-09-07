@@ -8,6 +8,6 @@ package.widget.text = function WidgetText(me) {
         properties:["ui.basic.text"]
     };
     me.default = {
-        "ui.theme.class":"normal"
+        "ui.class.class":"normal"
     };
 };

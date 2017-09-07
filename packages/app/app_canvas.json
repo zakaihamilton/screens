@@ -7,7 +7,7 @@
     "ui.style.height": "500px",
     "ui.basic.elements": [
         {
-            "ui.theme.class": "app.canvas.canvas",
+            "ui.class.class": "app.canvas.canvas",
             "!ui.element.component": "widget.canvas",
             "ui.basic.elements": [
                 {

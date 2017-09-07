@@ -63,7 +63,7 @@ package.app.transform = function AppTransform(me) {
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
-            me.ui.theme.useStylesheet("kab.terms");
+            me.ui.class.useStylesheet("kab.terms");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
@@ -224,8 +224,8 @@ package.app.transform = function AppTransform(me) {
                             styles.push("app.transform.placeholder");
                         }
                         var itemProperties = {
-                            "ui.theme.class":"app.transform.termItem",
-                            "ui.theme.add":styles
+                            "ui.class.class":"app.transform.termItem",
+                            "ui.class.add":styles
                         };
                         if(window.options.keepSource) {
                             itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
@@ -237,7 +237,7 @@ package.app.transform = function AppTransform(me) {
                         return itemProperties;
                     });
                 }
-                properties["ui.theme.add"] = "kab.terms.phase." + phase;
+                properties["ui.class.add"] = "kab.terms.phase." + phase;
                 list.push(properties);
             });
             data.push(list);
@@ -267,18 +267,18 @@ package.app.transform = function AppTransform(me) {
                             me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                         }
                         if (window.prevLanguage) {
-                            me.set(window.var.layout, "ui.theme.remove", window.prevLanguage);
-                            me.set(window.var.filter, "ui.theme.remove", window.prevLanguage);
-                            me.set(window.var.termTable, "ui.theme.remove", window.prevLanguage);
-                            me.set(window.var.toggleTerms, "ui.theme.remove", window.prevLanguage);
-                            me.set(window.var.toggleGlossary, "ui.theme.remove", window.prevLanguage);
+                            me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
+                            me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
+                            me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
+                            me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
+                            me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
                         }
-                        me.set(window.var.layout, "ui.theme.add", language);
-                        me.set(window.var.filter, "ui.theme.add", language);
+                        me.set(window.var.layout, "ui.class.add", language);
+                        me.set(window.var.filter, "ui.class.add", language);
                         me.set(window.var.termPopup, "title", data.termTableTitle);
-                        me.set(window.var.termTable, "ui.theme.add", language);
-                        me.set(window.var.toggleTerms, "ui.theme.add", language);
-                        me.set(window.var.toggleGlossary, "ui.theme.add", language);
+                        me.set(window.var.termTable, "ui.class.add", language);
+                        me.set(window.var.toggleTerms, "ui.class.add", language);
+                        me.set(window.var.toggleGlossary, "ui.class.add", language);
                         me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
                         me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                         window.prevLanguage = language;
@@ -399,7 +399,7 @@ package.app.transform = function AppTransform(me) {
         var descriptionTypes = ["explanation","technical","related"];
         descriptionTypes.map(function(descriptionType) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
-            me.set(descriptionBox, "ui.theme.remove", "show");
+            me.set(descriptionBox, "ui.class.remove", "show");
         });
     };
     me.hoverDescription = function(object, state) {
@@ -417,7 +417,7 @@ package.app.transform = function AppTransform(me) {
             object.descriptionType = descriptionType;
             me.resetDescription(object);
             if(state) {
-                me.set(descriptionBox, "ui.theme.add", "show");
+                me.set(descriptionBox, "ui.class.add", "show");
             }
         }, 1000);
     };
@@ -438,6 +438,6 @@ package.app.transform = function AppTransform(me) {
         }
         object.descriptionType = descriptionType;
         me.resetDescription(object);
-        me.set(descriptionBox, "ui.theme.add", "show");
+        me.set(descriptionBox, "ui.class.add", "show");
     };
 };

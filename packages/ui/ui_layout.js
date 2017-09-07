@@ -243,7 +243,7 @@ package.ui.layout = function UILayout(me) {
         target = me.content(target);
         var page = me.ui.element.create({
             "ui.basic.tag": "div",
-            "ui.theme.class": options.pageClass,
+            "ui.class.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
             "ui.style.visibility":"hidden",
@@ -251,20 +251,20 @@ package.ui.layout = function UILayout(me) {
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": options.headerClass,
+                    "ui.class.class": options.headerClass,
                     "ui.basic.var": "header",
                     "ui.style.width": pageWidth + "px",
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
-                            "ui.theme.class": options.pageNumberClass,
+                            "ui.class.class": options.pageNumberClass,
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
                             "ui.attribute.longPageNumberText": pageIndex
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.theme.class": options.scrollToTopClass,
+                            "ui.class.class": options.scrollToTopClass,
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "ui.layout.scrollToTop",
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
@@ -273,14 +273,14 @@ package.ui.layout = function UILayout(me) {
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": options.contentClass,
+                    "ui.class.class": options.contentClass,
                     "ui.style.columnCount": options.columnCount,
                     "ui.basic.var": "content",
                     "ui.style.overflow": "hidden"
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.theme.class": options.separatorClass,
+                    "ui.class.class": options.separatorClass,
                     "ui.basic.var": "separator",
                     "ui.style.display":"none"
                 }
