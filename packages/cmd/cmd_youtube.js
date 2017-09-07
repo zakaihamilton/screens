@@ -11,6 +11,9 @@ package.cmd.youtube = function CmdYoutube(me) {
             me.core.cmd.exit(terminal);
             return;
         }
+        var youtube_id = args[2];
+        youtube_id = youtube_id.replace("https://youtu.be/", "");
+        console.log("youtube_id:" + youtube_id);
         me.ui.element.create({
                 "title": args[1],
                 "ui.style.left": "550px",
@@ -21,7 +24,7 @@ package.cmd.youtube = function CmdYoutube(me) {
                 "ui.basic.elements": [
                     {
                         "ui.element.component": "widget.embed",
-                        "ui.basic.src": "https://www.youtube.com/embed/" + args[2] + "?ecver=1",
+                        "ui.basic.src": "https://www.youtube.com/embed/" + youtube_id + "?ecver=1",
                         "ui.attribute.allowFullScreen": "",
                         "ui.style.width":"100%",
                         "ui.style.height":"100%"
