@@ -18,7 +18,8 @@ package.include({
         "handle",
         "json",
         "performance",
-        "util"
+        "util",
+        "file"
     ],
     "storage": [
         "cache",
@@ -38,6 +39,7 @@ package.include({
         "basic",
         "focus",
         "class",
+        "theme",
         "property",
         "options",
         "scroll",

@@ -19,11 +19,8 @@ package.core.module = function CoreModule(me) {
         return component_path;
     };
     me.loadTextFile = function (job, filePath, callback) {
-        if (!me.fs) {
-            me.fs = require("fs");
-        }
         var task = core.job.begin(job);
-        me.fs.readFile(filePath, 'utf8', function (err, data) {
+        me.core.file.readFile(function (err, data) {
             core.console.log("serving text file: " + filePath);
             if (err) {
                 core.console.log(JSON.stringify(err));
@@ -32,14 +29,11 @@ package.core.module = function CoreModule(me) {
                 callback(data);
             }
             core.job.end(task);
-        });
+        }, filePath, 'utf8');
     };
     me.loadBinaryFile = function (job, filePath, callback) {
-        if (!me.fs) {
-            me.fs = require("fs");
-        }
         var task = core.job.begin(job);
-        me.fs.readFile(filePath, function (err, data) {
+        me.core.file.readFile(function (err, data) {
             core.console.log("serving binary file: " + filePath);
             if (err) {
                 core.console.log(JSON.stringify(err));
@@ -49,12 +43,11 @@ package.core.module = function CoreModule(me) {
             }
             core.job.end(task);
             core.console.log("finished serving binary file: " + filePath);
-        });
+        }, filePath);
     };
     me.receive = {
         set: function (info) {
             if (me.platform === "server") {
-                var fs = require("fs");
                 if (info.method === "GET") {
                     if (info.url === "/") {
                         info.url = "/main.html";
