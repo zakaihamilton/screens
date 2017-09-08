@@ -23,7 +23,7 @@ package.kab.terms = function KabTerms(me) {
                 callback(numTerms);
             }
         } else {
-            me.core.json.load(function (json) {
+            me.core.json.loadComponent(function (json) {
                 if (json) {
                     me.jsons[language] = json;
                     var numTerms = 0;

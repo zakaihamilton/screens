@@ -1,0 +1,10 @@
+{
+    "name":"Glow",
+    "mapping":[
+        {
+            "source":"widget-window-label",
+            "target":"glow-window-label",
+            "replace":false
+        }
+    ]
+}

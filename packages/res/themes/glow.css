@@ -1,0 +1,7 @@
+.glow-window-label {
+    background-color: red;    
+}
+
+.glow-window-label.focus {
+    background-color: greenyellow;    
+}

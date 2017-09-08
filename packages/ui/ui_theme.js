@@ -9,6 +9,11 @@ package.ui.theme = function UITheme(me) {
     me.init = function() {
         me.updateList();
     };
+    me.themeList = {
+        get: function(object) {
+            return me.themes;
+        }
+    };
     me.updateList = function() {
         me.themes = [];
         var path = "packages/res/themes";
@@ -16,11 +21,11 @@ package.ui.theme = function UITheme(me) {
             if(items) {
                 for(let item of items) {
                     var period = item.lastIndexOf(".");
-                    if(!period) {
+                    if(period == -1) {
                         continue;
                     }
                     var name = item.substring(0, period);
-                    var extension = item.substring(period);
+                    var extension = item.substring(period+1);
                     if(extension !== "json") {
                         continue;
                     }
@@ -50,6 +55,9 @@ package.ui.theme = function UITheme(me) {
             me.currentTheme.link = null;
             me.applyTheme(function(element, classItem) {
                 var mapping = me.findMapping(classItem);
+                if(!mapping) {
+                    return;
+                }
                 if(mapping.target === classItem) {
                     element.classList.remove(classItem);
                     if(mapping.replace) {
@@ -61,14 +69,17 @@ package.ui.theme = function UITheme(me) {
         }
     };
     me.load = function(callback, name) {
-        var path = "packages/res/themes/" + name;
-        me.core.file.readFile(function(err, data) {
-            if(!err && data) {
+        var path = "/packages/res/themes/" + name.toLowerCase();
+        me.core.json.loadFile(function(data) {
+            if(data) {
                 me.unload();
                 me.currentTheme = data;
                 me.currentTheme.link = me.ui.class.loadStylesheet(path + ".css");
                 me.applyTheme(function(element, classItem) {
                     var mapping = me.findMapping(classItem);
+                    if(!mapping) {
+                        return;
+                    }
                     if(mapping.source === classItem) {
                         element.classList.add(mapping.target);
                         if(mapping.replace) {
@@ -76,8 +87,8 @@ package.ui.theme = function UITheme(me) {
                         }
                     }
                 });
-                callback(data);
             }
+            callback(data);
         }, path + ".json", "utf8");
     };
     me.findMapping = function(classItem) {

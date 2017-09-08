@@ -1,0 +1,38 @@
+{
+    "title": "Theme",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "500px",
+    "ui.style.height": "120px",
+    "fixed": true,
+    "ui.basic.elements": [
+        {
+            "ui.basic.var": "themeList",
+            "ui.element.count": 8,
+            "ui.style.margin": "10px",
+            "ui.style.height":"91px",
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false,
+                    "ui.touch.default":"app.theme.setTheme"
+                },
+                "ui.data.values": [
+                    ["None"],
+                    "app.theme.themeList"
+                ]
+            }
+        },
+        {
+            "ui.style.marginTop":"10px",
+            "ui.basic.text": "Set",
+            "ui.touch.click": "app.theme.setTheme"
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-theme-window",
+        "storage.cache.location": "local",
+        "storage.cache.restore": "widget.window.store"
+    }
+}

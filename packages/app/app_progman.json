@@ -85,11 +85,14 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "browser",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Theme",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "theme",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
-            ],
-            [
-                "Storage", "storage.file./storage.items"
             ],
             [
                 "Utilities", [
