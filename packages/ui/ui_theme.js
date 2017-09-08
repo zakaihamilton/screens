@@ -61,7 +61,7 @@ package.ui.theme = function UITheme(me) {
                 if(mapping.target === classItem) {
                     element.classList.remove(classItem);
                     if(mapping.replace) {
-                        element.cassList.add(mapping.source);
+                        element.classList.add(mapping.source);
                     }
                 }
             });
@@ -83,7 +83,7 @@ package.ui.theme = function UITheme(me) {
                     if(mapping.source === classItem) {
                         element.classList.add(mapping.target);
                         if(mapping.replace) {
-                            element.cassList.remove(mapping.source);
+                            element.classList.remove(mapping.source);
                         }
                     }
                 });

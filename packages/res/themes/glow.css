@@ -1,7 +1,127 @@
 .glow-window-label {
-    background-color: red;    
+    background-color: white;
+    color:black;
+    border:Solid 1px #0f2777;
+    border-radius: 0px 0px 5px 5px;
+    box-sizing: border-box;
+    margin-top:-3px;
+    height:20px;
 }
 
 .glow-window-label.focus {
-    background-color: greenyellow;    
+    background-color: #0f2777;
+    color:white;
+    box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-window-border {
+    border:Solid 1px #0f2777;
+    background:white;
+    border-radius: 15px;
+}
+
+.glow-window-border.maximize {
+    border-radius: 0px;
+}
+
+.glow-window-border.focus {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-window-border.popup.focus {
+    background:white;
+}
+
+.glow-window-border.popup {
+    background:white;
+}
+
+.glow-window-margin {
+    border:Solid 1px #0f2777;
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    background:white;
+    border-radius: 15px;    
+}
+
+.glow-window-margin.maximize {
+    border-radius: 0px;
+}
+
+.glow-window-top-left {
+    border:none;
+}
+
+.glow-window-top-right {
+    border:none;
+}
+
+.glow-window-bottom-left {
+    border:none;
+}
+
+.glow-window-bottom-right {
+    border:none;
+}
+
+.glow-window-title {
+    border-bottom: none;
+}
+
+.glow-window-close {
+    flex:none;
+    width:18px;
+    height:18px;
+    background-color: white;
+}
+
+.glow-window-close::after {
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.20em;
+    left: 0.45em;
+    position: relative;
+    vertical-align: top;
+    width: 0.20em;
+    top: 0.35em;
+    transform: rotate(135deg);
+}
+
+.glow-window-action {
+    flex: none;
+    width:18px;
+    height:18px;
+    margin-left: auto;
+}
+
+.glow-window-action:hover:active {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    border-radius: 15px;
+}
+
+.glow-window-minimize-arrow {
+    background:#0f2777;
+    position: relative;
+    top:6px;
+    left:6px;
+    width:4px;
+    height:4px;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.glow-window-maximize-arrow {
+    border-radius: 2px;
+    position: relative;
+    left:4px;
+    top:5px;
+    width:8px;
+    height:8px;
+    border:2px dotted #0f2777;
+    box-sizing: border-box;
+}
+
+.glow-window-maximize-arrow.restore {
+    border:2px solid #0f2777;
 }

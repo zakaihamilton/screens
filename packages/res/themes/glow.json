@@ -3,8 +3,55 @@
     "mapping":[
         {
             "source":"widget-window-label",
-            "target":"glow-window-label",
-            "replace":false
+            "target":"glow-window-label"
+        },
+        {
+            "source":"widget-window-border",
+            "target":"glow-window-border"
+        },
+        {
+            "source":"widget-window-margin",
+            "target":"glow-window-margin"
+        },
+        {
+            "source":"widget-window-top-left",
+            "target":"glow-window-top-left"
+        },
+        {
+            "source":"widget-window-top-right",
+            "target":"glow-window-top-right"
+        },
+        {
+            "source":"widget-window-bottom-left",
+            "target":"glow-window-bottom-left"
+        },
+        {
+            "source":"widget-window-bottom-right",
+            "target":"glow-window-bottom-right"
+        },
+        {
+            "source":"widget-window-title",
+            "target":"glow-window-title"
+        },
+        {
+            "source":"widget-window-close",
+            "target":"glow-window-close",
+            "replace":true
+        },
+        {
+            "source":"widget-window-action",
+            "target":"glow-window-action",
+            "replace":true
+        },
+        {
+            "source":"widget-window-minimize-arrow",
+            "target":"glow-window-minimize-arrow",
+            "replace":true
+        },
+        {
+            "source":"widget-window-maximize-arrow",
+            "target":"glow-window-maximize-arrow",
+            "replace":true
         }
     ]
 }
