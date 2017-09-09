@@ -8,22 +8,10 @@
     "ui.style.background": "white",
     "maximize": null,
     "widget.menu.items": [
-        ["File", [
-                ["New", "app.transform.new"],
-                ["Transform", "app.transform.transform", {
+        ["Transform", [
+                ["Clear", "app.transform.new"],
+                ["Refresh", "app.transform.transform", {
                         "separator": true
-                    }
-                ]
-            ]
-        ],
-        ["Options", [
-                ["Auto Scroll", "app.transform.autoScroll", {
-                        "state": "select"
-                    }
-                ],
-                ["Snap to Page", "app.transform.snapToPage", {
-                        "state": "select",
-                        "enabled": "app.transform.pages"
                     }
                 ],
                 ["Translation", "app.transform.doTranslation", {
@@ -58,6 +46,18 @@
                         "state": "select",
                         "enabled": "app.transform.addStyles"
                     }
+                ]
+            ]
+        ],
+        ["Layout", [
+                ["Auto Scroll", "app.transform.autoScroll", {
+                        "state": "select"
+                    }
+                ],
+                ["Snap to Page", "app.transform.snapToPage", {
+                        "state": "select",
+                        "enabled": "app.transform.pages"
+                    }
                 ],
                 ["Pages", "app.transform.pages", {
                         "state": "select",
@@ -71,11 +71,13 @@
                 ],
                 ["HTML", "app.transform.showHtml", {
                         "state": "select",
-                        "separator": true
+                        "separator": true,
+                        "visible":false
                     }
                 ],
                 ["Input", "app.transform.showInput", {
-                        "state": "select"
+                        "state": "select",
+                        "separator": true
                     }
                 ]
             ]
@@ -143,20 +145,15 @@
                 ],
                 ["Debug", "app.transform.language", {
                         "state": "select",
-                        "separator": true
+                        "separator": true,
+                        "visible":false
                     }
                 ]
             ]
         ],
-        ["Window", [
-                ["Cascade", "widget.window.cascade", {
-                        "enabled": false
-                    }],
+        ["Document", [
                 ["Tile Horizontally", "widget.window.tileHorizontally"],
                 ["Tile Vertically", "widget.window.tileVertically"],
-                ["Arrange Icons", "widget.window.arrangeIcons", {
-                        "enabled": false
-                    }],
                 "widget.window.childMenuList"
             ]]
     ],

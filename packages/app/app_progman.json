@@ -109,12 +109,6 @@
                         "ui.touch.dblclick": "app.progman.shell"
                     },
                     {
-                        "text": "Phases",
-                        "ui.basic.src": "/packages/res/icons/phases.png",
-                        "app.progman.args": "phases",
-                        "ui.touch.dblclick": "app.progman.shell"
-                    },
-                    {
                         "text": "Canvas",
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "canvas",

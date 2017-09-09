@@ -4,7 +4,7 @@
     border:Solid 1px #0f2777;
     border-radius: 0px 0px 5px 5px;
     box-sizing: border-box;
-    margin-top:-3px;
+    margin-top:-2px;
     height:20px;
 }
 
@@ -124,4 +124,121 @@
 
 .glow-window-maximize-arrow.restore {
     border:2px solid #0f2777;
+}
+
+.glow-menu-horizontal span.select {
+    background-color: #0f2777;
+    color:white;
+    border-right: 1px solid black;
+}
+
+.glow-menu-vertical {
+    border-radius: 0px 0px 15px 15px;
+    border: 2px solid #0f2777;
+    box-shadow: none;
+    overflow: hidden;    
+}
+
+.glow-menu-vertical span {
+    background-color: transparent;
+}
+
+.glow-menu-vertical span:hover {
+    background-color: #0f2777;
+    color:white;
+}
+
+.glow-scrollbar-vertical-border {
+    border-radius: 5px;
+    background:white;
+}
+
+.glow-scrollbar-horizontal-border {
+    border-radius: 5px;
+    background:white;
+}
+
+.glow-scrollbar-corner {
+    background:white;
+    border:none;
+}
+
+.glow-scrollbar-button {
+    background:white;
+    color:#0f2777;
+    border-radius:5px;
+    border:1px solid #0f2777;
+    flex:none;
+    min-width:16px;
+    min-height:16px;
+}
+
+.glow-scrollbar-button:hover:active {
+    color:white;
+    background:#0f2777;
+}
+
+.glow-scrollbar-vertical-before-arrow {
+    position: relative;
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    height: 3px;
+    left: 5px;
+    vertical-align: top;
+    width: 3px;
+    top: 6px;
+    line-height:100%;
+    transform: rotate(-45deg);
+}
+
+.glow-scrollbar-vertical-after-arrow {
+    position: relative;
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    height: 3px;
+    left: 5px;
+    vertical-align: top;
+    width: 3px;
+    top: 5px;
+    line-height:100%;
+    transform: rotate(135deg);
+}
+
+.glow-scrollbar-horizontal-before-arrow {
+    position: relative;
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    height: 3px;
+    left: 6px;
+    vertical-align: top;
+    width: 3px;
+    top: 5px;
+    line-height:100%;
+    transform: rotate(-135deg);
+}
+
+.glow-scrollbar-horizontal-after-arrow {
+    position: relative;
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    height: 3px;
+    left: 4px;
+    vertical-align: top;
+    width: 3px;
+    top: 5px;
+    line-height:100%;
+    transform: rotate(45deg);
+}
+
+.glow-scrollbar-horizontal-track {
+    background:white;
+}
+
+.glow-scrollbar-vertical-track {
+    background:white;
+}
+
+.glow-window-footer {
+    background:white;
+    border-top: 1px solid #0f2777;
 }
