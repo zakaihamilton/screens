@@ -1,9 +1,9 @@
 {
     "title": "Controls",
     "ui.style.left": "450px",
-    "ui.style.top": "450px",
-    "ui.style.width": "300px",
-    "ui.style.height": "250px",
+    "ui.style.top": "250px",
+    "ui.style.width": "600px",
+    "ui.style.height": "450px",
     "ui.basic.elements": [
         {
             "ui.basic.text": "This is some text",

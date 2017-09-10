@@ -1,6 +1,15 @@
 .glow-window-label {
+    text-align: center;
     background-color: white;
-    color:black;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    line-height:18px;
+    flex:1;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: default;
+    user-select: none;
+    color:#0f2777;
     border:Solid 1px #0f2777;
     border-radius: 0px 0px 5px 5px;
     box-sizing: border-box;
@@ -12,6 +21,15 @@
     background-color: #0f2777;
     color:white;
     box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-window-label.child {
+    display:none;
+}
+
+.glow-window-label.popup {
+    color: black;
+    background-color: white;
 }
 
 .glow-window-border {
@@ -35,6 +53,18 @@
 
 .glow-window-border.popup {
     background:white;
+}
+
+.glow-window-border.maximize {
+    border:none;
+}
+
+.glow-window-border.minimize {
+    display:none;
+}
+
+.glow-window-border.concealed {
+    visibility:hidden;
 }
 
 .glow-window-margin {
@@ -78,6 +108,7 @@
 }
 
 .glow-window-close::after {
+    border-color: #0f2777;
     border-style: solid;
     border-width: 0.10em 0.10em 0 0;
     content: '';
@@ -89,6 +120,11 @@
     width: 0.20em;
     top: 0.35em;
     transform: rotate(135deg);
+}
+
+.glow-window-close:hover:active {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    border-radius: 15px;
 }
 
 .glow-window-action {
@@ -253,4 +289,186 @@
 .glow-window-footer {
     background:white;
     border-top: 1px solid #0f2777;
+}
+
+.glow-button-standard {
+    color: #0f2777;
+    background: white;
+    border:1px solid #0f2777;
+    box-shadow: 0px 0px 5px 1px #0f2777;
+    border-radius: 4px;
+    font-weight: normal;
+    transition: all 0.2s ease-in-out;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align:center;
+    min-width:64px;
+    min-height:17px;
+    display:inline-block;
+    margin-left:18px;
+    margin-top:2px;
+    margin-bottom:2px;
+    user-select: none;
+    cursor:default;
+}
+
+.glow-button-standard:hover:active {
+    color: white;
+    background: #0f2777;
+    box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-checkbox-icon {
+    display:flex;
+    cursor: default;
+    position: relative;
+    width: 11px;
+    height: 11px;
+    top: 0;
+    left: 0;
+    background: #eee;
+    border:1px solid #ddd;
+}
+
+.widget-checkbox-original:checked + .glow-checkbox-icon:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 3px;
+    background: transparent;
+    top: 2px;
+    left: 1px;
+    border: 3px solid #0f2777;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
+}
+
+.glow-radio-icon {
+    display:flex;
+    cursor: default;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    top: 0;
+    left: 0;
+    background: #eee;
+    border:2px solid #ddd;
+    border-radius: 50%;
+}
+
+.widget-radio-original:checked + .glow-radio-icon {
+    background       : #0f2777;
+    background-image : linear-gradient(#0f2555,#0f2999);
+}
+
+.glow-list-border {
+    border:1px solid #0f2777;
+    border-radius: 15px;
+    overflow:hidden;
+    background:white;
+    display:flex;
+}
+
+.glow-input-normal {
+    margin-left:18px;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    text-align:left;
+    margin-top:2px;
+    margin-bottom:2px;
+    border:1px solid #0f2777;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.glow-list-dropdown-selection {
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    text-align:left;
+    border:1px solid #0f2777;
+    border-radius: 5px 5px 5px 5px;
+    margin-top:2px;
+    margin-bottom:2px;
+    margin-right:-18px;
+    position:relative;
+    padding-left:6px;
+    padding-right:6px;
+    flex:1;
+    height:19px;
+    width:100%;
+    user-select:none;
+    cursor:default;
+    overflow: hidden;
+}
+
+.glow-list-dropdown-selection:after:hover:active {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    border-radius: 15px;
+}
+
+.glow-list-dropdown-button {
+    flex:none;
+    width:18px;
+    height:18px;
+    background-color: white;
+}
+
+.glow-list-dropdown-button::after {
+    border-color: #0f2777;
+    border-style: solid;
+    border-width: 0.10em 0.10em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.20em;
+    left: 0.35em;
+    position: relative;
+    vertical-align: top;
+    width: 0.20em;
+    top: 0.55em;
+    transform: rotate(135deg);
+}
+
+.glow-list-dropdown-button-arrow {
+    display:none;
+}
+
+.glow-list-dropdown-button-line {
+    display:none;
+}
+
+.glow-list-popup-border {
+    position:absolute;
+    background:white;
+    border:1px solid #0f2777;
+    z-index:100;
+    margin-top:-3px;
+    box-sizing: border-box;
+    display:flex;
+    border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
+}
+
+.glow-list-item {
+    background-color: white;
+    color: black;
+    height:18px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align: left;
+    display: block;
+    cursor:default;
+    user-select:none;
+}
+
+.glow-list-item.selected {
+    background-color: #0f2777;
+    color:white;
+}
+
+.glow-list-item.separator {
+    margin-top: 3px;
+    border-top: 3px solid white;
+    box-shadow: 0px -1px 0px 0px black;
 }

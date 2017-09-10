@@ -23,9 +23,7 @@ package.app.theme = function AppTheme(me) {
                 me.ui.theme.unload();
             }
             else {
-                me.ui.theme.load(function() {
-                    
-                }, theme);
+                me.ui.theme.load(null, theme);
             }
         }
     };

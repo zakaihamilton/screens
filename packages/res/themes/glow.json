@@ -3,11 +3,13 @@
     "mapping":[
         {
             "source":"widget-window-label",
-            "target":"glow-window-label"
+            "target":"glow-window-label",
+            "replace":true
         },
         {
             "source":"widget-window-border",
-            "target":"glow-window-border"
+            "target":"glow-window-border",
+            "replace":true
         },
         {
             "source":"widget-window-margin",
@@ -118,6 +120,61 @@
         {
             "source":"widget-window-footer",
             "target":"glow-window-footer"
+        },
+        {
+            "source":"widget-button-standard",
+            "target":"glow-button-standard",
+            "replace":true
+        },
+        {
+            "source":"widget-checkbox-icon",
+            "target":"glow-checkbox-icon",
+            "replace":true
+        },
+        {
+            "source":"widget-radio-icon",
+            "target":"glow-radio-icon",
+            "replace":true
+        },
+        {
+            "source":"widget-list-border",
+            "target":"glow-list-border",
+            "replace":true
+        },
+        {
+            "source":"widget-list-dropdown-selection",
+            "target":"glow-list-dropdown-selection",
+            "replace":true
+        },
+        {
+            "source":"widget-list-dropdown-button",
+            "target":"glow-list-dropdown-button",
+            "replace":true
+        },
+        {
+            "source":"widget-list-dropdown-button-arrow",
+            "target":"glow-list-dropdown-button-arrow",
+            "replace":true
+        },
+        {
+            "source":"widget-list-dropdown-button-line",
+            "target":"glow-list-dropdown-button-line",
+            "replace":true
+        },
+        {
+            "source":"widget-input-normal",
+            "target":"glow-input-normal",
+            "replace":true
+        },
+        {
+            "source":"widget-list-popup-border",
+            "target":"glow-list-popup-border",
+            "replace":true
+        },
+        {
+            "source":"widget-list-item",
+            "target":"glow-list-item",
+            "replace":true
         }
     ]
 }

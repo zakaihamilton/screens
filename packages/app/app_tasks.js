@@ -50,6 +50,16 @@ package.app.tasks = function AppTasks(me) {
             me.set(me.singleton, "widget.window.close");
             var task = me.findSelectedTask();
             me.set(task, "widget.window.show", true);
+            var region = me.ui.rect.absolute_region(task);
+            if(region.left < 0) {
+                me.set(task, "ui.style.left", "0px");
+            }
+            if(region.top < 0) {
+                me.set(task, "ui.style.top", "0px");
+            }
+            if(region.left < 0 || region.top < 0) {
+                me.notify(task, "update");
+            }
         }
     };
     me.closeTask = {
