@@ -13,7 +13,8 @@
         },
         {
             "source":"widget-window-margin",
-            "target":"glow-window-margin"
+            "target":"glow-window-margin",
+            "replace":true
         },
         {
             "source":"widget-window-top-left",

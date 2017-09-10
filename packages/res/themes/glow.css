@@ -27,11 +27,6 @@
     display:none;
 }
 
-.glow-window-label.popup {
-    color: black;
-    background-color: white;
-}
-
 .glow-window-border {
     border:Solid 1px #0f2777;
     background:white;
@@ -47,14 +42,6 @@
     box-shadow: 0px 0px 15px 3px #0f2777;
 }
 
-.glow-window-border.popup.focus {
-    background:white;
-}
-
-.glow-window-border.popup {
-    background:white;
-}
-
 .glow-window-border.maximize {
     border:none;
 }
@@ -68,6 +55,14 @@
 }
 
 .glow-window-margin {
+    position: absolute;
+    left:2px;
+    top:2px;
+    right:2px;
+    bottom:2px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
     border:Solid 1px #0f2777;
     box-shadow: 0px 0px 15px 3px #0f2777;
     background:white;
@@ -76,6 +71,21 @@
 }
 
 .glow-window-margin.maximize {
+    position: absolute;
+    left:-1px;
+    top:-1px;
+    right:-1px;
+    bottom:-1px;
+    border-radius: 0px;
+    margin:0px;
+}
+
+.glow-window-margin.child.maximize {
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    border:none;
     border-radius: 0px;
     margin:0px;
 }
