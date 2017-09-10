@@ -8,6 +8,13 @@ package.ui.theme = function UITheme(me) {
     me.currentTheme = null;
     me.init = function() {
         me.updateList();
+        var current_theme = me.get(me.storage.cache.local, "ui-theme-current");
+        if(!current_theme) {
+            current_theme = "glow";
+        }
+        if(current_theme !== "none") {
+            me.load(null, current_theme);
+        }
     };
     me.themeList = {
         get: function(object) {
@@ -21,7 +28,7 @@ package.ui.theme = function UITheme(me) {
             if(items) {
                 for(let item of items) {
                     var period = item.lastIndexOf(".");
-                    if(period == -1) {
+                    if(period === -1) {
                         continue;
                     }
                     var name = item.substring(0, period);
@@ -66,6 +73,7 @@ package.ui.theme = function UITheme(me) {
                 }
             });
             me.currentTheme = null;
+            me.set(me.storage.cache.local, "ui-theme-current", "none");
         }
     };
     me.load = function(callback, name) {
@@ -87,8 +95,11 @@ package.ui.theme = function UITheme(me) {
                         }
                     }
                 });
+                me.set(me.storage.cache.local, "ui-theme-current", name);
             }
-            callback(data);
+            if(callback) {
+                callback(data);
+            }
         }, path + ".json", "utf8");
     };
     me.findMapping = function(classItem) {

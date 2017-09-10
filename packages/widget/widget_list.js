@@ -53,6 +53,17 @@ package.widget.list = function WidgetList(me) {
                 }
             }
             return selection;
+        },
+        set: function(object, value) {
+            var content = me.widget.container.content(object.var.container);
+            var childList = me.ui.node.childList(content);
+            if (childList) {
+                for (var childIndex = 0; childIndex < childList.length; childIndex++) {
+                    var child = childList[childIndex];
+                    var label = me.get(child, "ui.basic.text");
+                    me.set(child, "state", value === label);
+                }
+            }
         }
     };
 };

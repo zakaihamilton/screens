@@ -18,6 +18,7 @@
     border:Solid 1px #0f2777;
     background:white;
     border-radius: 15px;
+    overflow:hidden;
 }
 
 .glow-window-border.maximize {
@@ -48,19 +49,19 @@
 }
 
 .glow-window-top-left {
-    border:none;
+    background:#0f2777;
 }
 
 .glow-window-top-right {
-    border:none;
+    background:#0f2777;
 }
 
 .glow-window-bottom-left {
-    border:none;
+    background:#0f2777;
 }
 
 .glow-window-bottom-right {
-    border:none;
+    background:#0f2777;
 }
 
 .glow-window-title {
