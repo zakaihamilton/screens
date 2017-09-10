@@ -162,8 +162,17 @@
 }
 
 .glow-scrollbar-corner {
+    width:16px;
+    height:16px;
+    position:relative;
+    flex:none;
+    display:none;
     background:white;
     border:none;
+}
+
+.glow-scrollbar-corner.vertical-scroll.horizontal-scroll {
+    display:flex;
 }
 
 .glow-scrollbar-button {

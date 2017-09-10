@@ -79,7 +79,8 @@
         },
         {
             "source":"widget-scrollbar-corner",
-            "target":"glow-scrollbar-corner"
+            "target":"glow-scrollbar-corner",
+            "replace":true
         },
         {
             "source":"widget-scrollbar-button",
