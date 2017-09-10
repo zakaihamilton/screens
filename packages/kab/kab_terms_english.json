@@ -3487,6 +3487,30 @@
         },
         "Dalet Partzufim":{
             "translation":"Four Faces"
+        },
+        "white":{
+            "style":{
+                "phase":"one",
+                "heading":"Color"
+            }
+        },
+        "red":{
+            "style":{
+                "phase":"two",
+                "heading":"Color"
+            }
+        },
+        "green":{
+            "style":{
+                "phase":"three",
+                "heading":"Color"
+            }
+        },
+        "black":{
+            "style":{
+                "phase":"four",
+                "heading":"Color"
+            }
         }
     },
     "style": {

@@ -41,6 +41,7 @@ package.kab.search = function KabSearch(me) {
                 searchTerm = me.terms[term] = {count: 0};
             }
             searchTerm.count++;
+            searchTerm.term = term;
             searchTerm.used = used;
             if (item.label) {
                 searchTerm.source = item.label;
@@ -54,6 +55,10 @@ package.kab.search = function KabSearch(me) {
                 }
                 searchTerm.heading = style.heading;
                 searchTerm.phase = style.phase;
+            }
+            else {
+                searchTerm.heading = null;
+                searchTerm.phase = null;
             }
     }
     };
