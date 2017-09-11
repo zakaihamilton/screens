@@ -152,6 +152,7 @@
             ]
         ],
         ["Document", [
+                ["Cascade", "ui.arrange.cascade"],
                 ["Tile Horizontally", "ui.arrange.tileHorizontally"],
                 ["Tile Vertically", "ui.arrange.tileVertically"],
                 "widget.window.childMenuList"
