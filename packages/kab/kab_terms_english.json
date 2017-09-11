@@ -16,9 +16,9 @@
         }
     },
     "data": {
-        "filterPlaceholder":"Search...",
-        "glossaryTitle":"Glossary",
-        "termTableTitle":"Table of Phases",
+        "filterPlaceholder": "Search...",
+        "glossaryTitle": "Glossary",
+        "termTableTitle": "Table of Phases",
         "termTable": [
             [
                 {
@@ -76,7 +76,7 @@
         "Nukvais": "Nukva is",
         "Aba": "Abba",
         "Imma": "Ima",
-        "histaklut":"Histaklut"
+        "histaklut": "Histaklut"
     },
     "pre": [
         {
@@ -221,8 +221,8 @@
             "replace": ""
         },
         {
-            "find":"(The Study of the Ten Sefirot)",
-            "replace":""
+            "find": "(The Study of the Ten Sefirot)",
+            "replace": ""
         }
     ],
     "post": [
@@ -464,7 +464,7 @@
         "Guf2": {
             "style": {
                 "heading": "Layers",
-                "phase":"two"
+                "phase": "two"
             },
             "translation": "Body"
         },
@@ -546,7 +546,7 @@
         },
         "Keter": {
             "translation": "Crown",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "root"
@@ -555,7 +555,7 @@
         "Hochma": {
             "translation": "Wisdom",
             "explanation": "Decree",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "one"
@@ -564,7 +564,7 @@
         "Bina": {
             "translation": "Understanding",
             "explanation": "Execution",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "two"
@@ -572,7 +572,7 @@
         },
         "Tifferet": {
             "translation": "Beauty",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -582,7 +582,7 @@
             "source": "Tifferet",
             "translation": "Beauty",
             "explanation": "Knowledge",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "two"
@@ -591,7 +591,7 @@
         "Malchut": {
             "translation": "Kingdom",
             "explanation": "Desire",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "four"
@@ -600,7 +600,7 @@
         "Hesed": {
             "translation": "Kindness",
             "explanation": "Responsibility",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "root"
@@ -609,7 +609,7 @@
         "Gevura": {
             "translation": "Judgement",
             "explanation": "Control",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "one"
@@ -618,7 +618,7 @@
         "Netzah": {
             "translation": "Eternity",
             "explanation": "Affinity",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "three"
@@ -627,7 +627,7 @@
         "Hod": {
             "translation": "Majesty",
             "explanation": "Communication",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "four"
@@ -636,7 +636,7 @@
         "Yesod": {
             "translation": "Foundation",
             "explanation": "Agreement",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
                 "phase": "collective"
@@ -664,7 +664,7 @@
             }
         },
         "Neshama2": {
-            "source":"Neshama",
+            "source": "Neshama",
             "translation": "Soul",
             "style": {
                 "heading": "Layers",
@@ -777,7 +777,7 @@
         },
         "Arich Anpin": {
             "translation": "Long Face",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Face",
                 "phase": "root"
@@ -800,8 +800,8 @@
         },
         "Adam Kadmon": {
             "translation": "Primordial Man",
-            "defaultTerm":true,
-            "style":"primordial man"
+            "defaultTerm": true,
+            "style": "primordial man"
         },
         "Atzilut": {
             "translation": "Emanation",
@@ -1003,8 +1003,8 @@
         "Shinui Tzura": {
             "translation": "Change of Form"
         },
-        "Shinui":{
-            "translation":"Change"
+        "Shinui": {
+            "translation": "Change"
         },
         "Igul": {
             "translation": "Circle"
@@ -1026,10 +1026,10 @@
             "translation": "Lines"
         },
         "Shoresh2": {
-            "translation":"Root",
-            "style":{
-                "phase":"root",
-                "heading":"Layers"
+            "translation": "Root",
+            "style": {
+                "phase": "root",
+                "heading": "Layers"
             }
         },
         "Shoresh": {
@@ -1060,9 +1060,9 @@
         },
         "Levush2": {
             "translation": "Clothing",
-            "style":{
-                "phase":"three",
-                "heading":"Layers"
+            "style": {
+                "phase": "three",
+                "heading": "Layers"
             }
         },
         "Hitpashtut": {
@@ -1289,7 +1289,7 @@
         },
         "Taamim": {
             "translation": "Tastes",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "phase": "one",
                 "heading": "Flow"
@@ -1297,7 +1297,7 @@
         },
         "Nekudot": {
             "translation": "Points",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "phase": "two",
                 "heading": "Flow"
@@ -1305,7 +1305,7 @@
         },
         "Tagin": {
             "translation": "Crowns",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "phase": "three",
                 "heading": "Flow"
@@ -1316,7 +1316,7 @@
         },
         "Otiot": {
             "translation": "Letters",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "phase": "four",
                 "heading": "Flow"
@@ -1790,9 +1790,9 @@
         },
         "Heichal2": {
             "translation": "Palace",
-            "style":{
-                "phase":"four",
-                "heading":"Layers"
+            "style": {
+                "phase": "four",
+                "heading": "Layers"
             }
         },
         "Taam": {
@@ -1866,7 +1866,7 @@
             "expansion": ["Yisrael Saba ve Tvuna"]
         },
         "Yisrael Saba Tvuna": {
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Face",
                 "phase": "two"
@@ -2743,7 +2743,7 @@
             "explanation": "Decree"
         },
         "Abba ve Ima": {
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Face",
                 "phase": "one"
@@ -3188,7 +3188,7 @@
             "context": ["tens", "hundreds", "thousands"],
             "source": "Alaphim",
             "translation": "Thousands",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Amount",
                 "phase": "one"
@@ -3198,7 +3198,7 @@
             "context": ["tens", "hundreds", "thousands"],
             "source": "Revavot",
             "translation": "Tens of Thousands",
-            "defaultTerm":true,
+            "defaultTerm": true,
             "style": {
                 "heading": "Amount",
                 "phase": "root"
@@ -3401,26 +3401,26 @@
             "explanation": "Vehicles"
         },
         "God": {
-            "fixed":true,
-            "prefix":"The",
+            "fixed": true,
+            "prefix": "The",
             "translation": "Creator",
             "explanation": "System"
         },
         "another god": {
-            "translation":"another god",
+            "translation": "another god",
             "explanation": "victim mentality"
         },
         "spiritual fruits": {
-            "translation":"Spiritual Fruits",
+            "translation": "Spiritual Fruits",
             "explanation": "Internal Control"
         },
         "blessed": {
-            "translation":"Blessed",
+            "translation": "Blessed",
             "explanation": "multiplied"
         },
         "Creator": {
-            "includePrefix":true,
-            "prefix":"The",
+            "includePrefix": true,
+            "prefix": "The",
             "translation": "Creator",
             "explanation": "System"
         },
@@ -3430,18 +3430,18 @@
             "explanation": "Completion of the Training Tier"
         },
         "good": {
-            "translation":"Good",
+            "translation": "Good",
             "explanation": "Maturity"
         },
         "evil": {
-            "translation":"Evil",
+            "translation": "Evil",
             "explanation": "Immaturity"
         },
-        "SNGLH":{
-            "expansion":["Shoresh2","Neshama2","Guf2","Levush2","Heichal2"]
+        "SNGLH": {
+            "expansion": ["Shoresh2", "Neshama2", "Guf2", "Levush2", "Heichal2"]
         },
-        "Dalet Behinot":{
-            "translation":"Four Phases"
+        "Dalet Behinot": {
+            "translation": "Four Phases"
         },
         "AYA": {
             "expansion": ["Atzilut", "Yetzira", "Assiya"]
@@ -3452,102 +3452,111 @@
         "ABY": {
             "expansion": ["Atzilut", "Beria", "Yetzira"]
         },
-        "Ketarim":{
-            "translation":"Crowns"
+        "Ketarim": {
+            "translation": "Crowns"
         },
-        "Shmiah":{
-            "translation":"Sound"
+        "Shmiah": {
+            "translation": "Sound"
         },
-        "Reiach":{
-            "translation":"Scent"
+        "Reiach": {
+            "translation": "Scent"
         },
-        "RSRD":{
-            "expansion":["Reiah","Shmiah","Reiach","Dibur"]
+        "RSRD": {
+            "expansion": ["Reiah", "Shmiah", "Reiach", "Dibur"]
         },
-        "Emtzai":{
-            "translation":"Medial"
+        "Emtzai": {
+            "translation": "Medial"
         },
-        "Malaachim":{
-            "translation":"Angels"
+        "Malaachim": {
+            "translation": "Angels"
         },
-        "Ribua":{
-            "translation":"Square"
+        "Ribua": {
+            "translation": "Square"
         },
-        "Drush":{
-            "translation":"Homily"
+        "Drush": {
+            "translation": "Homily"
         },
-        "Shmia":{
-            "translation":"Sound"
+        "Shmia": {
+            "translation": "Sound"
         },
-        "Et":{
-            "translation":"The"
+        "Et": {
+            "translation": "The"
         },
-        "GASMB":{
-            "expansion":["Galgalta","AB","SAG","MA","BON"]
+        "GASMB": {
+            "expansion": ["Galgalta", "AB", "SAG", "MA", "BON"]
         },
-        "Dalet Partzufim":{
-            "translation":"Four Faces"
+        "Dalet Partzufim": {
+            "translation": "Four Faces"
         },
-        "white":{
-            "style":{
-                "phase":"one",
-                "heading":"Color"
+        "white": {
+            "style": {
+                "phase": "one",
+                "heading": "Color"
             }
         },
-        "red":{
-            "style":{
-                "phase":"two",
-                "heading":"Color"
+        "red": {
+            "style": {
+                "phase": "two",
+                "heading": "Color"
             }
         },
-        "green":{
-            "style":{
-                "phase":"three",
-                "heading":"Color"
+        "green": {
+            "style": {
+                "phase": "three",
+                "heading": "Color"
             }
         },
-        "black":{
-            "style":{
-                "phase":"four",
-                "heading":"Color"
+        "black": {
+            "style": {
+                "phase": "four",
+                "heading": "Color"
             }
+        },
+        "Blita": {
+            "translation": "Bulge"
+        },
+        "Shibolet":{
+            "translation":"Stalk"
+        },
+        "Shibolet ha Zakan":{
+            "translation":"Chin Hair"
         }
     },
     "style": {
         "chest": {
             "phase": "two",
             "heading": "Location",
-            "technical":{
+            "technical": {
                 "short": "The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
                 "long": "When a Face is in a state of smallness, the upper part including the vessels Crown and Wisdom are kept intact while the lower part including the vessels Understanding, Beauty and Kingdom are detached to the face below. The division between them is called the Chest."
             },
-            "explanation":{
-                "short":"",
-                "long":""
+            "explanation": {
+                "short": "",
+                "long": ""
             }
         },
         "skull": {
             "heading": "Face",
             "phase": "root",
-            "technical":{
+            "technical": {
                 "short": "First Face in the World of Primordial Man"
             }
         },
         "sea": {
             "phase": "four",
             "heading": "Vessel",
-            "technical":{
+            "technical": {
                 "short": "When the Female (Desire) receives Wisdom"
             }
         },
         "primordial man": {
             "heading": "World",
             "phase": "root",
-            "technical":{
+            "technical": {
                 "short": "First World after Infinity"
             },
-            "explanation":{
-                "short":"First Spiritual World After Crossing the Barrier"
+            "explanation": {
+                "short": "First Spiritual World After Crossing the Barrier"
             }
         }
     }
