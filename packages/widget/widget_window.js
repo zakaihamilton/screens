@@ -655,120 +655,12 @@ package.widget.window = function WidgetWindow(me) {
             return items;
         }
     };
-    me.cascade = {
-        set: function (object) {
-
-        }
-    };
     me.clientRegion = {
         get: function (object) {
             var window = me.window(object);
             var content = me.get(window, "widget.window.content");
             var region = me.ui.rect.relative_region(content);
             return region;
-        }
-    };
-    me.alignToSide = function (object, callback) {
-        var window = me.window(object);
-        me.set(window, "unmaximize");
-        var parent = me.parent(window);
-        var content = null;
-        var container = null;
-        if (parent) {
-            container = parent.var.container;
-            content = container.var.content;
-        } else {
-            container = content = me.ui.element.desktop();
-        }
-        var parent_region = me.ui.rect.relative_region(container);
-        callback(parent_region);
-        me.ui.rect.set_relative_region(window, parent_region, content);
-        me.notify(window, "update");
-        me.notify(parent, "update");
-    };
-    me.alignToLeft = {
-        set: function (object) {
-            me.alignToSide(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.top = 0;
-                parent_region.width /= 2;
-                parent_region.width -= 4;
-                parent_region.height -= 4;
-                return parent_region;
-            });
-        }
-    };
-    me.alignToRight = {
-        set: function (object) {
-            me.alignToSide(object, function(parent_region) {
-                parent_region.top = 0;
-                parent_region.width /= 2;
-                parent_region.left = parent_region.width;
-                parent_region.width -= 4;
-                parent_region.height -= 4;
-                return parent_region;
-            });
-        }
-    };
-    me.alignToTop = {
-        set: function (object) {
-            me.alignToSide(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.top = 0;
-                parent_region.height /= 2;
-                parent_region.height -= 4;
-                parent_region.width -= 4;
-                return parent_region;
-            });
-        }
-    };
-    me.alignToBottom = {
-        set: function (object) {
-            me.alignToSide(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.height /= 2;
-                parent_region.top = parent_region.height;
-                parent_region.height -= 4;
-                parent_region.width -= 4;
-                return parent_region;
-            });
-        }
-    };
-    me.tileHorizontally = {
-        set: function (object) {
-            var window = me.mainWindow(object);
-            var parent = me.parent(window);
-            if (parent) {
-                window = parent;
-            }
-            var windows = me.get(window, "widget.window.visibleWindows");
-            if (windows && windows.length > 1) {
-                var left = windows[windows.length - 1];
-                var right = windows[windows.length - 2];
-                me.set(left, "alignToLeft");
-                me.set(right, "alignToRight");
-            }
-        }
-    };
-    me.tileVertically = {
-        set: function (object) {
-            var window = me.mainWindow(object);
-            var parent = me.parent(window);
-            if (parent) {
-                window = parent;
-            }
-            var windows = me.get(window, "widget.window.visibleWindows");
-            if (windows && windows.length > 1) {
-                var top = windows[windows.length - 1];
-                var bottom = windows[windows.length - 2];
-                me.set(top, "alignToTop");
-                me.set(bottom, "alignToBottom");
-            }
-        }
-    };
-    me.arrangeIcons = {
-        set: function (object) {
-
         }
     };
     me.conceal = {

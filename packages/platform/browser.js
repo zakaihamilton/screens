@@ -50,7 +50,8 @@ package.include({
         "monitor",
         "layout",
         "work",
-        "cachekey"
+        "cachekey",
+        "arrange"
     ],
     "menu": [
         "context"

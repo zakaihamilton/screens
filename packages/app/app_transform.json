@@ -152,8 +152,8 @@
             ]
         ],
         ["Document", [
-                ["Tile Horizontally", "widget.window.tileHorizontally"],
-                ["Tile Vertically", "widget.window.tileVertically"],
+                ["Tile Horizontally", "ui.arrange.tileHorizontally"],
+                ["Tile Vertically", "ui.arrange.tileVertically"],
                 "widget.window.childMenuList"
             ]]
     ],

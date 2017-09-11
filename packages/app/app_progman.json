@@ -38,10 +38,10 @@
                 ]
             ]],
         ["Window", [
-                ["Cascade", "widget.window.cascade"],
-                ["Tile Horizontally", "widget.window.tileHorizontally"],
-                ["Tile Vertically", "widget.window.tileVertically"],
-                ["Arrange Icons", "widget.window.arrangeIcons"],
+                ["Cascade", "ui.arrange.cascade"],
+                ["Tile Horizontally", "ui.arrange.tileHorizontally"],
+                ["Tile Vertically", "ui.arrange.tileVertically"],
+                ["Arrange Icons", "ui.arrange.arrangeIcons"],
                 "widget.window.childMenuList"
             ]],
         ["Help", [
