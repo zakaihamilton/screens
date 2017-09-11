@@ -66,7 +66,11 @@ package.ui.focus = function UIFocus(me) {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);
-            from = me.widget.window.parent(from);
+            parent = me.widget.window.parent(from);
+            if(parent) {
+                parent.focus_window = from;
+            }
+            from = parent;
         }
     };
     me.updateOrder = function (parent, object = null, order = - 1) {
@@ -123,11 +127,23 @@ package.ui.focus = function UIFocus(me) {
             }
         }
     };
+    me.findLeaf = function(window) {
+        var leaf = window;
+        while(window) {
+            window = window.focus_window;
+            if(window) {
+                leaf = window;
+            }
+        }
+        return leaf;
+    };
     me.focus = function (window) {
         /* Check if window is visible */
         if (!me.get(window, "visible")) {
             return;
         }
+        /* Find bottom window to focus on */
+        window = me.findLeaf(window);
         /* Find common window between previous and new window */
         var common = me.common(me.focus_window, window);
         /* Deactivate previous windows */
