@@ -58,11 +58,13 @@
         },
         {
             "source":"widget-menu-horizontal",
-            "target":"glow-menu-horizontal"
+            "target":"glow-menu-horizontal",
+            "replace":true
         },
         {
             "source":"widget-menu-vertical",
-            "target":"glow-menu-vertical"
+            "target":"glow-menu-vertical",
+            "replace":true
         },
         {
             "source":"widget-scrollbar-vertical-border",
@@ -120,7 +122,8 @@
         },
         {
             "source":"widget-window-footer",
-            "target":"glow-window-footer"
+            "target":"glow-window-footer",
+            "replace":true
         },
         {
             "source":"widget-button-standard",

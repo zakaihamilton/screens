@@ -4,7 +4,10 @@
     display:none;
     width:16px;
     background: #c0c0c0;
+    margin-left:-1px;
+    margin-right:-1px;
     border-left: 1px solid black;
+    border-right: 1px solid black;
     flex-direction:column;
 }
 

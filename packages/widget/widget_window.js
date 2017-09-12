@@ -381,6 +381,16 @@ package.widget.window = function WidgetWindow(me) {
                 } else {
                     me.set(window, "ui.focus.active", true);
                 }
+                var region = me.ui.rect.absolute_region(task);
+                if(region.left < 0) {
+                    me.set(window, "ui.style.left", "0px");
+                }
+                if(region.top < 0) {
+                    me.set(window, "ui.style.top", "0px");
+                }
+                if(region.left < 0 || region.top < 0) {
+                    me.notify(window, "update");
+                }
             } else if (!minimized) {
                 me.set(window, "minimize");
             }

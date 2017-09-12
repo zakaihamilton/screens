@@ -120,7 +120,7 @@
 .glow-window-close::after {
     border-color: #0f2777;
     border-style: solid;
-    border-width: 0.10em 0.10em 0 0;
+    border-width: 2px 2px 0 0;
     content: '';
     display: inline-block;
     height: 0.20em;
@@ -175,26 +175,91 @@
     border:2px solid #0f2777;
 }
 
+.glow-menu-horizontal {
+    display:flex;
+    flex:1;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    flex-direction:row;
+}
+
+.glow-menu-horizontal span {
+    color: black;
+    padding-top: 1px;
+    padding-left: 4px;
+    padding-right:4px;
+    padding-bottom: 0px;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align: left;
+    border-right: 1px solid transparent;
+    flex:0;
+    cursor:default;
+    user-select:none;
+}
+
 .glow-menu-horizontal span.select {
     background-color: #0f2777;
     color:white;
     border-right: 1px solid black;
 }
 
+.glow-menu-horizontal span[disabled="true"] {
+    background-color: white;
+    color:lightgray;
+}
+
 .glow-menu-vertical {
     border-radius: 0px 0px 15px 15px;
+    position:absolute;
+    min-width: 167px;
     border: 2px solid #0f2777;
-    box-shadow: none;
+    background-color: white;
+    box-shadow: 1px 1px 0px 0px #808080;
+    z-index: 100;
     overflow: hidden;    
 }
 
 .glow-menu-vertical span {
-    background-color: transparent;
+    background-color: white;
+    color: black;
+    height:18px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-family: "MS Sans Serif";
+    font-size: 14px;
+    text-align: left;
+    display: block;
+    cursor:default;
+    user-select:none;
 }
 
 .glow-menu-vertical span:hover {
     background-color: #0f2777;
     color:white;
+}
+
+.glow-menu-vertical span[disabled="true"] {
+    background-color: white;
+    color:lightgray;
+}
+
+.glow-menu-vertical span[disabled="true"]:hover {
+    background-color: #0f2777;
+    color:lightgray;
+}
+
+.glow-menu-vertical span.checked:after {
+    content:'\2713';
+    position:absolute;
+    left:3px;
+}
+
+.glow-menu-vertical span.separator {
+    margin-top: 3px;
+    border-top: 3px solid white;
+    box-shadow: 0px -1px 0px 0px black;
 }
 
 .glow-scrollbar-vertical-border {
@@ -237,35 +302,33 @@
 }
 
 .glow-scrollbar-vertical-before-arrow {
-    position: relative;
+    position: absolute;
     border-style: solid;
-    border-width: 0.10em 0.10em 0 0;
+    border-width: 3px 3px 0 0;
     height: 3px;
     left: 5px;
     vertical-align: top;
     width: 3px;
     top: 6px;
-    line-height:100%;
     transform: rotate(-45deg);
 }
 
 .glow-scrollbar-vertical-after-arrow {
-    position: relative;
+    position: absolute;
     border-style: solid;
-    border-width: 0.10em 0.10em 0 0;
+    border-width: 3px 3px 0 0;
     height: 3px;
     left: 5px;
     vertical-align: top;
     width: 3px;
     top: 5px;
-    line-height:100%;
     transform: rotate(135deg);
 }
 
 .glow-scrollbar-horizontal-before-arrow {
-    position: relative;
+    position: absolute;
     border-style: solid;
-    border-width: 0.10em 0.10em 0 0;
+    border-width: 3px 3px 0 0;
     height: 3px;
     left: 6px;
     vertical-align: top;
@@ -276,9 +339,9 @@
 }
 
 .glow-scrollbar-horizontal-after-arrow {
-    position: relative;
+    position: absolute;
     border-style: solid;
-    border-width: 0.10em 0.10em 0 0;
+    border-width: 3px 3px 0 0;
     height: 3px;
     left: 4px;
     vertical-align: top;
@@ -297,6 +360,16 @@
 }
 
 .glow-window-footer {
+    flex:none;
+    height:18px;
+    display:none;
+    color:black;
+    font-family: "MS Sans Serif";
+    font-size: 16px;
+    line-height:18px;
+    position: relative;
+    padding-top:2px;
+    padding-left: 2px;
     background:white;
     border-top: 1px solid #0f2777;
 }
