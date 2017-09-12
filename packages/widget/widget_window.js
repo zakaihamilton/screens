@@ -381,7 +381,7 @@ package.widget.window = function WidgetWindow(me) {
                 } else {
                     me.set(window, "ui.focus.active", true);
                 }
-                var region = me.ui.rect.absolute_region(task);
+                var region = me.ui.rect.absolute_region(window);
                 if(region.left < 0) {
                     me.set(window, "ui.style.left", "0px");
                 }
