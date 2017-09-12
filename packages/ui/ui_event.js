@@ -5,7 +5,7 @@
 
 package.ui.event = function UIEvent(me) {
     me.send_event = function(object, method, event) {
-        if(!object.getAttribute('disabled')) {
+        if(!object.getAttribute || !object.getAttribute('disabled')) {
             me.set(object, method, event);
         }
     };
