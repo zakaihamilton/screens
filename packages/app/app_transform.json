@@ -174,7 +174,7 @@
                         "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text"
                     },
-                    "ui.monitor.change": "app.transform.save",
+                    "ui.monitor.change": "ui.basic.save",
                     "ui.basic.var": "input"
                 },
                 {

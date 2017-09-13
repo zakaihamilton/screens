@@ -1,0 +1,31 @@
+{
+    "title": "Execute",
+    "ui.style.left": "50px",
+    "ui.style.top": "50px",
+    "ui.style.width": "600px",
+    "ui.style.height": "600px",
+    "widget.menu.items": [
+        ["Program", [
+                ["Run", "app.execute.run"],
+                ["Save", "ui.basic.save(ui.var.editor,)"]
+            ]]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.class.class":"app.execute.editor",
+            "ui.basic.tag":"span",
+            "ui.attribute.contenteditable":"true",
+            "ui.basic.var":"editor",
+            "ui.property.after": {
+                "storage.cache.key": "@ui.cachekey.app-execute-input-",
+                "storage.cache.location": "local",
+                "storage.cache.restore": "ui.basic.text"
+            }
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-execute-window",
+        "storage.cache.location": "local",
+        "storage.cache.restore": "widget.window.store"
+    }
+}

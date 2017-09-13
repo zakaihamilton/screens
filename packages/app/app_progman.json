@@ -119,6 +119,12 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "storage",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Execute",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "execute",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ]

@@ -125,12 +125,6 @@ package.app.transform = function AppTransform(me) {
         me.set(scrollbar, "scrollTo", window.options.scrollPos);
         me.set(scrollbar, "snap");
     };
-    me.save = {
-        set: function (object, value) {
-            var window = me.widget.window.mainWindow(object);
-            me.set(window.var.input, "storage.cache.store", me.get(window.var.input, "ui.basic.text"));
-        }
-    };
     me.new = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);

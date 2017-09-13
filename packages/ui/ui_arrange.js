@@ -107,11 +107,15 @@ package.ui.arrange = function UIArrange(me) {
                 object = window;
             }
             var windows = me.get(object, "widget.window.visibleWindows");
-            if (windows && windows.length > 1) {
-                var left = windows[windows.length - 1];
-                var right = windows[windows.length - 2];
-                me.set(left, "ui.arrange.alignToLeft");
-                me.set(right, "ui.arrange.alignToRight");
+            if (windows) {
+                if(windows.length > 0) {
+                    var left = windows[windows.length - 1];
+                    me.set(left, "ui.arrange.alignToLeft");
+                }
+                if(windows.length > 1) {
+                    var right = windows[windows.length - 2];
+                    me.set(right, "ui.arrange.alignToRight");
+                }
             }
         }
     };
@@ -126,11 +130,15 @@ package.ui.arrange = function UIArrange(me) {
                 object = window;
             }
             var windows = me.get(object, "widget.window.visibleWindows");
-            if (windows && windows.length > 1) {
-                var top = windows[windows.length - 1];
-                var bottom = windows[windows.length - 2];
-                me.set(top, "ui.arrange.alignToTop");
-                me.set(bottom, "ui.arrange.alignToBottom");
+            if (windows) {
+                if(windows.length > 0) {
+                    var top = windows[windows.length - 1];
+                    me.set(top, "ui.arrange.alignToTop");
+                }
+                if(windows.length > 1) {
+                    var bottom = windows[windows.length - 2];
+                    me.set(bottom, "ui.arrange.alignToBottom");
+                }
             }
         }
     };

@@ -39,24 +39,9 @@ package.core.property = function CoreProperty(me) {
     };
     me.get = function(object, name, value=null, method="get") {
         var result = undefined;
-        if(object && name && (typeof name !== "string" || !name.includes("!"))) {
-            if(typeof name === "function") {
-                result = name(object, value);
-            }
-            else {
-                name = me.fullname(object, name);
-                if(name) {
-                    result = me.send(name + "." + method, object, value);
-                }
-            }
-        }
-        return result;
-    };
-    me.setSingle = function(object, name, value=null, method="set") {
-        var result = undefined;
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.setSingle(item, name, value, method);
+                return me.get(item, name, value, method);
             });
             return results;
         }
@@ -79,10 +64,11 @@ package.core.property = function CoreProperty(me) {
     };
     me.split = function(object, name, value) {
         if(typeof name === "string") {
-            var valueSeparatorIdx = name.indexOf(":");
-            if(valueSeparatorIdx !== -1) {
-                args = name.substr(valueSeparatorIdx+1).split(",");
-                name = name.substr(0, valueSeparatorIdx);
+            var openIdx = name.indexOf("(");
+            var closeIdx = name.lastIndexOf(")");
+            if(openIdx !== -1 && closeIdx !== -1) {
+                var args = name.substr(openIdx+1,closeIdx-openIdx-1).split(",");
+                name = name.substr(0, openIdx);
                 if(args.length > 1) {
                     object = me.get(object, args[0]);
                     value = args[1];
@@ -155,7 +141,7 @@ package.core.property = function CoreProperty(me) {
             me.setTo(me._forwarding_list, object, source_method, value);
             me.setTo(object._forwarding_list, object, source_method, value);
         }
-        me.setSingle(object, name, value);
+        me.get(object, name, value, "set");
     };
     me.setTo = function(list, object, name, value) {
         if(list) {

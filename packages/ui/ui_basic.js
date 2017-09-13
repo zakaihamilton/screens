@@ -155,5 +155,11 @@ package.ui.basic = function UIBasic(me) {
         set: function (object, value) {
             object.contentEditable = value;
         }
-    }
+    };
+    me.save = {
+        set: function(object) {
+            me.set(object, "storage.cache.store", me.get(object, "ui.basic.text"));
+            me.notify(me.ui.node.container(object, me.widget.container.id), "update");
+        }
+    };
 };

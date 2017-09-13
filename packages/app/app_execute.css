@@ -1,0 +1,10 @@
+.app-execute-editor {
+    font-family:"Courier New", Courier, monospace;
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    padding: 5px;
+    display: inline-block;
+}
