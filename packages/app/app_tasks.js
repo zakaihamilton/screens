@@ -60,4 +60,18 @@ package.app.tasks = function AppTasks(me) {
             me.singleton = me.ui.element.create(__json__, "desktop", "self");
         }
     };
+    me.tile = {
+        set: function(object, value) {
+            me.set(me.singleton, "widget.window.close");
+            var body = me.get(object, "ui.element.body");
+            me.set(body, "ui.arrange.tileHorizontally");
+        }
+    };
+    me.cascade = {
+        set: function(object, value) {
+            me.set(me.singleton, "widget.window.close");
+            var body = me.get(object, "ui.element.body");
+            me.set(body, "ui.arrange.cascade");
+        }
+    };
 };

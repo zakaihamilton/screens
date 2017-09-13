@@ -69,7 +69,7 @@ package.ui.rect = function UIRect(me) {
         region.width = 0;
         region.height = 0;
     };
-    me.set_relative_region = function (object, region, relative_to = null) {
+    me.set_relative_region = function (object, region, relative_to = null, move_only=false) {
         if (!object || !region) {
             return;
         }
@@ -81,8 +81,10 @@ package.ui.rect = function UIRect(me) {
         }
         object.style.left = region.left - parent_region.left + "px";
         object.style.top = region.top - parent_region.top + "px";
-        object.style.width = region.width + "px";
-        object.style.height = region.height + "px";
+        if(!move_only) {
+            object.style.width = region.width + "px";
+            object.style.height = region.height + "px";
+        }
     };
     me.set_absolute_region = function (object, region) {
         if (object.parentNode === document.body) {

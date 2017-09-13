@@ -77,7 +77,9 @@
         "Aba": "Abba",
         "Imma": "Ima",
         "histaklut": "Histaklut",
-        "“Or":"“or"
+        "“Or":"“or",
+        "Midatha":"Midat ha",
+        "Bassar":"Basar"
     },
     "pre": [
         {
@@ -1171,7 +1173,7 @@
                 "phase": "two"
             }
         },
-        "Bassar": {
+        "Basar": {
             "translation": "Flesh",
             "style": {
                 "heading": "Body",

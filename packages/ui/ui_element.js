@@ -54,12 +54,19 @@ package.ui.element = function UIElement(me) {
         }
         return match;
     };
-    me.body = function () {
-        return document.getElementsByTagName("body")[0];
+    me.document = {
+        get: function(object) {
+            return document;
+        }
+    };
+    me.body = {
+        get: function(object) {
+            return document.getElementsByTagName("body")[0];
+        }
     };
     me.desktop = function() {
         return document.body;
-    }
+    };
     me.update = function (properties, object) {
         if (Array.isArray(properties)) {
             properties.map(function (item) {

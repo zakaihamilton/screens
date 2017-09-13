@@ -11,7 +11,10 @@ package.ui.arrange = function UIArrange(me) {
             if (parent) {
                 window = parent;
             }
-            var windows = me.get(window, "widget.window.visibleWindows");
+            if(window) {
+                object = window;
+            }
+            var windows = me.get(object, "widget.window.visibleWindows");
             var left = 0, top = 0, numWindows = windows.length;
             for(window of windows) {
                 me.reposition(window, function(region) {
@@ -39,8 +42,9 @@ package.ui.arrange = function UIArrange(me) {
             container = content = me.ui.element.desktop();
         }
         var parent_region = me.ui.rect.relative_region(container);
+        var isFixed = me.get(window, "fixed");
         callback(parent_region);
-        me.ui.rect.set_relative_region(window, parent_region, content);
+        me.ui.rect.set_relative_region(window, parent_region, content, isFixed);
         me.notify(window, "update");
         me.notify(parent, "update");
     };
@@ -99,7 +103,10 @@ package.ui.arrange = function UIArrange(me) {
             if (parent) {
                 window = parent;
             }
-            var windows = me.get(window, "widget.window.visibleWindows");
+            if(window) {
+                object = window;
+            }
+            var windows = me.get(object, "widget.window.visibleWindows");
             if (windows && windows.length > 1) {
                 var left = windows[windows.length - 1];
                 var right = windows[windows.length - 2];
@@ -115,7 +122,10 @@ package.ui.arrange = function UIArrange(me) {
             if (parent) {
                 window = parent;
             }
-            var windows = me.get(window, "widget.window.visibleWindows");
+            if(window) {
+                object = window;
+            }
+            var windows = me.get(object, "widget.window.visibleWindows");
             if (windows && windows.length > 1) {
                 var top = windows[windows.length - 1];
                 var bottom = windows[windows.length - 2];

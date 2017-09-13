@@ -61,20 +61,38 @@ package.core.property = function CoreProperty(me) {
             return results;
         }
         if(object && name && (typeof name !== "string" || !name.includes("!"))) {
-            if(typeof value === "string" && value.startsWith("@")) {
-                value = me.get(object, value.substring(1));
+            var info = me.split(object, name, value);
+            if(typeof info.value === "string" && info.value.startsWith("@")) {
+                info.value = me.get(info.object, info.value.substring(1));
             }
-            if(typeof name === "function") {
-                result = name(object, value);
+            if(typeof info.name === "function") {
+                result = info.name(info.object, info.value);
             }
             else {
-                name = me.fullname(object, name);
-                if(name) {
-                    result = me.send(name + "." + method, object, value);
+                info.name = me.fullname(info.object, info.name);
+                if(info.name) {
+                    result = me.send(info.name + "." + method, info.object, info.value);
                 }
             }
         }
         return result;
+    };
+    me.split = function(object, name, value) {
+        if(typeof name === "string") {
+            var valueSeparatorIdx = name.indexOf(":");
+            if(valueSeparatorIdx !== -1) {
+                args = name.substr(valueSeparatorIdx+1).split(",");
+                name = name.substr(0, valueSeparatorIdx);
+                if(args.length > 1) {
+                    object = me.get(object, args[0]);
+                    value = args[1];
+                }
+                else if(args.length === 1) {
+                    value = args[0];
+                }
+            }
+        }
+        return {object:object,name:name,value:value};
     };
     me.forward = {
         get : function(object, property) {

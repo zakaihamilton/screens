@@ -39,8 +39,8 @@
             ["Switch to", "app.tasks.switchTo"],
             ["End Task", "app.tasks.closeTask"],
             ["Cancel", "widget.window.close", "90px", "0px"],
-            ["Cascade", "ui.arrange.cascade"],
-            ["Tile", "ui.arrange.tileHorizontally"],
+            ["Cascade", "app.tasks.cascade"],
+            ["Tile", "app.tasks.tile"],
             ["Arrange Icons", "ui.arrange.arrangeIcons", "90px", "0px"]
         ]
     }
