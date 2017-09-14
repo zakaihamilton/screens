@@ -8,9 +8,14 @@ package.core.cmd = function CoreCmd(me) {
         return terminal.application;
     };
     me.split = function(args, separator=' ') {
-        return [].concat.apply([], args.split('"').map(function(v,i){
-           return i%2 ? v : v.split(separator);
-        })).filter(Boolean);
+        if(args) {
+            return [].concat.apply([], args.split('"').map(function(v,i){
+               return i%2 ? v : v.split(separator);
+            })).filter(Boolean);
+        }
+        else {
+            return [];
+        }
     };
     me.handle = function(terminal, args) {
         if(!Array.isArray(args)) {

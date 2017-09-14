@@ -78,7 +78,14 @@ package.core.message = function CoreMessage(me) {
                     info.body = core.type.wrap_args(args);
                     core.job.end(task);
                 };
-                core.message.send.apply(null, args);
+                try {
+                    core.message.send.apply(null, args);
+                }
+                catch(e) {
+                    console.log("error: " + e.message + " " + JSON.stringify(args));
+                    info.body = e.message;
+                    core.job.end(task);
+                }
             }
         }
     };

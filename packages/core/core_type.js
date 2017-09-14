@@ -8,17 +8,19 @@ package.core.type = function CoreType(me) {
         return JSON.stringify({type:typeof unwrapped_data,value:JSON.stringify(unwrapped_data)});
     };
     me.unwrap = function(wrapped_data) {
-        wrapped_data = JSON.parse(wrapped_data);
-        if(wrapped_data.value !== undefined) {
-            var unwrapped_data = JSON.parse(wrapped_data.value);
-            var type = wrapped_data.type;
-            if(type === "integer") {
-                unwrapped_data = Number(unwrapped_data);
+        if(wrapped_data) {
+            wrapped_data = JSON.parse(wrapped_data);
+            if(wrapped_data.value !== undefined) {
+                var unwrapped_data = JSON.parse(wrapped_data.value);
+                var type = wrapped_data.type;
+                if(type === "integer") {
+                    unwrapped_data = Number(unwrapped_data);
+                }
+                else if(type === "string") {
+                    unwrapped_data = String(unwrapped_data);
+                }
+                return unwrapped_data;
             }
-            else if(type === "string") {
-                unwrapped_data = String(unwrapped_data);
-            }
-            return unwrapped_data;
         }
     };
     me.wrap_args = function(unwrapped_args) {

@@ -1,0 +1,19 @@
+{
+    "title": "Editor",
+    "ui.style.left": "50px",
+    "ui.style.top": "50px",
+    "ui.style.width": "600px",
+    "ui.style.height": "600px",
+    "ui.basic.elements": [
+        {
+            "ui.class.class":"app.execute.editor",
+            "ui.basic.tag":"div",
+            "ui.attribute.contenteditable":"true",
+            "ui.basic.var":"editor"
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-editor-window",
+        "storage.cache.restore": "widget.window.store"
+    }
+}

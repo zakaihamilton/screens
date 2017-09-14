@@ -7,9 +7,16 @@ package.app.folder = function AppFolder(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;
-        json.title = me.core.path.name(path);
+        var name = path;
+        if(!name || name === ".") {
+            name = "/";
+        }
+        else {
+            name = name.replace("./", "/");
+        }
+        json.title = "Folder - " + name;
         json["app.folder.path"] = path;
-        var folder = me.ui.element.create(json);
+        var folder = me.ui.element.create(json, "desktop", "self");
         me.notify(folder, "app.folder.refresh");
     };
     me.init = function () {
@@ -39,15 +46,15 @@ package.app.folder = function AppFolder(me) {
                     properties = {
                         "text": name,
                         "ui.basic.src": "/packages/res/icons/folder.svg",
-                        "app.progman.args": "folder " + path,
-                        "ui.touch.dblclick": "app.progman.shell"
+                        "app.folder.args": path,
+                        "ui.touch.dblclick": "app.folder.shell"
                     };
                 } else {
                     properties = {
                         "text": name,
                         "ui.basic.src": "/packages/res/icons/file.png",
-                        "app.folder.args": path,
-                        "ui.touch.dblclick": "app.folder.shell"
+                        "app.progman.args": "editor " + path,
+                        "ui.touch.dblclick": "app.progman.shell"
                     };
                 }
                 me.set(object, "elements", properties);
@@ -55,15 +62,11 @@ package.app.folder = function AppFolder(me) {
             }, path);
         }
     };
-    me.args = {
-        set: function (object, value) {
-            object.args = value;
-        }
-    };
     me.shell = {
         set: function (object) {
-            var args = me.core.cmd.split(object.args);
+            var args = me.core.cmd.split(me.get(object, "app.folder.args"));
             if (args) {
+                console.log("folder launch args: " + JSON.stringify(args));
                 me.launch(args);
             }
         }
