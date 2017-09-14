@@ -19,11 +19,11 @@ package.include({
         "json",
         "performance",
         "util",
-        "file"
+        "file",
+        "path"
     ],
     "storage": [
-        "cache",
-        "file"
+        "cache"
     ],
     "ui": [
         "event",

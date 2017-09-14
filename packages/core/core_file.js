@@ -18,9 +18,14 @@ package.core.file = function CoreFile(me) {
             callback(err, items);
         });   
     };
-    me.stat = function(callback, path) {
+    me.isFile = function(callback, path) {
         me.fs.stat(path, function(err, stats) {
-            callback(err, stats);
+            callback(stats ? stats.isFile() : false);
+        });
+    };
+    me.isDirectory = function(callback, path) {
+        me.fs.stat(path, function(err, stats) {
+            callback(stats ? stats.isDirectory() : false);
         });
     };
 };

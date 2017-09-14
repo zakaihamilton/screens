@@ -99,6 +99,11 @@ package.core.module = function CoreModule(me) {
                         me.loadBinaryFile(info.job, file_path, function (data) {
                             info.body = data;
                         });
+                    } else if (file_path.endsWith(".svg")) {
+                        info["content-type"] = "image/svg+xml";
+                        me.loadBinaryFile(info.job, file_path, function (data) {
+                            info.body = data;
+                        });
                     } else if (file_path.endsWith(".json")) {
                         info["content-type"] = "application/json";
                         me.loadTextFile(info.job, file_path, function (data) {

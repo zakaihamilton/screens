@@ -124,6 +124,12 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "execute",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Folder",
+                        "ui.basic.src": "/packages/res/icons/folder.svg",
+                        "app.progman.args": "folder .",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ]

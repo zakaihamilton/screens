@@ -5,53 +5,53 @@
 
 package.app.folder = function AppFolder(me) {
     me.launch = function (args) {
-        var path=args[0];
-        var item = me.storage.file[path];
+        var path = args[0];
         var json = __json__;
-        json.title = item.name;
+        json.title = me.core.path.name(path);
         json["app.folder.path"] = path;
-        json["ui.basic.elements"] = "app.folder.items";
-        return me.ui.element.create(json);
+        var folder = me.ui.element.create(json);
+        me.notify(folder, "app.folder.refresh");
     };
-    me.path = {
-        get: function(object) {
-            return object.value;
-        },
-        set: function(object, value) {
-            object.value = value;
-        }
+    me.init = function () {
+        me.path = me.core.object.property("app.folder.path");
+        me.args = me.core.object.property("app.folder.args");
     };
-    me.items = {
-        get: function(object) {
+    me.refresh = {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var path = me.get(window, "app.folder.path");
-            var item = me.storage.file[path];
-            var members = me.storage.file.members(item);
-            var children = members.map(function(member) {
-                var item = null;
-                var memberPath = path + "/" + member.name;
-                if(member.members) {
-                    item = {
-                        "text": member.name,
-                        "ui.basic.src": "/packages/res/icons/folder.png",
-                        "app.progman.args": memberPath,
+            me.core.file.readDir(function (err, items) {
+                if (items) {
+                    for (let item of items) {
+                        var itemPath = path + "/" + item;
+                        me.set(object, "app.folder.refreshElement", itemPath);
+                    }
+                }
+            }, path);
+        }
+    };
+    me.refreshElement = {
+        set: function (object, path) {
+            var name = me.core.path.fullName(path);
+            me.core.file.isDirectory(function (isDirectory) {
+                var properties = null;
+                if (isDirectory) {
+                    properties = {
+                        "text": name,
+                        "ui.basic.src": "/packages/res/icons/folder.svg",
+                        "app.progman.args": "folder " + path,
                         "ui.touch.dblclick": "app.progman.shell"
                     };
-                }
-                else {
-                    item = {
-                        "text": member.name,
+                } else {
+                    properties = {
+                        "text": name,
                         "ui.basic.src": "/packages/res/icons/file.png",
-                        "app.folder.args": memberPath,
+                        "app.folder.args": path,
                         "ui.touch.dblclick": "app.folder.shell"
                     };
                 }
-                return item;
-            });
-            return children;
-        },
-        set: function(object, value) {
-            
+                me.set(object, "elements", properties);
+            }, path);
         }
     };
     me.args = {
@@ -60,7 +60,7 @@ package.app.folder = function AppFolder(me) {
         }
     };
     me.shell = {
-        set: function(object) {
+        set: function (object) {
             var args = me.core.cmd.split(object.args);
             if (args) {
                 me.launch(args);

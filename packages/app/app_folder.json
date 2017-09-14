@@ -1,5 +1,5 @@
 {
-    "icon": "/packages/res/icons/folder.png",
+    "icon": "/packages/res/icons/folder.svg",
     "ui.style.left": "350px",
     "ui.style.top": "350px",
     "ui.style.width": "400px",

@@ -19,7 +19,10 @@ package.widget.icon = function WidgetIcon(me) {
                 "ui.basic.src": "",
                 "ui.class.class": "image",
                 "ui.drag.element": null,
-                "ui.basic.var": "icon"
+                "ui.basic.var": "icon",
+                "ui.attribute.width": "32px",
+                "ui.attribute.height": "32px",
+                "ui.style.objectFit":"contain"
             },
             {
                 "ui.basic.tag": "figcaption",
