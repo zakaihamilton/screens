@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component AppEditor
+ @component AppViewer
  */
 
-package.app.editor = function AppEditor(me) {
+package.app.viewer = function AppViewer(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;
@@ -14,26 +14,25 @@ package.app.editor = function AppEditor(me) {
         else {
             name = name.replace("./", "/");
         }
-        json.title = "Editor - " + name;
-        json["app.editor.path"] = path;
-        var editor = me.ui.element.create(json, "desktop", "self");
-        me.notify(editor, "app.editor.reload");
+        json.title = "Viewer - " + name;
+        json["app.viewer.path"] = path;
+        var viewer = me.ui.element.create(json, "desktop", "self");
+        me.notify(viewer, "app.viewer.reload");
     };
     me.init = function () {
-        me.path = me.core.object.property("app.editor.path");
+        me.path = me.core.object.property("app.viewer.path");
     };
     me.reload = {
         set: function(object) {
             var window = me.widget.window.window(object);
-            var path = me.get(window, "app.editor.path");
+            var path = me.get(window, "app.viewer.path");
             me.core.file.readFile(function(err, data) {
                 if(err) {
-                    me.set(window.var.editor, "ui.basic.text", err);
+                    me.set(window.var.viewer, "ui.basic.text", err);
                 }
                 else {
-                    me.set(window.var.editor, "ui.basic.text", data);
+                    me.set(window.var.viewer, "ui.basic.text", data);
                 }
-                me.set(window.var.editor, "ui.style.height", "100%");
                 me.notify(window, "update");
             }, path, 'utf8');
         }

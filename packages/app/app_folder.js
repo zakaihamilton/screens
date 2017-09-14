@@ -53,7 +53,7 @@ package.app.folder = function AppFolder(me) {
                     properties = {
                         "text": name,
                         "ui.basic.src": "/packages/res/icons/file.png",
-                        "app.progman.args": "editor " + path,
+                        "app.progman.args": "viewer " + path,
                         "ui.touch.dblclick": "app.progman.shell"
                     };
                 }
