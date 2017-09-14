@@ -51,6 +51,7 @@ package.app.folder = function AppFolder(me) {
                     };
                 }
                 me.set(object, "elements", properties);
+                me.notify(object, "update");
             }, path);
         }
     };
