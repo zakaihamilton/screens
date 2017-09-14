@@ -23,9 +23,11 @@ package.app.execute = function AppExecute(me) {
                 result = e.message;
                 isError = true;
             }
-            me.set(me.singleton.var.footer, "ui.style.display", "block");
-            me.set(me.singleton.var.footer, "ui.style.background", isError ? "red" : "green");
-            me.set(me.singleton.var.footer, "ui.basic.text", result);
+            me.set(me.singleton.var.footer, "ui.property.group", {
+                "ui.style.display": "block",
+                "ui.style.background": isError ? "red" : "green",
+                "ui.basic.text": result
+            });
         }
     };
 };

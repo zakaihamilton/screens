@@ -43,7 +43,10 @@ package.storage.cache = function StorageCache(me) {
         set: function(object, value) {
             var key = me.get(object, "storage.cache.key");
             var location = me.get(object, "storage.cache.location");
-            if(key && location) {
+            if(!location) {
+                location = "local";
+            }
+            if(key) {
                 me.set(me[location], key, value);
             }
         }
@@ -52,8 +55,10 @@ package.storage.cache = function StorageCache(me) {
         set: function(object, value) {
             var key = me.get(object, "storage.cache.key");
             var location = me.get(object, "storage.cache.location");
-            console.log("restore key: "+ key + " location: " + location + " value: " + value);
-            if(key && location) {
+            if(!location) {
+                location = "local";
+            }
+            if(key) {
                 var store = me.get(me[location], key);
                 me.set(object, value, store);
             }

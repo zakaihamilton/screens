@@ -32,6 +32,8 @@
     background:white;
     border-radius: 15px;
     overflow:hidden;
+    min-width:200px;
+    min-height:200px;
 }
 
 .glow-window-border.maximize {

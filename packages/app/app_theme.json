@@ -32,7 +32,6 @@
     ],
     "ui.property.after":{
         "storage.cache.key": "app-theme-window",
-        "storage.cache.location": "local",
         "storage.cache.restore": "widget.window.store"
     }
 }

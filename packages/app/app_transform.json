@@ -171,7 +171,6 @@
                     "ui.class.class": "app.transform.input",
                     "ui.property.after": {
                         "storage.cache.key": "@ui.cachekey.app-transform-input-",
-                        "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text"
                     },
                     "ui.monitor.change": "ui.basic.save",
@@ -209,7 +208,6 @@
                     "ui.basic.var": "filter",
                     "ui.property.after": {
                         "storage.cache.key": "@ui.cachekey.app-transform-filter-",
-                        "storage.cache.location": "local",
                         "storage.cache.restore": "ui.basic.text",
                         "ui.attribute.list": "@ui.cachekey.app-transform-filter-"
                     },
@@ -271,7 +269,6 @@
                 "widget.scrollbar.vertical.alwaysHide": true,
                 "widget.scrollbar.horizontal.alwaysHide": true,
                 "storage.cache.key": "@ui.cachekey.app-transform-window-",
-                "storage.cache.location": "local",
                 "storage.cache.restore": "widget.window.store",
                 "app.transform.initOptions": null,
                 "app.transform.transform": null
@@ -300,7 +297,6 @@
     },
     "ui.property.after": {
         "storage.cache.key": "app-transform-window",
-        "storage.cache.location": "local",
         "storage.cache.restore": "widget.window.store"
     }
 }
