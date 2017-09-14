@@ -27,6 +27,7 @@ package.widget.list = function WidgetList(me) {
             if (value) {
                 object.listElements = value;
                 me.set(object.var.container, "ui.basic.elements", value);
+                me.notify(object.var.container, "update");
             }
         }
     };
@@ -34,6 +35,7 @@ package.widget.list = function WidgetList(me) {
         set: function(object) {
             me.set(object.var.container, "empty");
             me.set(object, "elements", object.listElements);
+            me.notify(object.var.container, "update");
         }
     };
     me.selection = {
