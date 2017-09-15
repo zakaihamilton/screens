@@ -1,46 +1,55 @@
 {
-    "grid": {
-        "ui.style.gridTemplateColumns":"150px 150px",
-        "ui.style.gridAutoRows":"50px",
-        "ui.style.padding":"5px",
-        "ui.style.margin":"5px"
-    },
-    "items":[
+    "layers": [
+        {
+            "ui.element.update": {
+                "ui.style.gridTemplateColumns": "50% 50%",
+                "ui.style.gridTemplateRows": "auto",
+                "ui.style.gridAutoRows": "auto",
+                "ui.style.padding": "5px",
+                "ui.style.margin": "5px"
+            }
+        },
         {
             "ui.group.data": {
-                "ui.data.keyList":["ui.basic.text","ui.style.backgroundColor","ui.style.borderColor"],
-                "ui.data.default":{
-                    "ui.style.border":"1px solid black",
-                    "ui.style.gridColumn":"1",
-                    "ui.style.padding":"5px",
-                    "ui.style.margin":"5px"
+                "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                "ui.data.default": {
+                    "ui.basic.tag":"div",
+                    "ui.style.border": "1px solid black",
+                    "ui.style.gridColumn": "1",
+                    "ui.style.padding": "5px",
+                    "ui.style.margin": "5px",
+                    "ui.style.height":"auto"
                 },
-                "ui.data.values":[
-                    ["Primordial Man","white","black"],
-                    ["Emanation","#FFF3CA","black"],
-                    ["Creation","#C8D9F9","black"],
-                    ["Formation","#F5CCCB","black"],
-                    ["Action","#D9EAD2","black"]
+                "ui.data.values": [
+                    ["1", "Direct Light", "black", "black", "white"],
+                    ["2", "Crown", "white", "black"],
+                    ["3", "Wisdom", "#FFF3CA", "black"],
+                    ["4", "Understanding", "#C8D9F9", "black"],
+                    ["5", "Beauty", "#F5CCCB", "black"],
+                    ["6", "Kingdom", "#D9EAD2", "black"]
                 ]
             }
         },
         {
             "ui.group.data": {
-                "ui.data.keyList":["ui.basic.text","ui.style.backgroundColor","ui.style.borderColor"],
-                "ui.data.default":{
-                    "ui.style.border":"1px solid black",
-                    "ui.style.gridColumn":"2",
-                    "ui.style.padding":"5px",
-                    "ui.style.margin":"5px"
+                "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                "ui.data.default": {
+                    "ui.basic.tag":"div",
+                    "ui.style.border": "1px solid black",
+                    "ui.style.gridColumn": "2",
+                    "ui.style.padding": "5px",
+                    "ui.style.margin": "5px",
+                    "ui.style.height":"auto"
                 },
-                "ui.data.values":[
-                    ["Skull","white","black"],
-                    ["AB","#FFF3CA","black"],
-                    ["SAG","#C8D9F9","black"],
-                    ["MA","#F5CCCB","black"],
-                    ["BON","#D9EAD2","black"]
+                "ui.data.values": [
+                    ["1", "Reflected Light", "black", "black", "white"],
+                    ["2", "Kingdom", "#D9EAD2", "black"],
+                    ["3", "Beauty", "#F5CCCB", "black"],
+                    ["4", "Understanding", "#C8D9F9", "black"],
+                    ["5", "Wisdom", "#FFF3CA", "black"],
+                    ["6", "Crown", "white", "black"]
                 ]
             }
         }
-   ]
+    ]
 }

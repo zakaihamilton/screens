@@ -84,8 +84,7 @@ package.app.diagram = function AppDiagram(me) {
         set: function(object) {
             var window = me.widget.window.window(object);
             var diagramData = me.get(window, "app.diagram.diagramData");
-            me.ui.element.update(diagramData.grid, window.var.viewer);
-            me.ui.element.create(diagramData.items, window.var.viewer);
+            me.ui.element.create(diagramData.layers, window.var.viewer);
         }
     };
 };
