@@ -20,7 +20,10 @@ package.core.json = function CoreJson(me) {
         }
         else {
             var parse = function(info) {
-                var json = JSON.parse(info.response);
+                var json = {};
+                if(info.response) {
+                    json = JSON.parse(info.response);
+                }
                 if(useCache) {
                     me.files[path] = json;
                 }

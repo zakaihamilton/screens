@@ -1,0 +1,46 @@
+{
+    "grid": {
+        "ui.style.gridTemplateColumns":"150px 150px",
+        "ui.style.gridAutoRows":"50px",
+        "ui.style.padding":"5px",
+        "ui.style.margin":"5px"
+    },
+    "items":[
+        {
+            "ui.group.data": {
+                "ui.data.keyList":["ui.basic.text","ui.style.backgroundColor","ui.style.borderColor"],
+                "ui.data.default":{
+                    "ui.style.border":"1px solid black",
+                    "ui.style.gridColumn":"1",
+                    "ui.style.padding":"5px",
+                    "ui.style.margin":"5px"
+                },
+                "ui.data.values":[
+                    ["Primordial Man","white","black"],
+                    ["Emanation","#FFF3CA","black"],
+                    ["Creation","#C8D9F9","black"],
+                    ["Formation","#F5CCCB","black"],
+                    ["Action","#D9EAD2","black"]
+                ]
+            }
+        },
+        {
+            "ui.group.data": {
+                "ui.data.keyList":["ui.basic.text","ui.style.backgroundColor","ui.style.borderColor"],
+                "ui.data.default":{
+                    "ui.style.border":"1px solid black",
+                    "ui.style.gridColumn":"2",
+                    "ui.style.padding":"5px",
+                    "ui.style.margin":"5px"
+                },
+                "ui.data.values":[
+                    ["Skull","white","black"],
+                    ["AB","#FFF3CA","black"],
+                    ["SAG","#C8D9F9","black"],
+                    ["MA","#F5CCCB","black"],
+                    ["BON","#D9EAD2","black"]
+                ]
+            }
+        }
+   ]
+}

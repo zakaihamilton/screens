@@ -1,0 +1,71 @@
+{
+    "title": "Diagram",
+    "ui.style.left": "50px",
+    "ui.style.top": "50px",
+    "ui.style.width": "600px",
+    "ui.style.height": "600px",
+    "widget.menu.items": [
+        ["View", [
+                ["Relationships", "app.diagram.viewType", {
+                        "state": "select"
+                    }
+                ],
+                ["Layers", "app.diagram.viewType", {
+                        "state": "select"
+                    }
+                ],
+                ["Text", "app.diagram.viewType", {
+                        "state": "select",
+                        "separator":true
+                    }
+                ]
+            ]],
+        ["Options", [
+                ["Translation", "app.diagram.doTranslation", {
+                        "state": "select"
+                    }
+                ],
+                ["Keep Source", "app.diagram.keepSource", {
+                        "state": "select"
+                    }
+                ],
+                ["Explanation", "app.diagram.doExplanation", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["Prioritize Explanation", "app.diagram.prioritizeExplanation", {
+                        "state": "select"
+                    }
+                ],
+                ["Styles", "app.diagram.addStyles", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["Headings", "app.diagram.headings", {
+                        "state": "select",
+                        "enabled": "app.diagram.addStyles"
+                    }
+                ],
+                ["Phase Numbers", "app.diagram.phaseNumbers", {
+                        "state": "select",
+                        "enabled": "app.diagram.addStyles"
+                    }
+                ]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag":"div",
+            "ui.basic.var":"viewer"
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-diagram-window",
+        "storage.cache.restore": "widget.window.store",
+        "app.diagram.initOptions": null,
+        "app.diagram.reload": null
+    }
+}

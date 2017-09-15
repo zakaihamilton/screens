@@ -11,7 +11,7 @@ package.app.theme = function AppTheme(me) {
         }
         me.singleton = me.ui.element.create(__json__, "desktop", "self");
         var current_theme = me.get(me.storage.cache.local, "ui-theme-current");
-        current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1)
+        current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
         me.set(me.singleton.var.themeList, "selection", current_theme);
     };
     me.setTheme = {

@@ -1,0 +1,38 @@
+.app-diagram-text {
+    font-family:"Courier New", Courier, monospace;
+    position:relative;
+    left:0px;
+    right:0px;
+    padding: 5px;
+    display: block;
+    white-space: pre-wrap;
+    background:white;
+    height:auto;
+    overflow:visible;
+}
+
+.app-diagram-relationships {
+    font-family:"Courier New", Courier, monospace;
+    position:relative;
+    left:0px;
+    right:0px;
+    padding: 5px;
+    display: block;
+    white-space: pre-wrap;
+    background:white;
+    height:auto;
+    overflow:visible;
+}
+
+.app-diagram-layers {
+    position:relative;
+    display:grid;
+}
+
+.app-diagram-box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}

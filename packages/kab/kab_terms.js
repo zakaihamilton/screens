@@ -15,27 +15,34 @@ package.kab.terms = function KabTerms(me) {
         language = language.toLowerCase();
         if (me.jsons[language]) {
             var json = me.jsons[language];
-            var numTerms = 0;
-            if (json.term) {
-                numTerms = Object.keys(json.term).length;
-            }
             if (callback) {
-                callback(numTerms);
+                callback(json);
             }
         } else {
             me.core.json.loadComponent(function (json) {
                 if (json) {
                     me.jsons[language] = json;
-                    var numTerms = 0;
-                    if (json.term) {
-                        numTerms = Object.keys(json.term).length;
-                    }
                     if (callback) {
-                        callback(numTerms);
+                        callback(json);
                     }
                 }
             }, "kab.terms_" + language);
         }
+    };
+    me.retrieveTerms = function(callback, language, options) {
+        me.language = language.toLowerCase();
+        me.json = me.jsons[me.language];
+        if (!me.json) {
+            if (callback) {
+                callback(null);
+                return null;
+            }
+        }
+        me.terms = me.send("kab.terms.prepare", me.json.term, options, false);
+        if(callback) {
+            callback(me.kab.search.terms);
+        }
+        return me.kab.search.terms;
     };
     me.parse = function (callback, language, wordsString, options) {
         me.language = language.toLowerCase();
@@ -340,7 +347,7 @@ package.kab.terms = function KabTerms(me) {
         }
         me.kab.format.insert(words, wordIndex + 1, me.json.suffix, item.suffix, suffixWord, text);
     };
-    me.prepare = function (terms, options) {
+    me.prepare = function (terms, options, defaultTermsOnly=true) {
         var result = new Map();
         for (var term in terms) {
             var info = terms[term];
@@ -348,7 +355,7 @@ package.kab.terms = function KabTerms(me) {
             var key = words[0].toUpperCase();
             var lookup = result[key];
             info.term = term;
-            if(info.defaultTerm) {
+            if(info.defaultTerm || !defaultTermsOnly) {
                 me.kab.search.setTerm(options, me.json.style, info, null, null, null, false);
             }
             if (!lookup) {

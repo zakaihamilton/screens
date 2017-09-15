@@ -253,7 +253,7 @@ package.app.transform = function AppTransform(me) {
                     console.log("detected language: " + language);
                 }
                 me.set(window.var.footer, "ui.style.display", "block");
-                me.kab.terms.setLanguage(function (numTerms) {
+                me.kab.terms.setLanguage(function () {
                     window.options.hoverCallback = "package.app.transform.hoverDescription";
                     window.options.toggleCallback = "package.app.transform.cycleDescription";
                     me.kab.terms.parse(function (text, terms, data) {
