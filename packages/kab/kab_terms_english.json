@@ -2549,7 +2549,10 @@
             "translation": "Adjunct"
         },
         "Enayim": {
-            "translation": "Eyes"
+            "translation": "Eyes",
+            "style": {
+                "phase": "one"
+            }
         },
         "Tikkunim": {
             "translation": "Corrections"
@@ -3526,6 +3529,9 @@
         },
         "Zecharim":{
             "translation":"Males"
+        },
+        "Dak":{
+            "translation":"Thin"
         }
     },
     "style": {

@@ -2,8 +2,8 @@
     "title": "Terminal",
     "ui.style.left": "350px",
     "ui.style.top": "100px",
-    "ui.style.width": "300px",
-    "ui.style.height": "300px",
+    "ui.style.width": "640px",
+    "ui.style.height": "480px",
     "icon": "/packages/res/icons/terminal.png",
     "ui.style.background": "black",
     "ui.basic.elements": [

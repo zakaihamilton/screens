@@ -1,55 +1,66 @@
 {
     "layers": [
         {
-            "ui.element.update": {
-                "ui.style.gridTemplateColumns": "50% 50%",
-                "ui.style.gridTemplateRows": "auto",
-                "ui.style.gridAutoRows": "auto",
-                "ui.style.padding": "5px",
-                "ui.style.margin": "5px"
-            }
-        },
-        {
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
-                "ui.data.default": {
-                    "ui.basic.tag":"div",
-                    "ui.style.border": "1px solid black",
-                    "ui.style.gridColumn": "1",
-                    "ui.style.padding": "5px",
-                    "ui.style.margin": "5px",
-                    "ui.style.height":"auto"
+            "ui.style.display":"grid",
+            "ui.style.position":"absolute",
+            "ui.style.left":"0px",
+            "ui.style.top":"0px",
+            "ui.style.right":"0px",
+            "ui.style.bottom":"0px",
+            "ui.style.gridAutoColumns": "50%",
+            "ui.style.gridAutoRows": "auto",
+            "ui.style.padding": "5px",
+            "ui.style.margin": "5px",
+            "ui.style.gridGap": "10px 10px",
+            "ui.basic.elements": [
+                {
+                    "ui.element.update": {
+                        "ui.group.data": {
+                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                            "ui.data.default": {
+                                "ui.basic.tag": "div",
+                                "ui.style.border": "1px solid black",
+                                "ui.style.gridColumn": "1",
+                                "ui.style.padding": "5px",
+                                "ui.style.margin": "5px",
+                                "ui.style.textAlign":"center",
+                                "ui.style.verticalAlign":"middle"
+                            },
+                            "ui.data.values": [
+                                ["1", "Direct Light", "black", "black", "white"],
+                                ["2", "Crown", "white", "black"],
+                                ["3", "Wisdom", "#FFF3CA", "black"],
+                                ["4", "Understanding", "#C8D9F9", "black"],
+                                ["5", "Beauty", "#F5CCCB", "black"],
+                                ["6", "Kingdom", "#D9EAD2", "black"]
+                            ]
+                        }
+                    }
                 },
-                "ui.data.values": [
-                    ["1", "Direct Light", "black", "black", "white"],
-                    ["2", "Crown", "white", "black"],
-                    ["3", "Wisdom", "#FFF3CA", "black"],
-                    ["4", "Understanding", "#C8D9F9", "black"],
-                    ["5", "Beauty", "#F5CCCB", "black"],
-                    ["6", "Kingdom", "#D9EAD2", "black"]
-                ]
-            }
-        },
-        {
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
-                "ui.data.default": {
-                    "ui.basic.tag":"div",
-                    "ui.style.border": "1px solid black",
-                    "ui.style.gridColumn": "2",
-                    "ui.style.padding": "5px",
-                    "ui.style.margin": "5px",
-                    "ui.style.height":"auto"
-                },
-                "ui.data.values": [
-                    ["1", "Reflected Light", "black", "black", "white"],
-                    ["2", "Kingdom", "#D9EAD2", "black"],
-                    ["3", "Beauty", "#F5CCCB", "black"],
-                    ["4", "Understanding", "#C8D9F9", "black"],
-                    ["5", "Wisdom", "#FFF3CA", "black"],
-                    ["6", "Crown", "white", "black"]
-                ]
-            }
+                {
+                    "ui.element.update": {
+                        "ui.group.data": {
+                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                            "ui.data.default": {
+                                "ui.basic.tag": "div",
+                                "ui.style.border": "1px solid black",
+                                "ui.style.gridColumn": "2",
+                                "ui.style.padding": "5px",
+                                "ui.style.margin": "5px",
+                                "ui.style.textAlign":"center"
+                            },
+                            "ui.data.values": [
+                                ["1", "Reflected Light", "black", "black", "white"],
+                                ["2", "Kingdom", "#D9EAD2", "black"],
+                                ["3", "Beauty", "#F5CCCB", "black"],
+                                ["4", "Understanding", "#C8D9F9", "black"],
+                                ["5", "Wisdom", "#FFF3CA", "black"],
+                                ["6", "Crown", "white", "black"]
+                            ]
+                        }
+                    }
+                }
+            ]
         }
     ]
 }
