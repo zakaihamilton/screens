@@ -16,4 +16,6 @@ package.include({
 
 package.remote("core.test", "server");
 package.remote("core.file", "server");
-package.remote("kab.terms", "client");
+package.remote("kab.text", "client");
+package.remote("kab.term", "client");
+package.remote("kab.data", "client");

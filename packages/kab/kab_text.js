@@ -1,78 +1,34 @@
 /*
  @author Zakai Hamilton
- @component KabTerms
+ @component KabText
  */
 
-package.kab.terms = function KabTerms(me) {
-    me.init = function () {
-        me.jsons = {};
-        me.json = null;
-        me.terms = null;
-        me.content = null;
-        me.language = "english";
-    };
-    me.setLanguage = function (callback, language) {
-        language = language.toLowerCase();
-        if (me.jsons[language]) {
-            var json = me.jsons[language];
-            if (callback) {
-                callback(json);
-            }
-        } else {
-            me.core.json.loadFile(function (json) {
-                if (json) {
-                    me.jsons[language] = json;
-                    if (callback) {
-                        callback(json);
-                    }
-                }
-            }, "/packages/res/terms/" + language + ".json");
-        }
-    };
+package.kab.text = function KabText(me) {
     me.retrieveTerms = function(callback, language, options) {
-        me.language = language.toLowerCase();
-        me.json = me.jsons[me.language];
-        if (!me.json) {
-            if (callback) {
-                callback(null);
-                return null;
+        var language = language.toLowerCase();
+        me.kab.data.load(function(json) {
+        var terms = me.send("kab.text.prepare", json, json.term, options, false);
+            if(callback) {
+                callback(terms);
             }
-        }
-        me.terms = me.send("kab.terms.prepare", me.json.term, options, false);
-        if(callback) {
-            callback(me.kab.search.terms);
-        }
-        return me.kab.search.terms;
+        }, language);
     };
-    me.parse = function (callback, language, wordsString, options) {
-        me.language = language.toLowerCase();
-        me.json = me.jsons[me.language];
-        if (!me.json) {
-            if (callback) {
-                callback(wordsString);
-                return;
-            }
-            return wordsString;
-        }
+    me.parseSingle = function(json, language, terms, content, wordsString, depth, options) {
         var match = me.match;
         var modify = me.modify;
         var duplicateOptions = me.duplicateOptions;
-        var parse = me.parse;
-        var prefix = me.json.prefix;
-        var suffix = me.json.suffix;
-        var ignore = me.json.ignore;
-        if (callback) {
-            me.send("kab.search.clear");
-            wordsString = me.send("kab.format.spelling", wordsString, me.json.spelling);
-            wordsString = me.send("kab.format.process", wordsString, me.json.pre);
-            me.terms = me.send("kab.terms.prepare", me.json.term, options);
-            me.content = wordsString;
+        var parseSingle = me.parseSingle;
+        var prefix = json.prefix;
+        var suffix = json.suffix;
+        var ignore = json.ignore;
+        var wordStyle = json.options.wordStyle;
+        if(!wordStyle) {
+            wordStyle = "whole";
         }
-        var terms = me.terms;
         if (terms) {
             wordsString = me.core.string.parseWords(function (words) {
                 var wasPrefix = false;
-                if (callback && me.json.options && me.json.options.splitPartial) {
+                if (!depth && json.options && json.options.splitPartial) {
                     for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                         var word = words[wordIndex];
                         if (terms[word.toUpperCase()]) {
@@ -107,7 +63,7 @@ package.kab.terms = function KabTerms(me) {
                     if (!termLookup) {
                         if (word.length > 2) {
                             term = terms["*"].find(function (term) {
-                                return match(null, word, term);
+                                return match(null, word, term, wordStyle);
                             });
                             if (term) {
                                 termLookup = terms[term];
@@ -169,9 +125,9 @@ package.kab.terms = function KabTerms(me) {
                         var source = collectedWords;
                         var target = term;
                         var upperCase = false;
-                        if (!match(item, source, target)) {
+                        if (!match(item, source, target, wordStyle)) {
                             if (!item.case || item.case !== "sensitive") {
-                                if (!match(item, source, target.toUpperCase())) {
+                                if (!match(item, source, target.toUpperCase(), wordStyle)) {
                                     continue;
                                 } else {
                                     upperCase = true;
@@ -197,12 +153,12 @@ package.kab.terms = function KabTerms(me) {
                         if (context) {
                             var contextMatch = true;
                             if (typeof context === "string") {
-                                if (!me.content.includes(context)) {
+                                if (!content.includes(context)) {
                                     contextMatch = false;
                                 }
                             } else if (Array.isArray(context)) {
                                 context.map(function (entry) {
-                                    if (!me.content.includes(entry)) {
+                                    if (!content.includes(entry)) {
                                         contextMatch = false;
                                     }
                                 });
@@ -215,7 +171,7 @@ package.kab.terms = function KabTerms(me) {
                             if (Array.isArray(expansion)) {
                                 expansion = expansion.map(function (text) {
                                     if (!text.includes(term)) {
-                                        text = parse(null, me.language, text, options);
+                                        text = parseSingle(json, language, terms, content, text, depth+1, options);
                                     }
                                     return text;
                                 });
@@ -225,23 +181,23 @@ package.kab.terms = function KabTerms(me) {
                                     expansion = expansion.slice(-1).toString();
                                 }
                             } else {
-                                expansion = parse(null, me.language, expansion, options);
+                                expansion = parseSingle(json, language, terms, content, expansion, depth+1, options);
                             }
-                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " (", expansion, null, ")", options, true);
+                            modify(json, words, wordIndex, span, prefixWord, suffixWord, item, source, " (", expansion, null, ")", options, true, language);
                         } else if (translation || explanation) {
                             if (translation) {
                                 if (!item.fixed && translation !== term) {
-                                    translation = parse(null, me.language, translation, duplicateOptions(options, {"addStyles": false}));
+                                    translation = parseSingle(json, language, terms, content, translation, depth+1, duplicateOptions(options, {"addStyles": false}));
                                 }
                             }
-                            me.kab.search.setTerm(options, me.json.style, item, null, translation, explanation);
+                            me.kab.search.setTerm(options, json.style, item, null, translation, explanation);
                             if (translation && upperCase) {
                                 translation = translation.toUpperCase();
                             }
                             if (explanation && upperCase) {
                                 explanation = explanation.toUpperCase();
                             }
-                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, " [", translation, explanation, "]", options);
+                            modify(json, words, wordIndex, span, prefixWord, suffixWord, item, source, " [", translation, explanation, "]", options, false, language);
                         } else if (overrideSource) {
                             words.splice(wordIndex, span);
                             if (Array.isArray(overrideSource)) {
@@ -251,20 +207,26 @@ package.kab.terms = function KabTerms(me) {
                             }
                             wordIndex--;
                         } else if (options.addStyles && item.style) {
-                            me.kab.search.setTerm(options, me.json.style, item);
-                            modify(words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, null, "", duplicateOptions(options, {"keepSource": false}));
+                            me.kab.search.setTerm(options, json.style, item);
+                            modify(json, words, wordIndex, span, prefixWord, suffixWord, item, source, "", source, null, "", duplicateOptions(options, {"keepSource": false}), false, language);
                         }
                         break;
                     }
                 }
             }, wordsString);
-        }
-        if (callback) {
-            wordsString = me.send("kab.format.process", wordsString, me.json.post);
-            callback(wordsString, me.kab.search.terms, me.json.data);
-            return;
-        }
+        }        
         return wordsString;
+    };
+    me.parse = function (callback, language, wordsString, options) {
+        me.kab.data.load(function(json) {
+            me.send("kab.search.clear");
+            wordsString = me.send("kab.format.spelling", wordsString, json.spelling);
+            wordsString = me.send("kab.format.process", wordsString, json.pre);
+            var terms = me.send("kab.text.prepare", json, json.term, options);
+            wordsString = me.parseSingle(json, language, terms, wordsString, wordsString, 0, options);
+            wordsString = me.send("kab.format.process", wordsString, json.post);
+            callback(wordsString, me.kab.search.terms, json.data);
+        }, language);
     };
     me.toCase = function (item, string) {
         var itemCase = "insensitive";
@@ -276,11 +238,7 @@ package.kab.terms = function KabTerms(me) {
         }
         return string;
     };
-    me.match = function (item, source, target) {
-        var wordStyle = "whole";
-        if (me.json.options && me.json.options.wordStyle) {
-            wordStyle = me.json.options.wordStyle;
-        }
+    me.match = function (item, source, target, wordStyle) {
         if (item && item.word) {
             wordStyle = item.word;
         }
@@ -306,7 +264,7 @@ package.kab.terms = function KabTerms(me) {
         }
         return duplicate;
     };
-    me.modify = function (words, wordIndex, sourceLength, prefixWord, suffixWord, item, term, prefix, translation, explanation, suffix, options, expansion) {
+    me.modify = function (json, words, wordIndex, sourceLength, prefixWord, suffixWord, item, term, prefix, translation, explanation, suffix, options, expansion, language) {
         var replacement = translation;
         if (explanation && translation) {
             if(options.prioritizeExplanation) {
@@ -337,15 +295,15 @@ package.kab.terms = function KabTerms(me) {
         var text = replacement;
         var replacementWithStyles = replacement;
         if (options.addStyles && (item.style || translation.toLowerCase() !== term.toLowerCase())) {
-            replacementWithStyles = me.kab.style.process(term, item.style, replacement, options, expansion, me.json, me.language);
+            replacementWithStyles = me.kab.style.process(term, item.style, replacement, options, expansion, json, language);
         }
         words.splice(wordIndex, 0, replacementWithStyles);
         if (!item.includePrefix) {
-            me.kab.format.insert(words, wordIndex, me.json.prefix, item.prefix, prefixWord, text);
+            me.kab.format.insert(words, wordIndex, json.prefix, item.prefix, prefixWord, text);
         }
-        me.kab.format.insert(words, wordIndex + 1, me.json.suffix, item.suffix, suffixWord, text);
+        me.kab.format.insert(words, wordIndex + 1, json.suffix, item.suffix, suffixWord, text);
     };
-    me.prepare = function (terms, options, defaultTermsOnly=true) {
+    me.prepare = function (json, terms, options, defaultTermsOnly=true) {
         var result = new Map();
         if(!terms) {
             return null;
@@ -355,7 +313,7 @@ package.kab.terms = function KabTerms(me) {
             var key = words[0].toUpperCase();
             var lookup = result[key];
             if(item.defaultTerm || !defaultTermsOnly) {
-                me.kab.search.setTerm(options, me.json.style, item, null, null, null, false);
+                me.kab.search.setTerm(options, json.style, item, null, null, null, false);
             }
             if (!lookup) {
                 lookup = new Map();

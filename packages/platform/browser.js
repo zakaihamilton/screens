@@ -91,7 +91,7 @@ package.include({
         "text"
     ],
     "kab": [
-        "terms"
+        "text"
     ],
 },
         function (info) {

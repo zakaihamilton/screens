@@ -253,45 +253,43 @@ package.app.transform = function AppTransform(me) {
                     console.log("detected language: " + language);
                 }
                 me.set(window.var.footer, "ui.style.display", "block");
-                me.kab.terms.setLanguage(function () {
-                    window.options.hoverCallback = "package.app.transform.hoverDescription";
-                    window.options.toggleCallback = "package.app.transform.cycleDescription";
-                    me.kab.terms.parse(function (text, terms, data) {
-                        if(data) {
-                            me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
-                        }
-                        if (window.prevLanguage) {
-                            me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
-                            me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
-                            me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
-                            me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
-                            me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
-                        }
-                        me.set(window.var.layout, "ui.class.add", language);
-                        me.set(window.var.filter, "ui.class.add", language);
-                        me.set(window.var.termPopup, "title", data.termTableTitle);
-                        me.set(window.var.termTable, "ui.class.add", language);
-                        me.set(window.var.toggleTerms, "ui.class.add", language);
-                        me.set(window.var.toggleGlossary, "ui.class.add", language);
-                        me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
-                        me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
-                        window.prevLanguage = language;
-                        if (window.options.showHtml) {
-                            me.set(window.var.output, "ui.basic.text", text);
-                        } else {
-                            me.set(window.var.output, "ui.basic.html", text);
-                        }
-                        me.updateFilterList(window, terms);
-                        if(data) {
-                            me.updateTermTable(window, terms, data.termTable, language);
-                        }
-                        me.ui.layout.move(window.var.output, window.var.layout);
-                        window.forceReflow = true;
-                        window.contentChanged = true;
-                        me.set(window, "update");
-                        me.set(window, "ui.work.state", false);
-                    }, language, text, window.options);
-                }, language);
+                window.options.hoverCallback = "package.app.transform.hoverDescription";
+                window.options.toggleCallback = "package.app.transform.cycleDescription";
+                me.kab.text.parse(function (text, terms, data) {
+                    if(data) {
+                        me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+                    }
+                    if (window.prevLanguage) {
+                        me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
+                        me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
+                        me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
+                        me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
+                        me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
+                    }
+                    me.set(window.var.layout, "ui.class.add", language);
+                    me.set(window.var.filter, "ui.class.add", language);
+                    me.set(window.var.termPopup, "title", data.termTableTitle);
+                    me.set(window.var.termTable, "ui.class.add", language);
+                    me.set(window.var.toggleTerms, "ui.class.add", language);
+                    me.set(window.var.toggleGlossary, "ui.class.add", language);
+                    me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
+                    me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+                    window.prevLanguage = language;
+                    if (window.options.showHtml) {
+                        me.set(window.var.output, "ui.basic.text", text);
+                    } else {
+                        me.set(window.var.output, "ui.basic.html", text);
+                    }
+                    me.updateFilterList(window, terms);
+                    if(data) {
+                        me.updateTermTable(window, terms, data.termTable, language);
+                    }
+                    me.ui.layout.move(window.var.output, window.var.layout);
+                    window.forceReflow = true;
+                    window.contentChanged = true;
+                    me.set(window, "update");
+                    me.set(window, "ui.work.state", false);
+                }, language, text, window.options);
             }
         }
     };

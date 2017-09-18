@@ -47,12 +47,10 @@ package.app.diagram = function AppDiagram(me) {
             var path = me.get(window, "app.diagram.path");
             me.core.json.loadFile(function(diagramJson) {
                 me.set(window, "app.diagram.diagramData", diagramJson);
-                me.kab.terms.setLanguage(function() {
-                    me.kab.terms.retrieveTerms(function(terms) {
-                        me.set(window, "app.diagram.termData", terms);
-                        me.notify(window, "app.diagram.refresh");
-                    }, "english", window.options);
-                }, "english");
+                me.kab.text.retrieveTerms(function(terms) {
+                    me.set(window, "app.diagram.termData", terms);
+                    me.notify(window, "app.diagram.refresh");
+                }, "english", window.options);
             }, path, false);
         }
     };
