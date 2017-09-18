@@ -1,0 +1,4710 @@
+{
+    "options": {
+        "splitPartial": true
+    },
+    "prefix": {
+        "a": {
+            "replaceOnly": true,
+            "match": "/^[^aeiouAEIOU]"
+        },
+        "an": {
+            "replaceOnly": true,
+            "match": "/^[aeiouAEIOU]"
+        },
+        "the": {
+
+        }
+    },
+    "data": {
+        "filterPlaceholder": "Search...",
+        "glossaryTitle": "Glossary",
+        "termTableTitle": "Table of Phases",
+        "termTable": [
+            [
+                {
+                    "ui.basic.text": ""
+                },
+                {
+                    "ui.basic.text": "Root Phase",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase One",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Two",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Three",
+                    "ui.style.height": "1em"
+                },
+                {
+                    "ui.basic.text": "Phase Four",
+                    "ui.style.height": "1em"
+                }
+            ]
+        ]
+    },
+    "phaseNumber": {
+        "root": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4"
+    },
+    "ignore": ["of", "de", "De", "OF", "DE"],
+    "spelling": {
+        "Hakaaof": "Hakaa of",
+        "onionskins": "onion skins",
+        "Agolon": "Agol on",
+        "Aviutfrom": "Aviut from",
+        "AVIut": "Aviut",
+        "aviut": "Aviut",
+        "retuned": "returned",
+        "Neshamain": "Neshama in",
+        "Hassadimon": "Hassadim on",
+        "Zoharonly": "Zohar only",
+        "Nunof": "Nun of",
+        "Elyonis": "Elyon is",
+        "Sefirotbe": "Sefirot be",
+        "judgments": "judgements",
+        "He’arahis": "He’arah is",
+        "Esh, Ruach": "Esh, Ruach2",
+        "Yetzufim": "Yetzurim",
+        "Nukvais": "Nukva is",
+        "Aba": "Abba",
+        "Imma": "Ima",
+        "histaklut": "Histaklut",
+        "“Or": "“or",
+        "Midatha": "Midat ha",
+        "Bassar": "Basar"
+    },
+    "pre": [
+        {
+            "find": "Table of content\n",
+            "replace": ""
+        },
+        {
+            "find": "Download version\n",
+            "replace": ""
+        },
+        {
+            "find": "Translation List\n",
+            "replace": ""
+        },
+        {
+            "find": "Services\n",
+            "replace": ""
+        },
+        {
+            "find": "Powered by Zapatec",
+            "replace": ""
+        },
+        {
+            "find": "Archive\t| Kabbalah Home\t| Free Kabbalah Course",
+            "replace": ""
+        },
+        {
+            "find": "/^You are here: Kabbalah Library Home.*?\n",
+            "replace": ""
+        },
+        {
+            "find": "Copyright © 2014. Bnei Baruch. All rights reserved.",
+            "replace": ""
+        },
+        {
+            "find": " Previous pageNext page \n",
+            "replace": ""
+        },
+        {
+            "find": "Word version\n",
+            "replace": ""
+        },
+        {
+            "find": "PDF version\n",
+            "replace": ""
+        },
+        {
+            "find": "Next page \n",
+            "replace": ""
+        },
+        {
+            "find": "Back to top\n",
+            "replace": ""
+        },
+        {
+            "match": "/^Talmud .*?$",
+            "prefix": "<h4 style=\"order:-4;text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "match": "/^Part .*?$",
+            "prefix": "<h4 style=\"order:-3;text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "match": "/^Chapter .*?$",
+            "prefix": "<h4 style=\"order:-2;text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "match": "/Chapter [0-9,I]$",
+            "prefix": "<h4 style=\"order:-2;text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "match": "/^Yehuda Leib HaLevi Ashlag \\(Baal HaSulam\\)$",
+            "prefix": "<h4 style=\"order:-1;text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "match": "/^[^a-z]*$",
+            "prefix": "<h4 style=\"text-transform: uppercase\">",
+            "suffix": "</h4>"
+        },
+        {
+            "split": "/(\\d\\..*)",
+            "join": "",
+            "match": "/\\(\\d+\\)",
+            "prefix": "<b>",
+            "suffix": "</b>"
+        },
+        {
+            "find": "/\\\n(\\d+\\))",
+            "replace": "\n<b>$1</b>"
+        },
+        {
+            "find": "/\\? (\\d+\\))",
+            "replace": "?\n$1"
+        },
+        {
+            "find": "/\\\n(\\d+\\.)",
+            "replace": "\n<b>$1</b>"
+        },
+        {
+            "match": "/^Ohr Pnimi$",
+            "prefix": "<h3>",
+            "suffix": "</h3>"
+        },
+        {
+            "find": "/([.?!:;,]) \n",
+            "replace": "$1\n"
+        },
+        {
+            "match": "/[^.?!:;,\\\"'”]$",
+            "prefix": "<h4 style=\"text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
+            "find": "/\\\n",
+            "replace": "</p><p>",
+            "prefix": "<p>",
+            "suffix": "</p>"
+        },
+        {
+            "find": "/<p><h4 style=\"text-align:center\"><br><\\/h4><\\/p>",
+            "replace": "<br>"
+        },
+        {
+            "find": "/<p><(h\\d)",
+            "replace": "<$1"
+        },
+        {
+            "find": "/<\\/(h\\d)><\\/p>",
+            "replace": "</$1>"
+        },
+        {
+            "find": "/\\s?\\[\\s?\\]",
+            "replace": ""
+        },
+        {
+            "find": "/<p>[\\s]?<\\/p>",
+            "replace": ""
+        },
+        {
+            "find": "(The Study of the Ten Sefirot)",
+            "replace": ""
+        }
+    ],
+    "post": [
+        {
+            "find": "/ ’s",
+            "replace": "’s"
+        },
+        {
+            "find": "/ ([.,])",
+            "replace": "$1"
+        }
+    ],
+    "term": [
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Me'ah",
+            "translation": "One Hundred",
+            "style": {
+                "heading": "Amount",
+                "phase": "two"
+            },
+            "term": "100"
+        },
+        {
+            "prefix": "the",
+            "translation": "Ending Kingdom",
+            "term": "Malchut ha Mesayemet"
+        },
+        {
+            "translation": "Skull Face",
+            "style": "skull",
+            "term": "Partzuf Galgalta"
+        },
+        {
+            "translation": "Skull",
+            "style": "skull",
+            "term": "Galgalta"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Infinity",
+            "style": {
+                "heading": "World",
+                "phase": "root"
+            },
+            "term": "Ohr Ein Sof"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Relaxation",
+            "style": {
+                "phase": "four"
+            },
+            "term": "Ohr Nefesh"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Modulation",
+            "style": {
+                "phase": "three"
+            },
+            "term": "Ohr Ruach"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Protection",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Ohr Neshama"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Expression",
+            "style": {
+                "phase": "one"
+            },
+            "term": "Ohr Haya"
+        },
+        {
+            "prefix": "the",
+            "translation": "Light of Singularity",
+            "style": {
+                "phase": "root"
+            },
+            "term": "Ohr Yechida"
+        },
+        {
+            "translation": "Light of Crown",
+            "style": {
+                "phase": "root"
+            },
+            "term": "Ohr Keter"
+        },
+        {
+            "translation": "Light of Wisdom",
+            "term": "Ohr Hochma"
+        },
+        {
+            "translation": "Light of Understanding",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Ohr Bina"
+        },
+        {
+            "translation": "Light of Beauty",
+            "style": {
+                "phase": "three"
+            },
+            "term": "Ohr Tifferet"
+        },
+        {
+            "translation": "Light of Kingdom",
+            "style": {
+                "phase": "four"
+            },
+            "term": "Ohr Malchut"
+        },
+        {
+            "translation": "Vessel of Crown",
+            "style": {
+                "heading": "Vessel",
+                "phase": "root"
+            },
+            "term": "Kli Keter"
+        },
+        {
+            "translation": "Vessel of Wisdom",
+            "style": {
+                "heading": "Vessel",
+                "phase": "one"
+            },
+            "term": "Kli Hochma"
+        },
+        {
+            "translation": "Vessel of Understanding",
+            "style": {
+                "heading": "Vessel",
+                "phase": "two"
+            },
+            "term": "Kli Bina"
+        },
+        {
+            "translation": "Vessel of Beauty",
+            "style": {
+                "heading": "Vessel",
+                "phase": "three"
+            },
+            "term": "Kli Tifferet"
+        },
+        {
+            "translation": "Vessel of Kingdom",
+            "style": {
+                "heading": "Vessel",
+                "phase": "four"
+            },
+            "term": "Kli Malchut"
+        },
+        {
+            "translation": "Vessel of ZA",
+            "style": {
+                "heading": "Vessel",
+                "phase": "three"
+            },
+            "term": "Kli ZA"
+        },
+        {
+            "translation": "Light of ZA",
+            "style": {
+                "heading": "Vessel",
+                "phase": "three"
+            },
+            "term": "Ohr ZA"
+        },
+        {
+            "translation": "Root Phase",
+            "style": {
+                "phase": "root",
+                "heading": "Phase"
+            },
+            "term": "Behinat Shoresh"
+        },
+        {
+            "translation": "Phase One",
+            "style": {
+                "phase": "one",
+                "heading": "Phase"
+            },
+            "term": "Behina Aleph"
+        },
+        {
+            "translation": "Phase Two",
+            "style": {
+                "phase": "two",
+                "heading": "Phase"
+            },
+            "term": "Behina Bet"
+        },
+        {
+            "translation": "Phase Three",
+            "style": {
+                "phase": "three",
+                "heading": "Phase"
+            },
+            "term": "Behina Gimel"
+        },
+        {
+            "translation": "Phase Four",
+            "style": {
+                "phase": "four",
+                "heading": "Phase"
+            },
+            "term": "Behina Dalet"
+        },
+        {
+            "translation": "Root Phase Coarseness",
+            "style": {
+                "phase": "root",
+                "heading": "coarseness"
+            },
+            "term": "Aviut Shoresh"
+        },
+        {
+            "translation": "Phase One Coarseness",
+            "style": {
+                "phase": "one",
+                "heading": "coarseness"
+            },
+            "term": "Aviut Aleph"
+        },
+        {
+            "translation": "Phase Two Coarseness",
+            "style": {
+                "phase": "two",
+                "heading": "coarseness"
+            },
+            "term": "Aviut Bet"
+        },
+        {
+            "translation": "Phase Three Coarseness",
+            "style": {
+                "phase": "three",
+                "heading": "coarseness"
+            },
+            "term": "Aviut Gimel"
+        },
+        {
+            "translation": "Phase Four Coarseness",
+            "style": {
+                "phase": "four",
+                "heading": "coarseness"
+            },
+            "term": "Aviut Dalet"
+        },
+        {
+            "translation": "Emanator",
+            "term": "Maatzil"
+        },
+        {
+            "translation": "Emanated",
+            "term": "Ne’etzal"
+        },
+        {
+            "translation": "Head",
+            "style": {
+                "heading": "Location"
+            },
+            "term": "Rosh"
+        },
+        {
+            "style": {
+                "heading": "location"
+            },
+            "translation": "Interior",
+            "term": "Toch"
+        },
+        {
+            "translation": "Body",
+            "term": "Guf"
+        },
+        {
+            "style": {
+                "heading": "Layers",
+                "phase": "two"
+            },
+            "translation": "Body",
+            "term": "Guf2"
+        },
+        {
+            "translation": "of",
+            "search": false,
+            "term": "de"
+        },
+        {
+            "translation": "Purification",
+            "term": "Hizdakchut"
+        },
+        {
+            "translation": "Purification of the Screen",
+            "term": "Hizdakchut Masach"
+        },
+        {
+            "translation": "Navel",
+            "style": {
+                "phase": "three",
+                "heading": "Location"
+            },
+            "term": "Tabur"
+        },
+        {
+            "prefix": "a",
+            "translation": "Vessel",
+            "term": "Kli"
+        },
+        {
+            "translation": "Facial Light",
+            "term": "Ohr Panim"
+        },
+        {
+            "translation": "Upper Light",
+            "term": "Ohr Elyon"
+        },
+        {
+            "translation": "Direct Light",
+            "term": "Ohr Yashar"
+        },
+        {
+            "translation": "Reflected Light",
+            "term": "Ohr Hozer"
+        },
+        {
+            "translation": "Direct Light of Judgement",
+            "term": "Ohr Yashar Din"
+        },
+        {
+            "translation": "Direct Light of Mercy",
+            "term": "Ohr Yashar Rachamim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Reflected Light of Judgement",
+            "term": "Ohr Hozer Din"
+        },
+        {
+            "translation": "Reflected Light of Mercy",
+            "term": "Ohr Hozer Rachamim"
+        },
+        {
+            "translation": "Surrounding Light",
+            "term": "Ohr Makif"
+        },
+        {
+            "translation": "Inner Light",
+            "term": "Ohr Pnimi"
+        },
+        {
+            "translation": "Light of Mercy",
+            "term": "Ohr Hassadim"
+        },
+        {
+            "translation": "Light",
+            "term": "Ohr"
+        },
+        {
+            "translation": "Coarse",
+            "term": "Av"
+        },
+        {
+            "translation": "Coarseness",
+            "term": "Aviut"
+        },
+        {
+            "translation": "Pure",
+            "term": "Zach"
+        },
+        {
+            "translation": "Purity",
+            "term": "Zachut"
+        },
+        {
+            "translation": "Screen",
+            "term": "Masach"
+        },
+        {
+            "translation": "Crown",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "root"
+            },
+            "term": "Keter"
+        },
+        {
+            "translation": "Wisdom",
+            "explanation": "Decree",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "one"
+            },
+            "term": "Hochma"
+        },
+        {
+            "translation": "Understanding",
+            "explanation": "Execution",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "two"
+            },
+            "term": "Bina"
+        },
+        {
+            "translation": "Beauty",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "three"
+            },
+            "term": "Tifferet"
+        },
+        {
+            "source": "Tifferet",
+            "translation": "Beauty",
+            "explanation": "Knowledge",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "two"
+            },
+            "term": "Tifferet2"
+        },
+        {
+            "translation": "Kingdom",
+            "explanation": "Desire",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "four"
+            },
+            "term": "Malchut"
+        },
+        {
+            "translation": "Kindness",
+            "explanation": "Responsibility",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "root"
+            },
+            "term": "Hesed"
+        },
+        {
+            "translation": "Judgement",
+            "explanation": "Control",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "one"
+            },
+            "term": "Gevura"
+        },
+        {
+            "translation": "Eternity",
+            "explanation": "Affinity",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "three"
+            },
+            "term": "Netzah"
+        },
+        {
+            "translation": "Majesty",
+            "explanation": "Communication",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "four"
+            },
+            "term": "Hod"
+        },
+        {
+            "translation": "Foundation",
+            "explanation": "Agreement",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Six Sides",
+                "phase": "collective"
+            },
+            "term": "Yesod"
+        },
+        {
+            "translation": "Relaxation",
+            "style": {
+                "heading": "Light",
+                "phase": "four"
+            },
+            "term": "Nefesh"
+        },
+        {
+            "translation": "Modulation",
+            "style": {
+                "heading": "Light",
+                "phase": "three"
+            },
+            "term": "Ruach"
+        },
+        {
+            "translation": "Protection",
+            "style": {
+                "heading": "Light",
+                "phase": "two"
+            },
+            "term": "Neshama"
+        },
+        {
+            "source": "Neshama",
+            "translation": "Soul",
+            "style": {
+                "heading": "Layers",
+                "phase": "one"
+            },
+            "term": "Neshama2"
+        },
+        {
+            "translation": "Expression",
+            "style": {
+                "heading": "Light",
+                "phase": "one"
+            },
+            "term": "Haya"
+        },
+        {
+            "translation": "Singularity",
+            "style": {
+                "heading": "Light",
+                "phase": "root"
+            },
+            "term": "Yechida"
+        },
+        {
+            "expansion": [
+                "Esh",
+                "Ruach2",
+                "Mayim",
+                "Afar"
+            ],
+            "term": "ERMA"
+        },
+        {
+            "expansion": [
+                "Nefesh",
+                "Ruach",
+                "Neshama",
+                "Haya",
+                "Yechida"
+            ],
+            "term": "NRNHY"
+        },
+        {
+            "expansion": [
+                "Yechida",
+                "Haya",
+                "Neshama",
+                "Ruach",
+                "Nefesh"
+            ],
+            "term": "YHNRN"
+        },
+        {
+            "expansion": [
+                "Haya",
+                "Neshama",
+                "Ruach",
+                "Nefesh"
+            ],
+            "term": "HNRN"
+        },
+        {
+            "expansion": [
+                "Nefesh",
+                "Ruach",
+                "Neshama",
+                "Haya"
+            ],
+            "term": "NRNH"
+        },
+        {
+            "expansion": [
+                "Nefesh",
+                "Ruach",
+                "Neshama"
+            ],
+            "term": "NRN"
+        },
+        {
+            "expansion": [
+                "Nefesh",
+                "Ruach"
+            ],
+            "term": "NR"
+        },
+        {
+            "expansion": [
+                "Keter",
+                "Hochma",
+                "Bina",
+                "Tifferet",
+                "Malchut"
+            ],
+            "term": "KHBTM"
+        },
+        {
+            "expansion": [
+                "Hochma",
+                "Bina",
+                "Tifferet",
+                "Malchut"
+            ],
+            "term": "HBTM"
+        },
+        {
+            "expansion": [
+                "Keter",
+                "Hochma",
+                "Bina"
+            ],
+            "term": "KHB"
+        },
+        {
+            "expansion": [
+                "Hochma",
+                "Bina"
+            ],
+            "term": "HB"
+        },
+        {
+            "expansion": [
+                "Tifferet",
+                "Malchut"
+            ],
+            "term": "TM"
+        },
+        {
+            "expansion": [
+                "AB",
+                "SAG",
+                "MA",
+                "BON"
+            ],
+            "term": "ASMB"
+        },
+        {
+            "expansion": [
+                "Atzilut",
+                "Beria",
+                "Yetzira",
+                "Assiya"
+            ],
+            "term": "ABYA"
+        },
+        {
+            "expansion": [
+                "Beria",
+                "Yetzira",
+                "Assiya"
+            ],
+            "term": "BYA"
+        },
+        {
+            "expansion": [
+                "Daat",
+                "Hesed",
+                "Gevura",
+                "Tifferet2"
+            ],
+            "term": "DHGT"
+        },
+        {
+            "expansion": [
+                "Hesed",
+                "Gevura",
+                "Tifferet2"
+            ],
+            "term": "HGT"
+        },
+        {
+            "expansion": [
+                "Hesed",
+                "Gevura"
+            ],
+            "term": "HG"
+        },
+        {
+            "expansion": [
+                "Hesed",
+                "Gevura",
+                "Tifferet2",
+                "Netzah",
+                "Hod"
+            ],
+            "term": "HGTNH"
+        },
+        {
+            "expansion": [
+                "Hesed",
+                "Gevura",
+                "Tifferet2",
+                "Netzah",
+                "Hod",
+                "Yesod"
+            ],
+            "term": "HGTNHY"
+        },
+        {
+            "expansion": [
+                "Tifferet2",
+                "Netzah",
+                "Hod",
+                "Yesod"
+            ],
+            "term": "TNHY"
+        },
+        {
+            "expansion": [
+                "Tifferet2",
+                "Netzah",
+                "Hod",
+                "Yesod",
+                "Malchut"
+            ],
+            "term": "TNHYM"
+        },
+        {
+            "expansion": [
+                "Arich Anpin"
+            ],
+            "term": "AA"
+        },
+        {
+            "expansion": [
+                "Zeir Anpin"
+            ],
+            "term": "ZA"
+        },
+        {
+            "expansion": [
+                "Netzah",
+                "Hod",
+                "Yesod"
+            ],
+            "term": "NHY"
+        },
+        {
+            "expansion": [
+                "Netzah",
+                "Hod",
+                "Yesod",
+                "Malchut"
+            ],
+            "term": "NHYM"
+        },
+        {
+            "expansion": [
+                "Galgalta",
+                "Enayim"
+            ],
+            "term": "GE"
+        },
+        {
+            "expansion": [
+                "Awyzen",
+                "Hotem",
+                "Peh"
+            ],
+            "term": "AHP"
+        },
+        {
+            "translation": "Greatness",
+            "term": "Gadlut"
+        },
+        {
+            "translation": "Smallness",
+            "term": "Katnut"
+        },
+        {
+            "translation": "Long Face",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Face",
+                "phase": "root"
+            },
+            "term": "Arich Anpin"
+        },
+        {
+            "translation": "Long",
+            "style": {
+                "heading": "Face",
+                "phase": "root"
+            },
+            "term": "Arich"
+        },
+        {
+            "translation": "Small Face",
+            "explanation": "Intention",
+            "style": {
+                "heading": "Face/Vessel",
+                "phase": "three"
+            },
+            "term": "Zeir Anpin"
+        },
+        {
+            "translation": "Primordial Man",
+            "defaultTerm": true,
+            "style": "primordial man",
+            "term": "Adam Kadmon"
+        },
+        {
+            "translation": "Emanation",
+            "explanation": "Control",
+            "style": {
+                "heading": "World",
+                "phase": "one"
+            },
+            "term": "Atzilut"
+        },
+        {
+            "translation": "Creation",
+            "explanation": "Affinity",
+            "style": {
+                "heading": "World",
+                "phase": "two"
+            },
+            "term": "Beria"
+        },
+        {
+            "translation": "Formation",
+            "explanation": "Communication",
+            "style": {
+                "heading": "World",
+                "phase": "three"
+            },
+            "term": "Yetzira"
+        },
+        {
+            "translation": "Action",
+            "explanation": "Agreement",
+            "style": {
+                "heading": "World",
+                "phase": "four"
+            },
+            "term": "Assiya"
+        },
+        {
+            "translation": "This World",
+            "explanation": "Reality",
+            "style": {
+                "heading": "World",
+                "phase": "four"
+            },
+            "term": "Olam ha Zeh"
+        },
+        {
+            "prefix": "the",
+            "translation": "Next World",
+            "explanation": "Inner Reality",
+            "style": {
+                "heading": "World",
+                "phase": "one"
+            },
+            "term": "Olam ha Ba"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Deficiencies",
+            "style": {
+                "heading": "World"
+            },
+            "term": "Olam ha Nekudim"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Primordial Man",
+            "style": {
+                "heading": "World",
+                "phase": "root"
+            },
+            "term": "Olam Adam Kadmon"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Binding",
+            "style": {
+                "heading": "World",
+                "phase": "root"
+            },
+            "term": "Olam Akudim"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Emanation",
+            "style": {
+                "heading": "World",
+                "phase": "one"
+            },
+            "term": "Olam Atzilut"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Creation",
+            "style": {
+                "heading": "World",
+                "phase": "two"
+            },
+            "term": "Olam Beria"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Formation",
+            "style": {
+                "heading": "World",
+                "phase": "three"
+            },
+            "term": "Olam Yetzira"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Action",
+            "style": {
+                "heading": "World",
+                "phase": "four"
+            },
+            "term": "Olam Assiya"
+        },
+        {
+            "prefix": "the",
+            "translation": "World of Deficiencies",
+            "term": "Olam Nekudim"
+        },
+        {
+            "translation": "World",
+            "term": "Olam"
+        },
+        {
+            "translation": "Worlds",
+            "term": "Olamot"
+        },
+        {
+            "translation": "Chest",
+            "style": "chest",
+            "term": "Chazeh"
+        },
+        {
+            "translation": "Eye",
+            "style": {
+                "phase": "one"
+            },
+            "term": "Ayin"
+        },
+        {
+            "translation": "Eyes",
+            "style": {
+                "phase": "one"
+            },
+            "term": "Eynayim"
+        },
+        {
+            "translation": "Ear",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Awyzen"
+        },
+        {
+            "translation": "Ears",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Awznayim"
+        },
+        {
+            "translation": "Ears",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Oznayim"
+        },
+        {
+            "translation": "Nose",
+            "style": {
+                "phase": "three"
+            },
+            "term": "Hotem"
+        },
+        {
+            "translation": "Mouth",
+            "style": {
+                "phase": "four"
+            },
+            "term": "Peh"
+        },
+        {
+            "translation": "Navel",
+            "style": {
+                "phase": "three",
+                "heading": "Location"
+            },
+            "term": "Taburit"
+        },
+        {
+            "translation": "Faces",
+            "term": "Partzufim"
+        },
+        {
+            "translation": "Face",
+            "term": "Partzuf"
+        },
+        {
+            "translation": "Ten",
+            "term": "Eser"
+        },
+        {
+            "translation": "Emanation",
+            "term": "Sefira"
+        },
+        {
+            "translation": "Emanations",
+            "term": "Sefirot"
+        },
+        {
+            "translation": "Ten Emanations",
+            "term": "Yod Sefirot"
+        },
+        {
+            "translation": "Ten Emanations",
+            "term": "Yud Sefirot"
+        },
+        {
+            "translation": "Phase",
+            "term": "Behina"
+        },
+        {
+            "translation": "Phases",
+            "term": "Behinot"
+        },
+        {
+            "translation": "Five Phases",
+            "term": "Hey Behinot"
+        },
+        {
+            "translation": "Change of Form",
+            "term": "Shinui Tzura"
+        },
+        {
+            "translation": "Change",
+            "term": "Shinui"
+        },
+        {
+            "translation": "Circle",
+            "term": "Igul"
+        },
+        {
+            "translation": "Line",
+            "term": "Kav"
+        },
+        {
+            "translation": "Infinity",
+            "style": {
+                "heading": "World",
+                "phase": "root"
+            },
+            "term": "Ein Sof"
+        },
+        {
+            "translation": "Circles",
+            "term": "Igulim"
+        },
+        {
+            "translation": "Lines",
+            "term": "Kavim"
+        },
+        {
+            "translation": "Root",
+            "style": {
+                "phase": "root",
+                "heading": "Layers"
+            },
+            "term": "Shoresh2"
+        },
+        {
+            "translation": "Root",
+            "term": "Shoresh"
+        },
+        {
+            "translation": "Inner Reflection",
+            "term": "Histaklut Pnimit"
+        },
+        {
+            "translation": "Female",
+            "explanation": "Desire",
+            "style": {
+                "heading": "Face/Vessel",
+                "phase": "four"
+            },
+            "term": "Nukva"
+        },
+        {
+            "translation": "Window",
+            "term": "Halon"
+        },
+        {
+            "expansion": [
+                "Zeir Anpin",
+                "Nukva"
+            ],
+            "term": "ZON"
+        },
+        {
+            "translation": "Clothing",
+            "term": "Hitlabshut"
+        },
+        {
+            "translation": "Clothing",
+            "term": "Levush"
+        },
+        {
+            "translation": "Clothing",
+            "style": {
+                "phase": "three",
+                "heading": "Layers"
+            },
+            "term": "Levush2"
+        },
+        {
+            "translation": "Expansion",
+            "term": "Hitpashtut"
+        },
+        {
+            "translation": "the First Expansion",
+            "term": "Hitpashtut Aleph"
+        },
+        {
+            "translation": "the Second Expansion",
+            "term": "Hitpashtut Bet"
+        },
+        {
+            "translation": "Other Side",
+            "explanation": "Opposing Intent",
+            "term": "Sitra Achra"
+        },
+        {
+            "expansion": "Adam Kadmon",
+            "term": "AK"
+        },
+        {
+            "translation": "Mating by Striking",
+            "term": "Zivug Hakaa"
+        },
+        {
+            "translation": "Mating",
+            "term": "Zivug"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "one",
+                "tooltip": "72",
+                "short": "Second Face in the World of Primordial Man"
+            },
+            "term": "AB"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "two",
+                "tooltip": "63",
+                "short": "Third Face in the World of Primordial Man"
+            },
+            "term": "SAG"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "three",
+                "tooltip": "45",
+                "short": "Fourth Face in the World of Primordial Man"
+            },
+            "term": "MA"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "four",
+                "tooltip": "52",
+                "short": "Fifth Face in the World of Primordial Man"
+            },
+            "term": "BON"
+        },
+        {
+            "expansion": [
+                "Abba ve Ima"
+            ],
+            "term": "AVI"
+        },
+        {
+            "translation": "Father",
+            "explanation": "Decree",
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            },
+            "term": "Abba"
+        },
+        {
+            "translation": "Mother",
+            "explanation": "Execution",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "term": "Ima"
+        },
+        {
+            "prefix": "the",
+            "translation": "First Restriction",
+            "term": "Tzimtzum Aleph"
+        },
+        {
+            "prefix": "the",
+            "translation": "Second Restriction",
+            "term": "Tzimtzum Bet"
+        },
+        {
+            "translation": "Restriction",
+            "term": "Tzimtzum"
+        },
+        {
+            "translation": "Mind",
+            "style": {
+                "heading": "Body",
+                "phase": "root"
+            },
+            "term": "Moach"
+        },
+        {
+            "translation": "Bones",
+            "style": {
+                "heading": "Body",
+                "phase": "one"
+            },
+            "term": "Atzamot"
+        },
+        {
+            "translation": "Tendons",
+            "style": {
+                "heading": "Body",
+                "phase": "two"
+            },
+            "term": "Gidin"
+        },
+        {
+            "translation": "Flesh",
+            "style": {
+                "heading": "Body",
+                "phase": "three"
+            },
+            "term": "Basar"
+        },
+        {
+            "case": "sensitive",
+            "translation": "Skin",
+            "style": {
+                "heading": "Body",
+                "phase": "four"
+            },
+            "term": "Or"
+        },
+        {
+            "translation": "Clothings",
+            "term": "Malbushim"
+        },
+        {
+            "translation": "Shirt",
+            "style": {
+                "heading": "Clothing",
+                "phase": "one"
+            },
+            "term": "Ktonet"
+        },
+        {
+            "translation": "Trousers",
+            "style": {
+                "heading": "Clothing",
+                "phase": "two"
+            },
+            "term": "Michnasayim"
+        },
+        {
+            "translation": "Miter",
+            "style": {
+                "heading": "Clothing",
+                "phase": "three"
+            },
+            "term": "Mitznefet"
+        },
+        {
+            "translation": "Belt",
+            "style": {
+                "heading": "Clothing",
+                "phase": "four"
+            },
+            "term": "Avnet"
+        },
+        {
+            "translation": "House",
+            "style": {
+                "heading": "House",
+                "phase": "one"
+            },
+            "term": "Bait"
+        },
+        {
+            "translation": "Yard",
+            "style": {
+                "heading": "House",
+                "phase": "two"
+            },
+            "term": "Hatzer"
+        },
+        {
+            "translation": "Field",
+            "style": {
+                "heading": "House",
+                "phase": "three"
+            },
+            "term": "Sadeh"
+        },
+        {
+            "translation": "Desert",
+            "style": {
+                "heading": "House",
+                "phase": "four"
+            },
+            "term": "Midbar"
+        },
+        {
+            "translation": "Water",
+            "style": {
+                "heading": "Element",
+                "phase": "one"
+            },
+            "term": "Mayim"
+        },
+        {
+            "case": "sensitive",
+            "translation": "Dust",
+            "style": {
+                "heading": "Element",
+                "phase": "four"
+            },
+            "term": "Afar"
+        },
+        {
+            "translation": "Fire",
+            "style": {
+                "heading": "Element",
+                "phase": "two"
+            },
+            "term": "Esh"
+        },
+        {
+            "source": "Ruach",
+            "translation": "Wind",
+            "style": {
+                "heading": "Element",
+                "phase": "three"
+            },
+            "term": "Ruach2"
+        },
+        {
+            "translation": "Dust",
+            "style": {
+                "heading": "Element",
+                "phase": "four"
+            },
+            "term": "Affar"
+        },
+        {
+            "translation": "Spark",
+            "term": "Nitzotz"
+        },
+        {
+            "translation": "Restrictions",
+            "term": "Tzimtzumim"
+        },
+        {
+            "translation": "Tastes",
+            "defaultTerm": true,
+            "style": {
+                "phase": "one",
+                "heading": "Flow"
+            },
+            "term": "Taamim"
+        },
+        {
+            "translation": "Points",
+            "defaultTerm": true,
+            "style": {
+                "phase": "two",
+                "heading": "Flow"
+            },
+            "term": "Nekudot"
+        },
+        {
+            "translation": "Crowns",
+            "defaultTerm": true,
+            "style": {
+                "phase": "three",
+                "heading": "Flow"
+            },
+            "term": "Tagin"
+        },
+        {
+            "translation": "Letter",
+            "term": "Ot"
+        },
+        {
+            "translation": "Letters",
+            "defaultTerm": true,
+            "style": {
+                "phase": "four",
+                "heading": "Flow"
+            },
+            "term": "Otiot"
+        },
+        {
+            "translation": "Diaphragm",
+            "style": {
+                "phase": "two",
+                "heading": "Location"
+            },
+            "term": "Parsa"
+        },
+        {
+            "translation": "Legs",
+            "term": "Raglin"
+        },
+        {
+            "translation": "End of Legs",
+            "style": {
+                "phase": "four",
+                "heading": "Location"
+            },
+            "term": "Sium Raglin"
+        },
+        {
+            "translation": "End of Diaphragm",
+            "term": "Sium Parsa"
+        },
+        {
+            "translation": "End",
+            "term": "Sium"
+        },
+        {
+            "translation": "Quarter of Blood",
+            "term": "Revi’it Dam"
+        },
+        {
+            "translation": "Blood",
+            "term": "Dam"
+        },
+        {
+            "translation": "Nails",
+            "term": "Tzipornaim"
+        },
+        {
+            "translation": "Hairs",
+            "term": "Se’arot"
+        },
+        {
+            "translation": "Hairs of the Head",
+            "term": "Se’arot Rosh"
+        },
+        {
+            "translation": "Hairs of the Head",
+            "term": "Se’arot Dikna"
+        },
+        {
+            "translation": "Tents",
+            "term": "Ohalim"
+        },
+        {
+            "translation": "Emanated",
+            "term": "Ne’etzalim"
+        },
+        {
+            "translation": "Ancient",
+            "style": {
+                "heading": "Face",
+                "phase": "root"
+            },
+            "term": "Atik"
+        },
+        {
+            "translation": "Unformed",
+            "style": {
+                "heading": "Phase",
+                "phase": "one"
+            },
+            "term": "Tohu"
+        },
+        {
+            "translation": "Chaos",
+            "style": {
+                "heading": "Phase",
+                "phase": "two"
+            },
+            "term": "Bohu"
+        },
+        {
+            "translation": "Darkness",
+            "style": {
+                "heading": "Phase",
+                "phase": "three"
+            },
+            "term": "Choshech"
+        },
+        {
+            "translation": "Knowledge",
+            "style": {
+                "heading": "Vessel",
+                "phase": "three"
+            },
+            "term": "Daat"
+        },
+        {
+            "translation": "Book of the Bright",
+            "style": {
+                "heading": "Book"
+            },
+            "term": "Sefer HaBahir"
+        },
+        {
+            "translation": "Book",
+            "term": "Sefer"
+        },
+        {
+            "translation": "Formless",
+            "term": "Hiuli"
+        },
+        {
+            "translation": "Form",
+            "term": "Tzura"
+        },
+        {
+            "translation": "Vessels",
+            "explanation": "Contexts",
+            "term": "Kelim"
+        },
+        {
+            "translation": "Striking",
+            "term": "Hakaa"
+        },
+        {
+            "translation": "Uppers",
+            "term": "Elyonim"
+        },
+        {
+            "translation": "Essence",
+            "term": "Atzmut"
+        },
+        {
+            "translation": "Tetragrammaton",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "HaVaYaH"
+        },
+        {
+            "translation": "Tetragrammatons",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "HaVaYot"
+        },
+        {
+            "translation": "was",
+            "term": "Haita"
+        },
+        {
+            "translation": "on",
+            "term": "Al"
+        },
+        {
+            "translation": "face",
+            "term": "Pnei"
+        },
+        {
+            "translation": "deep",
+            "term": "Tehom"
+        },
+        {
+            "translation": "Solomon",
+            "term": "Shlomo"
+        },
+        {
+            "translation": "Lights",
+            "term": "Orot"
+        },
+        {
+            "translation": "Coarsening",
+            "term": "Hitabut"
+        },
+        {
+            "translation": "Coarsening",
+            "term": "Hit’abbut"
+        },
+        {
+            "translation": "Remoteness",
+            "term": "Harchaka"
+        },
+        {
+            "translation": "Puncture",
+            "term": "Nekev"
+        },
+        {
+            "translation": "Concealment",
+            "term": "He’elem"
+        },
+        {
+            "translation": "the",
+            "term": "ha"
+        },
+        {
+            "translation": "ending",
+            "term": "Mesayemet"
+        },
+        {
+            "translation": "Correction",
+            "term": "Tikun"
+        },
+        {
+            "translation": "Clothing",
+            "term": "Malbush"
+        },
+        {
+            "translation": "Upper",
+            "term": "Elyon"
+        },
+        {
+            "translation": "Lower",
+            "term": "Tachton"
+        },
+        {
+            "translation": "Curtain",
+            "term": "Pargod"
+        },
+        {
+            "translation": "Border",
+            "term": "Gevul"
+        },
+        {
+            "translation": "Abundance",
+            "term": "Shefa"
+        },
+        {
+            "translation": "Overcoming",
+            "term": "Hitgabrut"
+        },
+        {
+            "translation": "Desire",
+            "term": "Ratzon"
+        },
+        {
+            "style": {
+                "heading": "Light",
+                "phase": "two"
+            },
+            "translation": "Mercy",
+            "term": "Hassadim"
+        },
+        {
+            "translation": "Judgements",
+            "term": "Dinim"
+        },
+        {
+            "translation": "Illumination",
+            "term": "He’ara"
+        },
+        {
+            "translation": "Illumination of",
+            "term": "He’arat"
+        },
+        {
+            "prefix": "the",
+            "translation": "Integration",
+            "term": "Hitkalelut"
+        },
+        {
+            "prefix": "the",
+            "translation": "Integration of Emanations",
+            "term": "Hitkalelut Sefirot"
+        },
+        {
+            "translation": "Screens",
+            "term": "Masachim"
+        },
+        {
+            "translation": "Judgement",
+            "term": "Din"
+        },
+        {
+            "prefix": "an",
+            "translation": "Illumination",
+            "term": "He’arah"
+        },
+        {
+            "translation": "Roots",
+            "term": "Shoreshim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Observation",
+            "term": "Histaklut"
+        },
+        {
+            "prefix": "the",
+            "translation": "Observation of Eyes",
+            "term": "Histaklut Eynaim"
+        },
+        {
+            "prefix": "the",
+            "translation": "First Observation",
+            "term": "Histaklut Aleph"
+        },
+        {
+            "prefix": "the",
+            "translation": "Second Observation",
+            "term": "Histaklut Bet"
+        },
+        {
+            "translation": "Departure",
+            "term": "Histalkut"
+        },
+        {
+            "translation": "First Departure",
+            "term": "Histalkut Aleph"
+        },
+        {
+            "translation": "Second Departure",
+            "term": "Histalkut Bet"
+        },
+        {
+            "translation": "Clothing",
+            "term": "Halbasha"
+        },
+        {
+            "translation": "Branch",
+            "term": "Anaf"
+        },
+        {
+            "translation": "Branches",
+            "term": "Anafim"
+        },
+        {
+            "translation": "Binding",
+            "term": "Akudim"
+        },
+        {
+            "prefix": "the",
+            "translation": "discernment of",
+            "term": "Behinat"
+        },
+        {
+            "prefix": "a",
+            "translation": "Memory",
+            "term": "Reshimo"
+        },
+        {
+            "translation": "Face to Face",
+            "term": "Panim be Panim"
+        },
+        {
+            "translation": "Face",
+            "term": "Panim"
+        },
+        {
+            "translation": "Back",
+            "term": "Achor"
+        },
+        {
+            "translation": "Backside",
+            "term": "Achoriam"
+        },
+        {
+            "translation": "Internality",
+            "term": "Pnimiut"
+        },
+        {
+            "translation": "Male",
+            "term": "Zachar"
+        },
+        {
+            "translation": "Female",
+            "term": "Nekeva"
+        },
+        {
+            "translation": "Height",
+            "term": "Koma"
+        },
+        {
+            "translation": "Heights",
+            "term": "Komot"
+        },
+        {
+            "translation": "Illuminations",
+            "term": "He'arot"
+        },
+        {
+            "translation": "Illuminations",
+            "term": "He’arot"
+        },
+        {
+            "translation": "Male",
+            "term": "Dechura"
+        },
+        {
+            "expansion": [
+                "Gimel Rishonot"
+            ],
+            "term": "GAR"
+        },
+        {
+            "expansion": [
+                "Zayin Tachtonot"
+            ],
+            "term": "ZAT"
+        },
+        {
+            "expansion": [
+                "Vav Kzavot"
+            ],
+            "term": "VAK"
+        },
+        {
+            "translation": "First Three",
+            "term": "Gimel Rishonot"
+        },
+        {
+            "translation": "Lower Seven",
+            "term": "Zayin Tachtonot"
+        },
+        {
+            "translation": "Lower",
+            "term": "Tachtonot"
+        },
+        {
+            "translation": "Sides",
+            "term": "Kzavot"
+        },
+        {
+            "translation": "Simple",
+            "term": "Pashut"
+        },
+        {
+            "translation": "Kingdoms",
+            "term": "Malchuyot"
+        },
+        {
+            "translation": "Simple",
+            "term": "Pshutim"
+        },
+        {
+            "translation": "Pipe",
+            "term": "Tzinor"
+        },
+        {
+            "translation": "Space",
+            "term": "Halal"
+        },
+        {
+            "translation": "Air",
+            "term": "Avir"
+        },
+        {
+            "translation": "Extends",
+            "term": "Nimshachim"
+        },
+        {
+            "translation": "Lines",
+            "term": "Yosher"
+        },
+        {
+            "translation": "Pipes",
+            "term": "Tzinorot"
+        },
+        {
+            "translation": "Justice",
+            "term": "Tzedek"
+        },
+        {
+            "translation": "Measure",
+            "term": "Midah"
+        },
+        {
+            "translation": "Measure",
+            "term": "Midat"
+        },
+        {
+            "prefix": "the",
+            "translation": "Measure of Judgement",
+            "term": "Midat ha Din"
+        },
+        {
+            "prefix": "the",
+            "translation": "Measure of Mercy",
+            "term": "Midat ha Rachamim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Measures of Judgement",
+            "term": "Midot ha Din"
+        },
+        {
+            "prefix": "the",
+            "translation": "Measures of Mercy",
+            "term": "Midot ha Rachamim"
+        },
+        {
+            "translation": "Measure",
+            "term": "Mida"
+        },
+        {
+            "translation": "Measures",
+            "term": "Midot"
+        },
+        {
+            "translation": "Mercy",
+            "term": "Rachamim"
+        },
+        {
+            "translation": "Upper Light",
+            "term": "OhrElyon"
+        },
+        {
+            "translation": "Wheel",
+            "term": "Galgal"
+        },
+        {
+            "translation": "Wheels",
+            "term": "Galgalim"
+        },
+        {
+            "translation": "Purity",
+            "term": "Zakut"
+        },
+        {
+            "translation": "Purity",
+            "term": "Zakkut"
+        },
+        {
+            "translation": "Lower Ones",
+            "term": "Tachtonim"
+        },
+        {
+            "translation": "Book of Formation",
+            "style": {
+                "heading": "Book"
+            },
+            "term": "Sefer Yetzira"
+        },
+        {
+            "translation": "A Welcoming Face",
+            "style": {
+                "heading": "Book"
+            },
+            "term": "Panim Masbirot"
+        },
+        {
+            "translation": "Corrections of The Zohar",
+            "term": "Tikkuney Zohar"
+        },
+        {
+            "translation": "Light of Essence",
+            "term": "Ohr Atzmut"
+        },
+        {
+            "translation": "Coarsening",
+            "term": "Hitaabut"
+        },
+        {
+            "style": {
+                "phase": "one"
+            },
+            "translation": "Eyes",
+            "term": "Eynaim"
+        },
+        {
+            "style": {
+                "phase": "two"
+            },
+            "translation": "Ears",
+            "term": "Awznaim"
+        },
+        {
+            "translation": "and",
+            "term": "ve"
+        },
+        {
+            "translation": "Females",
+            "term": "Nukvaot"
+        },
+        {
+            "expansion": [
+                "Taamim",
+                "Nekudot",
+                "Tagin",
+                "Otiot"
+            ],
+            "term": "TANTA"
+        },
+        {
+            "translation": "Bone",
+            "term": "Etzem"
+        },
+        {
+            "translation": "Beating",
+            "term": "Bitush"
+        },
+        {
+            "translation": "Gate",
+            "term": "Shaar"
+        },
+        {
+            "translation": "Gate of Binding",
+            "term": "Shaar Akudim"
+        },
+        {
+            "translation": "Palace",
+            "term": "Heichal"
+        },
+        {
+            "translation": "Palace of",
+            "term": "Heichalei"
+        },
+        {
+            "translation": "Palace",
+            "style": {
+                "phase": "four",
+                "heading": "Layers"
+            },
+            "term": "Heichal2"
+        },
+        {
+            "translation": "Taste",
+            "term": "Taam"
+        },
+        {
+            "translation": "Back to Back",
+            "term": "Achor be Achor"
+        },
+        {
+            "translation": "Back to Face",
+            "term": "Achor be Panim"
+        },
+        {
+            "translation": "Face to Back",
+            "term": "Panim be Achor"
+        },
+        {
+            "expansion": [
+                "Panim",
+                "be",
+                "Panim"
+            ],
+            "term": "PBP"
+        },
+        {
+            "expansion": [
+                "Panim",
+                "be",
+                "Achor"
+            ],
+            "term": "PBA"
+        },
+        {
+            "expansion": [
+                "Achor",
+                "be",
+                "Panim"
+            ],
+            "term": "ABP"
+        },
+        {
+            "translation": "Backside",
+            "term": "Achoraim"
+        },
+        {
+            "translation": "Sparks",
+            "term": "Nitzotzin"
+        },
+        {
+            "translation": "Points",
+            "term": "Nekudim"
+        },
+        {
+            "translation": "Glittering",
+            "term": "Hitnotzetzut"
+        },
+        {
+            "translation": "Glitter",
+            "term": "Natzatzin"
+        },
+        {
+            "translation": "Flowing",
+            "term": "Nehorin"
+        },
+        {
+            "translation": "Sparks",
+            "term": "Zikin"
+        },
+        {
+            "case": "sensitive",
+            "expansion": [
+                "Mayin Nukvin"
+            ],
+            "term": "MAN"
+        },
+        {
+            "translation": "Female Waters",
+            "explanation": "Raising Deficiencies",
+            "term": "Mayin Nukvin"
+        },
+        {
+            "case": "sensitive",
+            "expansion": "Mayin Duchrin",
+            "term": "MAD"
+        },
+        {
+            "translation": "Male Waters",
+            "explanation": "Filling Deficiencies",
+            "term": "Mayin Duchrin"
+        },
+        {
+            "translation": "Memories",
+            "term": "Reshimot"
+        },
+        {
+            "expansion": [
+                "Hochma",
+                "Bina",
+                "Zeir Anpin",
+                "Nukva"
+            ],
+            "term": "HBZON"
+        },
+        {
+            "expansion": [
+                "Yisrael Saba ve Tvuna"
+            ],
+            "term": "YESHSUT"
+        },
+        {
+            "defaultTerm": true,
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "translation": "Grandfather of Israel and Comprehension",
+            "explanation": "Execution",
+            "term": "Yisrael Saba Tvuna"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "translation": "Grandfather of Israel and Comprehension",
+            "explanation": "Execution",
+            "term": "Yisrael Saba ve Tvuna"
+        },
+        {
+            "translation": "Israel",
+            "term": "Yisrael"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "translation": "Grandfather of Israel",
+            "source": "Yisrael Saba",
+            "term": "Israel Saba"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "translation": "Grandfather of Israel",
+            "term": "Yisrael Saba"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "translation": "Comprehension",
+            "term": "Tvuna"
+        },
+        {
+            "expansion": [
+                "Yisrael Saba"
+            ],
+            "term": "YESH"
+        },
+        {
+            "fixed": true,
+            "translation": "Rabbi Aba",
+            "term": "Rabbi Aba"
+        },
+        {
+            "translation": "The Knowledge",
+            "term": "HaDaat"
+        },
+        {
+            "translation": "Holiness",
+            "explanation": "Advancement",
+            "term": "Kedusha"
+        },
+        {
+            "translation": "Light of Mercy",
+            "term": "OhrHassadim"
+        },
+        {
+            "translation": "Five Mercies",
+            "term": "Hey Hassadim"
+        },
+        {
+            "translation": "Five Judgements",
+            "term": "Hey Gevurot"
+        },
+        {
+            "translation": "Lower Hey",
+            "term": "Hey Tata'a"
+        },
+        {
+            "translation": "Judgements",
+            "term": "Gevurot"
+        },
+        {
+            "translation": "Correction",
+            "term": "Tikkun"
+        },
+        {
+            "translation": "Correction of Lines",
+            "term": "Tikkun Kavim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Hall of Primordial Man",
+            "term": "Heichal Adam Kadmon"
+        },
+        {
+            "translation": "Coarsening",
+            "term": "Ibuy"
+        },
+        {
+            "translation": "Adhesion",
+            "term": "Dvekut"
+        },
+        {
+            "translation": "Precept",
+            "term": "Mitzva"
+        },
+        {
+            "translation": "Precepts",
+            "term": "Mitzvot"
+        },
+        {
+            "translation": "Shell",
+            "term": "Klipa"
+        },
+        {
+            "translation": "Shells",
+            "explanation": "Superficial Attitude",
+            "term": "Klipot"
+        },
+        {
+            "translation": "Height of",
+            "term": "Komat"
+        },
+        {
+            "translation": "Attraction",
+            "term": "Hamshacha"
+        },
+        {
+            "prefix": "The",
+            "translation": "Study of the Ten Emanations",
+            "style": {
+                "heading": "Book"
+            },
+            "term": "Talmud Eser Sefirot"
+        },
+        {
+            "prefix": "the",
+            "translation": "Tree of Life",
+            "term": "Etz Chayim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Tree of Knowledge",
+            "term": "Etz Daat"
+        },
+        {
+            "prefix": "the",
+            "translation": "Tree of Life",
+            "term": "Etz ha Chayim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Tree of Knowledge",
+            "term": "Etz ha Daat"
+        },
+        {
+            "translation": "King",
+            "term": "Melech"
+        },
+        {
+            "translation": "Kings",
+            "term": "Melachim"
+        },
+        {
+            "prefix": "a",
+            "translation": "Memory",
+            "term": "Reshima"
+        },
+        {
+            "prefix": "the",
+            "translation": "Mirror",
+            "term": "Aspaklaria"
+        },
+        {
+            "prefix": "the",
+            "translation": "Mirror That Does Not Shine",
+            "term": "Aspaklaria Lo Nahara"
+        },
+        {
+            "translation": "Souls",
+            "term": "Neshamot"
+        },
+        {
+            "translation": "Bodies",
+            "term": "Gufim"
+        },
+        {
+            "translation": "Souls",
+            "term": "Nefashot"
+        },
+        {
+            "translation": "Palaces",
+            "term": "Heichalot"
+        },
+        {
+            "translation": "Clothes",
+            "term": "Levushim"
+        },
+        {
+            "translation": "Section",
+            "term": "Mador"
+        },
+        {
+            "prefix": "the",
+            "translation": "Shell Section",
+            "term": "Mador ha Klipot"
+        },
+        {
+            "translation": "External",
+            "term": "Hitzon"
+        },
+        {
+            "translation": "Bodies",
+            "term": "Gufot"
+        },
+        {
+            "translation": "Surroundings",
+            "term": "Makifim"
+        },
+        {
+            "translation": "Surrounding Vessels",
+            "term": "Kelim Makifim"
+        },
+        {
+            "fixed": true,
+            "translation": "Yud [י]",
+            "term": "Yud"
+        },
+        {
+            "fixed": true,
+            "translation": "Yod [י]",
+            "term": "Yod"
+        },
+        {
+            "fixed": true,
+            "source": "Hey [ה]",
+            "term": "Hey"
+        },
+        {
+            "fixed": true,
+            "source": "Hey [ה]",
+            "term": "Hey ה"
+        },
+        {
+            "fixed": true,
+            "source": "Vav [ו]",
+            "term": "Vav"
+        },
+        {
+            "fixed": true,
+            "source": "Aleph [א]",
+            "term": "Aleph"
+        },
+        {
+            "source": "Tav [ת]",
+            "term": "Tav"
+        },
+        {
+            "fixed": true,
+            "source": "Vav [ו]",
+            "term": "Viv"
+        },
+        {
+            "fixed": true,
+            "source": "Yodin [י]",
+            "term": "Yodin"
+        },
+        {
+            "fixed": true,
+            "source": "Yudin [י]",
+            "term": "Yudin"
+        },
+        {
+            "fixed": true,
+            "source": "Alephin [א]",
+            "term": "Alephin"
+        },
+        {
+            "fixed": true,
+            "source": "Heyin [ה]",
+            "term": "Heyin"
+        },
+        {
+            "prefix": "the",
+            "translation": "Yud of Tetragrammaton",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "Yud HaVaYaH"
+        },
+        {
+            "prefix": "the",
+            "translation": "Yod of Tetragrammaton",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "Yod HaVaYaH"
+        },
+        {
+            "prefix": "the",
+            "translation": "Hey of Tetragrammaton",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "Hey HaVaYaH"
+        },
+        {
+            "prefix": "the",
+            "translation": "Vav of Tetragrammaton",
+            "style": {
+                "heading": "HaVaYaH י-ה-ו-ה"
+            },
+            "term": "Vav HaVaYaH"
+        },
+        {
+            "translation": "Spirits",
+            "style": {
+                "heading": "Angels",
+                "phase": "two"
+            },
+            "term": "Ruchin"
+        },
+        {
+            "translation": "Spirits",
+            "style": {
+                "heading": "Angels",
+                "phase": "two"
+            },
+            "term": "Ruchot"
+        },
+        {
+            "translation": "Wheels",
+            "style": {
+                "heading": "Angels",
+                "phase": "four"
+            },
+            "term": "Ofanim"
+        },
+        {
+            "translation": "Wheel",
+            "style": {
+                "heading": "Angels",
+                "phase": "four"
+            },
+            "term": "Ofan"
+        },
+        {
+            "translation": "Angels",
+            "style": {
+                "heading": "Angels",
+                "phase": "three"
+            },
+            "term": "Mala'achim"
+        },
+        {
+            "translation": "Hardness",
+            "term": "Kashiut"
+        },
+        {
+            "translation": "a Point",
+            "term": "Nekuda"
+        },
+        {
+            "translation": "Kingdoms",
+            "term": "Malchuiot"
+        },
+        {
+            "translation": "Interior",
+            "term": "Pnimi"
+        },
+        {
+            "translation": "Surrounding",
+            "term": "Makif"
+        },
+        {
+            "translation": "Numerology",
+            "term": "Gimatria"
+        },
+        {
+            "translation": "Externality",
+            "term": "Hitzoniut"
+        },
+        {
+            "translation": "External Vessel",
+            "term": "Kli Hitzon"
+        },
+        {
+            "translation": "Internal Vessel",
+            "term": "Kli Pnimi"
+        },
+        {
+            "translation": "Windows",
+            "term": "Halonot"
+        },
+        {
+            "translation": "Extends",
+            "term": "Nimshach"
+        },
+        {
+            "translation": "Roof",
+            "term": "Gag"
+        },
+        {
+            "translation": "Man",
+            "term": "Adam"
+        },
+        {
+            "translation": "Image",
+            "term": "Tzelem"
+        },
+        {
+            "translation": "Minds",
+            "term": "Mochin"
+        },
+        {
+            "translation": "Shade",
+            "term": "Tzel"
+        },
+        {
+            "translation": "Entrance of Surrounding Light",
+            "term": "Knisat Makifin"
+        },
+        {
+            "translation": "Vessels of the Lower",
+            "term": "Kelim Tachton"
+        },
+        {
+            "prefix": "the",
+            "translation": "Circle of Mother",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "term": "Igul Ima"
+        },
+        {
+            "prefix": "the",
+            "translation": "Circle of Father",
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            },
+            "term": "Igul Abba"
+        },
+        {
+            "expansion": [
+                "Keter",
+                "Hochma",
+                "Bina",
+                "Daat"
+            ],
+            "term": "KHBD"
+        },
+        {
+            "expansion": [
+                "Hochma",
+                "Bina",
+                "Daat"
+            ],
+            "term": "HBD"
+        },
+        {
+            "translation": "Ear",
+            "style": {
+                "phase": "two"
+            },
+            "term": "Awzen"
+        },
+        {
+            "translation": "Beard",
+            "term": "Zakan"
+        },
+        {
+            "translation": "Beard",
+            "term": "Dikna"
+        },
+        {
+            "translation": "Divinity",
+            "term": "Shechina"
+        },
+        {
+            "translation": "Mistress",
+            "term": "Matronita"
+        },
+        {
+            "translation": "Baal HaSulam",
+            "style": {
+                "heading": "Author"
+            },
+            "term": "Yehuda Leib HaLevi Ashlag"
+        },
+        {
+            "translation": "End of Legs",
+            "term": "Sium Raglaim"
+        },
+        {
+            "translation": "Matings",
+            "term": "Zivugim"
+        },
+        {
+            "translation": "End of Correction",
+            "term": "Gmar Tikkun"
+        },
+        {
+            "translation": "Conception",
+            "term": "Ibur"
+        },
+        {
+            "translation": "Suckling",
+            "term": "Yenika"
+        },
+        {
+            "translation": "Round",
+            "term": "Agol"
+        },
+        {
+            "translation": "Corrections",
+            "term": "Tikunim"
+        },
+        {
+            "translation": "Firmament",
+            "term": "Rakia"
+        },
+        {
+            "translation": "Three Lines",
+            "term": "Gimel Kavim"
+        },
+        {
+            "translation": "Vessel of Reception",
+            "term": "Kli Kabbalah"
+        },
+        {
+            "translation": "Combined Tetragrammaton",
+            "style": {
+                "heading": "Y-A-H-D-O-N-H-Y י-א-ה-ד-ו-נ-ה-י"
+            },
+            "term": "YAHDONHY"
+        },
+        {
+            "style": {
+                "heading": "Location"
+            },
+            "translation": "End",
+            "term": "Sof"
+        },
+        {
+            "translation": "Wisdoms",
+            "term": "Hochmot"
+        },
+        {
+            "expansion": "Hochma Stima'a",
+            "term": "HS"
+        },
+        {
+            "translation": "Blocked Wisdom",
+            "style": {
+                "heading": "Vessel"
+            },
+            "term": "Hochma Stima'a"
+        },
+        {
+            "translation": "Blocked Wisdom",
+            "style": {
+                "heading": "Vessel"
+            },
+            "term": "Hochma Stimaa"
+        },
+        {
+            "translation": "Formations",
+            "style": {
+                "heading": "World",
+                "phase": "three"
+            },
+            "term": "Yetzirot"
+        },
+        {
+            "translation": "Engraved",
+            "term": "Harut"
+        },
+        {
+            "translation": "Freedom",
+            "term": "Herut"
+        },
+        {
+            "translation": "The Other Side (Impure)",
+            "term": "SAM"
+        },
+        {
+            "prefix": "the",
+            "translation": "Portion of",
+            "term": "Parashat"
+        },
+        {
+            "expansion": "Chapter",
+            "term": "Chap"
+        },
+        {
+            "translation": "That Does Not Shine",
+            "term": "Lo Nahara"
+        },
+        {
+            "translation": "Coarse Light",
+            "term": "Ohr Av"
+        },
+        {
+            "translation": "Pure Light",
+            "term": "Ohr Zach"
+        },
+        {
+            "translation": "Simple Light",
+            "term": "Ohr Pashut"
+        },
+        {
+            "translation": "Renewal",
+            "term": "Hidush"
+        },
+        {
+            "translation": "Renewal of Form",
+            "term": "Hidush Tzura"
+        },
+        {
+            "translation": "Equivalence of Form",
+            "term": "Hishtavut Tzura"
+        },
+        {
+            "translation": "Not Possible",
+            "term": "Lo Efshar"
+        },
+        {
+            "translation": "Possible",
+            "term": "Efshar"
+        },
+        {
+            "case": "insensitive",
+            "translation": "Without Intention",
+            "term": "Lo ka Mekavein"
+        },
+        {
+            "case": "insensitive",
+            "translation": "With Intention",
+            "term": "ka Mekavein"
+        },
+        {
+            "translation": "Sustenance",
+            "term": "Haiut"
+        },
+        {
+            "translation": "Revolving",
+            "term": "Mesabev"
+        },
+        {
+            "translation": "Length",
+            "term": "Orech"
+        },
+        {
+            "translation": "Surrounds",
+            "term": "Sovev"
+        },
+        {
+            "translation": "Bowed Head",
+            "term": "Harkanat Rosh"
+        },
+        {
+            "translation": "Connection",
+            "term": "Hitkashrut"
+        },
+        {
+            "translation": "Floor",
+            "term": "Karka"
+        },
+        {
+            "translation": "Straight",
+            "term": "Yashar"
+        },
+        {
+            "translation": "Inverse",
+            "term": "Hofchiut"
+        },
+        {
+            "translation": "Inversion of Form",
+            "term": "Hofchiut Tzura"
+        },
+        {
+            "translation": "Emanation of",
+            "term": "Sefirat"
+        },
+        {
+            "translation": "Crowning",
+            "term": "Machtir"
+        },
+        {
+            "translation": "Allowance",
+            "term": "Kitzba"
+        },
+        {
+            "translation": "Matter",
+            "term": "Homer"
+        },
+        {
+            "translation": "Breathing",
+            "term": "Neshima"
+        },
+        {
+            "translation": "Ethics of the Fathers",
+            "term": "Pirkey Avot"
+        },
+        {
+            "translation": "Square",
+            "term": "Meruba"
+        },
+        {
+            "translation": "Triangle",
+            "term": "Meshulash"
+        },
+        {
+            "translation": "Overcomings",
+            "term": "Hitgabruiot"
+        },
+        {
+            "translation": "First Overcoming",
+            "term": "Hitagbrut Aleph"
+        },
+        {
+            "translation": "Second Overcoming",
+            "term": "Hitgabrut Bet"
+        },
+        {
+            "translation": "Chair",
+            "term": "Kursaya"
+        },
+        {
+            "translation": "Organ",
+            "term": "Evar"
+        },
+        {
+            "translation": "Organs",
+            "term": "Evarim"
+        },
+        {
+            "translation": "Forms",
+            "term": "Tzurot"
+        },
+        {
+            "translation": "Speech",
+            "term": "Dibur"
+        },
+        {
+            "translation": "Breaching",
+            "term": "Beki’a"
+        },
+        {
+            "translation": "Vapor",
+            "term": "Hevel"
+        },
+        {
+            "style": {
+                "heading": "א-ת"
+            },
+            "term": "AT"
+        },
+        {
+            "prefix": "a",
+            "translation": "Seal",
+            "term": "Hotam"
+        },
+        {
+            "translation": "Engraving",
+            "term": "Hakika"
+        },
+        {
+            "translation": "Foundations",
+            "term": "Yesodot"
+        },
+        {
+            "translation": "Chair",
+            "term": "Kisse"
+        },
+        {
+            "translation": "Adjacent",
+            "term": "Samuch"
+        },
+        {
+            "prefix": "a",
+            "translation": "Quarter of",
+            "term": "Revieet"
+        },
+        {
+            "translation": "Sight",
+            "term": "Reiah"
+        },
+        {
+            "translation": "Holy",
+            "term": "Kadosh"
+        },
+        {
+            "translation": "Holy",
+            "term": "Kodesh"
+        },
+        {
+            "prefix": "the",
+            "translation": "Holy of Holies",
+            "term": "Kodesh Kodashim"
+        },
+        {
+            "translation": "Offspring",
+            "term": "Tolada"
+        },
+        {
+            "translation": "Consequential Light",
+            "term": "Ohr Tolada"
+        },
+        {
+            "translation": "Cover",
+            "term": "Kisui"
+        },
+        {
+            "translation": "Edges",
+            "term": "Ktzavot"
+        },
+        {
+            "translation": "White",
+            "term": "Loven"
+        },
+        {
+            "translation": "Sparks",
+            "term": "Nitzotzot"
+        },
+        {
+            "translation": "Impression",
+            "term": "Roshem"
+        },
+        {
+            "translation": "Impression of a Seal",
+            "term": "Roshem Hotam"
+        },
+        {
+            "expansion": [
+                "Netzah",
+                "Hod"
+            ],
+            "term": "NH"
+        },
+        {
+            "translation": "Beating",
+            "term": "Betisha"
+        },
+        {
+            "translation": "Roots",
+            "term": "Shorashim"
+        },
+        {
+            "translation": "Upper Roots",
+            "term": "Shorashim Elyonim"
+        },
+        {
+            "translation": "Glance",
+            "term": "Habata"
+        },
+        {
+            "translation": "Expansion",
+            "term": "Matei"
+        },
+        {
+            "translation": "Departure",
+            "term": "Lo Matei"
+        },
+        {
+            "translation": "Adjunct",
+            "term": "Taffel"
+        },
+        {
+            "translation": "Eyes",
+            "style": {
+                "phase": "one"
+            },
+            "term": "Enayim"
+        },
+        {
+            "translation": "Corrections",
+            "term": "Tikkunim"
+        },
+        {
+            "translation": "Illumination",
+            "term": "Butzina"
+        },
+        {
+            "translation": "Hardness",
+            "term": "Kardinuta"
+        },
+        {
+            "expansion": [
+                "Yod",
+                "Hey",
+                "Vav"
+            ],
+            "term": "YHV"
+        },
+        {
+            "translation": "The Punctuation Above Letters",
+            "term": "Holam"
+        },
+        {
+            "translation": "The Punctuation in the Letters",
+            "term": "Melafom"
+        },
+        {
+            "translation": "The Punctuation in the Letters",
+            "term": "Shuruk"
+        },
+        {
+            "translation": "The Punctuation below the Letters",
+            "term": "Hirik"
+        },
+        {
+            "fixed": true,
+            "style": {
+                "heading": "אָ",
+                "phase": "root"
+            },
+            "translation": "Punctuation of Crown",
+            "term": "Kamatz"
+        },
+        {
+            "style": {
+                "phase": "one"
+            },
+            "translation": "Eye Sockets",
+            "term": "Nikvey Eynaim"
+        },
+        {
+            "translation": "Luck",
+            "term": "Mazla"
+        },
+        {
+            "translation": "Legs",
+            "term": "Raglaim"
+        },
+        {
+            "style": {
+                "phase": "two"
+            },
+            "translation": "Ear Sockets",
+            "term": "Nikvey Awzen"
+        },
+        {
+            "fixed": true,
+            "translation": "Heys [ה]",
+            "term": "Heys"
+        },
+        {
+            "translation": "Foramens",
+            "term": "Nekavim"
+        },
+        {
+            "translation": "Fingers/Toes",
+            "term": "Etzbaot"
+        },
+        {
+            "translation": "Toes of the Feet",
+            "term": "Etzbaot Raglaim"
+        },
+        {
+            "translation": "Chin Hair",
+            "term": "Shibolet ha Zakan"
+        },
+        {
+            "translation": "Throne of Honor",
+            "term": "Kisseh HaKavod"
+        },
+        {
+            "translation": "Throne of Mercy",
+            "term": "Kisseh Rachamim"
+        },
+        {
+            "translation": "Wings",
+            "term": "Knafaim"
+        },
+        {
+            "translation": "Assembly of Israel",
+            "term": "Knesset Israel"
+        },
+        {
+            "translation": "Strength",
+            "term": "Koach"
+        },
+        {
+            "translation": "Wall",
+            "term": "Kotel"
+        },
+        {
+            "translation": "In the distant future",
+            "term": "LeAtid Lavo"
+        },
+        {
+            "translation": "Place",
+            "term": "Makom"
+        },
+        {
+            "translation": "Shell of",
+            "term": "Klipat"
+        },
+        {
+            "translation": "Tree",
+            "term": "Etz"
+        },
+        {
+            "translation": "Heads",
+            "term": "Roshim"
+        },
+        {
+            "prefix": "the",
+            "translation": "Third Head",
+            "term": "Rosh ha Gimel"
+        },
+        {
+            "prefix": "the",
+            "translation": "First Head",
+            "term": "Rosh ha Aleph"
+        },
+        {
+            "prefix": "the",
+            "translation": "Second Head",
+            "term": "Rosh ha Bet"
+        },
+        {
+            "prefix": "the",
+            "translation": "Fourth Head",
+            "term": "Rosh ha Dalet"
+        },
+        {
+            "translation": "Understandings",
+            "style": {
+                "heading": "Vessel",
+                "phase": "two"
+            },
+            "term": "Binot"
+        },
+        {
+            "prefix": "the",
+            "expansion": [
+                "Rosh",
+                "Toch",
+                "Sof"
+            ],
+            "term": "RTS"
+        },
+        {
+            "translation": "Admixtures",
+            "term": "Sigim"
+        },
+        {
+            "translation": "The Serpent's Skin",
+            "term": "Mishcha Hivia"
+        },
+        {
+            "prefix": "the",
+            "translation": "First Man",
+            "term": "Adam ha Rishon"
+        },
+        {
+            "translation": "Females",
+            "term": "Nekevot"
+        },
+        {
+            "translation": "Merit",
+            "term": "Zechut"
+        },
+        {
+            "translation": "Council",
+            "term": "Sanhedrin"
+        },
+        {
+            "translation": "Wheat",
+            "term": "Hitah"
+        },
+        {
+            "translation": "Sins",
+            "term": "Hataaim"
+        },
+        {
+            "translation": "Tetragrammaton",
+            "style": {
+                "heading": "ADNI א-ד-נ-י"
+            },
+            "term": "ADNI"
+        },
+        {
+            "translation": "Ledges of the Field",
+            "term": "Adnei ha Sadeh"
+        },
+        {
+            "translation": "Quarter",
+            "term": "Revi’it"
+        },
+        {
+            "translation": "Genesis",
+            "term": "Beresheet"
+        },
+        {
+            "translation": "Impurity",
+            "explanation": "Fulfillment",
+            "term": "Tuma’a"
+        },
+        {
+            "expansion": [
+                "Mocha Stima'a"
+            ],
+            "term": "MS"
+        },
+        {
+            "translation": "Mind",
+            "term": "Mocha"
+        },
+        {
+            "translation": "Blocked",
+            "term": "Stima'a"
+        },
+        {
+            "translation": "Blocked Mind",
+            "term": "Mocha Stima'a"
+        },
+        {
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            },
+            "translation": "Father and Mother",
+            "explanation": "Decree",
+            "term": "Abba Ima"
+        },
+        {
+            "defaultTerm": true,
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            },
+            "translation": "Father and Mother",
+            "explanation": "Decree",
+            "term": "Abba ve Ima"
+        },
+        {
+            "translation": "Six Edges",
+            "term": "Vav Kzavot"
+        },
+        {
+            "translation": "Six",
+            "term": "Vav  ( six )"
+        },
+        {
+            "translation": "Six Edges",
+            "term": "Vav Ktzavot"
+        },
+        {
+            "prefix": "a",
+            "translation": "tail for the lions",
+            "term": "Zanav la Araiot"
+        },
+        {
+            "translation": "Tail",
+            "term": "Zanav"
+        },
+        {
+            "prefix": "a",
+            "translation": "head for the foxes",
+            "term": "Rosh la Shualim"
+        },
+        {
+            "translation": "I",
+            "term": "Ani"
+        },
+        {
+            "translation": "Absence",
+            "term": "Ein"
+        },
+        {
+            "translation": "Parasangs",
+            "term": "Parsas"
+        },
+        {
+            "translation": "Chapter of",
+            "term": "Pirkey"
+        },
+        {
+            "translation": "Robe",
+            "term": "Haluk"
+        },
+        {
+            "translation": "Houses",
+            "term": "Batim"
+        },
+        {
+            "expansion": [
+                "Neshama2",
+                "Guf2",
+                "Levush2",
+                "Heichal2"
+            ],
+            "term": "NGLH"
+        },
+        {
+            "translation": "Stamped",
+            "term": "Nechtam"
+        },
+        {
+            "style": {
+                "heading": "Angel"
+            },
+            "term": "Zahariel"
+        },
+        {
+            "translation": "Key",
+            "term": "Miftacha"
+        },
+        {
+            "translation": "Lock",
+            "term": "Man’ula"
+        },
+        {
+            "translation": "Lock",
+            "term": "Manula"
+        },
+        {
+            "translation": "Crown",
+            "style": {
+                "heading": "Vessel",
+                "phase": "root"
+            },
+            "term": "Kitra"
+        },
+        {
+            "style": {
+                "phase": "root"
+            },
+            "translation": "Forehead",
+            "term": "Metzach"
+        },
+        {
+            "expansion": [
+                "Still",
+                "Vegatative",
+                "Animal",
+                "Speaking"
+            ],
+            "term": "SVAS"
+        },
+        {
+            "translation": "Good Light",
+            "term": "Tov Ohr"
+        },
+        {
+            "expansion": [
+                "Mem",
+                "Lamed",
+                "Tzadik"
+            ],
+            "term": "MLTz"
+        },
+        {
+            "translation": "Lower Wisdom",
+            "term": "Hochma Tataa"
+        },
+        {
+            "translation": "Upper Wisdom",
+            "term": "Hochma Ilaa"
+        },
+        {
+            "term": "have"
+        },
+        {
+            "term": "’s"
+        },
+        {
+            "translation": "don't",
+            "term": "lo"
+        },
+        {
+            "translation": "Unknown",
+            "term": "Etyada"
+        },
+        {
+            "translation": "Head",
+            "term": "Reisha"
+        },
+        {
+            "translation": "The Unknown Head",
+            "source": "Reisha de lo Etyada",
+            "term": "Reisha lo Etyada"
+        },
+        {
+            "translation": "Crust",
+            "term": "Kruma"
+        },
+        {
+            "style": {
+                "heading": "Zohar Portion"
+            },
+            "term": "Idra Zuta"
+        },
+        {
+            "style": {
+                "heading": "Zohar Portion"
+            },
+            "term": "Idra Raba"
+        },
+        {
+            "translation": "Boasts",
+            "term": "Mitpaer"
+        },
+        {
+            "translation": "Tied",
+            "term": "Akud"
+        },
+        {
+            "style": {
+                "heading": "Patriarch"
+            },
+            "translation": "Jacob",
+            "term": "Yaakov"
+        },
+        {
+            "style": {
+                "heading": "Book"
+            },
+            "translation": "Genesis Rabba",
+            "term": "Bershit Raba"
+        },
+        {
+            "translation": "Fathers",
+            "term": "Avot"
+        },
+        {
+            "translation": "Grizzled",
+            "term": "Brudim"
+        },
+        {
+            "style": {
+                "heading": "World",
+                "phase": "one"
+            },
+            "prefix": "The",
+            "translation": "World of Correction",
+            "term": "Olam ha Brudim"
+        },
+        {
+            "style": {
+                "heading": "World"
+            },
+            "prefix": "The",
+            "translation": "World of Correction",
+            "term": "Olam ha Tikun"
+        },
+        {
+            "translation": "Upper Mating",
+            "term": "Zivug Elyon"
+        },
+        {
+            "source": [
+                "the",
+                "Elyon",
+                "Shoresh",
+                "Keter"
+            ],
+            "term": "Shoresh Keter Elyon"
+        },
+        {
+            "translation": "Generality",
+            "term": "Klalut"
+        },
+        {
+            "translation": "Containing",
+            "term": "Kolel"
+        },
+        {
+            "translation": "Donation",
+            "term": "Truma"
+        },
+        {
+            "style": {
+                "heading": "A-Ha-Va-H א-ה-ב-ה"
+            },
+            "translation": "Love",
+            "term": "AHaVaH"
+        },
+        {
+            "style": {
+                "heading": "A-Ha-Va-H א-ה-ב-ה"
+            },
+            "translation": "Love",
+            "term": "AhaVaH"
+        },
+        {
+            "translation": "Kissing",
+            "term": "Neshikin"
+        },
+        {
+            "translation": "First Face",
+            "term": "Partzuf Aleph"
+        },
+        {
+            "translation": "Second Face",
+            "term": "Partzuf Bet"
+        },
+        {
+            "translation": "Third Face",
+            "term": "Partzuf Gimel"
+        },
+        {
+            "translation": "His Essence",
+            "term": "Atzmuto"
+        },
+        {
+            "source": [
+                "Elyon",
+                "Keter"
+            ],
+            "term": "Keter Elyon"
+        },
+        {
+            "source": [
+                "the",
+                "Elyon",
+                "Ohr",
+                "Keter"
+            ],
+            "term": "Ohr Keter Elyon"
+        },
+        {
+            "translation": "Mixture",
+            "term": "Eruv"
+        },
+        {
+            "translation": "Vapors",
+            "term": "Havalim"
+        },
+        {
+            "translation": "Genesis",
+            "term": "Bereshit"
+        },
+        {
+            "prefix": "The",
+            "translation": "Core of Wisdom",
+            "style": {
+                "phase": "one"
+            },
+            "term": "Etzem Hochma"
+        },
+        {
+            "translation": "Life",
+            "term": "Hayim"
+        },
+        {
+            "translation": "Kingdoms",
+            "style": {
+                "heading": "Vessel",
+                "phase": "four"
+            },
+            "term": "Malchuts"
+        },
+        {
+            "translation": "Sides",
+            "source": "Tsdadim",
+            "context": [
+                "sides",
+                "streams",
+                "rivers",
+                "paths",
+                "trails"
+            ],
+            "style": {
+                "phase": "root",
+                "heading": "Sea"
+            },
+            "term": "sides"
+        },
+        {
+            "translation": "Streams",
+            "source": "Nechalim",
+            "context": [
+                "sides",
+                "streams",
+                "rivers",
+                "paths",
+                "trails"
+            ],
+            "style": {
+                "phase": "one",
+                "heading": "Sea"
+            },
+            "term": "streams"
+        },
+        {
+            "translation": "Rivers",
+            "source": "Neharot",
+            "context": [
+                "sides",
+                "streams",
+                "rivers",
+                "paths",
+                "trails"
+            ],
+            "style": {
+                "phase": "two",
+                "heading": "Sea"
+            },
+            "term": "rivers"
+        },
+        {
+            "translation": "Paths",
+            "source": "Orchot",
+            "context": [
+                "sides",
+                "streams",
+                "rivers",
+                "paths",
+                "trails"
+            ],
+            "style": {
+                "phase": "three",
+                "heading": "Sea"
+            },
+            "term": "paths"
+        },
+        {
+            "translation": "Trails",
+            "source": "Shevilim",
+            "context": [
+                "sides",
+                "streams",
+                "rivers",
+                "paths",
+                "trails"
+            ],
+            "style": {
+                "phase": "four",
+                "heading": "Sea"
+            },
+            "term": "trails"
+        },
+        {
+            "translation": "Side",
+            "source": "Tsad",
+            "context": [
+                "side",
+                "stream",
+                "river",
+                "path",
+                "trail"
+            ],
+            "style": {
+                "phase": "root",
+                "heading": "Sea"
+            },
+            "term": "side"
+        },
+        {
+            "translation": "Stream",
+            "source": "Nachal",
+            "context": [
+                "side",
+                "stream",
+                "river",
+                "path",
+                "trail"
+            ],
+            "style": {
+                "phase": "one",
+                "heading": "Sea"
+            },
+            "term": "stream"
+        },
+        {
+            "translation": "River",
+            "source": "Nahar",
+            "context": [
+                "side",
+                "stream",
+                "river",
+                "path",
+                "trail"
+            ],
+            "style": {
+                "phase": "two",
+                "heading": "Sea"
+            },
+            "term": "river"
+        },
+        {
+            "translation": "Path",
+            "source": "Orach",
+            "context": [
+                "side",
+                "stream",
+                "river",
+                "path",
+                "trail"
+            ],
+            "style": {
+                "phase": "three",
+                "heading": "Sea"
+            },
+            "term": "path"
+        },
+        {
+            "translation": "Trail",
+            "source": "Shevil",
+            "context": [
+                "side",
+                "stream",
+                "river",
+                "path",
+                "trail"
+            ],
+            "style": {
+                "phase": "four",
+                "heading": "Sea"
+            },
+            "term": "trail"
+        },
+        {
+            "prefix": "The",
+            "includePrefix": true,
+            "translation": "Upper Sea",
+            "source": "HaYam HaElyon",
+            "style": {
+                "phase": "four",
+                "heading": "Vessel"
+            },
+            "term": "upper sea"
+        },
+        {
+            "prefix": "The",
+            "includePrefix": true,
+            "translation": "Bottom Sea",
+            "source": "HaYam HaTachton",
+            "style": {
+                "phase": "four",
+                "heading": "Vessel"
+            },
+            "term": "bottom sea"
+        },
+        {
+            "translation": "Upper Light",
+            "source": "Ohr HaElyon",
+            "term": "upper light"
+        },
+        {
+            "translation": "Sea",
+            "source": "Yam",
+            "style": "sea",
+            "term": "sea"
+        },
+        {
+            "translation": "Seas",
+            "source": "Yamim",
+            "style": {
+                "phase": "four",
+                "heading": "Vessel"
+            },
+            "term": "seas"
+        },
+        {
+            "translation": "Upper Seas",
+            "source": "Yamim Elyonim",
+            "style": {
+                "phase": "four",
+                "heading": "Vessel"
+            },
+            "term": "upper seas"
+        },
+        {
+            "expansion": [
+                "Taamim",
+                "Nekudot",
+                "Tagin",
+                "Otiot"
+            ],
+            "term": "TNTO"
+        },
+        {
+            "prefix": "The",
+            "translation": "Measure of Mercy",
+            "term": "Midatha Rachamim"
+        },
+        {
+            "source": "Zivug de Lo Pasik",
+            "translation": "Never Ending Mating",
+            "term": "Zivug Lo Pasik"
+        },
+        {
+            "translation": "Priest",
+            "term": "Cohen"
+        },
+        {
+            "translation": "Tractate",
+            "term": "Masechet"
+        },
+        {
+            "translation": "Mixture",
+            "term": "Kilaim"
+        },
+        {
+            "translation": "The World of Binding",
+            "style": {
+                "heading": "World",
+                "phase": "root"
+            },
+            "term": "Olam ha Akudim"
+        },
+        {
+            "translation": "Creatures",
+            "term": "Nivraim"
+        },
+        {
+            "translation": "Formed",
+            "term": "Naasim"
+        },
+        {
+            "translation": "Creations",
+            "term": "Yetzurim"
+        },
+        {
+            "context": [
+                "units",
+                "tens",
+                "hundreds"
+            ],
+            "source": "Yechidot",
+            "translation": "Units",
+            "style": {
+                "heading": "Amount",
+                "phase": "four"
+            },
+            "term": "units"
+        },
+        {
+            "context": [
+                "units",
+                "tens",
+                "hundreds"
+            ],
+            "source": "Asarot",
+            "translation": "Tens",
+            "style": {
+                "heading": "Amount",
+                "phase": "three"
+            },
+            "term": "tens"
+        },
+        {
+            "context": [
+                "units",
+                "tens",
+                "hundreds"
+            ],
+            "source": "Meot",
+            "translation": "Hundreds",
+            "style": {
+                "heading": "Amount",
+                "phase": "two"
+            },
+            "term": "hundreds"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Alaphim",
+            "translation": "Thousands",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Amount",
+                "phase": "one"
+            },
+            "term": "thousands"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Revavot",
+            "translation": "Tens of Thousands",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Amount",
+                "phase": "root"
+            },
+            "term": "tens thousands"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Eser",
+            "translation": "Ten",
+            "style": {
+                "heading": "Amount",
+                "phase": "three"
+            },
+            "term": "ten"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Me'ah",
+            "translation": "One Hundred",
+            "style": {
+                "heading": "Amount",
+                "phase": "two"
+            },
+            "term": "one hundred"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Eleph",
+            "translation": "One Thousand",
+            "style": {
+                "heading": "Amount",
+                "phase": "one"
+            },
+            "term": "one thousand"
+        },
+        {
+            "prefix": "a",
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Eleph",
+            "translation": "One Thousand",
+            "style": {
+                "heading": "Amount",
+                "phase": "one"
+            },
+            "term": "1 , 000"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Revava",
+            "translation": "Ten Thousand",
+            "style": {
+                "heading": "Amount",
+                "phase": "root"
+            },
+            "term": "10 , 000"
+        },
+        {
+            "context": [
+                "tens",
+                "hundreds",
+                "thousands"
+            ],
+            "source": "Eser Revavot",
+            "translation": "One Hundred Thousand",
+            "style": {
+                "heading": "Amount",
+                "phase": "root"
+            },
+            "term": "100 , 000"
+        },
+        {
+            "source": "Eser Paamim",
+            "translation": "Ten Times",
+            "term": "ten times"
+        },
+        {
+            "translation": "Ten Emanations",
+            "source": "Eser Sefirot",
+            "term": "ten Sefirot"
+        },
+        {
+            "translation": "Embryo",
+            "term": "Ubar"
+        },
+        {
+            "translation": "Truth",
+            "term": "Emet"
+        },
+        {
+            "expansion": [
+                "Reisha lo Etyada"
+            ],
+            "term": "RADLA"
+        },
+        {
+            "translation": "Righteous",
+            "term": "Tzadikim"
+        },
+        {
+            "translation": "Encirclement",
+            "term": "Ateret"
+        },
+        {
+            "translation": "Encirclement of Foundation",
+            "term": "Ateret Yesod"
+        },
+        {
+            "translation": "In the beginning God created the",
+            "quote": true,
+            "fixed": true,
+            "term": "Beresheet Barah Elokim Et"
+        },
+        {
+            "translation": "In the beginning it was created",
+            "quote": true,
+            "fixed": true,
+            "term": "Beresheet Barah"
+        },
+        {
+            "translation": "The Creator",
+            "quote": true,
+            "fixed": true,
+            "term": "Elokim Et"
+        },
+        {
+            "source": "Bet [ב]",
+            "term": "Bet"
+        },
+        {
+            "source": "Gimel [ג]",
+            "term": "Gimel"
+        },
+        {
+            "source": "Dalet [ד]",
+            "term": "Dalet"
+        },
+        {
+            "source": "Dalet [ז]",
+            "term": "Zayin"
+        },
+        {
+            "source": "Het [ח]",
+            "term": "Het"
+        },
+        {
+            "source": "Tet [ט]",
+            "term": "Tet"
+        },
+        {
+            "source": "Kaf [כ]",
+            "term": "Kaf"
+        },
+        {
+            "source": "Lamed [ל]",
+            "term": "Lamed"
+        },
+        {
+            "source": "Mem [מ]",
+            "term": "Mem"
+        },
+        {
+            "source": "Nun [נ]",
+            "term": "Nun"
+        },
+        {
+            "source": "Samech [ס]",
+            "term": "Samech"
+        },
+        {
+            "source": "Eyin [ע]",
+            "term": "Eyin"
+        },
+        {
+            "source": "Pey [פ]",
+            "term": "Pey"
+        },
+        {
+            "source": "Tzadi [צ]",
+            "term": "Tzadi"
+        },
+        {
+            "source": "Kof [ק]",
+            "term": "Kof"
+        },
+        {
+            "source": "Reish [ר]",
+            "term": "Reish"
+        },
+        {
+            "source": "Shin [ש]",
+            "term": "Shin"
+        },
+        {
+            "source": [
+                "Aleph",
+                "and",
+                "Bet"
+            ],
+            "term": "Aleph - Bet"
+        },
+        {
+            "source": [
+                "Aleph",
+                ", ",
+                "Bet",
+                "and",
+                "Gimel"
+            ],
+            "term": "Aleph - Bet - Gimel"
+        },
+        {
+            "source": [
+                "Kof",
+                ", ",
+                "Reish",
+                ", ",
+                "Shin",
+                "and",
+                "Tav"
+            ],
+            "term": "Kof - Reish - Shin - Tav"
+        },
+        {
+            "source": [
+                "Kof",
+                "and",
+                "Reish"
+            ],
+            "term": "Kof - Reish"
+        },
+        {
+            "source": [
+                "Reish",
+                "and",
+                "Kof"
+            ],
+            "term": "Reish - Kof"
+        },
+        {
+            "source": [
+                "Shin",
+                "and",
+                "Tav"
+            ],
+            "term": "Shin - Tav"
+        },
+        {
+            "source": [
+                "Tav",
+                "and",
+                "Shin"
+            ],
+            "term": "Tav - Shin"
+        },
+        {
+            "translation": "Death",
+            "explanation": "No Internal Power",
+            "term": "Mavet"
+        },
+        {
+            "translation": "Death",
+            "explanation": "No Internal Power",
+            "term": "death"
+        },
+        {
+            "translation": "Blessing",
+            "explanation": "Multiplicity",
+            "term": "Beracha"
+        },
+        {
+            "translation": "Chariots",
+            "explanation": "Vehicles",
+            "term": "Merkavot"
+        },
+        {
+            "fixed": true,
+            "prefix": "The",
+            "translation": "Creator",
+            "explanation": "System",
+            "term": "God"
+        },
+        {
+            "translation": "another god",
+            "explanation": "victim mentality",
+            "term": "another god"
+        },
+        {
+            "translation": "Spiritual Fruits",
+            "explanation": "Internal Control",
+            "term": "spiritual fruits"
+        },
+        {
+            "translation": "Blessed",
+            "explanation": "multiplied",
+            "term": "blessed"
+        },
+        {
+            "includePrefix": true,
+            "prefix": "The",
+            "translation": "Creator",
+            "explanation": "System",
+            "term": "Creator"
+        },
+        {
+            "source": "End of Correction",
+            "translation": "End of Correction",
+            "explanation": "Completion of the Training Tier",
+            "term": "end correction"
+        },
+        {
+            "translation": "Good",
+            "explanation": "Maturity",
+            "term": "good"
+        },
+        {
+            "translation": "Evil",
+            "explanation": "Immaturity",
+            "term": "evil"
+        },
+        {
+            "expansion": [
+                "Shoresh2",
+                "Neshama2",
+                "Guf2",
+                "Levush2",
+                "Heichal2"
+            ],
+            "term": "SNGLH"
+        },
+        {
+            "translation": "Four Phases",
+            "term": "Dalet Behinot"
+        },
+        {
+            "expansion": [
+                "Atzilut",
+                "Yetzira",
+                "Assiya"
+            ],
+            "term": "AYA"
+        },
+        {
+            "expansion": [
+                "Atzilut",
+                "Beria",
+                "Assiya"
+            ],
+            "term": "ABA"
+        },
+        {
+            "expansion": [
+                "Atzilut",
+                "Beria",
+                "Yetzira"
+            ],
+            "term": "ABY"
+        },
+        {
+            "translation": "Crowns",
+            "term": "Ketarim"
+        },
+        {
+            "translation": "Sound",
+            "term": "Shmiah"
+        },
+        {
+            "translation": "Scent",
+            "term": "Reiach"
+        },
+        {
+            "expansion": [
+                "Reiah",
+                "Shmiah",
+                "Reiach",
+                "Dibur"
+            ],
+            "term": "RSRD"
+        },
+        {
+            "translation": "Medial",
+            "term": "Emtzai"
+        },
+        {
+            "translation": "Angels",
+            "term": "Malaachim"
+        },
+        {
+            "translation": "Square",
+            "term": "Ribua"
+        },
+        {
+            "translation": "Homily",
+            "term": "Drush"
+        },
+        {
+            "translation": "Sound",
+            "term": "Shmia"
+        },
+        {
+            "translation": "The",
+            "term": "Et"
+        },
+        {
+            "expansion": [
+                "Galgalta",
+                "AB",
+                "SAG",
+                "MA",
+                "BON"
+            ],
+            "term": "GASMB"
+        },
+        {
+            "translation": "Four Faces",
+            "term": "Dalet Partzufim"
+        },
+        {
+            "style": {
+                "phase": "one",
+                "heading": "Color"
+            },
+            "term": "white"
+        },
+        {
+            "style": {
+                "phase": "two",
+                "heading": "Color"
+            },
+            "term": "red"
+        },
+        {
+            "style": {
+                "phase": "three",
+                "heading": "Color"
+            },
+            "term": "green"
+        },
+        {
+            "style": {
+                "phase": "four",
+                "heading": "Color"
+            },
+            "term": "black"
+        },
+        {
+            "translation": "Bulge",
+            "term": "Blita"
+        },
+        {
+            "translation": "Stalk",
+            "term": "Shibolet"
+        },
+        {
+            "translation": "Males",
+            "term": "Zecharim"
+        },
+        {
+            "translation": "Thin",
+            "term": "Dak"
+        }
+    ],
+    "style": {
+        "chest": {
+            "phase": "two",
+            "heading": "Location",
+            "technical": {
+                "short": "The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
+                "long": "When a Face is in a state of smallness, the upper part including the vessels Crown and Wisdom are kept intact while the lower part including the vessels Understanding, Beauty and Kingdom are detached to the face below. The division between them is called the Chest."
+            },
+            "explanation": {
+                "short": "",
+                "long": ""
+            }
+        },
+        "skull": {
+            "heading": "Face",
+            "phase": "root",
+            "technical": {
+                "short": "First Face in the World of Primordial Man"
+            }
+        },
+        "sea": {
+            "phase": "four",
+            "heading": "Vessel",
+            "technical": {
+                "short": "When the Female (Desire) receives Wisdom"
+            }
+        },
+        "primordial man": {
+            "heading": "World",
+            "phase": "root",
+            "technical": {
+                "short": "First World after Infinity"
+            },
+            "explanation": {
+                "short": "First Spiritual World After Crossing the Barrier"
+            }
+        }
+    }
+}

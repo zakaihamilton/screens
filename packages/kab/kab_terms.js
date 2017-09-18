@@ -19,14 +19,14 @@ package.kab.terms = function KabTerms(me) {
                 callback(json);
             }
         } else {
-            me.core.json.loadComponent(function (json) {
+            me.core.json.loadFile(function (json) {
                 if (json) {
                     me.jsons[language] = json;
                     if (callback) {
                         callback(json);
                     }
                 }
-            }, "kab.terms_" + language);
+            }, "/packages/res/terms/" + language + ".json");
         }
     };
     me.retrieveTerms = function(callback, language, options) {
@@ -260,9 +260,7 @@ package.kab.terms = function KabTerms(me) {
             }, wordsString);
         }
         if (callback) {
-            if (me.language !== "debug") {
-                wordsString = me.send("kab.format.process", wordsString, me.json.post);
-            }
+            wordsString = me.send("kab.format.process", wordsString, me.json.post);
             callback(wordsString, me.kab.search.terms, me.json.data);
             return;
         }
@@ -349,21 +347,22 @@ package.kab.terms = function KabTerms(me) {
     };
     me.prepare = function (terms, options, defaultTermsOnly=true) {
         var result = new Map();
-        for (var term in terms) {
-            var info = terms[term];
-            var words = term.split(" ");
+        if(!terms) {
+            return null;
+        }
+        for (var item of terms) {
+            var words = item.term.split(" ");
             var key = words[0].toUpperCase();
             var lookup = result[key];
-            info.term = term;
-            if(info.defaultTerm || !defaultTermsOnly) {
-                me.kab.search.setTerm(options, me.json.style, info, null, null, null, false);
+            if(item.defaultTerm || !defaultTermsOnly) {
+                me.kab.search.setTerm(options, me.json.style, item, null, null, null, false);
             }
             if (!lookup) {
                 lookup = new Map();
                 result[key] = lookup;
                 result[words[0]] = lookup;
             }
-            lookup[term] = info;
+            lookup[item.term] = item;
         }
         for (var term in result) {
             var lookup = result[term];

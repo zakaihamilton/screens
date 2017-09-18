@@ -6,6 +6,9 @@
 package.core.path = function CorePath(me) {
     me.goto = function(oldPath, newPath) {
         var path = oldPath;
+        if(!path) {
+            path = ".";
+        }
         var tokens = newPath.split("/");
         if(tokens) {
             if(newPath[0] === "/") {

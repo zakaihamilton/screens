@@ -16,7 +16,7 @@
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.text", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.html", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
@@ -27,7 +27,7 @@
                                 "ui.style.verticalAlign":"middle"
                             },
                             "ui.data.values": [
-                                ["1", "Direct Light", "black", "black", "white"],
+                                ["1", "@app.diagram.html(Ohr Pnimi)", "black", "black", "white"],
                                 ["2", "Crown", "white", "black"],
                                 ["3", "Wisdom", "#FFF3CA", "black"],
                                 ["4", "Understanding", "#C8D9F9", "black"],

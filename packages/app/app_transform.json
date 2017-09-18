@@ -142,12 +142,6 @@
                 ["Hebrew", "app.transform.language", {
                         "state": "select"
                     }
-                ],
-                ["Debug", "app.transform.language", {
-                        "state": "select",
-                        "separator": true,
-                        "visible":false
-                    }
                 ]
             ]
         ],

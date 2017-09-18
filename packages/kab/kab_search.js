@@ -55,10 +55,12 @@ package.kab.search = function KabSearch(me) {
                 }
                 searchTerm.heading = style.heading;
                 searchTerm.phase = style.phase;
+                searchTerm.tooltip = style.tooltip;
             }
             else {
                 searchTerm.heading = null;
                 searchTerm.phase = null;
+                searchTerm.tooltip = null;
             }
     }
     };

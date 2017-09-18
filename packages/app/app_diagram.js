@@ -56,6 +56,19 @@ package.app.diagram = function AppDiagram(me) {
             }, path, false);
         }
     };
+    me.style = {
+        get: function(object, value) {
+            var window = me.widget.window.window(object);
+            var termData = me.get(window, "app.diagram.termData");
+            var item = termData[value];
+            if(item) {
+                me.kab.style.process(value, item, )
+            }
+            else {
+                return value;
+            }
+        }
+    };
     me.refresh = {
         set: function(object) {
             var window = me.widget.window.window(object);
