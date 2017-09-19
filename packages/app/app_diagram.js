@@ -38,7 +38,7 @@ package.app.diagram = function AppDiagram(me) {
             me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.reload.set);
             me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.reload.set);
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.reload.set);
-            me.ui.class.useStylesheet("kab.terms");
+            me.ui.class.useStylesheet("kab.term");
         }
     };
     me.reload = {

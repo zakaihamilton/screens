@@ -63,7 +63,7 @@ package.app.transform = function AppTransform(me) {
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
-            me.ui.class.useStylesheet("kab.terms");
+            me.ui.class.useStylesheet("kab.term");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
@@ -213,7 +213,7 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (row[phase]) {
                     properties["ui.basic.elements"] = row[phase].map(function (item) {
-                        var styles = ["kab.terms.phase." + phase,"kab.terms.phase." + phase + ".outline",language];
+                        var styles = ["kab.term.phase." + phase,"kab.term.phase." + phase + ".outline",language];
                         if(!item.used) {
                             styles.push("app.transform.placeholder");
                         }
@@ -231,7 +231,7 @@ package.app.transform = function AppTransform(me) {
                         return itemProperties;
                     });
                 }
-                properties["ui.class.add"] = "kab.terms.phase." + phase;
+                properties["ui.class.add"] = "kab.term.phase." + phase;
                 list.push(properties);
             });
             data.push(list);

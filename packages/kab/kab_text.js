@@ -228,16 +228,6 @@ package.kab.text = function KabText(me) {
             callback(wordsString, me.kab.search.terms, json.data);
         }, language);
     };
-    me.toCase = function (item, string) {
-        var itemCase = "insensitive";
-        if (item.case) {
-            itemCase = item.case;
-        }
-        if (itemCase !== "sensitive") {
-            string = string.toUpperCase();
-        }
-        return string;
-    };
     me.match = function (item, source, target, wordStyle) {
         if (item && item.word) {
             wordStyle = item.word;

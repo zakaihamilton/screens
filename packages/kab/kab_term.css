@@ -1,4 +1,4 @@
-.kab-terms-heading {
+.kab-term-heading {
     position:absolute;
     bottom:3.2em;
     vertical-align:middle;
@@ -11,24 +11,24 @@
     background:white;
 }
 
-.kab-terms-heading.kab-terms-english {
+.kab-term-heading.kab-term-english {
     left:0em;
 }
 
-.kab-terms-heading.kab-terms-hebrew {
+.kab-term-heading.kab-term-hebrew {
     right:0em;
 }
 
-[kab-terms-tooltip] {
+[kab-term-tooltip] {
     position: relative;
     white-space:nowrap;
 }
 
-[kab-terms-tooltip].kab-terms-phase-none {
+[kab-term-tooltip].kab-term-phase-none {
     border-bottom:1px dashed darkgray;
 }
 
-[kab-terms-tooltip]:after {
+[kab-term-tooltip]:after {
     visibility: hidden;
     pointer-events: none;
     transition: border 0.10s ease-in;
@@ -37,7 +37,7 @@
     position: absolute;
     line-height:1;
     padding: 0px 5px;
-    content: attr(kab-terms-tooltip);
+    content: attr(kab-term-tooltip);
     text-align:center;
     white-space: nowrap;
     min-width: 100%;
@@ -47,20 +47,20 @@
     box-shadow: 5px 5px 5px grey;
 }
 
-[kab-terms-tooltip]:hover:after {
+[kab-term-tooltip]:hover:after {
     visibility: visible;
     pointer-events: auto;
     z-index: 100;
     font-weight:bold;
 }
 
-.kab-terms-phase-inline {
+.kab-term-phase-inline {
     position:relative;
     white-space: nowrap;
     border-style:hidden;
 }
 
-.kab-terms-phase-number {
+.kab-term-phase-number {
     position:absolute;
     bottom:2em;
     vertical-align:middle;
@@ -79,175 +79,175 @@
     text-align: center;
 }
 
-.kab-terms-phase-number.kab-terms-english {
+.kab-term-phase-number.kab-term-english {
     right:-0.5em;
 }
 
-.kab-terms-phase-number.kab-terms-hebrew {
+.kab-term-phase-number.kab-term-hebrew {
     left:-0.5em;
 }
 
-.kab-terms-phase-none {
+.kab-term-phase-none {
     background:white;
 }
 
-.kab-terms-phase-none:hover:after {
+.kab-term-phase-none:hover:after {
     background:white;
     border:2px solid gray;
 }
 
-.kab-terms-phase-root-outline {
+.kab-term-phase-root-outline {
     outline:1px solid gray;
 }
 
-.kab-terms-phase-root-border {
+.kab-term-phase-root-border {
     border:1px solid gray;
 }
 
-.kab-terms-phase-root-underline {
+.kab-term-phase-root-underline {
     border-bottom:1px solid gray;
 }
 
-.kab-terms-phase-root {
+.kab-term-phase-root {
     background:white;
 }
 
-.kab-terms-phase-root:hover:after {
+.kab-term-phase-root:hover:after {
     background:white;
     border:2px solid gray;
 }
 
-.kab-terms-phase-number-root {
+.kab-term-phase-number-root {
     background:white;
     border:1px solid gray;
 }
 
-.kab-terms-phase-one {
+.kab-term-phase-one {
     background:#FFF3CA;
 }
 
-.kab-terms-phase-one-outline {
+.kab-term-phase-one-outline {
     outline:1px solid orange;
 }
 
-.kab-terms-phase-one-border {
+.kab-term-phase-one-border {
     border:1px solid orange;
 }
 
-.kab-terms-phase-one-underline {
+.kab-term-phase-one-underline {
     border-bottom:1px solid orange;
 }
 
-.kab-terms-phase-one:hover:after {
+.kab-term-phase-one:hover:after {
     background:#FFF3CA;
     border:2px solid orange;
 }
 
-.kab-terms-phase-number-one {
+.kab-term-phase-number-one {
     background:#FFF3CA;
     border:1px solid orange;
 }
 
-.kab-terms-phase-two {
+.kab-term-phase-two {
     background:#C8D9F9;
 }
 
-.kab-terms-phase-two-outline {
+.kab-term-phase-two-outline {
     outline:1px solid darkblue;
 }
 
-.kab-terms-phase-two-border {
+.kab-term-phase-two-border {
     border:1px solid darkblue;
 }
 
-.kab-terms-phase-two-underline {
+.kab-term-phase-two-underline {
     border-bottom:1px solid darkblue;
 }
 
-.kab-terms-phase-two:hover:after {
+.kab-term-phase-two:hover:after {
     background:#C8D9F9;
     border:2px solid darkblue;
 }
 
-.kab-terms-phase-number-two {
+.kab-term-phase-number-two {
     background:#C8D9F9;
     border:1px solid darkblue;
 }
 
-.kab-terms-phase-three {
+.kab-term-phase-three {
     background:#F5CCCB;
 }
 
-.kab-terms-phase-three-outline {
+.kab-term-phase-three-outline {
     outline:1px solid coral;
 }
 
-.kab-terms-phase-three-border {
+.kab-term-phase-three-border {
     border:1px solid coral;
 }
 
-.kab-terms-phase-three-underline {
+.kab-term-phase-three-underline {
     border-bottom:1px solid coral;
 }
 
-.kab-terms-phase-three:hover:after {
+.kab-term-phase-three:hover:after {
     background:#F5CCCB;
     border:2px solid coral;
 }
 
-.kab-terms-phase-number-three {
+.kab-term-phase-number-three {
     background:#F5CCCB;
     border:1px solid coral;
 }
 
-.kab-terms-phase-four {
+.kab-term-phase-four {
     background:#D9EAD2;
 }
 
-.kab-terms-phase-four-outline {
+.kab-term-phase-four-outline {
     outline:1px solid green;
 }
 
-.kab-terms-phase-four-border {
+.kab-term-phase-four-border {
     border:1px solid green;
 }
 
-.kab-terms-phase-four-underline {
+.kab-term-phase-four-underline {
     border-bottom:1px solid green;
 }
 
-.kab-terms-phase-four:hover:after {
+.kab-term-phase-four:hover:after {
     background:#D9EAD2;
     border:2px solid green;
 }
 
-.kab-terms-phase-number-four {
+.kab-term-phase-number-four {
     background:#D9EAD2;
     border:1px solid green;
 }
 
-.kab-terms-phase-collective {
+.kab-term-phase-collective {
     background:Plum;
 }
 
-.kab-terms-phase-collective-outline {
+.kab-term-phase-collective-outline {
     outline:1px solid MediumPurple;
 }
 
-.kab-terms-phase-collective-border {
+.kab-term-phase-collective-border {
     border:1px solid MediumPurple;
 }
 
-.kab-terms-phase-collective:hover:after {
+.kab-term-phase-collective:hover:after {
     background:Plum;
     border:2px solid MediumPurple;
 }
 
-.kab-terms-phase-number-collective:after {
+.kab-term-phase-number-collective:after {
     display:none;
 }
 
-.kab-terms-polaroid-left {
+.kab-term-polaroid-left {
     float:left;
     background:white;
     margin:10px 10px;
@@ -259,11 +259,11 @@
     padding-bottom:5px;
 }
 
-.kab-terms-polaroid-left:hover {
+.kab-term-polaroid-left:hover {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }
 
-.kab-terms-polaroid-right {
+.kab-term-polaroid-right {
     float:right;
     background:white;
     margin:10px 10px;
@@ -275,11 +275,11 @@
     padding-bottom:5px;
 }
 
-.kab-terms-polaroid-right:hover {
+.kab-term-polaroid-right:hover {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
 }
 
-.kab-terms-description-box {
+.kab-term-description-box {
     position: fixed;
     bottom: -2px;
     left:10%;
@@ -294,11 +294,11 @@
     overflow-y: hidden;
 }
 
-.kab-terms-description-box.show {
+.kab-term-description-box.show {
     max-height:5em;
 }
 
-.kab-terms-description-type {
+.kab-term-description-type {
     position:absolute;
     top:0px;
     height:1.5em;
@@ -311,15 +311,15 @@
     text-transform:uppercase;
 }
 
-.kab-terms-description-type.kab-terms-english {
+.kab-term-description-type.kab-term-english {
     right:0px;
 }
 
-.kab-terms-description-type.kab-terms-hebrew {
+.kab-term-description-type.kab-term-hebrew {
     left:0px;
 }
 
-.kab-terms-short {
+.kab-term-short {
     position:absolute;
     left:0px;
     top:0px;
@@ -334,15 +334,15 @@
     text-overflow: ellipsis;
 }
 
-.kab-terms-short.kab-terms-english {
+.kab-term-short.kab-term-english {
     text-align: left;
 }
 
-.kab-terms-short.kab-terms-hebrew {
+.kab-term-short.kab-term-hebrew {
     text-align: right;
 }
 
-.kab-terms-long {
+.kab-term-long {
     padding-left:1.5em;
     padding-right:1.5em;
     padding-bottom:0.05em;
