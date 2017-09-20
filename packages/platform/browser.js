@@ -20,7 +20,8 @@ package.include({
         "performance",
         "util",
         "file",
-        "path"
+        "path",
+        "job"
     ],
     "storage": [
         "cache"

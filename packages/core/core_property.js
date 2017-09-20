@@ -47,8 +47,22 @@ package.core.property = function CoreProperty(me) {
         }
         if(object && name && (typeof name !== "string" || !name.includes("!"))) {
             var info = me.split(object, name, value);
-            if(typeof info.value === "string" && info.value.startsWith("@")) {
-                info.value = me.get(info.object, info.value.substring(1));
+            if(typeof info.value === "string") {
+                if(info.value.startsWith("@")) {
+                    info.value = me.get(info.object, info.value.substring(1));
+                }
+            }
+            if(typeof info.value === "string") {
+                if(info.value.startsWith("^")) {
+                    var subInfo = me.split(info.object, info.value, null);
+                    var job = me.core.job.open();
+                    var paramInfo = {job:job,value:subInfo.value};
+                    me.get(subInfo.object, subInfo.name.substring(1), paramInfo);
+                    me.core.job.close(job, function() {
+                        me.set(info.object, info.name, paramInfo.value);
+                    });
+                    return;
+                }
             }
             if(typeof info.name === "function") {
                 result = info.name(info.object, info.value);

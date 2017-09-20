@@ -54,6 +54,53 @@
                     }
                 ]
             ]
+        ],
+        ["Font", [
+                ["12px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["14px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["16px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["18px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["20px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["22px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["24px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["26px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["28px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["30px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ],
+                ["32px", "app.diagram.fontSize", {
+                        "state": "select"
+                    }
+                ]
+            ]
         ]
     ],
     "ui.basic.elements": [

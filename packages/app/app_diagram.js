@@ -10,11 +10,11 @@ package.app.diagram = function AppDiagram(me) {
         json["app.diagram.path"] = path;
         var window = me.ui.element.create(json, "desktop", "self");
         me.notify(window, "app.viewer.reload");
+        window.language = "english";
     };
     me.init = function () {
         me.path = me.core.object.property("app.viewer.path");
         me.diagramData = me.core.object.property("app.viewer.diagramData");
-        me.termData = me.core.object.property("app.viewer.termData");
     };
     me.initOptions = {
         set: function (object) {
@@ -26,7 +26,9 @@ package.app.diagram = function AppDiagram(me) {
                 prioritizeExplanation:false,
                 addStyles: true,
                 keepSource: false,
-                phaseNumbers: true
+                phaseNumbers: true,
+                headings: true,
+                fontSize: "22px"
             });
             me.viewType = me.ui.options.choiceSet(me, "viewType", function (object, options, key, value) {
                 var window = me.widget.window.window(object);
@@ -38,6 +40,12 @@ package.app.diagram = function AppDiagram(me) {
             me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.reload.set);
             me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.reload.set);
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.reload.set);
+            me.headings = me.ui.options.toggleSet(me, "headings", me.reload.set);
+            me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
+                var window = me.widget.window.mainWindow(object);
+                me.set(window.var.viewer, "ui.style.fontSize", value);
+                me.notify(window, "reload");
+            });
             me.ui.class.useStylesheet("kab.term");
         }
     };
@@ -47,24 +55,19 @@ package.app.diagram = function AppDiagram(me) {
             var path = me.get(window, "app.diagram.path");
             me.core.json.loadFile(function(diagramJson) {
                 me.set(window, "app.diagram.diagramData", diagramJson);
-                me.kab.text.retrieveTerms(function(terms) {
-                    me.set(window, "app.diagram.termData", terms);
-                    me.notify(window, "app.diagram.refresh");
-                }, "english", window.options);
+                me.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+                me.notify(window, "app.diagram.refresh");
             }, path, false);
         }
     };
-    me.style = {
-        get: function(object, value) {
+    me.term = {
+        get: function(object, info) {
+            var task = me.core.job.begin(info.job);
             var window = me.widget.window.window(object);
-            var termData = me.get(window, "app.diagram.termData");
-            var item = termData[value];
-            if(item) {
-                me.kab.style.process(value, item, )
-            }
-            else {
-                return value;
-            }
+            me.kab.text.parse(function(value) {
+                info.value = value;
+                me.core.job.end(task);
+            }, window.language, info.value, window.options);
         }
     };
     me.refresh = {
@@ -86,9 +89,6 @@ package.app.diagram = function AppDiagram(me) {
     me.viewAsRelationships = {
         set: function(object) {
             var window = me.widget.window.window(object);
-            var diagramData = me.get(window, "app.diagram.diagramData");
-            var termData = me.get(window, "app.diagram.termData");
-            me.set(window.var.viewer, "ui.basic.text", JSON.stringify(termData, null, 4));
         }
     };
     me.viewAsLayers = {
