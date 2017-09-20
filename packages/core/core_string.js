@@ -54,4 +54,15 @@ package.core.string = function CoreString(me) {
     me.escape = function(string) {
         return string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     };
+    me.match = function (source, target, wordStyle) {
+        if (wordStyle === "whole") {
+            return source === target;
+        } else if (wordStyle === "prefix") {
+            return source.beginsWith(target);
+        } else if (wordStyle === "suffix") {
+            return source.endsWith(target);
+        } else {
+            return source.includes(target);
+        }
+    };
 };

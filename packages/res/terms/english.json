@@ -16,6 +16,7 @@
         }
     },
     "data": {
+        "lastExpansion":" and ",
         "filterPlaceholder": "Search...",
         "glossaryTitle": "Glossary",
         "termTableTitle": "Table of Phases",
