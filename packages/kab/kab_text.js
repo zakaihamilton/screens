@@ -46,120 +46,111 @@ package.kab.text = function KabText(me) {
         if (!wordStyle) {
             wordStyle = "whole";
         }
-        if (session.terms) {
-            wordsString = me.core.string.parseWords(function (words) {
-                var wasPrefix = false;
-                for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
-                    var word = words[wordIndex];
-                    var isPrefix = prefix ? word.toLowerCase() in prefix : null;
-                    if (isPrefix) {
-                        wasPrefix = true;
-                        continue;
+        wordsString = me.core.string.parseWords(function (words) {
+            var wasPrefix = false;
+            for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
+                var word = words[wordIndex];
+                var isPrefix = prefix ? word.toLowerCase() in prefix : null;
+                if (isPrefix) {
+                    wasPrefix = true;
+                    continue;
+                }
+                if (!word) {
+                    continue;
+                }
+                word = word.toUpperCase();
+                var termLookup = session.terms[word];
+                if (!termLookup) {
+                    if (word.length > 2) {
+                        term = session.terms["*"].find(function (term) {
+                            return me.core.string.match(word, term, wordStyle);
+                        });
+                        if (term) {
+                            termLookup = session.terms[term];
+                        }
                     }
-                    if (!word) {
-                        continue;
-                    }
-                    word = word.toUpperCase();
-                    var termLookup = session.terms[word];
                     if (!termLookup) {
-                        if (word.length > 2) {
-                            term = session.terms["*"].find(function (term) {
-                                return me.core.string.match(word, term, wordStyle);
-                            });
-                            if (term) {
-                                termLookup = session.terms[term];
-                            }
-                        }
-                        if (!termLookup) {
-                            wasPrefix = false;
-                            continue;
-                        }
-                    }
-                    if (wasPrefix) {
-                        wordIndex--;
                         wasPrefix = false;
-                    }
-                    var subTermNames = termLookup["*"];
-                    if (!subTermNames) {
                         continue;
                     }
-                    for (var subTermIndex = 0; subTermIndex < subTermNames.length; subTermIndex++) {
-                        var term = subTermNames[subTermIndex];
-                        var item = termLookup[term];
-                        var prefixWord = null;
-                        var suffixWord = null;
-                        var numTermWords = item.numWords;
-                        if (!item.numWords) {
-                            numTermWords = item.numWords = term.split(" ").length;
+                }
+                if (wasPrefix) {
+                    wordIndex--;
+                    wasPrefix = false;
+                }
+                var subTermNames = termLookup["*"];
+                if (!subTermNames) {
+                    continue;
+                }
+                for (var subTermIndex = 0; subTermIndex < subTermNames.length; subTermIndex++) {
+                    var term = subTermNames[subTermIndex];
+                    var item = termLookup[term];
+                    var prefixWord = null, suffixWord = null;
+                    var numTermWords = item.numWords ? item.numWords : term.split(" ").length;
+                    if (item.suffix) {
+                        numTermWords++;
+                    }
+                    var collectedWords = "";
+                    for (var termWordIndex = 0; termWordIndex < numTermWords; termWordIndex++) {
+                        if (wordIndex + termWordIndex >= words.length) {
+                            break;
                         }
-                        if (item.suffix) {
-                            numTermWords++;
-                        }
-                        var collectedWords = "";
-                        for (var termWordIndex = 0; termWordIndex < numTermWords; termWordIndex++) {
-                            if (wordIndex + termWordIndex >= words.length) {
-                                break;
-                            }
-                            var word = words[wordIndex + termWordIndex];
-                            var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
-                            var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
-                            var ignoreTerm = ignore ? ignore.includes(word) : false;
-                            if (prefixTerm || ignoreTerm || suffixTerm) {
-                                if (prefixTerm || suffixTerm || collectedWords) {
-                                    if (prefixTerm) {
-                                        prefixWord = word;
-                                    }
-                                    if (suffixTerm) {
-                                        suffixWord = word;
-                                    }
-                                    numTermWords++;
-                                    continue;
+                        var word = words[wordIndex + termWordIndex];
+                        var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
+                        var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
+                        var ignoreTerm = ignore ? ignore.includes(word) : false;
+                        if (prefixTerm || ignoreTerm || suffixTerm) {
+                            if (prefixTerm || suffixTerm || collectedWords) {
+                                if (prefixTerm) {
+                                    prefixWord = word;
                                 }
-                            }
-                            if (collectedWords) {
-                                collectedWords += " " + word;
-                            } else {
-                                collectedWords = word;
-                            }
-                        }
-                        var span = numTermWords;
-                        var source = collectedWords;
-                        var target = term;
-                        var upperCase = false;
-                        if (item && item.word) {
-                            wordStyle = item.word;
-                        }
-                        if (!me.core.string.match(source, target, wordStyle)) {
-                            if (!item.case || item.case !== "sensitive") {
-                                if (!me.core.string.match(source, target.toUpperCase(), wordStyle)) {
-                                    continue;
-                                } else {
-                                    upperCase = true;
+                                if (suffixTerm) {
+                                    suffixWord = word;
                                 }
-                            } else {
+                                numTermWords++;
                                 continue;
                             }
                         }
-                        var instance = {
-                            item: item,
-                            session: session,
-                            depth: depth,
-                            source: source,
-                            target: target,
-                            upperCase: upperCase,
-                            prefixWord: prefixWord,
-                            suffixWord: suffixWord,
-                            words: words,
-                            wordIndex: wordIndex,
-                            span: span
-                        };
-                        me.handleInstance(session, instance);
-                        wordIndex = instance.wordIndex;
-                        break;
+                        if (collectedWords) {
+                            collectedWords += " " + word;
+                        } else {
+                            collectedWords = word;
+                        }
                     }
+                    var upperCase = false;
+                    if (item && item.word) {
+                        wordStyle = item.word;
+                    }
+                    if (!me.core.string.match(collectedWords, term, wordStyle)) {
+                        if (!item.case || item.case !== "sensitive") {
+                            if (!me.core.string.match(collectedWords, term.toUpperCase(), wordStyle)) {
+                                continue;
+                            } else {
+                                upperCase = true;
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+                    var instance = {
+                        item: item,
+                        session: session,
+                        depth: depth,
+                        source: collectedWords,
+                        target: term,
+                        upperCase: upperCase,
+                        prefixWord: prefixWord,
+                        suffixWord: suffixWord,
+                        words: words,
+                        wordIndex: wordIndex,
+                        span: numTermWords
+                    };
+                    me.handleInstance(session, instance);
+                    wordIndex = instance.wordIndex;
+                    break;
                 }
-            }, wordsString);
-        }
+            }
+        }, wordsString);
         return wordsString;
     };
     me.parse = function (callback, language, wordsString, options) {
@@ -171,7 +162,9 @@ package.kab.text = function KabText(me) {
             var session = {language: language, text: wordsString, options: options, terms: terms, json: json};
             wordsString = me.splitWords(session, wordsString);
             session.text = wordsString;
-            wordsString = me.parseSingle(session, wordsString, 0);
+            if (session.terms) {
+                wordsString = me.parseSingle(session, wordsString, 0);
+            }
             wordsString = me.send("kab.format.process", wordsString, json.post);
             callback(wordsString, me.kab.search.terms, json.data);
         }, language);
