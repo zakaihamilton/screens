@@ -177,6 +177,7 @@ package.ui.layout = function UILayout(me) {
                 }
                 if(widget.tagName && widget.tagName.toLowerCase() === "br") {
                     newPage = true;
+                    previousWidget = null;
                 }
                 else if (!(widget.innerHTML || widget.firstChild)) {
                     pageContent.removeChild(widget);

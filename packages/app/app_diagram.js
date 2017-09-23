@@ -62,12 +62,21 @@ package.app.diagram = function AppDiagram(me) {
     };
     me.term = {
         get: function(object, info) {
-            var task = me.core.job.begin(info.job);
+            if(object && info) {
+                var task = me.core.job.begin(info.job);
+                var window = me.widget.window.window(object);
+                me.kab.text.parse(function(value) {
+                    info.value = value;
+                    me.core.job.end(task);
+                }, window.language, info.value, window.options);
+            }
+        },
+        set: function(object, text) {
             var window = me.widget.window.window(object);
             me.kab.text.parse(function(value) {
-                info.value = value;
-                me.core.job.end(task);
-            }, window.language, info.value, window.options);
+                me.set(object, "ui.basic.html", value);
+                me.notify(window, "update");
+            }, window.language, text, window.options);
         }
     };
     me.refresh = {
