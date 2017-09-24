@@ -157,7 +157,9 @@ package.kab.text = function KabText(me) {
         me.kab.data.load(function (json) {
             me.send("kab.search.clear");
             wordsString = me.send("kab.format.spelling", wordsString, json.spelling);
-            wordsString = me.send("kab.format.process", wordsString, json.pre);
+            if(wordsString.includes("\n")) {
+                wordsString = me.send("kab.format.process", wordsString, json.pre);
+            }
             var terms = me.send("kab.text.prepare", json, json.term, options);
             var session = {language: language, text: wordsString, options: options, terms: terms, json: json};
             wordsString = me.splitWords(session, wordsString);

@@ -3,37 +3,36 @@
         {
             "ui.style.display":"grid",
             "ui.style.position":"absolute",
+            "ui.style.padding":"15px",
             "ui.style.left":"0px",
             "ui.style.top":"0px",
             "ui.style.right":"0px",
             "ui.style.bottom":"0px",
             "ui.style.gridAutoColumns": "50%",
-            "ui.style.gridAutoRows": "20%",
-            "ui.style.padding": "5px",
-            "ui.style.margin": "5px",
+            "ui.style.gridAutoRows": "auto",
             "ui.style.gridGap": "5px 5px",
+            "ui.style.alignItems":"stretch",
             "ui.style.lineHeight":"2.5",
             "ui.basic.elements": [
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "app.diagram.term", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                            "ui.data.keyList": ["ui.style.gridRow", "app.diagram.term", "ui.style.backgroundColor"],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
                                 "ui.style.gridColumn": "1",
-                                "ui.style.padding": "5px",
-                                "ui.style.margin": "5px",
+                                "ui.style.paddingTop": "5px",
                                 "ui.style.textAlign":"center",
                                 "ui.style.verticalAlign":"middle"
                             },
                             "ui.data.values": [
-                                ["1", "Ohr Pnimi", "white", "black"],
-                                ["2", "Keter", "white", "black"],
-                                ["3", "Hochma", "#FFF3CA", "black"],
-                                ["4", "Bina", "#C8D9F9", "black"],
-                                ["5", "Tifferet", "#F5CCCB", "black"],
-                                ["6", "Malchut", "#D9EAD2", "black"]
+                                ["1", "Ohr Pnimi", "white"],
+                                ["2", "Keter", "white"],
+                                ["3", "Hochma", "#FFF3CA"],
+                                ["4", "Bina", "#C8D9F9"],
+                                ["5", "Tifferet", "#F5CCCB"],
+                                ["6", "Malchut", "#D9EAD2"]
                             ]
                         }
                     }
@@ -41,22 +40,22 @@
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.html", "ui.style.backgroundColor", "ui.style.borderColor", "ui.style.color"],
+                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.html", "ui.style.backgroundColor"],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
                                 "ui.style.gridColumn": "2",
-                                "ui.style.padding": "5px",
-                                "ui.style.margin": "5px",
-                                "ui.style.textAlign":"center"
+                                "ui.style.paddingTop": "5px",
+                                "ui.style.textAlign":"center",
+                                "ui.style.verticalAlign":"middle"
                             },
                             "ui.data.values": [
-                                ["1", "^app.diagram.term(Ohr Makif)", "white", "black"],
-                                ["2", "^app.diagram.term(Malchut)", "#D9EAD2", "black"],
-                                ["3", "^app.diagram.term(Tifferet)", "#F5CCCB", "black"],
-                                ["4", "^app.diagram.term(Bina)", "#C8D9F9", "black"],
-                                ["5", "^app.diagram.term(Hochma)", "#FFF3CA", "black"],
-                                ["6", "^app.diagram.term(Keter)", "white", "black"]
+                                ["1", "^app.diagram.term(Ohr Makif)", "white"],
+                                ["2", "^app.diagram.term(Malchut)", "#D9EAD2"],
+                                ["3", "^app.diagram.term(Tifferet)", "#F5CCCB"],
+                                ["4", "^app.diagram.term(Bina)", "#C8D9F9"],
+                                ["5", "^app.diagram.term(Hochma)", "#FFF3CA"],
+                                ["6", "^app.diagram.term(Keter)", "white"]
                             ]
                         }
                     }
