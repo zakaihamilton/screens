@@ -9,7 +9,13 @@ package.app.diagram = function AppDiagram(me) {
         var json = __json__;
         json["app.diagram.path"] = path;
         var window = me.ui.element.create(json, "desktop", "self");
-        me.notify(window, "app.viewer.reload");
+        if(args.length > 1) {
+            var options = args[1];
+            window.options = options;
+            window.options.diagrams = false;
+            window.options.viewType = "Layers";
+            window.optionsLoaded = true;
+        }
         window.language = "english";
     };
     me.init = function () {
@@ -19,6 +25,10 @@ package.app.diagram = function AppDiagram(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.window(object);
+            if(window.optionsLoaded) {
+                return;
+            }
+            window.optionsLoaded = true;
             me.ui.options.load(me, window, {
                 viewType: "Text",
                 doTranslation: true,

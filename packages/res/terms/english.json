@@ -4728,5 +4728,11 @@
                 "short": "First Spiritual World After Crossing the Barrier"
             }
         }
-    }
+    },
+    "diagrams":[
+        {
+            "terms":["Ohr Yashar","Ohr Hozer"],
+            "diagram":"worlds"
+        }
+    ]
 }

@@ -31,7 +31,8 @@ package.app.transform = function AppTransform(me) {
                 language: "Auto",
                 fontSize: "22px",
                 scrollPos: 0,
-                phaseNumbers: true
+                phaseNumbers: true,
+                diagrams:true
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -62,6 +63,7 @@ package.app.transform = function AppTransform(me) {
             me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
+            me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet("kab.term");
         }

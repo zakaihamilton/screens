@@ -8,7 +8,7 @@
             "ui.style.top":"0px",
             "ui.style.right":"0px",
             "ui.style.bottom":"0px",
-            "ui.style.gridAutoColumns": "50%",
+            "ui.style.gridAutoColumns": "auto",
             "ui.style.gridAutoRows": "auto",
             "ui.style.gridGap": "5px 5px",
             "ui.style.alignItems":"stretch",
@@ -21,13 +21,14 @@
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
+                                "ui.style.margin":"0px",
                                 "ui.style.gridColumn": "1",
                                 "ui.style.paddingTop": "5px",
                                 "ui.style.textAlign":"center",
                                 "ui.style.verticalAlign":"middle"
                             },
                             "ui.data.values": [
-                                ["1", "Ohr Pnimi", "white"],
+                                ["1", "Ohr Yashar", "white"],
                                 ["2", "Keter", "white"],
                                 ["3", "Hochma", "#FFF3CA"],
                                 ["4", "Bina", "#C8D9F9"],
@@ -40,22 +41,23 @@
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "ui.basic.html", "ui.style.backgroundColor"],
+                            "ui.data.keyList": ["ui.style.gridRow", "app.diagram.term", "ui.style.backgroundColor"],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
+                                "ui.style.margin":"0px",
                                 "ui.style.gridColumn": "2",
                                 "ui.style.paddingTop": "5px",
                                 "ui.style.textAlign":"center",
                                 "ui.style.verticalAlign":"middle"
                             },
                             "ui.data.values": [
-                                ["1", "^app.diagram.term(Ohr Makif)", "white"],
-                                ["2", "^app.diagram.term(Malchut)", "#D9EAD2"],
-                                ["3", "^app.diagram.term(Tifferet)", "#F5CCCB"],
-                                ["4", "^app.diagram.term(Bina)", "#C8D9F9"],
-                                ["5", "^app.diagram.term(Hochma)", "#FFF3CA"],
-                                ["6", "^app.diagram.term(Keter)", "white"]
+                                ["1", "Ohr Hozer", "white"],
+                                ["2", "Malchut", "#D9EAD2"],
+                                ["3", "Tifferet", "#F5CCCB"],
+                                ["4", "Bina", "#C8D9F9"],
+                                ["5", "Hochma", "#FFF3CA"],
+                                ["6", "Keter", "white"]
                             ]
                         }
                     }

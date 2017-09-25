@@ -168,6 +168,9 @@ package.kab.text = function KabText(me) {
                 wordsString = me.parseSingle(session, wordsString, 0);
             }
             wordsString = me.send("kab.format.process", wordsString, json.post);
+            if(options.diagrams) {
+                wordsString = me.send("kab.diagram.process", wordsString, json, options);
+            }
             callback(wordsString, me.kab.search.terms, json.data);
         }, language);
     };
