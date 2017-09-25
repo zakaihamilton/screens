@@ -20,10 +20,23 @@
             "replace": ""
         },
         {
+            "find": "/([.?!:;,]) \n",
+            "replace": "$1\n"
+        },
+        {
+            "match": "/[^.?!:;,\\\"'”]$",
+            "prefix": "<h4 style=\"text-align:center\">",
+            "suffix": "</h4>"
+        },
+        {
             "prefix": "<p>",
             "find": "\n",
             "replace": "</p><p>",
             "suffix": "<br/><br/>"
+        },
+        {
+            "find": "/<p><h4 style=\"text-align:center\"><br><\\/h4><\\/p>",
+            "replace": "<br>"
         }
     ],
     "phaseNumber": {
@@ -34,7 +47,7 @@
         "four": "ד"
     },
     "data": {
-        "lastExpansion":"ו",
+        "lastExpansion":" ו",
         "filterPlaceholder": "חיפוש...",
         "glossaryTitle": "מילון מונחים",
         "termTableTitle": "טבלת בחינות",
@@ -774,12 +787,6 @@
                 "ג' תחתונות"
             ],
             "term": "ג \" ת"
-        },
-        {
-            "expansion": [
-                "דף"
-            ],
-            "term": "ד'"
         },
         {
             "expansion": [
@@ -4384,6 +4391,14 @@
                 "phase": "four"
             },
             "term": "נוקבא"
+        },
+        {
+            "term":"עש \" נ",
+            "expansion":["עולם","שנה","נפש"]
+        },
+        {
+            "term":"כמ \" ש",
+            "expansion":["כמו שכתוב"]
         }
     ]
 }
