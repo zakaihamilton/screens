@@ -4,27 +4,29 @@
  */
 
 package.kab.diagram = function KabDiagram(me) {
-    me.process = function(wordsString, json, options) {
-        var diagrams = json.diagrams;
-        if(!diagrams) {
-            return wordsString;
+    me.matchingDiagram = function(session, term) {
+        var matchingDiagram = null;
+        if(!session.json || !session.options.diagrams || !session.json.diagrams) {
+            return null;
         }
-        for(let diagram of diagrams) {
+        for(let diagram of session.json.diagrams) {
             var path = "/packages/res/diagrams/" + diagram.diagram + ".json";
-            if(!diagram.terms) {
+            if(diagram.term !== term) {
                 continue;
             }
-            var termsFound = 0;
-            for(let term of diagram.terms) {
-                if(wordsString.includes(term)) {
-                    termsFound++;
+            if(diagram.depends) {
+                var dependenciesFound = 0;
+                for(let dependency of diagram.depends) {
+                    if(session.text.includes(dependency)) {
+                        dependenciesFound++;
+                    }
+                }
+                if(dependenciesFound !== diagram.depends.length) {
+                    continue;
                 }
             }
-            if(termsFound !== diagram.terms.length) {
-                continue;
-            }
-            me.core.app.launch(null, "diagram", [path,options]);
+            matchingDiagram = path;
         }
-        return wordsString;
+        return matchingDiagram;
     };
 };

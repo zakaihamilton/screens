@@ -4731,7 +4731,8 @@
     },
     "diagrams":[
         {
-            "terms":["Ohr Yashar","Ohr Hozer"],
+            "depends":["Ohr Yashar","Ohr Hozer"],
+            "term":"Ohr Hozer",
             "diagram":"worlds"
         }
     ]

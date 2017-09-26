@@ -4,12 +4,13 @@
  */
 
 package.kab.style = function KabStyle(me) {
-    me.process = function (term, styles, text, options, expansion, json, language) {
+    me.process = function (session, instance, replacement, expansion) {
+        var styles = instance.item.style;
         var html = "";
         var phase = null, heading = null, tooltip = null, descriptions = {};
         if (typeof styles === "string") {
-            if (json.style) {
-                styles = json.style[styles];
+            if (session.json.style) {
+                styles = session.json.style[styles];
             } else {
                 styles = null;
             }
@@ -19,23 +20,23 @@ package.kab.style = function KabStyle(me) {
         }
         if (styles && styles.phase) {
             phase = styles.phase;
-            if (styles && styles.heading && options.headings) {
+            if (styles && styles.heading && session.options.headings) {
                 heading = styles.heading;
             }
-            if (!options.keepSource && !expansion && options.doTranslation && term !== text) {
-                tooltip = term;
+            if (!session.options.keepSource && !expansion && session.options.doTranslation && instance.target !== replacement) {
+                tooltip = instance.target;
             }
-        } else if (!options.keepSource && !expansion) {
+        } else if (!session.options.keepSource && !expansion) {
             phase = "none";
-            if (term !== text) {
-                tooltip = term;
+            if (instance.target !== replacement) {
+                tooltip = instance.target;
             }
-            if (styles && styles.heading && options.headings) {
+            if (styles && styles.heading && session.options.headings) {
                 heading = styles.heading;
             }
         }
         if(styles) {
-            if(options.prioritizeExplanation) {
+            if(session.options.prioritizeExplanation) {
                 if(styles.explanation) {
                     descriptions["explanation"] = styles.explanation;
                 }
@@ -65,21 +66,25 @@ package.kab.style = function KabStyle(me) {
             if (tooltip) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
-            if(options.hoverCallback) {
-                html += " onmouseover=\"" + options.hoverCallback + "(this,true)\" onmouseout=\"" + options.hoverCallback + "(this,false)\"";
+            var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
+            if(diagram) {
+                html += "kab-term-diagram=\"" + diagram + "\"";
             }
-            if(options.toggleCallback) {
-                html += " onclick=\"" + options.toggleCallback + "(this)\"";
+            if(session.options.hoverCallback) {
+                html += " onmouseover=\"" + session.options.hoverCallback + "(this,true)\" onmouseout=\"" + session.options.hoverCallback + "(this,false)\"";
+            }
+            if(session.options.toggleCallback) {
+                html += " onclick=\"" + session.options.toggleCallback + "(this)\"";
             }
             html += ">";
-            if (phase !== "none" && options.phaseNumbers && json.phaseNumber) {
-                var phaseNumber = json.phaseNumber[phase];
+            if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
+                var phaseNumber = session.json.phaseNumber[phase];
                 if (phaseNumber) {
-                    html += "<span class=\"kab-term-phase-number kab-term-phase-number-" + phase + " kab-term-" + language + "\">" + phaseNumber + "</span>";
+                    html += "<span class=\"kab-term-phase-number kab-term-phase-number-" + phase + " kab-term-" + session.language + "\">" + phaseNumber + "</span>";
                 }
             }
             if (heading) {
-                html += "<span class=\"kab-term-heading kab-term-" + language + "\">" + heading + "</span>";
+                html += "<span class=\"kab-term-heading kab-term-" + session.language + "\">" + heading + "</span>";
             }
             if (numDescriptions) {
                 if (phase === "none") {
@@ -92,8 +97,8 @@ package.kab.style = function KabStyle(me) {
                     if (!short) {
                         short = "";
                     }
-                    html += "<span class=\"kab-term-short kab-term-" + language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + text + ":</b> " + short + "</span>";
-                    html += "<span class=\"kab-term-description-type kab-term-" + language + "\">" + descriptionType + "</span>";
+                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + replacement + ":</b> " + short + "</span>";
+                    html += "<span class=\"kab-term-description-type kab-term-" + session.language + "\">" + descriptionType + "</span>";
                     var long = description.long;
                     if (long) {
                         html += "<span class=\"kab-term-long\">" + long + "</span>";
@@ -102,7 +107,7 @@ package.kab.style = function KabStyle(me) {
                 }
             }
         }
-        html += text;
+        html += replacement;
         if (phase) {
             html += "</span>";
         }

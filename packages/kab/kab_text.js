@@ -168,9 +168,6 @@ package.kab.text = function KabText(me) {
                 wordsString = me.parseSingle(session, wordsString, 0);
             }
             wordsString = me.send("kab.format.process", wordsString, json.post);
-            if(options.diagrams) {
-                wordsString = me.send("kab.diagram.process", wordsString, json, options);
-            }
             callback(wordsString, me.kab.search.terms, json.data);
         }, language);
     };
@@ -287,7 +284,7 @@ package.kab.text = function KabText(me) {
         var text = replacement;
         var replacementWithStyles = replacement;
         if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
-            replacementWithStyles = me.kab.style.process(instance.target, instance.item.style, replacement, session.options, expansion, session.json, session.language);
+            replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
         instance.words.splice(instance.wordIndex, 0, replacementWithStyles);
         if (!instance.item.includePrefix) {
