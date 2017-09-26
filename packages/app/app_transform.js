@@ -256,6 +256,7 @@ package.app.transform = function AppTransform(me) {
                 }
                 me.set(window.var.footer, "ui.style.display", "block");
                 window.options.hoverCallback = "package.app.transform.hoverDescription";
+                window.options.diagramCallback = "package.app.transform.loadDiagram";
                 window.options.toggleCallback = "package.app.transform.cycleDescription";
                 me.kab.text.parse(function (text, terms, data) {
                     if(data) {
@@ -395,6 +396,12 @@ package.app.transform = function AppTransform(me) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
             me.set(descriptionBox, "ui.class.remove", "show");
         });
+    };
+    me.loadDiagram = {
+        set: function(object, path) {
+            var window = me.widget.window.mainWindow(object);
+            me.core.app.launch(null, "diagram", [path,window.options,object]);
+        }
     };
     me.hoverDescription = function(object, state) {
         var window = me.widget.window.mainWindow(object);

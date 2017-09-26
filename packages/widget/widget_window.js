@@ -18,6 +18,7 @@ package.widget.window = function WidgetWindow(me) {
     me.default = __json__;
     me.init = function () {
         me.popup = me.ui.property.themedPropertySet("popup");
+        me.embed = me.ui.property.themedPropertySet("embed");
         me.temp = me.ui.property.themedPropertySet("temp");
         me.static = me.ui.property.themedPropertySet("static");
         me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {

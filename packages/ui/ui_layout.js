@@ -172,6 +172,8 @@ package.ui.layout = function UILayout(me) {
                     break;
                 }
                 var newPage = false;
+                me.cleanupWidget(widget);
+                me.activateOnLoad(widget, widget);
                 if (pageContent.scrollHeight > pageContent.clientHeight) {
                     newPage = true;
                 }
@@ -182,6 +184,7 @@ package.ui.layout = function UILayout(me) {
                 else if (!(widget.innerHTML || widget.firstChild)) {
                     pageContent.removeChild(widget);
                     widget = null;
+                    newPage = false;
                 }
                 if (newPage) {
                     if (widget) {
@@ -387,6 +390,29 @@ package.ui.layout = function UILayout(me) {
                     }
                     child.inView = pageInView;
                 }
+            }
+            child = child.nextSibling;
+        }
+    };
+    me.activateOnLoad = function(parent, widget) {
+        var child = widget.firstChild;
+        while(child) {
+            me.activateOnLoad(parent, child);
+            child = child.nextSibling;
+        }
+        if(widget && widget.getAttribute) {
+            var onload = widget.getAttribute("onload");
+            if(onload) {
+                me.set(parent, onload);
+            }
+        }
+    };
+    me.cleanupWidget = function(widget) {
+        var child = widget.firstChild;
+        while(child) {
+            if(child.tagName && child.tagName.toLowerCase() === "div") {
+                widget.removeChild(child);
+                child = widget.firstChild;
             }
             child = child.nextSibling;
         }

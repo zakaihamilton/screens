@@ -27,6 +27,18 @@
     display:none;
 }
 
+.glow-window-label.embed {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.glow-window-label.embed.focus {
+    background-color: white;
+    color:black;
+    border:none;
+    box-shadow: none;
+    margin-top:0px;
+}
+
 .glow-window-border {
     border:Solid 1px #0f2777;
     background:white;
@@ -54,6 +66,25 @@
 
 .glow-window-border.concealed {
     visibility:hidden;
+}
+
+.glow-window-border.embed {
+    position:relative;
+    float:right;
+    margin-top:10px;
+    margin-left:10px;
+    border-radius:5px 5px 0px 0px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.5);
+}
+
+.glow-window-border.embed:hover {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-window-border.embed::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .glow-window-margin {
@@ -89,6 +120,17 @@
     bottom:0px;
     border:none;
     border-radius: 0px;
+    margin:0px;
+}
+
+.glow-window-margin.embed {
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    border:none;
+    border-radius: 0px;
+    box-shadow:none;
     margin:0px;
 }
 
@@ -139,6 +181,10 @@
     border-radius: 15px;
 }
 
+.glow-window-close.embed {
+    display:none;
+}
+
 .glow-window-action {
     flex: none;
     width:18px;
@@ -149,6 +195,10 @@
 .glow-window-action:hover:active {
     box-shadow: 0px 0px 15px 3px #0f2777;
     border-radius: 15px;
+}
+
+.glow-window-action.embed {
+    display:none;
 }
 
 .glow-window-minimize-arrow {

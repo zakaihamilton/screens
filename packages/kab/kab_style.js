@@ -67,8 +67,8 @@ package.kab.style = function KabStyle(me) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
             var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
-            if(diagram) {
-                html += "kab-term-diagram=\"" + diagram + "\"";
+            if(diagram && session.options.diagramCallback) {
+                html += " onload=\"" + session.options.diagramCallback + "(this," + diagram + ")\"";
             }
             if(session.options.hoverCallback) {
                 html += " onmouseover=\"" + session.options.hoverCallback + "(this,true)\" onmouseout=\"" + session.options.hoverCallback + "(this,false)\"";

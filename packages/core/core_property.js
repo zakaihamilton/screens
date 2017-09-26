@@ -16,6 +16,7 @@ package.core.property = function CoreProperty(me) {
         if(typeof name !== "string") {
             throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;
         }
+        name = name.replace("package.", "");
         var separator = name.indexOf(".");
         var package_name = null;
         if(separator !== -1) {
@@ -84,7 +85,9 @@ package.core.property = function CoreProperty(me) {
                 var args = name.substr(openIdx+1,closeIdx-openIdx-1).split(",");
                 name = name.substr(0, openIdx);
                 if(args.length > 1) {
-                    object = me.get(object, args[0]);
+                    if(args[0] !== "this") {
+                        object = me.get(object, args[0]);
+                    }
                     value = args[1];
                 }
                 else if(args.length === 1) {

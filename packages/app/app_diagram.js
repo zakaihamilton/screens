@@ -7,13 +7,28 @@ package.app.diagram = function AppDiagram(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;
+        var parent = "desktop";
         json["app.diagram.path"] = path;
-        var window = me.ui.element.create(json, "desktop", "self");
+        if(args.length > 2) {
+            json["widget.window.embed"] = true;
+            json["ui.style.left"] = "0px";
+            json["ui.style.top"] = "0px";
+            json["ui.style.width"] = "250px";
+            json["ui.style.height"] = "250px";
+            json["ui.style.position"] = "relative";
+            json["ui.node.moveToFirst"] = true;
+            json["widget.window.fixed"] = true;
+            json["ui.move.enabled"] = false;
+            parent = args[2];
+        }
+        var window = me.ui.element.create(json, parent, "self");
         if(args.length > 1) {
             var options = args[1];
-            window.options = options;
+            window.options = JSON.parse(JSON.stringify(options));
             window.options.diagrams = false;
+            window.options.fontSize = (parseInt(window.options.fontSize)/2) + "px";
             window.options.viewType = "Layers";
+            window.options.hoverCallback = null;
             window.optionsLoaded = true;
         }
         window.language = "english";
@@ -115,6 +130,9 @@ package.app.diagram = function AppDiagram(me) {
             var window = me.widget.window.window(object);
             var diagramData = me.get(window, "app.diagram.diagramData");
             me.ui.element.create(diagramData.layers, window.var.viewer);
+            if(diagramData.title) {
+                me.set(window, "title", diagramData.title);
+            }
         }
     };
 };

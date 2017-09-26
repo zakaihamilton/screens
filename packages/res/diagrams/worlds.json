@@ -1,16 +1,17 @@
 {
+    "title":"Direct Light vs Reflected Light",
     "layers": [
         {
             "ui.style.display":"grid",
             "ui.style.position":"absolute",
-            "ui.style.padding":"15px",
+            "ui.style.padding":"2px",
             "ui.style.left":"0px",
             "ui.style.top":"0px",
             "ui.style.right":"0px",
             "ui.style.bottom":"0px",
             "ui.style.gridAutoColumns": "auto",
             "ui.style.gridAutoRows": "auto",
-            "ui.style.gridGap": "5px 5px",
+            "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems":"stretch",
             "ui.style.lineHeight":"2.5",
             "ui.basic.elements": [
@@ -23,7 +24,7 @@
                                 "ui.style.border": "1px solid black",
                                 "ui.style.margin":"0px",
                                 "ui.style.gridColumn": "1",
-                                "ui.style.paddingTop": "5px",
+                                "ui.style.paddingTop": "3px",
                                 "ui.style.textAlign":"center",
                                 "ui.style.verticalAlign":"middle"
                             },
@@ -47,7 +48,7 @@
                                 "ui.style.border": "1px solid black",
                                 "ui.style.margin":"0px",
                                 "ui.style.gridColumn": "2",
-                                "ui.style.paddingTop": "5px",
+                                "ui.style.paddingTop": "3px",
                                 "ui.style.textAlign":"center",
                                 "ui.style.verticalAlign":"middle"
                             },

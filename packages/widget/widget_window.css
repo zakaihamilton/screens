@@ -25,6 +25,16 @@
     background:white;
 }
 
+.widget-window-border.embed {
+    float:right;
+}
+
+.widget-window-border.embed::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 .widget-window-margin {
     position: absolute;
     left:2px;
@@ -76,6 +86,14 @@
 
 .widget-window-header.child {
     display:flex;
+}
+
+.widget-window-header.embed {
+    display:none;
+}
+
+.widget-window-header.menu.embed {
+    display:none;
 }
 
 .widget-window-footer {

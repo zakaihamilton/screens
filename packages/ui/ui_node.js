@@ -178,6 +178,13 @@ package.ui.node = function UINode(me) {
             }
         }
     };
+    me.moveToFirst = {
+        set: function (object, value) {
+            if (object.parentNode && value) {
+                me.insertBefore(object.parentNode, object, object.parentNode.firstChild);
+            }
+        }
+    };
     me.unshift = {
         set: function (object, value) {
             if (object.parentNode) {

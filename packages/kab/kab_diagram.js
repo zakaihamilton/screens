@@ -14,6 +14,9 @@ package.kab.diagram = function KabDiagram(me) {
             if(diagram.term !== term) {
                 continue;
             }
+            if(session.usedDiagrams && session.usedDiagrams.includes(path)) {
+                continue;
+            }
             if(diagram.depends) {
                 var dependenciesFound = 0;
                 for(let dependency of diagram.depends) {
@@ -26,6 +29,10 @@ package.kab.diagram = function KabDiagram(me) {
                 }
             }
             matchingDiagram = path;
+            if(!session.usedDiagrams) {
+                session.usedDiagrams = [];
+            }
+            session.usedDiagrams.push(path);
         }
         return matchingDiagram;
     };
