@@ -401,7 +401,7 @@ package.app.transform = function AppTransform(me) {
         set: function(object, path) {
             var window = me.widget.window.mainWindow(object);
             me.core.app.launch(function(diagramWindow) {
-                //me.set(diagramWindow, "core.property.\"widget.window.restore\"", "app.transform.reflow");
+                me.set(diagramWindow, "core.property.widget-window-restore", "app.transform.reflow");
             }, "diagram", [path,window.options,object]);
         }
     };

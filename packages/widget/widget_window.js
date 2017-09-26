@@ -33,6 +33,14 @@ package.widget.window = function WidgetWindow(me) {
             me.set(object, "ui.resize.enabled", !value && !maximized);
         });
     };
+    me.draw = {
+        set: function(object) {
+            var isEmbed = me.get(object, "embed");
+            if(!isEmbed) {
+                me.set(object, "ui.focus.active", true);
+            }
+        }
+    };
     me.storeRegion = function (object) {
         var window = me.window(object);
         var parent_window = me.parent(window);
@@ -86,7 +94,8 @@ package.widget.window = function WidgetWindow(me) {
         var window = me.window(object);
         for(;;) {
             var isPopup = me.get(window, "popup");
-            if(!isPopup) {
+            var isEmbed = me.get(window, "embed");
+            if(!isPopup && !isEmbed) {
                 break;
             }
             window = me.parent(window);

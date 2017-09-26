@@ -6,6 +6,9 @@
 package.ui.node = function UINode(me) {
     me.childList = function (object) {
         var childNodes = me.childNodes(object);
+        if(!childNodes) {
+            return [];
+        }
         var childList = Array(childNodes.length).fill(null);
         for (var childIndex = 0; childIndex < childNodes.length; childIndex++) {
             var child = childNodes[childIndex];
@@ -117,6 +120,9 @@ package.ui.node = function UINode(me) {
         return array;
     };
     me.appendChild = function (parent, child) {
+        if(!parent) {
+            return null;
+        }
         if ("_appendChild" in parent) {
             return parent._appendChild(child);
         } else {
@@ -124,6 +130,9 @@ package.ui.node = function UINode(me) {
         }
     };
     me.insertBefore = function (parent, child, sibling) {
+        if(!parent) {
+            return null;
+        }
         if ("_insertBefore" in parent) {
             return parent._insertBefore(child, sibling);
         } else {
@@ -138,6 +147,9 @@ package.ui.node = function UINode(me) {
         }
     };
     me.removeChild = function (parent, child) {
+        if(!parent) {
+            return null;
+        }
         if ("_removeChild" in parent) {
             return parent._removeChild(child);
         } else {
@@ -145,6 +157,9 @@ package.ui.node = function UINode(me) {
         }
     };
     me.firstChild = function (parent) {
+        if(!parent) {
+            return null;
+        }
         if ("_firstChild" in parent) {
             return parent._firstChild;
         } else {
@@ -152,6 +167,9 @@ package.ui.node = function UINode(me) {
         }
     };
     me.lastChild = function (parent) {
+        if(!parent) {
+            return null;
+        }
         if ("_lastChild" in parent) {
             return parent._lastChild;
         } else {
@@ -159,6 +177,9 @@ package.ui.node = function UINode(me) {
         }
     };
     me.childNodes = function (parent) {
+        if(!parent) {
+            return null;
+        }
         if ("_childNodes" in parent) {
             return parent._childNodes;
         } else {

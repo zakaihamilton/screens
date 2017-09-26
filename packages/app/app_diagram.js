@@ -32,6 +32,7 @@ package.app.diagram = function AppDiagram(me) {
             window.options.doExplanation = false;
             window.options.hoverCallback = null;
             window.optionsLoaded = true;
+            me.set(window, "core.property.widget-window-restore", "app.diagram.restore");
         }
         window.language = "english";
         return window;
@@ -135,6 +136,15 @@ package.app.diagram = function AppDiagram(me) {
             me.ui.element.create(diagramData.layers, window.var.viewer);
             if(diagramData.title) {
                 me.set(window, "title", diagramData.title);
+            }
+        }
+    };
+    me.restore = {
+        set: function(object) {
+            var window = me.widget.window.window(object);
+            var embed = me.get(window, "embed");
+            if(embed) {
+                me.set(window, "app.diagram.fontSize", (parseInt(window.options.fontSize)*2) + "px");
             }
         }
     };

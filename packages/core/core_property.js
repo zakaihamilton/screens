@@ -57,8 +57,8 @@ package.core.property = function CoreProperty(me) {
                 if(info.value.startsWith("^")) {
                     var subInfo = me.split(info.object, info.value, null);
                     var job = me.core.job.open();
-                    var paramInfo = {job:job,value:subInfo.value};
-                    me.get(subInfo.object, subInfo.name.substring(1), paramInfo);
+                    var paramInfo = {job:job,value:subInfo.name};
+                        me.get(subInfo.object, subInfo.name.substring(1), paramInfo);
                     me.core.job.close(job, function() {
                         me.set(info.object, info.name, paramInfo.value);
                     });
@@ -102,6 +102,9 @@ package.core.property = function CoreProperty(me) {
             return {
                 set: function (object, value) {
                     if (typeof value !== "undefined") {
+                        if(typeof property === "string") {
+                            property = property.replace(/-/g, ".");
+                        }
                         me.link(property, value, true, object);
                     }
                 }
