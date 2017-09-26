@@ -34,6 +34,7 @@ package.app.diagram = function AppDiagram(me) {
             window.optionsLoaded = true;
         }
         window.language = "english";
+        return window;
     };
     me.init = function () {
         me.path = me.core.object.property("app.viewer.path");
