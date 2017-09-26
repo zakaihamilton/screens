@@ -74,6 +74,8 @@
     text-align:justify;
     box-sizing:border-box;
     column-gap: 4em;
+    column-fill:balance;
+    column-rule-color:transparent;
 }
 
 .app-transform-page-content h4 {

@@ -34,7 +34,8 @@
         },
         {
             "source":"widget-window-title",
-            "target":"glow-window-title"
+            "target":"glow-window-title",
+            "replace":true
         },
         {
             "source":"widget-window-close",

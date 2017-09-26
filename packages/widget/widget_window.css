@@ -111,10 +111,6 @@
     padding-left: 2px;
 }
 
-.widget-window-title.child {
-    display:none;
-}
-
 .widget-window-left {
     position: absolute;
     left:-1px;
@@ -261,6 +257,10 @@
     display:flex;
     height:18px;
     border-bottom: 1px solid black;
+}
+
+.widget-window-title.child {
+    display:none;
 }
 
 .widget-window-label {

@@ -7,27 +7,32 @@ package.app.diagram = function AppDiagram(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;
+        var options = null;
         var parent = "desktop";
         json["app.diagram.path"] = path;
+        if(args.length > 1) {
+            options = JSON.parse(JSON.stringify(args[1]));
+        }
         if(args.length > 2) {
             json["widget.window.embed"] = true;
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
-            json["ui.style.width"] = "250px";
-            json["ui.style.height"] = "250px";
+            json["ui.style.width"] = "10em";
+            json["ui.style.height"] = "10em";
             json["ui.style.position"] = "relative";
             json["ui.node.moveToFirst"] = true;
             json["widget.window.fixed"] = true;
             json["ui.move.enabled"] = false;
+            json["ui.style.breakInside"] = "avoid-column";
             parent = args[2];
         }
         var window = me.ui.element.create(json, parent, "self");
         if(args.length > 1) {
-            var options = args[1];
-            window.options = JSON.parse(JSON.stringify(options));
+            window.options = options;
             window.options.diagrams = false;
             window.options.fontSize = (parseInt(window.options.fontSize)/2) + "px";
             window.options.viewType = "Layers";
+            window.options.doExplanation = false;
             window.options.hoverCallback = null;
             window.optionsLoaded = true;
         }
@@ -68,7 +73,6 @@ package.app.diagram = function AppDiagram(me) {
             me.headings = me.ui.options.toggleSet(me, "headings", me.reload.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
-                me.set(window.var.viewer, "ui.style.fontSize", value);
                 me.notify(window, "reload");
             });
             me.ui.class.useStylesheet("kab.term");
@@ -80,6 +84,7 @@ package.app.diagram = function AppDiagram(me) {
             var path = me.get(window, "app.diagram.path");
             me.core.json.loadFile(function(diagramJson) {
                 me.set(window, "app.diagram.diagramData", diagramJson);
+                me.set(window.var.label, "ui.style.fontSize", window.options.fontSize);
                 me.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
                 me.notify(window, "app.diagram.refresh");
             }, path, false);

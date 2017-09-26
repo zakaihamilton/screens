@@ -2,7 +2,7 @@
     text-align: center;
     background-color: white;
     font-family: "MS Sans Serif";
-    font-size: 16px;
+    font-size: 1em;
     line-height:18px;
     flex:1;
     margin-left: auto;
@@ -29,14 +29,17 @@
 
 .glow-window-label.embed {
     border-radius: 5px 5px 0px 0px;
+    border:none;
+    box-shadow: none;
+    margin-top:2px;
+    font-weight:bold;
+    background-color: white;
+    color:black;
 }
 
 .glow-window-label.embed.focus {
     background-color: white;
     color:black;
-    border:none;
-    box-shadow: none;
-    margin-top:0px;
 }
 
 .glow-window-border {
@@ -79,6 +82,7 @@
 
 .glow-window-border.embed:hover {
     box-shadow: 0px 0px 15px 3px #0f2777;
+    z-index: 100;
 }
 
 .glow-window-border.embed::after {
@@ -151,7 +155,14 @@
 }
 
 .glow-window-title {
+    flex:none;
+    display:flex;
+    height:18px;
     border-bottom: none;
+}
+
+.glow-window-title.child {
+    display:none;
 }
 
 .glow-window-close {
@@ -167,12 +178,12 @@
     border-width: 2px 2px 0 0;
     content: '';
     display: inline-block;
-    height: 0.20em;
-    left: 0.45em;
+    height: 3px;
+    left: 7px;
     position: relative;
     vertical-align: top;
-    width: 0.20em;
-    top: 0.35em;
+    width: 3px;
+    top: 5px;
     transform: rotate(135deg);
 }
 
@@ -181,7 +192,7 @@
     border-radius: 15px;
 }
 
-.glow-window-close.embed {
+.aglow-window-close.embed {
     display:none;
 }
 
