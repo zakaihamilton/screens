@@ -19,10 +19,7 @@ package.app.diagram = function AppDiagram(me) {
             json["ui.style.top"] = "0px";
             json["ui.style.width"] = "10em";
             json["ui.style.height"] = "10em";
-            json["ui.style.position"] = "relative";
             json["ui.node.moveToFirst"] = true;
-            json["widget.window.fixed"] = true;
-            json["ui.move.enabled"] = false;
             json["ui.style.breakInside"] = "avoid-column";
             parent = args[2];
         }
@@ -45,21 +42,20 @@ package.app.diagram = function AppDiagram(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            if(window.optionsLoaded) {
-                return;
+            if(!window.optionsLoaded) {
+                window.optionsLoaded = true;
+                me.ui.options.load(me, window, {
+                    viewType: "Text",
+                    doTranslation: true,
+                    doExplanation: false,
+                    prioritizeExplanation:false,
+                    addStyles: true,
+                    keepSource: false,
+                    phaseNumbers: true,
+                    headings: true,
+                    fontSize: "22px"
+                });
             }
-            window.optionsLoaded = true;
-            me.ui.options.load(me, window, {
-                viewType: "Text",
-                doTranslation: true,
-                doExplanation: false,
-                prioritizeExplanation:false,
-                addStyles: true,
-                keepSource: false,
-                phaseNumbers: true,
-                headings: true,
-                fontSize: "22px"
-            });
             me.viewType = me.ui.options.choiceSet(me, "viewType", function (object, options, key, value) {
                 var window = me.widget.window.window(object);
                 me.notify(window, "app.diagram.reload");
@@ -72,8 +68,10 @@ package.app.diagram = function AppDiagram(me) {
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.reload.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.reload.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
-                var window = me.widget.window.mainWindow(object);
+                var window = me.widget.window.window(object);
+                me.set(window.var.viewer, "ui.style.fontSize", value);
                 me.notify(window, "reload");
+                me.notify(window, "update");
             });
             me.ui.class.useStylesheet("kab.term");
         }
@@ -84,7 +82,6 @@ package.app.diagram = function AppDiagram(me) {
             var path = me.get(window, "app.diagram.path");
             me.core.json.loadFile(function(diagramJson) {
                 me.set(window, "app.diagram.diagramData", diagramJson);
-                me.set(window.var.label, "ui.style.fontSize", window.options.fontSize);
                 me.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
                 me.notify(window, "app.diagram.refresh");
             }, path, false);

@@ -18,7 +18,14 @@ package.widget.window = function WidgetWindow(me) {
     me.default = __json__;
     me.init = function () {
         me.popup = me.ui.property.themedPropertySet("popup");
-        me.embed = me.ui.property.themedPropertySet("embed");
+        me.embed = me.ui.property.themedPropertySet("embed", function(object, name, value) {
+            var maximized = me.get(object, "ui.class.contains", "maximize");
+            me.set(object, "ui.move.enabled", !value && !maximized);
+            me.set(object, "ui.style.position", value ? "relative" : "absolute");
+            if(!value) {
+                me.set(object, "ui.arrange.center");
+            }
+        });
         me.temp = me.ui.property.themedPropertySet("temp");
         me.static = me.ui.property.themedPropertySet("static");
         me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {
@@ -287,7 +294,8 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.class.contains", "minimize");
-            return !minimized;
+            var embed = me.get(window, "ui.class.contains", "embed");
+            return !minimized && !embed;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -324,7 +332,8 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.class.contains", "minimize");
             var maximized = me.get(window, "ui.class.contains", "maximize");
-            return !me.get(window, "fixed") && !me.get(window, "popup") && !maximized && !minimized;
+            var embed = me.get(window, "ui.class.contains", "embed");
+            return !me.get(window, "fixed") && !me.get(window, "popup") && !maximized && !minimized && !embed;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -402,16 +411,26 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.class.contains", "minimize");
             var maximized = me.get(window, "ui.class.contains", "maximize");
-            return maximized || minimized;
+            var embed = me.get(window, "ui.class.contains", "embed");
+            return maximized || minimized || embed;
         },
         set: function (object, value) {
             var window = me.window(object);
             var minimized = me.get(window, "ui.class.contains", "minimize");
             var maximized = me.get(window, "ui.class.contains", "maximize");
-            if (!minimized && !maximized) {
+            var embed = me.get(window, "ui.class.contains", "embed");
+            if (!minimized && !maximized && !embed) {
                 return;
             }
-            if (minimized) {
+            if(embed) {
+                me.set(window, "ui.property.group", {
+                    "widget.window.embed":false,
+                    "ui.focus.active": true,
+                    "ui.node.parent":me.ui.element.desktop()
+                });
+                me.notify(window, "update");
+            }
+            else if (minimized) {
                 if (maximized) {
                     me.set(window, "maximize");
                 } else {

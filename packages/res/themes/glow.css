@@ -2,7 +2,7 @@
     text-align: center;
     background-color: white;
     font-family: "MS Sans Serif";
-    font-size: 1em;
+    font-size: 16px;
     line-height:18px;
     flex:1;
     margin-left: auto;
@@ -35,6 +35,7 @@
     font-weight:bold;
     background-color: white;
     color:black;
+    font-size: 0.5em;
 }
 
 .glow-window-label.embed.focus {
