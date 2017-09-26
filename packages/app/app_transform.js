@@ -257,6 +257,7 @@ package.app.transform = function AppTransform(me) {
                 window.options.hoverCallback = "package.app.transform.hoverDescription";
                 window.options.diagramCallback = "package.app.transform.loadDiagram";
                 window.options.toggleCallback = "package.app.transform.cycleDescription";
+                window.options.reload = true;
                 me.kab.text.parse(function (text, terms, data) {
                     if (data) {
                         me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
@@ -298,8 +299,10 @@ package.app.transform = function AppTransform(me) {
     me.reflow = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            window.forceReflow = true;
-            me.notify(window, "update");
+            if(window) {
+                window.forceReflow = true;
+                me.notify(window, "update");
+            }
         }
     };
     me.update = {

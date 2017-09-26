@@ -401,7 +401,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.set(window, "maximize");
                 } else if (minimized) {
                     me.set(window, "unmaximize");
-                } else {
+                } else if(!me.get(window, "embed")) {
                     me.set(window, "ui.focus.active", true);
                 }
                 var region = me.ui.rect.absolute_region(window);
@@ -436,10 +436,14 @@ package.widget.window = function WidgetWindow(me) {
                 return;
             }
             if(embed) {
+                var parent_window = me.parent(window);
+                if(parent_window) {
+                    parent_window.focus_window = null;
+                }
                 me.set(window, "ui.property.group", {
                     "widget.window.embed":false,
-                    "ui.focus.active": true,
-                    "ui.node.parent":me.ui.element.desktop()
+                    "ui.node.parent":me.ui.element.desktop(),
+                    "ui.focus.active": true
                 });
                 me.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
                 me.notify(window, "update");

@@ -26,6 +26,9 @@ package.ui.focus = function UIFocus(me) {
         return false;
     };
     me.find_branch = function (object, x, y) {
+        if(me.get(object, "embed")) {
+            return null;
+        }
         /* Find the lowest matching element on position */
         var childList = me.ui.node.childList(object);
         for (var index = childList.length - 1; index >= 0; index--) {
@@ -65,7 +68,10 @@ package.ui.focus = function UIFocus(me) {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);
-            parent = me.widget.window.parent(from);
+            var parent = me.widget.window.parent(from);
+            if(parent && me.get(parent, "embed")) {
+                parent = me.widget.window.parent(parent);
+            }
             if(parent) {
                 parent.focus_window = from;
             }
@@ -100,7 +106,7 @@ package.ui.focus = function UIFocus(me) {
         for (var index = 0; index < length; index++) {
             if (sources[index] === targets[index]) {
                 common = sources[index];
-                if (common.focusable) {
+                if (common.component === "widget.window" && !me.get(common, "embed")) {
                     focusable = common;
                     break;
                 }

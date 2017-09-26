@@ -2303,11 +2303,7 @@
             "term": "Panim be Achor"
         },
         {
-            "expansion": [
-                "Panim",
-                "be",
-                "Panim"
-            ],
+            "expansion": ["Panim be Panim"],
             "term": "PBP"
         },
         {
@@ -4689,6 +4685,10 @@
         {
             "term":"Yachad",
             "translation":"Together"
+        },
+        {
+            "term":"Echad",
+            "translation":"One"
         }
     ],
     "style": {

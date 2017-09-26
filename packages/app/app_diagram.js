@@ -28,6 +28,7 @@ package.app.diagram = function AppDiagram(me) {
         if(args.length > 1) {
             window.options = options;
             window.options.diagrams = false;
+            window.options.reload = false;
             window.options.fontSize = (parseInt(window.options.fontSize)/2) + "px";
             window.options.viewType = "Layers";
             window.options.doExplanation = false;

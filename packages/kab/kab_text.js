@@ -169,7 +169,7 @@ package.kab.text = function KabText(me) {
             }
             wordsString = me.send("kab.format.process", wordsString, json.post);
             callback(wordsString, me.kab.search.terms, json.data);
-        }, language);
+        }, language, options.reload);
     };
     me.handleInstance = function (session, instance) {
         var modify = me.modify;
