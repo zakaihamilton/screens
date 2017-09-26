@@ -441,6 +441,7 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.focus.active": true,
                     "ui.node.parent":me.ui.element.desktop()
                 });
+                me.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
                 me.notify(window, "update");
             }
             else if (minimized) {
