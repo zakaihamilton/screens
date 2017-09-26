@@ -22,17 +22,23 @@ package.menu.context = function MenuContext(me) {
             return !me.get(window, "popup");
         }
     };
+    me.notEmbed = {
+        get: function (object) {
+            var window = me.widget.window.window(object);
+            return !me.get(window, "embed");
+        }
+    };
     me.switchable = {
         get: function (object) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
-            return !me.get(window, "temp") && !me.get(window, "popup") && !parent;
+            return !me.get(window, "temp") && !me.get(window, "popup") && !me.get(window, "embed") && !parent;
         }
     };
     me.isChild = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            if(me.get(window, "popup")) {
+            if(me.get(window, "popup") || me.get(window, "embed")) {
                 return false;
             }
             var parent = me.widget.window.parent(window);

@@ -25,6 +25,7 @@
     ],
     ["Close", "widget.window.close", {
             "separator": "menu.context.resizable",
+            "visible": "menu.context.notEmbed",
             "enabled": "select"
         }
     ],

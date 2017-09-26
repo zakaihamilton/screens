@@ -160,6 +160,10 @@ package.widget.window = function WidgetWindow(me) {
                 me.set(window, "minimize");
                 return;
             }
+            if (me.get(window, "embed")) {
+                me.set(window, "restore");
+                return;
+            }
             var parent_window = me.parent(window);
             if (parent_window) {
                 me.detach(parent_window);
