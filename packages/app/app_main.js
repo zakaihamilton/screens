@@ -32,7 +32,7 @@ package.app.main = function (me) {
                 package.include("app.storage", function(info) {
                     if(info.complete) {
                         me.send("app.storage.launch");
-                        package.include("app.transform", function(info) {
+                        package.include({"app":["transform","diagram"]}, function(info) {
                             if(info.complete) {
                                 me.send("app.transform.launch");
                             }

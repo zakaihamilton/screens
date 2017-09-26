@@ -12,6 +12,7 @@ package.app.diagram = function AppDiagram(me) {
         json["app.diagram.path"] = path;
         if(args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));
+            options.original = args[1];
         }
         if(args.length > 2) {
             json["widget.window.embed"] = true;
@@ -144,7 +145,8 @@ package.app.diagram = function AppDiagram(me) {
             var window = me.widget.window.window(object);
             var embed = me.get(window, "embed");
             if(embed) {
-                me.set(window, "app.diagram.fontSize", (parseInt(window.options.fontSize)*2) + "px");
+                me.set(window, "app.diagram.fontSize", window.options.original.fontSize);
+                me.set(window, "app.diagram.doExplanation", window.options.original.doExplanation);
             }
         }
     };

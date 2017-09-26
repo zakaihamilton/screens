@@ -1,35 +1,40 @@
 {
-    "title":"Direct Light vs Reflected Light",
+    "title": "Direct Light vs Reflected Light",
     "layers": [
         {
-            "ui.style.display":"grid",
-            "ui.style.position":"absolute",
-            "ui.style.padding":"2px",
-            "ui.style.left":"0px",
-            "ui.style.top":"0px",
-            "ui.style.right":"0px",
-            "ui.style.bottom":"0px",
+            "ui.style.display": "grid",
+            "ui.style.position": "absolute",
+            "ui.style.padding": "2px",
+            "ui.style.left": "0px",
+            "ui.style.top": "0px",
+            "ui.style.right": "0px",
+            "ui.style.bottom": "0px",
             "ui.style.gridAutoColumns": "auto",
             "ui.style.gridAutoRows": "auto",
             "ui.style.gridGap": "1px 1px",
-            "ui.style.alignItems":"stretch",
-            "ui.style.lineHeight":"2.5",
+            "ui.style.alignItems": "stretch",
+            "ui.style.lineHeight": "2.5",
             "ui.basic.elements": [
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "app.diagram.term", "ui.style.backgroundColor"],
+                            "ui.data.keyList": [
+                                "ui.style.gridRow",
+                                "app.diagram.term",
+                                "ui.style.backgroundColor",
+                                "ui.style.fontWeight"
+                            ],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
-                                "ui.style.margin":"0px",
+                                "ui.style.margin": "0px",
                                 "ui.style.gridColumn": "1",
                                 "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign":"center",
-                                "ui.style.verticalAlign":"middle"
+                                "ui.style.textAlign": "center",
+                                "ui.style.verticalAlign": "middle"
                             },
                             "ui.data.values": [
-                                ["1", "Ohr Yashar", "white"],
+                                ["1", "Ohr Yashar", "white", "bold"],
                                 ["2", "Keter", "white"],
                                 ["3", "Hochma", "#FFF3CA"],
                                 ["4", "Bina", "#C8D9F9"],
@@ -42,18 +47,23 @@
                 {
                     "ui.element.update": {
                         "ui.group.data": {
-                            "ui.data.keyList": ["ui.style.gridRow", "app.diagram.term", "ui.style.backgroundColor"],
+                            "ui.data.keyList": [
+                                "ui.style.gridRow",
+                                "app.diagram.term",
+                                "ui.style.backgroundColor",
+                                "ui.style.fontWeight"
+                            ],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
                                 "ui.style.border": "1px solid black",
-                                "ui.style.margin":"0px",
+                                "ui.style.margin": "0px",
                                 "ui.style.gridColumn": "2",
                                 "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign":"center",
-                                "ui.style.verticalAlign":"middle"
+                                "ui.style.textAlign": "center",
+                                "ui.style.verticalAlign": "middle"
                             },
                             "ui.data.values": [
-                                ["1", "Ohr Hozer", "white"],
+                                ["1", "Ohr Hozer", "white", "bold"],
                                 ["2", "Malchut", "#D9EAD2"],
                                 ["3", "Tifferet", "#F5CCCB"],
                                 ["4", "Bina", "#C8D9F9"],

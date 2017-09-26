@@ -18,7 +18,7 @@ package.app.transform = function AppTransform(me) {
             me.ui.options.load(me, window, {
                 doTranslation: true,
                 doExplanation: false,
-                prioritizeExplanation:false,
+                prioritizeExplanation: false,
                 addStyles: true,
                 keepSource: false,
                 showHtml: false,
@@ -32,7 +32,7 @@ package.app.transform = function AppTransform(me) {
                 fontSize: "22px",
                 scrollPos: 0,
                 phaseNumbers: true,
-                diagrams:true
+                diagrams: true
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -151,7 +151,7 @@ package.app.transform = function AppTransform(me) {
         searchItems.map(function (searchItem) {
             var term = searchItem[0];
             var info = searchItem[1];
-            if(!info.used) {
+            if (!info.used) {
                 return;
             }
             var option = document.createElement("option");
@@ -184,26 +184,26 @@ package.app.transform = function AppTransform(me) {
         for (var heading in table) {
             var row = table[heading];
             var usedRow = false;
-            for(var phase in row) {
+            for (var phase in row) {
                 var usedColumn = false;
                 var column = row[phase];
-                for(var name in column) {
+                for (var name in column) {
                     var item = column[name];
-                    if(item.used) {
+                    if (item.used) {
                         usedRow = true;
                         usedColumn = true;
                     }
                 }
-                if(usedColumn) {
-                    for(var name in column) {
+                if (usedColumn) {
+                    for (var name in column) {
                         var item = column[name];
-                        if(!item.used) {
+                        if (!item.used) {
                             delete column[name];
                         }
                     }
                 }
             }
-            if(!usedRow) {
+            if (!usedRow) {
                 delete table[heading];
             }
         }
@@ -215,18 +215,17 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (row[phase]) {
                     properties["ui.basic.elements"] = row[phase].map(function (item) {
-                        var styles = ["kab.term.phase." + phase,"kab.term.phase." + phase + ".outline",language];
-                        if(!item.used) {
+                        var styles = ["kab.term.phase." + phase, "kab.term.phase." + phase + ".outline", language];
+                        if (!item.used) {
                             styles.push("app.transform.placeholder");
                         }
                         var itemProperties = {
-                            "ui.class.class":"app.transform.termItem",
-                            "ui.class.add":styles
+                            "ui.class.class": "app.transform.termItem",
+                            "ui.class.add": styles
                         };
-                        if(window.options.keepSource) {
+                        if (window.options.keepSource) {
                             itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
-                        }
-                        else {
+                        } else {
                             itemProperties["ui.basic.text"] = item.name;
                             itemProperties["ui.attribute.app-transform-tooltip"] = item.source;
                         }
@@ -259,7 +258,7 @@ package.app.transform = function AppTransform(me) {
                 window.options.diagramCallback = "package.app.transform.loadDiagram";
                 window.options.toggleCallback = "package.app.transform.cycleDescription";
                 me.kab.text.parse(function (text, terms, data) {
-                    if(data) {
+                    if (data) {
                         me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                     }
                     if (window.prevLanguage) {
@@ -284,13 +283,13 @@ package.app.transform = function AppTransform(me) {
                         me.set(window.var.output, "ui.basic.html", text);
                     }
                     me.updateFilterList(window, terms);
-                    if(data) {
+                    if (data) {
                         me.updateTermTable(window, terms, data.termTable, language);
                     }
                     me.ui.layout.move(window.var.output, window.var.layout);
                     window.forceReflow = true;
                     window.contentChanged = true;
-                    me.set(window, "update");
+                    me.notify(window, "update");
                     me.set(window, "ui.work.state", false);
                 }, language, text, window.options);
             }
@@ -390,53 +389,53 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
         }
     };
-    me.resetDescription = function(object) {
-        var descriptionTypes = ["explanation","technical","related"];
-        descriptionTypes.map(function(descriptionType) {
+    me.resetDescription = function (object) {
+        var descriptionTypes = ["explanation", "technical", "related"];
+        descriptionTypes.map(function (descriptionType) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
             me.set(descriptionBox, "ui.class.remove", "show");
         });
     };
     me.loadDiagram = {
-        set: function(object, path) {
+        set: function (object, path) {
             var window = me.widget.window.mainWindow(object);
-            me.core.app.launch(function(diagramWindow) {
+            me.core.app.launch(function (diagramWindow) {
                 me.set(diagramWindow, "core.property.widget-window-restore", "app.transform.reflow");
-            }, "diagram", [path,window.options,object]);
+            }, "diagram", [path, window.options, object]);
         }
     };
-    me.hoverDescription = function(object, state) {
+    me.hoverDescription = function (object, state) {
         var window = me.widget.window.mainWindow(object);
-        var descriptionType = window.options.prioritizeExplanation ? "explanation": "technical";
+        var descriptionType = window.options.prioritizeExplanation ? "explanation" : "technical";
         var descriptionBox = me.ui.node.findById(object, descriptionType);
-        if(!descriptionBox) {
+        if (!descriptionBox) {
             descriptionBox = me.ui.node.findById(object, "related");
         }
         object.descriptionType = null;
-        if(object.hoverTimer) {
+        if (object.hoverTimer) {
             clearTimeout(object.hoverTimer);
         }
-        object.hoverTimer = setTimeout(function() {
+        object.hoverTimer = setTimeout(function () {
             object.descriptionType = descriptionType;
             me.resetDescription(object);
-            if(state) {
+            if (state) {
                 me.set(descriptionBox, "ui.class.add", "show");
             }
         }, 1000);
     };
-    me.cycleDescription = function(object) {
-        if(!object.descriptionType) {
+    me.cycleDescription = function (object) {
+        if (!object.descriptionType) {
             return;
         }
-        var descriptionTypes = ["explanation","technical","related"];
+        var descriptionTypes = ["explanation", "technical", "related"];
         var descriptionIndex = descriptionTypes.indexOf(object.descriptionType);
         descriptionIndex++;
-        if(descriptionIndex >= descriptionTypes.length) {
+        if (descriptionIndex >= descriptionTypes.length) {
             descriptionIndex = 0;
         }
         var descriptionType = descriptionTypes[descriptionIndex];
         var descriptionBox = me.ui.node.findById(object, descriptionType);
-        if(!descriptionBox) {
+        if (!descriptionBox) {
             descriptionBox = me.ui.node.findById(object, "related");
         }
         object.descriptionType = descriptionType;
