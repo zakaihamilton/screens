@@ -648,6 +648,7 @@
         },
         {
             "translation": "Beauty",
+            "explanation": "Intention",
             "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
