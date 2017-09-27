@@ -618,6 +618,7 @@
         },
         {
             "translation": "Crown",
+            "explanation": "Postulate",
             "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
