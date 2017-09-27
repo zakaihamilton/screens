@@ -355,7 +355,11 @@ package.widget.window = function WidgetWindow(me) {
             if (wasMaximized && !wasMinimized) {
                 return;
             }
-            if (me.get(window, "fixed") || me.get(window, "popup") || me.get(window, "embed")) {
+            if (me.get(window, "fixed") || me.get(window, "popup")) {
+                return;
+            }
+            if(me.get(window, "embed")) {
+                me.set(window, "restore");
                 return;
             }
             me.set(window, "ui.property.group", {

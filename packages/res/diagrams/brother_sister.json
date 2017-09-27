@@ -5,12 +5,12 @@
             "ui.style.display": "grid",
             "ui.style.position": "absolute",
             "ui.style.padding": "2px",
-            "ui.style.left": "15px",
+            "ui.style.left": "5px",
             "ui.style.top": "5px",
-            "ui.style.right": "15px",
-            "ui.style.bottom": "15px",
-            "ui.style.gridAutoColumns": "5%",
-            "ui.style.gridAutoRows": "5%",
+            "ui.style.right": "5px",
+            "ui.style.bottom": "5px",
+            "ui.style.gridAutoColumns": "2.5%",
+            "ui.style.gridAutoRows": "2.5%",
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
@@ -30,28 +30,29 @@
                                 "ui.property.style":{
                                     "border": "1px solid black",
                                     "margin": "0px",
-                                    "paddingTop": "3px",
                                     "textAlign": "center",
                                     "verticalAlign": "middle"
                                 }
                             },
                             "ui.data.values": [
-                                ["1/4", "5/16", "Keter", "white"],
-                                ["5/8", "13/20", "Hochma", "#FFF3CA"],
-                                ["5/12", "1/10", "Bina", "#C8D9F9"],
-                                ["8/11", "2/5", "Left", "#D9EAD2"],
-                                ["8/11", "6/9", "Right", "#F5CCCB"],
-                                ["13/16", "5/16", "ZA", "#F5CCCB"],
-                                ["17/20 ", "5/16", "Malchut", "#D9EAD2"]
+                                ["1/6", "8/30", "Keter", "white"],
+                                ["9/14", "24/34", "Hochma", "#FFF3CA"],
+                                ["9/20", "2/20", "Bina", "#C8D9F9"],
+                                ["14/19", "3/11", "Hochma2", "#D9EAD2"],
+                                ["14/19", "12/19", "Hassadim", "#F5CCCB"],
+                                ["21/27", "8/30", "ZA", "#F5CCCB"],
+                                ["28/34", "8/30", "Malchut", "#D9EAD2"]
                             ]
                         }
                     }
                 },
                 {
-                    "line":"9 9 13 9 12 13"
+                    "comment":"Small Face rising to Right of Understanding",
+                    "line":"19 16 21 16 24 21"
                 },
                 {
-                    "line":"4 11 4 19 5 19"
+                    "comment":"Malchut rising to Left of Understanding",
+                    "line":"6 19 6 31 8 31"
                 }
             ]
         }

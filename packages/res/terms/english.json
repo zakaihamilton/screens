@@ -518,7 +518,8 @@
                 "phase": "two"
             },
             "translation": "Body",
-            "term": "Guf2"
+            "term": "Guf2",
+            "source":"Guf"
         },
         {
             "translation": "of",
@@ -1320,7 +1321,8 @@
                 "phase": "root",
                 "heading": "Layers"
             },
-            "term": "Shoresh2"
+            "term": "Shoresh2",
+            "source":"Shoresh"
         },
         {
             "translation": "Root",
@@ -1364,7 +1366,8 @@
                 "phase": "three",
                 "heading": "Layers"
             },
-            "term": "Levush2"
+            "term": "Levush2",
+            "source":"Levush"
         },
         {
             "translation": "Expansion",
@@ -1909,6 +1912,15 @@
         {
             "style": {
                 "heading": "Light",
+                "phase": "one"
+            },
+            "translation": "Wisdom",
+            "term": "Hochma2",
+            "source":"Hochma"
+        },
+        {
+            "style": {
+                "heading": "Light",
                 "phase": "two"
             },
             "translation": "Mercy",
@@ -2284,7 +2296,8 @@
                 "phase": "four",
                 "heading": "Layers"
             },
-            "term": "Heichal2"
+            "term": "Heichal2",
+            "source":"Heichal"
         },
         {
             "translation": "Taste",
