@@ -27,11 +27,13 @@
                             ],
                             "ui.data.default": {
                                 "ui.basic.tag": "div",
-                                "ui.style.border": "1px solid black",
-                                "ui.style.margin": "0px",
-                                "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign": "center",
-                                "ui.style.verticalAlign": "middle"
+                                "ui.property.style":{
+                                    "border": "1px solid black",
+                                    "margin": "0px",
+                                    "paddingTop": "3px",
+                                    "textAlign": "center",
+                                    "verticalAlign": "middle"
+                                }
                             },
                             "ui.data.values": [
                                 ["1/4", "5/16", "Keter", "white"],
@@ -44,25 +46,14 @@
                             ]
                         }
                     }
+                },
+                {
+                    "line":"9 9 13 9 12 13"
+                },
+                {
+                    "line":"4 11 4 19 5 19"
                 }
             ]
-        },
-        {
-            "ui.element.component": "widget.svg",
-            "ui.attribute.width": "500",
-            "ui.attribute.height": "500",
-            "ui.group.data": {
-                "ui.data.keyList": [
-                    "widget.line.region"
-                ],
-                "ui.data.default": {
-                    "ui.element.component": "widget.line",
-                    "ui.attribute.stroke": "black"
-                },
-                "ui.data.values": [
-                    ["100 200 500 300"]
-                ]
-            }
         }
     ]
 }

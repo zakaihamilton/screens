@@ -79,8 +79,7 @@ package.include({
         "editor",
         "canvas",
         "table",
-        "svg",
-        "line"
+        "gridLine"
     ],
     "canvas": [
         "dirty",

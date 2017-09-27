@@ -14,14 +14,14 @@ package.ui.property = function UIProperty(me) {
     me.attribute = {
         set: function(object, properties) {
             for (var key in properties) {
-                me.set(object, "ui.attribute" + key, properties[key]);
+                me.set(object, "ui.attribute." + key, properties[key]);
             }
         }
     };
     me.style = {
         set: function(object, properties) {
             for (var key in properties) {
-                me.set(object, "ui.style" + key, properties[key]);
+                me.set(object, "ui.style." + key, properties[key]);
             }
         }
     };
