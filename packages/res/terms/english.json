@@ -4752,6 +4752,11 @@
             "depends":["Malchut","ZA","Hochma","Hassadim","brother","sister"],
             "term":"Malchut",
             "diagram":"brother_sister"
+        },
+        {
+            "depends":["Chazeh","left","middle", "right"],
+            "term":"Hirik",
+            "diagram":"chest"
         }
     ]
 }
