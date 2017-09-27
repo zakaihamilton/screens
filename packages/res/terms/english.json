@@ -1916,6 +1916,7 @@
                 "phase": "one"
             },
             "translation": "Wisdom",
+            "explanation":"Expression",
             "term": "Hochma2",
             "source":"Hochma"
         },
@@ -1925,6 +1926,7 @@
                 "phase": "two"
             },
             "translation": "Mercy",
+            "explanation":"Alignment",
             "term": "Hassadim"
         },
         {
