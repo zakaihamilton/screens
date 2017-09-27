@@ -4734,6 +4734,11 @@
             "depends":["Ohr Yashar","Ohr Hozer"],
             "term":"Ohr Hozer",
             "diagram":"worlds"
+        },
+        {
+            "depends":["Malchut","ZA","Hochma","Hassadim","brother","sister"],
+            "term":"Malchut",
+            "diagram":"brother_sister"
         }
     ]
 }

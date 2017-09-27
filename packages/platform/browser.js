@@ -78,7 +78,9 @@ package.include({
         "content",
         "editor",
         "canvas",
-        "table"
+        "table",
+        "svg",
+        "line"
     ],
     "canvas": [
         "dirty",
