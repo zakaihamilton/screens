@@ -151,10 +151,10 @@ package.ui.arrange = function UIArrange(me) {
         set: function(object) {
             var window = me.widget.window.window(object);
             me.reposition(window, function(parent_region) {
-                parent_region.left = parent_region.width / 4;
-                parent_region.top = parent_region.height / 4;
                 parent_region.width /= 1.5;
                 parent_region.height /= 1.5;
+                parent_region.left = parent_region.width / 4;
+                parent_region.top = parent_region.height / 4;
                 return parent_region;
             });
         }

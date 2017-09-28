@@ -445,8 +445,8 @@ package.widget.window = function WidgetWindow(me) {
                     parent_window.focus_window = null;
                 }
                 me.set(window, "ui.property.group", {
-                    "widget.window.embed":false,
                     "ui.node.parent":me.ui.element.desktop(),
+                    "widget.window.embed":false,
                     "ui.focus.active": true
                 });
                 me.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
