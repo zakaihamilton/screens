@@ -3,7 +3,7 @@
  @component WidgetGridLine
  */
 
-package.widget.gridLine = function WidgetGridLine(me) {
+package.widget.gridline = function WidgetGridLine(me) {
     me.depends = {
         properties: ["line"]
     };
@@ -18,8 +18,8 @@ package.widget.gridLine = function WidgetGridLine(me) {
         "borderStyle":"solid"
     };
     me.init = function() {
-        me.color = me.core.object.property("widget.gridLine.color");
-        me.borderStyle = me.core.object.property("widget.gridLine.borderStyle");
+        me.color = me.core.object.property("widget.gridline.color");
+        me.borderStyle = me.core.object.property("widget.gridline.borderStyle");
     };
     me.line = {
         get: function(object) {

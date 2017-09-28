@@ -79,7 +79,7 @@ package.include({
         "editor",
         "canvas",
         "table",
-        "gridLine"
+        "gridline"
     ],
     "canvas": [
         "dirty",
