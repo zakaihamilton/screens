@@ -2340,7 +2340,7 @@
             "term": "ABP"
         },
         {
-            "translation": "Backside",
+            "translation": "Posterior",
             "term": "Achoraim"
         },
         {
@@ -4758,9 +4758,14 @@
             "diagram":"brother_sister"
         },
         {
-            "depends":["Chazeh","left","middle", "right"],
+            "depends":["Chazeh","left","right"],
             "term":"Hirik",
             "diagram":"chest"
+        },
+        {
+            "depends":["Hassadim"],
+            "term":"Hirik",
+            "diagram":"punctuation"
         }
     ]
 }

@@ -33,6 +33,7 @@ package.kab.diagram = function KabDiagram(me) {
                 session.usedDiagrams = [];
             }
             session.usedDiagrams.push(path);
+            break;
         }
         return matchingDiagram;
     };

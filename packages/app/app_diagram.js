@@ -32,6 +32,8 @@ package.app.diagram = function AppDiagram(me) {
             window.options.fontSize = (parseInt(window.options.fontSize)/2) + "px";
             window.options.viewType = "Layers";
             window.options.doExplanation = false;
+            window.options.headings = false;
+            window.options.phaseNumbers = false;
             window.options.hoverCallback = null;
             window.optionsLoaded = true;
             me.set(window, "core.property.widget-window-restore", "app.diagram.restore");
@@ -148,6 +150,8 @@ package.app.diagram = function AppDiagram(me) {
             if(embed) {
                 me.set(window, "app.diagram.fontSize", window.options.original.fontSize);
                 me.set(window, "app.diagram.doExplanation", window.options.original.doExplanation);
+                me.set(window, "app.diagram.phaseNumbers", window.options.original.phaseNumbers);
+                me.set(window, "app.diagram.headings", window.options.original.headings);
             }
         }
     };
