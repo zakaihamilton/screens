@@ -1,4 +1,4 @@
-.kab-term-heading {
+[kab-term-heading]:after {
     position:absolute;
     bottom:3.2em;
     vertical-align:middle;
@@ -9,13 +9,15 @@
     text-transform:uppercase;
     pointer-events: none;
     background:transparent;
+    user-select: none;
+    content: attr(kab-term-heading);
 }
 
-.kab-term-heading.kab-term-english {
+[kab-term-heading].kab-term-english:after {
     left:0em;
 }
 
-.kab-term-heading.kab-term-hebrew {
+[kab-term-heading].kab-term-hebrew:after {
     right:0em;
 }
 
@@ -60,7 +62,7 @@
     border-style:hidden;
 }
 
-.kab-term-phase-number {
+[kab-term-phase-number]:after {
     position:absolute;
     bottom:2em;
     vertical-align:middle;
@@ -70,19 +72,21 @@
     font-size:50%;
     text-transform:uppercase;
     border-radius: 50%;
+    content:attr(kab-term-phase-number);
 
     width: 1em;
     height: 1em;
     padding: 0em;
 
     text-align: center;
+    user-select: none;
 }
 
-.kab-term-phase-number.kab-term-english {
+[kab-term-phase-number].kab-term-english:after {
     right:-0.5em;
 }
 
-.kab-term-phase-number.kab-term-hebrew {
+[kab-term-phase-number].kab-term-hebrew:after {
     left:-0.5em;
 }
 
@@ -116,7 +120,7 @@
     border:2px solid gray;
 }
 
-.kab-term-phase-number-root {
+.kab-term-phase-number-root:after {
     background:white;
     border:1px solid gray;
 }
@@ -142,7 +146,7 @@
     border:2px solid orange;
 }
 
-.kab-term-phase-number-one {
+.kab-term-phase-number-one:after {
     background:#FFF3CA;
     border:1px solid orange;
 }
@@ -168,7 +172,7 @@
     border:2px solid darkblue;
 }
 
-.kab-term-phase-number-two {
+.kab-term-phase-number-two:after {
     background:#C8D9F9;
     border:1px solid darkblue;
 }
@@ -194,7 +198,7 @@
     border:2px solid coral;
 }
 
-.kab-term-phase-number-three {
+.kab-term-phase-number-three:after {
     background:#F5CCCB;
     border:1px solid coral;
 }
@@ -220,7 +224,7 @@
     border:2px solid green;
 }
 
-.kab-term-phase-number-four {
+.kab-term-phase-number-four:after {
     background:#D9EAD2;
     border:1px solid green;
 }

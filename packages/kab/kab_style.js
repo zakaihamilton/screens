@@ -84,11 +84,11 @@ package.kab.style = function KabStyle(me) {
             if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
                 var phaseNumber = session.json.phaseNumber[phase];
                 if (phaseNumber) {
-                    html += "<span class=\"kab-term-phase-number kab-term-phase-number-" + phase + " kab-term-" + session.language + "\">" + phaseNumber + "</span>";
+                    html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-phase-number-" + phase + " kab-term-" + session.language + "\"></span>";
                 }
             }
             if (heading) {
-                html += "<span class=\"kab-term-heading kab-term-" + session.language + "\">" + heading + "</span>";
+                html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + "\"></span>";
             }
             if (numDescriptions) {
                 if (phase === "none") {
@@ -96,7 +96,7 @@ package.kab.style = function KabStyle(me) {
                 }
                 for(var descriptionType in descriptions) {
                     var description = descriptions[descriptionType];
-                    html += "<span id=\"" + descriptionType + "\" class=\"kab-term-description-box kab-term-" + descriptionType + " kab-term-phase-" + phase + "-border\">";
+                    html += "<span id=\"" + descriptionType + "\" style=\"display:none;\" class=\"kab-term-description-box kab-term-" + descriptionType + " kab-term-phase-" + phase + "-border\">";
                     var short = description.short;
                     if (!short) {
                         short = "";

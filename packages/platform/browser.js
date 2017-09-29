@@ -52,7 +52,8 @@ package.include({
         "layout",
         "work",
         "cachekey",
-        "arrange"
+        "arrange",
+        "exec"
     ],
     "menu": [
         "context"

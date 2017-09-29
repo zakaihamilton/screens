@@ -77,7 +77,7 @@
                 ["HTML", "app.transform.showHtml", {
                         "state": "select",
                         "separator": true,
-                        "visible":false
+                        "visible": false
                     }
                 ],
                 ["Input", "app.transform.showInput", {
@@ -85,6 +85,16 @@
                         "separator": true
                     }
                 ]
+            ]
+        ],
+        ["Edit", [
+                ["Copy", "ui.exec.copy"],
+                ["Bold", "ui.exec.bold", {
+                        "separator": true
+                    }
+                ],
+                ["Italic", "ui.exec.italic"],
+                ["Underline", "ui.exec.underline"]
             ]
         ],
         ["Font", [
@@ -220,15 +230,15 @@
                     }
                 },
                 {
-                    "ui.element.component":"widget.icon",
+                    "ui.element.component": "widget.icon",
                     "ui.class.add": "app.transform.toggleTerms",
                     "ui.basic.src": "/packages/res/icons/terms.png",
                     "ui.basic.var": "toggleTerms",
                     "ui.touch.click": "app.transform.toggleTerms"
                 },
                 {
-                    "ui.element.component":"widget.icon",
-                    "ui.class.add":"app.transform.toggleGlossary",
+                    "ui.element.component": "widget.icon",
+                    "ui.class.add": "app.transform.toggleGlossary",
                     "ui.basic.src": "/packages/res/icons/glossary.png",
                     "ui.basic.var": "toggleGlossary",
                     "ui.touch.click": "app.transform.toggleGlossary"

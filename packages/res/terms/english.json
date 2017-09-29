@@ -80,7 +80,12 @@
         "histaklut": "Histaklut",
         "“Or": "“or",
         "Midatha": "Midat ha",
-        "Bassar": "Basar"
+        "Bassar": "Basar",
+        "Behin at":"Behinat",
+        "reshimot":"Reshimot",
+        "Partzufimfrom":"Partzufim from",
+        "Hochma and Hassadim":"Hochma2 and Hassadim",
+        "Hochma was dark":"Hochma2 was dark"
     },
     "pre": [
         {
@@ -4706,6 +4711,14 @@
         {
             "term":"Echad",
             "translation":"One"
+        },
+        {
+            "term":"Merkava",
+            "translation":"Chariot"
+        },
+        {
+            "term":"Haka’ot",
+            "translation":"Strikings"
         }
     ],
     "style": {

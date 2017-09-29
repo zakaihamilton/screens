@@ -299,7 +299,7 @@ package.app.transform = function AppTransform(me) {
     me.reflow = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            if(window) {
+            if (window) {
                 window.forceReflow = true;
                 me.notify(window, "update");
             }
@@ -397,6 +397,11 @@ package.app.transform = function AppTransform(me) {
         descriptionTypes.map(function (descriptionType) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
             me.set(descriptionBox, "ui.class.remove", "show");
+            if (descriptionBox) {
+                descriptionBox.resetTimer = setTimeout(function () {
+                    me.set(descriptionBox, "ui.style.display", "none");
+                }, 1000);
+            }
         });
     };
     me.loadDiagram = {
@@ -422,7 +427,14 @@ package.app.transform = function AppTransform(me) {
             object.descriptionType = descriptionType;
             me.resetDescription(object);
             if (state) {
-                me.set(descriptionBox, "ui.class.add", "show");
+                if (descriptionBox && descriptionBox.resetTimer) {
+                    clearTimeout(descriptionBox.resetTimer);
+                    descriptionBox.resetTimer = null;
+                }
+                me.set(descriptionBox, "ui.style.display", "block");
+                setTimeout(function () {
+                    me.set(descriptionBox, "ui.class.add", "show");
+                }, 500);
             }
         }, 1000);
     };
@@ -443,6 +455,13 @@ package.app.transform = function AppTransform(me) {
         }
         object.descriptionType = descriptionType;
         me.resetDescription(object);
-        me.set(descriptionBox, "ui.class.add", "show");
+        if (descriptionBox && descriptionBox.resetTimer) {
+            clearTimeout(descriptionBox.resetTimer);
+            descriptionBox.resetTimer = null;
+        }
+        me.set(descriptionBox, "ui.style.display", "block");
+        setTimeout(function () {
+            me.set(descriptionBox, "ui.class.add", "show");
+        }, 500);
     };
 };
