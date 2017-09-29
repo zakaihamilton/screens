@@ -464,4 +464,14 @@ package.app.transform = function AppTransform(me) {
             me.set(descriptionBox, "ui.class.add", "show");
         }, 500);
     };
+    me.toggleSeparator = {
+        get: function(object, value) {
+            var window = me.widget.window.mainWindow(object);
+            return me.ui.layout.hasSeparator(me.ui.layout.currentPage(window.var.layout));
+        },
+        set: function(object, value) {
+            var window = me.widget.window.mainWindow(object);
+            me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
+        }
+    };
 };

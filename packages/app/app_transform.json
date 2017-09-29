@@ -94,7 +94,12 @@
                     }
                 ],
                 ["Italic", "ui.exec.italic"],
-                ["Underline", "ui.exec.underline"]
+                ["Underline", "ui.exec.underline"],
+                ["Separator", "app.transform.toggleSeparator", {
+                        "state":"select",
+                        "separator": true
+                    }
+                ]
             ]
         ],
         ["Font", [

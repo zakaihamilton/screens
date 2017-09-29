@@ -366,13 +366,13 @@ package.ui.layout = function UILayout(me) {
             page.style.display = "none";
         }
     };
-    me.pageInView = function (page) {
+    me.pageInView = function (page, partial=true) {
         let parentTop = page.parentNode.scrollTop;
         let parentBottom = parentTop + page.parentNode.clientHeight;
         let childTop = page.pageOffset;
         let childBottom = childTop + page.pageSize;
         let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
-        let isPartial = ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
+        let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
         return  (isTotal || isPartial);
     };
     me.scrolled = function(target) {
@@ -415,6 +415,39 @@ package.ui.layout = function UILayout(me) {
                 child = widget.firstChild;
             }
             child = child.nextSibling;
+        }
+    };
+    me.currentPage = function(target) {
+        target = me.content(target);
+        var child = target.firstChild;
+        while(child) {
+            if(child.pageSize) {
+                var pageInView = me.pageInView(child, false);
+                if(pageInView) {
+                    return child;
+                }
+            }
+            child = child.nextSibling;
+        }
+        return null;
+    };
+    me.hasSeparator = function(page) {
+        var hasSeparator = false;
+        if(page) {
+            if(page.var.separator.style.display !== "none") {
+                hasSeparator = true;
+            }
+        }
+        return hasSeparator;
+    };
+    me.toggleSeparator = function(page) {
+        if(page) {
+            if(page.var.separator.style.display === "none") {
+                page.var.separator.style.display = "block";
+            }
+            else {
+                page.var.separator.style.display = "none";
+            }
         }
     };
 };
