@@ -4719,6 +4719,16 @@
         {
             "term":"Haka’ot",
             "translation":"Strikings"
+        },
+        {
+            "term":"Dinim Nukva",
+            "source":"Dinim de Nukva",
+            "translation":"Female Judgements"
+        },
+        {
+            "term":"Dinim Dechura",
+            "source":"Dinim de Dechura",
+            "translation":"Male Judgements"
         }
     ],
     "style": {

@@ -414,7 +414,9 @@ package.ui.layout = function UILayout(me) {
                 widget.removeChild(child);
                 child = widget.firstChild;
             }
-            child = child.nextSibling;
+            if(child) {
+                child = child.nextSibling;
+            }
         }
     };
     me.currentPage = function(target) {

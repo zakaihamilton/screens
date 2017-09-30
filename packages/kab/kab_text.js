@@ -280,7 +280,7 @@ package.kab.text = function KabText(me) {
         } else if (keepSource && term.toLowerCase() !== replacement.toLowerCase()) {
             replacement = term + prefix + replacement + suffix;
         }
-        me.kab.format.replaceDuplicate(instance.words, instance.wordIndex, replacement);
+        me.kab.format.replaceDuplicate(session, instance, replacement);
         var text = replacement;
         var replacementWithStyles = replacement;
         if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {

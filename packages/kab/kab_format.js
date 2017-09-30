@@ -103,7 +103,9 @@ package.kab.format = function KabFormat(me) {
         }
         return wordsString;
     };
-    me.replaceDuplicate = function (words, wordIndex, replacement) {
+    me.replaceDuplicate = function (session, instance, replacement) {
+        var words = instance.words;
+        var wordIndex = instance.wordIndex;
         var collectIndex = wordIndex + 1;
         var next = words[collectIndex++];
         if (next === "(" || next === "[") {
@@ -114,6 +116,10 @@ package.kab.format = function KabFormat(me) {
                 }
                 var next = words[collectIndex++];
                 if (next === ")" || next === "]") {
+                    var addStyles = session.options.addStyles;
+                    session.options.addStyles = false;
+                    duplicate = me.kab.text.parseSingle(session, duplicate, instance.depth + 1);
+                    session.options.addStyles = addStyles;
                     if (replacement.toLowerCase().includes(duplicate.toLowerCase())) {
                         words.splice(wordIndex + 1, collectIndex - wordIndex);
                     }

@@ -10,6 +10,9 @@ package.kab.diagram = function KabDiagram(me) {
             return null;
         }
         for(let diagram of session.json.diagrams) {
+            if(!diagram.diagram) {
+                continue;
+            }
             var path = "/packages/res/diagrams/" + diagram.diagram + ".json";
             if(diagram.term && diagram.term !== term) {
                 continue;
