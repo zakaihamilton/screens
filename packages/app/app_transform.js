@@ -331,6 +331,9 @@ package.app.transform = function AppTransform(me) {
             var reflowOptions = {
                 pageClass: "app.transform.page",
                 contentClass: "app.transform.page.content",
+                containerClass:"app.transform.page.container",
+                marginLeftClass:"app.transform.page.margin.left",
+                marginRightClass:"app.transform.page.margin.right",
                 headerClass: "app.transform.page.header",
                 pageNumberClass: "app.transform.page.number",
                 scrollToTopClass: "app.transfer.page.scrolltotop",

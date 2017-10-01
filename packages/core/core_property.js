@@ -131,7 +131,7 @@ package.core.property = function CoreProperty(me) {
         }
         source_list[target] = enabled;
     };
-    me.notify = function (object, name) {
+    me.notify = function (object, name, value) {
         if(!object) {
             return;
         }
@@ -143,7 +143,7 @@ package.core.property = function CoreProperty(me) {
         }
         object.notifications[name] = setTimeout(function() {
             object.notifications[name] = null;
-            me.set(object, name);
+            me.set(object, name, value);
         }, 0);
     };
     me.set = function (object, name, value) {

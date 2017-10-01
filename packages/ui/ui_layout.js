@@ -44,7 +44,7 @@ package.ui.layout = function UILayout(me) {
                             }
                         }
                     } while (childWidget);
-                    widget.removeChild(widget.var.content);
+                    widget.var.content.parentNode.removeChild(widget.var.content);
                     widget.var.content = null;
                     target.removeChild(widget);
                 } else {
@@ -173,8 +173,10 @@ package.ui.layout = function UILayout(me) {
                 }
                 var newPage = false;
                 me.cleanupWidget(widget);
-                me.activateOnLoad(widget, widget);
                 if (pageContent.scrollHeight > pageContent.clientHeight) {
+                    newPage = true;
+                }
+                if (pageContent.scrollWidth > pageContent.clientWidth) {
                     newPage = true;
                 }
                 if(widget.tagName && widget.tagName.toLowerCase() === "br") {
@@ -208,6 +210,7 @@ package.ui.layout = function UILayout(me) {
                         }
                     }
                     previousWidget = null;
+                    me.activateOnLoad(target.page ? target.page.var.marginRight : widget, widget);
                     if(showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
@@ -215,6 +218,7 @@ package.ui.layout = function UILayout(me) {
                     break;
                 } else if (widget) {
                     previousWidget = widget;
+                    me.activateOnLoad(target.page ? target.page.var.marginRight : widget, widget);
                 }
             }
         }, 0);
@@ -277,10 +281,28 @@ package.ui.layout = function UILayout(me) {
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.contentClass,
-                    "ui.style.columnCount": options.columnCount,
-                    "ui.basic.var": "content",
-                    "ui.style.overflow": "hidden"
+                    "ui.class.class": options.containerClass,
+                    "ui.basic.var": "container",
+                    "ui.style.overflow": "hidden",
+                    "ui.basic.elements":[
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": options.marginLeftClass,
+                            "ui.basic.var": "marginLeft"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": options.contentClass,
+                            "ui.style.columnCount": options.columnCount,
+                            "ui.basic.var": "content",
+                            "ui.style.overflow": "hidden"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": options.marginRightClass,
+                            "ui.basic.var": "marginRight"
+                        }
+                    ]
                 },
                 {
                     "ui.basic.tag": "div",

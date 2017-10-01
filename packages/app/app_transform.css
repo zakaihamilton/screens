@@ -66,9 +66,23 @@
     margin:0;
 }
 
+.app-transform-page-container {
+    display:flex;
+    box-sizing:border-box;
+    margin:0;
+}
+
+.app-transform-page-margin-left {
+    padding-left:1em;
+    padding-right:1em;
+}
+
+.app-transform-page-margin-right {
+    padding-left:1em;
+    padding-right:1em;
+}
+
 .app-transform-page-content {
-    padding-left:5em;
-    padding-right:5em;
     padding-bottom:5em;
     position:relative;
     text-align:justify;
@@ -76,6 +90,8 @@
     column-gap: 4em;
     column-fill:balance;
     column-rule-color:transparent;
+    padding-left:3em;
+    padding-right:3em;
 }
 
 .app-transform-page-content h4 {

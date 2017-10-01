@@ -26,9 +26,6 @@ package.ui.focus = function UIFocus(me) {
         return false;
     };
     me.find_branch = function (object, x, y) {
-        if(me.get(object, "embed")) {
-            return null;
-        }
         /* Find the lowest matching element on position */
         var childList = me.ui.node.childList(object);
         for (var index = childList.length - 1; index >= 0; index--) {
@@ -146,6 +143,9 @@ package.ui.focus = function UIFocus(me) {
         /* Check if window is visible */
         if (!me.get(window, "visible")) {
             return;
+        }
+        if(me.get(window, "embed")) {
+            window = me.widget.window.parent(window);
         }
         /* Find bottom window to focus on */
         window = me.findLeaf(window);
