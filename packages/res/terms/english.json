@@ -4789,6 +4789,11 @@
             "depends":["Hassadim"],
             "term":"Hirik",
             "diagram":"punctuation"
+        },
+        {
+            "depends":["nakedness"],
+            "term":"Dinim Nukva",
+            "diagram":"nakedness"
         }
     ]
 }

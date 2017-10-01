@@ -409,6 +409,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.loadDiagram = {
         set: function (object, path) {
+            me.set(object, "ui.style.paddingBottom", "3em");
             var window = me.widget.window.mainWindow(object);
             me.core.app.launch(function (diagramWindow) {
                 me.set(diagramWindow, "core.property.widget-window-restore", "app.transform.reflow");

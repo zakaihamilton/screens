@@ -19,7 +19,7 @@ package.kab.data = function KabData(me) {
                     callback(json);
                 }
             }
-        }, "/packages/res/terms/" + language + ".json");
+        }, "/packages/res/terms/" + language + ".json", false);
     };
     me.load = function (callback, language, reload=false) {
         language = language.toLowerCase();

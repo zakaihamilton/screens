@@ -154,7 +154,7 @@ package.kab.text = function KabText(me) {
         return wordsString;
     };
     me.parse = function (callback, language, wordsString, options) {
-        me.kab.data.reload(function (json) {
+        me.kab.data.load(function (json) {
             me.send("kab.search.clear");
             wordsString = me.send("kab.format.spelling", wordsString, json.spelling);
             if(wordsString.includes("\n")) {
