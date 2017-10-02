@@ -54,14 +54,15 @@
 
 .glow-window-border.maximize {
     border-radius: 0px;
+    border:none;
+}
+
+.glow-window-border.maximize.main {
+    margin-bottom:0px;
 }
 
 .glow-window-border.focus {
     box-shadow: 0px 0px 15px 3px #0f2777;
-}
-
-.glow-window-border.maximize {
-    border:none;
 }
 
 .glow-window-border.minimize {

@@ -7,6 +7,7 @@
     "ui.move.enabled": true,
     "ui.resize.enabled": true,
     "ui.class.class": "border",
+    "ui.class.add": "@widget.window.mainClass",
     "ui.basic.elements": [
         {
             "ui.basic.var": "icon",
