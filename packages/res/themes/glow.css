@@ -618,3 +618,11 @@
     border-top: 3px solid white;
     box-shadow: 0px -1px 0px 0px black;
 }
+
+.glow-window-icon {
+    display:none;
+}
+
+.glow-window-icon.minimize {
+    display:block;
+}

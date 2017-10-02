@@ -55,8 +55,10 @@
             ]
         ],
         ["Layout", [
+                ["Reflow","app.transform.reflow"],
                 ["Auto Scroll", "app.transform.autoScroll", {
-                        "state": "select"
+                        "state": "select",
+                        "separator": true
                     }
                 ],
                 ["Snap to Page", "app.transform.snapToPage", {

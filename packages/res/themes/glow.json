@@ -180,6 +180,11 @@
             "source":"widget-list-item",
             "target":"glow-list-item",
             "replace":true
+        },
+        {
+            "source":"widget-window-icon",
+            "target":"glow-window-icon",
+            "replace":true
         }
     ]
 }

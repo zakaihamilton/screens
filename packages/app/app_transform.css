@@ -6,6 +6,11 @@
     height:180px;
     width:95%;
     margin:10px 10px 10px 10px;
+    direction: ltr;
+}
+
+.app-transform-input.hebrew {
+    direction: rtl;
 }
 
 .app-transform-convert {

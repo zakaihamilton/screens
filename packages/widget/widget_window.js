@@ -325,7 +325,7 @@ package.widget.window = function WidgetWindow(me) {
                 "ui.focus.active": false
             });
             if(!me.get(window, "popup")) {
-                me.set(window.var.icon, "ui.style.display", "block");
+                me.set(window.var.icon, "ui.class.add", "minimize");
             }
             var parent_window = me.parent(window);
             if (parent_window) {
@@ -371,7 +371,7 @@ package.widget.window = function WidgetWindow(me) {
                 }
             });
             if(!me.get(window, "popup")) {
-                me.set(window.var.icon, "ui.style.display", "none");
+                me.set(window.var.icon, "ui.class.remove", "minimize");
             }
             var parent_window = me.parent(window);
             if (parent_window) {
@@ -457,7 +457,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.set(window, "maximize");
                 } else {
                     if(!me.get(window, "popup")) {
-                        me.set(window.var.icon, "ui.style.display", "none");
+                        me.set(window.var.icon, "ui.class.remove", "minimize");
                     }
                     me.set(window, "ui.property.group", {
                         "ui.class.remove": "minimize",
@@ -500,7 +500,7 @@ package.widget.window = function WidgetWindow(me) {
                     "ui.focus.active": true
                 });
                 if(!me.get(window, "popup")) {
-                    me.set(window.var.icon, "ui.style.display", "none");
+                    me.set(window.var.icon, "ui.class.remove", "minimize");
                 }
             }
             if (maximized) {

@@ -263,12 +263,14 @@ package.app.transform = function AppTransform(me) {
                         me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                     }
                     if (window.prevLanguage) {
+                        me.set(window.var.input, "ui.class.remove", window.prevLanguage);
                         me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
                         me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
                         me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
                         me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
                         me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
                     }
+                    me.set(window.var.input, "ui.class.add", language);
                     me.set(window.var.layout, "ui.class.add", language);
                     me.set(window.var.filter, "ui.class.add", language);
                     me.set(window.var.termPopup, "title", data.termTableTitle);

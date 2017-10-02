@@ -11,7 +11,7 @@
         {
             "ui.basic.var": "icon",
             "text": "",
-            "ui.style.display": "none",
+            "ui.class.add":"widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.touch.click": "menu.context.show",
             "ui.touch.dblclick": "widget.window.restore",

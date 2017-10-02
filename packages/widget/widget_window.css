@@ -421,3 +421,11 @@
 .widget-window-minimize.child {
     display:none;
 }
+
+.widget-window-icon {
+    display:none;
+}
+
+.widget-window-icon.minimize {
+    display:block;
+}
