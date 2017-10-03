@@ -626,10 +626,17 @@
 
 .glow-window-icon.widget-icon-list {
     display:block;
-    border:1px solid black;
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    background-color: transparent;
+    color:white;
+    border:1px solid lightblue;
+    border-radius: 5px;
 }
 
 .glow-window-icon.widget-icon-list.minimize {
+    box-shadow: none;
+    background-color: transparent;
+    color:white;
     border:1px solid transparent;
 }
 
@@ -637,4 +644,5 @@
     box-shadow: 0px 0px 15px 3px #0f2777;
     background-color: #0f2777;
     color:white;
+    border:1px solid lightblue;
 }
