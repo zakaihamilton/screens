@@ -404,7 +404,7 @@ package.widget.window = function WidgetWindow(me) {
                 if (parent_window && parent_window.child_window && parent_window.child_window !== window) {
                     me.set(window, "maximize");
                 } else if (minimized) {
-                    me.set(window, "unmaximize");
+                    me.set(window, "restore");
                 } else if(!me.get(window, "embed")) {
                     me.set(window, "ui.focus.active", true);
                 }
@@ -527,13 +527,34 @@ package.widget.window = function WidgetWindow(me) {
             me.notify(window.child_window, "update");
         }
     };
-    me.toggle = {
+    me.toggleSize = {
         set: function (object, value) {
             var window = me.window(object);
-            if (me.get(window, "ui.class.contains", "maximize")) {
-                me.set(window, "widget.window.unmaximize");
-            } else {
-                me.set(window, "widget.window.maximize");
+            if (me.get(window, "ui.class.contains", "minimize")) {
+                me.set(window, "widget.window.restore");
+            }
+            else {
+                if (me.get(window, "ui.class.contains", "maximize")) {
+                    me.set(window, "widget.window.unmaximize");
+                } else {
+                    me.set(window, "widget.window.maximize");
+                }
+            }
+        }
+    };
+    me.toggleVisibility = {
+        set: function (object, value) {
+            var window = me.window(object);
+            if( me.get(window, "ui.focus.active")) {
+                if (me.get(window, "ui.class.contains", "minimize")) {
+                    me.set(window, "widget.window.restore");
+                }
+                else {
+                    me.set(window, "widget.window.minimize");
+                }
+            }
+            else {
+                me.set(window, "widget.window.show", true);
             }
         }
     };
@@ -727,6 +748,18 @@ package.widget.window = function WidgetWindow(me) {
             if(!value) {
                 me.notify(window, "update");
             }
+        }
+    };
+    me.focus = {
+        set: function(object) {
+            var window = me.window(object);
+            me.set(window.var.icon, "ui.class.add", "focus");
+        }
+    };
+    me.blur = {
+        set: function(object) {
+            var window = me.window(object);
+            me.set(window.var.icon, "ui.class.remove", "focus");
         }
     };
 };

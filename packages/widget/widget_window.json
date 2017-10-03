@@ -14,8 +14,8 @@
             "text": "",
             "ui.class.class":"widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.touch.click": "menu.context.show",
-            "ui.touch.dblclick": "widget.window.restore",
+            "ui.touch.dblclick": "menu.context.show",
+            "ui.touch.click": "widget.window.toggleVisibility",
             "ui.basic.window": null,
             "ui.node.parent": "@widget.tray.tray",
             "widget.icon.type":"@widget.tray.type(widget.tray.tray,)"
@@ -59,7 +59,7 @@
                             "ui.basic.text": "",
                             "ui.class.class": "label",
                             "ui.move.extend": null,
-                            "ui.touch.dblclick": "toggle"
+                            "ui.touch.dblclick": "toggleSize"
                         },
                         {
                             "ui.basic.var": "minimize",
@@ -72,7 +72,7 @@
                         {
                             "ui.basic.var": "maximize",
                             "ui.class.class": ["action", "maximize"],
-                            "ui.touch.click": "toggle",
+                            "ui.touch.click": "toggleSize",
                             "ui.basic.elements": {
                                 "ui.class.class": "maximize.arrow"
                             }

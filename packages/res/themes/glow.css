@@ -616,10 +616,25 @@
     box-shadow: 0px -1px 0px 0px black;
 }
 
-.glow-window-icon {
+.glow-window-icon.widget-icon-icon {
     display:none;
 }
 
-.glow-window-icon.minimize {
+.glow-window-icon.widget-icon-icon.minimize {
     display:block;
+}
+
+.glow-window-icon.widget-icon-list {
+    display:block;
+    border:1px solid black;
+}
+
+.glow-window-icon.widget-icon-list.minimize {
+    border:1px solid transparent;
+}
+
+.glow-window-icon.widget-icon-list.focus {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    background-color: #0f2777;
+    color:white;
 }

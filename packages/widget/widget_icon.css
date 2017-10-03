@@ -35,6 +35,8 @@
 .widget-icon-image-list {
     object-fit: none;
     position:relative;
+    margin-left:3px;
+    margin-top:3px;
 }
 
 .widget-icon-label-icon {
@@ -47,7 +49,7 @@
 .widget-icon-label-list {
     position: absolute;
     left:20px;
-    top:1px;
+    top:4px;
     font-family: "MS Sans Serif";
     font-size: 13px;
     user-select: none;
