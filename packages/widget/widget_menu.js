@@ -132,7 +132,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
             var item = value[0];
             var info = value[1];
             me.set(object, "back", item);
-            me.set(object.window, info, me.get(item, "ui.basic.text"), item);
+            me.set(object.window, info, me.get(item, "ui.basic.text"));
         }
     };
 };
@@ -153,7 +153,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
                 if(value === "select") {
                     value = object.menu_select;
                 }
-                value = me.get(object.parentNode.target, value, me.get(object, "ui.basic.text"));
+                value = me.get(object.parentNode.window, value, me.get(object, "ui.basic.text"));
             }
             callback(value);
         }

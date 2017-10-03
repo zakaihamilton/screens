@@ -762,4 +762,30 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window.var.icon, "ui.class.remove", "focus");
         }
     };
+    me.alwaysOnTop = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.alwaysOnTop;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            window.alwaysOnTop = value;
+            if(value) {
+                me.set(window, "ui.style.zIndex", 1000);
+            }
+            else {
+                me.ui.focus.updateOrder(window.parentNode, window);                
+            }
+        }
+    };
+    me.alwaysOnTopToggle = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.alwaysOnTop;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            me.set(window, "alwaysOnTop", !window.alwaysOnTop);
+        }
+    };
 };

@@ -29,6 +29,12 @@
             "enabled": "select"
         }
     ],
+    ["Always On Top", "widget.window.alwaysOnTopToggle", {
+            "separator": true,
+            "visible": "menu.context.notEmbed",
+            "state": "select"
+        }
+    ],
     ["Next", "menu.context.next", {
             "separator": true,
             "visible": "menu.context.isChild"

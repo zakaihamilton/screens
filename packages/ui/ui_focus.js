@@ -86,6 +86,9 @@ package.ui.focus = function UIFocus(me) {
             childList.splice(order, 0, object);
         }
         for (var childOrder = 0; childOrder < childList.length; childOrder++) {
+            if(me.get(childList[childOrder], "alwaysOnTop")) {
+                continue;
+            }
             me.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
         if(object) {

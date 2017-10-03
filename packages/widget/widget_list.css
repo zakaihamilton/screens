@@ -95,7 +95,7 @@
     position:absolute;
     background:white;
     border:1px solid black;
-    z-index:100;
+    z-index:1000;
     margin-top:-3px;
     box-sizing: border-box;
     display:flex;
