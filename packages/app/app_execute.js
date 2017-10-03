@@ -9,7 +9,7 @@ package.app.execute = function AppExecute(me) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "desktop", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.run = {
         set: function(object) {

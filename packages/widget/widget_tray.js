@@ -11,11 +11,13 @@ package.widget.tray = function WidgetTray(me) {
         get: function(object) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
+            var type = "icon";
             if(parent) {
                 parent = me.get(parent, "content");
             }
             else {
-                parent = me.ui.element.desktop();
+                parent = me.ui.element.bar();
+                type = "list";
             }
             if(!parent.var) {
                 parent.var = {};
@@ -23,10 +25,20 @@ package.widget.tray = function WidgetTray(me) {
             if(!parent.var.tray) {
                 me.ui.element.create({
                     "ui.element.component":"widget.tray",
-                    "ui.basic.var":"tray"
+                    "ui.basic.var":"tray",
+                    "type":type
                 }, parent);
             }
             return parent.var.tray;
         }
+    };
+    me.init = function() {
+        me.type = me.core.object.property("widget.tray.type", {
+            set: function(object, value) {
+                me.set(object, "ui.property.broadcast", {
+                    "type":value
+                });
+            }
+        });
     };
 };

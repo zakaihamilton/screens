@@ -65,7 +65,28 @@ package.ui.element = function UIElement(me) {
         }
     };
     me.desktop = function() {
-        return document.body;
+        if(document.body.var) {
+            return document.body.var.desktop;
+        }
+        else {
+            return document.body;
+        }
+    };
+    me.bar = function() {
+        if(document.body.var) {
+            return document.body.var.desktop.var.bar;
+        }
+        else {
+            return document.body;
+        }
+    };
+    me.workspace = function() {
+        if(document.body.var) {
+            return document.body.var.desktop.var.workspace;
+        }
+        else {
+            return document.body;
+        }
     };
     me.update = function (properties, object) {
         if (Array.isArray(properties)) {
@@ -133,8 +154,8 @@ package.ui.element = function UIElement(me) {
         if(!Object.keys(properties).length) {
             return;
         }
-        if (!parent || parent==="desktop") {
-            parent = me.desktop();
+        if (!parent || parent==="workspace") {
+            parent = me.workspace();
         }
         if("ui.element.update" in properties) {
             var update = properties["ui.element.update"];

@@ -47,10 +47,10 @@ package.ui.focus = function UIFocus(me) {
     };
     me.deactivate = function (from, to) {
         while (from && from !== to) {
-            me.set(from, "ui.property.trickle", {
+            me.set(from, "ui.property.broadcast", {
                 "ui.class.remove": "focus"
             });
-            me.set(from, "ui.property.trickle", {
+            me.set(from, "ui.property.broadcast", {
                 "blur": from
             });
             from = me.widget.window.parent(from);
@@ -58,10 +58,10 @@ package.ui.focus = function UIFocus(me) {
     };
     me.activate = function (from, to) {
         while (from && from !== to) {
-            me.set(from, "ui.property.trickle", {
+            me.set(from, "ui.property.broadcast", {
                 "ui.class.add": "focus"
             });
-            me.set(from, "ui.property.trickle", {
+            me.set(from, "ui.property.broadcast", {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);

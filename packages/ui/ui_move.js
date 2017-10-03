@@ -43,7 +43,7 @@ package.ui.move = function UIMove(me) {
                 width: target.offsetWidth,
                 height: target.offsetHeight
             };
-            me.set(target, "ui.property.trickle", {
+            me.set(target, "ui.property.broadcast", {
                 "transition": true
             });
             event.preventDefault();
@@ -71,7 +71,7 @@ package.ui.move = function UIMove(me) {
                 "ui.touch.move":null,
                 "ui.touch.up":null,
             });
-            me.set(me.info.target, "ui.property.trickle", {
+            me.set(me.info.target, "ui.property.broadcast", {
                 "transition": false
             });
             var window = me.widget.window.window(me.info.target);

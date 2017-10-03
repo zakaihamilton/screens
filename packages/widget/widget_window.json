@@ -12,12 +12,13 @@
         {
             "ui.basic.var": "icon",
             "text": "",
-            "ui.class.add":"widget.window.icon",
+            "ui.class.class":"widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.touch.click": "menu.context.show",
             "ui.touch.dblclick": "widget.window.restore",
             "ui.basic.window": null,
-            "ui.node.parent": "@widget.tray.tray"
+            "ui.node.parent": "@widget.tray.tray",
+            "widget.icon.type":"@widget.tray.type(widget.tray.tray,)"
         },
         {
             "ui.element.update": {
@@ -93,7 +94,7 @@
             ]
         }
     ],
-    "ui.property.trickle": {
+    "ui.property.broadcast": {
         "ui.class.add": "restore"
     }
 }

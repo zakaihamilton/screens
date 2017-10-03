@@ -8,7 +8,7 @@ package.app.diagram = function AppDiagram(me) {
         var path = args[0];
         var json = __json__;
         var options = null;
-        var parent = "desktop";
+        var parent = "workspace";
         json["app.diagram.path"] = path;
         if(args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));

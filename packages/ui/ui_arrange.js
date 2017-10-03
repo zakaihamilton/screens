@@ -39,7 +39,7 @@ package.ui.arrange = function UIArrange(me) {
             container = parent.var.container;
             content = container.var.content;
         } else {
-            container = content = me.ui.element.desktop();
+            container = content = me.ui.element.workspace();
         }
         var parent_region = me.ui.rect.relative_region(container);
         var isFixed = me.get(window, "fixed");

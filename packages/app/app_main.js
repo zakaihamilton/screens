@@ -23,7 +23,8 @@ package.app.main = function (me) {
     me.ready = function () {
         me.ui.element.create([
             {
-                "ui.element.component":"widget.desktop"
+                "ui.element.component":"widget.desktop",
+                "ui.basic.var":"desktop"
             }
         ]);
         package.include("app.progman", function(info) {

@@ -18,7 +18,7 @@ package.widget.window = function WidgetWindow(me) {
     me.default = __json__;
     me.init = function () {
         me.popup = me.ui.property.themedPropertySet("popup");
-        me.embed = me.ui.property.themedPropertySet("embed", function(object, name, value) {
+        me.embed = me.ui.property.themedPropertySet("embed", function(object, value) {
             var maximized = me.get(object, "ui.class.contains", "maximize");
             me.set(object, "ui.move.enabled", !value && !maximized);
             me.set(object, "ui.style.position", value ? "relative" : "absolute");
@@ -28,7 +28,7 @@ package.widget.window = function WidgetWindow(me) {
         });
         me.temp = me.ui.property.themedPropertySet("temp");
         me.static = me.ui.property.themedPropertySet("static");
-        me.fixed = me.ui.property.themedPropertySet("fixed", function (object, name, value) {
+        me.fixed = me.ui.property.themedPropertySet("fixed", function (object, value) {
             var maximized = me.get(object, "ui.class.contains", "maximize");
             me.set(object, "ui.resize.enabled", !value && !maximized);
         });
@@ -48,7 +48,7 @@ package.widget.window = function WidgetWindow(me) {
         if (parent_window) {
             content = me.get(parent_window, "widget.window.content");
         } else {
-            content = me.ui.element.desktop();
+            content = me.ui.element.workspace();
         }
         window.restore_region = me.ui.rect.relative_region(window, content);
     };
@@ -77,7 +77,7 @@ package.widget.window = function WidgetWindow(me) {
         }
         var parent = object.parentNode;
         while (parent) {
-            if (parent === me.ui.element.desktop()) {
+            if (parent === me.ui.element.workspace()) {
                 return null;
             }
             if (parent.window) {
@@ -123,8 +123,8 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.windows = {
         get: function (object) {
-            var content = me.ui.element.desktop();
-            if (object !== me.ui.element.desktop()) {
+            var content = me.ui.element.workspace();
+            if (object !== me.ui.element.workspace()) {
                 content = me.get(object, "widget.window.content");
             }
             return me.ui.node.members(content, me.id);
@@ -176,7 +176,7 @@ package.widget.window = function WidgetWindow(me) {
                 });
                 me.notify(parent_window, "update");
             } else {
-                me.set(me.ui.element.desktop(), "widget.window.refocus");
+                me.set(me.ui.element.workspace(), "widget.window.refocus");
             }
         }
     };
@@ -244,10 +244,10 @@ package.widget.window = function WidgetWindow(me) {
     me.switch = function (parent, child) {
         me.update_title(parent);
         me.widget.menu.switch(parent, child);
-        me.set(child, "ui.property.trickle", {
+        me.set(child, "ui.property.broadcast", {
             "ui.class.toggle": "child"
         });
-        me.set(parent, "ui.property.trickle", {
+        me.set(parent, "ui.property.broadcast", {
             "ui.class.toggle": "parent"
         });
     };
@@ -255,7 +255,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function(object, properties) {
             var window = me.window(object);
             var parent_window = me.parent(window);
-            var content = me.ui.element.desktop();
+            var content = me.ui.element.workspace();
             if(parent_window) {
                 content = me.get(parent_window, "widget.window.content");
             }
@@ -334,7 +334,7 @@ package.widget.window = function WidgetWindow(me) {
                 }
                 me.set(parent_window, "widget.window.refocus");
             } else {
-                me.set(me.ui.element.desktop(), "widget.window.refocus");
+                me.set(me.ui.element.workspace(), "widget.window.refocus");
             }
             me.notify(parent_window, "update");
             me.notify(window, "update");
@@ -365,7 +365,7 @@ package.widget.window = function WidgetWindow(me) {
             me.set(window, "ui.property.group", {
                 "ui.class.remove": "minimize",
                 "ui.focus.active": true,
-                "ui.property.trickle": {
+                "ui.property.broadcast": {
                     "ui.class.remove": "restore",
                     "ui.class.add": "maximize"
                 }
@@ -445,11 +445,12 @@ package.widget.window = function WidgetWindow(me) {
                     parent_window.focus_window = null;
                 }
                 me.set(window, "ui.property.group", {
-                    "ui.node.parent":me.ui.element.desktop(),
+                    "ui.node.parent":me.ui.element.workspace(),
                     "widget.window.embed":false,
                     "ui.focus.active": true
                 });
                 me.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
+                me.set(window.var.icon, "widget.icon.type", "@widget.tray.type(widget.tray.tray,)");
                 me.notify(window, "update");
             }
             else if (minimized) {
@@ -468,7 +469,7 @@ package.widget.window = function WidgetWindow(me) {
                     if (parent_window) {
                         content = me.get(parent_window, "widget.window.content");
                     } else {
-                        content = me.ui.element.desktop();
+                        content = me.ui.element.workspace();
                     }
                     me.ui.rect.set_relative_region(window, window.restore_region, content);
                     me.notify(window, "update");
@@ -495,7 +496,7 @@ package.widget.window = function WidgetWindow(me) {
                 return;
             }
             if (minimized) {
-                me.set(window, "ui.property.trickle", {
+                me.set(window, "ui.property.broadcast", {
                     "ui.class.remove": "minimize",
                     "ui.focus.active": true
                 });
@@ -509,11 +510,11 @@ package.widget.window = function WidgetWindow(me) {
                     me.detach(parent_window);
                     content = me.get(parent_window, "widget.window.content");
                 } else {
-                    content = me.ui.element.desktop();
+                    content = me.ui.element.workspace();
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
                 me.set(window, "ui.property.group", {
-                    "ui.property.trickle": {
+                    "ui.property.broadcast": {
                         "ui.class.remove": "maximize",
                         "ui.class.add": "restore"
                     },
@@ -557,7 +558,7 @@ package.widget.window = function WidgetWindow(me) {
                 if (parent_window) {
                     content = me.get(parent_window, "widget.window.content");
                 } else {
-                    content = me.ui.element.desktop();
+                    content = me.ui.element.workspace();
                 }
                 return me.ui.rect.relative_region(window, content);
             }
@@ -571,7 +572,7 @@ package.widget.window = function WidgetWindow(me) {
             if (parent_window) {
                 content = me.get(parent_window, "widget.window.content");
             } else {
-                content = me.ui.element.desktop();
+                content = me.ui.element.workspace();
             }
             if (!maximized && !minimized) {
                 me.ui.rect.set_relative_region(window, value, content);
@@ -639,8 +640,8 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.visibleWindows = {
         get: function (object, value) {
-            var content = me.ui.element.desktop();
-            if (object !== me.ui.element.desktop()) {
+            var content = me.ui.element.workspace();
+            if (object !== me.ui.element.workspace()) {
                 content = me.get(object, "widget.window.content");
             }
             var members = me.ui.node.members(content, me.id);

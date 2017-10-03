@@ -80,7 +80,7 @@ package.core.object = function CoreObject(me) {
                 if(options && "set" in options) {
                     var callback = options["set"];
                     if(callback) {
-                        callback(object, name, value, oldValue);
+                        callback(object, value, name, oldValue);
                     }
                 }
             },

@@ -61,17 +61,22 @@ package.menu.context = function MenuContext(me) {
             var visible = !me.get(window, "ui.class.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, __json__);
+            var padding = 0;
             if (!visible) {
                 var parent = me.widget.window.parent(window);
-                if (!parent) {
-                    parent = me.ui.element.desktop();
+                if (parent) {
+                    padding = -6;
+                }
+                else {
+                    parent = me.ui.element.workspace();
+                    padding = -16;
                 }
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
                 me.set(menu, "ui.property.group", {
                     "ui.style.left": icon_icon_region.left + "px",
-                    "ui.style.top": region.bottom - menu_region.height - icon_region.height + "px"
+                    "ui.style.top": region.bottom - menu_region.height - icon_region.height + padding + "px"
                 });
             }
         }

@@ -1,4 +1,4 @@
-.widget-icon-figure {
+.widget-icon-icon {
     padding-top: 4px;
     min-width:76px;
     margin-left:10px;
@@ -7,12 +7,24 @@
     text-align: center;
 }
 
-.widget-icon-figure+.widget-icon-figure
+.widget-icon-icon+.widget-icon-icon
 {
     margin-left:0px;
 }
 
-.widget-icon-image {
+.widget-icon-list+.widget-icon-list
+{
+    margin-left:0px;
+}
+
+.widget-icon-list {
+    min-width:150px;
+    position:relative;
+    float:left;
+    top: 12px;
+}
+
+.widget-icon-image-icon {
     pointer-events:none;
     object-fit: none;
     display: block;
@@ -20,8 +32,22 @@
     margin-right: auto;
 }
 
-.widget-icon-caption {
+.widget-icon-image-list {
+    object-fit: none;
+    position:relative;
+}
+
+.widget-icon-label-icon {
     margin-bottom:2px;
+    font-family: "MS Sans Serif";
+    font-size: 13px;
+    user-select: none;
+}
+
+.widget-icon-label-list {
+    position: absolute;
+    left:20px;
+    top:1px;
     font-family: "MS Sans Serif";
     font-size: 13px;
     user-select: none;

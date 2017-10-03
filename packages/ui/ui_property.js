@@ -34,7 +34,7 @@ package.ui.property = function UIProperty(me) {
             }, 0);
         }
     };
-    me.trickle = {
+    me.broadcast = {
         set: function(object, properties) {
             for (var key in properties) {
                 me.set(object, key, properties[key]);
@@ -49,10 +49,10 @@ package.ui.property = function UIProperty(me) {
                     if(child.component === me.widget.window.id) {
                         continue;
                     }
-                    if(child.getAttribute("noTrickle")) {
+                    if(child.getAttribute("noBroadcast")) {
                         continue;
                     }
-                    me.trickle.set(child, properties);
+                    me.broadcast.set(child, properties);
                 }
             }
         }
@@ -62,25 +62,25 @@ package.ui.property = function UIProperty(me) {
             var window = me.widget.window.window(object);
             var parent = me.widget.window.parent(window);
             if(parent) {
-                me.trickle.set(parent, properties);
+                me.broadcast.set(parent, properties);
                 me.bubble.set(parent, properties);
             }
         }
     };
     me.themedPropertySet = function (name, callback) {
         return me.core.object.property(name, {
-            "set": function (object, name, value) {
+            "set": function (object, value, name) {
                 if (value) {
-                    me.set(object, "ui.property.trickle", {
+                    me.set(object, "ui.property.broadcast", {
                         "ui.class.add": name
                     });
                 } else {
-                    me.set(object, "ui.property.trickle", {
+                    me.set(object, "ui.property.broadcast", {
                         "ui.class.remove": name
                     });
                 }
                 if (callback) {
-                    callback(object, name, value);
+                    callback(object, value, name);
                 }
             }
         });

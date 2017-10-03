@@ -57,10 +57,6 @@
     border:none;
 }
 
-.glow-window-border.maximize.main {
-    margin-bottom:0px;
-}
-
 .glow-window-border.focus {
     box-shadow: 0px 0px 15px 3px #0f2777;
 }

@@ -66,10 +66,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         var class_name = scroll_type + "_scroll";
         if (has_class) {
             me.set(container, "ui.class.remove", class_name);
-            me.set(container.var.vertical, "ui.property.trickle", {
+            me.set(container.var.vertical, "ui.property.broadcast", {
                 "ui.class.remove": class_name
             });
-            me.set(container.var.footer, "ui.property.trickle", {
+            me.set(container.var.footer, "ui.property.broadcast", {
                 "ui.class.remove": class_name
             });
         }
@@ -85,10 +85,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         var class_name = scroll_type + "_scroll";
         if (has_scroll) {
             me.set(container, "ui.class.add", class_name);
-            me.set(container.var.vertical, "ui.property.trickle", {
+            me.set(container.var.vertical, "ui.property.broadcast", {
                 "ui.class.add": class_name
             });
-            me.set(container.var.footer, "ui.property.trickle", {
+            me.set(container.var.footer, "ui.property.broadcast", {
                 "ui.class.add": class_name
             });
         }

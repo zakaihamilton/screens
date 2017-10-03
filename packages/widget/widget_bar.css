@@ -1,0 +1,10 @@
+.widget-bar-container {
+    position:absolute;
+    bottom:0px;
+    height:32px;
+    right:0px;
+    left:0px;
+    background:white;
+    border-top:1px solid black;
+    box-sizing: border-box;
+}

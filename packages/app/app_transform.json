@@ -211,7 +211,7 @@
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
                     "core.property.scrolled": "app.transform.scrolled",
-                    "ui.attribute.noTrickle": true
+                    "ui.attribute.noBroadcast": true
                 },
                 {
                     "ui.basic.tag": "div",

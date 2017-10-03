@@ -9,12 +9,12 @@ package.app.tasks = function AppTasks(me) {
             me.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "desktop", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.tasks = {
         get: function(object) {
             var isFirst = true;
-            var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
+            var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
             var items = windows.reverse().map(function(window) {
                 var label = me.get(window, "label");
                 if(label === "Task List") {
@@ -32,7 +32,7 @@ package.app.tasks = function AppTasks(me) {
     };
     me.findSelectedTask = function() {
         var selectedTask = null;
-        var windows = me.ui.node.members(me.ui.element.desktop(), me.widget.window.id);
+        var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
         var tasks = me.get(me.singleton.var.tasks, "selection");
         if(tasks.length) {
             var task = tasks[0];
@@ -57,7 +57,7 @@ package.app.tasks = function AppTasks(me) {
             var task = me.findSelectedTask();
             me.set(task, "widget.window.close");
             me.set(me.singleton, "widget.window.close");
-            me.singleton = me.ui.element.create(__json__, "desktop", "self");
+            me.singleton = me.ui.element.create(__json__, "workspace", "self");
         }
     };
     me.tile = {
