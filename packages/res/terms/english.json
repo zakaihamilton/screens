@@ -4729,6 +4729,26 @@
             "term":"Dinim Dechura",
             "source":"Dinim de Dechura",
             "translation":"Male Judgements"
+        },
+        {
+            "term":"GAS",
+            "expansion":["Galgalta","AB","SAG"]
+        },
+        {
+            "term":"Mazal",
+            "translation":"Constellation"
+        },
+        {
+            "term":"Israel and ST",
+            "expansion":["Yisrael Saba ve Tvuna"]
+        },
+        {
+            "term":"Notzer",
+            "translation":"Preserves"
+        },
+        {
+            "term":"Nakeh",
+            "translation":"Cleanses"
         }
     ],
     "style": {
