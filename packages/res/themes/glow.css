@@ -52,6 +52,14 @@
     min-height:200px;
 }
 
+.glow-window-border.see-through {
+    opacity:0.25;
+}
+
+.glow-window-border.focus.see-through {
+    opacity:0.75;
+}
+
 .glow-window-border.maximize {
     border-radius: 0px;
     border:none;
