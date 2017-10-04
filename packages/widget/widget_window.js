@@ -32,6 +32,7 @@ package.widget.window = function WidgetWindow(me) {
             var maximized = me.get(object, "ui.class.contains", "maximize");
             me.set(object, "ui.resize.enabled", !value && !maximized);
         });
+        me.opacityLevel = "0.75";
     };
     me.draw = {
         set: function(object) {
@@ -555,6 +556,21 @@ package.widget.window = function WidgetWindow(me) {
             }
             else {
                 me.set(window, "widget.window.show", true);
+            }
+        }
+    };
+    me.seeThrough = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.style.opacity === me.opacityLevel;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            if(window.style.opacity === me.opacityLevel) {
+                window.style.opacity = 1.0;
+            }
+            else {
+                window.style.opacity = me.opacityLevel;
             }
         }
     };

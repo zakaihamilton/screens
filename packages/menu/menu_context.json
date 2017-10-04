@@ -35,6 +35,11 @@
             "state": "select"
         }
     ],
+    ["See Through", "widget.window.seeThrough", {
+            "visible": "menu.context.notEmbed",
+            "state": "select"
+        }
+    ],
     ["Next", "menu.context.next", {
             "separator": true,
             "visible": "menu.context.isChild"
