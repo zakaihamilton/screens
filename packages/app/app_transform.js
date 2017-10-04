@@ -253,7 +253,6 @@ package.app.transform = function AppTransform(me) {
                     language = me.core.string.language(text);
                     console.log("detected language: " + language);
                 }
-                me.set(window.var.footer, "ui.style.display", "block");
                 window.options.hoverCallback = "package.app.transform.hoverDescription";
                 window.options.diagramCallback = "package.app.transform.loadDiagram";
                 window.options.toggleCallback = "package.app.transform.cycleDescription";

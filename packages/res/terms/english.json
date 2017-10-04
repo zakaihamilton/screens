@@ -4814,6 +4814,11 @@
             "depends":["nakedness"],
             "term":"Dinim Nukva",
             "diagram":"nakedness"
+        },
+        {
+            "depends":["HGT"],
+            "term":"Zeir Anpin",
+            "diagram":"fathers"
         }
     ]
 }
