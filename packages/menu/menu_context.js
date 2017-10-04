@@ -60,17 +60,15 @@ package.menu.context = function MenuContext(me) {
             var window = me.widget.window.window(object);
             var visible = !me.get(window, "ui.class.contains", "minimize");
             var region = me.ui.rect.absolute_region(object);
-            var menu = me.widget.menu.create_menu(window, object, region, __json__);
+            var bottomUp = !visible || value === "taskbar";
+            var menu = me.widget.menu.create_menu(window, object, region, __json__, bottomUp);
             var padding = 0;
-            if (!visible || value === "taskbar") {
+            if (bottomUp) {
                 var parent = me.widget.window.parent(window);
-                if (parent) {
-                    padding = -6;
-                }
-                else {
+                if(!parent) {
                     parent = me.ui.element.workspace();
-                    padding = -16;
                 }
+                padding = -6;
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);

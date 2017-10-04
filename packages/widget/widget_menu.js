@@ -93,7 +93,7 @@ package.widget.menu = function WidgetMenu(me) {
             }
         }
     };
-    me.create_menu = function (window, object, region, values) {
+    me.create_menu = function (window, object, region, values, bottomUp) {
         var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
@@ -106,6 +106,9 @@ package.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         });
+        if(bottomUp) {
+            me.set(menu, "ui.class.add", "bottom-up");
+        }
         if (object.component === me.id) {
             me.set(menu.var.modal, "ui.style.display", "none");
         }

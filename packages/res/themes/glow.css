@@ -281,6 +281,10 @@
     overflow: hidden;    
 }
 
+.glow-menu-vertical.bottom-up {
+    border-radius: 15px 15px 0px 0px;
+}
+
 .glow-menu-vertical span {
     background-color: white;
     color: black;
