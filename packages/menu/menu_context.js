@@ -62,10 +62,7 @@ package.menu.context = function MenuContext(me) {
             var region = me.ui.rect.absolute_region(object);
             var menu = me.widget.menu.create_menu(window, object, region, __json__);
             var padding = 0;
-            if (visible) {
-                me.set(window, "widget.window.show", true);
-            }
-            else {
+            if (!visible || value === "taskbar") {
                 var parent = me.widget.window.parent(window);
                 if (parent) {
                     padding = -6;

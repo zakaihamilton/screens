@@ -14,7 +14,7 @@
             "text": "",
             "ui.class.class":"widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.touch.dblclick": "menu.context.show",
+            "ui.touch.dblclick": "menu.context.show(taskbar)",
             "ui.touch.click": "widget.window.toggleVisibility",
             "ui.basic.window": null,
             "ui.node.parent": "@widget.tray.tray",
