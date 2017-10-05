@@ -422,10 +422,29 @@
     display:none;
 }
 
-.widget-window-icon {
+.widget-window-icon.widget-icon-icon {
     display:none;
 }
 
-.widget-window-icon.minimize {
+.widget-window-icon.widget-icon-icon.minimize {
     display:block;
+}
+
+.widget-window-icon.widget-icon-list {
+    display:block;
+    background-color: transparent;
+    color:black;
+    border:1px solid black;
+}
+
+.widget-window-icon.widget-icon-list.minimize {
+    background-color: transparent;
+    color:black;
+    border:1px solid transparent;
+}
+
+.widget-window-icon.widget-icon-list.focus {
+    background-color: white;
+    color:black;
+    border:1px solid black;
 }

@@ -185,6 +185,11 @@
             "source":"widget-window-icon",
             "target":"glow-window-icon",
             "replace":true
+        },
+        {
+            "source":"widget-bar-container",
+            "target":"glow-bar-container",
+            "replace":true
         }
     ]
 }
