@@ -4,15 +4,6 @@
  */
 
 package.kab.text = function KabText(me) {
-    me.retrieveTerms = function (callback, language, options) {
-        language = language.toLowerCase();
-        me.kab.data.load(function (json) {
-            var terms = me.send("kab.text.prepare", json, json.term, options, false);
-            if (callback) {
-                callback(terms);
-            }
-        }, language);
-    };
     me.splitWords = function (session, wordsString) {
         wordsString = me.core.string.parseWords(function (words) {
             if (session.json.options && session.json.options.splitPartial) {
@@ -62,8 +53,9 @@ package.kab.text = function KabText(me) {
                 var termLookup = session.terms[word];
                 if (!termLookup) {
                     if (word.length > 2) {
+                        var match = me.core.string.match;
                         term = session.terms["*"].find(function (term) {
-                            return me.core.string.match(word, term, wordStyle);
+                            return match(word, term, wordStyle);
                         });
                         if (term) {
                             termLookup = session.terms[term];
@@ -292,7 +284,7 @@ package.kab.text = function KabText(me) {
         }
         me.kab.format.insert(instance.words, instance.wordIndex + 1, session.json.suffix, instance.item.suffix, instance.suffixWord, text);
     };
-    me.prepare = function (json, terms, options, defaultTermsOnly = true) {
+    me.prepare = function (json, terms, options) {
         var result = new Map();
         if (!terms) {
             return null;
@@ -301,7 +293,7 @@ package.kab.text = function KabText(me) {
             var words = item.term.split(" ");
             var key = words[0].toUpperCase();
             var lookup = result[key];
-            if (item.defaultTerm || !defaultTermsOnly) {
+            if (item.defaultTerm) {
                 me.kab.search.setTerm(options, json.style, item, null, null, null, false);
             }
             if (!lookup) {
