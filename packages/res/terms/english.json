@@ -85,7 +85,10 @@
         "reshimot":"Reshimot",
         "Partzufimfrom":"Partzufim from",
         "Hochma and Hassadim":"Hochma2 and Hassadim",
-        "Hochma was dark":"Hochma2 was dark"
+        "Hochma was dark":"Hochma2 was dark",
+        "Ohrand":"Ohr and",
+        "Taginand":"Tagin and",
+        "MaatzilI":"Maatzil I"
     },
     "pre": [
         {
@@ -417,6 +420,7 @@
                 "phase": "root",
                 "heading": "Phase"
             },
+            "defaultTerm": true,
             "term": "Behinat Shoresh"
         },
         {
@@ -425,6 +429,7 @@
                 "phase": "one",
                 "heading": "Phase"
             },
+            "defaultTerm": true,
             "term": "Behina Aleph"
         },
         {
@@ -433,6 +438,7 @@
                 "phase": "two",
                 "heading": "Phase"
             },
+            "defaultTerm": true,
             "term": "Behina Bet"
         },
         {
@@ -441,6 +447,7 @@
                 "phase": "three",
                 "heading": "Phase"
             },
+            "defaultTerm": true,
             "term": "Behina Gimel"
         },
         {
@@ -449,6 +456,7 @@
                 "phase": "four",
                 "heading": "Phase"
             },
+            "defaultTerm": true,
             "term": "Behina Dalet"
         },
         {
@@ -1056,6 +1064,7 @@
             "translation": "Primordial Man",
             "defaultTerm": true,
             "style": "primordial man",
+            "defaultTerm": true,
             "term": "Adam Kadmon"
         },
         {
@@ -1065,6 +1074,7 @@
                 "heading": "World",
                 "phase": "one"
             },
+            "defaultTerm": true,
             "term": "Atzilut"
         },
         {
@@ -1074,6 +1084,7 @@
                 "heading": "World",
                 "phase": "two"
             },
+            "defaultTerm": true,
             "term": "Beria"
         },
         {
@@ -1083,6 +1094,7 @@
                 "heading": "World",
                 "phase": "three"
             },
+            "defaultTerm": true,
             "term": "Yetzira"
         },
         {
@@ -1092,6 +1104,7 @@
                 "heading": "World",
                 "phase": "four"
             },
+            "defaultTerm": true,
             "term": "Assiya"
         },
         {
@@ -1312,6 +1325,7 @@
                 "heading": "World",
                 "phase": "root"
             },
+            "defaultTerm": true,
             "term": "Ein Sof"
         },
         {
@@ -4793,7 +4807,7 @@
         {
             "depends":["Ohr Yashar","Ohr Hozer"],
             "term":"Ohr Hozer",
-            "diagram":"worlds"
+            "diagram":"direct_vs_reflected"
         },
         {
             "depends":["Malchut","ZA","Hochma","Hassadim","brother","sister"],
@@ -4819,6 +4833,11 @@
             "depends":["HGT"],
             "term":"Zeir Anpin",
             "diagram":"fathers"
+        },
+        {
+            "depends":["Yechida","Haya","Neshama","Ruach","Nefesh"],
+            "term":"Yechida",
+            "diagram":"vessels_vs_lights"
         }
     ]
 }

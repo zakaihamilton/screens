@@ -643,6 +643,8 @@
     color:white;
     border:1px solid darkgray;
     border-radius: 5px;
+    -webkit-margin-start:6px;
+    -webkit-margin-end:6px;
 }
 
 .glow-window-icon.widget-icon-list.minimize {

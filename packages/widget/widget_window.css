@@ -435,6 +435,8 @@
     background-color: transparent;
     color:black;
     border:1px solid black;
+    -webkit-margin-start:6px;
+    -webkit-margin-end:6px;
 }
 
 .widget-window-icon.widget-icon-list.minimize {
