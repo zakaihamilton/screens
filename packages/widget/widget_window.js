@@ -782,7 +782,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             window.alwaysOnTop = value;
             if(value) {
-                me.set(window, "ui.style.zIndex", 1000);
+                me.set(window, "ui.style.zIndex", 999);
             }
             else {
                 me.ui.focus.updateOrder(window.parentNode, window);                

@@ -96,7 +96,7 @@ package.core.http = function CoreHttp(me) {
                     }
                 };
             }
-            request.send(null);
+            request.send(info.body);
             if(!async && request.status === 200) {
                 return request.responseText;
             }

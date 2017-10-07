@@ -338,9 +338,6 @@ var package = new Proxy({components: {}, order: []}, {
                 Reflect.set(object, property, [""]);
                 var result = package_load(package_name, property);
                 return result;
-            },
-            set: function (object, property, value) {
-                Reflect.set(object, property, value);
             }
         });
         Reflect.set(object, property, package_obj);

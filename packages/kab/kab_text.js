@@ -257,9 +257,12 @@ package.kab.text = function KabText(me) {
             replacement = explanation;
         }
         instance.words.splice(instance.wordIndex, instance.span);
-        var term = instance.item.term;
+        var term = null;
         if (instance.item.source) {
             term = instance.item.source;
+        }
+        else {
+            term = instance.item.term;
         }
         if (instance.item.includePrefix && !keepSource) {
             replacement = instance.item.prefix + " " + replacement;

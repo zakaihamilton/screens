@@ -29,10 +29,11 @@ package.core.message = function CoreMessage(me) {
         if (me.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
-            var info = {method: "GET",
-                url: "/method/" + path + me.core.type.wrap_args(args),
+            var info = {method: "POST",
+                url: "/method/" + path,
                 callback: me.handleRemote,
-                altCallback: callback
+                altCallback: callback,
+                body: me.core.type.wrap_args(args)
             };
             core.http.send(info);
         } else if (me.platform === "server") {
@@ -67,10 +68,11 @@ package.core.message = function CoreMessage(me) {
     me.receive = {
         set: function (info) {
             core.console.log("matching url: " + info.url);
-            if (me.platform === "server" && info.method === "GET" && info.url.startsWith("/method/")) {
+            if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);
-                var args = core.type.unwrap_args(info.query);
+                var args = core.type.unwrap_args(core.http.parse_query(info.body));
+                info.body = null;
                 args.unshift(path);
                 var task = core.job.begin(info.job);
                 args[1] = function (response) {
