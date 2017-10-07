@@ -38,7 +38,7 @@ package.core.http = function CoreHttp(me) {
                         headers:request.headers,
                         code:200,
                         "content-type":"application/json",
-                        body:"",
+                        body:body,
                         job:job
                     };
                     core.object.attach(info, me);
