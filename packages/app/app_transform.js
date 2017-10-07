@@ -245,56 +245,59 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.clear(window.var.layout);
             var text = me.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
-            if (text) {
-                me.set(window.var.spinner, "ui.style.borderTop", "16px solid purple");
-                me.set(window, "ui.work.state", true);
-                var language = window.options.language.toLowerCase();
-                if (language === "auto") {
-                    language = me.core.string.language(text);
-                    console.log("detected language: " + language);
-                }
-                window.options.hoverCallback = "package.app.transform.hoverDescription";
-                window.options.diagramCallback = "package.app.transform.loadDiagram";
-                window.options.toggleCallback = "package.app.transform.cycleDescription";
-                window.options.reload = true;
-                me.kab.text.parse(function (text, terms, data) {
-                    if (data) {
-                        me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
-                    }
-                    if (window.prevLanguage) {
-                        me.set(window.var.input, "ui.class.remove", window.prevLanguage);
-                        me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
-                        me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
-                        me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
-                        me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
-                        me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
-                    }
-                    me.set(window.var.input, "ui.class.add", language);
-                    me.set(window.var.layout, "ui.class.add", language);
-                    me.set(window.var.filter, "ui.class.add", language);
-                    me.set(window.var.termPopup, "title", data.termTableTitle);
-                    me.set(window.var.termTable, "ui.class.add", language);
-                    me.set(window.var.toggleTerms, "ui.class.add", language);
-                    me.set(window.var.toggleGlossary, "ui.class.add", language);
-                    me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
-                    me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
-                    window.prevLanguage = language;
-                    if (window.options.showHtml) {
-                        me.set(window.var.output, "ui.basic.text", text);
-                    } else {
-                        me.set(window.var.output, "ui.basic.html", text);
-                    }
-                    me.updateFilterList(window, terms);
-                    if (data) {
-                        me.updateTermTable(window, terms, data.termTable, language);
-                    }
-                    me.ui.layout.move(window.var.output, window.var.layout);
-                    window.forceReflow = true;
-                    window.contentChanged = true;
-                    me.notify(window, "update");
-                    me.set(window, "ui.work.state", false);
-                }, language, text, window.options);
+            if (!text) {
+                return;
             }
+            window.inTransform = true;
+            me.set(window.var.spinner, "ui.style.borderTop", "16px solid purple");
+            me.set(window, "ui.work.state", true);
+            var language = window.options.language.toLowerCase();
+            if (language === "auto") {
+                language = me.core.string.language(text);
+                console.log("detected language: " + language);
+            }
+            window.options.hoverCallback = "package.app.transform.hoverDescription";
+            window.options.diagramCallback = "package.app.transform.loadDiagram";
+            window.options.toggleCallback = "package.app.transform.cycleDescription";
+            window.options.reload = true;
+            me.kab.text.parse(function (text, terms, data) {
+                if (data) {
+                    me.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+                }
+                if (window.prevLanguage) {
+                    me.set(window.var.input, "ui.class.remove", window.prevLanguage);
+                    me.set(window.var.layout, "ui.class.remove", window.prevLanguage);
+                    me.set(window.var.filter, "ui.class.remove", window.prevLanguage);
+                    me.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
+                    me.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
+                    me.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
+                }
+                me.set(window.var.input, "ui.class.add", language);
+                me.set(window.var.layout, "ui.class.add", language);
+                me.set(window.var.filter, "ui.class.add", language);
+                me.set(window.var.termPopup, "title", data.termTableTitle);
+                me.set(window.var.termTable, "ui.class.add", language);
+                me.set(window.var.toggleTerms, "ui.class.add", language);
+                me.set(window.var.toggleGlossary, "ui.class.add", language);
+                me.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
+                me.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+                window.prevLanguage = language;
+                if (window.options.showHtml) {
+                    me.set(window.var.output, "ui.basic.text", text);
+                } else {
+                    me.set(window.var.output, "ui.basic.html", text);
+                }
+                me.updateFilterList(window, terms);
+                if (data) {
+                    me.updateTermTable(window, terms, data.termTable, language);
+                }
+                me.ui.layout.move(window.var.output, window.var.layout);
+                window.forceReflow = true;
+                window.contentChanged = true;
+                window.inTransform = false;
+                me.set(window, "update");
+                me.set(window, "ui.work.state", false);
+            }, language, text, window.options);
         }
     };
     me.reflow = {
@@ -309,6 +312,9 @@ package.app.transform = function AppTransform(me) {
     me.update = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
+            if(window.inTransform) {
+                return;
+            }
             if (!me.shouldReflow(object)) {
                 return;
             }
