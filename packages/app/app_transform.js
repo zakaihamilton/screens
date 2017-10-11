@@ -97,6 +97,10 @@ package.app.transform = function AppTransform(me) {
     };
     me.work = {
         set: function (object, value) {
+            if(me.workTimeout) {
+                clearTimeout(me.workTimeout);
+                me.workTimeout = null;
+            }
             if (value) {
                 me.set(object.var.spinner, "ui.style.visibility", "visible");
                 object.var.layout.style.opacity = 0;
@@ -104,12 +108,14 @@ package.app.transform = function AppTransform(me) {
                 object.var.toggleGlossary.style.opacity = 0;
                 object.var.termPopup.style.opacity = 0;
             } else {
-                me.set(object.var.spinner, "ui.style.visibility", "hidden");
-                object.var.layout.style.opacity = 1;
-                object.var.toggleTerms.style.opacity = 1;
-                object.var.toggleGlossary.style.opacity = 1;
-                object.var.termPopup.style.opacity = 1;
-                me.updateScrolling(object);
+                me.workTimeout = setTimeout(function () {
+                    me.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    object.var.layout.style.opacity = 1;
+                    object.var.toggleTerms.style.opacity = 1;
+                    object.var.toggleGlossary.style.opacity = 1;
+                    object.var.termPopup.style.opacity = 1;
+                    me.updateScrolling(object);
+                }, 1000);
             }
         }
     };
@@ -312,7 +318,7 @@ package.app.transform = function AppTransform(me) {
     me.update = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            if(window.inTransform) {
+            if (window.inTransform) {
                 return;
             }
             if (!me.shouldReflow(object)) {
@@ -338,9 +344,9 @@ package.app.transform = function AppTransform(me) {
             var reflowOptions = {
                 pageClass: "app.transform.page",
                 contentClass: "app.transform.page.content",
-                containerClass:"app.transform.page.container",
-                marginLeftClass:"app.transform.page.margin.left",
-                marginRightClass:"app.transform.page.margin.right",
+                containerClass: "app.transform.page.container",
+                marginLeftClass: "app.transform.page.margin.left",
+                marginRightClass: "app.transform.page.margin.right",
                 headerClass: "app.transform.page.header",
                 pageNumberClass: "app.transform.page.number",
                 scrollToTopClass: "app.transfer.page.scrolltotop",
@@ -476,11 +482,11 @@ package.app.transform = function AppTransform(me) {
         }, 500);
     };
     me.toggleSeparator = {
-        get: function(object, value) {
+        get: function (object, value) {
             var window = me.widget.window.mainWindow(object);
             return me.ui.layout.hasSeparator(me.ui.layout.currentPage(window.var.layout));
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var window = me.widget.window.mainWindow(object);
             me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
         }
