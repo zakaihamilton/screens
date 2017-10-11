@@ -144,7 +144,7 @@ package.core.property = function CoreProperty(me) {
         object.notifications[name] = setTimeout(function() {
             object.notifications[name] = null;
             me.set(object, name, value);
-        }, 0);
+        }, 250);
     };
     me.set = function (object, name, value) {
         if(!object) {
