@@ -3489,7 +3489,8 @@
             "term": "Mishcha Hivia"
         },
         {
-            "prefix": "the",
+            "includePrefix": true,
+            "prefix": "The",
             "translation": "First Man",
             "term": "Adam ha Rishon"
         },
@@ -4710,6 +4711,7 @@
             "term":"Hishtavut"
         },
         {
+            "includePrefix": true,
             "term":"Adam HaRishon",
             "prefix":"The",
             "translation":"First Man"

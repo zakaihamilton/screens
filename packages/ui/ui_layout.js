@@ -59,7 +59,7 @@ package.ui.layout = function UILayout(me) {
     me.pageSize = function (target) {
         var container = me.ui.node.container(target, me.widget.container.id);
         var scrollbar = container.var.vertical;
-        var pageHeight = container.parentNode.offsetHeight;
+        var pageHeight = container.offsetHeight;
         var pageWidth = container.parentNode.offsetWidth;
         pageWidth -= scrollbar.offsetWidth + 1;
         return {width: pageWidth, height: pageHeight};
