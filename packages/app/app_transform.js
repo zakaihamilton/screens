@@ -301,7 +301,7 @@ package.app.transform = function AppTransform(me) {
                 window.forceReflow = true;
                 window.contentChanged = true;
                 window.inTransform = false;
-                me.set(window, "update");
+                me.notify(window, "update");
                 me.set(window, "ui.work.state", false);
             }, language, text, window.options);
         }

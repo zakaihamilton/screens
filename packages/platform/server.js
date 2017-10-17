@@ -12,7 +12,11 @@ package.include({
         "module",
         "script",
         "job"
-    ]});
+    ],
+    "storage":[
+        "remote"
+    ]
+});
 
 package.remote("core.test", "server");
 package.remote("core.file", "server");

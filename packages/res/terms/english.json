@@ -88,7 +88,8 @@
         "Hochma was dark":"Hochma2 was dark",
         "Ohrand":"Ohr and",
         "Taginand":"Tagin and",
-        "MaatzilI":"Maatzil I"
+        "MaatzilI":"Maatzil I",
+        "Panimbe":"Panim be"
     },
     "pre": [
         {
@@ -4776,6 +4777,10 @@
         {
             "term":"Perek",
             "translation":"Joint"
+        },
+        {
+            "term":"Histalkuiot",
+            "translation":"Observations"
         }
     ],
     "style": {
