@@ -40,4 +40,7 @@ package.core.json = function CoreJson(me) {
             me.core.http.send(info);
         }
     };
+    me.log = function(json) {
+        console.log(JSON.stringify(json, null, 4));        
+    };
 };

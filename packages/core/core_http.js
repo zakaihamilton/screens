@@ -21,7 +21,13 @@ package.core.http = function CoreHttp(me) {
                 }).on('data', function (chunk) {
                     body.push(chunk);
                 }).on('end', function () {
-                    me.handleRequest(request, response, body);
+                    if(request.url.includes("private")) {
+                        response.writeHead(200);
+                        response.end("cannot load private files remotely");
+                    }
+                    else {
+                        me.handleRequest(request, response, body);
+                    }
                 });
             });
             me.server.listen(me.port, function (err) {
