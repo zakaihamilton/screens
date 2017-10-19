@@ -46,6 +46,31 @@
             }
         },
         {
+            "ui.basic.text": "Option Two",
+            "ui.style.width": "200px",
+            "ui.element.count": 0,
+            "widget.tree.collapse":false,
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false
+                },
+                "ui.data.values": [
+                    ["Option One"],
+                    ["Option Two"],
+                    ["Option Three"],
+                    ["Option Four"],
+                    ["Option Five"],
+                    ["Option Six"],
+                    ["Option Seven"],
+                    ["Option Eight"],
+                    ["Option Nine"],
+                    ["Option Ten"]
+                ]
+            }
+        },
+        {
             "state": false,
             "ui.basic.text": "Orange"
         },

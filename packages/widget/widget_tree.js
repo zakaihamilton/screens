@@ -1,11 +1,11 @@
 /*
  @author Zakai Hamilton
- @component WidgetList
+ @component WidgetTree
  */
 
-package.widget.list = function WidgetList(me) {
+package.widget.tree = function WidgetTree(me) {
     me.depends = {
-        properties: ["ui.element.count"]
+        properties: ["ui.element.count","widget.tree.collapse"]
     };
     me.redirect = {
         "ui.basic.elements": "elements"
@@ -19,13 +19,21 @@ package.widget.list = function WidgetList(me) {
             }
         ]
     };
+    me.collapse = {
+        get: function(object) {
+            return object.isCollapsed;
+        },
+        set: function(object, value) {
+            object.isCollapsed = value;
+        }
+    };
     me.elements = {
         get: function (object) {
-            return object.listElements;
+            return object.treeElements;
         },
         set: function (object, value) {
             if (value) {
-                object.listElements = value;
+                object.treeElements = value;
                 me.set(object.var.container, "ui.basic.elements", value);
                 me.notify(object.var.container, "update");
             }
@@ -34,7 +42,7 @@ package.widget.list = function WidgetList(me) {
     me.refresh = {
         set: function(object) {
             me.set(object.var.container, "empty");
-            me.set(object, "elements", object.listElements);
+            me.set(object, "elements", object.treeElements);
             me.notify(object.var.container, "update");
         }
     };
@@ -70,9 +78,9 @@ package.widget.list = function WidgetList(me) {
     };
 };
 
-package.widget.list.dropdown = function WidgetDropDownList(me) {
+package.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.depends = {
-        properties: ["ui.element.count", "ui.basic.text"]
+        properties: ["ui.element.count", "ui.basic.text","widget.tree.collapse"]
     };
     me.redirect = {
         "ui.basic.text": "text",
@@ -119,15 +127,15 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.dropdown = {
         set: function (object, value) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            object.var.list = me.ui.element.create({
-                "ui.element.component": "widget.list.popup",
+            object.var.tree = me.ui.element.create({
+                "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "100px",
-                "ui.basic.elements": object.parentNode.listElements,
-                "ui.group.data":object.parentNode.listData,
-                "widget.list.popup.selection":me.get(object.parentNode, "text"),
+                "ui.basic.elements": object.parentNode.treeElements,
+                "ui.group.data":object.parentNode.treeData,
+                "widget.tree.popup.selection":me.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
             });
         }
@@ -156,23 +164,23 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
     me.elements = {
         get: function (object) {
-            return object.listElements;
+            return object.treeElements;
         },
         set: function (object, value) {
-            object.listElements = value;
+            object.treeElements = value;
         }
     };
     me.data = {
         get: function(object) {
-            return object.listData;
+            return object.treeData;
         },
         set: function(object, value) {
-            object.listData = value;
+            object.treeData = value;
         }
     };
 };
 
-package.widget.list.popup = function WidgetListPopup(me) {
+package.widget.tree.popup = function WidgetListPopup(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
@@ -225,15 +233,15 @@ package.widget.list.popup = function WidgetListPopup(me) {
     };
 };
 
-package.widget.list.item = function WidgetMenuItem(me) {
+package.widget.tree.item = function WidgetMenuItem(me) {
     me.default = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",
         "ui.touch.default": "dblclick",
-        "ui.class.class": "widget.list.item"
+        "ui.class.class": "widget.tree.item"
     };
     me.depends = {
-        parent: ["widget.list", "widget.list.popup"],
+        parent: ["widget.tree", "widget.tree.popup","widget.tree.item"],
         properties: ["ui.basic.text"]
     };
     me.value = function (object, value) {
@@ -283,7 +291,7 @@ package.widget.list.item = function WidgetMenuItem(me) {
                         me.set(child, "ui.class.remove", "selected");
                     }
                 }
-                var popup = me.ui.node.container(object, "widget.list.popup");
+                var popup = me.ui.node.container(object, "widget.tree.popup");
                 me.set(popup, "select", object);
             }
             else {

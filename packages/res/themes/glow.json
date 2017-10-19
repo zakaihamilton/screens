@@ -167,11 +167,6 @@
             "replace":true
         },
         {
-            "source":"widget-input-normal",
-            "target":"glow-input-normal",
-            "replace":true
-        },
-        {
             "source":"widget-list-popup-border",
             "target":"glow-list-popup-border",
             "replace":true
@@ -179,6 +174,46 @@
         {
             "source":"widget-list-item",
             "target":"glow-list-item",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-border",
+            "target":"glow-tree-border",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-dropdown-selection",
+            "target":"glow-tree-dropdown-selection",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-dropdown-button",
+            "target":"glow-tree-dropdown-button",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-dropdown-button-arrow",
+            "target":"glow-tree-dropdown-button-arrow",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-dropdown-button-line",
+            "target":"glow-tree-dropdown-button-line",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-popup-border",
+            "target":"glow-tree-popup-border",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-item",
+            "target":"glow-tree-item",
+            "replace":true
+        },
+        {
+            "source":"widget-input-normal",
+            "target":"glow-input-normal",
             "replace":true
         },
         {

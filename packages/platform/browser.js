@@ -81,7 +81,8 @@ package.include({
         "canvas",
         "table",
         "gridline",
-        "bar"
+        "bar",
+        "tree"
     ],
     "canvas": [
         "dirty",
