@@ -212,6 +212,26 @@
             "replace":true
         },
         {
+            "source":"widget-tree-item-container",
+            "target":"glow-tree-item-container",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-item-original",
+            "target":"glow-tree-item-original",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-item-label",
+            "target":"glow-tree-item-label",
+            "replace":true
+        },
+        {
+            "source":"widget-tree-item-icon",
+            "target":"glow-tree-item-icon",
+            "replace":true
+        },
+        {
             "source":"widget-input-normal",
             "target":"glow-input-normal",
             "replace":true

@@ -11,21 +11,17 @@ package.widget.radio = function WidgetRadio(me) {
         "ui.basic.text": "text"
     };
     me.default = {
-        "ui.class.class": "container"
-    };
-    me.create = {
-        set: function (object) {
-            var ref = me.core.ref.gen();
-            me.ui.element.create([{
+        "ui.class.class": "container",
+        "ui.basic.elements":[{
                     "ui.basic.var": "input",
                     "ui.basic.tag": "input",
                     "ui.basic.type": "radio",
                     "ui.class.class": "original",
-                    "ui.basic.elementId": ref
+                    "ui.basic.elementId": "@ui.basic.ref"
                 },
                 {
                     "ui.basic.tag": "label",
-                    "ui.basic.htmlFor": ref,
+                    "ui.basic.htmlFor": "@ui.basic.ref",
                     "ui.class.class": "icon"
                 },
                 {
@@ -33,8 +29,7 @@ package.widget.radio = function WidgetRadio(me) {
                     "ui.class.class": "label",
                     "ui.touch.click": "check"
                 }
-            ], object);
-        }
+            ]
     };
     me.state = {
         get: function (object) {

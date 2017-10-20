@@ -25,6 +25,26 @@ package.ui.basic = function UIBasic(me) {
             object.src = value;
         }
     };
+    me.ref = {
+        get: function(object) {
+            var ref = null;
+            var parent = object.parentNode;
+            if(parent) {
+                if(!parent.ref) {
+                    parent.ref = me.core.ref.gen();
+                }
+                ref = parent.ref;
+            }
+            return ref;
+        },
+        set: function(object, value) {
+            var ref = null;
+            var parent = object.parentNode;
+            if(parent) {
+                parent.ref = ref;
+            }
+        }
+    };
     me.href = {
         get: function (object) {
             return object.href;

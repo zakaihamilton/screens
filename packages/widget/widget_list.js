@@ -225,7 +225,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
     };
 };
 
-package.widget.list.item = function WidgetMenuItem(me) {
+package.widget.list.item = function WidgetListItem(me) {
     me.default = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",

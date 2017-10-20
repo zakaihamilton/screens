@@ -11,30 +11,25 @@ package.widget.checkbox = function WidgetCheckBox(me) {
         "ui.basic.text": "text"
     };
     me.default = {
-        "ui.class.class": "container"
-    };
-    me.create = {
-        set: function (object) {
-            var ref = me.core.ref.gen();
-            me.ui.element.create([{
-                    "ui.basic.var": "input",
-                    "ui.basic.tag": "input",
-                    "ui.basic.type": "checkbox",
-                    "ui.class.class": "original",
-                    "ui.basic.elementId": ref
-                },
-                {
-                    "ui.basic.tag": "label",
-                    "ui.basic.htmlFor": ref,
-                    "ui.class.class": "icon"
-                },
-                {
-                    "ui.basic.var": "label",
-                    "ui.class.class": "label",
-                    "ui.touch.click": "toggle"
-                }
-            ], object);
-        }
+        "ui.class.class": "container",
+        "ui.basic.elements": [{
+                "ui.basic.var": "input",
+                "ui.basic.tag": "input",
+                "ui.basic.type": "checkbox",
+                "ui.class.class": "original",
+                "ui.basic.elementId": "@ui.basic.ref"
+            },
+            {
+                "ui.basic.tag": "label",
+                "ui.basic.htmlFor": "@ui.basic.ref",
+                "ui.class.class": "icon"
+            },
+            {
+                "ui.basic.var": "label",
+                "ui.class.class": "label",
+                "ui.touch.click": "toggle"
+            }
+        ]
     };
     me.state = {
         get: function (object) {

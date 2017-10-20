@@ -16,11 +16,6 @@
     opacity: 0;
 }
 
-.widget-checkbox-group {
-    display:flex;
-    position: relative;
-}
-
 .widget-checkbox-icon {
     display:flex;
     position: relative;

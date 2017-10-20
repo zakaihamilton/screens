@@ -63,9 +63,17 @@ package.ui.data = function UIData(me) {
                 continue;
             }
             for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
+                var data_key = object.data_keys[data_key_index];
                 var data_value = values[data_key_index];
                 if (typeof data_value !== "undefined") {
-                    properties[object.data_keys[data_key_index]] = data_value;
+                    if(data_key === "ui.data.items") {
+                        var subElements = [];
+                        me.collect(object, subElements, data_value);
+                        properties["ui.basic.elements"] = subElements;
+                    }
+                    else {
+                        properties[data_key] = data_value;
+                    }
                 }
             }
             properties = me.ui.element.combine(object.data_default, properties);

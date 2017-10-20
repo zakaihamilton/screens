@@ -46,27 +46,33 @@
             }
         },
         {
-            "ui.basic.text": "Option Two",
+            "ui.basic.text": "Root",
             "ui.style.width": "200px",
             "ui.element.count": 0,
-            "widget.tree.collapse":false,
+            "widget.tree.collapse": false,
             "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.keyList": ["ui.basic.text", "ui.data.items"],
                 "ui.data.default": {
                     "group": "one",
                     "state": false
                 },
                 "ui.data.values": [
-                    ["Option One"],
-                    ["Option Two"],
-                    ["Option Three"],
-                    ["Option Four"],
-                    ["Option Five"],
-                    ["Option Six"],
-                    ["Option Seven"],
-                    ["Option Eight"],
-                    ["Option Nine"],
-                    ["Option Ten"]
+                    ["Root"],
+                    ["Fruit", [
+                            ["Apple"],
+                            ["Orange"],
+                            ["Banana"],
+                            ["Apricot"],
+                            ["Strawberries"]
+                        ]
+                    ],
+                    ["Vegetables", [
+                            ["Potato"],
+                            ["Tomato"],
+                            ["Radish"],
+                            ["Cucumber"]
+                        ]
+                    ]
                 ]
             }
         },

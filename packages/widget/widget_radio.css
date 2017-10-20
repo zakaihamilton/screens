@@ -16,11 +16,6 @@
     opacity: 0;
 }
 
-.widget-radio-group {
-    display:flex;
-    position: relative;
-}
-
 .widget-radio-icon {
     display:flex;
     position: relative;
