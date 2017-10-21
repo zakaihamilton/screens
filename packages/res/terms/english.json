@@ -1759,7 +1759,8 @@
                 "heading": "Face",
                 "phase": "root"
             },
-            "term": "Atik"
+            "term": "Atik",
+            "explanation":"Evaluation"
         },
         {
             "translation": "Unformed",
