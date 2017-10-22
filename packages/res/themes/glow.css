@@ -743,19 +743,25 @@
 
 .glow-tree-item-icon {
     display:none;
+}
+
+.glow-tree-item-icon::after {
+    background: white;
+    color: #0f2777;
     position: relative;
-    width: 11px;
-    height: 11px;
-    border: 1px solid black;
-    margin-top:1px;
+    width: 1em;
+    height: 1em;
+    content: '+';
+    text-align: center;
+    line-height: .9em;
 }
 
 .glow-tree-item-icon.parent {
     display:flex;
 }
 
-.glow-tree-item-original:checked + .glow-tree-item-icon {
-    background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 54%, black 54%,  black 56%,transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 49%, black 49%,  black 51%,transparent 51%, transparent 100%);
+.glow-tree-item-original:checked + .glow-tree-item-icon:after {
+    content: '–';
 }
 
 .glow-window-icon.widget-icon-icon {
