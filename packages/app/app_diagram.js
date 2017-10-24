@@ -48,6 +48,7 @@ package.app.diagram = function AppDiagram(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.window(object);
+            me.ui.options.setStorage(me, window, "none");
             if(!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {

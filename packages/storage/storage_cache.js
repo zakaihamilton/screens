@@ -7,9 +7,16 @@ package.require("storage.cache", "browser");
 
 package.storage.cache = function StorageCache(me) {
     me.init = function () {
+        me.none = me.core.object.create(me);
         me.local = me.core.object.create(me);
         me.session = me.core.object.create(me);
         if (me.isSupported()) {
+            me.none.storage = null;
+            me.none.members = function() {
+                return [];
+            };
+            me.none.clear = function() {
+            };
             me.local.storage = localStorage;
             me.local.members = function() {
                 return me.keyList(me.local);
@@ -83,7 +90,6 @@ package.storage.cache = function StorageCache(me) {
                     }
                 },
                 set: function (object, value) {
-                    console.log("storeLocal property:" + property + " value: " + value + "storage:" + object.storage);
                     if (object.storage && typeof value !== "undefined") {
                         if(value) {
                             object.storage.setItem(property, value);
