@@ -237,8 +237,10 @@ package.ui.node = function UINode(me) {
         }
     };
     me.empty = function (object) {
-        while (object.firstChild) {
-            object.removeChild(object.firstChild);
+        if(object) {
+            while (object.firstChild) {
+                object.removeChild(object.firstChild);
+            }
         }
     };
 };

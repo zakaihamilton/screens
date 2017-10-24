@@ -114,6 +114,12 @@
                         "ui.touch.dblclick": "app.progman.shell"
                     },
                     {
+                        "text": "Cache",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "cache",
+                        "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
                         "text": "Storage",
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "storage",

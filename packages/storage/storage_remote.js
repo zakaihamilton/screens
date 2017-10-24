@@ -54,7 +54,6 @@ package.storage.remote = function StorageRemote(me) {
                         continue;
                     }
                     item.entries = [];
-                    console.log("item:" + item.path_lower);
                     me.iterate(job, service, item.entries, item.path_lower, null, recursive);
                 }
             }

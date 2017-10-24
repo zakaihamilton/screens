@@ -19,6 +19,11 @@ package.widget.tree = function WidgetTree(me) {
             }
         ]
     };
+    me.clear = {
+        set: function (object, value) {
+            me.ui.node.empty(object.var.list);
+        }
+    };
     me.collapse = {
         get: function (object) {
             return object.isCollapsed;
@@ -37,7 +42,7 @@ package.widget.tree = function WidgetTree(me) {
                 if (!object.var.list) {
                     object.var.list = me.ui.element.create({
                         "ui.element.component": "widget.tree.list"
-                    }, object.var.container, object.context);
+                    }, me.widget.container.content(object.var.container), object.context);
                 }
                 me.set(object.var.list, "ui.basic.elements", value);
                 me.notify(object.var.container, "update");
@@ -316,19 +321,6 @@ package.widget.tree.item = function WidgetTreeItem(me) {
             }
         }
     };
-    me.state = {
-        get: function (object) {
-            return me.get(object, "ui.class.contains", "selected");
-        },
-        set: function (object, value) {
-            value = me.value(object, value);
-            if (value) {
-                me.set(object, "ui.class.add", "selected");
-            } else {
-                me.set(object, "ui.class.remove", "selected");
-            }
-        }
-    };
     me.dblclick = {
         set: function (object) {
             me.set(object, "click");
@@ -337,31 +329,13 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.click = {
         set: function (object) {
-            if (object.group) {
-                me.set(object, "ui.class.add", "selected");
-                var childList = me.ui.node.childList(object.parentNode);
-                if (childList) {
-                    for (var childIndex = 0; childIndex < childList.length; childIndex++) {
-                        var child = childList[childIndex];
-                        if (child.group !== object.group || object === child) {
-                            continue;
-                        }
-                        me.set(child, "ui.class.remove", "selected");
-                    }
-                }
-                var popup = me.ui.node.container(object, "widget.tree.popup");
-                me.set(popup, "select", object);
-            } else {
-                me.set(object, "ui.class.toggle", "selected");
-            }
-        }
-    };
-    me.state = {
-        get: function (object) {
-            return object.var.input.checked;
-        },
-        set: function (object, value) {
-            object.var.input.checked = value;
+            var container = me.ui.node.container(object, me.widget.container.id);
+            me.set(container, "ui.property.broadcast", {
+                "ui.class.remove" : "selected"
+            });
+            me.set(object, "ui.class.add", "selected");
+            var popup = me.ui.node.container(object, "widget.tree.popup");
+            me.set(popup, "select", object);
         }
     };
     me.text = {
@@ -377,6 +351,14 @@ package.widget.tree.item = function WidgetTreeItem(me) {
             var item = me.ui.node.container(object, me.id);
             me.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
             me.notify(me.ui.node.container(object, me.widget.container.id), "update");
+        }
+    };
+    me.state = {
+        get: function (object) {
+            return object.var.input.checked;
+        },
+        set: function (object, value) {
+            object.var.input.checked = value;
         }
     };
 };

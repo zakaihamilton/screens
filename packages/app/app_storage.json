@@ -1,0 +1,26 @@
+{
+    "title": "Storage",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "450px",
+    "ui.style.height": "450px",
+    "widget.menu.items": [
+        ["File", [
+                ["Refresh", "app.storage.refresh"]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.element.count":10,
+            "widget.tree.collapse":true,
+            "ui.class.class":"app.storage.tree",
+            "ui.basic.var":"tree"
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-storage-window",
+        "storage.cache.restore": "widget.window.store",
+        "app.storage.refresh":null
+    }
+}

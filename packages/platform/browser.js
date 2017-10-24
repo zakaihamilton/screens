@@ -24,7 +24,8 @@ package.include({
         "job"
     ],
     "storage": [
-        "cache"
+        "cache",
+        "remote"
     ],
     "ui": [
         "event",
