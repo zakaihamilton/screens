@@ -30,9 +30,9 @@ package.app.main = function (me) {
         package.include("app.progman", function(info) {
             if(info.complete) {
                 me.send("app.progman.launch");
-                package.include("app.storage", function(info) {
+                package.include("app.cache", function(info) {
                     if(info.complete) {
-                        me.send("app.storage.launch");
+                        me.send("app.cache.launch");
                         package.include({"app":["transform","diagram"]}, function(info) {
                             if(info.complete) {
                                 me.send("app.transform.launch");

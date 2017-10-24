@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component AppStorage
+ @component AppCache
  */
 
-package.app.storage = function AppStorage(me) {
+package.app.cache = function AppCache(me) {
     me.launch = function () {
         if (me.get(me.singleton, "ui.node.parent")) {
             me.set(me.singleton, "widget.window.show", true);
@@ -47,6 +47,19 @@ package.app.storage = function AppStorage(me) {
         }
     };
     me.clear = {
+        set: function(object) {
+            var cache = me.cache();
+            if(cache) {
+                var key = me.get(me.singleton.var.key, "ui.basic.text");
+                if(key) {
+                    me.set(cache, key, "");
+                    me.set(me.singleton.var.key, "ui.basic.text", "");
+                    me.set(me.singleton.var.value, "ui.basic.text", "");
+                }
+            }
+        }
+    };
+    me.clearAll = {
         set: function(object) {
             var cache = me.cache();
             if(cache) {

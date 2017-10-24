@@ -1,13 +1,13 @@
 {
-    "title": "Storage",
+    "title": "Cache",
     "ui.style.left": "150px",
     "ui.style.top": "150px",
-    "ui.style.width": "550px",
-    "ui.style.height": "220px",
+    "ui.style.width": "450px",
+    "ui.style.height": "250px",
     "fixed": true,
     "widget.menu.items": [
         ["Special", [
-                ["Clear Cache", "app.storage.clear"]
+                ["Clear All", "app.cache.clearAll"]
             ]
         ]
     ],
@@ -21,7 +21,7 @@
             "ui.basic.text": "Local",
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange": "app.storage.onChangeStorage",
+            "core.property.onChange": "app.cache.onChangeStorage",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
@@ -43,8 +43,8 @@
             "ui.basic.readOnly": false,
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange": "app.storage.onChangeKey",
-            "ui.monitor.change": "app.storage.onChangeKey",
+            "core.property.onChange": "app.cache.onChangeKey",
+            "ui.monitor.change": "app.cache.onChangeKey",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
@@ -52,7 +52,7 @@
                     "state": false
                 },
                 "ui.data.values": [
-                    "app.storage.keyList"
+                    "app.cache.keyList"
                 ]
             }
         },
@@ -66,12 +66,17 @@
             "ui.basic.type": "text"
         },
         {
+            "ui.style.marginTop":"15px",
+            "ui.basic.text": "Clear",
+            "ui.touch.click": "app.cache.clear"
+        },
+        {
             "ui.basic.text": "Set",
-            "ui.touch.click": "app.storage.store"
+            "ui.touch.click": "app.cache.store"
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-storage-window",
+        "storage.cache.key": "app-cache-window",
         "storage.cache.restore": "widget.window.store"
     }
 }
