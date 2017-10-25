@@ -52,7 +52,7 @@ package.app.diagram = function AppDiagram(me) {
             if(!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
-                    viewType: "Text",
+                    viewType: "Layers",
                     doTranslation: true,
                     doExplanation: false,
                     prioritizeExplanation:false,
