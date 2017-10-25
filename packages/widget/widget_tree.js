@@ -330,9 +330,10 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     me.click = {
         set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
-            me.set(container, "ui.property.broadcast", {
-                "ui.class.remove" : "selected"
-            });
+            if(container.selected) {
+                me.set(container.selected, "ui.class.remove", "selected");
+            }
+            container.selected = object;
             me.set(object, "ui.class.add", "selected");
             var popup = me.ui.node.container(object, "widget.tree.popup");
             me.set(popup, "select", object);
