@@ -21,7 +21,8 @@ package.widget.tree = function WidgetTree(me) {
     };
     me.clear = {
         set: function (object, value) {
-            me.ui.node.empty(object.var.list);
+            var content = me.widget.container.content(object.var.container);
+            me.ui.node.empty(content);
         }
     };
     me.collapse = {
@@ -34,17 +35,14 @@ package.widget.tree = function WidgetTree(me) {
     };
     me.elements = {
         get: function (object) {
-            return me.ui.node.childList(object.var.list);
+            var content = me.widget.container.content(object.var.container);
+            return me.ui.node.childList(content);
         },
         set: function (object, value) {
             if (value) {
                 object.treeElements = value;
-                if (!object.var.list) {
-                    object.var.list = me.ui.element.create({
-                        "ui.element.component": "widget.tree.list"
-                    }, me.widget.container.content(object.var.container), object.context);
-                }
-                me.set(object.var.list, "ui.basic.elements", value);
+                var content = me.widget.container.content(object.var.container);
+                me.set(content, "ui.basic.elements", value);
                 me.notify(object.var.container, "update");
             }
         }
@@ -350,7 +348,9 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     me.update = {
         set: function (object) {
             var item = me.ui.node.container(object, me.id);
-            me.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
+            if(item) {
+                me.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
+            }
             me.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };
