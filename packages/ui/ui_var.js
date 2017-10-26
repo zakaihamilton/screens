@@ -8,11 +8,28 @@ package.ui.var = function UIVar(me) {
         get : function(object, property) {
             return {
                 get: function (object) {
-                    return object.var[property];
+                    var variable = null;
+                    if(object.var && object.var[property]) {
+                        variable = object.var[property];
+                    }
+                    else if(object.parentNode && object.parentNode.var && object.parentNode.var[property]) {
+                        variable = object.parentNode.var[property];
+                    }
+                    else if(object.context && object.context && object.context.var[property]) {
+                        variable = object.context.var[property];
+                    }
+                    return variable;
                 },
                 set: function (object, value) {
                     if (object && typeof value !== "undefined") {
-                        object.var[property] = value;
+                        var parent = object;
+                        if(object.context) {
+                            parent = object.context;
+                        }
+                        if(!parent.var) {
+                            parent.var = {};
+                        }
+                        parent.var[property] = value;
                     }
                 }
             };

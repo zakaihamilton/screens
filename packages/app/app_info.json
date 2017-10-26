@@ -1,0 +1,26 @@
+{
+    "ui.style.left": "450px",
+    "ui.style.top": "250px",
+    "ui.style.width": "600px",
+    "ui.style.height": "450px",
+    "ui.basic.elements": [
+        {
+            "ui.style.position":"relative",
+            "ui.style.left": "5%",
+            "ui.style.top": "5%",
+            "ui.style.height": "90%",
+            "ui.style.width": "90%",
+            "ui.element.count": 10,
+            "widget.tree.collapse": false,
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text", "ui.data.items"],
+                "ui.data.default": {
+                    "state": false
+                },
+                "ui.data.values": [
+                    "app.info.data(@ui.var.data)"
+                ]
+            }
+        }
+    ]
+}

@@ -93,7 +93,8 @@
         "Gevura, Tifferet":"Gevura, Tifferet2",
         "Upper Gevura":"Upper Gevura2",
         "the Gevura":"the Gevura2",
-        "(Light of) Hochma":"(Light of) Hochma2"
+        "(Light of) Hochma":"(Light of) Hochma2",
+        "Bet (a second Behina)":"Bet2 (a second Behina)"
     },
     "pre": [
         {
@@ -4386,6 +4387,11 @@
         {
             "source": "Bet [ב]",
             "term": "Bet"
+        },
+        {
+            "source": "Bet",
+            "translation":"Two",
+            "term": "Bet2"
         },
         {
             "source": "Gimel [ג]",

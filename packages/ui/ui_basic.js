@@ -79,7 +79,6 @@ package.ui.basic = function UIBasic(me) {
                 if(!parent.var) {
                     parent.var = {};
                 }
-                console.log("storing var component: " + parent.component + " context: " + object.context + " storing var: " + value);
                 parent.var[value] = object;
             }
         }
@@ -180,6 +179,14 @@ package.ui.basic = function UIBasic(me) {
         set: function(object) {
             me.set(object, "storage.cache.store", me.get(object, "ui.basic.text"));
             me.notify(me.ui.node.container(object, me.widget.container.id), "update");
+        }
+    };
+    me.metadata = {
+        get : function(object) {
+            return object.metadata;
+        },
+        set : function(object, value) {
+            object.metadata = value;
         }
     };
 };

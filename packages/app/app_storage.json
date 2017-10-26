@@ -6,7 +6,11 @@
     "ui.style.height": "450px",
     "widget.menu.items": [
         ["File", [
-                ["Refresh", "app.storage.refresh"]
+                ["Refresh", "app.storage.refresh"],
+                ["Info","app.storage.info", {
+                        "separator":true
+                }],
+                ["Download","app.storage.download"]
             ]
         ]
     ],

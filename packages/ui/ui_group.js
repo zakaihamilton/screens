@@ -15,7 +15,7 @@ package.ui.group = function UIGroup(me) {
                             me.set(object, key, value[key]);
                         }
                     }
-                    me.send("ui." + property + ".group", object)
+                    me.send("ui." + property + ".group", object);
                 }
             };
         }

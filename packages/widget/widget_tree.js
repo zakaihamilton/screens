@@ -55,33 +55,8 @@ package.widget.tree = function WidgetTree(me) {
         }
     };
     me.selection = {
-        get: function (object, value) {
-            var selection = [];
-            var content = me.widget.container.content(object.var.container);
-            var childList = me.ui.node.childList(content);
-            if (childList) {
-                for (var childIndex = 0; childIndex < childList.length; childIndex++) {
-                    var child = childList[childIndex];
-                    var state = me.get(child, "state");
-                    var label = me.get(child, "ui.basic.text");
-                    if (state) {
-                        selection.push(label);
-                        break;
-                    }
-                }
-            }
-            return selection;
-        },
-        set: function (object, value) {
-            var content = me.widget.container.content(object.var.container);
-            var childList = me.ui.node.childList(content);
-            if (childList) {
-                for (var childIndex = 0; childIndex < childList.length; childIndex++) {
-                    var child = childList[childIndex];
-                    var label = me.get(child, "ui.basic.text");
-                    me.set(child, "state", value === label);
-                }
-            }
+        get: function (object) {
+            return object.var.container.selected;
         }
     };
 };
@@ -325,16 +300,29 @@ package.widget.tree.item = function WidgetTreeItem(me) {
             /*TODO: call default button on window */
         }
     };
-    me.click = {
-        set: function (object) {
+    me.select = {
+        set: function(object) {
             var container = me.ui.node.container(object, me.widget.container.id);
             if(container.selected) {
-                me.set(container.selected, "ui.class.remove", "selected");
+                me.set(container.selected, "ui.property.broadcast", {
+                    "ui.class.remove" : "selected"
+                });
             }
             container.selected = object;
-            me.set(object, "ui.class.add", "selected");
+            me.set(object, "ui.property.broadcast", {
+                "ui.class.add" : "selected"
+            });
+            me.set(object.var.list, "ui.property.broadcast", {
+                "ui.class.remove" : "selected"
+            });
             var popup = me.ui.node.container(object, "widget.tree.popup");
             me.set(popup, "select", object);
+        }
+    };
+    me.click = {
+        set: function (object) {
+            var item = me.ui.node.container(object, me.id);
+            me.set(item, "select");
         }
     };
     me.text = {
