@@ -246,6 +246,9 @@ package.kab.text = function KabText(me) {
         }
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
+        if(!translation) {
+            translation = "";
+        }
         var replacement = translation;
         if (explanation && translation) {
             if (session.options.prioritizeExplanation) {
@@ -278,8 +281,7 @@ package.kab.text = function KabText(me) {
         me.kab.format.replaceDuplicate(session, instance, replacement);
         var text = replacement;
         var replacementWithStyles = replacement;
-        var lowerCaseTranslation = translation ? translation.toLowerCase() : "";
-        if (session.options.addStyles && (instance.item.style || lowerCaseTranslation !== instance.target.toLowerCase())) {
+        if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
         instance.words.splice(instance.wordIndex, 0, replacementWithStyles);
