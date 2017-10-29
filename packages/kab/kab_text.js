@@ -278,7 +278,8 @@ package.kab.text = function KabText(me) {
         me.kab.format.replaceDuplicate(session, instance, replacement);
         var text = replacement;
         var replacementWithStyles = replacement;
-        if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
+        var lowerCaseTranslation = translation ? translation.toLowerCase() : "";
+        if (session.options.addStyles && (instance.item.style || lowerCaseTranslation !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
         instance.words.splice(instance.wordIndex, 0, replacementWithStyles);
