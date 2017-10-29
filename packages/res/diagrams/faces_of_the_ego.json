@@ -2,18 +2,20 @@
     "title": "Faces of the Ego",
     "layers": [
         {
-            "ui.style.display": "grid",
-            "ui.style.position": "absolute",
-            "ui.style.padding": "2px",
-            "ui.style.left": "5px",
-            "ui.style.top": "5px",
-            "ui.style.right": "5px",
-            "ui.style.bottom": "5px",
-            "ui.style.gridAutoColumns": "2.5%",
-            "ui.style.gridAutoRows": "2.5%",
-            "ui.style.gridGap": "1px 1px",
-            "ui.style.alignItems": "stretch",
-            "ui.style.lineHeight": "2.5",
+            "ui.property.style" : {
+                "display": "grid",
+                "position": "absolute",
+                "padding": "2px",
+                "left": "5px",
+                "top": "5px",
+                "right": "5px",
+                "bottom": "5px",
+                "gridAutoColumns": "2.5%",
+                "gridAutoRows": "2.5%",
+                "gridGap": "1px 1px",
+                "alignItems": "stretch",
+                "lineHeight": "2.5"
+            },
             "ui.basic.elements": [
                 {
                     "ui.element.update": {

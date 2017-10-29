@@ -94,7 +94,8 @@
         "Upper Gevura":"Upper Gevura2",
         "the Gevura":"the Gevura2",
         "(Light of) Hochma":"(Light of) Hochma2",
-        "Bet (a second Behina)":"Bet2 (a second Behina)"
+        "Bet (a second Behina)":"Bet2 (a second Behina)",
+        "bePanim":"be Panim"
     },
     "pre": [
         {
@@ -4860,6 +4861,88 @@
                 "heading": "Class",
                 "phase":"four"
             }
+        },
+        {
+            "term":"GAR Bina",
+            "source":"GAR de Bina",
+            "translation":"First Three of Understanding",
+            "explanation":"Decree",
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            }
+        },
+        {
+            "term":"ZAT Bina",
+            "source":"ZAT de Bina",
+            "translation":"Last Seven of Understanding",
+            "explanation":"Execution",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            }
+        },
+        {
+            "term":"GAR Partzuf Bina",
+            "source":"GAR de Partzuf Bina",
+            "translation":"First Three of the Face of Understanding",
+            "explanation":"Decree",
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            }
+        },
+        {
+            "term":"ZAT Partzuf Bina",
+            "source":"ZAT de Partzuf Bina",
+            "translation":"Last Seven of the Face of Understanding",
+            "explanation":"Execution",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            }
+        },
+        {
+            "term":"Partzuf GAR Bina",
+            "source":"Partzuf GAR de Bina",
+            "translation":"First Three of the Face of Understanding",
+            "explanation":"Decree",
+            "style": {
+                "heading": "Face",
+                "phase": "one"
+            }
+        },
+        {
+            "term":"Partzuf ZAT Bina",
+            "source":"Partzuf ZAT de Bina",
+            "translation":"Last Seven of the Face of Understanding",
+            "explanation":"Execution",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            }
+        },
+        {
+            "term":"GAR Partzuf",
+            "source":"GAR de Partzuf",
+            "translation":"First Three of the Face",
+            "explanation":"Attitude"
+        },
+        {
+            "term":"ZAT Partzuf",
+            "source":"ZAT de Partzuf",
+            "translation":"Lower Seven of the Face",
+            "explanation":"Implementation"
+        },
+        {
+            "term":"Partzuf GAR",
+            "translation":"First Three of the Face",
+            "explanation":"Attitude"
+        },
+        {
+            "term":"Partzuf ZAT",
+            "translation":"Lower Seven of the Face",
+            "explanation":"Implementation"
         }
     ],
     "style": {
