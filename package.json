@@ -1,7 +1,17 @@
 {
-  "name": "screens", "version":"1.0", "main": "./packages/platform/server.js", "repository": {
-    "type": "git", "url": "git://github.com/zakaihamilton/screens.git"
-  }, "scripts": {
-      "test": "echo \"Error: I don't have any test yet :-[\" && exit 1"
-  }, "license": "Unlicense"
+  "name": "screens",
+  "version": "1.0",
+  "main": "./packages/platform/server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zakaihamilton/screens.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: I don't have any test yet :-[\" && exit 1"
+  },
+  "license": "Unlicense",
+  "dependencies": {
+    "dropbox": "^2.5.12",
+    "xmlhttprequest": "^1.8.0"
+  }
 }

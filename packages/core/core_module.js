@@ -49,7 +49,9 @@ package.core.module = function CoreModule(me) {
         set: function (info) {
             if (me.platform === "server") {
                 if (info.method === "GET") {
-                    if (info.url === "/") {
+                    var startupApp = "";
+                    if (info.url.startsWith("/") && !info.url.includes(".")) {
+                        startupApp = info.url.substring(1);
                         info.url = "/main.html";
                     }
                     var file_path = info.url.substring(1);
@@ -96,6 +98,7 @@ package.core.module = function CoreModule(me) {
                     } else if (file_path.endsWith(".html")) {
                         info["content-type"] = "text/html";
                         me.loadTextFile(info.job, file_path, function (data) {
+                            data = data.replace("__startup_app__", "'" + startupApp + "'");
                             info.body = data;
                         });
                     } else if (file_path.endsWith(".png")) {

@@ -4,6 +4,9 @@
  */
 
 package.app.main = function (me) {
+    me.setStartupApp = function(callback, appName) {
+        me.appName = appName;
+    };
     me.browser = function () {
         /* run on the browser */
         me.core.console.log("browser is ready");
@@ -30,16 +33,21 @@ package.app.main = function (me) {
         package.include("app.progman", function(info) {
             if(info.complete) {
                 me.send("app.progman.launch");
-                package.include("app.cache", function(info) {
-                    if(info.complete) {
-                        me.send("app.cache.launch");
-                        package.include({"app":["transform","diagram"]}, function(info) {
-                            if(info.complete) {
-                                me.send("app.transform.launch");
-                            }
-                        });
-                    }
-                });
+                if(me.appName) {
+                    me.core.app.launch(null, me.appName);
+                }
+                else {
+                    package.include("app.cache", function(info) {
+                        if(info.complete) {
+                            me.send("app.cache.launch");
+                            package.include({"app":["transform","diagram"]}, function(info) {
+                                if(info.complete) {
+                                    me.send("app.transform.launch");
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
     };
