@@ -4577,12 +4577,17 @@
         },
         {
             "translation": "Good",
-            "explanation": "Maturity",
+            "explanation": "Mature",
             "term": "good"
         },
         {
+            "translation": "Bad",
+            "explanation": "Immature",
+            "term": "bad"
+        },
+        {
             "translation": "Evil",
-            "explanation": "Immaturity",
+            "explanation": "Immature",
             "term": "evil"
         },
         {
@@ -4943,6 +4948,14 @@
             "term":"Partzuf ZAT",
             "translation":"Lower Seven of the Face",
             "explanation":"Implementation"
+        },
+        {
+            "term":"Anochi",
+            "translation":"I"
+        },
+        {
+            "term":"Noga",
+            "explanation":"Human"
         }
     ],
     "style": {
