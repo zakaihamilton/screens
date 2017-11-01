@@ -2,7 +2,7 @@
     "title": "Diagram",
     "ui.style.left": "50px",
     "ui.style.top": "50px",
-    "ui.style.width": "600px",
+    "ui.style.width": "1200px",
     "ui.style.height": "600px",
     "widget.menu.items": [
         ["View", [
