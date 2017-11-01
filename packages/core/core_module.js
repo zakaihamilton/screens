@@ -102,6 +102,12 @@ package.core.module = function CoreModule(me) {
                             if(!startupArgs) {
                                 startupArgs = "";
                             }
+                            if(!startupArgs.startsWith("[")) {
+                                startupArgs = "[" + startupArgs;
+                            }
+                            if(!startupArgs.endsWith("]")) {
+                                startupArgs = startupArgs + "]";
+                            }
                             data = data.replace("__startup_app__", "'" + startupApp + "'");
                             data = data.replace("__startup_args__", startupArgs);
                             info.body = data;
