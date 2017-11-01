@@ -98,7 +98,12 @@ package.core.module = function CoreModule(me) {
                     } else if (file_path.endsWith(".html")) {
                         info["content-type"] = "text/html";
                         me.loadTextFile(info.job, file_path, function (data) {
+                            var startupArgs = info.query["args"];
+                            if(!startupArgs) {
+                                startupArgs = "";
+                            }
                             data = data.replace("__startup_app__", "'" + startupApp + "'");
+                            data = data.replace("__startup_args__", startupArgs);
                             info.body = data;
                         });
                     } else if (file_path.endsWith(".png")) {

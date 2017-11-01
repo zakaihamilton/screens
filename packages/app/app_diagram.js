@@ -5,6 +5,9 @@
 
 package.app.diagram = function AppDiagram(me) {
     me.launch = function (args) {
+        if(!args) {
+            args = [""];
+        }
         var path = args[0];
         var json = __json__;
         var options = null;

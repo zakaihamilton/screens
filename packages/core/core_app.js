@@ -24,14 +24,14 @@ package.core.app = function CoreApp(me) {
             };
         }
     };
-    me.launch = function(callback, appName, args) {
+    me.launch = function(callback, appName, appArgs) {
         var result = null;
         package.include("app." + appName, function (info) {
             if (info.complete) {
-                if(Array.isArray(args)) {
-                    args = args.slice(0);
+                if(Array.isArray(appArgs)) {
+                    appArgs = appArgs.slice(0);
                 }
-                result = me.send("app." + appName + ".launch", args);
+                result = me.send("app." + appName + ".launch", appArgs);
                 if(callback) {
                     callback(result);
                 }

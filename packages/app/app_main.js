@@ -7,6 +7,9 @@ package.app.main = function (me) {
     me.setStartupApp = function(callback, appName) {
         me.appName = appName;
     };
+    me.setStartupArgs = function(callback, appArgs) {
+        me.appArgs = appArgs;
+    };
     me.browser = function () {
         /* run on the browser */
         me.core.console.log("browser is ready");
@@ -34,7 +37,7 @@ package.app.main = function (me) {
             if(info.complete) {
                 me.send("app.progman.launch");
                 if(me.appName) {
-                    me.core.app.launch(null, me.appName);
+                    me.core.app.launch(null, me.appName, me.appArgs);
                 }
                 else {
                     package.include("app.cache", function(info) {

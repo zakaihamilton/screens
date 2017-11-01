@@ -1,6 +1,6 @@
 package.worker = new Worker("packages/platform/client.js");
 
-function startBrowser(appName) {
+function startBrowser(appName, appArgs) {
     package.include({
         "core": [
             "property",
@@ -118,6 +118,7 @@ function startBrowser(appName) {
                         if (appInfo.complete) {
                             if(appName) {
                                 package.send_browser("app.main.setStartupApp", null, appName);
+                                package.send_browser("app.main.setStartupArgs", null, appArgs);
                             }
                             package.send_browser("app.main.browser");
                         }

@@ -4956,6 +4956,10 @@
         {
             "term":"Noga shell",
             "explanation":"Human Perception"
+        },
+        {
+            "term":"Arvut",
+            "translation":"Mutual Guarantee"
         }
     ],
     "style": {
