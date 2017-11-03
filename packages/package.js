@@ -328,18 +328,7 @@ var package = new Proxy({components: {}, order: []}, {
             return "package";
         }
         /* Create package proxy */
-        package_obj = new Proxy({id: property, package: property, components: []}, {
-            get: function (object, property) {
-                if (Reflect.has(object, property)) {
-                    return Reflect.get(object, property);
-                }
-                /* Load component */
-                var package_name = Reflect.get(object, "id");
-                Reflect.set(object, property, [""]);
-                var result = package_load(package_name, property);
-                return result;
-            }
-        });
+        package_obj = {id: property, package: property, components: []};
         Reflect.set(object, property, package_obj);
         return package_obj;
     }

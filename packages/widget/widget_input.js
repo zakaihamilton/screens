@@ -12,7 +12,8 @@ package.widget.input = function WidgetInput(me) {
     };
     me.default = {
         "ui.basic.tag" : "input",
-        "ui.class.class" : "normal"
+        "ui.class.class" : "normal",
+        "ui.attribute.tabindex":"0"
     };
     me.text = {
         get: function(object) {

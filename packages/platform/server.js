@@ -11,7 +11,9 @@ package.include({
         "ref",
         "module",
         "script",
-        "job"
+        "job",
+        "object",
+        "file"
     ],
     "storage":[
         "remote"
