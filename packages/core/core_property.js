@@ -29,7 +29,7 @@ package.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if(object.component) {
-            var redirect = package[object.component].redirect;
+            var redirect = package.path(object.component).redirect;
             if(redirect) {
                 if(name in redirect) {
                     name = me.fullname(object, redirect[name]);

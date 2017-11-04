@@ -1,13 +1,5 @@
 function package_path(path) {
-    var items = null;
-    if(path.includes("\"")) {
-        items = [].concat.apply([], path.split("\"").map(function (v, i) {
-            return i % 2 ? v : v.split(".");
-        })).filter(Boolean);
-    }
-    else {
-        items = path.split(".");
-    }
+    var items = path.split(".");
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
@@ -29,14 +21,7 @@ function package_platform() {
 }
 
 function package_order(id) {
-    var found = false;
-    for (var index = 0; index < package.order; index++) {
-        if (package.order[index] === id) {
-            found = true;
-            break;
-        }
-    }
-    if (!found) {
+    if (package.order.indexOf(id) === -1) {
         package.order.push(id);
     }
 }
@@ -71,7 +56,7 @@ function package_init(package_name, component_name, callback, child_name = null,
     var id = package_name + "." + component_name;
     var component_id = id;
     if (!node) {
-        node = package[id];
+        node = package.path(id);
     }
     if (child_name) {
         node = node[child_name];
@@ -110,7 +95,7 @@ function package_init(package_name, component_name, callback, child_name = null,
         }
     });
     if (child_name) {
-        Reflect.set(package[package_name + "." + component_name], child_name, component_obj);
+        Reflect.set(package[package_name][component_name], child_name, component_obj);
     } else {
         Reflect.set(package[package_name], component_name, component_obj);
     }
@@ -155,17 +140,15 @@ function package_prepare(package_name, component_name, callback) {
 function package_load(package_name, component_name, callback) {
     var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
-    if (package[package_name]) {
-        var id = package_name + "." + component_name;
-        package[package_name].components.map(function (name) {
-            if (id !== name) {
-                return;
-            }
-            result = package[id];
+    if (package_name in package) {
+        if (component_name in package[package_name]) {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name}});
             }
-        });
+        }
+    }
+    else {
+        package[package_name] = {id: package_name, package: package_name, components: []};
     }
     if (result) {
         return result;
@@ -297,16 +280,6 @@ function package_general(object, property) {
     /* Check if package exists */
     if (Reflect.has(object, property)) {
         return Reflect.get(object, property);
-    } else if (typeof property === "string" && property.includes(".")) {
-        return package_path(property);
-    } else if (property === "platform") {
-        return package_platform();
-    } else if (property === "require") {
-        return package_require;
-    } else if (property === "remote") {
-        return package_remote;
-    } else if (property === "include") {
-        return package_include;
     } else if (property in package) {
         return package[property];
     } else if (property !== "forward" && Reflect.has(object, "forward")) {
@@ -318,21 +291,16 @@ function package_general(object, property) {
     return undefined;
 }
 
-var package = new Proxy({components: {}, order: []}, {
-    get: function (object, property) {
-        result = package_general(object, property);
-        if (typeof result !== "undefined") {
-            return result;
-        }
-        if (property === "id") {
-            return "package";
-        }
-        /* Create package proxy */
-        package_obj = {id: property, package: property, components: []};
-        Reflect.set(object, property, package_obj);
-        return package_obj;
-    }
-});
+var package = {
+    components: {},
+    order: [],
+    id: "package",
+    path : package_path,
+    platform : typeof require !== 'undefined' ? "server" : (typeof importScripts !== 'undefined' ? "client" : "browser"),
+    require: package_require,
+    include: package_include,
+    remote: package_remote
+};
 
 if (typeof require !== 'undefined') {
     global.package = package;

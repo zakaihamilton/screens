@@ -7,8 +7,8 @@ package.ui.element = function UIElement(me) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = me["widget"].components.map(function (component_name) {
-            var component = me[component_name];
+        var matches = package["widget"].components.map(function (component_name) {
+            var component = package.path(component_name);
             if (component.depends) {
                 var depends = component.depends;
                 if (depends.parent) {
@@ -41,12 +41,12 @@ package.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return me[target].depends.properties.length - me[source].depends.properties.length;
+            return package.path(target).depends.properties.length - package.path(source).depends.properties.length;
         });
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (me[matches[match_index]].depends.parent) {
+                if (package.path(matches[match_index]).depends.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -124,7 +124,7 @@ package.ui.element = function UIElement(me) {
         var member = null;
         while(object) {
             if(object.component) {
-                var component = me[object.component];
+                var component = package.path(object.component);
                 if(name in component) {
                     member = component[name];
                 }
@@ -175,7 +175,7 @@ package.ui.element = function UIElement(me) {
         if(!component_name) {
             component_name = "ui.element";
         }
-        var component = me[component_name];
+        var component = package.path(component_name);
         console.log("creating element of " + component_name);
         if(!tag && component.default && 'ui.basic.tag' in component.default) {
             tag = component.default['ui.basic.tag'];

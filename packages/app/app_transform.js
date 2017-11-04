@@ -115,7 +115,7 @@ package.app.transform = function AppTransform(me) {
                     object.var.toggleGlossary.style.opacity = 1;
                     object.var.termPopup.style.opacity = 1;
                     me.updateScrolling(object);
-                }, 1000);
+                }, 500);
             }
         }
     };
@@ -169,6 +169,7 @@ package.app.transform = function AppTransform(me) {
         });
     };
     me.updateTermTable = function (window, terms, data, language) {
+        var dataExists = false;
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
@@ -237,6 +238,7 @@ package.app.transform = function AppTransform(me) {
                         }
                         return itemProperties;
                     });
+                    dataExists = true;
                 }
                 properties["ui.class.add"] = "kab.term.phase." + phase;
                 list.push(properties);
@@ -244,10 +246,12 @@ package.app.transform = function AppTransform(me) {
             data.push(list);
         }
         me.set(window.var.termTable, "dataByRows", data);
+        me.set(window.var.toggleTerms, "ui.style.display", dataExists ? "block": "none");
     };
     me.transform = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
+            me.set(window.var.toggleTerms, "ui.style.display", "none");
             me.ui.layout.clear(window.var.layout);
             var text = me.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);

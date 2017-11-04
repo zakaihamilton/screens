@@ -23,7 +23,7 @@ package.app.main = function (me) {
         me.core.test.return_string(me.core.console.log, "testing 1, 2, 3");
         me.core.test.return_map(me.core.console.log, {a: 1, b: 2, c: 3});
         me.core.test.return_array(me.core.console.log, [5, 6, 7, 8]);
-        package["core.test.return_array"](me.core.console.log, [5, 6, 7, 8]);
+        package.path("core.test.return_array")(me.core.console.log, [5, 6, 7, 8]);
         me.core.message.send_browser("app.main.ready");
     };
     me.ready = function () {
