@@ -4,18 +4,18 @@
 */
 
 package.cmd.ls = function CmdLs(me) {
-    me.the.cmd = function(terminal, args) {
+    me.package.cmd = function(terminal, args) {
         var current_dir = terminal.current_dir;
         if(!current_dir) {
             current_dir = ".";
         }
-        me.the.core.file.readDir(function(err, items) {
+        me.package.core.file.readDir(function(err, items) {
             if(items) {
                 for(let item of items) {
-                    me.the.core.property.set(terminal, "print", item);
+                    me.package.core.property.set(terminal, "print", item);
                 }
             }
-            me.the.core.cmd.exit(terminal);
+            me.package.core.cmd.exit(terminal);
         }, current_dir);
     };
     

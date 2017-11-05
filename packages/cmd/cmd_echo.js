@@ -4,8 +4,8 @@
 */
 
 package.cmd.echo = function CmdEcho(me) {
-    me.the.cmd = function(terminal, args) {
-        me.the.core.property.set(terminal, "print", args.slice(1).join(' '));
-        me.the.core.cmd.exit(terminal);
+    me.package.cmd = function(terminal, args) {
+        me.package.core.property.set(terminal, "print", args.slice(1).join(' '));
+        me.package.core.cmd.exit(terminal);
     };
 };

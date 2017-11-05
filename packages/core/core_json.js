@@ -37,7 +37,7 @@ package.core.json = function CoreJson(me) {
                 callback:parse,
                 mimeType:"application/json"
             };
-            me.the.core.http.send(info);
+            me.package.core.http.send(info);
         }
     };
     me.log = function(json) {

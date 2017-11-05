@@ -59,15 +59,15 @@ package.ui.scroll = function UIScroll(me) {
         pos += "px";
         var changed = false;
         if (type === "vertical") {
-            var top = me.the.core.property.get(object, "ui.style.top");
+            var top = me.package.core.property.get(object, "ui.style.top");
             if (top !== pos) {
-                me.the.core.property.set(object, "ui.style.top", pos);
+                me.package.core.property.set(object, "ui.style.top", pos);
                 changed = true;
             }
         } else if (type === "horizontal") {
-            var left = me.the.core.property.get(object, "ui.style.left");
+            var left = me.package.core.property.get(object, "ui.style.left");
             if (left !== pos) {
-                me.the.core.property.set(object, "ui.style.left", pos);
+                me.package.core.property.set(object, "ui.style.left", pos);
                 changed = true;
             }
         }
@@ -77,15 +77,15 @@ package.ui.scroll = function UIScroll(me) {
         size += "px";
         var changed = false;
         if (type === "vertical") {
-            var height = me.the.core.property.get(object, "ui.style.height");
+            var height = me.package.core.property.get(object, "ui.style.height");
             if (height !== size) {
-                me.the.core.property.set(object, "ui.style.height", size);
+                me.package.core.property.set(object, "ui.style.height", size);
                 changed = true;
             }
         } else if (type === "horizontal") {
-            var width = me.the.core.property.get(object, "ui.style.width");
+            var width = me.package.core.property.get(object, "ui.style.width");
             if (width !== size) {
-                me.the.core.property.set(object, "ui.style.width", size);
+                me.package.core.property.set(object, "ui.style.width", size);
                 changed = true;
             }
         }
@@ -173,11 +173,11 @@ package.ui.scroll = function UIScroll(me) {
         }
     }
     me.overflow = function (object) {
-        var members = me.the.ui.node.members(object, me.the.widget.window.id);
-        var window_region = me.the.ui.rect.absolute_region(object);
+        var members = me.package.ui.node.members(object, me.package.widget.window.id);
+        var window_region = me.package.ui.rect.absolute_region(object);
         if (members) {
             members = members.filter(function (member) {
-                var member_region = me.the.ui.rect.absolute_region(member);
+                var member_region = me.package.ui.rect.absolute_region(member);
                 var h_overflow = member_region.left < window_region.left || member_region.right > window_region.right;
                 var v_overflow = member_region.top < window_region.top || member_region.bottom > window_region.bottom;
                 return h_overflow || v_overflow;
@@ -187,15 +187,15 @@ package.ui.scroll = function UIScroll(me) {
     };
     me.thumb = {
         set: function (object, value) {
-            var method = me.the.ui.element.to_full_name(object, value);
-            var type = me.the.core.property.get(object, method);
+            var method = me.package.ui.element.to_full_name(object, value);
+            var type = me.package.core.property.get(object, method);
             object.addEventListener('mousedown', function (e) {
                 if (object.getAttribute('disabled')) {
                     e.preventDefault();
                     return;
                 }
-                var container = me.the.ui.node.container(object, me.the.widget.container.id);
-                var thumb_region = me.the.ui.rect.absolute_region(object);
+                var container = me.package.ui.node.container(object, me.package.widget.container.id);
+                var thumb_region = me.package.ui.rect.absolute_region(object);
                 var info = {
                     target: object,
                     left: e.clientX - thumb_region.left,
@@ -204,8 +204,8 @@ package.ui.scroll = function UIScroll(me) {
                     height: object.offsetHeight
                 };
                 var scroll_method = function (e) {
-                    var track_region = me.the.ui.rect.absolute_region(object.parentNode);
-                    var thumb_region = me.the.ui.rect.absolute_region(object);
+                    var track_region = me.package.ui.rect.absolute_region(object.parentNode);
+                    var thumb_region = me.package.ui.rect.absolute_region(object);
                     var length = me.length(type, track_region, thumb_region);
                     var thumb_pos = null;
                     if (type === "vertical") {
@@ -214,13 +214,13 @@ package.ui.scroll = function UIScroll(me) {
                         var thumb_pos = (e.clientX - info.left) - track_region.left;
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
-                    me.shift(me.the.widget.container.content(container), type, percent);
-                    me.the.core.property.set(container, "update");
+                    me.shift(me.package.widget.container.content(container), type, percent);
+                    me.package.core.property.set(container, "update");
                 };
                 var release_method = function (e) {
                     removeEventListener('mousemove', scroll_method);
                     removeEventListener('mouseup', release_method);
-                    me.the.core.property.set(object.parentNode.parentNode, "snap");
+                    me.package.core.property.set(object.parentNode.parentNode, "snap");
                 };
                 addEventListener('mousemove', scroll_method);
                 addEventListener('mouseup', release_method);

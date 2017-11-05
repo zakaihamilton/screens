@@ -13,10 +13,10 @@ package.core.app = function CoreApp(me) {
                             if(Array.isArray(value)) {
                                 value = value.slice(0);
                                 value.unshift("app." + property + ".launch");
-                                me.the.core.message.send.apply(null, value);
+                                me.package.core.message.send.apply(null, value);
                             }
                             else {
-                                me.the.core.message.send("app." + property + ".launch", value);
+                                me.package.core.message.send("app." + property + ".launch", value);
                             }
                         }
                     });
@@ -31,7 +31,7 @@ package.core.app = function CoreApp(me) {
                 if(Array.isArray(appArgs)) {
                     appArgs = appArgs.slice(0);
                 }
-                result = me.the.core.message.send("app." + appName + ".launch", appArgs);
+                result = me.package.core.message.send("app." + appName + ".launch", appArgs);
                 if(callback) {
                     callback(result);
                 }

@@ -6,9 +6,9 @@
 package.require("core.module", "server");
 
 package.core.module = function CoreModule(me) {
-    var core = me.the.core;
+    var core = me.package.core;
     me.init = function() {
-        me.the.core.property.link("core.http.receive", "core.module.receive", true);
+        me.package.core.property.link("core.http.receive", "core.module.receive", true);
     };
     me.path_file_to_component = function (file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
@@ -20,7 +20,7 @@ package.core.module = function CoreModule(me) {
     };
     me.loadTextFile = function (job, filePath, callback) {
         var task = core.job.begin(job);
-        me.the.core.file.readFile(function (err, data) {
+        me.package.core.file.readFile(function (err, data) {
             core.console.log("serving text file: " + filePath);
             if (err) {
                 core.console.log(JSON.stringify(err));
@@ -33,7 +33,7 @@ package.core.module = function CoreModule(me) {
     };
     me.loadBinaryFile = function (job, filePath, callback) {
         var task = core.job.begin(job);
-        me.the.core.file.readFile(function (err, data) {
+        me.package.core.file.readFile(function (err, data) {
             core.console.log("serving binary file: " + filePath);
             if (err) {
                 core.console.log(JSON.stringify(err));
@@ -47,7 +47,7 @@ package.core.module = function CoreModule(me) {
     };
     me.receive = {
         set: function (info) {
-            if (me.the.platform === "server") {
+            if (me.package.platform === "server") {
                 if (info.method === "GET") {
                     var startupApp = "";
                     if (info.url.startsWith("/") && !info.url.includes(".")) {
@@ -61,8 +61,8 @@ package.core.module = function CoreModule(me) {
                         if (component_path) {
                             console.log("component_path: " + component_path);
                             try {
-                                var require_platform = me.the.remote(component_path);
-                                var remote_platform = me.the.remote(component_path);
+                                var require_platform = me.package.remote(component_path);
+                                var remote_platform = me.package.remote(component_path);
                                 if(require_platform) {
                                     target_platform = require_platform;
                                 }

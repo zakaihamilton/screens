@@ -21,8 +21,8 @@ package.widget.tree = function WidgetTree(me) {
     };
     me.clear = {
         set: function (object, value) {
-            var content = me.the.widget.container.content(object.var.container);
-            me.the.ui.node.empty(content);
+            var content = me.package.widget.container.content(object.var.container);
+            me.package.ui.node.empty(content);
         }
     };
     me.collapse = {
@@ -35,23 +35,23 @@ package.widget.tree = function WidgetTree(me) {
     };
     me.elements = {
         get: function (object) {
-            var content = me.the.widget.container.content(object.var.container);
-            return me.the.ui.node.childList(content);
+            var content = me.package.widget.container.content(object.var.container);
+            return me.package.ui.node.childList(content);
         },
         set: function (object, value) {
             if (value) {
                 object.treeElements = value;
-                var content = me.the.widget.container.content(object.var.container);
-                me.the.core.property.set(content, "ui.basic.elements", value);
-                me.the.core.property.notify(object.var.container, "update");
+                var content = me.package.widget.container.content(object.var.container);
+                me.package.core.property.set(content, "ui.basic.elements", value);
+                me.package.core.property.notify(object.var.container, "update");
             }
         }
     };
     me.refresh = {
         set: function (object) {
-            me.the.core.property.set(object.var.container, "empty");
-            me.the.core.property.set(object, "elements", object.treeElements);
-            me.the.core.property.notify(object.var.container, "update");
+            me.package.core.property.set(object.var.container, "empty");
+            me.package.core.property.set(object, "elements", object.treeElements);
+            me.package.core.property.notify(object.var.container, "update");
         }
     };
     me.selection = {
@@ -100,16 +100,16 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.back = {
         set: function (object, value) {
             if (value) {
-                var label = me.the.core.property.get(value, "ui.basic.text");
-                me.the.core.property.set(object, "ui.basic.text", label);
-                me.the.core.property.set(object, "onChange", label);
+                var label = me.package.core.property.get(value, "ui.basic.text");
+                me.package.core.property.set(object, "ui.basic.text", label);
+                me.package.core.property.set(object, "onChange", label);
             }
         }
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.the.ui.rect.absolute_region(object.parentNode);
-            object.var.tree = me.the.ui.element.create({
+            var region = me.package.ui.rect.absolute_region(object.parentNode);
+            object.var.tree = me.package.ui.element.create({
                 "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -117,31 +117,31 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
                 "ui.style.height": "100px",
                 "ui.basic.elements": object.parentNode.treeElements,
                 "ui.group.data": object.parentNode.treeData,
-                "widget.tree.popup.selection": me.the.core.property.get(object.parentNode, "text"),
+                "widget.tree.popup.selection": me.package.core.property.get(object.parentNode, "text"),
                 "ui.var.parentList": object.parentNode
             });
         }
     };
     me.readOnly = {
         get: function (object) {
-            return me.the.core.property.get(object.var.selection, "ui.basic.readOnly");
+            return me.package.core.property.get(object.var.selection, "ui.basic.readOnly");
         },
         set: function (object, value) {
-            me.the.core.property.set(object.var.selection, "ui.basic.readOnly", value);
-            me.the.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
+            me.package.core.property.set(object.var.selection, "ui.basic.readOnly", value);
+            me.package.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {
         get: function (object) {
-            return me.the.core.property.get(object.var.selection, "ui.basic.text");
+            return me.package.core.property.get(object.var.selection, "ui.basic.text");
         },
         set: function (object, value) {
-            me.the.core.property.set(object.var.selection, "ui.basic.text", value);
+            me.package.core.property.set(object.var.selection, "ui.basic.text", value);
         }
     };
     me.monitorChange = {
         set: function (object, value) {
-            me.the.core.property.set(object.var.selection, "ui.monitor.change", value);
+            me.package.core.property.set(object.var.selection, "ui.monitor.change", value);
         }
     };
     me.elements = {
@@ -180,24 +180,24 @@ package.widget.tree.popup = function WidgetListPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.the.core.property.set(object.var.parentList, "back", value);
-            me.the.core.property.set(object, "ui.node.parent");
+            me.package.core.property.set(object.var.parentList, "back", value);
+            me.package.core.property.set(object, "ui.node.parent");
         }
     };
     me.select = {
         set: function (object, value) {
-            me.the.core.property.set(object, "back", value);
+            me.package.core.property.set(object, "back", value);
         }
     };
     me.selection = {
         set: function (object, value) {
-            var childList = me.the.ui.node.childList(me.the.widget.container.content(object.var.container));
+            var childList = me.package.ui.node.childList(me.package.widget.container.content(object.var.container));
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
-                    var label = me.the.core.property.get(child, "ui.basic.text");
+                    var label = me.package.core.property.get(child, "ui.basic.text");
                     if (label === value) {
-                        me.the.core.property.set(child, "ui.class.add", "selected");
+                        me.package.core.property.set(child, "ui.class.add", "selected");
                         break;
                     }
                 }
@@ -207,8 +207,8 @@ package.widget.tree.popup = function WidgetListPopup(me) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.the.core.property.set(object.var.container, "ui.basic.elements", value);
-                me.the.core.property.set(object.var.container, "update");
+                me.package.core.property.set(object.var.container, "ui.basic.elements", value);
+                me.package.core.property.set(object.var.container, "update");
             }
         }
     };
@@ -264,7 +264,7 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.value = function (object, value) {
         if (typeof value === "string") {
-            value = me.the.core.property.get(object.parentNode.target, value);
+            value = me.package.core.property.get(object.parentNode.target, value);
         }
         return value;
     };
@@ -278,51 +278,51 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.elements = {
         get: function (object) {
-            return me.the.ui.node.childList(object.var.list);
+            return me.package.ui.node.childList(object.var.list);
         },
         set: function (object, value) {
             if (value) {
                 if (!object.var.list) {
-                    object.var.list = me.the.ui.element.create({
+                    object.var.list = me.package.ui.element.create({
                         "ui.element.component": "widget.tree.list",
                         "ui.basic.var": "list"
                     }, object, object.context);
                 }
-                me.the.core.property.set(object.var.icon, "ui.class.add", "parent");
-                me.the.ui.element.create(value, object.var.list, object.context);
-                me.the.core.property.set(object, "update");
+                me.package.core.property.set(object.var.icon, "ui.class.add", "parent");
+                me.package.ui.element.create(value, object.var.list, object.context);
+                me.package.core.property.set(object, "update");
             }
         }
     };
     me.dblclick = {
         set: function (object) {
-            me.the.core.property.set(object, "click");
+            me.package.core.property.set(object, "click");
             /*TODO: call default button on window */
         }
     };
     me.select = {
         set: function(object) {
-            var container = me.the.ui.node.container(object, me.the.widget.container.id);
+            var container = me.package.ui.node.container(object, me.package.widget.container.id);
             if(container.selected) {
-                me.the.core.property.set(container.selected, "ui.property.broadcast", {
+                me.package.core.property.set(container.selected, "ui.property.broadcast", {
                     "ui.class.remove" : "selected"
                 });
             }
             container.selected = object;
-            me.the.core.property.set(object, "ui.property.broadcast", {
+            me.package.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.add" : "selected"
             });
-            me.the.core.property.set(object.var.list, "ui.property.broadcast", {
+            me.package.core.property.set(object.var.list, "ui.property.broadcast", {
                 "ui.class.remove" : "selected"
             });
-            var popup = me.the.ui.node.container(object, "widget.tree.popup");
-            me.the.core.property.set(popup, "select", object);
+            var popup = me.package.ui.node.container(object, "widget.tree.popup");
+            me.package.core.property.set(popup, "select", object);
         }
     };
     me.click = {
         set: function (object) {
-            var item = me.the.ui.node.container(object, me.id);
-            me.the.core.property.set(item, "select");
+            var item = me.package.ui.node.container(object, me.id);
+            me.package.core.property.set(item, "select");
         }
     };
     me.text = {
@@ -335,11 +335,11 @@ package.widget.tree.item = function WidgetTreeItem(me) {
     };
     me.update = {
         set: function (object) {
-            var item = me.the.ui.node.container(object, me.id);
+            var item = me.package.ui.node.container(object, me.id);
             if(item) {
-                me.the.core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
+                me.package.core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
             }
-            me.the.core.property.notify(me.the.ui.node.container(object, me.the.widget.container.id), "update");
+            me.package.core.property.notify(me.package.ui.node.container(object, me.package.widget.container.id), "update");
         }
     };
     me.state = {

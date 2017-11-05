@@ -11,10 +11,10 @@ package.widget.embed = function WidgetEmbed(me) {
     me.transition = {
         set: function(object, value) {
             if(value) {
-                me.the.core.property.set(object, "ui.class.add", "transition");
+                me.package.core.property.set(object, "ui.class.add", "transition");
             }
             else {
-                me.the.core.property.set(object, "ui.class.remove", "transition");
+                me.package.core.property.set(object, "ui.class.remove", "transition");
             }
         }
     };

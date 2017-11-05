@@ -4,7 +4,7 @@
 */
 
 package.core.cmd = function CoreCmd(me) {
-    me.the.application = function(terminal) {
+    me.package.application = function(terminal) {
         return terminal.application;
     };
     me.split = function(args, separator=' ') {
@@ -26,22 +26,22 @@ package.core.cmd = function CoreCmd(me) {
             return;
         }
         if(terminal.application) {
-            me.the.core.message.send(terminal.application + ".cmd", terminal, args);
+            me.package.core.message.send(terminal.application + ".cmd", terminal, args);
             return;
         }
         application = "cmd." + args[0];
         package.include(application, function (info) {
             if (info.failure) {
-                me.the.core.property.set(terminal, "print", "Error: Command not found!");
+                me.package.core.property.set(terminal, "print", "Error: Command not found!");
                 me.exit(terminal);
             } else if(info.complete) {
                 terminal.application = application;
-                me.the.core.message.send(application + ".cmd", terminal, args);
+                me.package.core.message.send(application + ".cmd", terminal, args);
             }
         });
     };
     me.exit = function(terminal) {
         terminal.application = null;
-        me.the.core.property.set(terminal, "input", "C>");
+        me.package.core.property.set(terminal, "input", "C>");
     };
 };

@@ -10,39 +10,39 @@ package.widget.canvas = function WidgetCanvas(me) {
     };
     me.create = {
         set: function (object) {
-            me.the.canvas.node.attach(object);
-            me.the.canvas.dirty.attach(object);
+            me.package.canvas.node.attach(object);
+            me.package.canvas.dirty.attach(object);
             object._appendChild = function (child) {
-                return me.the.canvas.node.appendChild(this, child);
+                return me.package.canvas.node.appendChild(this, child);
             };
             object._removeChild = function (child) {
-                return me.the.canvas.node.removeChild(this, child);
+                return me.package.canvas.node.removeChild(this, child);
             };
             object._insertBefore = function (child, sibling) {
-                return me.the.canvas.node.insertBefore(this, child, sibling);
+                return me.package.canvas.node.insertBefore(this, child, sibling);
             };
             Object.defineProperty(object, "_firstChild", {
                 get: function () {
-                    return me.the.canvas.node.firstChild(object);
+                    return me.package.canvas.node.firstChild(object);
                 }
             });
             Object.defineProperty(object, "_lastChild", {
                 get: function () {
-                    return me.the.canvas.node.lastChild(object);
+                    return me.package.canvas.node.lastChild(object);
                 }
             });
         }
     };
     me.draw = {
         set: function (object) {
-            var region = me.the.ui.rect.absolute_region(object.parentNode);
+            var region = me.package.ui.rect.absolute_region(object.parentNode);
             if (parseInt(object.style.width) !== region.width || parseInt(object.style.height) !== region.height) {
                 object.width = region.width;
                 object.height = region.height;
                 object.style.width = region.width + 'px';
                 object.style.height = region.height + 'px';
                 me.scale(object);
-                me.the.canvas.dirty.draw(object, object);
+                me.package.canvas.dirty.draw(object, object);
             }
         }
     };

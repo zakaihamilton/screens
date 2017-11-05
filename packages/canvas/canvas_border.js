@@ -8,11 +8,11 @@ package.canvas.border = function CanvasBorder(me) {
 
     };
     me.draw = function (object, canvas) {
-        var context = me.the.core.property.get(canvas, "context");
+        var context = me.package.core.property.get(canvas, "context");
         if (object.style.borderColor) {
-            var region = me.the.ui.rect.relative_region(object, canvas);
-            var colors = me.the.ui.style.values(object.style.borderColor);
-            var widths = me.the.ui.style.values(object.style.borderWidth);
+            var region = me.package.ui.rect.relative_region(object, canvas);
+            var colors = me.package.ui.style.values(object.style.borderColor);
+            var widths = me.package.ui.style.values(object.style.borderWidth);
             context.save();
             context.lineJoin = "miter";
             var lineWidth = parseInt(widths.left);

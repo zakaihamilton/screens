@@ -18,13 +18,13 @@ package.widget.gridline = function WidgetGridLine(me) {
         "borderStyle":"solid"
     };
     me.init = function() {
-        me.color = me.the.core.object.property("widget.gridline.color");
-        me.borderStyle = me.the.core.object.property("widget.gridline.borderStyle");
+        me.color = me.package.core.object.property("widget.gridline.color");
+        me.borderStyle = me.package.core.object.property("widget.gridline.borderStyle");
     };
     me.line = {
         get: function(object) {
-            var row = me.the.core.property.get(object, "ui.style.gridRow");
-            var column = me.the.core.property.get(object, "ui.style.gridColumn");
+            var row = me.package.core.property.get(object, "ui.style.gridRow");
+            var column = me.package.core.property.get(object, "ui.style.gridColumn");
             return row + " " + column;
         },
         set: function(object, value) {
@@ -40,25 +40,25 @@ package.widget.gridline = function WidgetGridLine(me) {
                 firstPoint = [coords[0], coords[1]];
                 secondPoint = thirdPoint = [coords[2], coords[3]];
             }
-            me.the.core.property.set(object, "ui.style.gridRow", firstPoint[1] + "/" + thirdPoint[1]);
-            me.the.core.property.set(object, "ui.style.gridColumn", firstPoint[0] + "/" + thirdPoint[0]);
-            var color = me.the.core.property.get(object, "color");
-            var borderStyle = me.the.core.property.get(object, "borderStyle");
+            me.package.core.property.set(object, "ui.style.gridRow", firstPoint[1] + "/" + thirdPoint[1]);
+            me.package.core.property.set(object, "ui.style.gridColumn", firstPoint[0] + "/" + thirdPoint[0]);
+            var color = me.package.core.property.get(object, "color");
+            var borderStyle = me.package.core.property.get(object, "borderStyle");
             borderLeft = firstPoint[0] === secondPoint[0];
             borderTop = firstPoint[1] === secondPoint[1];
             borderRight = secondPoint[0] === thirdPoint[1];
             borderBottom = secondPoint[1] === thirdPoint[1] && firstPoint[1] !== thirdPoint[1];
             if(borderLeft) {
-                me.the.core.property.set(object, "ui.style.borderLeft", "1px " + borderStyle + " " + color);
+                me.package.core.property.set(object, "ui.style.borderLeft", "1px " + borderStyle + " " + color);
             }
             if(borderRight) {
-                me.the.core.property.set(object, "ui.style.borderRight", "1px " + borderStyle + " " + color);
+                me.package.core.property.set(object, "ui.style.borderRight", "1px " + borderStyle + " " + color);
             }
             if(borderTop) {
-                me.the.core.property.set(object, "ui.style.borderTop", "1px " + borderStyle + " " + color);
+                me.package.core.property.set(object, "ui.style.borderTop", "1px " + borderStyle + " " + color);
             }
             if(borderBottom) {
-                me.the.core.property.set(object, "ui.style.borderBottom", "1px " + borderStyle + " " + color);
+                me.package.core.property.set(object, "ui.style.borderBottom", "1px " + borderStyle + " " + color);
             }
         }
     };

@@ -14,7 +14,7 @@ package.kab.format = function KabFormat(me) {
                     var checkInSplit = false;
                     var itemSplit = "\n";
                     if ("split" in item) {
-                        itemSplit = me.the.core.string.regex(item.split);
+                        itemSplit = me.package.core.string.regex(item.split);
                         checkInSplit = item.split.startsWith("/");
                     }
                     var itemJoin = itemSplit;
@@ -23,7 +23,7 @@ package.kab.format = function KabFormat(me) {
                     }
                     wordsString = wordsString.split(itemSplit).map(function (selection) {
                         var inSplit = selection.match(itemSplit);
-                        var matches = selection.match(me.the.core.string.regex(item.match));
+                        var matches = selection.match(me.package.core.string.regex(item.match));
                         if (matches && (inSplit || !checkInSplit)) {
                             if (item.prefix) {
                                 selection = item.prefix + selection;
@@ -33,7 +33,7 @@ package.kab.format = function KabFormat(me) {
                             }
                             var find = item.find;
                             if (find) {
-                                selection = selection.replace(me.the.core.string.regex(find), me.the.core.string.regex(item.replace));
+                                selection = selection.replace(me.package.core.string.regex(find), me.package.core.string.regex(item.replace));
                             }
                         }
                         return selection;
@@ -42,7 +42,7 @@ package.kab.format = function KabFormat(me) {
                 }
                 var find = item.find;
                 if (find && (item.prefix || item.suffix)) {
-                    wordsString = wordsString.split(me.the.core.string.regex(find)).join(item.replace);
+                    wordsString = wordsString.split(me.package.core.string.regex(find)).join(item.replace);
                     if (item.prefix) {
                         wordsString = item.prefix + wordsString;
                     }
@@ -50,7 +50,7 @@ package.kab.format = function KabFormat(me) {
                         wordsString = wordsString + item.suffix;
                     }
                 } else if (find) {
-                    wordsString = wordsString.replace(me.the.core.string.regex(find), me.the.core.string.regex(item.replace));
+                    wordsString = wordsString.replace(me.package.core.string.regex(find), me.package.core.string.regex(item.replace));
                 }
             });
         }
@@ -69,7 +69,7 @@ package.kab.format = function KabFormat(me) {
                 if (!defaultWord) {
                     for (var altPrefix in collection) {
                         var altPrefixItem = collection[altPrefix];
-                        if (altPrefixItem.match && text.match(me.the.core.string.regex(altPrefixItem.match))) {
+                        if (altPrefixItem.match && text.match(me.package.core.string.regex(altPrefixItem.match))) {
                             defaultWord = altPrefix;
                             if (wordToInsert[0] === wordToInsert[0].toUpperCase()) {
                                 defaultWord = defaultWord.charAt(0).toUpperCase() + defaultWord.slice(1);
@@ -118,7 +118,7 @@ package.kab.format = function KabFormat(me) {
                 if (next === ")" || next === "]") {
                     var addStyles = session.options.addStyles;
                     session.options.addStyles = false;
-                    duplicate = me.the.kab.text.parseSingle(session, duplicate, instance.depth + 1);
+                    duplicate = me.package.kab.text.parseSingle(session, duplicate, instance.depth + 1);
                     duplicate = duplicate.replace(/“/g, "");
                     duplicate = duplicate.replace(/”/g, "");
                     duplicate = duplicate.toLowerCase();

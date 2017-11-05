@@ -8,9 +8,9 @@ package.canvas.background = function CanvasBackground(me) {
 
     };
     me.draw = function(object, canvas) {
-        var context = me.the.core.property.get(canvas, "context");
+        var context = me.package.core.property.get(canvas, "context");
         if(object.style.background) {
-            var region = me.the.ui.rect.relative_region(object, canvas);
+            var region = me.package.ui.rect.relative_region(object, canvas);
             context.fillStyle=object.style.background;
             context.fillRect(region.left,region.top,region.width,region.height);
         }

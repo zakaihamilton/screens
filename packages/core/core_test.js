@@ -7,7 +7,7 @@ package.require("core.test", "server");
 
 package.core.test = function CoreTest(me) {
     me.test = function(callback, param1, param2, param3) {
-        var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + me.the.platform;
+        var result = "test: param1=" + param1 + " param2=" + param2 + " param3=" + param3 + " " + me.package.platform;
         if(callback) {
             callback(result);
         }

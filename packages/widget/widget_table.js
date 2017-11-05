@@ -8,11 +8,11 @@ package.widget.table = function WidgetTable(me) {
         "ui.basic.tag": "table"
     };
     me.init = function () {
-        me.firstRowHeader = me.the.core.object.property("widge.table.firstRowHeader");
+        me.firstRowHeader = me.package.core.object.property("widge.table.firstRowHeader");
     };
     me.create = {
         set: function (object) {
-            me.the.core.property.set(object, "firstRowHeader", true);
+            me.package.core.property.set(object, "firstRowHeader", true);
         }
     };
     me.dataByColumns = {
@@ -28,16 +28,16 @@ package.widget.table = function WidgetTable(me) {
                     });
                 });
             }
-            me.the.core.property.set(object, "dataByRows", result);
+            me.package.core.property.set(object, "dataByRows", result);
         }
     };
     me.dataByRows = {
         set: function (object, data) {
-            me.the.ui.node.removeChildren(object);
+            me.package.ui.node.removeChildren(object);
             if (data) {
-                var firstRowHeader = me.the.core.property.get(object, "firstRowHeader");
+                var firstRowHeader = me.package.core.property.get(object, "firstRowHeader");
                 data.map(function (row, index) {
-                    me.the.ui.element.create({
+                    me.package.ui.element.create({
                         "ui.element.component": "widget.table.row",
                         "ui.basic.elements": row.map(function (item) {
                             var properties = Object.assign({}, item);

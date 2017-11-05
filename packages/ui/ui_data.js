@@ -44,7 +44,7 @@ package.ui.data = function UIData(me) {
             if(object.data_parent) {
                 parent = object.data_parent;
             }
-            me.the.core.property.set(parent, "ui.basic.elements", elements);
+            me.package.core.property.set(parent, "ui.basic.elements", elements);
         }
     };
     me.collect = function(object, elements, items) {
@@ -53,7 +53,7 @@ package.ui.data = function UIData(me) {
             var values = items[item_index];
             var data_value = null;
             if(typeof values === "string") {
-                values = me.the.core.property.get(object, values);
+                values = me.package.core.property.get(object, values);
                 if(Array.isArray(values)) {
                     me.collect(object, elements, values);
                 }
@@ -76,7 +76,7 @@ package.ui.data = function UIData(me) {
                     }
                 }
             }
-            properties = me.the.ui.element.combine(object.data_default, properties);
+            properties = me.package.ui.element.combine(object.data_default, properties);
             elements.push(properties);
         }
     };

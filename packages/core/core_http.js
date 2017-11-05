@@ -4,7 +4,7 @@
  */
 
 package.core.http = function CoreHttp(me) {
-    var core = me.the.core;
+    var core = me.package.core;
     if (package.platform === "server") {
         me.port = process.env.PORT || 8080;
     } else {
@@ -12,7 +12,7 @@ package.core.http = function CoreHttp(me) {
     }
     me.listeners = [];
     me.init = function () {
-        if (me.the.platform === "server") {
+        if (me.package.platform === "server") {
             me.http = require("http");
             me.server = me.http.createServer(function (request, response) {
                 var body = [];
@@ -82,7 +82,7 @@ package.core.http = function CoreHttp(me) {
         return array;
     };
     me.send = function (info, async = true) {
-        if (me.the.platform === "server") {
+        if (me.package.platform === "server") {
             var request = {
                 url:info.url,
                 headers:null,
@@ -97,14 +97,14 @@ package.core.http = function CoreHttp(me) {
                     }
                 }
             };
-            me.the.core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
+            me.package.core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            me.the.core.console.log("sending request info:" + JSON.stringify(info));
+            me.package.core.console.log("sending request info:" + JSON.stringify(info));
             request.open(info.method, info.url, async);
             if (async) {
                 request.onreadystatechange = function (e) {

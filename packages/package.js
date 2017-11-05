@@ -70,7 +70,7 @@ function package_init(package_name, component_name, callback, child_name = null,
     /* Register component in package */
     package[package_name].components.push(id);
     /* Create component proxy */
-    var component_obj = new Proxy({the:package, id: id, package: package_name, component: component_name, child: child_name}, {
+    var component_obj = new Proxy({package:package, id: id, child: child_name}, {
         get: function (object, property) {
             var result = undefined;
             if (Reflect.has(object, property)) {

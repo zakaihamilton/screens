@@ -16,24 +16,24 @@ package.app.viewer = function AppViewer(me) {
         }
         json.title = "Viewer - " + name;
         json["app.viewer.path"] = path;
-        var viewer = me.the.ui.element.create(json, "workspace", "self");
-        me.the.core.property.notify(viewer, "app.viewer.reload");
+        var viewer = me.package.ui.element.create(json, "workspace", "self");
+        me.package.core.property.notify(viewer, "app.viewer.reload");
     };
     me.init = function () {
-        me.path = me.the.core.object.property("app.viewer.path");
+        me.path = me.package.core.object.property("app.viewer.path");
     };
     me.reload = {
         set: function(object) {
-            var window = me.the.widget.window.window(object);
-            var path = me.the.core.property.get(window, "app.viewer.path");
-            me.the.core.file.readFile(function(err, data) {
+            var window = me.package.widget.window.window(object);
+            var path = me.package.core.property.get(window, "app.viewer.path");
+            me.package.core.file.readFile(function(err, data) {
                 if(err) {
-                    me.the.core.property.set(window.var.viewer, "ui.basic.text", err);
+                    me.package.core.property.set(window.var.viewer, "ui.basic.text", err);
                 }
                 else {
-                    me.the.core.property.set(window.var.viewer, "ui.basic.text", data);
+                    me.package.core.property.set(window.var.viewer, "ui.basic.text", data);
                 }
-                me.the.core.property.notify(window, "update");
+                me.package.core.property.notify(window, "update");
             }, path, 'utf8');
         }
     };
