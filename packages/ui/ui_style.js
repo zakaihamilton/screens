@@ -5,8 +5,7 @@
 
 package.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.forward = {
-        get : function(object, property) {
+    me.forward = function(object, property) {
             return {
                 get: function (object) {
                     var styles = null;
@@ -25,7 +24,6 @@ package.ui.style = function UIStyle(me) {
                     }
                 }
             };
-        }
     };
     me.values = function(values) {
         var result = {left:0,top:0,right:0,bottom:0};

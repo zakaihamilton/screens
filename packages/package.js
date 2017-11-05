@@ -77,8 +77,8 @@ function package_init(package_name, component_name, callback, child_name = null,
                 return Reflect.get(object, property);
             } else if (property !== "forward" && Reflect.has(object, "forward")) {
                 var forward = Reflect.get(object, "forward");
-                if (forward && forward.enabled && forward.get) {
-                    return forward.get(object, property);
+                if (forward && forward.enabled) {
+                    return forward(object, property);
                 }
             }
             return undefined;

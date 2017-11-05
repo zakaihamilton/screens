@@ -12,23 +12,23 @@ package.storage.cache = function StorageCache(me) {
         me.session = me.package.core.object.create(me);
         if (me.isSupported()) {
             me.none.storage = null;
-            me.none.members = function() {
+            me.none.members = function () {
                 return [];
             };
-            me.none.clear = function() {
+            me.none.clear = function () {
             };
             me.local.storage = localStorage;
-            me.local.members = function() {
+            me.local.members = function () {
                 return me.keyList(me.local);
             };
-            me.local.clear = function() {
+            me.local.clear = function () {
                 me.local.storage.clear();
             };
             me.session.storage = sessionStorage;
-            me.session.members = function() {
+            me.session.members = function () {
                 return me.keyList(me.session);
             };
-            me.session.clear = function() {
+            me.session.clear = function () {
                 me.session.storage.clear();
             };
         }
@@ -42,30 +42,30 @@ package.storage.cache = function StorageCache(me) {
             return false;
         }
     };
-    me.validKey = function(key) {
+    me.validKey = function (key) {
         key = key.replace(/[.]/g, "-");
         return key;
     };
     me.store = {
-        set: function(object, value) {
+        set: function (object, value) {
             var key = me.package.core.property.get(object, "storage.cache.key");
             var location = me.package.core.property.get(object, "storage.cache.location");
-            if(!location) {
+            if (!location) {
                 location = "local";
             }
-            if(key) {
+            if (key) {
                 me.package.core.property.set(me[location], key, value);
             }
         }
     };
     me.restore = {
-        set: function(object, value) {
+        set: function (object, value) {
             var key = me.package.core.property.get(object, "storage.cache.key");
             var location = me.package.core.property.get(object, "storage.cache.location");
-            if(!location) {
+            if (!location) {
                 location = "local";
             }
-            if(key) {
+            if (key) {
                 var store = me.package.core.property.get(me[location], key);
                 me.package.core.property.set(object, value, store);
             }
@@ -81,25 +81,22 @@ package.storage.cache = function StorageCache(me) {
             return keys;
         }
     };
-    me.forward = {
-        get: function (object, property) {
-            return {
-                get: function (object) {
-                    if (object.storage) {
-                        return object.storage.getItem(property);
-                    }
-                },
-                set: function (object, value) {
-                    if (object.storage && typeof value !== "undefined") {
-                        if(value) {
-                            object.storage.setItem(property, value);
-                        }
-                        else {
-                            object.storage.removeItem(property);
-                        }
+    me.forward = function (object, property) {
+        return {
+            get: function (object) {
+                if (object.storage) {
+                    return object.storage.getItem(property);
+                }
+            },
+            set: function (object, value) {
+                if (object.storage && typeof value !== "undefined") {
+                    if (value) {
+                        object.storage.setItem(property, value);
+                    } else {
+                        object.storage.removeItem(property);
                     }
                 }
-            };
-        }
+            }
+        };
     };
 };
