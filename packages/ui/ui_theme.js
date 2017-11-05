@@ -41,7 +41,7 @@ package.ui.theme = function UITheme(me) {
             }
         }, path);
     };
-    me.package.applyTheme = function(elementCallback, parent) {
+    me.applyTheme = function(elementCallback, parent) {
         if(!parent) {
             parent = document.body;
         }

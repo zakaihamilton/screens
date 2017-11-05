@@ -129,7 +129,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.group.data":object.parentNode.listData,
                 "widget.list.popup.selection":me.package.core.property.get(object.parentNode, "text"),
                 "ui.var.parentList":object.parentNode
-            });
+            }, "workspace", "self");
         }
     };
     me.readOnly = {
