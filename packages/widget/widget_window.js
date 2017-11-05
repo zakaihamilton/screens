@@ -6,11 +6,11 @@
 package.require("widget.window", "browser");
 
 package.widget.window = function WidgetWindow(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["title"]
     };
     me.extend = ["ui.focus"];
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.text": "text",
         "ui.style.background": "background",
         "ui.basic.elements": "elements"

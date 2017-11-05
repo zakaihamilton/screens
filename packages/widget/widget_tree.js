@@ -4,10 +4,10 @@
  */
 
 package.widget.tree = function WidgetTree(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["ui.element.count", "widget.tree.collapse"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
     me["ui.element.default"] = {
@@ -61,10 +61,10 @@ package.widget.tree = function WidgetTree(me) {
     };
 };
 package.widget.tree.dropdown = function WidgetDropDownList(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",
         "ui.basic.elements": "elements",
@@ -162,7 +162,7 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
     };
 };
 package.widget.tree.popup = function WidgetListPopup(me) {
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
     me["ui.element.default"] = {
@@ -254,11 +254,11 @@ package.widget.tree.item = function WidgetTreeItem(me) {
             }
         ]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.elements": "elements",
         "ui.basic.text": "text"
     };
-    me.depends = {
+    me["ui.element.depends"] = {
         parent: ["widget.tree", "widget.tree.popup", "widget.tree.item", "widget.tree.list"],
         properties: ["ui.basic.text"]
     };

@@ -4,10 +4,10 @@
  */
 
 package.widget.list = function WidgetList(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["ui.element.count"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
     me["ui.element.default"] = {
@@ -71,10 +71,10 @@ package.widget.list = function WidgetList(me) {
 };
 
 package.widget.list.dropdown = function WidgetDropDownList(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["ui.element.count", "ui.basic.text"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",
         "ui.basic.elements": "elements",
@@ -173,7 +173,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
 };
 
 package.widget.list.popup = function WidgetListPopup(me) {
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
     me["ui.element.default"] = {
@@ -232,7 +232,7 @@ package.widget.list.item = function WidgetListItem(me) {
         "ui.touch.default": "dblclick",
         "ui.class.class": "widget.list.item"
     };
-    me.depends = {
+    me["ui.element.depends"] = {
         parent: ["widget.list", "widget.list.popup"],
         properties: ["ui.basic.text"]
     };

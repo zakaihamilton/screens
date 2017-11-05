@@ -4,10 +4,10 @@
  */
 
 package.widget.input = function WidgetInput(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties:["ui.basic.text","ui.basic.type"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.text":"text"
     };
     me["ui.element.default"] = {

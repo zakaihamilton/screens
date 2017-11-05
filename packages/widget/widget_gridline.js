@@ -4,7 +4,7 @@
  */
 
 package.widget.gridline = function WidgetGridLine(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["line"]
     };
     me["ui.element.default"] = {

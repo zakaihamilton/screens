@@ -4,10 +4,10 @@
  */
 
 package.widget.checkbox = function WidgetCheckBox(me) {
-    me.depends = {
+    me["ui.element.depends"] = {
         properties: ["state"]
     };
-    me.redirect = {
+    me["core.property.redirect"] = {
         "ui.basic.text": "text"
     };
     me["ui.element.default"] = {

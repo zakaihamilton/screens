@@ -145,7 +145,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         "ui.basic.tag": "span",
         "ui.touch.click": "click"
     };
-    me.depends = {
+    me["ui.element.depends"] = {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
     };
