@@ -8,11 +8,11 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     me["ui.element.create"] = function (object) {
         object.autoScrollSpeed = 250;
         object.autoScrollSize = 1;
-        object.deltaSpeed = 50;
+        object.deltaSpeed = 25;
         object.snapToScrollWait = 500;
         object.snapToPageUnits = 50;
         object.scrollSize = 10;
-        object.delayTimeout = 0;
+        object.delayTimeout = 10;
         object.deltaDistance = 0;
         object.has_scroll = false;
     };
