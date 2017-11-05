@@ -15,7 +15,7 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.background": "background",
         "ui.basic.elements": "elements"
     };
-    me.default = __json__;
+    me["ui.element.default"] = __json__;
     me.init = function () {
         me.popup = me.package.ui.property.themedPropertySet("popup");
         me.embed = me.package.ui.property.themedPropertySet("embed", function(object, value) {

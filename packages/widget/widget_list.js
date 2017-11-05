@@ -10,7 +10,7 @@ package.widget.list = function WidgetList(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -81,7 +81,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
         "ui.group.data": "data",
         "ui.monitor.change":"monitorChange"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "group",
         "ui.basic.elements": [
             {
@@ -176,7 +176,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -226,7 +226,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
 };
 
 package.widget.list.item = function WidgetListItem(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",
         "ui.touch.default": "dblclick",

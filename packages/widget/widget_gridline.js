@@ -7,7 +7,7 @@ package.widget.gridline = function WidgetGridLine(me) {
     me.depends = {
         properties: ["line"]
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "div",
         "ui.property.style": {
             "position": "absolute",

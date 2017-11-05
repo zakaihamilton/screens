@@ -176,9 +176,10 @@ package.ui.element = function UIElement(me) {
             component_name = "ui.element";
         }
         var component = package.path(component_name);
+        var defaultProperties = component["ui.element.default"];
         console.log("creating element of " + component_name);
-        if(!tag && component.default && 'ui.basic.tag' in component.default) {
-            tag = component.default['ui.basic.tag'];
+        if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
+            tag = defaultProperties['ui.basic.tag'];
         }
         if(!tag) {
             tag = "div";
@@ -204,9 +205,9 @@ package.ui.element = function UIElement(me) {
         object.context = object;
         var redirect = component.redirect;
         component.redirect = null;
-        if(component.default) {
-            for (var key in component.default) {
-                me.package.core.property.set(object, key, component.default[key]);
+        if(defaultProperties) {
+            for (var key in defaultProperties) {
+                me.package.core.property.set(object, key, defaultProperties[key]);
             }
         }
         component.redirect = redirect;

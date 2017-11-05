@@ -12,7 +12,7 @@ package.widget.dropdown = function WidgetDropDown(me) {
         "ui.basic.readOnly": "readOnly",
         "ui.monitor.change":"monitorChange"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "group",
         "ui.basic.elements": [
             {

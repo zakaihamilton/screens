@@ -4,7 +4,7 @@
  */
 
 package.widget.canvas = function WidgetCanvas(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "canvas",
         "ui.class.class": "border"
     };

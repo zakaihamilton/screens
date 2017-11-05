@@ -10,7 +10,7 @@ package.widget.input = function WidgetInput(me) {
     me.redirect = {
         "ui.basic.text":"text"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag" : "input",
         "ui.class.class" : "normal",
         "ui.attribute.tabindex":"0"

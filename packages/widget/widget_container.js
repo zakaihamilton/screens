@@ -9,7 +9,7 @@ package.widget.container = function WidgetContainer(me) {
         "ui.basic.text": "text",
         "ui.basic.html": "html"
     };
-    me.default = __json__;
+    me["ui.element.default"] = __json__;
     me.content = function (object) {
         return object.var.content;
     };

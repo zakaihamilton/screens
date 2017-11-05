@@ -4,7 +4,7 @@
  */
 
 package.widget.table = function WidgetTable(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "table"
     };
     me.init = function () {
@@ -54,19 +54,19 @@ package.widget.table = function WidgetTable(me) {
 };
 
 package.widget.table.header = function WidgetTableHeader(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "th"
     };
 };
 
 package.widget.table.row = function WidgetTableRow(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "tr"
     };
 };
 
 package.widget.table.data = function WidgetTableData(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "td"
     };
 };

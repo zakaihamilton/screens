@@ -4,7 +4,7 @@
  */
 
 package.widget.modal = function WidgetModal(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.touch.click":"click",
         "ui.class.class" : "overlay"
     };

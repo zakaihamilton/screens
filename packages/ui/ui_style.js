@@ -5,33 +5,32 @@
 
 package.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.forward = function(object, property) {
-            return {
-                get: function (object) {
-                    var styles = null;
-                    var method = object._getComputedStyle;
-                    if(method) {
-                        styles = method(object);
-                    }
-                    else {
-                        styles = getComputedStyle(object);
-                    }
-                    return styles[property];
-                },
-                set: function (object, value) {
-                    if (object && typeof value !== "undefined" && object.style) {
-                        object.style[property] = value;
-                    }
+    me.forward = function (object, property) {
+        return {
+            get: function (object) {
+                var styles = null;
+                var method = object._getComputedStyle;
+                if (method) {
+                    styles = method(object);
+                } else {
+                    styles = getComputedStyle(object);
                 }
-            };
+                return styles[property];
+            },
+            set: function (object, value) {
+                if (object && typeof value !== "undefined" && object.style) {
+                    object.style[property] = value;
+                }
+            }
+        };
     };
-    me.values = function(values) {
-        var result = {left:0,top:0,right:0,bottom:0};
-        if(!values || !(typeof values === 'string' || values instanceof String)) {
+    me.values = function (values) {
+        var result = {left: 0, top: 0, right: 0, bottom: 0};
+        if (!values || !(typeof values === 'string' || values instanceof String)) {
             return result;
         }
         var array = values.split(" ");
-        switch(array.length) {
+        switch (array.length) {
             case 1:
                 result.left = result.top = result.right = result.bottom = array[0];
                 break;

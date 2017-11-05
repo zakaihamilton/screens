@@ -4,7 +4,7 @@
  */
 
 package.widget.menu = function WidgetMenu(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
@@ -117,7 +117,7 @@ package.widget.menu = function WidgetMenu(me) {
 };
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
@@ -141,7 +141,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
 };
 
 package.widget.menu.item = function WidgetMenuItem(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click"
     };

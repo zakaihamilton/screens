@@ -52,7 +52,7 @@ package.ui.theme = function UITheme(me) {
                     elementCallback(element, classItem);
                 });
             }
-            me.package.applyTheme(elementCallback, element);
+            me.applyTheme(elementCallback, element);
             element = element.nextSibling;
         }
     };
@@ -60,7 +60,7 @@ package.ui.theme = function UITheme(me) {
         if(me.currentTheme) {
             me.currentTheme.link.parentNode.removeChild(me.currentTheme.link);
             me.currentTheme.link = null;
-            me.package.applyTheme(function(element, classItem) {
+            me.applyTheme(function(element, classItem) {
                 var mapping = me.findMapping(classItem);
                 if(!mapping) {
                     return;
@@ -83,7 +83,7 @@ package.ui.theme = function UITheme(me) {
                 me.unload();
                 me.currentTheme = data;
                 me.currentTheme.link = me.package.ui.class.loadStylesheet(path + ".css");
-                me.package.applyTheme(function(element, classItem) {
+                me.applyTheme(function(element, classItem) {
                     var mapping = me.findMapping(classItem);
                     if(!mapping) {
                         return;

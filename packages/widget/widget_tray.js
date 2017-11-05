@@ -4,7 +4,7 @@
  */
 
 package.widget.tray = function WidgetTray(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class":"container"
     };
     me.tray = {

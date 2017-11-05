@@ -10,7 +10,7 @@ package.widget.radio = function WidgetRadio(me) {
     me.redirect = {
         "ui.basic.text": "text"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "container",
         "ui.basic.elements":[{
                     "ui.basic.var": "input",

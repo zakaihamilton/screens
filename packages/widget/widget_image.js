@@ -7,7 +7,7 @@ package.widget.image = function WidgetImage(me) {
     me.depends = {
         properties:["ui.basic.src"]
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag" : "img"
     };
 };

@@ -12,7 +12,7 @@ package.widget.icon = function WidgetIcon(me) {
         "ui.basic.src" : "src"
     };
     me.extend = ["ui.drag.icon"];
-    me.default = __json__;
+    me["ui.element.default"] = __json__;
     me.init = function() {
         me.type = me.package.core.object.property("widget.icon.type", {
             set: function(object, value, name, oldValue) {

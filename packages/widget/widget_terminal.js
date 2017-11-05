@@ -4,7 +4,7 @@
  */
 
 package.widget.terminal = function WidgetTerminal(me) {
-    me.default = __json__;
+    me["ui.element.default"] = __json__;
     me.sendInput = function (terminal, message, type) {
         var window = me.package.widget.window.window(terminal);
         var field = me.package.ui.element.create({

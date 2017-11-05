@@ -4,7 +4,7 @@
  */
 
 package.widget.desktop = function WidgetDesktop(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "div",
         "ui.class.class": "background",
         "ui.basic.elements":[

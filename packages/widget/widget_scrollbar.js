@@ -4,7 +4,7 @@
  */
 
 function WidgetScrollbarTemplate(me, scroll_type) {
-    me.default = __json__;
+    me["ui.element.default"] = __json__;
     me.create = {
         set: function (object) {
             object.autoScrollSpeed = 250;

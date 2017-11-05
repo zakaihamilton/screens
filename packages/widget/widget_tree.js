@@ -10,7 +10,7 @@ package.widget.tree = function WidgetTree(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -71,7 +71,7 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
         "ui.group.data": "data",
         "ui.monitor.change": "monitorChange"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "group",
         "ui.basic.elements": [
             {
@@ -165,7 +165,7 @@ package.widget.tree.popup = function WidgetListPopup(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -215,14 +215,14 @@ package.widget.tree.popup = function WidgetListPopup(me) {
 };
 
 package.widget.tree.list = function WidgetTreeList(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "ul",
         "ui.class.class": "widget.tree.list"
     };
 };
 
 package.widget.tree.item = function WidgetTreeItem(me) {
-    me.default = {
+    me["ui.element.default"] = {
         "ui.basic.tag": "li",
         "ui.class.class": "widget.tree.item",
         "ui.basic.elements": [

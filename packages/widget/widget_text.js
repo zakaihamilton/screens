@@ -7,7 +7,7 @@ package.widget.text = function WidgetText(me) {
     me.depends = {
         properties:["ui.basic.text"]
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class":"normal"
     };
 };

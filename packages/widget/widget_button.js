@@ -7,7 +7,7 @@ package.widget.button = function WidgetButton(me) {
     me.depends = {
         properties:["ui.basic.text","ui.touch.click"]
     };
-    me.default = {
+    me["ui.element.default"] = {
         "ui.class.class" : "standard",
         "ui.attribute.tabindex":"0"
     };
