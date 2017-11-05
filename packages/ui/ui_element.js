@@ -199,8 +199,9 @@ package.ui.element = function UIElement(me) {
         }
         object.context = context ? context : parent;
         me.package.core.property.set(object, "ui.node.parent", parent);
-        if (component_name !== me.id) {
-            me.package.core.property.set(object, "create", parent);
+        var constructor = component["ui.element.create"];
+        if(constructor) {
+            constructor(object, parent);
         }
         object.context = object;
         var redirect = component["core.property.redirect"];

@@ -5,30 +5,27 @@
 
 function WidgetScrollbarTemplate(me, scroll_type) {
     me["ui.element.default"] = __json__;
-    me.create = {
-        set: function (object) {
-            object.autoScrollSpeed = 250;
-            object.autoScrollSize = 1;
-            object.deltaSpeed = 50;
-            object.snapToScrollWait = 500;
-            object.snapToPageUnits = 50;
-            object.scrollSize = 10;
-            object.delayTimeout = 100;
-            object.deltaDistance = 0;
-            object.has_scroll = false;
-        }
+    me["ui.element.create"] = function (object) {
+        object.autoScrollSpeed = 250;
+        object.autoScrollSize = 1;
+        object.deltaSpeed = 50;
+        object.snapToScrollWait = 500;
+        object.snapToPageUnits = 50;
+        object.scrollSize = 10;
+        object.delayTimeout = 0;
+        object.deltaDistance = 0;
+        object.has_scroll = false;
     };
     me.scrollType = {
         get: function (object) {
             return scroll_type;
         }
     };
-    me.container = function(object) {
+    me.container = function (object) {
         var container = null;
-        if(object.component === me.package.widget.window.id) {
+        if (object.component === me.package.widget.window.id) {
             container = object.var.container;
-        }
-        else {
+        } else {
             container = me.package.ui.node.container(object, me.package.widget.container.id);
         }
         return container;
@@ -57,9 +54,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             scrollbar.alwaysHide = value;
         }
     };
-    me.remove_scroll_class = function(container, scroll_type) {
+    me.remove_scroll_class = function (container, scroll_type) {
         var scrollbar = container.var[scroll_type];
-        if(!scrollbar) {
+        if (!scrollbar) {
             return;
         }
         var has_class = me.package.core.property.get(container, "ui.class.contains", scroll_type + "_scroll");
@@ -74,9 +71,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             });
         }
     };
-    me.update_scroll_class = function(container, scroll_type) {
+    me.update_scroll_class = function (container, scroll_type) {
         var scrollbar = container.var[scroll_type];
-        if(!scrollbar) {
+        if (!scrollbar) {
             return;
         }
         var content = me.package.widget.container.content(container);
@@ -99,7 +96,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var scrollbar = container.var[scroll_type];
             var content = me.package.widget.container.content(container);
             var has_scroll = me.package.ui.scroll.has_scroll(content, scroll_type);
-            if(scrollbar.has_scroll !== has_scroll) {
+            if (scrollbar.has_scroll !== has_scroll) {
                 me.remove_scroll_class(container, scroll_type);
                 me.update_scroll_class(container, scroll_type);
                 me.package.core.property.set(scrollbar, "ui.style.visibility", has_scroll ? "visible" : "hidden");
@@ -115,15 +112,15 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 var length = me.package.ui.scroll.length(scroll_type, track_region, thumb_region);
                 position = me.package.ui.scroll.percent_to_pos(length, scroll_percent);
             }
-            if(thumb_percent) {
+            if (thumb_percent) {
                 var length = me.package.ui.scroll.length(scroll_type, track_region, null);
                 size = me.package.ui.scroll.percent_to_pos(length, thumb_percent);
             }
-            if(has_scroll) {
+            if (has_scroll) {
                 me.package.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
             }
             var changed = me.package.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
-            if(changed) {
+            if (changed) {
                 var scrolledInfo = {};
                 scrolledInfo[scroll_type] = me.package.ui.scroll.current_pos(content, scroll_type);
                 me.package.core.property.set(container, "scrolled", scrolledInfo);
@@ -131,7 +128,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
     };
     me.refresh = {
-        set: function(object) {
+        set: function (object) {
             me.update.set(object);
             me.update.set(object);
         }
@@ -147,7 +144,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var content = me.package.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             var scrollSize = scrollbar.scrollSize;
-            if(scrollbar.snapToPage) {
+            if (scrollbar.snapToPage) {
                 scrollSize = scrollbar.pageSize;
             }
             me.package.ui.scroll.by(content, scroll_type, -scrollSize);
@@ -161,7 +158,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var content = me.package.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             var scrollSize = scrollbar.scrollSize;
-            if(scrollbar.snapToPage) {
+            if (scrollbar.snapToPage) {
                 scrollSize = scrollbar.pageSize;
             }
             me.package.ui.scroll.by(content, scroll_type, scrollSize);
@@ -193,7 +190,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var scroll_direction = me.package.ui.scroll.direction(value, scroll_type, thumb_region);
             var scrollbar = container.var[scroll_type];
             var scrollSize = scrollbar.scrollSize;
-            if(scrollbar.snapToPage) {
+            if (scrollbar.snapToPage) {
                 scrollSize = scrollbar.pageSize;
             }
             if (scroll_direction < 0) {
@@ -274,10 +271,10 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var content = me.package.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
             scrollbar.deltaDistance += value;
-            if(scrollbar.delta_timer) {
+            if (scrollbar.delta_timer) {
                 return;
             }
-            scrollbar.delta_timer = setTimeout(function() {
+            scrollbar.delta_timer = setTimeout(function () {
                 me.package.ui.scroll.by(content, scroll_type, scrollbar.deltaDistance);
                 me.refresh.set(container);
                 me.package.core.property.set(scrollbar, "snap");
@@ -287,11 +284,11 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
     };
     me.snap = {
-        set: function(object, value) {
+        set: function (object, value) {
             var container = me.container(object);
             var content = me.package.widget.container.content(container);
             var scrollbar = container.var[scroll_type];
-            if(!scrollbar.snapToPage) {
+            if (!scrollbar.snapToPage) {
                 return;
             }
             var pageSize = scrollbar.pageSize;
@@ -308,35 +305,32 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 var targetPos = currentPos;
                 var delta = currentPos % pageSize;
                 var direction = 0;
-                if(delta) {
+                if (delta) {
                     targetPos = Math.round(currentPos / pageSize) * pageSize;
                 }
-                if(currentPos < targetPos) {
+                if (currentPos < targetPos) {
                     direction = 1;
-                }
-                else if(currentPos > targetPos) {
+                } else if (currentPos > targetPos) {
                     direction = -1;
                 }
                 scrollbar.deltaInterval = setInterval(function () {
                     currentPos = me.package.ui.scroll.current_pos(content, scroll_type);
                     var scrollBy = 0;
-                    if(direction > 0) {
+                    if (direction > 0) {
                         scrollBy = scrollbar.snapToPageUnits;
-                        if(currentPos + scrollBy > targetPos) {
+                        if (currentPos + scrollBy > targetPos) {
                             scrollBy = targetPos - currentPos;
                         }
-                    }
-                    else if(direction < 0) {
+                    } else if (direction < 0) {
                         scrollBy = 0 - scrollbar.snapToPageUnits;
-                        if(currentPos + scrollBy < targetPos) {
+                        if (currentPos + scrollBy < targetPos) {
                             scrollBy = targetPos - currentPos;
                         }
                     }
-                    if(scrollBy) {
+                    if (scrollBy) {
                         me.package.ui.scroll.by(content, scroll_type, scrollBy);
                         me.refresh.set(container);
-                    }
-                    else {
+                    } else {
                         clearInterval(scrollbar.deltaInterval);
                         scrollbar.deltaInterval = null;
                     }
