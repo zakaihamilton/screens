@@ -6,26 +6,26 @@
 package.widget.terminal = function WidgetTerminal(me) {
     me.default = __json__;
     me.sendInput = function (terminal, message, type) {
-        var window = me.widget.window.window(terminal);
-        var field = me.ui.element.create({
+        var window = me.the.widget.window.window(terminal);
+        var field = me.the.ui.element.create({
             "ui.basic.tag": "input",
             "ui.class.class":"widget.terminal.field"
         }, window);
         terminal.field = field;
-        me.set(terminal.var.inputLine, "ui.basic.text", "");
-        me.set(terminal.var.input, "ui.style.display", "block");
+        me.the.core.property.set(terminal.var.inputLine, "ui.basic.text", "");
+        me.the.core.property.set(terminal.var.input, "ui.style.display", "block");
         clearTimeout(terminal.cursorTimeout);
-        me.set(terminal, "scroll");
+        me.the.core.property.set(terminal, "scroll");
         if (message.length) {
-            me.set(terminal.var.prefix, "ui.basic.text", message);
+            me.the.core.property.set(terminal.var.prefix, "ui.basic.text", message);
         }
         field.onblur = function () {
-            me.set(terminal.var.cursor, "ui.style.display", "none");
+            me.the.core.property.set(terminal.var.cursor, "ui.style.display", "none");
             clearTimeout(terminal.cursorTimeout);
         };
         field.onfocus = function () {
-            field.value = me.get(terminal.var.inputLine, "ui.basic.text");
-            me.set(terminal.var.cursor, "ui.style.display", "inline");
+            field.value = me.the.core.property.get(terminal.var.inputLine, "ui.basic.text");
+            me.the.core.property.set(terminal.var.cursor, "ui.style.display", "inline");
             me.blinkCursor(terminal, field);
         };
         window.onclick = function () {
@@ -36,19 +36,19 @@ package.widget.terminal = function WidgetTerminal(me) {
                 e.preventDefault();
             } else if (type === "input" && e.which !== 13) {
                 setTimeout(function () {
-                    me.set(terminal.var.inputLine, "ui.basic.text", field.value);
-                    me.set(terminal, "scroll");
+                    me.the.core.property.set(terminal.var.inputLine, "ui.basic.text", field.value);
+                    me.the.core.property.set(terminal, "scroll");
                 }, 1);
             }
         };
         field.onkeyup = function (e) {
             if (e.which === 13) {
-                me.set(terminal.var.input, "ui.style.display", "none");
+                me.the.core.property.set(terminal.var.input, "ui.style.display", "none");
                 if (type === "input") {
-                    me.set(terminal, "print", message + field.value);
+                    me.the.core.property.set(terminal, "print", message + field.value);
                 }
-                me.set(field, "ui.node.parent");
-                me.set(terminal, terminal.response, field.value);
+                me.the.core.property.set(field, "ui.node.parent");
+                me.the.core.property.set(terminal, terminal.response, field.value);
             }
         };
         if (!terminal.running) {
@@ -64,17 +64,17 @@ package.widget.terminal = function WidgetTerminal(me) {
         var cursor = terminal.var.cursor;
         terminal.cursorTimeout = setTimeout(function () {
             if (field.parentElement) {
-                var visibility = me.get(cursor, "ui.style.visibility");
-                me.set(cursor, "ui.style.visibility", visibility === "visible" ? "hidden" : "visible");
+                var visibility = me.the.core.property.get(cursor, "ui.style.visibility");
+                me.the.core.property.set(cursor, "ui.style.visibility", visibility === "visible" ? "hidden" : "visible");
                 me.blinkCursor(terminal, field);
             } else {
-                me.set(cursor, "ui.style.visibility", "visible");
+                me.the.core.property.set(cursor, "ui.style.visibility", "visible");
             }
         }, 500);
     };
     me.clear = {
         set: function (terminal) {
-            me.set(terminal.var.output, "ui.basic.text", "");
+            me.the.core.property.set(terminal.var.output, "ui.basic.text", "");
         }
     };
     me.response = {
@@ -84,19 +84,19 @@ package.widget.terminal = function WidgetTerminal(me) {
     };
     me.print = {
         set: function (terminal, message) {
-            var print = me.ui.element.create({
+            var print = me.the.ui.element.create({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);
-            me.set(terminal, "scroll");
+            me.the.core.property.set(terminal, "scroll");
         }
     };
     me.scroll = {
         set: function(terminal) {
-            var container = me.ui.node.container(terminal, me.widget.container.id);
-            var content = me.widget.container.content(container);
+            var container = me.the.ui.node.container(terminal, me.the.widget.container.id);
+            var content = me.the.widget.container.content(container);
             content.scrollTop = content.scrollHeight;
-            me.notify(container, "update");
+            me.the.core.property.notify(container, "update");
         }
     };
     me.input = {

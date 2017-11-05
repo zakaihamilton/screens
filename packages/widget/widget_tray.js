@@ -9,21 +9,21 @@ package.widget.tray = function WidgetTray(me) {
     };
     me.tray = {
         get: function(object) {
-            var window = me.widget.window.window(object);
-            var parent = me.widget.window.parent(window);
+            var window = me.the.widget.window.window(object);
+            var parent = me.the.widget.window.parent(window);
             var type = "icon";
             if(parent) {
-                parent = me.get(parent, "content");
+                parent = me.the.core.property.get(parent, "content");
             }
             else {
-                parent = me.ui.element.bar();
+                parent = me.the.ui.element.bar();
                 type = "list";
             }
             if(!parent.var) {
                 parent.var = {};
             }
             if(!parent.var.tray) {
-                me.ui.element.create({
+                me.the.ui.element.create({
                     "ui.element.component":"widget.tray",
                     "ui.basic.var":"tray",
                     "type":type
@@ -33,9 +33,9 @@ package.widget.tray = function WidgetTray(me) {
         }
     };
     me.init = function() {
-        me.type = me.core.object.property("widget.tray.type", {
+        me.type = me.the.core.object.property("widget.tray.type", {
             set: function(object, value) {
-                me.set(object, "ui.property.broadcast", {
+                me.the.core.property.set(object, "ui.property.broadcast", {
                     "type":value
                 });
             }

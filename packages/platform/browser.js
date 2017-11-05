@@ -117,10 +117,10 @@ function startBrowser(appName, appArgs) {
                     package.include("app.main", function (appInfo) {
                         if (appInfo.complete) {
                             if(appName) {
-                                package.send_browser("app.main.setStartupApp", null, appName);
-                                package.send_browser("app.main.setStartupArgs", null, appArgs);
+                                package.core.message.send_browser("app.main.setStartupApp", null, appName);
+                                package.core.message.send_browser("app.main.setStartupArgs", null, appArgs);
                             }
-                            package.send_browser("app.main.browser");
+                            package.core.message.send_browser("app.main.browser");
                         }
                     });
                 }

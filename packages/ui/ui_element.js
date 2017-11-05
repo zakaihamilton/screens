@@ -15,7 +15,7 @@ package.ui.element = function UIElement(me) {
                     if (parent) {
                         var match = false;
                         for (var depend_index = 0; depend_index < depends.parent.length; depend_index++) {
-                            if (me.ui.node.container(parent, depends.parent[depend_index])) {
+                            if (me.the.ui.node.container(parent, depends.parent[depend_index])) {
                                 match = true;
                             }
                         }
@@ -96,7 +96,7 @@ package.ui.element = function UIElement(me) {
             return;
         }
         for (var key in properties) {
-            me.set(object, key, properties[key]);
+            me.the.core.property.set(object, key, properties[key]);
         }
     };
     me.combine = function (maps) {
@@ -117,7 +117,7 @@ package.ui.element = function UIElement(me) {
         if(object.context) {
             object = object.context;
         }
-        path = me.core.property.fullname(object, path, path);
+        path = me.the.core.property.fullname(object, path, path);
         return path;
     };
     me.find = function(object, name) {
@@ -140,7 +140,7 @@ package.ui.element = function UIElement(me) {
     };
     me.create = function (properties, parent, context=null) {
         if(typeof properties === "string") {
-            properties = me.get(parent, properties, context);
+            properties = me.the.core.property.get(parent, properties, context);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
@@ -160,7 +160,7 @@ package.ui.element = function UIElement(me) {
         if("ui.element.update" in properties) {
             var update = properties["ui.element.update"];
             for (var key in update) {
-                me.set(parent, key, update[key]);
+                me.the.core.property.set(parent, key, update[key]);
             }
             if(Object.keys(properties).length === 1) {
                 return;
@@ -190,37 +190,37 @@ package.ui.element = function UIElement(me) {
         else {
             object = document.createElement(tag);
         }
-        me.core.object.attach(object, component);
+        me.the.core.object.attach(object, component);
         object.var = {};
             if(context === "self") {
             console.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;
-        me.set(object, "ui.node.parent", parent);
+        me.the.core.property.set(object, "ui.node.parent", parent);
         if (component_name !== me.id) {
-            me.set(object, "create", parent);
+            me.the.core.property.set(object, "create", parent);
         }
         object.context = object;
         var redirect = component.redirect;
         component.redirect = null;
         if(component.default) {
             for (var key in component.default) {
-                me.set(object, key, component.default[key]);
+                me.the.core.property.set(object, key, component.default[key]);
             }
         }
         component.redirect = redirect;
         object.context = context ? context : parent;
         for (var key in properties) {
-            me.set(object, key, properties[key]);
+            me.the.core.property.set(object, key, properties[key]);
         }
         if (component.extend) {
             component.extend.map(function (extension) {
-                me.set(object, extension + ".extend");
+                me.the.core.property.set(object, extension + ".extend");
             });
         }
         if (component_name !== me.id) {
-            me.set(object, "draw");
+            me.the.core.property.set(object, "draw");
         }
         return object;
     };

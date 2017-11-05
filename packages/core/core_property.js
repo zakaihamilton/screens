@@ -6,11 +6,6 @@
 package.core.property = function CoreProperty(me) {
     me.init = function() {
         me._forwarding_list = {};
-        package.get = me.get;
-        package.set = me.set;
-        package.dirty = me.dirty;
-        package.link = me.link;
-        package.notify = me.notify;
     };
     me.fullname = function(object, name, default_name=null) {
         if(typeof name !== "string") {
@@ -42,7 +37,7 @@ package.core.property = function CoreProperty(me) {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.get(item, name, value, method);
+                return me.the.core.property.get(item, name, value, method);
             });
             return results;
         }
@@ -50,17 +45,17 @@ package.core.property = function CoreProperty(me) {
             var info = me.split(object, name, value);
             if(typeof info.value === "string") {
                 if(info.value.startsWith("@")) {
-                    info.value = me.get(info.object, info.value.substring(1));
+                    info.value = me.the.core.property.get(info.object, info.value.substring(1));
                 }
             }
             if(typeof info.value === "string") {
                 if(info.value.startsWith("^")) {
                     var subInfo = me.split(info.object, info.value, null);
-                    var job = me.core.job.open();
+                    var job = me.the.core.job.open();
                     var paramInfo = {job:job,value:subInfo.name};
-                        me.get(subInfo.object, subInfo.name.substring(1), paramInfo);
-                    me.core.job.close(job, function() {
-                        me.set(info.object, info.name, paramInfo.value);
+                        me.the.core.property.get(subInfo.object, subInfo.name.substring(1), paramInfo);
+                    me.the.core.job.close(job, function() {
+                        me.the.core.property.set(info.object, info.name, paramInfo.value);
                     });
                     return;
                 }
@@ -71,7 +66,7 @@ package.core.property = function CoreProperty(me) {
             else {
                 info.name = me.fullname(info.object, info.name);
                 if(info.name) {
-                    result = me.send(info.name + "." + method, info.object, info.value);
+                    result = me.the.core.message.send(info.name + "." + method, info.object, info.value);
                 }
             }
         }
@@ -86,7 +81,7 @@ package.core.property = function CoreProperty(me) {
                 name = name.substr(0, openIdx);
                 if(args.length > 1) {
                     if(args[0] !== "this") {
-                        object = me.get(object, args[0]);
+                        object = me.the.core.property.get(object, args[0]);
                     }
                     value = args[1];
                 }
@@ -116,8 +111,8 @@ package.core.property = function CoreProperty(me) {
             object=me;
         }
         if(object && object !== me) {
-            source = me.core.property.fullname(object, source);
-            target = me.core.property.fullname(object, target);
+            source = me.the.core.property.fullname(object, source);
+            target = me.the.core.property.fullname(object, target);
         }
         var forwarding_list = object._forwarding_list;
         if(!forwarding_list) {
@@ -143,7 +138,7 @@ package.core.property = function CoreProperty(me) {
         }
         object.notifications[name] = setTimeout(function() {
             object.notifications[name] = null;
-            me.set(object, name, value);
+            me.the.core.property.set(object, name, value);
         }, 250);
     };
     me.set = function (object, name, value) {
@@ -152,16 +147,16 @@ package.core.property = function CoreProperty(me) {
         }
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.set(item, name, value);
+                return me.the.core.property.set(item, name, value);
             });
             return results;
         }
         if(typeof name !== "function") {
-            var source_method = me.core.property.fullname(object, name);
+            var source_method = me.the.core.property.fullname(object, name);
             me.setTo(me._forwarding_list, object, source_method, value);
             me.setTo(object._forwarding_list, object, source_method, value);
         }
-        me.get(object, name, value, "set");
+        me.the.core.property.get(object, name, value, "set");
     };
     me.setTo = function(list, object, name, value) {
         if(list) {
@@ -170,13 +165,10 @@ package.core.property = function CoreProperty(me) {
                 for (var target in forwarding_list) {
                     var enabled = forwarding_list[target];
                     if(enabled) {
-                        me.set(object, target, value);
+                        me.the.core.property.set(object, target, value);
                     }
                 }
             }
         }
-    };
-    me.dirty = function(object, name) {
-        me.get(object, name, "dirty");
     };
 };

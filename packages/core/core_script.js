@@ -6,9 +6,9 @@
 package.require("core.script", "server");
 
 package.core.script = function CoreScript(me) {
-    var core = me.core;
+    var core = me.the.core;
     me.init = function() {
-        me.link("core.http.parse", "core.script.parse", true);
+        me.the.core.property.link("core.http.parse", "core.script.parse", true);
     };
     me.parse = {
         set: function (info) {

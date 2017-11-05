@@ -4,16 +4,16 @@
 */
 
 package.cmd.parse = function CmdParse(me) {
-    me.cmd = function(terminal, args) {
+    me.the.cmd = function(terminal, args) {
         if(args.length <= 1) {
-            me.core.cmd.exit(terminal);
+            me.the.core.cmd.exit(terminal);
             return;
         }
-        var path = me.core.path.goto(terminal.current_dir, args[1]);
-        me.core.json.loadFile(function(json) {
+        var path = me.the.core.path.goto(terminal.current_dir, args[1]);
+        me.the.core.json.loadFile(function(json) {
             me.parse(function(json) {
                 console.log(JSON.stringify(json, null, 4));
-                me.core.cmd.exit(terminal);
+                me.the.core.cmd.exit(terminal);
             }, json);
         }, path);
     };

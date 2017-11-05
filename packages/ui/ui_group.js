@@ -9,13 +9,13 @@ package.ui.group = function UIGroup(me) {
             return {
                 set: function (object, value) {
                     if (Array.isArray(value)) {
-                        me.ui.element.create(value, object);
+                        me.the.ui.element.create(value, object);
                     } else if (value) {
                         for (var key in value) {
-                            me.set(object, key, value[key]);
+                            me.the.core.property.set(object, key, value[key]);
                         }
                     }
-                    me.send("ui." + property + ".group", object);
+                    me.the.core.message.send("ui." + property + ".group", object);
                 }
             };
         }

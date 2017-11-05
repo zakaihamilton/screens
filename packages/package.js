@@ -70,34 +70,24 @@ function package_init(package_name, component_name, callback, child_name = null,
     /* Register component in package */
     package[package_name].components.push(id);
     /* Create component proxy */
-    var component_obj = new Proxy({id: id, package: package_name, component: component_name, child: child_name}, {
+    var component_obj = new Proxy({the:package, id: id, package: package_name, component: component_name, child: child_name}, {
         get: function (object, property) {
+            var result = undefined;
             if (Reflect.has(object, property)) {
                 return Reflect.get(object, property);
-            }
-            var result = undefined;
-            result = package_general(object, property);
-            if (result) {
-                Reflect.set(object, property, result);
-                return result;
-            }
-            return undefined;
-        },
-        set: function (object, property, value) {
-            if (property !== "forward" && Reflect.has(object, "forward")) {
+            } else if (property !== "forward" && Reflect.has(object, "forward")) {
                 var forward = Reflect.get(object, "forward");
-                if (forward && forward.enabled && forward.set) {
-                    forward.set(object, property, value);
-                    return;
+                if (forward && forward.enabled && forward.get) {
+                    return forward.get(object, property);
                 }
             }
-            Reflect.set(object, property, value);
+            return undefined;
         }
     });
     if (child_name) {
-        Reflect.set(package[package_name][component_name], child_name, component_obj);
+        package[package_name][component_name][child_name] = component_obj;
     } else {
-        Reflect.set(package[package_name], component_name, component_obj);
+        package[package_name][component_name] = component_obj;
     }
     if (typeof node !== "function") {
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
@@ -274,21 +264,6 @@ function package_include(packages, callback) {
         load(package_index, component_index);
     };
     load(0, 0);
-}
-
-function package_general(object, property) {
-    /* Check if package exists */
-    if (Reflect.has(object, property)) {
-        return Reflect.get(object, property);
-    } else if (property in package) {
-        return package[property];
-    } else if (property !== "forward" && Reflect.has(object, "forward")) {
-        var forward = Reflect.get(object, "forward");
-        if (forward && forward.enabled && forward.get) {
-            return forward.get(object, property);
-        }
-    }
-    return undefined;
 }
 
 var package = {

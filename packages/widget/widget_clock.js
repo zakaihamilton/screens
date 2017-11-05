@@ -17,7 +17,7 @@ package.widget.clock = function WidgetClock(me) {
                     m = "0" + m;
                 }
                 ;
-                me.set(object, "ui.basic.text", h + ":" + m);
+                me.the.core.property.set(object, "ui.basic.text", h + ":" + m);
             }, 1000);
         }
     };

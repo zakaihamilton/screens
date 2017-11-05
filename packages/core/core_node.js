@@ -4,7 +4,7 @@
 */
 
 package.core.node = function CoreNode(me) {
-    me.parent = me.core.object.property("parent", {
+    me.parent = me.the.core.object.property("parent", {
         
     });
 };

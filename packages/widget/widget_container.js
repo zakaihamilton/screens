@@ -15,9 +15,9 @@ package.widget.container = function WidgetContainer(me) {
     };
     me.isChild = function(container) {
         var isChild = false;
-        var window = me.widget.window.window(container);
+        var window = me.the.widget.window.window(container);
         if(window && window.var.container === container) {
-            var parent = me.widget.window.parent(window);
+            var parent = me.the.widget.window.parent(window);
             if(!parent && window.child_window) {
                 isChild = true;
             }
@@ -27,42 +27,42 @@ package.widget.container = function WidgetContainer(me) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.ui.element.create(value, object.var.content, object.context);
+                me.the.ui.element.create(value, object.var.content, object.context);
             }
         }
     };
     me.update = {
         set: function(object, value) {
             setTimeout( function() {
-                me.notify(object.var.vertical, "update");
-                me.notify(object.var.horizontal, "update");
+                me.the.core.property.notify(object.var.vertical, "update");
+                me.the.core.property.notify(object.var.horizontal, "update");
             }, 0);
-            var containers = me.ui.node.members(object.var.content, me.id);
+            var containers = me.the.ui.node.members(object.var.content, me.id);
             containers.map(function(container) {
-                me.notify(container, "update");
+                me.the.core.property.notify(container, "update");
             });
         }
     };
     me.text = {
         get: function (object) {
-            return me.get(object.var.content, "ui.basic.text");
+            return me.the.core.property.get(object.var.content, "ui.basic.text");
         },
         set: function (object, value) {
-            me.set(object.var.content, "ui.basic.text", value);
+            me.the.core.property.set(object.var.content, "ui.basic.text", value);
         }
     };
     me.html = {
         get: function (object) {
-            return me.get(object.var.content, "ui.basic.html");
+            return me.the.core.property.get(object.var.content, "ui.basic.html");
         },
         set: function (object, value) {
-            me.set(object.var.content, "ui.basic.html", value);
+            me.the.core.property.set(object.var.content, "ui.basic.html", value);
         }
     };
     me.empty = {
         set: function(object) {
-            me.ui.node.empty(object.var.content);
-            me.notify(object, "update");
+            me.the.ui.node.empty(object.var.content);
+            me.the.core.property.notify(object, "update");
         }
     };
 };

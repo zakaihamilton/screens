@@ -5,20 +5,20 @@
 
 package.app.browser = function AppBrowser(me) {
     me.launch = function () {
-        me.ui.element.create(__json__, "workspace", "self");
+        me.the.ui.element.create(__json__, "workspace", "self");
     };
     me.load = {
         set: function(object) {
-            var window = me.widget.window.window(object);
-            var url = me.get(window.var.url, "text");
+            var window = me.the.widget.window.window(object);
+            var url = me.the.core.property.get(window.var.url, "text");
             if(!url.startsWith("www.")) {
                 url = "www." + url;
             }
             if(!url.startsWith("http://")) {
                 url = "http://" + url;
             }
-            me.set(window.var.embed, "ui.basic.src", url);
-            me.set(window, "title", "Browser - " + url.replace("http://www.", ""));
+            me.the.core.property.set(window.var.embed, "ui.basic.src", url);
+            me.the.core.property.set(window, "title", "Browser - " + url.replace("http://www.", ""));
         }
     };
 };

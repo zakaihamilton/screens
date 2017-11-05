@@ -8,7 +8,7 @@ package.ui.theme = function UITheme(me) {
     me.currentTheme = null;
     me.init = function() {
         me.updateList();
-        var current_theme = me.get(me.storage.cache.local, "ui-theme-current");
+        var current_theme = me.the.core.property.get(me.the.storage.cache.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
@@ -24,7 +24,7 @@ package.ui.theme = function UITheme(me) {
     me.updateList = function() {
         me.themes = [];
         var path = "packages/res/themes";
-        me.core.file.readDir(function(err, items) {
+        me.the.core.file.readDir(function(err, items) {
             if(items) {
                 for(let item of items) {
                     var period = item.lastIndexOf(".");
@@ -41,7 +41,7 @@ package.ui.theme = function UITheme(me) {
             }
         }, path);
     };
-    me.applyTheme = function(elementCallback, parent) {
+    me.the.applyTheme = function(elementCallback, parent) {
         if(!parent) {
             parent = document.body;
         }
@@ -52,7 +52,7 @@ package.ui.theme = function UITheme(me) {
                     elementCallback(element, classItem);
                 });
             }
-            me.applyTheme(elementCallback, element);
+            me.the.applyTheme(elementCallback, element);
             element = element.nextSibling;
         }
     };
@@ -60,7 +60,7 @@ package.ui.theme = function UITheme(me) {
         if(me.currentTheme) {
             me.currentTheme.link.parentNode.removeChild(me.currentTheme.link);
             me.currentTheme.link = null;
-            me.applyTheme(function(element, classItem) {
+            me.the.applyTheme(function(element, classItem) {
                 var mapping = me.findMapping(classItem);
                 if(!mapping) {
                     return;
@@ -73,17 +73,17 @@ package.ui.theme = function UITheme(me) {
                 }
             });
             me.currentTheme = null;
-            me.set(me.storage.cache.local, "ui-theme-current", "none");
+            me.the.core.property.set(me.the.storage.cache.local, "ui-theme-current", "none");
         }
     };
     me.load = function(callback, name) {
         var path = "/packages/res/themes/" + name.toLowerCase();
-        me.core.json.loadFile(function(data) {
+        me.the.core.json.loadFile(function(data) {
             if(data) {
                 me.unload();
                 me.currentTheme = data;
-                me.currentTheme.link = me.ui.class.loadStylesheet(path + ".css");
-                me.applyTheme(function(element, classItem) {
+                me.currentTheme.link = me.the.ui.class.loadStylesheet(path + ".css");
+                me.the.applyTheme(function(element, classItem) {
                     var mapping = me.findMapping(classItem);
                     if(!mapping) {
                         return;
@@ -95,7 +95,7 @@ package.ui.theme = function UITheme(me) {
                         }
                     }
                 });
-                me.set(me.storage.cache.local, "ui-theme-current", name);
+                me.the.core.property.set(me.the.storage.cache.local, "ui-theme-current", name);
             }
             if(callback) {
                 callback(data);

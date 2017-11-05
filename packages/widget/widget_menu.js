@@ -14,12 +14,12 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.updateTheme = function(object) {
         if(object.var.menu) {
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.add": "menu"
             });
         }
         else {
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.remove": "menu"
             });
         }
@@ -38,7 +38,7 @@ package.widget.menu = function WidgetMenu(me) {
                 if (object.var.header) {
                     parent = object.var.header;
                 }
-                object.var.menu = me.ui.element.create({
+                object.var.menu = me.the.ui.element.create({
                     "ui.element.component": "widget.menu",
                     "ui.style.position": "relative",
                     "ui.group.data": {
@@ -46,7 +46,7 @@ package.widget.menu = function WidgetMenu(me) {
                         "ui.data.values": value
                     }
                 }, parent);
-                me.set(object, "ui.property.broadcast", {
+                me.the.core.property.set(object, "ui.property.broadcast", {
                     "ui.class.add": "menu"
                 });
             }
@@ -54,13 +54,13 @@ package.widget.menu = function WidgetMenu(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object, "ui.style.zIndex", "");
-            me.set(object.var.modal, "ui.style.display", "none");
-            me.set(object.var.menu, "ui.node.parent");
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.style.zIndex", "");
+            me.the.core.property.set(object.var.modal, "ui.style.display", "none");
+            me.the.core.property.set(object.var.menu, "ui.node.parent");
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.remove": "select"
             });
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.touch.over": null
             });
             object.selected_item = null;
@@ -71,30 +71,30 @@ package.widget.menu = function WidgetMenu(me) {
             var item = value[0];
             var info = value[1];
             if (item === object.selected_item) {
-                me.set(object, "back", item);
+                me.the.core.property.set(object, "back", item);
                 return;
             }
             object.selected_item = item;
-            me.set(object, "ui.style.zIndex", "10");
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.style.zIndex", "10");
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.touch.over": "widget.menu.item.hover"
             });
-            me.set(object, "ui.property.broadcast", {
+            me.the.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.remove": "select"
             });
-            me.set(item, "ui.class.add", "select");
-            me.set(object.var.menu, "ui.node.parent");
-            me.set(object.var.modal, "ui.style.display", "initial");
+            me.the.core.property.set(item, "ui.class.add", "select");
+            me.the.core.property.set(object.var.menu, "ui.node.parent");
+            me.the.core.property.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
-                me.set(object, info, item);
+                me.the.core.property.set(object, info, item);
             } else if (Array.isArray(info)) {
-                var window = me.get(object, "widget.window.active");
-                object.var.menu = me.create_menu(window, object, me.ui.rect.absolute_region(item), info);
+                var window = me.the.core.property.get(object, "widget.window.active");
+                object.var.menu = me.create_menu(window, object, me.the.ui.rect.absolute_region(item), info);
             }
         }
     };
     me.create_menu = function (window, object, region, values, bottomUp) {
-        var menu = me.ui.element.create({
+        var menu = me.the.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.left": region.left + "px",
@@ -107,10 +107,10 @@ package.widget.menu = function WidgetMenu(me) {
             }
         });
         if(bottomUp) {
-            me.set(menu, "ui.class.add", "bottom-up");
+            me.the.core.property.set(menu, "ui.class.add", "bottom-up");
         }
         if (object.component === me.id) {
-            me.set(menu.var.modal, "ui.style.display", "none");
+            me.the.core.property.set(menu.var.modal, "ui.style.display", "none");
         }
         return menu;
     };
@@ -126,16 +126,16 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.set(object.target, "back", value);
-            me.set(object, "ui.node.parent");
+            me.the.core.property.set(object.target, "back", value);
+            me.the.core.property.set(object, "ui.node.parent");
         }
     };
     me.select = {
         set: function (object, value) {
             var item = value[0];
             var info = value[1];
-            me.set(object, "back", item);
-            me.set(object.window, info, me.get(item, "ui.basic.text"));
+            me.the.core.property.set(object, "back", item);
+            me.the.core.property.set(object.window, info, me.the.core.property.get(item, "ui.basic.text"));
         }
     };
 };
@@ -156,7 +156,7 @@ package.widget.menu.item = function WidgetMenuItem(me) {
                 if(value === "select") {
                     value = object.menu_select;
                 }
-                value = me.get(object.parentNode.window, value, me.get(object, "ui.basic.text"));
+                value = me.the.core.property.get(object.parentNode.window, value, me.the.core.property.get(object, "ui.basic.text"));
             }
             callback(value);
         }
@@ -165,23 +165,23 @@ package.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, options) {
             if (options) {
                 me.handleValue(object, options, "enabled", function (value) {
-                    me.set(object, "ui.basic.enabled", value);
+                    me.the.core.property.set(object, "ui.basic.enabled", value);
                 });
                 me.handleValue(object, options, "visible", function (value) {
-                    me.set(object, "ui.style.display", value ? "block" : "none");
+                    me.the.core.property.set(object, "ui.style.display", value ? "block" : "none");
                 });
                 me.handleValue(object, options, "state", function (value) {
                     if (value) {
-                        me.set(object, "ui.class.add", "checked");
+                        me.the.core.property.set(object, "ui.class.add", "checked");
                     } else {
-                        me.set(object, "ui.class.remove", "checked");
+                        me.the.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
                 me.handleValue(object, options, "separator", function (value) {
                     if (value) {
-                        me.set(object, "ui.class.add", "separator");
+                        me.the.core.property.set(object, "ui.class.add", "separator");
                     } else {
-                        me.set(object, "ui.class.remove", "separator");
+                        me.the.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
             }
@@ -198,13 +198,13 @@ package.widget.menu.item = function WidgetMenuItem(me) {
     me.hover = {
         set: function (object, value) {
             if (object.parentNode.selected_item !== object && object.menu_select) {
-                me.set(object.parentNode, "select", [object, object.menu_select]);
+                me.the.core.property.set(object.parentNode, "select", [object, object.menu_select]);
             }
         }
     };
     me.click = {
         set: function (object) {
-            me.set(object.parentNode, "select", [object, object.menu_select]);
+            me.the.core.property.set(object.parentNode, "select", [object, object.menu_select]);
         }
     };
 };

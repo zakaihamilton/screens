@@ -8,8 +8,8 @@ package.ui.touch = function UIEvent(me) {
     me.click_repeat_delay = 250;
     me.click_repeat_interval = 50;
     me.init = function () {
-        me.send_event = me.ui.event.send_event;
-        me.register = me.ui.event.register;
+        me.send_event = me.the.ui.event.send_event;
+        me.register = me.the.ui.event.register;
     };
     me.handle = {
         click: function (object, method, event) {

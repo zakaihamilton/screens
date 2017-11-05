@@ -5,17 +5,17 @@
 
 package.app.storage = function AppStorage(me) {
     me.launch = function () {
-        if (me.get(me.singleton, "ui.node.parent")) {
-            me.set(me.singleton, "widget.window.show", true);
+        if (me.the.core.property.get(me.singleton, "ui.node.parent")) {
+            me.the.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.the.ui.element.create(__json__, "workspace", "self");
     };
     me.refresh = {
         set: function(object) {
-            me.set(me.singleton.var.tree, "clear");
-            me.storage.remote.getChildren(function(root) {
-                me.set(me.singleton.var.tree, "ui.group.data", {
+            me.the.core.property.set(me.singleton.var.tree, "clear");
+            me.the.storage.remote.getChildren(function(root) {
+                me.the.core.property.set(me.singleton.var.tree, "ui.group.data", {
                     "ui.data.keyList": ["ui.basic.text", "ui.basic.metadata", "ui.data.items"],
                     "ui.data.default": {
                         "state": false
@@ -42,19 +42,19 @@ package.app.storage = function AppStorage(me) {
     };
     me.info = {
         set: function(object) {
-            var selection = me.get(me.singleton.var.tree, "selection");
-            var metadata = me.get(selection, "ui.basic.metadata");
-            me.storage.remote.metadata(function(data) {
+            var selection = me.the.core.property.get(me.singleton.var.tree, "selection");
+            var metadata = me.the.core.property.get(selection, "ui.basic.metadata");
+            me.the.storage.remote.metadata(function(data) {
                 metadata.data = data;
-                me.core.app.launch(null, "info", [me.get(selection, "ui.basic.text"), metadata]);
+                me.the.core.app.launch(null, "info", [me.the.core.property.get(selection, "ui.basic.text"), metadata]);
             }, metadata.path);
         }
     };
     me.download = {
         set: function(object) {
-            var selection = me.get(me.singleton.var.tree, "selection");
-            var metadata = me.get(selection, "ui.basic.metadata");
-            me.storage.remote.downloadData(function(data) {
+            var selection = me.the.core.property.get(me.singleton.var.tree, "selection");
+            var metadata = me.the.core.property.get(selection, "ui.basic.metadata");
+            me.the.storage.remote.downloadData(function(data) {
                 metadata.data = data;
                 alert(JSON.stringify(metadata));
             }, metadata.path);

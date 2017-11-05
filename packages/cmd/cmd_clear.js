@@ -4,8 +4,8 @@
 */
 
 package.cmd.clear = function CmdClear(me) {
-    me.cmd = function(terminal, args) {
-        me.set(terminal, "clear");
-        me.core.cmd.exit(terminal);
+    me.the.cmd = function(terminal, args) {
+        me.the.core.property.set(terminal, "clear");
+        me.the.core.cmd.exit(terminal);
     };
 };

@@ -40,24 +40,24 @@ package.widget.dropdown = function WidgetDropDown(me) {
     };
     me.readOnly = {
         get: function (object) {
-            return me.get(object.var.selection, "ui.basic.readOnly");
+            return me.the.core.property.get(object.var.selection, "ui.basic.readOnly");
         },
         set: function (object, value) {
-            me.set(object.var.selection, "ui.basic.readOnly", value);
-            me.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
+            me.the.core.property.set(object.var.selection, "ui.basic.readOnly", value);
+            me.the.core.property.set(object.var.selection, "ui.touch.click", value ? null : "dropdown");
         }
     };
     me.text = {
         get: function (object) {
-            return me.get(object.var.selection, "ui.basic.text");
+            return me.the.core.property.get(object.var.selection, "ui.basic.text");
         },
         set: function (object, value) {
-            me.set(object.var.selection, "ui.basic.text", value);
+            me.the.core.property.set(object.var.selection, "ui.basic.text", value);
         }
     };
     me.monitorChange = {
         set: function (object, value) {
-            me.set(object.var.selection, "ui.monitor.change", value);
+            me.the.core.property.set(object.var.selection, "ui.monitor.change", value);
         }
     };
 };

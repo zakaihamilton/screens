@@ -78,7 +78,7 @@ package.ui.class = function UIClass(me) {
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
         path = path.replace(/[\.\_]/g, "-");
-        path = me.ui.theme.getMapping(path);
+        path = me.the.ui.theme.getMapping(path);
         return path;
     };
     me.to_component = function(object, path) {
@@ -101,7 +101,7 @@ package.ui.class = function UIClass(me) {
             });
             return;
         }
-        path = me.ui.element.to_full_name(object, path);
+        path = me.the.ui.element.to_full_name(object, path);
         var class_name = me.to_class(object, path);
         var component_name = me.to_component(object, path);
         if(component_name) {

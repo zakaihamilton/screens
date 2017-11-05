@@ -8,8 +8,8 @@ package.ui.cachekey = function UICacheKey(me) {
         get : function(object, property) {
             return {
                 get: function (object) {
-                    var window = me.widget.window.window(object);
-                    var key = me.get(window, "key");
+                    var window = me.the.widget.window.window(object);
+                    var key = me.the.core.property.get(window, "key");
                     return property + key;
                 }
             };

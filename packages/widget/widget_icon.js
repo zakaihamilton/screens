@@ -14,20 +14,20 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.drag.icon"];
     me.default = __json__;
     me.init = function() {
-        me.type = me.core.object.property("widget.icon.type", {
+        me.type = me.the.core.object.property("widget.icon.type", {
             set: function(object, value, name, oldValue) {
                 if(value === "icon") {
-                    me.set(object.var.icon, "ui.attribute.width", "32px");
-                    me.set(object.var.icon, "ui.attribute.height", "32px");
+                    me.the.core.property.set(object.var.icon, "ui.attribute.width", "32px");
+                    me.the.core.property.set(object.var.icon, "ui.attribute.height", "32px");
                 }
                 else if(value === "list") {
-                    me.set(object.var.icon, "ui.attribute.width", "16px");
-                    me.set(object.var.icon, "ui.attribute.height", "16px");
+                    me.the.core.property.set(object.var.icon, "ui.attribute.width", "16px");
+                    me.the.core.property.set(object.var.icon, "ui.attribute.height", "16px");
                 }
-                me.set(object, "ui.class.remove", "widget.icon." + oldValue);
-                me.set(object, "ui.class.add", "widget.icon." + value);
-                me.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
-                me.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
+                me.the.core.property.set(object, "ui.class.remove", "widget.icon." + oldValue);
+                me.the.core.property.set(object, "ui.class.add", "widget.icon." + value);
+                me.the.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
+                me.the.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
             }
         });
     };

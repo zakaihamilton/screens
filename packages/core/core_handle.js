@@ -25,7 +25,7 @@ package.core.handle = function CoreHandle(me) {
     me.push = function(object) {
         var ref = null;
         if(object) {
-            var ref = me.core.ref.gen();
+            var ref = me.the.core.ref.gen();
             me.handles[ref] = object;
         }
         return ref;

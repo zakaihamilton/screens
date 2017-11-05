@@ -5,8 +5,8 @@
 
 package.ui.layout = function UILayout(me) {
     me.content = function (target) {
-        if (target && target.component === me.widget.container.id) {
-            target = me.widget.container.content(target);
+        if (target && target.component === me.the.widget.container.id) {
+            target = me.the.widget.container.content(target);
         }
         return target;
     };
@@ -57,7 +57,7 @@ package.ui.layout = function UILayout(me) {
         } while (widget);
     };
     me.pageSize = function (target) {
-        var container = me.ui.node.container(target, me.widget.container.id);
+        var container = me.the.ui.node.container(target, me.the.widget.container.id);
         var scrollbar = container.var.vertical;
         var pageHeight = container.offsetHeight;
         var pageWidth = container.parentNode.offsetWidth;
@@ -92,7 +92,7 @@ package.ui.layout = function UILayout(me) {
             var parent = widget.parentNode;
             while (parent) {
                 if (parent.parentNode === target) {
-                    me.set(target, "widget.scrollbar.vertical.scrollTo", parent.offsetTop);
+                    me.the.core.property.set(target, "widget.scrollbar.vertical.scrollTo", parent.offsetTop);
                     break;
                 }
                 parent = parent.parentNode;
@@ -128,15 +128,15 @@ package.ui.layout = function UILayout(me) {
         var previousWidget = null, visibleWidget = null;
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
-            var window = me.widget.window.window(target);
+            var window = me.the.widget.window.window(target);
             for(;;) {
-                var concealed = me.get(window, "conceal");
+                var concealed = me.the.core.property.get(window, "conceal");
                 var widget = source.firstChild;
                 if (!widget || concealed) {
                     clearInterval(target.reflowInterval);
                     target.reflowInterval = null;
                     if (options.usePages) {
-                        me.applyNumPages(layoutContent, pageIndex);
+                        me.the.applyNumPages(layoutContent, pageIndex);
                     }
                     me.completePage(target.page, options);
                     if(target.page) {
@@ -146,7 +146,7 @@ package.ui.layout = function UILayout(me) {
                         callback(true);
                         target.notified = true;
                     }
-                    me.notify(target, "update");
+                    me.the.core.property.notify(target, "update");
                     break;
                 }
                 if(options.scrollWidget) {
@@ -159,7 +159,7 @@ package.ui.layout = function UILayout(me) {
                 }
                 var location = pageContent ? pageContent : layoutContent;
                 if (widget.style && widget.style.order) {
-                    location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
+                    location.insertBefore(widget, me.the.widgetByOrder(location, widget.style.order));
                 } else {
                     location.appendChild(widget);
                 }
@@ -214,7 +214,7 @@ package.ui.layout = function UILayout(me) {
                     if(showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
-                    me.notify(target, "update");
+                    me.the.core.property.notify(target, "update");
                     break;
                 } else if (widget) {
                     previousWidget = widget;
@@ -229,11 +229,11 @@ package.ui.layout = function UILayout(me) {
             callback(true);
             target.notified = true;
             if(options.scrollWidget) {
-                me.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+                me.the.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
             }
         }
     };
-    me.widgetByOrder = function (page, order) {
+    me.the.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
         var match = null;
         while (widget) {
@@ -249,7 +249,7 @@ package.ui.layout = function UILayout(me) {
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
         target = me.content(target);
-        var page = me.ui.element.create({
+        var page = me.the.ui.element.create({
             "ui.basic.tag": "div",
             "ui.class.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
@@ -315,7 +315,7 @@ package.ui.layout = function UILayout(me) {
         return page;
     };
     me.createBreak = function (target) {
-        var page = me.ui.element.create({
+        var page = me.the.ui.element.create({
             "ui.basic.tag": "br"
         }, target);
         return page;
@@ -323,15 +323,15 @@ package.ui.layout = function UILayout(me) {
     me.scrollToTop = {
         set: function (object) {
             var target = me.content(object);
-            me.set(target, "widget.scrollbar.vertical.scrollTo", 0);
+            me.the.core.property.set(target, "widget.scrollbar.vertical.scrollTo", 0);
         }
     };
-    me.applyNumPages = function (target, numPages) {
+    me.the.applyNumPages = function (target, numPages) {
         var widget = target.firstChild;
         while (widget) {
             if (widget.var && widget.var.pageNumber) {
-                var pageNumber = me.get(widget, "ui.attribute.pageNumber");
-                me.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
+                var pageNumber = me.the.core.property.get(widget, "ui.attribute.pageNumber");
+                me.the.core.property.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
             widget = widget.nextSibling;
         }
@@ -354,7 +354,7 @@ package.ui.layout = function UILayout(me) {
         widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
         widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
         if(options.filter) {
-            var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
+            var find = me.the.core.string.regex("/(" + me.the.core.string.escape(options.filter) + ")", 'gi');
             var replace = "<mark>$1</mark>";
             widget.innerHTML = widget.innerHTML.replace(find, replace);
         }
@@ -425,7 +425,7 @@ package.ui.layout = function UILayout(me) {
         if(widget && widget.getAttribute) {
             var onload = widget.getAttribute("onload");
             if(onload) {
-                me.set(parent, onload);
+                me.the.core.property.set(parent, onload);
             }
         }
     };

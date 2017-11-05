@@ -22,7 +22,7 @@ package.core.path = function CorePath(me) {
                     continue;
                 }
                 if(token === "..") {
-                    path = me.core.util.removeLast(path, "/");
+                    path = me.the.core.util.removeLast(path, "/");
                     continue;
                 }
                 if(path) {

@@ -26,10 +26,10 @@ package.ui.options = function UIOptions(me) {
         var storage = me.getStorage(component, object);
         var storageKey = component.id + ".options";
         if(object) {
-            storageKey += "." + me.get(object, "key");
+            storageKey += "." + me.the.core.property.get(object, "key");
         }
-        var validKey = me.storage.cache.validKey(storageKey);
-        var value = me.get(me.storage.cache[storage], validKey);
+        var validKey = me.the.storage.cache.validKey(storageKey);
+        var value = me.the.core.property.get(me.the.storage.cache[storage], validKey);
         var options = Object.assign({}, defaults, value ? JSON.parse(value) : {});
         if(object) {
             object.options = options;
@@ -45,7 +45,7 @@ package.ui.options = function UIOptions(me) {
         return {
             get: function (object) {
                 var options = component.options;
-                var window = me.get(object, "widget.window.active");
+                var window = me.the.core.property.get(object, "widget.window.active");
                 if(window && window.options) {
                     options = window.options;
                 }
@@ -54,7 +54,7 @@ package.ui.options = function UIOptions(me) {
             set: function (object, value) {
                 var storage = me.getStorage(component, object);
                 var options = component.options;
-                var window = me.get(object, "widget.window.active");
+                var window = me.the.core.property.get(object, "widget.window.active");
                 if(window && window.options) {
                     options = window.options;
                 }
@@ -65,10 +65,10 @@ package.ui.options = function UIOptions(me) {
                 if(storage) {
                     var storageKey = component.id + ".options";
                     if(object && object.options) {
-                        storageKey += "." + me.get(object, "key");
+                        storageKey += "." + me.the.core.property.get(object, "key");
                     }
-                    var validKey = me.storage.cache.validKey(storageKey);
-                    me.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                    var validKey = me.the.storage.cache.validKey(storageKey);
+                    me.the.core.property.set(me.the.storage.cache[storage], validKey, JSON.stringify(options));
                 }
             }
         };
@@ -80,7 +80,7 @@ package.ui.options = function UIOptions(me) {
         var methods = {
             get: function (object, value) {
                 var options = component.options;
-                var window = me.get(object, "widget.window.active");
+                var window = me.the.core.property.get(object, "widget.window.active");
                 if(window && window.options) {
                     options = window.options;
                 }
@@ -89,7 +89,7 @@ package.ui.options = function UIOptions(me) {
             set: function (object, value) {
                 var storage = me.getStorage(component, object);
                 var options = component.options;
-                var window = me.get(object, "widget.window.active");
+                var window = me.the.core.property.get(object, "widget.window.active");
                 if(window && window.options) {
                     options = window.options;
                 }
@@ -100,10 +100,10 @@ package.ui.options = function UIOptions(me) {
                 if(storage) {
                     var storageKey = component.id + ".options";
                     if(object && object.options) {
-                        storageKey += "." + me.get(object, "key");
+                        storageKey += "." + me.the.core.property.get(object, "key");
                     }
-                    var validKey = me.storage.cache.validKey(storageKey);
-                    me.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                    var validKey = me.the.storage.cache.validKey(storageKey);
+                    me.the.core.property.set(me.the.storage.cache[storage], validKey, JSON.stringify(options));
                 }
             }
         };

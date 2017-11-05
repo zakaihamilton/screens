@@ -4,10 +4,10 @@
 */
 
 package.cmd.exec = function CmdExec(me) {
-    me.cmd = function(terminal, args) {
+    me.the.cmd = function(terminal, args) {
         args = args.slice(1);
-        var result = me.send.apply(null, args);
-        me.set(terminal, "print", JSON.stringify(result));
-        me.core.cmd.exit(terminal);
+        var result = me.the.core.message.send.apply(null, args);
+        me.the.core.property.set(terminal, "print", JSON.stringify(result));
+        me.the.core.cmd.exit(terminal);
     };
 };
