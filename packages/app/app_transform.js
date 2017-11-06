@@ -113,7 +113,7 @@ package.app.transform = function AppTransform(me) {
                     object.var.layout.style.opacity = 1;
                     object.var.toggleTerms.style.opacity = 1;
                     object.var.toggleGlossary.style.opacity = 1;
-                    object.var.termPopup.style.opacity = 1;
+                    object.var.termPopup.style.opacity = "";
                     me.updateScrolling(object);
                 }, 500);
             }
