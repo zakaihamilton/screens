@@ -21,7 +21,7 @@
             "ui.basic.text": "Local",
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange": "app.cache.onChangeStorage",
+            "core.link.onChange": "app.cache.onChangeStorage",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {
@@ -43,7 +43,7 @@
             "ui.basic.readOnly": false,
             "ui.style.width": "400px",
             "ui.element.count": 0,
-            "core.property.onChange": "app.cache.onChangeKey",
+            "core.link.onChange": "app.cache.onChangeKey",
             "ui.monitor.change": "app.cache.onChangeKey",
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],

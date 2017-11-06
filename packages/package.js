@@ -128,20 +128,17 @@ function package_prepare(package_name, component_name, callback) {
 }
 
 function package_load(package_name, component_name, callback) {
-    var result = null;
     console.log(package.platform + ": Loading " + package_name + "." + component_name);
     if (package_name in package) {
         if (component_name in package[package_name]) {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name}});
+                return;
             }
         }
     }
     else {
         package[package_name] = {id: package_name, package: package_name, components: []};
-    }
-    if (result) {
-        return result;
     }
     try {
         if (package.platform === "browser") {
@@ -162,10 +159,10 @@ function package_load(package_name, component_name, callback) {
         } else if (package.platform === "server") {
             path = "./" + package_name + "/" + package_name + "_" + component_name;
             require(path);
-            result = package_prepare(package_name, component_name, callback);
+            package_prepare(package_name, component_name, callback);
         } else if (package.platform === "client") {
             importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
-            result = package_prepare(package_name, component_name, callback);
+            package_prepare(package_name, component_name, callback);
         }
     } catch (err) {
         console.log("Found error: " + err + " stack: " + err.stack);
@@ -173,7 +170,6 @@ function package_load(package_name, component_name, callback) {
             callback({failure: {package: package_name, component: component_name}});
         }
     }
-    return result;
 }
 
 function package_complete(info, callback) {

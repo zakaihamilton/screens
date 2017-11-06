@@ -210,7 +210,7 @@
                     "ui.class.class": "app.transform.layout",
                     "widget.scrollbar.vertical.alwaysShow": true,
                     "widget.scrollbar.horizontal.alwaysHide": true,
-                    "core.property.scrolled": "app.transform.scrolled",
+                    "core.link.scrolled": "app.transform.scrolled",
                     "ui.attribute.noBroadcast": true
                 },
                 {
@@ -280,8 +280,8 @@
                     "ui.basic.var": "description"
                 }
             ],
-            "core.property.update": "app.transform.update",
-            "core.property.work": "app.transform.work",
+            "core.link.update": "app.transform.update",
+            "core.link.work": "app.transform.work",
             "ui.property.after": {
                 "widget.scrollbar.vertical.alwaysHide": true,
                 "widget.scrollbar.horizontal.alwaysHide": true,

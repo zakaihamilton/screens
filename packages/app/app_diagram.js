@@ -39,7 +39,7 @@ package.app.diagram = function AppDiagram(me) {
             window.options.phaseNumbers = false;
             window.options.hoverCallback = null;
             window.optionsLoaded = true;
-            me.package.core.property.set(window, "core.property.widget-window-restore", "app.diagram.restore");
+            me.package.core.property.set(window, "core.link.widget-window-restore", "app.diagram.restore");
         }
         window.language = "english";
         return window;

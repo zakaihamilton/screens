@@ -90,18 +90,6 @@ package.core.property = function CoreProperty(me) {
         }
         return {object: object, name: name, value: value};
     };
-    me.forward = function (object, property) {
-        return {
-            set: function (object, value) {
-                if (typeof value !== "undefined") {
-                    if (typeof property === "string") {
-                        property = property.replace(/-/g, ".");
-                    }
-                    me.link(property, value, true, object);
-                }
-            }
-        };
-    };
     me.link = function (source, target, enabled, object) {
         if (!object) {
             object = me;

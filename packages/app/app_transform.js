@@ -429,7 +429,7 @@ package.app.transform = function AppTransform(me) {
             me.package.core.property.set(object, "ui.style.paddingBottom", "3em");
             var window = me.package.widget.window.mainWindow(object);
             me.package.core.app.launch(function (diagramWindow) {
-                me.package.core.property.set(diagramWindow, "core.property.widget-window-restore", "app.transform.reflow");
+                me.package.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
             }, "diagram", [path, window.options, object]);
         }
     };
