@@ -210,8 +210,22 @@ package.ui.scroll = function UIScroll(me) {
                     var thumb_pos = null;
                     if (type === "vertical") {
                         var thumb_pos = (e.clientY - info.top) - track_region.top;
+                        if(thumb_pos < 0) {
+                            thumb_pos = 0;
+                        }
+                        if(thumb_pos > track_region.height - thumb_region.height) {
+                            thumb_pos = track_region.height - thumb_region.height;
+                        }
+                        me.package.core.property.set(object, "ui.style.top", thumb_pos + "px");
                     } else if (type === "horizontal") {
                         var thumb_pos = (e.clientX - info.left) - track_region.left;
+                        if(thumb_pos < 0) {
+                            thumb_pos = 0;
+                        }
+                        if(thumb_pos > track_region.width - thumb_region.width) {
+                            thumb_pos = track_region.width - thumb_region.width;
+                        }
+                        me.package.core.property.set(object, "ui.style.left", thumb_pos + "px");
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
                     me.shift(me.package.widget.container.content(container), type, percent);
