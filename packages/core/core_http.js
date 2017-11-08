@@ -32,7 +32,7 @@ package.core.http = function CoreHttp(me) {
             });
             me.server.listen(me.port, function (err) {
                 if (err) {
-                    return core.console.log("something bad happened", err)
+                    return core.console.log("something bad happened", err);
                 }
                 core.console.log("server is listening on " + core.http.port);
             });
@@ -58,16 +58,19 @@ package.core.http = function CoreHttp(me) {
             code: 200,
             "content-type": "application/json",
             body: body,
-            job: job
+            job: job,
+            response: response,
+            stream: false
         };
         core.object.attach(info, me);
-        core.console.log("Received request: " + JSON.stringify(info));
         core.property.set(info, "receive");
         core.job.close(job, function () {
-            response.writeHead(info.code, {
-                "Content-Type": info["content-type"],
-            });
-            response.end(info.body);
+            if(info.stream === false) {
+                response.writeHead(info.code, {
+                    "Content-Type": info["content-type"],
+                });
+                response.end(info.body);
+            }
         });
     };
     me.parse_query = function (query) {

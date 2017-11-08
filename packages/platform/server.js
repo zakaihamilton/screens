@@ -13,7 +13,9 @@ package.include({
         "script",
         "job",
         "object",
-        "file"
+        "file",
+        "private",
+        "json"
     ],
     "storage":[
         "remote"

@@ -4960,6 +4960,34 @@
         {
             "term":"Arvut",
             "translation":"Mutual Guarantee"
+        },
+        {
+            "term":"Nifkad",
+            "translation":"Missing"
+        },
+        {
+            "term":"Ne’esham",
+            "translation":"Accused"
+        },
+        {
+            "term":"Ne’eshama",
+            "translation":"Accused"
+        },
+        {
+            "term":"Samin",
+            "translation":"Placing"
+        },
+        {
+            "term":"Nishmat",
+            "translation":"Breath"
+        },
+        {
+            "term":"Nishmat",
+            "translation":"Breath"
+        },
+        {
+            "term":"Chayah",
+            "translation":"Living"
         }
     ],
     "style": {

@@ -127,6 +127,10 @@ package.core.module = function CoreModule(me) {
                         me.loadTextFile(info.job, file_path, function (data) {
                             info.body = data;
                         });
+                    } else if(file_path.endsWith(".m4a")) {
+                        var stream = me.package.core.file.me.fs.createReadStream(file_path);
+                        stream.pipe(info.response);
+                        info.stream = true;
                     }
                 }
             }
