@@ -4,7 +4,7 @@
 */
 
 package.cmd.cd = function CmdCd(me) {
-    me.package.cmd = function(terminal, args) {
+    me.cmd = function(terminal, args) {
         var current_dir = terminal.current_dir;
         if(!current_dir) {
             current_dir = ".";

@@ -4,7 +4,7 @@
 */
 
 package.cmd.youtube = function CmdYoutube(me) {
-    me.package.cmd = function(terminal, args) {
+    me.cmd = function(terminal, args) {
         if(args.length < 2) {
             me.package.core.property.set(terminal, "print", "youtube: title video_id");
             me.package.core.property.set(terminal, "print", "example: youtube \"The Computer Chronicles\" YewNEAIkbG4");

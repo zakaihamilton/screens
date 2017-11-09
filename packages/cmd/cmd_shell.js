@@ -4,7 +4,7 @@
 */
 
 package.cmd.shell = function CmdShell(me) {
-    me.package.cmd = function(terminal, args) {
+    me.cmd = function(terminal, args) {
         package.include("app." + args[1], function(info) {
             if(info.failure) {
                 me.package.core.property.set(terminal, "print", "Cannot launch " + args[1] + " application");

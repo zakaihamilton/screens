@@ -29,7 +29,7 @@ package.core.cmd = function CoreCmd(me) {
             me.package.core.message.send(terminal.application + ".cmd", terminal, args);
             return;
         }
-        application = "cmd." + args[0];
+        var application = "cmd." + args[0];
         package.include(application, function (info) {
             if (info.failure) {
                 me.package.core.property.set(terminal, "print", "Error: Command not found!");

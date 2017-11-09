@@ -4,7 +4,7 @@
 */
 
 package.cmd.parse = function CmdParse(me) {
-    me.package.cmd = function(terminal, args) {
+    me.cmd = function(terminal, args) {
         if(args.length <= 1) {
             me.package.core.cmd.exit(terminal);
             return;
