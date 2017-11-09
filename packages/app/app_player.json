@@ -2,7 +2,7 @@
     "title": "Player",
     "ui.style.left": "150px",
     "ui.style.top": "150px",
-    "ui.style.width": "450px",
+    "ui.style.width": "950px",
     "ui.style.height": "450px",
     "widget.menu.items": [
         ["File", [
