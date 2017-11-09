@@ -85,7 +85,9 @@ function startBrowser(appName, appArgs) {
             "table",
             "gridline",
             "bar",
-            "tree"
+            "tree",
+            "audio",
+            "video"
         ],
         "canvas": [
             "dirty",

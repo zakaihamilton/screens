@@ -104,10 +104,17 @@ package.storage.remote = function StorageRemote(me) {
         });
     };
     me.downloadFile = function(callback, from, to) {
+        console.log("Downloading: " + from);
         me.downloadData(function(data) {
-            me.fs.writeFile(to, data, "binary", function (err) {
-                callback(err);
-            });
+            if(data.fileBinary) {
+                console.log("Writing file to: " + to);
+                me.fs.writeFile(to, data.fileBinary, "binary", function (err) {
+                    callback(err);
+                });
+            }
+            else {
+                callback("Cannot download file: " + from);
+            }
         }, from);
     };
     me.uploadFile = function(callback, from, to) {

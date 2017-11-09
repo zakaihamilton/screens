@@ -8,7 +8,8 @@ package.widget.radio = function WidgetRadio(me) {
         properties: ["state","group"]
     };
     me["core.property.redirect"] = {
-        "ui.basic.text": "text"
+        "ui.basic.text": "text",
+        "ui.monitor.change":"change"
     };
     me["ui.element.default"] = {
         "ui.class.class": "container",

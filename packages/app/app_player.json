@@ -1,0 +1,136 @@
+{
+    "title": "Player",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "450px",
+    "ui.style.height": "450px",
+    "widget.menu.items": [
+        ["File", [
+                ["Refresh", "app.player.refresh"]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.text": "Group:",
+            "ui.property.style":{
+                "left":"10px",
+                "top":"10px",
+                "width":"100px",
+                "position":"absolute"
+            }
+        },
+        {
+            "ui.basic.var": "groupList",
+            "ui.basic.text": "American",
+            "ui.property.style":{
+                "left":"10px",
+                "top":"30px",
+                "width":"100px",
+                "position":"absolute"
+            },
+            "ui.element.count": 0,
+            "core.link.onChange": "app.player.onChangeGroup",
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false
+                },
+                "ui.data.values": [
+                    "app.player.groupList"
+                ]
+            }
+        },
+        {
+            "ui.basic.text": "Session:",
+            "ui.property.style":{
+                "left":"120px",
+                "top":"10px",
+                "width":"100px",
+                "position":"absolute"
+            }
+        },
+        {
+            "ui.basic.var": "sessionList",
+            "ui.basic.text": "",
+            "ui.property.style":{
+                "left":"120px",
+                "top":"30px",
+                "width":"400px",
+                "position":"absolute"
+            },
+            "ui.element.count": 0,
+            "core.link.onChange": "app.player.onChangeSession",
+            "ui.monitor.change": "app.player.onChangeSession",
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.default": {
+                    "group": "one",
+                    "state": false
+                },
+                "ui.data.values": [
+                    "app.player.sessionList"
+                ]
+            }
+        },
+        {
+            "state": true,
+            "group": "type",
+            "ui.basic.text": "Audio",
+            "ui.property.style":{
+                "left":"10px",
+                "top":"70px",
+                "width":"100px",
+                "position":"absolute",
+                "visibility":"hidden"
+            },
+            "ui.basic.var":"audioType",
+            "ui.touch.click":"app.player.updatePlayer"
+        },
+        {
+            "state": false,
+            "group": "type",
+            "ui.basic.text": "Video",
+            "ui.property.style":{
+                "left":"100px",
+                "top":"70px",
+                "width":"100px",
+                "position":"absolute",
+                "visibility":"hidden"
+            },
+            "ui.basic.var":"videoType",
+            "ui.touch.click":"app.player.updatePlayer"
+        },
+        {
+            "ui.element.component":"widget.audio",
+            "ui.attribute.preload":"auto",
+            "ui.basic.var":"audioPlayer",
+            "ui.property.style" : {
+                "display":"none",
+                "left":"5%",
+                "top":"100px",
+                "width":"90%",
+                "height":"100px",
+                "position":"absolute"
+            }
+        },
+        {
+            "ui.element.component":"widget.video",
+            "ui.basic.var":"videoPlayer",
+            "ui.property.style" : {
+                "display":"none",
+                "left":"5%",
+                "top":"100px",
+                "width":"90%",
+                "height":"80%",
+                "position":"absolute"
+            }
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-player-window",
+        "storage.cache.restore": "widget.window.store",
+        "app.player.refresh":null
+    }
+}

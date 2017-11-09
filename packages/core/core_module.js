@@ -127,10 +127,20 @@ package.core.module = function CoreModule(me) {
                         me.loadTextFile(info.job, file_path, function (data) {
                             info.body = data;
                         });
-                    } else if(file_path.endsWith(".m4a")) {
-                        var stream = me.package.core.file.me.fs.createReadStream(file_path);
-                        stream.pipe(info.response);
+                    } else if(file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
+                        var prefix = file_path.endsWith(".m4a") ? "audio" : "video";
+                        var extension = me.package.core.path.extension(file_path);
                         info.stream = true;
+                        if(info.headers.range && info.headers.range.length) {
+                            me.package.core.media.serve(info.headers, info.response, file_path, prefix + "/" + extension);
+                        }
+                        else {
+                            var stream = me.package.core.file.fs.createReadStream(file_path);
+                            info.response.writeHead(info.code, {
+                                "Content-Type": prefix + "/" + extension
+                            });
+                            stream.pipe(info.response);
+                        }
                     }
                 }
             }

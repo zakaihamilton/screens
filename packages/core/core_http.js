@@ -52,7 +52,7 @@ package.core.http = function CoreHttp(me) {
         }
         var info = {
             method: request.method,
-            url: url,
+            url: decodeURIComponent(url),
             query: core.http.parse_query(query),
             headers: request.headers,
             code: 200,

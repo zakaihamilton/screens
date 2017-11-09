@@ -95,7 +95,10 @@
         "the Gevura":"the Gevura2",
         "(Light of) Hochma":"(Light of) Hochma2",
         "Bet (a second Behina)":"Bet2 (a second Behina)",
-        "bePanim":"be Panim"
+        "bePanim":"be Panim",
+        "soul (Nefesh)":"soul (Nefesh2)",
+        "soul (Neshama)":"soul (Neshama2)",
+        "“soul” (Neshama)":" “soul” (Neshama2)"
     },
     "pre": [
         {
@@ -746,6 +749,11 @@
                 "phase": "collective"
             },
             "term": "Yesod"
+        },
+        {
+            "term": "Nefesh2",
+            "translation": "Soul",
+            "source":"Nefesh"
         },
         {
             "translation": "Relaxation",
@@ -4988,6 +4996,12 @@
         {
             "term":"Chayah",
             "translation":"Living"
+        },
+        {
+            "term":"MALBIM",
+            "style":{
+                "heading":"Author"
+            }
         }
     ],
     "style": {

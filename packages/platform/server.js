@@ -15,7 +15,9 @@ package.include({
         "object",
         "file",
         "private",
-        "json"
+        "json",
+        "media",
+        "path"
     ],
     "storage":[
         "remote"
