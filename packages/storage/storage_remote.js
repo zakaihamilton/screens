@@ -74,10 +74,10 @@ package.storage.remote = function StorageRemote(me) {
         me.getService((service) => {
             path = me.fixPath(path);
             service.filesDownload({path:path}).then(function(response) {
-                callback(response);
+                callback(response, null);
             })
             .catch(function(error) {
-                callback(error);
+                callback(null, error);
             });
         });
     };
@@ -85,10 +85,10 @@ package.storage.remote = function StorageRemote(me) {
         me.getService((service) => {
             path = me.fixPath(path);
             service.filesUpload({path:path,contents:data}).then(function(response) {
-                callback(response);
+                callback(response, null);
             })
             .catch(function(error) {
-                callback(error);
+                callback(null, error);
             });
         });
     };
@@ -105,15 +105,15 @@ package.storage.remote = function StorageRemote(me) {
     };
     me.downloadFile = function(callback, from, to) {
         console.log("Downloading: " + from);
-        me.downloadData(function(data) {
-            if(data.fileBinary) {
+        me.downloadData(function(data, error) {
+            if(data && data.fileBinary) {
                 console.log("Writing file to: " + to);
                 me.fs.writeFile(to, data.fileBinary, "binary", function (err) {
                     callback(err);
                 });
             }
             else {
-                callback("Cannot download file: " + from);
+                callback("Cannot download file: " + from + "because of: " + error);
             }
         }, from);
     };

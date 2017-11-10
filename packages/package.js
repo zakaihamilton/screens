@@ -178,6 +178,9 @@ function package_complete(info, callback) {
             callback(info);
         }
     }
+    if(info && info.failure) {
+        return;
+    }
     package.order.map(function (id) {
         var component = package_component(id);
         if (component.init) {
