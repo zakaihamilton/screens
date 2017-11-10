@@ -82,7 +82,7 @@ package.storage.remote = function StorageRemote(me) {
                 });
             }
             catch(err) {
-                callback(null, error);
+                callback(null, err);
             }
         });
     };
