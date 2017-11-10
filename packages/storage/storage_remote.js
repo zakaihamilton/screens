@@ -73,12 +73,17 @@ package.storage.remote = function StorageRemote(me) {
     me.downloadData = function(callback, path) {
         me.getService((service) => {
             path = me.fixPath(path);
-            service.filesDownload({path:path}).then(function(response) {
-                callback(response, null);
-            })
-            .catch(function(error) {
+            try {
+                service.filesDownload({path:path}).then(function(response) {
+                    callback(response, null);
+                })
+                .catch(function(error) {
+                    callback(null, error);
+                });
+            }
+            catch(err) {
                 callback(null, error);
-            });
+            }
         });
     };
     me.uploadData = function(callback, path, data) {
