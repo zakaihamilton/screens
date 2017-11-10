@@ -54,8 +54,13 @@ package.app.storage = function AppStorage(me) {
         set: function(object) {
             var selection = me.package.core.property.get(me.singleton.var.tree, "selection");
             var metadata = me.package.core.property.get(selection, "ui.basic.metadata");
-            me.package.storage.remote.downloadData(function(data) {
-                metadata.data = data;
+            me.package.storage.remote.downloadData(function(data, error) {
+                if(error) {
+                    metadata.data = error;
+                }
+                else {
+                    metadata.data = data;
+                }
                 alert(JSON.stringify(metadata));
             }, metadata.path);
         }
