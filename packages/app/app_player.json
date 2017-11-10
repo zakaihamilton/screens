@@ -3,7 +3,7 @@
     "ui.style.left": "150px",
     "ui.style.top": "150px",
     "ui.style.width": "950px",
-    "ui.style.height": "450px",
+    "ui.style.height": "650px",
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.player.refresh"]

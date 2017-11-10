@@ -18,6 +18,11 @@ package.core.file = function CoreFile(me) {
             callback(err, items);
         });   
     };
+    me.delete = function(callback, path) {
+        me.fs.unlink(path, function(err) {
+            callback(err);
+        });
+    };
     me.isFile = function(callback, path) {
         me.fs.stat(path, function(err, stats) {
             callback(stats ? stats.isFile() : false);
@@ -26,6 +31,11 @@ package.core.file = function CoreFile(me) {
     me.isDirectory = function(callback, path) {
         me.fs.stat(path, function(err, stats) {
             callback(stats ? stats.isDirectory() : false);
+        });
+    };
+    me.size = function(callback, path) {
+        me.fs.stat(path, function(err, stats) {
+            callback(err, stats.size);
         });
     };
 };

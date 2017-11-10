@@ -26,7 +26,7 @@ package.core.cmd = function CoreCmd(me) {
             return;
         }
         if(terminal.application) {
-            me.package.core.message.send(terminal.application + ".cmd", terminal, args);
+            me.package.core.message.send(terminal.application + ".response", terminal, terminal.handle, args);
             return;
         }
         var application = "cmd." + args[0];
@@ -36,7 +36,7 @@ package.core.cmd = function CoreCmd(me) {
                 me.exit(terminal);
             } else if(info.complete) {
                 terminal.application = application;
-                me.package.core.message.send(application + ".cmd", terminal, args);
+                terminal.handle = me.package.core.message.send(application + ".cmd", terminal, args);
             }
         });
     };

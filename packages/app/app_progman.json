@@ -74,6 +74,12 @@
                         "ui.basic.src": "/packages/res/icons/transform.png",
                         "app.progman.args": "transform",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Player",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "player",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ],
