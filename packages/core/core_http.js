@@ -100,14 +100,14 @@ package.core.http = function CoreHttp(me) {
                     }
                 }
             };
-            me.package.core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
+            core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            me.package.core.console.log("sending request info:" + JSON.stringify(info));
+            core.console.log("sending request info:" + JSON.stringify(info));
             request.open(info.method, info.url, async);
             if (async) {
                 request.onreadystatechange = function (e) {

@@ -59,7 +59,7 @@ package.core.module = function CoreModule(me) {
                         var component_path = core.module.path_file_to_component(file_path);
                         var target_platform = null;
                         if (component_path) {
-                            console.log("component_path: " + component_path);
+                            core.console.log("component_path: " + component_path);
                             try {
                                 var require_platform = me.package.remote(component_path);
                                 var remote_platform = me.package.remote(component_path);
@@ -70,16 +70,16 @@ package.core.module = function CoreModule(me) {
                                     target_platform = remote_platform;
                                 }
                             } catch (err) {
-                                console.log("error: " + err);
+                                core.console.log("error: " + err);
                                 info.body = null;
                                 return;
                             }
                         }
                         var source_platform = info.query["platform"];
-                        console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
+                        core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
                         info["content-type"] = "application/javascript";
                         if (target_platform && source_platform !== target_platform) {
-                            console.log("serving remote for:" + file_path);
+                            core.console.log("serving remote for:" + file_path);
                             file_path = "packages/remote.js";
                         }
                         info["content-type"] = "application/javascript";

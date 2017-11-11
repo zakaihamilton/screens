@@ -82,7 +82,7 @@ package.storage.remote = function StorageRemote(me) {
                 });
             }
             catch(err) {
-                callback(null, err);
+                callback(null, err.message);
             }
         });
     };
@@ -109,15 +109,16 @@ package.storage.remote = function StorageRemote(me) {
         });
     };
     me.downloadFile = function(callback, from, to) {
-        console.log("Downloading: " + from);
+        me.package.core.console.log("Downloading: " + from);
         me.downloadData(function(data, error) {
             if(data && data.fileBinary) {
-                console.log("Writing file to: " + to);
+                me.package.core.console.log("Writing file to: " + to);
                 me.fs.writeFile(to, data.fileBinary, "binary", function (err) {
                     callback(err);
                 });
             }
             else {
+                me.package.core.console.log("Cannot download file: " + from + "because of: " + error);
                 callback("Cannot download file: " + from + "because of: " + error);
             }
         }, from);

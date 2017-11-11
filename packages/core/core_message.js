@@ -63,7 +63,7 @@ package.core.message = function CoreMessage(me) {
     };
     me.receive = {
         set: function (info) {
-            core.console.log("matching url: " + info.url);
+            me.package.core.console.log("matching url: " + info.url);
             if (me.package.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);
@@ -80,7 +80,7 @@ package.core.message = function CoreMessage(me) {
                     core.message.send.apply(null, args);
                 }
                 catch(e) {
-                    console.log("error: " + e.message + " " + JSON.stringify(args));
+                    me.package.core.console.log("error: " + e.message + " " + JSON.stringify(args));
                     info.body = e.message;
                     core.job.end(task);
                 }

@@ -35,7 +35,7 @@ package.core.media = function CoreMedia(me) {
             else {
                 response.end();                
             }
-            console.log("serving:" + JSON.stringify(headers) + " with stream: " + stream);
+            me.package.core.console.log("serving:" + JSON.stringify(headers) + " with stream: " + stream);
         }
     };
 };

@@ -13,7 +13,7 @@ package.cmd.youtube = function CmdYoutube(me) {
         }
         var youtube_id = args[2];
         youtube_id = youtube_id.replace("https://youtu.be/", "");
-        console.log("youtube_id:" + youtube_id);
+        me.package.core.console.log("youtube_id:" + youtube_id);
         me.package.ui.element.create({
                 "title": args[1],
                 "ui.style.left": "550px",

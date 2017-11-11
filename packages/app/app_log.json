@@ -1,0 +1,38 @@
+{
+    "title": "Log",
+    "ui.style.width": "640px",
+    "ui.style.height": "480px",
+    "widget.menu.items": [
+        ["File", [
+                ["Refresh", "app.log.refresh"],
+                ["Clear","app.log.clear"],
+                ["Server","app.log.source", {
+                        "state": "select",
+                        "separator":true
+                }],
+                ["Client","app.log.source", {
+                        "state": "select"
+                }],
+                ["Browser","app.log.source", {
+                        "state": "select"
+                }]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.var": "log",
+            "ui.element.component": "widget.editor",
+            "ui.property.style": {
+                "left":"5px",
+                "top":"5px",
+                "width":"95%",
+                "bottom":"5px",
+                "position":"absolute",
+                "resize":"none",
+                "overflow":"auto",
+                "fontSize":"16px"
+            }
+        }
+    ]
+}

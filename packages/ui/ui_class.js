@@ -65,7 +65,7 @@ package.ui.class = function UIClass(me) {
         link.rel = "stylesheet";
         link.media = "screen,print";
         document.getElementsByTagName("head")[0].appendChild(link);
-        console.log("Loaded css stylesheet: " + path + "=" + link.href);
+        me.package.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
     me.loadComponentStylesheet = function (path) {
@@ -113,7 +113,7 @@ package.ui.class = function UIClass(me) {
     };
     me.useStylesheet = function(component_name) {
         if (!me.stylesheets[component_name]) {
-            console.log("loading css stylesheet: " + component_name);
+            me.package.core.console.log("loading css stylesheet: " + component_name);
             me.stylesheets[component_name] = me.loadComponentStylesheet(component_name);
         }
     };

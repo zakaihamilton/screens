@@ -264,7 +264,7 @@ package.app.transform = function AppTransform(me) {
             var language = window.options.language.toLowerCase();
             if (language === "auto") {
                 language = me.package.core.string.language(text);
-                console.log("detected language: " + language);
+                me.package.core.console.log("detected language: " + language);
             }
             window.options.hoverCallback = "package.app.transform.hoverDescription";
             window.options.diagramCallback = "package.app.transform.loadDiagram";

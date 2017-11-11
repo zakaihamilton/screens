@@ -80,7 +80,7 @@ package.widget.canvas = function WidgetCanvas(me) {
                 component.attach(element);
             }
         });
-        console.log("element: " + Object.keys(element));
+        me.package.core.console.log("element: " + Object.keys(element));
         return element;
     };
 };

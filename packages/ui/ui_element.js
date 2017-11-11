@@ -177,7 +177,7 @@ package.ui.element = function UIElement(me) {
         }
         var component = package.path(component_name);
         var defaultProperties = component["ui.element.default"];
-        console.log("creating element of " + component_name);
+        me.package.core.console.log("creating element of " + component_name);
         if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
             tag = defaultProperties['ui.basic.tag'];
         }
@@ -194,7 +194,7 @@ package.ui.element = function UIElement(me) {
         me.package.core.object.attach(object, component);
         object.var = {};
             if(context === "self") {
-            console.log("using self context");
+            me.package.core.console.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;
