@@ -119,21 +119,14 @@ package.app.player = function AppPlayer(me) {
                     player = me.singleton.var.videoPlayer;
                     path = videoPath;
                 }
-                me.package.core.file.isFile(function(data) {
-                    if(data) {
-                        me.package.core.property.set(player, "source", me.cachePath + "/" + path);
+                me.package.manager.download.push(function(err) {
+                    if(err) {
+                       me.package.core.app.launch(null, "info", [path, err]);
                     }
                     else {
-                        me.package.storage.remote.downloadFile(function(err) {
-                            if(err) {
-                               me.package.core.app.launch(null, "info", [path, err]);
-                            }
-                            else {
-                                me.package.core.property.set(player, "source", me.cachePath + "/" + path);
-                            }
-                        }, me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                        me.package.core.property.set(player, "source", me.cachePath + "/" + path);
                     }
-                }, me.cachePath + "/" + path);
+                }, me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
             }
         }
     };

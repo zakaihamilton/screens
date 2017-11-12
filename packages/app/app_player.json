@@ -57,7 +57,7 @@
             "ui.property.style":{
                 "left":"120px",
                 "top":"30px",
-                "width":"400px",
+                "width":"70%",
                 "position":"absolute"
             },
             "ui.element.count": 0,

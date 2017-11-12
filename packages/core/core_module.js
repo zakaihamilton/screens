@@ -61,7 +61,7 @@ package.core.module = function CoreModule(me) {
                         if (component_path) {
                             core.console.log("component_path: " + component_path);
                             try {
-                                var require_platform = me.package.remote(component_path);
+                                var require_platform = me.package.require(component_path);
                                 var remote_platform = me.package.remote(component_path);
                                 if(require_platform) {
                                     target_platform = require_platform;

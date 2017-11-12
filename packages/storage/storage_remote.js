@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component StorageCache
+ @component StorageRemote
  */
 
 package.require("storage.remote", "server");

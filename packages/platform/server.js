@@ -21,12 +21,13 @@ package.include({
     ],
     "storage":[
         "remote"
+    ],
+    "manager":[
+        "download"
     ]
 });
 
 package.remote("core.test", "server");
-package.remote("core.file", "server");
-package.remote("storage.remote", "server");
 package.remote("core.app", "browser");
 package.remote("kab.text", "client");
 package.remote("kab.term", "client");
