@@ -54,11 +54,11 @@
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    animation: spin 2s linear infinite;
+    animation: app-transform-spinner-animation 2s linear infinite;
     visibility:hidden;
 }
 
-@keyframes spin {
+@keyframes app-transform-spinner-animation {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
