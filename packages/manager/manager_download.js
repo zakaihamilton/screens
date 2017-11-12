@@ -42,7 +42,9 @@ package.manager.download = function ManagerDownload(me) {
                 }
                 else {
                     item.isDownloading = true;
+                    me.package.core.console.log("downloading: " + item.from + " to: " + item.to);
                     me.package.storage.remote.downloadFile(function(err) {
+                        me.package.core.console.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
                         var index = me.queue.indexOf(item);
                         if(index !== -1) {
                             me.queue.splice(index, 1);
@@ -75,6 +77,7 @@ package.manager.download = function ManagerDownload(me) {
                     callback(null);
                 }
                 else {
+                    me.package.core.console.log("pushing to download queue: " + item.from + " to: " + item.to);
                     item = {from:from, to:to, isDownloading:false, callbacks:[callback]};
                     me.queue.push(item);
                     me.private.update();

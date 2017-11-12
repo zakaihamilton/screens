@@ -124,7 +124,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
                 "ui.style.width": region.width + "px",
-                "ui.style.height": "100px",
+                "ui.style.height": "200px",
                 "ui.basic.elements": object.parentNode.listElements,
                 "ui.group.data":object.parentNode.listData,
                 "widget.list.popup.selection":me.package.core.property.get(object.parentNode, "text"),
