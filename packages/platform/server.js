@@ -36,6 +36,6 @@ package.remote("kab.data", "client");
 process.on('uncaughtException', (err) => {
     var fs = require("fs");
     var date = new Date();
-    console.log("error: " + date.toUTCString() + " = " + err.message);
-    fs.writeFileSync("crash.txt", "error: " + date.toUTCString() + " = " + err.message);
+    console.log("fatal error: " + date.toUTCString() + err.stack);
+    fs.writeFileSync("crash.txt", "error: " + date.toUTCString() + err.stack);
 });

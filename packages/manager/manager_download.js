@@ -77,7 +77,7 @@ package.manager.download = function ManagerDownload(me) {
                     callback(null);
                 }
                 else {
-                    me.package.core.console.log("pushing to download queue: " + item.from + " to: " + item.to);
+                    me.package.core.console.log("pushing to download queue: " + from + " to: " + to);
                     item = {from:from, to:to, isDownloading:false, callbacks:[callback]};
                     me.queue.push(item);
                     me.private.update();
