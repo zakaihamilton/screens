@@ -128,19 +128,9 @@ package.core.module = function CoreModule(me) {
                             info.body = data;
                         });
                     } else if(file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
-                        var prefix = file_path.endsWith(".m4a") ? "audio" : "video";
-                        var extension = me.package.core.path.extension(file_path);
-                        info.stream = true;
-                        if(info.headers.range && info.headers.range.length) {
-                            me.package.core.media.serve(info.headers, info.response, file_path, prefix + "/" + extension);
-                        }
-                        else {
-                            var stream = me.package.core.file.fs.createReadStream(file_path);
-                            info.response.writeHead(info.code, {
-                                "Content-Type": prefix + "/" + extension
-                            });
-                            stream.pipe(info.response);
-                        }
+                        var mimeType = file_path.endsWith(".m4a") ? "audio/mp4" : "video/mp4";
+                        info.custom = true;
+                        me.package.core.media.serve(info.headers, info.response, file_path, mimeType);
                     }
                 }
             }

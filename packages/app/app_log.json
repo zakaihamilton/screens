@@ -34,5 +34,8 @@
                 "fontSize":"16px"
             }
         }
-    ]
+    ],
+    "ui.property.after":{
+        "app.log.refresh":null
+    }
 }

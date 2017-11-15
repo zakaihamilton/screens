@@ -7,9 +7,14 @@ package.ui.cachekey = function UICacheKey(me) {
     me.forward = function (object, property) {
         return {
             get: function (object) {
-                var window = me.package.widget.window.window(object);
-                var key = me.package.core.property.get(window, "key");
-                return property + key;
+                if(property.endsWith("-")) {
+                    var window = me.package.widget.window.window(object);
+                    var key = me.package.core.property.get(window, "key");
+                    return property + key;
+                }
+                else {
+                    return property;
+                }
             }
         };
     };

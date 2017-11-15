@@ -40,7 +40,9 @@
                 "ui.data.values": [
                     "app.player.groupList"
                 ]
-            }
+            },
+            "storage.cache.key": "@ui.cachekey.app-player-group",
+            "storage.cache.restore": "ui.basic.text"
         },
         {
             "ui.basic.text": "Session:",

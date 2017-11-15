@@ -31,6 +31,7 @@ package.app.player = function AppPlayer(me) {
             me.package.core.property.set(me.singleton.var.videoType, "ui.style.visibility", "hidden");
             me.package.core.property.set(me.singleton.var.audioPlayer, "ui.style.display", "none");
             me.package.core.property.set(me.singleton.var.videoPlayer, "ui.style.display", "none");
+            me.package.core.property.set(me.singleton.var.groupList, "ui.basic.save", null);
             me.updateSessions();
         }
     };

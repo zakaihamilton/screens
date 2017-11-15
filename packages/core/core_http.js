@@ -60,12 +60,12 @@ package.core.http = function CoreHttp(me) {
             body: body,
             job: job,
             response: response,
-            stream: false
+            custom: false
         };
         core.object.attach(info, me);
         core.property.set(info, "receive");
         core.job.close(job, function () {
-            if(info.stream === false) {
+            if(info.custom === false) {
                 response.writeHead(info.code, {
                     "Content-Type": info["content-type"],
                 });

@@ -67,7 +67,9 @@ package.storage.cache = function StorageCache(me) {
             }
             if (key) {
                 var store = me.package.core.property.get(me[location], key);
-                me.package.core.property.set(object, value, store);
+                if(store !== null) {
+                    me.package.core.property.set(object, value, store);
+                }
             }
         }
     };

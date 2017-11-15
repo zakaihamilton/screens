@@ -8,6 +8,7 @@ package.require("core.media", "server");
 package.core.media = function CoreMedia(me) {
     me.init = function () {
         me.fs = require("fs");
+        me.faststart = require("faststart");
     };
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
@@ -20,22 +21,38 @@ package.core.media = function CoreMedia(me) {
 
             var start = parseInt(partialstart, 10);
             var end = partialend ? parseInt(partialend, 10) : total;
-            var chunksize = (end - start);
+            var chunkSize = (end - start);
             var headers = {
                 "Content-Range": "bytes " + start + "-" + end + "/" + total,
                 "Accept-Ranges": "bytes",
-                "Content-Length": chunksize,
+                "Content-Length": chunkSize,
                 "Content-Type": contentType
             };
             response.writeHead(200, headers);
-            var stream = me.fs.createReadStream(path, {start: start, end: end});
+            var stream = me.faststart.createReadStream(path, {start: start, end: end});
             if(stream) {
                 stream.pipe(response);
             }
             else {
                 response.end();                
             }
-            me.package.core.console.log("serving:" + JSON.stringify(headers) + " with stream: " + stream);
+            me.package.core.console.log("streaming:" + path + " with stream: " + stream);
+        }
+        else {
+            var stream = me.faststart.createReadStream(path);
+            var headers = {
+                "Content-Length": stat.size,
+                "Content-Type": contentType
+            };
+            response.writeHead(200, headers);
+            if(stream) {
+                me.package.core.console.log("serving: " + path + " with contentType:" + contentType);
+                stream.pipe(response);
+            }
+            else {
+                me.package.core.console.log("cannot serve: " + path + " with contentType:" + contentType);
+                response.end();                
+            }
         }
     };
 };
