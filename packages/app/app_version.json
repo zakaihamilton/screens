@@ -1,0 +1,29 @@
+{
+    "title": "Version",
+    "ui.style.left": "150px",
+    "ui.style.top": "150px",
+    "ui.style.width": "220px",
+    "ui.style.height": "120px",
+    "ui.basic.elements": [
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"10px",
+                "top":"30px"
+            },
+            "ui.basic.text":"Screens Environment Version: "
+        },
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "right":"50px",
+                "top":"30px"
+            },
+            "ui.basic.text":"^app.version.version"
+        }
+    ],
+    "ui.property.after":{
+        "storage.cache.key": "app-version-window",
+        "storage.cache.restore": "widget.window.store"
+    }
+}

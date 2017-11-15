@@ -57,7 +57,7 @@
             "icon": "/packages/res/icons/group.png",
             "minimize": null,
             "static": true,
-            "ui.property.after":{
+            "ui.property.after": {
                 "storage.cache.key": "@ui.cachekey.app-progman-window-",
                 "storage.cache.restore": "widget.window.store"
             }
@@ -148,12 +148,18 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "log",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Version",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "version",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ]
         ]
     },
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.cache.key": "app-progman-window",
         "storage.cache.restore": "widget.window.store"
     }

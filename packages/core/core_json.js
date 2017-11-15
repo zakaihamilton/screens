@@ -43,7 +43,4 @@ package.core.json = function CoreJson(me) {
     me.log = function(json) {
         me.package.core.console.log(JSON.stringify(json, null, 4));        
     };
-    me.convert = function(source, target, mapping) {
-        
-    };
 };
