@@ -1,9 +1,11 @@
 {
     "title": "Execute",
-    "ui.style.left": "50px",
-    "ui.style.top": "50px",
-    "ui.style.width": "600px",
-    "ui.style.height": "600px",
+    "ui.property.style":{
+        "left": "50px",
+        "top": "50px",
+        "width": "600px",
+        "height": "600px"
+    },
     "widget.menu.items": [
         ["Program", [
                 ["Run", "app.execute.run"],

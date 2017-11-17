@@ -1,10 +1,12 @@
 {
     "title": "Program Manager",
     "icon": "/packages/res/icons/program_manager.png",
-    "ui.style.left": "750px",
-    "ui.style.top": "150px",
-    "ui.style.width": "400px",
-    "ui.style.height": "400px",
+    "ui.property.style":{
+        "left": "750px",
+        "top": "150px",
+        "width": "400px",
+        "height": "400px"
+    },
     "widget.window.static": true,
     "widget.menu.items": [
         ["File", [

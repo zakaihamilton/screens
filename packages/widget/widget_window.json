@@ -1,9 +1,11 @@
 {
-    "ui.style.width": "150px",
-    "ui.style.height": "150px",
-    "ui.style.position": "absolute",
-    "ui.style.left": "100px",
-    "ui.style.top": "100px",
+    "ui.property.style":{
+        "width": "150px",
+        "height": "150px",
+        "position": "absolute",
+        "left": "100px",
+        "top": "100px"
+    },
     "ui.move.enabled": true,
     "ui.resize.enabled": true,
     "ui.class.class": "border",

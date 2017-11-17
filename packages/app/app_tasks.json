@@ -3,8 +3,10 @@
     "fixed": true,
     "popup": true,
     "temp": true,
-    "ui.style.width": "288px",
-    "ui.style.height": "201px",
+    "ui.property.style":{
+        "width": "288px",
+        "height": "201px"
+    },
     "ui.basic.elements": [
         {
             "ui.basic.var": "tasks",

@@ -1,9 +1,11 @@
 {
     "title": "Diagram",
-    "ui.style.left": "50px",
-    "ui.style.top": "50px",
-    "ui.style.width": "1200px",
-    "ui.style.height": "600px",
+    "ui.property.style":{
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
     "widget.menu.items": [
         ["View", [
                 ["Relationships", "app.diagram.viewType", {

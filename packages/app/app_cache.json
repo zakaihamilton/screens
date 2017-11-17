@@ -1,9 +1,11 @@
 {
     "title": "Cache",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "450px",
-    "ui.style.height": "250px",
+    "ui.property.style":{
+        "left": "150px",
+        "top": "150px",
+        "width": "450px",
+        "height": "250px"
+    },
     "fixed": true,
     "widget.menu.items": [
         ["Special", [

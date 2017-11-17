@@ -1,9 +1,11 @@
 {
     "title": "Player",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "950px",
-    "ui.style.height": "650px",
+    "ui.property.style":{
+        "left": "150px",
+        "top": "150px",
+        "width": "950px",
+        "height": "650px"
+    },
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.player.refresh"]

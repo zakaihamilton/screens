@@ -1,6 +1,6 @@
 {
     "title": "Browser",
-    "ui.property.group":{
+    "ui.property.style":{
         "left": "150px",
         "top": "150px",
         "width": "640px",

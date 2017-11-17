@@ -1,9 +1,11 @@
 {
     "title": "Version",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "360px",
-    "ui.style.height": "120px",
+    "ui.property.style": {
+        "left": "150px",
+        "top": "150px",
+        "width": "360px",
+        "height": "120px"
+    },
     "ui.basic.elements": [
         {
             "ui.property.style":{

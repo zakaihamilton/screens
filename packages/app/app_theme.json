@@ -1,16 +1,20 @@
 {
     "title": "Theme",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "500px",
-    "ui.style.height": "120px",
+    "ui.property.style":{
+        "left": "150px",
+        "top": "150px",
+        "width": "500px",
+        "height": "120px"
+    },
     "fixed": true,
     "ui.basic.elements": [
         {
             "ui.basic.var": "themeList",
             "ui.element.count": 8,
-            "ui.style.margin": "10px",
-            "ui.style.height":"91px",
+            "ui.property.style":{
+                "margin": "10px",
+                "height":"91px"
+            },
             "ui.group.data": {
                 "ui.data.keyList": ["ui.basic.text"],
                 "ui.data.default": {

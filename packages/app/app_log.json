@@ -1,9 +1,11 @@
 {
     "title": "Log",
-    "ui.style.left": "120px",
-    "ui.style.top": "120px",
-    "ui.style.width": "640px",
-    "ui.style.height": "480px",
+    "ui.property.style":{
+        "left": "120px",
+        "top": "120px",
+        "width": "640px",
+        "height": "480px"
+    },
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.log.refresh"],

@@ -1,9 +1,11 @@
 {
     "title": "Storage",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "450px",
-    "ui.style.height": "450px",
+    "ui.property.style":{
+        "left": "150px",
+        "top": "150px",
+        "width": "450px",
+        "height": "450px"
+    },
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.storage.refresh"],

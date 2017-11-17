@@ -1,15 +1,19 @@
 {
-    "ui.style.left": "450px",
-    "ui.style.top": "250px",
-    "ui.style.width": "600px",
-    "ui.style.height": "450px",
+    "ui.property.style":{
+        "left": "450px",
+        "top": "250px",
+        "width": "600px",
+        "height": "450px"
+    },
     "ui.basic.elements": [
         {
-            "ui.style.position":"relative",
-            "ui.style.left": "5%",
-            "ui.style.top": "5%",
-            "ui.style.height": "90%",
-            "ui.style.width": "90%",
+            "ui.property.style":{
+                "position":"relative",
+                "left": "5%",
+                "top": "5%",
+                "height": "90%",
+                "width": "90%"
+            },
             "ui.element.count": 10,
             "widget.tree.collapse": false,
             "ui.group.data": {
