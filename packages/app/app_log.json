@@ -1,5 +1,7 @@
 {
     "title": "Log",
+    "ui.style.left": "120px",
+    "ui.style.top": "120px",
     "ui.style.width": "640px",
     "ui.style.height": "480px",
     "widget.menu.items": [
@@ -36,6 +38,8 @@
         }
     ],
     "ui.property.after":{
+        "storage.cache.key": "app-log-window",
+        "storage.cache.restore": "widget.window.store",
         "app.log.refresh":null
     }
 }
