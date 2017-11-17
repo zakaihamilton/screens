@@ -14,41 +14,35 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.basic.elements": [
-                {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "ui.style.gridColumn",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.border",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.property.style":{
-                                    "margin": "0px",
-                                    "textAlign": "center",
-                                    "verticalAlign": "middle"
-                                }
-                            },
-                            "ui.data.values": [
-                                ["2/16", "18/34", "Hesed", "white", "1px solid black", "bold"],
-                                ["6/10", "20/32", "Keter", "white"],
-                                ["10/14", "20/32", "Abraham", "white"],
-                                ["2/16", "1/16", "Gevura", "#FFF3CA", "1px solid black", "bold"],
-                                ["6/10", "3/14", "Hochma", "#FFF3CA"],
-                                ["10/14", "3/14", "Isaac", "#FFF3CA"],
-                                ["18/32", "8/26", "Tifferet2", "#C8D9F9", "1px solid black", "bold"],
-                                ["22/26", "10/24", "Bina", "#C8D9F9"],
-                                ["26/30", "10/24", "Jacob", "#C8D9F9"]
-                            ]
-                        }
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "app.diagram.term",
+                    "ui.style.backgroundColor",
+                    "ui.style.border",
+                    "ui.style.fontWeight"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "margin": "0px",
+                        "textAlign": "center",
+                        "verticalAlign": "middle"
                     }
-                }
-            ]
+                },
+                "ui.data.values": [
+                    ["2/16", "18/34", "Hesed", "white", "1px solid black", "bold"],
+                    ["6/10", "20/32", "Keter", "white"],
+                    ["10/14", "20/32", "Abraham", "white"],
+                    ["2/16", "1/16", "Gevura", "#FFF3CA", "1px solid black", "bold"],
+                    ["6/10", "3/14", "Hochma", "#FFF3CA"],
+                    ["10/14", "3/14", "Isaac", "#FFF3CA"],
+                    ["18/32", "8/26", "Tifferet2", "#C8D9F9", "1px solid black", "bold"],
+                    ["22/26", "10/24", "Bina", "#C8D9F9"],
+                    ["26/30", "10/24", "Jacob", "#C8D9F9"]
+                ]
+            }
         }
     ]
 }

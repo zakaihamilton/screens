@@ -14,63 +14,59 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.basic.elements": [
+            "ui.property.group": [
                 {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.style.border": "1px solid black",
-                                "ui.style.margin": "0px",
-                                "ui.style.gridColumn": "1",
-                                "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign": "center",
-                                "ui.style.verticalAlign": "middle"
-                            },
-                            "ui.data.values": [
-                                ["1", "Ohr Yashar", "white", "bold"],
-                                ["2", "Keter", "white"],
-                                ["3", "Hochma", "#FFF3CA"],
-                                ["4", "Bina", "#C8D9F9"],
-                                ["5", "Tifferet", "#F5CCCB"],
-                                ["6", "Malchut", "#D9EAD2"]
-                            ]
-                        }
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.fontWeight"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.style.border": "1px solid black",
+                            "ui.style.margin": "0px",
+                            "ui.style.gridColumn": "1",
+                            "ui.style.paddingTop": "3px",
+                            "ui.style.textAlign": "center",
+                            "ui.style.verticalAlign": "middle"
+                        },
+                        "ui.data.values": [
+                            ["1", "Ohr Yashar", "white", "bold"],
+                            ["2", "Keter", "white"],
+                            ["3", "Hochma", "#FFF3CA"],
+                            ["4", "Bina", "#C8D9F9"],
+                            ["5", "Tifferet", "#F5CCCB"],
+                            ["6", "Malchut", "#D9EAD2"]
+                        ]
                     }
                 },
                 {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.style.border": "1px solid black",
-                                "ui.style.margin": "0px",
-                                "ui.style.gridColumn": "2",
-                                "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign": "center",
-                                "ui.style.verticalAlign": "middle"
-                            },
-                            "ui.data.values": [
-                                ["1", "Ohr Hozer", "white", "bold"],
-                                ["2", "Malchut", "#D9EAD2"],
-                                ["3", "Tifferet", "#F5CCCB"],
-                                ["4", "Bina", "#C8D9F9"],
-                                ["5", "Hochma", "#FFF3CA"],
-                                ["6", "Keter", "white"]
-                            ]
-                        }
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.fontWeight"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.style.border": "1px solid black",
+                            "ui.style.margin": "0px",
+                            "ui.style.gridColumn": "2",
+                            "ui.style.paddingTop": "3px",
+                            "ui.style.textAlign": "center",
+                            "ui.style.verticalAlign": "middle"
+                        },
+                        "ui.data.values": [
+                            ["1", "Ohr Hozer", "white", "bold"],
+                            ["2", "Malchut", "#D9EAD2"],
+                            ["3", "Tifferet", "#F5CCCB"],
+                            ["4", "Bina", "#C8D9F9"],
+                            ["5", "Hochma", "#FFF3CA"],
+                            ["6", "Keter", "white"]
+                        ]
                     }
                 }
             ]

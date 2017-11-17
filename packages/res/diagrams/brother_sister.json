@@ -14,45 +14,41 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.basic.elements": [
-                {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "ui.style.gridColumn",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.property.style":{
-                                    "border": "1px solid black",
-                                    "margin": "0px",
-                                    "textAlign": "center",
-                                    "verticalAlign": "middle"
-                                }
-                            },
-                            "ui.data.values": [
-                                ["3/8", "8/30", "Keter", "white"],
-                                ["9/14", "24/34", "Hochma", "#FFF3CA"],
-                                ["9/20", "2/20", "Bina", "#C8D9F9"],
-                                ["14/19", "3/11", "Hochma2", "#D9EAD2"],
-                                ["14/19", "12/19", "Hassadim", "#F5CCCB"],
-                                ["21/27", "8/30", "ZA", "#F5CCCB"],
-                                ["28/34", "8/30", "Malchut", "#D9EAD2"]
-                            ]
-                        }
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "app.diagram.term",
+                    "ui.style.backgroundColor",
+                    "ui.style.fontWeight"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "border": "1px solid black",
+                        "margin": "0px",
+                        "textAlign": "center",
+                        "verticalAlign": "middle"
                     }
                 },
+                "ui.data.values": [
+                    ["3/8", "8/30", "Keter", "white"],
+                    ["9/14", "24/34", "Hochma", "#FFF3CA"],
+                    ["9/20", "2/20", "Bina", "#C8D9F9"],
+                    ["14/19", "3/11", "Hochma2", "#D9EAD2"],
+                    ["14/19", "12/19", "Hassadim", "#F5CCCB"],
+                    ["21/27", "8/30", "ZA", "#F5CCCB"],
+                    ["28/34", "8/30", "Malchut", "#D9EAD2"]
+                ]
+            },
+            "ui.basic.elements": [
                 {
-                    "comment":"Small Face rising to Right of Understanding",
-                    "line":"19 16 21 16 24 21"
+                    "comment": "Small Face rising to Right of Understanding",
+                    "line": "19 16 21 16 24 21"
                 },
                 {
-                    "comment":"Malchut rising to Left of Understanding",
-                    "line":"6 19 6 31 8 31"
+                    "comment": "Malchut rising to Left of Understanding",
+                    "line": "6 19 6 31 8 31"
                 }
             ]
         }

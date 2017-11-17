@@ -14,63 +14,59 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.basic.elements": [
+            "ui.property.group": [
                 {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.style.border": "1px solid black",
-                                "ui.style.margin": "0px",
-                                "ui.style.gridColumn": "1",
-                                "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign": "center",
-                                "ui.style.verticalAlign": "middle"
-                            },
-                            "ui.data.values": [
-                                ["1", "Kelim", "white", "bold"],
-                                ["2", "Keter", "white"],
-                                ["3", "Hochma", "#FFF3CA"],
-                                ["4", "Bina", "#C8D9F9"],
-                                ["5", "Tifferet", "#F5CCCB"],
-                                ["6", "Malchut", "#D9EAD2"]
-                            ]
-                        }
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.fontWeight"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.style.border": "1px solid black",
+                            "ui.style.margin": "0px",
+                            "ui.style.gridColumn": "1",
+                            "ui.style.paddingTop": "3px",
+                            "ui.style.textAlign": "center",
+                            "ui.style.verticalAlign": "middle"
+                        },
+                        "ui.data.values": [
+                            ["1", "Kelim", "white", "bold"],
+                            ["2", "Keter", "white"],
+                            ["3", "Hochma", "#FFF3CA"],
+                            ["4", "Bina", "#C8D9F9"],
+                            ["5", "Tifferet", "#F5CCCB"],
+                            ["6", "Malchut", "#D9EAD2"]
+                        ]
                     }
                 },
                 {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.style.border": "1px solid black",
-                                "ui.style.margin": "0px",
-                                "ui.style.gridColumn": "2",
-                                "ui.style.paddingTop": "3px",
-                                "ui.style.textAlign": "center",
-                                "ui.style.verticalAlign": "middle"
-                            },
-                            "ui.data.values": [
-                                ["1", "Orot", "white", "bold"],
-                                ["2", "Yechida", "white"],
-                                ["3", "Haya", "#FFF3CA"],
-                                ["4", "Neshama", "#C8D9F9"],
-                                ["5", "Ruach", "#F5CCCB"],
-                                ["6", "Nefesh", "#D9EAD2"]
-                            ]
-                        }
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.fontWeight"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.style.border": "1px solid black",
+                            "ui.style.margin": "0px",
+                            "ui.style.gridColumn": "2",
+                            "ui.style.paddingTop": "3px",
+                            "ui.style.textAlign": "center",
+                            "ui.style.verticalAlign": "middle"
+                        },
+                        "ui.data.values": [
+                            ["1", "Orot", "white", "bold"],
+                            ["2", "Yechida", "white"],
+                            ["3", "Haya", "#FFF3CA"],
+                            ["4", "Neshama", "#C8D9F9"],
+                            ["5", "Ruach", "#F5CCCB"],
+                            ["6", "Nefesh", "#D9EAD2"]
+                        ]
                     }
                 }
             ]

@@ -22,6 +22,9 @@
     position:relative;
     float:left;
     top: 12px;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .widget-icon-image-icon {

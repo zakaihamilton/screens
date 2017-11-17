@@ -6,6 +6,14 @@
 package.ui.property = function UIProperty(me) {
     me.group = {
         set: function(object, properties) {
+            if (Array.isArray(properties)) {
+                properties.map(function (item) {
+                    for (var key in item) {
+                        me.package.core.property.set(object, key, item[key]);
+                    }
+                });
+                return;
+            }
             for (var key in properties) {
                 me.package.core.property.set(object, key, properties[key]);
             }

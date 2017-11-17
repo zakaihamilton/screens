@@ -88,17 +88,6 @@ package.ui.element = function UIElement(me) {
             return document.body;
         }
     };
-    me.update = function (properties, object) {
-        if (Array.isArray(properties)) {
-            properties.map(function (item) {
-                me.update(item, object);
-            });
-            return;
-        }
-        for (var key in properties) {
-            me.package.core.property.set(object, key, properties[key]);
-        }
-    };
     me.combine = function (maps) {
         var combined = {};
         var maps = Array.prototype.slice.call(arguments, 0);
@@ -156,15 +145,6 @@ package.ui.element = function UIElement(me) {
         }
         if (!parent || parent==="workspace") {
             parent = me.workspace();
-        }
-        if("ui.element.update" in properties) {
-            var update = properties["ui.element.update"];
-            for (var key in update) {
-                me.package.core.property.set(parent, key, update[key]);
-            }
-            if(Object.keys(properties).length === 1) {
-                return;
-            }
         }
         var object = null;
         var component_name = properties["ui.element.component"];

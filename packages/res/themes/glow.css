@@ -781,6 +781,9 @@
     border-radius: 5px;
     -webkit-margin-start:6px;
     -webkit-margin-end:6px;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
 }
 
 .glow-window-icon.widget-icon-list.minimize {

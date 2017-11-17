@@ -2,7 +2,7 @@
     "title": "Faces of the Ego",
     "layers": [
         {
-            "ui.property.style" : {
+            "ui.property.style": {
                 "display": "grid",
                 "position": "absolute",
                 "padding": "2px",
@@ -16,38 +16,32 @@
                 "alignItems": "stretch",
                 "lineHeight": "2.5"
             },
-            "ui.basic.elements": [
-                {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "ui.style.gridColumn",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.property.style":{
-                                    "border": "1px solid black",
-                                    "margin": "0px",
-                                    "textAlign": "center",
-                                    "verticalAlign": "middle"
-                                }
-                            },
-                            "ui.data.values": [
-                                ["1/5", "8/30", "Atik", "white"],
-                                ["6/10", "8/30", "Arich Anpin", "white"],
-                                ["11/15", "23/34", "Abba ve Ima", "#FFF3CA"],
-                                ["11/15", "2/22", "Yisrael Saba ve Tvuna", "#C8D9F9"],
-                                ["16/20", "8/30", "Zeir Anpin", "#F5CCCB"],
-                                ["21/25", "8/30", "Nukva", "#D9EAD2"]
-                            ]
-                        }
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "app.diagram.term",
+                    "ui.style.backgroundColor",
+                    "ui.style.fontWeight"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "border": "1px solid black",
+                        "margin": "0px",
+                        "textAlign": "center",
+                        "verticalAlign": "middle"
                     }
-                }
-            ]
+                },
+                "ui.data.values": [
+                    ["1/5", "8/30", "Atik", "white"],
+                    ["6/10", "8/30", "Arich Anpin", "white"],
+                    ["11/15", "23/34", "Abba ve Ima", "#FFF3CA"],
+                    ["11/15", "2/22", "Yisrael Saba ve Tvuna", "#C8D9F9"],
+                    ["16/20", "8/30", "Zeir Anpin", "#F5CCCB"],
+                    ["21/25", "8/30", "Nukva", "#D9EAD2"]
+                ]
+            }
         }
     ]
 }

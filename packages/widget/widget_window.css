@@ -437,6 +437,9 @@
     border:1px solid black;
     -webkit-margin-start:6px;
     -webkit-margin-end:6px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .widget-window-icon.widget-icon-list.minimize {

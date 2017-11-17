@@ -1,17 +1,15 @@
 {
     "title": "Browser",
-    "ui.style.left": "150px",
-    "ui.style.top": "150px",
-    "ui.style.width": "640px",
-    "ui.style.height": "480px",
+    "ui.property.group":{
+        "left": "150px",
+        "top": "150px",
+        "width": "640px",
+        "height": "480px",
+        "display":"flex",
+        "flexWrap":"wrap",
+        "alignItems":"flex-start"
+    },
     "ui.basic.elements": [
-        {
-            "ui.element.update":{
-                "ui.style.display":"flex",
-                "ui.style.flexWrap":"wrap",
-                "ui.style.alignItems":"flex-start"
-            }
-        },
         {
             "ui.basic.var": "url",
             "ui.basic.text": "",

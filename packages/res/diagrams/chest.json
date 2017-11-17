@@ -14,44 +14,38 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.basic.elements": [
-                {
-                    "comment":"Chest Separator",
-                    "borderStyle":"dashed",
-                    "line":"2 14 34 14"
-                },
-                {
-                    "ui.element.update": {
-                        "ui.group.data": {
-                            "ui.data.keyList": [
-                                "ui.style.gridRow",
-                                "ui.style.gridColumn",
-                                "app.diagram.term",
-                                "ui.style.backgroundColor",
-                                "ui.style.borderColor",
-                                "ui.style.fontWeight"
-                            ],
-                            "ui.data.default": {
-                                "ui.basic.tag": "div",
-                                "ui.property.style":{
-                                    "border": "1px solid black",
-                                    "margin": "0px",
-                                    "textAlign": "center",
-                                    "verticalAlign": "middle"
-                                }
-                            },
-                            "ui.data.values": [
-                                ["2/7", "22/34", "Keter", "white"],
-                                ["8/13", "22/34", "Hochma", "#FFF3CA"],
-                                ["12/17", "16/22", "Chazeh", "white", "white"],
-                                ["17/22", "2/16", "Bina", "#C8D9F9"],
-                                ["23/28", "2/16", "Tifferet", "#F5CCCB"],
-                                ["29/34", "2/16", "Malchut", "#D9EAD2"]
-                            ]
-                        }
+            "ui.basic.elements": {
+                "comment": "Chest Separator",
+                "borderStyle": "dashed",
+                "line": "2 14 34 14"
+            },
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "app.diagram.term",
+                    "ui.style.backgroundColor",
+                    "ui.style.borderColor",
+                    "ui.style.fontWeight"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "border": "1px solid black",
+                        "margin": "0px",
+                        "textAlign": "center",
+                        "verticalAlign": "middle"
                     }
-                }
-            ]
+                },
+                "ui.data.values": [
+                    ["2/7", "22/34", "Keter", "white"],
+                    ["8/13", "22/34", "Hochma", "#FFF3CA"],
+                    ["12/17", "16/22", "Chazeh", "white", "white"],
+                    ["17/22", "2/16", "Bina", "#C8D9F9"],
+                    ["23/28", "2/16", "Tifferet", "#F5CCCB"],
+                    ["29/34", "2/16", "Malchut", "#D9EAD2"]
+                ]
+            }
         }
     ]
 }
