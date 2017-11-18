@@ -1,0 +1,19 @@
+.widget-spinner-container {
+    flex:0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: widget-spinner-animation 2s linear infinite;
+    visibility:hidden;
+}
+
+@keyframes widget-spinner-animation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

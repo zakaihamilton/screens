@@ -87,7 +87,8 @@ function startBrowser(appName, appArgs) {
             "bar",
             "tree",
             "audio",
-            "video"
+            "video",
+            "spinner"
         ],
         "canvas": [
             "dirty",

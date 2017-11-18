@@ -1,6 +1,6 @@
 {
     "title": "Transform",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "150px",
         "top": "100px",
         "width": "1000px",
@@ -57,7 +57,7 @@
             ]
         ],
         ["Layout", [
-                ["Reflow","app.transform.reflow"],
+                ["Reflow", "app.transform.reflow"],
                 ["Auto Scroll", "app.transform.autoScroll", {
                         "state": "select",
                         "separator": true
@@ -101,7 +101,7 @@
                 ["Underline", "ui.exec.underline"],
                 ["Strikethrough", "ui.exec.strikeThrough"],
                 ["Separator", "app.transform.toggleSeparator", {
-                        "state":"select",
+                        "state": "select",
                         "separator": true
                     }
                 ]
@@ -181,8 +181,10 @@
         "ui.data.default": {
             "ui.basic.context": "self",
             "static": true,
-            "ui.style.width": "500px",
-            "ui.style.height": "500px",
+            "ui.property.style": {
+                "ui.style.width": "500px",
+                "ui.style.height": "500px"
+            },
             "maximize": true,
             "ui.basic.elements": [
                 {
@@ -216,8 +218,7 @@
                     "ui.attribute.noBroadcast": true
                 },
                 {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": "app.transform.spinner",
+                    "ui.element.component":"widget.spinner",
                     "ui.basic.var": "spinner"
                 },
                 {
@@ -259,12 +260,14 @@
                     "ui.basic.var": "termPopup",
                     "ui.element.component": "widget.window",
                     "title": "Tables of Phases",
-                    "ui.style.left": "25px",
-                    "ui.style.top": "50px",
-                    "ui.style.right": "25px",
-                    "ui.style.bottom": "100px",
-                    "ui.style.width": "",
-                    "ui.style.height": "",
+                    "ui.property.style": {
+                        "left": "25px",
+                        "top": "50px",
+                        "right": "25px",
+                        "bottom": "100px",
+                        "width": "",
+                        "height": ""
+                    },
                     "popup": true,
                     "static": true,
                     "minimize": true,
@@ -289,7 +292,7 @@
                 "widget.scrollbar.horizontal.alwaysHide": true,
                 "storage.cache.key": "@ui.cachekey.app-transform-window-",
                 "storage.cache.restore": "widget.window.store",
-                "ui.resize.event":"app.transform.reflow",
+                "ui.resize.event": "app.transform.reflow",
                 "app.transform.initOptions": null,
                 "app.transform.transform": null
             }
@@ -312,6 +315,9 @@
             ],
             [
                 "Document 5"
+            ],
+            [
+                "Document 6"
             ]
         ]
     },
