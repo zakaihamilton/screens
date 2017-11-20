@@ -39,18 +39,6 @@ package.app.main = function (me) {
                 if(me.package.appName) {
                     me.package.core.app.launch(null, me.package.appName, me.package.appArgs);
                 }
-                else {
-                    package.include("app.cache", function(info) {
-                        if(info.complete) {
-                            me.package.core.message.send("app.cache.launch");
-                            package.include({"app":["transform","diagram"]}, function(info) {
-                                if(info.complete) {
-                                    me.package.core.message.send("app.transform.launch");
-                                }
-                            });
-                        }
-                    });
-                }
             }
         });
     };
