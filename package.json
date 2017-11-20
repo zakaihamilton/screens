@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "0.11",
+  "version": "0.12",
   "main": "./packages/platform/server.js",
   "repository": {
     "type": "git",
@@ -14,5 +14,9 @@
     "dropbox": "^2.5.12",
     "faststart": "^1.0.0",
     "xmlhttprequest": "^1.8.0"
+  },
+  "disabled":{
+    "@ffmpeg-installer/ffmpeg": "^1.0.13",
+    "fluent-ffmpeg": "^2.1.2"
   }
 }
