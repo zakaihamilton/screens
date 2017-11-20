@@ -130,7 +130,7 @@ package.core.module = function CoreModule(me) {
                     } else if(file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
                         var mimeType = file_path.endsWith(".m4a") ? "audio/mp4" : "video/mp4";
                         info.custom = true;
-                        me.package.core.media.serve(info.headers, info.response, file_path, mimeType);
+                        me.package.core.stream.serve(info.headers, info.response, file_path, mimeType);
                     }
                 }
             }

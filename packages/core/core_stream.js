@@ -1,11 +1,11 @@
 /*
  @author Zakai Hamilton
- @component CoreMedia
+ @component CoreStream
  */
 
-package.require("core.media", "server");
+package.require("core.stream", "server");
 
-package.core.media = function CoreMedia(me) {
+package.core.stream = function CoreStream(me) {
     me.init = function () {
         me.fs = require("fs");
         me.faststart = require("faststart");

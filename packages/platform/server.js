@@ -16,7 +16,7 @@ package.include({
         "file",
         "private",
         "json",
-        "media",
+        "stream",
         "path"
     ],
     "storage":[
@@ -24,6 +24,9 @@ package.include({
     ],
     "manager":[
         "download"
+    ],
+    "media":[
+        "ffmpeg"
     ]
 });
 

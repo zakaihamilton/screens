@@ -130,8 +130,13 @@
                 "height":"80%",
                 "position":"absolute"
             }
+        },
+        {
+            "ui.element.component":"widget.spinner",
+            "ui.basic.var": "spinner"
         }
     ],
+    "core.link.work": "app.player.work",
     "ui.property.after":{
         "storage.cache.key": "app-player-window",
         "storage.cache.restore": "widget.window.store",
