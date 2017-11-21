@@ -104,7 +104,7 @@
 .widget-list-item {
     background-color: white;
     color: black;
-    height:18px;
+    min-height:18px;
     padding-left: 3px;
     padding-right: 3px;
     font-family: "MS Sans Serif";

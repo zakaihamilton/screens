@@ -4,7 +4,7 @@
 */
 
 package.core.cmd = function CoreCmd(me) {
-    me.package.application = function(terminal) {
+    me.application = function(terminal) {
         return terminal.application;
     };
     me.split = function(args, separator=' ') {

@@ -24,6 +24,9 @@ package.include({
     ],
     "manager":[
         "download"
+    ],
+    "media":[
+        "ffmpeg"
     ]
 });
 

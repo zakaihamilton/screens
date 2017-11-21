@@ -26,6 +26,7 @@ package.widget.list = function WidgetList(me) {
         set: function (object, value) {
             if (value) {
                 object.listElements = value;
+                me.package.core.property.set(object.var.container, "empty");
                 me.package.core.property.set(object.var.container, "ui.basic.elements", value);
                 me.package.core.property.notify(object.var.container, "update");
             }

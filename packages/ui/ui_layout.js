@@ -136,7 +136,7 @@ package.ui.layout = function UILayout(me) {
                     clearInterval(target.reflowInterval);
                     target.reflowInterval = null;
                     if (options.usePages) {
-                        me.package.applyNumPages(layoutContent, pageIndex);
+                        me.applyNumPages(layoutContent, pageIndex);
                     }
                     me.completePage(target.page, options);
                     if(target.page) {
@@ -159,7 +159,7 @@ package.ui.layout = function UILayout(me) {
                 }
                 var location = pageContent ? pageContent : layoutContent;
                 if (widget.style && widget.style.order) {
-                    location.insertBefore(widget, me.package.widgetByOrder(location, widget.style.order));
+                    location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
                 } else {
                     location.appendChild(widget);
                 }
@@ -233,7 +233,7 @@ package.ui.layout = function UILayout(me) {
             }
         }
     };
-    me.package.widgetByOrder = function (page, order) {
+    me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
         var match = null;
         while (widget) {
@@ -326,7 +326,7 @@ package.ui.layout = function UILayout(me) {
             me.package.core.property.set(target, "widget.scrollbar.vertical.scrollTo", 0);
         }
     };
-    me.package.applyNumPages = function (target, numPages) {
+    me.applyNumPages = function (target, numPages) {
         var widget = target.firstChild;
         while (widget) {
             if (widget.var && widget.var.pageNumber) {

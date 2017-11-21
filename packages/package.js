@@ -69,6 +69,7 @@ function package_init(package_name, component_name, callback, child_name = null,
     }
     /* Register component in package */
     package[package_name].components.push(id);
+    package.count++;
     /* Create component proxy */
     var component_obj = new Proxy({package:package, id: id, child: child_name}, {
         get: function (object, property) {
@@ -273,7 +274,8 @@ var package = {
     platform : typeof require !== 'undefined' ? "server" : (typeof importScripts !== 'undefined' ? "client" : "browser"),
     require: package_require,
     include: package_include,
-    remote: package_remote
+    remote: package_remote,
+    count: 0
 };
 
 if (typeof require !== 'undefined') {

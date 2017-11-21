@@ -156,6 +156,12 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "version",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Downloads",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "downloads",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ]

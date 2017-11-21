@@ -606,7 +606,7 @@
 .glow-list-item {
     background-color: white;
     color: black;
-    height:18px;
+    min-height:18px;
     padding-left: 6px;
     padding-right: 6px;
     font-family: "MS Sans Serif";

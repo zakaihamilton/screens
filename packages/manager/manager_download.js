@@ -89,6 +89,10 @@ package.manager.download = function ManagerDownload(me) {
         var item = me.private.findItem(from, to);
         callback(item ? true : false);
     };
+    me.removeall = function(callback) {
+        me.queue = [];
+        callback();
+    };
     me.remove = function(callback, from, to) {
         var item = me.private.findItem(from, to);
         if(item) {
@@ -96,6 +100,13 @@ package.manager.download = function ManagerDownload(me) {
             me.queue.splice(index, 1);
         }
         callback();
+    };
+    me.items = function(callback) {
+        var items = [];
+        for(var item of me.queue) {
+            items.push({from:item.from,to:item.to,isDownloading:item.isDownloading});
+        }
+        callback(items);
     };
     me.isDownloading = function(callback, from, to) {
         var item = me.private.findItem(from, to);
