@@ -6,7 +6,7 @@
 package.core.http = function CoreHttp(me) {
     var core = me.package.core;
     if (package.platform === "server") {
-        me.port = process.env.PORT || 8080;
+        me.port = process.env.PORT || 4040;
     } else {
         me.port = 80;
     }
