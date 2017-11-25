@@ -82,6 +82,12 @@
                         "ui.basic.src": "/packages/res/icons/default.png",
                         "app.progman.args": "player",
                         "ui.touch.dblclick": "app.progman.shell"
+                    },
+                    {
+                        "text": "Diagram",
+                        "ui.basic.src": "/packages/res/icons/default.png",
+                        "app.progman.args": "diagram",
+                        "ui.touch.dblclick": "app.progman.shell"
                     }
                 ]
             ],

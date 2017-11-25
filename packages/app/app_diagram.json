@@ -112,6 +112,8 @@
         }
     ],
     "ui.property.after":{
+        "storage.cache.key": "app-diagram-window",
+        "storage.cache.restore": "widget.window.store",
         "app.diagram.initOptions": null,
         "app.diagram.reload": null
     }

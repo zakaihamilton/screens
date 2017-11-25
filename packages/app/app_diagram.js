@@ -29,6 +29,7 @@ package.app.diagram = function AppDiagram(me) {
         }
         var window = me.package.ui.element.create(json, parent, "self");
         if(args.length > 1) {
+            window.options = Object.assign({}, window.options, options);
             window.options = options;
             window.options.diagrams = false;
             window.options.reload = false;
@@ -51,7 +52,6 @@ package.app.diagram = function AppDiagram(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.package.widget.window.window(object);
-            me.package.ui.options.setStorage(me, window, "none");
             if(!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.package.ui.options.load(me, window, {
