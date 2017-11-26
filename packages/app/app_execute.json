@@ -15,8 +15,7 @@
     "ui.basic.elements": [
         {
             "ui.class.class":"app.execute.editor",
-            "ui.basic.tag":"span",
-            "ui.attribute.contenteditable":"true",
+            "ui.element.component":"widget.editor",
             "ui.basic.var":"editor",
             "ui.property.after": {
                 "storage.cache.key": "@ui.cachekey.app-execute-input-",

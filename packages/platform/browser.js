@@ -106,6 +106,9 @@ function startBrowser(appName, appArgs) {
         ],
         "manager":[
             "download"
+        ],
+        "media":[
+            "ffmpeg"
         ]
     },
             function (info) {

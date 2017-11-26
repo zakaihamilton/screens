@@ -2,11 +2,11 @@
     font-family:"Courier New", Courier, monospace;
     position:relative;
     left:0px;
-    right:0px;
-    padding: 5px;
+    width:99%;
     display: block;
     white-space: pre-wrap;
-    background:lightcyan;
     overflow:visible;
-    height:auto;
+    height:99%;
+    resize: none;
+    font-size: 16px;
 }
