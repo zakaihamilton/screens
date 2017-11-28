@@ -51,10 +51,10 @@ package.core.property = function CoreProperty(me) {
             if (typeof info.value === "string") {
                 if (info.value.startsWith("^")) {
                     var subInfo = me.split(info.object, info.value, null);
-                    var job = me.package.core.job.open();
+                    var job = me.package.core.job.create();
                     var paramInfo = {job: job, value: subInfo.name};
                     me.package.core.property.get(subInfo.object, subInfo.name.substring(1), paramInfo);
-                    me.package.core.job.close(job, function () {
+                    me.package.core.job.complete(job, function () {
                         me.package.core.property.set(info.object, info.name, paramInfo.value);
                     });
                     return;

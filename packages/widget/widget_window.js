@@ -628,10 +628,12 @@ package.widget.window = function WidgetWindow(me) {
             return JSON.stringify(options);
         },
         set: function (object, value) {
-            var options = JSON.parse(value);
-            for (var optionKey in options) {
-                var optionValue = options[optionKey];
-                me.package.core.property.set(object, optionKey, optionValue);
+            if(!me.package.core.property.get(object, "embed")) {
+                var options = JSON.parse(value);
+                for (var optionKey in options) {
+                    var optionValue = options[optionKey];
+                    me.package.core.property.set(object, optionKey, optionValue);
+                }
             }
         }
     };

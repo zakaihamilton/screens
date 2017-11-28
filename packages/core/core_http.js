@@ -42,7 +42,7 @@ package.core.http = function CoreHttp(me) {
         if(body) {
             body = Buffer.concat(body).toString();
         }
-        var job = core.job.open();
+        var job = core.job.create();
         var url = request.url;
         var query = "";
         var query_offset = url.lastIndexOf("?");
@@ -64,7 +64,7 @@ package.core.http = function CoreHttp(me) {
         };
         core.object.attach(info, me);
         core.property.set(info, "receive");
-        core.job.close(job, function () {
+        core.job.complete(job, function () {
             if(info.custom === false) {
                 response.writeHead(info.code, {
                     "Content-Type": info["content-type"],

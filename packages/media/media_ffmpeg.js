@@ -28,4 +28,35 @@ package.media.ffmpeg = function MediaFFMpeg(me) {
         })
         .save(target);
     };
+    me.info = function(callback) {
+        var job = me.package.core.job.create();
+        var info = {};
+        me.package.core.job.task(job, function(task) {
+            me.ffmpeg.getAvailableFormats(function(err, formats) {
+                info.formats = formats;
+                me.package.core.job.close(task);
+            });
+        });
+        me.package.core.job.task(job, function(task) {
+            me.ffmpeg.getAvailableCodecs(function(err, codecs) {
+                info.codecs = codecs;
+                me.package.core.job.close(task);
+            });
+        });
+        me.package.core.job.task(job, function(task) {
+            me.ffmpeg.getAvailableEncoders(function(err, encoders) {
+                info.encoders = encoders;
+                me.package.core.job.close(task);
+            });
+        });
+        me.package.core.job.task(job, function(task) {
+            me.ffmpeg.getAvailableFilters(function(err, filters) {
+                info.filters = filters;
+                me.package.core.job.close(task);
+            });
+        });
+        me.package.core.job.complete(job, function() {
+            callback(info);
+        });
+    };
 };

@@ -19,7 +19,7 @@ package.core.module = function CoreModule(me) {
         return component_path;
     };
     me.loadTextFile = function (job, filePath, callback) {
-        var task = core.job.begin(job);
+        var task = core.job.open(job);
         me.package.core.file.readFile(function (err, data) {
             core.console.log("serving text file: " + filePath);
             if (err) {
@@ -28,11 +28,11 @@ package.core.module = function CoreModule(me) {
             } else {
                 callback(data);
             }
-            core.job.end(task);
+            core.job.close(task);
         }, filePath, 'utf8');
     };
     me.loadBinaryFile = function (job, filePath, callback) {
-        var task = core.job.begin(job);
+        var task = core.job.open(job);
         me.package.core.file.readFile(function (err, data) {
             core.console.log("serving binary file: " + filePath);
             if (err) {
@@ -41,7 +41,7 @@ package.core.module = function CoreModule(me) {
             } else {
                 callback(data);
             }
-            core.job.end(task);
+            core.job.close(task);
             core.console.log("finished serving binary file: " + filePath);
         }, filePath);
     };

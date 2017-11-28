@@ -6,12 +6,12 @@
 package.core.job = function CoreJob(me) {
     me.jobs = [];
     me.tasks = [];
-    me.open = function() {
+    me.create = function() {
         var job = me.package.core.ref.gen();
         me.jobs[job] = {state:true,tasks:[], callback:null};
         return job;
     };
-    me.close = function(job, callback) {
+    me.complete = function(job, callback) {
         var job_info = me.jobs[job];
         if(job_info !== undefined) {
             job_info.callback = callback;
@@ -22,7 +22,7 @@ package.core.job = function CoreJob(me) {
             }
         }
     };
-    me.begin = function(job) {
+    me.open = function(job) {
         var job_info = me.jobs[job];
         if(job_info !== undefined) {
             var task = me.package.core.ref.gen();
@@ -31,7 +31,7 @@ package.core.job = function CoreJob(me) {
         }
         return task;
     };
-    me.end = function(task) {
+    me.close = function(task) {
         var task_info = me.tasks[task];
         if(task_info !== undefined) {
             var job_info = me.jobs[task_info.job];
@@ -43,4 +43,8 @@ package.core.job = function CoreJob(me) {
             }
         }
     };
+    me.task = function(job, callback) {
+        var task = me.open(job);
+        callback(task);
+    }
 };

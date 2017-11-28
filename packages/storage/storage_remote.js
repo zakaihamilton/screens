@@ -29,9 +29,9 @@ package.storage.remote = function StorageRemote(me) {
     me.getChildren = function (callback, path, recursive) {
         var entries = [];
         me.getService((service) => {
-            var job = me.package.core.job.open();
+            var job = me.package.core.job.create();
             me.iterate(job, service, entries, path, null, recursive);
-            me.package.core.job.close(job, () => {
+            me.package.core.job.complete(job, () => {
                 if (callback) {
                     callback(entries);
                 }
@@ -39,7 +39,7 @@ package.storage.remote = function StorageRemote(me) {
         });
     };
     me.iterate = function (job, service, entries, path, cursor, recursive) {
-        var task = me.package.core.job.begin(job);
+        var task = me.package.core.job.open(job);
         var method = cursor ? "filesListFolderContinue" : "filesListFolder";
         path = me.fixPath(path);
         service[method]({path: path})
@@ -56,10 +56,10 @@ package.storage.remote = function StorageRemote(me) {
                             me.iterate(job, service, item.entries, item.path_lower, null, recursive);
                         }
                     }
-                    me.package.core.job.end(task);
+                    me.package.core.job.close(task);
                 })
                 .catch(function (error) {
-                    me.package.core.job.end(task);
+                    me.package.core.job.close(task);
                 });
     };
     me.createFolder = function (callback, path) {

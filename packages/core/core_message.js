@@ -70,11 +70,11 @@ package.core.message = function CoreMessage(me) {
                 var args = core.type.unwrap_args(core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
-                var task = core.job.begin(info.job);
+                var task = core.job.open(info.job);
                 args[1] = function (response) {
                     var args = Array.prototype.slice.call(arguments, 0);
                     info.body = core.type.wrap_args(args);
-                    core.job.end(task);
+                    core.job.close(task);
                 };
                 try {
                     core.message.send.apply(null, args);
@@ -82,7 +82,7 @@ package.core.message = function CoreMessage(me) {
                 catch(e) {
                     me.package.core.console.log("error: " + e.message + " " + JSON.stringify(args));
                     info.body = e.message;
-                    core.job.end(task);
+                    core.job.close(task);
                 }
             }
         }

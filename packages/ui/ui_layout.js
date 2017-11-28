@@ -345,18 +345,20 @@ package.ui.layout = function UILayout(me) {
         return match;
     };
     me.styleParagraph = function(widget, options) {
-        widget.style.display = "flex-inline";
-        if(!options.usePages) {
-            if(options.filter && !me.paragraphMatch(widget, options)) {
-                widget.style.display = "none";
+        if(widget && widget.style) {
+            widget.style.display = "flex-inline";
+            if(!options.usePages) {
+                if(options.filter && !me.paragraphMatch(widget, options)) {
+                    widget.style.display = "none";
+                }
             }
-        }
-        widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
-        widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
-        if(options.filter) {
-            var find = me.package.core.string.regex("/(" + me.package.core.string.escape(options.filter) + ")", 'gi');
-            var replace = "<mark>$1</mark>";
-            widget.innerHTML = widget.innerHTML.replace(find, replace);
+            widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
+            widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
+            if(options.filter) {
+                var find = me.package.core.string.regex("/(" + me.package.core.string.escape(options.filter) + ")", 'gi');
+                var replace = "<mark>$1</mark>";
+                widget.innerHTML = widget.innerHTML.replace(find, replace);
+            }
         }
     };
     me.completePage = function(page, options) {

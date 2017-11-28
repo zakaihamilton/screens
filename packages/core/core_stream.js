@@ -13,7 +13,7 @@ package.core.stream = function CoreStream(me) {
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
         var range = headers.range;
-        if (range) {
+        if (false && range) {
             var total = stat.size;
             var parts = range.replace(/bytes=/, "").split("-");
             var partialstart = parts[0];
@@ -28,15 +28,21 @@ package.core.stream = function CoreStream(me) {
                 "Content-Length": chunkSize,
                 "Content-Type": contentType
             };
-            response.writeHead(200, headers);
-            var stream = me.faststart.createReadStream(path, {start: start, end: end});
+            var partial = total !== chunkSize;
+            var responseCode = 200;
+            if(partial) {
+                responseCode = 206;
+            }
+            response.writeHead(responseCode, headers);
+            var stream = null;
+            stream = me.faststart.createReadStream(path, {start: start, end: end});
             if(stream) {
                 stream.pipe(response);
             }
             else {
                 response.end();                
             }
-            me.package.core.console.log("streaming:" + path + " with stream: " + stream);
+            me.package.core.console.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
             var stream = me.faststart.createReadStream(path);
