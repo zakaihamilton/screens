@@ -81,7 +81,7 @@ function package_remote(id, platform) {
     return component.remote;
 }
 
-function package_init(package_name, component_name, callback, child_name = null, node = null) {
+function package_init(task, package_name, component_name, callback, child_name = null, node = null) {
     var children = [];
     /* Retrieve component function */
     var id = package_name + "." + component_name;
@@ -139,24 +139,26 @@ function package_init(package_name, component_name, callback, child_name = null,
                 }
                 component.init.push(init_method);
             } else {
-                init_method();
+                init_method(task);
             }
         }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
     children.map(function (child) {
-        package_init(package_name, component_name, callback, child, node);
+        package_init(task, package_name, component_name, callback, child, node);
     });
-    return component_obj;
 }
 
 function package_prepare(package_name, component_name, callback) {
-    var component = package_init(package_name, component_name, callback);
-    if (callback) {
-        callback({loaded: {package: package_name, component: component_name}});
-    }
-    return component;
+    package.lock(task => {
+        package_init(task, package_name, component_name, callback);
+        package.unlock(task, () => {
+            if (callback) {
+                callback({loaded: {package: package_name, component: component_name}});
+            }
+        });
+    });
 }
 
 function package_load(package_name, component_name, callback) {
@@ -213,25 +215,29 @@ function package_complete(info, callback) {
     if(info && info.failure) {
         return;
     }
-    package.order.map(function (id) {
-        var component = package_component(id);
-        if (component.init) {
-            do {
-                var init = component.init.shift();
-                if (init) {
-                    init();
+    package.lock(task => {
+        package.order.map(function (id) {
+            var component = package_component(id);
+            if (component.init) {
+                do {
+                    var init = component.init.shift();
+                    if (init) {
+                        init(task);
+                    }
+                } while (init);
+            }
+        });
+        package.unlock(task, () => {
+            if (info) {
+                if (info.loaded) {
+                    info.complete = true;
                 }
-            } while (init);
-        }
+                if (callback) {
+                    callback(info);
+                }
+            }
+        });
     });
-    if (info) {
-        if (info.loaded) {
-            info.complete = true;
-        }
-        if (callback) {
-            callback(info);
-        }
-    }
 }
 
 function package_include(packages, callback) {
