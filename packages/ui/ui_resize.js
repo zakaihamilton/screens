@@ -91,6 +91,7 @@ package.ui.resize = function UIResize(me) {
                 "ui.touch.up": null
             });
             me.package.core.property.set(me.info.target, "ui.property.broadcast", {
+                "resize": null,
                 "transition": false
             });
             var window = me.package.widget.window.window(me.info.target);

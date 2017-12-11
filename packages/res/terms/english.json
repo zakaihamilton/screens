@@ -212,7 +212,7 @@
             "replace": "$1\n"
         },
         {
-            "match": "/[^.?!:;,\\\"'”]$",
+            "match": "/[^.?!:;,\\\"'”)]$",
             "prefix": "<h4 style=\"text-align:center\">",
             "suffix": "</h4>"
         },
@@ -5002,6 +5002,21 @@
             "style":{
                 "heading":"Author"
             }
+        },
+        {
+            "term":"Lo Lishma",
+            "translation":"Not for Her Name"
+        },
+        {
+            "term":"Baal Shem Tov",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"God forbid",
+            "source":"Has VeShalom",
+            "translation":"God forbid"
         }
     ],
     "style": {

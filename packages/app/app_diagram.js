@@ -100,12 +100,13 @@ package.app.diagram = function AppDiagram(me) {
     me.term = {
         get: function(object, info) {
             if(object && info) {
-                var task = me.package.core.job.open(info.job);
-                var window = me.package.widget.window.window(object);
-                me.package.kab.text.parse(function(value) {
-                    info.value = value;
-                    me.package.core.job.close(task);
-                }, window.language, info.value, window.options);
+                me.package.lock(info.task, task => {
+                    var window = me.package.widget.window.window(object);
+                    me.package.kab.text.parse(function(value) {
+                        info.value = value;
+                        me.package.unlock(task);
+                    }, window.language, info.value, window.options);
+                });
             }
         },
         set: function(object, text) {

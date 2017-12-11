@@ -11,7 +11,6 @@ package.include({
         "ref",
         "module",
         "script",
-        "job",
         "object",
         "file",
         "private",

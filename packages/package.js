@@ -10,6 +10,37 @@ function package_path(path) {
     return item;
 }
 
+function package_lock(parent_task, callback) {
+    if(typeof(parent_task) === "function") {
+        callback = parent_task;
+        parent_task = null;
+    }
+    var task = {state:true,lock:0,parent:parent_task};
+    if(parent_task) {
+        parent_task.lock++;
+    }
+    task.lock++;
+    if(callback) {
+        callback(task);
+    }
+}
+
+function package_unlock(task, callback) {
+    task.lock--;
+    if(callback) {
+        task.callback = callback;
+    }
+    if(task.lock <= 0 && task.state) {
+        task.state = false;
+        if(task.callback) {
+            task.callback(task);
+        }
+        if(task.parent) {
+            package_unlock(task.parent);
+        }
+    }
+}
+
 function package_platform() {
     var platform = "browser";
     if (typeof require !== 'undefined') {
@@ -275,6 +306,8 @@ var package = {
     require: package_require,
     include: package_include,
     remote: package_remote,
+    lock: package_lock,
+    unlock: package_unlock,
     count: 0
 };
 

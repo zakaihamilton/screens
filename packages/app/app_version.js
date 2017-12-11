@@ -13,11 +13,12 @@ package.app.version = function AppVersion(me) {
     };
     me.version = {
         get: function(object, info) {
-            var task = me.package.core.job.open(info.job);
-            me.package.core.json.loadFile(function(json) {
-                info.value = json.version;
-                me.package.core.job.close(task);
-            }, "/package.json");
+            me.package.lock(info.task, task => {
+                me.package.core.json.loadFile(function(json) {
+                    info.value = json.version;
+                    me.package.unlock(task);
+                }, "/package.json");
+            });
         }
     };
 };

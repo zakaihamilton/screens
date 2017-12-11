@@ -70,20 +70,21 @@ package.core.message = function CoreMessage(me) {
                 var args = core.type.unwrap_args(core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
-                var task = core.job.open(info.job);
-                args[1] = function (response) {
-                    var args = Array.prototype.slice.call(arguments, 0);
-                    info.body = core.type.wrap_args(args);
-                    core.job.close(task);
-                };
-                try {
-                    core.message.send.apply(null, args);
-                }
-                catch(e) {
-                    me.package.core.console.log("error: " + e.message + " " + JSON.stringify(args));
-                    info.body = e.message;
-                    core.job.close(task);
-                }
+                me.package.lock(info.task, task => {
+                    args[1] = function (response) {
+                        var args = Array.prototype.slice.call(arguments, 0);
+                        info.body = core.type.wrap_args(args);
+                        me.package.unlock(task);
+                    };
+                    try {
+                        core.message.send.apply(null, args);
+                    }
+                    catch(e) {
+                        me.package.core.console.log("error: " + e.message + " " + JSON.stringify(args));
+                        info.body = e.message;
+                        me.package.unlock(task);
+                    }
+                });
             }
         }
     };

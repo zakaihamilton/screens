@@ -22,7 +22,6 @@ function startBrowser(appName, appArgs) {
             "util",
             "file",
             "path",
-            "job",
             "link"
         ],
         "storage": [

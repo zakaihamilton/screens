@@ -42,35 +42,36 @@ package.core.http = function CoreHttp(me) {
         if(body) {
             body = Buffer.concat(body).toString();
         }
-        var job = core.job.create();
-        var url = request.url;
-        var query = "";
-        var query_offset = url.lastIndexOf("?");
-        if (query_offset !== -1) {
-            url = request.url.substring(0, query_offset);
-            query = request.url.substring(query_offset + 1);
-        }
-        var info = {
-            method: request.method,
-            url: decodeURIComponent(url),
-            query: core.http.parse_query(query),
-            headers: request.headers,
-            code: 200,
-            "content-type": "application/json",
-            body: body,
-            job: job,
-            response: response,
-            custom: false
-        };
-        core.object.attach(info, me);
-        core.property.set(info, "receive");
-        core.job.complete(job, function () {
-            if(info.custom === false) {
-                response.writeHead(info.code, {
-                    "Content-Type": info["content-type"],
-                });
-                response.end(info.body);
+        me.package.lock(task => {
+            var url = request.url;
+            var query = "";
+            var query_offset = url.lastIndexOf("?");
+            if (query_offset !== -1) {
+                url = request.url.substring(0, query_offset);
+                query = request.url.substring(query_offset + 1);
             }
+            var info = {
+                method: request.method,
+                url: decodeURIComponent(url),
+                query: core.http.parse_query(query),
+                headers: request.headers,
+                code: 200,
+                "content-type": "application/json",
+                body: body,
+                task: task,
+                response: response,
+                custom: false
+            };
+            core.object.attach(info, me);
+            core.property.set(info, "receive");
+            me.package.unlock(task, () => {
+                if(info.custom === false) {
+                    response.writeHead(info.code, {
+                        "Content-Type": info["content-type"],
+                    });
+                    response.end(info.body);
+                }
+            });
         });
     };
     me.parse_query = function (query) {

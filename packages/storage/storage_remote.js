@@ -29,38 +29,40 @@ package.storage.remote = function StorageRemote(me) {
     me.getChildren = function (callback, path, recursive) {
         var entries = [];
         me.getService((service) => {
-            var job = me.package.core.job.create();
-            me.iterate(job, service, entries, path, null, recursive);
-            me.package.core.job.complete(job, () => {
-                if (callback) {
-                    callback(entries);
-                }
+            me.package.lock(task => {
+                me.iterate(task, service, entries, path, null, recursive);
+                me.package.unlock(task, () => {
+                    if (callback) {
+                        callback(entries);
+                    }
+                });
             });
         });
     };
-    me.iterate = function (job, service, entries, path, cursor, recursive) {
-        var task = me.package.core.job.open(job);
-        var method = cursor ? "filesListFolderContinue" : "filesListFolder";
-        path = me.fixPath(path);
-        service[method]({path: path})
-                .then(function (response) {
-                    entries.push(...response.entries);
-                    if (response.has_more) {
-                        me.iterate(job, service, entries, path, response.cursor, recursive);
-                    } else if (recursive) {
-                        for (let item of response.entries) {
-                            if (item[".tag"] !== "folder") {
-                                continue;
+    me.iterate = function (task, service, entries, path, cursor, recursive) {
+        me.package.lock(task, task => {
+            var method = cursor ? "filesListFolderContinue" : "filesListFolder";
+            path = me.fixPath(path);
+            service[method]({path: path})
+                    .then(function (response) {
+                        entries.push(...response.entries);
+                        if (response.has_more) {
+                            me.iterate(task, service, entries, path, response.cursor, recursive);
+                        } else if (recursive) {
+                            for (let item of response.entries) {
+                                if (item[".tag"] !== "folder") {
+                                    continue;
+                                }
+                                item.entries = [];
+                                me.iterate(task, service, item.entries, item.path_lower, null, recursive);
                             }
-                            item.entries = [];
-                            me.iterate(job, service, item.entries, item.path_lower, null, recursive);
                         }
-                    }
-                    me.package.core.job.close(task);
-                })
-                .catch(function (error) {
-                    me.package.core.job.close(task);
-                });
+                        me.package.unlock(task);
+                    })
+                    .catch(function (error) {
+                        me.package.unlock(task);
+                    });
+        });
     };
     me.createFolder = function (callback, path) {
         me.getService((service) => {

@@ -7,7 +7,7 @@ package.require("core.module", "server");
 
 package.core.module = function CoreModule(me) {
     var core = me.package.core;
-    me.init = function() {
+    me.init = function () {
         me.package.core.property.link("core.http.receive", "core.module.receive", true);
     };
     me.path_file_to_component = function (file_path) {
@@ -18,32 +18,34 @@ package.core.module = function CoreModule(me) {
         var component_path = file_path.replace(/_/g, ".").replace(".js", "");
         return component_path;
     };
-    me.loadTextFile = function (job, filePath, callback) {
-        var task = core.job.open(job);
-        me.package.core.file.readFile(function (err, data) {
-            core.console.log("serving text file: " + filePath);
-            if (err) {
-                core.console.log(JSON.stringify(err));
-                callback(null);
-            } else {
-                callback(data);
-            }
-            core.job.close(task);
-        }, filePath, 'utf8');
+    me.loadTextFile = function (task, filePath, callback) {
+        me.package.lock(task, task => {
+            me.package.core.file.readFile(function (err, data) {
+                core.console.log("serving text file: " + filePath);
+                if (err) {
+                    core.console.log(JSON.stringify(err));
+                    callback(null);
+                } else {
+                    callback(data);
+                }
+                me.package.unlock(task);
+            }, filePath, 'utf8');
+        });
     };
-    me.loadBinaryFile = function (job, filePath, callback) {
-        var task = core.job.open(job);
-        me.package.core.file.readFile(function (err, data) {
-            core.console.log("serving binary file: " + filePath);
-            if (err) {
-                core.console.log(JSON.stringify(err));
-                callback(JSON.stringify(err));
-            } else {
-                callback(data);
-            }
-            core.job.close(task);
-            core.console.log("finished serving binary file: " + filePath);
-        }, filePath);
+    me.loadBinaryFile = function (task, filePath, callback) {
+        me.package.lock(task, task => {
+            me.package.core.file.readFile(function (err, data) {
+                core.console.log("serving binary file: " + filePath);
+                if (err) {
+                    core.console.log(JSON.stringify(err));
+                    callback(JSON.stringify(err));
+                } else {
+                    callback(data);
+                }
+                me.package.unlock(task);
+                core.console.log("finished serving binary file: " + filePath);
+            }, filePath);
+        });
     };
     me.receive = {
         set: function (info) {
@@ -63,10 +65,9 @@ package.core.module = function CoreModule(me) {
                             try {
                                 var require_platform = me.package.require(component_path);
                                 var remote_platform = me.package.remote(component_path);
-                                if(require_platform) {
+                                if (require_platform) {
                                     target_platform = require_platform;
-                                }
-                                else if (remote_platform) {
+                                } else if (remote_platform) {
                                     target_platform = remote_platform;
                                 }
                             } catch (err) {
@@ -83,8 +84,8 @@ package.core.module = function CoreModule(me) {
                             file_path = "packages/remote.js";
                         }
                         info["content-type"] = "application/javascript";
-                        me.loadTextFile(info.job, file_path.replace(".js", ".json"), function (jsonData) {
-                            me.loadTextFile(info.job, file_path, function (data) {
+                        me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {
+                            me.loadTextFile(info.task, file_path, function (data) {
                                 info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
                                 info.body = data;
                                 core.property.set(info, "parse");
@@ -92,20 +93,20 @@ package.core.module = function CoreModule(me) {
                         });
                     } else if (file_path.endsWith(".css")) {
                         info["content-type"] = "text/css";
-                        me.loadTextFile(info.job, file_path, function (data) {
+                        me.loadTextFile(info.task, file_path, function (data) {
                             info.body = data;
                         });
                     } else if (file_path.endsWith(".html")) {
                         info["content-type"] = "text/html";
-                        me.loadTextFile(info.job, file_path, function (data) {
+                        me.loadTextFile(info.task, file_path, function (data) {
                             var startupArgs = info.query["args"];
-                            if(!startupArgs) {
+                            if (!startupArgs) {
                                 startupArgs = "";
                             }
-                            if(!startupArgs.startsWith("[")) {
+                            if (!startupArgs.startsWith("[")) {
                                 startupArgs = "[" + startupArgs;
                             }
-                            if(!startupArgs.endsWith("]")) {
+                            if (!startupArgs.endsWith("]")) {
                                 startupArgs = startupArgs + "]";
                             }
                             data = data.replace("__startup_app__", "'" + startupApp + "'");
@@ -114,20 +115,20 @@ package.core.module = function CoreModule(me) {
                         });
                     } else if (file_path.endsWith(".png")) {
                         info["content-type"] = "image/png";
-                        me.loadBinaryFile(info.job, file_path, function (data) {
+                        me.loadBinaryFile(info.task, file_path, function (data) {
                             info.body = data;
                         });
                     } else if (file_path.endsWith(".svg")) {
                         info["content-type"] = "image/svg+xml";
-                        me.loadBinaryFile(info.job, file_path, function (data) {
+                        me.loadBinaryFile(info.task, file_path, function (data) {
                             info.body = data;
                         });
                     } else if (file_path.endsWith(".json")) {
                         info["content-type"] = "application/json";
-                        me.loadTextFile(info.job, file_path, function (data) {
+                        me.loadTextFile(info.task, file_path, function (data) {
                             info.body = data;
                         });
-                    } else if(file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
+                    } else if (file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
                         var mimeType = file_path.endsWith(".m4a") ? "audio/mp4" : "video/mp4";
                         info.custom = true;
                         me.package.core.stream.serve(info.headers, info.response, file_path, mimeType);
