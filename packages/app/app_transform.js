@@ -106,12 +106,14 @@ package.app.transform = function AppTransform(me) {
                 object.var.layout.style.opacity = 0;
                 object.var.toggleGlossary.style.opacity = 0;
                 object.var.termPopup.style.opacity = 0;
+                object.var.filter.style.opacity = 0;
             } else {
                 object.workTimeout = setTimeout(function () {
                     me.package.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     object.var.layout.style.opacity = 1;
                     object.var.toggleGlossary.style.opacity = 1;
                     object.var.termPopup.style.opacity = "";
+                    object.var.filter.style.opacity = "";
                     me.updateScrolling(object);
                 }, 500);
             }
@@ -329,6 +331,9 @@ package.app.transform = function AppTransform(me) {
             window.contentChanged = false;
             window.pageSize = me.package.ui.layout.pageSize(window.var.layout);
             me.package.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
+            var fullscreen = me.package.core.property.get(window, "fullscreen");
+            me.package.core.property.set(object.var.filter, "ui.style.visibility", fullscreen ? "hidden" : "visible");
+            me.package.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
             me.package.core.property.set(window, "ui.work.state", true);
             var target = me.package.widget.container.content(window.var.layout);
             window.var.layout.style.opacity = 0;
@@ -498,4 +503,9 @@ package.app.transform = function AppTransform(me) {
             me.package.ui.layout.toggleSeparator(me.package.ui.layout.currentPage(window.var.layout));
         }
     };
+    me.fullscreen = {
+        set: function (object, value) {
+            
+        }
+    }
 };

@@ -96,6 +96,14 @@
     display:none;
 }
 
+.widget-window-header.fullscreen {
+    display:none;
+}
+
+.widget-window-header.menu.fullscreen {
+    display:none;
+}
+
 .widget-window-footer {
     flex:none;
     height:18px;

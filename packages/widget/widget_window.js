@@ -569,6 +569,29 @@ package.widget.window = function WidgetWindow(me) {
             me.package.core.property.set(window, "ui.class.toggle", "see-through");
         }
     };
+    me.fullscreen = {
+        get: function(object) {
+            var window = me.window(object);
+            var fullscreen = me.package.core.property.get(window, "ui.class.contains", "fullscreen");
+            return fullscreen;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            var parent = me.parent(window);
+            var fullscreen = me.package.core.property.get(window, "ui.class.contains", "fullscreen");
+            if(fullscreen) {
+                me.package.core.property.set([parent,window], "ui.property.broadcast", {
+                    "ui.class.remove": "fullscreen"
+                });
+            }
+            else {
+                me.package.core.property.set([parent,window], "ui.property.broadcast", {
+                    "ui.class.add": "fullscreen"
+                });
+            }
+            me.package.core.property.notify(window, "update");
+        }
+    };
     me.blur = {
         set: function (object) {
             var window = me.window(object);

@@ -95,7 +95,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             var content = me.package.widget.container.content(container);
-            var has_scroll = me.package.ui.scroll.has_scroll(content, scroll_type);
+            var has_scroll = (me.package.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
             if (scrollbar.has_scroll !== has_scroll) {
                 me.remove_scroll_class(container, scroll_type);
                 me.update_scroll_class(container, scroll_type);
