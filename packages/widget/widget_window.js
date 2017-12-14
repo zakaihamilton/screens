@@ -578,13 +578,16 @@ package.widget.window = function WidgetWindow(me) {
         set: function(object, value) {
             var window = me.window(object);
             var parent = me.parent(window);
+            var workspace = me.package.ui.element.workspace();
             var fullscreen = me.package.core.property.get(window, "ui.class.contains", "fullscreen");
             if(fullscreen) {
+                me.package.core.property.set(workspace, "ui.class.remove", "fullscreen");
                 me.package.core.property.set([parent,window], "ui.property.broadcast", {
                     "ui.class.remove": "fullscreen"
                 });
             }
             else {
+                me.package.core.property.set(workspace, "ui.class.add", "fullscreen");
                 me.package.core.property.set([parent,window], "ui.property.broadcast", {
                     "ui.class.add": "fullscreen"
                 });
