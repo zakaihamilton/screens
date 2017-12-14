@@ -195,34 +195,6 @@
     box-shadow: 5px 5px 5px lightgray;
 }
 
-.app-transform-toggleTerms {
-    position:absolute;
-    bottom:10px;
-    color:black;
-    padding:10px;
-    cursor:default;
-    user-select:none;
-    border:1px solid transparent;
-}
-
-.app-transform-toggleTerms.english {
-    left:0px;
-}
-
-.app-transform-toggleTerms.hebrew {
-    right:0px;
-}
-
-.app-transform-toggleTerms:hover{
-    border:1px solid black;
-}
-
-.app-transform-toggleTerms:hover:active {
-    background:black;
-    color:white;
-    border:1px solid white;
-}
-
 .app-transform-toggleGlossary {
     position:absolute;
     bottom:10px;

@@ -184,6 +184,13 @@ package.widget.menu.item = function WidgetMenuItem(me) {
                         me.package.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
+                me.handleValue(object, options, "header", function (value) {
+                    if (value) {
+                        me.package.core.property.set(object, "ui.class.add", "header");
+                    } else {
+                        me.package.core.property.set(object, "ui.class.remove", "header");
+                    }
+                });
             }
         }
     };

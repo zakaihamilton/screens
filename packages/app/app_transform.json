@@ -53,6 +53,24 @@
                         "state": "select",
                         "separator": true
                     }
+                ],
+                ["Language", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                ["Auto", "app.transform.language", {
+                        "state": "select"
+                    }
+                ],
+                ["English", "app.transform.language", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["Hebrew", "app.transform.language", {
+                        "state": "select"
+                    }
                 ]
             ]
         ],
@@ -88,26 +106,12 @@
                         "state": "select",
                         "separator": true
                     }
-                ]
-            ]
-        ],
-        ["Edit", [
-                ["Copy", "ui.exec.copy"],
-                ["Bold", "ui.exec.bold", {
-                        "separator": true
+                ],
+                ["Font Size", null, {
+                        "enabled": false,
+                        "header": true
                     }
                 ],
-                ["Italic", "ui.exec.italic"],
-                ["Underline", "ui.exec.underline"],
-                ["Strikethrough", "ui.exec.strikeThrough"],
-                ["Separator", "app.transform.toggleSeparator", {
-                        "state": "select",
-                        "separator": true
-                    }
-                ]
-            ]
-        ],
-        ["Font", [
                 ["12px", "app.transform.fontSize", {
                         "state": "select"
                     }
@@ -154,24 +158,31 @@
                 ]
             ]
         ],
-        ["Language", [
-                ["Auto", "app.transform.language", {
-                        "state": "select"
-                    }
-                ],
-                ["English", "app.transform.language", {
-                        "state": "select",
+        ["Edit", [
+                ["Copy", "ui.exec.copy"],
+                ["Bold", "ui.exec.bold", {
                         "separator": true
                     }
                 ],
-                ["Hebrew", "app.transform.language", {
-                        "state": "select"
+                ["Italic", "ui.exec.italic"],
+                ["Underline", "ui.exec.underline"],
+                ["Strikethrough", "ui.exec.strikeThrough"],
+                ["Separator", "app.transform.toggleSeparator", {
+                        "state": "select",
+                        "separator": true
                     }
                 ]
             ]
         ],
         ["Document", [
-                ["Cascade", "ui.arrange.cascade"],
+                ["Table of Phases", "app.transform.toggleTerms", {
+                        "state": "select",
+                        "enabled": "app.transform.termsAvailable"
+                    }
+                ],
+                ["Cascade", "ui.arrange.cascade", {
+                        "separator": true
+                    }],
                 ["Tile Horizontally", "ui.arrange.tileHorizontally"],
                 ["Tile Vertically", "ui.arrange.tileVertically"],
                 "widget.window.childMenuList"
@@ -218,7 +229,7 @@
                     "ui.attribute.noBroadcast": true
                 },
                 {
-                    "ui.element.component":"widget.spinner",
+                    "ui.element.component": "widget.spinner",
                     "ui.basic.var": "spinner"
                 },
                 {
@@ -239,13 +250,6 @@
                     "ui.property.after": {
                         "ui.basic.elementId": "@ui.cachekey.app-transform-filter-"
                     }
-                },
-                {
-                    "ui.element.component": "widget.icon",
-                    "ui.class.add": "app.transform.toggleTerms",
-                    "ui.basic.src": "/packages/res/icons/terms.png",
-                    "ui.basic.var": "toggleTerms",
-                    "ui.touch.click": "app.transform.toggleTerms"
                 },
                 {
                     "ui.element.component": "widget.icon",

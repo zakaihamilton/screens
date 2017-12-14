@@ -87,3 +87,15 @@
     border-top: 3px solid white;
     box-shadow: 0px -1px 0px 0px black;
 }
+
+.widget-menu-vertical span.header {
+    color:black;
+    font-weight: bold;
+    margin-top: 3px;
+    box-shadow: 0px -1px 0px 0px black;
+    background: linear-gradient(to right, white, lightgray);
+}
+
+.widget-menu-vertical span.header:hover {
+    color:black;
+}

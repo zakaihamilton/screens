@@ -98,7 +98,8 @@
         "bePanim":"be Panim",
         "soul (Nefesh)":"soul (Nefesh2)",
         "soul (Neshama)":"soul (Neshama2)",
-        "“soul” (Neshama)":" “soul” (Neshama2)"
+        "“soul” (Neshama)":" “soul” (Neshama2)",
+        "Bait":"Bayit"
     },
     "pre": [
         {
@@ -1592,7 +1593,7 @@
                 "heading": "House",
                 "phase": "one"
             },
-            "term": "Bait"
+            "term": "Bayit"
         },
         {
             "translation": "Yard",
@@ -3671,7 +3672,7 @@
         },
         {
             "translation": "Lock",
-            "term": "Man’ula"
+            "term": "Man ’ ula"
         },
         {
             "translation": "Lock",
@@ -5017,6 +5018,28 @@
             "term":"God forbid",
             "source":"Has VeShalom",
             "translation":"God forbid"
+        },
+        {
+            "term":"Resheet",
+            "translation":"First"
+        },
+        {
+            "term":"Eden",
+            "style":{"heading":"Location"}
+        },
+        {
+            "term":"great ZON",
+            "source":"Great Zeir Anpin ve Nukva",
+            "translation":"Great Small Face and Female",
+            "explanation":"Intention",
+            "style":{"heading":"Face","phase":"three"}
+        },
+        {
+            "term":"small ZON",
+            "source":"Small Zeir Anpin ve Nukva",
+            "translation":"Small Small Face and Female",
+            "explanation":"Desire",
+            "style":{"heading":"Face","phase":"four"}
         }
     ],
     "style": {

@@ -97,21 +97,19 @@ package.app.transform = function AppTransform(me) {
     };
     me.work = {
         set: function (object, value) {
-            if(me.workTimeout) {
-                clearTimeout(me.workTimeout);
-                me.workTimeout = null;
+            if(object.workTimeout) {
+                clearTimeout(object.workTimeout);
+                object.workTimeout = null;
             }
             if (value) {
                 me.package.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
                 object.var.layout.style.opacity = 0;
-                object.var.toggleTerms.style.opacity = 0;
                 object.var.toggleGlossary.style.opacity = 0;
                 object.var.termPopup.style.opacity = 0;
             } else {
-                me.workTimeout = setTimeout(function () {
+                object.workTimeout = setTimeout(function () {
                     me.package.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     object.var.layout.style.opacity = 1;
-                    object.var.toggleTerms.style.opacity = 1;
                     object.var.toggleGlossary.style.opacity = 1;
                     object.var.termPopup.style.opacity = "";
                     me.updateScrolling(object);
@@ -169,7 +167,7 @@ package.app.transform = function AppTransform(me) {
         });
     };
     me.updateTermTable = function (window, terms, data, language) {
-        var dataExists = false;
+        window.dataExists = false;
         var table = {};
         for (var termName in terms) {
             var term = terms[termName];
@@ -238,7 +236,7 @@ package.app.transform = function AppTransform(me) {
                         }
                         return itemProperties;
                     });
-                    dataExists = true;
+                    window.dataExists = true;
                 }
                 properties["ui.class.add"] = "kab.term.phase." + phase;
                 list.push(properties);
@@ -246,12 +244,10 @@ package.app.transform = function AppTransform(me) {
             data.push(list);
         }
         me.package.core.property.set(window.var.termTable, "dataByRows", data);
-        me.package.core.property.set(window.var.toggleTerms, "ui.style.display", dataExists ? "block": "none");
     };
     me.transform = {
         set: function (object) {
             var window = me.package.widget.window.mainWindow(object);
-            me.package.core.property.set(window.var.toggleTerms, "ui.style.display", "none");
             me.package.ui.layout.clear(window.var.layout);
             var text = me.package.core.property.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
@@ -279,7 +275,6 @@ package.app.transform = function AppTransform(me) {
                     me.package.core.property.set(window.var.layout, "ui.class.remove", window.prevLanguage);
                     me.package.core.property.set(window.var.filter, "ui.class.remove", window.prevLanguage);
                     me.package.core.property.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
-                    me.package.core.property.set(window.var.toggleTerms, "ui.class.remove", window.prevLanguage);
                     me.package.core.property.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
                 }
                 me.package.core.property.set(window.var.input, "ui.class.add", language);
@@ -287,9 +282,7 @@ package.app.transform = function AppTransform(me) {
                 me.package.core.property.set(window.var.filter, "ui.class.add", language);
                 me.package.core.property.set(window.var.termPopup, "title", data.termTableTitle);
                 me.package.core.property.set(window.var.termTable, "ui.class.add", language);
-                me.package.core.property.set(window.var.toggleTerms, "ui.class.add", language);
                 me.package.core.property.set(window.var.toggleGlossary, "ui.class.add", language);
-                me.package.core.property.set(window.var.toggleTerms, "ui.basic.text", data.termTableTitle);
                 me.package.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                 window.prevLanguage = language;
                 if (window.options.showHtml) {
@@ -393,7 +386,17 @@ package.app.transform = function AppTransform(me) {
             me.package.core.property.set(window, "app.transform.reflow");
         }
     };
+    me.termsAvailable = {
+        get: function(object) {
+            var window = me.package.widget.window.mainWindow(object);
+            return window.dataExists;
+        }
+    };
     me.toggleTerms = {
+        get: function(object) {
+            var window = me.package.widget.window.mainWindow(object);
+            return me.package.core.property.get(window.var.termPopup, "minimize");
+        },
         set: function (object) {
             var window = me.package.widget.window.mainWindow(object);
             me.package.core.property.set(window.var.termPopup, "show", !me.package.core.property.get(window.var.termPopup, "minimize"));
