@@ -142,7 +142,7 @@ package.ui.layout = function UILayout(me) {
                     if(target.page) {
                         target.page.var.separator.style.display = "block";
                     }
-                    me.completeReflow(callback, target, options);
+                    me.completeReflow(callback, target, options, false);
                     me.updatePages(target);
                     break;
                 }
@@ -220,12 +220,12 @@ package.ui.layout = function UILayout(me) {
             }
         }, 0);
     };
-    me.completeReflow = function(callback, target, options) {
+    me.completeReflow = function(callback, target, options, scrollToWidget=true) {
         var layoutContent = me.content(target);
         if (!target.notified && callback) {
             callback(true);
             target.notified = true;
-            if(options.scrollWidget) {
+            if(options.scrollWidget && scrollToWidget) {
                 me.scrollToWidget(options.scrollWidget, layoutContent);
             }
             me.package.core.property.notify(target, "update");
