@@ -577,22 +577,32 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function(object, value) {
             var window = me.window(object);
-            var parent = me.parent(window);
-            var workspace = me.package.ui.element.workspace();
             var fullscreen = me.package.core.property.get(window, "ui.class.contains", "fullscreen");
+            var list = [];
+            while(window) {
+                list.push(window);
+                var maximized = me.package.core.property.get(window, "ui.class.contains", "maximize");
+                if(!maximized) {
+                    break;
+                }
+                window = me.parent(window);
+            }
+            if(!window) {
+                var workspace = me.package.ui.element.workspace();
+                list.push(workspace);
+            }
             if(fullscreen) {
-                me.package.core.property.set(workspace, "ui.class.remove", "fullscreen");
-                me.package.core.property.set([parent,window], "ui.property.broadcast", {
+                me.package.core.property.set(list, "ui.property.broadcast", {
                     "ui.class.remove": "fullscreen"
                 });
+                me.package.core.property.notify(list, "update");
             }
             else {
-                me.package.core.property.set(workspace, "ui.class.add", "fullscreen");
-                me.package.core.property.set([parent,window], "ui.property.broadcast", {
+                me.package.core.property.set(list, "ui.property.broadcast", {
                     "ui.class.add": "fullscreen"
                 });
+                me.package.core.property.notify(list, "update");
             }
-            me.package.core.property.notify(window, "update");
         }
     };
     me.blur = {
