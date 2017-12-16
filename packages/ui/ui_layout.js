@@ -142,11 +142,8 @@ package.ui.layout = function UILayout(me) {
                     if(target.page) {
                         target.page.var.separator.style.display = "block";
                     }
-                    if (!target.notified && callback) {
-                        callback(true);
-                        target.notified = true;
-                    }
-                    me.package.core.property.notify(target, "update");
+                    me.completeReflow(callback, target, options);
+                    me.updatePages(target);
                     break;
                 }
                 if(options.scrollWidget) {
@@ -229,8 +226,9 @@ package.ui.layout = function UILayout(me) {
             callback(true);
             target.notified = true;
             if(options.scrollWidget) {
-                me.package.ui.layout.scrollToWidget(options.scrollWidget, layoutContent);
+                me.scrollToWidget(options.scrollWidget, layoutContent);
             }
+            me.package.core.property.notify(target, "update");
         }
     };
     me.widgetByOrder = function (page, order) {
@@ -399,7 +397,7 @@ package.ui.layout = function UILayout(me) {
         let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
         return  (isTotal || isPartial);
     };
-    me.scrolled = function(target) {
+    me.updatePages = function(target) {
         target = me.content(target);
         var child = target.firstChild;
         while(child) {
@@ -407,10 +405,14 @@ package.ui.layout = function UILayout(me) {
                 var pageInView = me.pageInView(child);
                 if(pageInView !== child.inView) {
                     if(pageInView) {
+                        console.log("showing page: " + me.package.core.property.get(child, "ui.attribute.pageNumber"));
                         child.var.content.style.display = "";
+                        child.style.visibility = "visible";
                     }
                     else {
+                        console.log("hiding page: " + me.package.core.property.get(child, "ui.attribute.pageNumber"));
                         child.var.content.style.display = "none";
+                        child.style.visibility = "hidden";
                     }
                     child.inView = pageInView;
                 }

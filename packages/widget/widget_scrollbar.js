@@ -119,10 +119,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             if (has_scroll) {
                 me.package.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
             }
-            var changed = me.package.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
-            if (changed) {
+            me.package.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
+            var current_pos = me.package.ui.scroll.current_pos(content, scroll_type);
+            if (current_pos !== scrollbar.prev_pos) {
+                scrollbar.prev_pos = current_pos;
                 var scrolledInfo = {};
-                scrolledInfo[scroll_type] = me.package.ui.scroll.current_pos(content, scroll_type);
+                scrolledInfo[scroll_type] = current_pos;
                 me.package.core.property.set(container, "scrolled", scrolledInfo);
             }
         }

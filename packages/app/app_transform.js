@@ -370,7 +370,7 @@ package.app.transform = function AppTransform(me) {
             if (me.package.core.property.get(window, "ui.work.state") || me.package.core.property.get(window, "conceal")) {
                 return;
             }
-            me.package.ui.layout.scrolled(window.var.layout);
+            me.package.ui.layout.updatePages(window.var.layout);
             if (object.scrolledTimer) {
                 clearTimeout(object.scrolledTimer);
             }

@@ -163,7 +163,7 @@
 
 .app-transform-filter {
     position: absolute;
-    width:10%;
+    width:20%;
     margin-top:5px;
     border: 1px solid black;
     transition: width 0.4s ease-in-out;
