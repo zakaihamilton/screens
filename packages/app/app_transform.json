@@ -227,7 +227,8 @@
                     "widget.scrollbar.horizontal.alwaysHide": true,
                     "core.link.scrolled": "app.transform.scrolled",
                     "ui.attribute.noBroadcast": true,
-                    "ui.touch.dblclick":"widget.window.fullscreen"
+                    "ui.touch.dblclick":"widget.window.fullscreen",
+                    "ui.scroll.thumb":"vertical"
                 },
                 {
                     "ui.element.component": "widget.spinner",

@@ -3,13 +3,35 @@
  @component UITouch
  */
 
-package.ui.touch = function UIEvent(me) {
-    me.click_delay = 200;
-    me.click_repeat_delay = 250;
-    me.click_repeat_interval = 50;
+package.ui.touch = function UITouch(me) {
     me.init = function () {
+        me.click_delay = 200;
+        me.click_repeat_delay = 250;
+        me.click_repeat_interval = 50;
         me.send_event = me.package.ui.event.send_event;
         me.register = me.package.ui.event.register;
+        if (window.PointerEvent) {
+            console.log("using pointer events");
+            me.eventNames = {
+                down:"pointerdown",
+                enter:"pointerenter",
+                leave:"pointerleave",
+                move:"pointermove",
+                out:"pointerout",
+                over:"pointerover",
+                up:"pointerup"};
+        }
+        else {
+            console.log("no pointer events support");
+            me.eventNames = {
+                down:"mousedown",
+                enter:"mouseenter",
+                leave:"mouseleave",
+                move:"mousemove",
+                out:"mouseout",
+                over:"mouseover",
+                up:"mouseup"};
+        }
     };
     me.handle = {
         click: function (object, method, event) {
@@ -69,17 +91,17 @@ package.ui.touch = function UIEvent(me) {
     };
     me.move = {
         set: function (object, value) {
-            me.register(me.handle, object, "mousemove", value, "mousemove", window);
+            me.register(me.handle, object, me.eventNames["move"], value, me.eventNames["move"], window);
         }
     };
     me.over = {
         set: function (object, value) {
-            me.register(me.handle, object, "mouseover", value);
+            me.register(me.handle, object, me.eventNames["over"], value);
         }
     };
     me.enter = {
         set: function (object, value) {
-            me.register(me.handle, object, "mouseenter", value);
+            me.register(me.handle, object, me.eventNames["enter"], value);
         }
     };
     me.click = {
@@ -94,20 +116,20 @@ package.ui.touch = function UIEvent(me) {
     };
     me.down = {
         set: function (object, value) {
-            me.register(me.handle, object, "mousedown", value);
+            me.register(me.handle, object, me.eventNames["down"], value);
         }
     };
     me.up = {
         set: function (object, value) {
-            me.register(me.handle, object, "mouseup", value, "mouseup", window);
+            me.register(me.handle, object, me.eventNames["up"], value);
         }
     };
     me.repeat = {
         set: function (object, value) {
-            me.register(me.handle, object, "mousedown", value, "repeatdown");
-            me.register(me.handle, object, "mouseover", value, "repeatover");
-            me.register(me.handle, object, "mouseleave", value, "repeatleave");
-            me.register(me.handle, object, "mouseup", value, "repeatup", window);
+            me.register(me.handle, object, me.eventNames["down"], value, "repeatdown");
+            me.register(me.handle, object, me.eventNames["over"], value, "repeatover");
+            me.register(me.handle, object, me.eventNames["leave"], value, "repeatleave");
+            me.register(me.handle, object, me.eventNames["up"], value, "repeatup", window);
         }
     };
     me.default = {
