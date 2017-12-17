@@ -68,7 +68,7 @@ package.app.transform = function AppTransform(me) {
             me.scrollPos = me.package.ui.options.choiceSet(me, "scrollPos");
             me.swipe = me.package.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
                 var window = me.package.widget.window.mainWindow(object);
-                me.package.core.property.set(window.var.layout, "ui.scroll.thumb", value ? "vertical/5" : "");
+                me.package.core.property.set(window.var.layout, "ui.scroll.thumb", value ? "vertical/10" : "");
             });
             me.package.ui.class.useStylesheet("kab.term");
         }
@@ -81,7 +81,7 @@ package.app.transform = function AppTransform(me) {
         me.package.core.property.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
         me.package.core.property.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.package.core.property.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
-        me.package.core.property.set(window.var.layout, "ui.scroll.thumb", window.options.swipe ? "vertical/5" : "");
+        me.package.core.property.set(window.var.layout, "ui.scroll.thumb", window.options.swipe ? "vertical/10" : "");
         me.package.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
             me.package.core.property.notify(window, "update");

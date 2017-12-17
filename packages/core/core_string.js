@@ -65,4 +65,24 @@ package.core.string = function CoreString(me) {
             return source.includes(target);
         }
     };
+    me.prefix = function(string, separator) {
+        var prefix = string;
+        if(string) {
+            var tokens = string.split(separator);
+            if(tokens && tokens.length > 1) {
+                prefix = tokens[0];
+            }
+        }
+        return prefix;
+    };
+    me.suffix = function(string, separator) {
+        var suffix = "";
+        if(string) {
+            var tokens = string.split(separator);
+            if(tokens && tokens.length > 1) {
+                suffix = tokens[1];
+            }
+        }
+        return suffix;
+    };
 };
