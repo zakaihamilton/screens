@@ -188,21 +188,27 @@ package.ui.scroll = function UIScroll(me) {
     me.thumb = {
         set: function (object, value) {
             var container = me.package.ui.node.container(object, me.package.widget.container.id);
-            var scroll_type = value;
+            var scroll_type = me.package.core.string.prefix(value, "/");
             var scrollbar = null;
             var invert = false;
             if(!value) {
                 me.package.core.property.set(object, "ui.touch.down", null);
                 return;
             }
-            if(value !== "vertical" && value !== "horizontal") {
+            var division=1;
+            if(value.startsWith("vertical") || value.startsWith("horizontal")) {
+                scrollbar = container.var[scroll_type];
+                invert = true;
+                division = me.package.core.string.suffix(value, "/");
+                if(!division) {
+                    division = 1;
+                }
+                division = parseInt(division);
+            }
+            else {
                 var method = me.package.ui.element.to_full_name(object, value);
                 scroll_type = me.package.core.property.get(object, method);
                 scrollbar = object.parentNode.parentNode;
-            }
-            else {
-                scrollbar = container.var[scroll_type];
-                invert = true;
             }
             var thumb = scrollbar.var.thumb;
             me.package.core.property.set(object, "ui.touch.down", function(object, event) {
@@ -235,7 +241,7 @@ package.ui.scroll = function UIScroll(me) {
                         if(invert) {
                             var distance = y_pos - info.origTop;
                             console.log("scrolling info top:" + info.top + " y_pos:" + y_pos + " origTop: " + info.origTop + " distance: " + distance);
-                            y_pos = info.origTop - distance;
+                            y_pos = info.origTop - distance / division;
                             console.log("scrolling info result: " + y_pos);
                         }
                         var thumb_pos = (y_pos - info.top) - track_region.top;
