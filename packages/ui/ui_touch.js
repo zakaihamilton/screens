@@ -121,7 +121,12 @@ package.ui.touch = function UITouch(me) {
     };
     me.up = {
         set: function (object, value) {
-            me.register(me.handle, object, me.eventNames["up"], value);
+            me.register(me.handle, object, me.eventNames["up"], value, me.eventNames["up"], window);
+        }
+    };
+    me.contextmenu = {
+        set: function (object, value) {
+            me.register(me.handle, object, "contextmenu", value, "contextmenu", window);
         }
     };
     me.repeat = {

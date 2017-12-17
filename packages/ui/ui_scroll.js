@@ -258,14 +258,20 @@ package.ui.scroll = function UIScroll(me) {
                     me.shift(me.package.widget.container.content(container), scroll_type, percent);
                     me.package.core.property.set(container, "update");
                     event.handled = true;
+                    event.preventDefault();
                 };
                 var release_method = function (object, event) {
                     me.package.core.property.set(object, "ui.touch.move", null);
                     me.package.core.property.set(object, "ui.touch.up", null);
                     me.package.core.property.set(scrollbar, "snap");
                 };
+                var contextmenu_method = function(object, event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                };
                 me.package.core.property.set(object, "ui.touch.move", scroll_method);
                 me.package.core.property.set(object, "ui.touch.up", release_method);
+                me.package.core.property.set(object, "ui.touch.contextmenu", contextmenu_method);
                 event.preventDefault();
             });
         }
