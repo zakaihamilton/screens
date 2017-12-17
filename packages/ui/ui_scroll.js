@@ -202,10 +202,6 @@ package.ui.scroll = function UIScroll(me) {
             }
             var thumb = scrollbar.var.thumb;
             me.package.core.property.set(object, "ui.touch.down", function(object, event) {
-                if(event.handled) {
-                    return;
-                }
-                event.handled = true;
                 if (object.getAttribute('disabled')) {
                     event.preventDefault();
                     return;
@@ -213,6 +209,10 @@ package.ui.scroll = function UIScroll(me) {
                 if(invert && event.pointerType !== "touch") {
                     return;
                 }
+                if(event.handled) {
+                    return;
+                }
+                event.handled = true;
                 var thumb_region = me.package.ui.rect.absolute_region(thumb);
                 var info = {
                     target: thumb,
