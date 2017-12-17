@@ -86,6 +86,9 @@
                         "enabled": "app.transform.pages"
                     }
                 ],
+                ["Swipe", "app.transform.swipe", {
+                        "state":"select"
+                }],
                 ["Pages", "app.transform.pages", {
                         "state": "select",
                         "separator": true
@@ -227,8 +230,7 @@
                     "widget.scrollbar.horizontal.alwaysHide": true,
                     "core.link.scrolled": "app.transform.scrolled",
                     "ui.attribute.noBroadcast": true,
-                    "ui.touch.dblclick":"widget.window.fullscreen",
-                    "ui.scroll.thumb":"vertical"
+                    "ui.touch.dblclick":"widget.window.fullscreen"
                 },
                 {
                     "ui.element.component": "widget.spinner",

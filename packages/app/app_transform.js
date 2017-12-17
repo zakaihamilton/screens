@@ -32,7 +32,8 @@ package.app.transform = function AppTransform(me) {
                 fontSize: "22px",
                 scrollPos: 0,
                 phaseNumbers: true,
-                diagrams: true
+                diagrams: true,
+                swipe: me.package.core.device.isMobile()
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -65,6 +66,10 @@ package.app.transform = function AppTransform(me) {
             me.headings = me.package.ui.options.toggleSet(me, "headings", me.transform.set);
             me.diagrams = me.package.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.scrollPos = me.package.ui.options.choiceSet(me, "scrollPos");
+            me.swipe = me.package.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
+                var window = me.package.widget.window.mainWindow(object);
+                me.package.core.property.set(window.var.layout, "ui.scroll.thumb", value ? "vertical" : "");
+            });
             me.package.ui.class.useStylesheet("kab.term");
         }
     };
@@ -76,6 +81,7 @@ package.app.transform = function AppTransform(me) {
         me.package.core.property.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
         me.package.core.property.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
         me.package.core.property.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
+        me.package.core.property.set(window.var.layout, "ui.scroll.thumb", window.options.swipe ? "vertical" : "");
         me.package.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
             me.package.core.property.notify(window, "update");
@@ -503,9 +509,4 @@ package.app.transform = function AppTransform(me) {
             me.package.ui.layout.toggleSeparator(me.package.ui.layout.currentPage(window.var.layout));
         }
     };
-    me.fullscreen = {
-        set: function (object, value) {
-            
-        }
-    }
 };

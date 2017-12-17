@@ -191,6 +191,10 @@ package.ui.scroll = function UIScroll(me) {
             var scroll_type = value;
             var scrollbar = null;
             var invert = false;
+            if(!value) {
+                me.package.core.property.set(object, "ui.touch.down", null);
+                return;
+            }
             if(value !== "vertical" && value !== "horizontal") {
                 var method = me.package.ui.element.to_full_name(object, value);
                 scroll_type = me.package.core.property.get(object, method);
@@ -204,9 +208,6 @@ package.ui.scroll = function UIScroll(me) {
             me.package.core.property.set(object, "ui.touch.down", function(object, event) {
                 if (object.getAttribute('disabled')) {
                     event.preventDefault();
-                    return;
-                }
-                if(invert && event.pointerType !== "touch") {
                     return;
                 }
                 if(event.handled) {
