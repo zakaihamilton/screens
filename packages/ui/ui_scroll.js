@@ -202,6 +202,10 @@ package.ui.scroll = function UIScroll(me) {
             }
             var thumb = scrollbar.var.thumb;
             me.package.core.property.set(object, "ui.touch.down", function(object, event) {
+                if(event.handled) {
+                    return;
+                }
+                event.handled = true;
                 if (object.getAttribute('disabled')) {
                     event.preventDefault();
                     return;
@@ -220,9 +224,6 @@ package.ui.scroll = function UIScroll(me) {
                     height: thumb.offsetHeight
                 };
                 var scroll_method = function (object, event) {
-                    if(event.handled) {
-                        return;
-                    }
                     var track_region = me.package.ui.rect.absolute_region(scrollbar.var.track);
                     var thumb_region = me.package.ui.rect.absolute_region(thumb);
                     var length = me.length(scroll_type, track_region, thumb_region);
@@ -257,21 +258,22 @@ package.ui.scroll = function UIScroll(me) {
                     var percent = me.pos_to_percent(length, thumb_pos);
                     me.shift(me.package.widget.container.content(container), scroll_type, percent);
                     me.package.core.property.set(container, "update");
-                    event.handled = true;
-                    event.preventDefault();
                 };
                 var release_method = function (object, event) {
                     me.package.core.property.set(object, "ui.touch.move", null);
                     me.package.core.property.set(object, "ui.touch.up", null);
+                    me.package.core.property.set(object, "ui.touch.contextmenu", null);
+                    me.package.core.property.set(object, "ui.touch.cancel", null);
                     me.package.core.property.set(scrollbar, "snap");
                 };
-                var contextmenu_method = function(object, event) {
+                var block_method = function(object, event) {
                     event.preventDefault();
                     event.stopPropagation();
                 };
                 me.package.core.property.set(object, "ui.touch.move", scroll_method);
                 me.package.core.property.set(object, "ui.touch.up", release_method);
-                me.package.core.property.set(object, "ui.touch.contextmenu", contextmenu_method);
+                me.package.core.property.set(object, "ui.touch.contextmenu", block_method);
+                me.package.core.property.set(object, "ui.touch.cancel", block_method);
                 event.preventDefault();
             });
         }

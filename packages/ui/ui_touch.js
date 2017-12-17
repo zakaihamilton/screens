@@ -19,7 +19,9 @@ package.ui.touch = function UITouch(me) {
                 move:"pointermove",
                 out:"pointerout",
                 over:"pointerover",
-                up:"pointerup"};
+                up:"pointerup",
+                cancel:"pointercancel"
+            };
         }
         else {
             console.log("no pointer events support");
@@ -30,7 +32,9 @@ package.ui.touch = function UITouch(me) {
                 move:"mousemove",
                 out:"mouseout",
                 over:"mouseover",
-                up:"mouseup"};
+                up:"mouseup",
+                cancel:"mousecancel"
+            };
         }
     };
     me.handle = {
@@ -127,6 +131,11 @@ package.ui.touch = function UITouch(me) {
     me.contextmenu = {
         set: function (object, value) {
             me.register(me.handle, object, "contextmenu", value, "contextmenu", window);
+        }
+    };
+    me.cancel = {
+        set: function (object, value) {
+            me.register(me.handle, object, me.eventNames["cancel"], value, me.eventNames["cancel"], window);
         }
     };
     me.repeat = {
