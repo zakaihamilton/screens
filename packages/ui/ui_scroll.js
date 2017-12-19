@@ -316,6 +316,9 @@ package.ui.scroll = function UIScroll(me) {
                     if (scroll_type === "vertical") {
                         var y_pos = event.clientY;
                         var distance = y_pos - info.origTop;
+                        if(Math.abs(distance) < division) {
+                            return;
+                        }
                         console.log("scrolling info top:" + info.top + " y_pos:" + y_pos + " origTop: " + info.origTop + " distance: " + distance);
                         y_pos = info.origTop - distance / division;
                         console.log("scrolling info result: " + y_pos);
