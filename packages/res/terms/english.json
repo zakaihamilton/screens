@@ -5016,8 +5016,11 @@
         },
         {
             "term":"God forbid",
-            "source":"Has VeShalom",
-            "translation":"God forbid"
+            "fixed":true
+        },
+        {
+            "term":"thank God",
+            "fixed":true
         },
         {
             "term":"Resheet",

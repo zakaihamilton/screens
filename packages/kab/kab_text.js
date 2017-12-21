@@ -244,6 +244,9 @@ package.kab.text = function KabText(me) {
             me.package.kab.search.setTerm(session.options, session.json.style, instance.item);
             modify(session, instance, "", instance.source, null, "", false, false);
         }
+        else {
+            modify(session, instance, "", instance.source, null, "", false, false);
+        }
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
         if(!translation) {
