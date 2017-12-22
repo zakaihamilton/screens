@@ -8,7 +8,7 @@ package.ui.theme = function UITheme(me) {
     me.currentTheme = null;
     me.init = function() {
         me.updateList();
-        var current_theme = me.package.core.property.get(me.package.storage.cache.local, "ui-theme-current");
+        var current_theme = me.core.property.get(me.storage.cache.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
@@ -24,7 +24,7 @@ package.ui.theme = function UITheme(me) {
     me.updateList = function() {
         me.themes = [];
         var path = "packages/res/themes";
-        me.package.core.file.readDir(function(err, items) {
+        me.core.file.readDir(function(err, items) {
             if(items) {
                 for(let item of items) {
                     var period = item.lastIndexOf(".");
@@ -73,16 +73,16 @@ package.ui.theme = function UITheme(me) {
                 }
             });
             me.currentTheme = null;
-            me.package.core.property.set(me.package.storage.cache.local, "ui-theme-current", "none");
+            me.core.property.set(me.storage.cache.local, "ui-theme-current", "none");
         }
     };
     me.load = function(callback, name) {
         var path = "/packages/res/themes/" + name.toLowerCase();
-        me.package.core.json.loadFile(function(data) {
+        me.core.json.loadFile(function(data) {
             if(data) {
                 me.unload();
                 me.currentTheme = data;
-                me.currentTheme.link = me.package.ui.class.loadStylesheet(path + ".css");
+                me.currentTheme.link = me.ui.class.loadStylesheet(path + ".css");
                 me.applyTheme(function(element, classItem) {
                     var mapping = me.findMapping(classItem);
                     if(!mapping) {
@@ -95,7 +95,7 @@ package.ui.theme = function UITheme(me) {
                         }
                     }
                 });
-                me.package.core.property.set(me.package.storage.cache.local, "ui-theme-current", name);
+                me.core.property.set(me.storage.cache.local, "ui-theme-current", name);
             }
             if(callback) {
                 callback(data);

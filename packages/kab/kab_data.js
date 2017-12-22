@@ -9,7 +9,7 @@ package.kab.data = function KabData(me) {
     };
     me.reload = function(callback, language) {
         language = language.toLowerCase();
-        me.package.core.json.loadFile(function (json) {
+        me.core.json.loadFile(function (json) {
             if (json) {
                 me.files[language] = json;
                 if(json) {

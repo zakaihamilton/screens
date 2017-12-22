@@ -31,7 +31,7 @@ package.ui.basic = function UIBasic(me) {
             var parent = object.parentNode;
             if(parent) {
                 if(!parent.ref) {
-                    parent.ref = me.package.core.ref.gen();
+                    parent.ref = me.core.ref.gen();
                 }
                 ref = parent.ref;
             }
@@ -99,7 +99,7 @@ package.ui.basic = function UIBasic(me) {
     me.elements = {
         set: function(object, value) {
             if (value) {
-                me.package.ui.element.create(value, object, object.context);
+                me.ui.element.create(value, object, object.context);
             }
         }
     };
@@ -156,7 +156,7 @@ package.ui.basic = function UIBasic(me) {
             if(!value) {
                 value = object;
             }
-            object.window = me.package.widget.window.window(value);
+            object.window = me.widget.window.window(value);
         }
     };
     me.target = {
@@ -177,8 +177,8 @@ package.ui.basic = function UIBasic(me) {
     };
     me.save = {
         set: function(object) {
-            me.package.core.property.set(object, "storage.cache.store", me.package.core.property.get(object, "ui.basic.text"));
-            me.package.core.property.notify(me.package.ui.node.container(object, me.package.widget.container.id), "update");
+            me.core.property.set(object, "storage.cache.store", me.core.property.get(object, "ui.basic.text"));
+            me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };
     me.metadata = {

@@ -70,7 +70,7 @@ package.kab.style = function KabStyle(me) {
             if (tooltip) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
-            var diagram = me.package.kab.diagram.matchingDiagram(session, instance.target);
+            var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
             if(diagram && session.options.diagramCallback) {
                 html += " onload=\"" + session.options.diagramCallback + "(this," + diagram + ")\"";
             }

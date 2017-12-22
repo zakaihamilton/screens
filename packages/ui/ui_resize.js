@@ -22,20 +22,20 @@ package.ui.resize = function UIResize(me) {
     };
     me.extend = {
         set: function (object) {
-            me.package.core.property.set(object, "ui.touch.down", "ui.resize.down");
+            me.core.property.set(object, "ui.touch.down", "ui.resize.down");
         }
     };
     me.down = {
         set: function (object, event) {
             var target = object.resize_target;
             if (!target) {
-                target = me.package.widget.window.window(object);
+                target = me.widget.window.window(object);
             }
             if (!target.resize_enabled) {
                 event.preventDefault();
                 return;
             }
-            var target_region = me.package.ui.rect.absolute_region(target);
+            var target_region = me.ui.rect.absolute_region(target);
             me.info = {
                 target: target,
                 left: event.clientX - target_region.left,
@@ -43,11 +43,11 @@ package.ui.resize = function UIResize(me) {
                 width: target.offsetWidth,
                 height: target.offsetHeight
             };
-            me.package.core.property.set(target, "ui.property.broadcast", {
+            me.core.property.set(target, "ui.property.broadcast", {
                 "transition": true
             });
             event.preventDefault();
-            me.package.core.property.set(object, "ui.property.group", {
+            me.core.property.set(object, "ui.property.group", {
                 "ui.touch.move": "ui.resize.move",
                 "ui.touch.up": "ui.resize.up"
             });
@@ -55,12 +55,12 @@ package.ui.resize = function UIResize(me) {
     };
     me.move = {
         set: function (object, event) {
-            var target_region = me.package.ui.rect.absolute_region(me.info.target);
-            var object_region = me.package.ui.rect.absolute_region(object);
+            var target_region = me.ui.rect.absolute_region(me.info.target);
+            var object_region = me.ui.rect.absolute_region(object);
             var shift_region = {};
-            me.package.ui.rect.empty_region(shift_region);
-            var min_width = parseInt(me.package.core.property.get(me.info.target, "ui.style.minWidth"), 10);
-            var min_height = parseInt(me.package.core.property.get(me.info.target, "ui.style.minHeight"), 10);
+            me.ui.rect.empty_region(shift_region);
+            var min_width = parseInt(me.core.property.get(me.info.target, "ui.style.minWidth"), 10);
+            var min_height = parseInt(me.core.property.get(me.info.target, "ui.style.minHeight"), 10);
             if (object_region.left < target_region.left + (target_region.width / 2)) {
                 if (object_region.right < target_region.left + (target_region.width / 2)) {
                     target_region.width = target_region.width + (target_region.left - event.clientX);
@@ -81,31 +81,31 @@ package.ui.resize = function UIResize(me) {
             } else {
                 target_region.height = event.clientY - target_region.top;
             }
-            me.package.ui.rect.set_absolute_region(me.info.target, target_region);
+            me.ui.rect.set_absolute_region(me.info.target, target_region);
         }
     };
     me.up = {
         set: function (object, event) {
-            me.package.core.property.set(object, "ui.property.group", {
+            me.core.property.set(object, "ui.property.group", {
                 "ui.touch.move": null,
                 "ui.touch.up": null
             });
-            me.package.core.property.set(me.info.target, "ui.property.broadcast", {
+            me.core.property.set(me.info.target, "ui.property.broadcast", {
                 "resize": null,
                 "transition": false
             });
-            var window = me.package.widget.window.window(me.info.target);
-            me.package.core.property.notify(window, "update");
-            var parent = me.package.widget.window.parent(me.info.target);
-            me.package.core.property.notify(parent, "update");
+            var window = me.widget.window.window(me.info.target);
+            me.core.property.notify(window, "update");
+            var parent = me.widget.window.parent(me.info.target);
+            me.core.property.notify(parent, "update");
             if(window.child_window) {
-                me.package.core.property.notify(window.child_window, "update");
+                me.core.property.notify(window.child_window, "update");
             }
         }
     };
     me.event = {
         set: function (object, value) {
-            me.package.ui.event.register(null, object, "resize", value, "resize", window);
+            me.ui.event.register(null, object, "resize", value, "resize", window);
         }
     };
 };

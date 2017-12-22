@@ -9,7 +9,7 @@ package.cmd.pwd = function CmdPwd(me) {
         if(!current_dir) {
             current_dir = ".";
         }
-        me.package.core.property.set(terminal, "print", current_dir);
-        me.package.core.cmd.exit(terminal);
+        me.core.property.set(terminal, "print", current_dir);
+        me.core.cmd.exit(terminal);
     };
 };

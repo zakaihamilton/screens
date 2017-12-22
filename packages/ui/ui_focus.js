@@ -10,7 +10,7 @@ package.ui.focus = function UIFocus(me) {
             object.addEventListener('mousedown', function (e) {
                 var branch = me.find_branch(object, e.clientX, e.clientY);
                 if (branch) {
-                    me.package.core.property.set(branch, "ui.focus.active", true);
+                    me.core.property.set(branch, "ui.focus.active", true);
                 }
             }, false);
         }
@@ -27,14 +27,14 @@ package.ui.focus = function UIFocus(me) {
     };
     me.find_branch = function (object, x, y) {
         /* Find the lowest matching element on position */
-        var childList = me.package.ui.node.childList(object);
+        var childList = me.ui.node.childList(object);
         for (var index = childList.length - 1; index >= 0; index--) {
             var node = childList[index];
             if (!node.component) {
                 continue;
             }
-            var rect = me.package.ui.rect.absolute_region(node);
-            var in_rect = me.package.ui.rect.in_region(rect, x, y);
+            var rect = me.ui.rect.absolute_region(node);
+            var in_rect = me.ui.rect.in_region(rect, x, y);
             if (in_rect) {
                 var branch = me.find_branch(node, x, y);
                 if (branch) {
@@ -47,27 +47,27 @@ package.ui.focus = function UIFocus(me) {
     };
     me.deactivate = function (from, to) {
         while (from && from !== to) {
-            me.package.core.property.set(from, "ui.property.broadcast", {
+            me.core.property.set(from, "ui.property.broadcast", {
                 "ui.class.remove": "focus"
             });
-            me.package.core.property.set(from, "ui.property.broadcast", {
+            me.core.property.set(from, "ui.property.broadcast", {
                 "blur": from
             });
-            from = me.package.widget.window.parent(from);
+            from = me.widget.window.parent(from);
         }
     };
     me.activate = function (from, to) {
         while (from && from !== to) {
-            me.package.core.property.set(from, "ui.property.broadcast", {
+            me.core.property.set(from, "ui.property.broadcast", {
                 "ui.class.add": "focus"
             });
-            me.package.core.property.set(from, "ui.property.broadcast", {
+            me.core.property.set(from, "ui.property.broadcast", {
                 "focus": from
             });
             me.updateOrder(from.parentNode, from);
-            var parent = me.package.widget.window.parent(from);
-            if(parent && me.package.core.property.get(parent, "embed")) {
-                parent = me.package.widget.window.parent(parent);
+            var parent = me.widget.window.parent(from);
+            if(parent && me.core.property.get(parent, "embed")) {
+                parent = me.widget.window.parent(parent);
             }
             if(parent) {
                 parent.focus_window = from;
@@ -76,7 +76,7 @@ package.ui.focus = function UIFocus(me) {
         }
     };
     me.updateOrder = function (parent, object = null, order = - 1) {
-        var childList = me.package.ui.node.childList(parent);
+        var childList = me.ui.node.childList(parent);
         if (object) {
             if (order === -1) {
                 order = childList.length - 1;
@@ -86,27 +86,27 @@ package.ui.focus = function UIFocus(me) {
             childList.splice(order, 0, object);
         }
         for (var childOrder = 0; childOrder < childList.length; childOrder++) {
-            if(me.package.core.property.get(childList[childOrder], "alwaysOnTop")) {
+            if(me.core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
-            me.package.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
+            me.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
         if(object) {
-            me.package.core.property.notify(object, "update");
+            me.core.property.notify(object, "update");
         }
     };
     me.common = function (source, target) {
         if (!source || !target) {
-            return me.package.ui.element.root;
+            return me.ui.element.root;
         }
         var common = null, focusable = null;
-        var sources = me.package.ui.node.path(source);
-        var targets = me.package.ui.node.path(target);
+        var sources = me.ui.node.path(source);
+        var targets = me.ui.node.path(target);
         var length = sources.length > targets.length ? targets.length : sources.length;
         for (var index = 0; index < length; index++) {
             if (sources[index] === targets[index]) {
                 common = sources[index];
-                if (common.component === "widget.window" && !me.package.core.property.get(common, "embed")) {
+                if (common.component === "widget.window" && !me.core.property.get(common, "embed")) {
                     focusable = common;
                     break;
                 }
@@ -118,16 +118,16 @@ package.ui.focus = function UIFocus(me) {
     };
     me.active = {
         get: function (object) {
-            var window = me.package.widget.window.window(object);
+            var window = me.widget.window.window(object);
             return me.is_active(window);
         },
         set: function (object, value) {
-            var window = me.package.widget.window.window(object);
+            var window = me.widget.window.window(object);
             var is_active = me.is_active(window);
             if (!is_active && value) {
                 me.focus(window);
             } else if (is_active && !value) {
-                var parent = me.package.widget.window.parent(object);
+                var parent = me.widget.window.parent(object);
                 me.focus(parent);
             }
         }
@@ -144,11 +144,11 @@ package.ui.focus = function UIFocus(me) {
     };
     me.focus = function (window) {
         /* Check if window is visible */
-        if (!me.package.core.property.get(window, "visible")) {
+        if (!me.core.property.get(window, "visible")) {
             return;
         }
-        if(me.package.core.property.get(window, "embed")) {
-            window = me.package.widget.window.parent(window);
+        if(me.core.property.get(window, "embed")) {
+            window = me.widget.window.parent(window);
         }
         /* Find bottom window to focus on */
         window = me.findLeaf(window);

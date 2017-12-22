@@ -10,18 +10,18 @@ package.cmd.cd = function CmdCd(me) {
             current_dir = ".";
         }
         if(args.length <= 1) {
-            me.package.core.cmd.exit(terminal);
+            me.core.cmd.exit(terminal);
             return;
         }
-        current_dir = me.package.core.path.goto(current_dir, args[1]);
-        me.package.core.file.readDir(function(err, items) {
+        current_dir = me.core.path.goto(current_dir, args[1]);
+        me.core.file.readDir(function(err, items) {
             if(err) {
-                me.package.core.property.set(terminal, "print", "cd: " + args[1] + ": No such file or directory");
+                me.core.property.set(terminal, "print", "cd: " + args[1] + ": No such file or directory");
             }
             else {
                 terminal.current_dir = current_dir;
             }
-            me.package.core.cmd.exit(terminal);
+            me.core.cmd.exit(terminal);
         }, current_dir);
     };
 };

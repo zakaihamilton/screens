@@ -6,14 +6,14 @@
 package.cmd.parse = function CmdParse(me) {
     me.cmd = function(terminal, args) {
         if(args.length <= 1) {
-            me.package.core.cmd.exit(terminal);
+            me.core.cmd.exit(terminal);
             return;
         }
-        var path = me.package.core.path.goto(terminal.current_dir, args[1]);
-        me.package.core.json.loadFile(function(json) {
+        var path = me.core.path.goto(terminal.current_dir, args[1]);
+        me.core.json.loadFile(function(json) {
             me.parse(function(json) {
-                me.package.core.console.log(JSON.stringify(json, null, 4));
-                me.package.core.cmd.exit(terminal);
+                me.core.console.log(JSON.stringify(json, null, 4));
+                me.core.cmd.exit(terminal);
             }, json);
         }, path);
     };

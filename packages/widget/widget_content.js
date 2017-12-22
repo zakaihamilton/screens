@@ -10,12 +10,12 @@ package.widget.content = function WidgetContent(me) {
     };
     me.wheel = {
         set: function(object, event) {
-            var container = me.package.ui.node.container(object, me.package.widget.container.id);
+            var container = me.ui.node.container(object, me.widget.container.id);
             if(container) {
-                if(!me.package.widget.container.isChild(container)) {
+                if(!me.widget.container.isChild(container)) {
                     var scrollbar = container.var.vertical;
                     var delta = event.deltaY;
-                    me.package.core.property.set(scrollbar, "delta", delta);
+                    me.core.property.set(scrollbar, "delta", delta);
                 }
             }
         }

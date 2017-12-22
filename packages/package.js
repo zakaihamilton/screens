@@ -102,11 +102,13 @@ function package_init(task, package_name, component_name, callback, child_name =
     package[package_name].components.push(id);
     package.count++;
     /* Create component proxy */
-    var component_obj = new Proxy({package:package, id: id, child: child_name}, {
+    var component_obj = new Proxy({id: id, child: child_name}, {
         get: function (object, property) {
             var result = undefined;
             if (Reflect.has(object, property)) {
                 return Reflect.get(object, property);
+            } else if(property in package) {
+                return package[property];
             } else if (property !== "forward" && Reflect.has(object, "forward")) {
                 var forward = Reflect.get(object, "forward");
                 if (forward && forward.enabled) {
@@ -303,6 +305,12 @@ function package_include(packages, callback) {
     load(0, 0);
 }
 
+function package_alias(object, aliases) {
+    for(var alias in aliases) {
+        object[alias] = package_path(aliases[alias]);
+    }
+}
+
 var package = {
     components: {},
     order: [],
@@ -314,6 +322,7 @@ var package = {
     remote: package_remote,
     lock: package_lock,
     unlock: package_unlock,
+    alias: package_alias,
     count: 0
 };
 

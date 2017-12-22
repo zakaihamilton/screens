@@ -14,20 +14,20 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.drag.icon"];
     me["ui.element.default"] = __json__;
     me.init = function() {
-        me.type = me.package.core.object.property("widget.icon.type", {
+        me.type = me.core.object.property("widget.icon.type", {
             set: function(object, value, name, oldValue) {
                 if(value === "icon") {
-                    me.package.core.property.set(object.var.icon, "ui.attribute.width", "32px");
-                    me.package.core.property.set(object.var.icon, "ui.attribute.height", "32px");
+                    me.core.property.set(object.var.icon, "ui.attribute.width", "32px");
+                    me.core.property.set(object.var.icon, "ui.attribute.height", "32px");
                 }
                 else if(value === "list") {
-                    me.package.core.property.set(object.var.icon, "ui.attribute.width", "16px");
-                    me.package.core.property.set(object.var.icon, "ui.attribute.height", "16px");
+                    me.core.property.set(object.var.icon, "ui.attribute.width", "16px");
+                    me.core.property.set(object.var.icon, "ui.attribute.height", "16px");
                 }
-                me.package.core.property.set(object, "ui.class.remove", "widget.icon." + oldValue);
-                me.package.core.property.set(object, "ui.class.add", "widget.icon." + value);
-                me.package.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
-                me.package.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
+                me.core.property.set(object, "ui.class.remove", "widget.icon." + oldValue);
+                me.core.property.set(object, "ui.class.add", "widget.icon." + value);
+                me.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
+                me.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
             }
         });
     };

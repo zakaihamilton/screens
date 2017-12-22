@@ -26,22 +26,22 @@ package.core.cmd = function CoreCmd(me) {
             return;
         }
         if(terminal.application) {
-            me.package.core.message.send(terminal.application + ".response", terminal, terminal.handle, args);
+            me.core.message.send(terminal.application + ".response", terminal, terminal.handle, args);
             return;
         }
         var application = "cmd." + args[0];
         package.include(application, function (info) {
             if (info.failure) {
-                me.package.core.property.set(terminal, "print", "Error: Command not found!");
+                me.core.property.set(terminal, "print", "Error: Command not found!");
                 me.exit(terminal);
             } else if(info.complete) {
                 terminal.application = application;
-                terminal.handle = me.package.core.message.send(application + ".cmd", terminal, args);
+                terminal.handle = me.core.message.send(application + ".cmd", terminal, args);
             }
         });
     };
     me.exit = function(terminal) {
         terminal.application = null;
-        me.package.core.property.set(terminal, "input", "C>");
+        me.core.property.set(terminal, "input", "C>");
     };
 };

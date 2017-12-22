@@ -11,7 +11,7 @@ package.core.link = function CoreLink(me) {
                     if (typeof property === "string") {
                         property = property.replace(/-/g, ".");
                     }
-                    me.package.core.property.link(property, value, true, object);
+                    me.core.property.link(property, value, true, object);
                 }
             }
         };

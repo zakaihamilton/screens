@@ -7,6 +7,6 @@ package.require("core.private", "server");
 
 package.core.private = function CorePrivate(me) {
     me.keys = function(callback, serviceName) {
-        me.package.core.json.loadFile(callback, "/private/" + serviceName + ".json");
+        me.core.json.loadFile(callback, "/private/" + serviceName + ".json");
     };
 };

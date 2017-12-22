@@ -5,17 +5,17 @@
 
 package.app.transform = function AppTransform(me) {
     me.launch = function () {
-        if (me.package.core.property.get(me.singleton, "ui.node.parent")) {
-            me.package.core.property.set(me.singleton, "widget.window.show", true);
+        if (me.core.property.get(me.singleton, "ui.node.parent")) {
+            me.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.package.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             window.prevLanguage = null;
-            me.package.ui.options.load(me, window, {
+            me.ui.options.load(me, window, {
                 doTranslation: true,
                 doExplanation: false,
                 prioritizeExplanation: false,
@@ -33,65 +33,65 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                swipe: me.package.core.device.isMobile()
+                swipe: me.core.device.isMobile()
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
-            me.doTranslation = me.package.ui.options.toggleSet(me, "doTranslation", me.transform.set);
-            me.doExplanation = me.package.ui.options.toggleSet(me, "doExplanation", me.transform.set);
-            me.prioritizeExplanation = me.package.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
-            me.addStyles = me.package.ui.options.toggleSet(me, "addStyles", me.transform.set);
-            me.phaseNumbers = me.package.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
-            me.keepSource = me.package.ui.options.toggleSet(me, "keepSource", me.transform.set);
-            me.showHtml = me.package.ui.options.toggleSet(me, "showHtml", me.transform.set);
-            me.showInput = me.package.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
-                var window = me.package.widget.window.mainWindow(object);
-                if (!me.package.core.property.get(window.var.layout, "ui.basic.text")) {
+            me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
+            me.doExplanation = me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
+            me.prioritizeExplanation = me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
+            me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
+            me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
+            me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);
+            me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
+            me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
+                var window = me.widget.window.mainWindow(object);
+                if (!me.core.property.get(window.var.layout, "ui.basic.text")) {
                     value = true;
                 }
                 me.updateWidgets(window, value);
             });
-            me.autoScroll = me.package.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
-            me.snapToPage = me.package.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
-            me.language = me.package.ui.options.choiceSet(me, "language", me.transform.set);
-            me.fontSize = me.package.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
-                var window = me.package.widget.window.mainWindow(object);
-                me.package.core.property.set(window.var.layout, "ui.style.fontSize", value);
-                me.package.core.property.set(window.var.termTable, "ui.style.fontSize", value);
+            me.autoScroll = me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
+            me.snapToPage = me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
+            me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
+            me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
+                var window = me.widget.window.mainWindow(object);
+                me.core.property.set(window.var.layout, "ui.style.fontSize", value);
+                me.core.property.set(window.var.termTable, "ui.style.fontSize", value);
                 window.forceReflow = true;
-                me.package.core.property.notify(window, "update");
+                me.core.property.notify(window, "update");
             });
-            me.pages = me.package.ui.options.toggleSet(me, "pages", me.reflow.set);
-            me.columns = me.package.ui.options.toggleSet(me, "columns", me.reflow.set);
-            me.headings = me.package.ui.options.toggleSet(me, "headings", me.transform.set);
-            me.diagrams = me.package.ui.options.toggleSet(me, "diagrams", me.transform.set);
-            me.scrollPos = me.package.ui.options.choiceSet(me, "scrollPos");
-            me.swipe = me.package.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
-                var window = me.package.widget.window.mainWindow(object);
-                me.package.core.property.set(window.var.layout, "ui.scroll.swipe", value ? "vertical" : "");
+            me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
+            me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
+            me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
+            me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
+            me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
+            me.swipe = me.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
+                var window = me.widget.window.mainWindow(object);
+                me.core.property.set(window.var.layout, "ui.scroll.swipe", value ? "vertical" : "");
             });
-            me.package.ui.class.useStylesheet("kab.term");
+            me.ui.class.useStylesheet("kab.term");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
-        var window = me.package.widget.window.mainWindow(object);
-        me.package.core.property.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
-        me.package.core.property.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
-        me.package.core.property.set(window.var.filter, "ui.style.top", showInput ? "250px" : "0px");
-        me.package.core.property.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
-        me.package.core.property.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
-        me.package.core.property.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
-        me.package.core.property.set(window.var.layout, "ui.scroll.swipe", window.options.swipe ? "vertical" : "");
-        me.package.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
+        var window = me.widget.window.mainWindow(object);
+        me.core.property.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
+        me.core.property.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
+        me.core.property.set(window.var.filter, "ui.style.top", showInput ? "250px" : "0px");
+        me.core.property.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
+        me.core.property.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
+        me.core.property.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
+        me.core.property.set(window.var.layout, "ui.scroll.swipe", window.options.swipe ? "vertical" : "");
+        me.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
-            me.package.core.property.notify(window, "update");
+            me.core.property.notify(window, "update");
     }
     };
     me.shouldReflow = function (object) {
-        var window = me.package.widget.window.mainWindow(object);
+        var window = me.widget.window.mainWindow(object);
         var reflow = false;
-        var pageSize = me.package.ui.layout.pageSize(window.var.layout);
-        if (me.package.core.property.get(window, "visible") && !me.package.core.property.get(window, "conceal")) {
+        var pageSize = me.ui.layout.pageSize(window.var.layout);
+        if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
             if (window.pageSize && (pageSize.height !== window.pageSize.height || pageSize.width !== window.pageSize.width)) {
                 reflow = true;
             }
@@ -108,14 +108,14 @@ package.app.transform = function AppTransform(me) {
                 object.workTimeout = null;
             }
             if (value) {
-                me.package.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
                 object.var.layout.style.opacity = 0;
                 object.var.toggleGlossary.style.opacity = 0;
                 object.var.termPopup.style.opacity = 0;
                 object.var.filter.style.opacity = 0;
             } else {
                 object.workTimeout = setTimeout(function () {
-                    me.package.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     object.var.layout.style.opacity = 1;
                     object.var.toggleGlossary.style.opacity = 1;
                     object.var.termPopup.style.opacity = "";
@@ -126,34 +126,34 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.updateScrolling = function (object) {
-        var window = me.package.widget.window.mainWindow(object);
+        var window = me.widget.window.mainWindow(object);
         var scrollbar = window.var.layout.var.vertical;
-        var pageSize = me.package.ui.layout.pageSize(window.var.layout);
+        var pageSize = me.ui.layout.pageSize(window.var.layout);
         var snapToPage = window.options.snapToPage;
         if (!window.options.pages) {
             snapToPage = false;
         }
-        me.package.core.property.set(scrollbar, "snapToPage", snapToPage);
-        me.package.core.property.set(scrollbar, "pageSize", pageSize.height);
-        me.package.core.property.set(scrollbar, "autoScroll", window.options.autoScroll);
-        me.package.core.property.set(scrollbar, "scrollTo", window.options.scrollPos);
-        me.package.core.property.set(scrollbar, "snap");
+        me.core.property.set(scrollbar, "snapToPage", snapToPage);
+        me.core.property.set(scrollbar, "pageSize", pageSize.height);
+        me.core.property.set(scrollbar, "autoScroll", window.options.autoScroll);
+        me.core.property.set(scrollbar, "scrollTo", window.options.scrollPos);
+        me.core.property.set(scrollbar, "snap");
     };
     me.new = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.core.property.set(window.var.input, "ui.basic.text", "");
-            me.package.core.property.set(window.var.input, "storage.cache.store", "");
-            me.package.core.property.set(window.var.output, "ui.basic.html", "");
-            me.package.ui.node.removeChildren(window.var.filterList);
-            me.package.ui.node.removeChildren(window.var.termTable);
-            me.package.ui.layout.clear(window.var.layout);
+            var window = me.widget.window.mainWindow(object);
+            me.core.property.set(window.var.input, "ui.basic.text", "");
+            me.core.property.set(window.var.input, "storage.cache.store", "");
+            me.core.property.set(window.var.output, "ui.basic.html", "");
+            me.ui.node.removeChildren(window.var.filterList);
+            me.ui.node.removeChildren(window.var.termTable);
+            me.ui.layout.clear(window.var.layout);
             me.updateWidgets(window, true);
             window.options.scrollPos = 0;
         }
     };
     me.updateFilterList = function (window, terms) {
-        me.package.ui.node.removeChildren(window.var.filterList);
+        me.ui.node.removeChildren(window.var.filterList);
         var searchItems = Object.keys(terms).map(function (key) {
             return [key, terms[key]];
         });
@@ -251,78 +251,78 @@ package.app.transform = function AppTransform(me) {
             });
             data.push(list);
         }
-        me.package.core.property.set(window.var.termTable, "dataByRows", data);
+        me.core.property.set(window.var.termTable, "dataByRows", data);
     };
     me.transform = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.ui.layout.clear(window.var.layout);
-            var text = me.package.core.property.get(window.var.input, "ui.basic.text");
+            var window = me.widget.window.mainWindow(object);
+            me.ui.layout.clear(window.var.layout);
+            var text = me.core.property.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
             if (!text) {
                 return;
             }
             window.inTransform = true;
-            me.package.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid purple");
-            me.package.core.property.set(window, "ui.work.state", true);
+            me.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid purple");
+            me.core.property.set(window, "ui.work.state", true);
             var language = window.options.language.toLowerCase();
             if (language === "auto") {
-                language = me.package.core.string.language(text);
-                me.package.core.console.log("detected language: " + language);
+                language = me.core.string.language(text);
+                me.core.console.log("detected language: " + language);
             }
             window.options.hoverCallback = "package.app.transform.hoverDescription";
             window.options.diagramCallback = "package.app.transform.loadDiagram";
             window.options.toggleCallback = "package.app.transform.cycleDescription";
             window.options.reload = true;
-            me.package.kab.text.parse(function (text, terms, data) {
+            me.kab.text.parse(function (text, terms, data) {
                 if (data) {
-                    me.package.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+                    me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                 }
                 if (window.prevLanguage) {
-                    me.package.core.property.set(window.var.input, "ui.class.remove", window.prevLanguage);
-                    me.package.core.property.set(window.var.layout, "ui.class.remove", window.prevLanguage);
-                    me.package.core.property.set(window.var.filter, "ui.class.remove", window.prevLanguage);
-                    me.package.core.property.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
-                    me.package.core.property.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set(window.var.input, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set(window.var.layout, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set(window.var.filter, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
                 }
-                me.package.core.property.set(window.var.input, "ui.class.add", language);
-                me.package.core.property.set(window.var.layout, "ui.class.add", language);
-                me.package.core.property.set(window.var.filter, "ui.class.add", language);
-                me.package.core.property.set(window.var.termPopup, "title", data.termTableTitle);
-                me.package.core.property.set(window.var.termTable, "ui.class.add", language);
-                me.package.core.property.set(window.var.toggleGlossary, "ui.class.add", language);
-                me.package.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+                me.core.property.set(window.var.input, "ui.class.add", language);
+                me.core.property.set(window.var.layout, "ui.class.add", language);
+                me.core.property.set(window.var.filter, "ui.class.add", language);
+                me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
+                me.core.property.set(window.var.termTable, "ui.class.add", language);
+                me.core.property.set(window.var.toggleGlossary, "ui.class.add", language);
+                me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                 window.prevLanguage = language;
                 if (window.options.showHtml) {
-                    me.package.core.property.set(window.var.output, "ui.basic.text", text);
+                    me.core.property.set(window.var.output, "ui.basic.text", text);
                 } else {
-                    me.package.core.property.set(window.var.output, "ui.basic.html", text);
+                    me.core.property.set(window.var.output, "ui.basic.html", text);
                 }
                 me.updateFilterList(window, terms);
                 if (data) {
                     me.updateTermTable(window, terms, data.termTable, language);
                 }
-                me.package.ui.layout.move(window.var.output, window.var.layout);
+                me.ui.layout.move(window.var.output, window.var.layout);
                 window.forceReflow = true;
                 window.contentChanged = true;
                 window.inTransform = false;
-                me.package.core.property.notify(window, "update");
-                me.package.core.property.set(window, "ui.work.state", false);
+                me.core.property.notify(window, "update");
+                me.core.property.set(window, "ui.work.state", false);
             }, language, text, window.options);
         }
     };
     me.reflow = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             if (window) {
                 window.forceReflow = true;
-                me.package.core.property.notify(window, "update");
+                me.core.property.notify(window, "update");
             }
         }
     };
     me.update = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             if (window.inTransform) {
                 return;
             }
@@ -331,17 +331,17 @@ package.app.transform = function AppTransform(me) {
             }
             var visibleWidget = null;
             if (!window.contentChanged) {
-                visibleWidget = me.package.ui.layout.firstVisibleWidget(window.var.layout);
+                visibleWidget = me.ui.layout.firstVisibleWidget(window.var.layout);
             }
             window.forceReflow = false;
             window.contentChanged = false;
-            window.pageSize = me.package.ui.layout.pageSize(window.var.layout);
-            me.package.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
-            var fullscreen = me.package.core.property.get(window, "fullscreen");
-            me.package.core.property.set(object.var.filter, "ui.style.visibility", fullscreen ? "hidden" : "visible");
-            me.package.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
-            me.package.core.property.set(window, "ui.work.state", true);
-            var target = me.package.widget.container.content(window.var.layout);
+            window.pageSize = me.ui.layout.pageSize(window.var.layout);
+            me.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
+            var fullscreen = me.core.property.get(window, "fullscreen");
+            me.core.property.set(object.var.filter, "ui.style.visibility", fullscreen ? "hidden" : "visible");
+            me.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
+            me.core.property.set(window, "ui.work.state", true);
+            var target = me.widget.container.content(window.var.layout);
             window.var.layout.style.opacity = 0;
             if (window.options.pages) {
                 target.style.margin = "";
@@ -363,55 +363,55 @@ package.app.transform = function AppTransform(me) {
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
                 scrollPos: window.options.scrollPos,
-                filter: me.package.core.property.get(window.var.filter, "ui.basic.text")
+                filter: me.core.property.get(window.var.filter, "ui.basic.text")
             };
-            me.package.ui.layout.reflow(function () {
-                me.package.core.property.set(window, "ui.work.state", false);
+            me.ui.layout.reflow(function () {
+                me.core.property.set(window, "ui.work.state", false);
             }, window.var.output, window.var.layout, reflowOptions);
         }
     };
     me.scrolled = {
         set: function (object, value) {
-            var window = me.package.widget.window.mainWindow(object);
-            if (me.package.core.property.get(window, "ui.work.state") || me.package.core.property.get(window, "conceal")) {
+            var window = me.widget.window.mainWindow(object);
+            if (me.core.property.get(window, "ui.work.state") || me.core.property.get(window, "conceal")) {
                 return;
             }
-            me.package.ui.layout.updatePages(window.var.layout);
+            me.ui.layout.updatePages(window.var.layout);
             if (object.scrolledTimer) {
                 clearTimeout(object.scrolledTimer);
             }
             object.scrolledTimer = setTimeout(function () {
-                if (me.package.core.property.get(window, "ui.work.state") || me.package.core.property.get(window, "conceal")) {
+                if (me.core.property.get(window, "ui.work.state") || me.core.property.get(window, "conceal")) {
                     return;
                 }
                 if ("vertical" in value) {
-                    me.package.core.property.set(window, "app.transform.scrollPos", value.vertical);
+                    me.core.property.set(window, "app.transform.scrollPos", value.vertical);
                 }
             }, 2000);
         }
     };
     me.filterChange = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.core.property.set(window.var.filter, "storage.cache.store", me.package.core.property.get(window.var.filter, "ui.basic.text"));
-            me.package.core.property.set(window, "app.transform.reflow");
+            var window = me.widget.window.mainWindow(object);
+            me.core.property.set(window.var.filter, "storage.cache.store", me.core.property.get(window.var.filter, "ui.basic.text"));
+            me.core.property.set(window, "app.transform.reflow");
         }
     };
     me.termsAvailable = {
         get: function(object) {
-            var window = me.package.widget.window.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             return window.dataExists;
         }
     };
     me.toggleTerms = {
         get: function(object) {
-            var window = me.package.widget.window.mainWindow(object);
-            return me.package.core.property.get(window.var.termPopup, "minimize");
+            var window = me.widget.window.mainWindow(object);
+            return me.core.property.get(window.var.termPopup, "minimize");
         },
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.core.property.set(window.var.termPopup, "show", !me.package.core.property.get(window.var.termPopup, "minimize"));
-            me.package.core.property.set(window.var.termPopup, "ui.property.group", {
+            var window = me.widget.window.mainWindow(object);
+            me.core.property.set(window.var.termPopup, "show", !me.core.property.get(window.var.termPopup, "minimize"));
+            me.core.property.set(window.var.termPopup, "ui.property.group", {
                 "ui.style.left": "25px",
                 "ui.style.top": "50px",
                 "ui.style.right": "25px",
@@ -423,36 +423,36 @@ package.app.transform = function AppTransform(me) {
     };
     me.toggleGlossary = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
         }
     };
     me.resetDescription = function (object) {
         var descriptionTypes = ["explanation", "technical", "related"];
         descriptionTypes.map(function (descriptionType) {
-            var descriptionBox = me.package.ui.node.findById(object, descriptionType);
-            me.package.core.property.set(descriptionBox, "ui.class.remove", "show");
+            var descriptionBox = me.ui.node.findById(object, descriptionType);
+            me.core.property.set(descriptionBox, "ui.class.remove", "show");
             if (descriptionBox) {
                 descriptionBox.resetTimer = setTimeout(function () {
-                    me.package.core.property.set(descriptionBox, "ui.style.display", "none");
+                    me.core.property.set(descriptionBox, "ui.style.display", "none");
                 }, 1000);
             }
         });
     };
     me.loadDiagram = {
         set: function (object, path) {
-            me.package.core.property.set(object, "ui.style.paddingBottom", "3em");
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.core.app.launch(function (diagramWindow) {
-                me.package.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
+            me.core.property.set(object, "ui.style.paddingBottom", "3em");
+            var window = me.widget.window.mainWindow(object);
+            me.core.app.launch(function (diagramWindow) {
+                me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
             }, "diagram", [path, window.options, object]);
         }
     };
     me.hoverDescription = function (object, state) {
-        var window = me.package.widget.window.mainWindow(object);
+        var window = me.widget.window.mainWindow(object);
         var descriptionType = window.options.prioritizeExplanation ? "explanation" : "technical";
-        var descriptionBox = me.package.ui.node.findById(object, descriptionType);
+        var descriptionBox = me.ui.node.findById(object, descriptionType);
         if (!descriptionBox) {
-            descriptionBox = me.package.ui.node.findById(object, "related");
+            descriptionBox = me.ui.node.findById(object, "related");
         }
         object.descriptionType = null;
         if (object.hoverTimer) {
@@ -466,9 +466,9 @@ package.app.transform = function AppTransform(me) {
                     clearTimeout(descriptionBox.resetTimer);
                     descriptionBox.resetTimer = null;
                 }
-                me.package.core.property.set(descriptionBox, "ui.style.display", "block");
+                me.core.property.set(descriptionBox, "ui.style.display", "block");
                 setTimeout(function () {
-                    me.package.core.property.set(descriptionBox, "ui.class.add", "show");
+                    me.core.property.set(descriptionBox, "ui.class.add", "show");
                 }, 500);
             }
         }, 1000);
@@ -484,9 +484,9 @@ package.app.transform = function AppTransform(me) {
             descriptionIndex = 0;
         }
         var descriptionType = descriptionTypes[descriptionIndex];
-        var descriptionBox = me.package.ui.node.findById(object, descriptionType);
+        var descriptionBox = me.ui.node.findById(object, descriptionType);
         if (!descriptionBox) {
-            descriptionBox = me.package.ui.node.findById(object, "related");
+            descriptionBox = me.ui.node.findById(object, "related");
         }
         object.descriptionType = descriptionType;
         me.resetDescription(object);
@@ -494,19 +494,19 @@ package.app.transform = function AppTransform(me) {
             clearTimeout(descriptionBox.resetTimer);
             descriptionBox.resetTimer = null;
         }
-        me.package.core.property.set(descriptionBox, "ui.style.display", "block");
+        me.core.property.set(descriptionBox, "ui.style.display", "block");
         setTimeout(function () {
-            me.package.core.property.set(descriptionBox, "ui.class.add", "show");
+            me.core.property.set(descriptionBox, "ui.class.add", "show");
         }, 500);
     };
     me.toggleSeparator = {
         get: function (object, value) {
-            var window = me.package.widget.window.mainWindow(object);
-            return me.package.ui.layout.hasSeparator(me.package.ui.layout.currentPage(window.var.layout));
+            var window = me.widget.window.mainWindow(object);
+            return me.ui.layout.hasSeparator(me.ui.layout.currentPage(window.var.layout));
         },
         set: function (object, value) {
-            var window = me.package.widget.window.mainWindow(object);
-            me.package.ui.layout.toggleSeparator(me.package.ui.layout.currentPage(window.var.layout));
+            var window = me.widget.window.mainWindow(object);
+            me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
         }
     };
 };

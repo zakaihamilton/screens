@@ -15,7 +15,7 @@ package.storage.remote = function StorageRemote(me) {
             callback(me.service);
             return;
         }
-        me.package.core.private.keys((keys) => {
+        me.core.private.keys((keys) => {
             me.service = new me.dropbox({accessToken: keys['access-token']});
             callback(me.service);
         }, "dropbox");
@@ -29,9 +29,9 @@ package.storage.remote = function StorageRemote(me) {
     me.getChildren = function (callback, path, recursive) {
         var entries = [];
         me.getService((service) => {
-            me.package.lock(task => {
+            me.lock(task => {
                 me.iterate(task, service, entries, path, null, recursive);
-                me.package.unlock(task, () => {
+                me.unlock(task, () => {
                     if (callback) {
                         callback(entries);
                     }
@@ -40,7 +40,7 @@ package.storage.remote = function StorageRemote(me) {
         });
     };
     me.iterate = function (task, service, entries, path, cursor, recursive) {
-        me.package.lock(task, task => {
+        me.lock(task, task => {
             var method = cursor ? "filesListFolderContinue" : "filesListFolder";
             path = me.fixPath(path);
             service[method]({path: path})
@@ -57,10 +57,10 @@ package.storage.remote = function StorageRemote(me) {
                                 me.iterate(task, service, item.entries, item.path_lower, null, recursive);
                             }
                         }
-                        me.package.unlock(task);
+                        me.unlock(task);
                     })
                     .catch(function (error) {
-                        me.package.unlock(task);
+                        me.unlock(task);
                     });
         });
     };

@@ -8,10 +8,10 @@ package.canvas.text = function CanvasText(me) {
 
     };
     me.draw = function(object, canvas) {
-        var context = me.package.core.property.get(canvas, "context");
+        var context = me.core.property.get(canvas, "context");
         if(object.textContent) {
-            me.package.core.console.log("textContent: " +object.textContent);
-            var region = me.package.ui.rect.relative_region(object, canvas);
+            me.core.console.log("textContent: " +object.textContent);
+            var region = me.ui.rect.relative_region(object, canvas);
             var textPos = me.textPos(object, context, region);
             context.textAlign = object.style.textAlign || "left";
             context.fillStyle = object.style.textColor || "black";

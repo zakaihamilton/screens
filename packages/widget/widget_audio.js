@@ -15,9 +15,9 @@ package.widget.audio = function WidgetAudio(me) {
     };
     me.source = {
         set: function(object, path) {
-            var extension = me.package.core.path.extension(path);
-            me.package.core.property.set(object.var.source, "ui.attribute.src", path);
-            me.package.core.property.set(object.var.source, "ui.attribute.type", "audio/"+extension);
+            var extension = me.core.path.extension(path);
+            me.core.property.set(object.var.source, "ui.attribute.src", path);
+            me.core.property.set(object.var.source, "ui.attribute.type", "audio/"+extension);
             object.src = path;
             object.load();
         }

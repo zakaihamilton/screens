@@ -15,9 +15,9 @@ package.widget.video = function WidgetVideo(me) {
     };
     me.source = {
         set: function(object, path) {
-            var extension = me.package.core.path.extension(path);
-            me.package.core.property.set(object.var.source, "ui.attribute.src", path);
-            me.package.core.property.set(object.var.source, "ui.attribute.type", "video/"+extension);
+            var extension = me.core.path.extension(path);
+            me.core.property.set(object.var.source, "ui.attribute.src", path);
+            me.core.property.set(object.var.source, "ui.attribute.type", "video/"+extension);
             object.src = path;
             object.load();
         }

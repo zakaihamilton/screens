@@ -15,7 +15,7 @@ package.core.file = function CoreFile(me) {
     };
     me.readDir = function(callback, path) {
         me.fs.readdir(path, function(err, items) {
-            me.package.core.console.log("path:" + path + " items:" + JSON.stringify(items));
+            me.core.console.log("path:" + path + " items:" + JSON.stringify(items));
             callback(err, items);
         });   
     };

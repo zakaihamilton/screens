@@ -65,7 +65,7 @@ package.ui.class = function UIClass(me) {
         link.rel = "stylesheet";
         link.media = "screen,print";
         document.getElementsByTagName("head")[0].appendChild(link);
-        me.package.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
+        me.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
     me.loadComponentStylesheet = function (path) {
@@ -78,7 +78,7 @@ package.ui.class = function UIClass(me) {
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
         path = path.replace(/[\.\_]/g, "-");
-        path = me.package.ui.theme.getMapping(path);
+        path = me.ui.theme.getMapping(path);
         return path;
     };
     me.to_component = function(object, path) {
@@ -101,7 +101,7 @@ package.ui.class = function UIClass(me) {
             });
             return;
         }
-        path = me.package.ui.element.to_full_name(object, path);
+        path = me.ui.element.to_full_name(object, path);
         var class_name = me.to_class(object, path);
         var component_name = me.to_component(object, path);
         if(component_name) {
@@ -113,7 +113,7 @@ package.ui.class = function UIClass(me) {
     };
     me.useStylesheet = function(component_name) {
         if (!me.stylesheets[component_name]) {
-            me.package.core.console.log("loading css stylesheet: " + component_name);
+            me.core.console.log("loading css stylesheet: " + component_name);
             me.stylesheets[component_name] = me.loadComponentStylesheet(component_name);
         }
     };

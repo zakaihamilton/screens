@@ -34,7 +34,7 @@ package.manager.download = function ManagerDownload(me) {
             if(item.isDownloading) {
                 return;
             }
-            me.package.core.file.isFile(function(isFile) {
+            me.core.file.isFile(function(isFile) {
                 if(isFile) {
                     var index = me.queue.indexOf(item);
                     me.queue.splice(index, 1);
@@ -42,9 +42,9 @@ package.manager.download = function ManagerDownload(me) {
                 }
                 else {
                     item.isDownloading = true;
-                    me.package.core.console.log("downloading: " + item.from + " to: " + item.to);
-                    me.package.storage.remote.downloadFile(function(err) {
-                        me.package.core.console.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
+                    me.core.console.log("downloading: " + item.from + " to: " + item.to);
+                    me.storage.remote.downloadFile(function(err) {
+                        me.core.console.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
                         var index = me.queue.indexOf(item);
                         if(index !== -1) {
                             me.queue.splice(index, 1);
@@ -72,12 +72,12 @@ package.manager.download = function ManagerDownload(me) {
             me.queue.push(item);
         }
         else {
-            me.package.core.file.isFile(function(isFile) {
+            me.core.file.isFile(function(isFile) {
                 if(isFile) {
                     callback(null);
                 }
                 else {
-                    me.package.core.console.log("pushing to download queue: " + from + " to: " + to);
+                    me.core.console.log("pushing to download queue: " + from + " to: " + to);
                     item = {from:from, to:to, isDownloading:false, callbacks:[callback]};
                     me.queue.push(item);
                     me.private.update();

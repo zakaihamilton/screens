@@ -9,38 +9,38 @@ package.widget.canvas = function WidgetCanvas(me) {
         "ui.class.class": "border"
     };
     me["ui.element.create"] = function (object) {
-        me.package.canvas.node.attach(object);
-        me.package.canvas.dirty.attach(object);
+        me.canvas.node.attach(object);
+        me.canvas.dirty.attach(object);
         object._appendChild = function (child) {
-            return me.package.canvas.node.appendChild(this, child);
+            return me.canvas.node.appendChild(this, child);
         };
         object._removeChild = function (child) {
-            return me.package.canvas.node.removeChild(this, child);
+            return me.canvas.node.removeChild(this, child);
         };
         object._insertBefore = function (child, sibling) {
-            return me.package.canvas.node.insertBefore(this, child, sibling);
+            return me.canvas.node.insertBefore(this, child, sibling);
         };
         Object.defineProperty(object, "_firstChild", {
             get: function () {
-                return me.package.canvas.node.firstChild(object);
+                return me.canvas.node.firstChild(object);
             }
         });
         Object.defineProperty(object, "_lastChild", {
             get: function () {
-                return me.package.canvas.node.lastChild(object);
+                return me.canvas.node.lastChild(object);
             }
         });
     };
     me.draw = {
         set: function (object) {
-            var region = me.package.ui.rect.absolute_region(object.parentNode);
+            var region = me.ui.rect.absolute_region(object.parentNode);
             if (parseInt(object.style.width) !== region.width || parseInt(object.style.height) !== region.height) {
                 object.width = region.width;
                 object.height = region.height;
                 object.style.width = region.width + 'px';
                 object.style.height = region.height + 'px';
                 me.scale(object);
-                me.package.canvas.dirty.draw(object, object);
+                me.canvas.dirty.draw(object, object);
             }
         }
     };
@@ -80,7 +80,7 @@ package.widget.canvas = function WidgetCanvas(me) {
                 component.attach(element);
             }
         });
-        me.package.core.console.log("element: " + Object.keys(element));
+        me.core.console.log("element: " + Object.keys(element));
         return element;
     };
 };

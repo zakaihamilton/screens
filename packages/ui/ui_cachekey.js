@@ -8,8 +8,8 @@ package.ui.cachekey = function UICacheKey(me) {
         return {
             get: function (object) {
                 if(property.endsWith("-")) {
-                    var window = me.package.widget.window.window(object);
-                    var key = me.package.core.property.get(window, "key");
+                    var window = me.widget.window.window(object);
+                    var key = me.core.property.get(window, "key");
                     return property + key;
                 }
                 else {

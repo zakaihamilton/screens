@@ -6,9 +6,9 @@
 package.require("core.module", "server");
 
 package.core.module = function CoreModule(me) {
-    var core = me.package.core;
+    var core = me.core;
     me.init = function () {
-        me.package.core.property.link("core.http.receive", "core.module.receive", true);
+        me.core.property.link("core.http.receive", "core.module.receive", true);
     };
     me.path_file_to_component = function (file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
@@ -19,8 +19,8 @@ package.core.module = function CoreModule(me) {
         return component_path;
     };
     me.loadTextFile = function (task, filePath, callback) {
-        me.package.lock(task, task => {
-            me.package.core.file.readFile(function (err, data) {
+        me.lock(task, task => {
+            me.core.file.readFile(function (err, data) {
                 core.console.log("serving text file: " + filePath);
                 if (err) {
                     core.console.log(JSON.stringify(err));
@@ -28,13 +28,13 @@ package.core.module = function CoreModule(me) {
                 } else {
                     callback(data);
                 }
-                me.package.unlock(task);
+                me.unlock(task);
             }, filePath, 'utf8');
         });
     };
     me.loadBinaryFile = function (task, filePath, callback) {
-        me.package.lock(task, task => {
-            me.package.core.file.readFile(function (err, data) {
+        me.lock(task, task => {
+            me.core.file.readFile(function (err, data) {
                 core.console.log("serving binary file: " + filePath);
                 if (err) {
                     core.console.log(JSON.stringify(err));
@@ -42,14 +42,14 @@ package.core.module = function CoreModule(me) {
                 } else {
                     callback(data);
                 }
-                me.package.unlock(task);
+                me.unlock(task);
                 core.console.log("finished serving binary file: " + filePath);
             }, filePath);
         });
     };
     me.receive = {
         set: function (info) {
-            if (me.package.platform === "server") {
+            if (me.platform === "server") {
                 if (info.method === "GET") {
                     var startupApp = "";
                     if (info.url.startsWith("/") && !info.url.includes(".")) {
@@ -63,8 +63,8 @@ package.core.module = function CoreModule(me) {
                         if (component_path) {
                             core.console.log("component_path: " + component_path);
                             try {
-                                var require_platform = me.package.require(component_path);
-                                var remote_platform = me.package.remote(component_path);
+                                var require_platform = me.require(component_path);
+                                var remote_platform = me.remote(component_path);
                                 if (require_platform) {
                                     target_platform = require_platform;
                                 } else if (remote_platform) {
@@ -131,7 +131,7 @@ package.core.module = function CoreModule(me) {
                     } else if (file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
                         var mimeType = file_path.endsWith(".m4a") ? "audio/mp4" : "video/mp4";
                         info.custom = true;
-                        me.package.core.stream.serve(info.headers, info.response, file_path, mimeType);
+                        me.core.stream.serve(info.headers, info.response, file_path, mimeType);
                     }
                 }
             }

@@ -5,12 +5,12 @@
 
 package.app.downloads = function AppDownloads(me) {
     me.launch = function (args) {
-        me.package.ui.element.create(__json__, "workspace", "self");
+        me.ui.element.create(__json__, "workspace", "self");
     };
     me.refresh = {
         set: function(object) {
-            var window = me.package.widget.window.window(object);
-            me.package.manager.download.items(function(items) {
+            var window = me.widget.window.window(object);
+            me.manager.download.items(function(items) {
                 var widgets = [];
                 for(var item of items) {
                     widgets.push({
@@ -62,15 +62,15 @@ package.app.downloads = function AppDownloads(me) {
                         ]
                     });
                 }
-                me.package.core.property.set(window.var.list, "ui.basic.elements", widgets);
+                me.core.property.set(window.var.list, "ui.basic.elements", widgets);
             });
         }
     };
     me.clearall = {
         set: function(object) {
-            var window = me.package.widget.window.window(object);
-            me.package.manager.download.removeall(function() {
-                me.package.core.property.notify(window, "app.downloads.refresh");
+            var window = me.widget.window.window(object);
+            me.manager.download.removeall(function() {
+                me.core.property.notify(window, "app.downloads.refresh");
             });
         }
     };

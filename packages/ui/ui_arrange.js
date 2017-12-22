@@ -6,19 +6,19 @@
 package.ui.arrange = function UIArrange(me) {
     me.cascade = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            var parent = me.package.widget.window.parent(window);
+            var window = me.widget.window.mainWindow(object);
+            var parent = me.widget.window.parent(window);
             if (parent) {
                 window = parent;
             }
             if(window) {
                 object = window;
             }
-            var windows = me.package.core.property.get(object, "widget.window.visibleWindows");
+            var windows = me.core.property.get(object, "widget.window.visibleWindows");
             var left = 0, top = 0, numWindows = windows.length;
             for(window of windows) {
                 me.reposition(window, function(region) {
-                    var label_region = me.package.ui.rect.relative_region(window.var.label, window);
+                    var label_region = me.ui.rect.relative_region(window.var.label, window);
                     region.left = left;
                     region.top = top;
                     region.width -= label_region.bottom * numWindows;
@@ -30,23 +30,23 @@ package.ui.arrange = function UIArrange(me) {
         }
     };
     me.reposition = function (object, callback) {
-        var window = me.package.widget.window.window(object);
-        me.package.core.property.set(window, "unmaximize");
-        var parent = me.package.widget.window.parent(window);
+        var window = me.widget.window.window(object);
+        me.core.property.set(window, "unmaximize");
+        var parent = me.widget.window.parent(window);
         var content = null;
         var container = null;
         if (parent) {
             container = parent.var.container;
             content = container.var.content;
         } else {
-            container = content = me.package.ui.element.workspace();
+            container = content = me.ui.element.workspace();
         }
-        var parent_region = me.package.ui.rect.relative_region(container);
-        var isFixed = me.package.core.property.get(window, "fixed");
+        var parent_region = me.ui.rect.relative_region(container);
+        var isFixed = me.core.property.get(window, "fixed");
         callback(parent_region);
-        me.package.ui.rect.set_relative_region(window, parent_region, content, isFixed);
-        me.package.core.property.notify(window, "update");
-        me.package.core.property.notify(parent, "update");
+        me.ui.rect.set_relative_region(window, parent_region, content, isFixed);
+        me.core.property.notify(window, "update");
+        me.core.property.notify(parent, "update");
     };
     me.alignToLeft = {
         set: function (object) {
@@ -98,46 +98,46 @@ package.ui.arrange = function UIArrange(me) {
     };
     me.tileHorizontally = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            var parent = me.package.widget.window.parent(window);
+            var window = me.widget.window.mainWindow(object);
+            var parent = me.widget.window.parent(window);
             if (parent) {
                 window = parent;
             }
             if(window) {
                 object = window;
             }
-            var windows = me.package.core.property.get(object, "widget.window.visibleWindows");
+            var windows = me.core.property.get(object, "widget.window.visibleWindows");
             if (windows) {
                 if(windows.length > 0) {
                     var left = windows[windows.length - 1];
-                    me.package.core.property.set(left, "ui.arrange.alignToLeft");
+                    me.core.property.set(left, "ui.arrange.alignToLeft");
                 }
                 if(windows.length > 1) {
                     var right = windows[windows.length - 2];
-                    me.package.core.property.set(right, "ui.arrange.alignToRight");
+                    me.core.property.set(right, "ui.arrange.alignToRight");
                 }
             }
         }
     };
     me.tileVertically = {
         set: function (object) {
-            var window = me.package.widget.window.mainWindow(object);
-            var parent = me.package.widget.window.parent(window);
+            var window = me.widget.window.mainWindow(object);
+            var parent = me.widget.window.parent(window);
             if (parent) {
                 window = parent;
             }
             if(window) {
                 object = window;
             }
-            var windows = me.package.core.property.get(object, "widget.window.visibleWindows");
+            var windows = me.core.property.get(object, "widget.window.visibleWindows");
             if (windows) {
                 if(windows.length > 0) {
                     var top = windows[windows.length - 1];
-                    me.package.core.property.set(top, "ui.arrange.alignToTop");
+                    me.core.property.set(top, "ui.arrange.alignToTop");
                 }
                 if(windows.length > 1) {
                     var bottom = windows[windows.length - 2];
-                    me.package.core.property.set(bottom, "ui.arrange.alignToBottom");
+                    me.core.property.set(bottom, "ui.arrange.alignToBottom");
                 }
             }
         }
@@ -149,7 +149,7 @@ package.ui.arrange = function UIArrange(me) {
     };
     me.center = {
         set: function(object) {
-            var window = me.package.widget.window.window(object);
+            var window = me.widget.window.window(object);
             me.reposition(window, function(parent_region) {
                 parent_region.width /= 1.5;
                 parent_region.height /= 1.5;

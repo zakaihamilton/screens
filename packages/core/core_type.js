@@ -27,7 +27,7 @@ package.core.type = function CoreType(me) {
         var query = "";
         if(unwrapped_args) {
             for(var i = 0; i < unwrapped_args.length; i++) {
-                var value = encodeURIComponent(me.package.core.type.wrap(unwrapped_args[i]));
+                var value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
                 if(i === 0) {
                     query = "?" + i + "=" + value;
                 }
@@ -43,7 +43,7 @@ package.core.type = function CoreType(me) {
         if(wrapped_args) {
             for(var key in wrapped_args) {
                 if(wrapped_args.hasOwnProperty(key)) {
-                    unwrapped_args.push(me.package.core.type.unwrap(wrapped_args[key]));
+                    unwrapped_args.push(me.core.type.unwrap(wrapped_args[key]));
                 }
             }
         }

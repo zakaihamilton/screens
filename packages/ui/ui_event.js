@@ -6,7 +6,7 @@
 package.ui.event = function UIEvent(me) {
     me.send_event = function(object, method, event) {
         if(!object.getAttribute || !object.getAttribute('disabled')) {
-            me.package.core.property.set(object, method, event);
+            me.core.property.set(object, method, event);
         }
     };
     me.register = function (handlers, object, type, method, name=type, target=object) {
@@ -14,7 +14,7 @@ package.ui.event = function UIEvent(me) {
             object.event_types = {};
         }
         if(method) {
-            method = me.package.ui.element.to_full_name(object, method);
+            method = me.ui.element.to_full_name(object, method);
         }
         var listener_callback = function (event) {
             var result = true;

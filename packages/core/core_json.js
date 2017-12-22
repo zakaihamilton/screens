@@ -37,10 +37,10 @@ package.core.json = function CoreJson(me) {
                 callback:parse,
                 mimeType:"application/json"
             };
-            me.package.core.http.send(info);
+            me.core.http.send(info);
         }
     };
     me.log = function(json) {
-        me.package.core.console.log(JSON.stringify(json, null, 4));        
+        me.core.console.log(JSON.stringify(json, null, 4));        
     };
 };

@@ -4,7 +4,7 @@
  */
 
 package.core.http = function CoreHttp(me) {
-    var core = me.package.core;
+    var core = me.core;
     if (package.platform === "server") {
         me.port = process.env.PORT || 4040;
     } else {
@@ -12,7 +12,7 @@ package.core.http = function CoreHttp(me) {
     }
     me.listeners = [];
     me.init = function () {
-        if (me.package.platform === "server") {
+        if (me.platform === "server") {
             me.http = require("http");
             me.server = me.http.createServer(function (request, response) {
                 var body = [];
@@ -42,7 +42,7 @@ package.core.http = function CoreHttp(me) {
         if(body) {
             body = Buffer.concat(body).toString();
         }
-        me.package.lock(task => {
+        me.lock(task => {
             var url = request.url;
             var query = "";
             var query_offset = url.lastIndexOf("?");
@@ -64,7 +64,7 @@ package.core.http = function CoreHttp(me) {
             };
             core.object.attach(info, me);
             core.property.set(info, "receive");
-            me.package.unlock(task, () => {
+            me.unlock(task, () => {
                 if(info.custom === false) {
                     response.writeHead(info.code, {
                         "Content-Type": info["content-type"],
@@ -86,7 +86,7 @@ package.core.http = function CoreHttp(me) {
         return array;
     };
     me.send = function (info, async = true) {
-        if (me.package.platform === "server") {
+        if (me.platform === "server") {
             var request = {
                 url:info.url,
                 headers:null,

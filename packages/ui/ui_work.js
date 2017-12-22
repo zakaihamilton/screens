@@ -15,13 +15,13 @@ package.ui.work = function UIWork(me) {
             if(state) {
                 object.inWork++;
                 if(object.inWork === 1) {
-                    me.package.core.property.set(object, "work", true);
+                    me.core.property.set(object, "work", true);
                 }
             }
             else {
                 object.inWork--;
                 if(object.inWork === 0) {
-                    me.package.core.property.set(object, "work", false);
+                    me.core.property.set(object, "work", false);
                 }
             }
         }

@@ -15,47 +15,47 @@ package.media.ffmpeg = function MediaFFMpeg(me) {
         me.ffmpeg(source)
                 .toFormat(format)
                 .on('error', function (err) {
-                    me.package.core.console.log('An error occurred: ' + err.message);
+                    me.core.console.log('An error occurred: ' + err.message);
                     callback(err);
                 })
                 .on('progress', function (progress) {
-                    me.package.core.console.log('Processing: ' + source + ' to ' + target + ' ' + progress.targetSize + ' KB converted = ' + JSON.stringify(progress));
+                    me.core.console.log('Processing: ' + source + ' to ' + target + ' ' + progress.targetSize + ' KB converted = ' + JSON.stringify(progress));
                     callback(progress);
                 })
                 .on('end', function () {
-                    me.package.core.console.log('Processing finished for ' + source + ' to ' + target);
+                    me.core.console.log('Processing finished for ' + source + ' to ' + target);
                     callback(null);
                 })
                 .save(target);
     };
     me.info = function (callback) {
-        me.package.lock(task => {
+        me.lock(task => {
             var info = {};
-            me.package.lock(task, task => {
+            me.lock(task, task => {
                 me.ffmpeg.getAvailableFormats(function (err, formats) {
                     info.formats = formats;
-                    me.package.unlock(task);
+                    me.unlock(task);
                 });
             });
-            me.package.lock(task, task => {
+            me.lock(task, task => {
                 me.ffmpeg.getAvailableCodecs(function (err, codecs) {
                     info.codecs = codecs;
-                    me.package.unlock(task);
+                    me.unlock(task);
                 });
             });
-            me.package.lock(task, task => {
+            me.lock(task, task => {
                 me.ffmpeg.getAvailableEncoders(function (err, encoders) {
                     info.encoders = encoders;
-                    me.package.unlock(task);
+                    me.unlock(task);
                 });
             });
-            me.package.lock(task, task => {
+            me.lock(task, task => {
                 me.ffmpeg.getAvailableFilters(function (err, filters) {
                     info.filters = filters;
-                    me.package.unlock(task);
+                    me.unlock(task);
                 });
             });
-            me.package.unlock(task, () => {
+            me.unlock(task, () => {
                 callback(info);
             });
         });

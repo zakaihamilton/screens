@@ -8,8 +8,8 @@ package.ui.touch = function UITouch(me) {
         me.click_delay = 200;
         me.click_repeat_delay = 250;
         me.click_repeat_interval = 50;
-        me.send_event = me.package.ui.event.send_event;
-        me.register = me.package.ui.event.register;
+        me.send_event = me.ui.event.send_event;
+        me.register = me.ui.event.register;
         if (window.PointerEvent) {
             console.log("using pointer events");
             me.eventNames = {

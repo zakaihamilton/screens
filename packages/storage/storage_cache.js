@@ -7,9 +7,9 @@ package.require("storage.cache", "browser");
 
 package.storage.cache = function StorageCache(me) {
     me.init = function () {
-        me.none = me.package.core.object.create(me);
-        me.local = me.package.core.object.create(me);
-        me.session = me.package.core.object.create(me);
+        me.none = me.core.object.create(me);
+        me.local = me.core.object.create(me);
+        me.session = me.core.object.create(me);
         if (me.isSupported()) {
             me.none.storage = null;
             me.none.members = function () {
@@ -32,8 +32,8 @@ package.storage.cache = function StorageCache(me) {
                 me.session.storage.clear();
             };
         }
-        me.key = me.package.core.object.property("storage.cache.key");
-        me.location = me.package.core.object.property("storage.cache.location");
+        me.key = me.core.object.property("storage.cache.key");
+        me.location = me.core.object.property("storage.cache.location");
     };
     me.isSupported = function () {
         try {
@@ -48,27 +48,27 @@ package.storage.cache = function StorageCache(me) {
     };
     me.store = {
         set: function (object, value) {
-            var key = me.package.core.property.get(object, "storage.cache.key");
-            var location = me.package.core.property.get(object, "storage.cache.location");
+            var key = me.core.property.get(object, "storage.cache.key");
+            var location = me.core.property.get(object, "storage.cache.location");
             if (!location) {
                 location = "local";
             }
             if (key) {
-                me.package.core.property.set(me[location], key, value);
+                me.core.property.set(me[location], key, value);
             }
         }
     };
     me.restore = {
         set: function (object, value) {
-            var key = me.package.core.property.get(object, "storage.cache.key");
-            var location = me.package.core.property.get(object, "storage.cache.location");
+            var key = me.core.property.get(object, "storage.cache.key");
+            var location = me.core.property.get(object, "storage.cache.location");
             if (!location) {
                 location = "local";
             }
             if (key) {
-                var store = me.package.core.property.get(me[location], key);
+                var store = me.core.property.get(me[location], key);
                 if(store !== null) {
-                    me.package.core.property.set(object, value, store);
+                    me.core.property.set(object, value, store);
                 }
             }
         }

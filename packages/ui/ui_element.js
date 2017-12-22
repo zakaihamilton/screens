@@ -15,7 +15,7 @@ package.ui.element = function UIElement(me) {
                     if (parent) {
                         var match = false;
                         for (var depend_index = 0; depend_index < depends.parent.length; depend_index++) {
-                            if (me.package.ui.node.container(parent, depends.parent[depend_index])) {
+                            if (me.ui.node.container(parent, depends.parent[depend_index])) {
                                 match = true;
                             }
                         }
@@ -107,7 +107,7 @@ package.ui.element = function UIElement(me) {
             if(object.context) {
                 object = object.context;
             }
-            path = me.package.core.property.fullname(object, path, path);
+            path = me.core.property.fullname(object, path, path);
         }
         return path;
     };
@@ -131,7 +131,7 @@ package.ui.element = function UIElement(me) {
     };
     me.create = function (properties, parent, context=null) {
         if(typeof properties === "string") {
-            properties = me.package.core.property.get(parent, properties, context);
+            properties = me.core.property.get(parent, properties, context);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
@@ -159,7 +159,7 @@ package.ui.element = function UIElement(me) {
         }
         var component = package.path(component_name);
         var defaultProperties = component["ui.element.default"];
-        me.package.core.console.log("creating element of " + component_name);
+        me.core.console.log("creating element of " + component_name);
         if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
             tag = defaultProperties['ui.basic.tag'];
         }
@@ -173,14 +173,14 @@ package.ui.element = function UIElement(me) {
         else {
             object = document.createElement(tag);
         }
-        me.package.core.object.attach(object, component);
+        me.core.object.attach(object, component);
         object.var = {};
             if(context === "self") {
-            me.package.core.console.log("using self context");
+            me.core.console.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;
-        me.package.core.property.set(object, "ui.node.parent", parent);
+        me.core.property.set(object, "ui.node.parent", parent);
         var constructor = component["ui.element.create"];
         if(constructor) {
             constructor(object, parent);
@@ -190,21 +190,21 @@ package.ui.element = function UIElement(me) {
         component["core.property.redirect"] = null;
         if(defaultProperties) {
             for (var key in defaultProperties) {
-                me.package.core.property.set(object, key, defaultProperties[key]);
+                me.core.property.set(object, key, defaultProperties[key]);
             }
         }
         component["core.property.redirect"] = redirect;
         object.context = context ? context : parent;
         for (var key in properties) {
-            me.package.core.property.set(object, key, properties[key]);
+            me.core.property.set(object, key, properties[key]);
         }
         if (component.extend) {
             component.extend.map(function (extension) {
-                me.package.core.property.set(object, extension + ".extend");
+                me.core.property.set(object, extension + ".extend");
             });
         }
         if (component_name !== me.id) {
-            me.package.core.property.set(object, "draw");
+            me.core.property.set(object, "draw");
         }
         return object;
     };

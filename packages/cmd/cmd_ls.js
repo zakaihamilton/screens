@@ -9,13 +9,13 @@ package.cmd.ls = function CmdLs(me) {
         if(!current_dir) {
             current_dir = ".";
         }
-        me.package.core.file.readDir(function(err, items) {
+        me.core.file.readDir(function(err, items) {
             if(items) {
                 for(let item of items) {
-                    me.package.core.property.set(terminal, "print", item);
+                    me.core.property.set(terminal, "print", item);
                 }
             }
-            me.package.core.cmd.exit(terminal);
+            me.core.cmd.exit(terminal);
         }, current_dir);
     };
     

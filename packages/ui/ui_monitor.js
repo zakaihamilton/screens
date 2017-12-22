@@ -5,8 +5,8 @@
 
 package.ui.monitor = function UIMonitor(me) {
     me.init = function() {
-        me.send_event = me.package.ui.event.send_event;
-        me.register = me.package.ui.event.register;
+        me.send_event = me.ui.event.send_event;
+        me.register = me.ui.event.register;
     }
     me.keys = [];
     me.handle = {};

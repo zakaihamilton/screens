@@ -16,22 +16,22 @@ package.app.folder = function AppFolder(me) {
         }
         json.title = "Folder - " + name;
         json["app.folder.path"] = path;
-        var folder = me.package.ui.element.create(json, "workspace", "self");
-        me.package.core.property.notify(folder, "app.folder.refresh");
+        var folder = me.ui.element.create(json, "workspace", "self");
+        me.core.property.notify(folder, "app.folder.refresh");
     };
     me.init = function () {
-        me.path = me.package.core.object.property("app.folder.path");
-        me.args = me.package.core.object.property("app.folder.args");
+        me.path = me.core.object.property("app.folder.path");
+        me.args = me.core.object.property("app.folder.args");
     };
     me.refresh = {
         set: function (object) {
-            var window = me.package.widget.window.window(object);
-            var path = me.package.core.property.get(window, "app.folder.path");
-            me.package.core.file.readDir(function (err, items) {
+            var window = me.widget.window.window(object);
+            var path = me.core.property.get(window, "app.folder.path");
+            me.core.file.readDir(function (err, items) {
                 if (items) {
                     for (let item of items) {
                         var itemPath = path + "/" + item;
-                        me.package.core.property.set(object, "app.folder.refreshElement", itemPath);
+                        me.core.property.set(object, "app.folder.refreshElement", itemPath);
                     }
                 }
             }, path);
@@ -39,8 +39,8 @@ package.app.folder = function AppFolder(me) {
     };
     me.refreshElement = {
         set: function (object, path) {
-            var name = me.package.core.path.fullName(path);
-            me.package.core.file.isDirectory(function (isDirectory) {
+            var name = me.core.path.fullName(path);
+            me.core.file.isDirectory(function (isDirectory) {
                 var properties = null;
                 if (isDirectory) {
                     properties = {
@@ -57,16 +57,16 @@ package.app.folder = function AppFolder(me) {
                         "ui.touch.dblclick": "app.progman.shell"
                     };
                 }
-                me.package.core.property.set(object, "elements", properties);
-                me.package.core.property.notify(object, "update");
+                me.core.property.set(object, "elements", properties);
+                me.core.property.notify(object, "update");
             }, path);
         }
     };
     me.shell = {
         set: function (object) {
-            var args = me.package.core.cmd.split(me.package.core.property.get(object, "app.folder.args"));
+            var args = me.core.cmd.split(me.core.property.get(object, "app.folder.args"));
             if (args) {
-                me.package.core.console.log("folder launch args: " + JSON.stringify(args));
+                me.core.console.log("folder launch args: " + JSON.stringify(args));
                 me.launch(args);
             }
         }

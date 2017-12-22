@@ -15,7 +15,7 @@ package.widget.clock = function WidgetClock(me) {
             if (m < 10) {
                 m = "0" + m;
             }
-            me.package.core.property.set(object, "ui.basic.text", h + ":" + m);
+            me.core.property.set(object, "ui.basic.text", h + ":" + m);
         }, 1000);
     };
 };

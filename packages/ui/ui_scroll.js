@@ -59,15 +59,15 @@ package.ui.scroll = function UIScroll(me) {
         pos += "px";
         var changed = false;
         if (type === "vertical") {
-            var top = me.package.core.property.get(object, "ui.style.top");
+            var top = me.core.property.get(object, "ui.style.top");
             if (top !== pos) {
-                me.package.core.property.set(object, "ui.style.top", pos);
+                me.core.property.set(object, "ui.style.top", pos);
                 changed = true;
             }
         } else if (type === "horizontal") {
-            var left = me.package.core.property.get(object, "ui.style.left");
+            var left = me.core.property.get(object, "ui.style.left");
             if (left !== pos) {
-                me.package.core.property.set(object, "ui.style.left", pos);
+                me.core.property.set(object, "ui.style.left", pos);
                 changed = true;
             }
         }
@@ -77,15 +77,15 @@ package.ui.scroll = function UIScroll(me) {
         size += "px";
         var changed = false;
         if (type === "vertical") {
-            var height = me.package.core.property.get(object, "ui.style.height");
+            var height = me.core.property.get(object, "ui.style.height");
             if (height !== size) {
-                me.package.core.property.set(object, "ui.style.height", size);
+                me.core.property.set(object, "ui.style.height", size);
                 changed = true;
             }
         } else if (type === "horizontal") {
-            var width = me.package.core.property.get(object, "ui.style.width");
+            var width = me.core.property.get(object, "ui.style.width");
             if (width !== size) {
-                me.package.core.property.set(object, "ui.style.width", size);
+                me.core.property.set(object, "ui.style.width", size);
                 changed = true;
             }
         }
@@ -173,11 +173,11 @@ package.ui.scroll = function UIScroll(me) {
         }
     };
     me.overflow = function (object) {
-        var members = me.package.ui.node.members(object, me.package.widget.window.id);
-        var window_region = me.package.ui.rect.absolute_region(object);
+        var members = me.ui.node.members(object, me.widget.window.id);
+        var window_region = me.ui.rect.absolute_region(object);
         if (members) {
             members = members.filter(function (member) {
-                var member_region = me.package.ui.rect.absolute_region(member);
+                var member_region = me.ui.rect.absolute_region(member);
                 var h_overflow = member_region.left < window_region.left || member_region.right > window_region.right;
                 var v_overflow = member_region.top < window_region.top || member_region.bottom > window_region.bottom;
                 return h_overflow || v_overflow;
@@ -187,23 +187,23 @@ package.ui.scroll = function UIScroll(me) {
     };
     me.thumb = {
         set: function (object, value) {
-            var container = me.package.ui.node.container(object, me.package.widget.container.id);
+            var container = me.ui.node.container(object, me.widget.container.id);
             var scroll_type = value;
             var scrollbar = null;
             if(!scroll_type) {
-                me.package.core.property.set(object, "ui.touch.down", null);
+                me.core.property.set(object, "ui.touch.down", null);
                 return;
             }
             if(value.startsWith("vertical") || value.startsWith("horizontal")) {
                 scrollbar = container.var[scroll_type];
             }
             else {
-                var method = me.package.ui.element.to_full_name(object, value);
-                scroll_type = me.package.core.property.get(object, method);
+                var method = me.ui.element.to_full_name(object, value);
+                scroll_type = me.core.property.get(object, method);
                 scrollbar = object.parentNode.parentNode;
             }
             var thumb = scrollbar.var.thumb;
-            me.package.core.property.set(object, "ui.touch.down", function(object, event) {
+            me.core.property.set(object, "ui.touch.down", function(object, event) {
                 if (object.getAttribute('disabled')) {
                     event.preventDefault();
                     return;
@@ -212,7 +212,7 @@ package.ui.scroll = function UIScroll(me) {
                     return;
                 }
                 event.handled = true;
-                var thumb_region = me.package.ui.rect.absolute_region(thumb);
+                var thumb_region = me.ui.rect.absolute_region(thumb);
                 var info = {
                     target: thumb,
                     left: event.clientX - thumb_region.left,
@@ -223,8 +223,8 @@ package.ui.scroll = function UIScroll(me) {
                     height: thumb.offsetHeight
                 };
                 var scroll_method = function (object, event) {
-                    var track_region = me.package.ui.rect.absolute_region(scrollbar.var.track);
-                    var thumb_region = me.package.ui.rect.absolute_region(thumb);
+                    var track_region = me.ui.rect.absolute_region(scrollbar.var.track);
+                    var thumb_region = me.ui.rect.absolute_region(thumb);
                     var length = me.length(scroll_type, track_region, thumb_region);
                     var thumb_pos = null;
                     if (scroll_type === "vertical") {
@@ -236,7 +236,7 @@ package.ui.scroll = function UIScroll(me) {
                         if(thumb_pos > track_region.height - thumb_region.height) {
                             thumb_pos = track_region.height - thumb_region.height;
                         }
-                        me.package.core.property.set(thumb, "ui.style.top", thumb_pos + "px");
+                        me.core.property.set(thumb, "ui.style.top", thumb_pos + "px");
                     } else if (scroll_type === "horizontal") {
                         var thumb_pos = (event.clientX - info.left) - track_region.left;
                         if(thumb_pos < 0) {
@@ -245,38 +245,38 @@ package.ui.scroll = function UIScroll(me) {
                         if(thumb_pos > track_region.width - thumb_region.width) {
                             thumb_pos = track_region.width - thumb_region.width;
                         }
-                        me.package.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
+                        me.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
-                    me.shift(me.package.widget.container.content(container), scroll_type, percent);
-                    me.package.core.property.set(container, "update");
+                    me.shift(me.widget.container.content(container), scroll_type, percent);
+                    me.core.property.set(container, "update");
                 };
                 var release_method = function (object, event) {
-                    me.package.core.property.set(object, "ui.touch.move", null);
-                    me.package.core.property.set(object, "ui.touch.up", null);
-                    me.package.core.property.set(object, "ui.touch.contextmenu", null);
-                    me.package.core.property.set(object, "ui.touch.cancel", null);
-                    me.package.core.property.set(scrollbar, "snap");
+                    me.core.property.set(object, "ui.touch.move", null);
+                    me.core.property.set(object, "ui.touch.up", null);
+                    me.core.property.set(object, "ui.touch.contextmenu", null);
+                    me.core.property.set(object, "ui.touch.cancel", null);
+                    me.core.property.set(scrollbar, "snap");
                 };
                 var block_method = function(object, event) {
                     event.preventDefault();
                     event.stopPropagation();
                 };
-                me.package.core.property.set(object, "ui.touch.move", scroll_method);
-                me.package.core.property.set(object, "ui.touch.up", release_method);
-                me.package.core.property.set(object, "ui.touch.contextmenu", block_method);
-                me.package.core.property.set(object, "ui.touch.cancel", block_method);
+                me.core.property.set(object, "ui.touch.move", scroll_method);
+                me.core.property.set(object, "ui.touch.up", release_method);
+                me.core.property.set(object, "ui.touch.contextmenu", block_method);
+                me.core.property.set(object, "ui.touch.cancel", block_method);
                 event.preventDefault();
             });
         }
     };
     me.swipe = {
         set: function (object, value) {
-            var container = me.package.ui.node.container(object, me.package.widget.container.id);
+            var container = me.ui.node.container(object, me.widget.container.id);
             var scroll_type = value;
             var scrollbar = null;
             if(!value) {
-                me.package.core.property.set(object, "ui.touch.down", null);
+                me.core.property.set(object, "ui.touch.down", null);
                 return;
             }
             var division=10;
@@ -284,12 +284,12 @@ package.ui.scroll = function UIScroll(me) {
                 scrollbar = container.var[scroll_type];
             }
             else {
-                var method = me.package.ui.element.to_full_name(object, value);
-                scroll_type = me.package.core.property.get(object, method);
+                var method = me.ui.element.to_full_name(object, value);
+                scroll_type = me.core.property.get(object, method);
                 scrollbar = object.parentNode.parentNode;
             }
             var thumb = scrollbar.var.thumb;
-            me.package.core.property.set(object, "ui.touch.down", function(object, event) {
+            me.core.property.set(object, "ui.touch.down", function(object, event) {
                 if (object.getAttribute('disabled')) {
                     event.preventDefault();
                     return;
@@ -298,7 +298,7 @@ package.ui.scroll = function UIScroll(me) {
                     return;
                 }
                 event.handled = true;
-                var thumb_region = me.package.ui.rect.absolute_region(thumb);
+                var thumb_region = me.ui.rect.absolute_region(thumb);
                 var info = {
                     target: thumb,
                     left: event.clientX - thumb_region.left,
@@ -309,8 +309,8 @@ package.ui.scroll = function UIScroll(me) {
                     height: thumb.offsetHeight
                 };
                 var scroll_method = function (object, event) {
-                    var track_region = me.package.ui.rect.absolute_region(scrollbar.var.track);
-                    var thumb_region = me.package.ui.rect.absolute_region(thumb);
+                    var track_region = me.ui.rect.absolute_region(scrollbar.var.track);
+                    var thumb_region = me.ui.rect.absolute_region(thumb);
                     var length = me.length(scroll_type, track_region, thumb_region);
                     var thumb_pos = null;
                     if (scroll_type === "vertical") {
@@ -329,7 +329,7 @@ package.ui.scroll = function UIScroll(me) {
                         if(thumb_pos > track_region.height - thumb_region.height) {
                             thumb_pos = track_region.height - thumb_region.height;
                         }
-                        me.package.core.property.set(thumb, "ui.style.top", thumb_pos + "px");
+                        me.core.property.set(thumb, "ui.style.top", thumb_pos + "px");
                     } else if (scroll_type === "horizontal") {
                         var thumb_pos = (event.clientX - info.left) - track_region.left;
                         if(thumb_pos < 0) {
@@ -338,27 +338,27 @@ package.ui.scroll = function UIScroll(me) {
                         if(thumb_pos > track_region.width - thumb_region.width) {
                             thumb_pos = track_region.width - thumb_region.width;
                         }
-                        me.package.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
+                        me.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
                     }
                     var percent = me.pos_to_percent(length, thumb_pos);
-                    me.shift(me.package.widget.container.content(container), scroll_type, percent);
-                    me.package.core.property.set(container, "update");
+                    me.shift(me.widget.container.content(container), scroll_type, percent);
+                    me.core.property.set(container, "update");
                 };
                 var release_method = function (object, event) {
-                    me.package.core.property.set(object, "ui.touch.move", null);
-                    me.package.core.property.set(object, "ui.touch.up", null);
-                    me.package.core.property.set(object, "ui.touch.contextmenu", null);
-                    me.package.core.property.set(object, "ui.touch.cancel", null);
-                    me.package.core.property.set(scrollbar, "snap");
+                    me.core.property.set(object, "ui.touch.move", null);
+                    me.core.property.set(object, "ui.touch.up", null);
+                    me.core.property.set(object, "ui.touch.contextmenu", null);
+                    me.core.property.set(object, "ui.touch.cancel", null);
+                    me.core.property.set(scrollbar, "snap");
                 };
                 var block_method = function(object, event) {
                     event.preventDefault();
                     event.stopPropagation();
                 };
-                me.package.core.property.set(object, "ui.touch.move", scroll_method);
-                me.package.core.property.set(object, "ui.touch.up", release_method);
-                me.package.core.property.set(object, "ui.touch.contextmenu", block_method);
-                me.package.core.property.set(object, "ui.touch.cancel", block_method);
+                me.core.property.set(object, "ui.touch.move", scroll_method);
+                me.core.property.set(object, "ui.touch.up", release_method);
+                me.core.property.set(object, "ui.touch.contextmenu", block_method);
+                me.core.property.set(object, "ui.touch.cancel", block_method);
                 event.preventDefault();
             });
         }

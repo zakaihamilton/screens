@@ -22,7 +22,8 @@ function startBrowser(appName, appArgs) {
             "util",
             "file",
             "path",
-            "link"
+            "link",
+            "device"
         ],
         "storage": [
             "cache",
@@ -55,7 +56,8 @@ function startBrowser(appName, appArgs) {
             "work",
             "cachekey",
             "arrange",
-            "exec"
+            "exec",
+            "screenshot"
         ],
         "menu": [
             "context"
