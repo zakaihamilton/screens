@@ -824,12 +824,7 @@ package.widget.window = function WidgetWindow(me) {
                 value = !window.alwaysOnTop;
             }
             window.alwaysOnTop = value;
-            if(value) {
-                me.core.property.set(window, "ui.style.zIndex", 999);
-            }
-            else {
-                me.ui.focus.updateOrder(window.parentNode, window);                
-            }
+            me.ui.focus.updateOrder(window.parentNode, window);                
         }
     };
 };

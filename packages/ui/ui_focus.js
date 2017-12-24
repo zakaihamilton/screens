@@ -91,6 +91,12 @@ package.ui.focus = function UIFocus(me) {
             }
             me.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
+        for (var childOrder = childList.length - 1; childOrder >= 0; childOrder--) {
+            if(!me.core.property.get(childList[childOrder], "alwaysOnTop")) {
+                continue;
+            }
+            me.core.property.set(childList[childOrder], "ui.style.zIndex", 999-childOrder);
+        }
         if(object) {
             me.core.property.notify(object, "update");
         }
