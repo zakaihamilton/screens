@@ -820,6 +820,9 @@ package.widget.window = function WidgetWindow(me) {
         },
         set: function(object, value) {
             var window = me.window(object);
+            if(typeof value === "string") {
+                value = !window.alwaysOnTop;
+            }
             window.alwaysOnTop = value;
             if(value) {
                 me.core.property.set(window, "ui.style.zIndex", 999);
@@ -827,16 +830,6 @@ package.widget.window = function WidgetWindow(me) {
             else {
                 me.ui.focus.updateOrder(window.parentNode, window);                
             }
-        }
-    };
-    me.alwaysOnTopToggle = {
-        get: function(object) {
-            var window = me.window(object);
-            return window.alwaysOnTop;
-        },
-        set: function(object, value) {
-            var window = me.window(object);
-            me.core.property.set(window, "alwaysOnTop", !window.alwaysOnTop);
         }
     };
 };

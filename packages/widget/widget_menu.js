@@ -133,9 +133,9 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     me.select = {
         set: function (object, value) {
             var item = value[0];
-            var info = value[1];
+            var method = value[1];
             me.core.property.set(object, "back", item);
-            me.core.property.set(object.window, info, me.core.property.get(item, "ui.basic.text"));
+            me.core.property.set(object.window, method, me.core.property.get(item, "ui.basic.text"));
         }
     };
 };

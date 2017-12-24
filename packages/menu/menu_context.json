@@ -29,7 +29,7 @@
             "enabled": "select"
         }
     ],
-    ["Always On Top", "widget.window.alwaysOnTopToggle", {
+    ["Always On Top", "widget.window.alwaysOnTop", {
             "separator": true,
             "visible": "menu.context.notEmbed",
             "state": "select"
