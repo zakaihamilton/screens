@@ -27,12 +27,7 @@ package.app.viewer = function AppViewer(me) {
             var window = me.widget.window.window(object);
             var path = me.core.property.get(window, "app.viewer.path");
             me.core.file.readFile(function(err, data) {
-                if(err) {
-                    me.core.property.set(window.var.viewer, "ui.basic.text", err);
-                }
-                else {
-                    me.core.property.set(window.var.viewer, "ui.basic.text", data);
-                }
+                me.core.property.set(window.var.viewer, "ui.basic.text", err ? err : data);
                 me.core.property.notify(window, "update");
             }, path, 'utf8');
         }

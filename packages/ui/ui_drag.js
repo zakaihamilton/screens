@@ -58,7 +58,7 @@ package.ui.drag.icon = function UIDragIcon(me) {
     me.extend = {
         set: function (object) {
             object.setAttribute("draggable", true);
-            me.core.property.set(object, "ui.property.group", {
+            me.core.property.set(object, {
                 "ui.drag.start": "ui.drag.icon.start",
                 "ui.drag.enter": "ui.drag.icon.enter",
                 "ui.drag.over": "ui.drag.icon.over",

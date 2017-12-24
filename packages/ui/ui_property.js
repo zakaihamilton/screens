@@ -4,21 +4,6 @@
  */
 
 package.ui.property = function UIProperty(me) {
-    me.group = {
-        set: function(object, properties) {
-            if (Array.isArray(properties)) {
-                properties.map(function (item) {
-                    for (var key in item) {
-                        me.core.property.set(object, key, item[key]);
-                    }
-                });
-                return;
-            }
-            for (var key in properties) {
-                me.core.property.set(object, key, properties[key]);
-            }
-        }
-    };
     me.attribute = {
         set: function(object, properties) {
             for (var key in properties) {

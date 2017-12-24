@@ -171,7 +171,7 @@ package.widget.window = function WidgetWindow(me) {
             me.core.property.set(window.var.icon, "ui.node.parent");
             me.core.property.set(window, "ui.node.parent");
             if (parent_window) {
-                me.core.property.set(parent_window, "ui.property.group", {
+                me.core.property.set(parent_window, {
                     "widget.window.refocus": null
                 });
                 me.core.property.notify(parent_window, "update");
@@ -320,7 +320,7 @@ package.widget.window = function WidgetWindow(me) {
             if (!maximized) {
                 me.storeRegion(window);
             }
-            me.core.property.set(window, "ui.property.group", {
+            me.core.property.set(window, {
                 "ui.class.add": "minimize",
                 "ui.focus.active": false
             });
@@ -362,7 +362,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window, "restore");
                 return;
             }
-            me.core.property.set(window, "ui.property.group", {
+            me.core.property.set(window, {
                 "ui.class.remove": "minimize",
                 "ui.focus.active": true,
                 "ui.property.broadcast": {
@@ -379,13 +379,15 @@ package.widget.window = function WidgetWindow(me) {
             }
             if (!wasMaximized) {
                 me.storeRegion(window);
-                me.core.property.set(window, "ui.property.group", {
-                    "ui.style.left": "0px",
-                    "ui.style.top": "0px",
-                    "ui.style.width": "",
-                    "ui.style.height": "",
-                    "ui.style.bottom": "0px",
-                    "ui.style.right": "0px",
+                me.core.property.set(window, {
+                    "ui.property.style" : {
+                        "left": "0px",
+                        "top": "0px",
+                        "width": "",
+                        "height": "",
+                        "bottom": "0px",
+                        "right": "0px"
+                    },
                     "ui.move.enabled": false,
                     "ui.resize.enabled": false
                 });
@@ -444,7 +446,7 @@ package.widget.window = function WidgetWindow(me) {
                 if(parent_window) {
                     parent_window.focus_window = null;
                 }
-                me.core.property.set(window, "ui.property.group", {
+                me.core.property.set(window, {
                     "ui.node.parent":me.ui.element.workspace(),
                     "widget.window.embed":false,
                     "ui.focus.active": true
@@ -460,7 +462,7 @@ package.widget.window = function WidgetWindow(me) {
                     if(!me.core.property.get(window, "popup")) {
                         me.core.property.set(window.var.icon, "ui.class.remove", "minimize");
                     }
-                    me.core.property.set(window, "ui.property.group", {
+                    me.core.property.set(window, {
                         "ui.class.remove": "minimize",
                         "ui.focus.active": true
                     });
@@ -513,7 +515,7 @@ package.widget.window = function WidgetWindow(me) {
                     content = me.ui.element.workspace();
                 }
                 me.ui.rect.set_relative_region(window, window.restore_region, content);
-                me.core.property.set(window, "ui.property.group", {
+                me.core.property.set(window, {
                     "ui.property.broadcast": {
                         "ui.class.remove": "maximize",
                         "ui.class.add": "restore"

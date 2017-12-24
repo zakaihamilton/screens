@@ -72,7 +72,7 @@ package.menu.context = function MenuContext(me) {
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
-                me.core.property.set(menu, "ui.property.group", {
+                me.core.property.set(menu, {
                     "ui.style.left": icon_icon_region.left + "px",
                     "ui.style.top": region.bottom - menu_region.height - icon_region.height + padding + "px"
                 });

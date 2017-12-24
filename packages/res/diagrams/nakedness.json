@@ -21,7 +21,7 @@
                     "line": "2 18 34 18"
                 }
             ],
-            "ui.property.group": {
+            "core.property.group": {
                 "ui.group.data": {
                     "ui.data.keyList": [
                         "ui.style.gridRow",

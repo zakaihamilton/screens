@@ -56,8 +56,7 @@ package.app.transform = function AppTransform(me) {
             me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
-                me.core.property.set(window.var.layout, "ui.style.fontSize", value);
-                me.core.property.set(window.var.termTable, "ui.style.fontSize", value);
+                me.core.property.set([window.var.layout,window.var.termTable], "ui.style.fontSize", value);
                 window.forceReflow = true;
                 me.core.property.notify(window, "update");
             });
@@ -77,11 +76,12 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         me.core.property.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
         me.core.property.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
-        me.core.property.set(window.var.filter, "ui.style.top", showInput ? "250px" : "0px");
-        me.core.property.set(window.var.layout, "ui.style.top", showInput ? "250px" : "0px");
-        me.core.property.set(window.var.layout, "ui.style.borderTop", showInput ? "1px solid black" : "none");
-        me.core.property.set(window.var.layout, "ui.style.fontSize", window.options.fontSize);
-        me.core.property.set(window.var.layout, "ui.scroll.swipe", window.options.swipe ? "vertical" : "");
+        me.core.property.set([window.var.filter,window.var.layout], "ui.style.top", showInput ? "250px" : "0px");
+        me.core.property.set(window.var.layout, {
+            "ui.style.borderTop" : showInput ? "1px solid black" : "none",
+            "ui.style.fontSize" : window.options.fontSize,
+            "ui.scroll.swipe": window.options.swipe ? "vertical" : ""
+        });
         me.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
             me.core.property.notify(window, "update");
@@ -279,25 +279,25 @@ package.app.transform = function AppTransform(me) {
                     me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                 }
                 if (window.prevLanguage) {
-                    me.core.property.set(window.var.input, "ui.class.remove", window.prevLanguage);
-                    me.core.property.set(window.var.layout, "ui.class.remove", window.prevLanguage);
-                    me.core.property.set(window.var.filter, "ui.class.remove", window.prevLanguage);
-                    me.core.property.set(window.var.termTable, "ui.class.remove", window.prevLanguage);
-                    me.core.property.set(window.var.toggleGlossary, "ui.class.remove", window.prevLanguage);
+                    me.core.property.set([
+                        window.var.input,
+                        window.var.filter,
+                        window.var.termTable,
+                        window.var.toggleGlossary,
+                        window.var.layout
+                    ], "ui.class.remove", window.prevLanguage);
                 }
-                me.core.property.set(window.var.input, "ui.class.add", language);
-                me.core.property.set(window.var.layout, "ui.class.add", language);
-                me.core.property.set(window.var.filter, "ui.class.add", language);
-                me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
-                me.core.property.set(window.var.termTable, "ui.class.add", language);
-                me.core.property.set(window.var.toggleGlossary, "ui.class.add", language);
+                me.core.property.set([
+                    window.var.input,
+                    window.var.filter,
+                    window.var.termTable,
+                    window.var.toggleGlossary,
+                    window.var.layout
+                ], "ui.class.add", window.prevLanguage);
                 me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+                me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
                 window.prevLanguage = language;
-                if (window.options.showHtml) {
-                    me.core.property.set(window.var.output, "ui.basic.text", text);
-                } else {
-                    me.core.property.set(window.var.output, "ui.basic.html", text);
-                }
+                me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
                 me.updateFilterList(window, terms);
                 if (data) {
                     me.updateTermTable(window, terms, data.termTable, language);
@@ -410,14 +410,16 @@ package.app.transform = function AppTransform(me) {
         },
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            me.core.property.set(window.var.termPopup, "show", !me.core.property.get(window.var.termPopup, "minimize"));
-            me.core.property.set(window.var.termPopup, "ui.property.group", {
-                "ui.style.left": "25px",
-                "ui.style.top": "50px",
-                "ui.style.right": "25px",
-                "ui.style.bottom": "100px",
-                "ui.style.width": "",
-                "ui.style.height": ""
+            me.core.property.set(window.var.termPopup, {
+                "show": !me.core.property.get(window.var.termPopup, "minimize"),
+                "ui.property.style":{
+                    "left": "25px",
+                    "top": "50px",
+                    "right": "25px",
+                    "bottom": "100px",
+                    "width": "",
+                    "height": ""
+                }
             });
         }
     };

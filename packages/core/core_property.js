@@ -127,7 +127,7 @@ package.core.property = function CoreProperty(me) {
         }, 250);
     };
     me.set = function (object, name, value) {
-        if (!object) {
+        if (!object || !name) {
             return;
         }
         if (Array.isArray(object)) {
@@ -136,10 +136,24 @@ package.core.property = function CoreProperty(me) {
             });
             return results;
         }
-        if (typeof name !== "function") {
+        if (Array.isArray(name)) {
+            var results = name.map(function (item) {
+                return me.core.property.set(object, item, value);
+            });
+            return results;
+        }
+        if(typeof name === "string") {
             var source_method = me.core.property.fullname(object, name);
             me.setTo(me._forwarding_list, object, source_method, value);
             me.setTo(object._forwarding_list, object, source_method, value);
+        }
+        else if(typeof name !== "function") {
+            var results = {};
+            for(var key in name) {
+                var value = name[key];
+                results[key] = me.core.property.set(object, key, value);
+            }
+            return results;
         }
         me.core.property.get(object, name, value, "set");
     };
@@ -153,6 +167,21 @@ package.core.property = function CoreProperty(me) {
                         me.core.property.set(object, target, value);
                     }
                 }
+            }
+        }
+    };
+    me.group = {
+        set: function(object, properties) {
+            if (Array.isArray(properties)) {
+                properties.map(function (item) {
+                    for (var key in item) {
+                        me.core.property.set(object, key, item[key]);
+                    }
+                });
+                return;
+            }
+            for (var key in properties) {
+                me.core.property.set(object, key, properties[key]);
             }
         }
     };

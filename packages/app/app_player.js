@@ -29,10 +29,8 @@ package.app.player = function AppPlayer(me) {
         set: function (object, string) {
             var window = me.singleton;
             me.core.property.set(window.var.sessionList, "ui.basic.text", "");
-            me.core.property.set(window.var.audioType, "ui.style.visibility", "hidden");
-            me.core.property.set(window.var.videoType, "ui.style.visibility", "hidden");
-            me.core.property.set(window.var.audioPlayer, "ui.style.display", "none");
-            me.core.property.set(window.var.videoPlayer, "ui.style.display", "none");
+            me.core.property.set([window.var.audioType,window.var.videoType], "ui.style.visibility", "hidden");
+            me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.groupList, "ui.basic.save", null);
             me.updateSessions();
         }

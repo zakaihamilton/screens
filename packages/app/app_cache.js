@@ -53,8 +53,7 @@ package.app.cache = function AppCache(me) {
                 var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
                 if(key) {
                     me.core.property.set(cache, key, "");
-                    me.core.property.set(me.singleton.var.key, "ui.basic.text", "");
-                    me.core.property.set(me.singleton.var.value, "ui.basic.text", "");
+                    me.core.property.set([me.singleton.var.key,me.singleton.var.value], "ui.basic.text", "");
                 }
             }
         }
@@ -69,8 +68,7 @@ package.app.cache = function AppCache(me) {
     };
     me.onChangeStorage = {
         set: function(object, string) {
-            me.core.property.set(me.singleton.var.key, "ui.basic.text", "");
-            me.core.property.set(me.singleton.var.value, "ui.basic.text", "");
+            me.core.property.set([me.singleton.var.key,me.singleton.var.value], "ui.basic.text", "");
         }
     };
     me.onChangeKey = {

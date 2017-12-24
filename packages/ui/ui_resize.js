@@ -47,7 +47,7 @@ package.ui.resize = function UIResize(me) {
                 "transition": true
             });
             event.preventDefault();
-            me.core.property.set(object, "ui.property.group", {
+            me.core.property.set(object, {
                 "ui.touch.move": "ui.resize.move",
                 "ui.touch.up": "ui.resize.up"
             });
@@ -86,7 +86,7 @@ package.ui.resize = function UIResize(me) {
     };
     me.up = {
         set: function (object, event) {
-            me.core.property.set(object, "ui.property.group", {
+            me.core.property.set(object, {
                 "ui.touch.move": null,
                 "ui.touch.up": null
             });

@@ -5,7 +5,7 @@
 
 package.app.diagram = function AppDiagram(me) {
     me.launch = function (args) {
-        if(!args) {
+        if (!args) {
             args = [""];
         }
         var path = args[0];
@@ -13,11 +13,11 @@ package.app.diagram = function AppDiagram(me) {
         var options = null;
         var parent = "workspace";
         json["app.diagram.path"] = path;
-        if(args.length > 1) {
+        if (args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));
             options.original = args[1];
         }
-        if(args.length > 2) {
+        if (args.length > 2) {
             json["widget.window.embed"] = true;
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
@@ -28,12 +28,12 @@ package.app.diagram = function AppDiagram(me) {
             parent = args[2];
         }
         var window = me.ui.element.create(json, parent, "self");
-        if(args.length > 1) {
+        if (args.length > 1) {
             window.options = Object.assign({}, window.options, options);
             window.options = options;
             window.options.diagrams = false;
             window.options.reload = false;
-            window.options.fontSize = (parseInt(window.options.fontSize)/2) + "px";
+            window.options.fontSize = (parseInt(window.options.fontSize) / 2) + "px";
             window.options.viewType = "Layers";
             window.options.doExplanation = false;
             window.options.headings = false;
@@ -52,13 +52,13 @@ package.app.diagram = function AppDiagram(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            if(!window.optionsLoaded) {
+            if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
                     viewType: "Layers",
                     doTranslation: true,
                     doExplanation: false,
-                    prioritizeExplanation:false,
+                    prioritizeExplanation: false,
                     addStyles: true,
                     keepSource: false,
                     phaseNumbers: true,
@@ -87,10 +87,10 @@ package.app.diagram = function AppDiagram(me) {
         }
     };
     me.reload = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var path = me.core.property.get(window, "app.diagram.path");
-            me.core.json.loadFile(function(diagramJson) {
+            me.core.json.loadFile(function (diagramJson) {
                 me.core.property.set(window, "app.diagram.diagramData", diagramJson);
                 me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
                 me.core.property.notify(window, "app.diagram.refresh");
@@ -98,65 +98,69 @@ package.app.diagram = function AppDiagram(me) {
         }
     };
     me.term = {
-        get: function(object, info) {
-            if(object && info) {
+        get: function (object, info) {
+            if (object && info) {
                 me.lock(info.task, task => {
                     var window = me.widget.window.window(object);
-                    me.kab.text.parse(function(value) {
+                    me.kab.text.parse(function (value) {
                         info.value = value;
                         me.unlock(task);
                     }, window.language, info.value, window.options);
                 });
             }
         },
-        set: function(object, text) {
+        set: function (object, text) {
             var window = me.widget.window.window(object);
-            me.kab.text.parse(function(value) {
+            me.kab.text.parse(function (value) {
                 me.core.property.set(object, "ui.basic.html", value);
                 me.core.property.notify(window, "update");
             }, window.language, text, window.options);
         }
     };
     me.refresh = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
-            me.core.property.set(window.var.viewer, "ui.basic.html", null);
-            me.core.property.set(window.var.viewer, "ui.class.class", "app.diagram." + window.options.viewType.toLowerCase());
+            me.core.property.set(window.var.viewer, {
+                "ui.basic.html":null,
+                "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
+            });
             me.core.property.notify(window, "app.diagram.viewAs" + window.options.viewType);
             me.core.property.notify(window, "update");
         }
     };
     me.viewAsText = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.core.property.set(window.var.viewer, "ui.basic.text", JSON.stringify(diagramData, null, 4));
         }
     };
     me.viewAsRelationships = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
         }
     };
     me.viewAsLayers = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.ui.element.create(diagramData.layers, window.var.viewer);
-            if(diagramData.title) {
+            if (diagramData.title) {
                 me.core.property.set(window, "title", diagramData.title);
             }
         }
     };
     me.restore = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var embed = me.core.property.get(window, "embed");
-            if(embed) {
-                me.core.property.set(window, "app.diagram.fontSize", window.options.original.fontSize);
-                me.core.property.set(window, "app.diagram.doExplanation", window.options.original.doExplanation);
-                me.core.property.set(window, "app.diagram.phaseNumbers", window.options.original.phaseNumbers);
-                me.core.property.set(window, "app.diagram.headings", window.options.original.headings);
+            if (embed) {
+                me.core.property.set(window, {
+                    "app.diagram.fontSize": window.options.original.fontSize,
+                    "app.diagram.doExplanation": window.options.original.doExplanation,
+                    "app.diagram.phaseNumbers": window.options.original.phaseNumbers,
+                    "app.diagram.headings": window.options.original.headings
+                });
             }
         }
     };

@@ -14,7 +14,7 @@
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
             "ui.style.lineHeight": "2.5",
-            "ui.property.group": [
+            "core.property.group": [
                 {
                     "ui.group.data": {
                         "ui.data.keyList": [
