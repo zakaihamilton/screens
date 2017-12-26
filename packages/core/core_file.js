@@ -21,6 +21,10 @@ package.core.file = function CoreFile(me) {
     };
     me.delete = function(callback, path) {
         me.fs.stat(path, function(err, stats) {
+            if(err) {
+                callback(err);
+                return;
+            }
             if(stats && stats.isDirectory()) {
                 me.fs.rmdir(path, function(err) {
                     callback(err);
