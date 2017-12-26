@@ -20,8 +20,17 @@ package.core.file = function CoreFile(me) {
         });   
     };
     me.delete = function(callback, path) {
-        me.fs.unlink(path, function(err) {
-            callback(err);
+        me.fs.stat(path, function(err, stats) {
+            if(stats && stats.isDirectory()) {
+                me.fs.rmdir(path, function(err) {
+                    callback(err);
+                });
+            }
+            else {
+                me.fs.unlink(path, function(err) {
+                    callback(err);
+                });
+            }
         });
     };
     me.isFile = function(callback, path) {
