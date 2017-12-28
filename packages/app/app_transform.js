@@ -293,7 +293,7 @@ package.app.transform = function AppTransform(me) {
                     window.var.termTable,
                     window.var.toggleGlossary,
                     window.var.layout
-                ], "ui.class.add", window.prevLanguage);
+                ], "ui.class.add", language);
                 me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                 me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
                 window.prevLanguage = language;
