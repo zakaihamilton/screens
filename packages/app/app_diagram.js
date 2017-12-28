@@ -12,20 +12,31 @@ package.app.diagram = function AppDiagram(me) {
         var json = __json__;
         var options = null;
         var parent = "workspace";
+        var fullscreen = false;
         json["app.diagram.path"] = path;
         if (args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));
             options.original = args[1];
         }
-        if (args.length > 2) {
-            json["widget.window.embed"] = true;
+        if (args.length > 3) {
+            parent = args[2];
+            fullscreen = args[3];
+            if(fullscreen) {
+                json["widget.window.fullscreen"] = true;
+                parent = parent.var.fullscreen;
+                json["ui.style.width"] = "100%";
+                json["ui.style.height"] = "100%";
+            }
+            else {
+                json["widget.window.embed"] = true;
+                parent = parent.var.embed;
+                json["ui.style.width"] = "10em";
+                json["ui.style.height"] = "10em";
+            }
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
-            json["ui.style.width"] = "10em";
-            json["ui.style.height"] = "10em";
             json["ui.node.moveToFirst"] = true;
             json["ui.style.breakInside"] = "avoid-column";
-            parent = args[2];
         }
         var window = me.ui.element.create(json, parent, "self");
         if (args.length > 1) {
@@ -33,7 +44,9 @@ package.app.diagram = function AppDiagram(me) {
             window.options = options;
             window.options.diagrams = false;
             window.options.reload = false;
-            window.options.fontSize = (parseInt(window.options.fontSize) / 2) + "px";
+            if(!fullscreen) {
+                window.options.fontSize = (parseInt(window.options.fontSize) / 2) + "px";
+            }
             window.options.viewType = "Layers";
             window.options.doExplanation = false;
             window.options.headings = false;
@@ -154,7 +167,8 @@ package.app.diagram = function AppDiagram(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             var embed = me.core.property.get(window, "embed");
-            if (embed) {
+            var fullscreen = me.core.property.get(window, "fullscreen");
+            if (embed || fullscreen) {
                 me.core.property.set(window, {
                     "app.diagram.fontSize": window.options.original.fontSize,
                     "app.diagram.doExplanation": window.options.original.doExplanation,

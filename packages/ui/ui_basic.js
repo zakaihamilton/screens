@@ -79,7 +79,9 @@ package.ui.basic = function UIBasic(me) {
                 if(!parent.var) {
                     parent.var = {};
                 }
-                parent.var[value] = object;
+                value.split(",").map(value => {
+                    parent.var[value] = object;
+                });
             }
         }
     };

@@ -4428,6 +4428,10 @@
             "term": "Kaf"
         },
         {
+            "term":"Chaf",
+            "source": "Chaf [כ]"
+        },
+        {
             "source": "Lamed [ל]",
             "term": "Lamed"
         },
@@ -5043,6 +5047,14 @@
             "translation":"Small Small Face and Female",
             "explanation":"Desire",
             "style":{"heading":"Face","phase":"four"}
+        },
+        {
+            "term":"Gematria",
+            "translation":"Numerology"
+        },
+        {
+            "term":"AB Names",
+            "translation":"72 Names"
         }
     ],
     "style": {

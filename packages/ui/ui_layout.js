@@ -207,7 +207,7 @@ package.ui.layout = function UILayout(me) {
                         }
                     }
                     previousWidget = null;
-                    me.activateOnLoad(target.page ? target.page.var.marginRight : widget, widget);
+                    me.activateOnLoad(target.page ? target.page : widget, widget);
                     if(showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
@@ -215,7 +215,7 @@ package.ui.layout = function UILayout(me) {
                     break;
                 } else if (widget) {
                     previousWidget = widget;
-                    me.activateOnLoad(target.page ? target.page.var.marginRight : widget, widget);
+                    me.activateOnLoad(target.page ? target.page : widget, widget);
                 }
             }
         }, 0);
@@ -266,7 +266,8 @@ package.ui.layout = function UILayout(me) {
                             "ui.class.class": options.pageNumberClass,
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
-                            "ui.attribute.longPageNumberText": pageIndex
+                            "ui.attribute.longPageNumberText": pageIndex,
+                            "ui.touch.dblclick":"widget.window.fullscreen"
                         },
                         {
                             "ui.basic.tag": "div",
@@ -292,13 +293,13 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.contentClass,
                             "ui.style.columnCount": options.columnCount,
-                            "ui.basic.var": "content",
+                            "ui.basic.var": "content,fullscreen",
                             "ui.style.overflow": "hidden"
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.marginRightClass,
-                            "ui.basic.var": "marginRight"
+                            "ui.basic.var": "marginRight,embed"
                         }
                     ]
                 },

@@ -81,10 +81,6 @@
     visibility:hidden;
 }
 
-.glow-window-border.fullscreen {
-    border:none;
-}
-
 .glow-window-border.embed {
     position:relative;
     float:right;
@@ -102,6 +98,15 @@
     content: "";
     clear: both;
     display: table;
+}
+
+.glow-window-border.fullscreen {
+    border: none;
+    border-radius: 0px;
+}
+
+.glow-window-border.fullscreen.focus {
+    box-shadow:none;
 }
 
 .glow-window-margin {

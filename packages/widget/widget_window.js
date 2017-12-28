@@ -160,7 +160,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window, "minimize");
                 return;
             }
-            if (me.core.property.get(window, "embed")) {
+            if (me.core.property.get(window, "embed") || me.core.property.get(window, "fullscreen")) {
                 me.core.property.set(window, "restore");
                 return;
             }
@@ -308,7 +308,8 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            return !minimized && !embed;
+            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
+            return !minimized && !embed && !fullscreen;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -346,7 +347,8 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            return !me.core.property.get(window, "fixed") && !me.core.property.get(window, "popup") && !maximized && !minimized && !embed;
+            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
+            return !me.core.property.get(window, "fixed") && !me.core.property.get(window, "popup") && !maximized && !minimized && !embed && !fullscreen;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -358,7 +360,7 @@ package.widget.window = function WidgetWindow(me) {
             if (me.core.property.get(window, "fixed") || me.core.property.get(window, "popup")) {
                 return;
             }
-            if(me.core.property.get(window, "embed")) {
+            if(me.core.property.get(window, "embed") || me.core.property.get(window, "fullscreen")) {
                 me.core.property.set(window, "restore");
                 return;
             }
@@ -407,7 +409,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.core.property.set(window, "maximize");
                 } else if (minimized) {
                     me.core.property.set(window, "restore");
-                } else if(!me.core.property.get(window, "embed")) {
+                } else if(!me.core.property.get(window, "embed") && !me.core.property.get(window, "fullscreen")) {
                     me.core.property.set(window, "ui.focus.active", true);
                 }
                 var region = me.ui.rect.absolute_region(window);
@@ -431,17 +433,19 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            return maximized || minimized || embed;
+            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
+            return maximized || minimized || embed || fullscreen;
         },
         set: function (object, value) {
             var window = me.window(object);
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            if (!minimized && !maximized && !embed) {
+            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
+            if (!minimized && !maximized && !embed && !fullscreen) {
                 return;
             }
-            if(embed) {
+            if(embed || fullscreen) {
                 var parent_window = me.parent(window);
                 if(parent_window) {
                     parent_window.focus_window = null;
@@ -666,7 +670,7 @@ package.widget.window = function WidgetWindow(me) {
             return JSON.stringify(options);
         },
         set: function (object, value) {
-            if(!me.core.property.get(object, "embed")) {
+            if(!me.core.property.get(object, "embed") && !me.core.property.get(object, "fullscreen")) {
                 var options = JSON.parse(value);
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];

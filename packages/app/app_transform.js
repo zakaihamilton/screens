@@ -442,11 +442,10 @@ package.app.transform = function AppTransform(me) {
     };
     me.loadDiagram = {
         set: function (object, path) {
-            me.core.property.set(object, "ui.style.paddingBottom", "3em");
             var window = me.widget.window.mainWindow(object);
             me.core.app.launch(function (diagramWindow) {
                 me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
-            }, "diagram", [path, window.options, object]);
+            }, "diagram", [path, window.options, object, false]);
         }
     };
     me.hoverDescription = function (object, state) {
