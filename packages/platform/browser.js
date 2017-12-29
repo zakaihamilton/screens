@@ -103,7 +103,8 @@ function startBrowser(appName, appArgs) {
             "text"
         ],
         "kab": [
-            "text"
+            "text",
+            "letters"
         ],
         "manager":[
             "download"

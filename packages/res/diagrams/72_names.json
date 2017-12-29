@@ -1,0 +1,68 @@
+{
+    "title": "72 Names",
+    "layers": [
+        {
+            "kab.letters.source":{
+                "columnCount":"8",
+                "sources":{
+                    "right":{
+                        "verse":"וַיִּסַּע מַלְאַךְ הָאֱלֹהִים, הַהֹלֵךְ לִפְנֵי מַחֲנֵה יִשְׂרָאֵל, וַיֵּלֶךְ, מֵאַחֲרֵיהֶם; וַיִּסַּע עַמּוּד הֶעָנָן, מִפְּנֵיהֶם, וַיַּעֲמֹד, מֵאַחֲרֵיהֶם.",
+                        "offset":2,
+                        "backgroundColor":"#FFF3CA",
+                        "borderColor":"orange"
+                    },
+                    "left":{
+                        "verse":"וַיָּבֹא בֵּין מַחֲנֵה מִצְרַיִם, וּבֵין מַחֲנֵה יִשְׂרָאֵל, וַיְהִי הֶעָנָן וְהַחֹשֶׁךְ, וַיָּאֶר אֶת-הַלָּיְלָה; וְלֹא-קָרַב זֶה אֶל-זֶה, כָּל-הַלָּיְלָה.",
+                        "reverse":true,
+                        "offset":1,
+                        "backgroundColor":"#C8D9F9",
+                        "borderColor":"darkblue"
+                    },
+                    "middle":{
+                        "verse":"וַיֵּט מֹשֶׁה אֶת-יָדוֹ, עַל-הַיָּם, וַיּוֹלֶךְ יְהוָה אֶת-הַיָּם בְּרוּחַ קָדִים עַזָּה כָּל-הַלַּיְלָה, וַיָּשֶׂם אֶת-הַיָּם לֶחָרָבָה; וַיִּבָּקְעוּ, הַמָּיִם.",
+                        "offset":0,
+                        "backgroundColor":"#F5CCCB",
+                        "borderColor":"coral"
+                    }
+                }
+            },
+            "ui.property.style":{
+                "display": "grid",
+                "position": "absolute",
+                "padding": "10px",
+                "left": "5px",
+                "top": "5px",
+                "right": "5px",
+                "bottom": "5px",
+                "gridGap": "2% 1px",
+                "alignItems": "stretch",
+                "lineHeight": "0.5"
+            },
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "ui.basic.text",
+                    "ui.style.backgroundColor",
+                    "ui.style.borderColor",
+                    "ui.style.fontWeight"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "display":"flex",
+                        "alignItems":"center",
+                        "justifyContent":"center",
+                        "border": "1px solid black",
+                        "margin": "0",
+                        "textAlign": "center",
+                        "verticalAlign": "middle"
+                    }
+                },
+                "ui.data.values": [
+                    "kab.letters.values"
+                ]
+            }
+        }
+    ]
+}

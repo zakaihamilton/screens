@@ -209,11 +209,11 @@
             "suffix": "</h3>"
         },
         {
-            "find": "/([.?!:;,]) \n",
+            "find": "/([.?!:;,…]) \n",
             "replace": "$1\n"
         },
         {
-            "match": "/[^.?!:;,\\\"'”)]$",
+            "match": "/[^.?!:;,\\\"'”…)]$",
             "prefix": "<h4 style=\"text-align:center\">",
             "suffix": "</h4>"
         },
@@ -5055,6 +5055,10 @@
         {
             "term":"AB Names",
             "translation":"72 Names"
+        },
+        {
+            "term":"Atarot",
+            "translation":"Crowns"
         }
     ],
     "style": {
@@ -5130,6 +5134,10 @@
             "depends":["Yechida","Haya","Neshama","Ruach","Nefesh"],
             "term":"Yechida",
             "diagram":"vessels_vs_lights"
+        },
+        {
+            "depends":["seventy-two names"],
+            "diagram":"72_names"
         }
     ]
 }

@@ -4,6 +4,9 @@
  */
 
 package.kab.diagram = function KabDiagram(me) {
+    me.init = function() {
+        
+    };
     me.matchingDiagram = function(session, term) {
         var matchingDiagram = null;
         if(!session.json || !session.options.diagrams || !session.json.diagrams) {

@@ -21,6 +21,13 @@ package.core.app = function CoreApp(me) {
             }
         };
     };
+    me.preload = function(callback, appName) {
+        package.include("app." + appName, function (info) {
+            if (info.complete) {
+                callback();
+            }
+        });
+    };
     me.launch = function (callback, appName, appArgs) {
         var result = null;
         package.include("app." + appName, function (info) {

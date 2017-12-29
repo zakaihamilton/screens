@@ -21,6 +21,5 @@ package.include({
         "format",
         "search",
         "style",
-        "term",
         "text"
     ]});

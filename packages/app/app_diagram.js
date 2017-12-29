@@ -30,8 +30,8 @@ package.app.diagram = function AppDiagram(me) {
             else {
                 json["widget.window.embed"] = true;
                 parent = parent.var.embed;
-                json["ui.style.width"] = "10em";
-                json["ui.style.height"] = "10em";
+                json["ui.style.width"] = "13em";
+                json["ui.style.height"] = "13em";
             }
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
