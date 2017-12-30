@@ -25,6 +25,8 @@ package.kab.letters = function KabLetters(me) {
             var sources = window.kab_info.sources;
             var sourceCount = Object.keys(sources).length;
             var columnCount = parseInt(window.kab_info.columnCount);
+            var columnIndex = parseInt(window.kab_info.columnIndex);
+            var rowIndex = parseInt(window.kab_info.rowIndex);
             var gridColumnCount = columnCount * (sourceCount+1);
             for(var sourceName in sources) {
                 var source = sources[sourceName];
@@ -34,8 +36,8 @@ package.kab.letters = function KabLetters(me) {
                 }
                 for(var letterIndex = 0; letterIndex < letters.length; letterIndex++) {
                     var letter = letters[letterIndex];
-                    var row = parseInt(letterIndex / columnCount) + 1;
-                    var column = (gridColumnCount - (sourceCount+1)) - (((letterIndex % columnCount) * (sourceCount+1)) - source.offset) + 1;
+                    var row = rowIndex + parseInt(letterIndex / columnCount) + 1;
+                    var column = columnIndex + (gridColumnCount - (sourceCount+1)) - (((letterIndex % columnCount) * (sourceCount+1)) - source.offset) + 1;
                     values.push([row, column, letter, source.backgroundColor, source.borderColor]);
                 }
             }
