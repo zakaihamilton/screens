@@ -409,7 +409,7 @@ package.widget.window = function WidgetWindow(me) {
                     me.core.property.set(window, "maximize");
                 } else if (minimized) {
                     me.core.property.set(window, "restore");
-                } else if(!me.core.property.get(window, "embed") && !me.core.property.get(window, "fullscreen")) {
+                } else if(!me.core.property.get(window, "embed")) {
                     me.core.property.set(window, "ui.focus.active", true);
                 }
                 var region = me.ui.rect.absolute_region(window);

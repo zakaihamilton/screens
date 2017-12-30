@@ -3355,19 +3355,23 @@
         },
         {
             "translation": "The Punctuation Above Letters",
-            "term": "Holam"
+            "term": "Holam",
+            "explanation":"Smallness"
         },
         {
             "translation": "The Punctuation in the Letters",
-            "term": "Melafom"
+            "term": "Melafom",
+            "explanation":"Greatness"
         },
         {
             "translation": "The Punctuation in the Letters",
-            "term": "Shuruk"
+            "term": "Shuruk",
+            "explanation":"Greatness"
         },
         {
             "translation": "The Punctuation Below the Letters",
-            "term": "Hirik"
+            "term": "Hirik",
+            "explanation":"Expression"
         },
         {
             "fixed": true,
