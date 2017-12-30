@@ -46,7 +46,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "app.diagram.term",
+                            "ui.basic.text",
                             "ui.style.backgroundColor",
                             "ui.style.borderColor"
                         ],
