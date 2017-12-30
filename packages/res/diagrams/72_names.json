@@ -36,7 +36,7 @@
                 "top": "15px",
                 "right": "5px",
                 "bottom": "5px",
-                "gridGap": "2% 1px",
+                "gridGap": "0.5% 1px",
                 "alignItems": "stretch",
                 "lineHeight": "0.5"
             },
@@ -87,28 +87,27 @@
                                 "margin": "0",
                                 "textAlign": "center",
                                 "verticalAlign": "middle",
-                                "fontWeight":"bold",
                                 "paddingTop":"1.2em"
                             }
                         },
                         "ui.data.values": [
-                            ["1", "25/28", "Hesed", "white", "transparent"],
-                            ["1", "21/24", "Gevura", "#FFF3CA", "transparent"],
-                            ["1", "17/20", "Tifferet2", "#C8D9F9", "transparent"],
-                            ["1", "13/16", "Netzah", "#F5CCCB", "transparent"],
-                            ["1", "9/12", "Hod", "#D9EAD2", "transparent"],
-                            ["1", "5/8", "Yesod", "Plum", "transparent"],
-                            ["1", "1/4", "Malchut", "#D9EAD2", "transparent"],
-                            ["2", "29/32", "Hochma", "#FFF3CA", "transparent"],
-                            ["3", "29/32", "Bina", "#C8D9F9", "transparent"],
-                            ["4", "29/32", "Daat", "#F5CCCB", "transparent"],
-                            ["5", "29/32", "Hesed", "white", "transparent"],
-                            ["6", "29/32", "Gevura", "#FFF3CA", "transparent"],
-                            ["7", "29/32", "Tifferet2", "#C8D9F9", "transparent"],
-                            ["8", "29/32", "Netzah", "#F5CCCB", "transparent"],
-                            ["9", "29/32", "Hod", "#D9EAD2", "transparent"],
-                            ["10", "29/32", "Yesod", "Plum", "transparent"],
-                            ["11", "29/32", "Malchut", "#D9EAD2", "transparent"]
+                            ["1", "25/28", "Hesed", "white"],
+                            ["1", "21/24", "Gevura", "#FFF3CA"],
+                            ["1", "17/20", "Tifferet2", "#C8D9F9"],
+                            ["1", "13/16", "Netzah", "#F5CCCB"],
+                            ["1", "9/12", "Hod", "#D9EAD2"],
+                            ["1", "5/8", "Yesod", "Plum"],
+                            ["1", "1/4", "Malchut", "#D9EAD2"],
+                            ["2", "29/32", "Hochma", "#FFF3CA"],
+                            ["3", "29/32", "Bina", "#C8D9F9"],
+                            ["4", "29/32", "Daat", "#F5CCCB"],
+                            ["5", "29/32", "Hesed", "white"],
+                            ["6", "29/32", "Gevura", "#FFF3CA"],
+                            ["7", "29/32", "Tifferet2", "#C8D9F9"],
+                            ["8", "29/32", "Netzah", "#F5CCCB"],
+                            ["9", "29/32", "Hod", "#D9EAD2"],
+                            ["10", "29/32", "Yesod", "Plum"],
+                            ["11", "29/32", "Malchut", "#D9EAD2"]
                         ]
                     }
                 }

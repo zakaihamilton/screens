@@ -103,6 +103,11 @@ package.ui.touch = function UITouch(me) {
             me.register(me.handle, object, me.eventNames["over"], value);
         }
     };
+    me.leave = {
+        set: function (object, value) {
+            me.register(me.handle, object, me.eventNames["leave"], value);
+        }
+    };
     me.enter = {
         set: function (object, value) {
             me.register(me.handle, object, me.eventNames["enter"], value);

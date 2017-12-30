@@ -54,4 +54,18 @@ package.ui.style = function UIStyle(me) {
         }
         return result;
     };
+    me.hover = {
+        set: function(object, value) {
+            if(value.over) {
+                me.core.property.set(object, "ui.touch.over", () => {
+                    me.core.property.set(object, "ui.property.style", value.over);
+                });
+            }
+            if(value.leave) {
+                me.core.property.set(object, "ui.touch.leave", () => {
+                    me.core.property.set(object, "ui.property.style", value.leave);
+                });
+            }
+        }
+    };
 };
