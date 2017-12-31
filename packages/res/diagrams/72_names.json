@@ -6,27 +6,27 @@
                 "columnCount": "7",
                 "columnIndex": "0",
                 "rowIndex": "1",
-                "sources": {
-                    "right": {
+                "sources": [
+                    {
                         "verse": "וַיִּסַּע מַלְאַךְ הָאֱלֹהִים, הַהֹלֵךְ לִפְנֵי מַחֲנֵה יִשְׂרָאֵל, וַיֵּלֶךְ, מֵאַחֲרֵיהֶם; וַיִּסַּע עַמּוּד הֶעָנָן, מִפְּנֵיהֶם, וַיַּעֲמֹד, מֵאַחֲרֵיהֶם.",
                         "offset": 2,
                         "backgroundColor": "white",
                         "borderColor": "gray"
                     },
-                    "left": {
+                    {
                         "verse": "וַיָּבֹא בֵּין מַחֲנֵה מִצְרַיִם, וּבֵין מַחֲנֵה יִשְׂרָאֵל, וַיְהִי הֶעָנָן וְהַחֹשֶׁךְ, וַיָּאֶר אֶת-הַלָּיְלָה; וְלֹא-קָרַב זֶה אֶל-זֶה, כָּל-הַלָּיְלָה.",
                         "reverse": true,
                         "offset": 1,
                         "backgroundColor": "#FFF3CA",
                         "borderColor": "orange"
                     },
-                    "middle": {
+                    {
                         "verse": "וַיֵּט מֹשֶׁה אֶת-יָדוֹ, עַל-הַיָּם, וַיּוֹלֶךְ יְהוָה אֶת-הַיָּם בְּרוּחַ קָדִים עַזָּה כָּל-הַלַּיְלָה, וַיָּשֶׂם אֶת-הַיָּם לֶחָרָבָה; וַיִּבָּקְעוּ, הַמָּיִם.",
                         "offset": 0,
                         "backgroundColor": "#C8D9F9",
                         "borderColor": "darkblue"
                     }
-                }
+                ]
             },
             "ui.property.style": {
                 "display": "grid",
@@ -58,12 +58,37 @@
                                 "justifyContent": "center",
                                 "border": "1px solid black",
                                 "margin": "0",
+                                "paddingBottom":"0.5em",
                                 "textAlign": "center",
                                 "verticalAlign": "middle"
                             }
                         },
                         "ui.data.values": [
-                            "kab.letters.values"
+                            "kab.letters.text"
+                        ]
+                    }
+                },
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "ui.basic.text"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.property.style": {
+                                "display": "flex",
+                                "alignItems": "flex-end",
+                                "justifyContent": "center",
+                                "margin": "0",
+                                "paddingBottom":"0.5em",
+                                "fontSize":"75%",
+                                "textAlign": "center"
+                            }
+                        },
+                        "ui.data.values": [
+                            "kab.letters.numerology"
                         ]
                     }
                 },
