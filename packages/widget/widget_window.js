@@ -160,7 +160,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window, "minimize");
                 return;
             }
-            if (me.core.property.get(window, "embed") || me.core.property.get(window, "fullscreen")) {
+            if (me.core.property.get(window, "embed")) {
                 me.core.property.set(window, "restore");
                 return;
             }
@@ -308,8 +308,7 @@ package.widget.window = function WidgetWindow(me) {
             var window = me.window(object);
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
-            return !minimized && !embed && !fullscreen;
+            return !minimized && !embed;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -347,8 +346,7 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
-            return !me.core.property.get(window, "fixed") && !me.core.property.get(window, "popup") && !maximized && !minimized && !embed && !fullscreen;
+            return !me.core.property.get(window, "fixed") && !me.core.property.get(window, "popup") && !maximized && !minimized && !embed;
         },
         set: function (object, value) {
             var window = me.window(object);
@@ -360,7 +358,7 @@ package.widget.window = function WidgetWindow(me) {
             if (me.core.property.get(window, "fixed") || me.core.property.get(window, "popup")) {
                 return;
             }
-            if(me.core.property.get(window, "embed") || me.core.property.get(window, "fullscreen")) {
+            if(me.core.property.get(window, "embed")) {
                 me.core.property.set(window, "restore");
                 return;
             }
@@ -433,19 +431,17 @@ package.widget.window = function WidgetWindow(me) {
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
-            return maximized || minimized || embed || fullscreen;
+            return maximized || minimized || embed;
         },
         set: function (object, value) {
             var window = me.window(object);
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
-            var fullscreen = me.core.property.get(window, "ui.class.contains", "fullscreen");
-            if (!minimized && !maximized && !embed && !fullscreen) {
+            if (!minimized && !maximized && !embed) {
                 return;
             }
-            if(embed || fullscreen) {
+            if(embed) {
                 var parent_window = me.parent(window);
                 if(parent_window) {
                     parent_window.focus_window = null;
@@ -670,7 +666,7 @@ package.widget.window = function WidgetWindow(me) {
             return JSON.stringify(options);
         },
         set: function (object, value) {
-            if(!me.core.property.get(object, "embed") && !me.core.property.get(object, "fullscreen")) {
+            if(!me.core.property.get(object, "embed")) {
                 var options = JSON.parse(value);
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];
