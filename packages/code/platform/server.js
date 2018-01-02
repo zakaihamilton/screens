@@ -29,7 +29,6 @@ package.include({
     ]
 });
 
-package.remote("core.test", "server");
 package.remote("core.app", "browser");
 package.remote("kab.text", "client");
 package.remote("kab.term", "client");

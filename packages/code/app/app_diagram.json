@@ -8,10 +8,6 @@
     },
     "widget.menu.items": [
         ["View", [
-                ["Relationships", "app.diagram.viewType", {
-                        "state": "select"
-                    }
-                ],
                 ["Layers", "app.diagram.viewType", {
                         "state": "select"
                     }

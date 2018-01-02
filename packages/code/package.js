@@ -1,10 +1,15 @@
-function package_path(path) {
+function package_path(path, optional=false) {
     var items = path.split(".");
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
         item = item[items[part_index]];
         if (!item) {
-            throw path + " not found";
+            if(optional) {
+                return null;
+            }
+            else {
+                throw path + " not found";
+            }
         }
     }
     return item;
@@ -81,7 +86,7 @@ function package_remote(id, platform) {
     return component.remote;
 }
 
-function package_init(task, package_name, component_name, callback, child_name = null, node = null) {
+function package_init(task, package_name, component_name, child_name, callback, node = null) {
     var children = [];
     /* Retrieve component function */
     var id = package_name + "." + component_name;
@@ -102,7 +107,7 @@ function package_init(task, package_name, component_name, callback, child_name =
     package[package_name].components.push(id);
     package.count++;
     /* Create component proxy */
-    var component_obj = new Proxy({id: id, child: child_name}, {
+    var component_obj = new Proxy({id: id}, {
         get: function (object, property) {
             var result = undefined;
             if (Reflect.has(object, property)) {
@@ -148,27 +153,32 @@ function package_init(task, package_name, component_name, callback, child_name =
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
     children.map(function (child) {
-        package_init(task, package_name, component_name, callback, child, node);
+        package_init(task, package_name, component_name, child, callback, node);
     });
 }
 
-function package_prepare(package_name, component_name, callback) {
+function package_prepare(package_name, component_name, child_name, callback) {
     package.lock(task => {
-        package_init(task, package_name, component_name, callback);
+        package_init(task, package_name, component_name, child_name, callback);
         package.unlock(task, () => {
             if (callback) {
-                callback({loaded: {package: package_name, component: component_name}});
+                callback({loaded: {package: package_name, component: component_name, child:child_name}});
             }
         });
     });
 }
 
-function package_load(package_name, component_name, callback) {
-    console.log(package.platform + ": Loading " + package_name + "." + component_name);
+function package_load(package_type, package_name, component_name, child_name, callback) {
+    var file_name = package_name + "/" + package_name + "_" + component_name;
+    var code_name = package_name + "." + component_name;
+    if(child_name) {
+        code_name = code_name + "." + child_name;
+    }
+    console.log(package.platform + ": Loading " + code_name);
     if (package_name in package) {
-        if (component_name in package[package_name]) {
+        if (package_path(code_name, true)) {
             if (callback) {
-                callback({loaded: {package: package_name, component: component_name}});
+                callback({loaded: {package: package_name, component: component_name, child_name:child_name}});
                 return;
             }
         }
@@ -180,30 +190,30 @@ function package_load(package_name, component_name, callback) {
         if (package.platform === "browser") {
             var ref = document.getElementsByTagName("script")[ 0 ];
             var script = document.createElement("script");
-            script.src = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=browser";
+            script.src = "/packages/" + package_type + "/" + file_name + ".js?platform=browser";
             script.onload = function () {
                 try {
-                    package_prepare(package_name, component_name, callback);
+                    package_prepare(package_name, component_name, child_name, callback);
                 } catch (err) {
                     console.log("Found error: " + err + " stack: " + err.stack);
                     if (callback) {
-                        callback({failure: {package: package_name, component: component_name}});
+                        callback({failure: {package: package_name, component: component_name, child:child_name}});
                     }
                 }
             };
             ref.parentNode.insertBefore(script, ref);
         } else if (package.platform === "server") {
-            path = "./" + package_name + "/" + package_name + "_" + component_name;
+            path = "../" + package_type + "/" + file_name;
             require(path);
-            package_prepare(package_name, component_name, callback);
+            package_prepare(package_name, component_name, child_name, callback);
         } else if (package.platform === "client") {
-            importScripts("/packages/" + package_name + "/" + package_name + "_" + component_name + ".js?platform=client");
-            package_prepare(package_name, component_name, callback);
+            importScripts("/packages/" + package_type + "/" + file_name + ".js?platform=client");
+            package_prepare(package_name, component_name, child_name, callback);
         }
     } catch (err) {
         console.log("Found error: " + err + " stack: " + err.stack);
         if (callback) {
-            callback({failure: {package: package_name, component: component_name}});
+            callback({failure: {package: package_name, component: component_name, child:child_name}});
         }
     }
 }
@@ -242,13 +252,14 @@ function package_complete(info, callback) {
     });
 }
 
-function package_include(packages, callback) {
+function package_include(packages, callback, package_type="code") {
     if (typeof packages === "string" && packages) {
-        var separator = packages.indexOf(".");
-        var package_name = packages.substr(0, separator);
-        var component_name = packages.substr(separator + 1);
-        package_order(package_name + "." + component_name);
-        package_load(package_name, component_name, function (info) {
+        var names = packages.split(".");
+        var package_name = names[0];
+        var component_name = names[1];
+        var child_name = names[2];
+        package_order(packages);
+        package_load(package_type, package_name, component_name, child_name, function (info) {
             package_complete(info, callback);
         });
         return;
@@ -272,7 +283,7 @@ function package_include(packages, callback) {
         var package_name = package_keys[package_index];
         var components = packages[package_name];
         var component_name = components[component_index];
-        package_load(package_name, component_name, function (info) {
+        package_load(package_type, package_name, component_name, null, function (info) {
             if (info.failure) {
                 if (callback) {
                     callback(info);

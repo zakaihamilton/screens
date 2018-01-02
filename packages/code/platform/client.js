@@ -1,4 +1,4 @@
-importScripts("/packages/package.js?platform=client");
+importScripts("/packages/code/package.js?platform=client");
 
 package.include({
     "core": [

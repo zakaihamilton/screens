@@ -72,7 +72,7 @@ package.ui.class = function UIClass(me) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
-        var fullPath = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".css";
+        var fullPath = "/packages/code/" + package_name + "/" + package_name + "_" + component_name + ".css";
         return me.loadStylesheet(fullPath);
     };
     me.to_class = function (object, path) {

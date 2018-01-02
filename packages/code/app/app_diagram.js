@@ -148,11 +148,6 @@ package.app.diagram = function AppDiagram(me) {
             me.core.property.set(window.var.viewer, "ui.basic.text", JSON.stringify(diagramData, null, 4));
         }
     };
-    me.viewAsRelationships = {
-        set: function (object) {
-            var window = me.widget.window.window(object);
-        }
-    };
     me.viewAsLayers = {
         set: function (object) {
             var window = me.widget.window.window(object);

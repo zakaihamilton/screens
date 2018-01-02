@@ -1,7 +1,7 @@
 {
   "name": "screens",
-  "version": "0.25",
-  "main": "./packages/platform/server.js",
+  "version": "0.26",
+  "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/zakaihamilton/screens.git"

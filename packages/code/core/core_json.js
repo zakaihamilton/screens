@@ -11,7 +11,7 @@ package.core.json = function CoreJson(me) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
-        var url = "/packages/" + package_name + "/" + package_name + "_" + component_name + ".json";
+        var url = "/packages/code/" + package_name + "/" + package_name + "_" + component_name + ".json";
         me.loadFile(callback, url, useCache);
     };
     me.loadFile = function(callback, path, useCache=true) {

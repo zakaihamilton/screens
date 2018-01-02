@@ -81,7 +81,7 @@ package.core.module = function CoreModule(me) {
                         info["content-type"] = "application/javascript";
                         if (target_platform && source_platform !== target_platform) {
                             core.console.log("serving remote for:" + file_path);
-                            file_path = "packages/remote.js";
+                            file_path = "packages/code/remote.js";
                         }
                         info["content-type"] = "application/javascript";
                         me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {

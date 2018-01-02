@@ -9,19 +9,7 @@
     background:white;
     height:auto;
     overflow:visible;
-}
-
-.app-diagram-relationships {
-    font-family:"Courier New", Courier, monospace;
-    position:relative;
-    left:0px;
-    right:0px;
-    padding: 5px;
-    display: block;
-    white-space: pre-wrap;
-    background:white;
-    height:auto;
-    overflow:visible;
+    user-select: text;
 }
 
 .app-diagram-layers {

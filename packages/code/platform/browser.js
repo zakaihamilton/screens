@@ -1,4 +1,4 @@
-package.worker = new Worker("packages/platform/client.js");
+package.worker = new Worker("packages/code/platform/client.js");
 
 function startBrowser(appName, appArgs) {
     package.include({
