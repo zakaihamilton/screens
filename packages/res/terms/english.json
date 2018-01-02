@@ -100,7 +100,14 @@
         "soul (Neshama)":"soul (Neshama2)",
         "“soul” (Neshama)":" “soul” (Neshama2)",
         "Bait":"Bayit",
-        "plural of Ruach":"plural of Ruach2"
+        "plural of Ruach":"plural of Ruach2",
+        "the tree patriarchs":"the three patriarchs",
+        "Hochma does not shine":"Hochma2 does not shine",
+        "Hochma returns to shine":"Hochma2 returns to shine",
+        "to clothe the Hochma":"to clothe the Hochma2",
+        "Hochma in the left line":"Hochma2 in the left line",
+        "Hochma would clothe":"Hochma2 would clothe",
+        "Hochma cannot shine":"Hochma2 cannot shine"
     },
     "pre": [
         {
@@ -3355,7 +3362,7 @@
             "term": "YHV"
         },
         {
-            "translation": "The Punctuation Above Letters",
+            "translation": "The Punctuation Above the Letters",
             "term": "Holam",
             "explanation":"Smallness"
         },
