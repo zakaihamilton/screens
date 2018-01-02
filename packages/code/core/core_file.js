@@ -13,6 +13,11 @@ package.core.file = function CoreFile(me) {
             callback(err, data);
         });
     };
+    me.makeDir = function(callback, path) {
+        me.fs.mkdir(path, function(err) {
+            callback(err);
+        });
+    };
     me.readDir = function(callback, path) {
         me.fs.readdir(path, function(err, items) {
             me.core.console.log("path:" + path + " items:" + JSON.stringify(items));

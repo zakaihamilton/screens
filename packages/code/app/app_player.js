@@ -14,6 +14,7 @@ package.app.player = function AppPlayer(me) {
         me.groupListData = [];
         me.sessionListData = [];
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.core.file.makeDir(null, me.cachePath);
     };
     me.refresh = {
         set: function (object) {
