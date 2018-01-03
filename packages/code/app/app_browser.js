@@ -5,7 +5,7 @@
 
 package.app.browser = function AppBrowser(me) {
     me.launch = function () {
-        me.ui.element.create(__json__, "workspace", "self");
+        return me.ui.element.create(__json__, "workspace", "self");
     };
     me.load = {
         set: function(object) {
