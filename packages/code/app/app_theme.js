@@ -7,12 +7,13 @@ package.app.theme = function AppTheme(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
-            return;
+            return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         var current_theme = me.core.property.get(me.storage.cache.local, "ui-theme-current");
         current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
         me.core.property.set(me.singleton.var.themeList, "selection", current_theme);
+        return me.singleton;
     };
     me.setTheme = {
         set: function(object) {

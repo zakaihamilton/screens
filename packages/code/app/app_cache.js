@@ -10,6 +10,7 @@ package.app.cache = function AppCache(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        return me.singleton;
     };
     me.cache = function() {
         if(!me.singleton) {

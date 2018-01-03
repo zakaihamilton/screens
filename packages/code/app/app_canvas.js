@@ -10,6 +10,7 @@ package.app.canvas = function AppCanvas(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__);
+        return me.singleton;
     };
     me.pos = {
         get: function(object) {

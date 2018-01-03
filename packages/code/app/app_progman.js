@@ -7,9 +7,10 @@ package.app.progman = function AppProgman(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
-            return;
+            return me.singleton;
         }
-        return me.singleton = me.ui.element.create(__json__);
+        me.singleton = me.ui.element.create(__json__);
+        return me.singleton;
     };
     me.init = function() {
         me.ui.options.load(me, null, {

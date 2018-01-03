@@ -7,9 +7,10 @@ package.app.storage = function AppStorage(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
-            return;
+            return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        return me.singleton;
     };
     me.refresh = {
         set: function(object) {

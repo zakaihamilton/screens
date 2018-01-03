@@ -411,13 +411,21 @@ package.widget.window = function WidgetWindow(me) {
                     me.core.property.set(window, "ui.focus.active", true);
                 }
                 var region = me.ui.rect.absolute_region(window);
-                if(region.left < 0) {
+                var workspace_region = me.ui.rect.absolute_region(me.ui.element.workspace());
+                var update = false;
+                if(region.left <= workspace_region.left || region.left >= workspace_region.top) {
                     me.core.property.set(window, "ui.style.left", "0px");
                 }
-                if(region.top < 0) {
+                if(region.top <= workspace_region.top || region.top >= workspace_region.bottom) {
                     me.core.property.set(window, "ui.style.top", "0px");
                 }
-                if(region.left < 0 || region.top < 0) {
+                if(region.right >= workspace_region.right) {
+                    me.core.property.set(window, "ui.style.width", workspace_region.right - workspace_region.left);
+                }
+                if(region.bottom >= workspace_region.bottom) {
+                    me.core.property.set(window, "ui.style.height", workspace_region.bottom - workspace_region.top);
+                }
+                if(update) {
                     me.core.property.notify(window, "update");
                 }
             } else if (!minimized) {

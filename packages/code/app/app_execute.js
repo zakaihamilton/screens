@@ -10,6 +10,7 @@ package.app.execute = function AppExecute(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        return me.singleton;
     };
     me.run = {
         set: function(object) {

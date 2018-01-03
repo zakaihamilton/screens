@@ -5,7 +5,8 @@
 
 package.app.terminal = function AppTerminal(me) {
     me.launch = function () {
-        me.ui.element.create(__json__);
+        me.singleton = me.ui.element.create(__json__);
+        return me.singleton;
     };
     me.response = {
         set: function(object, value) {

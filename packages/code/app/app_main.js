@@ -27,7 +27,12 @@ package.app.main = function (me) {
             if(info.complete) {
                 me.core.message.send("app.progman.launch");
                 if(me.appName) {
-                    me.core.app.launch(null, me.appName, me.appArgs);
+                    me.core.app.launch(function(window) {
+                        if(window) {
+                            me.core.property.set(window, "widget.window.show");
+                            me.core.property.set(window, "widget.window.maximize");
+                        }
+                    }, me.appName, me.appArgs);
                 }
             }
         });

@@ -39,7 +39,7 @@ package.app.diagram = function AppDiagram(me) {
             json["ui.style.breakInside"] = "avoid-column";
         }
         var window = me.ui.element.create(json, parent, "self");
-        if (args.length > 1) {
+        if (args.length > 3) {
             window.options = Object.assign({}, window.options, options);
             window.options = options;
             window.options.diagrams = false;

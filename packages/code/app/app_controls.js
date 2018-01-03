@@ -10,5 +10,6 @@ package.app.controls = function AppControls(me) {
             return;
         }
         me.singleton = me.ui.element.create(__json__);
+        return me.singleton;
     };
 };
