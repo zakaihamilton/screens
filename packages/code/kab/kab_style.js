@@ -101,7 +101,11 @@ package.kab.style = function KabStyle(me) {
                     if (!short) {
                         short = "";
                     }
-                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + replacement + " [" + tooltip + "]:</b> " + short + "</span>";
+                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + replacement;
+                    if(tooltip) {
+                        html +=" [" + tooltip + "]";
+                    }
+                    html += ":</b> " + short + "</span>";
                     html += "<span class=\"kab-term-description-type kab-term-" + session.language + "\">" + descriptionType + "</span>";
                     var long = description.long;
                     if (long) {
