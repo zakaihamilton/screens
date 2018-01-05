@@ -231,7 +231,7 @@ package.kab.text = function KabText(me) {
             if (explanation && instance.upperCase) {
                 explanation = explanation.toUpperCase();
             }
-            modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource);
+            modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
         } else if (overrideSource) {
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(overrideSource)) {
@@ -249,6 +249,13 @@ package.kab.text = function KabText(me) {
         }
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
+        var term = null;
+        if (instance.item.source) {
+            term = instance.item.source;
+        }
+        else {
+            term = instance.item.term;
+        }
         if(!translation) {
             translation = "";
         }
@@ -263,13 +270,6 @@ package.kab.text = function KabText(me) {
             replacement = explanation;
         }
         instance.words.splice(instance.wordIndex, instance.span);
-        var term = null;
-        if (instance.item.source) {
-            term = instance.item.source;
-        }
-        else {
-            term = instance.item.term;
-        }
         if (instance.item.includePrefix && !keepSource) {
             replacement = instance.item.prefix + " " + replacement;
         }

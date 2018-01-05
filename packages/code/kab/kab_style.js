@@ -102,7 +102,7 @@ package.kab.style = function KabStyle(me) {
                         short = "";
                     }
                     html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + replacement;
-                    if(tooltip) {
+                    if(tooltip && !session.json.options.keepExpandedSource) {
                         html +=" [" + tooltip + "]";
                     }
                     html += ":</b> " + short + "</span>";
