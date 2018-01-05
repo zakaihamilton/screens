@@ -16,7 +16,7 @@ package.kab.diagram = function KabDiagram(me) {
             if(!diagram.diagram) {
                 continue;
             }
-            var path = "/packages/res/diagrams/" + diagram.diagram + ".json";
+            var path = diagram.diagram;
             if(diagram.term && diagram.term !== term) {
                 continue;
             }

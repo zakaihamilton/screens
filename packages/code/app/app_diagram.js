@@ -8,7 +8,7 @@ package.app.diagram = function AppDiagram(me) {
         if (!args) {
             args = [""];
         }
-        var path = args[0];
+        var path = "/packages/res/diagrams/" + args[0] + ".json";
         var json = __json__;
         var options = null;
         var parent = "workspace";
