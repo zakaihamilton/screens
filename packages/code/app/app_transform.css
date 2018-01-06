@@ -111,7 +111,7 @@
 
 .app-transform-page-number:after{
     position:absolute;
-    font-size:50%;
+    font-size:75%;
     line-height:100%;
     color:gray;
     content:attr(shortPageNumberText);
@@ -125,8 +125,8 @@
 .app-transform-page-number:hover:after {
     font-size:100%;
     font-weight: bold;
-    content:attr(longPageNumberText);
     color:black;
+    content:attr(longPageNumberText);
 }
 
 .app-transfer-page-scrolltotop {

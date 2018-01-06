@@ -33,6 +33,13 @@ package.kab.letters = function KabLetters(me) {
         'ף' : 800,
         'ץ' : 900
     };
+    me.endingLetters = {
+        'ך':'כ',
+        'ם':'מ',
+        'ן':'נ',
+        'ף':'פ',
+        'ץ':'צ'
+    };
     me.source = {
         set: function (object, value) {
             var window = me.widget.window.window(object);
@@ -52,6 +59,7 @@ package.kab.letters = function KabLetters(me) {
         var sourceCount = Object.keys(sources).length;
         var columnCount = parseInt(window.kab_info.columnCount);
         var columnIndex = parseInt(window.kab_info.columnIndex);
+        var endingLetters = window.kab_info.endingLetters;
         var rowIndex = parseInt(window.kab_info.rowIndex);
         var gridColumnCount = columnCount * (sourceCount + 1);
         for (var source of sources) {
@@ -61,6 +69,12 @@ package.kab.letters = function KabLetters(me) {
             }
             for (var letterIndex = 0; letterIndex < letters.length; letterIndex++) {
                 var letter = letters[letterIndex];
+                if(!endingLetters) {
+                    var matchingLetter = me.endingLetters[letter];
+                    if(matchingLetter) {
+                        letter = matchingLetter;
+                    }
+                }
                 var row = rowIndex + parseInt(letterIndex / columnCount) + 1;
                 var column = columnIndex + (gridColumnCount - (sourceCount + 1)) - (((letterIndex % columnCount) * (sourceCount + 1)) - source.offset) + 1;
                 var info = {row:row,column:column,source:source,letter:letter};
