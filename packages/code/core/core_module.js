@@ -71,7 +71,7 @@ package.core.module = function CoreModule(me) {
                                     target_platform = remote_platform;
                                 }
                             } catch (err) {
-                                core.console.log("error: " + err);
+                                core.console.error(err);
                                 info.body = null;
                                 return;
                             }

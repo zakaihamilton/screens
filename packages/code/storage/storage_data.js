@@ -6,33 +6,22 @@
 package.require("storage.data", "server");
 package.storage.data = function StorageData(me) {
     me.init = function () {
-        me.storage = require('@google-cloud/storage');
+        me.datastore = require('@google-cloud/datastore');
     };
     me.getService = function (callback) {
         if (me.service) {
             callback(me.service);
             return;
         }
-        me.service = me.storage({keyFilename: me.core.private.path("google")});
+        me.service = me.datastore({
+            keyFilename: me.core.private.path("google")
+        });
         callback(me.service);
     };
-    me.getBuckets = function (callback) {
+    me.save = function (callback, value, key=null) {
         var entries = [];
         me.getService((service) => {
-            service.getBuckets()
-                    .then((results) => {
-                        const buckets = results[0];
-                        console.log('Buckets:');
-                        buckets.forEach((bucket) => {
-                            console.log(bucket.name);
-                            entries.push(bucket.name);
-                        });
-                        callback(entries);
-                    })
-                    .catch((err) => {
-                        console.error('ERROR:', err);
-                        callback(null);
-                    });
+
         });
     };
 };

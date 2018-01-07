@@ -15,7 +15,7 @@ package.app.storage = function AppStorage(me) {
     me.refresh = {
         set: function(object) {
             me.core.property.set(me.singleton.var.tree, "clear");
-            me.storage.remote.getChildren(function(root) {
+            me.storage.file.getChildren(function(root) {
                 me.core.property.set(me.singleton.var.tree, "ui.group.data", {
                     "ui.data.keyList": ["ui.basic.text", "ui.basic.metadata", "ui.data.items"],
                     "ui.data.default": {
@@ -45,7 +45,7 @@ package.app.storage = function AppStorage(me) {
         set: function(object) {
             var selection = me.core.property.get(me.singleton.var.tree, "selection");
             var metadata = me.core.property.get(selection, "ui.basic.metadata");
-            me.storage.remote.metadata(function(data) {
+            me.storage.file.metadata(function(data) {
                 metadata.data = data;
                 me.core.app.launch(null, "info", [me.core.property.get(selection, "ui.basic.text"), metadata]);
             }, metadata.path);
@@ -55,7 +55,7 @@ package.app.storage = function AppStorage(me) {
         set: function(object) {
             var selection = me.core.property.get(me.singleton.var.tree, "selection");
             var metadata = me.core.property.get(selection, "ui.basic.metadata");
-            me.storage.remote.downloadData(function(data, error) {
+            me.storage.file.downloadData(function(data, error) {
                 if(error) {
                     metadata.data = error;
                 }

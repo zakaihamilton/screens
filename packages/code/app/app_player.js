@@ -21,7 +21,7 @@ package.app.player = function AppPlayer(me) {
         set: function (object) {
             var window = me.singleton;
             me.core.property.set(window.var.tree, "clear");
-            me.storage.remote.getChildren(function (root) {
+            me.storage.file.getChildren(function (root) {
                 me.groupListData = root;
                 me.core.property.set(window, "app.player.onChangeGroup", "");
             }, me.rootPath, false);
@@ -70,7 +70,7 @@ package.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var group = me.core.property.get(window.var.groupList, "ui.basic.text");
         if (group) {
-            me.storage.remote.getChildren(function (root) {
+            me.storage.file.getChildren(function (root) {
                 me.sessionListData = root;
                 if (me.sessionListData.length) {
                     var name = me.sessionListData[me.sessionListData.length - 1].name;
