@@ -8,11 +8,13 @@ package.storage.data = function StorageData(me) {
     me.init = function () {
         me.datastore = require('@google-cloud/datastore');
         me.core.util.version(version => {
-            me.save(me.core.console.error, {
+            var data = {
                 date:Date(),
                 version:version,
                 port:me.core.http.port
-            }, "startup");
+            };
+            me.core.console.log("startup: " + JSON.stringify(data));
+            me.save(me.core.console.error, data, "startup");
         });
     };
     me.getService = function (callback) {
