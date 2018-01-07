@@ -22,6 +22,14 @@ package.core.string = function CoreString(me) {
         }
         return result;
     };
+    me.unparseWords = function(string) {
+        var delimiters = me.delimiters();
+        for(var index = 0; index < delimiters.length; index++) {
+            var delimiter = delimiters[index];
+            string = string.split(" " + delimiter + " ").join(delimiter);
+        }
+        return string;
+    };
     me.parseWords = function(callback, string) {
         var delimiters = me.delimiters();
         for(var index = 0; index < delimiters.length; index++) {

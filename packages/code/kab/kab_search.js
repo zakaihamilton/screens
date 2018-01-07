@@ -48,6 +48,7 @@ package.kab.search = function KabSearch(me) {
             } else {
                 searchTerm.source = item.source ? item.source : source;
             }
+            searchTerm.source = me.core.string.unparseWords(searchTerm.source);
             if (item.style) {
                 var style = item.style;
                 if (typeof style === "string" && styles) {

@@ -180,7 +180,7 @@ package.ui.layout = function UILayout(me) {
                     newPage = true;
                     previousWidget = null;
                 }
-                else if (!(widget.innerHTML || widget.firstChild)) {
+                else if (!(widget.textContent || widget.firstChild)) {
                     pageContent.removeChild(widget);
                     widget = null;
                     newPage = false;

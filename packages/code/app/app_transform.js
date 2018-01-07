@@ -48,7 +48,8 @@ package.app.transform = function AppTransform(me) {
             me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
             me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
-                if (!me.core.property.get(window.var.layout, "ui.basic.text")) {
+                var text = me.core.property.get(window.var.layout, "ui.basic.text");
+                if (!text) {
                     value = true;
                 }
                 me.updateWidgets(window, value);

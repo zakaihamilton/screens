@@ -88,7 +88,7 @@ package.kab.text = function KabText(me) {
                             break;
                         }
                         var word = words[wordIndex + termWordIndex];
-                        var prefixTerm = prefix ? word.toLowerCase() in prefix : false;
+                        var prefixTerm = prefix ? word.toLowerCase() in prefix && !termWordIndex : false;
                         var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
                         var ignoreTerm = ignore ? ignore.includes(word) : false;
                         if (prefixTerm || ignoreTerm || suffixTerm) {
