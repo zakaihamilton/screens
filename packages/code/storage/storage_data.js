@@ -7,6 +7,13 @@ package.require("storage.data", "server");
 package.storage.data = function StorageData(me) {
     me.init = function () {
         me.datastore = require('@google-cloud/datastore');
+        me.core.util.version(version => {
+            me.save(me.core.console.error, {
+                date:Date(),
+                version:version,
+                port:me.core.http.port
+            }, "startup");
+        });
     };
     me.getService = function (callback) {
         if (me.service) {
@@ -18,10 +25,23 @@ package.storage.data = function StorageData(me) {
         });
         callback(me.service);
     };
-    me.save = function (callback, value, key=null) {
-        var entries = [];
+    me.save = function (callback, value, type = null, id = null) {
         me.getService((service) => {
-
+            const key = service.key([type, id]);
+            service.save({
+                key: key,
+                data: value
+            }, function (err) {
+                callback(err);
+            });
+        });
+    };
+    me.load = function(callback, type = null, id = null) {
+        me.getService((service) => {
+            const key = service.key([type, id]);
+            service.get(key, function(err, value) {
+                callback(err, value);
+            });
         });
     };
 };

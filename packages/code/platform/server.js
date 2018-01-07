@@ -16,7 +16,8 @@ package.include({
         "private",
         "json",
         "stream",
-        "path"
+        "path",
+        "util"
     ],
     "storage":[
         "file",

@@ -22,4 +22,9 @@ package.core.util = function CoreUtil(me) {
             return arg;
         });
     };
+    me.version = function(callback) {
+        me.core.json.loadFile(function(json) {
+            callback(json.version);
+        }, "/package.json");
+    }
 };
