@@ -1,10 +1,10 @@
 /*
  @author Zakai Hamilton
- @component StorageRemote
+ @component StorageFile
  */
 
-package.require("storage.remote", "server");
-package.storage.remote = function StorageRemote(me) {
+package.require("storage.file", "server");
+package.storage.file = function StorageFile(me) {
     me.init = function () {
         me.dropbox = require("dropbox");
         me.fs = require("fs");

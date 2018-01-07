@@ -19,7 +19,8 @@ package.include({
         "path"
     ],
     "storage":[
-        "remote"
+        "file",
+        "data"
     ],
     "manager":[
         "download"

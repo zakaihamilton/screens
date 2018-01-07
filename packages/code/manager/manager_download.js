@@ -43,7 +43,7 @@ package.manager.download = function ManagerDownload(me) {
                 else {
                     item.isDownloading = true;
                     me.core.console.log("downloading: " + item.from + " to: " + item.to);
-                    me.storage.remote.downloadFile(function(err) {
+                    me.storage.file.downloadFile(function(err) {
                         me.core.console.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
                         var index = me.queue.indexOf(item);
                         if(index !== -1) {

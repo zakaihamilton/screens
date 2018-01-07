@@ -27,7 +27,8 @@ function startBrowser(appName, appArgs) {
         ],
         "storage": [
             "cache",
-            "remote"
+            "file",
+            "data"
         ],
         "ui": [
             "event",
