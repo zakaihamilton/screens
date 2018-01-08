@@ -7,19 +7,21 @@ package.require("storage.data", "server");
 package.storage.data = function StorageData(me) {
     me.init = function (task) {
         me.core.console.log("initialising storage data");
-        me.datastore = require('@google-cloud/datastore');
-        me.core.console.log("retrieving version information");
         me.lock(task, task => {
-            me.core.util.version(version => {
-                var data = {
-                    date:Date(),
-                    version:version,
-                    port:me.core.http.port
-                };
-                me.core.console.log("startup: " + JSON.stringify(data));
-                me.save(me.core.console.error, data, "startup");
-                me.unlock(task);
-            });
+            me.core.server.run(() => {
+                me.datastore = require('@google-cloud/datastore');
+                me.core.console.log("retrieving version information");
+                me.core.util.version(version => {
+                    var data = {
+                        date: Date(),
+                        version: version,
+                        port: me.core.http.port
+                    };
+                    me.core.console.log("startup: " + JSON.stringify(data));
+                    me.save(me.core.console.error, data, "startup");
+                    me.unlock(task);
+                });
+            }, "npm rebuild");
         });
     };
     me.getService = function (callback) {
@@ -43,10 +45,10 @@ package.storage.data = function StorageData(me) {
             });
         });
     };
-    me.load = function(callback, type = null, id = null) {
+    me.load = function (callback, type = null, id = null) {
         me.getService((service) => {
             const key = service.key([type, id]);
-            service.get(key, function(err, value) {
+            service.get(key, function (err, value) {
                 callback(err, value);
             });
         });
