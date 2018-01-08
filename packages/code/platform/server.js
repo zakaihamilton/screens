@@ -17,7 +17,8 @@ package.include({
         "json",
         "stream",
         "path",
-        "util"
+        "util",
+        "server"
     ],
     "storage":[
         "file",

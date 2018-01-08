@@ -86,7 +86,7 @@ function package_remote(id, platform) {
     return component.remote;
 }
 
-function package_init(task, package_name, component_name, child_name, callback, node = null) {
+function package_setup(task, package_name, component_name, child_name, callback, node = null) {
     var children = [];
     /* Retrieve component function */
     var id = package_name + "." + component_name;
@@ -146,20 +146,20 @@ function package_init(task, package_name, component_name, child_name, callback, 
                 }
                 component.init.push(init_method);
             } else {
-                init_method(task);
+                package_init(id, init_method, task);
             }
         }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
     /* Load child components */
     children.map(function (child) {
-        package_init(task, package_name, component_name, child, callback, node);
+        package_setup(task, package_name, component_name, child, callback, node);
     });
 }
 
 function package_prepare(package_name, component_name, child_name, callback) {
     package.lock(task => {
-        package_init(task, package_name, component_name, child_name, callback);
+        package_setup(task, package_name, component_name, child_name, callback);
         package.unlock(task, () => {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name, child:child_name}});
@@ -218,6 +218,15 @@ function package_load(package_type, package_name, component_name, child_name, ca
     }
 }
 
+function package_init(name, callback, task) {
+    try {
+        callback(task);
+    }
+    catch(err) {
+        console.log("Failed to initialise component: " + name + " with error: " + err);
+    }
+}
+
 function package_complete(info, callback) {
     if (info) {
         if (callback) {
@@ -234,7 +243,7 @@ function package_complete(info, callback) {
                 do {
                     var init = component.init.shift();
                     if (init) {
-                        init(task);
+                        package_init(id, init, task);
                     }
                 } while (init);
             }

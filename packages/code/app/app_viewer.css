@@ -9,4 +9,5 @@
     background:white;
     height:auto;
     overflow:visible;
+    user-select: text;
 }

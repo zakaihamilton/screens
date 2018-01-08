@@ -24,7 +24,12 @@ package.core.util = function CoreUtil(me) {
     };
     me.version = function(callback) {
         me.core.json.loadFile(function(json) {
-            callback(json.version);
+            if(json) {
+                callback(json.version);
+            }
+            else {
+                callback(null);
+            }
         }, "/package.json");
-    }
+    };
 };
