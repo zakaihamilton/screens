@@ -15,7 +15,7 @@ package.storage.data = function StorageData(me) {
                     var date = new Date();
                     var id = date.getTime();
                     var data = {
-                        date: Date(),
+                        date: date.toString(),
                         version: version,
                         port: me.core.http.port
                     };
@@ -77,13 +77,13 @@ package.storage.data = function StorageData(me) {
                 if (err) {
                     callback(err);
                 } else if (!result) {
-                    var message = "verification mismatch between: " + JSON.stringify(data) + " and " + JSON.stringify(compare);
+                    var message = "verification mismatch between: " + JSON.stringify(value) + " and " + JSON.stringify(compare);
                     var error = new Error(message);
                     callback(error);
                 } else {
                     callback(null);
                 }
-            }, value,type, id);
+            }, value, type, id);
         }, value, type, id);
     };
 };
