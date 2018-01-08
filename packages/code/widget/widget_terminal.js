@@ -15,6 +15,7 @@ package.widget.terminal = function WidgetTerminal(me) {
         me.core.property.set(terminal.var.inputLine, "ui.basic.text", "");
         me.core.property.set(terminal.var.input, "ui.style.display", "block");
         clearTimeout(terminal.cursorTimeout);
+        terminal.cursorTimeout = null;
         me.core.property.set(terminal, "scroll");
         if (message.length) {
             me.core.property.set(terminal.var.prefix, "ui.basic.text", message);
@@ -22,6 +23,7 @@ package.widget.terminal = function WidgetTerminal(me) {
         field.onblur = function () {
             me.core.property.set(terminal.var.cursor, "ui.style.display", "none");
             clearTimeout(terminal.cursorTimeout);
+            terminal.cursorTimeout = null;
         };
         field.onfocus = function () {
             field.value = me.core.property.get(terminal.var.inputLine, "ui.basic.text");
@@ -29,7 +31,11 @@ package.widget.terminal = function WidgetTerminal(me) {
             me.blinkCursor(terminal, field);
         };
         window.onclick = function () {
-            field.focus();
+            if(!terminal.cursorTimeout) {
+                setTimeout(() => {
+                    field.focus();
+                }, 1500);
+            }
         };
         field.onkeydown = function (e) {
             if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
