@@ -24,11 +24,18 @@ package.storage.data = function StorageData(me) {
                         if (err) {
                             me.core.console.log("failed to save startup to cloud: " + err.message);
                             me.unlock(task);
-                        }
-                        else {
+                        } else {
                             me.core.console.log("startup verification complete");
                         }
-                        me.unlock(task);
+                        me.query((err, items) => {
+                            if(err) {
+                                me.core.console.log("cannot retrieve startup items: " + err.message);
+                            }
+                            else {
+                                me.core.console.log("startup items: " + JSON.stringify(items));
+                            }
+                            me.unlock(task);
+                        }, "startup", "date");
                     }, data, "startup", id);
                 });
             }, "npm rebuild");
@@ -85,5 +92,22 @@ package.storage.data = function StorageData(me) {
                 }
             }, value, type, id);
         }, value, type, id);
+    };
+    me.query = function (callback, type, order) {
+        me.getService((service) => {
+            const query = service.createQuery(type).order(order);
+            service
+                    .runQuery(query)
+                    .then(results => {
+                        const items = results[0];
+                        items.forEach(task => {
+                                task.key = task[service.KEY];
+                            });
+                        callback(null, items);
+                    })
+                    .catch(err => {
+                        callback(err, null);
+                    });
+        });
     };
 };
