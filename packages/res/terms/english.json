@@ -114,7 +114,8 @@
         "water of Hochma":"water of Hochma2",
         "Hochma extends only from the left":"Hochma2 extends only from the left",
         "to extend Hochma":"to extend Hochma2",
-        "llumination of Hochma":"llumination of Hochma2"
+        "llumination of Hochma":"llumination of Hochma2",
+        "three Ruchot":"three Ruchot2"
     },
     "pre": [
         {
@@ -1668,6 +1669,15 @@
                 "phase": "three"
             },
             "term": "Ruach2"
+        },
+        {
+            "source": "Ruchot",
+            "translation": "Winds",
+            "style": {
+                "heading": "Element",
+                "phase": "three"
+            },
+            "term": "Ruchot2"
         },
         {
             "translation": "Dust",
