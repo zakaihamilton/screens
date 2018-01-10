@@ -710,7 +710,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, keys) {
             if (keys) {
                 keys.map(function (key) {
-                    var window = me.findWindowByTitle(object, key);
+                    var window = me.findWindowByKey(object, key);
                     if (window) {
                         me.core.property.set(window, "ui.focus.active", true);
                     }
