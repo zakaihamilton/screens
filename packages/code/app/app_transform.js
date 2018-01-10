@@ -547,6 +547,16 @@ package.app.transform = function AppTransform(me) {
             return items;
         }
     };
+    me.title = {
+        get: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var title = me.ui.layout.firstVisibleWidget(window.var.layout);
+            if(title && title.tagName.toLowerCase() === "h4") {
+                return title.innerText;
+            }
+            return null;
+        }
+    };
     me.save = {
         get: function(object) {
             var window = me.widget.window.mainWindow(object);
@@ -558,7 +568,10 @@ package.app.transform = function AppTransform(me) {
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var date = new Date();
             var id = date.getTime();
-            var title = date.toLocaleDateString();
+            var title = me.core.property.get(window, "app.transform.title");
+            if(!title) {
+                title = date.toLocaleDateString();
+            }
             var data = {
                 content:me.core.string.encode(text),
                 date: date.toString(),
