@@ -27,14 +27,7 @@ package.storage.data = function StorageData(me) {
                         } else {
                             me.core.console.log("startup verification complete");
                         }
-                        me.query((err, items) => {
-                            if (err) {
-                                me.core.console.log("cannot retrieve startup items: " + err.message);
-                            } else {
-                                me.core.console.log("startup items: " + JSON.stringify(items));
-                            }
-                            me.unlock(task);
-                        }, "startup", "date");
+                        me.unlock(task);
                     }, data, "startup", id);
                 });
             }, "npm rebuild");

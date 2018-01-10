@@ -370,6 +370,8 @@ package.app.transform = function AppTransform(me) {
             };
             me.ui.layout.reflow(function () {
                 me.core.property.set(window, "ui.work.state", false);
+                var title = me.core.property.get(window, "app.transform.title");
+                me.core.property.set(window, "widget.window.title", title);
             }, window.var.output, window.var.layout, reflowOptions);
         }
     };
@@ -547,14 +549,33 @@ package.app.transform = function AppTransform(me) {
             return items;
         }
     };
+    me.documentIndex = {
+        set: function(object, value) {
+            var baseTitle = "Document " + value;
+            me.core.property.set(object, "widget.window.key", baseTitle);
+            me.core.property.set(object, "widget.window.title", baseTitle);
+        }
+    };
+    me.contentTitle = {
+        get: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var title = me.ui.layout.firstVisibleWidget(window.var.layout);
+            var key = me.core.property.get(window, "widget.window.key");
+            if(title && title.tagName.toLowerCase() === "h4") {
+                return title.innerText;
+            }
+            return key;
+        }
+    };
     me.title = {
         get: function(object) {
             var window = me.widget.window.mainWindow(object);
             var title = me.ui.layout.firstVisibleWidget(window.var.layout);
+            var key = me.core.property.get(window, "widget.window.key");
             if(title && title.tagName.toLowerCase() === "h4") {
-                return title.innerText;
+                return key + " - " + title.innerText;
             }
-            return null;
+            return key;
         }
     };
     me.save = {
@@ -568,7 +589,7 @@ package.app.transform = function AppTransform(me) {
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var date = new Date();
             var id = date.getTime();
-            var title = me.core.property.get(window, "app.transform.title");
+            var title = me.core.property.get(window, "app.transform.contentTitle");
             if(!title) {
                 title = date.toLocaleDateString();
             }

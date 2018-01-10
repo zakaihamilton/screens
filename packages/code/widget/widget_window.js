@@ -190,9 +190,9 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.update_title = function (object) {
         var window = me.window(object);
-        var title = window.window_title;
+        var title = me.core.property.get(window, "widget.window.title");
         if (window.child_window) {
-            title += " - [" + window.child_window.window_title + "]";
+            title += " - [" + me.core.property.get(window.child_window, "widget.window.title") + "]";
         }
         me.core.property.set(window.var.label, "ui.basic.text", title);
     };

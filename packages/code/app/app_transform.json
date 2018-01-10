@@ -202,6 +202,7 @@
         "ui.data.default": {
             "ui.basic.context": "self",
             "static": true,
+            "title":"Document",
             "ui.property.style": {
                 "ui.style.width": "500px",
                 "ui.style.height": "500px"
@@ -312,26 +313,26 @@
             }
         },
         "ui.data.keyList": [
-            "title"
+            "app.transform.documentIndex",
         ],
         "ui.data.values": [
             [
-                "Document 1"
+                1
             ],
             [
-                "Document 2"
+                2
             ],
             [
-                "Document 3"
+                3
             ],
             [
-                "Document 4"
+                4
             ],
             [
-                "Document 5"
+                5
             ],
             [
-                "Document 6"
+                6
             ]
         ]
     },
