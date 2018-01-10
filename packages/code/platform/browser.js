@@ -24,7 +24,8 @@ function startBrowser(appName, appArgs) {
             "path",
             "link",
             "device",
-            "server"
+            "server",
+            "date"
         ],
         "storage": [
             "cache",

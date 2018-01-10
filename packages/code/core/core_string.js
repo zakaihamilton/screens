@@ -93,4 +93,20 @@ package.core.string = function CoreString(me) {
         }
         return suffix;
     };
+    me.encode = function(string) {
+        return window.btoa(unescape(encodeURIComponent(string)));
+    };
+    // base64 encoded ascii to ucs-2 string
+    me.decode = function(string) {
+        return decodeURIComponent(escape(window.atob(string)));
+    };
+    me.blobToString = function(blob) {
+        var url, request;
+        url = URL.createObjectURL(blob);
+        request = new XMLHttpRequest();
+        request.open('GET', url, false);
+        request.send();
+        URL.revokeObjectURL(url);
+        return request.responseText;
+    };
 };

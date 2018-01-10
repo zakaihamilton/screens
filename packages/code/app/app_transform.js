@@ -513,4 +513,68 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
         }
     };
+    me.init = function(task) {
+        me.lock(task, task => {
+            me.storage.data.query((err, items) => {
+                me.core.console.error(err);
+                me.contentList = items;
+                me.unlock(task);
+            }, "app.transform.content", "date");
+        });
+    };
+    me.contentMenuList = {
+        get: function(object) {
+            var isFirst = true;
+            var window = me.widget.window.mainWindow(object);
+            var text = me.core.property.get(window.var.input, "ui.basic.text");
+            var items = me.contentList.map(function (item) {
+                var result = [
+                    item.title,
+                    function () {
+                        me.core.property.set(window.var.input, "ui.basic.text", me.core.string.blobToString(item.content));
+                        me.core.property.set(window, "app.transform.transform");
+                    },
+                    {
+                        "state": function () {
+                            return text === item.content;
+                        },
+                        "separator": isFirst
+                    }
+                ];
+                isFirst = false;
+                return result;
+            });
+            return items;
+        }
+    };
+    me.save = {
+        get: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = me.core.property.get(window.var.input, "ui.basic.text");
+            return text;
+        },
+        set: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = me.core.property.get(window.var.input, "ui.basic.text");
+            var date = new Date();
+            var id = date.getTime();
+            var title = date.toLocaleDateString();
+            var blob = new Blob([text], {
+                type: 'text/plain'
+            });
+            var data = {
+                content:blob,
+                date: date.toString(),
+                title: title
+            };
+            me.storage.data.save(err => {
+                if(err) {
+                    me.core.console.error("Cannot save content: " + err.message);
+                }
+                else {
+                    me.contentList.push(data);
+                }
+            }, data, "app.transform.content", id);
+        }
+    };
 };

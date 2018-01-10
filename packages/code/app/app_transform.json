@@ -87,8 +87,8 @@
                     }
                 ],
                 ["Swipe", "app.transform.swipe", {
-                        "state":"select"
-                }],
+                        "state": "select"
+                    }],
                 ["Pages", "app.transform.pages", {
                         "state": "select",
                         "separator": true
@@ -175,6 +175,13 @@
                         "separator": true
                     }
                 ]
+            ]
+        ],
+        ["Content", [
+                ["Save", "app.transform.save", {
+                        "enabled": "select"
+                    }],
+                "app.transform.contentMenuList"
             ]
         ],
         ["Document", [
