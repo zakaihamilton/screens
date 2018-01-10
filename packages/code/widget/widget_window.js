@@ -662,7 +662,8 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var options = {
                 "region": me.core.property.get(object, "region"),
-                "titleOrder": me.core.property.get(object, "titleOrder")
+                "titleOrder": me.core.property.get(object, "titleOrder"),
+                "title": me.core.property.get(object, "title")
             };
             var keys = ["maximize", "restore", "minimize"];
             keys.map(function (key) {
