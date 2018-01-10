@@ -66,7 +66,6 @@ package.storage.data = function StorageData(me) {
         return results;
     };
     me.save = function (callback, value, type, id, nonIndexed) {
-        me.core.console.log(JSON.stringify(value));
         me.getService((service) => {
             const key = service.key([type, id]);
             service.save({
