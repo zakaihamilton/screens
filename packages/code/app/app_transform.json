@@ -178,10 +178,12 @@
             ]
         ],
         ["Content", [
+                ["Refresh", "app.transform.refreshContentList"],
+                "app.transform.contentMenuList",
                 ["Save", "app.transform.save", {
-                        "enabled": "select"
-                    }],
-                "app.transform.contentMenuList"
+                        "enabled": "select",
+                        "separator":true
+                    }]
             ]
         ],
         ["Document", [
@@ -313,7 +315,7 @@
             }
         },
         "ui.data.keyList": [
-            "app.transform.documentIndex",
+            "app.transform.documentIndex"
         ],
         "ui.data.values": [
             [

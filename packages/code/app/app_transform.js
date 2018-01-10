@@ -515,6 +515,14 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
         }
     };
+    me.refreshContentList = {
+        set: function(object) {
+            me.storage.data.query((err, items) => {
+                me.core.console.error(err);
+                me.contentList = items;
+            }, "app.transform.content", "date");
+        }
+    };
     me.init = function(task) {
         me.lock(task, task => {
             me.storage.data.query((err, items) => {
@@ -530,15 +538,16 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var items = me.contentList.map(function (item) {
+                var content = me.core.string.decode(item.content);
                 var result = [
                     item.title,
                     function () {
-                        me.core.property.set(window.var.input, "ui.basic.text", me.core.string.decode(item.content));
+                        me.core.property.set(window.var.input, "ui.basic.text", content);
                         me.core.property.set(window, "app.transform.transform");
                     },
                     {
                         "state": function () {
-                            return text === item.content;
+                            return text === content;
                         },
                         "separator": isFirst
                     }
@@ -588,7 +597,6 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var date = new Date();
-            var id = date.getTime();
             var title = me.core.property.get(window, "app.transform.contentTitle");
             if(!title) {
                 title = date.toLocaleDateString();
@@ -603,9 +611,9 @@ package.app.transform = function AppTransform(me) {
                     me.core.console.error("Cannot save content: " + err.message);
                 }
                 else {
-                    me.contentList.push(data);
+                    me.refreshContentList.set(object);
                 }
-            }, data, "app.transform.content", id, ["content"]);
+            }, data, "app.transform.content", title, ["content"]);
         }
     };
 };

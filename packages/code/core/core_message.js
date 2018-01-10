@@ -104,7 +104,7 @@ package.core.message = function CoreMessage(me) {
             //me.core.console.log(error);
             return undefined;
         }
-        me.core.console.log("sending: " + path + " with: " + args);
+        me.core.console.log("sending: " + path + " with " + args.length + " arguments");
         if (typeof callback === "function") {
             var result = callback.apply(null, args);
             return result;

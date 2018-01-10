@@ -690,12 +690,12 @@ package.widget.window = function WidgetWindow(me) {
             me.core.property.set(window, "storage.cache.store", me.core.property.get(window, "store"));
         }
     };
-    me.findWindowByTitle = function (object, title) {
+    me.findWindowByKey = function (object, key) {
         var windows = me.core.property.get(object, "widget.window.visibleWindows");
         var result = null;
         windows.map(function (window) {
-            var label = me.core.property.get(window, "title");
-            if (label === title) {
+            var label = me.core.property.get(window, "key");
+            if (label === key) {
                 result = window;
             }
         });
@@ -704,13 +704,13 @@ package.widget.window = function WidgetWindow(me) {
     me.titleOrder = {
         get: function (object) {
             return me.core.property.get(object, "widget.window.visibleWindows").map(function (window) {
-                return me.core.property.get(window, "title");
+                return me.core.property.get(window, "key");
             });
         },
-        set: function (object, titles) {
-            if (titles) {
-                titles.map(function (title) {
-                    var window = me.findWindowByTitle(object, title);
+        set: function (object, keys) {
+            if (keys) {
+                keys.map(function (key) {
+                    var window = me.findWindowByTitle(object, key);
                     if (window) {
                         me.core.property.set(window, "ui.focus.active", true);
                     }
