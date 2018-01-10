@@ -28,10 +28,9 @@ package.storage.data = function StorageData(me) {
                             me.core.console.log("startup verification complete");
                         }
                         me.query((err, items) => {
-                            if(err) {
+                            if (err) {
                                 me.core.console.log("cannot retrieve startup items: " + err.message);
-                            }
-                            else {
+                            } else {
                                 me.core.console.log("startup items: " + JSON.stringify(items));
                             }
                             me.unlock(task);
@@ -51,12 +50,28 @@ package.storage.data = function StorageData(me) {
         });
         callback(me.service);
     };
-    me.save = function (callback, value, type, id) {
+    me.toDataStore = function(json, nonIndexed) {
+        nonIndexed = nonIndexed || [];
+        let results = [];
+        Object.keys(json).forEach((key) => {
+            if (json[key] === undefined) {
+                return;
+            }
+            results.push({
+                name: key,
+                value: json[key],
+                excludeFromIndexes: nonIndexed.indexOf(key) !== -1
+            });
+        });
+        return results;
+    };
+    me.save = function (callback, value, type, id, nonIndexed) {
+        me.core.console.log(JSON.stringify(value));
         me.getService((service) => {
             const key = service.key([type, id]);
             service.save({
                 key: key,
-                data: value
+                data: me.toDataStore(value, nonIndexed)
             }, function (err) {
                 callback(err);
             });
@@ -75,7 +90,7 @@ package.storage.data = function StorageData(me) {
             callback(err, JSON.stringify(compare) === JSON.stringify(value), value);
         }, type, id);
     };
-    me.saveAndVerify = function (callback, value, type, id) {
+    me.saveAndVerify = function (callback, value, type, id, nonIndexed) {
         me.save(err => {
             if (err) {
                 callback(err);
@@ -91,7 +106,7 @@ package.storage.data = function StorageData(me) {
                     callback(null);
                 }
             }, value, type, id);
-        }, value, type, id);
+        }, value, type, id, nonIndexed);
     };
     me.query = function (callback, type, order) {
         me.getService((service) => {
@@ -101,8 +116,8 @@ package.storage.data = function StorageData(me) {
                     .then(results => {
                         const items = results[0];
                         items.forEach(task => {
-                                task.key = task[service.KEY];
-                            });
+                            task.key = task[service.KEY];
+                        });
                         callback(null, items);
                     })
                     .catch(err => {

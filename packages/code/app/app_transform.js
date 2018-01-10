@@ -531,7 +531,7 @@ package.app.transform = function AppTransform(me) {
                 var result = [
                     item.title,
                     function () {
-                        me.core.property.set(window.var.input, "ui.basic.text", me.core.string.blobToString(item.content));
+                        me.core.property.set(window.var.input, "ui.basic.text", me.core.string.decode(item.content));
                         me.core.property.set(window, "app.transform.transform");
                     },
                     {
@@ -559,11 +559,8 @@ package.app.transform = function AppTransform(me) {
             var date = new Date();
             var id = date.getTime();
             var title = date.toLocaleDateString();
-            var blob = new Blob([text], {
-                type: 'text/plain'
-            });
             var data = {
-                content:blob,
+                content:me.core.string.encode(text),
                 date: date.toString(),
                 title: title
             };
@@ -574,7 +571,7 @@ package.app.transform = function AppTransform(me) {
                 else {
                     me.contentList.push(data);
                 }
-            }, data, "app.transform.content", id);
+            }, data, "app.transform.content", id, ["content"]);
         }
     };
 };

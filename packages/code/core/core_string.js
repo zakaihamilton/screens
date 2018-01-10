@@ -96,7 +96,6 @@ package.core.string = function CoreString(me) {
     me.encode = function(string) {
         return window.btoa(unescape(encodeURIComponent(string)));
     };
-    // base64 encoded ascii to ucs-2 string
     me.decode = function(string) {
         return decodeURIComponent(escape(window.atob(string)));
     };
