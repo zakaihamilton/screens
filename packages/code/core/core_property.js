@@ -18,7 +18,7 @@ package.core.property = function CoreProperty(me) {
             package_name = name.substr(0, separator);
         }
         if (!package_name || !(package_name in package)) {
-            if (!object.component) {
+            if (!object || !object.component) {
                 return default_name;
             }
             name = object.component + "." + name;
@@ -41,7 +41,7 @@ package.core.property = function CoreProperty(me) {
             });
             return results;
         }
-        if (object && name && (typeof name !== "string" || !name.includes("!"))) {
+        if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
             var info = me.split(object, name, value);
             if (typeof info.value === "string") {
                 if (info.value.startsWith("@")) {
@@ -55,7 +55,7 @@ package.core.property = function CoreProperty(me) {
                         var paramInfo = {value: subInfo.name, task:task};
                         me.core.property.get(subInfo.object, subInfo.name.substring(1), paramInfo);
                         me.unlock(task, () => {
-                            me.core.property.set(info.object, info.name, paramInfo.value);
+                            me.core.property.get(info.object, info.name, paramInfo.value, method);
                         });
                     });
                     return;

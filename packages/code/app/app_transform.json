@@ -318,24 +318,7 @@
             "app.transform.documentIndex"
         ],
         "ui.data.values": [
-            [
-                1
-            ],
-            [
-                2
-            ],
-            [
-                3
-            ],
-            [
-                4
-            ],
-            [
-                5
-            ],
-            [
-                6
-            ]
+            "core.number.fillArray(1-6)"
         ]
     },
     "ui.property.after": {

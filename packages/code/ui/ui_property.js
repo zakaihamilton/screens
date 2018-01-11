@@ -27,12 +27,14 @@ package.ui.property = function UIProperty(me) {
             me.afterQueue.push({object:object, properties:properties});
             if(!me.afterQueueTimer) {
                 me.afterQueueTimer = setTimeout(function() {
-                    me.afterQueue.map(list => {
+                    me.afterQueueTimer = null;
+                    var queue = me.afterQueue;
+                    me.afterQueue = [];
+                    queue.map(list => {
                         for (var key in list.properties) {
                             me.core.property.set(list.object, key, list.properties[key]);
                         }
                     });
-                    me.afterQueueTimer = null;
                 }, 0);
             }
         }
