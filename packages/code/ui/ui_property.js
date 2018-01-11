@@ -4,6 +4,10 @@
  */
 
 package.ui.property = function UIProperty(me) {
+    me.init = function() {
+        me.afterQueue = [];
+        me.afterQueueTimer = null;
+    };
     me.attribute = {
         set: function(object, properties) {
             for (var key in properties) {
@@ -20,11 +24,17 @@ package.ui.property = function UIProperty(me) {
     };
     me.after = {
         set: function(object, properties) {
-            setTimeout(function() {
-                for (var key in properties) {
-                    me.core.property.set(object, key, properties[key]);
-                }
-            }, 0);
+            me.afterQueue.push({object:object, properties:properties});
+            if(!me.afterQueueTimer) {
+                me.afterQueueTimer = setTimeout(function() {
+                    me.afterQueue.map(list => {
+                        for (var key in list.properties) {
+                            me.core.property.set(list.object, key, list.properties[key]);
+                        }
+                    });
+                    me.afterQueueTimer = null;
+                }, 0);
+            }
         }
     };
     me.broadcast = {
