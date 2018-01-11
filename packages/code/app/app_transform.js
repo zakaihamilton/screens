@@ -568,21 +568,20 @@ package.app.transform = function AppTransform(me) {
     me.contentTitle = {
         get: function(object) {
             var window = me.widget.window.mainWindow(object);
-            var title = me.ui.layout.firstVisibleWidget(window.var.layout);
-            var key = me.core.property.get(window, "widget.window.key");
+            var title = me.ui.layout.firstWidget(window.var.layout);
             if(title && title.tagName.toLowerCase() === "h4") {
                 return title.innerText;
             }
-            return key;
+            return null;
         }
     };
     me.title = {
         get: function(object) {
             var window = me.widget.window.mainWindow(object);
-            var title = me.ui.layout.firstVisibleWidget(window.var.layout);
+            var title = me.core.property.get(window, "app.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
-            if(title && title.tagName.toLowerCase() === "h4") {
-                return key + " - " + title.innerText;
+            if(title) {
+                return key + " - " + title;
             }
             return key;
         }
@@ -598,6 +597,10 @@ package.app.transform = function AppTransform(me) {
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var date = new Date();
             var title = me.core.property.get(window, "app.transform.contentTitle");
+            var key = me.core.property.get(window, "widget.window.key");
+            if(!title) {
+                title = key;
+            }
             if(!title) {
                 title = date.toLocaleDateString();
             }

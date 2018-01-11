@@ -1061,11 +1061,39 @@
         },
         {
             "translation": "Greatness",
-            "term": "Gadlut"
+            "term": "Gadlut",
+            "defaultTerm": true,
+            "style": {
+                "heading": "State",
+                "phase": "three"
+            }
         },
         {
             "translation": "Smallness",
-            "term": "Katnut"
+            "term": "Katnut",
+            "defaultTerm": true,
+            "style": {
+                "heading": "State",
+                "phase": "two"
+            }
+        },
+        {
+            "translation":"Expression",
+            "term":"Bituy",
+            "defaultTerm": true,
+            "style": {
+                "heading": "State",
+                "phase": "four"
+            }
+        },
+        {
+            "term":"Rigshi",
+            "translation":"Emotional",
+            "defaultTerm": true,
+            "style": {
+                "heading": "State",
+                "phase": "one"
+            }
         },
         {
             "translation": "Long Face",
@@ -5094,6 +5122,59 @@
         {
             "term":"Lahat",
             "translation":"Flame"
+        },
+        {
+            "term":"Regesh",
+            "translation":"Emotion"
+        },
+        {
+            "term":"Sechel",
+            "translation":"Thought"
+        },
+        {
+            "term":"Boreh",
+            "translation":"Creator",
+            "fixed":true
+        },
+        {
+            "term":"Nivrah",
+            "translation":"Creature"
+        },
+        {
+            "term":"Ruchani",
+            "translation":"Spiritual"
+        },
+        {
+            "term":"Enoshi",
+            "translation":"Human"
+        },
+        {
+            "term":"Sechel Ruchani",
+            "translation":"Spiritual Thought",
+            "style": {
+                "phase": "one"
+            }
+        },
+        {
+            "term":"Regesh Ruchani",
+            "translation":"Spiritual Emotion",
+            "style": {
+                "phase": "two"
+            }
+        },
+        {
+            "term":"Sechel Enoshi",
+            "translation":"Human Thought",
+            "style": {
+                "phase": "three"
+            }
+        },
+        {
+            "term":"Regesh Enoshi",
+            "translation":"Human Emotion",
+            "style": {
+                "phase": "four"
+            }
         }
     ],
     "style": {

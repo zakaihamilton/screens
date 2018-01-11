@@ -1,0 +1,77 @@
+{
+    "title": "Thought & Emotion",
+    "layers": [
+        {
+            "ui.property.style": {
+                "display": "grid",
+                "position": "absolute",
+                "padding": "10px",
+                "left": "5px",
+                "top": "15px",
+                "right": "5px",
+                "bottom": "5px",
+                "gridGap": "1.0% 1px",
+                "alignItems": "stretch",
+                "lineHeight": "0.5"
+            },
+            "core.property.group": [
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.fontWeight",
+                            "ui.style.display"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.property.style": {
+                                "display": "block",
+                                "alignItems": "center",
+                                "justifyContent": "center",
+                                "border": "1px solid black",
+                                "margin": "0",
+                                "textAlign": "center",
+                                "verticalAlign": "middle",
+                                "paddingTop": "1.2em"
+                            }
+                        },
+                        "ui.data.values": [
+                            ["1", "17/20", "Bituy", "#D9EAD2"],
+                            ["1", "13/16", "Gadlut", "#F5CCCB"],
+                            ["1", "9/12", "Katnut", "#C8D9F9"],
+                            ["1", "5/8", "Rigshi", "#FFF3CA"],
+                            ["1", "1/4", "Klipa", "white"],
+                            ["2/4", "21/24", "Hochma", "#FFF3CA"],
+                            ["4/6", "21/24", "Bina", "#C8D9F9"],
+                            ["8/10", "21/24", "Tifferet", "#F5CCCB"],
+                            ["10/12", "21/24", "Malchut", "#D9EAD2"],
+                            ["2/6", "25/28", "Boreh", ""],
+                            ["8/12", "25/28", "Nivrah", ""],
+                            ["8/10", "1/4", "Sechel Enoshi", "#F5CCCB", "bold"],
+                            ["10/12", "1/4", "Regesh Enoshi", "#D9EAD2"],
+                            ["4/6", "5/8", "Sechel Ruchani", "#FFF3CA"],
+                            ["8/10", "5/8", "Regesh Enoshi", "#D9EAD2", "bold"],
+                            ["4/6", "9/12", "Sechel Ruchani", "#FFF3CA", "bold"],
+                            ["8/10", "9/12", "Regesh Enoshi", "#D9EAD2", ""],
+                            ["2/4", "13/16", "Sechel Ruchani", "#FFF3CA"],
+                            ["4/6", "13/16", "Regesh Ruchani", "#C8D9F9", "bold"],
+                            ["2/4", "17/20", "Sechel Ruchani", "#FFF3CA", "bold"],
+                            ["4/6", "17/20", "Regesh Ruchani", "#C8D9F9"]
+                        ]
+                    }
+                },
+                {
+                    "ui.basic.elements":
+                            {
+                                "comment": "Diaphragm Separator",
+                                "borderStyle": "dashed",
+                                "line": "1 7 28 7"
+                            }
+                }
+            ]
+        }
+    ]
+}

@@ -64,6 +64,11 @@ package.ui.layout = function UILayout(me) {
         pageWidth -= scrollbar.offsetWidth + 1;
         return {width: pageWidth, height: pageHeight};
     };
+    me.firstPage = function (target) {
+        target = me.content(target);
+        var page = target.firstChild;
+        return page;
+    };
     me.firstVisiblePage = function (target) {
         target = me.content(target);
         var page = null;
@@ -74,6 +79,15 @@ package.ui.layout = function UILayout(me) {
                 break;
             }
             widget = widget.nextSibling;
+        }
+        return page;
+    };
+    me.firstWidget = function (target) {
+        var page = me.firstPage(target);
+        if (page && page.tagName) {
+            if (page.tagName.toLowerCase() === "div") {
+                return page.var.content.firstChild;
+            }
         }
         return page;
     };
@@ -379,7 +393,8 @@ package.ui.layout = function UILayout(me) {
                 showPage = false;
             }
         }
-        if(showPage) {
+        var pageNumber = me.core.property.get(page, "ui.attribute.pageNumber");
+        if(pageNumber === "1" || showPage) {
             page.style.display = "flex-inline";
             page.style.visibility = "visible";
             page.pageOffset = page.offsetTop;
@@ -404,14 +419,15 @@ package.ui.layout = function UILayout(me) {
         while(child) {
             if(child.pageSize) {
                 var pageInView = me.pageInView(child);
+                var pageNumber = me.core.property.get(child, "ui.attribute.pageNumber");
                 if(pageInView !== child.inView) {
                     if(pageInView) {
-                        console.log("showing page: " + me.core.property.get(child, "ui.attribute.pageNumber"));
+                        console.log("showing page: " + pageNumber);
                         child.var.content.style.display = "";
                         child.style.visibility = "visible";
                     }
                     else {
-                        console.log("hiding page: " + me.core.property.get(child, "ui.attribute.pageNumber"));
+                        console.log("hiding page: " + pageNumber);
                         child.var.content.style.display = "none";
                         child.style.visibility = "hidden";
                     }
