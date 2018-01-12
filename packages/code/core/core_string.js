@@ -73,6 +73,27 @@ package.core.string = function CoreString(me) {
             return source.includes(target);
         }
     };
+    me.middleLetters = function(source, target) {
+        var index = source.indexOf(target);
+        if(index !== -1) {
+            return source.substring(index, index + target.length);
+        }
+        return "";
+    };
+    me.prefixLetters = function(source, target) {
+        var index = source.indexOf(target);
+        if(index !== -1 && index) {
+            return source.substring(0, index);
+        }
+        return "";
+    };
+    me.suffixLetters = function(source, target) {
+        var index = source.indexOf(target);
+        if(index !== -1 && index + target.length < source.length) {
+            return source.substring(index + target.length);
+        }
+        return "";
+    };
     me.prefix = function(string, separator) {
         var prefix = string;
         if(string) {

@@ -113,9 +113,11 @@ package.kab.text = function KabText(me) {
                     if (item && item.word) {
                         wordStyle = item.word;
                     }
+                    var match = term;
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
                         if (!item.case || item.case !== "sensitive") {
-                            if (!me.core.string.match(collectedWords, term.toUpperCase(), wordStyle)) {
+                            match = term.toUpperCase();
+                            if (!me.core.string.match(collectedWords, match, wordStyle)) {
                                 continue;
                             } else {
                                 upperCase = true;
@@ -128,14 +130,16 @@ package.kab.text = function KabText(me) {
                         item: item,
                         session: session,
                         depth: depth,
-                        source: collectedWords,
+                        source: me.core.string.middleLetters(collectedWords, match),
                         target: term,
                         upperCase: upperCase,
                         prefixWord: prefixWord,
                         suffixWord: suffixWord,
                         words: words,
                         wordIndex: wordIndex,
-                        span: numTermWords
+                        span: numTermWords,
+                        prefixLetters: me.core.string.prefixLetters(collectedWords, match),
+                        suffixLetters: me.core.string.suffixLetters(collectedWords, match)
                     };
                     me.handleInstance(session, instance);
                     wordIndex = instance.wordIndex;
@@ -287,7 +291,7 @@ package.kab.text = function KabText(me) {
         if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
-        instance.words.splice(instance.wordIndex, 0, replacementWithStyles);
+        instance.words.splice(instance.wordIndex, 0, instance.prefixLetters + replacementWithStyles + instance.suffixLetters);
         if (!instance.item.includePrefix) {
             me.kab.format.insert(instance.words, instance.wordIndex, session.json.prefix, instance.item.prefix, instance.prefixWord, text);
         }
