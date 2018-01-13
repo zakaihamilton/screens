@@ -18,7 +18,8 @@ package.include({
         "stream",
         "path",
         "util",
-        "server"
+        "server",
+        "hash"
     ],
     "storage":[
         "file",

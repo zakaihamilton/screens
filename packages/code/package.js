@@ -48,7 +48,7 @@ function package_unlock(task, callback) {
 
 function package_platform() {
     var platform = "browser";
-    if (typeof require !== 'undefined') {
+    if (typeof module !== 'undefined' && this.module !== module) {
         platform = "server";
     } else if (typeof importScripts !== 'undefined') {
         platform = "client";
@@ -336,7 +336,7 @@ var package = {
     order: [],
     id: "package",
     path : package_path,
-    platform : typeof require !== 'undefined' ? "server" : (typeof importScripts !== 'undefined' ? "client" : "browser"),
+    platform : package_platform(),
     require: package_require,
     include: package_include,
     remote: package_remote,
@@ -346,7 +346,7 @@ var package = {
     count: 0
 };
 
-if (typeof require !== 'undefined') {
+if (package_platform() === "server") {
     global.package = package;
     global.__json__ = {};
 }
