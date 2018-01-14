@@ -660,19 +660,21 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.store = {
         get: function (object) {
-            var options = {
-                "region": me.core.property.get(object, "region"),
-                "titleOrder": me.core.property.get(object, "titleOrder"),
-                "title": me.core.property.get(object, "title")
-            };
-            var keys = ["maximize", "restore", "minimize"];
-            keys.map(function (key) {
-                var enabled = me.core.property.get(object, "ui.class.contains", key);
-                if (enabled) {
-                    options[key] = null;
-                }
-            });
-            return JSON.stringify(options);
+            if(!me.core.property.get(object, "embed")) {
+                var options = {
+                    "region": me.core.property.get(object, "region"),
+                    "titleOrder": me.core.property.get(object, "titleOrder"),
+                    "title": me.core.property.get(object, "title")
+                };
+                var keys = ["maximize", "restore", "minimize"];
+                keys.map(function (key) {
+                    var enabled = me.core.property.get(object, "ui.class.contains", key);
+                    if (enabled) {
+                        options[key] = null;
+                    }
+                });
+                return JSON.stringify(options);
+            }
         },
         set: function (object, value) {
             if(!me.core.property.get(object, "embed")) {
