@@ -530,13 +530,10 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.init = function(task) {
-        me.lock(task, task => {
-            me.storage.data.query((err, items) => {
-                me.core.console.error(err);
-                me.contentList = items;
-                me.unlock(task);
-            }, "app.transform.content", "date");
-        });
+        me.storage.data.query((err, items) => {
+            me.core.console.error(err);
+            me.contentList = items;
+        }, "app.transform.content", "date");
     };
     me.contentMenuList = {
         get: function(object) {
