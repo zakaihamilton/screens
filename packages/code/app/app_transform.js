@@ -543,7 +543,11 @@ package.app.transform = function AppTransform(me) {
             var isFirst = true;
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
-            var items = me.contentList.map(function (item) {
+            var contentList = me.contentList;
+            if(!contentList) {
+                contentList = [];
+            }
+            var items = contentList.map(function (item) {
                 var content = me.core.string.decode(item.content);
                 var result = [
                     item.title,
