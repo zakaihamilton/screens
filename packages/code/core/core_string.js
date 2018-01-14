@@ -74,21 +74,21 @@ package.core.string = function CoreString(me) {
         }
     };
     me.middleLetters = function(source, target) {
-        var index = source.indexOf(target);
+        var index = source.toUpperCase().indexOf(target.toUpperCase());
         if(index !== -1) {
             return source.substring(index, index + target.length);
         }
         return "";
     };
     me.prefixLetters = function(source, target) {
-        var index = source.indexOf(target);
+        var index = source.toUpperCase().indexOf(target.toUpperCase());
         if(index !== -1 && index) {
             return source.substring(0, index);
         }
         return "";
     };
     me.suffixLetters = function(source, target) {
-        var index = source.indexOf(target);
+        var index = source.toUpperCase().indexOf(target.toUpperCase());
         if(index !== -1 && index + target.length < source.length) {
             return source.substring(index + target.length);
         }

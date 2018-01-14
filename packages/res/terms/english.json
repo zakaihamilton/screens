@@ -116,9 +116,14 @@
         "to extend Hochma":"to extend Hochma2",
         "llumination of Hochma":"llumination of Hochma2",
         "three Ruchot":"three Ruchot2",
-        "Three Ruchot":"Three Ruchot2"
+        "Three Ruchot":"Three Ruchot2",
+        "Vav Ktzavot":"Vav Kzavot"
     },
     "pre": [
+        {
+            "find":"/\\.\\.\\.",
+            "replace":"…"
+        },
         {
             "find": "Table of content\n",
             "replace": ""
@@ -1065,7 +1070,7 @@
             "defaultTerm": true,
             "style": {
                 "heading": "State",
-                "phase": "three"
+                "phase": "one"
             }
         },
         {
@@ -1074,7 +1079,7 @@
             "defaultTerm": true,
             "style": {
                 "heading": "State",
-                "phase": "two"
+                "phase": "root"
             }
         },
         {
@@ -1083,7 +1088,37 @@
             "defaultTerm": true,
             "style": {
                 "heading": "State",
-                "phase": "four"
+                "phase": "two"
+            }
+        },
+        {
+            "translation": "Left Line",
+            "term":"left line",
+            "source": "Kav Small",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Line",
+                "phase": "one"
+            }
+        },
+        {
+            "translation": "Right Line",
+            "term":"right line",
+            "source": "Kav Yamin",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Line",
+                "phase": "root"
+            }
+        },
+        {
+            "translation":"Middle Line",
+            "source":"Kav Emtsaey",
+            "term":"middle line",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Line",
+                "phase": "two"
             }
         },
         {
@@ -2016,7 +2051,7 @@
         {
             "style": {
                 "heading": "Side of Light",
-                "phase": "two"
+                "phase": "root"
             },
             "translation": "Mercy",
             "explanation":"Alignment",
@@ -2187,7 +2222,8 @@
         },
         {
             "translation": "First Three",
-            "term": "Gimel Rishonot"
+            "term": "Gimel Rishonot",
+            "explanation":"Attitude"
         },
         {
             "translation": "Lower Seven",
@@ -3409,24 +3445,40 @@
             "term": "YHV"
         },
         {
-            "translation": "The Punctuation Above the Letters",
+            "translation": "Above the Letters",
             "term": "Holam",
-            "explanation":"Smallness"
+            "explanation":"Smallness",
+            "style": {
+                "heading": "Punctuation",
+                "phase": "root"
+            }
         },
         {
-            "translation": "The Punctuation in the Letters",
+            "translation": "In the Letters",
             "term": "Melafom",
-            "explanation":"Greatness"
+            "explanation":"Greatness",
+            "style": {
+                "heading": "Punctuation",
+                "phase": "one"
+            }
         },
         {
-            "translation": "The Punctuation in the Letters",
+            "translation": "In the Letters",
             "term": "Shuruk",
-            "explanation":"Greatness"
+            "explanation":"Greatness",
+            "style": {
+                "heading": "Punctuation",
+                "phase": "one"
+            }
         },
         {
-            "translation": "The Punctuation Below the Letters",
+            "translation": "Below the Letters",
             "term": "Hirik",
-            "explanation":"Expression"
+            "explanation":"Expression",
+            "style": {
+                "heading": "Punctuation",
+                "phase": "two"
+            }
         },
         {
             "fixed": true,
@@ -3658,15 +3710,12 @@
         },
         {
             "translation": "Six Edges",
-            "term": "Vav Kzavot"
+            "term": "Vav Kzavot",
+            "explanation":"Implementation"
         },
         {
             "translation": "Six",
             "term": "Vav  ( six )"
-        },
-        {
-            "translation": "Six Edges",
-            "term": "Vav Ktzavot"
         },
         {
             "prefix": "a",
@@ -5175,6 +5224,45 @@
             "style": {
                 "phase": "four"
             }
+        },
+        {
+            "term":"And … Went",
+            "style":"72 names - right line verse",
+            "case":"ignore"
+        },
+        {
+            "term":"And the angel of God who went",
+            "style":"72 names - right line verse",
+            "fixed":true,
+            "case":"ignore"
+        },
+        {
+            "term":"And the angel of God went",
+            "style":"72 names - right line verse",
+            "fixed":true,
+            "case":"ignore"
+        },
+        {
+            "term":"And it came between the camp of Egypt and the camp of Israel",
+            "style":"72 names - left line verse",
+            "fixed":true,
+            "case":"ignore"
+        },
+        {
+            "term":"And Moses stretched out his hand over the sea",
+            "style":"72 names - middle line verse",
+            "fixed":true,
+            "case":"ignore"
+        },
+        {
+            "term":"And It Came",
+            "style":"72 names - left line verse",
+            "case":"ignore"
+        },
+        {
+            "term":"And … Stretched",
+            "style":"72 names - middle line verse",
+            "case":"ignore"
         }
     ],
     "style": {
@@ -5212,6 +5300,30 @@
             },
             "explanation": {
                 "short": "First Spiritual World After Crossing the Barrier"
+            }
+        },
+        "72 names - right line verse": {
+            "heading": "Verse",
+            "phase": "root",
+            "source": {
+                "short": "",
+                "long":"Then the angel of God, who had been going in front of the Israelite camp, moved and went behind them, and the pillar of cloud moved away from in front of them and stood behind them. (Exodus 14:19)"
+            }
+        },
+        "72 names - left line verse": {
+            "heading": "Verse",
+            "phase": "one",
+            "source": {
+                "short": "",
+                "long":"And he came between the camp of Egypt and the camp of Israel, and there were the cloud and the darkness, and it illuminated the night, and one did not draw near the other all night long. (Exodus 14:20)"
+            }
+        },
+        "72 names - middle line verse": {
+            "heading": "Verse",
+            "phase": "two",
+            "source": {
+                "short": "",
+                "long":"And Moses stretched out his hand over the sea, and the Lord led the sea with the strong east wind all night, and He made the sea into dry land and the waters split. (Exodus 14:21)"
             }
         }
     },

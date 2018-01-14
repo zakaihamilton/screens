@@ -434,7 +434,7 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.resetDescription = function (object) {
-        var descriptionTypes = ["explanation", "technical", "related"];
+        var descriptionTypes = ["explanation", "technical", "source", "related"];
         descriptionTypes.map(function (descriptionType) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
             me.core.property.set(descriptionBox, "ui.class.remove", "show");
@@ -457,6 +457,9 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var descriptionType = window.options.prioritizeExplanation ? "explanation" : "technical";
         var descriptionBox = me.ui.node.findById(object, descriptionType);
+        if (!descriptionBox) {
+            descriptionBox = me.ui.node.findById(object, "source");
+        }
         if (!descriptionBox) {
             descriptionBox = me.ui.node.findById(object, "related");
         }
@@ -483,7 +486,7 @@ package.app.transform = function AppTransform(me) {
         if (!object.descriptionType) {
             return;
         }
-        var descriptionTypes = ["explanation", "technical", "related"];
+        var descriptionTypes = ["explanation", "technical", "source", "related"];
         var descriptionIndex = descriptionTypes.indexOf(object.descriptionType);
         descriptionIndex++;
         if (descriptionIndex >= descriptionTypes.length) {
@@ -491,6 +494,9 @@ package.app.transform = function AppTransform(me) {
         }
         var descriptionType = descriptionTypes[descriptionIndex];
         var descriptionBox = me.ui.node.findById(object, descriptionType);
+        if (!descriptionBox) {
+            descriptionBox = me.ui.node.findById(object, "source");
+        }
         if (!descriptionBox) {
             descriptionBox = me.ui.node.findById(object, "related");
         }

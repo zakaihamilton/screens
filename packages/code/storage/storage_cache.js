@@ -48,15 +48,13 @@ package.storage.cache = function StorageCache(me) {
     };
     me.store = {
         set: function (object, value) {
-            if(value) {
-                var key = me.core.property.get(object, "storage.cache.key");
-                var location = me.core.property.get(object, "storage.cache.location");
-                if (!location) {
-                    location = "local";
-                }
-                if (key) {
-                    me.core.property.set(me[location], key, value);
-                }
+            var key = me.core.property.get(object, "storage.cache.key");
+            var location = me.core.property.get(object, "storage.cache.location");
+            if (!location) {
+                location = "local";
+            }
+            if (key) {
+                me.core.property.set(me[location], key, value);
             }
         }
     };

@@ -90,7 +90,7 @@ package.kab.text = function KabText(me) {
                         var word = words[wordIndex + termWordIndex];
                         var prefixTerm = prefix ? word.toLowerCase() in prefix && !termWordIndex : false;
                         var suffixTerm = suffix ? word.toLowerCase() in suffix : false;
-                        var ignoreTerm = ignore ? ignore.includes(word) : false;
+                        var ignoreTerm = ignore ? ignore.includes(word) && !item.fixed : false;
                         if (prefixTerm || ignoreTerm || suffixTerm) {
                             if (prefixTerm || suffixTerm || collectedWords) {
                                 if (prefixTerm) {
@@ -102,6 +102,10 @@ package.kab.text = function KabText(me) {
                                 numTermWords++;
                                 continue;
                             }
+                        }
+                        if(!word) {
+                            numTermWords++;
+                            continue;
                         }
                         if (collectedWords) {
                             collectedWords += " " + word;
@@ -117,7 +121,15 @@ package.kab.text = function KabText(me) {
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
                         if (!item.case || item.case !== "sensitive") {
                             match = term.toUpperCase();
-                            if (!me.core.string.match(collectedWords, match, wordStyle)) {
+                            if(item.case === "ignore") {
+                                if (me.core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
+                                    term = collectedWords;
+                                }
+                                else {
+                                    continue;
+                                }
+                            }
+                            else if (!me.core.string.match(collectedWords, match, wordStyle)) {
                                 continue;
                             } else {
                                 upperCase = true;

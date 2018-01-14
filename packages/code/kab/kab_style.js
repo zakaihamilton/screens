@@ -56,6 +56,9 @@ package.kab.style = function KabStyle(me) {
                     descriptions["explanation"] = styles.explanation;
                 }
             }
+            if(styles.source) {
+                descriptions["source"] = styles.source;
+            }
         }
         descriptions["related"] = {};
         var numDescriptions = Object.keys(descriptions).length;
