@@ -134,7 +134,13 @@ package.ui.focus = function UIFocus(me) {
                 me.focus(window);
             } else if (is_active && !value) {
                 var parent = me.widget.window.parent(object);
-                me.focus(parent);
+                if(parent) {
+                    me.focus(parent);
+                }
+                else {
+                    me.deactivate(object, null);
+                    me.focus_window = null;
+                }
             }
         }
     };

@@ -752,9 +752,10 @@ package.widget.window = function WidgetWindow(me) {
             var windows = me.core.property.get(object, "widget.window.visibleWindows");
             if (windows && windows.length) {
                 var last = windows[windows.length - 1];
-                if (last) {
-                    me.core.property.set(last, "ui.focus.active", true);
-                }
+                me.core.property.set(last, "ui.focus.active", true);
+            }
+            else {
+                me.core.property.set(object, "ui.focus.active", false);
             }
         }
     };
