@@ -25,6 +25,9 @@ package.include({
         "file",
         "data"
     ],
+    "user": [
+        "profile"
+    ],
     "manager":[
         "download"
     ],

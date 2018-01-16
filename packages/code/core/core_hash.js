@@ -22,8 +22,8 @@ package.core.hash = function CoreHash(me) {
         });
     };
     me.compare = function(callback, password, hash) {
-        me.bcrypt.compare(password, hash, function(err, res) {
-            callback(err, res);
+        me.bcrypt.compare(password, hash, function(err, result) {
+            callback(err, result);
         });
     };
 };

@@ -59,10 +59,15 @@ package.core.http = function CoreHttp(me) {
                 body: body,
                 task: task,
                 response: response,
-                custom: false
+                custom: false,
+                check: true
             };
             me.core.object.attach(info, me);
             me.core.property.set(info, "check");
+            if(!info.check) {
+                response.writeHead(403);
+                response.end();
+            }
             me.core.property.set(info, "receive");
             me.unlock(task, () => {
                 if(info.custom === false) {
