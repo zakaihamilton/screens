@@ -10,7 +10,9 @@ package.include({
         "http",
         "handle",
         "json",
-        "string"
+        "string",
+        "object",
+        "property"
     ],
     "app": [
         "main"

@@ -4,7 +4,6 @@
  */
 
 package.core.http = function CoreHttp(me) {
-    var core = me.core;
     if (package.platform === "server") {
         me.port = process.env.PORT || 4040;
     } else {
@@ -32,9 +31,9 @@ package.core.http = function CoreHttp(me) {
             });
             me.server.listen(me.port, function (err) {
                 if (err) {
-                    return core.console.log("something bad happened", err);
+                    return me.core.console.log("something bad happened", err);
                 }
-                core.console.log("server is listening on " + core.http.port);
+                me.core.console.log("server is listening on " + me.core.http.port);
             });
         }
     };
@@ -53,7 +52,7 @@ package.core.http = function CoreHttp(me) {
             var info = {
                 method: request.method,
                 url: decodeURIComponent(url),
-                query: core.http.parse_query(query),
+                query: me.core.http.parse_query(query),
                 headers: request.headers,
                 code: 200,
                 "content-type": "application/json",
@@ -62,8 +61,9 @@ package.core.http = function CoreHttp(me) {
                 response: response,
                 custom: false
             };
-            core.object.attach(info, me);
-            core.property.set(info, "receive");
+            me.core.object.attach(info, me);
+            me.core.property.set(info, "check");
+            me.core.property.set(info, "receive");
             me.unlock(task, () => {
                 if(info.custom === false) {
                     response.writeHead(info.code, {
@@ -86,10 +86,13 @@ package.core.http = function CoreHttp(me) {
         return array;
     };
     me.send = function (info, async = true) {
+        var headers = Object.assign({}, info.headers);
+        me.core.object.attach(info, me);
+        me.core.property.set(info, "headers", headers);
         if (me.platform === "server") {
             var request = {
                 url:info.url,
-                headers:null,
+                headers:headers,
                 method:info.method.toUpperCase()
             };
             var response = {
@@ -101,14 +104,14 @@ package.core.http = function CoreHttp(me) {
                     }
                 }
             };
-            core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
+            me.core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            core.console.log("sending request info:" + JSON.stringify(info));
+            me.core.console.log("sending request info:" + JSON.stringify(info));
             request.open(info.method, info.url, async);
             if (async) {
                 request.onreadystatechange = function (e) {
@@ -126,6 +129,11 @@ package.core.http = function CoreHttp(me) {
                         }
                     }
                 };
+            }
+            if(headers) {
+                for(var key in headers) {
+                    request.setRequestHeader(key, headers[key]);
+                }
             }
             request.send(info.body);
             if (!async && request.status === 200) {
