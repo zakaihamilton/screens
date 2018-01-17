@@ -117,7 +117,8 @@
         "llumination of Hochma":"llumination of Hochma2",
         "three Ruchot":"three Ruchot2",
         "Three Ruchot":"Three Ruchot2",
-        "Vav Ktzavot":"Vav Kzavot"
+        "Vav Ktzavot":"Vav Kzavot",
+        "face-to-face":"Face to Face"
     },
     "pre": [
         {
@@ -915,6 +916,13 @@
                 "Bina"
             ],
             "term": "KHB"
+        },
+        {
+            "expansion": [
+                "Keter",
+                "Hochma"
+            ],
+            "term": "KH"
         },
         {
             "expansion": [
@@ -1893,7 +1901,7 @@
             "term": "Choshech"
         },
         {
-            "translation": "Knowledge",
+            "translation": "Connection",
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -2223,7 +2231,10 @@
         {
             "translation": "First Three",
             "term": "Gimel Rishonot",
-            "explanation":"Attitude"
+            "explanation":"Attitude",
+            "style":{
+                "heading":"Intensity"
+            }
         },
         {
             "translation": "Lower Seven",
@@ -3711,7 +3722,10 @@
         {
             "translation": "Six Edges",
             "term": "Vav Kzavot",
-            "explanation":"Implementation"
+            "explanation":"Implementation",
+            "style":{
+                "heading":"Intensity"
+            }
         },
         {
             "translation": "Six",
@@ -5263,6 +5277,34 @@
             "term":"And … Stretched",
             "style":"72 names - middle line verse",
             "case":"ignore"
+        },
+        {
+            "term":"Michael",
+            "style":{
+                "heading":"Angel",
+                "phase":"one"
+            }
+        },
+        {
+            "term":"Gabriel",
+            "style":{
+                "heading":"Angel",
+                "phase":"two"
+            }
+        },
+        {
+            "term":"Uriel",
+            "style":{
+                "heading":"Angel",
+                "phase":"four"
+            }
+        },
+        {
+            "term":"Raphael",
+            "style":{
+                "heading":"Angel",
+                "phase":"three"
+            }
         }
     ],
     "style": {
