@@ -19,7 +19,8 @@ package.include({
         "path",
         "util",
         "server",
-        "hash"
+        "hash",
+        "flow"
     ],
     "storage":[
         "file",

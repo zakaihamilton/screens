@@ -27,7 +27,8 @@ function startBrowser(appName, appArgs) {
             "server",
             "date",
             "number",
-            "hash"
+            "hash",
+            "flow"
         ],
         "storage": [
             "cache",

@@ -12,7 +12,8 @@ package.include({
         "json",
         "string",
         "object",
-        "property"
+        "property",
+        "flow"
     ],
     "app": [
         "main"
