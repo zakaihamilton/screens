@@ -36,36 +36,25 @@ package.user.profile = function UserProfile(me) {
         });
     };
     me.profile = function (callback, name) {
-        me.storage.data.load((err, profile) => {
-            if (err) {
-                err = new Error("cannot retrieve " + name + " profile: " + err.message);
-            } else if (!profile) {
-                err = new Error(name + " is an empty profile");
-            } else if (profile.name !== name) {
-                err = new Error(name + " does not match name in profile: " + profile.name);
-            }
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, profile);
-            }
-        }, "user.profile.data", name);
+        me.flow(callback, (flow) => {
+            flow.async(me.storage.data.load, flow.continue, "user.profile.data", name);
+            flow.wait((err, profile) => {
+                flow.error(err, "cannot retrieve " + name + " profile");
+                flow.check(profile, name + " is an empty profile");
+                flow.check(profile.name === name, name + " does not match name in profile: " + profile.name);
+                flow.end(null, profile);
+            });
+        });
     };
     me.update = function (callback, profile) {
-        var err = null;
-        if (!profile) {
-            var err = new Error(name + " is an empty profile");
-            callback(err);
-            return;
-        }
-        me.storage.data.save((err) => {
-            if (err) {
-                err = new Error("cannot save " + profile.name + " profile: " + err.message);
-                callback(err);
-                return;
-            }
-            callback(null);
-        }, "user.profile.data", profile.name, profile, me.nonIndexed);
+        me.flow(callback, (flow) => {
+            flow.check(profile, "no profile was passed");
+            flow.async(me.storage.data.save, "user.profile.data", profile.name, profile, me.nonIndexed);
+            flow.wait((err) => {
+                flow.error(err, "cannot save " + profile.name + " profile");
+                flow.end();
+            });
+        });
     };
     me.exists = function (callback, name) {
         me.profile((err, profile) => {
@@ -73,14 +62,19 @@ package.user.profile = function UserProfile(me) {
         }, name);
     };
     me.verify = function (callback, name, password) {
-        me.profile((err, profile) => {
-            if (err) {
-                callback(err, false);
-            } else if (profile.password) {
-                me.core.hash.compare((err, result) => {
-                    callback(err, result);
-                }, password, profile.password);
-            }
-        }, "user.profile.data", name);
+        me.flow(callback, (flow) => {
+            flow.check(name, "empty name was passed");
+            flow.check(password, "no password was passed for user: " + name);
+            flow.async(me.profile, "user.profile.data", name);
+            flow.wait((err, profile) => {
+                flow.error(err, "cannot retrieve profile for user: " + name);
+                flow.check(profile.password, "profile does not have a password for user: " + name);
+                flow.async(me.core.hash.compare, password, profile.password);
+                flow.wait((err, result) => {
+                    flow.error(err, "cannot compare hash between:" + password + " and:" + profile.password);
+                    flow.end(null, result);
+                });
+            });
+        });
     };
 };
