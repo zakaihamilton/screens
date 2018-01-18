@@ -73,25 +73,6 @@ package.user.profile = function UserProfile(me) {
             }
         }, "user.profile.data", name);
     };
-    me.profile = function(callback, name) {
-        me.storage.data.load((err, profile) => {
-            if(err) {
-                err = new Error("cannot retrieve " + name + " profile: " + err.message);
-            }
-            else if(!profile) {
-                err = new Error(name + " is an empty profile");
-            }
-            else if(profile.name !== name) {
-                err = new Error(name + " does not match name in profile: " + profile.name);
-            }
-            if(err) {
-                callback(err, null);
-            }
-            else {
-                callback(null, profile);
-            }
-        }, "user.profile.data", name);
-    };
     me.update = function(callback, profile) {
         var err = null;
         if(!profile) {

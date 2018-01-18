@@ -5305,6 +5305,34 @@
                 "heading":"Angel",
                 "phase":"three"
             }
+        },
+        {
+            "term":"north",
+            "style":{
+                "heading":"Angle",
+                "phase":"one"
+            }
+        },
+        {
+            "term":"south",
+            "style":{
+                "heading":"Angle",
+                "phase":"root"
+            }
+        },
+        {
+            "term":"east",
+            "style":{
+                "heading":"Angle",
+                "phase":"three"
+            }
+        },
+        {
+            "term":"west",
+            "style":{
+                "heading":"Angle",
+                "phase":"four"
+            }
         }
     ],
     "style": {

@@ -4409,6 +4409,20 @@
             "source":"זעיר אנפין ונוקבא הקטנים",
             "explanation":"רצון",
             "style":{"heading":"פרצוף","phase":"four"}
+        },
+        {
+            "style": {
+                "phase": "three"
+            },
+            "term": "שמיים",
+            "explanation":"כוונה"
+        },
+        {
+            "style": {
+                "phase": "four"
+            },
+            "term": "ארץ",
+            "explanation":"רצון"
         }
     ]
 }
