@@ -260,6 +260,7 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
             me.ui.layout.clear(window.var.layout);
+            me.core.property.set(window.var.input, "ui.basic.save");
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
             if (!text) {
