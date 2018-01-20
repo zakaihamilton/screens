@@ -20,21 +20,29 @@ package.include({
         "util",
         "server",
         "hash",
-        "flow"
+        "flow",
+        "startup"
     ],
-    "storage":[
+    "storage": [
         "file",
         "data"
     ],
     "user": [
         "profile"
     ],
-    "manager":[
+    "manager": [
         "download"
     ],
-    "media":[
+    "media": [
         "ffmpeg"
+    ],
+    "startup": [
+        "version"
     ]
+}, function (info) {
+    if (info.complete) {
+        package.core.startup.run();
+    }
 });
 
 package.remote("core.app", "browser");

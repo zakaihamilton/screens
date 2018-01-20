@@ -14,21 +14,21 @@ package.core.flow = function CoreFlow(me) {
             error:me.error,
             code:me.code,
             end:me.end,
-            resume:me.resume,
+            callback:me.callback,
             wait:me.wait,
             isRunning:true,
             isWaiting:false,
             asyncQueue:[],
             response:null,
-            callback:endCallback
+            endCallback:endCallback
         };
         startCallback(flow);
     };
     me.check = function(statement, message) {
         if(this.running && !statement) {
             this.running = false;
-            if(this.callback) {
-                this.callback(new Error(message));
+            if(this.endCallback) {
+                this.endCallback(new Error(message));
             }
         }
     };
@@ -41,8 +41,8 @@ package.core.flow = function CoreFlow(me) {
     me.error = function(err, message) {
         if(this.running && err) {
             this.running = false;
-            if(this.callback) {
-                this.callback(new Error(message + " | " + err.message));
+            if(this.endCallback) {
+                this.endCallback(new Error(message + " | " + err.message));
             }
         }
     };
@@ -65,7 +65,7 @@ package.core.flow = function CoreFlow(me) {
             }
         }
     };
-    me.resume = function(args) {
+    me.callback = function(args) {
         if(this.running) {
             var args = Array.prototype.slice.call(arguments, 1);
             this.response.apply(this, args);

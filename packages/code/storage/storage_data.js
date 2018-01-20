@@ -10,26 +10,7 @@ package.storage.data = function StorageData(me) {
         me.lock(task, task => {
             me.core.server.run(() => {
                 me.datastore = require('@google-cloud/datastore');
-                me.core.console.log("retrieving version information");
-                me.core.util.version(version => {
-                    var date = new Date();
-                    var id = date.getTime();
-                    var data = {
-                        date: date.toString(),
-                        version: version,
-                        port: me.core.http.port
-                    };
-                    me.core.console.log("startup: " + JSON.stringify(data) + " id: " + id);
-                    me.saveAndVerify(err => {
-                        if (err) {
-                            me.core.console.log("failed to save startup to cloud: " + err.message);
-                            me.unlock(task);
-                        } else {
-                            me.core.console.log("startup verification complete");
-                        }
-                        me.unlock(task);
-                    }, data, "startup", id);
-                });
+                me.unlock(task);
             }, "npm rebuild");
         });
     };

@@ -238,6 +238,7 @@ function package_complete(info, callback) {
     }
     package.lock(task => {
         package.order.map(function (id) {
+            console.log(package.platform + ": Initializing " + id);
             var component = package_component(id);
             if (component.init) {
                 do {
@@ -302,6 +303,8 @@ function package_include(packages, callback, package_type="code") {
             var component = package_component(info.package + "." + info.component);
             component.status = true;
             loadedComponents++;
+            info.loadedComponents = loadedComponents;
+            info.numComponents = numComponents;
             info.progress = (loadedComponents / numComponents) * 100;
             if (info.progress > 100) {
                 info.progress = 100;

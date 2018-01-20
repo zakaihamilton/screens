@@ -28,7 +28,8 @@ function startBrowser(appName, appArgs) {
             "date",
             "number",
             "hash",
-            "flow"
+            "flow",
+            "startup"
         ],
         "storage": [
             "cache",
@@ -115,35 +116,31 @@ function startBrowser(appName, appArgs) {
             "text",
             "letters"
         ],
-        "manager":[
+        "manager": [
             "download"
         ],
-        "media":[
+        "media": [
             "ffmpeg"
+        ],
+        "startup": [
+            "app"
         ]
-    },
-            function (info) {
-                if (info.failure) {
-                    console.log("Cannot load " + info.failure.package + "." + info.failure.component);
-                } else if (info.progress && info.loaded) {
-                    var progress_width = (300 / 100) * info.progress;
-                    var progress = document.getElementById("progress");
-                    if (progress) {
-                        progress.style.width = progress_width + "px";
-                        progress.innerHTML = info.loaded.package + "." + info.loaded.component;
-                    }
-                }
-                if (info.complete) {
-                    document.getElementById("bar").style.display = "none";
-                    package.include("app.main", function (appInfo) {
-                        if (appInfo.complete) {
-                            if(appName) {
-                                package.core.message.send_browser("app.main.setStartupApp", null, appName);
-                                package.core.message.send_browser("app.main.setStartupArgs", null, appArgs);
-                            }
-                            package.core.message.send_browser("app.main.browser");
-                        }
-                    });
-                }
-            });
+    }, function (info) {
+        if (info.failure) {
+            console.log("Cannot load " + info.failure.package + "." + info.failure.component);
+        } else if (info.progress && info.loaded) {
+            var progress_width = (300 / 100) * info.progress;
+            var progress = document.getElementById("progress");
+            if (progress) {
+                progress.style.width = progress_width + "px";
+                progress.innerHTML = info.loaded.package + "." + info.loaded.component;
+            }
+        }
+        if (info.complete) {
+            var app = package.startup.app;
+            app.args = appArgs;
+            app.name = appName;
+            package.core.startup.run();
+        }
+    });
 }

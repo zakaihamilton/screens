@@ -10,11 +10,11 @@ package.user.profile = function UserProfile(me) {
         me.flow(callback, (flow) => {
             flow.check(name, "profile name not provided");
             flow.check(password, "profile password not provided for user name: " + name);
-            flow.async(me.exists, flow.continue, name);
+            flow.async(me.exists, flow.callback, name);
             flow.wait((err, result) => {
                 flow.error(err, "failed to check if profile exists");
                 flow.check(!result, "profile " + name + " already exists");
-                flow.async(me.core.has.gen, flow.resume, password);
+                flow.async(me.core.has.gen, flow.callback, password);
                 flow.wait((err, hash) => {
                     flow.error(err, "cannot generate hash for password " + password + " for user: " + name);
                     flow.check(hash, "invalid hash for password " + password + " for user: " + name);
@@ -25,7 +25,7 @@ package.user.profile = function UserProfile(me) {
                             password: hash,
                             date: date.toString(),
                         };
-                        flow.async(me.storage.data.save, flow.continue, "user.profile", name, profile);
+                        flow.async(me.storage.data.save, flow.callback, "user.profile", name, profile);
                         flow.wait((err) => {
                             flow.error(err, "Cannot save profile for user:" + name);
                             flow.end(null, profile);
@@ -37,7 +37,7 @@ package.user.profile = function UserProfile(me) {
     };
     me.profile = function (callback, name) {
         me.flow(callback, (flow) => {
-            flow.async(me.storage.data.load, flow.continue, "user.profile.data", name);
+            flow.async(me.storage.data.load, flow.callback, "user.profile.data", name);
             flow.wait((err, profile) => {
                 flow.error(err, "cannot retrieve " + name + " profile");
                 flow.check(profile, name + " is an empty profile");
@@ -49,6 +49,7 @@ package.user.profile = function UserProfile(me) {
     me.update = function (callback, profile) {
         me.flow(callback, (flow) => {
             flow.check(profile, "no profile was passed");
+            flow.async(me.verify, flow.callback, profile.name, profile.password);
             flow.async(me.storage.data.save, "user.profile.data", profile.name, profile, me.nonIndexed);
             flow.wait((err) => {
                 flow.error(err, "cannot save " + profile.name + " profile");
@@ -65,11 +66,11 @@ package.user.profile = function UserProfile(me) {
         me.flow(callback, (flow) => {
             flow.check(name, "empty name was passed");
             flow.check(password, "no password was passed for user: " + name);
-            flow.async(me.profile, "user.profile.data", name);
+            flow.async(me.profile, flow.callback, "user.profile.data", name);
             flow.wait((err, profile) => {
                 flow.error(err, "cannot retrieve profile for user: " + name);
                 flow.check(profile.password, "profile does not have a password for user: " + name);
-                flow.async(me.core.hash.compare, password, profile.password);
+                flow.async(me.core.hash.compare, flow.callback, password, profile.password);
                 flow.wait((err, result) => {
                     flow.error(err, "cannot compare hash between:" + password + " and:" + profile.password);
                     flow.end(null, result);

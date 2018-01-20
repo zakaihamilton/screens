@@ -118,7 +118,8 @@
         "three Ruchot":"three Ruchot2",
         "Three Ruchot":"Three Ruchot2",
         "Vav Ktzavot":"Vav Kzavot",
-        "face-to-face":"Face to Face"
+        "face-to-face":"Face to Face",
+        "judgment":"judgement"
     },
     "pre": [
         {
@@ -236,7 +237,7 @@
             "replace": "$1\n"
         },
         {
-            "match": "/[^.?!:;,\\\"'”…)]$",
+            "match": "/[^.?!:;,\\\"'”…\\)]$",
             "prefix": "<h4 style=\"text-align:center\">",
             "suffix": "</h4>"
         },
@@ -672,6 +673,16 @@
                 "phase": "root"
             },
             "term": "Keter"
+        },
+        {
+            "translation": "Crowns",
+            "explanation": "Postulates",
+            "defaultTerm": true,
+            "style": {
+                "heading": "Vessel",
+                "phase": "root"
+            },
+            "term": "Keters"
         },
         {
             "translation": "Wisdom",
@@ -2067,7 +2078,11 @@
         },
         {
             "translation": "Judgements",
-            "term": "Dinim"
+            "term": "Dinim",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
         },
         {
             "translation": "Illumination",
@@ -2093,7 +2108,11 @@
         },
         {
             "translation": "Judgement",
-            "term": "Din"
+            "term": "Din",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
         },
         {
             "prefix": "an",
@@ -2299,22 +2318,38 @@
         {
             "prefix": "the",
             "translation": "Measure of Judgement",
-            "term": "Midat ha Din"
+            "term": "Midat ha Din",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
         },
         {
             "prefix": "the",
             "translation": "Measure of Mercy",
-            "term": "Midat ha Rachamim"
+            "term": "Midat ha Rachamim",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "root"
+            }
         },
         {
             "prefix": "the",
             "translation": "Measures of Judgement",
-            "term": "Midot ha Din"
+            "term": "Midot ha Din",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
         },
         {
             "prefix": "the",
             "translation": "Measures of Mercy",
-            "term": "Midot ha Rachamim"
+            "term": "Midot ha Rachamim",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "root"
+            }
         },
         {
             "translation": "Measure",
@@ -2326,7 +2361,11 @@
         },
         {
             "translation": "Mercy",
-            "term": "Rachamim"
+            "term": "Rachamim",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "root"
+            }
         },
         {
             "translation": "Upper Light",
@@ -2633,11 +2672,19 @@
         },
         {
             "translation": "Judgements",
-            "term": "Gevurot"
+            "term": "Gevurot",
+            "style": {
+                "heading": "Six Sides",
+                "phase": "one"
+            }
         },
         {
             "term":"Gevura2",
-            "translation":"Judgement"
+            "translation":"Judgement",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
         },
         {
             "translation": "Correction",
@@ -5333,8 +5380,69 @@
                 "heading":"Angle",
                 "phase":"four"
             }
+        },
+        {
+            "term":"Mezuzahs",
+            "translation":"Doorposts"
+        },
+        {
+            "term":"Mezuzah",
+            "translation":"Doorpost"
+        },
+        {
+            "term":"Egypt",
+            "style":{
+                "heading":"Location"
+            }
+        },
+        {
+            "term":"Edom",
+            "style":{
+                "heading":"Location"
+            }
+        },
+        {
+            "term":"Bozrah",
+            "style":{
+                "heading":"Location"
+            }
+        },
+        {
+            "term":"Abraham",
+            "style":{
+                "heading":"Patriarch",
+                "phase":"root"
+            }
+        },
+        {
+            "term":"Isaac",
+            "style":{
+                "heading":"Patriarch",
+                "phase":"one"
+            }
+        },
+        {
+            "term":"Jacob",
+            "style":{
+                "heading":"Patriarch",
+                "phase":"two"
+            }
+        },
+        {
+            "term": "judgement",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "one"
+            }
+        },
+        {
+            "term": "mercy",
+            "style": {
+                "heading": "Side of Light",
+                "phase": "root"
+            }
         }
-    ],
+        ],
     "style": {
         "chest": {
             "phase": "two",

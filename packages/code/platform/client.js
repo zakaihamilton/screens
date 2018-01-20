@@ -13,7 +13,8 @@ package.include({
         "string",
         "object",
         "property",
-        "flow"
+        "flow",
+        "startup"
     ],
     "app": [
         "main"
@@ -25,4 +26,8 @@ package.include({
         "search",
         "style",
         "text"
-    ]});
+    ]}, function (info) {
+    if (info.complete) {
+        package.core.startup.run();
+    }
+});
