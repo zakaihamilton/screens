@@ -12,7 +12,7 @@ package.core.startup = function CoreStartup(me) {
                 if(components) {
                     components.map(function (component_name) {
                         me.lock(task, (task) => {
-                            var component = me.path(component_name);
+                            var component = me.browse(component_name);
                             if(component.run) {
                                 me.core.console.log("startup:" + component_name);
                                 component.run(task);

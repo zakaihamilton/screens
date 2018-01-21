@@ -35,6 +35,7 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
+                embedded: true,
                 swipe: me.core.device.isMobile()
             });
             window.pageSize = {width: 0, height: 0};
@@ -67,6 +68,7 @@ package.app.transform = function AppTransform(me) {
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
+            me.embedded = me.ui.options.toggleSet(me, "embedded", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.swipe = me.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
@@ -369,6 +371,7 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: window.options.scrollPos,
                 filter: me.core.property.get(window.var.filter, "ui.basic.text")
             };
+            window.diagrams = [];
             me.ui.layout.reflow(function () {
                 me.core.property.set(window, "ui.work.state", false);
                 var title = me.core.property.get(window, "app.transform.title");
@@ -446,12 +449,45 @@ package.app.transform = function AppTransform(me) {
             }
         });
     };
+    me.hasDiagrams = {
+        get: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            return window.diagrams && window.diagrams.length;
+        }
+    };
+    me.diagramList = {
+        get: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var diagrams = window.diagrams;
+            if(!diagrams) {
+                diagrams = [];
+            }
+            var items = diagrams.map(function (item) {
+                var result = [
+                    item.title,
+                    function () {
+                        me.core.app.launch(null, "diagram", [item.path, window.options]);
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+    };
     me.loadDiagram = {
         set: function (object, path) {
             var window = me.widget.window.mainWindow(object);
-            me.core.app.launch(function (diagramWindow) {
-                me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
-            }, "diagram", [path, window.options, object, false]);
+            var fullPath = me.app.diagram.fullPath(path);
+            me.core.json.loadFile(function (json) {
+                if(json.title) {
+                    window.diagrams.push({title:json.title,path:path});
+                }
+            }, fullPath, false);
+            if(window.options.embedded) {
+                me.core.app.launch(function (diagramWindow) {
+                    me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
+                }, "diagram", [path, window.options, object, true]);
+            }
         }
     };
     me.hoverDescription = function (object, state) {

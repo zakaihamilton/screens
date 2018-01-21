@@ -5360,6 +5360,9 @@
         },
         {
             "term":"north",
+            "source":"Tsaphon",
+            "translation":"North",
+            "explanation":"Change",
             "style":{
                 "heading":"Angle",
                 "phase":"one"
@@ -5367,6 +5370,9 @@
         },
         {
             "term":"south",
+            "source":"Darom",
+            "translation":"South",
+            "explanation":"Start",
             "style":{
                 "heading":"Angle",
                 "phase":"root"
@@ -5374,6 +5380,9 @@
         },
         {
             "term":"east",
+            "source":"Mizrah",
+            "translation":"East",
+            "explanation":"Stop",
             "style":{
                 "heading":"Angle",
                 "phase":"three"
@@ -5381,6 +5390,10 @@
         },
         {
             "term":"west",
+            "source":"Maarav",
+            "translation":"West",
+            "language":"english",
+            "explanation":"Dominion",
             "style":{
                 "heading":"Angle",
                 "phase":"four"

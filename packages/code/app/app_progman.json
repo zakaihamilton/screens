@@ -44,6 +44,11 @@
                 ["Tile Horizontally", "ui.arrange.tileHorizontally"],
                 ["Tile Vertically", "ui.arrange.tileVertically"],
                 ["Arrange Icons", "ui.arrange.arrangeIcons"],
+                ["Groups", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
                 "widget.window.childMenuList"
             ]],
         ["Help", [

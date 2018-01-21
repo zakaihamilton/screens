@@ -1,4 +1,4 @@
-function package_path(path, optional=false) {
+function package_browse(path, optional=false) {
     var items = path.split(".");
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
@@ -92,7 +92,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
     var id = package_name + "." + component_name;
     var component_id = id;
     if (!node) {
-        node = package.path(id);
+        node = package.browse(id);
     }
     if (child_name) {
         node = node[child_name];
@@ -176,7 +176,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
     }
     console.log(package.platform + ": Loading " + code_name);
     if (package_name in package) {
-        if (package_path(code_name, true)) {
+        if (package_browse(code_name, true)) {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name, child_name:child_name}});
                 return;
@@ -330,7 +330,7 @@ function package_include(packages, callback, package_type="code") {
 
 function package_alias(object, aliases) {
     for(var alias in aliases) {
-        object[alias] = package_path(aliases[alias]);
+        object[alias] = package_browse(aliases[alias]);
     }
 }
 
@@ -338,7 +338,7 @@ var package = {
     components: {},
     order: [],
     id: "package",
-    path : package_path,
+    browse : package_browse,
     platform : package_platform(),
     require: package_require,
     include: package_include,

@@ -74,8 +74,8 @@ package.widget.canvas = function WidgetCanvas(me) {
             tagName: tag,
             virtual: true
         };
-        package["canvas"].components.map(function (component_name) {
-            var component = package.path(component_name);
+        me["canvas"].components.map(function (component_name) {
+            var component = me.browse(component_name);
             if ("attach" in component) {
                 component.attach(element);
             }

@@ -99,7 +99,7 @@ package.core.message = function CoreMessage(me) {
             return result;
         }
         try {
-            callback = package.path(path);
+            callback = me.browse(path);
         } catch (error) {
             //me.core.console.log(error);
             return undefined;

@@ -54,6 +54,11 @@
                         "separator": true
                     }
                 ],
+                ["Embedded", "app.transform.embedded", {
+                        "state": "select",
+                        "enabled": "app.transform.diagrams"
+                    }
+                ],
                 ["Language", null, {
                         "enabled": false,
                         "header": true
@@ -182,21 +187,32 @@
                 "app.transform.contentMenuList",
                 ["Save", "app.transform.save", {
                         "enabled": "select",
-                        "separator":true
+                        "separator": true
                     }]
             ]
         ],
-        ["Document", [
+        ["Window", [
+                ["Cascade", "ui.arrange.cascade"],
+                ["Tile Horizontally", "ui.arrange.tileHorizontally"],
+                ["Tile Vertically", "ui.arrange.tileVertically"],
                 ["Table of Phases", "app.transform.toggleTerms", {
+                        "separator": true,
                         "state": "select",
                         "enabled": "app.transform.termsAvailable"
                     }
                 ],
-                ["Cascade", "ui.arrange.cascade", {
-                        "separator": true
-                    }],
-                ["Tile Horizontally", "ui.arrange.tileHorizontally"],
-                ["Tile Vertically", "ui.arrange.tileVertically"],
+                ["Diagrams", null, {
+                        "visible":"app.transform.hasDiagrams",
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.transform.diagramList",
+                ["Documents", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
                 "widget.window.childMenuList"
             ]]
     ],
@@ -204,7 +220,7 @@
         "ui.data.default": {
             "ui.basic.context": "self",
             "static": true,
-            "title":"Document",
+            "title": "Document",
             "ui.property.style": {
                 "ui.style.width": "500px",
                 "ui.style.height": "500px"

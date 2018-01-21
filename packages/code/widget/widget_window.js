@@ -761,7 +761,6 @@ package.widget.window = function WidgetWindow(me) {
     };
     me.childMenuList = {
         get: function (object) {
-            var isFirst = true;
             var window = me.mainWindow(object);
             var parent = me.parent(window);
             if (parent) {
@@ -782,11 +781,9 @@ package.widget.window = function WidgetWindow(me) {
                     {
                         "state": function () {
                             return me.core.property.get(child, "ui.focus.active");
-                        },
-                        "separator": isFirst
+                        }
                     }
                 ];
-                isFirst = false;
                 return result;
             });
             return items;
