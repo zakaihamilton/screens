@@ -277,6 +277,12 @@ package.ui.layout = function UILayout(me) {
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
+                            "ui.class.class": options.pageReloadClass,
+                            "ui.basic.var": "pageReload",
+                            "ui.touch.dblclick":options.reloadMethod
+                        },
+                        {
+                            "ui.basic.tag": "div",
                             "ui.class.class": options.pageNumberClass,
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,

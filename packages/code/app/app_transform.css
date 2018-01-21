@@ -96,17 +96,16 @@
 }
 
 .app-transform-page-header {
-    height:50px;
+    height:60px;
 }
 
 .app-transform-page-number{
     position: absolute;
     width:20%;
-    height:30px;
+    height:20px;
     left:40%;
     top: 20px;
     text-align: center;
-    background:white;
 }
 
 .app-transform-page-number:after{
@@ -119,7 +118,7 @@
     top:0px;
     left:0%;
     width:100%;
-    height:30px;
+    height:20px;
 }
 
 .app-transform-page-number:hover:after {
@@ -129,16 +128,15 @@
     content:attr(longPageNumberText);
 }
 
-.app-transfer-page-scrolltotop {
+.app-transform-page-scrolltotop {
     position: absolute;
     width:20%;
     height:20px;
     left:40%;
     top: 0px;
-    background:white;
 }
 
-.app-transfer-page-scrolltotop:after {
+.app-transform-page-scrolltotop:after {
     border-style: solid;
     content: '';
     position: absolute;
@@ -153,13 +151,41 @@
     color:gray;
 }
 
-.app-transfer-page-scrolltotop:hover:after{
+.app-transform-page-scrolltotop:hover:after{
     color:black;
     top:0.25em;
     border-width: 0.25em 0.25em 0 0;
     margin-left: -0.35em;
     width: 0.45em;
     height: 0.45em;
+}
+
+.app-transform-page-reload {
+    position: absolute;
+    width:20%;
+    height:20px;
+    left:40%;
+    top: 40px;
+    text-align: center;
+}
+
+.app-transform-page-reload:after {
+    position:absolute;
+    font-size:50%;
+    line-height:100%;
+    color:gray;
+    content: '\21ba';
+    text-align:center;
+    top:0px;
+    left:0%;
+    width:100%;
+    height:30px;
+}
+
+.app-transform-page-reload:hover:after {
+    font-size:100%;
+    font-weight: bold;
+    color:black;
 }
 
 .app-transform-filter {
