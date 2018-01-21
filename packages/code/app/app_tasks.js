@@ -63,15 +63,15 @@ package.app.tasks = function AppTasks(me) {
     me.tile = {
         set: function(object, value) {
             me.core.property.set(me.singleton, "widget.window.close");
-            var body = me.core.property.get(object, "ui.element.body");
-            me.core.property.set(body, "ui.arrange.tileHorizontally");
+            var workspace = me.ui.element.workspace();
+            me.core.property.set(workspace, "ui.arrange.tileHorizontally");
         }
     };
     me.cascade = {
         set: function(object, value) {
             me.core.property.set(me.singleton, "widget.window.close");
-            var body = me.core.property.get(object, "ui.element.body");
-            me.core.property.set(body, "ui.arrange.cascade");
+            var workspace = me.ui.element.workspace();
+            me.core.property.set(workspace, "ui.arrange.cascade");
         }
     };
 };

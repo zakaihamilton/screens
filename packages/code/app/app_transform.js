@@ -60,7 +60,7 @@ package.app.transform = function AppTransform(me) {
             me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
-                me.core.property.set([window.var.layout,window.var.termTable], "ui.style.fontSize", value);
+                me.core.property.set([window.var.layout, window.var.termTable], "ui.style.fontSize", value);
                 window.forceReflow = true;
                 me.core.property.notify(window, "update");
             });
@@ -70,7 +70,7 @@ package.app.transform = function AppTransform(me) {
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.embedded = me.ui.options.toggleSet(me, "embedded", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
-            me.swipe = me.ui.options.toggleSet(me, "swipe", function(object, options, key, value) {
+            me.swipe = me.ui.options.toggleSet(me, "swipe", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
                 me.core.property.set(window.var.layout, "ui.scroll.swipe", value ? "vertical" : "");
             });
@@ -81,10 +81,10 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         me.core.property.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
         me.core.property.set(window.var.transform, "ui.style.display", showInput ? "inline-block" : "none");
-        me.core.property.set([window.var.filter,window.var.layout], "ui.style.top", showInput ? "250px" : "0px");
+        me.core.property.set([window.var.filter, window.var.layout], "ui.style.top", showInput ? "250px" : "0px");
         me.core.property.set(window.var.layout, {
-            "ui.style.borderTop" : showInput ? "1px solid black" : "none",
-            "ui.style.fontSize" : window.options.fontSize,
+            "ui.style.borderTop": showInput ? "1px solid black" : "none",
+            "ui.style.fontSize": window.options.fontSize,
             "ui.scroll.swipe": window.options.swipe ? "vertical" : ""
         });
         me.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
@@ -108,7 +108,7 @@ package.app.transform = function AppTransform(me) {
     };
     me.work = {
         set: function (object, value) {
-            if(object.workTimeout) {
+            if (object.workTimeout) {
                 clearTimeout(object.workTimeout);
                 object.workTimeout = null;
             }
@@ -409,13 +409,13 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.termsAvailable = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             return window.dataExists;
         }
     };
     me.toggleTerms = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             return me.core.property.get(window.var.termPopup, "minimize");
         },
@@ -423,7 +423,7 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             me.core.property.set(window.var.termPopup, {
                 "show": !me.core.property.get(window.var.termPopup, "minimize"),
-                "ui.property.style":{
+                "ui.property.style": {
                     "left": "25px",
                     "top": "50px",
                     "right": "25px",
@@ -452,16 +452,16 @@ package.app.transform = function AppTransform(me) {
         });
     };
     me.hasDiagrams = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             return window.diagrams && window.diagrams.length;
         }
     };
     me.diagramList = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var diagrams = window.diagrams;
-            if(!diagrams) {
+            if (!diagrams) {
                 diagrams = [];
             }
             var items = diagrams.map(function (item) {
@@ -481,11 +481,11 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             var fullPath = me.app.diagram.fullPath(path);
             me.core.json.loadFile(function (json) {
-                if(json.title) {
-                    window.diagrams.push({title:json.title,path:path});
+                if (json.title) {
+                    window.diagrams.push({title: json.title, path: path});
                 }
             }, fullPath, false);
-            if(window.options.embedded) {
+            if (window.options.embedded) {
                 me.core.app.launch(function (diagramWindow) {
                     me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
                 }, "diagram", [path, window.options, object, true]);
@@ -561,26 +561,26 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.refreshContentList = {
-        set: function(object) {
+        set: function (object) {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);
                 me.contentList = items;
             }, "app.transform.content", "date");
         }
     };
-    me.init = function(task) {
+    me.init = function (task) {
         me.storage.data.query((err, items) => {
             me.core.console.error(err);
             me.contentList = items;
         }, "app.transform.content", "date");
     };
     me.contentMenuList = {
-        get: function(object) {
+        get: function (object) {
             var isFirst = true;
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var contentList = me.contentList;
-            if(!contentList) {
+            if (!contentList) {
                 contentList = [];
             }
             var items = contentList.map(function (item) {
@@ -605,61 +605,60 @@ package.app.transform = function AppTransform(me) {
         }
     };
     me.documentIndex = {
-        set: function(object, value) {
+        set: function (object, value) {
             var baseTitle = "Document " + value;
             me.core.property.set(object, "widget.window.key", baseTitle);
             me.core.property.set(object, "widget.window.title", baseTitle);
         }
     };
     me.contentTitle = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var title = me.ui.layout.firstWidget(window.var.layout);
-            if(title && title.tagName.toLowerCase() === "h4") {
+            if (title && title.tagName.toLowerCase() === "h4") {
                 return title.innerText;
             }
             return null;
         }
     };
     me.title = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var title = me.core.property.get(window, "app.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
-            if(title) {
+            if (title) {
                 return key + " - " + title;
             }
             return key;
         }
     };
     me.save = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             return text;
         },
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             var date = new Date();
             var title = me.core.property.get(window, "app.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
-            if(!title) {
+            if (!title) {
                 title = key;
             }
-            if(!title) {
+            if (!title) {
                 title = date.toLocaleDateString();
             }
             var data = {
-                content:me.core.string.encode(text),
+                content: me.core.string.encode(text),
                 date: date.toString(),
                 title: title
             };
             me.storage.data.save(err => {
-                if(err) {
+                if (err) {
                     me.core.console.error("Cannot save content: " + err.message);
-                }
-                else {
+                } else {
                     me.refreshContentList.set(object);
                 }
             }, data, "app.transform.content", title, ["content"]);
