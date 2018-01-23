@@ -29,7 +29,8 @@ function startBrowser(appName, appArgs) {
             "number",
             "hash",
             "flow",
-            "startup"
+            "startup",
+            "network"
         ],
         "storage": [
             "cache",
@@ -123,7 +124,8 @@ function startBrowser(appName, appArgs) {
             "ffmpeg"
         ],
         "startup": [
-            "app"
+            "app",
+            "version"
         ]
     }, function (info) {
         if (info.failure) {

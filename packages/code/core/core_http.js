@@ -20,11 +20,10 @@ package.core.http = function CoreHttp(me) {
                 }).on('data', function (chunk) {
                     body.push(chunk);
                 }).on('end', function () {
-                    if(request.url.includes("private")) {
+                    if (request.url.includes("private")) {
                         response.writeHead(200);
                         response.end("cannot load private files remotely");
-                    }
-                    else {
+                    } else {
                         me.handleRequest(request, response, body);
                     }
                 });
@@ -38,7 +37,7 @@ package.core.http = function CoreHttp(me) {
         }
     };
     me.handleRequest = function (request, response, body) {
-        if(body) {
+        if (body) {
             body = Buffer.concat(body).toString();
         }
         me.lock(task => {
@@ -49,6 +48,10 @@ package.core.http = function CoreHttp(me) {
                 url = request.url.substring(0, query_offset);
                 query = request.url.substring(query_offset + 1);
             }
+            var ip = request && ((request.headers['x-forwarded-for'] && request.headers['x-forwarded-for'].split(',').pop()) ||
+                    (request.connection && request.connection.remoteAddress) ||
+                    (request.socket && request.socket.remoteAddress) ||
+                    (request.connection && request.connection.socket && request.connection.socket.remoteAddress));
             var info = {
                 method: request.method,
                 url: decodeURIComponent(url),
@@ -60,17 +63,18 @@ package.core.http = function CoreHttp(me) {
                 task: task,
                 response: response,
                 custom: false,
-                check: true
+                check: true,
+                ip: ip
             };
             me.core.object.attach(info, me);
             me.core.property.set(info, "check");
-            if(!info.check) {
+            if (!info.check) {
                 response.writeHead(403);
                 response.end();
             }
             me.core.property.set(info, "receive");
             me.unlock(task, () => {
-                if(info.custom === false) {
+                if (info.custom === false) {
                     response.writeHead(info.code, {
                         "Content-Type": info["content-type"],
                     });
@@ -96,20 +100,20 @@ package.core.http = function CoreHttp(me) {
         me.core.property.set(info, "headers", headers);
         if (me.platform === "server") {
             var request = {
-                url:info.url,
-                headers:headers,
-                method:info.method.toUpperCase()
+                url: info.url,
+                headers: headers,
+                method: info.method.toUpperCase()
             };
             var response = {
-                writeHead : function() { },
-                end : function(body) {
+                writeHead: function () { },
+                end: function (body) {
                     if (info.callback) {
                         info.response = body;
                         info.callback(info);
                     }
                 }
             };
-            me.core.console.log("sending request:"  + JSON.stringify(request) + " body: " + info.body);
+            me.core.console.log("sending request:" + JSON.stringify(request) + " body: " + info.body);
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();
@@ -135,8 +139,8 @@ package.core.http = function CoreHttp(me) {
                     }
                 };
             }
-            if(headers) {
-                for(var key in headers) {
+            if (headers) {
+                for (var key in headers) {
                     request.setRequestHeader(key, headers[key]);
                 }
             }
@@ -144,6 +148,6 @@ package.core.http = function CoreHttp(me) {
             if (!async && request.status === 200) {
                 return request.responseText;
             }
-        }
+    }
     };
 };

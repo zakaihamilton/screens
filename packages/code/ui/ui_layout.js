@@ -279,7 +279,7 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageReloadClass,
                             "ui.basic.var": "pageReload",
-                            "ui.touch.dblclick":options.reloadMethod
+                            "ui.touch.click":options.reloadMethod
                         },
                         {
                             "ui.basic.tag": "div",

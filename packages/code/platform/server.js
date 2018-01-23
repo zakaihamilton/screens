@@ -21,7 +21,8 @@ package.include({
         "server",
         "hash",
         "flow",
-        "startup"
+        "startup",
+        "network"
     ],
     "storage": [
         "file",

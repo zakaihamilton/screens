@@ -77,7 +77,7 @@ package.core.message = function CoreMessage(me) {
                         me.unlock(task);
                     };
                     try {
-                        core.message.send.apply(null, args);
+                        core.message.send.apply(info, args);
                     }
                     catch(e) {
                         me.core.console.log("error: " + e.message + " " + JSON.stringify(args));
@@ -95,7 +95,7 @@ package.core.message = function CoreMessage(me) {
             return undefined;
         }
         if (typeof path === "function") {
-            var result = path.apply(null, args);
+            var result = path.apply(this, args);
             return result;
         }
         try {
@@ -106,7 +106,7 @@ package.core.message = function CoreMessage(me) {
         }
         me.core.console.log("sending: " + path + " with " + args.length + " arguments");
         if (typeof callback === "function") {
-            var result = callback.apply(null, args);
+            var result = callback.apply(this, args);
             return result;
         } else {
             me.core.console.log("callback is not a function but rather " + JSON.stringify(callback));
