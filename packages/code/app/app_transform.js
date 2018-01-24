@@ -340,6 +340,7 @@ package.app.transform = function AppTransform(me) {
             if (!me.shouldReflow(object)) {
                 return;
             }
+            var text = me.core.property.get(window.var.input, "ui.basic.text");
             var visibleWidget = null;
             if (!window.contentChanged) {
                 visibleWidget = me.ui.layout.firstVisibleWidget(window.var.layout);
@@ -349,7 +350,7 @@ package.app.transform = function AppTransform(me) {
             window.pageSize = me.ui.layout.pageSize(window.var.layout);
             me.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
             var fullscreen = me.core.property.get(window, "fullscreen");
-            me.core.property.set(object.var.filter, "ui.style.visibility", fullscreen ? "hidden" : "visible");
+            me.core.property.set(object.var.filter, "ui.style.visibility", !text || fullscreen ? "hidden" : "visible");
             me.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
             me.core.property.set(window, "ui.work.state", true);
             var target = me.widget.container.content(window.var.layout);

@@ -8,7 +8,7 @@ package.kab.style = function KabStyle(me) {
         var styles = instance.item.style;
         var html = "";
         var phase = null, parentPhase = null, heading = null, tooltip = null, descriptions = {};
-        var term = instance.item.source ? instance.item.source : instance.target;
+        var term = instance.target;
         if (typeof styles === "string") {
             if (session.json.style) {
                 styles = session.json.style[styles];
@@ -37,9 +37,6 @@ package.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
             if (!session.options.keepSource && !expansion && session.options.doTranslation && term !== replacement) {
-                if (instance.item.source) {
-                    term = instance.item.source;
-                }
                 tooltip = term;
             }
         } else if (!session.options.keepSource && !expansion) {

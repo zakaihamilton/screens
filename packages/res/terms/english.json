@@ -5490,6 +5490,12 @@
             "style":{
                 "heading":"Angel"
             }
+        },
+        {
+            "term":"sheaf",
+            "source":"Tsror",
+            "translation":"Sheaf",
+            "explanation":"Screen"
         }
         ],
     "style": {

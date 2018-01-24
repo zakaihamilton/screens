@@ -143,7 +143,7 @@ package.kab.text = function KabText(me) {
                         session: session,
                         depth: depth,
                         source: me.core.string.middleLetters(collectedWords, match),
-                        target: term,
+                        target: item.source ? item.source : term,
                         upperCase: upperCase,
                         prefixWord: prefixWord,
                         suffixWord: suffixWord,
@@ -185,7 +185,7 @@ package.kab.text = function KabText(me) {
         var expansion = instance.item.expansion;
         var translation = instance.item.translation;
         var explanation = instance.item.explanation;
-        var overrideSource = instance.item.source;
+        var source = instance.item.source;
         var context = instance.item.context;
         var lastExpansion = "";
         if (session.json.data.lastExpansion) {
@@ -248,12 +248,12 @@ package.kab.text = function KabText(me) {
                 explanation = explanation.toUpperCase();
             }
             modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
-        } else if (overrideSource) {
+        } else if (source) {
             instance.words.splice(instance.wordIndex, instance.span);
-            if (Array.isArray(overrideSource)) {
-                instance.words.splice(instance.wordIndex, 0, ...overrideSource);
+            if (Array.isArray(source)) {
+                instance.words.splice(instance.wordIndex, 0, ...source);
             } else {
-                instance.words.splice(instance.wordIndex, 0, overrideSource);
+                instance.words.splice(instance.wordIndex, 0, source);
             }
             instance.wordIndex--;
         } else if (session.options.addStyles && instance.item.style) {
@@ -265,13 +265,7 @@ package.kab.text = function KabText(me) {
         }
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
-        var term = null;
-        if (instance.item.source) {
-            term = instance.item.source;
-        }
-        else {
-            term = instance.item.term;
-        }
+        var term = instance.item.target;
         if(!translation) {
             translation = "";
         }
