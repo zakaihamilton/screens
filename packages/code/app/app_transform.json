@@ -174,12 +174,7 @@
                 ],
                 ["Italic", "ui.exec.italic"],
                 ["Underline", "ui.exec.underline"],
-                ["Strikethrough", "ui.exec.strikeThrough"],
-                ["Separator", "app.transform.toggleSeparator", {
-                        "state": "select",
-                        "separator": true
-                    }
-                ]
+                ["Strikethrough", "ui.exec.strikeThrough"]
             ]
         ],
         ["Content", [

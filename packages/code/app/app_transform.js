@@ -185,14 +185,23 @@ package.app.transform = function AppTransform(me) {
         for (var termName in terms) {
             var term = terms[termName];
             if (term.heading && term.phase) {
+                var phase = term.phase;
+                if(typeof phase !== "string") {
+                    if(phase.minor) {
+                        phase = phase.minor;
+                    }
+                    else {
+                        phase = phase.major;
+                    }
+                }
                 term.heading.split("/").map(function (subHeading) {
                     var column = table[subHeading];
                     if (!column) {
                         column = table[subHeading] = {};
                     }
-                    var row = column[term.phase];
+                    var row = column[phase];
                     if (!row) {
-                        row = column[term.phase] = [];
+                        row = column[phase] = [];
                     }
                     term.name = termName;
                     row.push(term);

@@ -7,7 +7,7 @@ package.kab.style = function KabStyle(me) {
     me.process = function (session, instance, replacement, expansion) {
         var styles = instance.item.style;
         var html = "";
-        var phase = null, heading = null, tooltip = null, descriptions = {};
+        var phase = null, parentPhase = null, heading = null, tooltip = null, descriptions = {};
         var term = instance.item.source ? instance.item.source : instance.target;
         if (typeof styles === "string") {
             if (session.json.style) {
@@ -21,6 +21,18 @@ package.kab.style = function KabStyle(me) {
         }
         if (styles && styles.phase) {
             phase = styles.phase;
+            if(typeof phase !== "string") {
+                if(phase.major) {
+                    parentPhase = phase.major;
+                }
+                if(phase.minor) {
+                    phase = phase.minor;
+                }
+                else {
+                    phase = phase.major;
+                    parentPhase = null;
+                }
+            }
             if (styles && styles.heading && session.options.headings) {
                 heading = styles.heading;
             }

@@ -726,7 +726,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "two"
+                "phase": {
+                    "major":"three",
+                    "minor":"two"
+                }
             },
             "term": "Tifferet2"
         },
@@ -746,7 +749,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "root"
+                "phase": {
+                    "major":"three",
+                    "minor":"root"
+                }
             },
             "term": "Hesed"
         },
@@ -756,7 +762,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "one"
+                "phase": {
+                    "major":"three",
+                    "minor":"one"
+                }
             },
             "term": "Gevura"
         },
@@ -766,7 +775,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "three"
+                "phase": {
+                    "major":"three",
+                    "minor":"three"
+                }
             },
             "term": "Netzah"
         },
@@ -776,7 +788,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "four"
+                "phase": {
+                    "major":"three",
+                    "minor":"four"
+                }
             },
             "term": "Hod"
         },
@@ -786,7 +801,10 @@
             "defaultTerm": true,
             "style": {
                 "heading": "Six Sides",
-                "phase": "collective"
+                "phase": {
+                    "major":"three",
+                    "minor":"collective"
+                }
             },
             "term": "Yesod"
         },
@@ -5458,6 +5476,18 @@
             "style": {
                 "heading": "Side of Light",
                 "phase": "root"
+            }
+        },
+        {
+            "term":"Aza",
+            "style":{
+                "heading":"Angel"
+            }
+        },
+        {
+            "term":"Azael",
+            "style":{
+                "heading":"Angel"
             }
         }
         ],
