@@ -2703,6 +2703,7 @@
         },
         {
             "term":"Gevura2",
+            "source":"Gevura",
             "translation":"Judgement",
             "style": {
                 "heading": "Side of Light",

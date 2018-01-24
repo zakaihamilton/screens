@@ -11,7 +11,7 @@
     "maximize": null,
     "widget.menu.items": [
         ["Transform", [
-                ["Clear", "app.transform.new"],
+                ["Clear", "app.transform.clear"],
                 ["Refresh", "app.transform.transform", {
                         "separator": true
                     }

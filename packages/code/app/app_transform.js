@@ -114,17 +114,11 @@ package.app.transform = function AppTransform(me) {
             }
             if (value) {
                 me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
-                object.var.layout.style.opacity = 0;
-                object.var.toggleGlossary.style.opacity = 0;
-                object.var.termPopup.style.opacity = 0;
-                object.var.filter.style.opacity = 0;
+                me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
             } else {
                 object.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    object.var.layout.style.opacity = 1;
-                    object.var.toggleGlossary.style.opacity = 1;
-                    object.var.termPopup.style.opacity = "";
-                    object.var.filter.style.opacity = "";
+                me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
                     me.updateScrolling(object);
                 }, 500);
             }
@@ -138,17 +132,20 @@ package.app.transform = function AppTransform(me) {
         if (!window.options.pages) {
             snapToPage = false;
         }
-        me.core.property.set(scrollbar, "snapToPage", snapToPage);
-        me.core.property.set(scrollbar, "pageSize", pageSize.height);
-        me.core.property.set(scrollbar, "autoScroll", window.options.autoScroll);
-        me.core.property.set(scrollbar, "scrollTo", window.options.scrollPos);
-        me.core.property.set(scrollbar, "snap");
+        me.core.property.set(scrollbar, {
+            "snapToPage" : snapToPage,
+            "pageSize": pageSize.height,
+            "autoScroll": window.options.autoScroll,
+            "scrollTo": window.options.scrollPos,
+            "snap" : null
+        });
     };
-    me.new = {
+    me.clear = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            me.core.property.set(window.var.input, "ui.basic.text", "");
-            me.core.property.set(window.var.input, "storage.cache.store", "");
+            me.core.property.set(window.var.input, {
+                "ui.basic.text": "",
+                "storage.cache.store": ""});
             me.core.property.set(window.var.output, "ui.basic.html", "");
             me.ui.node.removeChildren(window.var.filterList);
             me.ui.node.removeChildren(window.var.termTable);
@@ -186,11 +183,10 @@ package.app.transform = function AppTransform(me) {
             var term = terms[termName];
             if (term.heading && term.phase) {
                 var phase = term.phase;
-                if(typeof phase !== "string") {
-                    if(phase.minor) {
+                if (typeof phase !== "string") {
+                    if (phase.minor) {
                         phase = phase.minor;
-                    }
-                    else {
+                    } else {
                         phase = phase.major;
                     }
                 }
