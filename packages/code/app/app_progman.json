@@ -7,7 +7,6 @@
         "width": "400px",
         "height": "400px"
     },
-    "widget.window.static": true,
     "widget.menu.items": [
         ["File", [
                 ["New..."],
