@@ -43,4 +43,18 @@ package.core.json = function CoreJson(me) {
     me.log = function(json) {
         me.core.console.log(JSON.stringify(json, null, 4));        
     };
+    me.compare = function(source, target) {
+        var sourceKeys = Object.getOwnPropertyNames(source);
+        var targetKeys = Object.getOwnPropertyNames(target);
+        if (sourceKeys.length !== targetKeys.length) {
+            return false;
+        }
+        for (var i = 0; i < sourceKeys.length; i++) {
+            var propName = sourceKeys[i];
+            if (source[propName] !== target[propName]) {
+                return false;
+            }
+        }
+        return true;
+    };
 };

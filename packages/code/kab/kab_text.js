@@ -265,7 +265,7 @@ package.kab.text = function KabText(me) {
         }
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
-        var term = instance.item.target;
+        var term = instance.target;
         if(!translation) {
             translation = "";
         }
@@ -288,7 +288,7 @@ package.kab.text = function KabText(me) {
         }
         if (!session.options.doTranslation && !session.options.doExplanation) {
             replacement = term;
-        } else if (keepSource && term.toLowerCase() !== replacement.toLowerCase()) {
+        } else if (keepSource && !me.core.string.caselessCompare(term, replacement)) {
             replacement = term + prefix + replacement + suffix;
         }
         me.kab.format.replaceDuplicate(session, instance, replacement);

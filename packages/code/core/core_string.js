@@ -129,4 +129,13 @@ package.core.string = function CoreString(me) {
         URL.revokeObjectURL(url);
         return request.responseText;
     };
+    me.caselessCompare = function(source, target) {
+        if((source && !target) || (!source && target)) {
+            return false;
+        }
+        if(!source && !target) {
+            return true;
+        }
+        return source.toLowerCase() === target.toLowerCase();
+    };
 };

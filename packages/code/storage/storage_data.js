@@ -60,7 +60,7 @@ package.storage.data = function StorageData(me) {
     };
     me.verify = function (callback, value, type, id) {
         me.load((err, compare) => {
-            callback(err, JSON.stringify(compare) === JSON.stringify(value), value);
+            callback(err, me.core.json.compare(compare, value), compare);
         }, type, id);
     };
     me.saveAndVerify = function (callback, value, type, id, nonIndexed) {
