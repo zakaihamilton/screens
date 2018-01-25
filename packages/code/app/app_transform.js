@@ -16,7 +16,7 @@ package.app.transform = function AppTransform(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            window.prevLanguage = null;
+            window.language = null;
             me.ui.options.load(me, window, {
                 doTranslation: true,
                 doExplanation: false,
@@ -289,14 +289,14 @@ package.app.transform = function AppTransform(me) {
                 if (data) {
                     me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
                 }
-                if (window.prevLanguage) {
+                if (window.language) {
                     me.core.property.set([
                         window.var.input,
                         window.var.filter,
                         window.var.termTable,
                         window.var.toggleGlossary,
                         window.var.layout
-                    ], "ui.class.remove", window.prevLanguage);
+                    ], "ui.class.remove", window.language);
                 }
                 me.core.property.set([
                     window.var.input,
@@ -307,7 +307,7 @@ package.app.transform = function AppTransform(me) {
                 ], "ui.class.add", language);
                 me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
                 me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
-                window.prevLanguage = language;
+                window.language = language;
                 me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
                 me.updateFilterList(window, terms);
                 if (data) {
@@ -379,7 +379,8 @@ package.app.transform = function AppTransform(me) {
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
                 scrollPos: window.options.scrollPos,
-                filter: me.core.property.get(window.var.filter, "ui.basic.text")
+                filter: me.core.property.get(window.var.filter, "ui.basic.text"),
+                language: window.language
             };
             window.diagrams = [];
             me.ui.layout.reflow(function () {
