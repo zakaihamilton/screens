@@ -286,11 +286,16 @@ package.ui.layout = function UILayout(me) {
                         },
                         {
                             "ui.basic.tag": "div",
+                            "ui.class.class": options.pageFullscreenClass,
+                            "ui.basic.var": "pageFullscreen",
+                            "ui.touch.click":options.fullscreenMethod
+                        },
+                        {
+                            "ui.basic.tag": "div",
                             "ui.class.class": options.pageNumberClass,
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
-                            "ui.attribute.longPageNumberText": pageIndex,
-                            "ui.touch.dblclick":"widget.window.fullscreen"
+                            "ui.attribute.longPageNumberText": pageIndex
                         },
                         {
                             "ui.basic.tag": "div",

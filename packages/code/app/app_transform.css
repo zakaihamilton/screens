@@ -101,9 +101,9 @@
 
 .app-transform-page-number{
     position: absolute;
-    width:20%;
+    width:5%;
     height:20px;
-    left:40%;
+    left:45%;
     top: 20px;
     text-align: center;
 }
@@ -130,9 +130,9 @@
 
 .app-transform-page-scrolltotop {
     position: absolute;
-    width:20%;
+    width:5%;
     height:20px;
-    left:40%;
+    left:45%;
     top: 0px;
 }
 
@@ -162,11 +162,10 @@
 
 .app-transform-page-reload {
     position: absolute;
-    width:20%;
-    height:20px;
+    width:5%;
+    height:40px;
     left:40%;
-    top: 40px;
-    text-align: center;
+    top: 10px;
 }
 
 .app-transform-page-reload:after {
@@ -186,6 +185,35 @@
     font-size:100%;
     font-weight: bold;
     color:black;
+    content: '\21BB\A Reload';
+}
+
+.app-transform-page-fullscreen {
+    position: absolute;
+    width:5%;
+    height:40px;
+    left:50%;
+    top: 10px;
+}
+
+.app-transform-page-fullscreen:after {
+    position:absolute;
+    font-size:50%;
+    line-height:100%;
+    color:gray;
+    content: '\25F3';
+    text-align:center;
+    top:0px;
+    left:0%;
+    width:100%;
+    height:30px;
+}
+
+.app-transform-page-fullscreen:hover:after {
+    font-size:100%;
+    font-weight: bold;
+    color:black;
+    content: '\25F3\A Fullcreen';
 }
 
 .app-transform-filter {
