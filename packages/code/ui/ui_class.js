@@ -92,6 +92,9 @@ package.ui.class = function UIClass(me) {
         return null;
     };
     me.set_class = function (object, path, add=false) {
+        if(!path) {
+            return;
+        }
         if(!add) {
             object.className = "";
         }
@@ -101,11 +104,16 @@ package.ui.class = function UIClass(me) {
             });
             return;
         }
-        path = me.ui.element.to_full_name(object, path);
-        var class_name = me.to_class(object, path);
-        var component_name = me.to_component(object, path);
-        if(component_name) {
-            me.useStylesheet(component_name);
+        if(typeof path === "string" && path.startsWith(".")) {
+            class_name = path.substr(1);
+        }
+        else {
+            path = me.ui.element.to_full_name(object, path);
+            var class_name = me.to_class(object, path);
+            var component_name = me.to_component(object, path);
+            if(component_name) {
+                me.useStylesheet(component_name);
+            }
         }
         me.processClass(object, class_name, function(item) {
             object.classList.add(item);

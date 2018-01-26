@@ -104,13 +104,12 @@
                         "enabled": "app.transform.pages"
                     }
                 ],
-                ["HTML", "app.transform.showHtml", {
+                ["Input", "app.transform.showInput", {
                         "state": "select",
-                        "separator": true,
-                        "visible": false
+                        "separator": true
                     }
                 ],
-                ["Input", "app.transform.showInput", {
+                ["Video Slot", "app.transform.pipVideo", {
                         "state": "select",
                         "separator": true
                     }

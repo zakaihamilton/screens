@@ -36,6 +36,7 @@ package.app.transform = function AppTransform(me) {
                 phaseNumbers: true,
                 diagrams: true,
                 embedded: true,
+                pipVideo : false,
                 swipe: me.core.device.isMobile()
             });
             window.pageSize = {width: 0, height: 0};
@@ -69,6 +70,7 @@ package.app.transform = function AppTransform(me) {
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.embedded = me.ui.options.toggleSet(me, "embedded", me.reflow.set);
+            me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.swipe = me.ui.options.toggleSet(me, "swipe", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
@@ -361,26 +363,32 @@ package.app.transform = function AppTransform(me) {
                 target.style.margin = "20px 40px";
             }
             var columnCount = window.options.columns ? 2 : 1;
+            var modifiers = [window.language];
+            if(window.options.pipVideo) {
+                modifiers.push("pipVideo");
+            }
+            modifiers = modifiers.map((modifier) => {
+                return "." + modifier;
+            });
             var reflowOptions = {
-                pageClass: "app.transform.page",
-                contentClass: "app.transform.page.content",
-                containerClass: "app.transform.page.container",
-                marginLeftClass: "app.transform.page.margin.left",
-                marginRightClass: "app.transform.page.margin.right",
-                headerClass: "app.transform.page.header",
-                pageNumberClass: "app.transform.page.number",
-                pageReloadClass: "app.transform.page.reload",
-                pageFullscreenClass: "app.transform.page.fullscreen",
-                scrollToTopClass: "app.transform.page.scrolltotop",
-                separatorClass: "app.transform.separator",
-                reloadMethod: "app.transform.transform",
-                fullscreenMethod: "widget.window.fullscreen",
+                pageClass: ["app.transform.page", modifiers],
+                contentClass: ["app.transform.page.content", modifiers],
+                containerClass: ["app.transform.page.container", modifiers],
+                marginLeftClass: ["app.transform.page.margin.left", modifiers],
+                marginRightClass: ["app.transform.page.margin.right", modifiers],
+                headerClass: ["app.transform.page.header", modifiers],
+                pageNumberClass: ["app.transform.page.number", modifiers],
+                pageReloadClass: ["app.transform.page.reload", modifiers],
+                pageFullscreenClass: ["app.transform.page.fullscreen", modifiers],
+                scrollToTopClass: ["app.transform.page.scrolltotop", modifiers],
+                separatorClass: ["app.transform.separator", modifiers],
+                reloadMethod: ["app.transform.transform", modifiers],
+                fullscreenMethod: ["widget.window.fullscreen", modifiers],
                 usePages: window.options.pages,
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
                 scrollPos: window.options.scrollPos,
-                filter: me.core.property.get(window.var.filter, "ui.basic.text"),
-                language: window.language
+                filter: me.core.property.get(window.var.filter, "ui.basic.text")
             };
             window.diagrams = [];
             me.ui.layout.reflow(function () {

@@ -61,12 +61,18 @@
 .app-transform-page-margin-left {
     padding-left:1em;
     padding-right:1em;
+    background-color:transparent;
 }
 
 .app-transform-page-margin-right {
     padding-left:1em;
     padding-right:1em;
     padding-bottom:3em;
+    background-color:transparent;
+}
+
+.app-transform-page-margin-right.pipVideo {
+    margin-right:200px;
 }
 
 .app-transform-page-content {
@@ -101,7 +107,7 @@
 
 .app-transform-page-number{
     position: absolute;
-    width:5%;
+    width:10%;
     height:20px;
     left:45%;
     top: 20px;
@@ -130,7 +136,7 @@
 
 .app-transform-page-scrolltotop {
     position: absolute;
-    width:5%;
+    width:10%;
     height:20px;
     left:45%;
     top: 0px;
@@ -162,9 +168,9 @@
 
 .app-transform-page-reload {
     position: absolute;
-    width:5%;
+    width:10%;
     height:40px;
-    left:40%;
+    left:35%;
     top: 10px;
 }
 
@@ -197,9 +203,9 @@
 
 .app-transform-page-fullscreen {
     position: absolute;
-    width:5%;
+    width:10%;
     height:40px;
-    left:50%;
+    left:55%;
     top: 10px;
 }
 

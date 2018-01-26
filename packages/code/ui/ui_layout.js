@@ -271,44 +271,38 @@ package.ui.layout = function UILayout(me) {
             "ui.style.height": pageHeight + "px",
             "ui.style.visibility":"hidden",
             "ui.attribute.pageNumber": pageIndex,
-            "ui.class.add":options.language,
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
                     "ui.class.class": options.headerClass,
                     "ui.basic.var": "header",
                     "ui.style.width": pageWidth + "px",
-                    "ui.class.add":options.language,
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageReloadClass,
                             "ui.basic.var": "pageReload",
-                            "ui.touch.click":options.reloadMethod,
-                            "ui.class.add":options.language
+                            "ui.touch.click":options.reloadMethod
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageFullscreenClass,
                             "ui.basic.var": "pageFullscreen",
-                            "ui.touch.click":options.fullscreenMethod,
-                            "ui.class.add":options.language
+                            "ui.touch.click":options.fullscreenMethod
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageNumberClass,
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
-                            "ui.attribute.longPageNumberText": pageIndex,
-                            "ui.class.add":options.language
+                            "ui.attribute.longPageNumberText": pageIndex
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.scrollToTopClass,
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "ui.layout.scrollToTop",
-                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0",
-                            "ui.class.add":options.language
+                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         }
                     ]
                 },
