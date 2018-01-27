@@ -71,8 +71,8 @@
     background-color:transparent;
 }
 
-.app-transform-page-margin-right.pipVideo {
-    margin-right:200px;
+.app-transform-page-container.pipVideo {
+    margin-top:100px;
 }
 
 .app-transform-page-content {
