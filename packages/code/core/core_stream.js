@@ -13,7 +13,7 @@ package.core.stream = function CoreStream(me) {
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
         var range = headers.range;
-        if (false && range) {
+        if (contentType && contentType.startsWith("audio") && range) {
             var total = stat.size;
             var parts = range.replace(/bytes=/, "").split("-");
             var partialstart = parts[0];
