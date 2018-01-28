@@ -59,6 +59,7 @@
 .kab-term-phase-inline {
     position:relative;
     border-style:hidden;
+    white-space: nowrap;
 }
 
 [kab-term-phase-number]:after {

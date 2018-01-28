@@ -155,6 +155,7 @@ package.ui.layout = function UILayout(me) {
                     me.completePage(target.page, options);
                     if(target.page) {
                         target.page.var.separator.style.display = "block";
+                        target.page.var.pageNext.style.opacity = "0.0";
                     }
                     me.completeReflow(callback, target, options, false);
                     me.updatePages(target);
@@ -303,6 +304,19 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "ui.layout.scrollToTop",
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": options.previousPageClass,
+                            "ui.basic.var": "pagePrevious",
+                            "ui.touch.click":options.previousPageMethod,
+                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": options.nextPageClass,
+                            "ui.basic.var": "pageNext",
+                            "ui.touch.click":options.nextPageMethod
                         }
                     ]
                 },
