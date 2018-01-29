@@ -166,20 +166,18 @@
     height: 0.45em;
 }
 
-.app-transform-page-reload {
+.app-transform-page-button {
     position: absolute;
     width:10%;
     height:40px;
-    left:25%;
     top: 10px;
 }
 
-.app-transform-page-reload:after {
+.app-transform-page-button:after {
     position:absolute;
     font-size:50%;
     line-height:100%;
     color:gray;
-    content: '\21BB';
     text-align:center;
     top:0px;
     left:0%;
@@ -187,122 +185,73 @@
     height:30px;
 }
 
-.app-transform-page-reload:hover:after {
+.app-transform-page-button:hover:after {
     font-size:100%;
     font-weight: bold;
     color:black;
+}
+
+.app-transform-page-reload {
+    left:25%;
+}
+
+.app-transform-page-reload:after {
+    content: '\21BB';
+}
+
+.app-transform-page-reload:hover:after {
     content: '\21BB\A Reload';
 }
 
 .app-transform-page-reload.hebrew:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\21BB\A טען מחדש';
 }
 
 .app-transform-page-fullscreen {
-    position: absolute;
-    width:10%;
-    height:40px;
     left:35%;
-    top: 10px;
 }
 
 .app-transform-page-fullscreen:after {
-    position:absolute;
-    font-size:50%;
-    line-height:100%;
-    color:gray;
     content: '\25F3';
-    text-align:center;
-    top:0px;
-    left:0%;
-    width:100%;
-    height:30px;
 }
 
 .app-transform-page-fullscreen:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\25F3\A Fullcreen';
 }
 
 .app-transform-page-fullscreen.hebrew:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\25F3\A מסך מלא';
 }
 
 .app-transform-page-previous {
-    position: absolute;
-    width:10%;
-    height:40px;
     left:55%;
-    top: 10px;
 }
 
 .app-transform-page-previous:after {
-    position:absolute;
-    font-size:50%;
-    line-height:100%;
-    color:gray;
     content: '\21E6';
-    text-align:center;
-    top:0px;
-    left:0%;
-    width:100%;
-    height:30px;
 }
 
 .app-transform-page-previous:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\21E6\Previous Page';
 }
 
 .app-transform-page-previous.hebrew:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\21E6\A עמוד קודם';
 }
 
 .app-transform-page-next {
-    position: absolute;
-    width:10%;
-    height:40px;
     left:65%;
-    top: 10px;
 }
 
 .app-transform-page-next:after {
-    position:absolute;
-    font-size:50%;
-    line-height:100%;
-    color:gray;
     content: '\21E8';
-    text-align:center;
-    top:0px;
-    left:0%;
-    width:100%;
-    height:30px;
 }
 
 .app-transform-page-next:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\21E8\Next Page';
 }
 
 .app-transform-page-next.hebrew:hover:after {
-    font-size:100%;
-    font-weight: bold;
-    color:black;
     content: '\21E8\A עמוד הבא';
 }
 
