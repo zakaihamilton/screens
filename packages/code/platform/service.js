@@ -30,9 +30,7 @@ package.include({
     ]
 }, function (info) {
     if (info.complete) {
-        package.core.startup.run(() => {
-            package.core.service.setup();
-        });
+        package.core.startup.run();
     }
 });
 

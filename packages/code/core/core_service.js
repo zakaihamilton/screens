@@ -12,21 +12,21 @@ package.core.service = function CoreService(me) {
                     me.server = me.io.listen(config.servicePort);
                     me.clients = new Map();
                     me.server.on("connection", (socket) => {
-                        console.info(`Service connected [id=${socket.id}]`);
+                        me.core.console.log(`Service connected [id=${socket.id}]`);
                         var ref = me.core.ref.gen();
                         me.clients.set(socket, ref);
                         socket.on("disconnect", () => {
                             me.clients.delete(socket);
-                            console.info(`Service disconnected [id=${socket.id}]`);
+                            me.core.console.log(`Service disconnected [id=${socket.id}]`);
                         });
                         socket.on("method", (info) => {
                             me.core.message.handleLocal((response) => {
                                 socket.emit("method", response);
                             }, info);
                         });
-                        console.log("Service setup request for ref: " + ref);
+                        me.core.console.log("Service setup request for ref: " + ref);
                         me.core.message.send_service.call(socket, "core.service.setup", () => {
-                            console.log("Service setup complete for ref: " + ref);
+                            me.core.console.log("Service setup complete for ref: " + ref);
                         }, ref);
                     });
                 }
