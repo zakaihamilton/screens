@@ -1,4 +1,4 @@
-/* remote component @component */
+/* remote component __component__ */
 
 package.__component__ = function (me) {
     me.forward = function (object, property) {

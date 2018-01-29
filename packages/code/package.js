@@ -49,7 +49,12 @@ function package_unlock(task, callback) {
 function package_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this.module !== module) {
-        platform = "server";
+        if(global.platform) {
+            platform = global.platform;
+        }
+        else {
+            platform = "server";
+        }
     } else if (typeof importScripts !== 'undefined') {
         platform = "client";
     }
@@ -80,10 +85,17 @@ function package_require(id, platform) {
 
 function package_remote(id, platform) {
     var component = package_component(id);
+    var support = "";
     if (typeof platform !== "undefined") {
         component.remote = platform;
     }
-    return component.remote;
+    if(component.remote) {
+        support = component.remote;
+    }
+    else if(component.require) {
+        support = component.require;
+    }
+    return support;
 }
 
 function package_setup(task, package_name, component_name, child_name, callback, node = null) {
@@ -93,6 +105,20 @@ function package_setup(task, package_name, component_name, child_name, callback,
     var component_id = id;
     if (!node) {
         node = package.browse(id);
+    }
+    if(package.platform === "service") {
+        var remote = package.remote(id);
+        if(remote && remote.includes("server") && !remote.includes("service")) {
+            node = function (me) {
+                me.forward = function (object, property) {
+                    return function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.unshift("__component__." + property);
+                        me.core.message.send_server.apply(null, args);
+                    };
+                };
+            };
+        }
     }
     if (child_name) {
         node = node[child_name];
@@ -132,7 +158,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var requirement_platform = package.require(id);
-    if (!requirement_platform || requirement_platform === package.platform) {
+    if (!requirement_platform || requirement_platform.includes(package.platform)) {
         node(component_obj, child_name);
         var init_method = component_obj.init;
         if (component_obj.forward) {
@@ -202,7 +228,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
                 }
             };
             ref.parentNode.insertBefore(script, ref);
-        } else if (package.platform === "server") {
+        } else if (package.platform === "server" || package.platform === "service") {
             path = "../" + package_type + "/" + file_name;
             require(path);
             package_prepare(package_name, component_name, child_name, callback);
@@ -349,7 +375,8 @@ var package = {
     count: 0
 };
 
-if (package_platform() === "server") {
+var platform = package_platform();
+if (platform === "server" || platform === "service") {
     global.package = package;
     global.__json__ = {};
 }

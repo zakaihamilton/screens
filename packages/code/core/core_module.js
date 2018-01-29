@@ -62,24 +62,12 @@ package.core.module = function CoreModule(me) {
                         var target_platform = null;
                         if (component_path) {
                             core.console.log("component_path: " + component_path);
-                            try {
-                                var require_platform = me.require(component_path);
-                                var remote_platform = me.remote(component_path);
-                                if (require_platform) {
-                                    target_platform = require_platform;
-                                } else if (remote_platform) {
-                                    target_platform = remote_platform;
-                                }
-                            } catch (err) {
-                                core.console.error(err);
-                                info.body = null;
-                                return;
-                            }
+                            target_platform = me.remote(component_path);
                         }
                         var source_platform = info.query["platform"];
                         core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
                         info["content-type"] = "application/javascript";
-                        if (target_platform && source_platform !== target_platform) {
+                        if (target_platform && !target_platform.includes(source_platform)) {
                             core.console.log("serving remote for:" + file_path);
                             file_path = "packages/code/remote.js";
                         }
