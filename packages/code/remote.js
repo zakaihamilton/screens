@@ -5,7 +5,7 @@ package.__component__ = function (me) {
         return function () {
             var args = Array.prototype.slice.call(arguments);
             args.unshift("__component__." + property);
-            me.core.message.send___platform__.apply(null, args);
+            me.core.message.send___platform__.apply(this, args);
         };
     };
 };

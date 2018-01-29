@@ -98,7 +98,7 @@ package.core.http = function CoreHttp(me) {
         var headers = Object.assign({}, info.headers);
         me.core.object.attach(info, me);
         me.core.property.set(info, "headers", headers);
-        if (me.platform === "server") {
+        if (me.platform === "server" || me.platform === "service") {
             var request = {
                 url: info.url,
                 headers: headers,

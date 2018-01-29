@@ -6,13 +6,13 @@
 package.startup.version = function StartupVersion(me) {
     me.run = function(task) {
         me.core.console.log("retrieving version information");
-        me.core.util.version(version => {
+        me.core.util.config(config => {
             me.core.network.ipAddress(ip => {
                 var date = new Date();
                 var id = date.getTime();
                 var data = {
                     date: date.toString(),
-                    version: version,
+                    version: config.version,
                     port: me.core.http.port,
                     platform: me.platform,
                     ip: ip

@@ -1,0 +1,44 @@
+global.platform = "service";
+
+require("../package.js");
+
+package.include({
+    "core": [
+        "console",
+        "message",
+        "test",
+        "type",
+        "ref",
+        "http",
+        "handle",
+        "json",
+        "string",
+        "object",
+        "property",
+        "flow",
+        "service",
+        "util",
+        "startup",
+        "network"
+    ],
+    "storage": [
+        "file",
+        "data"
+    ],
+    "startup": [
+        "version"
+    ]
+}, function (info) {
+    if (info.complete) {
+        package.core.startup.run(() => {
+            package.core.service.setup();
+        });
+    }
+});
+
+process.on('uncaughtException', (err) => {
+    var fs = require("fs");
+    var date = new Date();
+    console.log("fatal error: " + date.toUTCString() + err.stack);
+    fs.writeFileSync("crash.txt", "error: " + date.toUTCString() + err.stack);
+});

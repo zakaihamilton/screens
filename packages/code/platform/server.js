@@ -6,6 +6,7 @@ package.include({
         "console",
         "test",
         "http",
+        "handle",
         "message",
         "type",
         "ref",
@@ -22,7 +23,8 @@ package.include({
         "hash",
         "flow",
         "startup",
-        "network"
+        "network",
+        "service"
     ],
     "storage": [
         "file",

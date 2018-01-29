@@ -11,18 +11,25 @@ package.core.message = function CoreMessage(me) {
         } else if (me.platform === "browser") {
             package.worker.onmessage = function (event) {
                 me.core.console.log("Receiving message");
-                me.handleLocal(package.worker, event.data);
+                me.handleLocal(package.worker.postMessage, event.data);
             };
             package.worker.postMessage(null);
         } else if (me.platform === "client") {
             self.onmessage = function (event) {
                 me.core.console.log("Receiving message");
-                me.handleLocal(null, event.data);
+                me.handleLocal(self.postMessage, event.data);
             };
         }
     };
     me.send_server = function (path, callback, params) {
-        if (me.platform !== "server") {
+        if (me.platform === "service") {
+            var args = Array.prototype.slice.call(arguments, 1);
+            args[0] = null;
+            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
+            me.core.console.log(JSON.stringify(info));
+            me.core.service.client.emit("method", info);
+        }
+        else if (me.platform !== "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {method: "POST",
@@ -46,7 +53,19 @@ package.core.message = function CoreMessage(me) {
             package.worker.postMessage(info);
         } else if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 0);
-            me.send.apply(null, args);
+            me.send.apply(this, args);
+        }
+    };
+    me.send_service = function (path, callback, params) {
+        if (me.platform === "server") {
+            var args = Array.prototype.slice.call(arguments, 1);
+            args[0] = null;
+            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
+            me.core.console.log(JSON.stringify(info));
+            this.emit("method", info);
+        } else if (me.platform === "service") {
+            var args = Array.prototype.slice.call(arguments, 0);
+            me.send.apply(this, args);
         }
     };
     me.send_browser = function (path, callback, params) {
@@ -119,15 +138,15 @@ package.core.message = function CoreMessage(me) {
             info.altCallback.apply(null, info.response);
         }
     };
-    me.handleLocal = function (context, info) {
+    me.handleLocal = function (callback, info) {
         if(!info) {
             return;
         }
         info = Object.assign({}, info);
         if (typeof info.response !== "undefined") {
-            var callback = me.core.handle.pop(info.callback);
-            if (callback) {
-                callback.apply(null, info.response);
+            var infoCallback = me.core.handle.pop(info.callback);
+            if (infoCallback) {
+                infoCallback.apply(null, info.response);
             }
             return;
         }
@@ -141,11 +160,7 @@ package.core.message = function CoreMessage(me) {
                 info.params = null;
                 info.response = args;
                 info.callback = responseCallback;
-                if (context) {
-                    context.postMessage(info);
-                } else {
-                    self.postMessage(info);
-                }
+                callback(info);
             };
         }
         me.send.apply(null, args);

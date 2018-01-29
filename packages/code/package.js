@@ -106,20 +106,6 @@ function package_setup(task, package_name, component_name, child_name, callback,
     if (!node) {
         node = package.browse(id);
     }
-    if(package.platform === "service") {
-        var remote = package.remote(id);
-        if(remote && remote.includes("server") && !remote.includes("service")) {
-            node = function (me) {
-                me.forward = function (object, property) {
-                    return function () {
-                        var args = Array.prototype.slice.call(arguments);
-                        args.unshift("__component__." + property);
-                        me.core.message.send_server.apply(null, args);
-                    };
-                };
-            };
-        }
-    }
     if (child_name) {
         node = node[child_name];
         id += "." + child_name;
@@ -158,7 +144,24 @@ function package_setup(task, package_name, component_name, child_name, callback,
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var requirement_platform = package.require(id);
-    if (!requirement_platform || requirement_platform.includes(package.platform)) {
+    var init = !requirement_platform || requirement_platform.includes(package.platform);
+    if(package.platform === "service") {
+        var remote = package.remote(id);
+        if(remote && remote.includes("server") && !remote.includes("service")) {
+            node = function (me) {
+                console.log("registering:" + id);
+                me.forward = function (object, property) {
+                    return function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.unshift(id + "." + property);
+                        me.core.message.send_server.apply(null, args);
+                    };
+                };
+            };
+            init = true;
+        }
+    }
+    if (init) {
         node(component_obj, child_name);
         var init_method = component_obj.init;
         if (component_obj.forward) {

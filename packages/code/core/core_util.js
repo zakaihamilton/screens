@@ -22,10 +22,10 @@ package.core.util = function CoreUtil(me) {
             return arg;
         });
     };
-    me.version = function(callback) {
+    me.config = function(callback) {
         me.core.json.loadFile(function(json) {
             if(json) {
-                callback(json.version);
+                callback(json);
             }
             else {
                 callback(null);
