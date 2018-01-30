@@ -7,12 +7,17 @@ package.require("storage.data", "server");
 package.storage.data = function StorageData(me) {
     me.init = function (task) {
         me.core.console.log("initialising storage data");
-        me.lock(task, task => {
-            me.core.server.run(() => {
-                me.datastore = require('@google-cloud/datastore');
-                me.unlock(task);
-            }, "npm rebuild");
-        });
+        me.datastore = null;
+        try {
+            me.datastore = require('@google-cloud/datastore');
+        } catch (e) {
+            me.lock(task, task => {
+                me.core.server.run(() => {
+                    me.datastore = require('@google-cloud/datastore');
+                    me.unlock(task);
+                }, "npm rebuild");
+            });
+        }
     };
     me.getService = function (callback) {
         if (me.service) {
@@ -24,7 +29,7 @@ package.storage.data = function StorageData(me) {
         });
         callback(me.service);
     };
-    me.toDataStore = function(json, nonIndexed) {
+    me.toDataStore = function (json, nonIndexed) {
         nonIndexed = nonIndexed || [];
         let results = [];
         Object.keys(json).forEach((key) => {

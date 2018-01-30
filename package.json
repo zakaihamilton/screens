@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "0.45",
+  "version": "0.45.0",
   "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
@@ -23,5 +23,5 @@
     "socket.io-client": "^2.0.4",
     "xmlhttprequest": "^1.8.0"
   },
-  "servicePort":8000
+  "servicePort": 8000
 }

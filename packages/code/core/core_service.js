@@ -48,8 +48,9 @@ package.core.service = function CoreService(me) {
         }
     };
     me.setup = function (callback, ref) {
-        package.include("service." + me.serviceName, function (info) {
+        me.include("service." + me.serviceName, function (info) {
             if (info.complete) {
+                me.core.message.send("service." + me.serviceName + ".setup", ref);
                 callback(ref);
             }
         });
