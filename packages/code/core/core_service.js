@@ -7,9 +7,9 @@ package.core.service = function CoreService(me) {
     me.init = function () {
         if (me.platform === "server") {
             me.core.util.config(config => {
-                if (config.servicePort) {
+                if (config.settings && config.settings.servicePort) {
                     me.io = require("socket.io");
-                    me.server = me.io.listen(config.servicePort);
+                    me.server = me.io.listen(config.settings.servicePort);
                     me.clients = new Map();
                     me.server.on("connection", (socket) => {
                         me.core.console.log(`Service connected [id=${socket.id}]`);
