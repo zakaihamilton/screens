@@ -22,57 +22,64 @@ package.core.flow = function CoreFlow(me) {
             response:null,
             endCallback:endCallback
         };
+        flow.callback = function(args) {
+            if(flow.isRunning) {
+                var args = Array.prototype.slice.call(arguments, 0);
+                if(flow.response) {
+                    flow.response.apply(flow, args);
+                }
+            }
+        };
         startCallback(flow);
     };
     me.check = function(statement, message) {
-        if(this.running && !statement) {
-            this.running = false;
+        if(this.isRunning && !statement) {
+            this.isRunning = false;
             if(this.endCallback) {
                 this.endCallback(new Error(message));
             }
         }
     };
     me.async = function(method, args) {
-        if(this.running && method) {
+        if(this.isRunning && method) {
             var args = Array.prototype.slice.call(arguments, 1);
+            if(!this.asyncQueue) {
+                this.asyncQueue = [];
+            }
             this.asyncQueue.push({method:method, args:args});
         }
     };
     me.error = function(err, message) {
-        if(this.running && err) {
-            this.running = false;
+        if(this.isRunning && err) {
+            this.isRunning = false;
             if(this.endCallback) {
                 this.endCallback(new Error(message + " | " + err.message));
             }
         }
     };
     me.wait = function(callback) {
-        if(this.running) {
+        if(this.isRunning) {
             this.response = callback;
             var queue = this.asyncQueue;
             this.asyncQueue = [];
-            queue.map((call) => {
-                call.method.apply(this, call.args);
-            });
+            if(queue.length) {
+                queue.map((call) => {
+                    call.method.apply(this, call.args);
+                });
+            }
         }
     };
     me.end = function(args) {
-        if(this.running) {
-            this.running = false;
+        if(this.isRunning) {
+            this.isRunning = false;
             if(this.endCallback) {
-                var args = Array.prototype.slice.call(arguments, 1);
+                var args = Array.prototype.slice.call(arguments, 0);
                 this.endCallback.apply(this, args);
             }
         }
     };
-    me.callback = function(args) {
-        if(this.running) {
-            var args = Array.prototype.slice.call(arguments, 1);
-            this.response.apply(this, args);
-        }
-    };
     me.code = function(callback) {
-        if(this.running && callback) {
+        if(this.isRunning && callback) {
             callback();
         }
     };
