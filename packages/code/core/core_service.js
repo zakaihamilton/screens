@@ -7,9 +7,9 @@ package.core.service = function CoreService(me) {
     me.init = function () {
         if (me.platform === "server") {
             me.core.util.config(config => {
-                if (config.settings && config.settings.servicePort) {
+                if (config.settings && config.settings.service && config.settings.service.port) {
                     me.io = require("socket.io");
-                    me.server = me.io.listen(config.settings.servicePort);
+                    me.server = me.io.listen(config.settings.service.port);
                     me.clients = new Map();
                     me.server.on("connection", (socket) => {
                         me.core.console.log(`Service connected [id=${socket.id}]`);
@@ -25,8 +25,8 @@ package.core.service = function CoreService(me) {
                             }, info);
                         });
                         me.core.console.log("Service setup request for ref: " + ref);
-                        me.core.message.send_service.call(socket, "core.service.setup", () => {
-                            me.core.console.log("Service setup complete for ref: " + ref);
+                        me.core.message.send_service.call(socket, "core.service.setup", (serviceName, ref) => {
+                            me.core.console.log("Service setup complete for service: " + serviceName + " ref: " + ref);
                         }, ref);
                     });
                 }
@@ -50,9 +50,27 @@ package.core.service = function CoreService(me) {
     me.setup = function (callback, ref) {
         me.include("service." + me.serviceName, function (info) {
             if (info.complete) {
-                me.core.message.send("service." + me.serviceName + ".setup", ref);
-                callback(ref);
+                me.core.message.send("service." + me.serviceName + ".setup", () => {
+                    callback(me.serviceName, ref);
+                }, ref);
             }
+        });
+    };
+    me.config = function(callback, name) {
+        me.core.util.config(config => {
+            var response = null;
+            if(config && config.settings) {
+                var services = config.settings.service;
+                if(services) {
+                    if(services) {
+                        var service = services[name];
+                        if(service) {
+                            response = service;
+                        }
+                    }
+                }
+            }
+            callback(response);
         });
     };
 };

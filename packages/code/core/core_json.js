@@ -34,10 +34,9 @@ package.core.json = function CoreJson(me) {
             var info = {
                 method:"get",
                 url:path,
-                callback:parse,
                 mimeType:"application/json"
             };
-            me.core.http.send(info);
+            me.core.http.send(parse, info);
         }
     };
     me.log = function(json) {

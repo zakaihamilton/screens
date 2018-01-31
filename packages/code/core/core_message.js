@@ -34,11 +34,10 @@ package.core.message = function CoreMessage(me) {
             args[0] = null;
             var info = {method: "POST",
                 url: "/method/" + path,
-                callback: me.handleRemote,
                 altCallback: callback,
                 body: me.core.type.wrap_args(args)
             };
-            core.http.send(info);
+            core.http.send(me.handleRemote, info);
         } else if (me.platform === "server") {
             var args = Array.prototype.slice.call(arguments, 0);
             me.send.apply(null, args);

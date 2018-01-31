@@ -25,6 +25,12 @@
     "xmlhttprequest": "^1.8.0"
   },
   "settings":{
-      "servicePort": 8000
+      "service":{
+            "port":8000,
+            "netmonitor":{
+                "device":"en0",
+                "filter":"port 80"
+            }
+      }
   }
 }

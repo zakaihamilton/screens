@@ -21,6 +21,9 @@ package.include({
         "startup",
         "network"
     ],
+    "manager": [
+        "packet"
+    ],
     "storage": [
         "file",
         "data"

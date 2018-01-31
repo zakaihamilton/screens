@@ -94,11 +94,14 @@ package.core.http = function CoreHttp(me) {
         }
         return array;
     };
-    me.send = function (info, async = true) {
+    me.send = function (callback, info, async = true) {
         var headers = Object.assign({}, info.headers);
         me.core.object.attach(info, me);
         me.core.property.set(info, "headers", headers);
-        if (me.platform === "server" || me.platform === "service") {
+        if(me.platform === "service") {
+            me.core.message.send_server(me.id + ".send", callback, info, async);
+        }
+        else if (me.platform === "server") {
             var request = {
                 url: info.url,
                 headers: headers,
@@ -107,9 +110,9 @@ package.core.http = function CoreHttp(me) {
             var response = {
                 writeHead: function () { },
                 end: function (body) {
-                    if (info.callback) {
+                    if (callback) {
                         info.response = body;
-                        info.callback(info);
+                        callback(info);
                     }
                 }
             };
@@ -126,14 +129,14 @@ package.core.http = function CoreHttp(me) {
                 request.onreadystatechange = function (e) {
                     if (request.readyState === 4) {
                         if (request.status === 200 || request.status === 201) {
-                            if (info.callback) {
+                            if (callback) {
                                 info.response = request.responseText;
-                                info.callback(info);
+                                callback(info);
                             }
                         } else if (info.hasOwnProperty("failure")) {
-                            if (info.callback) {
+                            if (callback) {
                                 info.status = request.status;
-                                info.callback(info);
+                                callback(info);
                             }
                         }
                     }

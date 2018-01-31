@@ -119,7 +119,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
     package[package_name].components.push(id);
     package.count++;
     /* Create component proxy */
-    var component_obj = new Proxy({id: id}, {
+    var component_obj = new Proxy({id: id, __package:package_name, __component:component_name}, {
         get: function (object, property) {
             var result = undefined;
             if (Reflect.has(object, property)) {

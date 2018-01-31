@@ -34,7 +34,8 @@ package.include({
         "profile"
     ],
     "manager": [
-        "download"
+        "download",
+        "packet"
     ],
     "media": [
         "ffmpeg"
