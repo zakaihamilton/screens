@@ -9,6 +9,7 @@ package.core.service = function CoreService(me) {
             me.core.util.config(config => {
                 if (config.settings && config.settings.service && config.settings.service.port) {
                     me.io = require("socket.io");
+                    me.core.console.log("listening for services on port: " + config.settings.service.port);
                     me.server = me.io.listen(config.settings.service.port);
                     me.clients = new Map();
                     me.server.on("connection", (socket) => {

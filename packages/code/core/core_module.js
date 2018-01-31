@@ -72,12 +72,18 @@ package.core.module = function CoreModule(me) {
                             file_path = "packages/code/remote.js";
                         }
                         info["content-type"] = "application/javascript";
-                        me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {
-                            me.loadTextFile(info.task, file_path, function (data) {
-                                info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
+                        me.loadTextFile(info.task, file_path, function (data) {
+                            if (data.includes("__json__")) {
+                                me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {
+                                    info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
+                                    info.body = data;
+                                    core.property.set(info, "parse");
+                                });
+                            } else {
+                                info.vars = {"component": component_path, "platform": target_platform};
                                 info.body = data;
                                 core.property.set(info, "parse");
-                            });
+                            }
                         });
                     } else if (file_path.endsWith(".css")) {
                         info["content-type"] = "text/css";

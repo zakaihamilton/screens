@@ -10,13 +10,34 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
             if(config) {
                 me.pcap = require('pcap');
                 me.util = require('util');
-                me.pcap_session = me.pcap.createSession(config.device, config.filter);
-                me.pcap_session.on('packet', function (raw_packet) {
-                    var packet = me.pcap.decode.packet(raw_packet);
-                    me.manager.packet.push(() => {
+                var devices = config.device;
+                if(devices && !Array.isArray(devices)) {
+                    devices = [devices];
+                }
+                for(var device of devices) {
+                    me.pcap_session = null;
+                    try {
+                        me.pcap_session = me.pcap.createSession(device, config.filter);
+                    }
+                    catch(e) {
+                        
+                    }
+                    if(me.pcap_session) {
+                        me.core.console.log("connected through device: " + device +  " filter: " + config.filter);
+                        break;
+                    }
+                }
+                if(me.pcap_session) {
+                    me.pcap_session.on('packet', function (raw_packet) {
+                        var packet = me.pcap.decode.packet(raw_packet);
+                        me.manager.packet.push(() => {
 
-                    }, packet, ref);
-                });
+                        }, packet, ref);
+                    });
+                }
+                else {
+                    me.core.console.log("cannot connect through any of the following devices: " + devices);
+                }
                 callback();
             }
         }, me.__component);

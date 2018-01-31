@@ -25,9 +25,9 @@
   },
   "settings":{
       "service":{
-            "port":8000,
+            "port":5050,
             "netmonitor":{
-                "device":"en0",
+                "device":["wlan0","en0"],
                 "filter":"port 80"
             }
       }
