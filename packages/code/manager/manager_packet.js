@@ -9,8 +9,8 @@ package.manager.packet = function ManagerPacket(me) {
     me.init = function () {
         me.list = [];
     };
-    me.push = function(callback, packet) {
-        me.list.push(packet);
+    me.push = function(callback, packet, service) {
+        me.list.push({service:service,packet:packet});
         me.core.console.log("accumalated " + me.list.length + " packets");
     };
     me.removeall = function(callback) {

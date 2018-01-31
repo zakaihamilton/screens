@@ -118,7 +118,9 @@ function startBrowser(appName, appArgs) {
             "letters"
         ],
         "manager": [
-            "download"
+            "download",
+            "service",
+            "packet"
         ],
         "media": [
             "ffmpeg"

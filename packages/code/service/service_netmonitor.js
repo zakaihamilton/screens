@@ -15,7 +15,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                     var packet = me.pcap.decode.packet(raw_packet);
                     me.manager.packet.push(() => {
 
-                    }, packet);
+                    }, packet, ref);
                 });
                 callback();
             }

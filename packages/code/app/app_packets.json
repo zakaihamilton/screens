@@ -1,5 +1,5 @@
 {
-    "title": "Downloads",
+    "title": "Packets",
     "ui.property.style":{
         "left": "450px",
         "top": "250px",
@@ -8,8 +8,8 @@
     },
     "widget.menu.items": [
         ["File", [
-                ["Refresh", "app.downloads.refresh"],
-                ["Clear All", "app.downloads.clearall", {
+                ["Refresh", "app.packets.refresh"],
+                ["Clear All", "app.packets.clearall", {
                         "separator":true
                 }]
             ]
@@ -28,5 +28,5 @@
             "ui.element.count": 10
         }
     ],
-    "app.downloads.refresh":null
+    "app.packets.refresh":null
 }

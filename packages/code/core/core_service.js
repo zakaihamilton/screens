@@ -14,7 +14,6 @@ package.core.service = function CoreService(me) {
                     me.server.on("connection", (socket) => {
                         me.core.console.log(`Service connected [id=${socket.id}]`);
                         var ref = me.core.ref.gen();
-                        me.clients.set(socket, ref);
                         socket.on("disconnect", () => {
                             me.clients.delete(socket);
                             me.core.console.log(`Service disconnected [id=${socket.id}]`);
@@ -25,8 +24,9 @@ package.core.service = function CoreService(me) {
                             }, info);
                         });
                         me.core.console.log("Service setup request for ref: " + ref);
-                        me.core.message.send_service.call(socket, "core.service.setup", (serviceName, ref) => {
-                            me.core.console.log("Service setup complete for service: " + serviceName + " ref: " + ref);
+                        me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
+                            me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
+                            me.clients.set(socket, {ref: ref, name:name});
                         }, ref);
                     });
                 }
@@ -46,6 +46,15 @@ package.core.service = function CoreService(me) {
                 }, info);
             });
         }
+    };
+    me.list = function(callback) {
+        var items = [];
+        if(me.clients) {
+            me.clients.forEach((value, key) => {
+                items.push(value);
+            });
+        }
+        callback(items);
     };
     me.setup = function (callback, ref) {
         me.include("service." + me.serviceName, function (info) {
