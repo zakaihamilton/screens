@@ -65,4 +65,19 @@ package.core.json = function CoreJson(me) {
         }
         return true;
     };
+    me.traverse = function(root, path) {
+        var item = root, parent = root;
+        if(root) {
+            var tokens = path.split(".");
+            for(var tokensIndex = 0; tokensIndex < tokens.length; tokensIndex++) {
+                parent = item;
+                var token = tokens[tokensIndex];
+                item = item[token];
+                if(!item) {
+                    break;
+                }
+            }
+        }
+        return {parent:parent,item:item};
+    };
 };

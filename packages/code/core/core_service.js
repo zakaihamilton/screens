@@ -27,7 +27,7 @@ package.core.service = function CoreService(me) {
                         me.core.console.log("Service setup request for ref: " + ref);
                         me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
                             me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
-                            me.clients.set(socket, {ref: ref, name:name});
+                            me.clients.set(socket, {ref: ref, name: name});
                         }, ref);
                     });
                 }
@@ -38,8 +38,8 @@ package.core.service = function CoreService(me) {
                 console.log("params: service_name http://ip:port");
                 process.exit(-1);
             }
-            me.serviceName = process.argv[2];
-            me.serverAddress = process.argv[3];
+            me.serverAddress = process.argv[2];
+            me.serviceNames = process.argv.splice(3);
             me.client = me.io.connect(me.serverAddress);
             me.client.on("method", (info) => {
                 me.core.message.handleLocal((response) => {
@@ -48,9 +48,9 @@ package.core.service = function CoreService(me) {
             });
         }
     };
-    me.list = function(callback) {
+    me.list = function (callback) {
         var items = [];
-        if(me.clients) {
+        if (me.clients) {
             me.clients.forEach((value, key) => {
                 items.push(value);
             });
@@ -58,23 +58,36 @@ package.core.service = function CoreService(me) {
         callback(items);
     };
     me.setup = function (callback, ref) {
-        me.include("service." + me.serviceName, function (info) {
-            if (info.complete) {
-                me.core.message.send("service." + me.serviceName + ".setup", () => {
-                    callback(me.serviceName, ref);
-                }, ref);
-            }
+        me.lock((task) => {
+            me.serviceNames.map((serviceName) => {
+                me.lock(task, (task) => {
+                    me.core.console.log("loading service: " + serviceName + "...");
+                    me.include("service." + serviceName, function (info) {
+                        if (info.complete) {
+                            me.core.console.log("service loaded: " + serviceName);
+                            me.core.console.log("setup service: " + serviceName + "...");
+                            me.core.message.send("service." + serviceName + ".setup", () => {
+                                me.core.console.log("setup service: " + serviceName + " complete");
+                                me.unlock(task);
+                            }, ref);
+                        }
+                    });
+                });
+            });
+            me.unlock(task, () => {
+                callback(me.serviceNames, ref);
+            });
         });
     };
-    me.config = function(callback, name) {
+    me.config = function (callback, name) {
         me.core.util.config(config => {
             var response = null;
-            if(config && config.settings) {
+            if (config && config.settings) {
                 var services = config.settings.service;
-                if(services) {
-                    if(services) {
+                if (services) {
+                    if (services) {
                         var service = services[name];
-                        if(service) {
+                        if (service) {
                             response = service;
                         }
                     }

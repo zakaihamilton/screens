@@ -6,12 +6,15 @@
 package.core.http = function CoreHttp(me) {
     if (package.platform === "server") {
         me.port = process.env.PORT || 4040;
+    }
+    else if (package.platform === "service") {
+        me.port = 4041;
     } else {
         me.port = 80;
     }
     me.listeners = [];
     me.init = function () {
-        if (me.platform === "server") {
+        if (me.platform === "server" || me.platform === "service") {
             me.http = require("http");
             me.server = me.http.createServer(function (request, response) {
                 var body = [];

@@ -19,7 +19,8 @@ package.include({
         "service",
         "util",
         "startup",
-        "network"
+        "network",
+        "path"
     ],
     "manager": [
         "packet"
