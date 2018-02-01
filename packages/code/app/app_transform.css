@@ -61,14 +61,12 @@
 .app-transform-page-margin-left {
     padding-left:1em;
     padding-right:1em;
-    background-color:transparent;
 }
 
 .app-transform-page-margin-right {
     padding-left:1em;
     padding-right:1em;
     padding-bottom:3em;
-    background-color:transparent;
 }
 
 .app-transform-page-container.pipVideo {
@@ -82,7 +80,6 @@
     box-sizing:border-box;
     column-gap: 4em;
     column-fill:balance;
-    column-rule-color:transparent;
     padding-left:2em;
     padding-right:2em;
 }
