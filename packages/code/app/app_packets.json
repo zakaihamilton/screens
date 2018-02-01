@@ -7,13 +7,13 @@
         "height": "450px"
     },
     "widget.menu.items": [
-        ["File", [
+        ["Options", [
                 ["Refresh", "app.packets.refresh"],
                 ["Auto Refresh", "app.packets.autoRefresh", {
                         "state": "select"
                     }
                 ],
-                ["Clear All", "app.packets.clearall", {
+                ["Reset", "app.packets.reset", {
                         "separator":true
                 }]
             ]

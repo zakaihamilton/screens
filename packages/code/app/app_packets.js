@@ -27,7 +27,7 @@ package.app.packets = function AppPackets(me) {
             });
         }
     };
-    me.clearall = {
+    me.reset = {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.manager.packet.reset(() => {

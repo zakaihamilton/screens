@@ -97,4 +97,10 @@ package.core.service = function CoreService(me) {
             callback(response);
         });
     };
+    me.sendAll = function(path, callback, params) {
+        me.clients.forEach((info, socket) => {
+            var args = Array.prototype.slice.call(arguments);
+            me.core.message.send_service.apply(socket, args);
+        });
+    };
 };
