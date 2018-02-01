@@ -5,7 +5,15 @@
  */
 
 package.service.netmonitor = function ServiceNetMonitor(me) {
+    me.init = function() {
+        me.alreadySetup = false;
+    };
     me.setup = function (callback, ref) {
+        if(me.alreadySetup) {
+            callback();
+            return;
+        }
+        me.alreadySetup = true;
         me.core.service.config(config => {
             if (config) {
                 me.pcap = require('pcap');
@@ -15,22 +23,27 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                 if (devices && !Array.isArray(devices)) {
                     devices = [devices];
                 }
+                var filter = config.filter;
+                if(filter) {
+                    filter = filter.replace("@port", me.core.http.port);
+                    me.core.console.log("using filter: " + filter);
+                }
                 for (var device of devices) {
                     me.session = null;
                     try {
-                        me.session = me.pcap.createSession(device, config.filter);
+                        me.session = me.pcap.createSession(device, filter);
                     } catch (e) {
 
                     }
                     if (me.session) {
-                        me.core.console.log("connected through device: " + device + " filter: " + config.filter);
+                        me.core.console.log("connected through device: " + device + " filter: " + filter);
                         break;
                     }
                 }
                 if (me.session) {
                     me.session.on('packet', function (raw_packet) {
                         var packet = me.pcap.decode.packet(raw_packet);
-                        if (config.filter && config.filter.includes("tcp")) {
+                        if (filter && filter.includes("tcp")) {
                             me.tracker.track_packet(packet);
                         }
                         packet = JSON.parse(JSON.stringify(packet));
@@ -44,7 +57,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
 
                         }, packet, ref);
                     });
-                    if (config.filter && config.filter.includes("tcp")) {
+                    if (filter && filter.includes("tcp")) {
                         me.tracker.on('start', function (session) {
                             me.core.console.log("Start of TCP session between " + session.src_name + " and " + session.dst_name);
                         });

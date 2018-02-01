@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "0.45.0",
+  "version": "0.46.0",
   "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
           "wlan0",
           "en0"
         ],
-        "filter": "port 80"
+        "filter": "port @port"
       },
       "httpserver": {
         "path": "files/"

@@ -8,7 +8,7 @@ package.core.http = function CoreHttp(me) {
         me.port = process.env.PORT || 4040;
     }
     else if (package.platform === "service") {
-        me.port = 4041;
+        me.port = 80;
     } else {
         me.port = 80;
     }
