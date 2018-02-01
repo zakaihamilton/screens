@@ -1,12 +1,12 @@
 [kab-term-heading]:after {
     position:absolute;
     padding-left:2px;
-    top:0.5em;
+    top:0.3em;
     vertical-align:middle;
     height:1em;
     line-height: 1;
     font-weight:bold;
-    font-size:40%;
+    font-size:50%;
     text-transform:uppercase;
     pointer-events: none;
     background-color:transparent;
@@ -59,20 +59,19 @@
     display:inline-block;
     height:1.8em;
     margin-top:0.2em;
+    padding-left:0.1em;
+    padding-right:0.1em;
 }
 
 [kab-term-phase-number]:after {
     position:absolute;
-    top:-0.4em;
+    top:-0.1em;
     vertical-align:middle;
-    height:1em;
     line-height: 1;
     font-weight:bold;
-    font-size:50%;
+    font-size:75%;
     text-transform:uppercase;
-    border-radius: 50%;
     content:attr(kab-term-phase-number);
-
     width: 1em;
     height: 1em;
     padding: 0em;
@@ -82,11 +81,11 @@
 }
 
 [kab-term-phase-number].kab-term-english:after {
-    right:-0.5em;
+    right:0.1em;
 }
 
 [kab-term-phase-number].kab-term-hebrew:after {
-    left:-0.5em;
+    left:0.1em;
 }
 
 .kab-term-phase-none {
