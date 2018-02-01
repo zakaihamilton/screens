@@ -145,7 +145,6 @@ package.core.message = function CoreMessage(me) {
             }
             return;
         }
-        me.core.console.log("info: " + JSON.stringify(info));
         var args = info.params;
         args.unshift(info.path);
         var responseCallback = info.callback;
