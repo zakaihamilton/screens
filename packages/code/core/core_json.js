@@ -65,7 +65,7 @@ package.core.json = function CoreJson(me) {
         }
         return true;
     };
-    me.traverse = function(root, path) {
+    me.traverse = function(root, path, value) {
         var item = root, parent = root;
         if(root) {
             var tokens = path.split(".");
@@ -77,7 +77,10 @@ package.core.json = function CoreJson(me) {
                     break;
                 }
             }
+            if(item) {
+                value = item;
+            }
         }
-        return {parent:parent,item:item};
+        return {parent:parent,item:item,value:value};
     };
 };

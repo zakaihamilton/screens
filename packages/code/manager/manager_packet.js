@@ -7,17 +7,23 @@ package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
     me.init = function () {
-        me.list = [];
+        me.reset(() => {
+            
+        });
     };
     me.push = function(callback, packet, service) {
-        me.list.push({service:service,packet:packet});
-        me.core.console.log("accumalated " + me.list.length + " packets");
+        var info = me.packetInfo;
+        info.packetCount++;
+        var dataSize = me.core.json.traverse(packet, "payload.payload.payload.dataLength").value;
+        if(dataSize) {
+            info.dataSize+=dataSize;
+        }
     };
-    me.removeall = function(callback) {
-        me.list = [];
+    me.info = function(callback) {
+        callback(me.packetInfo);
+    };
+    me.reset = function(callback) {
+        me.packetInfo = {packetCount:0, dataSize:0};
         callback();
-    };
-    me.items = function(callback) {
-        callback(me.list);
     };
 };

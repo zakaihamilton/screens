@@ -9,6 +9,10 @@
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.packets.refresh"],
+                ["Auto Refresh", "app.packets.autoRefresh", {
+                        "state": "select"
+                    }
+                ],
                 ["Clear All", "app.packets.clearall", {
                         "separator":true
                 }]
@@ -17,16 +21,39 @@
     ],
     "ui.basic.elements": [
         {
+            "ui.basic.text": "Packet Count",
             "ui.property.style":{
-                "position":"relative",
-                "left": "5%",
-                "top": "5%",
-                "height": "90%",
-                "width": "90%"
+                "paddingTop":"10px"
+            }
+        },
+        {
+            "ui.basic.text": "",
+            "ui.basic.readOnly": true,
+            "ui.property.style":{
+                "width":"200px"
             },
-            "ui.basic.var":"list",
-            "ui.element.count": 10
+            "ui.basic.type": "text",
+            "ui.basic.var": "packetCount"
+        },
+        {
+            "ui.basic.text": "Packet Size",
+            "ui.property.style":{
+                "paddingTop":"10px"
+            }
+        },
+        {
+            "ui.basic.text": "",
+            "ui.basic.readOnly": true,
+            "ui.property.style":{
+                "width":"200px"
+            },
+            "ui.basic.type": "text",
+            "ui.basic.var": "dataSize"
         }
     ],
-    "app.packets.refresh":null
+    "app.packets.refresh":null,
+    "ui.property.after": {
+        "storage.cache.key": "app-packets-window",
+        "storage.cache.restore": "widget.window.store"
+    }
 }
