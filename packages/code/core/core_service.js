@@ -16,8 +16,9 @@ package.core.service = function CoreService(me) {
                         me.core.console.log(`Service connected [id=${socket.id}]`);
                         var ref = me.core.ref.gen();
                         socket.on("disconnect", () => {
+                            var info = me.clients.get(socket);
                             me.clients.delete(socket);
-                            me.core.console.log(`Service disconnected [id=${socket.id}]`);
+                            me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
                         });
                         socket.on("method", (info) => {
                             me.core.message.handleLocal((response) => {

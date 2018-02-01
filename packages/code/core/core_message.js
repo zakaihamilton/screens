@@ -26,7 +26,6 @@ package.core.message = function CoreMessage(me) {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {path: path, params: args, callback: me.core.handle.push(callback)};
-            me.core.console.log("send_server: " + JSON.stringify(info));
             me.core.service.client.emit("method", info);
         }
         else if (me.platform !== "server") {
@@ -48,7 +47,6 @@ package.core.message = function CoreMessage(me) {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {path: path, params: args, callback: me.core.handle.push(callback)};
-            me.core.console.log("send_client:" + JSON.stringify(info));
             package.worker.postMessage(info);
         } else if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 0);
@@ -60,7 +58,6 @@ package.core.message = function CoreMessage(me) {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {path: path, params: args, callback: me.core.handle.push(callback)};
-            me.core.console.log("send_service:" + JSON.stringify(info));
             this.emit("method", info);
         } else if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 0);
@@ -72,7 +69,6 @@ package.core.message = function CoreMessage(me) {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {path: path, params: args, callback: me.core.handle.push(callback)};
-            me.core.console.log(JSON.stringify(info));
             postMessage(info);
         } else if (me.platform === "browser") {
             var args = Array.prototype.slice.call(arguments, 0);

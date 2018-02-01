@@ -49,9 +49,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         packet = JSON.parse(JSON.stringify(packet));
                         var node = me.core.json.traverse(packet, "payload.payload.payload.data");
                         if (node.item) {
-                            console.log("removed data from: " + node.parent);
                             delete node.parent["data"];
-                            console.log("result from removed data: " + node.parent);
                         }
                         me.manager.packet.push(() => {
 
