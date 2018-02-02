@@ -37,7 +37,7 @@
     padding: 0px 5px;
     content: attr(kab-term-tooltip);
     text-align:center;
-    white-space: nowrap;
+    white-space: pre;
     min-width: 100%;
     min-height: 100%;
     padding-top:1px;
@@ -59,7 +59,7 @@
     white-space: nowrap;
     display:inline-block;
     height:1.8em;
-    margin-top:0.2em;
+    margin:0.2em;
     padding-left:0.1em;
     padding-right:0.1em;
     border-radius: 5px;

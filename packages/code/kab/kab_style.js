@@ -48,6 +48,9 @@ package.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
         }
+        if(instance.item && instance.item.hebrew) {
+            tooltip = instance.item.hebrew + " &#xa; " + tooltip;
+        }
         if(styles) {
             if(session.options.prioritizeExplanation) {
                 if(styles.explanation) {
