@@ -240,7 +240,7 @@ package.app.transform = function AppTransform(me) {
                 var properties = {};
                 if (row[phase]) {
                     properties["ui.basic.elements"] = row[phase].map(function (item) {
-                        var styles = ["kab.term.phase." + phase, "kab.term.phase." + phase + ".outline", language];
+                        var styles = ["kab.term.phase." + phase, "kab.term.phase." + phase + ".border", language];
                         if (!item.used) {
                             styles.push("app.transform.placeholder");
                         }

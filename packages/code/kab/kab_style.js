@@ -75,7 +75,7 @@ package.kab.style = function KabStyle(me) {
             tooltip = styles.tooltip;
         }
         if (phase) {
-            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-outline\"";
+            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border\"";
             if (numDescriptions) {
                 html += " kab-term-toast";
             }
@@ -96,7 +96,7 @@ package.kab.style = function KabStyle(me) {
             if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
                 var phaseNumber = session.json.phaseNumber[phase];
                 if (phaseNumber) {
-                    html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-phase-number-" + phase + " kab-term-" + session.language + "\"></span>";
+                    html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-" + session.language + "\"></span>";
                 }
             }
             if (heading) {

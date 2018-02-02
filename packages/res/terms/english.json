@@ -2086,7 +2086,7 @@
         },
         {
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             },
             "translation": "Wisdom",
@@ -2096,7 +2096,7 @@
         },
         {
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "root"
             },
             "translation": "Mercy",
@@ -2107,7 +2107,7 @@
             "translation": "Judgements",
             "term": "Dinim",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
@@ -2137,7 +2137,7 @@
             "translation": "Judgement",
             "term": "Din",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
@@ -2347,7 +2347,7 @@
             "translation": "Measure of Judgement",
             "term": "Midat ha Din",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
@@ -2356,7 +2356,7 @@
             "translation": "Measure of Mercy",
             "term": "Midat ha Rachamim",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "root"
             }
         },
@@ -2365,7 +2365,7 @@
             "translation": "Measures of Judgement",
             "term": "Midot ha Din",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
@@ -2374,7 +2374,7 @@
             "translation": "Measures of Mercy",
             "term": "Midot ha Rachamim",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "root"
             }
         },
@@ -2390,7 +2390,7 @@
             "translation": "Mercy",
             "term": "Rachamim",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "root"
             }
         },
@@ -2710,7 +2710,7 @@
             "source":"Gevura",
             "translation":"Judgement",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
@@ -5315,41 +5315,41 @@
             }
         },
         {
-            "term":"And … Went",
+            "term":"“ And … Went",
             "style":"72 names - right line verse",
             "case":"ignore"
         },
         {
-            "term":"And the angel of God who went",
-            "style":"72 names - right line verse",
-            "fixed":true,
-            "case":"ignore"
-        },
-        {
-            "term":"And the angel of God went",
+            "term":"“ And the angel of God who went",
             "style":"72 names - right line verse",
             "fixed":true,
             "case":"ignore"
         },
         {
-            "term":"And it came between the camp of Egypt and the camp of Israel",
+            "term":"“ And the angel of God went",
+            "style":"72 names - right line verse",
+            "fixed":true,
+            "case":"ignore"
+        },
+        {
+            "term":"“ And it came between the camp of Egypt and the camp of Israel",
             "style":"72 names - left line verse",
             "fixed":true,
             "case":"ignore"
         },
         {
-            "term":"And Moses stretched out his hand over the sea",
+            "term":"“ And Moses stretched out his hand over the sea",
             "style":"72 names - middle line verse",
             "fixed":true,
             "case":"ignore"
         },
         {
-            "term":"And It Came",
+            "term":"“ And It Came",
             "style":"72 names - left line verse",
             "case":"ignore"
         },
         {
-            "term":"And … Stretched",
+            "term":"“ And … Stretched",
             "style":"72 names - middle line verse",
             "case":"ignore"
         },
@@ -5472,14 +5472,14 @@
         {
             "term": "judgement",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "one"
             }
         },
         {
             "term": "mercy",
             "style": {
-                "heading": "Side of Light",
+                "heading": "Aspect",
                 "phase": "root"
             }
         },

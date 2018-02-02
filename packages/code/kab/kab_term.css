@@ -1,6 +1,7 @@
 [kab-term-heading]:after {
     position:absolute;
     padding-left:2px;
+    padding-right:2px;
     top:0.3em;
     vertical-align:middle;
     height:1em;
@@ -9,7 +10,6 @@
     font-size:50%;
     text-transform:uppercase;
     pointer-events: none;
-    background-color:transparent;
     user-select: none;
     content: attr(kab-term-heading);
 }
@@ -43,6 +43,7 @@
     padding-top:1px;
     vertical-align: middle;
     box-shadow: 5px 5px 5px grey;
+    border-radius: 5px;
 }
 
 [kab-term-tooltip]:hover:after {
@@ -61,21 +62,22 @@
     margin-top:0.2em;
     padding-left:0.1em;
     padding-right:0.1em;
+    border-radius: 5px;
+    min-width:3.5em;
+    text-align:center;
 }
 
 [kab-term-phase-number]:after {
     position:absolute;
-    top:-0.1em;
+    top:0.1em;
     vertical-align:middle;
     line-height: 1;
-    font-weight:bold;
-    font-size:75%;
+    font-size:60%;
     text-transform:uppercase;
     content:attr(kab-term-phase-number);
     width: 1em;
     height: 1em;
     padding: 0em;
-
     text-align: center;
     user-select: none;
 }
@@ -90,15 +92,12 @@
 
 .kab-term-phase-none {
     background-color:white;
+    min-width:0;
 }
 
 .kab-term-phase-none:hover:after {
     background-color:white;
     border:2px solid gray;
-}
-
-.kab-term-phase-root-outline {
-    outline:1px solid gray;
 }
 
 .kab-term-phase-root-border {
@@ -118,17 +117,8 @@
     border:2px solid gray;
 }
 
-.kab-term-phase-number-root:after {
-    background-color:white;
-    border:1px solid gray;
-}
-
 .kab-term-phase-one {
     background-color:#FFF3CA;
-}
-
-.kab-term-phase-one-outline {
-    outline:1px solid orange;
 }
 
 .kab-term-phase-one-border {
@@ -144,17 +134,8 @@
     border:2px solid orange;
 }
 
-.kab-term-phase-number-one:after {
-    background-color:#FFF3CA;
-    border:1px solid orange;
-}
-
 .kab-term-phase-two {
     background-color:#C8D9F9;
-}
-
-.kab-term-phase-two-outline {
-    outline:1px solid darkblue;
 }
 
 .kab-term-phase-two-border {
@@ -170,17 +151,8 @@
     border:2px solid darkblue;
 }
 
-.kab-term-phase-number-two:after {
-    background-color:#C8D9F9;
-    border:1px solid darkblue;
-}
-
 .kab-term-phase-three {
     background-color:#F5CCCB;
-}
-
-.kab-term-phase-three-outline {
-    outline:1px solid coral;
 }
 
 .kab-term-phase-three-border {
@@ -196,17 +168,8 @@
     border:2px solid coral;
 }
 
-.kab-term-phase-number-three:after {
-    background-color:#F5CCCB;
-    border:1px solid coral;
-}
-
 .kab-term-phase-four {
     background-color:#D9EAD2;
-}
-
-.kab-term-phase-four-outline {
-    outline:1px solid green;
 }
 
 .kab-term-phase-four-border {
@@ -222,17 +185,8 @@
     border:2px solid green;
 }
 
-.kab-term-phase-number-four:after {
-    background-color:#D9EAD2;
-    border:1px solid green;
-}
-
 .kab-term-phase-collective {
     background-color:Plum;
-}
-
-.kab-term-phase-collective-outline {
-    outline:1px solid MediumPurple;
 }
 
 .kab-term-phase-collective-border {
@@ -242,10 +196,6 @@
 .kab-term-phase-collective:hover:after {
     background-color:Plum;
     border:2px solid MediumPurple;
-}
-
-.kab-term-phase-number-collective:after {
-    display:none;
 }
 
 .kab-term-polaroid-left {
