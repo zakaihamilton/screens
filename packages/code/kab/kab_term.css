@@ -50,6 +50,7 @@
     visibility: visible;
     pointer-events: auto;
     z-index: 100;
+    cursor: none;
 }
 
 .kab-term-phase-inline {
@@ -59,8 +60,7 @@
     display:inline-block;
     height:1.8em;
     margin:0.2em;
-    padding-left:0.1em;
-    padding-right:0.1em;
+    padding:0.1em;
     border-radius: 5px;
     min-width:3.5em;
     text-align:center;

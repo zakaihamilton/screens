@@ -49,7 +49,12 @@ package.kab.style = function KabStyle(me) {
             }
         }
         if(instance.item && instance.item.hebrew) {
-            tooltip = instance.item.hebrew + " &#xa; " + tooltip;
+            if(tooltip) {
+                tooltip = instance.item.hebrew + " &#xa; " + tooltip;
+            }
+            else {
+                tooltip = instance.item.hebrew;
+            }
         }
         if(styles) {
             if(session.options.prioritizeExplanation) {
