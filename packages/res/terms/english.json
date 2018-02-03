@@ -4552,14 +4552,6 @@
         },
         {
             "style": {
-                "heading": "Patriarch"
-            },
-            "translation": "Jacob",
-            "term": "Yaakov",
-            "hebrew":"יעקב"
-        },
-        {
-            "style": {
                 "heading": "Book"
             },
             "translation": "Genesis Rabba",
@@ -5755,8 +5747,8 @@
             "term":"Avraham",
             "translation":"Abraham",
             "style":{
-                "heading": "Class",
-                "phase":"one"
+                "heading": "Class/Patriarch",
+                "phase":"root"
             },
             "hebrew":"אברהם"
         },
@@ -5764,8 +5756,8 @@
             "term":"Yitzhak",
             "translation":"Isaac",
             "style":{
-                "heading": "Class",
-                "phase":"two"
+                "heading": "Class/Patriarch",
+                "phase":"one"
             },
             "hebrew":"יצחק"
         },
@@ -5773,8 +5765,8 @@
             "term":"Yaakov",
             "translation":"Jacob",
             "style":{
-                "heading": "Class",
-                "phase":"three"
+                "heading": "Class/Patriarch",
+                "phase":"two"
             },
             "hebrew":"יעקב"
         },
@@ -5783,7 +5775,7 @@
             "translation":"Joseph",
             "style":{
                 "heading": "Class",
-                "phase":"four"
+                "phase":"collective"
             },
             "hebrew":"יוסף"
         },
@@ -6213,26 +6205,38 @@
         {
             "term":"Abraham",
             "style":{
-                "heading":"Patriarch",
+                "heading":"Class/Patriarch",
                 "phase":"root"
             },
+            "transliterated":"Avraham",
             "hebrew":"אברהם"
         },
         {
             "term":"Isaac",
             "style":{
-                "heading":"Patriarch",
+                "heading":"Class/Patriarch",
                 "phase":"one"
             },
+            "transliterated":"Yitzhak",
             "hebrew":"יצחק"
         },
         {
             "term":"Jacob",
             "style":{
-                "heading":"Patriarch",
+                "heading":"Class/Patriarch",
                 "phase":"two"
             },
+            "transliterated":"Yaakov",
             "hebrew":"יעקב"
+        },
+        {
+            "term":"Joseph",
+            "style":{
+                "heading":"Class",
+                "phase":"collective"
+            },
+            "transliterated":"Yosef",
+            "hebrew":"יוסף"
         },
         {
             "term": "judgement",

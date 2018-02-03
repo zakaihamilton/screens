@@ -138,4 +138,11 @@ package.core.string = function CoreString(me) {
         }
         return source.toLowerCase() === target.toLowerCase();
     };
+    me.optional = function(string, check) {
+        var result = "";
+        if(check) {
+            result = string;
+        }
+        return result;
+    };
 };
