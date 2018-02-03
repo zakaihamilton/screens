@@ -6380,6 +6380,11 @@
         {
             "depends":["seventy-two names"],
             "diagram":"72_names"
+        },
+        {
+            "depends":["Igulim","Behina Aleph","Behina Bet","Behina Gimel","Behina Dalet"],
+            "term":"Igulim",
+            "diagram":"circles"
         }
     ]
 }

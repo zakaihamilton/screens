@@ -1,0 +1,49 @@
+{
+    "title": "Circles",
+    "layers": [
+        {
+            "ui.style.display": "grid",
+            "ui.style.position": "absolute",
+            "ui.style.padding": "2px",
+            "ui.style.left": "25%",
+            "ui.style.top": "15px",
+            "ui.style.width": "50%",
+            "ui.style.height": "50%",
+            "ui.style.gridAutoColumns": "auto",
+            "ui.style.gridAutoRows": "auto",
+            "ui.style.lineHeight": "2.5",
+            "core.property.group": [
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.property.style":{
+                                "border": "1px solid black",
+                                "textAlign": "center",
+                                "verticalAlign": "middle",
+                                "borderRadius":"50%",
+                                "width": "100%",
+                                "height": "0",
+                                "paddingTop":"10px",
+                                "paddingBottom":"95%"
+                            }
+                        },
+                        "ui.data.values": [
+                            ["1/10", "1/10", "Keter", "white"],
+                            ["2/9", "2/9", "Hochma", "#FFF3CA"],
+                            ["3/8", "3/8", "Bina", "#C8D9F9"],
+                            ["4/7", "4/7", "Tifferet", "#F5CCCB"],
+                            ["5/6", "5/6", "Malchut", "#D9EAD2"]
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
