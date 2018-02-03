@@ -367,6 +367,9 @@ package.app.transform = function AppTransform(me) {
             if(window.options.pipVideo) {
                 modifiers.push("pipVideo");
             }
+            if(me.core.property.get(window, "fullscreen")) {
+                modifiers.push("fullscreen");
+            }
             modifiers = modifiers.map((modifier) => {
                 return "." + modifier;
             });

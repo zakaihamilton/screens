@@ -209,15 +209,27 @@
 }
 
 .app-transform-page-fullscreen:after {
-    content: '\25F3';
+    content: '\25FB';
 }
 
 .app-transform-page-fullscreen:hover:after {
-    content: '\25F3\A Fullcreen';
+    content: '\25FB\A Fullcreen';
 }
 
 .app-transform-page-fullscreen.hebrew:hover:after {
-    content: '\25F3\A מסך מלא';
+    content: '\25FB\A מסך מלא';
+}
+
+.app-transform-page-fullscreen.fullscreen:after {
+    content: '\25F3';
+}
+
+.app-transform-page-fullscreen.fullscreen:hover:after {
+    content: '\25F3\A Restore';
+}
+
+.app-transform-page-fullscreen.hebrew.fullscreen:hover:after {
+    content: '\25F3\A החזר';
 }
 
 .app-transform-page-previous {

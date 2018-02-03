@@ -335,7 +335,7 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.contentClass,
                             "ui.style.columnCount": options.columnCount,
-                            "ui.basic.var": "content,fullscreen",
+                            "ui.basic.var": "content",
                             "ui.style.overflow": "hidden"
                         },
                         {
