@@ -1,6 +1,6 @@
 {
     "title": "Packets",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "450px",
         "top": "250px",
         "width": "600px",
@@ -14,82 +14,96 @@
                     }
                 ],
                 ["Reset", "app.packets.reset", {
-                        "separator":true
-                }]
+                        "separator": true
+                    }]
             ]
         ]
     ],
     "ui.basic.elements": [
         {
             "ui.basic.text": "Packet Count",
-            "ui.property.style":{
-                "paddingTop":"10px"
+            "ui.property.style": {
+                "paddingTop": "10px"
             }
         },
         {
             "ui.basic.text": "",
             "ui.basic.readOnly": true,
-            "ui.property.style":{
-                "width":"200px"
+            "ui.property.style": {
+                "width": "200px"
             },
             "ui.basic.type": "text",
             "ui.basic.var": "packetCount"
         },
         {
             "ui.basic.text": "Packet Size",
-            "ui.property.style":{
-                "paddingTop":"10px"
+            "ui.property.style": {
+                "paddingTop": "10px"
             }
         },
         {
             "ui.basic.text": "",
             "ui.basic.readOnly": true,
-            "ui.property.style":{
-                "width":"200px"
+            "ui.property.style": {
+                "width": "200px"
             },
             "ui.basic.type": "text",
             "ui.basic.var": "dataSize"
         },
         {
-            "ui.element.component":"widget.chart",
-            "ui.style.width":"80%",
-            "info":{
-                "type": "bar",
+            "ui.element.component": "widget.chart",
+            "ui.style.width": "80%",
+            "data": "@app.packets.data",
+            "info": {
+                "type": "line",
                 "data": {
-                    "labels": ["Red", "Blue", "Yellow", "Green", "Purple"],
                     "datasets": [{
-                        "label": "# of Votes",
-                        "data": [12, 19, 3, 5, 2],
-                        "backgroundColor": [
-                            "rgba(255, 99, 132, 0.2)",
-                            "rgba(54, 162, 235, 0.2)",
-                            "rgba(255, 206, 86, 0.2)",
-                            "rgba(75, 192, 192, 0.2)",
-                            "rgba(153, 102, 255, 0.2)"
-                        ],
-                        "borderColor": [
-                            "rgba(255,99,132,1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)"
-                        ],
-                        "borderWidth": 1
-                    }]
+                            "label": "Device",
+                            "backgroundColor": "red",
+                            "borderColor": "red",
+                            "fill": false
+                        },
+                        {
+                            "label": "Device 2",
+                            "backgroundColor": "blue",
+                            "borderColor": "blue",
+                            "fill": false
+                        }]
                 },
                 "options": {
+                    "responsive": true,
+                    "title": {
+                        "display": true,
+                        "text": "Chart.js Time Point Data"
+                    },
                     "scales": {
-                        "yAxes": [{
+                        "xAxes": [{
+                            "type": "time",
+                            "display": true,
+                            "scaleLabel": {
+                                "display": true,
+                                "labelString": "Date"
+                            },
                             "ticks": {
-                                "beginAtZero":true
+                                "major": {
+                                    "fontStyle": "bold",
+                                    "fontColor": "#FF0000"
+                                }
                             }
-                        }]
+                        }],
+                        "yAxes": {
+                            "display": true,
+                            "scaleLabel": {
+                                "display": true,
+                                "labelString": "value"
+                            }
+                        }
                     }
                 }
             }
         }
     ],
-    "app.packets.refresh":null,
+    "app.packets.refresh": null,
     "ui.property.after": {
         "storage.cache.key": "app-packets-window",
         "storage.cache.restore": "widget.window.store"
