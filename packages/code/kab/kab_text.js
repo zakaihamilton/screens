@@ -153,6 +153,9 @@ package.kab.text = function KabText(me) {
                         prefixLetters: me.core.string.prefixLetters(collectedWords, match),
                         suffixLetters: me.core.string.suffixLetters(collectedWords, match)
                     };
+                    if(item.debug) {
+                        debugger
+                    }
                     me.handleInstance(session, instance);
                     wordIndex = instance.wordIndex;
                     break;
@@ -248,6 +251,9 @@ package.kab.text = function KabText(me) {
                 explanation = explanation.toUpperCase();
             }
             modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
+        } else if (session.options.addStyles && instance.item.style) {
+            me.kab.search.setTerm(session.options, session.json.style, instance.item);
+            modify(session, instance, "", instance.source, null, "", false, false);
         } else if (source) {
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(source)) {
@@ -256,9 +262,6 @@ package.kab.text = function KabText(me) {
                 instance.words.splice(instance.wordIndex, 0, source);
             }
             instance.wordIndex--;
-        } else if (session.options.addStyles && instance.item.style) {
-            me.kab.search.setTerm(session.options, session.json.style, instance.item);
-            modify(session, instance, "", instance.source, null, "", false, false);
         }
         else {
             modify(session, instance, "", instance.source, null, "", false, false);
