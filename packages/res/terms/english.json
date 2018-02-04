@@ -6376,12 +6376,6 @@
             }
         },
         {
-            "term":"secrets",
-            "style":{
-                "heading":"Test"
-            }
-        },
-        {
             "term":"secrets of Torah",
             "debug":true,
             "fixed":true,
@@ -6424,6 +6418,7 @@
         },
         {
             "term":"Taamim of Torah",
+            "translation":"Tastes of the Torah",
             "fixed":true,
             "hebrew":"טעמי תורה",
             "transliterated":"Taamai Torah",
@@ -6433,19 +6428,12 @@
         },
         {
             "term":"Taamim of the Torah",
+            "translation":"Tastes of the Torah",
             "fixed":true,
             "hebrew":"טעמי תורה",
             "transliterated":"Taamai Torah",
             "style":{
                 "heading":"Knowledge"
-            }
-        },
-        {
-            "term":"Torah",
-            "hebrew":"תורה",
-            "translation":"Bible",
-            "style":{
-                "heading":"Book"
             }
         },
         {

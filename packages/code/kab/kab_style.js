@@ -49,7 +49,7 @@ package.kab.style = function KabStyle(me) {
             }
         }
         if(instance.item && instance.item.hebrew) {
-            if(!tooltip) {
+            if(instance.item.transliterated) {
                 tooltip = instance.item.transliterated;
             }
             tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
