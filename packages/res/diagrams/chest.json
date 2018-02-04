@@ -13,7 +13,7 @@
             "ui.style.gridAutoRows": "2.5%",
             "ui.style.gridGap": "1px 1px",
             "ui.style.alignItems": "stretch",
-            "ui.style.lineHeight": "2.5",
+            "ui.style.lineHeight": "2",
             "ui.basic.elements": {
                 "comment": "Chest Separator",
                 "borderStyle": "dashed",

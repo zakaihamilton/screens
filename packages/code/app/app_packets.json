@@ -74,7 +74,7 @@
                     "responsive": true,
                     "title": {
                         "display": true,
-                        "text": "Chart.js Time Point Data"
+                        "text": "Chart Data"
                     },
                     "scales": {
                         "xAxes": [{

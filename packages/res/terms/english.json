@@ -130,6 +130,8 @@
         "OhrElyon":"Ohr Elyon",
         "OhrHassadim":"Ohr Hassadim",
         "Midatha":"Midat ha",
+        "Yomincovered":"Yomin covered",
+        "Taamimof":"Taamim of",
         "<title>":"<br>\n<h4 style=\"text-align:center\">",
         "</title>":"</h4>"
     },
@@ -2112,6 +2114,15 @@
             "term": "Atik",
             "explanation":"Evaluation",
             "hebrew":"עתיק"
+        },
+        {
+            "translation": "Ancient of Days",
+            "style": {
+                "heading": "Face",
+                "phase": "root"
+            },
+            "term": "Atik Yomin",
+            "hebrew":"עתיק יומין"
         },
         {
             "translation": "Unformed",
@@ -5656,6 +5667,18 @@
             "hebrew":"מרכבה"
         },
         {
+            "term":"Maase Merkava",
+            "translation":"Act of Assembly",
+            "explanation":"Expression",
+            "hebrew":"מעשה מרכבה"
+        },
+        {
+            "term":"Maase Beresheet",
+            "translation":"Act of Creation",
+            "explanation":"Advancement",
+            "hebrew":"מעשה בראשית"
+        },
+        {
             "term":"Haka ’ ot",
             "translation":"Strikings",
             "hebrew":"הכאות"
@@ -6277,6 +6300,80 @@
             "term":"Ein Od Milvado",
             "translation":"There is None Else Beside Him",
             "hebrew":"אין עוד מלבדו"
+        },
+        {
+            "term":"Lishna Kama",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"RASHBAM",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Rabbi Ishmael",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Rabbi Hai Gaon",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Rabbi Hamai Gaon",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Rabbi Elazar of Garmiza",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Rishonim",
+            "translation":"The First Sages",
+            "hebrew":"ראשונים",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"RAMBAN",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Baal HaTurim",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Baal Shulchan Aruch",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Vilna Gaon",
+            "style":{
+                "heading":"Author"
+            }
+        },
+        {
+            "term":"Ladi Gaon",
+            "style":{
+                "heading":"Author"
+            }
         }
         ],
     "style": {

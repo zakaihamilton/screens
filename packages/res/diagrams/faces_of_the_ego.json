@@ -14,7 +14,7 @@
                 "gridAutoRows": "2.5%",
                 "gridGap": "1px 1px",
                 "alignItems": "stretch",
-                "lineHeight": "2.5"
+                "lineHeight": "2"
             },
             "ui.group.data": {
                 "ui.data.keyList": [
