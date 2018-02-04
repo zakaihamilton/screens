@@ -224,7 +224,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
                 try {
                     package_prepare(package_name, component_name, child_name, callback);
                 } catch (err) {
-                    console.log("Found error: " + err + " stack: " + err.stack);
+                    console.error("Found error: " + err + " stack: " + err.stack);
                     if (callback) {
                         callback({failure: {package: package_name, component: component_name, child:child_name}});
                     }
@@ -240,7 +240,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
             package_prepare(package_name, component_name, child_name, callback);
         }
     } catch (err) {
-        console.log("Found error: " + err + " stack: " + err.stack);
+        console.error("Found error: " + err + " stack: " + err.stack);
         if (callback) {
             callback({failure: {package: package_name, component: component_name, child:child_name}});
         }
@@ -252,7 +252,7 @@ function package_init(name, callback, task) {
         callback(task);
     }
     catch(err) {
-        console.log("Failed to initialise component: " + name + " with error: " + err);
+        console.error("Failed to initialise component: " + name + " with error: " + err);
     }
 }
 

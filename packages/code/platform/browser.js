@@ -30,7 +30,8 @@ function startBrowser(appName, appArgs) {
             "hash",
             "flow",
             "startup",
-            "network"
+            "network",
+            "require"
         ],
         "storage": [
             "cache",
@@ -100,7 +101,8 @@ function startBrowser(appName, appArgs) {
             "tree",
             "audio",
             "video",
-            "spinner"
+            "spinner",
+            "chart"
         ],
         "canvas": [
             "dirty",

@@ -35,7 +35,7 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                embedded: true,
+                embedded: false,
                 pipVideo : false,
                 swipe: me.core.device.isMobile()
             });

@@ -73,7 +73,7 @@ package.core.module = function CoreModule(me) {
                         }
                         info["content-type"] = "application/javascript";
                         me.loadTextFile(info.task, file_path, function (data) {
-                            if (data.includes("__json__")) {
+                            if (data && data.includes("__json__")) {
                                 me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {
                                     info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
                                     info.body = data;
