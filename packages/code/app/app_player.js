@@ -121,11 +121,9 @@ package.app.player = function AppPlayer(me) {
             if(showAudioPlayer || showVideoPlayer) {
                 var player = window.var.audioPlayer;
                 var path = audioPath;
-                var convert = "mp3";
                 if(showVideoPlayer) {
                     player = window.var.videoPlayer;
                     path = videoPath;
-                    convert = null;
                 }
                 me.core.property.set(window, "ui.work.state", true);
                 me.manager.download.push(function(err, target) {
@@ -136,7 +134,7 @@ package.app.player = function AppPlayer(me) {
                         me.core.property.set(player, "source", target);
                     }
                     me.core.property.set(window, "ui.work.state", false);
-                }, me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path, convert);
+                }, me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
             }
         }
     };
