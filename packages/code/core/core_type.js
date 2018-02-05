@@ -35,8 +35,8 @@ package.core.type = function CoreType(me) {
             }
         }
     };
-    me.wrap_args = function(unwrapped_args, url=false) {
-        var query = "";
+    me.wrap_args = function(unwrapped_args) {
+        var query = null;
         if(unwrapped_args) {
             for(var i = 0; i < unwrapped_args.length; i++) {
                 var value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
