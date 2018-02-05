@@ -100,8 +100,8 @@ package.core.service = function CoreService(me) {
         });
     };
     me.sendAll = function (path, callback, params) {
+        var args = Array.prototype.slice.call(arguments);
         me.clients.forEach((info, socket) => {
-            var args = Array.prototype.slice.call(arguments);
             me.core.message.send_service.apply(socket, args);
         });
     };
