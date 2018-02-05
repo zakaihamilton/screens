@@ -8,12 +8,11 @@ package.require("core.stream", "server");
 package.core.stream = function CoreStream(me) {
     me.init = function () {
         me.fs = require("fs");
-        me.faststart = require("faststart");
     };
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
         var range = headers.range;
-        if (contentType && contentType.startsWith("audio") && range) {
+        if (range) {
             var total = stat.size;
             var parts = range.replace(/bytes=/, "").split("-");
             var partialstart = parts[0];
@@ -45,13 +44,7 @@ package.core.stream = function CoreStream(me) {
             me.core.console.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
-            var stream = null;
-            if(contentType && contentType.startsWith("audio")) {
-                stream = me.fs.createReadStream(path);
-            }
-            else {
-                stream = me.faststart.createReadStream(path, {passthrough:true});
-            }
+            var stream = me.fs.createReadStream(path);
             var headers = {
                 "Content-Length": stat.size,
                 "Content-Type": contentType
