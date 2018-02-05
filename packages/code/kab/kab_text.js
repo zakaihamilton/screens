@@ -253,7 +253,7 @@ package.kab.text = function KabText(me) {
             modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
         } else if (session.options.addStyles && instance.item.style) {
             me.kab.search.setTerm(session.options, session.json.style, instance.item);
-            modify(session, instance, "", instance.source, null, "", false, false);
+            modify(session, instance, "", source ? source : instance.source, null, "", false, false);
         } else if (source) {
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(source)) {

@@ -6389,6 +6389,7 @@
         {
             "term":"flavors of Torah",
             "fixed":true,
+            "debug":true,
             "source":"Flavors of Torah",
             "hebrew":"טעמי תורה",
             "transliterated":"Taamai Torah",
@@ -6402,16 +6403,6 @@
             "source":"Secrets of the Torah",
             "hebrew":"סתרי תורה",
             "transliterated":"Sitrai Torah",
-            "style":{
-                "heading":"Knowledge"
-            }
-        },
-        {
-            "term":"flavors of Torah",
-            "source":"Flavors of Torah",
-            "fixed":true,
-            "hebrew":"טעמי תורה",
-            "transliterated":"Taamai Torah",
             "style":{
                 "heading":"Knowledge"
             }

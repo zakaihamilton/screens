@@ -34,15 +34,15 @@
     left: -1px;
     position: absolute;
     line-height:1em;
-    padding: 3px;
+    padding-bottom: 1px;
+    padding-left:3px;
+    padding-right:3px;
     content: attr(kab-term-tooltip);
     text-align:center;
     white-space: pre;
     min-width: 100%;
     min-height: 100%;
-    padding-top:1px;
     vertical-align: middle;
-    box-shadow: 2px 2px 2px grey;
     border-radius: 5px;
 }
 
