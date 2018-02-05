@@ -54,6 +54,20 @@ package.manager.packet = function ManagerPacket(me) {
         callback();
     };
     me.setPacketLoss = function(callback, packetLoss) {
-        me.core.service.sendAll("service.netcontrol.setPacketLoss", callback, packetLoss);
+        var errors = null;
+        var count = me.core.service.sendAll("service.netcontrol.setPacketLoss", (err) => {
+            if(err) {
+                if(!errors) {
+                    errors = [];
+                }
+                errors.push(err);
+            }
+            count--;
+            console.log("recieved from a device, " + count + " devices left");
+            if(!count) {
+                callback(errors);
+            }
+        }, packetLoss);
+        console.log("sent to " + count + " devices");
     };
 };

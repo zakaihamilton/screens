@@ -101,8 +101,11 @@ package.core.service = function CoreService(me) {
     };
     me.sendAll = function (path, callback, params) {
         var args = Array.prototype.slice.call(arguments);
+        var count = 0;
         me.clients.forEach((info, socket) => {
             me.core.message.send_service.apply(socket, args);
+            count++;
         });
+        return count;
     };
 };
