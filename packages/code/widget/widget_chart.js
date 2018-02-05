@@ -44,11 +44,11 @@ package.widget.chart = function WidgetChart(me) {
         }
     };
     me.update = {
-        set: function (object) {
+        set: function (object, value) {
             object.chartInfo.data = object.data;
             if (object.chart) {
                 object.chart.data = object.chartInfo.data;
-                object.chart.update();
+                object.chart.update(value);
             } else {
                 var context = me.core.property.get(object, "context");
                 object.chart = new me.chart.Chart(context, object.chartInfo);

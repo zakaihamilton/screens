@@ -38,7 +38,6 @@ package.manager.packet = function ManagerPacket(me) {
                 items = targetMap.items = {};
             }
             var key = parseInt(packet_sec/10);
-            console.log("key: " + key + " from: " + packet_sec);
             var item = items[key];
             if(!item) {
                 item = items[key] = {len:0,start:packet_sec,end:0};

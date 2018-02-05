@@ -26,7 +26,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.dataSize, "ui.basic.text", info.dataSize);
                 window.packetInfo = info;
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
-                me.core.property.notify(window.var.chart, "update");
+                me.core.property.notify(window.var.chart, "update", {"duration":0});
             });
         }
     };
@@ -59,6 +59,7 @@ package.app.packets = function AppPackets(me) {
                         backgroundColor: colors[colorIndex],
                         borderColor: colors[colorIndex],
                         fill: false,
+                        lineTension:0,
                         data: []
                     };
                     colorIndex++;
@@ -67,7 +68,7 @@ package.app.packets = function AppPackets(me) {
                         var item = target.items[time];
                         dataset.data.push({
                             x: dateRel(item.end),
-                            y: item.len
+                            y: item.len/1000
                         });
                     }
                     data.datasets.push(dataset);
