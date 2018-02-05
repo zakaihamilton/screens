@@ -87,4 +87,11 @@ package.core.path = function CorePath(me) {
         }
         return extension;
     };
+    me.replaceExtension = function(path, extension) {
+        var currentExtension = me.extension(path);
+        if(currentExtension) {
+            path = path.replace("." + currentExtension, "." + extension);
+        }
+        return path;
+    };
 };

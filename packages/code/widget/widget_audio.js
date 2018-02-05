@@ -17,6 +17,9 @@ package.widget.audio = function WidgetAudio(me) {
         set: function(object, path) {
             var extension = me.core.path.extension(path);
             me.core.property.set(object.var.source, "ui.attribute.src", path);
+            if(extension === "mp3") {
+                extension = "mpeg";
+            }
             me.core.property.set(object.var.source, "ui.attribute.type", "audio/"+extension);
             object.src = path;
             object.load();

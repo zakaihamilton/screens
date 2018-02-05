@@ -9,6 +9,8 @@ package.core.module = function CoreModule(me) {
     var core = me.core;
     me.init = function () {
         me.core.property.link("core.http.receive", "core.module.receive", true);
+        me.autoprefixer = require('autoprefixer');
+        me.postcss = require('postcss');
     };
     me.path_file_to_component = function (file_path) {
         file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
@@ -24,9 +26,9 @@ package.core.module = function CoreModule(me) {
                 core.console.log("serving text file: " + filePath);
                 if (err) {
                     core.console.log(JSON.stringify(err));
-                    callback(null);
+                    callback(null, task);
                 } else {
-                    callback(data);
+                    callback(data, task);
                 }
                 me.unlock(task);
             }, filePath, 'utf8');
@@ -38,9 +40,9 @@ package.core.module = function CoreModule(me) {
                 core.console.log("serving binary file: " + filePath);
                 if (err) {
                     core.console.log(JSON.stringify(err));
-                    callback(JSON.stringify(err));
+                    callback(JSON.stringify(err), task);
                 } else {
-                    callback(data);
+                    callback(data, task);
                 }
                 me.unlock(task);
                 core.console.log("finished serving binary file: " + filePath);
@@ -87,8 +89,16 @@ package.core.module = function CoreModule(me) {
                         });
                     } else if (file_path.endsWith(".css")) {
                         info["content-type"] = "text/css";
-                        me.loadTextFile(info.task, file_path, function (data) {
-                            info.body = data;
+                        me.loadTextFile(info.task, file_path, function (data, task) {
+                            me.lock(task, task => {
+                                me.postcss([ me.autoprefixer ]).process(data).then(function (result) {
+                                    result.warnings().forEach(function (warn) {
+                                        me.core.console.warn(warn.toString());
+                                    });
+                                    info.body = result.css;
+                                    me.unlock(task);
+                                });
+                            });
                         });
                     } else if (file_path.endsWith(".html")) {
                         info["content-type"] = "text/html";
@@ -122,8 +132,16 @@ package.core.module = function CoreModule(me) {
                         me.loadTextFile(info.task, file_path, function (data) {
                             info.body = data;
                         });
-                    } else if (file_path.endsWith(".m4a") || file_path.endsWith(".mp4")) {
-                        var mimeType = file_path.endsWith(".m4a") ? "audio/mp4" : "video/mp4";
+                    } else if (file_path.endsWith(".m4a")) {
+                        var mimeType = "audio/mp4";
+                        info.custom = true;
+                        me.core.stream.serve(info.headers, info.response, file_path, mimeType);
+                    } else if (file_path.endsWith(".mp4")) {
+                        var mimeType = "video/mp4";
+                        info.custom = true;
+                        me.core.stream.serve(info.headers, info.response, file_path, mimeType);
+                    } else if (file_path.endsWith(".mp3")) {
+                        var mimeType = "audio/mpeg";
                         info.custom = true;
                         me.core.stream.serve(info.headers, info.response, file_path, mimeType);
                     }
@@ -131,4 +149,5 @@ package.core.module = function CoreModule(me) {
             }
         }
     };
+    
 };

@@ -35,7 +35,7 @@ package.core.stream = function CoreStream(me) {
             }
             response.writeHead(responseCode, headers);
             var stream = null;
-            stream = me.faststart.createReadStream(path, {start: start, end: end});
+            stream = me.faststart.createReadStream(path, {start: start, end: end, passthrough:true});
             if(stream) {
                 stream.pipe(response);
             }
@@ -45,7 +45,7 @@ package.core.stream = function CoreStream(me) {
             me.core.console.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
-            var stream = me.faststart.createReadStream(path);
+            var stream = me.faststart.createReadStream(path, {passthrough:true});
             var headers = {
                 "Content-Length": stat.size,
                 "Content-Type": contentType

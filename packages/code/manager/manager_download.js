@@ -34,11 +34,13 @@ package.manager.download = function ManagerDownload(me) {
             if(item.isDownloading) {
                 return;
             }
+            me.core.console.log("checking if file exists, path: " + item.to);
             me.core.file.isFile(function(isFile) {
                 if(isFile) {
                     var index = me.queue.indexOf(item);
                     me.queue.splice(index, 1);
-                    me.private.notify(item, null);
+                    me.core.console.log("found file: " + item.to);
+                    me.private.notify(item, null, item.to);
                 }
                 else {
                     item.isDownloading = true;
@@ -49,21 +51,33 @@ package.manager.download = function ManagerDownload(me) {
                         if(index !== -1) {
                             me.queue.splice(index, 1);
                         }
-                        me.private.notify(item, err);
-                        me.private.update();
+                        if(item.convert) {
+                            var path = me.core.path.replaceExtension(item.to, item.convert);
+                            me.core.console.log("converting file from: " + item.to + " to: " + path);
+                            me.media.ffmpeg.convert((err, progress) => {
+                                if(!progress) {
+                                    me.private.notify(item, err, path);
+                                    me.private.update();
+                                }
+                            }, item.to, item.convert, path);
+                        }
+                        else {
+                            me.private.notify(item, err, item.to);
+                            me.private.update();
+                        }
                     }, item.from, item.to);
                 }
             }, item.to);
         },
-        notify : function(item, err) {
+        notify : function(item, err, target) {
             var callback = item.callbacks.pop();
             while(callback) {
-                callback(err);
+                callback(err, target);
                 callback = item.callbacks.pop();
             }
         }
     };
-    me.push = function(callback, from, to) {
+    me.push = function(callback, from, to, convert) {
         var item = me.private.findItem(from, to);
         if(item) {
             var index = me.queue.indexOf(item);
@@ -72,17 +86,21 @@ package.manager.download = function ManagerDownload(me) {
             me.queue.push(item);
         }
         else {
+            var path = to;
+            if(convert) {
+                path = me.core.path.replaceExtension(to, convert);
+            }
             me.core.file.isFile(function(isFile) {
                 if(isFile) {
-                    callback(null);
+                    callback(null, path);
                 }
                 else {
                     me.core.console.log("pushing to download queue: " + from + " to: " + to);
-                    item = {from:from, to:to, isDownloading:false, callbacks:[callback]};
+                    item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
                     me.queue.push(item);
                     me.private.update();
                 }
-            }, to);
+            }, path);
         }
     };
     me.exists = function(callback, from, to) {
@@ -104,7 +122,7 @@ package.manager.download = function ManagerDownload(me) {
     me.items = function(callback) {
         var items = [];
         for(var item of me.queue) {
-            items.push({from:item.from,to:item.to,isDownloading:item.isDownloading});
+            items.push({from:item.from,to:item.to,isDownloading:item.isDownloading,convert:item.convert});
         }
         callback(items);
     };
