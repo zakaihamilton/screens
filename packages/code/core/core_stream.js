@@ -13,15 +13,15 @@ package.core.stream = function CoreStream(me) {
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
         var range = headers.range;
-        if (false && contentType && contentType.startsWith("audio") && range) {
+        if (contentType && contentType.startsWith("audio") && range) {
             var total = stat.size;
             var parts = range.replace(/bytes=/, "").split("-");
             var partialstart = parts[0];
             var partialend = parts[1];
 
             var start = parseInt(partialstart, 10);
-            var end = partialend ? parseInt(partialend, 10) : total;
-            var chunkSize = (end - start);
+            var end = partialend ? parseInt(partialend, 10) : total-1;
+            var chunkSize = (end - start)+1;
             var headers = {
                 "Content-Range": "bytes " + start + "-" + end + "/" + total,
                 "Accept-Ranges": "bytes",
@@ -35,7 +35,7 @@ package.core.stream = function CoreStream(me) {
             }
             response.writeHead(responseCode, headers);
             var stream = null;
-            stream = me.faststart.createReadStream(path, {start: start, end: end, passthrough:true});
+            stream = me.fs.createReadStream(path, {start: start, end: end});
             if(stream) {
                 stream.pipe(response);
             }
@@ -45,7 +45,13 @@ package.core.stream = function CoreStream(me) {
             me.core.console.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
-            var stream = me.faststart.createReadStream(path, {passthrough:true});
+            var stream = null;
+            if(contentType && contentType.startsWith("audio")) {
+                stream = me.fs.createReadStream(path);
+            }
+            else {
+                stream = me.faststart.createReadStream(path, {passthrough:true});
+            }
             var headers = {
                 "Content-Length": stat.size,
                 "Content-Type": contentType
