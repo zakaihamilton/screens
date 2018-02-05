@@ -6377,7 +6377,6 @@
         },
         {
             "term":"secrets of Torah",
-            "debug":true,
             "fixed":true,
             "source":"Secrets of Torah",
             "hebrew":"סתרי תורה",
@@ -6389,7 +6388,6 @@
         {
             "term":"flavors of Torah",
             "fixed":true,
-            "debug":true,
             "source":"Flavors of Torah",
             "hebrew":"טעמי תורה",
             "transliterated":"Taamai Torah",

@@ -300,7 +300,11 @@ package.kab.text = function KabText(me) {
         if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
-        instance.words.splice(instance.wordIndex, 0, instance.prefixLetters + replacementWithStyles + instance.suffixLetters);
+        var insert = replacementWithStyles;
+        if(instance.prefixLetters || instance.suffixLetters) {
+            insert = "<span style=\"white-space: nowrap\">" + instance.prefixLetters + replacementWithStyles + instance.suffixLetters + "</span>";
+        }
+        instance.words.splice(instance.wordIndex, 0, insert);
         if (!instance.item.includePrefix) {
             me.kab.format.insert(instance.words, instance.wordIndex, session.json.prefix, instance.item.prefix, instance.prefixWord, text);
         }
