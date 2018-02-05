@@ -28,8 +28,9 @@ package.service.netcontrol = function ServiceNetControl(me) {
                 console.log("list current directory: " + data);
                 flow.async(cmd.get, "sudo tc qdisc del root dev " + device, flow.callback);
                 flow.wait((err, data, stderr) => {
-                    flow.error(err, "failed to reset device:" + device);
-                    flow.check(!stderr, "failed with stderr: " + stderr);
+                    if(err) {
+                        console.log(err.message);
+                    }
                     console.log("reset device output: " + data);
                     if(me.packetLoss) {
                         console.log("setting packet loss to: " + me.packetLoss);
