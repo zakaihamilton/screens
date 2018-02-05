@@ -65,7 +65,8 @@ package.manager.packet = function ManagerPacket(me) {
             count--;
             console.log("recieved from a device, " + count + " devices left");
             if(!count) {
-                callback(errors);
+                console.dir("errors: " + errors);
+                callback.apply(null, errors);
             }
         }, packetLoss);
         console.log("sent to " + count + " devices");

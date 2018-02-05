@@ -25,7 +25,7 @@ package.core.message = function CoreMessage(me) {
         if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
-            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
+            var info = {path: path, params: me.core.type.wrap_args(args), callback: me.core.handle.push(callback)};
             me.core.service.client.emit("method", info);
         }
         else if (me.platform !== "server") {
@@ -57,7 +57,7 @@ package.core.message = function CoreMessage(me) {
         if (me.platform === "server") {
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
-            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
+            var info = {path: path, params: me.core.type.wrap_args(args), callback: me.core.handle.push(callback)};
             this.emit("method", info);
         } else if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 0);
@@ -127,23 +127,29 @@ package.core.message = function CoreMessage(me) {
         }
     };
     me.handleRemote = function (info) {
+        info.response = me.core.type.unwrap_args(info.response);
         if (info.altCallback) {
-            var args = core.http.parse_query(info.response);
-            info.response = core.type.unwrap_args(args);
             info.altCallback.apply(null, info.response);
         }
     };
-    me.handleLocal = function (callback, info) {
+    me.handleLocal = function (callback, info, remote) {
         if(!info) {
             return;
         }
         info = Object.assign({}, info);
         if (typeof info.response !== "undefined") {
+            if(remote) {
+                info.response = me.core.type.unwrap_args(info.response);
+            }
             var infoCallback = me.core.handle.pop(info.callback);
+            console.log("responding with: " + JSON.stringify(info) + " callback: " + callback);
             if (infoCallback) {
                 infoCallback.apply(null, info.response);
             }
             return;
+        }
+        if(remote) {
+            info.params = me.core.type.unwrap_args(info.params);
         }
         var args = info.params;
         args.unshift(info.path);
@@ -154,8 +160,11 @@ package.core.message = function CoreMessage(me) {
                 info.params = null;
                 info.response = args;
                 info.callback = responseCallback;
-                callback(info);
                 console.log("responding with: " + JSON.stringify(info) + " callback: " + callback);
+                if(remote) {
+                    info.response = me.core.type.wrap_args(info.response);
+                }
+                callback(info);
             };
         }
         me.send.apply(null, args);

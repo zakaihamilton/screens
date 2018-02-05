@@ -25,7 +25,7 @@ package.core.service = function CoreService(me) {
                         socket.on("method", (info) => {
                             me.core.message.handleLocal((response) => {
                                 socket.emit("method", response);
-                            }, info);
+                            }, info, true);
                         });
                         me.core.console.log("Service setup request for ref: " + ref);
                         me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
@@ -47,7 +47,7 @@ package.core.service = function CoreService(me) {
             me.client.on("method", (info) => {
                 me.core.message.handleLocal((response) => {
                     me.client.emit("method", response);
-                }, info);
+                }, info, true);
             });
         }
     };

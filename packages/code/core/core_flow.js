@@ -14,7 +14,6 @@ package.core.flow = function CoreFlow(me) {
             error:me.error,
             code:me.code,
             end:me.end,
-            callback:me.callback,
             wait:me.wait,
             isRunning:true,
             isWaiting:false,
