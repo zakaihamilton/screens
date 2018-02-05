@@ -85,8 +85,10 @@ package.app.packets = function AppPackets(me) {
             if(packetLoss === "None") {
                 packetLoss = "";
             }
-            me.manager.packet.setPacketLoss(() => {
-                
+            me.manager.packet.setPacketLoss((err) => {
+                if(err) {
+                    alert("Cannot set packet loss: " + err.message);
+                }
             }, packetLoss);
         }
     };

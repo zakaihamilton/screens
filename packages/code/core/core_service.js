@@ -17,8 +17,10 @@ package.core.service = function CoreService(me) {
                         var ref = me.core.ref.gen();
                         socket.on("disconnect", () => {
                             var info = me.clients.get(socket);
-                            me.clients.delete(socket);
-                            me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
+                            if (info) {
+                                me.clients.delete(socket);
+                                me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
+                            }
                         });
                         socket.on("method", (info) => {
                             me.core.message.handleLocal((response) => {
@@ -97,7 +99,7 @@ package.core.service = function CoreService(me) {
             callback(response);
         });
     };
-    me.sendAll = function(path, callback, params) {
+    me.sendAll = function (path, callback, params) {
         me.clients.forEach((info, socket) => {
             var args = Array.prototype.slice.call(arguments);
             me.core.message.send_service.apply(socket, args);

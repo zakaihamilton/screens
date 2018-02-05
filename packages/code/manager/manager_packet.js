@@ -54,8 +54,6 @@ package.manager.packet = function ManagerPacket(me) {
         callback();
     };
     me.setPacketLoss = function(callback, packetLoss) {
-        me.core.service.sendAll("service.netcontrol.setPacketLoss", () => {
-            callback();
-        }, packetLoss);
+        me.core.service.sendAll("service.netcontrol.setPacketLoss", callback, packetLoss);
     };
 };
