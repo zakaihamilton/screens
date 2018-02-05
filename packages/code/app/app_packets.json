@@ -15,7 +15,25 @@
                 ],
                 ["Reset", "app.packets.reset", {
                         "separator": true
-                    }]
+                    }],
+                ["Packet Loss", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                ["None", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ],
+                ["25%", "app.packets.packetLoss", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["50%", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ]
             ]
         ]
     ],
@@ -91,6 +109,7 @@
         }
     ],
     "app.packets.refresh": null,
+    "app.packets.affect": null,
     "ui.property.after": {
         "storage.cache.key": "app-packets-window",
         "storage.cache.restore": "widget.window.store"

@@ -9,9 +9,11 @@ package.app.packets = function AppPackets(me) {
     };
     me.init = function () {
         me.ui.options.load(me, null, {
-            "autoRefresh": true
+            "autoRefresh": true,
+            "packetLoss":"None"
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refresh.set);
+        me.packetLoss = me.ui.options.choiceSet(me, "packetLoss", me.affect.set);
     };
     me.refresh = {
         set: function (object) {
@@ -26,7 +28,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.dataSize, "ui.basic.text", info.dataSize);
                 window.packetInfo = info;
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
-                me.core.property.notify(window.var.chart, "update", {"duration":0});
+                me.core.property.notify(window.var.chart, "update", {"duration": 0});
             });
         }
     };
@@ -41,40 +43,51 @@ package.app.packets = function AppPackets(me) {
     me.data = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            if(!window || !window.packetInfo || !window.packetInfo.packets) {
+            if (!window || !window.packetInfo || !window.packetInfo.packets) {
                 return [];
             }
             function dateRel(sec) {
                 return me.widget.chart.dateRel(sec);
             }
-            var colors = ["red","blue","green","yellow","orange"];
-            var data = {datasets:[],labels:[]};
+            var colors = ["red", "blue", "green", "yellow", "orange"];
+            var data = {datasets: [], labels: []};
             var colorIndex = 0;
-            for(var sourceIp in window.packetInfo.packets) {
+            for (var sourceIp in window.packetInfo.packets) {
                 var targets = window.packetInfo.packets[sourceIp];
-                for(var targetIp in targets) {
+                for (var targetIp in targets) {
                     var target = targets[targetIp];
                     var dataset = {
                         label: sourceIp + " -> " + targetIp,
                         backgroundColor: colors[colorIndex],
                         borderColor: colors[colorIndex],
                         fill: false,
-                        lineTension:0,
+                        lineTension: 0,
                         data: []
                     };
                     colorIndex++;
                     dataset.data = [];
-                    for(var time in target.items) {
+                    for (var time in target.items) {
                         var item = target.items[time];
                         dataset.data.push({
                             x: dateRel(item.end),
-                            y: item.len/1000
+                            y: item.len / 1000
                         });
                     }
-                    data.datasets.push(dataset);
                 }
+                data.datasets.push(dataset);
             }
             return data;
+        }
+    };
+    me.affect = {
+        set: function(object) {
+            var packetLoss = me.options.packetLoss;
+            if(packetLoss === "None") {
+                packetLoss = "";
+            }
+            me.manager.packet.setPacketLoss(() => {
+                
+            }, packetLoss);
         }
     };
 };

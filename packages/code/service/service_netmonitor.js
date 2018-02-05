@@ -14,6 +14,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
             return;
         }
         me.alreadySetup = true;
+        me.device = null;
         me.core.service.config(config => {
             if (config) {
                 me.pcap = require('pcap');
@@ -37,6 +38,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                     }
                     if (me.session) {
                         me.core.console.log("connected through device: " + device + " filter: " + filter);
+                        me.device = device;
                         break;
                     }
                 }

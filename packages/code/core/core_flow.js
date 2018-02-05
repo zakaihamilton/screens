@@ -57,9 +57,9 @@ package.core.flow = function CoreFlow(me) {
             }
         }
     };
-    me.wait = function(callback) {
+    me.wait = function(responseCallback) {
         if(this.isRunning) {
-            this.response = callback;
+            this.response = responseCallback;
             var queue = this.asyncQueue;
             this.asyncQueue = [];
             if(queue.length) {
