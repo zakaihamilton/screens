@@ -19,11 +19,14 @@ package.app.packets = function AppPackets(me) {
             if (me.options.autoRefresh) {
                 setTimeout(() => {
                     me.core.property.set(window, "app.packets.refresh");
-                }, 1000);
+                }, 5000);
             }
             me.manager.packet.info((info) => {
                 me.core.property.set(window.var.packetCount, "ui.basic.text", info.packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", info.dataSize);
+                window.packetInfo = info;
+                me.core.property.set(window.var.chart, "data", "@app.packets.data");
+                me.core.property.notify(window.var.chart, "update");
             });
         }
     };
@@ -37,38 +40,40 @@ package.app.packets = function AppPackets(me) {
     };
     me.data = {
         get: function (object) {
-            function dateNow(sec) {
-                return me.widget.chart.dateNow(sec, "d");
+            var window = me.widget.window.window(object);
+            if(!window || !window.packetInfo || !window.packetInfo.packets) {
+                return [];
             }
-            function dateNowString(sec) {
-                return me.widget.chart.dateNowString(sec, "d");
+            function dateRel(sec) {
+                return me.widget.chart.dateRel(sec);
             }
-            return [
-                [
-                    {x: dateNow(1), y: 1},
-                    {x: dateNow(2), y: 20},
-                    {x: dateNow(3), y: 50},
-                    {x: dateNow(4), y: -30},
-                    {x: dateNow(5), y: 60},
-                    {x: dateNow(6), y: 76},
-                    {x: dateNow(7), y: 32},
-                    {x: dateNow(8), y: 24},
-                    {x: dateNow(9), y: 72},
-                    {x: dateNow(10), y: 34}
-                ],
-                [
-                    {x: dateNowString(1), y: 10},
-                    {x: dateNowString(2), y: 5},
-                    {x: dateNowString(3), y: 20},
-                    {x: dateNowString(4), y: 30},
-                    {x: dateNowString(5), y: 40},
-                    {x: dateNowString(6), y: 86},
-                    {x: dateNowString(7), y: 22},
-                    {x: dateNowString(8), y: 14},
-                    {x: dateNowString(9), y: 42},
-                    {x: dateNowString(10), y: 34}
-                ]                
-            ];
+            var colors = ["red","blue","green","yellow","orange"];
+            var data = {datasets:[],labels:[]};
+            var colorIndex = 0;
+            for(var sourceIp in window.packetInfo.packets) {
+                var targets = window.packetInfo.packets[sourceIp];
+                for(var targetIp in targets) {
+                    var target = targets[targetIp];
+                    var dataset = {
+                        label: sourceIp + " -> " + targetIp,
+                        backgroundColor: colors[colorIndex],
+                        borderColor: colors[colorIndex],
+                        fill: false,
+                        data: []
+                    };
+                    colorIndex++;
+                    dataset.data = [];
+                    for(var time in target.items) {
+                        var item = target.items[time];
+                        dataset.data.push({
+                            x: dateRel(item.end),
+                            y: item.len
+                        });
+                    }
+                    data.datasets.push(dataset);
+                }
+            }
+            return data;
         }
     };
 };

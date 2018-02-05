@@ -52,24 +52,11 @@
         },
         {
             "ui.element.component": "widget.chart",
+            "ui.basic.var":"chart",
             "ui.style.width": "80%",
             "data": "@app.packets.data",
             "info": {
                 "type": "line",
-                "data": {
-                    "datasets": [{
-                            "label": "Device",
-                            "backgroundColor": "red",
-                            "borderColor": "red",
-                            "fill": false
-                        },
-                        {
-                            "label": "Device 2",
-                            "backgroundColor": "blue",
-                            "borderColor": "blue",
-                            "fill": false
-                        }]
-                },
                 "options": {
                     "responsive": true,
                     "title": {
