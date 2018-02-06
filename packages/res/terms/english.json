@@ -493,7 +493,8 @@
             },
             "defaultTerm": true,
             "term": "Behinat Shoresh",
-            "hebrew":"בחינת שורש"
+            "hebrew":"בחינת שורש",
+            "explanation":"Nature"
         },
         {
             "translation": "Phase One",
@@ -503,7 +504,8 @@
             },
             "defaultTerm": true,
             "term": "Behina Aleph",
-            "hebrew":"בחינה א׳"
+            "hebrew":"בחינה א׳",
+            "explanation":"Humanity"
         },
         {
             "translation": "Phase Two",
@@ -513,7 +515,8 @@
             },
             "defaultTerm": true,
             "term": "Behina Bet",
-            "hebrew":"בחינה ב׳"
+            "hebrew":"בחינה ב׳",
+            "explanation":"Society"
         },
         {
             "translation": "Phase Three",
@@ -523,7 +526,8 @@
             },
             "defaultTerm": true,
             "term": "Behina Gimel",
-            "hebrew":"בחינה ג׳"
+            "hebrew":"בחינה ג׳",
+            "explanation":"Group"
         },
         {
             "translation": "Phase Four",
@@ -533,7 +537,8 @@
             },
             "defaultTerm": true,
             "term": "Behina Dalet",
-            "hebrew":"בחינה ב׳"
+            "hebrew":"בחינה ב׳",
+            "explanation":"Individual"
         },
         {
             "translation": "Root Phase Coarseness",
@@ -670,7 +675,8 @@
         {
             "translation": "Reflected Light",
             "term": "Ohr Hozer",
-            "hebrew":"אור חוזר"
+            "hebrew":"אור חוזר",
+            "explanation":"Causality"
         },
         {
             "translation": "Direct Light of Judgement",
@@ -716,22 +722,26 @@
         {
             "translation": "Coarse",
             "term": "Av",
-            "hebrew":"עב"
+            "hebrew":"עב",
+            "explanation":"Egoistic"
         },
         {
             "translation": "Coarseness",
             "term": "Aviut",
-            "hebrew":"עביות"
+            "hebrew":"עביות",
+            "explanation":"Egoism"
         },
         {
             "translation": "Pure",
             "term": "Zach",
-            "hebrew":"זך"
+            "hebrew":"זך",
+            "explanation":"Altruistic"
         },
         {
             "translation": "Purity",
             "term": "Zachut",
-            "hebrew":"זכות"
+            "hebrew":"זכות",
+            "explanation":"Altruism"
         },
         {
             "translation": "Screen",
@@ -1590,12 +1600,14 @@
         {
             "translation": "Circle",
             "term": "Igul",
-            "hebrew":"עיגול"
+            "hebrew":"עיגול",
+            "explanation":"Equality"
         },
         {
             "translation": "Line",
             "term": "Kav",
-            "hebrew":"קו"
+            "hebrew":"קו",
+            "explanation":"Discrimination"
         },
         {
             "translation": "Infinity",
@@ -1610,12 +1622,14 @@
         {
             "translation": "Circles",
             "term": "Igulim",
-            "hebrew":"עיגולים"
+            "hebrew":"עיגולים",
+            "explanation":"Equalities"
         },
         {
             "translation": "Lines",
             "term": "Kavim",
-            "hebrew":"קווים"
+            "hebrew":"קווים",
+            "explanation":"Discriminations"
         },
         {
             "translation": "Root",
@@ -2621,7 +2635,8 @@
         {
             "translation": "Lines",
             "term": "Yosher",
-            "hebrew":"יושר"
+            "hebrew":"יושר",
+            "explanation":"Discriminations"
         },
         {
             "translation": "Pipes",
@@ -2715,12 +2730,14 @@
         {
             "translation": "Purity",
             "term": "Zakut",
-            "hebrew":"זכות"
+            "hebrew":"זכות",
+            "explanation":"Altruism"
         },
         {
             "translation": "Purity",
             "term": "Zakkut",
-            "hebrew":"זכות"
+            "hebrew":"זכות",
+            "explanation":"Altruism"
         },
         {
             "translation": "Lower Ones",

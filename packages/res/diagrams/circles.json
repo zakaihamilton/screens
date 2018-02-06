@@ -35,11 +35,11 @@
                             }
                         },
                         "ui.data.values": [
-                            ["1/10", "1/10", "Keter", "white"],
-                            ["2/9", "2/9", "Hochma", "#FFF3CA"],
-                            ["3/8", "3/8", "Bina", "#C8D9F9"],
-                            ["4/7", "4/7", "Tifferet", "#F5CCCB"],
-                            ["5/6", "5/6", "Malchut", "#D9EAD2"]
+                            ["1/10", "1/10", "Behinat Shoresh", "white"],
+                            ["2/9", "2/9", "Behina Aleph", "#FFF3CA"],
+                            ["3/8", "3/8", "Behina Bet", "#C8D9F9"],
+                            ["4/7", "4/7", "Behina Gimel", "#F5CCCB"],
+                            ["5/6", "5/6", "Behina Dalet", "#D9EAD2"]
                         ]
                     }
                 }
