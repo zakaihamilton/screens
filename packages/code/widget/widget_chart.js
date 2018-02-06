@@ -17,7 +17,7 @@ package.widget.chart = function WidgetChart(me) {
                 me.moment = moment;
                 me.chart = chart;
                 me.unlock(task);
-            }, ['/node_modules/moment/moment.js', '/node_modules/chart.js/dist/chart.bundle.js']);
+            }, ['/node_modules/moment/moment.js', '/node_modules/chart.js/dist/Chart.bundle.js']);
         });
     };
     me.context = {
