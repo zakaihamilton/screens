@@ -6,7 +6,7 @@
             "ui.style.position": "absolute",
             "ui.style.padding": "2px",
             "ui.style.left": "25%",
-            "ui.style.top": "15px",
+            "ui.style.top": "2em",
             "ui.style.width": "50%",
             "ui.style.height": "50%",
             "ui.style.gridAutoColumns": "auto",
@@ -30,8 +30,8 @@
                                 "borderRadius":"50%",
                                 "width": "100%",
                                 "height": "0",
-                                "paddingTop":"10px",
-                                "paddingBottom":"95%"
+                                "paddingTop":"0.5em",
+                                "paddingBottom":"100%"
                             }
                         },
                         "ui.data.values": [

@@ -2388,13 +2388,11 @@
             "hebrew":"הארת"
         },
         {
-            "prefix": "the",
             "translation": "Integration",
             "term": "Hitkalelut",
             "hebrew":"התכללות"
         },
         {
-            "prefix": "the",
             "translation": "Integration of Emanations",
             "term": "Hitkalelut Sefirot",
             "hebrew":"התכללות ספירות"
@@ -2625,7 +2623,7 @@
         {
             "translation": "Air",
             "term": "Avir",
-            "hebrew":"אוויר"
+            "hebrew":"אויר"
         },
         {
             "translation": "Extends",
