@@ -1,4 +1,4 @@
-function package_browse(path, optional=false) {
+function package_browse(path, optional) {
     var items = path.split(".");
     var item = package;
     for (var part_index = 0; part_index < items.length; part_index++) {
