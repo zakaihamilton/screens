@@ -11,7 +11,7 @@ package.ui.touch = function UITouch(me) {
         me.send_event = me.ui.event.send_event;
         me.register = me.ui.event.register;
         if (window.PointerEvent) {
-            console.log("using pointer events");
+            me.core.console.log("using pointer events");
             me.eventNames = {
                 down:"pointerdown",
                 enter:"pointerenter",
@@ -24,7 +24,7 @@ package.ui.touch = function UITouch(me) {
             };
         }
         else {
-            console.log("no pointer events support");
+            me.core.console.log("no pointer events support");
             me.eventNames = {
                 down:"mousedown",
                 enter:"mouseenter",

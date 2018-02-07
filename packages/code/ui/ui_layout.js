@@ -450,12 +450,10 @@ package.ui.layout = function UILayout(me) {
                 var pageNumber = me.core.property.get(child, "ui.attribute.pageNumber");
                 if(pageInView !== child.inView) {
                     if(pageInView) {
-                        console.log("showing page: " + pageNumber);
                         child.var.content.style.display = "";
                         child.style.visibility = "visible";
                     }
                     else {
-                        console.log("hiding page: " + pageNumber);
                         child.var.content.style.display = "none";
                         child.style.visibility = "hidden";
                     }

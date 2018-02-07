@@ -12,12 +12,10 @@ package.core.type = function CoreType(me) {
         else {
             result = JSON.stringify({type:typeof unwrapped_data,value:JSON.stringify(unwrapped_data)});
         }
-        console.log("wrapping: " + result);
         return result;
     };
     me.unwrap = function(wrapped_data) {
         if(wrapped_data) {
-            console.log("unwrap: " + wrapped_data);
             wrapped_data = JSON.parse(wrapped_data);
             if(wrapped_data.value !== undefined) {
                 var unwrapped_data = JSON.parse(wrapped_data.value);

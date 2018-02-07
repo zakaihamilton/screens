@@ -142,7 +142,6 @@ package.core.message = function CoreMessage(me) {
                 info.response = me.core.type.unwrap_args(info.response);
             }
             var infoCallback = me.core.handle.pop(info.callback);
-            console.log("responding with: " + JSON.stringify(info) + " callback: " + callback);
             if (infoCallback) {
                 infoCallback.apply(null, info.response);
             }
@@ -160,7 +159,6 @@ package.core.message = function CoreMessage(me) {
                 info.params = null;
                 info.response = args;
                 info.callback = responseCallback;
-                console.log("responding with: " + JSON.stringify(info) + " callback: " + callback);
                 if(remote) {
                     info.response = me.core.type.wrap_args(info.response);
                 }
