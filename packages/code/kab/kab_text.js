@@ -29,7 +29,7 @@ package.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
-    me.parseSingle = function (session, wordsString, depth) {
+    me.parseSingle = function (session, parentInstance, wordsString) {
         var prefix = session.json.prefix;
         var suffix = session.json.suffix;
         var ignore = session.json.ignore;
@@ -141,7 +141,7 @@ package.kab.text = function KabText(me) {
                     var instance = {
                         item: item,
                         session: session,
-                        depth: depth,
+                        parent: parentInstance,
                         source: me.core.string.middleLetters(collectedWords, match),
                         target: item.source ? item.source : term,
                         upperCase: upperCase,
@@ -176,7 +176,7 @@ package.kab.text = function KabText(me) {
             wordsString = me.splitWords(session, wordsString);
             session.text = wordsString;
             if (session.terms) {
-                wordsString = me.parseSingle(session, wordsString, 0);
+                wordsString = me.parseSingle(session, null, wordsString);
             }
             wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
             callback(wordsString, me.kab.search.terms, json.data);
@@ -222,25 +222,28 @@ package.kab.text = function KabText(me) {
         }
         if (expansion) {
             if (Array.isArray(expansion)) {
-                expansion = expansion.map(function (text) {
+                expansion = expansion.map(function (text, index) {
+                    if(index === expansion.length - 1 && expansion.length > 1) {
+                        text = lastExpansion + text;
+                    }
                     if (!text.includes(instance.target)) {
-                        text = parseSingle(session, text, instance.depth + 1);
+                        text = parseSingle(session, instance, text);
                     }
                     return text;
                 });
                 if (expansion.length > 1) {
-                    expansion = expansion.slice(0, -1).join(", ") + lastExpansion + expansion.slice(-1).toString();
+                    expansion = expansion.slice(0, -1).join(", ") + expansion.slice(-1).toString();
                 } else {
                     expansion = expansion.slice(-1).toString();
                 }
             } else {
-                expansion = parseSingle(session, expansion, instance.depth + 1);
+                expansion = parseSingle(session, instance, expansion);
             }
             modify(session, instance, " (", expansion, null, ")", true, session.options.keepSource);
         } else if (translation || explanation) {
             if (translation) {
                 if (!instance.item.fixed && translation !== instance.target) {
-                    translation = parseSingle(session, translation, instance.depth + 1);
+                    translation = parseSingle(session, instance, translation);
                 }
             }
             me.kab.search.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
@@ -295,14 +298,22 @@ package.kab.text = function KabText(me) {
             replacement = term + prefix + replacement + suffix;
         }
         me.kab.format.replaceDuplicate(session, instance, replacement);
+        var prefixLetters = instance.prefixLetters;
+        if(!prefixLetters && instance.parent) {
+            prefixLetters = instance.prefixLetters = instance.parent.prefixLetters;
+            instance.parent.prefixLetters = null;
+        }
         var text = replacement;
         var replacementWithStyles = replacement;
         if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
+        else {
+            replacementWithStyles = prefixLetters + replacementWithStyles;
+        }
         var insert = replacementWithStyles;
-        if(instance.prefixLetters || instance.suffixLetters) {
-            insert = "<span style=\"white-space: nowrap\">" + instance.prefixLetters + replacementWithStyles + instance.suffixLetters + "</span>";
+        if(instance.suffixLetters) {
+            insert = "<span style=\"white-space: nowrap\">" + replacementWithStyles + instance.suffixLetters + "</span>";
         }
         instance.words.splice(instance.wordIndex, 0, insert);
         if (!instance.item.includePrefix) {

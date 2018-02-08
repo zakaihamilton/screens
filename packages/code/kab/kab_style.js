@@ -133,6 +133,9 @@ package.kab.style = function KabStyle(me) {
                 }
             }
         }
+        if(instance.prefixLetters) {
+           html += instance.prefixLetters; 
+        }
         html += replacement;
         if (phase) {
             html += "</span>";

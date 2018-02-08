@@ -4317,9 +4317,25 @@
             "defaultTerm": true,
             "style": {
                 "heading": "אור",
-                "phase": "two"
+                "phase": "root"
             },
             "term": "חסדים"
+        },
+        {
+            "defaultTerm": true,
+            "style": {
+                "heading": "אור",
+                "phase": "one"
+            },
+            "term": "אור החכמה"
+        },
+        {
+            "defaultTerm": true,
+            "style": {
+                "heading": "אור",
+                "phase": "root"
+            },
+            "term": "אור החסדים"
         },
         {
             "defaultTerm": true,

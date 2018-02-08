@@ -118,7 +118,7 @@ package.kab.format = function KabFormat(me) {
                 if (next === ")" || next === "]") {
                     var addStyles = session.options.addStyles;
                     session.options.addStyles = false;
-                    duplicate = me.kab.text.parseSingle(session, duplicate, instance.depth + 1);
+                    duplicate = me.kab.text.parseSingle(session, instance, duplicate, instance.depth + 1);
                     duplicate = duplicate.replace(/“/g, "");
                     duplicate = duplicate.replace(/”/g, "");
                     duplicate = duplicate.toLowerCase();
