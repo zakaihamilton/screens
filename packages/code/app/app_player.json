@@ -62,7 +62,7 @@
             "ui.property.style":{
                 "left":"10px",
                 "top":"80px",
-                "width":"60%",
+                "width":"90%",
                 "position":"absolute"
             },
             "ui.element.count": 0,
