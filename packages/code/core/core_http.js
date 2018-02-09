@@ -6,37 +6,70 @@
 package.core.http = function CoreHttp(me) {
     if (package.platform === "server") {
         me.port = process.env.PORT || 4040;
-    }
-    else if (package.platform === "service") {
+    } else if (package.platform === "service") {
         me.port = 4050;
     } else {
         me.port = 80;
     }
     me.listeners = [];
-    me.init = function () {
+    me.init = function (task) {
         if (me.platform === "server" || me.platform === "service") {
-            me.http = require("http");
-            me.server = me.http.createServer(function (request, response) {
-                var body = [];
-                request.on('error', function (err) {
-                    console.error(err);
-                }).on('data', function (chunk) {
-                    body.push(chunk);
-                }).on('end', function () {
-                    if (request.url.includes("private")) {
-                        response.writeHead(200);
-                        response.end("cannot load private files remotely");
-                    } else {
-                        me.handleRequest(request, response, body);
-                    }
+            me.lock(task, (task) => {
+                me.createServer((server) => {
+                    server.listen(me.port, function (err) {
+                        if (err) {
+                            return me.core.console.log("something bad happened", err);
+                        }
+                        me.core.console.log("server is listening on " + me.core.http.port);
+                        me.unlock(task);
+                    });
+                }, function (request, response) {
+                    var body = [];
+                    request.on('error', function (err) {
+                        console.error(err);
+                    }).on('data', function (chunk) {
+                        body.push(chunk);
+                    }).on('end', function () {
+                        if (request.url.includes("private")) {
+                            response.writeHead(200);
+                            response.end("cannot load private files remotely");
+                        } else {
+                            me.handleRequest(request, response, body);
+                        }
+                    });
                 });
             });
-            me.server.listen(me.port, function (err) {
-                if (err) {
-                    return me.core.console.log("something bad happened", err);
+        }
+    };
+    me.createServer = function (callback, requestHandler) {
+        var service = null;
+        var useSecure = false;
+        me.https = require("https");
+        if (me.platform === "server") {
+            me.core.private.keys((keys) => {
+                if(keys && keys.key && keys.cert) {
+                    var options = {
+                        key: keys.key.join("\n"),
+                        cert: keys.cert.join("\n")
+                    };
+                    me.core.console.log("using https");
+                    var https = require("https");
+                    service = https.createServer(options, requestHandler);
+                    callback(service);
                 }
-                me.core.console.log("server is listening on " + me.core.http.port);
-            });
+                else {
+                    me.core.console.log("using http");
+                    var http = require("http");
+                    service = http.createServer(requestHandler);
+                    callback(service);
+                }
+            }, "https");
+        }
+        else {
+            me.core.console.log("using http");
+            var http = require("http");
+            service = http.createServer(requestHandler);
+            callback(service);
         }
     };
     me.handleRequest = function (request, response, body) {
@@ -101,10 +134,9 @@ package.core.http = function CoreHttp(me) {
         var headers = Object.assign({}, info.headers);
         me.core.object.attach(info, me);
         me.core.property.set(info, "headers", headers);
-        if(me.platform === "service") {
+        if (me.platform === "service") {
             me.core.message.send_server(me.id + ".send", callback, info, async);
-        }
-        else if (me.platform === "server") {
+        } else if (me.platform === "server") {
             var request = {
                 url: info.url,
                 headers: headers,

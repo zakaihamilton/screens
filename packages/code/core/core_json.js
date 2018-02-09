@@ -19,10 +19,13 @@ package.core.json = function CoreJson(me) {
             callback(me.files[path]);
         }
         else {
-            var parse = function(info) {
+            if(path) {
+                path = path.substring(1);
+            }
+            me.core.file.readFile(function(err, data) {
                 var json = {};
-                if(info.response) {
-                    json = JSON.parse(info.response);
+                if(data) {
+                    json = JSON.parse(data);
                 }
                 if(useCache) {
                     me.files[path] = json;
@@ -30,13 +33,7 @@ package.core.json = function CoreJson(me) {
                 if(callback) {
                     callback(json);
                 }
-            };
-            var info = {
-                method:"get",
-                url:path,
-                mimeType:"application/json"
-            };
-            me.core.http.send(parse, info);
+            }, path, 'utf8');
         }
     };
     me.log = function(json) {

@@ -8,6 +8,7 @@ package.include({
         "type",
         "ref",
         "http",
+        "file",
         "handle",
         "json",
         "string",

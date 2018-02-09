@@ -252,7 +252,7 @@ function package_init(name, callback, task) {
         callback(task);
     }
     catch(err) {
-        console.error("Failed to initialise component: " + name + " with error: " + err);
+        console.error("Failed to initialise component: " + name + " with error: " + err.message + " stack: " + err.stack);
     }
 }
 
