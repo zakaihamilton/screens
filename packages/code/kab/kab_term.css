@@ -35,8 +35,8 @@
     position: absolute;
     line-height:1em;
     padding-bottom: 1px;
-    padding-left:3px;
-    padding-right:3px;
+    padding-left:10px;
+    padding-right:10px;
     content: attr(kab-term-tooltip);
     text-align:center;
     white-space: pre;
