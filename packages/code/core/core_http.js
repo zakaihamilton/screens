@@ -43,9 +43,9 @@ package.core.http = function CoreHttp(me) {
     };
     me.createServer = function (callback, requestHandler) {
         var service = null;
-        var useSecure = false;
         me.https = require("https");
         if (me.platform === "server") {
+            var useSecure = true;
             me.core.private.keys((keys) => {
                 if(keys && keys.key && keys.cert) {
                     var options = {
@@ -54,10 +54,19 @@ package.core.http = function CoreHttp(me) {
                     };
                     me.core.console.log("using https");
                     var https = require("https");
-                    service = https.createServer(options, requestHandler);
-                    callback(service);
+                    try {
+                        service = https.createServer(options, requestHandler);
+                        callback(service);
+                    }
+                    catch(e) {
+                        me.core.console.error("Cannot create secure server, error: " + e.message);
+                        useSecure = false;
+                    }
                 }
                 else {
+                    useSecure = false;
+                }
+                if(!useSecure) {
                     me.core.console.log("using http");
                     var http = require("http");
                     service = http.createServer(requestHandler);
