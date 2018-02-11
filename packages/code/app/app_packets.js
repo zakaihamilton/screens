@@ -56,8 +56,23 @@ package.app.packets = function AppPackets(me) {
                 var targets = window.packetInfo.packets[sourceIp];
                 for (var targetIp in targets) {
                     var target = targets[targetIp];
+                    var label = "";
+                    if(target.sourceIsService) {
+                        label = "service";
+                    }
+                    else {
+                        label = "device";
+                    }
+                    label += "(" + sourceIp + ") => ";
+                    if(target.targetIsService) {
+                        label += "service";
+                    }
+                    else {
+                        label += "device";
+                    }
+                    label += "(" + targetIp + ")";
                     var dataset = {
-                        label: sourceIp + " -> " + targetIp,
+                        label: label,
                         backgroundColor: colors[colorIndex],
                         borderColor: colors[colorIndex],
                         fill: false,

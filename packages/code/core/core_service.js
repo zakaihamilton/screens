@@ -23,6 +23,7 @@ package.core.service = function CoreService(me) {
                             }
                         });
                         socket.on("method", (info) => {
+                            info.clientIp = socket.request.connection.remoteAddress;
                             me.core.message.handleLocal((response) => {
                                 socket.emit("method", response);
                             }, info, true);

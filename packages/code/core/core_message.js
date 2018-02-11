@@ -23,14 +23,12 @@ package.core.message = function CoreMessage(me) {
     };
     me.send_server = function (path, callback, params) {
         if (me.platform === "service") {
-            var ip = require("ip");
             var args = Array.prototype.slice.call(arguments, 1);
             args[0] = null;
             var info = {
                 path: path,
                 params: me.core.type.wrap_args(args),
-                callback: me.core.handle.push(callback),
-                clientIp: ip.address()
+                callback: me.core.handle.push(callback)
             };
             me.core.service.client.emit("method", info);
         }
@@ -180,6 +178,6 @@ package.core.message = function CoreMessage(me) {
                 callback(info);
             };
         }
-        me.send.apply(null, args);
+        me.send.apply(info, args);
     };
 };
