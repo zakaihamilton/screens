@@ -19,7 +19,7 @@ package.core.json = function CoreJson(me) {
             callback(me.files[path]);
         }
         else {
-            if(path) {
+            if(path && path.startsWith("/")) {
                 path = path.substring(1);
             }
             me.core.file.readFile(function(err, data) {

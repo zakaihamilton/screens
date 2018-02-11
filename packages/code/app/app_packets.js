@@ -61,7 +61,6 @@ package.app.packets = function AppPackets(me) {
                         backgroundColor: colors[colorIndex],
                         borderColor: colors[colorIndex],
                         fill: false,
-                        lineTension: 0,
                         data: []
                     };
                     colorIndex++;
@@ -73,6 +72,7 @@ package.app.packets = function AppPackets(me) {
                             y: item.len / 1000
                         });
                     }
+                    dataset.data.pop();
                 }
                 data.datasets.push(dataset);
             }

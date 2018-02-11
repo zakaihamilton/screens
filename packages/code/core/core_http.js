@@ -26,7 +26,7 @@ package.core.http = function CoreHttp(me) {
                 }, function (request, response) {
                     var body = [];
                     request.on('error', function (err) {
-                        console.error(err);
+                        console.error("found http error: " + err);
                     }).on('data', function (chunk) {
                         body.push(chunk);
                     }).on('end', function () {
@@ -81,6 +81,31 @@ package.core.http = function CoreHttp(me) {
             callback(service);
         }
     };
+    me.clientIp = function(request) {
+        var ip = null;
+        if(request) {
+            ip = request.headers['x-forwarded-for'];
+            if(ip) {
+                ip = request.headers['x-forwarded-for'].split(',').pop();
+            }
+            if(!ip) {
+                if(request.connection) {
+                    ip = request.connection.remoteAddress;
+                    if(!ip) {
+                        if(request.connection.socket) {
+                            ip = request.connection.socket.remoteAddress;
+                        }
+                    }
+                }
+            }
+            if(!ip) {
+                if(request.socket) {
+                    ip = request.socket.remoteAddress;
+                }
+            }
+        }
+        return ip;
+    };
     me.handleRequest = function (request, response, body) {
         if (body) {
             body = Buffer.concat(body).toString();
@@ -93,10 +118,6 @@ package.core.http = function CoreHttp(me) {
                 url = request.url.substring(0, query_offset);
                 query = request.url.substring(query_offset + 1);
             }
-            var ip = request && ((request.headers['x-forwarded-for'] && request.headers['x-forwarded-for'].split(',').pop()) ||
-                    (request.connection && request.connection.remoteAddress) ||
-                    (request.socket && request.socket.remoteAddress) ||
-                    (request.connection && request.connection.socket && request.connection.socket.remoteAddress));
             var info = {
                 method: request.method,
                 url: decodeURIComponent(url),
@@ -109,7 +130,7 @@ package.core.http = function CoreHttp(me) {
                 response: response,
                 custom: false,
                 check: true,
-                ip: ip
+                clientIp: me.clientIp(request)
             };
             me.core.object.attach(info, me);
             me.core.property.set(info, "check");

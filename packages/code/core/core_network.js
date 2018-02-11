@@ -8,8 +8,8 @@ package.require("core.network", "server");
 package.core.network = function CoreNetwork(me) {
     me.ipAddress = function(callback) {
         var ip = null;
-        if(this && this.ip) {
-            ip = this.ip;
+        if(this && this.clientIp) {
+            ip = this.clientIp;
         }
         callback(ip);
     };

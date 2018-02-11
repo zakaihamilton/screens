@@ -45,6 +45,7 @@ package.manager.packet = function ManagerPacket(me) {
             item.len += packet_len;
             item.end = packet_sec;
         }
+        callback();
     };
     me.info = function(callback) {
         callback(me.packetInfo);
@@ -65,7 +66,9 @@ package.manager.packet = function ManagerPacket(me) {
             count--;
             console.log("recieved from a device, " + count + " devices left");
             if(!count) {
-                console.dir("errors: " + errors);
+                if(errors) {
+                    me.core.console.error("errors: " + errors);
+                }
                 callback.apply(null, errors);
             }
         }, packetLoss);
