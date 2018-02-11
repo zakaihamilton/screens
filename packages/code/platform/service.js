@@ -8,6 +8,7 @@ package.include({
         "message",
         "test",
         "type",
+        "file",
         "ref",
         "http",
         "handle",

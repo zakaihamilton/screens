@@ -132,6 +132,7 @@
         "Midatha":"Midat ha",
         "Yomincovered":"Yomin covered",
         "Taamimof":"Taamim of",
+        "Eser de Sefirot":"Eser Sefirot",
         "<title>":"<br>\n<h4 style=\"text-align:center\">",
         "</title>":"</h4>"
     },
@@ -1398,7 +1399,8 @@
                 "phase": "root"
             },
             "term": "Olam Adam Kadmon",
-            "hebrew":"עולם אדם קדמון"
+            "hebrew":"עולם אדם קדמון",
+            "explanation":"World of Attitude"
         },
         {
             "prefix": "the",
@@ -1408,7 +1410,8 @@
                 "phase": "root"
             },
             "term": "Olam Akudim",
-            "hebrew":"עולם העקודים"
+            "hebrew":"עולם העקודים",
+            "explanation":"World of Attitude"
         },
         {
             "prefix": "the",
@@ -1418,7 +1421,8 @@
                 "phase": "one"
             },
             "term": "Olam Atzilut",
-            "hebrew":"עולם אצילות"
+            "hebrew":"עולם אצילות",
+            "explanation":"World of Control"
         },
         {
             "prefix": "the",
@@ -1428,7 +1432,8 @@
                 "phase": "two"
             },
             "term": "Olam Beria",
-            "hebrew":"עולם בריאה"
+            "hebrew":"עולם בריאה",
+            "explanation":"World of Affinity"
         },
         {
             "prefix": "the",
@@ -1438,6 +1443,7 @@
                 "phase": "three"
             },
             "term": "Olam Yetzira",
+            "explanation":"World of Communication",
             "hebrew":"עולם יצירה"
         },
         {
@@ -1448,6 +1454,7 @@
                 "phase": "four"
             },
             "term": "Olam Assiya",
+            "explanation":"World of Agreement",
             "hebrew":"עולם עשייה"
         },
         {
