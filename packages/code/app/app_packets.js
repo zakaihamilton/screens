@@ -7,36 +7,104 @@ package.app.packets = function AppPackets(me) {
     me.launch = function (args) {
         return me.ui.element.create(__json__, "workspace", "self");
     };
-    me.init = function () {
+    me.init = function (task) {
         me.ui.options.load(me, null, {
             "autoRefresh": true,
-            "packetLoss":"None"
+            "packetLoss":"None",
+            "dataProfile":"Live"
         });
-        me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refresh.set);
+        me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
+        me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", me.refreshData.set);
         me.packetLoss = me.ui.options.choiceSet(me, "packetLoss", me.affect.set);
+        me.lock(task, (task) => {
+            me.storage.data.query((err, items) => {
+                me.core.console.error(err);
+                me.dataList = items;
+                me.unlock(task);
+            }, "app.packets.data", "date");
+        });
     };
-    me.refresh = {
+    me.refreshDataList = {
+        set: function (object) {
+            me.storage.data.query((err, items) => {
+                me.core.console.error(err);
+                me.dataList = items;
+            }, "app.packets.data", "date");
+        }
+    };
+    me.dataMenuList = {
+        get: function (object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = JSON.stringify(window.packetInfo);
+            var dataList = me.dataList;
+            if (!dataList) {
+                dataList = [];
+            }
+            var items = dataList.map(function (item) {
+                var packetInfo = me.core.string.decode(item.packetInfo);
+                var result = [
+                    item.title,
+                    function () {
+                        window.packetInfo = JSON.parse(packetInfo);
+                        me.core.property.set(window, "app.packets.dataProfile", item.title);
+                    },
+                    {
+                        "state": function () {
+                            return me.core.property.get(window, "app.packets.dataProfile", item.title);
+                        }
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+    };
+    me.refreshData = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            if (me.options.autoRefresh) {
-                setTimeout(() => {
-                    me.core.property.set(window, "app.packets.refresh");
-                }, 5000);
-            }
+            var autoRefresh = me.options.autoRefresh;
             me.manager.packet.info((info) => {
-                me.core.property.set(window.var.packetCount, "ui.basic.text", info.packetCount);
-                me.core.property.set(window.var.dataSize, "ui.basic.text", info.dataSize);
-                window.packetInfo = info;
+                if(me.options.dataProfile === "Live") {
+                    window.packetInfo = info;
+                }
+                else if(me.dataList) {
+                    var item = me.dataList.find((item) => {
+                        return item.title === me.options.dataProfile;
+                    });
+                    if(item) {
+                        window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                    }
+                    autoRefresh = false;
+                }
+                me.core.property.set(window, "app.packets.updateData");
+                if (autoRefresh) {
+                    setTimeout(() => {
+                        me.core.property.set(window, "app.packets.refreshData");
+                    }, 5000);
+                }
+            });
+        }
+    };
+    me.updateData = {
+        set: function(object) {
+            var window = me.widget.window.window(object);
+            var packetCount = 0;
+            var dataSize = 0;
+            if(window.packetInfo) {
+                packetCount = window.packetInfo.packetCount;
+                dataSize = window.packetInfo.dataSize;
+                me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
+                me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {"duration": 0});
-            });
+            }
         }
     };
     me.reset = {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.manager.packet.reset(() => {
-                me.core.property.notify(window, "app.packets.refresh");
+                me.core.property.notify(window, "app.packets.refreshData");
             });
         }
     };
@@ -105,6 +173,31 @@ package.app.packets = function AppPackets(me) {
                     alert("Cannot set packet loss: " + err.message);
                 }
             }, packetLoss);
+        }
+    };
+    me.save = {
+        get: function (object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = JSON.stringify(window.packetInfo);
+            return text;
+        },
+        set: function (object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = JSON.stringify(window.packetInfo);
+            var date = new Date();
+            var title = date.toLocaleDateString();
+            var data = {
+                packetInfo: me.core.string.encode(text),
+                date: date.toString(),
+                title: title
+            };
+            me.storage.data.save(err => {
+                if (err) {
+                    me.core.console.error("Cannot save data: " + err.message);
+                } else {
+                    me.refreshDataList.set(object);
+                }
+            }, data, "app.packets.data", title, ["packetInfo"]);
         }
     };
 };

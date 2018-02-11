@@ -141,6 +141,9 @@ package.core.message = function CoreMessage(me) {
     };
     me.handleRemote = function (info) {
         info.response = me.core.type.unwrap_args(info.response);
+        if(!info.response) {
+            info.response = [];
+        }
         if (info.altCallback) {
             info.altCallback.apply(null, info.response);
         }

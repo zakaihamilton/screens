@@ -8,7 +8,7 @@
     },
     "widget.menu.items": [
         ["Options", [
-                ["Refresh", "app.packets.refresh"],
+                ["Refresh", "app.packets.refreshData"],
                 ["Auto Refresh", "app.packets.autoRefresh", {
                         "state": "select"
                     }
@@ -34,6 +34,20 @@
                         "state": "select"
                     }
                 ]
+            ]
+        ],
+        ["Data", [
+                ["Refresh", "app.packets.refreshDataList"],
+                ["Live", "app.packets.dataProfile", {
+                        "state":"select",
+                        "separator": true
+                    }
+                ],
+                "app.packets.dataMenuList",
+                ["Save", "app.packets.save", {
+                        "enabled": "select",
+                        "separator": true
+                    }]
             ]
         ]
     ],
@@ -108,7 +122,7 @@
             }
         }
     ],
-    "app.packets.refresh": null,
+    "app.packets.refreshData": null,
     "app.packets.affect": null,
     "ui.property.after": {
         "storage.cache.key": "app-packets-window",
