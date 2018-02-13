@@ -177,16 +177,15 @@ package.app.packets = function AppPackets(me) {
             if(packetDelay === "None") {
                 packetDelay = "";
             }
-            me.manager.packet.setPacketLoss((err) => {
+            var params = {
+                packetDelay:packetDelay,
+                packetLoss:packetLoss
+            };
+            me.manager.packet.affect((err) => {
                 if(err) {
                     alert("Cannot set packet loss: " + err.message);
                 }
-            }, packetLoss);
-            me.manager.packet.setPacketDelay((err) => {
-                if(err) {
-                    alert("Cannot set packet loss: " + err.message);
-                }
-            }, packetDelay);
+            }, params);
         }
     };
     me.save = {
