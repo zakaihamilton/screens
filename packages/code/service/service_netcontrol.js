@@ -45,7 +45,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
                             flow.check(!stderr, "failed with stderr: " + stderr);
                             me.core.console.log("set command output: " + data);
                         }, () => {
-                            me.core.console.log("completed sending: " + JSON.stringify(info));
+                            me.core.console.log("completed sending: " + JSON.stringify(info) + " after sending: " + flow.waitCount + " commands");
                             flow.end();
                         });
                     }
