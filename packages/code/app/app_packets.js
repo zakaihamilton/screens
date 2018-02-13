@@ -109,7 +109,7 @@ package.app.packets = function AppPackets(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.manager.packet.reset(() => {
-                me.core.property.notify(window, "app.packets.refreshData");
+                me.core.property.set(window, "app.packets.dataProfile", "Live");
             });
         }
     };
