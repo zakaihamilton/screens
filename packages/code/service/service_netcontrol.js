@@ -40,6 +40,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
                             flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + info.packetLoss, flow.callback);
                         }
                         flow.wait((err, data, stderr) => {
+                            me.core.console.log("finished a command");
                             flow.error(err, "failed to set command:" + device);
                             flow.check(!stderr, "failed with stderr: " + stderr);
                             me.core.console.log("set command output: " + data);
