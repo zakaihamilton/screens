@@ -15,17 +15,24 @@ package.core.flow = function CoreFlow(me) {
             code:me.code,
             end:me.end,
             wait:me.wait,
+            waitAll:me.waitAll,
             isRunning:true,
             isWaiting:false,
             asyncQueue:[],
-            response:null,
+            waitCount:0,
+            responseCallback:null,
+            completeCallback:null,
             endCallback:endCallback
         };
         flow.callback = function(args) {
             if(flow.isRunning) {
                 var args = Array.prototype.slice.call(arguments, 0);
-                if(flow.response) {
-                    flow.response.apply(flow, args);
+                if(flow.responseCallback) {
+                    flow.responseCallback.apply(flow, args);
+                }
+                flow.waitCount--;
+                if(!flow.waitCount && flow.completeCallback) {
+                    flow.completeCallback(flow);
                 }
             }
         };
@@ -56,15 +63,17 @@ package.core.flow = function CoreFlow(me) {
             }
         }
     };
-    me.wait = function(responseCallback) {
+    me.wait = function(responseCallback, completeCallback) {
         if(this.isRunning) {
-            this.response = responseCallback;
+            this.responseCallback = responseCallback;
+            this.completeCallback = completeCallback;
             var queue = this.asyncQueue;
             this.asyncQueue = [];
             if(queue.length) {
                 queue.map((call) => {
                     call.method.apply(this, call.args);
                 });
+                this.waitCount = queue.length;
             }
         }
     };

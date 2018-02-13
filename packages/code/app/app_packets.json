@@ -33,13 +33,35 @@
                 ["50%", "app.packets.packetLoss", {
                         "state": "select"
                     }
+                ],
+                ["Packet Delay", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                ["None", "app.packets.packetDelay", {
+                        "state": "select"
+                    }
+                ],
+                ["100ms", "app.packets.packetDelay", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                ["250ms", "app.packets.packetDelay", {
+                        "state": "select"
+                    }
+                ],
+                ["500ms", "app.packets.packetDelay", {
+                        "state": "select"
+                    }
                 ]
             ]
         ],
         ["Data", [
                 ["Refresh", "app.packets.refreshDataList"],
                 ["Live", "app.packets.dataProfile", {
-                        "state":"select",
+                        "state": "select",
                         "separator": true
                     }
                 ],
@@ -53,38 +75,83 @@
     ],
     "ui.basic.elements": [
         {
-            "ui.basic.text": "Packet Count",
+            "ui.basic.tag": "div",
             "ui.property.style": {
-                "paddingTop": "10px"
-            }
-        },
-        {
-            "ui.basic.text": "",
-            "ui.basic.readOnly": true,
-            "ui.property.style": {
-                "width": "200px"
+                "display": "flex",
+                "margin": "10px",
+                "flexWrap": "wrap",
+                "alignItems": "flex-start"
             },
-            "ui.basic.type": "text",
-            "ui.basic.var": "packetCount"
-        },
-        {
-            "ui.basic.text": "Data Size",
-            "ui.property.style": {
-                "paddingTop": "10px"
-            }
-        },
-        {
-            "ui.basic.text": "",
-            "ui.basic.readOnly": true,
-            "ui.property.style": {
-                "width": "200px"
-            },
-            "ui.basic.type": "text",
-            "ui.basic.var": "dataSize"
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Title",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "title",
+                            "ui.property.after": {
+                                "storage.cache.key": "@ui.cachekey.app-packets-input-",
+                                "storage.cache.restore": "ui.basic.text"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Packet Count",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "300px",
+                                "display": "inline-block"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "packetCount"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Data Size",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "dataSize"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "ui.element.component": "widget.chart",
-            "ui.basic.var":"chart",
+            "ui.basic.var": "chart",
             "ui.style.width": "80%",
             "data": "@app.packets.data",
             "info": {
@@ -97,26 +164,26 @@
                     },
                     "scales": {
                         "xAxes": [{
-                            "type": "time",
-                            "display": true,
-                            "scaleLabel": {
+                                "type": "time",
                                 "display": true,
-                                "labelString": "Time"
-                            },
-                            "ticks": {
-                                "major": {
-                                    "fontStyle": "bold",
-                                    "fontColor": "#FF0000"
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Time"
+                                },
+                                "ticks": {
+                                    "major": {
+                                        "fontStyle": "bold",
+                                        "fontColor": "#FF0000"
+                                    }
                                 }
-                            }
-                        }],
+                            }],
                         "yAxes": [{
-                            "display": true,
-                            "scaleLabel": {
                                 "display": true,
-                                "labelString": "Bytes [KB]"
-                            }
-                        }]
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Bytes [KB]"
+                                }
+                            }]
                     }
                 }
             }

@@ -100,13 +100,30 @@ package.core.service = function CoreService(me) {
             callback(response);
         });
     };
-    me.sendAll = function (path, callback, params) {
+    me.sendAll = function (path, callback, param) {
+        var errors = null;
         var args = Array.prototype.slice.call(arguments);
         var count = 0;
+        args[1] = (err) => {
+            if (err) {
+                if (!errors) {
+                    errors = [];
+                }
+                errors.push(err);
+            }
+            count--;
+            me.core.console.log("recieved from a device, " + count + " devices left");
+            if (!count) {
+                if (errors) {
+                    me.core.console.error("errors: " + errors);
+                }
+                callback.apply(null, errors);
+            }
+        };
         me.clients.forEach((info, socket) => {
             me.core.message.send_service.apply(socket, args);
             count++;
         });
-        return count;
+        me.core.console.log("sent " + path + " with param '" + param + "' to " + count + " devices");
     };
 };
