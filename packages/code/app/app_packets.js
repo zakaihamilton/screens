@@ -5,13 +5,14 @@
 
 package.app.packets = function AppPackets(me) {
     me.launch = function (args) {
-        return me.ui.element.create(__json__, "workspace", "self");
+        var window = me.ui.element.create(__json__, "workspace", "self");
+        me.core.property.set(window.var.title, "ui.basic.text", me.options.dataProfile);
     };
     me.init = function (task) {
         me.ui.options.load(me, null, {
             "autoRefresh": true,
-            "packetLoss":"None",
-            "dataProfile":"Live"
+            "packetLoss": "None",
+            "dataProfile": "Live"
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
@@ -69,14 +70,13 @@ package.app.packets = function AppPackets(me) {
             var window = me.widget.window.window(object);
             var autoRefresh = me.options.autoRefresh;
             me.manager.packet.info((info) => {
-                if(me.options.dataProfile === "Live") {
+                if (me.options.dataProfile === "Live") {
                     window.packetInfo = info;
-                }
-                else if(me.dataList) {
+                } else if (me.dataList) {
                     var item = me.dataList.find((item) => {
                         return item.title === me.options.dataProfile;
                     });
-                    if(item) {
+                    if (item) {
                         window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
                     }
                     autoRefresh = false;
@@ -91,18 +91,20 @@ package.app.packets = function AppPackets(me) {
         }
     };
     me.updateData = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var packetCount = 0;
             var dataSize = 0;
-            if(window.packetInfo) {
+            if (window.packetInfo) {
                 packetCount = window.packetInfo.packetCount;
                 dataSize = window.packetInfo.dataSize;
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
-                me.core.property.notify(window.var.chart, "update", {"duration": 0});
-            }
+                me.core.property.notify(window.var.chart, "update", {
+                    "duration": 0
+                }); 
+           }
         }
     };
     me.reset = {
@@ -130,17 +132,15 @@ package.app.packets = function AppPackets(me) {
                 for (var targetIp in targets) {
                     var target = targets[targetIp];
                     var label = "";
-                    if(target.sourceIsService) {
+                    if (target.sourceIsService) {
                         label = "service";
-                    }
-                    else {
+                    } else {
                         label = "device";
                     }
                     label += "(" + sourceIp + ") => ";
-                    if(target.targetIsService) {
+                    if (target.targetIsService) {
                         label += "service";
-                    }
-                    else {
+                    } else {
                         label += "device";
                     }
                     label += "(" + targetIp + ")";
@@ -168,21 +168,21 @@ package.app.packets = function AppPackets(me) {
         }
     };
     me.affect = {
-        set: function(object) {
+        set: function (object) {
             var packetLoss = me.options.packetLoss;
-            if(packetLoss === "None") {
+            if (packetLoss === "None") {
                 packetLoss = "";
             }
             var packetDelay = me.options.packetDelay;
-            if(packetDelay === "None") {
+            if (packetDelay === "None") {
                 packetDelay = "";
             }
             var params = {
-                packetDelay:packetDelay,
-                packetLoss:packetLoss
+                packetDelay: packetDelay,
+                packetLoss: packetLoss
             };
             me.manager.packet.affect((err) => {
-                if(err) {
+                if (err) {
                     alert("Cannot set packet loss: " + err.message);
                 }
             }, params);
@@ -199,7 +199,7 @@ package.app.packets = function AppPackets(me) {
             var text = JSON.stringify(window.packetInfo);
             var date = new Date();
             var title = me.core.property.get(window.var.title, "ui.basic.text");
-            if(!title) {
+            if (!title) {
                 title = date.toLocaleDateString();
             }
             var data = {

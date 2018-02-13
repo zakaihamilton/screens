@@ -61,12 +61,6 @@ function package_platform() {
     return platform;
 }
 
-function package_order(id) {
-    if (package.order.indexOf(id) === -1) {
-        package.order.push(id);
-    }
-}
-
 function package_component(id) {
     var item = package.components[id];
     if (!item) {
@@ -256,7 +250,7 @@ function package_init(name, callback, task) {
     }
 }
 
-function package_complete(info, callback) {
+function package_complete(info, order, callback) {
     if (info) {
         if (callback) {
             callback(info);
@@ -266,9 +260,9 @@ function package_complete(info, callback) {
         return;
     }
     package.lock(task => {
-        package.order.map(function (id) {
+        order.map(function (id) {
             var component = package_component(id);
-            if (component.init) {
+            if (component.init && component.init.length) {
                 console.log(package.platform + ": Initializing " + id);
                 do {
                     var init = component.init.shift();
@@ -278,7 +272,6 @@ function package_complete(info, callback) {
                 } while (init);
             }
         });
-        package.order = [];
         package.unlock(task, () => {
             if (info) {
                 if (info.loaded) {
@@ -298,18 +291,18 @@ function package_include(packages, callback, package_type="code") {
         var package_name = names[0];
         var component_name = names[1];
         var child_name = names[2];
-        package_order(packages);
         package_load(package_type, package_name, component_name, child_name, function (info) {
-            package_complete(info, callback);
+            package_complete(info, [packages], callback);
         });
         return;
     }
     var numComponents = 0;
     var loadedComponents = 0;
+    var order = [];
     for (var package_name in packages) {
         packages[package_name].map(function (component_name) {
             var id = package_name + "." + component_name;
-            package_order(id);
+            order.push(id);
             var component = package_component(id);
             component.status = false;
             numComponents++;
@@ -340,7 +333,7 @@ function package_include(packages, callback, package_type="code") {
                 info.progress = 100;
             }
             if (loadedComponents >= numComponents) {
-                package_complete(info, callback);
+                package_complete(info, order, callback);
                 return;
             }
             if (callback) {

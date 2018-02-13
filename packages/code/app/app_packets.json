@@ -25,12 +25,27 @@
                         "state": "select"
                     }
                 ],
-                ["25%", "app.packets.packetLoss", {
-                        "state": "select",
-                        "separator": true
+                ["5%", "app.packets.packetLoss", {
+                        "state": "select"
                     }
                 ],
-                ["50%", "app.packets.packetLoss", {
+                ["10%", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ],
+                ["15%", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ],
+                ["20%", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ],
+                ["25%", "app.packets.packetLoss", {
+                        "state": "select"
+                    }
+                ],
+                ["30%", "app.packets.packetLoss", {
                         "state": "select"
                     }
                 ],
@@ -44,8 +59,7 @@
                     }
                 ],
                 ["100ms", "app.packets.packetDelay", {
-                        "state": "select",
-                        "separator": true
+                        "state": "select"
                     }
                 ],
                 ["250ms", "app.packets.packetDelay", {
