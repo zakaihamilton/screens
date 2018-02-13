@@ -145,7 +145,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Data Size",
+                            "ui.basic.text": "Data Size (Bytes)",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }
@@ -195,7 +195,7 @@
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
-                                    "labelString": "Bytes [KB]"
+                                    "labelString": "Bytes (KB)"
                                 }
                             }]
                     }

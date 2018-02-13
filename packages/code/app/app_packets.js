@@ -6,7 +6,9 @@
 package.app.packets = function AppPackets(me) {
     me.launch = function (args) {
         var window = me.ui.element.create(__json__, "workspace", "self");
-        me.core.property.set(window.var.title, "ui.basic.text", me.options.dataProfile);
+        if(me.options.dataProfile !== "Live") {
+            me.core.property.set(window.var.title, "ui.basic.text", me.options.dataProfile);
+        }
     };
     me.init = function (task) {
         me.ui.options.load(me, null, {
