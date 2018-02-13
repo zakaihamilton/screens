@@ -267,9 +267,9 @@ function package_complete(info, callback) {
     }
     package.lock(task => {
         package.order.map(function (id) {
-            console.log(package.platform + ": Initializing " + id);
             var component = package_component(id);
             if (component.init) {
+                console.log(package.platform + ": Initializing " + id);
                 do {
                     var init = component.init.shift();
                     if (init) {

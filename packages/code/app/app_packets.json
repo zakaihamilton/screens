@@ -68,7 +68,7 @@
             "ui.basic.var": "packetCount"
         },
         {
-            "ui.basic.text": "Packet Size",
+            "ui.basic.text": "Data Size",
             "ui.property.style": {
                 "paddingTop": "10px"
             }
@@ -110,13 +110,13 @@
                                 }
                             }
                         }],
-                        "yAxes": {
+                        "yAxes": [{
                             "display": true,
                             "scaleLabel": {
                                 "display": true,
-                                "labelString": "value"
+                                "labelString": "Bytes [KB]"
                             }
-                        }
+                        }]
                     }
                 }
             }
