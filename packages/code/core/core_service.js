@@ -112,11 +112,8 @@ package.core.service = function CoreService(me) {
                 errors.push(err);
             }
             count--;
-            me.core.console.log("recieved from a device, " + count + " devices left");
+            me.core.console.log("recieved from a device, " + count + " devices left, error: " + err);
             if (!count) {
-                if (errors) {
-                    me.core.console.error("errors: " + errors);
-                }
                 callback.apply(null, errors);
             }
         };
@@ -124,6 +121,6 @@ package.core.service = function CoreService(me) {
             me.core.message.send_service.apply(socket, args);
             count++;
         });
-        me.core.console.log("sent " + path + " with param '" + param + "' to " + count + " devices");
+        me.core.console.log("sent " + path + "' to " + count + " devices");
     };
 };

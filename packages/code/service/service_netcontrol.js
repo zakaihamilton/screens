@@ -7,15 +7,15 @@ package.service.netcontrol = function ServiceNetControl(me) {
     me.setup = function (callback, ref) {
         callback();
     };
-    me.affect = function(callback, params) {
+    me.affect = function(callback, info) {
         var device = me.service.netmonitor.device;
         if(!device) {
             device = "wlan0";
         }
-        if(!params) {
-            params = {};
+        if(!info) {
+            info = {};
         }
-        console.log("using device: "+ device);
+        me.core.console.log("using device: "+ device);
         var cmd = require('node-cmd');
         me.flow(callback, (flow) => {
             flow.check(cmd, "cannot retrieve command lib");
@@ -23,27 +23,28 @@ package.service.netcontrol = function ServiceNetControl(me) {
             flow.wait((err, data, stderr) => {
                 flow.error(err, "failed to list current directory");
                 flow.check(!stderr, "failed with stderr: " + stderr);
-                console.log("list current directory: " + data);
+                me.core.console.log("list current directory: " + data);
                 flow.async(cmd.get, "sudo tc qdisc del root dev " + device, flow.callback);
                 flow.wait((err, data, stderr) => {
                     if(err) {
-                        console.log(err.message);
+                        me.core.console.log(err.message);
                     }
-                    console.log("reset device output: " + data);
-                    if(params.packetLoss || params.packetDelay) {
-                        console.log("setting packet loss to: " + params.packetLoss);
-                        console.log("setting packet delay to: " + params.packetDelay);
-                        if(params.packetDelay) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + params.packetDelay, flow.callback);
+                    me.core.console.log("reset device output: " + data);
+                    if(info.packetLoss || info.packetDelay) {
+                        me.core.console.log("setting packet loss to: " + info.packetLoss);
+                        me.core.console.log("setting packet delay to: " + info.packetDelay);
+                        if(info.packetDelay) {
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + info.packetDelay, flow.callback);
                         }
-                        if(params.packetLoss) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + params.packetLoss, flow.callback);
+                        if(info.packetLoss) {
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + info.packetLoss, flow.callback);
                         }
                         flow.wait((err, data, stderr) => {
                             flow.error(err, "failed to set command:" + device);
                             flow.check(!stderr, "failed with stderr: " + stderr);
-                            console.log("set command output: " + data);
+                            me.core.console.log("set command output: " + data);
                         }, () => {
+                            me.core.console.log("completed sending: " + JSON.stringify(info));
                             flow.end();
                         });
                     }
