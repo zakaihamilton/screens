@@ -278,6 +278,7 @@ function package_complete(info, callback) {
                 } while (init);
             }
         });
+        package.order = [];
         package.unlock(task, () => {
             if (info) {
                 if (info.loaded) {
