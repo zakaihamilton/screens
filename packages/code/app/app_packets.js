@@ -95,16 +95,21 @@ package.app.packets = function AppPackets(me) {
     me.updateData = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            var packetCount = 0;
-            var dataSize = 0;
-            var streamRequests = 0;
             if (window.packetInfo) {
-                packetCount = window.packetInfo.packetCount;
-                dataSize = window.packetInfo.dataSize;
-                streamRequests = window.packetInfo.streamRequests;
+                var packetCount = 0;
+                var dataSize = 0;
+                var abr = 0;
+                var streamRequests = window.packetInfo.streamRequests;
+                if(streamRequests.length) {
+                    var streamRequest = streamRequests[streamRequests.length-1];
+                    packetCount = streamRequest.packetCount;
+                    dataSize = streamRequest.dataSize;
+                    abr = streamRequest.abr;
+                }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
-                me.core.property.set(window.var.streamRequests, "ui.basic.text", streamRequests);
+                me.core.property.set(window.var.abr, "ui.basic.text", abr);
+                me.core.property.set(window.var.streamRequests, "ui.basic.text", streamRequests.length);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
@@ -123,7 +128,16 @@ package.app.packets = function AppPackets(me) {
     me.data = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            if (!window || !window.packetInfo || !window.packetInfo.packets) {
+            if (!window || !window.packetInfo) {
+                return [];
+            }
+            var streamRequests = window.packetInfo.streamRequests;
+            if(!streamRequests.length) {
+                return [];
+            }
+            var streamRequest = streamRequests[streamRequests.length-1];
+            var packets = streamRequest.packets;
+            if(!packets) {
                 return [];
             }
             function dateRel(sec) {
@@ -132,8 +146,8 @@ package.app.packets = function AppPackets(me) {
             var colors = ["red", "blue", "green", "yellow", "orange"];
             var data = {datasets: [], labels: []};
             var colorIndex = 0;
-            for (var sourceIp in window.packetInfo.packets) {
-                var targets = window.packetInfo.packets[sourceIp];
+            for (var sourceIp in packets) {
+                var targets = packets[sourceIp];
                 for (var targetIp in targets) {
                     var target = targets[targetIp];
                     var label = "";

@@ -17,14 +17,19 @@ package.manager.packet = function ManagerPacket(me) {
     };
     me.push = function (callback, packet, service) {
         var info = me.packetInfo;
-        if(info.signal) {
+        if(info.signal || !info.streamRequests.length) {
             info.signal = false;
-            info.streamRequests++;
+            info.streamRequests.push({
+                packetCount: 0,
+                dataSize: 0,
+                packets: {}
+            });
         }
-        info.packetCount++;
+        var streamRequest = info.streamRequests[info.streamRequests.length-1];
+        streamRequest.packetCount++;
         var dataSize = me.core.json.traverse(packet, "payload.payload.payload.dataLength").value;
         if (dataSize) {
-            info.dataSize += dataSize;
+            streamRequest.dataSize += dataSize;
         }
         var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
         var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;
@@ -33,9 +38,9 @@ package.manager.packet = function ManagerPacket(me) {
         if (packet_source && packet_target) {
             packet_source = packet_source.join(".");
             packet_target = packet_target.join(".");
-            var sourceMap = info.packets[packet_source];
+            var sourceMap = streamRequest.packets[packet_source];
             if (!sourceMap) {
-                sourceMap = info.packets[packet_source] = {};
+                sourceMap = streamRequest.packets[packet_source] = {};
             }
             var targetMap = sourceMap[packet_target];
             if (!targetMap) {
@@ -68,11 +73,8 @@ package.manager.packet = function ManagerPacket(me) {
     };
     me.reset = function (callback) {
         me.packetInfo = {
-            packetCount: 0,
-            dataSize: 0,
-            streamRequests:0,
-            signal:false,
-            packets: {}
+            streamRequests:[],
+            signal:false
         };
         callback();
     };
