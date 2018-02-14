@@ -101,7 +101,11 @@ package.app.packets = function AppPackets(me) {
                 var abr = 0;
                 var streamRequests = window.packetInfo.streamRequests;
                 if(streamRequests.length) {
-                    var streamRequest = streamRequests[streamRequests.length-1];
+                    var streamIndex = window.streamIndex;
+                    if(!streamIndex) {
+                        streamIndex = streamRequests.length;
+                    }
+                    var streamRequest = streamRequests[streamIndex-1];
                     packetCount = streamRequest.packetCount;
                     dataSize = streamRequest.dataSize;
                     abr = streamRequest.abr;
