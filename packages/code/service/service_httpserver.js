@@ -27,18 +27,25 @@ package.service.httpserver = function HttpServer(me) {
                 var filePath = me.filePrefix + info.url.substring(1);
                 var extension = me.core.path.extension(filePath);
                 info["content-type"] = me.mime.getType(extension);
-                me.lock(info.task, task => {
-                    me.fs.readFile(filePath, null, function (err, data) {
-                        me.core.console.log("serving file: " + filePath + " with content type: " + info["content-type"]);
-                        if (err) {
-                            info.body = err.message;
-                        }
-                        else {
-                            info.body = data;
-                        }
-                        me.unlock(task);
+                if (extension === "mp4") {
+                    var mimeType = "video/mp4";
+                    info.custom = true;
+                    me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+                }
+                else {
+                    me.lock(info.task, task => {
+                        me.fs.readFile(filePath, null, function (err, data) {
+                            me.core.console.log("serving file: " + filePath + " with content type: " + info["content-type"]);
+                            if (err) {
+                                info.body = err.message;
+                            }
+                            else {
+                                info.body = data;
+                            }
+                            me.unlock(task);
+                        });
                     });
-                });
+                }
             }
         }
     };

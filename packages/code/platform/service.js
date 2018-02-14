@@ -19,6 +19,7 @@ package.include({
         "flow",
         "service",
         "util",
+        "stream",
         "startup",
         "network",
         "path"
