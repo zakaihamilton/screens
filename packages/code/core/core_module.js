@@ -69,7 +69,7 @@ package.core.module = function CoreModule(me) {
                         var source_platform = info.query["platform"];
                         core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
                         info["content-type"] = "application/javascript";
-                        if (target_platform && !target_platform.includes(source_platform)) {
+                        if (target_platform && !target_platform.includes(source_platform) && !target_platform.includes("/")) {
                             core.console.log("serving remote for:" + file_path);
                             file_path = "packages/code/remote.js";
                         }
