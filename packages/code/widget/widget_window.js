@@ -324,6 +324,7 @@ package.widget.window = function WidgetWindow(me) {
             if (minimized) {
                 return;
             }
+            var parent_window = me.parent(window);
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             if (!maximized) {
                 me.storeRegion(window);
@@ -335,7 +336,6 @@ package.widget.window = function WidgetWindow(me) {
             if(!me.core.property.get(window, "popup")) {
                 me.core.property.set(window.var.icon, "ui.class.add", "minimize");
             }
-            var parent_window = me.parent(window);
             if (parent_window) {
                 if(maximized) {
                     me.detach(parent_window);
@@ -761,9 +761,6 @@ package.widget.window = function WidgetWindow(me) {
             if (windows && windows.length) {
                 var last = windows[windows.length - 1];
                 me.core.property.set(last, "ui.focus.active", true);
-            }
-            else {
-                me.core.property.set(object, "ui.focus.active", false);
             }
         }
     };
