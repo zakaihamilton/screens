@@ -62,6 +62,11 @@ package.core.service = function CoreService(me) {
         callback(items);
     };
     me.setup = function (callback, ref) {
+        if(me.alreadySetup) {
+            callback(me.serviceNames, ref);
+            return;
+        }
+        me.alreadySetup = true;
         me.lock((task) => {
             me.serviceNames.map((serviceName) => {
                 me.lock(task, (task) => {

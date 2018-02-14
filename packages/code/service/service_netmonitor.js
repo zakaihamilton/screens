@@ -5,15 +5,7 @@
  */
 
 package.service.netmonitor = function ServiceNetMonitor(me) {
-    me.init = function() {
-        me.alreadySetup = false;
-    };
     me.setup = function (callback, ref) {
-        if(me.alreadySetup) {
-            callback();
-            return;
-        }
-        me.alreadySetup = true;
         me.device = null;
         me.core.service.config(config => {
             if (config) {
