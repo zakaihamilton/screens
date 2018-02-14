@@ -655,6 +655,7 @@
         {
             "prefix": "a",
             "translation": "Vessel",
+            "explanation": "Desire",
             "term": "Kli",
             "hebrew":"כלי"
         },
@@ -2206,7 +2207,7 @@
         },
         {
             "translation": "Vessels",
-            "explanation": "Contexts",
+            "explanation": "Desires",
             "term": "Kelim",
             "hebrew":"כלים"
         },
