@@ -171,6 +171,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.affect = {
         set: function (object) {
+            var window = me.widget.window.mainWindow(object);
             var packetLoss = me.options.packetLoss;
             if (packetLoss === "None") {
                 packetLoss = "";
@@ -178,6 +179,14 @@ package.app.packets = function AppPackets(me) {
             var packetDelay = me.options.packetDelay;
             if (packetDelay === "None") {
                 packetDelay = "";
+            }
+            if(packetLoss < 0) {
+                packetLoss = 0;
+                me.core.property.set(window.var.packetLoss, "ui.basic.text", "0");
+            }
+            if(packetDelay < 0) {
+                packetDelay = 0;
+                me.core.property.set(window.var.packetDelay, "ui.basic.text", "0");
             }
             var params = {
                 packetDelay: packetDelay,

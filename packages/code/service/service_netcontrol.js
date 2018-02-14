@@ -34,10 +34,10 @@ package.service.netcontrol = function ServiceNetControl(me) {
                         me.core.console.log("setting packet loss to: " + info.packetLoss);
                         me.core.console.log("setting packet delay to: " + info.packetDelay);
                         if(info.packetDelay) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + info.packetDelay, flow.callback);
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + info.packetDelay + "ms", flow.callback);
                         }
                         if(info.packetLoss) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + info.packetLoss, flow.callback);
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + info.packetLoss + "%", flow.callback);
                         }
                         flow.wait((err, data, stderr) => {
                             flow.error(err, "failed to set command:" + device);

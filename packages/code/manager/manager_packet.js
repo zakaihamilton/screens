@@ -11,6 +11,10 @@ package.manager.packet = function ManagerPacket(me) {
 
         });
     };
+    me.signal = function(callback, path) {
+        me.core.console.log("new stream request for: " + path);
+        callback();
+    };
     me.push = function (callback, packet, service) {
         var info = me.packetInfo;
         info.packetCount++;

@@ -30,7 +30,9 @@ package.service.httpserver = function HttpServer(me) {
                 if (extension === "mp4") {
                     var mimeType = "video/mp4";
                     info.custom = true;
-                    me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+                    me.manager.packet.signal(() => {
+                        me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+                    }, filePath);
                 }
                 else {
                     me.lock(info.task, task => {

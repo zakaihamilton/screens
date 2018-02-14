@@ -137,13 +137,31 @@
                             }
                         },
                         {
-                            "ui.basic.text": "0",
+                            "ui.basic.text": "",
                             "ui.property.style": {
                                 "width": "300px"
                             },
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetLoss",
-                            "ui.monitor.change": "app.packets.packetLoss"
+                            "ui.attribute.step":"0.0001",
+                            "ui.monitor.change": "app.packets.packetLoss",
+                            "ui.attribute.list": "app.packets.packetLoss"
+                        },
+                        {
+                            "ui.basic.tag": "datalist",
+                            "ui.basic.elementId": "app.packets.packetLoss",
+                            "ui.group.data": {
+                                "ui.data.keyList": ["ui.attribute.value"],
+                                "ui.data.default":{
+                                    "ui.basic.tag":"option"
+                                },
+                                "ui.data.values": [
+                                    ["0.0001"],
+                                    ["0.001"],
+                                    ["0.1"],
+                                    ["1"]
+                                ]
+                            }
                         }
                     ]
                 },
@@ -161,9 +179,9 @@
                             "ui.property.style": {
                                 "width": "300px"
                             },
-                            "ui.attribute.min":"0",
-                            "ui.attribute.step":"5",
-                            "ui.attribute.max":"1000",
+                            "ui.attribute.min": "0",
+                            "ui.attribute.step": "5",
+                            "ui.attribute.max": "1000",
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetDelay",
                             "ui.monitor.change": "app.packets.packetDelay"
