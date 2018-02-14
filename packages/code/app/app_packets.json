@@ -143,7 +143,7 @@
                             },
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetLoss",
-                            "ui.attribute.step":"0.0001",
+                            "ui.attribute.step": "0.0001",
                             "ui.monitor.change": "app.packets.packetLoss",
                             "ui.attribute.list": "app.packets.packetLoss"
                         },
@@ -152,8 +152,8 @@
                             "ui.basic.elementId": "app.packets.packetLoss",
                             "ui.group.data": {
                                 "ui.data.keyList": ["ui.attribute.value"],
-                                "ui.data.default":{
-                                    "ui.basic.tag":"option"
+                                "ui.data.default": {
+                                    "ui.basic.tag": "option"
                                 },
                                 "ui.data.values": [
                                     ["0.0001"],
@@ -205,6 +205,35 @@
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "streamRequests"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Stream",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "Last",
+                            "ui.style.width": "300px",
+                            "ui.basic.var":"streamIndex",
+                            "core.link.onChange": "app.packets.onChangeStream",
+                            "ui.element.count": 0,
+                            "ui.group.data": {
+                                "ui.data.keyList": ["ui.basic.text"],
+                                "ui.data.default": {
+                                    "group": "one",
+                                    "state": false
+                                },
+                                "ui.data.values": [
+                                    ["Last"],
+                                    "core.number.fillArray(1-@app.packets.streamRequestCount)"
+                                ]
+                            }
                         }
                     ]
                 }

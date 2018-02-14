@@ -41,6 +41,9 @@ function startBrowser(appName, appArgs) {
         "user": [
             "profile"
         ],
+        "content": [
+            "text"
+        ],
         "ui": [
             "event",
             "data",

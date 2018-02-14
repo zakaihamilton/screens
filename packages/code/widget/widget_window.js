@@ -80,6 +80,9 @@ package.widget.window = function WidgetWindow(me) {
             if (parent === me.ui.element.workspace()) {
                 return null;
             }
+            if(parent.var && parent.var.parentList) {
+                return parent.var.parentList;
+            }
             if (parent.window) {
                 return parent.window;
             }
@@ -109,7 +112,12 @@ package.widget.window = function WidgetWindow(me) {
                 window = window.window;
             }
             if (window.component !== me.id) {
-                window = me.parent(window);
+                if(window.var && window.var.parentList) {
+                    window = window.var.parentList;
+                }
+                if (window.component !== me.id) {
+                    window = me.parent(window);
+                }
             }
         }
         return window;

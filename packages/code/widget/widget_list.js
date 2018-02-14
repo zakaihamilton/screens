@@ -126,10 +126,10 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.top": region.bottom + "px",
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "200px",
+                "ui.var.parentList":object.parentNode,
                 "ui.basic.elements": object.parentNode.listElements,
                 "ui.group.data":object.parentNode.listData,
-                "widget.list.popup.selection":me.core.property.get(object.parentNode, "text"),
-                "ui.var.parentList":object.parentNode
+                "widget.list.popup.selection":me.core.property.get(object.parentNode, "text")
             }, "workspace", "self");
         }
     };

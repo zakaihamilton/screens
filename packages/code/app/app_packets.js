@@ -18,7 +18,7 @@ package.app.packets = function AppPackets(me) {
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
-            var window = me.widget.window.mainWindow(object);
+            var window = me.widget.window.window(object);
             me.core.property.set(window, "app.packets.refreshData", value);
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
@@ -42,7 +42,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.dataMenuList = {
         get: function (object) {
-            var window = me.widget.window.mainWindow(object);
+            var window = me.widget.window.window(object);
             var dataList = me.dataList;
             if (!dataList) {
                 dataList = [];
@@ -113,7 +113,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
-                }); 
+                });
            }
         }
     };
@@ -123,6 +123,19 @@ package.app.packets = function AppPackets(me) {
             me.manager.packet.reset(() => {
                 me.core.property.set(window, "app.packets.dataProfile", "Live");
             });
+        }
+    };
+    me.streamRequestCount = {
+        get: function(object) {
+            var count = 0;
+            var window = me.widget.window.window(object);
+            if(window && window.packetInfo) {
+                var streamRequests = window.packetInfo.streamRequests;
+                if(streamRequests) {
+                    count = streamRequests.length;
+                }
+            }
+            return count;
         }
     };
     me.data = {
@@ -135,7 +148,11 @@ package.app.packets = function AppPackets(me) {
             if(!streamRequests.length) {
                 return [];
             }
-            var streamRequest = streamRequests[streamRequests.length-1];
+            var streamIndex = window.streamIndex;
+            if(!streamIndex) {
+                streamIndex = streamRequests.length;
+            }
+            var streamRequest = streamRequests[streamIndex-1];
             var packets = streamRequest.packets;
             if(!packets) {
                 return [];
@@ -188,7 +205,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.affect = {
         set: function (object) {
-            var window = me.widget.window.mainWindow(object);
+            var window = me.widget.window.window(object);
             var packetLoss = me.options.packetLoss;
             if (packetLoss === "None") {
                 packetLoss = "";
@@ -218,12 +235,12 @@ package.app.packets = function AppPackets(me) {
     };
     me.save = {
         get: function (object) {
-            var window = me.widget.window.mainWindow(object);
+            var window = me.widget.window.window(object);
             var text = JSON.stringify(window.packetInfo);
             return text;
         },
         set: function (object) {
-            var window = me.widget.window.mainWindow(object);
+            var window = me.widget.window.window(object);
             var text = JSON.stringify(window.packetInfo);
             var date = new Date();
             var title = me.core.property.get(window.var.title, "ui.basic.text");
@@ -242,6 +259,17 @@ package.app.packets = function AppPackets(me) {
                     me.refreshDataList.set(object);
                 }
             }, data, "app.packets.data", title, ["packetInfo"]);
+        }
+    };
+    me.onChangeStream = {
+        set: function(object) {
+            var window = me.widget.window.window(object);
+            var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text");
+            if(streamIndex === "Last") {
+                streamIndex = 0;
+            }
+            window.streamIndex = streamIndex;
+            me.core.property.notify(window, "app.packets.refreshData");
         }
     };
 };
