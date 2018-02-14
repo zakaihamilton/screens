@@ -11,6 +11,7 @@ package.app.packets = function AppPackets(me) {
         }
     };
     me.init = function (task) {
+        me.colors = [];
         me.ui.options.load(me, null, {
             "autoRefresh": true,
             "packetLoss": "None",
@@ -105,10 +106,19 @@ package.app.packets = function AppPackets(me) {
                     if(!streamIndex) {
                         streamIndex = streamRequests.length;
                     }
-                    var streamRequest = streamRequests[streamIndex-1];
-                    packetCount = streamRequest.packetCount;
-                    dataSize = streamRequest.dataSize;
-                    abr = streamRequest.abr;
+                    if(streamIndex === -1) {
+                        streamRequests.map((streamRequest) => {
+                            packetCount += streamRequest.packetCount;
+                            dataSize += streamRequest.dataSize;
+                            abr = streamRequest.abr; /* TODO: need to combine abr */
+                        });
+                    }
+                    else {
+                        var streamRequest = streamRequests[streamIndex-1];
+                        packetCount = streamRequest.packetCount;
+                        dataSize = streamRequest.dataSize;
+                        abr = streamRequest.abr;
+                    }
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
@@ -157,53 +167,65 @@ package.app.packets = function AppPackets(me) {
             if(!streamIndex) {
                 streamIndex = streamRequests.length;
             }
-            var streamRequest = streamRequests[streamIndex-1];
-            var packets = streamRequest.packets;
-            if(!packets) {
-                return data;
+            if(streamIndex !== -1) {
+                streamRequests = [streamRequests[streamIndex-1]];
             }
-            function dateRel(sec) {
-                return me.widget.chart.dateRel(sec);
-            }
-            var colors = ["red", "blue", "green", "yellow", "orange"];
             var colorIndex = 0;
-            for (var sourceIp in packets) {
-                var targets = packets[sourceIp];
-                for (var targetIp in targets) {
-                    var target = targets[targetIp];
-                    var label = "";
-                    if (target.sourceIsService) {
-                        label = "service";
-                    } else {
-                        label = "device";
-                    }
-                    label += "(" + sourceIp + ") => ";
-                    if (target.targetIsService) {
-                        label += "service";
-                    } else {
-                        label += "device";
-                    }
-                    label += "(" + targetIp + ")";
-                    var dataset = {
-                        label: label,
-                        backgroundColor: colors[colorIndex],
-                        borderColor: colors[colorIndex],
-                        fill: false,
-                        data: []
-                    };
-                    colorIndex++;
-                    dataset.data = [];
-                    for (var time in target.items) {
-                        var item = target.items[time];
-                        dataset.data.push({
-                            x: dateRel(item.end),
-                            y: item.len / 1000
-                        });
-                    }
-                    dataset.data.pop();
+            var info = {};
+            streamRequests.map((streamRequest) => {
+                var packets = streamRequest.packets;
+                if(!packets) {
+                    return data;
                 }
-                data.datasets.push(dataset);
-            }
+                function dateRel(sec) {
+                    return me.widget.chart.dateRel(sec);
+                }
+                for (var sourceIp in packets) {
+                    var targets = packets[sourceIp];
+                    for (var targetIp in targets) {
+                        var target = targets[targetIp];
+                        var label = "";
+                        if (target.sourceIsService) {
+                            label = "service";
+                        } else {
+                            label = "device";
+                        }
+                        label += "(" + sourceIp + ") => ";
+                        if (target.targetIsService) {
+                            label += "service";
+                        } else {
+                            label += "device";
+                        }
+                        label += "(" + targetIp + ")";
+                        if(!(label in info)) {
+                            var color = me.colors[label];
+                            if(!color) {
+                                color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                            }
+                            var dataset = {
+                                label: label,
+                                backgroundColor: color,
+                                borderColor: color,
+                                fill: false,
+                                data: []
+                            };
+                            info[label] = dataset;
+                        }
+                        var dataset = info[label];
+                        for (var time in target.items) {
+                            var item = target.items[time];
+                            dataset.data.push({
+                                x: dateRel(item.end),
+                                y: item.len / 1000
+                            });
+                        }
+                        dataset.data.pop();
+                    }
+                }
+            });
+            Object.keys(info).sort().map((label) => {
+                data.datasets.push(info[label]);
+            });
             return data;
         }
     };
@@ -271,6 +293,9 @@ package.app.packets = function AppPackets(me) {
             var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text");
             if(streamIndex === "Last") {
                 streamIndex = 0;
+            }
+            if(streamIndex === "Combined") {
+                streamIndex = -1;
             }
             window.streamIndex = streamIndex;
             me.core.property.notify(window, "app.packets.refreshData");

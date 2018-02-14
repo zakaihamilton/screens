@@ -72,7 +72,8 @@ function startBrowser(appName, appArgs) {
             "cachekey",
             "arrange",
             "exec",
-            "screenshot"
+            "screenshot",
+            "color"
         ],
         "menu": [
             "context"

@@ -230,6 +230,7 @@
                                     "state": false
                                 },
                                 "ui.data.values": [
+                                    ["Combined"],
                                     ["Last"],
                                     "core.number.fillArray(1-@app.packets.streamRequestCount)"
                                 ]
@@ -248,6 +249,8 @@
                 "type": "line",
                 "options": {
                     "responsive": true,
+                    "showLines":true,
+                    "spanGaps":true,
                     "title": {
                         "display": true,
                         "text": "Chart Data"
