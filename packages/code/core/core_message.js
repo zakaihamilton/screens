@@ -169,18 +169,16 @@ package.core.message = function CoreMessage(me) {
         var args = info.params;
         args.unshift(info.path);
         var responseCallback = info.callback;
-        if(responseCallback) {
-            args[1] = function(result) {
-                var args = Array.prototype.slice.call(arguments, 0);
-                info.params = null;
-                info.response = args;
-                info.callback = responseCallback;
-                if(remote) {
-                    info.response = me.core.type.wrap_args(info.response);
-                }
-                callback(info);
-            };
-        }
+        args[1] = function(result) {
+            var args = Array.prototype.slice.call(arguments, 0);
+            info.params = null;
+            info.response = args;
+            info.callback = responseCallback;
+            if(remote) {
+                info.response = me.core.type.wrap_args(info.response);
+            }
+            callback(info);
+        };
         me.send.apply(info, args);
     };
 };
