@@ -15,61 +15,7 @@
                 ],
                 ["Reset", "app.packets.reset", {
                         "separator": true
-                    }],
-                ["Packet Loss", null, {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                ["None", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["5%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["10%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["15%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["20%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["25%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["30%", "app.packets.packetLoss", {
-                        "state": "select"
-                    }
-                ],
-                ["Packet Delay", null, {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                ["None", "app.packets.packetDelay", {
-                        "state": "select"
-                    }
-                ],
-                ["100ms", "app.packets.packetDelay", {
-                        "state": "select"
-                    }
-                ],
-                ["250ms", "app.packets.packetDelay", {
-                        "state": "select"
-                    }
-                ],
-                ["500ms", "app.packets.packetDelay", {
-                        "state": "select"
-                    }
-                ]
+                    }]
             ]
         ],
         ["Data", [
@@ -158,6 +104,69 @@
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "dataSize"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Average Bit Rate",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "abr"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Packet Loss (%)",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "0",
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.basic.type": "number",
+                            "ui.basic.var": "packetLoss",
+                            "ui.monitor.change": "app.packets.packetLoss"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Packet Delay (msec)",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "0",
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.attribute.min":"0",
+                            "ui.attribute.step":"5",
+                            "ui.attribute.max":"1000",
+                            "ui.basic.type": "number",
+                            "ui.basic.var": "packetDelay",
+                            "ui.monitor.change": "app.packets.packetDelay"
                         }
                     ]
                 }

@@ -22,8 +22,8 @@ package.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData", value);
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
-        me.packetLoss = me.ui.options.choiceSet(me, "packetLoss", me.affect.set);
-        me.packetDelay = me.ui.options.choiceSet(me, "packetDelay", me.affect.set);
+        me.packetLoss = me.ui.options.inputSet(me, "packetLoss", me.affect.set);
+        me.packetDelay = me.ui.options.inputSet(me, "packetDelay", me.affect.set);
         me.lock(task, (task) => {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);

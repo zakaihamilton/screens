@@ -39,7 +39,7 @@
         "filter": "port @port"
       },
       "httpserver": {
-        "path": "files/"
+        "path": "./"
       }
     }
   }

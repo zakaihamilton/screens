@@ -109,4 +109,49 @@ package.ui.options = function UIOptions(me) {
         };
         return methods;
     };
+    me.inputSet = function (component, key, callback) {
+        if(!component.options) {
+            component.options = {};
+        }
+        var methods = {
+            get: function (object) {
+                var options = component.options;
+                var window = me.core.property.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
+                }
+                return options[key];
+            },
+            set: function (object, value) {
+                var storage = me.getStorage(component, object);
+                var options = component.options;
+                var window = me.core.property.get(object, "widget.window.active");
+                if(window && window.options) {
+                    options = window.options;
+                }
+                var text = me.core.property.get(window.var[key], "ui.basic.text");
+                if(typeof value === "string" || typeof value === "number") {
+                    if(text !== value) {
+                        me.core.property.set(window.var[key], "ui.basic.text", value);
+                    }
+                }
+                else {
+                    value = text;
+                }
+                options[key] = value;
+                if(callback) {
+                    callback(object, options, key, options[key]);
+                }
+                if(storage) {
+                    var storageKey = component.id + ".options";
+                    if(object && object.options) {
+                        storageKey += "." + me.core.property.get(object, "key");
+                    }
+                    var validKey = me.storage.cache.validKey(storageKey);
+                    me.core.property.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                }
+            }
+        };
+        return methods;
+    };
 };
