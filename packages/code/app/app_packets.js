@@ -97,11 +97,14 @@ package.app.packets = function AppPackets(me) {
             var window = me.widget.window.window(object);
             var packetCount = 0;
             var dataSize = 0;
+            var streamRequests = 0;
             if (window.packetInfo) {
                 packetCount = window.packetInfo.packetCount;
                 dataSize = window.packetInfo.dataSize;
+                streamRequests = window.packetInfo.streamRequests;
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
+                me.core.property.set(window.var.streamRequests, "ui.basic.text", streamRequests);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0

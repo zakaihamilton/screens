@@ -12,11 +12,15 @@ package.manager.packet = function ManagerPacket(me) {
         });
     };
     me.signal = function(callback, path) {
-        me.core.console.log("new stream request for: " + path);
+        me.packetInfo.signal = true;
         callback();
     };
     me.push = function (callback, packet, service) {
         var info = me.packetInfo;
+        if(info.signal) {
+            info.signal = false;
+            info.streamRequests++;
+        }
         info.packetCount++;
         var dataSize = me.core.json.traverse(packet, "payload.payload.payload.dataLength").value;
         if (dataSize) {
@@ -63,7 +67,13 @@ package.manager.packet = function ManagerPacket(me) {
         callback(me.packetInfo);
     };
     me.reset = function (callback) {
-        me.packetInfo = {packetCount: 0, dataSize: 0, packets: {}};
+        me.packetInfo = {
+            packetCount: 0,
+            dataSize: 0,
+            streamRequests:0,
+            signal:false,
+            packets: {}
+        };
         callback();
     };
     me.affect = function (callback, params) {

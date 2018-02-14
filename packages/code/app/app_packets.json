@@ -187,6 +187,26 @@
                             "ui.monitor.change": "app.packets.packetDelay"
                         }
                     ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Stream Requests",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "300px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "streamRequests"
+                        }
+                    ]
                 }
             ]
         },
