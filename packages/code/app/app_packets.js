@@ -140,13 +140,14 @@ package.app.packets = function AppPackets(me) {
     };
     me.data = {
         get: function (object) {
+            var data = {datasets: [], labels: []};
             var window = me.widget.window.window(object);
             if (!window || !window.packetInfo) {
-                return [];
+                return data;
             }
             var streamRequests = window.packetInfo.streamRequests;
             if(!streamRequests.length) {
-                return [];
+                return data;
             }
             var streamIndex = window.streamIndex;
             if(!streamIndex) {
@@ -155,13 +156,12 @@ package.app.packets = function AppPackets(me) {
             var streamRequest = streamRequests[streamIndex-1];
             var packets = streamRequest.packets;
             if(!packets) {
-                return [];
+                return data;
             }
             function dateRel(sec) {
                 return me.widget.chart.dateRel(sec);
             }
             var colors = ["red", "blue", "green", "yellow", "orange"];
-            var data = {datasets: [], labels: []};
             var colorIndex = 0;
             for (var sourceIp in packets) {
                 var targets = packets[sourceIp];
