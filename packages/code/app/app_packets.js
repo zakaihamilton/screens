@@ -95,10 +95,10 @@ package.app.packets = function AppPackets(me) {
             });
         }
     };
-    me.formatAbr = function (number) {
+    me.formatBytes = function (number) {
         var set = false;
         if (number < 1000) {
-            number = parseInt(number) + "b";
+            number = parseInt(number) + "B";
             set = true;
         }
         if (!set) {
@@ -190,8 +190,8 @@ package.app.packets = function AppPackets(me) {
                     }
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
-                me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
-                me.core.property.set(window.var.abr, "ui.basic.text", me.formatAbr(abr));
+                me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
+                me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr));
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
                 var durationText = me.lib.moment.moment().startOf('day').seconds(duration).format('HH:mm:ss');
                 me.core.property.set(window.var.duration, "ui.basic.text", durationText);

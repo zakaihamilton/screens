@@ -7,17 +7,15 @@ package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
     me.init = function () {
-        me.packetInfo = {
-            streamRequests:[],
-            signal:false,
-            effects:{}
-        };
+        me.reset(() => {
+            
+        });
     };
     me.signal = function(callback, path) {
         me.packetInfo.signal = true;
         if(me.packetInfo.effects.autoIncreasePacketDelay) {
             me.affect(callback, {
-                "packetDelay" : me.packetInfo.effects.packetDelay + 5
+                "packetDelay" : parseInt(me.packetInfo.effects.packetDelay) + 5
             });
         }
         else {
@@ -84,6 +82,11 @@ package.manager.packet = function ManagerPacket(me) {
         callback(me.packetInfo);
     };
     me.reset = function (callback) {
+        me.packetInfo = {
+            streamRequests:[],
+            signal:false,
+            effects:{}
+        };
         callback();
     };
     me.affect = function (callback, params) {

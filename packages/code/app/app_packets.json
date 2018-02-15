@@ -97,7 +97,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Data Size (Bytes)",
+                            "ui.basic.text": "Data Size",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }
