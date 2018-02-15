@@ -90,7 +90,7 @@ package.app.packets = function AppPackets(me) {
                 if (autoRefresh) {
                     setTimeout(() => {
                         me.core.property.set(window, "app.packets.refreshData");
-                    }, 5000);
+                    }, 10000);
                 }
             });
         }

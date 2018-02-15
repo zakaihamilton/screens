@@ -15,6 +15,9 @@ package.manager.packet = function ManagerPacket(me) {
         me.packetInfo.signal = true;
         if(me.packetInfo.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.packetInfo.effects.packetDelay);
+            if(!packetDelay) {
+                packetDelay = 0;
+            }
             var effects = {
                 "packetDelay" : packetDelay + 5
             };
