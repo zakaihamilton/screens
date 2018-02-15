@@ -58,23 +58,32 @@ package.widget.chart = function WidgetChart(me) {
             me.core.property.notify(object, "update");
         }
     };
+    me.reset = {
+        get: function(object) {
+            return !object.chart;
+        },
+        set: function(object) {
+            if(object.chart) {
+                object.chart.destroy();
+                object.chart = null;
+            }
+        }
+    };
     me.update = {
         set: function (object, value) {
             if(object.chartData) {
                 object.chartInfo.data = object.chartData;
             }
-            if(object.chartOptions) {
-                //object.chartInfo.options = object.chartOptions;
-            }
-            if(object.chartType) {
-                object.chartInfo.type = object.chartType;
-            }
             if (object.chart) {
                 object.chart.data = object.chartInfo.data;
-                object.chart.options = object.chartInfo.options;
-                object.chart.type = object.chartInfo.type;
                 object.chart.update(value);
             } else {
+                if(object.chartOptions) {
+                    object.chartInfo.options = object.chartOptions;
+                }
+                if(object.chartType) {
+                    object.chartInfo.type = object.chartType;
+                }
                 var context = me.core.property.get(object, "context");
                 object.chart = new me.chart.Chart(context, object.chartInfo);
             }

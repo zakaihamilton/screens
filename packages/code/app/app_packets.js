@@ -114,6 +114,20 @@ package.app.packets = function AppPackets(me) {
                 set = true;
             }
         }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + "GB";
+                set = true;
+            }
+        }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + "TB";
+                set = true;
+            }
+        }
         return number;
     };
     me.autoIncreasePacketDelay = {
