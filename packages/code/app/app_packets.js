@@ -20,7 +20,10 @@ package.app.packets = function AppPackets(me) {
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
             var window = me.widget.window.window(object);
-            me.core.property.set(window, "app.packets.refreshData", value);
+            if(window.streamIndex > 0) {
+                me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
+            }
+            me.core.property.set(window, "app.packets.refreshData");
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
         me.packetLoss = me.ui.options.inputSet(me, "packetLoss", me.affect.set);
@@ -88,7 +91,7 @@ package.app.packets = function AppPackets(me) {
                 if (autoRefresh) {
                     setTimeout(() => {
                         me.core.property.set(window, "app.packets.refreshData");
-                    }, 5000);
+                    }, 2500);
                 }
             });
         }
@@ -123,7 +126,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
                 me.core.property.set(window.var.abr, "ui.basic.text", abr);
-                me.core.property.set(window.var.streamRequests, "ui.basic.text", streamRequests.length);
+                me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
@@ -135,6 +138,9 @@ package.app.packets = function AppPackets(me) {
         set: function (object) {
             var window = me.widget.window.window(object);
             me.manager.packet.reset(() => {
+                if(window.streamIndex > 0) {
+                    me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
+                }
                 me.core.property.set(window, "app.packets.dataProfile", "Live");
             });
         }
@@ -219,12 +225,13 @@ package.app.packets = function AppPackets(me) {
                                 y: item.len / 1000
                             });
                         }
-                        dataset.data.pop();
                     }
                 }
             });
             Object.keys(info).sort().map((label) => {
-                data.datasets.push(info[label]);
+                var dataset = info[label];
+                dataset.data.pop();
+                data.datasets.push(dataset);
             });
             return data;
         }

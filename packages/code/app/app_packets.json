@@ -192,7 +192,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Stream Requests",
+                            "ui.basic.text": "Stream Count",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }
@@ -204,7 +204,7 @@
                                 "width": "300px"
                             },
                             "ui.basic.type": "text",
-                            "ui.basic.var": "streamRequests"
+                            "ui.basic.var": "streamCount"
                         }
                     ]
                 },
@@ -218,7 +218,7 @@
                             }
                         },
                         {
-                            "ui.basic.text": "Last",
+                            "ui.basic.text": "Combined",
                             "ui.style.width": "300px",
                             "ui.basic.var":"streamIndex",
                             "core.link.onChange": "app.packets.onChangeStream",
@@ -243,7 +243,8 @@
         {
             "ui.element.component": "widget.chart",
             "ui.basic.var": "chart",
-            "ui.style.width": "80%",
+            "ui.style.paddingLeft":"10%",
+            "ui.style.width": "75%",
             "data": "@app.packets.data",
             "info": {
                 "type": "line",
@@ -284,6 +285,7 @@
     ],
     "app.packets.refreshData": null,
     "app.packets.affect": null,
+    "app.packets.onChangeStream":null,
     "ui.property.after": {
         "storage.cache.key": "app-packets-window",
         "storage.cache.restore": "widget.window.store"

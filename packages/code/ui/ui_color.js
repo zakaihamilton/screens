@@ -6,14 +6,18 @@
 package.ui.color = function UIColor(me) {
     me.colors = [];
     me.random = function() {
-        return 'hsla(' + (Math.random() * 360) + ', 100%, 50%, 1)';
+        return 'hsla(' + (Math.random() * 360) + ', 100%, 40%, 1)';
     };
     me.randomSet = function(count) {
         if(count < 0) {
             count = 0;
         }
         while(me.colors.length < count) {
-            me.colors.push(me.random());
+            var color = me.random();
+            while(me.colors.includes(color)) {
+                color = me.random();
+            }
+            me.colors.push(color);
         }
         return me.colors.slice(0, count);
     };
