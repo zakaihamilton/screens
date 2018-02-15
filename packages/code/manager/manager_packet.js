@@ -40,6 +40,7 @@ package.manager.packet = function ManagerPacket(me) {
             });
         }
         var streamRequest = info.streamRequests[info.streamRequests.length-1];
+        streamRequest.effects = Object.assign({}, info.effects);
         streamRequest.packetCount++;
         var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
         var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;

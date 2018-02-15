@@ -85,7 +85,6 @@ package.app.packets = function AppPackets(me) {
                     }
                     autoRefresh = false;
                 }
-                me.core.property.set(window, "app.packets.updateEffects");
                 me.core.property.set(window, "app.packets.updateData");
                 if (autoRefresh) {
                     setTimeout(() => {
@@ -116,22 +115,6 @@ package.app.packets = function AppPackets(me) {
             }
         }
         return number;
-    };
-    me.updateEffects = {
-        set: function (object) {
-            var window = me.widget.window.window(object);
-            if (window.packetInfo) {
-                var effects = window.packetInfo.effects;
-                if (effects) {
-                    if(window.var.packetLoss !== document.activeElement) {
-                        me.core.property.set(window.var.packetLoss, "ui.basic.text", effects.packetLoss);
-                    }
-                    if(window.var.packetDelay !== document.activeElement) {
-                        me.core.property.set(window.var.packetDelay, "ui.basic.text", effects.packetDelay);
-                    }
-                }
-            }
-        }
     };
     me.autoIncreasePacketDelay = {
         get: function (object) {
@@ -164,6 +147,7 @@ package.app.packets = function AppPackets(me) {
                 var dataSize = 0;
                 var abr = 0;
                 var duration = 0;
+                var effects = {};
                 var streamRequests = window.packetInfo.streamRequests;
                 if (streamRequests.length) {
                     var streamIndex = window.streamIndex;
@@ -179,6 +163,7 @@ package.app.packets = function AppPackets(me) {
                         if (duration) {
                             abr = dataSize / duration;
                         }
+                        effects = window.packetInfo.effects;
                     } else {
                         var streamRequest = streamRequests[streamIndex - 1];
                         packetCount = streamRequest.packetCount;
@@ -187,7 +172,14 @@ package.app.packets = function AppPackets(me) {
                         if (duration) {
                             abr = dataSize / duration;
                         }
+                        effects = streamRequest.effects;
                     }
+                }
+                if(window.var.packetLoss !== document.activeElement) {
+                    me.core.property.set(window.var.packetLoss, "ui.basic.text", effects.packetLoss);
+                }
+                if(window.var.packetDelay !== document.activeElement) {
+                    me.core.property.set(window.var.packetDelay, "ui.basic.text", effects.packetDelay);
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
