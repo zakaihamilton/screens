@@ -91,10 +91,32 @@ package.app.packets = function AppPackets(me) {
                 if (autoRefresh) {
                     setTimeout(() => {
                         me.core.property.set(window, "app.packets.refreshData");
-                    }, 2500);
+                    }, 5000);
                 }
             });
         }
+    };
+    me.formatAbr = function(number) {
+        var set = false;
+        if(number < 1000) {
+            number = parseInt(number) + "b";
+            set = true;
+        }
+        if(!set) {
+            number /= 1000;
+            if(number < 1000) {
+                number = parseInt(number) + "KB";
+                set = true;
+            }
+        }
+        if(!set) {
+            number /= 1000;
+            if(number < 1000) {
+                number = parseInt(number) + "MB";
+                set = true;
+            }
+        }
+        return number;
     };
     me.updateData = {
         set: function (object) {
@@ -103,6 +125,7 @@ package.app.packets = function AppPackets(me) {
                 var packetCount = 0;
                 var dataSize = 0;
                 var abr = 0;
+                var duration = 0;
                 var streamRequests = window.packetInfo.streamRequests;
                 if(streamRequests.length) {
                     var streamIndex = window.streamIndex;
@@ -113,20 +136,28 @@ package.app.packets = function AppPackets(me) {
                         streamRequests.map((streamRequest) => {
                             packetCount += streamRequest.packetCount;
                             dataSize += streamRequest.dataSize;
-                            abr = streamRequest.abr; /* TODO: need to combine abr */
+                            duration += streamRequest.duration;
                         });
+                        if(duration) {
+                            abr = dataSize / duration;
+                        }
                     }
                     else {
                         var streamRequest = streamRequests[streamIndex-1];
                         packetCount = streamRequest.packetCount;
                         dataSize = streamRequest.dataSize;
-                        abr = streamRequest.abr;
+                        duration = streamRequest.duration;
+                        if(duration) {
+                            abr = dataSize / duration;
+                        }
                     }
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", dataSize);
-                me.core.property.set(window.var.abr, "ui.basic.text", abr);
+                me.core.property.set(window.var.abr, "ui.basic.text", me.formatAbr(abr));
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
+                var durationText = me.lib.moment.moment().startOf('day').seconds(duration).format('HH:mm:ss');
+                me.core.property.set(window.var.duration, "ui.basic.text", durationText);
                 me.core.property.set(window.var.chart, "data", "@app.packets.data");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
@@ -156,6 +187,16 @@ package.app.packets = function AppPackets(me) {
                 }
             }
             return count;
+        }
+    };
+    me.type = {
+        get: function (object) {
+            return null;
+        }
+    };
+    me.options = {
+        get: function (object) {
+            return null;
         }
     };
     me.data = {

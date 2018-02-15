@@ -13,11 +13,10 @@ package.widget.chart = function WidgetChart(me) {
     };
     me.init = function (task) {
         me.lock(task, (task) => {
-            me.core.require.require((moment, chart) => {
-                me.moment = moment;
+            me.core.require.require((chart) => {
                 me.chart = chart;
                 me.unlock(task);
-            }, ['/node_modules/moment/moment.js', '/node_modules/chart.js/dist/Chart.bundle.js']);
+            }, ['/node_modules/chart.js/dist/Chart.bundle.js']);
         });
     };
     me.context = {
@@ -34,6 +33,22 @@ package.widget.chart = function WidgetChart(me) {
             object.data = value;
         }
     };
+    me.type = {
+        get: function (object) {
+            return object.type;
+        },
+        set: function (object, value) {
+            object.type = value;
+        }
+    };
+    me.options = {
+        get: function (object) {
+            return object.options;
+        },
+        set: function (object, value) {
+            object.options = value;
+        }
+    };
     me.info = {
         get: function (object) {
             return object.chartInfo;
@@ -45,9 +60,19 @@ package.widget.chart = function WidgetChart(me) {
     };
     me.update = {
         set: function (object, value) {
-            object.chartInfo.data = object.data;
+            if(object.data) {
+                object.chartInfo.data = object.data;
+            }
+            if(object.options) {
+                object.chartInfo.options = object.options;
+            }
+            if(object.type) {
+                object.chartInfo.type = object.type;
+            }
             if (object.chart) {
                 object.chart.data = object.chartInfo.data;
+                object.chart.options = object.chartInfo.options;
+                object.chart.type = object.chartInfo.type;
                 object.chart.update(value);
             } else {
                 var context = me.core.property.get(object, "context");
@@ -56,9 +81,9 @@ package.widget.chart = function WidgetChart(me) {
         }
     };
     me.dateNow = function (amount, type) {
-        return me.moment().add(amount, type).toDate();
+        return me.lib.moment.moment().add(amount, type).toDate();
     };
     me.dateRel = function(unixTimestamp) {
-        return me.moment.unix(unixTimestamp).toDate();
+        return me.lib.moment.unix(unixTimestamp).toDate();
     };
 };

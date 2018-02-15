@@ -22,17 +22,20 @@ package.manager.packet = function ManagerPacket(me) {
             info.streamRequests.push({
                 packetCount: 0,
                 dataSize: 0,
+                startTime: 0,
+                duration: 0,
                 packets: {}
             });
         }
         var streamRequest = info.streamRequests[info.streamRequests.length-1];
         streamRequest.packetCount++;
-        var dataSize = me.core.json.traverse(packet, "payload.payload.payload.dataLength").value;
-        if (dataSize) {
-            streamRequest.dataSize += dataSize;
-        }
         var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
         var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;
+        streamRequest.dataSize += packet_len;
+        if(!streamRequest.startTime) {
+            streamRequest.startTime = packet_sec;
+        }
+        streamRequest.duration = packet_sec - streamRequest.startTime;
         var packet_source = me.core.json.traverse(packet, "payload.payload.saddr.addr").value;
         var packet_target = me.core.json.traverse(packet, "payload.payload.daddr.addr").value;
         if (packet_source && packet_target) {

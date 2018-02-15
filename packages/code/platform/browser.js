@@ -33,6 +33,9 @@ function startBrowser(appName, appArgs) {
             "network",
             "require"
         ],
+        "lib":[
+            "moment"
+        ],
         "storage": [
             "cache",
             "file",

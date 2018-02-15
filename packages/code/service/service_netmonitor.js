@@ -42,7 +42,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         }
                         packet = JSON.parse(JSON.stringify(packet));
                         var node = me.core.json.traverse(packet, "payload.payload.payload.data");
-                        if (node.item) {
+                        if (node.item && node.parent) {
                             delete node.parent["data"];
                         }
                         me.manager.packet.push(() => {

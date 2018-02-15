@@ -55,7 +55,7 @@
                         {
                             "ui.basic.text": "",
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "title",
@@ -79,7 +79,7 @@
                             "ui.basic.text": "",
                             "ui.basic.readOnly": true,
                             "ui.property.style": {
-                                "width": "300px",
+                                "width": "250px",
                                 "display": "inline-block"
                             },
                             "ui.basic.type": "text",
@@ -100,7 +100,7 @@
                             "ui.basic.text": "",
                             "ui.basic.readOnly": true,
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "dataSize"
@@ -120,7 +120,7 @@
                             "ui.basic.text": "",
                             "ui.basic.readOnly": true,
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "abr"
@@ -139,7 +139,7 @@
                         {
                             "ui.basic.text": "",
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetLoss",
@@ -177,7 +177,7 @@
                         {
                             "ui.basic.text": "0",
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.attribute.min": "0",
                             "ui.attribute.step": "5",
@@ -185,6 +185,26 @@
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetDelay",
                             "ui.monitor.change": "app.packets.packetDelay"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Duration",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "250px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "duration"
                         }
                     ]
                 },
@@ -201,7 +221,7 @@
                             "ui.basic.text": "",
                             "ui.basic.readOnly": true,
                             "ui.property.style": {
-                                "width": "300px"
+                                "width": "250px"
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "streamCount"
@@ -219,7 +239,7 @@
                         },
                         {
                             "ui.basic.text": "Combined",
-                            "ui.style.width": "300px",
+                            "ui.style.width": "250px",
                             "ui.basic.var":"streamIndex",
                             "core.link.onChange": "app.packets.onChangeStream",
                             "ui.element.count": 0,
@@ -246,6 +266,8 @@
             "ui.style.paddingLeft":"10%",
             "ui.style.width": "75%",
             "data": "@app.packets.data",
+            "options":"@app.packets.options",
+            "type":"@app.packets.type",
             "info": {
                 "type": "line",
                 "options": {
