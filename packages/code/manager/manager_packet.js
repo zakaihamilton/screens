@@ -14,9 +14,11 @@ package.manager.packet = function ManagerPacket(me) {
     me.signal = function(callback, path) {
         me.packetInfo.signal = true;
         if(me.packetInfo.effects.autoIncreasePacketDelay) {
-            me.affect(callback, {
-                "packetDelay" : parseInt(me.packetInfo.effects.packetDelay) + 5
-            });
+            var packetDelay = parseInt(me.packetInfo.effects.packetDelay);
+            var effects = {
+                "packetDelay" : packetDelay + 5
+            };
+            me.affect(callback, effects);
         }
         else {
             callback();
@@ -91,6 +93,7 @@ package.manager.packet = function ManagerPacket(me) {
     };
     me.affect = function (callback, params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
+        me.core.console.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
         me.core.service.sendAll("service.netcontrol.affect", callback, me.packetInfo.effects);
     };
 };
