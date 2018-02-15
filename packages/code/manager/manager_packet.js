@@ -7,13 +7,22 @@ package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
     me.init = function () {
-        me.reset(() => {
-
-        });
+        me.packetInfo = {
+            streamRequests:[],
+            signal:false,
+            effects:{}
+        };
     };
     me.signal = function(callback, path) {
         me.packetInfo.signal = true;
-        callback();
+        if(me.packetInfo.effects.autoIncreasePacketDelay) {
+            me.affect(callback, {
+                "packetDelay" : me.packetInfo.effects.packetDelay + 5
+            });
+        }
+        else {
+            callback();
+        }
     };
     me.push = function (callback, packet, service) {
         var info = me.packetInfo;
@@ -75,13 +84,10 @@ package.manager.packet = function ManagerPacket(me) {
         callback(me.packetInfo);
     };
     me.reset = function (callback) {
-        me.packetInfo = {
-            streamRequests:[],
-            signal:false
-        };
         callback();
     };
     me.affect = function (callback, params) {
-        me.core.service.sendAll("service.netcontrol.affect", callback, params);
+        me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
+        me.core.service.sendAll("service.netcontrol.affect", callback, me.packetInfo.effects);
     };
 };
