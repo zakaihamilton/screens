@@ -27,26 +27,26 @@ package.widget.chart = function WidgetChart(me) {
     };
     me.data = {
         get: function (object) {
-            return object.data;
+            return object.chartData;
         },
         set: function (object, value) {
-            object.data = value;
+            object.chartData = value;
         }
     };
     me.type = {
         get: function (object) {
-            return object.type;
+            return object.chartType;
         },
         set: function (object, value) {
-            object.type = value;
+            object.chartType = value;
         }
     };
     me.options = {
         get: function (object) {
-            return object.options;
+            return object.chartOptions;
         },
         set: function (object, value) {
-            object.options = value;
+            object.chartOptions = value;
         }
     };
     me.info = {
@@ -60,14 +60,14 @@ package.widget.chart = function WidgetChart(me) {
     };
     me.update = {
         set: function (object, value) {
-            if(object.data) {
-                object.chartInfo.data = object.data;
+            if(object.chartData) {
+                object.chartInfo.data = object.chartData;
             }
-            if(object.options) {
-                object.chartInfo.options = object.options;
+            if(object.chartOptions) {
+                //object.chartInfo.options = object.chartOptions;
             }
-            if(object.type) {
-                object.chartInfo.type = object.type;
+            if(object.chartType) {
+                object.chartInfo.type = object.chartType;
             }
             if (object.chart) {
                 object.chart.data = object.chartInfo.data;

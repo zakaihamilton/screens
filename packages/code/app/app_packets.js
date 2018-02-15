@@ -175,10 +175,10 @@ package.app.packets = function AppPackets(me) {
                         effects = streamRequest.effects;
                     }
                 }
-                if(window.var.packetLoss !== document.activeElement) {
+                if (window.var.packetLoss !== document.activeElement) {
                     me.core.property.set(window.var.packetLoss, "ui.basic.text", effects.packetLoss);
                 }
-                if(window.var.packetDelay !== document.activeElement) {
+                if (window.var.packetDelay !== document.activeElement) {
                     me.core.property.set(window.var.packetDelay, "ui.basic.text", effects.packetDelay);
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
@@ -220,12 +220,44 @@ package.app.packets = function AppPackets(me) {
     };
     me.chartType = {
         get: function (object) {
-            return null;
+            return "line";
         }
     };
     me.chartOptions = {
         get: function (object) {
-            return null;
+            var options = {
+                "responsive": true,
+                "showLines": true,
+                "spanGaps": true,
+                "title": {
+                    "display": true,
+                    "text": "Chart Data"
+                },
+                "scales": {
+                    "xAxes": [{
+                            "type": "time",
+                            "display": true,
+                            "scaleLabel": {
+                                "display": true,
+                                "labelString": "Time"
+                            },
+                            "ticks": {
+                                "major": {
+                                    "fontStyle": "bold",
+                                    "fontColor": "#FF0000"
+                                }
+                            }
+                        }],
+                    "yAxes": [{
+                            "display": true,
+                            "scaleLabel": {
+                                "display": true,
+                                "labelString": "Bytes (KB)"
+                            }
+                        }]
+                }
+            };
+            return options;
         }
     };
     me.chartData = {

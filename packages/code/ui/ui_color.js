@@ -6,7 +6,11 @@
 package.ui.color = function UIColor(me) {
     me.colors = [];
     me.random = function() {
-        return 'hsla(' + (Math.random() * 360) + ', 100%, 40%, 1)';
+        var allowed = "0369cf".split( '' ), s = "#";
+        while ( s.length < 4 ) {
+            s += allowed.splice( Math.floor( ( Math.random() * allowed.length ) ), 1 );
+        }
+        return s;
     };
     me.randomSet = function(count) {
         if(count < 0) {
