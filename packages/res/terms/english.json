@@ -6452,6 +6452,32 @@
             "term":"Hech",
             "hebrew":"חך",
             "translation":"Palate"
+        },
+        {
+            "term":"Ophanim",
+            "hebrew":"אופנים",
+            "translation":"Cycles",
+            "style":{
+                "heading":"Angels",
+                "phase":"four"
+            }
+        },
+        {
+            "term":"Hayot",
+            "hebrew":"חיות",
+            "translation":"Animals",
+            "style":{
+                "heading":"Angels",
+                "phase":"three"
+            }
+        },
+        {
+            "term":"Seraphim",
+            "hebrew":"שרפים",
+            "style":{
+                "heading":"Angels",
+                "phase":"two"
+            }
         }
         ],
     "style": {
