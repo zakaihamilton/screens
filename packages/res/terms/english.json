@@ -134,7 +134,9 @@
         "Taamimof":"Taamim of",
         "Eser de Sefirot":"Eser Sefirot",
         "<title>":"<br>\n<h4 style=\"text-align:center\">",
-        "</title>":"</h4>"
+        "</title>":"</h4>",
+        "<rtl>":"<span dir=\"rtl\">",
+        "</rtl>":"</span>"
     },
     "pre": [
         {
@@ -710,6 +712,10 @@
             "translation": "Inner Light",
             "term": "Ohr Pnimi",
             "hebrew":"אור פנימי"
+        },
+        {
+            "term":"Love",
+            "hebrew":"אהבה"
         },
         {
             "translation": "Light of Mercy",
@@ -2371,7 +2377,7 @@
                 "heading": "Aspect",
                 "phase": "root"
             },
-            "translation": "Mercy",
+            "translation": "Mercies",
             "explanation":"Alignment",
             "term": "Hassadim",
             "hebrew":"חסדים"
@@ -5445,13 +5451,6 @@
             "explanation": "Vehicles",
             "term": "Merkavot",
             "hebrew":"מרכבות"
-        },
-        {
-            "fixed": true,
-            "prefix": "The",
-            "translation": "Creator",
-            "explanation": "System",
-            "term": "God"
         },
         {
             "translation": "another god",
