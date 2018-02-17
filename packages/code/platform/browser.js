@@ -147,13 +147,19 @@ function startBrowser(appName, appArgs) {
             if (progress) {
                 progress.style.width = progress_width + "px";
                 progress.innerHTML = info.loaded.package + "." + info.loaded.component;
+                if(info.progress >= 100) {
+                    progress.innerHTML = "Initializing Components";
+                }
             }
         }
         if (info.complete) {
-            var app = package.startup.app;
-            app.args = appArgs;
-            app.name = appName;
-            package.core.startup.run();
+            progress.innerHTML = "Starting " + (appName ? appName : "Screens Environment");
+            setTimeout(() => {
+                var app = package.startup.app;
+                app.args = appArgs;
+                app.name = appName;
+                package.core.startup.run();
+            }, 0);
         }
     });
 }

@@ -4,7 +4,7 @@
  */
 
 package.app.transform = function AppTransform(me) {
-    me.launch = function () {
+    me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;

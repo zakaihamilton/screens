@@ -259,30 +259,32 @@ function package_complete(info, order, callback) {
     if(info && info.failure) {
         return;
     }
-    package.lock(task => {
-        order.map(function (id) {
-            var component = package_component(id);
-            if (component.init && component.init.length) {
-                console.log(package.platform + ": Initializing " + id);
-                do {
-                    var init = component.init.shift();
-                    if (init) {
-                        package_init(id, init, task);
+    setTimeout(() => {
+        package.lock(task => {
+            order.map(function (id) {
+                var component = package_component(id);
+                if (component.init && component.init.length) {
+                    console.log(package.platform + ": Initializing " + id);
+                    do {
+                        var init = component.init.shift();
+                        if (init) {
+                            package_init(id, init, task);
+                        }
+                    } while (init);
+                }
+            });
+            package.unlock(task, () => {
+                if (info) {
+                    if (info.loaded) {
+                        info.complete = true;
                     }
-                } while (init);
-            }
-        });
-        package.unlock(task, () => {
-            if (info) {
-                if (info.loaded) {
-                    info.complete = true;
+                    if (callback) {
+                        callback(info);
+                    }
                 }
-                if (callback) {
-                    callback(info);
-                }
-            }
+            });
         });
-    });
+    }, 0);
 }
 
 function package_include(packages, callback, package_type="code") {
