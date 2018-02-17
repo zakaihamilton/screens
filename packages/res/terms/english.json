@@ -3907,13 +3907,6 @@
             "hebrew":"הבל"
         },
         {
-            "style": {
-                "heading": "Letters"
-            },
-            "term": "AT",
-            "hebrew":"את"
-        },
-        {
             "prefix": "a",
             "translation": "Seal",
             "term": "Hotam",
