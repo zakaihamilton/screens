@@ -8,7 +8,13 @@ package.core.require = function CoreRequire(me) {
         require(list, function () {
             var modules = [];
             list.map((path) => {
-                var module = require(path);
+                var module = null;
+                try {
+                    module = require(path);
+                }
+                catch(e) {
+                    me.core.console.error(e);
+                }
                 modules.push(module);
             });
             callback.apply(null, modules);
