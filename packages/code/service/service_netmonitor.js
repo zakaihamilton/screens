@@ -37,16 +37,22 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                     }
                 }
                 if (me.session) {
-                    me.session.on('packet', function (raw_packet) {
-                        var packet = me.pcap.decode.packet(raw_packet);
+                    me.session.on('packet', function (rawPacket) {
+                        var fullPacket = me.pcap.decode.packet(rawPacket);
                         if (filter && filter.includes("tcp")) {
-                            me.tracker.track_packet(packet);
+                            me.tracker.track_packet(fullPacket);
                         }
-                        packet = JSON.parse(JSON.stringify(packet));
-                        var node = me.core.json.traverse(packet, "payload.payload.payload.data");
-                        if (node.item && node.parent) {
-                            delete node.parent["data"];
-                        }
+                        var fullPacket = JSON.parse(JSON.stringify(fullPacket));
+                        var packet_sec = me.core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
+                        var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
+                        var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
+                        var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
+                        var packet = {
+                            source: packet_source,
+                            target: packet_target,
+                            size: packet_len,
+                            time: packet_sec
+                        };
                         me.packets.push(packet);
                         if(!me.timer) {
                             me.timer = setTimeout(() => {

@@ -42,19 +42,20 @@ package.manager.packet = function ManagerPacket(me) {
         if(!Array.isArray(packets)) {
             packets = [packets];
         }
+        me.core.console.log("received " + packets.length + " packets");
         for(var packet of packets) {
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
             streamRequest.effects = Object.assign({}, info.effects);
             streamRequest.packetCount++;
-            var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
-            var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;
+            var packet_sec = packet.time;
+            var packet_len = packet.size;
+            var packet_source = packet.source;
+            var packet_target = packet.target;
             streamRequest.dataSize += packet_len;
             if(!streamRequest.startTime) {
                 streamRequest.startTime = packet_sec;
             }
             streamRequest.duration = packet_sec - streamRequest.startTime;
-            var packet_source = me.core.json.traverse(packet, "payload.payload.saddr.addr").value;
-            var packet_target = me.core.json.traverse(packet, "payload.payload.daddr.addr").value;
             if (packet_source && packet_target) {
                 packet_source = packet_source.join(".");
                 packet_target = packet_target.join(".");
