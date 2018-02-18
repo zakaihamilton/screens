@@ -37,6 +37,17 @@
                         "separator": true
                     }]
             ]
+        ],
+        ["View", [
+                ["Data / Time", "app.packets.viewType", {
+                        "state": "select"
+                    }
+                ],
+                ["ABR / Packet Delay", "app.packets.viewType", {
+                        "state": "select"
+                    }
+                ]
+            ]
         ]
     ],
     "ui.basic.elements": [
@@ -274,41 +285,7 @@
             "data": "@app.packets.chartData",
             "options":"@app.packets.chartOptions",
             "type":"@app.packets.chartType",
-            "info": {
-                "type": "line",
-                "options": {
-                    "responsive": true,
-                    "showLines":true,
-                    "spanGaps":true,
-                    "title": {
-                        "display": true,
-                        "text": "Chart Data"
-                    },
-                    "scales": {
-                        "xAxes": [{
-                                "type": "time",
-                                "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Time"
-                                },
-                                "ticks": {
-                                    "major": {
-                                        "fontStyle": "bold",
-                                        "fontColor": "#FF0000"
-                                    }
-                                }
-                            }],
-                        "yAxes": [{
-                                "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Bytes (KB)"
-                                }
-                            }]
-                    }
-                }
-            }
+            "info": {}
         }
     ],
     "app.packets.refreshData": null,

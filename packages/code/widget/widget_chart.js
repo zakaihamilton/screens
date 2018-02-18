@@ -54,6 +54,9 @@ package.widget.chart = function WidgetChart(me) {
             return object.chartInfo;
         },
         set: function (object, value) {
+            if(!value) {
+                value = {};
+            }
             object.chartInfo = value;
             me.core.property.notify(object, "update");
         }

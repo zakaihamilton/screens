@@ -5,18 +5,31 @@
 
 package.app.packets = function AppPackets(me) {
     me.launch = function (args) {
-        var window = me.ui.element.create(__json__, "workspace", "self");
-        if (me.options.dataProfile !== "Live") {
-            me.core.property.set(window.var.title, "ui.basic.text", me.options.dataProfile);
+        if (me.core.property.get(me.singleton, "ui.node.parent")) {
+            me.core.property.set(me.singleton, "widget.window.show", true);
+            return me.singleton;
         }
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        if (me.options.dataProfile !== "Live") {
+            me.core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
+        }
+        return me.singleton;
     };
     me.init = function (task) {
         me.colors = [];
         me.ui.options.load(me, null, {
             "autoRefresh": true,
-            "dataProfile": "Live"
+            "dataProfile": "Live",
+            "viewType": "Data / Time"
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
+        me.viewType = me.ui.options.choiceSet(me, "viewType", (object, options, key, value) => {
+            var window = me.widget.window.window(object);
+            me.core.property.set(window.var.chart, "reset");
+            me.core.property.set(window.var.chart, "type", "@app.packets.chartType");
+            me.core.property.set(window.var.chart, "options", "@app.packets.chartOptions");
+            me.core.property.set(window, "app.packets.refreshData");
+        });
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
             var window = me.widget.window.window(object);
             if (window.streamIndex > 0) {
@@ -239,38 +252,76 @@ package.app.packets = function AppPackets(me) {
     };
     me.chartOptions = {
         get: function (object) {
-            var options = {
-                "responsive": true,
-                "showLines": true,
-                "spanGaps": true,
-                "title": {
-                    "display": true,
-                    "text": "Chart Data"
-                },
-                "scales": {
-                    "xAxes": [{
-                            "type": "time",
-                            "display": true,
-                            "scaleLabel": {
+            var window = me.widget.window.window(object);
+            var viewType = me.options.viewType;
+            var options = {};
+            if (viewType === "Data / Time") {
+                options = {
+                    "responsive": true,
+                    "showLines": true,
+                    "spanGaps": true,
+                    "title": {
+                        "display": true,
+                        "text": viewType
+                    },
+                    "scales": {
+                        "xAxes": [{
+                                "type": "time",
                                 "display": true,
-                                "labelString": "Time"
-                            },
-                            "ticks": {
-                                "major": {
-                                    "fontStyle": "bold",
-                                    "fontColor": "#FF0000"
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Time"
+                                },
+                                "ticks": {
+                                    "major": {
+                                        "fontStyle": "bold",
+                                        "fontColor": "#FF0000"
+                                    }
                                 }
-                            }
-                        }],
-                    "yAxes": [{
-                            "display": true,
-                            "scaleLabel": {
+                            }],
+                        "yAxes": [{
                                 "display": true,
-                                "labelString": "Bytes (KB)"
-                            }
-                        }]
-                }
-            };
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Bytes (KB)"
+                                }
+                            }]
+                    }
+                };
+            } else if (viewType === "ABR / Packet Delay") {
+                options = {
+                    "responsive": true,
+                    "showLines": true,
+                    "spanGaps": true,
+                    "title": {
+                        "display": true,
+                        "text": viewType
+                    },
+                    "scales": {
+                        "xAxes": [{
+                                "type":"linear",
+                                "display": true,
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Packet Delay"
+                                },
+                                "ticks": {
+                                    "major": {
+                                        "fontStyle": "bold",
+                                        "fontColor": "#FF0000"
+                                    }
+                                }
+                            }],
+                        "yAxes": [{
+                                "display": true,
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "ABR (KB)"
+                                }
+                            }]
+                    }
+                };
+            }
             return options;
         }
     };
@@ -281,6 +332,7 @@ package.app.packets = function AppPackets(me) {
             if (!window || !window.packetInfo) {
                 return data;
             }
+            var viewType = me.options.viewType;
             var streamRequests = window.packetInfo.streamRequests;
             if (!streamRequests.length) {
                 return data;
@@ -302,46 +354,81 @@ package.app.packets = function AppPackets(me) {
                 function dateRel(sec) {
                     return me.widget.chart.dateRel(sec);
                 }
-                for (var sourceIp in packets) {
-                    var targets = packets[sourceIp];
-                    for (var targetIp in targets) {
-                        var target = targets[targetIp];
-                        var label = "";
-                        if (target.sourceIsService) {
-                            label = "service";
-                        } else {
-                            label = "device";
-                        }
-                        label += "(" + sourceIp + ") => ";
-                        if (target.targetIsService) {
-                            label += "service";
-                        } else {
-                            label += "device";
-                        }
-                        label += "(" + targetIp + ")";
-                        if (!(label in info)) {
-                            var color = me.colors[label];
-                            if (!color) {
-                                color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                if (viewType === "Data / Time") {
+                    for (var sourceIp in packets) {
+                        var targets = packets[sourceIp];
+                        for (var targetIp in targets) {
+                            var target = targets[targetIp];
+                            var label = "";
+                            if (target.sourceIsService) {
+                                label = "service";
+                            } else {
+                                label = "device";
                             }
-                            var dataset = {
-                                label: label,
-                                backgroundColor: color,
-                                borderColor: color,
-                                fill: false,
-                                data: []
-                            };
-                            info[label] = dataset;
-                        }
-                        var dataset = info[label];
-                        for (var time in target.items) {
-                            var item = target.items[time];
-                            dataset.data.push({
-                                x: dateRel(item.end),
-                                y: item.len / 1000
-                            });
+                            label += "(" + sourceIp + ") => ";
+                            if (target.targetIsService) {
+                                label += "service";
+                            } else {
+                                label += "device";
+                            }
+                            label += "(" + targetIp + ")";
+                            if (!(label in info)) {
+                                var color = me.colors[label];
+                                if (!color) {
+                                    color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                                }
+                                var dataset = {
+                                    label: label,
+                                    backgroundColor: color,
+                                    borderColor: color,
+                                    fill: false,
+                                    data: []
+                                };
+                                info[label] = dataset;
+                            }
+                            var dataset = info[label];
+                            for (var time in target.items) {
+                                var item = target.items[time];
+                                var data = {
+                                    x: dateRel(item.end),
+                                    y: parseInt(item.len / 1000)
+                                };
+                                dataset.data.push(data);
+                            }
                         }
                     }
+                } else if (viewType === "ABR / Packet Delay") {
+                    var dataSize = streamRequest.dataSize;
+                    var duration = streamRequest.duration;
+                    var abr = 0;
+                    if (duration) {
+                        abr = dataSize / duration;
+                    }
+                    var effects = streamRequest.effects;
+                    var packetDelay = 0;
+                    if (effects) {
+                        packetDelay = effects.packetDelay;
+                    }
+                    var label = "default";
+                    var dataset = info[label];
+                    if (!dataset) {
+                        var color = me.colors[label];
+                        if (!color) {
+                            color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                        }
+                        dataset = info[label] = {
+                            label: "",
+                            backgroundColor: color,
+                            borderColor: color,
+                            fill: false,
+                            data: []
+                        };
+                    }
+                    var data = {
+                        x: packetDelay,
+                        y: parseInt(abr / 1000)
+                    };
+                    dataset.data.push(data);
                 }
             });
             Object.keys(info).sort().map((label) => {

@@ -12,6 +12,7 @@ package.core.stream = function CoreStream(me) {
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);
         var range = headers.range;
+        var partial = false;
         if (range) {
             var total = stat.size;
             var parts = range.replace(/bytes=/, "").split("-");
@@ -27,7 +28,7 @@ package.core.stream = function CoreStream(me) {
                 "Content-Length": chunkSize,
                 "Content-Type": contentType
             };
-            var partial = total !== chunkSize;
+            partial = total !== chunkSize;
             var responseCode = 200;
             if(partial) {
                 responseCode = 206;
@@ -59,5 +60,6 @@ package.core.stream = function CoreStream(me) {
                 response.end();                
             }
         }
+        return partial;
     };
 };
