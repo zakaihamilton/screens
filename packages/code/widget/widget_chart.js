@@ -11,14 +11,6 @@ package.widget.chart = function WidgetChart(me) {
             "ui.basic.var": "canvas"
         }
     };
-    me.init = function (task) {
-        me.lock(task, (task) => {
-            me.core.require.require((chart) => {
-                me.chart = chart;
-                me.unlock(task);
-            }, ['/node_modules/chart.js/dist/Chart.bundle.js']);
-        });
-    };
     me.context = {
         get: function (object) {
             var context = object.var.canvas.getContext("2d");
@@ -88,7 +80,15 @@ package.widget.chart = function WidgetChart(me) {
                     object.chartInfo.type = object.chartType;
                 }
                 var context = me.core.property.get(object, "context");
-                object.chart = new me.chart.Chart(context, object.chartInfo);
+                if(!me.chart) {
+                    me.core.require.require((chart) => {
+                        me.chart = chart;
+                        object.chart = new me.chart.Chart(context, object.chartInfo);
+                    }, ['/node_modules/chart.js/dist/Chart.bundle.js']);
+                }
+                else {
+                    object.chart = new me.chart.Chart(context, object.chartInfo);
+                }
             }
         }
     };
