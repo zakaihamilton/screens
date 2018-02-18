@@ -27,7 +27,7 @@ package.manager.packet = function ManagerPacket(me) {
             callback();
         }
     };
-    me.push = function (callback, packet, service) {
+    me.push = function (callback, packets, service) {
         var info = me.packetInfo;
         if(info.signal || !info.streamRequests.length) {
             info.signal = false;
@@ -39,48 +39,53 @@ package.manager.packet = function ManagerPacket(me) {
                 packets: {}
             });
         }
-        var streamRequest = info.streamRequests[info.streamRequests.length-1];
-        streamRequest.effects = Object.assign({}, info.effects);
-        streamRequest.packetCount++;
-        var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
-        var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;
-        streamRequest.dataSize += packet_len;
-        if(!streamRequest.startTime) {
-            streamRequest.startTime = packet_sec;
+        if(!Array.isArray(packets)) {
+            packets = [packets];
         }
-        streamRequest.duration = packet_sec - streamRequest.startTime;
-        var packet_source = me.core.json.traverse(packet, "payload.payload.saddr.addr").value;
-        var packet_target = me.core.json.traverse(packet, "payload.payload.daddr.addr").value;
-        if (packet_source && packet_target) {
-            packet_source = packet_source.join(".");
-            packet_target = packet_target.join(".");
-            var sourceMap = streamRequest.packets[packet_source];
-            if (!sourceMap) {
-                sourceMap = streamRequest.packets[packet_source] = {};
+        for(var packet of packets) {
+            var streamRequest = info.streamRequests[info.streamRequests.length-1];
+            streamRequest.effects = Object.assign({}, info.effects);
+            streamRequest.packetCount++;
+            var packet_sec = me.core.json.traverse(packet, "pcap_header.tv_sec").value;
+            var packet_len = me.core.json.traverse(packet, "pcap_header.len").value;
+            streamRequest.dataSize += packet_len;
+            if(!streamRequest.startTime) {
+                streamRequest.startTime = packet_sec;
             }
-            var targetMap = sourceMap[packet_target];
-            if (!targetMap) {
-                targetMap = sourceMap[packet_target] = {};
-            }
-            if (this && this.clientIp) {
-                if (this.clientIp.includes(packet_source)) {
-                    targetMap.sourceIsService = true;
+            streamRequest.duration = packet_sec - streamRequest.startTime;
+            var packet_source = me.core.json.traverse(packet, "payload.payload.saddr.addr").value;
+            var packet_target = me.core.json.traverse(packet, "payload.payload.daddr.addr").value;
+            if (packet_source && packet_target) {
+                packet_source = packet_source.join(".");
+                packet_target = packet_target.join(".");
+                var sourceMap = streamRequest.packets[packet_source];
+                if (!sourceMap) {
+                    sourceMap = streamRequest.packets[packet_source] = {};
                 }
-                if (this.clientIp.includes(packet_target)) {
-                    targetMap.targetIsService = true;
+                var targetMap = sourceMap[packet_target];
+                if (!targetMap) {
+                    targetMap = sourceMap[packet_target] = {};
                 }
+                if (this && this.clientIp) {
+                    if (this.clientIp.includes(packet_source)) {
+                        targetMap.sourceIsService = true;
+                    }
+                    if (this.clientIp.includes(packet_target)) {
+                        targetMap.targetIsService = true;
+                    }
+                }
+                var items = targetMap.items;
+                if (!targetMap.items) {
+                    items = targetMap.items = {};
+                }
+                var key = parseInt(packet_sec / 10);
+                var item = items[key];
+                if (!item) {
+                    item = items[key] = {len: 0, start: packet_sec, end: 0};
+                }
+                item.len += packet_len;
+                item.end = packet_sec;
             }
-            var items = targetMap.items;
-            if (!targetMap.items) {
-                items = targetMap.items = {};
-            }
-            var key = parseInt(packet_sec / 10);
-            var item = items[key];
-            if (!item) {
-                item = items[key] = {len: 0, start: packet_sec, end: 0};
-            }
-            item.len += packet_len;
-            item.end = packet_sec;
         }
         callback();
     };

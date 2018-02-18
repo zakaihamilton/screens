@@ -36,7 +36,8 @@
           "wlan0",
           "en0"
         ],
-        "filter": "port @port"
+        "filter": "port @port",
+        "delay":2500
       },
       "httpserver": {
         "path": "./"

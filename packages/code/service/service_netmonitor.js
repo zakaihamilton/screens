@@ -7,6 +7,8 @@
 package.service.netmonitor = function ServiceNetMonitor(me) {
     me.setup = function (callback, ref) {
         me.device = null;
+        me.packets = [];
+        me.timer = null;
         me.core.service.config(config => {
             if (config) {
                 me.pcap = require('pcap');
@@ -45,9 +47,19 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         if (node.item && node.parent) {
                             delete node.parent["data"];
                         }
-                        me.manager.packet.push(() => {
+                        me.packets.push(packet);
+                        if(!me.timer) {
+                            me.timer = setTimeout(() => {
+                                me.timer = null;
+                                var packets = me.packets;
+                                me.packets = [];
+                                if(packets) {
+                                    me.manager.packet.push(() => {
 
-                        }, packet, ref);
+                                    }, packets, ref);
+                                }
+                            }, parseInt(config.delay));
+                        }
                     });
                     if (filter && filter.includes("tcp")) {
                         me.tracker.on('start', function (session) {
