@@ -97,7 +97,9 @@ package.manager.packet = function ManagerPacket(me) {
         me.packetInfo = {
             streamRequests:[],
             signal:false,
-            effects:{}
+            effects:{
+                autoIncreasePacketDelay:true
+            }
         };
         callback();
     };
