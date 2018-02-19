@@ -155,6 +155,7 @@ function startBrowser(appName, appArgs) {
         if (info.complete) {
             progress.innerHTML = "Starting " + (appName ? appName : "Screens Environment");
             setTimeout(() => {
+                document.getElementById("bar").style.display = "none";
                 var app = package.startup.app;
                 app.args = appArgs;
                 app.name = appName;

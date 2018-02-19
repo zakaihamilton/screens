@@ -3,18 +3,28 @@
  @component AppMain
  */
 
+package.require("app.main", "browser");
 package.app.main = function (me) {
+    me.ready = {browser:false, client:false};
     me.setStartupApp = function(callback, appName) {
         me.appName = appName;
     };
     me.setStartupArgs = function(callback, appArgs) {
         me.appArgs = appArgs;
     };
+    me.client = function () {
+        me.core.console.log("client is ready");
+        me.ready.client = true;
+        if(me.ready.browser) {
+            me.ready();
+        }
+    };
     me.browser = function () {
-        /* run on the browser */
         me.core.console.log("browser is ready");
-        me.core.message.send_browser("app.main.ready");
-        me.core.test.run("core.string");
+        me.ready.browser = true;
+        if(me.ready.client) {
+            me.ready();
+        }
     };
     me.ready = function () {
         me.ui.element.create([

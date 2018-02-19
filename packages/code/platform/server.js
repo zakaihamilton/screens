@@ -46,6 +46,7 @@ package.include({
     ]
 }, function (info) {
     if (info.complete) {
+        package.core.console.log("server loaded");
         package.core.startup.run();
     }
 });

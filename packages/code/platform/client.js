@@ -27,8 +27,13 @@ package.include({
         "search",
         "style",
         "text"
-    ]}, function (info) {
+    ],
+    "startup": [
+        "app"
+    ]
+}, function (info) {
     if (info.complete) {
+        package.core.console.log("client loaded");
         package.core.startup.run();
     }
 });
