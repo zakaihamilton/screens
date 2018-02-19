@@ -100,7 +100,11 @@ package.app.packets = function AppPackets(me) {
                 }
                 me.core.property.set(window, "app.packets.updateData");
                 if (autoRefresh) {
-                    setTimeout(() => {
+                    if(me.timer) {
+                        clearTimeout(me.timer);
+                        me.timer = null;
+                    }
+                    me.timer = setTimeout(() => {
                         me.core.property.set(window, "app.packets.refreshData");
                     }, 10000);
                 }
