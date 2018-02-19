@@ -109,20 +109,14 @@ package.manager.packet = function ManagerPacket(me) {
         me.core.service.sendAll("service.netcontrol.affect", callback, me.packetInfo.effects);
     };
     me.enablePush = function(callback, flag) {
-        me.core.service.sendAll("service.netmonitor.enablePush", (responses) => {
-            var error = null;
-            responses.map((response) => {
-                error = response[0];
-            });
+        me.core.service.sendAll("service.netmonitor.enablePush", (response) => {
+            var error = response[0];
             callback(error);
         }, flag);
     };
     me.isPushEnabled = function(callback) {
-        me.core.service.sendAll("service.netmonitor.enablePush", (responses) => {
-            var isPushEnabled = false;
-            responses.map((response) => {
-                isPushEnabled = response[0];
-            });
+        me.core.service.sendAll("service.netmonitor.isPushEnabled", (response) => {
+            var isPushEnabled = response[0];
             callback(isPushEnabled);
         });
     };

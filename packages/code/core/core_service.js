@@ -114,15 +114,20 @@ package.core.service = function CoreService(me) {
             var response = Array.prototype.slice.call(arguments);
             responses.push(response);
             count--;
-            me.core.console.log("recieved from a device, " + count + " devices left");
+            me.core.console.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
             if (!count) {
                 callback.apply(null, responses);
             }
         };
-        me.clients.forEach((info, socket) => {
-            me.core.message.send_service.apply(socket, args);
-            count++;
-        });
+        if(me.clients) {
+            me.clients.forEach((info, socket) => {
+                me.core.message.send_service.apply(socket, args);
+                count++;
+            });
+        }
+        else {
+            callback();
+        }
         me.core.console.log("sent " + path + "' to " + count + " devices");
     };
 };
