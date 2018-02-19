@@ -109,17 +109,14 @@ package.core.service = function CoreService(me) {
         var errors = null;
         var args = Array.prototype.slice.call(arguments);
         var count = 0;
-        args[1] = (err) => {
-            if (err) {
-                if (!errors) {
-                    errors = [];
-                }
-                errors.push(err);
-            }
+        var responses = [];
+        args[1] = function() {
+            var response = Array.prototype.slice.call(arguments);
+            responses.push(response);
             count--;
-            me.core.console.log("recieved from a device, " + count + " devices left, error: " + err);
+            me.core.console.log("recieved from a device, " + count + " devices left");
             if (!count) {
-                callback.apply(null, errors);
+                callback.apply(null, responses);
             }
         };
         me.clients.forEach((info, socket) => {

@@ -9,6 +9,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
         me.device = null;
         me.packets = [];
         me.timer = null;
+        me.options = {enablePush:true};
         me.core.service.config(config => {
             if (config) {
                 me.pcap = require('pcap');
@@ -54,18 +55,6 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                             time: packet_sec
                         };
                         me.packets.push(packet);
-                        if(!me.timer) {
-                            me.timer = setTimeout(() => {
-                                me.timer = null;
-                                var packets = me.packets;
-                                me.packets = [];
-                                if(packets) {
-                                    me.manager.packet.push(() => {
-
-                                    }, packets, ref);
-                                }
-                            }, parseInt(config.delay));
-                        }
                     });
                     if (filter && filter.includes("tcp")) {
                         me.tracker.on('start', function (session) {
@@ -75,11 +64,33 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                             me.core.console.log("End of TCP session between " + session.src_name + " and " + session.dst_name);
                         });
                     }
+                    setInterval(() => {
+                        if(me.options.enablePush) {
+                            var packets = me.packets;
+                            me.packets = [];
+                            if(packets) {
+                                me.manager.packet.push(() => {
+
+                                }, packets, ref);
+                            }
+                        }
+                    }, parseInt(config.delay));
                 } else {
                     me.core.console.log("cannot connect through any of the following devices: " + devices);
                 }
                 callback();
             }
         }, me.__component);
+    };
+    me.enablePush = function(callback, flag) {
+        me.options.enablePush = flag;
+        callback();
+    };
+    me.isPushEnabled = function(callback) {
+        callback(me.options.enablePush);
+    };
+    me.reset = function(callback) {
+        me.packets = [];
+        callback();
     };
 };

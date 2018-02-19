@@ -17,6 +17,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.init = function (task) {
         me.colors = [];
+        me.isPushEnabled = false;
         me.ui.options.load(me, null, {
             "autoRefresh": true,
             "dataProfile": "Live",
@@ -42,8 +43,11 @@ package.app.packets = function AppPackets(me) {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);
                 me.dataList = items;
+                me.manager.packet.isPushEnabled((isPushEnabled) => {
+                    me.isPushEnabled = isPushEnabled;
+                });
                 me.unlock(task);
-            }, "app.packets.data", "date");
+            }, "app.packets.data", "title");
         });
     };
     me.refreshDataList = {
@@ -51,7 +55,7 @@ package.app.packets = function AppPackets(me) {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);
                 me.dataList = items;
-            }, "app.packets.data", "date");
+            }, "app.packets.data", "title");
         }
     };
     me.dataMenuList = {
@@ -100,7 +104,7 @@ package.app.packets = function AppPackets(me) {
                 }
                 me.core.property.set(window, "app.packets.updateData");
                 if (autoRefresh) {
-                    if(me.timer) {
+                    if (me.timer) {
                         clearTimeout(me.timer);
                         me.timer = null;
                     }
@@ -303,7 +307,7 @@ package.app.packets = function AppPackets(me) {
                     },
                     "scales": {
                         "xAxes": [{
-                                "type":"linear",
+                                "type": "linear",
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
@@ -508,6 +512,19 @@ package.app.packets = function AppPackets(me) {
             }
             window.streamIndex = streamIndex;
             me.core.property.notify(window, "app.packets.refreshData");
+        }
+    };
+    me.pushPackets = {
+        get: function (object) {
+            return me.isPushEnabled;
+        },
+        set: function (object, value) {
+            me.isPushEnabled = !me.isPushEnabled;
+            me.manager.packet.enablePush((err) => {
+                if (err) {
+                    alert("Cannot set packet loss: " + err.message);
+                }
+            }, me.isPushEnabled);
         }
     };
 };

@@ -589,14 +589,14 @@ package.app.transform = function AppTransform(me) {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);
                 me.contentList = items;
-            }, "app.transform.content", "date");
+            }, "app.transform.content", "title");
         }
     };
     me.init = function (task) {
         me.storage.data.query((err, items) => {
             me.core.console.error(err);
             me.contentList = items;
-        }, "app.transform.content", "date");
+        }, "app.transform.content", "title");
     };
     me.contentMenuList = {
         get: function (object) {
