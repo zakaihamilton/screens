@@ -32,7 +32,7 @@ package.service.httpserver = function HttpServer(me) {
                     info.custom = true;
                     var partial = me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                     if(!partial) {
-                        me.manager.packet.signal(null, filePath);
+                        me.core.service.sendAll("signal");
                     }
                 }
                 else {

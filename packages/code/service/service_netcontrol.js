@@ -7,14 +7,28 @@ package.service.netcontrol = function ServiceNetControl(me) {
     me.setup = function (callback, ref) {
         callback();
     };
-    me.affect = function(callback, info) {
+    me.effects = {};
+    me.signal = function() {
+        if(me.effects.autoIncreasePacketDelay) {
+            var packetDelay = parseInt(me.effects.packetDelay);
+            if(packetDelay < 0) {
+                packetDelay = 0;
+            }
+            me.effects.packetDelay = packetDelay + 5;
+            me.affect(() => {
+                
+            }, me.effects);
+        }
+    };
+    me.affect = function(callback, effects) {
         var device = me.service.netmonitor.device;
         if(!device) {
             device = "wlan0";
         }
-        if(!info) {
-            info = {};
+        if(!effects) {
+            effects = {};
         }
+        me.effects = effects;
         me.core.console.log("using device: "+ device);
         var cmd = require('node-cmd');
         me.flow(callback, (flow) => {
@@ -30,21 +44,21 @@ package.service.netcontrol = function ServiceNetControl(me) {
                         me.core.console.log(err.message);
                     }
                     me.core.console.log("reset device output: " + data);
-                    if(info.packetLoss || info.packetDelay) {
-                        me.core.console.log("setting packet loss to: " + info.packetLoss);
-                        me.core.console.log("setting packet delay to: " + info.packetDelay);
-                        if(info.packetDelay) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + info.packetDelay + "ms", flow.callback);
+                    if(effects.packetLoss || effects.packetDelay) {
+                        me.core.console.log("setting packet loss to: " + effects.packetLoss);
+                        me.core.console.log("setting packet delay to: " + effects.packetDelay);
+                        if(effects.packetDelay) {
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem delay " + effects.packetDelay + "ms", flow.callback);
                         }
-                        if(info.packetLoss) {
-                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + info.packetLoss + "%", flow.callback);
+                        if(effects.packetLoss) {
+                            flow.async(cmd.get, "sudo tc qdisc add dev " + device + " root netem loss " + effects.packetLoss + "%", flow.callback);
                         }
                         flow.wait((err, data, stderr) => {
                             flow.error(err, "failed to set command:" + device);
                             flow.check(!stderr, "failed with stderr: " + stderr);
                             me.core.console.log("set command output: " + data);
                         }, () => {
-                            me.core.console.log("completed sending: " + JSON.stringify(info) + " after sending: " + flow.waitCount + " commands");
+                            me.core.console.log("completed sending: " + JSON.stringify(effects) + " after sending: " + flow.waitCount + " commands");
                             flow.end();
                         });
                     }

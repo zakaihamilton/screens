@@ -11,39 +11,22 @@ package.manager.packet = function ManagerPacket(me) {
             
         });
     };
-    me.signal = function(callback, path) {
-        me.packetInfo.signal = true;
-        if(me.packetInfo.effects.autoIncreasePacketDelay) {
-            var packetDelay = parseInt(me.packetInfo.effects.packetDelay);
-            if(!packetDelay) {
-                packetDelay = 0;
-            }
-            var effects = {
-                "packetDelay" : packetDelay + 5
-            };
-            me.affect(callback, effects);
-        }
-        else {
-            callback();
-        }
-    };
     me.push = function (callback, packets, service) {
         var info = me.packetInfo;
-        if(info.signal || !info.streamRequests.length) {
-            info.signal = false;
-            info.streamRequests.push({
-                packetCount: 0,
-                dataSize: 0,
-                startTime: 0,
-                duration: 0,
-                packets: {}
-            });
-        }
         if(!Array.isArray(packets)) {
             packets = [packets];
         }
         me.core.console.log("received " + packets.length + " packets");
         for(var packet of packets) {
+            if(packet.signal || !info.streamRequests.length) {
+                info.streamRequests.push({
+                    packetCount: 0,
+                    dataSize: 0,
+                    startTime: 0,
+                    duration: 0,
+                    packets: {}
+                });
+            }
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
             streamRequest.effects = Object.assign({}, info.effects);
             streamRequest.packetCount++;
@@ -96,7 +79,6 @@ package.manager.packet = function ManagerPacket(me) {
     me.reset = function (callback) {
         me.packetInfo = {
             streamRequests:[],
-            signal:false,
             effects:{
                 autoIncreasePacketDelay:true
             }

@@ -105,29 +105,38 @@ package.core.service = function CoreService(me) {
             callback(response);
         });
     };
-    me.sendAll = function (path, callback, param) {
-        var errors = null;
-        var args = Array.prototype.slice.call(arguments);
-        var count = 0;
-        var responses = [];
-        args[1] = function() {
-            var response = Array.prototype.slice.call(arguments);
-            responses.push(response);
-            count--;
-            me.core.console.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
-            if (!count) {
-                callback.apply(null, responses);
-            }
-        };
-        if(me.clients) {
-            me.clients.forEach((info, socket) => {
-                me.core.message.send_service.apply(socket, args);
-                count++;
+    me.sendAll = function (method, callback, param) {
+        if(me.platform === "service") {
+            var args = Array.prototype.slice.call(arguments);
+            me.serviceNames.map((serviceName) => {
+                args[0] = "service." + serviceName + "." + method;
+                me.core.message.send.apply(null, args);
             });
         }
         else {
-            callback();
+            var errors = null;
+            var args = Array.prototype.slice.call(arguments);
+            var count = 0;
+            var responses = [];
+            args[1] = function() {
+                var response = Array.prototype.slice.call(arguments);
+                responses.push(response);
+                count--;
+                me.core.console.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
+                if (!count) {
+                    callback.apply(null, responses);
+                }
+            };
+            if(me.clients) {
+                me.clients.forEach((info, socket) => {
+                    me.core.message.send_service.apply(socket, args);
+                    count++;
+                });
+            }
+            else {
+                callback();
+            }
+            me.core.console.log("sent " + path + "' to " + count + " devices");
         }
-        me.core.console.log("sent " + path + "' to " + count + " devices");
     };
 };

@@ -9,6 +9,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
         me.device = null;
         me.packets = [];
         me.timer = null;
+        me.signalFlag = false;
         me.options = {enablePush:true};
         me.core.service.config(config => {
             if (config) {
@@ -48,11 +49,16 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
                         var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
                         var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
+                        var signal = me.signalFlag;
+                        if(!signal) {
+                            me.signalFlag = false;
+                        }
                         var packet = {
                             source: packet_source,
                             target: packet_target,
                             size: packet_len,
-                            time: packet_sec
+                            time: packet_sec,
+                            signal: signal
                         };
                         me.packets.push(packet);
                     });
@@ -68,7 +74,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         if(me.options.enablePush) {
                             var packets = me.packets;
                             me.packets = [];
-                            if(packets) {
+                            if(packets && packets.length) {
                                 me.manager.packet.push(() => {
 
                                 }, packets, ref);
@@ -92,5 +98,8 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
     me.reset = function(callback) {
         me.packets = [];
         callback();
+    };
+    me.signal = function() {
+        me.signalFlag = true;
     };
 };

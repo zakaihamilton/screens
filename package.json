@@ -37,7 +37,7 @@
           "en0"
         ],
         "filter": "port @port",
-        "delay":5000
+        "delay": 5000
       },
       "httpserver": {
         "path": "./"
