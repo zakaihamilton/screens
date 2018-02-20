@@ -32,6 +32,8 @@ package.core.service = function CoreService(me) {
                         me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
                             me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
                             me.clients.set(socket, {ref: ref, name: name});
+                            me.core.object.attach(socket, me);
+                            me.core.property.set(socket, "ready");
                         }, ref);
                     });
                 }
@@ -136,7 +138,7 @@ package.core.service = function CoreService(me) {
             else {
                 callback();
             }
-            me.core.console.log("sent " + path + "' to " + count + " devices");
+            me.core.console.log("sent " + method + "' to " + count + " devices");
         }
     };
 };

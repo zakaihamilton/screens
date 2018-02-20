@@ -6,10 +6,12 @@
 package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
-    me.init = function () {
-        me.reset(() => {
-            
-        });
+    me.packetInfo = {
+        streamRequests:[],
+        effects:{}
+    };
+    me.init = function() {
+        me.core.property.link("core.service.ready", "manager.packet.ready", true);
     };
     me.push = function (callback, packets, service) {
         var info = me.packetInfo;
@@ -87,14 +89,24 @@ package.manager.packet = function ManagerPacket(me) {
             });
         });
     };
+    me.ready = {
+        set: function() {
+            me.retrieveEffects(() => {
+                
+            });
+        }
+    };
     me.retrieveEffects = function (callback) {
         me.core.service.sendAll("service.netcontrol.retrieveEffects", (response) => {
-            var effects = response[0];
-            if(!effects) {
-                effects = {};
+            if(response) {
+                var effects = response[0];
+                if(!effects) {
+                    effects = {};
+                }
+                me.core.console.log("recieved effects: " + JSON.stringify(effects));
+                me.packetInfo.effects = effects;
+                callback(effects);
             }
-            me.packetInfo.effects = effects;
-            callback(effects);
         });
     };
     me.applyEffects = function (callback, params) {
@@ -113,8 +125,10 @@ package.manager.packet = function ManagerPacket(me) {
     };
     me.isPushEnabled = function(callback) {
         me.core.service.sendAll("service.netmonitor.isPushEnabled", (response) => {
-            var isPushEnabled = response[0];
-            callback(isPushEnabled);
+            if(response) {
+                var isPushEnabled = response[0];
+                callback(isPushEnabled);
+            }
         });
     };
 };
