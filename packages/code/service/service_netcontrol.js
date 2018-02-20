@@ -7,7 +7,10 @@ package.service.netcontrol = function ServiceNetControl(me) {
     me.setup = function (callback, ref) {
         callback();
     };
-    me.effects = {autoIncreasePacketDelay:true};
+    me.effects = {
+        autoIncreasePacketDelay:true,
+        packetDelay:0
+    };
     me.signal = function() {
         if(me.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.effects.packetDelay);

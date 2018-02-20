@@ -237,6 +237,7 @@ package.app.packets = function AppPackets(me) {
                     me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
                 }
                 me.core.property.set(window, "app.packets.dataProfile", "Live");
+                me.core.property.set(window, "app.packets.refreshData");
             });
         }
     };
@@ -414,7 +415,7 @@ package.app.packets = function AppPackets(me) {
                     }
                     var effects = streamRequest.effects;
                     var packetDelay = 0;
-                    if (effects) {
+                    if (effects && effects.packetDelay) {
                         packetDelay = effects.packetDelay;
                     }
                     var label = "default";
@@ -450,7 +451,7 @@ package.app.packets = function AppPackets(me) {
     me.effects = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            if (window.packetInfo) {
+            if (window.packetInfo && window.streamIndex <= 0) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
                     effects.packetLoss = me.core.property.get(window.var.packetLoss, "ui.basic.text");
