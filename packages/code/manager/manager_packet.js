@@ -7,8 +7,7 @@ package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
     me.packetInfo = {
-        streamRequests:[],
-        effects:{}
+        streamRequests:[]
     };
     me.init = function() {
         me.core.property.link("core.service.ready", "manager.packet.ready", true);
@@ -30,17 +29,16 @@ package.manager.packet = function ManagerPacket(me) {
                 });
             }
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
-            streamRequest.effects = Object.assign({}, info.effects);
+            me.packetInfo.effects = packet.effects;
+            streamRequest.effects = packet.effects;
             streamRequest.packetCount++;
-            var packet_sec = packet.time;
-            var packet_len = packet.size;
             var packet_source = packet.source;
             var packet_target = packet.target;
-            streamRequest.dataSize += packet_len;
+            streamRequest.dataSize += packet.size;
             if(!streamRequest.startTime) {
-                streamRequest.startTime = packet_sec;
+                streamRequest.startTime = packet.time;
             }
-            streamRequest.duration = packet_sec - streamRequest.startTime;
+            streamRequest.duration = packet.time - streamRequest.startTime;
             if (packet_source && packet_target) {
                 packet_source = packet_source.join(".");
                 packet_target = packet_target.join(".");
@@ -64,13 +62,13 @@ package.manager.packet = function ManagerPacket(me) {
                 if (!targetMap.items) {
                     items = targetMap.items = {};
                 }
-                var key = parseInt(packet_sec / 10);
+                var key = parseInt(packet.time / 10);
                 var item = items[key];
                 if (!item) {
-                    item = items[key] = {len: 0, start: packet_sec, end: 0};
+                    item = items[key] = {len: 0, start: packet.time, end: 0};
                 }
-                item.len += packet_len;
-                item.end = packet_sec;
+                item.len += packet.size;
+                item.end = packet.time;
             }
         }
         callback();

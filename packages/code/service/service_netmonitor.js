@@ -53,12 +53,18 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         if(signal) {
                             me.signalFlag = false;
                         }
+                        var effects = {};
+                        var netcontrol = me.service.netcontrol;
+                        if(netcontrol) {
+                            var effects = netcontrol.effects;
+                        }
                         var packet = {
                             source: packet_source,
                             target: packet_target,
                             size: packet_len,
                             time: packet_sec,
-                            signal: signal
+                            signal: signal,
+                            effects: effects
                         };
                         me.packets.push(packet);
                     });

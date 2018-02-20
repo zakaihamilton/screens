@@ -11,7 +11,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
     me.signal = function() {
         if(me.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.effects.packetDelay);
-            if(packetDelay < 0) {
+            if(!packetDelay || packetDelay < 0) {
                 packetDelay = 0;
             }
             me.effects.packetDelay = packetDelay + 5;
@@ -22,7 +22,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
     };
     me.reset = function(callback) {
         me.effects = {autoIncreasePacketDelay:true};
-        callback();
+        me.applyEffects(callback, me.effects);
     };
     me.retrieveEffects = function(callback) {
         callback(me.effects);
@@ -36,7 +36,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
             effects = {};
         }
         me.effects = effects;
-        me.core.console.log("using device: "+ device);
+        me.core.console.log("using device: "+ device + " to set effects: " + JSON.stringify(effects));
         var cmd = require('node-cmd');
         me.flow(callback, (flow) => {
             flow.check(cmd, "cannot retrieve command lib");
