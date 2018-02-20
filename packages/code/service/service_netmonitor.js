@@ -50,7 +50,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
                         var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
                         var signal = me.signalFlag;
-                        if(!signal) {
+                        if(signal) {
                             me.signalFlag = false;
                         }
                         var packet = {
