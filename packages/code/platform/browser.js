@@ -132,11 +132,15 @@ function startBrowser(appName, appArgs) {
             "packet"
         ],
         "media": [
-            "ffmpeg"
+            "ffmpeg",
+            "hls"
         ],
         "startup": [
             "app",
             "version"
+        ],
+        "app": [
+            "main"
         ]
     }, function (info) {
         if (info.failure) {

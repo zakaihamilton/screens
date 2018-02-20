@@ -39,7 +39,8 @@ package.include({
         "service"
     ],
     "media": [
-        "ffmpeg"
+        "ffmpeg",
+        "hls"
     ],
     "startup": [
         "version"
@@ -52,6 +53,7 @@ package.include({
 });
 
 package.remote("core.app", "browser");
+package.remote("app.main", "browser");
 package.remote("kab.text", "client");
 package.remote("kab.term", "client");
 package.remote("kab.data", "client");

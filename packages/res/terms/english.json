@@ -133,6 +133,8 @@
         "Yomincovered":"Yomin covered",
         "Taamimof":"Taamim of",
         "Eser de Sefirot":"Eser Sefirot",
+        "Torahall":"Torah all",
+        "\nOr a":"_Or a",
         "<title>":"<br>\n<h4 style=\"text-align:center\">",
         "</title>":"</h4>",
         "<rtl>":"<span dir=\"rtl\">",
@@ -299,6 +301,10 @@
         {
             "find": "/ ([.,])",
             "replace": "$1"
+        },
+        {
+            "find": "/_",
+            "replace": ""
         }
     ],
     "term": [
@@ -2182,7 +2188,7 @@
             "hebrew":"חשך"
         },
         {
-            "translation": "Connection",
+            "translation": "Knowledge",
             "style": {
                 "heading": "Vessel",
                 "phase": "three"
@@ -5973,6 +5979,11 @@
             "hebrew":"לא לשמה"
         },
         {
+            "term":"Lishma",
+            "translation":"For Her Name",
+            "hebrew":"לשמה"
+        },
+        {
             "term":"Baal Shem Tov",
             "style":{
                 "heading":"Author"
@@ -6477,6 +6488,15 @@
             "term":"Atah",
             "hebrew":"אתה",
             "translation":"You"
+        },
+        {
+            "term":"Melech ha Daat",
+            "style":{
+                "heading":"King",
+                "phase":"three"
+            },
+            "translation":"King of Knowledge",
+            "hebrew":"מלך הדעת"
         }
         ],
     "style": {

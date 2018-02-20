@@ -292,7 +292,7 @@ package.app.packets = function AppPackets(me) {
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
-                                    "labelString": "Bytes (KB)"
+                                    "labelString": "Data (KB)"
                                 }
                             }]
                     }
