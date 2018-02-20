@@ -166,7 +166,7 @@
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetLoss",
                             "ui.attribute.step": "0.0001",
-                            "ui.monitor.change": "app.packets.affect",
+                            "ui.monitor.change": "app.packets.applyEffects",
                             "ui.attribute.list": "packetLoss"
                         },
                         {
@@ -206,7 +206,7 @@
                             "ui.attribute.max": "1000",
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetDelay",
-                            "ui.monitor.change": "app.packets.affect"
+                            "ui.monitor.change": "app.packets.applyEffects"
                         }
                     ]
                 },

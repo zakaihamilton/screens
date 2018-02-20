@@ -15,12 +15,19 @@ package.service.netcontrol = function ServiceNetControl(me) {
                 packetDelay = 0;
             }
             me.effects.packetDelay = packetDelay + 5;
-            me.affect(() => {
+            me.applyEffects(() => {
                 
             }, me.effects);
         }
     };
-    me.affect = function(callback, effects) {
+    me.reset = function(callback) {
+        me.effects = {autoIncreasePacketDelay:true};
+        callback();
+    };
+    me.retrieveEffects = function(callback) {
+        callback(me.effects);
+    };
+    me.applyEffects = function(callback, effects) {
         var device = me.service.netmonitor.device;
         if(!device) {
             device = "wlan0";

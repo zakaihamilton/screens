@@ -79,16 +79,31 @@ package.manager.packet = function ManagerPacket(me) {
     me.reset = function (callback) {
         me.packetInfo = {
             streamRequests:[],
-            effects:{
-                autoIncreasePacketDelay:true
-            }
+            effects:{}
         };
-        me.core.service.sendAll("service.netmonitor.reset", callback);
+        me.core.service.sendAll("service.netmonitor.reset", () => {
+            me.core.service.sendAll("service.netcontrol.reset", () => {
+                me.retrieveEffects(callback);
+            });
+        });
     };
-    me.affect = function (callback, params) {
+    me.retrieveEffects = function (callback) {
+        me.core.service.sendAll("service.netcontrol.retrieveEffects", (response) => {
+            var effects = response[0];
+            if(!effects) {
+                effects = {};
+            }
+            me.packetInfo.effects = effects;
+            callback(effects);
+        });
+    };
+    me.applyEffects = function (callback, params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
         me.core.console.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
-        me.core.service.sendAll("service.netcontrol.affect", callback, me.packetInfo.effects);
+        me.core.service.sendAll("service.netcontrol.applyEffects", (response) => {
+            var error = response[0];
+            callback(error);
+        }, me.packetInfo.effects);
     };
     me.enablePush = function(callback, flag) {
         me.core.service.sendAll("service.netmonitor.enablePush", (response) => {

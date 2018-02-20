@@ -169,7 +169,7 @@ package.app.packets = function AppPackets(me) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
                     effects.autoIncreasePacketDelay = !effects.autoIncreasePacketDelay;
-                    me.core.property.notify(window, "app.packets.affect");
+                    me.core.property.notify(window, "app.packets.applyEffects");
                 }
             }
         }
@@ -447,7 +447,7 @@ package.app.packets = function AppPackets(me) {
             return data;
         }
     };
-    me.affect = {
+    me.effects = {
         set: function (object) {
             var window = me.widget.window.window(object);
             if (window.packetInfo) {
@@ -463,9 +463,9 @@ package.app.packets = function AppPackets(me) {
                         effects.packetDelay = 0;
                         me.core.property.set(window.var.packetDelay, "ui.basic.text", "0");
                     }
-                    me.manager.packet.affect((err) => {
+                    me.manager.packet.applyEffects((err) => {
                         if (err) {
-                            alert("Cannot set packet loss: " + err.message);
+                            alert("Cannot apply effects: " + err.message);
                         }
                     }, effects);
                 }
