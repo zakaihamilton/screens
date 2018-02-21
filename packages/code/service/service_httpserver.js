@@ -35,7 +35,18 @@ package.service.httpserver = function HttpServer(me) {
                         me.core.service.sendAll("signal");
                     }
                 }
+                else if(extension === "ts") {
+                    var mimeType = "video/MP2T";
+                    info.custom = true;
+                    me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+                }
                 else {
+                    if (extension === "m3u8") {
+                        info["content-type"] = "application/x-mpegURL";
+                    }
+                    if(filePath.endsWith("movie.m3u8")) {
+                        me.core.service.sendAll("signal");
+                    }
                     me.lock(info.task, task => {
                         me.fs.readFile(filePath, null, function (err, data) {
                             me.core.console.log("serving file: " + filePath + " with content type: " + info["content-type"]);
