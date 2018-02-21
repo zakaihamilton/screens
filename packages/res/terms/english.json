@@ -140,7 +140,8 @@
         "<rtl>":"<span dir=\"rtl\">",
         "</rtl>":"</span>",
         "<set>":"<span style=\"display: inline-block;\">",
-        "</set>":"</span>"
+        "</set>":"</span>",
+        "\u00A0":" "
     },
     "pre": [
         {
