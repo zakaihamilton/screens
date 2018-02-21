@@ -31,6 +31,15 @@ package.core.flow = function CoreFlow(me) {
                 if(flow.responseCallback) {
                     flow.responseCallback.apply(flow, args);
                 }
+                var queue = flow.asyncQueue;
+                if(flow.parallelCount) {
+                    for(var parallelIndex = 0; parallelIndex < flow.parallelCount; parallelIndex++) {
+                        var call = queue.shift();
+                        if(call) {
+                            call.method.apply(flow, call.args);
+                        }
+                    }
+                }
                 flow.waitIndex++;
                 if(flow.waitIndex >= flow.waitCount && flow.completeCallback) {
                     flow.completeCallback(flow);
@@ -64,18 +73,27 @@ package.core.flow = function CoreFlow(me) {
             }
         }
     };
-    me.wait = function(responseCallback, completeCallback) {
+    me.wait = function(responseCallback, completeCallback, parallelCount) {
         if(this.isRunning) {
             this.responseCallback = responseCallback;
             this.completeCallback = completeCallback;
             var queue = this.asyncQueue;
-            this.asyncQueue = [];
             if(queue.length) {
-                queue.map((call) => {
-                    call.method.apply(this, call.args);
-                });
+                if(!parallelCount) {
+                    parallelCount = queue.length;
+                }
+                for(var parallelIndex = 0; parallelIndex < parallelCount; parallelIndex++) {
+                    var call = queue.shift();
+                    if(call) {
+                        call.method.apply(this, call.args);
+                    }
+                }
+                this.parallelCount = parallelCount;
                 this.waitCount = queue.length;
                 this.waitIndex = 0;
+            }
+            else if(completeCallback) {
+                completeCallback();
             }
         }
     };

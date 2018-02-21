@@ -8,6 +8,7 @@ package.core.file = function CoreFile(me) {
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");
+        me.https = require("https");
     };
     me.readFile = function (callback, path, options) {
         try {
@@ -22,6 +23,32 @@ package.core.file = function CoreFile(me) {
     me.makeDir = function (callback, path) {
         me.fs.mkdir(path, function (err) {
             callback(err);
+        });
+    };
+    me.makeDirEx = function(callback, path) {
+        var tokens = path.split("/");
+        var mkdirPath = "";
+        var error = null;
+        me.flow(callback, (flow) => {
+            tokens.map((token) => {
+                if(mkdirPath) {
+                    mkdirPath += "/" + token;
+                }
+                else {
+                    mkdirPath = token;
+                }
+                flow.async(me.makeDir, flow.callback, mkdirPath);
+            });
+            flow.wait((err) => {
+                if(err) {
+                    error = err;
+                }
+            }, () => {
+                if(error) {
+                    flow.error(error, "failed to create directory " + path);
+                }
+                flow.end();
+            }, 1);
         });
     };
     me.readDir = function (callback, path) {
@@ -63,15 +90,26 @@ package.core.file = function CoreFile(me) {
         });
     };
     me.download = function (callback, source, target) {
-        var file = me.fs.createWriteStream(target);
-        me.http.get(source, function (response) {
-            response.pipe(file);
-            file.on('finish', function () {
-                file.close(callback);  // close() is async, call cb after close completes.
+        var folder = me.core.path.goto(target, "..");
+        me.makeDirEx(() => {
+            var file = me.fs.createWriteStream(target);
+            if(!file) {
+                callback(new Error("Cannot create stream: " + target));
+                return;
+            }
+            var protocol = me.http;
+            if(source.startsWith("https:")) {
+                protocol = me.https;
+            }
+            protocol.get(source, function (response) {
+                response.pipe(file);
+                file.on('finish', function () {
+                    file.close(callback);
+                });
+            }).on('error', function (err) {
+                me.fs.unlink(target);
+                callback(err);
             });
-        }).on('error', function (err) { // Handle errors
-            me.fs.unlink(target); // Delete the file async. (But we don't check the result)
-            callback(err);
-        });
+        }, folder);
     };
 };

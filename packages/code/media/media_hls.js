@@ -10,6 +10,7 @@ package.media.hls = function MediaHLS(me) {
         var targetPlaylist = me.core.path.goto(destination, name);
         me.core.console.log("downloading " + path + " to:" + targetPlaylist);
         var sourceFile = path;
+        var targetFile = null;
         var errors = [];
         me.core.file.download((err) => {
             if (err) {
@@ -28,42 +29,27 @@ package.media.hls = function MediaHLS(me) {
                 }
                 var lines = String(data).split("\n");
                 if (lines.length) {
-                    me.lock((task) => {
-                        for (var line of lines) {
+                    me.flow(callback, (flow) => {
+                        for(var line of lines) {
                             if (line.endsWith(".m3u8")) {
                                 sourceFile = me.core.path.goto(path, "../" + line);
-                                me.lock(task, (task) => {
-                                    me.download((error) => {
-                                        if (error) {
-                                            errors.push(new Error("Cannot download file: " + path + " error:" + error.message));
-                                        }
-                                        me.unlock(task);
-                                    }, sourceFile, destination);
-                                });
+                                targetFile = me.core.path.goto(destination, line + "/..");
+                                flow.async(me.download, flow.callback, sourceFile, targetFile);
                             }
                             if (line.endsWith(".ts")) {
                                 sourceFile = me.core.path.goto(path, "../" + line);
-                                me.core.console.log("downloading: " + sourceFile);
-                                me.lock(task, (task) => {
-                                    me.core.file.download((err) => {
-                                        if (err) {
-                                            errors.push(new Error("Cannot open" + targetPlaylist + " err: " + err.message));
-                                        }
-                                        me.unlock(task);
-                                    }, sourceFile, destination);
-                                });
+                                targetFile = me.core.path.goto(destination, line);
+                                flow.async(me.core.file.download, flow.callback, sourceFile, targetFile);
                             }
                         }
-                        me.unlock(task, () => {
-                            if (errors.length) {
-                                var error = errors.map((error) => {
-                                    return error.message;
-                                }).join(", ");
-                                callback(error);
-                            } else {
-                                callback(null);
+                        flow.wait((err) => {
+                            if(err) {
+                                me.core.console.log("error: " + err.message);
                             }
-                        });
+                            flow.error(err, "failed to download in playlist: " + targetPlaylist);
+                        }, () => {
+                            flow.end();
+                        }, 1);
                     });
                 }
             }, targetPlaylist);
