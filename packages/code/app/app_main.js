@@ -5,31 +5,13 @@
 
 package.require("app.main", "browser");
 package.app.main = function (me) {
-    me.readyFlags = {
-        browser:false,
-        client:false
-    };
     me.setStartupApp = function(callback, appName) {
         me.appName = appName;
     };
     me.setStartupArgs = function(callback, appArgs) {
         me.appArgs = appArgs;
     };
-    me.client = function () {
-        me.core.console.log("client is ready");
-        me.readyFlags.client = true;
-        if(me.readyFlags.browser) {
-            me.ready();
-        }
-    };
-    me.browser = function () {
-        me.core.console.log("browser is ready");
-        me.readyFlags.browser = true;
-        if(me.readyFlags.client) {
-            me.ready();
-        }
-    };
-    me.ready = function () {
+    me.launch = function () {
         me.core.console.log("starting applications");
         me.ui.element.create([
             {

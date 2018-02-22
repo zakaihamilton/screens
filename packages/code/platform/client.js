@@ -27,13 +27,14 @@ package.include({
         "search",
         "style",
         "text"
-    ],
-    "startup": [
-        "app"
     ]
 }, function (info) {
     if (info.complete) {
         package.core.console.log("client loaded");
-        package.core.startup.run();
+        package.core.startup.run(() => {
+            package.core.message.send_browser("core.startup.run", function() {
+                
+            });
+        });
     }
 });

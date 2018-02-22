@@ -9,17 +9,23 @@ package.core.message = function CoreMessage(me) {
         if (package.platform === "server") {
             me.core.property.link("core.http.receive", "core.message.receive", true);
         } else if (me.platform === "browser") {
-            package.worker.onmessage = function (event) {
-                me.core.console.log("Receiving message");
-                me.handleLocal(package.worker.postMessage, event.data);
-            };
-            package.worker.postMessage(null);
+
         } else if (me.platform === "client") {
             self.onmessage = function (event) {
                 me.core.console.log("Receiving message");
                 me.handleLocal(self.postMessage, event.data);
             };
         }
+    };
+    me.loadWorker = function(path) {
+        package.worker = new Worker(path);
+        package.worker.onmessage = function (event) {
+            package.core.console.log("Receiving message");
+            package.core.message.handleLocal((info) => {
+                package.worker.postMessage(info);
+            }, event.data);
+        };
+        package.worker.postMessage(null);
     };
     me.send_server = function (path, callback, params) {
         if (me.platform === "service") {
@@ -76,6 +82,13 @@ package.core.message = function CoreMessage(me) {
             var args = Array.prototype.slice.call(arguments, 0);
             me.send.apply(this, args);
         }
+    };
+    me.send_platform = function(platform, path, callback, params) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        if(!platform) {
+            platform = me.platform;
+        }
+        me["send_" + platform].apply(null, args);
     };
     me.send_browser = function (path, callback, params) {
         if (me.platform === "client") {
@@ -177,7 +190,9 @@ package.core.message = function CoreMessage(me) {
             if(remote) {
                 info.response = me.core.type.wrap_args(info.response);
             }
-            callback(info);
+            if(callback) {
+                callback(info);
+            }
         };
         me.send.apply(info, args);
     };

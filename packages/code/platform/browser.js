@@ -1,5 +1,3 @@
-package.worker = new Worker("packages/code/platform/client.js");
-
 function startBrowser(appName, appArgs) {
     package.include({
         "core": [
@@ -163,8 +161,8 @@ function startBrowser(appName, appArgs) {
                 var app = package.startup.app;
                 app.args = appArgs;
                 app.name = appName;
-                package.core.startup.run();
             }, 0);
+            package.core.message.loadWorker("packages/code/platform/client.js");
         }
     });
 }

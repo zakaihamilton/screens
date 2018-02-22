@@ -13,8 +13,7 @@ package.startup.app = function StartupApp(me) {
                     me.app.main.setStartupApp(null, me.name);
                     me.app.main.setStartupArgs(null, me.args);
                 }
-                me.core.console.log("sending ready message");
-                me.core.message.send_browser("app.main." + me.platform);
+                me.app.main.launch();
             }
         });
     };

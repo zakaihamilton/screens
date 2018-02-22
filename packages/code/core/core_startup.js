@@ -22,7 +22,11 @@ package.core.startup = function CoreStartup(me) {
                     });
                 }
             }
-            me.unlock(task, callback);
+            me.unlock(task, () => {
+                if(callback) {
+                    callback();
+                }
+            });
         });
     };
 };
