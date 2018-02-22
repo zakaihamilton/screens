@@ -42,7 +42,8 @@
         "delay": 5000
       },
       "httpserver": {
-        "path": "./"
+        "path": "./",
+        "signalSuffix":"video/180_250000/hls/segment_0.ts"
       }
     }
   }

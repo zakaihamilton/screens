@@ -17,6 +17,11 @@ package.service.httpserver = function HttpServer(me) {
                     me.core.property.link("core.http.receive", "service.httpserver.receive", true);
                     me.filePrefix = path;
                 }
+                var signalSuffix = config.signalSuffix;
+                if(signalSuffix) {
+                    me.core.console.log("suffix for signal: " + signalSuffix);
+                    me.signalSuffix = signalSuffix;
+                }
                 callback();
             }
         }, me.__component);
@@ -26,11 +31,16 @@ package.service.httpserver = function HttpServer(me) {
             if (info.method === "GET") {
                 var filePath = me.filePrefix + info.url.substring(1);
                 var extension = me.core.path.extension(filePath);
+                if(me.signalSuffix && filePath.endsWith(me.signalSuffix)) {
+                    me.core.console.log("signal");
+                    me.core.service.sendAll("signal");
+                }
                 if (extension === "mp4") {
                     var mimeType = "video/mp4";
                     info.custom = true;
                     var partial = me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                     if(!partial) {
+                        me.core.console.log("signal");
                         me.core.service.sendAll("signal");
                     }
                 }
@@ -43,9 +53,6 @@ package.service.httpserver = function HttpServer(me) {
                     if (extension === "m3u8") {
                         info["content-type"] = "application/x-mpegURL";
                         info.responseHeaders["Accept-Ranges"] = "bytes";
-                    }
-                    if(filePath.endsWith("movie.m3u8")) {
-                        me.core.service.sendAll("signal");
                     }
                     var mimeType = me.mime.getType(extension);
                     info.custom = true;
