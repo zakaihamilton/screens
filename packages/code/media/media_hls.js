@@ -31,6 +31,14 @@ package.media.hls = function MediaHLS(me) {
                 if (lines.length) {
                     me.flow(callback, (flow) => {
                         for(var line of lines) {
+                            var search = "URI=\"";
+                            if (line.includes(search)) {
+                                var start = line.indexOf(search);
+                                var len = line.substring(start+search.length).indexOf("\"");
+                                if(start !== -1 && len !== -1) {
+                                    line = line.substring(start+search.length, start+search.length+len);
+                                }
+                            }
                             if (line.endsWith(".m3u8")) {
                                 sourceFile = me.core.path.goto(path, "../" + line);
                                 targetFile = me.core.path.goto(destination, line + "/..");

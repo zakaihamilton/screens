@@ -47,6 +47,12 @@ package.core.stream = function CoreStream(me) {
         else {
             var stream = me.fs.createReadStream(path);
             var headers = {
+                "Accept-Ranges": "bytes",
+                "Access-Control-Allow-Credentials":"false",
+                "Access-Control-Allow-Headers":"*",
+                "Access-Control-Allow-Methods":"GET,POST,HEAD",
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Max-Age":86400,
                 "Content-Length": stat.size,
                 "Content-Type": contentType
             };

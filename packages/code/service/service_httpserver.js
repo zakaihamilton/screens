@@ -26,7 +26,6 @@ package.service.httpserver = function HttpServer(me) {
             if (info.method === "GET") {
                 var filePath = me.filePrefix + info.url.substring(1);
                 var extension = me.core.path.extension(filePath);
-                info["content-type"] = me.mime.getType(extension);
                 if (extension === "mp4") {
                     var mimeType = "video/mp4";
                     info.custom = true;
@@ -36,29 +35,21 @@ package.service.httpserver = function HttpServer(me) {
                     }
                 }
                 else if(extension === "ts") {
-                    var mimeType = "video/MP2T";
+                    var mimeType = "video/mp2t";
                     info.custom = true;
                     me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                 }
                 else {
                     if (extension === "m3u8") {
                         info["content-type"] = "application/x-mpegURL";
+                        info.responseHeaders["Accept-Ranges"] = "bytes";
                     }
                     if(filePath.endsWith("movie.m3u8")) {
                         me.core.service.sendAll("signal");
                     }
-                    me.lock(info.task, task => {
-                        me.fs.readFile(filePath, null, function (err, data) {
-                            me.core.console.log("serving file: " + filePath + " with content type: " + info["content-type"]);
-                            if (err) {
-                                info.body = err.message;
-                            }
-                            else {
-                                info.body = data;
-                            }
-                            me.unlock(task);
-                        });
-                    });
+                    var mimeType = me.mime.getType(extension);
+                    info.custom = true;
+                    me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                 }
             }
         }

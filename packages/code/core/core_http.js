@@ -130,7 +130,8 @@ package.core.http = function CoreHttp(me) {
                 response: response,
                 custom: false,
                 check: true,
-                clientIp: me.clientIp(request)
+                clientIp: me.clientIp(request),
+                responseHeaders: {}
             };
             me.core.object.attach(info, me);
             me.core.property.set(info, "check");
@@ -141,9 +142,8 @@ package.core.http = function CoreHttp(me) {
             me.core.property.set(info, "receive");
             me.unlock(task, () => {
                 if (info.custom === false) {
-                    response.writeHead(info.code, {
-                        "Content-Type": info["content-type"],
-                    });
+                    info.responseHeaders["Content-Type"] = info["content-type"];
+                    response.writeHead(info.code, info.responseHeaders);
                     response.end(info.body);
                 }
             });
