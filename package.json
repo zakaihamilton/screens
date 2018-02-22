@@ -43,7 +43,7 @@
       },
       "httpserver": {
         "path": "./",
-        "signalSuffix":"video/180_250000/hls/segment_0.ts"
+        "signalMatches":["video", "segment_0.ts"]
       }
     }
   }
