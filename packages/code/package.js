@@ -20,6 +20,9 @@ function package_lock(parent_task, callback) {
         callback = parent_task;
         parent_task = null;
     }
+    while(parent_task && !parent_task.state) {
+        parent_task = parent_task.parent;
+    }
     var task = {state:true,lock:0,parent:parent_task};
     if(parent_task) {
         parent_task.lock++;
@@ -36,6 +39,7 @@ function package_unlock(task, callback) {
         task.callback = callback;
     }
     if(task.lock <= 0 && task.state) {
+        task.lock = 0;
         task.state = false;
         if(task.callback) {
             task.callback(task);
@@ -214,6 +218,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
             var ref = document.getElementsByTagName("script")[ 0 ];
             var script = document.createElement("script");
             script.src = "/packages/" + package_type + "/" + file_name + ".js?platform=browser";
+            script.async = true;
             script.onload = function () {
                 try {
                     package_prepare(package_name, component_name, child_name, callback);

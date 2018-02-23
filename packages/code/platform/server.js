@@ -44,6 +44,9 @@ package.include({
     ],
     "startup": [
         "version"
+    ],
+    "lib": [
+        "zlib"
     ]
 }, function (info) {
     if (info.complete) {

@@ -47,7 +47,7 @@ package.core.http = function CoreHttp(me) {
         if (me.platform === "server") {
             var useSecure = true;
             me.core.private.keys((keys) => {
-                if(keys && keys.key && keys.cert) {
+                if (keys && keys.key && keys.cert) {
                     var options = {
                         key: keys.key.join("\n"),
                         cert: keys.cert.join("\n")
@@ -57,49 +57,46 @@ package.core.http = function CoreHttp(me) {
                     try {
                         service = https.createServer(options, requestHandler);
                         callback(service);
-                    }
-                    catch(e) {
+                    } catch (e) {
                         me.core.console.error("Cannot create secure server, error: " + e.message);
                         useSecure = false;
                     }
-                }
-                else {
+                } else {
                     useSecure = false;
                 }
-                if(!useSecure) {
+                if (!useSecure) {
                     me.core.console.log("using http");
                     var http = require("http");
                     service = http.createServer(requestHandler);
                     callback(service);
                 }
             }, "https");
-        }
-        else {
+        } else {
             me.core.console.log("using http");
             var http = require("http");
             service = http.createServer(requestHandler);
             callback(service);
         }
     };
-    me.clientIp = function(request) {
+    me.clientIp = function (request) {
         var ip = null;
-        if(request) {
+        if (request) {
             ip = request.headers['x-forwarded-for'];
-            if(ip) {
+            if (ip) {
                 ip = request.headers['x-forwarded-for'].split(',').pop();
             }
-            if(!ip) {
-                if(request.connection) {
+            if (!ip) {
+                if (request.connection) {
                     ip = request.connection.remoteAddress;
-                    if(!ip) {
-                        if(request.connection.socket) {
+                    if (!ip) {
+                        if (request.connection.socket) {
                             ip = request.connection.socket.remoteAddress;
                         }
                     }
                 }
             }
-            if(!ip) {
-                if(request.socket) {
+            if (!ip) {
+                if (request.socket) {
                     ip = request.socket.remoteAddress;
                 }
             }
@@ -141,11 +138,17 @@ package.core.http = function CoreHttp(me) {
             }
             me.core.property.set(info, "receive");
             me.unlock(task, () => {
-                if (info.custom === false) {
-                    info.responseHeaders["Content-Type"] = info["content-type"];
-                    response.writeHead(info.code, info.responseHeaders);
-                    response.end(info.body);
-                }
+                me.lock((task) => {
+                    info.task = task;
+                    me.core.property.set(info, "compress");
+                    me.unlock(task, () => {
+                        if (info.custom === false) {
+                            info.responseHeaders["Content-Type"] = info["content-type"];
+                            response.writeHead(info.code, info.responseHeaders);
+                            response.end(info.body);
+                        }
+                    });
+                });
             });
         });
     };

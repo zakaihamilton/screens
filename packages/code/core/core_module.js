@@ -45,7 +45,6 @@ package.core.module = function CoreModule(me) {
                     callback(data, task);
                 }
                 me.unlock(task);
-                core.console.log("finished serving binary file: " + filePath);
             }, filePath);
         });
     };
@@ -74,7 +73,7 @@ package.core.module = function CoreModule(me) {
                             file_path = "packages/code/remote.js";
                         }
                         info["content-type"] = "application/javascript";
-                        me.loadTextFile(info.task, file_path, function (data) {
+                        me.loadTextFile(info.task, file_path, function (data, task) {
                             if (data && data.includes("__json__")) {
                                 me.loadTextFile(info.task, file_path.replace(".js", ".json"), function (jsonData) {
                                     info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
