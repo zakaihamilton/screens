@@ -214,32 +214,20 @@ function package_load(package_type, package_name, component_name, child_name, ca
         package[package_name] = {id: package_name, package: package_name, components: []};
     }
     try {
-        if (package.platform === "browser") {
-            var ref = document.getElementsByTagName("script")[ 0 ];
-            var script = document.createElement("script");
-            script.src = "/packages/" + package_type + "/" + file_name + ".js?platform=browser";
-            script.async = true;
-            script.onload = function () {
-                try {
-                    package_prepare(package_name, component_name, child_name, callback);
-                } catch (err) {
-                    console.error("Found error: " + err + " stack: " + err.stack);
-                    if (callback) {
-                        callback({failure: {package: package_name, component: component_name, child:child_name}});
-                    }
-                }
-            };
-            ref.parentNode.insertBefore(script, ref);
-        } else if (package.platform === "server" || package.platform === "service") {
+        if (package.platform === "server" || package.platform === "service") {
             path = "../" + package_type + "/" + file_name;
             require(path);
             package_prepare(package_name, component_name, child_name, callback);
-        } else if (package.platform === "client") {
+        } else if (package.platform === "client" || package.platform === "browser") {
             if(!package.list) {
                 package.list = [];
             }
+            var url = "/packages/" + package_type + "/" + file_name + ".js";
+            if(package.platform === "client") {
+                url += "?platform=client";
+            }
             var item = {
-                url: "/packages/" + package_type + "/" + file_name + ".js?platform=client",
+                url: url,
                 package_name: package_name,
                 component_name : component_name,
                 child_name : child_name,
@@ -301,6 +289,15 @@ function package_complete(info, order, callback) {
     }, 0);
 }
 
+function package_script_load(callback, path) {
+    var ref = document.getElementsByTagName("script")[ 0 ];
+    var script = document.createElement("script");
+    script.src = path;
+    script.async = true;
+    script.onload = callback;
+    ref.parentNode.insertBefore(script, ref);
+}
+
 function package_handle_list() {
     if(package.list && package.list.length) {
         var list = package.list;
@@ -308,10 +305,20 @@ function package_handle_list() {
         var urls = list.map((item) => {
             return item.url;
         });
-        importScripts.apply(null, urls);
-        list.map((item) => {
-            package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
-        });
+        if(package.platform === "client") {
+            importScripts.apply(null, urls);
+            list.map((item) => {
+                package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
+            });
+        }
+        else if(package.platform === "browser") {
+            var path = urls.join(",") + "?platform=browser";
+            package_script_load(() => {
+                list.map((item) => {
+                    package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
+                });
+            }, path);
+        }
     }
 }
 
@@ -367,8 +374,8 @@ function package_include(packages, callback, package_type="code") {
                 }
             });
         }
+        package_handle_list();
     }
-    package_handle_list();
 }
 
 function package_alias(object, aliases) {
