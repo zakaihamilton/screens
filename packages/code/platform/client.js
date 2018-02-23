@@ -30,10 +30,8 @@ package.include({
     if (info.complete) {
         package.core.console.log("client loaded");
         package.core.startup.run(() => {
-            package.core.message.send_browser("core.startup.run", function() {
-                package.core.message.workerReady(() => {
-                    
-                });
+            package.core.message.workerReady(() => {
+
             });
         });
     }
