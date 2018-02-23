@@ -12,7 +12,6 @@ package.lib.zlib = function LibZLib(me) {
     };
     me.compress = {
         set: function (info) {
-            me.core.console.log("compress headers: " + JSON.stringify(info.headers));
             var encoding = info.headers['accept-encoding'];
             var compressMethod = null;
             if(encoding && info.body) {
@@ -30,9 +29,7 @@ package.lib.zlib = function LibZLib(me) {
                         if (err) {
                             me.core.console.log("compress encoding failed for encoding: " + encoding + " error: " + JSON.stringify(err));
                         } else {
-                            me.core.console.log("compress encoding successful for encoding: " + encoding);
                             info.responseHeaders['Content-Encoding'] = encoding;
-                            me.core.console.log("buf: " + buf.length + " info.body: " + info.body);
                             info.body = buf;
                         }
                         me.unlock(task);
