@@ -29,7 +29,8 @@ function startBrowser(appName, appArgs) {
             "flow",
             "startup",
             "network",
-            "require"
+            "require",
+            "listener"
         ],
         "lib":[
             "moment"
@@ -163,6 +164,9 @@ function startBrowser(appName, appArgs) {
                 app.name = appName;
             }, 0);
             package.core.message.loadWorker("packages/code/platform/client.js");
+            package.core.startup.run(() => {
+                
+            });
         }
     });
 }

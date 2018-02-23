@@ -308,7 +308,6 @@ function package_handle_list() {
         var urls = list.map((item) => {
             return item.url;
         });
-        console.log("urls: " + urls);
         importScripts.apply(null, urls);
         list.map((item) => {
             package_prepare(item.package_name, item.component_name, item.child_name, item.callback);

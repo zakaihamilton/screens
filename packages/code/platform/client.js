@@ -15,7 +15,8 @@ package.include({
         "object",
         "property",
         "flow",
-        "startup"
+        "startup",
+        "listener"
     ],
     "app": [
         "main"
@@ -33,7 +34,9 @@ package.include({
         package.core.console.log("client loaded");
         package.core.startup.run(() => {
             package.core.message.send_browser("core.startup.run", function() {
-                
+                package.core.message.workerReady(() => {
+                    
+                });
             });
         });
     }

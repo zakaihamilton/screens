@@ -287,41 +287,43 @@ package.app.transform = function AppTransform(me) {
             window.options.diagramCallback = "package.app.transform.loadDiagram";
             window.options.toggleCallback = "package.app.transform.cycleDescription";
             window.options.reload = true;
-            me.kab.text.parse(function (text, terms, data) {
-                if (data) {
-                    me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
-                }
-                if (window.language) {
+            me.core.message.waitForWorker(() => {
+                me.kab.text.parse((text, terms, data) => {
+                    if (data) {
+                        me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+                    }
+                    if (window.language) {
+                        me.core.property.set([
+                            window.var.input,
+                            window.var.filter,
+                            window.var.termTable,
+                            window.var.toggleGlossary,
+                            window.var.layout
+                        ], "ui.class.remove", window.language);
+                    }
                     me.core.property.set([
                         window.var.input,
                         window.var.filter,
                         window.var.termTable,
                         window.var.toggleGlossary,
                         window.var.layout
-                    ], "ui.class.remove", window.language);
-                }
-                me.core.property.set([
-                    window.var.input,
-                    window.var.filter,
-                    window.var.termTable,
-                    window.var.toggleGlossary,
-                    window.var.layout
-                ], "ui.class.add", language);
-                me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
-                me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
-                window.language = language;
-                me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
-                me.updateFilterList(window, terms);
-                if (data) {
-                    me.updateTermTable(window, terms, data.termTable, language);
-                }
-                me.ui.layout.move(window.var.output, window.var.layout);
-                window.forceReflow = true;
-                window.contentChanged = true;
-                window.inTransform = false;
-                me.core.property.notify(window, "update");
-                me.core.property.set(window, "ui.work.state", false);
-            }, language, text, window.options);
+                    ], "ui.class.add", language);
+                    me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+                    me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
+                    window.language = language;
+                    me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
+                    me.updateFilterList(window, terms);
+                    if (data) {
+                        me.updateTermTable(window, terms, data.termTable, language);
+                    }
+                    me.ui.layout.move(window.var.output, window.var.layout);
+                    window.forceReflow = true;
+                    window.contentChanged = true;
+                    window.inTransform = false;
+                    me.core.property.notify(window, "update");
+                    me.core.property.set(window, "ui.work.state", false);
+                }, language, text, window.options);
+            });
         }
     };
     me.reflow = {

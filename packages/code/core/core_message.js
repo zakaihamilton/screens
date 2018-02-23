@@ -17,6 +17,9 @@ package.core.message = function CoreMessage(me) {
             };
         }
     };
+    me.waitForWorker = function(callback) {
+        me.core.listener.wait(callback, me.id);
+    };
     me.loadWorker = function(path) {
         package.worker = new Worker(path);
         package.worker.onmessage = function (event) {
@@ -26,6 +29,13 @@ package.core.message = function CoreMessage(me) {
             }, event.data);
         };
         package.worker.postMessage(null);
+    };
+    me.workerReady = function(callback) {
+        if (me.platform === "client") {
+            me.send_browser("core.listener.signal", () => {
+                callback();
+            }, me.id);
+        }
     };
     me.send_server = function (path, callback, params) {
         if (me.platform === "service") {
