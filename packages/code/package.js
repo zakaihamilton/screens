@@ -315,47 +315,35 @@ function package_include(packages, callback, package_type="code") {
             numComponents++;
         });
     }
-    var load = function (package_index, component_index) {
-        var package_keys = Object.keys(packages);
-        if (package_index >= package_keys.length) {
-            return;
-        }
-        var package_name = package_keys[package_index];
+    for(var package_name in packages) {
         var components = packages[package_name];
-        var component_name = components[component_index];
-        package_load(package_type, package_name, component_name, null, function (info) {
-            if (info.failure) {
+        for(var component_name of components) {
+            package_load(package_type, package_name, component_name, null, function (info) {
+                if (info.failure) {
+                    if (callback) {
+                        callback(info);
+                    }
+                    return;
+                }
+                var component = package_component(info.package + "." + info.component);
+                component.status = true;
+                loadedComponents++;
+                info.loadedComponents = loadedComponents;
+                info.numComponents = numComponents;
+                info.progress = (loadedComponents / numComponents) * 100;
+                if (info.progress > 100) {
+                    info.progress = 100;
+                }
+                if (loadedComponents >= numComponents) {
+                    package_complete(info, order, callback);
+                    return;
+                }
                 if (callback) {
                     callback(info);
                 }
-                return;
-            }
-            var component = package_component(info.package + "." + info.component);
-            component.status = true;
-            loadedComponents++;
-            info.loadedComponents = loadedComponents;
-            info.numComponents = numComponents;
-            info.progress = (loadedComponents / numComponents) * 100;
-            if (info.progress > 100) {
-                info.progress = 100;
-            }
-            if (loadedComponents >= numComponents) {
-                package_complete(info, order, callback);
-                return;
-            }
-            if (callback) {
-                callback(info);
-            }
-        });
-        /* Load next component */
-        component_index++;
-        if (component_index >= components.length) {
-            package_index++;
-            component_index = 0;
+            });
         }
-        load(package_index, component_index);
-    };
-    load(0, 0);
+    }
 }
 
 function package_alias(object, aliases) {

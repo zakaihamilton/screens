@@ -10,6 +10,7 @@ package.app.log = function AppLog(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton.isEnabled = false;
         return me.singleton;
     };
     me.init = function () {
@@ -30,9 +31,8 @@ package.app.log = function AppLog(me) {
         } else if (source === "Browser") {
             send = me.core.message.send_browser;
         }
-        send(method, function (result) {
-            callback(result);
-        });
+        var args = Array.prototype.slice.call(arguments, 0);
+        send.apply(null, args);
     };
     me.clear = {
         set: function (object) {
@@ -50,6 +50,20 @@ package.app.log = function AppLog(me) {
             me.send("core.console.retrieveMessages", function (messages) {
                 me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));
             });
+            me.send("core.console.isEnabled", function (isEnabled) {
+                me.singleton.isEnabled = isEnabled;
+            });
+        }
+    };
+    me.enable = {
+        get: function (object) {
+            return me.singleton.isEnabled;
+        },
+        set: function (object) {
+            me.singleton.isEnabled = !me.singleton.isEnabled;
+            me.send("core.console.enable", function () {
+
+            }, me.singleton.isEnabled);
         }
     };
 };

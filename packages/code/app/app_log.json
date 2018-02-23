@@ -10,6 +10,10 @@
         ["File", [
                 ["Refresh", "app.log.refresh"],
                 ["Clear","app.log.clear"],
+                ["Enabled", "app.log.enable", {
+                    "state": "select",
+                    "separator":true
+                }],
                 ["Server","app.log.source", {
                         "state": "select",
                         "separator":true
