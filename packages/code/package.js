@@ -235,8 +235,17 @@ function package_load(package_type, package_name, component_name, child_name, ca
             require(path);
             package_prepare(package_name, component_name, child_name, callback);
         } else if (package.platform === "client") {
-            importScripts("/packages/" + package_type + "/" + file_name + ".js?platform=client");
-            package_prepare(package_name, component_name, child_name, callback);
+            if(!package.list) {
+                package.list = [];
+            }
+            var item = {
+                url: "/packages/" + package_type + "/" + file_name + ".js?platform=client",
+                package_name: package_name,
+                component_name : component_name,
+                child_name : child_name,
+                callback : callback
+            };
+            package.list.push(item);
         }
     } catch (err) {
         console.error("Found error: " + err + " stack: " + err.stack);
@@ -292,6 +301,21 @@ function package_complete(info, order, callback) {
     }, 0);
 }
 
+function package_handle_list() {
+    if(package.list && package.list.length) {
+        var list = package.list;
+        package.list = [];
+        var urls = list.map((item) => {
+            return item.url;
+        });
+        console.log("urls: " + urls);
+        importScripts.apply(null, urls);
+        list.map((item) => {
+            package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
+        });
+    }
+}
+
 function package_include(packages, callback, package_type="code") {
     if (typeof packages === "string" && packages) {
         var names = packages.split(".");
@@ -301,6 +325,7 @@ function package_include(packages, callback, package_type="code") {
         package_load(package_type, package_name, component_name, child_name, function (info) {
             package_complete(info, [packages], callback);
         });
+        package_handle_list();
         return;
     }
     var numComponents = 0;
@@ -344,6 +369,7 @@ function package_include(packages, callback, package_type="code") {
             });
         }
     }
+    package_handle_list();
 }
 
 function package_alias(object, aliases) {
