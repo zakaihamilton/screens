@@ -18,9 +18,6 @@ package.include({
         "startup",
         "listener"
     ],
-    "app": [
-        "main"
-    ],
     "kab": [
         "data",
         "diagram",
