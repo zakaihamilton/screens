@@ -134,7 +134,7 @@
         "Taamimof":"Taamim of",
         "Eser de Sefirot":"Eser Sefirot",
         "Torahall":"Torah all",
-        "\nOr a":"_Or a",
+        "\nOr a":"__Or a",
         "<title>":"<br>\n<h4 style=\"text-align:center\">",
         "</title>":"</h4>",
         "<rtl>":"<span dir=\"rtl\">",
@@ -304,7 +304,7 @@
             "replace": "$1"
         },
         {
-            "find": "/_",
+            "find": "/__",
             "replace": ""
         }
     ],

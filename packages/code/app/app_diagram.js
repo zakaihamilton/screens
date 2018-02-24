@@ -56,8 +56,8 @@ package.app.diagram = function AppDiagram(me) {
         return "/packages/res/diagrams/" + name + ".json";
     };
     me.init = function () {
-        me.path = me.core.object.property("app.viewer.path");
-        me.diagramData = me.core.object.property("app.viewer.diagramData");
+        me.path = me.core.object.property("app.diagram.path");
+        me.diagramData = me.core.object.property("app.diagram.diagramData");
     };
     me.initOptions = {
         set: function (object) {
