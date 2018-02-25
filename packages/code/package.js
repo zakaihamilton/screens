@@ -114,6 +114,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
         }
     }
     /* Register component in package */
+    var component = package_component(component_id);
     package.count++;
     /* Create component proxy */
     var component_obj = new Proxy({id: id, __package:package_name, __component:component_name}, {
@@ -166,7 +167,6 @@ function package_setup(task, package_name, component_name, child_name, callback,
         }
         if (init_method) {
             if (callback) {
-                var component = package_component(component_id);
                 if (!component.init) {
                     component.init = [];
                 }

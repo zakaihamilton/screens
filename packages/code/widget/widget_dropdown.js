@@ -4,9 +4,6 @@
  */
 
 package.widget.dropdown = function WidgetDropDown(me) {
-    me["ui.element.depends"] = {
-        properties: ["ui.element.count", "ui.basic.text"]
-    };
     me["core.property.redirect"] = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",

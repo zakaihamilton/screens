@@ -7,8 +7,11 @@ package.ui.element = function UIElement(me) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = Object.keys(me["widget"]).map(function (component_name) {
-            var component = me.browse("widget." + component_name);
+        var matches = Object.keys(me.components).map(function (component_name) {
+            if(!(component_name.includes("widget."))) {
+                return null;
+            }
+            var component = me.browse(component_name);
             var depends = component["ui.element.depends"];
             if (depends) {
                 if (depends.parent) {
@@ -43,6 +46,9 @@ package.ui.element = function UIElement(me) {
         matches.sort(function (source, target) {
             return me.browse(target)["ui.element.depends"].properties.length - me.browse(source)["ui.element.depends"].properties.length;
         });
+        if(!matches.length) {
+            return null;
+        }
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {

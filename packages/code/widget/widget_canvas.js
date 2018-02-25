@@ -75,7 +75,7 @@ package.widget.canvas = function WidgetCanvas(me) {
             virtual: true
         };
         Object.keys(me["canvas"]).map(function (component_name) {
-            var component = me.browse(component_name);
+            var component = me.browse("canvas." + component_name);
             if ("attach" in component) {
                 component.attach(element);
             }
