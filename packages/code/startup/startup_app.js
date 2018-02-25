@@ -14,16 +14,20 @@ package.startup.app = function StartupApp(me) {
             }
         ]);
         if(!me.appName || me.appName !== "none") {
-            me.core.app.launch(function(window) {
-                if(me.appName) {
-                    me.core.app.launch(function(window) {
-                        if(window) {
-                            me.core.property.set(window, "widget.window.show", true);
-                            me.core.property.set(window, "widget.window.maximize");
-                        }
-                    }, me.appName, me.appArgs);
-                }
-            }, "progman");
+            if(me.appName) {
+                me.core.app.launch(function(window) {
+                    if(window) {
+                        me.core.property.set(window, "widget.window.show", true);
+                        me.core.property.set(window, "widget.window.maximize");
+                    }
+                }, me.appName, me.appArgs);
+            }
+            else {
+                me.core.app.launch(function(window) {
+                    me.core.property.set(window, "widget.window.show", true);
+                    me.core.property.set(window, "widget.window.maximize");
+                }, "progman");
+            }
         }
     };
 };
