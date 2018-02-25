@@ -9,7 +9,7 @@ package.ui.event = function UIEvent(me) {
             me.core.property.set(object, method, event);
         }
     };
-    me.register = function (handlers, object, type, method, name=type, target=object) {
+    me.register = function (handlers, object, type, method, name=type, target=object, options=null) {
         if (!object.event_types) {
             object.event_types = {};
         }
@@ -31,7 +31,7 @@ package.ui.event = function UIEvent(me) {
         }
         if (method) {
             object.event_types[name] = listener_callback;
-            target.addEventListener(type, listener_callback);
+            target.addEventListener(type, listener_callback, options);
         }
     };
 };

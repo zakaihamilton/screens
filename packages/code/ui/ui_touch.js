@@ -158,7 +158,7 @@ package.ui.touch = function UITouch(me) {
     };
     me.wheel = {
         set: function (object, value) {
-            me.register(me.handle, object, "wheel", value);
+            me.register(me.handle, object, "wheel", value, "wheel", object, {passive:true});
         }
     };
 };
