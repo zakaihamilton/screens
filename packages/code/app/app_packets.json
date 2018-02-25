@@ -44,8 +44,13 @@
             ]
         ],
         ["View", [
-                ["Data / Time", "app.packets.viewType", {
+                ["Auto", "app.packets.viewType", {
                         "state": "select"
+                    }
+                ],
+                ["Data / Time", "app.packets.viewType", {
+                        "state": "select",
+                        "separator": true
                     }
                 ],
                 ["ABR / Packet Delay", "app.packets.viewType", {

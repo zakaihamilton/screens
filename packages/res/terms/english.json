@@ -6498,6 +6498,26 @@
             },
             "translation":"King of Knowledge",
             "hebrew":"מלך הדעת"
+        },
+        {
+            "term":"Derech",
+            "translation":"Path",
+            "hebrew":"דרך"
+        },
+        {
+            "term":"Maavar",
+            "translation":"Passing",
+            "hebrew":"מעבר"
+        },
+        {
+            "term":"Derech Hitlabshut",
+            "translation":"Through Clothing",
+            "hebrew":"דרך התלבשות"
+        },
+        {
+            "term":"Derech Maavar",
+            "translation":"In Passing",
+            "hebrew":"דרך מעבר"
         }
         ],
     "style": {

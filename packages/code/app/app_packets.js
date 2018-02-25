@@ -21,7 +21,7 @@ package.app.packets = function AppPackets(me) {
         me.ui.options.load(me, null, {
             "autoRefresh": true,
             "dataProfile": "Live",
-            "viewType": "Data / Time"
+            "viewType": "Auto"
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.viewType = me.ui.options.choiceSet(me, "viewType", (object, options, key, value) => {
@@ -259,10 +259,22 @@ package.app.packets = function AppPackets(me) {
             return "line";
         }
     };
+    me.calcViewType = function(window) {
+        var viewType = me.options.viewType;
+        if(viewType === "Auto") {
+            if(window.streamIndex === -1) {
+                viewType = "ABR / Packet Delay";
+            }
+            else {
+                viewType = "Data / Time";
+            }
+        }
+        return viewType;
+    };
     me.chartOptions = {
         get: function (object) {
             var window = me.widget.window.window(object);
-            var viewType = me.options.viewType;
+            var viewType = me.calcViewType(window);
             var options = {};
             if (viewType === "Data / Time") {
                 options = {
@@ -341,7 +353,7 @@ package.app.packets = function AppPackets(me) {
             if (!window || !window.packetInfo) {
                 return data;
             }
-            var viewType = me.options.viewType;
+            var viewType = me.calcViewType(window);
             var streamRequests = window.packetInfo.streamRequests;
             if (!streamRequests.length) {
                 return data;
@@ -512,6 +524,9 @@ package.app.packets = function AppPackets(me) {
                 streamIndex = -1;
             }
             window.streamIndex = streamIndex;
+            me.core.property.set(window.var.chart, "reset");
+            me.core.property.set(window.var.chart, "type", "@app.packets.chartType");
+            me.core.property.set(window.var.chart, "options", "@app.packets.chartOptions");
             me.core.property.notify(window, "app.packets.refreshData");
         }
     };

@@ -25,12 +25,12 @@ package.manager.packet = function ManagerPacket(me) {
                     dataSize: 0,
                     startTime: 0,
                     duration: 0,
-                    packets: {}
+                    packets: {},
+                    effects: packet.effects
                 });
+                me.packetInfo.effects = packet.effects;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
-            me.packetInfo.effects = packet.effects;
-            streamRequest.effects = packet.effects;
             streamRequest.packetCount++;
             var packet_source = packet.source;
             var packet_target = packet.target;
