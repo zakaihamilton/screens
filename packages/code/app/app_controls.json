@@ -21,7 +21,7 @@
         },
         {
             "ui.basic.text": "Hello",
-            "ui.touch.click": "app.main.ok"
+            "ui.touch.click": ""
         },
         {
             "ui.basic.text": "Option One",

@@ -4,17 +4,26 @@
  */
 
 package.startup.app = function StartupApp(me) {
-    me.name = null;
-    me.args = null;
+    me.appName = null;
+    me.appArgs = null;
     me.run = function(task) {
-        me.include("app.main", function (appInfo) {
-            if (appInfo.complete) {
-                if (me.name) {
-                    me.app.main.setStartupApp(null, me.name);
-                    me.app.main.setStartupArgs(null, me.args);
-                }
-                me.app.main.launch();
+        me.ui.element.create([
+            {
+                "ui.element.component":"widget.desktop",
+                "ui.basic.var":"desktop"
             }
-        });
+        ]);
+        if(!me.appName || me.appName !== "none") {
+            me.core.app.launch(function(window) {
+                if(me.appName) {
+                    me.core.app.launch(function(window) {
+                        if(window) {
+                            me.core.property.set(window, "widget.window.show", true);
+                            me.core.property.set(window, "widget.window.maximize");
+                        }
+                    }, me.appName, me.appArgs);
+                }
+            }, "progman");
+        }
     };
 };

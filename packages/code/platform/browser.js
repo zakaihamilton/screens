@@ -26,17 +26,6 @@ function startBrowser(appName, appArgs) {
         "widget": [
             "*"
         ],
-        "canvas": [
-            "dirty",
-            "node",
-            "element",
-            "attribute",
-            "style",
-            "rect",
-            "border",
-            "background",
-            "text"
-        ],
         "kab": [
             "text",
             "letters"
@@ -53,32 +42,17 @@ function startBrowser(appName, appArgs) {
         "startup": [
             "app",
             "version"
-        ],
-        "app": [
-            "main"
         ]
     }, function (info) {
         if (info.failure) {
             console.log("Cannot load " + info.failure.package + "." + info.failure.component);
         } else if (info.progress && info.loaded) {
-            var progress_width = (300 / 100) * info.progress;
-            var progress = document.getElementById("progress");
-            if (progress) {
-                progress.style.width = progress_width + "px";
-                progress.innerHTML = info.loaded.package + "." + info.loaded.component;
-                if(info.progress >= 100) {
-                    progress.innerHTML = "Initializing Components";
-                }
-            }
+
         }
         if (info.complete) {
-            progress.innerHTML = "Starting " + (appName ? appName : "Screens Environment");
-            setTimeout(() => {
-                document.getElementById("bar").style.display = "none";
-                var app = package.startup.app;
-                app.args = appArgs;
-                app.name = appName;
-            }, 0);
+            var app = package.startup.app;
+            app.appArgs = appArgs;
+            app.appName = appName;
             package.core.message.loadWorker("packages/code/platform/client.js");
             package.core.startup.run(() => {
                 
