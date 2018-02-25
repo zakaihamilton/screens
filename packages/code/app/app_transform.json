@@ -54,11 +54,6 @@
                         "separator": true
                     }
                 ],
-                ["Embedded", "app.transform.embedded", {
-                        "state": "select",
-                        "enabled": "app.transform.diagrams"
-                    }
-                ],
                 ["Language", null, {
                         "enabled": false,
                         "header": true

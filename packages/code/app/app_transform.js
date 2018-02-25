@@ -9,9 +9,7 @@ package.app.transform = function AppTransform(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.core.app.preload(() => {
-            me.singleton = me.ui.element.create(__json__, "workspace", "self");
-        }, "diagram");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.initOptions = {
         set: function (object) {
@@ -35,7 +33,6 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                embedded: false,
                 pipVideo : false,
                 swipe: me.core.device.isMobile()
             });
@@ -69,7 +66,6 @@ package.app.transform = function AppTransform(me) {
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
-            me.embedded = me.ui.options.toggleSet(me, "embedded", me.reflow.set);
             me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.swipe = me.ui.options.toggleSet(me, "swipe", function (object, options, key, value) {
@@ -505,18 +501,16 @@ package.app.transform = function AppTransform(me) {
     me.loadDiagram = {
         set: function (object, path) {
             var window = me.widget.window.mainWindow(object);
-            var fullPath = me.app.diagram.fullPath(path);
+            var fullPath = me.fullPath(path);
             me.core.json.loadFile(function (json) {
                 if (json.title) {
                     window.diagrams.push({title: json.title, path: path});
                 }
             }, fullPath, false);
-            if (window.options.embedded) {
-                me.core.app.launch(function (diagramWindow) {
-                    me.core.property.set(diagramWindow, "core.link.widget-window-restore", "app.transform.reflow");
-                }, "diagram", [path, window.options, object, true]);
-            }
         }
+    };
+    me.fullPath = function(name) {
+        return "/packages/res/diagrams/" + name + ".json";
     };
     me.hoverDescription = function (object, state) {
         var window = me.widget.window.mainWindow(object);
