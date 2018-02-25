@@ -91,7 +91,6 @@ package.core.module = function CoreModule(me) {
                 var file = files[0];
                 var folder = me.core.path.folder(file);
                 var name = me.core.path.name(file);
-                console.log("file: " + file + " folder: " + folder + " name: " + name);
                 if(name.includes("*")) {
                     me.lock(task, (task) => {
                         me.core.file.readDir((err, items) => {
@@ -102,7 +101,6 @@ package.core.module = function CoreModule(me) {
                                 return filePath.endsWith(".js");
                             });
                             files.unshift(file);
-                            console.log("files: " + JSON.stringify(files));
                             me.unlock(task);
                         }, folder);
                     });
