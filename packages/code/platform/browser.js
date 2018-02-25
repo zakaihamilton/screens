@@ -3,9 +3,6 @@ function startBrowser(appName, appArgs) {
         "core": [
             "*"
         ],
-        "lib":[
-            "moment"
-        ],
         "storage": [
             "cache",
             "file",
