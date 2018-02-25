@@ -8,11 +8,11 @@ package.core.startup = function CoreStartup(me) {
         me.lock((task) => {
             var startup = me["startup"];
             if(startup) {
-                var components = startup.components;
+                var components = Object.keys(startup);
                 if(components) {
                     components.map(function (component_name) {
                         me.lock(task, (task) => {
-                            var component = me.browse(component_name);
+                            var component = me.browse("startup." + component_name);
                             if(component.run) {
                                 me.core.console.log("startup:" + component_name);
                                 component.run(task);

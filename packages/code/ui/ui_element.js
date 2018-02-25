@@ -7,8 +7,8 @@ package.ui.element = function UIElement(me) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = me["widget"].components.map(function (component_name) {
-            var component = me.browse(component_name);
+        var matches = Object.keys(me["widget"]).map(function (component_name) {
+            var component = me.browse("widget." + component_name);
             var depends = component["ui.element.depends"];
             if (depends) {
                 if (depends.parent) {

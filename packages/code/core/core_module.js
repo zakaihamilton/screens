@@ -87,13 +87,42 @@ package.core.module = function CoreModule(me) {
         if (filePath.endsWith(".js")) {
             var files = filePath.split(",");
             info.body = "";
-            me.flow(null, (flow) => {
-                files.map((filePath) => {
-                    flow.async(me.handleCode, flow.callback, info, filePath, params);
+            me.lock(info.task, (task) => {
+                var file = files[0];
+                var folder = me.core.path.folder(file);
+                var name = me.core.path.name(file);
+                console.log("file: " + file + " folder: " + folder + " name: " + name);
+                if(name.includes("*")) {
+                    me.lock(task, (task) => {
+                        me.core.file.readDir((err, items) => {
+                            files = items.map((filePath) => {
+                                return folder + "/" + filePath;
+                            });
+                            files = files.filter((filePath) => {
+                                return filePath.endsWith(".js");
+                            });
+                            files.unshift(file);
+                            console.log("files: " + JSON.stringify(files));
+                            me.unlock(task);
+                        }, folder);
+                    });
+                }
+                else if(files.length > 1) {
+                    files = files.slice(1).map((filePath) => {
+                        return folder + "/" + filePath;
+                    });
+                    files.unshift(file);
+                }
+                me.unlock(task, () => {
+                    me.flow(null, (flow) => {
+                        files.map((filePath) => {
+                            flow.async(me.handleCode, flow.callback, info, filePath, params);
+                        });
+                        flow.wait(null, () => {
+                            flow.end();
+                        }, 1);
+                    });
                 });
-                flow.wait(null, () => {
-                    flow.end();
-                }, 1);
             });
         } else if (filePath.endsWith(".css")) {
             info["content-type"] = "text/css";

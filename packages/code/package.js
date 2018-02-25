@@ -114,7 +114,6 @@ function package_setup(task, package_name, component_name, child_name, callback,
         }
     }
     /* Register component in package */
-    package[package_name].components.push(id);
     package.count++;
     /* Create component proxy */
     var component_obj = new Proxy({id: id, __package:package_name, __component:component_name}, {
@@ -196,7 +195,7 @@ function package_prepare(package_name, component_name, child_name, callback) {
 }
 
 function package_load(package_type, package_name, component_name, child_name, callback) {
-    var file_name = package_name + "/" + package_name + "_" + component_name;
+    var file_name = package_name + "_" + component_name;
     var code_name = package_name + "." + component_name;
     if(child_name) {
         code_name = code_name + "." + child_name;
@@ -211,23 +210,21 @@ function package_load(package_type, package_name, component_name, child_name, ca
         }
     }
     else {
-        package[package_name] = {id: package_name, package: package_name, components: []};
+        package[package_name] = {};
     }
     try {
         if (package.platform === "server" || package.platform === "service") {
-            path = "../" + package_type + "/" + file_name;
+            path = "../" + package_type + "/" + package_name + "/" + file_name;
             require(path);
             package_prepare(package_name, component_name, child_name, callback);
         } else if (package.platform === "client" || package.platform === "browser") {
             if(!package.list) {
                 package.list = [];
             }
-            var url = "/packages/" + package_type + "/" + file_name + ".js";
-            if(package.platform === "client") {
-                url += "?platform=client";
-            }
+            var url = file_name;
             var item = {
                 url: url,
+                package_type: package_type,
                 package_name: package_name,
                 component_name : component_name,
                 child_name : child_name,
@@ -264,16 +261,25 @@ function package_complete(info, order, callback) {
     setTimeout(() => {
         package.lock(task => {
             order.map(function (id) {
-                var component = package_component(id);
-                if (component.init && component.init.length) {
-                    console.log(package.platform + ": Initializing " + id);
-                    do {
-                        var init = component.init.shift();
-                        if (init) {
-                            package_init(id, init, task);
-                        }
-                    } while (init);
+                var ids = [id];
+                if(id.includes("*")) {
+                    var package_name = id.split(".")[0];
+                    ids = Object.keys(package[package_name]).map((component_name) => {
+                        return package_name + "." + component_name;
+                    });
                 }
+                ids.map((id) => {
+                    var component = package_component(id);
+                    if (component.init && component.init.length) {
+                        console.log(package.platform + ": Initializing " + id);
+                        do {
+                            var init = component.init.shift();
+                            if (init) {
+                                package_init(id, init, task);
+                            }
+                        } while (init);
+                    }
+                });
             });
             package.unlock(task, () => {
                 if (info) {
@@ -298,25 +304,50 @@ function package_script_load(callback, path) {
     ref.parentNode.insertBefore(script, ref);
 }
 
-function package_handle_list() {
-    if(package.list && package.list.length) {
-        var list = package.list;
-        package.list = [];
+function package_handle_list(list) {
+    var firstItem = list[0];
+    if(firstItem.component_name === "*") {
+        var index = 0;
+        var count = Object.keys(package[firstItem.package_name]).length;
+        list = Object.keys(package[firstItem.package_name]).map((component_name) => {
+            return {
+                package_name:firstItem.package_name,
+                component_name:component_name,
+                child_name:null,
+                callback:(info) => {
+                    index++;
+                    if(index >= count && firstItem.callback) {
+                        firstItem.callback(info);
+                    }
+                }
+            };
+        });
+    }
+    list.map((item) => {
+        package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
+    });
+};
+
+function package_import_list(list) {
+    if(list && list.length) {
+        var first = true;
         var urls = list.map((item) => {
-            return item.url;
+            var url = item.url;
+            if(first) {
+                 url = "/packages/" + item.package_type + "/" + item.package_name + "/" + url;
+                first = false;
+            }
+            return url + ".js";
         });
         if(package.platform === "client") {
-            importScripts.apply(null, urls);
-            list.map((item) => {
-                package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
-            });
+            var path = urls.join(",") + "?platform=client";
+            importScripts(path);
+            package_handle_list(list);
         }
         else if(package.platform === "browser") {
             var path = urls.join(",") + "?platform=browser";
             package_script_load(() => {
-                list.map((item) => {
-                    package_prepare(item.package_name, item.component_name, item.child_name, item.callback);
-                });
+                package_handle_list(list);
             }, path);
         }
     }
@@ -331,7 +362,8 @@ function package_include(packages, callback, package_type="code") {
         package_load(package_type, package_name, component_name, child_name, function (info) {
             package_complete(info, [packages], callback);
         });
-        package_handle_list();
+        package_import_list(package.list);
+        package.list = [];
         return;
     }
     var numComponents = 0;
@@ -341,8 +373,6 @@ function package_include(packages, callback, package_type="code") {
         packages[package_name].map(function (component_name) {
             var id = package_name + "." + component_name;
             order.push(id);
-            var component = package_component(id);
-            component.status = false;
             numComponents++;
         });
     }
@@ -356,8 +386,6 @@ function package_include(packages, callback, package_type="code") {
                     }
                     return;
                 }
-                var component = package_component(info.package + "." + info.component);
-                component.status = true;
                 loadedComponents++;
                 info.loadedComponents = loadedComponents;
                 info.numComponents = numComponents;
@@ -374,7 +402,8 @@ function package_include(packages, callback, package_type="code") {
                 }
             });
         }
-        package_handle_list();
+        package_import_list(package.list);
+        package.list = [];
     }
 }
 

@@ -36,6 +36,12 @@ package.core.path = function CorePath(me) {
         }
         return path;
     };
+    me.folder = function(path) {
+        path = path.split("/");
+        path.pop();
+        path = path.join("/");
+        return path;
+    };
     me.fullName = function(path) {
         var name = "";
         var last = path.split("/").pop();

@@ -1,36 +1,7 @@
 function startBrowser(appName, appArgs) {
     package.include({
         "core": [
-            "property",
-            "console",
-            "object",
-            "test",
-            "http",
-            "message",
-            "type",
-            "ref",
-            "module",
-            "script",
-            "cmd",
-            "app",
-            "string",
-            "handle",
-            "json",
-            "performance",
-            "util",
-            "file",
-            "path",
-            "link",
-            "device",
-            "server",
-            "date",
-            "number",
-            "hash",
-            "flow",
-            "startup",
-            "network",
-            "require",
-            "listener"
+            "*"
         ],
         "lib":[
             "moment"
