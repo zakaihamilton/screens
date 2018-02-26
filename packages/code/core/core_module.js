@@ -71,12 +71,22 @@ package.core.module = function CoreModule(me) {
                 if (data && data.includes("__json__")) {
                     me.loadTextFile(info.task, filePath.replace(".js", ".json"), function (jsonData) {
                         info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
-                        info.body += data;
+                        if(info.body) {
+                            info.body += data;
+                        }
+                        else {
+                            info.body = data;
+                        }
                         core.property.set(info, "parse");
                     });
                 } else {
                     info.vars = {"component": component_path, "platform": target_platform};
-                    info.body += data;
+                    if(info.body) {
+                        info.body += data;
+                    }
+                    else {
+                        info.body = data;
+                    }
                     core.property.set(info, "parse");
                 }
             });
