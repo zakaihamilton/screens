@@ -397,9 +397,9 @@ package.app.packets = function AppPackets(me) {
                                 var target = targets[targetIp];
                                 var label = dataProfileName + ": ";
                                 if (target.sourceIsService) {
-                                    label = "service";
+                                    label += "service";
                                 } else {
-                                    label = "device";
+                                    label += "device";
                                 }
                                 label += "(" + sourceIp + ") => ";
                                 if (target.targetIsService) {
