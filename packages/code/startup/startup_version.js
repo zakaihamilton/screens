@@ -10,12 +10,14 @@ package.startup.version = function StartupVersion(me) {
             me.core.network.ipAddress(ip => {
                 var date = new Date();
                 var id = date.getTime();
+                var appName = package.core.startup.app.name || "";
                 var data = {
                     date: date.toString(),
                     version: config.version,
                     port: me.core.http.port,
                     platform: me.platform,
-                    ip: ip
+                    ip: ip,
+                    app: appName
                 };
                 me.core.console.log("startup: " + JSON.stringify(data) + " id: " + id);
                 me.storage.data.saveAndVerify(err => {

@@ -4,8 +4,6 @@
  */
 
 package.startup.app = function StartupApp(me) {
-    me.appName = null;
-    me.appArgs = null;
     me.run = function(task) {
         me.ui.element.create([
             {
@@ -13,14 +11,15 @@ package.startup.app = function StartupApp(me) {
                 "ui.basic.var":"desktop"
             }
         ]);
-        if(!me.appName || me.appName !== "none") {
-            if(me.appName) {
+        var app = me.core.startup.app;
+        if(!app.name || app.name !== "none") {
+            if(app.name) {
                 me.core.app.launch(function(window) {
                     if(window) {
                         me.core.property.set(window, "widget.window.show", true);
                         me.core.property.set(window, "widget.window.maximize");
                     }
-                }, me.appName, me.appArgs);
+                }, app.name, app.params);
             }
             else {
                 me.core.app.launch(function(window) {

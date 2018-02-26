@@ -32,8 +32,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "startup": [
-            "app",
-            "version"
+            "*"
         ]
     }, function (info) {
         if (info.failure) {
@@ -42,9 +41,10 @@ function startBrowser(appName, appArgs) {
 
         }
         if (info.complete) {
-            var app = package.startup.app;
-            app.appArgs = appArgs;
-            app.appName = appName;
+            package.core.startup.app = {
+                name: appName,
+                params: appArgs
+            };
             package.core.message.loadWorker("packages/code/platform/client.js");
             package.core.startup.run(() => {
                 
