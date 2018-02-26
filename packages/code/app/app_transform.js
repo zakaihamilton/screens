@@ -72,7 +72,7 @@ package.app.transform = function AppTransform(me) {
                 var window = me.widget.window.mainWindow(object);
                 me.core.property.set(window.var.layout, "ui.scroll.swipe", value ? "vertical" : "");
             });
-            me.ui.class.useStylesheet("kab.term");
+            me.ui.class.useStylesheet("kab");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
@@ -111,14 +111,14 @@ package.app.transform = function AppTransform(me) {
                 object.workTimeout = null;
             }
             if (value) {
-                me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
                 me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
+                me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
             } else {
                 object.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                 me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
                     me.updateScrolling(object);
-                }, 500);
+                }, 250);
             }
         }
     };

@@ -19,7 +19,9 @@ package.core.listener = function CoreListener(me) {
             listener = me.listener[id] = {callbacks:[], signal:false};
         }
         listener.signal = false;
-        callback(id);
+        if(callback) {
+            callback(id);
+        }
     };
     me.signal = function(callback, id) {
         var listener = me.listener[id];
@@ -30,7 +32,9 @@ package.core.listener = function CoreListener(me) {
         for(var callbackItem of listener.callbacks) {
             callbackItem(id);
         }
-        callback(id);
+        if(callback) {
+            callback(id);
+        }
     };
     me.wait = function(callback, id) {
         var listener = me.listener[id];

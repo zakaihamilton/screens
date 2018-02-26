@@ -6,7 +6,6 @@
         "width": "950px",
         "height": "650px"
     },
-    "maximize": null,
     "widget.menu.items": [
         ["File", [
                 ["Refresh", "app.player.refresh"]

@@ -5,6 +5,7 @@
 
 package.ui.class = function UIClass(me) {
     me.stylesheets = {};
+    me.styleSheetsLeftToLoad = 0;
     me.processClass = function(object, classList, callback) {
         if (Array.isArray(classList)) {
             classList = classList.join(" ");
@@ -64,15 +65,22 @@ package.ui.class = function UIClass(me) {
         link.type = "text/css";
         link.rel = "stylesheet";
         link.media = "screen,print";
+        link.onload = function() {
+            me.styleSheetsLeftToLoad--;
+            if(!me.styleSheetsLeftToLoad) {
+                me.core.listener.signal(null, me.id);
+            }
+        };
+        if(!me.styleSheetsLeftToLoad) {
+            me.core.listener.reset(null, me.id);
+        }
+        me.styleSheetsLeftToLoad++;
         document.getElementsByTagName("head")[0].appendChild(link);
         me.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
         return link;
     };
-    me.loadComponentStylesheet = function (path) {
-        var period = path.lastIndexOf(".");
-        var component_name = path.substring(period + 1);
-        var package_name = path.substring(0, period);
-        var fullPath = "/packages/code/" + package_name + "/" + package_name + "_" + component_name + ".css";
+    me.loadPackageStylesheets = function (package_name) {
+        var fullPath = "/packages/code/" + package_name + "/" + package_name + "_*.css";
         return me.loadStylesheet(fullPath);
     };
     me.to_class = function (object, path) {
@@ -81,13 +89,11 @@ package.ui.class = function UIClass(me) {
         path = me.ui.theme.getMapping(path);
         return path;
     };
-    me.to_component = function(object, path) {
+    me.to_package = function(object, path) {
         path = path.replace("@component", object.component);
         var tokens = path.split(".");
         if(tokens.length >= 2) {
-            var package_name = tokens[0];
-            var component_name = tokens[1];
-            return package_name + "." + component_name;
+            return tokens[0];
         }
         return null;
     };
@@ -110,19 +116,39 @@ package.ui.class = function UIClass(me) {
         else {
             path = me.ui.element.to_full_name(object, path);
             var class_name = me.to_class(object, path);
-            var component_name = me.to_component(object, path);
-            if(component_name) {
-                me.useStylesheet(component_name);
+            var package_name = me.to_package(object, path);
+            if(package_name) {
+                me.useStylesheet(package_name);
             }
         }
         me.processClass(object, class_name, function(item) {
             object.classList.add(item);
         });
     };
-    me.useStylesheet = function(component_name) {
-        if (!me.stylesheets[component_name]) {
-            me.core.console.log("loading css stylesheet: " + component_name);
-            me.stylesheets[component_name] = me.loadComponentStylesheet(component_name);
+    me.useStylesheet = function(package_name) {
+        if (!me.stylesheets[package_name]) {
+            me.core.console.log("loading css stylesheets for package: " + package_name);
+            me.stylesheets[package_name] = me.loadPackageStylesheets(package_name);
+        }
+    };
+    me.waitForStylesheets = function(callback) {
+        me.core.listener.wait(callback, me.id);
+    };
+    me.wait = {
+        set: function(object, properties) {
+            if(!me.waitQueue) {
+                me.waitQueue = [];
+            }
+            me.waitQueue.push({object:object, properties:properties});
+            me.core.listener.wait(() => {
+                var queue = me.waitQueue;
+                me.waitQueue = [];
+                queue.map(list => {
+                    for (var key in list.properties) {
+                        me.core.property.set(list.object, key, list.properties[key]);
+                    }
+                });
+            }, me.id);
         }
     };
 };

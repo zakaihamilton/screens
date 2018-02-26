@@ -48,6 +48,20 @@ package.core.module = function CoreModule(me) {
             }, filePath);
         });
     };
+    me.handleStylesheet = function(callback, info, filePath, params) {
+        info["content-type"] = "text/css";
+        me.loadTextFile(info.task, filePath, function (data, task) {
+            me.lock(task, task => {
+                me.postcss([me.autoprefixer]).process(data).then(function (result) {
+                    result.warnings().forEach(function (warn) {
+                        me.core.console.warn(warn.toString());
+                    });
+                    info.body += result.css;
+                    me.unlock(task, callback);
+                });
+            });
+        });
+    };
     me.handleCode = function (callback, info, filePath, params) {
         me.lock(info.task, (task) => {
             if(filePath.startsWith("/")) {
@@ -71,30 +85,19 @@ package.core.module = function CoreModule(me) {
                 if (data && data.includes("__json__")) {
                     me.loadTextFile(info.task, filePath.replace(".js", ".json"), function (jsonData) {
                         info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
-                        if(info.body) {
-                            info.body += data;
-                        }
-                        else {
-                            info.body = data;
-                        }
+                        info.body += data;
                         core.property.set(info, "parse");
                     });
                 } else {
                     info.vars = {"component": component_path, "platform": target_platform};
-                    if(info.body) {
-                        info.body += data;
-                    }
-                    else {
-                        info.body = data;
-                    }
+                    info.body += data;
                     core.property.set(info, "parse");
                 }
             });
             me.unlock(task, callback);
         });
     };
-    me.handleFile = function (info, filePath, params) {
-        if (filePath.endsWith(".js")) {
+    me.handleMultiFiles = function(info, filePath, params) {
             var files = filePath.split(",");
             info.body = "";
             me.lock(info.task, (task) => {
@@ -108,9 +111,8 @@ package.core.module = function CoreModule(me) {
                                 return folder + "/" + filePath;
                             });
                             files = files.filter((filePath) => {
-                                return filePath.endsWith(".js");
+                                return filePath.endsWith(params.extension);
                             });
-                            files.unshift(file);
                             me.unlock(task);
                         }, folder);
                     });
@@ -124,27 +126,26 @@ package.core.module = function CoreModule(me) {
                 me.unlock(task, () => {
                     me.flow(null, (flow) => {
                         files.map((filePath) => {
-                            flow.async(me.handleCode, flow.callback, info, filePath, params);
+                            flow.async(params.method, flow.callback, info, filePath, params);
                         });
                         flow.wait(null, () => {
                             flow.end();
                         }, 1);
                     });
                 });
-            });
+            });        
+    };
+    me.handleFile = function (info, filePath, params) {
+        if (filePath.endsWith(".js")) {
+            params = Object.assign({}, params);
+            params.method = me.handleCode;
+            params.extension = ".js";
+            me.handleMultiFiles(info, filePath, params);
         } else if (filePath.endsWith(".css")) {
-            info["content-type"] = "text/css";
-            me.loadTextFile(info.task, filePath, function (data, task) {
-                me.lock(task, task => {
-                    me.postcss([me.autoprefixer]).process(data).then(function (result) {
-                        result.warnings().forEach(function (warn) {
-                            me.core.console.warn(warn.toString());
-                        });
-                        info.body = result.css;
-                        me.unlock(task);
-                    });
-                });
-            });
+            params = Object.assign({}, params);
+            params.method = me.handleStylesheet;
+            params.extension = ".css";
+            me.handleMultiFiles(info, filePath, params);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
             me.loadTextFile(info.task, filePath, function (data) {
