@@ -4,21 +4,19 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "storage": [
-            "cache",
-            "file",
-            "data"
+            "*"
         ],
         "user": [
-            "profile"
+            "*"
         ],
         "content": [
-            "text"
+            "*"
         ],
         "ui": [
             "*"
         ],
         "menu": [
-            "context"
+            "*"
         ],
         "widget": [
             "*"
@@ -28,13 +26,10 @@ function startBrowser(appName, appArgs) {
             "letters"
         ],
         "manager": [
-            "download",
-            "service",
-            "packet"
+            "*"
         ],
         "media": [
-            "ffmpeg",
-            "hls"
+            "*"
         ],
         "startup": [
             "app",
