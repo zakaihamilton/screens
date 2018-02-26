@@ -156,6 +156,7 @@ package.ui.layout = function UILayout(me) {
                     if(target.page) {
                         target.page.var.separator.style.display = "block";
                         target.page.var.pageNext.style.opacity = "0.0";
+                        me.core.property.set(target.page.var.separator, "ui.class.add", "last");
                     }
                     me.completeReflow(callback, target, options, false);
                     me.updatePages(target);

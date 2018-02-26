@@ -294,8 +294,12 @@
     right:20%;
     bottom:30px;
     height:5px;
-    background:darkgray;
+    background: gray;
     box-shadow: 5px 5px 5px lightgray;
+}
+
+.app-transform-separator.last {
+    background: black;
 }
 
 .app-transform-toggleGlossary {
