@@ -10,7 +10,7 @@ package.app.packets = function AppPackets(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
-        if (me.options.dataProfile !== "Live") {
+        if (me.options.dataProfile !== "Live" && me.options.dataProfile !== "Combined") {
             me.core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
         }
         return me.singleton;
@@ -70,11 +70,10 @@ package.app.packets = function AppPackets(me) {
                 dataList = [];
             }
             var items = dataList.map(function (item) {
-                var packetInfo = me.core.string.decode(item.packetInfo);
                 var result = [
                     item.title,
                     function () {
-                        window.packetInfo = JSON.parse(packetInfo);
+                        window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
                         me.core.property.set(window, "app.packets.dataProfile", item.title);
                         me.core.property.set(window.var.title, "ui.basic.text", item.title);
                     },
@@ -94,7 +93,7 @@ package.app.packets = function AppPackets(me) {
             var window = me.widget.window.window(object);
             var autoRefresh = me.options.autoRefresh;
             me.manager.packet.info((info) => {
-                if (me.options.dataProfile === "Live") {
+                if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
                     window.packetInfo = Object.assign({}, info);
                     window.packetInfo.effects = Object.assign({}, info.effects);
                 } else if (me.dataList) {
@@ -280,7 +279,7 @@ package.app.packets = function AppPackets(me) {
             var window = me.widget.window.window(object);
             var viewType = me.calcViewType(window);
             var options = {};
-            if (viewType === "Data / Time") {
+            if (viewType.includes("Data / Time")) {
                 options = {
                     "responsive": true,
                     "showLines": true,
@@ -313,7 +312,7 @@ package.app.packets = function AppPackets(me) {
                             }]
                     }
                 };
-            } else if (viewType === "ABR / Packet Delay") {
+            } else if (viewType.includes("ABR / Packet Delay")) {
                 options = {
                     "responsive": true,
                     "showLines": true,
@@ -358,106 +357,120 @@ package.app.packets = function AppPackets(me) {
                 return data;
             }
             var viewType = me.calcViewType(window);
-            var streamRequests = window.packetInfo.streamRequests;
-            if (!streamRequests.length) {
-                return data;
+            var dataProfiles = {};
+            if(me.options.dataProfile === "Combined") {
+                me.dataList.map(function (item) {
+                    var packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                    dataProfiles[item.title] = packetInfo;
+                });
             }
-            var streamIndex = window.streamIndex;
-            if (!streamIndex) {
-                streamIndex = streamRequests.length;
+            else {
+                dataProfiles[me.options.dataProfile] = window.packetInfo;
             }
-            if (streamIndex !== -1) {
-                streamRequests = [streamRequests[streamIndex - 1]];
-            }
-            var colorIndex = 0;
             var info = {};
-            streamRequests.map((streamRequest) => {
-                var packets = streamRequest.packets;
-                if (!packets) {
+            var colorIndex = 0;
+            Object.keys(dataProfiles).map((dataProfileName) => {
+                var dataProfile = dataProfiles[dataProfileName];
+                var streamRequests = dataProfile.streamRequests;
+                if (!streamRequests.length) {
                     return data;
                 }
-                function dateRel(sec) {
-                    return me.widget.chart.dateRel(sec);
+                var streamIndex = window.streamIndex;
+                if (!streamIndex) {
+                    streamIndex = streamRequests.length;
                 }
-                if (viewType === "Data / Time") {
-                    for (var sourceIp in packets) {
-                        var targets = packets[sourceIp];
-                        for (var targetIp in targets) {
-                            var target = targets[targetIp];
-                            var label = "";
-                            if (target.sourceIsService) {
-                                label = "service";
-                            } else {
-                                label = "device";
-                            }
-                            label += "(" + sourceIp + ") => ";
-                            if (target.targetIsService) {
-                                label += "service";
-                            } else {
-                                label += "device";
-                            }
-                            label += "(" + targetIp + ")";
-                            if (!(label in info)) {
-                                var color = me.colors[label];
-                                if (!color) {
-                                    color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                if (streamIndex !== -1) {
+                    streamRequests = [streamRequests[streamIndex - 1]];
+                }
+                streamRequests.map((streamRequest) => {
+                    var packets = streamRequest.packets;
+                    if (!packets) {
+                        return data;
+                    }
+                    function dateRel(sec) {
+                        return me.widget.chart.dateRel(sec);
+                    }
+                    if (viewType.includes("Data / Time")) {
+                        for (var sourceIp in packets) {
+                            var targets = packets[sourceIp];
+                            for (var targetIp in targets) {
+                                var target = targets[targetIp];
+                                var label = dataProfileName + ": ";
+                                if (target.sourceIsService) {
+                                    label = "service";
+                                } else {
+                                    label = "device";
                                 }
-                                var dataset = {
-                                    label: label,
-                                    backgroundColor: color,
-                                    borderColor: color,
-                                    fill: false,
-                                    data: []
-                                };
-                                info[label] = dataset;
-                            }
-                            var dataset = info[label];
-                            for (var time in target.items) {
-                                var item = target.items[time];
-                                var data = {
-                                    x: dateRel(item.end),
-                                    y: parseInt(item.len / 1000)
-                                };
-                                dataset.data.push(data);
+                                label += "(" + sourceIp + ") => ";
+                                if (target.targetIsService) {
+                                    label += "service";
+                                } else {
+                                    label += "device";
+                                }
+                                label += "(" + targetIp + ")";
+                                if (!(label in info)) {
+                                    var color = me.colors[label];
+                                    if (!color) {
+                                        color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                                    }
+                                    var dataset = {
+                                        label: label,
+                                        backgroundColor: color,
+                                        borderColor: color,
+                                        fill: false,
+                                        data: []
+                                    };
+                                    info[label] = dataset;
+                                }
+                                var dataset = info[label];
+                                for (var time in target.items) {
+                                    var item = target.items[time];
+                                    var data = {
+                                        x: dateRel(item.end),
+                                        y: parseInt(item.len / 1000)
+                                    };
+                                    dataset.data.push(data);
+                                }
                             }
                         }
-                    }
-                } else if (viewType === "ABR / Packet Delay") {
-                    var dataSize = streamRequest.dataSize;
-                    var duration = streamRequest.duration;
-                    var abr = 0;
-                    if (duration) {
-                        abr = dataSize / duration;
-                    }
-                    var effects = streamRequest.effects;
-                    var packetDelay = 0;
-                    if (effects && effects.packetDelay) {
-                        packetDelay = effects.packetDelay;
-                    }
-                    var label = "default";
-                    var dataset = info[label];
-                    if (!dataset) {
-                        var color = me.colors[label];
-                        if (!color) {
-                            color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                    } else if (viewType.includes("ABR / Packet Delay")) {
+                        var dataSize = streamRequest.dataSize;
+                        var duration = streamRequest.duration;
+                        var abr = 0;
+                        if (duration) {
+                            abr = dataSize / duration;
                         }
-                        dataset = info[label] = {
-                            label: "",
-                            backgroundColor: color,
-                            borderColor: color,
-                            fill: false,
-                            data: []
+                        var effects = streamRequest.effects;
+                        var packetDelay = 0;
+                        if (effects && effects.packetDelay) {
+                            packetDelay = effects.packetDelay;
+                        }
+                        var label = dataProfileName;
+                        var dataset = info[label];
+                        if (!dataset) {
+                            var color = me.colors[label];
+                            if (!color) {
+                                color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                            }
+                            dataset = info[label] = {
+                                label: dataProfileName,
+                                backgroundColor: color,
+                                borderColor: color,
+                                fill: false,
+                                data: []
+                            };
+                        }
+                        var data = {
+                            x: packetDelay,
+                            y: parseInt(abr / 1000)
                         };
+                        dataset.data.push(data);
                     }
-                    var data = {
-                        x: packetDelay,
-                        y: parseInt(abr / 1000)
-                    };
-                    dataset.data.push(data);
-                }
+                });
             });
             Object.keys(info).sort().map((label) => {
                 var dataset = info[label];
+                dataset.data.shift();
                 dataset.data.pop();
                 data.datasets.push(dataset);
             });
