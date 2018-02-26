@@ -25,8 +25,8 @@
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-storage-window",
-        "storage.cache.restore": "widget.window.store",
+        "storage.local.key": "app-storage-window",
+        "storage.local.restore": "widget.window.store",
         "app.storage.refresh":null
     }
 }

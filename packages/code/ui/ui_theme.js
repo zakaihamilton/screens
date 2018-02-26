@@ -8,7 +8,7 @@ package.ui.theme = function UITheme(me) {
     me.currentTheme = null;
     me.init = function() {
         me.updateList();
-        var current_theme = me.core.property.get(me.storage.cache.local, "ui-theme-current");
+        var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
@@ -73,7 +73,7 @@ package.ui.theme = function UITheme(me) {
                 }
             });
             me.currentTheme = null;
-            me.core.property.set(me.storage.cache.local, "ui-theme-current", "none");
+            me.core.property.set(me.storage.local.local, "ui-theme-current", "none");
         }
     };
     me.load = function(callback, name) {
@@ -95,7 +95,7 @@ package.ui.theme = function UITheme(me) {
                         }
                     }
                 });
-                me.core.property.set(me.storage.cache.local, "ui-theme-current", name);
+                me.core.property.set(me.storage.local.local, "ui-theme-current", name);
             }
             if(callback) {
                 callback(data);

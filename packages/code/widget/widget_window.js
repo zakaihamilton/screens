@@ -698,7 +698,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object) {
             var window = me.window(object);
             me.core.property.notify(window.var.container, "update");
-            me.core.property.set(window, "storage.cache.store", me.core.property.get(window, "store"));
+            me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
         }
     };
     me.findWindowByKey = function (object, key) {

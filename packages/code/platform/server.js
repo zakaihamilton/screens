@@ -24,7 +24,8 @@ package.include({
         "flow",
         "startup",
         "network",
-        "service"
+        "service",
+        "cache"
     ],
     "storage": [
         "file",

@@ -44,8 +44,8 @@
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-log-window",
-        "storage.cache.restore": "widget.window.store",
+        "storage.local.key": "app-log-window",
+        "storage.local.restore": "widget.window.store",
         "app.log.refresh":null
     }
 }

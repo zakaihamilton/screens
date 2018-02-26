@@ -18,13 +18,25 @@ package.app.player = function AppPlayer(me) {
         return me.singleton;
     };
     me.refresh = {
+        set: function(object) {
+            var window = me.singleton;
+            var group = me.core.property.get(window.var.groupList, "ui.basic.text");
+            me.core.message.send_server("core.cache.reset", () => {
+                me.core.message.send_server("core.cache.reset", () => {
+                    me.core.property.set(window, "app.player.update");
+                }, me.id + "-" + group);
+            }, me.id);
+        }
+    };
+    me.update = {
         set: function (object) {
             var window = me.singleton;
             me.core.property.set(window.var.tree, "clear");
-            me.storage.file.getChildren(function (root) {
+            me.core.message.send_server("core.cache.use", (root) => {
+                console.log("groupListData:" + JSON.stringify(root));
                 me.groupListData = root;
                 me.core.property.set(window, "app.player.onChangeGroup", "");
-            }, me.rootPath, false);
+            }, me.id, "storage.file.getChildren", me.rootPath, false);
         }
     };
     me.onChangeGroup = {
@@ -70,9 +82,9 @@ package.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var group = me.core.property.get(window.var.groupList, "ui.basic.text");
         if (group) {
-            me.storage.file.getChildren(function (root) {
+            me.core.message.send_server("core.cache.use", (root) => {
                 me.sessionListData = root;
-                if (me.sessionListData.length) {
+                if (me.sessionListData && me.sessionListData.length) {
                     var name = me.sessionListData[me.sessionListData.length - 1].name;
                     if (name) {
                         name = name.charAt(0).toUpperCase() + name.slice(1);
@@ -81,11 +93,14 @@ package.app.player = function AppPlayer(me) {
                         me.updateSession();
                     }
                 }
-            }, me.rootPath + "/" + group.toLowerCase(), false);
+            }, me.id + "-" + group, "storage.file.getChildren", me.rootPath + "/" + group.toLowerCase(), false);
         }
     };
     me.groupList = {
         get: function (object) {
+            if(!me.groupListData) {
+                return [];
+            }
             var items = me.groupListData.map(function (item) {
                 return [item.name.charAt(0).toUpperCase() + item.name.slice(1)];
             });

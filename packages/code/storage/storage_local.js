@@ -1,11 +1,11 @@
 /*
  @author Zakai Hamilton
- @component StorageCache
+ @component StorageLocal
  */
 
-package.require("storage.cache", "browser");
+package.require("storage.local", "browser");
 
-package.storage.cache = function StorageCache(me) {
+package.storage.local = function StorageLocal(me) {
     me.init = function () {
         me.none = me.core.object.create(me);
         me.local = me.core.object.create(me);
@@ -32,8 +32,8 @@ package.storage.cache = function StorageCache(me) {
                 me.session.storage.clear();
             };
         }
-        me.key = me.core.object.property("storage.cache.key");
-        me.location = me.core.object.property("storage.cache.location");
+        me.key = me.core.object.property("storage.local.key");
+        me.location = me.core.object.property("storage.local.location");
     };
     me.isSupported = function () {
         try {
@@ -48,8 +48,8 @@ package.storage.cache = function StorageCache(me) {
     };
     me.store = {
         set: function (object, value) {
-            var key = me.core.property.get(object, "storage.cache.key");
-            var location = me.core.property.get(object, "storage.cache.location");
+            var key = me.core.property.get(object, "storage.local.key");
+            var location = me.core.property.get(object, "storage.local.location");
             if (!location) {
                 location = "local";
             }
@@ -60,8 +60,8 @@ package.storage.cache = function StorageCache(me) {
     };
     me.restore = {
         set: function (object, value) {
-            var key = me.core.property.get(object, "storage.cache.key");
-            var location = me.core.property.get(object, "storage.cache.location");
+            var key = me.core.property.get(object, "storage.local.key");
+            var location = me.core.property.get(object, "storage.local.location");
             if (!location) {
                 location = "local";
             }

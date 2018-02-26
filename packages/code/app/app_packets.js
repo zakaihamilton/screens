@@ -371,6 +371,8 @@ package.app.packets = function AppPackets(me) {
             var colorIndex = 0;
             Object.keys(dataProfiles).map((dataProfileName) => {
                 var dataProfile = dataProfiles[dataProfileName];
+                var effects = dataProfile.effects;
+                var dataProfilePacketLoss = effects.packetLoss || 0;
                 var streamRequests = dataProfile.streamRequests;
                 if (!streamRequests.length) {
                     return data;
@@ -445,7 +447,7 @@ package.app.packets = function AppPackets(me) {
                         if (effects && effects.packetDelay) {
                             packetDelay = effects.packetDelay;
                         }
-                        var label = dataProfileName;
+                        var label = dataProfileName + "(" + dataProfilePacketLoss + "%)";
                         var dataset = info[label];
                         if (!dataset) {
                             var color = me.colors[label];
@@ -453,7 +455,7 @@ package.app.packets = function AppPackets(me) {
                                 color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
                             }
                             dataset = info[label] = {
-                                label: dataProfileName,
+                                label: label,
                                 backgroundColor: color,
                                 borderColor: color,
                                 fill: false,

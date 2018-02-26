@@ -10,7 +10,7 @@ package.app.theme = function AppTheme(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
-        var current_theme = me.core.property.get(me.storage.cache.local, "ui-theme-current");
+        var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
         current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
         me.core.property.set(me.singleton.var.themeList, "selection", current_theme);
         return me.singleton;

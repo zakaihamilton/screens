@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UICacheKey
+ @component UIWindowKey
  */
 
-package.ui.cachekey = function UICacheKey(me) {
+package.ui.windowkey = function UIWindowKey(me) {
     me.forward = function (object, property) {
         return {
             get: function (object) {

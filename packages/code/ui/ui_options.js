@@ -28,8 +28,8 @@ package.ui.options = function UIOptions(me) {
         if(object) {
             storageKey += "." + me.core.property.get(object, "key");
         }
-        var validKey = me.storage.cache.validKey(storageKey);
-        var value = me.core.property.get(me.storage.cache[storage], validKey);
+        var validKey = me.storage.local.validKey(storageKey);
+        var value = me.core.property.get(me.storage.local[storage], validKey);
         var options = Object.assign({}, defaults, value ? JSON.parse(value) : {});
         if(object) {
             object.options = options;
@@ -67,8 +67,8 @@ package.ui.options = function UIOptions(me) {
                     if(object && object.options) {
                         storageKey += "." + me.core.property.get(object, "key");
                     }
-                    var validKey = me.storage.cache.validKey(storageKey);
-                    me.core.property.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                    var validKey = me.storage.local.validKey(storageKey);
+                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
                 }
             }
         };
@@ -102,8 +102,8 @@ package.ui.options = function UIOptions(me) {
                     if(object && object.options) {
                         storageKey += "." + me.core.property.get(object, "key");
                     }
-                    var validKey = me.storage.cache.validKey(storageKey);
-                    me.core.property.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                    var validKey = me.storage.local.validKey(storageKey);
+                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
                 }
             }
         };
@@ -147,8 +147,8 @@ package.ui.options = function UIOptions(me) {
                     if(object && object.options) {
                         storageKey += "." + me.core.property.get(object, "key");
                     }
-                    var validKey = me.storage.cache.validKey(storageKey);
-                    me.core.property.set(me.storage.cache[storage], validKey, JSON.stringify(options));
+                    var validKey = me.storage.local.validKey(storageKey);
+                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
                 }
             }
         };

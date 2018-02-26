@@ -179,7 +179,7 @@ package.ui.basic = function UIBasic(me) {
     };
     me.save = {
         set: function(object) {
-            me.core.property.set(object, "storage.cache.store", me.core.property.get(object, "ui.basic.text"));
+            me.core.property.set(object, "storage.local.store", me.core.property.get(object, "ui.basic.text"));
             me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };

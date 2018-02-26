@@ -64,8 +64,8 @@
             "minimize": null,
             "static": true,
             "ui.property.after": {
-                "storage.cache.key": "@ui.cachekey.app-progman-window-",
-                "storage.cache.restore": "widget.window.store"
+                "storage.local.key": "@ui.windowkey.app-progman-window-",
+                "storage.local.restore": "widget.window.store"
             }
         },
         "ui.data.keyList": [
@@ -178,7 +178,7 @@
         ]
     },
     "ui.property.after": {
-        "storage.cache.key": "app-progman-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-progman-window",
+        "storage.local.restore": "widget.window.store"
     }
 }

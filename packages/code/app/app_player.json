@@ -43,8 +43,8 @@
                     "app.player.groupList"
                 ]
             },
-            "storage.cache.key": "@ui.cachekey.app-player-group",
-            "storage.cache.restore": "ui.basic.text"
+            "storage.local.key": "@ui.windowkey.app-player-group",
+            "storage.local.restore": "ui.basic.text"
         },
         {
             "ui.basic.text": "Session:",
@@ -138,8 +138,8 @@
     ],
     "core.link.work": "app.player.work",
     "ui.property.after":{
-        "storage.cache.key": "app-player-window",
-        "storage.cache.restore": "widget.window.store",
-        "app.player.refresh":null
+        "storage.local.key": "app-player-window",
+        "storage.local.restore": "widget.window.store",
+        "app.player.update":null
     }
 }

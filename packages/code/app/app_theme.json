@@ -35,7 +35,7 @@
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-theme-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-theme-window",
+        "storage.local.restore": "widget.window.store"
     }
 }

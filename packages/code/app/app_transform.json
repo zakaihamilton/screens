@@ -220,8 +220,8 @@
                     "ui.element.component": "widget.editor",
                     "ui.class.class": "app.transform.input",
                     "ui.property.after": {
-                        "storage.cache.key": "@ui.cachekey.app-transform-input-",
-                        "storage.cache.restore": "ui.basic.text"
+                        "storage.local.key": "@ui.windowkey.app-transform-input-",
+                        "storage.local.restore": "ui.basic.text"
                     },
                     "ui.basic.var": "input"
                 },
@@ -255,9 +255,9 @@
                     "ui.basic.type": "search",
                     "ui.basic.var": "filter",
                     "ui.property.after": {
-                        "storage.cache.key": "@ui.cachekey.app-transform-filter-",
-                        "storage.cache.restore": "ui.basic.text",
-                        "ui.attribute.list": "@ui.cachekey.app-transform-filter-"
+                        "storage.local.key": "@ui.windowkey.app-transform-filter-",
+                        "storage.local.restore": "ui.basic.text",
+                        "ui.attribute.list": "@ui.windowkey.app-transform-filter-"
                     },
                     "ui.monitor.change": "app.transform.filterChange"
                 },
@@ -265,7 +265,7 @@
                     "ui.basic.tag": "datalist",
                     "ui.basic.var": "filterList",
                     "ui.property.after": {
-                        "ui.basic.elementId": "@ui.cachekey.app-transform-filter-"
+                        "ui.basic.elementId": "@ui.windowkey.app-transform-filter-"
                     }
                 },
                 {
@@ -311,8 +311,8 @@
             "ui.property.after": {
                 "widget.scrollbar.vertical.alwaysHide": true,
                 "widget.scrollbar.horizontal.alwaysHide": true,
-                "storage.cache.key": "@ui.cachekey.app-transform-window-",
-                "storage.cache.restore": "widget.window.store",
+                "storage.local.key": "@ui.windowkey.app-transform-window-",
+                "storage.local.restore": "widget.window.store",
                 "ui.resize.event": "app.transform.reflow",
                 "app.transform.initOptions": null,
                 "app.transform.transform": null
@@ -326,7 +326,7 @@
         ]
     },
     "ui.property.after": {
-        "storage.cache.key": "app-transform-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-transform-window",
+        "storage.local.restore": "widget.window.store"
     }
 }

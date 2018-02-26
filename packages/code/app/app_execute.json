@@ -18,13 +18,13 @@
             "ui.element.component":"widget.editor",
             "ui.basic.var":"editor",
             "ui.property.after": {
-                "storage.cache.key": "@ui.cachekey.app-execute-input-",
-                "storage.cache.restore": "ui.basic.text"
+                "storage.local.key": "@ui.windowkey.app-execute-input-",
+                "storage.local.restore": "ui.basic.text"
             }
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-execute-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-execute-window",
+        "storage.local.restore": "widget.window.store"
     }
 }

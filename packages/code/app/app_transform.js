@@ -143,7 +143,7 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             me.core.property.set(window.var.input, {
                 "ui.basic.text": "",
-                "storage.cache.store": ""});
+                "storage.local.store": ""});
             me.core.property.set(window.var.output, "ui.basic.html", "");
             me.ui.node.removeChildren(window.var.filterList);
             me.ui.node.removeChildren(window.var.termTable);
@@ -426,7 +426,7 @@ package.app.transform = function AppTransform(me) {
     me.filterChange = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            me.core.property.set(window.var.filter, "storage.cache.store", me.core.property.get(window.var.filter, "ui.basic.text"));
+            me.core.property.set(window.var.filter, "storage.local.store", me.core.property.get(window.var.filter, "ui.basic.text"));
             me.core.property.set(window, "app.transform.reflow");
         }
     };

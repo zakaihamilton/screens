@@ -92,8 +92,8 @@
                             "ui.basic.type": "text",
                             "ui.basic.var": "title",
                             "ui.property.after": {
-                                "storage.cache.key": "@ui.cachekey.app-packets-input-",
-                                "storage.cache.restore": "ui.basic.text"
+                                "storage.local.key": "@ui.windowkey.app-packets-input-",
+                                "storage.local.restore": "ui.basic.text"
                             }
                         }
                     ]
@@ -306,7 +306,7 @@
     "app.packets.refreshData": null,
     "app.packets.onChangeStream":null,
     "ui.property.after": {
-        "storage.cache.key": "app-packets-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-packets-window",
+        "storage.local.restore": "widget.window.store"
     }
 }

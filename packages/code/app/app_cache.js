@@ -14,14 +14,14 @@ package.app.cache = function AppCache(me) {
     };
     me.cache = function() {
         if(!me.singleton) {
-            return me.storage.cache.local;
+            return me.storage.local.local;
         }
         var storage = me.core.property.get(me.singleton.var.storage, "ui.basic.text");
         if(storage === "Local") {
-            return me.storage.cache.local;
+            return me.storage.local.local;
         }
         else if(storage === "Session") {
-            return me.storage.cache.session;
+            return me.storage.local.session;
         }
     };
     me.keyList = {

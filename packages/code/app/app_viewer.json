@@ -14,7 +14,7 @@
         }
     ],
     "ui.property.after":{
-        "storage.cache.key": "app-viewer-window",
-        "storage.cache.restore": "widget.window.store"
+        "storage.local.key": "app-viewer-window",
+        "storage.local.restore": "widget.window.store"
     }
 }
