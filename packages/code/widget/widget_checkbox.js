@@ -5,7 +5,7 @@
 
 package.widget.checkbox = function WidgetCheckBox(me) {
     me["ui.element.depends"] = {
-        properties: ["state"]
+        properties: ["ui.basic.text","state"]
     };
     me["core.property.redirect"] = {
         "ui.basic.text": "text"

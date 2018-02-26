@@ -5,7 +5,7 @@
 
 package.widget.radio = function WidgetRadio(me) {
     me["ui.element.depends"] = {
-        properties: ["state","group"]
+        properties: ["ui.basic.text","state","group"]
     };
     me["core.property.redirect"] = {
         "ui.basic.text": "text",
@@ -44,7 +44,7 @@ package.widget.radio = function WidgetRadio(me) {
         set: function (object, value) {
             object.parentNode.var.input.checked = true;
         }
-    }
+    };
     me.text = {
         get: function (object) {
             return object.var.label.innerHTML;
