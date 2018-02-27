@@ -76,7 +76,7 @@ package.app.player = function AppPlayer(me) {
         } else if (!audioFound && videoFound) {
             me.core.property.set(window.var.videoType, "state", true);
         }
-        me.core.property.set(window, "app.player.updatePlayer");
+        me.core.property.notify(window, "app.player.updatePlayer");
     };
     me.updateSessions = function () {
         var window = me.singleton;
