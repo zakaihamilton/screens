@@ -86,9 +86,6 @@
                         "enabled": "app.transform.pages"
                     }
                 ],
-                ["Swipe", "app.transform.swipe", {
-                        "state": "select"
-                    }],
                 ["Pages", "app.transform.pages", {
                         "state": "select",
                         "separator": true

@@ -69,6 +69,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             me.core.property.set(container.var.footer, "ui.property.broadcast", {
                 "ui.class.remove": class_name
             });
+            me.core.property.set(container, "ui.scroll.swipe", "");
         }
     };
     me.update_scroll_class = function (container, scroll_type) {
@@ -88,6 +89,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             me.core.property.set(container.var.footer, "ui.property.broadcast", {
                 "ui.class.add": class_name
             });
+            if(me.core.device.isMobile()) {
+                me.core.property.set(container, "ui.scroll.swipe", "vertical");
+            }
         }
     };
     me.update = {

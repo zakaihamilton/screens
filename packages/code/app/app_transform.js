@@ -33,8 +33,7 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                pipVideo : false,
-                swipe: me.core.device.isMobile()
+                pipVideo : false
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -68,10 +67,6 @@ package.app.transform = function AppTransform(me) {
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
-            me.swipe = me.ui.options.toggleSet(me, "swipe", function (object, options, key, value) {
-                var window = me.widget.window.mainWindow(object);
-                me.core.property.set(window.var.layout, "ui.scroll.swipe", value ? "vertical" : "");
-            });
             me.ui.class.useStylesheet("kab");
         }
     };
