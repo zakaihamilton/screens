@@ -16,6 +16,9 @@ package.kab.style = function KabStyle(me) {
                 styles = null;
             }
         }
+        if(styles && styles.descriptions) {
+            descriptions = styles.descriptions;
+        }
         if (styles && styles.bold) {
             html += "<b>";
         }
@@ -54,28 +57,9 @@ package.kab.style = function KabStyle(me) {
             }
             tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
         }
-        if(styles) {
-            if(session.options.prioritizeExplanation) {
-                if(styles.explanation) {
-                    descriptions["explanation"] = styles.explanation;
-                }
-                if(styles.technical) {
-                    descriptions["technical"] = styles.technical;
-                }
-            }
-            else {
-                if(styles.technical) {
-                    descriptions["technical"] = styles.technical;
-                }
-                if(styles.explanation) {
-                    descriptions["explanation"] = styles.explanation;
-                }
-            }
-            if(styles.source) {
-                descriptions["source"] = styles.source;
-            }
+        if(!("related" in descriptions)) {
+            descriptions["related"] = {};
         }
-        descriptions["related"] = {};
         var numDescriptions = Object.keys(descriptions).length;
         if (styles && styles.tooltip) {
             tooltip = styles.tooltip;

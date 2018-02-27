@@ -88,10 +88,11 @@ package.kab.format = function KabFormat(me) {
                 defaultWord = null;
             }
         }
-        if (wordToInsert) {
-            words.splice(wordIndex, 0, wordToInsert);
-        } else if (defaultWord) {
+        if (defaultWord) {
             words.splice(wordIndex, 0, defaultWord);
+        }
+        else if (wordToInsert) {
+            words.splice(wordIndex, 0, wordToInsert);
         }
     };
     me.spelling = function (wordsString, spelling) {

@@ -244,6 +244,7 @@
     overflow-y: hidden;
     text-align: left;
     font-weight:normal;
+    border-width:3px;
 }
 
 .kab-term-description-box.show {
@@ -281,7 +282,6 @@
     padding-right:1em;
     padding-top:0.5em;
     line-height:100%;
-    border-radius: 5px 5px 0px 0px;
     overflow:hidden;
     text-overflow: ellipsis;
 }

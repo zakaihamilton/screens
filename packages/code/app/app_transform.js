@@ -507,24 +507,37 @@ package.app.transform = function AppTransform(me) {
     me.fullPath = function(name) {
         return "/packages/res/diagrams/" + name + ".json";
     };
-    me.hoverDescription = function (object, state) {
+    me.showDescriptionBox = function(object, next, visible) {
+        var descriptionType = null;
+        var descriptionBox = null;
         var window = me.widget.window.mainWindow(object);
-        var descriptionType = window.options.prioritizeExplanation ? "explanation" : "technical";
-        var descriptionBox = me.ui.node.findById(object, descriptionType);
-        if (!descriptionBox) {
-            descriptionBox = me.ui.node.findById(object, "source");
+        var descriptionTypes = ["source", "related"];
+        if(window.options.prioritizeExplanation) {
+            descriptionTypes.unshift("technical");
+            descriptionTypes.unshift("explanation");
         }
-        if (!descriptionBox) {
-            descriptionBox = me.ui.node.findById(object, "related");
+        else {
+            descriptionTypes.unshift("explanation");
+            descriptionTypes.unshift("technical");
         }
-        object.descriptionType = null;
+        var descriptionIndex = 0;
+        if(next && object.descriptionType) {
+            descriptionIndex = descriptionTypes.indexOf(object.descriptionType) + 1;
+        }
+        for(var cycleIndex = 0; cycleIndex < descriptionTypes.length; cycleIndex++) {
+            descriptionType = descriptionTypes[(descriptionIndex+cycleIndex)%descriptionTypes.length];
+            descriptionBox = me.ui.node.findById(object, descriptionType);
+            if(descriptionBox) {
+                break;
+            }
+        }
+        object.descriptionType = descriptionType;
         if (object.hoverTimer) {
             clearTimeout(object.hoverTimer);
         }
         object.hoverTimer = setTimeout(function () {
-            object.descriptionType = descriptionType;
             me.resetDescription(object);
-            if (state) {
+            if (visible) {
                 if (descriptionBox && descriptionBox.resetTimer) {
                     clearTimeout(descriptionBox.resetTimer);
                     descriptionBox.resetTimer = null;
@@ -532,38 +545,15 @@ package.app.transform = function AppTransform(me) {
                 me.core.property.set(descriptionBox, "ui.style.display", "block");
                 setTimeout(function () {
                     me.core.property.set(descriptionBox, "ui.class.add", "show");
-                }, 500);
+                }, 250);
             }
-        }, 1000);
+        }, next ? 0 : 1000);
+    };
+    me.hoverDescription = function (object, state) {
+        me.showDescriptionBox(object, false, state);
     };
     me.cycleDescription = function (object) {
-        if (!object.descriptionType) {
-            return;
-        }
-        var descriptionTypes = ["explanation", "technical", "source", "related"];
-        var descriptionIndex = descriptionTypes.indexOf(object.descriptionType);
-        descriptionIndex++;
-        if (descriptionIndex >= descriptionTypes.length) {
-            descriptionIndex = 0;
-        }
-        var descriptionType = descriptionTypes[descriptionIndex];
-        var descriptionBox = me.ui.node.findById(object, descriptionType);
-        if (!descriptionBox) {
-            descriptionBox = me.ui.node.findById(object, "source");
-        }
-        if (!descriptionBox) {
-            descriptionBox = me.ui.node.findById(object, "related");
-        }
-        object.descriptionType = descriptionType;
-        me.resetDescription(object);
-        if (descriptionBox && descriptionBox.resetTimer) {
-            clearTimeout(descriptionBox.resetTimer);
-            descriptionBox.resetTimer = null;
-        }
-        me.core.property.set(descriptionBox, "ui.style.display", "block");
-        setTimeout(function () {
-            me.core.property.set(descriptionBox, "ui.class.add", "show");
-        }, 500);
+        me.showDescriptionBox(object, true, true);
     };
     me.toggleSeparator = {
         get: function (object, value) {
