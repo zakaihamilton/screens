@@ -47,6 +47,27 @@
             "storage.local.restore": "ui.basic.text"
         },
         {
+            "ui.basic.text": "Count:",
+            "ui.property.style":{
+                "left":"230px",
+                "top":"10px",
+                "width":"100px",
+                "position":"absolute"
+            }
+        },
+        {
+            "ui.basic.text":"",
+            "ui.basic.type":"number",
+            "ui.property.style":{
+                "left":"230px",
+                "top":"30px",
+                "width":"100px",
+                "position":"absolute"
+            },
+            "ui.basic.readOnly":true,
+            "ui.basic.var":"sessionCount"
+        },
+        {
             "ui.basic.text": "Session:",
             "ui.property.style":{
                 "left":"10px",

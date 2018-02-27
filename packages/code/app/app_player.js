@@ -58,7 +58,7 @@ package.app.player = function AppPlayer(me) {
         var audioFound = false, videoFound = false;
         var window = me.singleton;
         var name = me.core.property.get(window.var.sessionList, "ui.basic.text");
-        me.sessionListData.filter(function (item) {
+        me.sessionListData.map(function (item) {
             if (item.name.indexOf(name) !== -1) {
                 var extension = me.core.path.extension(item.name);
                 if (extension === "m4a") {
@@ -84,15 +84,17 @@ package.app.player = function AppPlayer(me) {
         if (group) {
             me.core.message.send_server("core.cache.use", (root) => {
                 me.sessionListData = root;
-                if (me.sessionListData && me.sessionListData.length) {
-                    var name = me.sessionListData[me.sessionListData.length - 1].name;
+                var sessions = me.core.property.get(window, "app.player.sessionList");
+                var sessionCount = 0;
+                if(sessions && sessions.length) {
+                    sessionCount = sessions.length;
+                    var name = sessions[0][0];
                     if (name) {
-                        name = name.charAt(0).toUpperCase() + name.slice(1);
-                        name = me.core.path.name(name);
                         me.core.property.set(window.var.sessionList, "ui.basic.text", name);
                         me.updateSession();
                     }
                 }
+                me.core.property.set(window.var.sessionCount, "ui.basic.text", sessionCount);
             }, me.id + "-" + group, "storage.file.getChildren", me.rootPath + "/" + group.toLowerCase(), false);
         }
     };
