@@ -50,6 +50,13 @@
     box-sizing:border-box;
     border-top:1px solid gray;
     margin:0;
+    background: repeating-linear-gradient(
+      45deg,
+      #fefefe,
+      #fefefe 10px,
+      #fcfcfc 10px,
+      #fcfcfc 20px
+    );    
 }
 
 .app-transform-page-container {

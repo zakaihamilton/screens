@@ -448,8 +448,8 @@ package.ui.layout = function UILayout(me) {
         while(child) {
             if(child.pageSize) {
                 var pageInView = me.pageInView(child);
-                var pageNumber = me.core.property.get(child, "ui.attribute.pageNumber");
-                if(pageInView !== child.inView) {
+                var childInView = child.inView || false;
+                if(pageInView !== childInView) {
                     if(pageInView) {
                         child.var.content.style.display = "";
                         child.style.visibility = "visible";
