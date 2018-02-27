@@ -14,68 +14,81 @@ package.core.http = function CoreHttp(me) {
     me.listeners = [];
     me.init = function (task) {
         if (me.platform === "server" || me.platform === "service") {
-            me.lock(task, (task) => {
-                me.createServer((server) => {
-                    server.listen(me.port, function (err) {
+            if (me.platform === "server") {
+                me.lock(task, (task) => {
+                    me.createServer((server, port, err) => {
                         if (err) {
-                            return me.core.console.log("something bad happened", err);
+                            me.core.console.log("cannot create secure server, error: " + err);
+                            return;
                         }
-                        me.core.console.log("server is listening on " + me.core.http.port);
+                        me.core.console.log("secure server is listening on " + port);
                         me.unlock(task);
-                    });
-                }, function (request, response) {
-                    var body = [];
-                    request.on('error', function (err) {
-                        console.error("found http error: " + err);
-                    }).on('data', function (chunk) {
-                        body.push(chunk);
-                    }).on('end', function () {
-                        if (request.url.includes("private")) {
-                            response.writeHead(200);
-                            response.end("cannot load private files remotely");
-                        } else {
-                            me.handleRequest(request, response, body);
-                        }
-                    });
+                    }, true);
                 });
+            }
+            me.lock(task, (task) => {
+                me.createServer((server, port, err) => {
+                    if (err) {
+                        me.core.console.log("cannot create normal server, error: " + err);
+                        return;
+                    }
+                    me.core.console.log("normal server is listening on " + port);
+                    me.unlock(task);
+                }, false);
             });
         }
     };
-    me.createServer = function (callback, requestHandler) {
-        var service = null;
+    me.createServer = function (callback, secure) {
+        var server = null;
+        var port = me.port;
+        me.http = require("http");
         me.https = require("https");
-        if (me.platform === "server") {
-            var useSecure = true;
+        me.fs = require("fs");
+        var requestHandler = function (request, response) {
+            var body = [];
+            request.on('error', function (err) {
+                console.error("found http error: " + err);
+            }).on('data', function (chunk) {
+                body.push(chunk);
+            }).on('end', function () {
+                if (request.url.includes("private")) {
+                    response.writeHead(200);
+                    response.end("cannot load private files remotely");
+                } else {
+                    me.handleRequest(request, response, body);
+                }
+            });
+        };
+        if (secure) {
             me.core.private.keys((keys) => {
-                if (keys && keys.key && keys.cert) {
-                    var options = {
-                        key: keys.key.join("\n"),
-                        cert: keys.cert.join("\n")
-                    };
-                    me.core.console.log("using https");
-                    var https = require("https");
+                if (keys && keys.key && keys.cert && keys.ca) {
                     try {
-                        service = https.createServer(options, requestHandler);
-                        callback(service);
+                        var options = {
+                            ca: me.fs.readFileSync(keys.ca),
+                            key: me.fs.readFileSync(keys.key),
+                            cert: me.fs.readFileSync(keys.cert)
+                        };
+                        var https = require("https");
+                        server = https.createServer(options, requestHandler);
+                        port = 443;
+                        server.on('error', function (e) {
+                            callback(server, port, e);
+                        });
+                        server.listen(port, function (err) {
+                            callback(server, port, err);
+                        });
                     } catch (e) {
                         me.core.console.error("Cannot create secure server, error: " + e.message);
-                        useSecure = false;
+                        callback(server, port, e);
                     }
-                } else {
-                    useSecure = false;
-                }
-                if (!useSecure) {
-                    me.core.console.log("using http");
-                    var http = require("http");
-                    service = http.createServer(requestHandler);
-                    callback(service);
                 }
             }, "https");
         } else {
             me.core.console.log("using http");
-            var http = require("http");
-            service = http.createServer(requestHandler);
-            callback(service);
+            server = me.http.createServer(requestHandler);
+            server.listen(port, function (err) {
+                callback(server, port, err);
+            });
         }
     };
     me.clientIp = function (request) {
@@ -103,7 +116,7 @@ package.core.http = function CoreHttp(me) {
         }
         return ip;
     };
-    me.handleRequest = function (request, response, body) {
+    me.handleRequest = function (request, response, body, secure) {
         if (body) {
             body = Buffer.concat(body).toString();
         }
@@ -116,6 +129,7 @@ package.core.http = function CoreHttp(me) {
                 query = request.url.substring(query_offset + 1);
             }
             var info = {
+                secure: secure,
                 method: request.method,
                 url: decodeURIComponent(url),
                 query: me.core.http.parse_query(query),

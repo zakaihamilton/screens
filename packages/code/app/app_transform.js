@@ -29,7 +29,7 @@ package.app.transform = function AppTransform(me) {
                 pages: true,
                 columns: true,
                 language: "Auto",
-                fontSize: "22px",
+                fontSize: "18px",
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,

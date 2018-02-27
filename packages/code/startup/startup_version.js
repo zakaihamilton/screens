@@ -10,7 +10,7 @@ package.startup.version = function StartupVersion(me) {
             me.core.network.ipAddress(ip => {
                 var date = new Date();
                 var id = date.getTime();
-                var appName = package.core.startup.app.name || "";
+                var appName = me.core.startup.app.name || "";
                 var data = {
                     date: date.toString(),
                     version: config.version,

@@ -178,6 +178,11 @@ package.core.module = function CoreModule(me) {
             me.loadTextFile(info.task, filePath, function (data) {
                 info.body = data;
             });
+        } else if (filePath.endsWith(".txt")) {
+            info["content-type"] = "text/plain";
+            me.loadTextFile(info.task, filePath, function (data) {
+                info.body = data;
+            });
         } else if (filePath.endsWith(".m4a")) {
             var mimeType = "audio/mp4";
             info.custom = true;
