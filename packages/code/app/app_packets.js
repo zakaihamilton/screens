@@ -189,7 +189,7 @@ package.app.packets = function AppPackets(me) {
                 var streamRequests = window.packetInfo.streamRequests;
                 if (streamRequests.length) {
                     var streamIndex = window.streamIndex;
-                    if (!streamIndex) {
+                    if (!streamIndex || streamIndex > streamRequests.length) {
                         streamIndex = streamRequests.length;
                     }
                     if (streamIndex === -1) {
@@ -452,7 +452,7 @@ package.app.packets = function AppPackets(me) {
                         if (!dataset) {
                             var color = me.colors[label];
                             if (!color) {
-                                color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                                color = me.colors[label] = me.ui.color.colors[colorIndex++];
                             }
                             dataset = info[label] = {
                                 label: label,

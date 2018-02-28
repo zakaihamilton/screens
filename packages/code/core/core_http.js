@@ -12,6 +12,7 @@ package.core.http = function CoreHttp(me) {
         me.port = 80;
     }
     me.listeners = [];
+    me.redirect = null;
     me.init = function (task) {
         if (me.platform === "server" || me.platform === "service") {
             if (me.platform === "server") {
@@ -45,6 +46,14 @@ package.core.http = function CoreHttp(me) {
         me.https = require("https");
         me.fs = require("fs");
         var requestHandler = function (request, response) {
+            if(!secure && me.redirect) {
+                me.core.console.log("redirect: " + me.redirect + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
+                response.writeHead(301,{
+                    Location: me.redirect + request.url
+                });
+                response.end();
+                return;
+            }
             var body = [];
             request.on('error', function (err) {
                 console.error("found http error: " + err);
@@ -75,6 +84,7 @@ package.core.http = function CoreHttp(me) {
                             callback(server, port, e);
                         });
                         server.listen(port, function (err) {
+                            me.redirect = keys.redirect;
                             callback(server, port, err);
                         });
                     } catch (e) {

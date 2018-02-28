@@ -17,8 +17,8 @@ package.app.transform = function AppTransform(me) {
             window.language = null;
             me.ui.options.load(me, window, {
                 doTranslation: true,
-                doExplanation: false,
-                prioritizeExplanation: false,
+                doExplanation: true,
+                prioritizeExplanation: true,
                 addStyles: true,
                 keepSource: false,
                 showHtml: false,

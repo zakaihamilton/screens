@@ -4,32 +4,14 @@
  */
 
 package.ui.color = function UIColor(me) {
-    me.colors = [];
-    me.random = function() {
-        var allowed = "0369cf".split( '' ), s = "#";
-        while ( s.length < 4 ) {
-            s += allowed.splice( Math.floor( ( Math.random() * allowed.length ) ), 1 );
-        }
-        return s;
-    };
-    me.randomSet = function(count) {
-        if(count < 0) {
-            count = 0;
-        }
-        while(me.colors.length < count) {
-            var color = me.random();
-            while(me.colors.includes(color)) {
-                color = me.random();
-            }
-            me.colors.push(color);
-        }
-        return me.colors.slice(0, count);
-    };
-    me.randomInSet = function(index) {
-        if(index < 0) {
-            index = 0;
-        }
-        var colors = me.randomSet(index+1);
-        return colors[index];
-    };
+    me.colors = ["#a7309f",
+        "#c0d547",
+        "#005dc4",
+        "#718500",
+        "#c4a1ff",
+        "#01a76d",
+        "#ad0072",
+        "#bf4a0f",
+        "#ff7ba3",
+        "#6a0003"];
 };
