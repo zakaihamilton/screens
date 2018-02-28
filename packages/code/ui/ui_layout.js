@@ -354,6 +354,9 @@ package.ui.layout = function UILayout(me) {
                 }
             ]
         }, target, "self");
+        if(me.core.device.isMobile()) {
+            me.core.property.set(page, "ui.scroll.swipe", "vertical");
+        }
         return page;
     };
     me.createBreak = function (target) {
