@@ -1,0 +1,42 @@
+{
+    "title": "Login",
+    "fixed": true,
+    "popup": true,
+    "ui.property.after":{
+        "ui.property.style":{
+            "left":"40%",
+            "top":"20%",
+            "width": "350px",
+            "height": "400px"
+        }
+    },
+    "app.login.attach":"signin",
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.text": "User Name",
+                    "ui.property.style": {
+                        "paddingTop": "10px"
+                    }
+                },
+                {
+                    "ui.basic.text": "@lib.googleauth.currentName",
+                    "ui.basic.readOnly": true,
+                    "ui.property.style": {
+                        "width": "250px",
+                        "display": "inline-block"
+                    },
+                    "ui.basic.type": "text",
+                    "ui.basic.var": "currentName"
+                }
+            ]
+        },
+        {
+            "ui.basic.text":"Sign out",
+            "ui.basic.var":"signout",
+            "ui.touch.click":"lib.googleauth.signout"
+        }
+    ]
+}

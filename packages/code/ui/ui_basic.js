@@ -191,4 +191,12 @@ package.ui.basic = function UIBasic(me) {
             object.metadata = value;
         }
     };
+    me.debugger = {
+        get : function(object) {
+            debugger;
+        },
+        set : function(object, value) {
+            debugger;
+        }
+    };
 };

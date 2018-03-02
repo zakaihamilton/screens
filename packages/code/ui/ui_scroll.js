@@ -279,7 +279,7 @@ package.ui.scroll = function UIScroll(me) {
                 me.core.property.set(object, "ui.touch.down", null);
                 return;
             }
-            var division=10;
+            var division=5;
             if(value.startsWith("vertical") || value.startsWith("horizontal")) {
                 scrollbar = container.var[scroll_type];
             }

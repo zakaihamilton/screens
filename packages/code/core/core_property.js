@@ -66,7 +66,18 @@ package.core.property = function CoreProperty(me) {
             } else {
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
-                    result = me.core.message.send(info.name + "." + method, info.object, info.value);
+                    var callback = me.browse(info.name, true);
+                    if(!callback) {
+                        me.core.console.log(info.name + " method not found");
+                    }
+                    else if(typeof callback === "function") {
+                        result = callback(info.object, info.value);
+                    }
+                    else {
+                        if(callback[method]) {
+                            result = callback[method](info.object, info.value);
+                        }
+                    }
                 }
             }
         }
