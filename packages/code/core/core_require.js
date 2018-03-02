@@ -5,6 +5,12 @@
 
 package.core.require = function CoreRequire(me) {
     me.require = function(callback, list) {
+        if(!list) {
+            if(callback) {
+                callback();
+            }
+            return;
+        }
         require(list, function () {
             var modules = [];
             list.map((path) => {
@@ -17,7 +23,9 @@ package.core.require = function CoreRequire(me) {
                 }
                 modules.push(module);
             });
-            callback.apply(null, modules);
+            if(callback) {
+                callback.apply(null, modules);
+            }
         });
     };
 };

@@ -6,7 +6,12 @@
 package.app.login = function AppLogin(me) {
     me.init = function(task) {
         me.lock(task, (task) => {
-            me.include("lib.googleauth", function(info) {
+            me.include({
+                "lib":[
+                    "googleauth",
+                    "facebookauth"
+                ]
+            }, function(info) {
                 if(info.complete) {
                     me.unlock(task);
                 }
@@ -22,7 +27,7 @@ package.app.login = function AppLogin(me) {
         me.singleton.isEnabled = false;
         return me.singleton;
     };
-    me.attach = {
+    me.attachGoogle = {
         set: function(object, value) {
             var widget = document.getElementById(value);
             var window = me.widget.window.window(object);
@@ -31,8 +36,9 @@ package.app.login = function AppLogin(me) {
             me.core.property.set(widget, "ui.property.style", {
                 "visibility":"",
                 "position":"absolute",
-                "left":"30%",
-                "bottom":"50px"
+                "left":"10%",
+                "bottom":"100px",
+                "textAlign":"center"
             });
             me.core.property.set(widget, "lib.googleauth.attachSignIn", () => {
               me.core.property.set(window.var.userName, "ui.basic.text", "@lib.googleauth.currentName");
@@ -40,12 +46,15 @@ package.app.login = function AppLogin(me) {
             });
         }
     };
-    me.signout = {
-        set: function(object, value) {
-            var window = me.widget.window.window(object);
-            me.core.property.set(object, "lib.googleauth.signout");
-            me.core.property.set(window.var.userName, "ui.basic.text", "");
-            me.core.property.set(object, "ui.basic.show", false);
-        }
+    me.signout = function(object, value) {
+        var window = me.widget.window.window(object);
+        me.core.property.set(object, "lib.googleauth.signout");
+        me.core.property.set(window.var.userName, "ui.basic.text", "");
+        me.core.property.set(object, "ui.basic.show", false);
+    };
+    me.checkFBLoginState = function() {
+        me.lib.facebookauth.status((response) => {
+            console.log("fb status: " + JSON.stringify(response));
+        });
     };
 };

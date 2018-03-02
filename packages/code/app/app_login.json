@@ -4,13 +4,13 @@
     "popup": true,
     "ui.property.after":{
         "ui.property.style":{
-            "left":"40%",
+            "left":"30%",
             "top":"20%",
-            "width": "350px",
+            "width": "40%",
             "height": "400px"
         }
     },
-    "app.login.attach":"signin",
+    "app.login.attachGoogle":"signin",
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
@@ -38,6 +38,22 @@
             "ui.basic.var":"signout",
             "ui.touch.click":"app.login.signout",
             "ui.basic.show":"@lib.googleauth.isSignedIn"
+        },
+        {
+            "ui.basic.tag":"fb:login-button",
+            "ui.property.style":{
+                "visibility":"",
+                "position":"absolute",
+                "left":"10%",
+                "bottom":"50px"
+            },
+            "ui.property.attribute":{
+                "scope":"public_profile,email",
+                "onlogin":"app.login.checkFBLoginState",
+                "data-max-rows":"1",
+                "data-size":"large",
+                "data-button-type":"continue_with"
+            }
         }
     ]
 }
