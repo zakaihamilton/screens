@@ -51,7 +51,6 @@ package.lib.googleauth = function GoogleAuth(me) {
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
 
-        window.var.name.innerText = "Signed in: " + googleUser.getBasicProfile().getName();
         if (callback) {
             callback();
         }

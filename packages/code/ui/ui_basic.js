@@ -199,4 +199,12 @@ package.ui.basic = function UIBasic(me) {
             debugger;
         }
     };
+    me.show = {
+        get: function(object) {
+            return object.style.visibility;
+        },
+        set: function(object, value) {
+            object.style.visibility = value ? "visible": "hidden";
+        }
+    };
 };

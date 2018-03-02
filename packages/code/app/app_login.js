@@ -25,7 +25,8 @@ package.app.login = function AppLogin(me) {
     me.attach = {
         set: function(object, value) {
             var widget = document.getElementById(value);
-            var content = me.core.property.get(object, "widget.window.content");
+            var window = me.widget.window.window(object);
+            var content = me.core.property.get(window, "widget.window.content");
             me.core.property.set(widget, "ui.node.parent", content);
             me.core.property.set(widget, "ui.property.style", {
                 "visibility":"",
@@ -34,8 +35,17 @@ package.app.login = function AppLogin(me) {
                 "bottom":"50px"
             });
             me.core.property.set(widget, "lib.googleauth.attachSignIn", () => {
-                
+              me.core.property.set(window.var.userName, "ui.basic.text", "@lib.googleauth.currentName");
+              me.core.property.set(window.var.signout, "ui.basic.show", true);
             });
+        }
+    };
+    me.signout = {
+        set: function(object, value) {
+            var window = me.widget.window.window(object);
+            me.core.property.set(object, "lib.googleauth.signout");
+            me.core.property.set(window.var.userName, "ui.basic.text", "");
+            me.core.property.set(object, "ui.basic.show", false);
         }
     };
 };

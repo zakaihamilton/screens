@@ -29,14 +29,15 @@
                         "display": "inline-block"
                     },
                     "ui.basic.type": "text",
-                    "ui.basic.var": "currentName"
+                    "ui.basic.var": "userName"
                 }
             ]
         },
         {
             "ui.basic.text":"Sign out",
             "ui.basic.var":"signout",
-            "ui.touch.click":"lib.googleauth.signout"
+            "ui.touch.click":"app.login.signout",
+            "ui.basic.show":"@lib.googleauth.isSignedIn"
         }
     ]
 }
