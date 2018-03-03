@@ -136,6 +136,8 @@
         "Eser de Sefirot": "Eser Sefirot",
         "Torahall": "Torah all",
         "\nOr a": "__Or a",
+        "<subtitle>": "\n<h4 style=\"text-align:center\">",
+        "</subtitle>": "</h4>",
         "<title>": "<br>\n<h4 style=\"text-align:center\">",
         "</title>": "</h4>",
         "<rtl>": "<span dir=\"rtl\">",

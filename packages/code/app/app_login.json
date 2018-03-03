@@ -56,5 +56,6 @@
                 "data-auto-logout-link":true
             }
         }
-    ]
+    ],
+    "app.login.checkFBLoginState":null
 }

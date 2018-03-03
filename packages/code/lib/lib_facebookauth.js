@@ -14,15 +14,23 @@ package.lib.facebookauth = function FacebookAuth(me) {
                     version: 'v2.12'
                 });
                 FB.AppEvents.logPageView();
+                me.unlock(task);
             };
             me.core.require.require(() => {
-                me.unlock(task);
             }, ["https://connect.facebook.net/en_US/sdk.js"]);
         });
     };
     me.status = function (callback) {
         FB.getLoginStatus(function (response) {
-            callback(response);
+            if(response.status === "connected") {
+                FB.api('/' + response.userID, function(profile) {
+                    response.profile = profile;
+                    callback(response);
+                });
+            }
+            else {
+                callback(response);
+            }
         });
     };
 };
