@@ -143,7 +143,7 @@ package.ui.layout = function UILayout(me) {
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
             var window = me.widget.window.window(target);
-            for(;;) {
+            for (; ; ) {
                 var concealed = me.core.property.get(window, "conceal");
                 var widget = source.firstChild;
                 if (!widget || concealed) {
@@ -153,7 +153,7 @@ package.ui.layout = function UILayout(me) {
                         me.applyNumPages(layoutContent, pageIndex);
                     }
                     me.completePage(target.page, options);
-                    if(target.page) {
+                    if (target.page) {
                         target.page.var.separator.style.display = "block";
                         target.page.var.pageNext.style.opacity = "0.0";
                         me.core.property.set(target.page.var.separator, "ui.class.add", "last");
@@ -162,12 +162,11 @@ package.ui.layout = function UILayout(me) {
                     me.updatePages(target);
                     break;
                 }
-                if(options.scrollWidget) {
-                    if(visibleWidget === options.scrollWidget) {
+                if (options.scrollWidget) {
+                    if (visibleWidget === options.scrollWidget) {
                         showInProgress = true;
                     }
-                }
-                else if(options.scrollPos < layoutContent.scrollHeight) {
+                } else if (options.scrollPos < layoutContent.scrollHeight) {
                     showInProgress = true;
                 }
                 var location = pageContent ? pageContent : layoutContent;
@@ -179,7 +178,7 @@ package.ui.layout = function UILayout(me) {
                 visibleWidget = widget;
                 me.styleParagraph(widget, options);
                 if (!target.page) {
-                    if(showInProgress) {
+                    if (showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
                     break;
@@ -192,14 +191,13 @@ package.ui.layout = function UILayout(me) {
                 if (pageContent.scrollWidth > pageContent.clientWidth) {
                     newPage = true;
                 }
-                if(widget.tagName && widget.tagName.toLowerCase() === "br") {
+                if (widget.tagName && widget.tagName.toLowerCase() === "br") {
                     newPage = true;
                     previousWidget = null;
-                    if(target.page) {
+                    if (target.page) {
                         target.page.var.separator.style.display = "block";
                     }
-                }
-                else if (!(widget.textContent || widget.firstChild)) {
+                } else if (!(widget.textContent || widget.firstChild)) {
                     pageContent.removeChild(widget);
                     widget = null;
                     newPage = false;
@@ -227,7 +225,7 @@ package.ui.layout = function UILayout(me) {
                     }
                     previousWidget = null;
                     me.activateOnLoad(target.page ? target.page : widget, widget);
-                    if(showInProgress) {
+                    if (showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
                     me.core.property.notify(target, "update");
@@ -239,16 +237,16 @@ package.ui.layout = function UILayout(me) {
             }
         }, 0);
     };
-    me.completeReflow = function(callback, target, options, scrollToWidget=true) {
+    me.completeReflow = function (callback, target, options, scrollToWidget = true) {
         var layoutContent = me.content(target);
         if (!target.notified && callback) {
             callback(true);
             target.notified = true;
-            if(options.scrollWidget && scrollToWidget) {
+            if (options.scrollWidget && scrollToWidget) {
                 me.scrollToWidget(options.scrollWidget, layoutContent);
             }
             me.core.property.notify(target, "update");
-        }
+    }
     };
     me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
@@ -271,7 +269,7 @@ package.ui.layout = function UILayout(me) {
             "ui.class.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
-            "ui.style.visibility":"hidden",
+            "ui.style.visibility": "hidden",
             "ui.attribute.pageNumber": pageIndex,
             "ui.basic.elements": [
                 {
@@ -284,13 +282,13 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageReloadClass,
                             "ui.basic.var": "pageReload",
-                            "ui.touch.click":options.reloadMethod
+                            "ui.touch.click": options.reloadMethod
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.pageFullscreenClass,
                             "ui.basic.var": "pageFullscreen",
-                            "ui.touch.click":options.fullscreenMethod
+                            "ui.touch.click": options.fullscreenMethod
                         },
                         {
                             "ui.basic.tag": "div",
@@ -310,14 +308,14 @@ package.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.previousPageClass,
                             "ui.basic.var": "pagePrevious",
-                            "ui.touch.click":options.previousPageMethod,
+                            "ui.touch.click": options.previousPageMethod,
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         },
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.nextPageClass,
                             "ui.basic.var": "pageNext",
-                            "ui.touch.click":options.nextPageMethod
+                            "ui.touch.click": options.nextPageMethod
                         }
                     ]
                 },
@@ -326,35 +324,23 @@ package.ui.layout = function UILayout(me) {
                     "ui.class.class": options.containerClass,
                     "ui.basic.var": "container",
                     "ui.style.overflow": "hidden",
-                    "ui.basic.elements":[
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": options.marginLeftClass,
-                            "ui.basic.var": "marginLeft"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": options.contentClass,
-                            "ui.style.columnCount": options.columnCount,
-                            "ui.basic.var": "content",
-                            "ui.style.overflow": "hidden"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": options.marginRightClass,
-                            "ui.basic.var": "marginRight,embed"
-                        }
-                    ]
+                    "ui.basic.elements": {
+                        "ui.basic.tag": "div",
+                        "ui.class.class": options.contentClass,
+                        "ui.style.columnCount": options.columnCount,
+                        "ui.basic.var": "content",
+                        "ui.style.overflow": "hidden"
+                    }
                 },
                 {
                     "ui.basic.tag": "div",
                     "ui.class.class": options.separatorClass,
                     "ui.basic.var": "separator",
-                    "ui.style.display":"none"
+                    "ui.style.display": "none"
                 }
             ]
         }, target, "self");
-        if(me.core.device.isMobile()) {
+        if (me.core.device.isMobile()) {
             me.core.property.set(page, "ui.scroll.swipe", "vertical");
         }
         return page;
@@ -381,62 +367,61 @@ package.ui.layout = function UILayout(me) {
             widget = widget.nextSibling;
         }
     };
-    me.paragraphMatch = function(widget, options) {
+    me.paragraphMatch = function (widget, options) {
         var match = false;
-        if(!options.filter) {
+        if (!options.filter) {
             return false;
         }
         match = widget.textContent.toUpperCase().includes(options.filter.toUpperCase());
         return match;
     };
-    me.styleParagraph = function(widget, options) {
-        if(widget && widget.style) {
+    me.styleParagraph = function (widget, options) {
+        if (widget && widget.style) {
             widget.style.display = "flex-inline";
-            if(!options.usePages) {
-                if(options.filter && !me.paragraphMatch(widget, options)) {
+            if (!options.usePages) {
+                if (options.filter && !me.paragraphMatch(widget, options)) {
                     widget.style.display = "none";
                 }
             }
             widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
             widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
-            if(options.filter) {
+            if (options.filter) {
                 var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
                 var replace = "<mark>$1</mark>";
                 widget.innerHTML = widget.innerHTML.replace(find, replace);
             }
         }
     };
-    me.completePage = function(page, options) {
+    me.completePage = function (page, options) {
         var showPage = true;
-        if(!page) {
+        if (!page) {
             return;
         }
-        if(options.filter) {
+        if (options.filter) {
             var widget = page.var.content.firstChild;
             var found = false;
-            while(widget) {
-                if(me.paragraphMatch(widget, options)) {
-                   found = true;
+            while (widget) {
+                if (me.paragraphMatch(widget, options)) {
+                    found = true;
                     break;
                 }
                 widget = widget.nextSibling;
             }
-            if(!found) {
+            if (!found) {
                 showPage = false;
             }
         }
         var pageNumber = me.core.property.get(page, "ui.attribute.pageNumber");
-        if(pageNumber === "1" || showPage) {
+        if (pageNumber === "1" || showPage) {
             page.style.display = "flex-inline";
             page.style.visibility = "visible";
             page.pageOffset = page.offsetTop;
             page.pageSize = page.clientHeight;
-        }
-        else {
+        } else {
             page.style.display = "none";
         }
     };
-    me.pageInView = function (page, partial=true) {
+    me.pageInView = function (page, partial = true) {
         let parentTop = page.parentNode.scrollTop;
         let parentBottom = parentTop + page.parentNode.clientHeight;
         let childTop = page.pageOffset;
@@ -445,19 +430,18 @@ package.ui.layout = function UILayout(me) {
         let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
         return  (isTotal || isPartial);
     };
-    me.updatePages = function(target) {
+    me.updatePages = function (target) {
         target = me.content(target);
         var child = target.firstChild;
-        while(child) {
-            if(child.pageSize) {
+        while (child) {
+            if (child.pageSize) {
                 var pageInView = me.pageInView(child);
                 var childInView = child.inView || false;
-                if(pageInView !== childInView) {
-                    if(pageInView) {
+                if (pageInView !== childInView) {
+                    if (pageInView) {
                         child.var.content.style.display = "";
                         child.style.visibility = "visible";
-                    }
-                    else {
+                    } else {
                         child.var.content.style.display = "none";
                         child.style.visibility = "hidden";
                     }
@@ -467,38 +451,38 @@ package.ui.layout = function UILayout(me) {
             child = child.nextSibling;
         }
     };
-    me.activateOnLoad = function(parent, widget) {
+    me.activateOnLoad = function (parent, widget) {
         var child = widget.firstChild;
-        while(child) {
+        while (child) {
             me.activateOnLoad(parent, child);
             child = child.nextSibling;
         }
-        if(widget && widget.getAttribute) {
+        if (widget && widget.getAttribute) {
             var onload = widget.getAttribute("onload");
-            if(onload) {
+            if (onload) {
                 me.core.property.set(parent, onload);
             }
         }
     };
-    me.cleanupWidget = function(widget) {
+    me.cleanupWidget = function (widget) {
         var child = widget.firstChild;
-        while(child) {
-            if(child.tagName && child.tagName.toLowerCase() === "div") {
+        while (child) {
+            if (child.tagName && child.tagName.toLowerCase() === "div") {
                 widget.removeChild(child);
                 child = widget.firstChild;
             }
-            if(child) {
+            if (child) {
                 child = child.nextSibling;
             }
         }
     };
-    me.currentPage = function(target) {
+    me.currentPage = function (target) {
         target = me.content(target);
         var child = target.firstChild;
-        while(child) {
-            if(child.pageSize) {
+        while (child) {
+            if (child.pageSize) {
                 var pageInView = me.pageInView(child, false);
-                if(pageInView) {
+                if (pageInView) {
                     return child;
                 }
             }
@@ -506,21 +490,20 @@ package.ui.layout = function UILayout(me) {
         }
         return null;
     };
-    me.hasSeparator = function(page) {
+    me.hasSeparator = function (page) {
         var hasSeparator = false;
-        if(page) {
-            if(page.var.separator.style.display !== "none") {
+        if (page) {
+            if (page.var.separator.style.display !== "none") {
                 hasSeparator = true;
             }
         }
         return hasSeparator;
     };
-    me.toggleSeparator = function(page) {
-        if(page) {
-            if(page.var.separator.style.display === "none") {
+    me.toggleSeparator = function (page) {
+        if (page) {
+            if (page.var.separator.style.display === "none") {
                 page.var.separator.style.display = "block";
-            }
-            else {
+            } else {
                 page.var.separator.style.display = "none";
             }
         }

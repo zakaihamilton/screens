@@ -372,7 +372,7 @@ package.app.transform = function AppTransform(me) {
                 pageClass: ["app.transform.page", modifiers],
                 contentClass: ["app.transform.page.content", modifiers],
                 containerClass: ["app.transform.page.container", modifiers],
-                marginLeftClass: ["app.transform.page.margin.left", modifiers],
+                videoSlotClass: ["app.transform.page.video.slot", modifiers],
                 marginRightClass: ["app.transform.page.margin.right", modifiers],
                 headerClass: ["app.transform.page.header", modifiers],
                 pageNumberClass: ["app.transform.page.number", modifiers],
