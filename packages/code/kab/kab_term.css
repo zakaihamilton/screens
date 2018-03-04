@@ -2,10 +2,9 @@
     position:absolute;
     padding-left:2px;
     padding-right:2px;
-    top:0.2em;
+    top:-0.2em;
     vertical-align:middle;
     height:1em;
-    line-height: 1;
     font-weight:bold;
     font-size:50%;
     text-transform:uppercase;
@@ -22,6 +21,22 @@
     right:0em;
 }
 
+[kab-term-sub-heading]:after {
+    position:absolute;
+    padding-left:2px;
+    padding-right:2px;
+    left:0em;
+    right:0em;
+    bottom:0.5em;
+    text-align: center;
+    vertical-align:middle;
+    height:1em;
+    font-size:50%;
+    pointer-events: none;
+    user-select: none;
+    content: attr(kab-term-sub-heading);
+}
+
 [kab-term-tooltip].kab-term-phase-none {
     border-bottom:1px dashed darkgray;
 }
@@ -33,7 +48,7 @@
     top: -1px;
     left: -1px;
     position: absolute;
-    line-height:1em;
+    line-height: 1em;
     padding-bottom: 1px;
     padding-left:10px;
     padding-right:10px;
@@ -58,7 +73,7 @@
     border-style:hidden;
     white-space: nowrap;
     display:inline-block;
-    height:1.8em;
+    height:2em;
     margin:0.2em;
     padding:0.1em;
     border-radius: 5px;
@@ -68,9 +83,8 @@
 
 [kab-term-phase-number]:after {
     position:absolute;
-    top:0.1em;
+    top:-0.3em;
     vertical-align:middle;
-    line-height: 1;
     font-size:60%;
     text-transform:uppercase;
     content:attr(kab-term-phase-number);
@@ -197,38 +211,6 @@
     border:2px solid MediumPurple;
 }
 
-.kab-term-polaroid-left {
-    float:left;
-    background-color:white;
-    margin:10px 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 250px;
-    text-align: center;
-    line-height:1;
-    padding-top:5px;
-    padding-bottom:5px;
-}
-
-.kab-term-polaroid-left:hover {
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
-}
-
-.kab-term-polaroid-right {
-    float:right;
-    background-color:white;
-    margin:10px 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 250px;
-    text-align: center;
-    line-height:1;
-    padding-top:5px;
-    padding-bottom:5px;
-}
-
-.kab-term-polaroid-right:hover {
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 black;
-}
-
 .kab-term-description-box {
     position: fixed;
     bottom: -2px;
@@ -258,7 +240,6 @@
     padding-left:1em;
     padding-right:1em;
     padding-top:0.5em;
-    line-height:100%;
     font-size:50%;
     font-weight: bold;
     text-transform:uppercase;
@@ -276,12 +257,11 @@
     position:absolute;
     left:0px;
     top:0px;
-    height:1.5em;
+    height:2em;
     right:0px;
     padding-left:1em;
     padding-right:1em;
-    padding-top:0.5em;
-    line-height:100%;
+    padding-top:0em;
     overflow:hidden;
     text-overflow: ellipsis;
 }
@@ -307,5 +287,4 @@
     display: inline;
     margin: 0 auto;
     white-space:normal;
-    line-height: 100%;
 }

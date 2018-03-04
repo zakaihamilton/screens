@@ -7,6 +7,7 @@ package.kab.style = function KabStyle(me) {
     me.process = function (session, instance, replacement, expansion) {
         var styles = instance.item.style;
         var html = "";
+        var subHeading = "";
         var phase = null, parentPhase = null, heading = null, tooltip = null, descriptions = {};
         var term = instance.target;
         if (typeof styles === "string") {
@@ -56,6 +57,9 @@ package.kab.style = function KabStyle(me) {
                 tooltip = instance.item.transliterated;
             }
             tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
+            if(session.options.subHeadings) {
+                subHeading = tooltip;
+            }
         }
         if(!("related" in descriptions)) {
             descriptions["related"] = {};
@@ -91,6 +95,9 @@ package.kab.style = function KabStyle(me) {
             }
             if (heading) {
                 html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + "\"></span>";
+            }
+            if (subHeading) {
+                html += "<span kab-term-sub-heading=\"" + subHeading + "\" class=\"kab-term-" + session.language + "\"></span>";
             }
             if (numDescriptions) {
                 if (phase === "none") {

@@ -26,6 +26,7 @@ package.app.transform = function AppTransform(me) {
                 autoScroll: false,
                 snapToPage: true,
                 headings: true,
+                subHeadings: true,
                 pages: true,
                 columns: true,
                 language: "Auto",
@@ -64,6 +65,7 @@ package.app.transform = function AppTransform(me) {
             me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
             me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
+            me.subHeadings = me.ui.options.toggleSet(me, "subHeadings", me.transform.set);
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
@@ -485,7 +487,8 @@ package.app.transform = function AppTransform(me) {
                 var result = [
                     item.title,
                     function () {
-                        me.core.app.launch(null, "diagram", [item.path, window.options]);
+                        var isFullscreen = me.core.property.get(window, "fullscreen");
+                        me.core.app.launch(null, "diagram", [item.path, window.options, isFullscreen]);
                     }
                 ];
                 return result;

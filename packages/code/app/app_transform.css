@@ -121,7 +121,6 @@
 .app-transform-page-number:after{
     position:absolute;
     font-size:75%;
-    line-height:100%;
     color:gray;
     content:attr(shortPageNumberText);
     text-align:center;
@@ -180,7 +179,6 @@
 .app-transform-page-button:after {
     position:absolute;
     font-size:50%;
-    line-height:100%;
     color:gray;
     text-align:center;
     top:0px;
@@ -406,7 +404,6 @@
     bottom: -1px;
     left: -1px;
     position: absolute;
-    line-height:1;
     padding: 0px 5px;
     content: attr(app-transform-tooltip);
     text-align:center;

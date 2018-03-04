@@ -12,7 +12,7 @@ package.app.diagram = function AppDiagram(me) {
         var json = __json__;
         var options = null;
         var parent = "workspace";
-        var embed = false;
+        var fullscreen = false;
         json["app.diagram.path"] = path;
         if (args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));
@@ -20,12 +20,9 @@ package.app.diagram = function AppDiagram(me) {
         }
         if (args.length > 3) {
             parent = args[2];
-            embed = args[3];
-            if(embed) {
-                json["widget.window.embed"] = true;
-                parent = parent.var.embed;
-                json["ui.style.width"] = "13em";
-                json["ui.style.height"] = "13em";
+            fullscreen = args[3];
+            if(fullscreen) {
+                json["widget.window.fullscreen"] = null;
             }
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
@@ -38,9 +35,6 @@ package.app.diagram = function AppDiagram(me) {
             window.options = options;
             window.options.diagrams = false;
             window.options.reload = false;
-            if(embed) {
-                window.options.fontSize = (parseInt(window.options.fontSize) / 2) + "px";
-            }
             window.options.viewType = "Layers";
             window.options.doExplanation = false;
             window.options.headings = false;
@@ -152,20 +146,6 @@ package.app.diagram = function AppDiagram(me) {
             me.ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
                 me.core.property.set(window, "title", diagramData.title);
-            }
-        }
-    };
-    me.restore = {
-        set: function (object) {
-            var window = me.widget.window.window(object);
-            var embed = me.core.property.get(window, "embed");
-            if (embed) {
-                me.core.property.set(window, {
-                    "app.diagram.fontSize": window.options.original.fontSize,
-                    "app.diagram.doExplanation": window.options.original.doExplanation,
-                    "app.diagram.phaseNumbers": window.options.original.phaseNumbers,
-                    "app.diagram.headings": window.options.original.headings
-                });
             }
         }
     };

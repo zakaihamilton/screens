@@ -49,6 +49,11 @@
                         "enabled": "app.transform.addStyles"
                     }
                 ],
+                ["Sub Headings", "app.transform.subHeadings", {
+                        "state": "select",
+                        "enabled": "app.transform.addStyles"
+                    }
+                ],
                 ["Diagrams", "app.transform.diagrams", {
                         "state": "select",
                         "separator": true
