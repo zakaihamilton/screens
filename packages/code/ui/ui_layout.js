@@ -193,6 +193,7 @@ package.ui.layout = function UILayout(me) {
                 }
                 if (widget.tagName && widget.tagName.toLowerCase() === "br") {
                     newPage = true;
+                    widget = null;
                     previousWidget = null;
                     if (target.page) {
                         target.page.var.separator.style.display = "block";

@@ -136,7 +136,6 @@
         "Eser de Sefirot": "Eser Sefirot",
         "Torahall": "Torah all",
         "\nOr a": "__Or a",
-        "========":"<hr style=\"column-span:all\"></hr>",
         "<subtitle>": "\n<h4>",
         "</subtitle>": "</h4>",
         "<title>": "<br>\n<h4>",
@@ -278,24 +277,16 @@
             "replace": "<br>"
         },
         {
-            "find": "/<p><(h\\d)",
-            "replace": "<$1"
-        },
-        {
-            "find": "/<\\/(h\\d)><\\/p>",
-            "replace": "</$1>"
-        },
-        {
             "find": "/\\s?\\[\\s?\\]",
-            "replace": ""
-        },
-        {
-            "find": "/<p>[\\s]?<\\/p>",
             "replace": ""
         },
         {
             "find": "(The Study of the Ten Sefirot)",
             "replace": ""
+        },
+        {
+            "find": "/<hr>",
+            "replace": "<hr style=\"column-span:all\"></hr>"
         }
     ],
     "post": [
