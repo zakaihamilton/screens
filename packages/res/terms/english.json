@@ -139,7 +139,7 @@
         "========":"<hr style=\"column-span:all\"></hr>",
         "<subtitle>": "\n<h4>",
         "</subtitle>": "</h4>",
-        "<title>": "<br>\n<h4 style=\"text-align:center\">",
+        "<title>": "<br>\n<h4>",
         "</title>": "</h4>",
         "<rtl>": "<span dir=\"rtl\">",
         "</rtl>": "</span>",
@@ -770,6 +770,7 @@
         },
         {
             "translation": "Screen",
+            "explanation":"Filter",
             "term": "Masach",
             "hebrew": "מסך"
         },
@@ -6544,6 +6545,17 @@
             "term": "Derech Maavar",
             "translation": "In Passing",
             "hebrew": "דרך מעבר"
+        },
+        {
+            "term":"Olam Tzimtzum",
+            "prefix":"The",
+            "source":"Olam Ha Tzimtzum",
+            "translation":"World of Restriction",
+            "style":{
+                "heading":"World",
+                "phase":"root"
+            },
+            "hebrew":"עולם הצמצום"
         }
     ],
     "style": {
