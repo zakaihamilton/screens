@@ -681,25 +681,23 @@ package.app.transform = function AppTransform(me) {
         if(isPlaying) {
             responsiveVoice.cancel();
             me.ui.layout.setPlayState(currentPage, false);
-            clearInterval(me.playInterval);
-            me.playInterval = null;
         }
         else {
             var text = me.ui.layout.text(currentPage);
-            console.log("speaking text:" + text);
+            text = text.replace(/[()]/g, "\n");
+            text = text.replace(/,/g, "\n");
+            console.log("speaking text: " + text);
             if(responsiveVoice.voiceSupport()) {
-                responsiveVoice.speak(text, "UK English Male");
-                me.ui.layout.setPlayState(currentPage, true);
+                var parameters = {
+                    onstart: () => {
+                        me.ui.layout.setPlayState(currentPage, true);
+                    },
+                    onend: () => {
+                        me.ui.layout.setPlayState(currentPage, false);
+                    }
+                }
+                responsiveVoice.speak(text, "UK English Male", parameters);
             }
-            if(me.playInterval) {
-                clearInterval(me.playInterval);
-            }
-            setInterval(() => {
-                if(!responsiveVoice.isPlaying()) {
-                    me.ui.layout.setPlayState(currentPage, false);
-                    clearInterval(me.playInterval);
-                }                
-            }, 1000);
         }
     };
 };
