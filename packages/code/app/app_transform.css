@@ -412,3 +412,16 @@
     font-weight:bold;
     color:black;
 }
+
+.app-transform-play:after {
+    position:absolute;
+    right:5%;
+    width:40px;
+    bottom:30px;
+    height:40px;
+    content: "\25B6";
+}
+
+.app-transform-play.play:after {
+    content:"\25FC";
+}

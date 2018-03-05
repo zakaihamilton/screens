@@ -823,10 +823,11 @@
     color:white;
     border:1px solid darkgray;
     border-radius: 5px;
+    padding-right:6px;
     -webkit-margin-start:6px;
     -webkit-margin-end:6px;
     text-overflow: ellipsis;
-    overflow: hidden; 
+    overflow: hidden;
     white-space: nowrap;
 }
 

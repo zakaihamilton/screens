@@ -382,10 +382,12 @@ package.app.transform = function AppTransform(me) {
                 nextPageClass: ["app.transform.page.button", "app.transform.page.next", modifiers],
                 scrollToTopClass: ["app.transform.page.scrolltotop", modifiers],
                 separatorClass: ["app.transform.separator", modifiers],
+                playClass: ["app.transform.play", modifiers],
                 reloadMethod: "app.transform.transform",
                 fullscreenMethod: "widget.window.fullscreen",
                 previousPageMethod: "widget.scrollbar.vertical.before",
                 nextPageMethod: "widget.scrollbar.vertical.after",
+                playMethod: "app.transform.play",
                 usePages: window.options.pages,
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
@@ -670,6 +672,34 @@ package.app.transform = function AppTransform(me) {
                     me.refreshContentList.set(object);
                 }
             }, data, "app.transform.content", title, ["content"]);
+        }
+    };
+    me.play = function(object) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        if(isPlaying) {
+            responsiveVoice.cancel();
+            me.ui.layout.setPlayState(currentPage, false);
+            clearInterval(me.playInterval);
+            me.playInterval = null;
+        }
+        else {
+            var text = me.ui.layout.text(currentPage);
+            console.log("speaking text:" + text);
+            if(responsiveVoice.voiceSupport()) {
+                responsiveVoice.speak(text, "UK English Male");
+                me.ui.layout.setPlayState(currentPage, true);
+            }
+            if(me.playInterval) {
+                clearInterval(me.playInterval);
+            }
+            setInterval(() => {
+                if(!responsiveVoice.isPlaying()) {
+                    me.ui.layout.setPlayState(currentPage, false);
+                    clearInterval(me.playInterval);
+                }                
+            }, 1000);
         }
     };
 };

@@ -338,6 +338,12 @@ package.ui.layout = function UILayout(me) {
                     "ui.class.class": options.separatorClass,
                     "ui.basic.var": "separator",
                     "ui.style.display": "none"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": options.playClass,
+                    "ui.basic.var": "play",
+                    "ui.touch.click": options.playMethod
                 }
             ]
         }, target, "self");
@@ -493,6 +499,27 @@ package.ui.layout = function UILayout(me) {
             child = child.nextSibling;
         }
         return null;
+    };
+    me.text = function(page) {
+        var content = page.var.content;
+        var text = Array.from(content.children).map(el => 
+            (el.getAttribute('hidden') ? '' : el.innerText) + "\n"
+        ).join('');
+        return text;
+    };
+    me.isPlaying = function(page) {
+        var play = page.var.play;
+        var isPlaying = me.core.property.get(play, "ui.class.contains", "play");
+        return isPlaying;
+    };
+    me.setPlayState = function(page, playing) {
+        var play = page.var.play;
+        if(playing) {
+            me.core.property.set(play, "ui.class.add", "play");
+        }
+        else {
+            me.core.property.set(play, "ui.class.remove", "play");
+        }
     };
     me.hasSeparator = function (page) {
         var hasSeparator = false;

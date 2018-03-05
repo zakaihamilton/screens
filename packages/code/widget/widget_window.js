@@ -614,7 +614,7 @@ package.widget.window = function WidgetWindow(me) {
             }
             list = list.filter(function(item, pos, self) {
                 return self.indexOf(item) === pos;
-            });            
+            });
             if(fullscreen) {
                 me.core.property.set(list, "ui.property.broadcast", {
                     "ui.class.remove": "fullscreen"

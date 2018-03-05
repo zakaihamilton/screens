@@ -294,7 +294,14 @@ function package_complete(info, order, callback) {
 }
 
 function package_script_load(callback, path) {
-    var ref = document.getElementsByTagName("script")[ 0 ];
+    var scripts = document.getElementsByTagName("script");
+    for (var i = scripts.length; i--;) {
+        if (scripts[i].src === path) {
+            callback();
+            return;
+        }
+    }
+    var ref = scripts[ 0 ];
     var script = document.createElement("script");
     script.src = path;
     script.async = true;
@@ -423,6 +430,7 @@ var package = {
     lock: package_lock,
     unlock: package_unlock,
     alias: package_alias,
+    import: package_script_load,
     count: 0
 };
 
