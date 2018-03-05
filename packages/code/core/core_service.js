@@ -141,4 +141,9 @@ package.core.service = function CoreService(me) {
             me.core.console.log("sent " + method + "' to " + count + " devices");
         }
     };
+    me.ready = {
+        set: function(socket) {
+            
+        }
+    };
 };

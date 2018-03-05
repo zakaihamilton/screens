@@ -34,7 +34,7 @@ package.service.httpserver = function HttpServer(me) {
                 if(me.signalMatches && me.signalMatches.length) {
                     var match = true;
                     me.signalMatches.map((signalMatch) => {
-                        if(!filePath.includes(signalMatch)) {
+                        if(!filePath.toLowerCase().includes(signalMatch.toLowerCase())) {
                             match = false;
                         }
                     });

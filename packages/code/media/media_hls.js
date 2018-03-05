@@ -8,7 +8,6 @@ package.media.hls = function MediaHLS(me) {
     me.download = function (callback, path, destination) {
         var name = me.core.path.fullName(path);
         var targetPlaylist = me.core.path.goto(destination, name);
-        me.core.console.log("downloading " + path + " to:" + targetPlaylist);
         var sourceFile = path;
         var targetFile = null;
         var errors = [];
@@ -31,6 +30,7 @@ package.media.hls = function MediaHLS(me) {
                 if (lines.length) {
                     me.flow(callback, (flow) => {
                         for(var line of lines) {
+                            line = line.trim();
                             var search = "URI=\"";
                             if (line.includes(search)) {
                                 var start = line.indexOf(search);

@@ -245,4 +245,24 @@ package.core.http = function CoreHttp(me) {
             }
     }
     };
+    me.compress = {
+        set: function (info) {
+            
+        }
+    };
+    me.check = {
+        set: function (info) {
+            
+        }
+    };
+    me.parse = {
+        set: function (info) {
+            
+        }
+    };
+    me.receive = {
+        set: function (info) {
+            
+        }
+    };
 };
