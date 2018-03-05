@@ -453,6 +453,9 @@ package.ui.layout = function UILayout(me) {
         }
     };
     me.activateOnLoad = function (parent, widget) {
+        if(!widget) {
+            return;
+        }
         var child = widget.firstChild;
         while (child) {
             me.activateOnLoad(parent, child);

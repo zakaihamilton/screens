@@ -40,6 +40,11 @@
             "state": "select"
         }
     ],
+    ["Fullscreen", "widget.window.fullscreen", {
+            "visible": "menu.context.notEmbed",
+            "state": "select"
+        }
+    ],
     ["Next", "menu.context.next", {
             "separator": true,
             "visible": "menu.context.isChild"

@@ -27,7 +27,7 @@
     padding-right:2px;
     left:0em;
     right:0em;
-    bottom:0.5em;
+    bottom:0.6em;
     text-align: center;
     vertical-align:middle;
     height:1em;
@@ -45,8 +45,8 @@
     visibility: hidden;
     pointer-events: none;
     transition: border 0.10s ease-in;
-    top: -1px;
-    left: -1px;
+    top: -2px;
+    left: -2px;
     position: absolute;
     line-height: 1em;
     padding:0.2em;

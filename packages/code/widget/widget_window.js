@@ -599,6 +599,9 @@ package.widget.window = function WidgetWindow(me) {
             var list = [];
             while(window) {
                 list.push(window);
+                if(window.child_window) {
+                    list.push(window.child_window);
+                }
                 var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
                 if(!maximized) {
                     break;
@@ -609,6 +612,9 @@ package.widget.window = function WidgetWindow(me) {
                 var workspace = me.ui.element.workspace();
                 list.push(workspace);
             }
+            list = list.filter(function(item, pos, self) {
+                return self.indexOf(item) === pos;
+            });            
             if(fullscreen) {
                 me.core.property.set(list, "ui.property.broadcast", {
                     "ui.class.remove": "fullscreen"
