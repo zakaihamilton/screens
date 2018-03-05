@@ -31,7 +31,7 @@
     text-align: center;
     vertical-align:middle;
     height:1em;
-    font-size:50%;
+    font-size:60%;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-sub-heading);
@@ -49,14 +49,11 @@
     left: -1px;
     position: absolute;
     line-height: 1em;
-    padding-bottom: 1px;
-    padding-left:10px;
-    padding-right:10px;
+    padding:0.2em;
     content: attr(kab-term-tooltip);
     text-align:center;
     white-space: pre;
     min-width: 100%;
-    min-height: 100%;
     vertical-align: middle;
     border-radius: 5px;
 }
@@ -74,8 +71,8 @@
     white-space: nowrap;
     display:inline-block;
     height:2em;
-    margin:0.2em;
-    padding:0.1em;
+    margin:0.1em;
+    padding:0.2em;
     border-radius: 5px;
     min-width:5em;
     text-align:center;
