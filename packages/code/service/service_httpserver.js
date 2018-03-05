@@ -39,6 +39,7 @@ package.service.httpserver = function HttpServer(me) {
                         }
                     });
                     if(match) {
+                        me.core.console.log("found match in " + filePath + ", sending signal");
                         me.core.console.log("signal");
                         me.core.service.sendAll("signal");
                     }

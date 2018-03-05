@@ -45,7 +45,6 @@
       "httpserver": {
         "path": "./",
         "signalMatches": [
-          "video",
           "segment_0.ts"
         ]
       }
