@@ -680,7 +680,8 @@ package.app.transform = function AppTransform(me) {
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         if(isPlaying) {
             responsiveVoice.cancel();
-            me.ui.layout.setPlayState(currentPage, false);
+            me.ui.layout.setPlayState(me.currentPlayingPage, false);
+            me.currentPlayingPage = null;
         }
         else {
             var text = me.ui.layout.text(currentPage);
@@ -695,8 +696,13 @@ package.app.transform = function AppTransform(me) {
                     onend: () => {
                         me.ui.layout.setPlayState(currentPage, false);
                     }
-                }
+                };
                 responsiveVoice.speak(text, "UK English Male", parameters);
+                if(me.currentPlayingPage) {
+                    me.ui.layout.setPlayState(me.currentPlayingPage, false);
+                    me.currentPlayingPage = null;
+                }
+                me.currentPlayingPage = currentPage;
             }
         }
     };
