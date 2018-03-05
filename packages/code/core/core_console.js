@@ -5,7 +5,7 @@
 
 package.core.console = function CoreConsole(me) {
     me.messages = [];
-    me.enabled = false;
+    me.enabled = (me.platform !== "browser");
     me.clear = function() {
         me.messages = [];
     };
