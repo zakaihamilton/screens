@@ -717,7 +717,9 @@ package.app.transform = function AppTransform(me) {
                     }
                 },
                 onchange: (index, text) => {
-                    me.ui.layout.mark(currentPage, index, text);
+                    if(text) {
+                        me.ui.layout.mark(currentPage, index, text);
+                    }
                 }
             };
             me.media.voice.play(text, window.options.voice, params);
@@ -750,8 +752,9 @@ package.app.transform = function AppTransform(me) {
         if(!voicelist) {
             voicelist = [];
         }
+        language = language.slice(0, 2).toLowerCase();
         voicelist = voicelist.filter((voice) => {
-            return voice.name.toLowerCase().includes(language);
+            return voice.lang.toLowerCase().startsWith(language);
         });
         voicelist = voicelist.map((voice) => {
             return [voice.name, "app.transform.voice", {
