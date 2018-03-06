@@ -344,6 +344,12 @@ package.ui.layout = function UILayout(me) {
                     "ui.class.class": options.playClass,
                     "ui.basic.var": "play",
                     "ui.touch.click": options.playMethod
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": options.stopClass,
+                    "ui.basic.var": "stop",
+                    "ui.touch.click": options.stopMethod
                 }
             ]
         }, target, "self");
@@ -508,17 +514,25 @@ package.ui.layout = function UILayout(me) {
         return text;
     };
     me.isPlaying = function(page) {
-        var play = page.var.play;
-        var isPlaying = me.core.property.get(play, "ui.class.contains", "play");
+        var isPlaying = me.core.property.get(page.var.play, "ui.class.contains", "play");
         return isPlaying;
     };
-    me.setPlayState = function(page, playing) {
-        var play = page.var.play;
-        if(playing) {
-            me.core.property.set(play, "ui.class.add", "play");
+    me.isPaused = function(page) {
+        var isPaused = me.core.property.get(page.var.play, "ui.class.contains", "pause");
+        return isPaused;
+    };
+    me.setPlayState = function(page, play, pause) {
+        if(play) {
+            me.core.property.set([page.var.play,page.var.stop], "ui.class.add", "play");
         }
         else {
-            me.core.property.set(play, "ui.class.remove", "play");
+            me.core.property.set([page.var.play,page.var.stop], "ui.class.remove", "play");
+        }
+        if(pause) {
+            me.core.property.set([page.var.play,page.var.stop], "ui.class.add", "pause");
+        }
+        else {
+            me.core.property.set([page.var.play,page.var.stop], "ui.class.remove", "pause");
         }
     };
     me.hasSeparator = function (page) {

@@ -415,13 +415,31 @@
 
 .app-transform-play:after {
     position:absolute;
+    right:9%;
+    width:40px;
+    bottom:30px;
+    height:40px;
+    content: "\23EF";
+}
+
+.app-transform-play.play:after {
+    content:"\23F8";
+}
+
+.app-transform-play.play.pause:after {
+    content: "\23EF";
+}
+
+.app-transform-stop:after {
+    position:absolute;
     right:5%;
     width:40px;
     bottom:30px;
     height:40px;
-    content: "\25B6";
+    content: "\23F9";
+    display:none;
 }
 
-.app-transform-play.play:after {
-    content:"\25FC";
+.app-transform-stop.play:after {
+    display:block;
 }

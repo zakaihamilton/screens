@@ -383,11 +383,13 @@ package.app.transform = function AppTransform(me) {
                 scrollToTopClass: ["app.transform.page.scrolltotop", modifiers],
                 separatorClass: ["app.transform.separator", modifiers],
                 playClass: ["app.transform.play", modifiers],
+                stopClass: ["app.transform.stop", modifiers],
                 reloadMethod: "app.transform.transform",
                 fullscreenMethod: "widget.window.fullscreen",
                 previousPageMethod: "widget.scrollbar.vertical.before",
                 nextPageMethod: "widget.scrollbar.vertical.after",
                 playMethod: "app.transform.play",
+                stopMethod: "app.transform.stop",
                 usePages: window.options.pages,
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
@@ -678,32 +680,46 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
-        if(isPlaying) {
-            responsiveVoice.cancel();
-            me.ui.layout.setPlayState(me.currentPlayingPage, false);
-            me.currentPlayingPage = null;
+        var isPaused = me.ui.layout.isPaused(currentPage);
+        if(isPlaying && !isPaused) {
+            responsiveVoice.pause();
+            me.ui.layout.setPlayState(currentPage, true, true);
+        }
+        else if(isPlaying && isPaused) {
+            responsiveVoice.resume();
+            me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
         else {
             var text = me.ui.layout.text(currentPage);
-            text = text.replace(/[()]/g, "\n");
-            text = text.replace(/,/g, "\n");
+            text = text.replace(/[(),.]/g, "\n");
             console.log("speaking text: " + text);
             if(responsiveVoice.voiceSupport()) {
                 var parameters = {
                     onstart: () => {
-                        me.ui.layout.setPlayState(currentPage, true);
+                        me.ui.layout.setPlayState(currentPage, true, false);
                     },
                     onend: () => {
-                        me.ui.layout.setPlayState(currentPage, false);
+                        me.ui.layout.setPlayState(currentPage, false, false);
                     }
                 };
                 responsiveVoice.speak(text, "UK English Male", parameters);
                 if(me.currentPlayingPage) {
-                    me.ui.layout.setPlayState(me.currentPlayingPage, false);
+                    me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                     me.currentPlayingPage = null;
                 }
                 me.currentPlayingPage = currentPage;
             }
+        }
+    };
+    me.stop = function(object) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var isPaused = me.ui.layout.isPaused(currentPage);
+        if(isPlaying) {
+            responsiveVoice.cancel();
+            me.ui.layout.setPlayState(currentPage, false, false);
+            me.currentPlayingPage = null;
         }
     };
 };
