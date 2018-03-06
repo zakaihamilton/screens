@@ -154,6 +154,7 @@ package.ui.layout = function UILayout(me) {
                     }
                     me.completePage(target.page, options);
                     if (target.page) {
+                        target.page.last = true;
                         target.page.var.separator.style.display = "block";
                         target.page.var.pageNext.style.opacity = "0.0";
                         me.core.property.set(target.page.var.separator, "ui.class.add", "last");

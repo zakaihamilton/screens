@@ -707,8 +707,10 @@ package.app.transform = function AppTransform(me) {
                         me.ui.layout.setPlayState(currentPage, false, false);
                         if(window.options.autoPlay) {
                             setTimeout(() => {
-                                me.core.property.set(object, "widget.scrollbar.vertical.after");
-                                me.core.property.set(object, "app.transform.play");
+                                if(!currentPage.last) {
+                                    me.core.property.set(object, "widget.scrollbar.vertical.after");
+                                    me.core.property.set(object, "app.transform.play");
+                                }
                             }, 1000);
                         }
                     }
