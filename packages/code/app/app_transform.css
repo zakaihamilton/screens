@@ -284,8 +284,8 @@
 
 .app-transform-separator {
     position:absolute;
-    left:20%;
-    right:20%;
+    left:40%;
+    right:40%;
     bottom:30px;
     height:5px;
     background: gray;
