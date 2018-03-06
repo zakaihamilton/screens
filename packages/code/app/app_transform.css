@@ -432,6 +432,18 @@
     content: "\23EF";
 }
 
+.app-transform-play:hover:after {
+    content: "\23EF\APlay";
+}
+
+.app-transform-play.play:hover:after {
+    content: "\23F8\APause";
+}
+
+.app-transform-play.play.pause:hover:after {
+    content: "\23EF\AResume";
+}
+
 .app-transform-play.fullscreen:after {
     opacity: 0;
 }
@@ -450,6 +462,10 @@
     content: "\23F9";
     display:none;
     margin:auto;
+}
+
+.app-transform-stop:hover:after {
+    content: "\23F9\AStop";
 }
 
 .app-transform-stop.play:after {
