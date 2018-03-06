@@ -402,6 +402,7 @@ package.app.transform = function AppTransform(me) {
                 filter: me.core.property.get(window.var.filter, "ui.basic.text")
             };
             window.diagrams = [];
+            me.media.voice.stop();
             me.ui.layout.reflow(function () {
                 me.core.property.set(window, "ui.work.state", false);
                 var title = me.core.property.get(window, "app.transform.title");
@@ -697,12 +698,16 @@ package.app.transform = function AppTransform(me) {
         else {
             var text = me.ui.layout.text(currentPage);
             text = text.replace(/[\)\]”“\"]/g, " ");
-            text = text.replace(/[\(\[,.]/g, "\n");
+            text = text.replace(/[\(\[]/g, ",");
+            text = text.replace(/[\(\[.]/g, "\n");
+            text = text.replace(/[,]\s[,]/g, ",");
+            text = text.replace(/[,][,]/g, ",");
+            text = text.replace(/[,]/g, ", ");
             text = text.replace(/\n\s\n/g, "\n");
             text = text.replace(/\n\n/g, "\n");
             text = text.replace(/  /g, " ");
             text = text.replace(/\n\s/g, "\n");
-            var parameters = {
+            var params = {
                 onstart: () => {
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
@@ -720,7 +725,7 @@ package.app.transform = function AppTransform(me) {
                     }
                 }
             };
-            me.media.voice.play(text, window.options.voice, parameters);
+            me.media.voice.play(text, window.options.voice, params);
             if(me.currentPlayingPage) {
                 me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                 me.currentPlayingPage = null;

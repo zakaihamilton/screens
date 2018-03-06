@@ -25,13 +25,17 @@ package.media.voice = function MediaVoice(me) {
             return;
         }
         var voice = voices[0];
-        if (!me.queueIndex) {
-            me.synth.cancel();
-            me.utterances = [];
-        }
+        me.utterances = [];
         var parts = text.split("\n").filter(item => {
             return item.trim() !== "";
         });
+        if(me.queueIndex) {
+            me.queueIndex = 0;
+            me.synth.cancel();
+            if (params.onstart) {
+                params.onstart();
+            }
+        }
         if (!parts.length) {
             if (params.onend) {
                 params.onend();
@@ -63,8 +67,6 @@ package.media.voice = function MediaVoice(me) {
         });
     };
     me.stop = function () {
-        me.queueIndex = 0;
-        me.utterances = [];
         me.synth.cancel();
     };
     me.voices = function () {
