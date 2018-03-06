@@ -702,32 +702,30 @@ package.app.transform = function AppTransform(me) {
             text = text.replace(/\n\n/g, "\n");
             text = text.replace(/  /g, " ");
             text = text.replace(/\n\s/g, "\n");
-            if(me.media.voice.support()) {
-                var parameters = {
-                    onstart: () => {
-                        me.ui.layout.setPlayState(currentPage, true, false);
-                    },
-                    onend: () => {
-                        me.ui.layout.setPlayState(currentPage, false, false);
-                        if(window.options.autoPlay) {
-                            setTimeout(() => {
-                                if(!currentPage.last) {
-                                    me.core.property.set(object, "widget.scrollbar.vertical.after");
-                                    setTimeout(() => {
-                                        me.core.property.set(object, "app.transform.play");
-                                    }, 1000);
-                                }
-                            }, 1000);
-                        }
+            var parameters = {
+                onstart: () => {
+                    me.ui.layout.setPlayState(currentPage, true, false);
+                },
+                onend: () => {
+                    me.ui.layout.setPlayState(currentPage, false, false);
+                    if(window.options.autoPlay) {
+                        setTimeout(() => {
+                            if(!currentPage.last) {
+                                me.core.property.set(object, "widget.scrollbar.vertical.after");
+                                setTimeout(() => {
+                                    me.core.property.set(object, "app.transform.play");
+                                }, 1000);
+                            }
+                        }, 1000);
                     }
-                };
-                me.media.voice.play(text, window.options.voice, parameters);
-                if(me.currentPlayingPage) {
-                    me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
-                    me.currentPlayingPage = null;
                 }
-                me.currentPlayingPage = currentPage;
+            };
+            me.media.voice.play(text, window.options.voice, parameters);
+            if(me.currentPlayingPage) {
+                me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
+                me.currentPlayingPage = null;
             }
+            me.currentPlayingPage = currentPage;
         }
     };
     me.stop = function(object) {
