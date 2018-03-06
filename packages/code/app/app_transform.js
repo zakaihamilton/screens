@@ -34,7 +34,9 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                pipVideo : false
+                pipVideo : false,
+                autoPlay: true,
+                voice: "UK English Male"
             });
             window.pageSize = {width: 0, height: 0};
             window.options.autoScroll = false;
@@ -68,6 +70,8 @@ package.app.transform = function AppTransform(me) {
             me.subHeadings = me.ui.options.toggleSet(me, "subHeadings", me.transform.set);
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
+            me.autoPlay = me.ui.options.toggleSet(me, "autoPlay");
+            me.voice = me.ui.options.choiceSet(me, "voice");
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet("kab");
         }
@@ -691,6 +695,7 @@ package.app.transform = function AppTransform(me) {
         }
         else {
             var text = me.ui.layout.text(currentPage);
+            text = text.replace(/[)/[/]]/g, " ");
             text = text.replace(/[(),.]/g, "\n");
             console.log("speaking text: " + text);
             if(responsiveVoice.voiceSupport()) {
@@ -700,9 +705,15 @@ package.app.transform = function AppTransform(me) {
                     },
                     onend: () => {
                         me.ui.layout.setPlayState(currentPage, false, false);
+                        if(window.options.autoPlay) {
+                            setTimeout(() => {
+                                me.core.property.set(object, "widget.scrollbar.vertical.after");
+                                me.core.property.set(object, "app.transform.play");
+                            }, 1000);
+                        }
                     }
                 };
-                responsiveVoice.speak(text, "UK English Male", parameters);
+                responsiveVoice.speak(text, window.options.voice, parameters);
                 if(me.currentPlayingPage) {
                     me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                     me.currentPlayingPage = null;
@@ -721,5 +732,27 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
+    };
+    me.voices = function(object) {
+        var window = me.widget.window.mainWindow(object);
+        var voicelist = responsiveVoice.getVoices();
+        var language = window.language;
+        if(!language) {
+            language = "English";
+        }
+        language = language.toLowerCase();
+        if(!voicelist) {
+            voicelist = [];
+        }
+        voicelist = voicelist.filter((voice) => {
+            return voice.name.toLowerCase().includes(language);
+        });
+        voicelist = voicelist.map((voice) => {
+            return [voice.name, "app.transform.voice", {
+                    "state": "select"
+                }
+            ];
+        });
+        return voicelist;
     };
 };

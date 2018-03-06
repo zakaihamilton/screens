@@ -111,6 +111,17 @@
                         "separator": true
                     }
                 ],
+                ["Voice", null, {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.transform.voices",
+                ["Auto Play", "app.transform.autoPlay", {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
                 ["Font Size", null, {
                         "enabled": false,
                         "header": true
