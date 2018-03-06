@@ -698,11 +698,12 @@ package.app.transform = function AppTransform(me) {
         else {
             var text = me.ui.layout.text(currentPage);
             text = text.replace(/[\)\]”“\"]/g, " ");
-            text = text.replace(/[\(\[]/g, ",");
+            text = text.replace(/[\(\[]/g, "-");
             text = text.replace(/[\(\[.]/g, "\n");
-            text = text.replace(/[,]\s[,]/g, ",");
-            text = text.replace(/[,][,]/g, ",");
-            text = text.replace(/[,]/g, ", ");
+            text = text.replace(/[-]\s[-]/g, "-");
+            text = text.replace(/[-][-]/g, "-");
+            text = text.replace(/[-]/g, " - ");
+            text = text.replace(/[,]/g, "\n");
             text = text.replace(/\n\s\n/g, "\n");
             text = text.replace(/\n\n/g, "\n");
             text = text.replace(/  /g, " ");
