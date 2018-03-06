@@ -285,6 +285,7 @@ package.app.transform = function AppTransform(me) {
             window.options.toggleCallback = "package.app.transform.cycleDescription";
             window.options.reload = true;
             me.core.message.waitForWorker(() => {
+                me.media.voice.stop();
                 me.kab.text.parse((text, terms, data) => {
                     if (data) {
                         me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);

@@ -436,6 +436,7 @@ package.ui.layout = function UILayout(me) {
         } else {
             page.style.display = "none";
         }
+        me.mark(page, 0, "");
     };
     me.pageInView = function (page, partial = true) {
         let parentTop = page.parentNode.scrollTop;
@@ -579,10 +580,8 @@ package.ui.layout = function UILayout(me) {
         return text;
     };
     me.mark = function (page, index, text) {
-        console.log("marking:" + text);
         var content = page.var.content;
         var focusElement = null;
-        var ignore = page.focusElement;
         if (!page.focusElement || !text) {
             Array.from(content.children).map(element => {
                 if (element.getAttribute('hidden')) {
