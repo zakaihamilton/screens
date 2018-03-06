@@ -420,7 +420,6 @@
     bottom:10px;
     height:50px;
     text-align: center;
-    border: 1px solid black;
     content: "\23EF";
     margin:auto;
 }
@@ -435,7 +434,6 @@
 
 .app-transform-stop:after {
     position:absolute;
-    border: 1px solid black;
     right:50px;
     width:100px;
     bottom:10px;
