@@ -31,7 +31,6 @@ package.media.voice = function MediaVoice(me) {
         }
         var voice = voices[0];
         me.utterances = [];
-        var parts = text.split("\n");
         if(me.queueIndex) {
             me.queueIndex = 0;
             me.synth.cancel();
@@ -39,37 +38,43 @@ package.media.voice = function MediaVoice(me) {
                 params.onstart();
             }
         }
-        if (!parts.length) {
-            if (params.onend) {
-                params.onend();
-            }
-            return;
+        if(!Array.isArray(text)) {
+            text = [text];
         }
-        parts.map(text => {
-            var utterance = new SpeechSynthesisUtterance();
-            utterance.voice = voice;
-            utterance.volume = 1; // 0 to 1
-            utterance.rate = 1; // 0.1 to 10
-            utterance.pitch = 1; //0 to 2
-            utterance.text = text;
-            utterance.lang = voice.lang;
-            utterance.onstart = () => {
-                if (!me.queueIndex && params.onstart) {
-                    params.onstart();
-                }
-                if(params.onchange) {
-                    params.onchange(me.queueIndex, text);
-                }
-            };
-            utterance.onend = () => {
-                me.queueIndex++;
-                if (me.queueIndex >= me.utterances.length && params.onend) {
-                    me.queueIndex = 0;
+        text.map((textItem, index) => {
+            var parts = textItem.split("\n");
+            if (!parts.length) {
+                if (params.onend) {
                     params.onend();
                 }
-            };
-            me.utterances.push(utterance);
-            me.synth.speak(utterance);
+                return;
+            }
+            parts.map(text => {
+                var utterance = new SpeechSynthesisUtterance();
+                utterance.voice = voice;
+                utterance.volume = 1; // 0 to 1
+                utterance.rate = 1; // 0.1 to 10
+                utterance.pitch = 1; //0 to 2
+                utterance.text = text;
+                utterance.lang = voice.lang;
+                utterance.onstart = () => {
+                    if (!me.queueIndex && params.onstart) {
+                        params.onstart();
+                    }
+                    if(params.onchange) {
+                        params.onchange(index, text);
+                    }
+                };
+                utterance.onend = () => {
+                    me.queueIndex++;
+                    if (me.queueIndex >= me.utterances.length && params.onend) {
+                        me.queueIndex = 0;
+                        params.onend();
+                    }
+                };
+                me.utterances.push(utterance);
+                me.synth.speak(utterance);
+            });
         });
     };
     me.stop = function () {

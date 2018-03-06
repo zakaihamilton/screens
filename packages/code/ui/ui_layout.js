@@ -509,12 +509,19 @@ package.ui.layout = function UILayout(me) {
         }
         return null;
     };
-    me.text = function (page) {
+    me.pageText = function (page, cleanForVoice) {
         var content = page.var.content;
-        var text = Array.from(content.children).map(el =>
-            (el.getAttribute('hidden') ? '' : el.innerText) + "\n"
-        ).join('');
-        return text;
+        var array = Array.from(content.children).map(el => {
+            if (el.getAttribute("hidden")) {
+                return "";
+            }
+            var text = el.innerText;
+            if (cleanForVoice) {
+                text = me.ui.layout.cleanTextForVoice(text);
+            }
+            return text;
+        });
+        return array;
     };
     me.isPlaying = function (page) {
         var isPlaying = me.core.property.get(page.var.play, "ui.class.contains", "play");
@@ -554,10 +561,10 @@ package.ui.layout = function UILayout(me) {
             }
         }
     };
-    me.cleanTextForSpeech = function (text) {
+    me.cleanTextForVoice = function (text) {
         text = text.replace(/[\)\]”“\"]/g, " ");
         text = text.replace(/[\(\[]/g, "-");
-        text = text.replace(/[\(\[.]/g, "\n");
+        text = text.replace(/[.]/g, "\n");
         text = text.replace(/[-]\s[-]/g, "-");
         text = text.replace(/[-][-]/g, "-");
         text = text.replace(/[-]/g, " - ");
@@ -572,46 +579,32 @@ package.ui.layout = function UILayout(me) {
         return text;
     };
     me.mark = function (page, index, text) {
+        console.log("marking:" + text);
         var content = page.var.content;
         var focusElement = null;
         var ignore = page.focusElement;
-        if(!page.focusElement || !text) {
+        if (!page.focusElement || !text) {
             Array.from(content.children).map(element => {
                 if (element.getAttribute('hidden')) {
                     return;
                 }
-                if(text) {
+                if (text) {
                     element.style.color = "darkgray";
-                }
-                else {
+                } else {
                     element.style.color = "black";
                 }
             });
         }
-        if(!text) {
+        if (!text) {
             page.focusElement = null;
             return;
         }
-        Array.from(content.children).map(element => {
-            if(element === page.focusElement) {
-                ignore = false;
-            }
-            if(ignore || focusElement) {
-                return;
-            }
-            if (element.getAttribute('hidden')) {
-                return;
-            }
-            var innerText = me.cleanTextForSpeech(element.innerText);
-            if (innerText.includes(text)) {
-                focusElement = element;
-            }
-        });
-        if(page.focusElement !== focusElement) {
-            if(page.focusElement) {
+        focusElement = content.children[index];
+        if (page.focusElement !== focusElement) {
+            if (page.focusElement) {
                 page.focusElement.style.color = "darkgray";
             }
-            if(focusElement) {
+            if (focusElement) {
                 focusElement.style.color = "black";
             }
             page.focusElement = focusElement;
