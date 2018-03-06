@@ -54,6 +54,7 @@ package.media.voice = function MediaVoice(me) {
             utterance.onend = () => {
                 me.queueIndex++;
                 if (me.queueIndex >= me.utterances.length && params.onend) {
+                    me.queueIndex = 0;
                     params.onend();
                 }
             };
