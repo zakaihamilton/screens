@@ -687,11 +687,11 @@ package.app.transform = function AppTransform(me) {
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
         if(isPlaying && !isPaused) {
-            responsiveVoice.pause();
+            me.media.voice.pause();
             me.ui.layout.setPlayState(currentPage, true, true);
         }
         else if(isPlaying && isPaused) {
-            responsiveVoice.resume();
+            me.media.voice.resume();
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
         else {
@@ -702,7 +702,7 @@ package.app.transform = function AppTransform(me) {
             text = text.replace(/\n\n/g, "\n");
             text = text.replace(/  /g, " ");
             text = text.replace(/\n\s/g, "\n");
-            if(responsiveVoice.voiceSupport()) {
+            if(me.media.voice.support()) {
                 var parameters = {
                     onstart: () => {
                         me.ui.layout.setPlayState(currentPage, true, false);
@@ -721,7 +721,7 @@ package.app.transform = function AppTransform(me) {
                         }
                     }
                 };
-                responsiveVoice.speak(text, window.options.voice, parameters);
+                me.media.voice.play(text, window.options.voice, parameters);
                 if(me.currentPlayingPage) {
                     me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                     me.currentPlayingPage = null;
@@ -734,16 +734,15 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
-        var isPaused = me.ui.layout.isPaused(currentPage);
         if(isPlaying) {
-            responsiveVoice.cancel();
+            me.media.voice.stop();
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
     me.voices = function(object) {
         var window = me.widget.window.mainWindow(object);
-        var voicelist = responsiveVoice.getVoices();
+        var voicelist = me.media.voice.voices();
         var language = window.language;
         if(!language) {
             language = "English";
