@@ -713,7 +713,9 @@ package.app.transform = function AppTransform(me) {
                             setTimeout(() => {
                                 if(!currentPage.last) {
                                     me.core.property.set(object, "widget.scrollbar.vertical.after");
-                                    me.core.property.set(object, "app.transform.play");
+                                    setTimeout(() => {
+                                        me.core.property.set(object, "app.transform.play");
+                                    }, 1000);
                                 }
                             }, 1000);
                         }
