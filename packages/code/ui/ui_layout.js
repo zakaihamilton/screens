@@ -468,7 +468,7 @@ package.ui.layout = function UILayout(me) {
         }
     };
     me.activateOnLoad = function (parent, widget) {
-        if(!widget) {
+        if (!widget) {
             return;
         }
         var child = widget.firstChild;
@@ -509,33 +509,31 @@ package.ui.layout = function UILayout(me) {
         }
         return null;
     };
-    me.text = function(page) {
+    me.text = function (page) {
         var content = page.var.content;
-        var text = Array.from(content.children).map(el => 
+        var text = Array.from(content.children).map(el =>
             (el.getAttribute('hidden') ? '' : el.innerText) + "\n"
         ).join('');
         return text;
     };
-    me.isPlaying = function(page) {
+    me.isPlaying = function (page) {
         var isPlaying = me.core.property.get(page.var.play, "ui.class.contains", "play");
         return isPlaying;
     };
-    me.isPaused = function(page) {
+    me.isPaused = function (page) {
         var isPaused = me.core.property.get(page.var.play, "ui.class.contains", "pause");
         return isPaused;
     };
-    me.setPlayState = function(page, play, pause) {
-        if(play) {
-            me.core.property.set([page.var.play,page.var.stop], "ui.class.add", "play");
+    me.setPlayState = function (page, play, pause) {
+        if (play) {
+            me.core.property.set([page.var.play, page.var.stop], "ui.class.add", "play");
+        } else {
+            me.core.property.set([page.var.play, page.var.stop], "ui.class.remove", "play");
         }
-        else {
-            me.core.property.set([page.var.play,page.var.stop], "ui.class.remove", "play");
-        }
-        if(pause) {
-            me.core.property.set([page.var.play,page.var.stop], "ui.class.add", "pause");
-        }
-        else {
-            me.core.property.set([page.var.play,page.var.stop], "ui.class.remove", "pause");
+        if (pause) {
+            me.core.property.set([page.var.play, page.var.stop], "ui.class.add", "pause");
+        } else {
+            me.core.property.set([page.var.play, page.var.stop], "ui.class.remove", "pause");
         }
     };
     me.hasSeparator = function (page) {
@@ -554,6 +552,62 @@ package.ui.layout = function UILayout(me) {
             } else {
                 page.var.separator.style.display = "none";
             }
+        }
+    };
+    me.cleanTextForSpeech = function (text) {
+        text = text.replace(/[\)\]”“\"]/g, " ");
+        text = text.replace(/[\(\[]/g, "-");
+        text = text.replace(/[\(\[.]/g, "\n");
+        text = text.replace(/[-]\s[-]/g, "-");
+        text = text.replace(/[-][-]/g, "-");
+        text = text.replace(/[-]/g, " - ");
+        text = text.replace(/[,:;]/g, "\n");
+        text = text.replace(/\n\s\n/g, "\n");
+        text = text.replace(/\n\n/g, "\n");
+        text = text.replace(/  /g, " ");
+        text = text.replace(/\n\s/g, "\n");
+        var text = text.split("\n").filter(item => {
+            return item.trim() !== "";
+        }).join("\n");
+        return text;
+    };
+    me.mark = function (page, index, text) {
+        var content = page.var.content;
+        var focusElement = null;
+        if(!page.focusElement || !text) {
+            Array.from(content.children).map(element => {
+                if (element.getAttribute('hidden')) {
+                    return;
+                }
+                if(text) {
+                    element.style.color = "darkgray";
+                }
+                else {
+                    element.style.color = "black";
+                }
+            });
+        }
+        if(!text) {
+            page.focusElement = null;
+            return;
+        }
+        Array.from(content.children).map(element => {
+            if (element.getAttribute('hidden')) {
+                return;
+            }
+            var innerText = me.cleanTextForSpeech(element.innerText);
+            if (innerText.includes(text)) {
+                focusElement = element;
+            }
+        });
+        if(page.focusElement !== focusElement) {
+            if(page.focusElement) {
+                page.focusElement.style.color = "darkgray";
+            }
+            if(focusElement) {
+                focusElement.style.color = "black";
+            }
+            page.focusElement = focusElement;
         }
     };
 };

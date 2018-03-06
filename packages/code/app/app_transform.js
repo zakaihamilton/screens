@@ -697,22 +697,13 @@ package.app.transform = function AppTransform(me) {
         }
         else {
             var text = me.ui.layout.text(currentPage);
-            text = text.replace(/[\)\]”“\"]/g, " ");
-            text = text.replace(/[\(\[]/g, "-");
-            text = text.replace(/[\(\[.]/g, "\n");
-            text = text.replace(/[-]\s[-]/g, "-");
-            text = text.replace(/[-][-]/g, "-");
-            text = text.replace(/[-]/g, " - ");
-            text = text.replace(/[,:;]/g, "\n");
-            text = text.replace(/\n\s\n/g, "\n");
-            text = text.replace(/\n\n/g, "\n");
-            text = text.replace(/  /g, " ");
-            text = text.replace(/\n\s/g, "\n");
+            text = me.ui.layout.cleanTextForSpeech(text);
             var params = {
                 onstart: () => {
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
                 onend: () => {
+                    me.ui.layout.mark(currentPage, 0, "");
                     me.ui.layout.setPlayState(currentPage, false, false);
                     if(window.options.autoPlay) {
                         setTimeout(() => {
@@ -724,6 +715,9 @@ package.app.transform = function AppTransform(me) {
                             }
                         }, 1000);
                     }
+                },
+                onchange: (index, text) => {
+                    me.ui.layout.mark(currentPage, index, text);
                 }
             };
             me.media.voice.play(text, window.options.voice, params);
@@ -740,6 +734,7 @@ package.app.transform = function AppTransform(me) {
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         if(isPlaying) {
             me.media.voice.stop();
+            me.ui.layout.mark(currentPage, 0, "");
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }

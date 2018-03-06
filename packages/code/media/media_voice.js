@@ -26,9 +26,7 @@ package.media.voice = function MediaVoice(me) {
         }
         var voice = voices[0];
         me.utterances = [];
-        var parts = text.split("\n").filter(item => {
-            return item.trim() !== "";
-        });
+        var parts = text.split("\n");
         if(me.queueIndex) {
             me.queueIndex = 0;
             me.synth.cancel();
@@ -42,17 +40,20 @@ package.media.voice = function MediaVoice(me) {
             }
             return;
         }
-        parts.map(item => {
+        parts.map(text => {
             var utterance = new SpeechSynthesisUtterance();
             utterance.voice = voice;
             utterance.volume = 1; // 0 to 1
             utterance.rate = 1; // 0.1 to 10
             utterance.pitch = 1; //0 to 2
-            utterance.text = item;
+            utterance.text = text;
             utterance.lang = voice.lang;
             utterance.onstart = () => {
                 if (!me.queueIndex && params.onstart) {
                     params.onstart();
+                }
+                if(params.onchange) {
+                    params.onchange(me.queueIndex, text);
                 }
             };
             utterance.onend = () => {

@@ -101,7 +101,6 @@
 }
 
 .kab-term-phase-none {
-    background-color:white;
     min-width:0;
 }
 
@@ -116,10 +115,6 @@
 
 .kab-term-phase-root-underline {
     border-bottom:1px solid gray;
-}
-
-.kab-term-phase-root {
-    background-color:white;
 }
 
 .kab-term-phase-root:hover:after {
