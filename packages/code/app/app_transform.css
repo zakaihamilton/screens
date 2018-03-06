@@ -415,8 +415,8 @@
 
 .app-transform-play:after {
     position:absolute;
-    right:150px;
-    width:100px;
+    right:100px;
+    width:50px;
     bottom:30px;
     height:50px;
     text-align: center;
@@ -432,10 +432,18 @@
     content: "\23EF";
 }
 
+.app-transform-play.fullscreen:after {
+    opacity: 0;
+}
+
+.app-transform-play.fullscreen:hover:after {
+    opacity: 1;
+}
+
 .app-transform-stop:after {
     position:absolute;
     right:50px;
-    width:100px;
+    width:50px;
     bottom:30px;
     height:50px;
     text-align: center;
@@ -446,4 +454,12 @@
 
 .app-transform-stop.play:after {
     display:block;
+}
+
+.app-transform-stop.fullscreen:after {
+    opacity:0;
+}
+
+.app-transform-stop.fullscreen:hover:after {
+    opacity:1;
 }
