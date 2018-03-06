@@ -116,6 +116,10 @@
                         "header": true
                     }
                 ],
+                ["None", "app.transform.voice", {
+                        "state": "select"
+                    }
+                ],
                 "app.transform.voices",
                 ["Auto Play", "app.transform.autoPlay", {
                         "state": "select",

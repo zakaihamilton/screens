@@ -71,7 +71,7 @@ package.app.transform = function AppTransform(me) {
             me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.autoPlay = me.ui.options.toggleSet(me, "autoPlay");
-            me.voice = me.ui.options.choiceSet(me, "voice");
+            me.voice = me.ui.options.choiceSet(me, "voice", me.reflow.set);
             me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet("kab");
         }
@@ -398,6 +398,7 @@ package.app.transform = function AppTransform(me) {
                 columnCount: columnCount,
                 scrollWidget: visibleWidget,
                 scrollPos: window.options.scrollPos,
+                playEnabled: window.options.voice !== "None",
                 filter: me.core.property.get(window.var.filter, "ui.basic.text")
             };
             window.diagrams = [];
@@ -695,9 +696,12 @@ package.app.transform = function AppTransform(me) {
         }
         else {
             var text = me.ui.layout.text(currentPage);
-            text = text.replace(/[)/[/]]/g, " ");
-            text = text.replace(/[(),.]/g, "\n");
-            console.log("speaking text: " + text);
+            text = text.replace(/[\)\]”“\"]/g, " ");
+            text = text.replace(/[\(\[,.]/g, "\n");
+            text = text.replace(/\n\s\n/g, "\n");
+            text = text.replace(/\n\n/g, "\n");
+            text = text.replace(/  /g, " ");
+            text = text.replace(/\n\s/g, "\n");
             if(responsiveVoice.voiceSupport()) {
                 var parameters = {
                     onstart: () => {

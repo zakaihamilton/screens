@@ -344,13 +344,15 @@ package.ui.layout = function UILayout(me) {
                     "ui.basic.tag": "div",
                     "ui.class.class": options.playClass,
                     "ui.basic.var": "play",
-                    "ui.touch.click": options.playMethod
+                    "ui.touch.click": options.playMethod,
+                    "ui.basic.show": options.playEnabled
                 },
                 {
                     "ui.basic.tag": "div",
                     "ui.class.class": options.stopClass,
                     "ui.basic.var": "stop",
-                    "ui.touch.click": options.stopMethod
+                    "ui.touch.click": options.stopMethod,
+                    "ui.basic.show": options.playEnabled
                 }
             ]
         }, target, "self");
