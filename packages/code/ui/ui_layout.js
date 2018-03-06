@@ -574,6 +574,7 @@ package.ui.layout = function UILayout(me) {
     me.mark = function (page, index, text) {
         var content = page.var.content;
         var focusElement = null;
+        var ignore = page.focusElement;
         if(!page.focusElement || !text) {
             Array.from(content.children).map(element => {
                 if (element.getAttribute('hidden')) {
@@ -592,6 +593,12 @@ package.ui.layout = function UILayout(me) {
             return;
         }
         Array.from(content.children).map(element => {
+            if(element === page.focusElement) {
+                ignore = false;
+            }
+            if(ignore || focusElement) {
+                return;
+            }
             if (element.getAttribute('hidden')) {
                 return;
             }

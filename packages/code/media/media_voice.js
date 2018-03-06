@@ -22,7 +22,12 @@ package.media.voice = function MediaVoice(me) {
             return voice.name.includes(voiceName);
         });
         if(!voices.length) {
-            return;
+            voices = voices.filter((voice) => {
+                return voice.name.includes("English");
+            });
+            if(!voices.length) {
+                return;
+            }
         }
         var voice = voices[0];
         me.utterances = [];
