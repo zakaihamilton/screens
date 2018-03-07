@@ -720,7 +720,8 @@ package.app.transform = function AppTransform(me) {
                     if(text) {
                         me.ui.layout.mark(currentPage, index, text);
                     }
-                }
+                },
+                rate: 0.90
             };
             me.media.voice.play(text, window.options.voice, params);
             if(me.currentPlayingPage) {
