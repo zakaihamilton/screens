@@ -577,7 +577,6 @@ package.ui.layout = function UILayout(me) {
         text = text.replace(/\n\s/g, "\n");
         text = text.split("\n").map(item => {
             if(item.split(" ").length >= 20) {
-                console.log("splitting string because '" + item + "' is too long");
                 item = item.replace(/ that is that /g, " that\nis that ");
                 item = item.replace(/ because /g, "\nbecause ");
                 item = item.replace(/ and /g, "\nand ");
