@@ -351,6 +351,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.chartData = {
         get: function (object) {
+            me.colors = [];
             var data = {datasets: [], labels: []};
             var window = me.widget.window.window(object);
             if (!window || !window.packetInfo) {
@@ -413,7 +414,7 @@ package.app.packets = function AppPackets(me) {
                                 if (!(label in info)) {
                                     var color = me.colors[label];
                                     if (!color) {
-                                        color = me.colors[label] = me.ui.color.randomInSet(colorIndex++);
+                                        color = me.colors[label] = me.ui.color.colors[colorIndex++];
                                     }
                                     var dataset = {
                                         label: label,
