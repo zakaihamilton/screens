@@ -581,17 +581,21 @@ package.ui.layout = function UILayout(me) {
     };
     me.mark = function (page, index, text) {
         var content = page.var.content;
+        var applyEffect = (element, flag) => {
+            if(flag) {
+                element.style.color = "rgba(0,0,0,0.5)";
+            }
+            else {
+                element.style.color = "";
+            }
+        };
         var focusElement = null;
         if (!page.focusElement || !text) {
             Array.from(content.children).map(element => {
                 if (element.getAttribute('hidden')) {
                     return;
                 }
-                if (text) {
-                    element.style.color = "darkgray";
-                } else {
-                    element.style.color = "black";
-                }
+                applyEffect(element, text);
             });
         }
         if (!text) {
@@ -601,10 +605,10 @@ package.ui.layout = function UILayout(me) {
         focusElement = content.children[index];
         if (page.focusElement !== focusElement) {
             if (page.focusElement) {
-                page.focusElement.style.color = "darkgray";
+                applyEffect(page.focusElement, true);
             }
             if (focusElement) {
-                focusElement.style.color = "black";
+                applyEffect(focusElement, false);
             }
             page.focusElement = focusElement;
         }
