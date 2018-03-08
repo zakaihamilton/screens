@@ -703,7 +703,7 @@ package.app.transform = function AppTransform(me) {
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
                 onend: () => {
-                    me.ui.layout.mark(currentPage, 0, "");
+                    me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
                     if(window.options.autoPlay) {
                         setTimeout(() => {
@@ -717,11 +717,10 @@ package.app.transform = function AppTransform(me) {
                     }
                 },
                 onchange: (index, text) => {
-                    if(text) {
-                        me.ui.layout.mark(currentPage, index, text);
-                    }
+                    me.ui.layout.markPage(currentPage, index, text);
                 },
-                rate: 1
+                rate: 1,
+                language: window.language
             };
             me.media.voice.play(text, window.options.voice, params);
             if(me.currentPlayingPage) {
@@ -737,26 +736,15 @@ package.app.transform = function AppTransform(me) {
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         if(isPlaying) {
             me.media.voice.stop();
-            me.ui.layout.mark(currentPage, 0, "");
+            me.ui.layout.clearPage(currentPage);
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
     me.voices = function(object) {
         var window = me.widget.window.mainWindow(object);
-        var voicelist = me.media.voice.voices();
         var language = window.language;
-        if(!language) {
-            language = "English";
-        }
-        language = language.toLowerCase();
-        if(!voicelist) {
-            voicelist = [];
-        }
-        language = language.slice(0, 2).toLowerCase();
-        voicelist = voicelist.filter((voice) => {
-            return voice.lang.toLowerCase().startsWith(language);
-        });
+        var voicelist = me.media.voice.voices(language);
         voicelist = voicelist.map((voice) => {
             return [voice.name, "app.transform.voice", {
                     "state": "select"

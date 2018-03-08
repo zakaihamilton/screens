@@ -436,7 +436,7 @@ package.ui.layout = function UILayout(me) {
         } else {
             page.style.display = "none";
         }
-        me.mark(page, 0, "");
+        me.clearPage(page);
     };
     me.pageInView = function (page, partial = true) {
         let parentTop = page.parentNode.scrollTop;
@@ -589,36 +589,43 @@ package.ui.layout = function UILayout(me) {
         }).join("\n");
         return text;
     };
-    me.mark = function (page, index, text) {
+    me.markElement = function(element, mark) {
+        if(mark) {
+            element.style.color = "";
+        }
+        else {
+            element.style.color = "rgba(0,0,0,0.5)";
+        }
+    };
+    me.clearPage = function(page) {
         var content = page.var.content;
-        var applyEffect = (element, flag) => {
-            if(flag) {
-                element.style.color = "rgba(0,0,0,0.5)";
+        Array.from(content.children).map(element => {
+            if (element.getAttribute('hidden')) {
+                return;
             }
-            else {
-                element.style.color = "";
-            }
-        };
+            me.markElement(element, true);
+        });
+        page.focusElement = null;
+    };
+    me.markPage = function (page, index, text) {
+        var content = page.var.content;
         var focusElement = null;
-        if (!page.focusElement || !text) {
-            Array.from(content.children).map(element => {
-                if (element.getAttribute('hidden')) {
-                    return;
-                }
-                applyEffect(element, text);
-            });
-        }
-        if (!text) {
-            page.focusElement = null;
-            return;
-        }
         focusElement = content.children[index];
+        Array.from(content.children).map(element => {
+            if (element.getAttribute('hidden')) {
+                return;
+            }
+            if(element === focusElement) {
+                return;
+            }
+            me.markElement(element, false);
+        });
         if (page.focusElement !== focusElement) {
             if (page.focusElement) {
-                applyEffect(page.focusElement, true);
+                me.markElement(page.focusElement, false);
             }
             if (focusElement) {
-                applyEffect(focusElement, false);
+                me.markElement(focusElement, true);
             }
             page.focusElement = focusElement;
         }

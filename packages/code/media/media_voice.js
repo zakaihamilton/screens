@@ -17,14 +17,12 @@ package.media.voice = function MediaVoice(me) {
         me.synth.resume();
     };
     me.play = function (text, voiceName, params) {
-        var voices = me.synth.getVoices();
+        var voices = me.voices(params.language);
         var voices = voices.filter((voice) => {
             return voice.name.includes(voiceName);
         });
         if(!voices.length) {
-            voices = voices.filter((voice) => {
-                return voice.name.includes("English");
-            });
+            voices = me.voices(params.language);
             if(!voices.length) {
                 return;
             }
@@ -80,7 +78,18 @@ package.media.voice = function MediaVoice(me) {
     me.stop = function () {
         me.synth.cancel();
     };
-    me.voices = function () {
-        return me.synth.getVoices();
+    me.voices = function (language) {
+        var voices = me.synth.getVoices();
+        if(language) {
+            language = language.toLowerCase();
+            if(!voices) {
+                voices = [];
+            }
+            language = language.slice(0, 2).toLowerCase();
+        }
+        voices = voices.filter((voice) => {
+            return voice.lang.toLowerCase().startsWith(language);
+        });
+        return voices;
     };
 };
