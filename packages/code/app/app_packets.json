@@ -53,12 +53,16 @@
                         "state": "select"
                     }
                 ],
-                ["Data / Time", "app.packets.viewType", {
+                ["Data by Time", "app.packets.viewType", {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["ABR / Packet Delay", "app.packets.viewType", {
+                ["ABR by Packet Delay", "app.packets.viewType", {
+                        "state": "select"
+                    }
+                ],
+                ["Duration by Packet Delay", "app.packets.viewType", {
                         "state": "select"
                     }
                 ]
@@ -143,7 +147,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Average Bit Rate",
+                            "ui.basic.text": "Average Byte Rate",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }

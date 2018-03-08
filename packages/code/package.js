@@ -420,7 +420,6 @@ function package_alias(object, aliases) {
 
 var package = {
     components: {},
-    order: [],
     id: "package",
     browse : package_browse,
     platform : package_platform(),

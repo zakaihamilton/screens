@@ -121,34 +121,34 @@ package.app.packets = function AppPackets(me) {
     me.formatBytes = function (number) {
         var set = false;
         if (number < 1000) {
-            number = parseInt(number) + "B";
+            number = parseInt(number) + " B";
             set = true;
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + "KB";
+                number = parseInt(number) + " KB";
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + "MB";
+                number = parseInt(number) + " MB";
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + "GB";
+                number = parseInt(number) + " GB";
                 set = true;
             }
         }
         if (!set) {
             number /= 1000;
             if (number < 1000) {
-                number = parseInt(number) + "TB";
+                number = parseInt(number) + " TB";
                 set = true;
             }
         }
@@ -221,7 +221,7 @@ package.app.packets = function AppPackets(me) {
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
-                me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr));
+                me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
                 var durationText = me.lib.moment.moment().startOf('day').seconds(duration).format('HH:mm:ss');
                 me.core.property.set(window.var.duration, "ui.basic.text", durationText);
@@ -266,10 +266,10 @@ package.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         if(viewType === "Auto") {
             if(window.streamIndex === -1) {
-                viewType = "ABR / Packet Delay";
+                viewType = "Duration by Packet Delay";
             }
             else {
-                viewType = "Data / Time";
+                viewType = "Data by Time";
             }
         }
         return viewType;
@@ -279,7 +279,7 @@ package.app.packets = function AppPackets(me) {
             var window = me.widget.window.window(object);
             var viewType = me.calcViewType(window);
             var options = {};
-            if (viewType.includes("Data / Time")) {
+            if (viewType.includes("Data by Time")) {
                 options = {
                     "responsive": true,
                     "showLines": true,
@@ -312,7 +312,7 @@ package.app.packets = function AppPackets(me) {
                             }]
                     }
                 };
-            } else if (viewType.includes("ABR / Packet Delay")) {
+            } else if (viewType.includes("ABR by Packet Delay")) {
                 options = {
                     "responsive": true,
                     "showLines": true,
@@ -341,6 +341,39 @@ package.app.packets = function AppPackets(me) {
                                 "scaleLabel": {
                                     "display": true,
                                     "labelString": "ABR (KB)"
+                                }
+                            }]
+                    }
+                };
+            } else if (viewType.includes("Duration by Packet Delay")) {
+                options = {
+                    "responsive": true,
+                    "showLines": true,
+                    "spanGaps": true,
+                    "title": {
+                        "display": true,
+                        "text": viewType
+                    },
+                    "scales": {
+                        "xAxes": [{
+                                "type": "linear",
+                                "display": true,
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Packet Delay"
+                                },
+                                "ticks": {
+                                    "major": {
+                                        "fontStyle": "bold",
+                                        "fontColor": "#FF0000"
+                                    }
+                                }
+                            }],
+                        "yAxes": [{
+                                "display": true,
+                                "scaleLabel": {
+                                    "display": true,
+                                    "labelString": "Duration"
                                 }
                             }]
                     }
@@ -393,7 +426,7 @@ package.app.packets = function AppPackets(me) {
                     function dateRel(sec) {
                         return me.widget.chart.dateRel(sec);
                     }
-                    if (viewType.includes("Data / Time")) {
+                    if (viewType.includes("Data by Time")) {
                         for (var sourceIp in packets) {
                             var targets = packets[sourceIp];
                             for (var targetIp in targets) {
@@ -436,7 +469,7 @@ package.app.packets = function AppPackets(me) {
                                 }
                             }
                         }
-                    } else if (viewType.includes("ABR / Packet Delay")) {
+                    } else if (viewType.includes("ABR by Packet Delay")) {
                         var dataSize = streamRequest.dataSize;
                         var duration = streamRequest.duration;
                         var abr = 0;
@@ -466,6 +499,34 @@ package.app.packets = function AppPackets(me) {
                         var data = {
                             x: packetDelay,
                             y: parseInt(abr / 1000)
+                        };
+                        dataset.data.push(data);
+                    } else if (viewType.includes("Duration by Packet Delay")) {
+                        var dataSize = streamRequest.dataSize;
+                        var duration = streamRequest.duration;
+                        var effects = streamRequest.effects;
+                        var packetDelay = 0;
+                        if (effects && effects.packetDelay) {
+                            packetDelay = effects.packetDelay;
+                        }
+                        var label = dataProfileName + "(" + dataProfilePacketLoss + "%)";
+                        var dataset = info[label];
+                        if (!dataset) {
+                            var color = me.colors[label];
+                            if (!color) {
+                                color = me.colors[label] = me.ui.color.colors[colorIndex++];
+                            }
+                            dataset = info[label] = {
+                                label: label,
+                                backgroundColor: color,
+                                borderColor: color,
+                                fill: false,
+                                data: []
+                            };
+                        }
+                        var data = {
+                            x: packetDelay,
+                            y: parseInt(duration)
                         };
                         dataset.data.push(data);
                     }
