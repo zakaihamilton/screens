@@ -65,6 +65,10 @@
                 ["Duration by Packet Delay", "app.packets.viewType", {
                         "state": "select"
                     }
+                ],
+                ["Duration % by Packet Delay", "app.packets.viewType", {
+                        "state": "select"
+                    }
                 ]
             ]
         ]
@@ -94,10 +98,30 @@
                                 "width": "250px"
                             },
                             "ui.basic.type": "text",
-                            "ui.basic.var": "title",
+                            "ui.basic.var": "title"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Video Duration",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.property.style": {
+                                "width": "250px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "videoDuration",
                             "ui.property.after": {
-                                "storage.local.key": "@ui.windowkey.app-packets-input-",
-                                "storage.local.restore": "ui.basic.text"
+                                "storage.local.key": "@ui.windowkey.app-packets-video-duration-",
+                                "storage.local.restore": "ui.basic.text",
+                                "ui.monitor.change":"ui.basic.save"
                             }
                         }
                     ]
@@ -228,7 +252,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Duration",
+                            "ui.basic.text": "Stream Duration",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }

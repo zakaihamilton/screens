@@ -470,10 +470,16 @@ package.app.packets = function AppPackets(me) {
                                 data: []
                             };
                         }
+                        var videoDuration = me.videoDuration(window);
+                        var durationPercentage = duration;
+                        if(videoDuration) {
+                            durationPercentage = parseInt(duration * 100 / videoDuration);
+                        }
                         var values = {
                             Duration: duration,
                             ABR: parseInt(abr / 1000),
-                            "Packet Delay":packetDelay
+                            "Packet Delay":packetDelay,
+                            "Duration %":durationPercentage
                         };
                         var data = {
                             x: values[xAxis],
@@ -574,5 +580,10 @@ package.app.packets = function AppPackets(me) {
                 }
             }, me.isPushEnabled);
         }
+    };
+    me.videoDuration = function(window) {
+        var videoDuration = me.core.property.get(window.var.videoDuration, "ui.basic.text");
+        var secs = videoDuration.split(':').reverse().reduce((prev, curr, i) => prev + curr*Math.pow(60, i), 0);
+        return secs;
     };
 };
