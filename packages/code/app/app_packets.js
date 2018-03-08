@@ -96,6 +96,9 @@ package.app.packets = function AppPackets(me) {
                 if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
                     window.packetInfo = Object.assign({}, info);
                     window.packetInfo.effects = Object.assign({}, info.effects);
+                    if(me.options.dataProfile === "Combined") {
+                        autoRefresh = false;
+                    }
                 } else if (me.dataList) {
                     var item = me.dataList.find((item) => {
                         return item.title === me.options.dataProfile;
