@@ -307,12 +307,16 @@ package.app.packets = function AppPackets(me) {
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
-                                    "labelString": "Data (KB)"
+                                    "labelString": "Data"
                                 }
                             }]
                     }
                 };
-            } else if (viewType.includes("ABR by Packet Delay")) {
+            }
+            else {
+                var axis = viewType.split("by");
+                var xAxis = axis[1].trim();
+                var yAxis = axis[0].trim();
                 options = {
                     "responsive": true,
                     "showLines": true,
@@ -327,7 +331,7 @@ package.app.packets = function AppPackets(me) {
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
-                                    "labelString": "Packet Delay"
+                                    "labelString": xAxis
                                 },
                                 "ticks": {
                                     "major": {
@@ -340,40 +344,7 @@ package.app.packets = function AppPackets(me) {
                                 "display": true,
                                 "scaleLabel": {
                                     "display": true,
-                                    "labelString": "ABR (KB)"
-                                }
-                            }]
-                    }
-                };
-            } else if (viewType.includes("Duration by Packet Delay")) {
-                options = {
-                    "responsive": true,
-                    "showLines": true,
-                    "spanGaps": true,
-                    "title": {
-                        "display": true,
-                        "text": viewType
-                    },
-                    "scales": {
-                        "xAxes": [{
-                                "type": "linear",
-                                "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Packet Delay"
-                                },
-                                "ticks": {
-                                    "major": {
-                                        "fontStyle": "bold",
-                                        "fontColor": "#FF0000"
-                                    }
-                                }
-                            }],
-                        "yAxes": [{
-                                "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Duration"
+                                    "labelString": yAxis
                                 }
                             }]
                     }
@@ -469,7 +440,10 @@ package.app.packets = function AppPackets(me) {
                                 }
                             }
                         }
-                    } else if (viewType.includes("ABR by Packet Delay")) {
+                    } else {
+                        var axis = viewType.split("by");
+                        var xAxis = axis[1].trim();
+                        var yAxis = axis[0].trim();
                         var dataSize = streamRequest.dataSize;
                         var duration = streamRequest.duration;
                         var abr = 0;
@@ -496,37 +470,14 @@ package.app.packets = function AppPackets(me) {
                                 data: []
                             };
                         }
-                        var data = {
-                            x: packetDelay,
-                            y: parseInt(abr / 1000)
+                        var values = {
+                            Duration: duration,
+                            ABR: parseInt(abr / 1000),
+                            "Packet Delay":packetDelay
                         };
-                        dataset.data.push(data);
-                    } else if (viewType.includes("Duration by Packet Delay")) {
-                        var dataSize = streamRequest.dataSize;
-                        var duration = streamRequest.duration;
-                        var effects = streamRequest.effects;
-                        var packetDelay = 0;
-                        if (effects && effects.packetDelay) {
-                            packetDelay = effects.packetDelay;
-                        }
-                        var label = dataProfileName + "(" + dataProfilePacketLoss + "%)";
-                        var dataset = info[label];
-                        if (!dataset) {
-                            var color = me.colors[label];
-                            if (!color) {
-                                color = me.colors[label] = me.ui.color.colors[colorIndex++];
-                            }
-                            dataset = info[label] = {
-                                label: label,
-                                backgroundColor: color,
-                                borderColor: color,
-                                fill: false,
-                                data: []
-                            };
-                        }
                         var data = {
-                            x: packetDelay,
-                            y: parseInt(duration)
+                            x: values[xAxis],
+                            y: values[yAxis]
                         };
                         dataset.data.push(data);
                     }
