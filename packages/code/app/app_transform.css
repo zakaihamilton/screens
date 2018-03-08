@@ -479,3 +479,21 @@
 .app-transform-stop.fullscreen:hover:after {
     opacity:1;
 }
+
+h4.mark:before {
+    content:"\25B6";
+    float:left;
+    margin-left: -1.5em;
+    margin-top: 0.8em;
+    display: inline-block;
+    line-height: 1em;
+}
+
+p.mark:before {
+    content:"\25B6";
+    float:left;
+    margin-left: -1.5em;
+    margin-top: 0.8em;
+    display: inline-block;
+    line-height: 1em;
+}

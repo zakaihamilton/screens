@@ -604,6 +604,7 @@ package.ui.layout = function UILayout(me) {
                 return;
             }
             me.markElement(element, true);
+            element.classList.remove("mark");
         });
         page.focusElement = null;
     };
@@ -623,9 +624,11 @@ package.ui.layout = function UILayout(me) {
         if (page.focusElement !== focusElement) {
             if (page.focusElement) {
                 me.markElement(page.focusElement, false);
+                page.focusElement.classList.remove("mark");
             }
             if (focusElement) {
                 me.markElement(focusElement, true);
+                focusElement.classList.add("mark");
             }
             page.focusElement = focusElement;
         }
