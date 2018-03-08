@@ -218,8 +218,8 @@ function package_load(package_type, package_name, component_name, child_name, ca
             require(path);
             package_prepare(package_name, component_name, child_name, callback);
         } else if (package.platform === "client" || package.platform === "browser") {
-            if(!package.list) {
-                package.list = [];
+            if(!package._list) {
+                package._list = [];
             }
             var url = file_name;
             var item = {
@@ -230,7 +230,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
                 child_name : child_name,
                 callback : callback
             };
-            package.list.push(item);
+            package._list.push(item);
         }
     } catch (err) {
         console.error("Found error: " + err + " stack: " + err.stack);
@@ -367,8 +367,8 @@ function package_include(packages, callback, package_type="code") {
         package_load(package_type, package_name, component_name, child_name, function (info) {
             package_complete(info, [packages], callback);
         });
-        package_import_list(package.list);
-        package.list = [];
+        package_import_list(package._list);
+        package._list = [];
         return;
     }
     var numComponents = 0;
@@ -407,8 +407,8 @@ function package_include(packages, callback, package_type="code") {
                 }
             });
         }
-        package_import_list(package.list);
-        package.list = [];
+        package_import_list(package._list);
+        package._list = [];
     }
 }
 
