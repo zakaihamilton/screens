@@ -717,7 +717,9 @@ package.app.transform = function AppTransform(me) {
                     }
                 },
                 onchange: (index, text) => {
-                    me.ui.layout.markPage(currentPage, index, text);
+                    setTimeout(() => {
+                        me.ui.layout.markPage(currentPage, index, text);
+                    }, 0);
                 },
                 rate: 1,
                 language: window.language
