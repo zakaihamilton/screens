@@ -121,12 +121,11 @@ function package_setup(task, package_name, component_name, child_name, callback,
         return { };
     }, {
         get: function (object, property) {
-            var result = undefined;
             if (Reflect.has(object, property)) {
                 return Reflect.get(object, property);
             } else if(property in package) {
                 return package[property];
-            } else if (property !== "get" && Reflect.has(object, "get")) {
+            } else {
                 var get = Reflect.get(object, "get");
                 if (get && get.enabled) {
                     return get(object, property);
@@ -135,11 +134,9 @@ function package_setup(task, package_name, component_name, child_name, callback,
             return undefined;
         },
         apply: function(object, thisArg, argumentsList) {
-            if(Reflect.has(object, "apply")) {
-                var apply = Reflect.get(object, "apply");
-                if (apply) {
-                    return apply.apply(thisArg, argumentsList);
-                }
+            var apply = Reflect.get(object, "apply");
+            if (apply) {
+                return apply.apply(thisArg, argumentsList);
             }
         }
     });
