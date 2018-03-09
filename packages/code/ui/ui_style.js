@@ -5,7 +5,7 @@
 
 package.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             get: function (object) {
                 var styles = null;

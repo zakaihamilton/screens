@@ -117,22 +117,35 @@ function package_setup(task, package_name, component_name, child_name, callback,
     var component = package_component(component_id);
     package.count++;
     /* Create component proxy */
-    var component_obj = new Proxy({id: id, __package:package_name, __component:component_name}, {
+    var component_obj = new Proxy(() => {
+        return { };
+    }, {
         get: function (object, property) {
             var result = undefined;
             if (Reflect.has(object, property)) {
                 return Reflect.get(object, property);
             } else if(property in package) {
                 return package[property];
-            } else if (property !== "forward" && Reflect.has(object, "forward")) {
-                var forward = Reflect.get(object, "forward");
-                if (forward && forward.enabled) {
-                    return forward(object, property);
+            } else if (property !== "get" && Reflect.has(object, "get")) {
+                var get = Reflect.get(object, "get");
+                if (get && get.enabled) {
+                    return get(object, property);
                 }
             }
             return undefined;
+        },
+        apply: function(object, thisArg, argumentsList) {
+            if(Reflect.has(object, "apply")) {
+                var apply = Reflect.get(object, "apply");
+                if (apply) {
+                    return apply.apply(thisArg, argumentsList);
+                }
+            }
         }
     });
+    component_obj.id = id;
+    component_obj.__package = package_name;
+    component_obj.__component = component_name;
     if (child_name) {
         package[package_name][component_name][child_name] = component_obj;
     } else {
@@ -148,7 +161,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
         if(remote && remote.includes("server") && !remote.includes("service")) {
             node = function (me) {
                 console.log("registering:" + id);
-                me.forward = function (object, property) {
+                me.get = function (object, property) {
                     return function () {
                         var args = Array.prototype.slice.call(arguments);
                         args.unshift(id + "." + property);
@@ -162,8 +175,8 @@ function package_setup(task, package_name, component_name, child_name, callback,
     if (init) {
         node(component_obj, child_name);
         var init_method = component_obj.init;
-        if (component_obj.forward) {
-            component_obj.forward.enabled = true;
+        if (component_obj.get) {
+            component_obj.get.enabled = true;
         }
         if (init_method) {
             if (callback) {
@@ -245,7 +258,8 @@ function package_init(name, callback, task) {
         callback(task);
     }
     catch(err) {
-        console.error("Failed to initialise component: " + name + " with error: " + err.message + " stack: " + err.stack);
+        var message = err.message || err;
+        console.error("Failed to initialise component: " + name + " with error: " + message + " stack: " + err.stack);
     }
 }
 

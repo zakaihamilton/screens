@@ -226,7 +226,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
                 me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
-                var durationText = me.lib.moment.moment().startOf('day').seconds(duration).format('HH:mm:ss');
+                var durationText = me.lib.moment().startOf('day').seconds(duration).format('HH:mm:ss');
                 me.core.property.set(window.var.duration, "ui.basic.text", durationText);
                 me.core.property.set(window.var.chart, "data", "@app.packets.chartData");
                 me.core.property.notify(window.var.chart, "update", {

@@ -4,7 +4,7 @@
  */
 
 package.ui.exec = function UIExec(me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             set: function (object, value) {
                 document.designMode = "on";

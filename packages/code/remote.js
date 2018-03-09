@@ -1,7 +1,7 @@
 /* remote component __component__ */
 
 package.__component__ = function (me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return function () {
             var args = Array.prototype.slice.call(arguments);
             args.unshift("__component__." + property);

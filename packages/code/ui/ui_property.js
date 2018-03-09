@@ -72,22 +72,26 @@ package.ui.property = function UIProperty(me) {
             }
         }
     };
-    me.themedPropertySet = function (name, callback) {
-        return me.core.object.property(name, {
-            "set": function (object, value, name) {
-                if (value) {
-                    me.core.property.set(object, "ui.property.broadcast", {
-                        "ui.class.add": name
-                    });
-                } else {
-                    me.core.property.set(object, "ui.property.broadcast", {
-                        "ui.class.remove": name
-                    });
+    me.themedProperties = function (object, mapping) {
+        for(var name in mapping) {
+            var callback = mapping[name];
+            var property = me.core.object.property(name, {
+                "set": function (object, value, name) {
+                    if (value) {
+                        me.core.property.set(object, "ui.property.broadcast", {
+                            "ui.class.add": name
+                        });
+                    } else {
+                        me.core.property.set(object, "ui.property.broadcast", {
+                            "ui.class.remove": name
+                        });
+                    }
+                    if (callback) {
+                        callback(object, value, name);
+                    }
                 }
-                if (callback) {
-                    callback(object, value, name);
-                }
-            }
-        });
+            });
+            object[name] = property;
+        }
     };
 };

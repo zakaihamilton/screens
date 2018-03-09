@@ -83,7 +83,7 @@ package.storage.local = function StorageLocal(me) {
             return keys;
         }
     };
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             get: function (object) {
                 if (object.storage) {

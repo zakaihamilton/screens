@@ -113,12 +113,12 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var thumb_region = me.ui.rect.relative_region(scrollbar.var.thumb);
             var position = 0, size = 0;
             if (scroll_percent) {
-                var length = me.ui.scroll.length(scroll_type, track_region, thumb_region);
-                position = me.ui.scroll.percent_to_pos(length, scroll_percent);
+                var scrollSize = me.ui.scroll.size(scroll_type, track_region, thumb_region);
+                position = me.ui.scroll.percent_to_pos(scrollSize, scroll_percent);
             }
             if (thumb_percent) {
-                var length = me.ui.scroll.length(scroll_type, track_region, null);
-                size = me.ui.scroll.percent_to_pos(length, thumb_percent);
+                size = me.ui.scroll.size(scroll_type, track_region, null);
+                size = me.ui.scroll.percent_to_pos(size, thumb_percent);
             }
             if (has_scroll) {
                 me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);

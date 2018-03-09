@@ -8,11 +8,12 @@ package.lib.moment = function LibMoment(me) {
         me.lock(task, (task) => {
             me.core.require.require((moment) => {
                 me.moment = moment;
+                me.apply = me.moment;
                 me.unlock(task);
             }, ['/node_modules/moment/moment.js']);
         });
     };
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return function () {
             var args = Array.prototype.slice.call(arguments);
             return me.moment[property].apply(this, args);

@@ -4,7 +4,7 @@
  */
 
 package.ui.group = function UIGroup(me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             set: function (object, value) {
                 if (Array.isArray(value)) {

@@ -4,7 +4,7 @@
  */
 
 package.core.link = function CoreLink(me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             set: function (object, value) {
                 if (typeof value !== "undefined") {

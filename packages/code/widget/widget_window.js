@@ -17,20 +17,22 @@ package.widget.window = function WidgetWindow(me) {
     };
     me["ui.element.default"] = __json__;
     me.init = function () {
-        me.popup = me.ui.property.themedPropertySet("popup");
-        me.embed = me.ui.property.themedPropertySet("embed", function(object, value) {
-            var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
-            me.core.property.set(object, "ui.move.enabled", !value && !maximized);
-            me.core.property.set(object, "ui.style.position", value ? "relative" : "absolute");
-            if(!value) {
-                me.core.property.set(object, "ui.arrange.center");
+        me.ui.property.themedProperties(me, {
+            "popup":null,
+            "embed":function(object, value) {
+                var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
+                me.core.property.set(object, "ui.move.enabled", !value && !maximized);
+                me.core.property.set(object, "ui.style.position", value ? "relative" : "absolute");
+                if(!value) {
+                    me.core.property.set(object, "ui.arrange.center");
+                }
+            },
+            "temp":null,
+            "static":null,
+            "fixed":function (object, value) {
+                var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
+                me.core.property.set(object, "ui.resize.enabled", !value && !maximized);
             }
-        });
-        me.temp = me.ui.property.themedPropertySet("temp");
-        me.static = me.ui.property.themedPropertySet("static");
-        me.fixed = me.ui.property.themedPropertySet("fixed", function (object, value) {
-            var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
-            me.core.property.set(object, "ui.resize.enabled", !value && !maximized);
         });
     };
     me.draw = {

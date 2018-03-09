@@ -98,20 +98,20 @@ package.ui.scroll = function UIScroll(me) {
             return me.percent_to_pos(object.scrollWidth - object.clientWidth, percent);
         }
     };
-    me.length = function (type, track_region, thumb_region=null) {
-        var length = null;
+    me.size = function (type, track_region, thumb_region=null) {
+        var size = null;
         if (type === "vertical") {
-            length = track_region.height;
+            size = track_region.height;
             if(thumb_region) {
-                length -= thumb_region.height;
+                size -= thumb_region.height;
             }
         } else if (type === "horizontal") {
-            length = track_region.width;
+            size = track_region.width;
             if(thumb_region) {
-                length -= thumb_region.width;
+                size -= thumb_region.width;
             }
         }
-        return length;
+        return size;
     };
     me.pos_to_percent = function (length, pos) {
         return ((pos / length) * 100);
@@ -225,7 +225,7 @@ package.ui.scroll = function UIScroll(me) {
                 var scroll_method = function (object, event) {
                     var track_region = me.ui.rect.absolute_region(scrollbar.var.track);
                     var thumb_region = me.ui.rect.absolute_region(thumb);
-                    var length = me.length(scroll_type, track_region, thumb_region);
+                    var size = me.size(scroll_type, track_region, thumb_region);
                     var thumb_pos = null;
                     if (scroll_type === "vertical") {
                         var y_pos = event.clientY;
@@ -247,7 +247,7 @@ package.ui.scroll = function UIScroll(me) {
                         }
                         me.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
                     }
-                    var percent = me.pos_to_percent(length, thumb_pos);
+                    var percent = me.pos_to_percent(size, thumb_pos);
                     me.shift(me.widget.container.content(container), scroll_type, percent);
                     me.core.property.set(container, "update");
                 };
@@ -311,7 +311,7 @@ package.ui.scroll = function UIScroll(me) {
                 var scroll_method = function (object, event) {
                     var track_region = me.ui.rect.absolute_region(scrollbar.var.track);
                     var thumb_region = me.ui.rect.absolute_region(thumb);
-                    var length = me.length(scroll_type, track_region, thumb_region);
+                    var size = me.size(scroll_type, track_region, thumb_region);
                     var thumb_pos = null;
                     if (scroll_type === "vertical") {
                         var y_pos = event.clientY;
@@ -338,7 +338,7 @@ package.ui.scroll = function UIScroll(me) {
                         }
                         me.core.property.set(thumb, "ui.style.left", thumb_pos + "px");
                     }
-                    var percent = me.pos_to_percent(length, thumb_pos);
+                    var percent = me.pos_to_percent(size, thumb_pos);
                     me.shift(me.widget.container.content(container), scroll_type, percent);
                     me.core.property.set(container, "update");
                 };

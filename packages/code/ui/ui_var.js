@@ -4,7 +4,7 @@
  */
 
 package.ui.var = function UIVar(me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             get: function (object) {
                 var variable = null;

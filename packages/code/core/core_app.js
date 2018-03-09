@@ -4,7 +4,7 @@
  */
 
 package.core.app = function CoreApp(me) {
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             set: function (object, value) {
                 package.include("app." + property, function (info) {

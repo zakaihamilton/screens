@@ -5,7 +5,7 @@
 
 package.ui.attribute = function UIAttribute(me) {
     me.stylesheets = {};
-    me.forward = function (object, property) {
+    me.get = function (object, property) {
         return {
             get: function (object) {
                 return object.getAttribute(property);
