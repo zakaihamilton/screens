@@ -31,14 +31,10 @@ package.app.progman = function AppProgman(me) {
         set: function (object, value) {
             var args = me.core.cmd.split(object.args);
             if (args) {
-                package.include("app." + args[0], function (info) {
-                    if (info.complete) {
-                        me.core.message.send("app." + args[0] + ".launch", args.slice(1));
-                    }
-                    if (me.options["minimize_on_use"]) {
-                        me.core.property.set(me.singleton, "minimize");
-                    }
-                });
+                if (me.options["minimize_on_use"]) {
+                    me.core.property.set(me.singleton, "minimize");
+                }
+                me.core.app.launch(() => {}, args[0], args.slice(1));
             }
         }
     };
