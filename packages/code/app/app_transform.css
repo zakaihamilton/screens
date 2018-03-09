@@ -482,7 +482,7 @@
 
 h4.mark:before {
     content:"\25B6";
-    float:left;
+    position: absolute;
     margin-left: -1.5em;
     margin-top: 0.8em;
     display: inline-block;
@@ -491,7 +491,7 @@ h4.mark:before {
 
 p.mark:before {
     content:"\25B6";
-    float:left;
+    position: absolute;
     margin-left: -1.5em;
     margin-top: 0.8em;
     display: inline-block;

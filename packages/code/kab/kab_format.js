@@ -95,11 +95,14 @@ package.kab.format = function KabFormat(me) {
             words.splice(wordIndex, 0, wordToInsert);
         }
     };
-    me.spelling = function (wordsString, spelling) {
-        if (spelling) {
-            for (var incorrect in spelling) {
-                var correct = spelling[incorrect];
-                wordsString = wordsString.split(incorrect).join(correct);
+    me.replace = function (wordsString, replacements) {
+        if (replacements) {
+            for (var groupName in replacements) {
+                var groupItems = replacements[groupName];
+                for(var from in groupItems) {
+                    var to = groupItems[from];
+                    wordsString = wordsString.split(from).join(to);
+                }
             }
         }
         return wordsString;

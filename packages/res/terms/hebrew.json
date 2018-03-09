@@ -3,8 +3,10 @@
         "wordStyle": "suffix",
         "keepExpandedSource":true
     },
-    "spelling":{
-        "'\"":"\""
+    "replace":{
+        "characters":{
+            "'\"":"\""
+        }
     },
     "pre": [
         {
