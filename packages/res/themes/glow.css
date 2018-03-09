@@ -328,7 +328,7 @@
 .glow-menu-vertical span {
     background-color: white;
     color: black;
-    height:18px;
+    min-height:18px;
     padding-left: 16px;
     padding-right: 16px;
     font-family: "MS Sans Serif";

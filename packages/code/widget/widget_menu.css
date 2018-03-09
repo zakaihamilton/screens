@@ -41,6 +41,7 @@
 .widget-menu-vertical {
     position:absolute;
     min-width: 167px;
+    max-width: 100%;
     border: 1px solid black;
     background-color: white;
     box-shadow: 1px 1px 0px 0px #808080;
@@ -50,7 +51,7 @@
 .widget-menu-vertical span {
     background-color: white;
     color: black;
-    height:18px;
+    min-height:18px;
     padding-left: 16px;
     padding-right: 16px;
     font-family: "MS Sans Serif";
