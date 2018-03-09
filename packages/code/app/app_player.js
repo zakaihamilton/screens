@@ -113,7 +113,7 @@ package.app.player = function AppPlayer(me) {
         get: function (object) {
             var items = me.sessionListData.map(function (item) {
                 var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
-                return me.core.path.name(name);
+                return me.core.path.fileName(name);
             }).reverse();
             items = Array.from(new Set(items));
             items = items.map(function (item) {

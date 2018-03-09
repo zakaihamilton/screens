@@ -102,8 +102,8 @@ package.core.module = function CoreModule(me) {
             info.body = "";
             me.lock(info.task, (task) => {
                 var file = files[0];
-                var folder = me.core.path.folder(file);
-                var name = me.core.path.name(file);
+                var folder = me.core.path.folderPath(file);
+                var name = me.core.path.fileName(file);
                 if(name.includes("*")) {
                     me.lock(task, (task) => {
                         me.core.file.readDir((err, items) => {

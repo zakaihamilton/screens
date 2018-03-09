@@ -36,7 +36,7 @@ package.core.path = function CorePath(me) {
         }
         return path;
     };
-    me.folder = function(path) {
+    me.folderPath = function(path) {
         path = path.split("/");
         path.pop();
         path = path.join("/");
@@ -58,7 +58,7 @@ package.core.path = function CorePath(me) {
         }
         return name;
     };
-    me.name = function(path) {
+    me.fileName = function(path) {
         var name = "";
         var last = path.split("/").pop();
         if(last) {
