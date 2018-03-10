@@ -697,7 +697,7 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
         else {
-            var text = me.ui.layout.pageText(currentPage, true);
+            var text = me.ui.layout.pageText(currentPage);
             var params = {
                 onstart: () => {
                     me.ui.layout.setPlayState(currentPage, true, false);

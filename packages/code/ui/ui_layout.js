@@ -510,16 +510,13 @@ package.ui.layout = function UILayout(me) {
         }
         return null;
     };
-    me.pageText = function (page, cleanForVoice) {
+    me.pageText = function (page) {
         var content = page.var.content;
         var array = Array.from(content.children).map(el => {
             if (el.getAttribute("hidden")) {
                 return "";
             }
             var text = el.innerText;
-            if (cleanForVoice) {
-                text = me.ui.layout.cleanTextForVoice(text);
-            }
             return text;
         });
         return array;
@@ -561,34 +558,6 @@ package.ui.layout = function UILayout(me) {
                 page.var.separator.style.display = "none";
             }
         }
-    };
-    me.cleanTextForVoice = function (text) {
-        text = text.replace(/[,:;]/g, "\n");
-        text = text.replace(/[\)\]]/g, ", ");
-        text = text.replace(/[-\-”\"]/g, "\n");
-        text = text.replace(/[“\(\[]/g, ", ");
-        text = text.replace(/[.]/g, "\n");
-        text = text.replace(/[,]\s[,]/g, ",");
-        text = text.replace(/\s[,]/g, ",");
-        text = text.replace(/[,][,]/g, ",");
-        text = text.replace(/\n\s\n/g, "\n");
-        text = text.replace(/\n\n/g, "\n");
-        text = text.replace(/  /g, " ");
-        text = text.replace(/\n\s/g, "\n");
-        text = text.replace(/…/g, "");
-        text = text.split("\n").map(item => {
-            if(item.split(" ").length >= 20) {
-                item = item.replace(/ that is that /g, " that\nis that ");
-                item = item.replace(/ because /g, "\nbecause ");
-                item = item.replace(/ and /g, "\nand ");
-                item = item.replace(/ or /g, "\nor ");
-            }
-            return item;
-        }).join("\n");
-        text = text.split("\n").filter(item => {
-            return item.trim() !== "";
-        }).join("\n");
-        return text;
     };
     me.markElement = function(element, mark) {
         if(mark) {

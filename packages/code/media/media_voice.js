@@ -52,6 +52,7 @@ package.media.voice = function MediaVoice(me) {
             text = [text];
         }
         text.map((textItem, index) => {
+            textItem = me.process(textItem);
             var parts = textItem.split("\n");
             if (!parts.length) {
                 if (params.onend) {
@@ -104,4 +105,32 @@ package.media.voice = function MediaVoice(me) {
         });
         return voices;
     };
+    me.process = function (text) {
+        text = text.replace(/[,:;]/g, "\n");
+        text = text.replace(/[\)\]]/g, ", ");
+        text = text.replace(/[-\-”\"]/g, "\n");
+        text = text.replace(/[“\(\[]/g, ", ");
+        text = text.replace(/[.]/g, "\n");
+        text = text.replace(/[,]\s[,]/g, ",");
+        text = text.replace(/\s[,]/g, ",");
+        text = text.replace(/[,][,]/g, ",");
+        text = text.replace(/\n\s\n/g, "\n");
+        text = text.replace(/\n\n/g, "\n");
+        text = text.replace(/  /g, " ");
+        text = text.replace(/\n\s/g, "\n");
+        text = text.replace(/…/g, "");
+        text = text.split("\n").map(item => {
+            if(item.split(" ").length >= 20) {
+                item = item.replace(/ that is that /g, " that\nis that ");
+                item = item.replace(/ because /g, "\nbecause ");
+                item = item.replace(/ and /g, "\nand ");
+                item = item.replace(/ or /g, "\nor ");
+            }
+            return item;
+        }).join("\n");
+        text = text.split("\n").filter(item => {
+            return item.trim() !== "";
+        }).join("\n");
+        return text;
+    };    
 };
