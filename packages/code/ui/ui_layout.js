@@ -575,6 +575,7 @@ package.ui.layout = function UILayout(me) {
         text = text.replace(/\n\n/g, "\n");
         text = text.replace(/  /g, " ");
         text = text.replace(/\n\s/g, "\n");
+        text = text.replace(/…/g, "");
         text = text.split("\n").map(item => {
             if(item.split(" ").length >= 20) {
                 item = item.replace(/ that is that /g, " that\nis that ");

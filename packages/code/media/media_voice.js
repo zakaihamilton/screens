@@ -21,6 +21,18 @@ package.media.voice = function MediaVoice(me) {
         var voices = voices.filter((voice) => {
             return voice.name.includes(voiceName);
         });
+        var volume = 1;
+        var rate = 1;
+        var pitch = 1;
+        if(typeof params.volume !== "undefined") {
+            volume = params.volume;
+        }
+        if(typeof params.rate !== "undefined") {
+            rate = params.rate;
+        }
+        if(typeof params.pitch !== "undefined") {
+            pitch = params.pitch;
+        }
         if(!voices.length) {
             voices = me.voices(params.language);
             if(!voices.length) {
@@ -50,9 +62,9 @@ package.media.voice = function MediaVoice(me) {
             parts.map(text => {
                 var utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
-                utterance.volume = 1; // 0 to 1
-                utterance.rate = params.rate || 1; // 0.1 to 10
-                utterance.pitch = 1; //0 to 2
+                utterance.volume = volume; // 0 to 1
+                utterance.rate = rate; // 0.1 to 10
+                utterance.pitch = pitch; //0 to 2
                 utterance.text = text;
                 utterance.lang = voice.lang;
                 utterance.onstart = () => {
