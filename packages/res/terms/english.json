@@ -211,27 +211,27 @@
         },
         {
             "match": "/^Talmud .*?$",
-            "prefix": "<h4 style=\"order:-4;text-align:center\">",
+            "prefix": "<h4 style=\"order:-4;\">",
             "suffix": "</h4>"
         },
         {
             "match": "/^Part .*?$",
-            "prefix": "<h4 style=\"order:-3;text-align:center\">",
+            "prefix": "<h4 style=\"order:-3;\">",
             "suffix": "</h4>"
         },
         {
             "match": "/^Chapter .*?$",
-            "prefix": "<h4 style=\"order:-2;text-align:center\">",
+            "prefix": "<h4 style=\"order:-2;\">",
             "suffix": "</h4>"
         },
         {
             "match": "/Chapter [0-9,I]$",
-            "prefix": "<h4 style=\"order:-2;text-align:center\">",
+            "prefix": "<h4 style=\"order:-2;\">",
             "suffix": "</h4>"
         },
         {
             "match": "/^Yehuda Leib HaLevi Ashlag \\(Baal HaSulam\\)$",
-            "prefix": "<h4 style=\"order:-1;text-align:center\">",
+            "prefix": "<h4 style=\"order:-1;\">",
             "suffix": "</h4>"
         },
         {
@@ -269,7 +269,7 @@
         },
         {
             "match": "/[^.?!:;,\\\"'”…\\)]$",
-            "prefix": "<h4 style=\"text-align:center\">",
+            "prefix": "<h4>",
             "suffix": "</h4>"
         },
         {
@@ -279,11 +279,11 @@
             "suffix": "</p>"
         },
         {
-            "find": "/<p><h4 style=\"text-align:center\"><br><\\/h4><\\/p>",
+            "find": "/<p><h4><br><\\/h4><\\/p>",
             "replace": "<br>"
         },
         {
-            "find": "/<p><h4 style=\"text-align:center\"><hr><\\/h4><\\/p>",
+            "find": "/<p><h4><hr><\\/h4><\\/p>",
             "replace": "<hr>"
         },
         {

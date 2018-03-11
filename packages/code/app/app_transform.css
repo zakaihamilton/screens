@@ -91,9 +91,9 @@
 .app-transform-page-number{
     position: absolute;
     width:10%;
-    height:20px;
+    height:30px;
     left:45%;
-    top: 20px;
+    top: 30px;
     text-align: center;
 }
 
@@ -121,7 +121,7 @@
     width:10%;
     height:20px;
     left:45%;
-    top: 0px;
+    top: 10px;
 }
 
 .app-transform-page-scrolltotop:after {
@@ -477,18 +477,22 @@
 }
 
 p.app-transform-widget {
-    margin:0;
-    padding-bottom: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+h4.app-transform-widget {
+    text-align: center;
+    width:100%;
 }
 
 .app-transform-widget:before {
-    content:"";
-    float:left;
-    margin-left: -1.5em;
-    margin-top: 0.4em;
+    content:"\25B6\00a0";
+    margin-left: -1.0em;
     display: inline-block;
+    opacity:0;
 }
 
 .app-transform-widget.mark:before {
-    content:"\25B6";
+    opacity:1;
 }
