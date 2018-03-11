@@ -487,7 +487,6 @@ p.app-transform-widget {
     margin-left: -1.5em;
     margin-top: 0.4em;
     display: inline-block;
-    border:1px solid green;
 }
 
 .app-transform-widget.mark:before {
