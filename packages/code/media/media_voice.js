@@ -48,32 +48,33 @@ package.media.voice = function MediaVoice(me) {
                 params.onstart();
             }
         }
-        if(!Array.isArray(text)) {
-            text = [text];
+        var textArray = text;
+        if(!Array.isArray(textArray)) {
+            textArray = [text];
         }
-        text = text.map((text) => me.process(text));
-        text.map((textItem, index) => {
-            var parts = textItem.split("\n");
+        var processedTexts = textArray.map((text) => me.process(text));
+        processedTexts.map((text, index) => {
+            var parts = text.split("\n");
             if (!parts.length) {
                 if (params.onend) {
                     params.onend();
                 }
                 return;
             }
-            parts.map(text => {
+            parts.map(processedText => {
                 var utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
                 utterance.volume = volume; // 0 to 1
                 utterance.rate = rate; // 0.1 to 10
                 utterance.pitch = pitch; //0 to 2
-                utterance.text = text;
+                utterance.text = processedText;
                 utterance.lang = voice.lang;
                 utterance.onstart = () => {
                     if (!me.queueIndex && params.onstart) {
                         params.onstart();
                     }
                     if(params.onchange) {
-                        params.onchange(index, text);
+                        params.onchange(index, processedText);
                     }
                 };
                 utterance.onend = () => {
@@ -108,21 +109,20 @@ package.media.voice = function MediaVoice(me) {
     me.process = function (text) {
         var items = text.match(/-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?/g);
         text = text.replace(/[,]/g, "\n");
-        items.map(item => {
-            text = text.replace(item.replace(",", "\n"), item);
-        });
-        text = text.replace(/[:;]/g, "\n");
-        text = text.replace(/[:;]/g, "\n");
+        if(items) {
+            items.map(item => {
+                text = text.replace(item.replace(",", "\n"), item);
+            });
+        }
+        text = text.replace(/[-\-”\".:;]/g, "\n");
         text = text.replace(/[\)\]]/g, ", ");
-        text = text.replace(/[-\-”\"]/g, "\n");
         text = text.replace(/[“\(\[]/g, ", ");
-        text = text.replace(/[.]/g, "\n");
-        text = text.replace(/[,]\s[,]/g, ",");
         text = text.replace(/\s[,]/g, ",");
         text = text.replace(/[,][,]/g, ",");
         text = text.replace(/\n\s\n/g, "\n");
         text = text.replace(/\n\n/g, "\n");
         text = text.replace(/  /g, " ");
+        text = text.replace(/\s\n/g, "\n");
         text = text.replace(/\n\s/g, "\n");
         text = text.replace(/…/g, "");
         text = text.split("\n").map(item => {
@@ -134,10 +134,15 @@ package.media.voice = function MediaVoice(me) {
             }
             return item;
         }).join("\n");
+        text = text.split("\n").map(item => {
+            if(item.split(" ").length >= 20) {
+                console.log("long text: " + item);
+            }
+            return item;
+        }).join("\n");
         text = text.split("\n").filter(item => {
             return item.trim() !== "";
         }).join("\n");
-        console.log("text: " + text);
         return text;
     };    
 };

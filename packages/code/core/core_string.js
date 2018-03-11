@@ -45,6 +45,15 @@ package.core.string = function CoreString(me) {
         }
         return string;
     };
+    me.nextWord = function(string) {
+        var nextWord = "";
+        me.core.string.parseWords(function (words) {
+            if(words.length > 0) {
+                nextWord = words[0];
+            }
+        }, string);
+        return nextWord;
+    };
     me.language = function(string) {
         var position = string.search(/[A-Z]/);
         if(position >= 0){
