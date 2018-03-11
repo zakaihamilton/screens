@@ -283,6 +283,10 @@
             "replace": "<br>"
         },
         {
+            "find": "/<p><h4 style=\"text-align:center\"><hr><\\/h4><\\/p>",
+            "replace": "<hr>"
+        },
+        {
             "find": "/\\s?\\[\\s?\\]",
             "replace": ""
         },

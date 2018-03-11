@@ -2,7 +2,7 @@
     position:absolute;
     padding-left:2px;
     padding-right:2px;
-    top:-0.2em;
+    top:-1em;
     vertical-align:middle;
     height:1em;
     font-weight:bold;
@@ -27,7 +27,7 @@
     padding-right:2px;
     left:0em;
     right:0em;
-    bottom:0.6em;
+    bottom:1.2em;
     text-align: center;
     vertical-align:middle;
     height:1em;
@@ -67,10 +67,9 @@
 
 .kab-term-phase-inline {
     position:relative;
-    border-style:hidden;
     white-space: nowrap;
     display:inline-block;
-    height:2em;
+    min-height:2em;
     margin:0.1em;
     padding:0.2em;
     border-radius: 5px;
@@ -81,7 +80,7 @@
 
 [kab-term-phase-number]:after {
     position:absolute;
-    top:-0.3em;
+    top:-1em;
     vertical-align:middle;
     font-size:60%;
     text-transform:uppercase;

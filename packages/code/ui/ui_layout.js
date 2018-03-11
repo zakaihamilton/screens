@@ -192,7 +192,10 @@ package.ui.layout = function UILayout(me) {
                 if (pageContent.scrollWidth > pageContent.clientWidth) {
                     newPage = true;
                 }
-                if (widget.tagName && widget.tagName.toLowerCase() === "br") {
+                if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
+                    previousWidget = null;
+                }
+                else if (widget.tagName && widget.tagName.toLowerCase() === "br") {
                     newPage = true;
                     widget = null;
                     previousWidget = null;
@@ -359,6 +362,7 @@ package.ui.layout = function UILayout(me) {
         if (me.core.device.isMobile()) {
             me.core.property.set(page, "ui.scroll.swipe", "vertical");
         }
+        page.options = options;
         return page;
     };
     me.createBreak = function (target) {
@@ -574,6 +578,9 @@ package.ui.layout = function UILayout(me) {
                 return;
             }
             me.markElement(element, true);
+            if(element.innerText) {
+                me.core.property.set(element, "ui.class.add", page.options.widgetClass);
+            }
             element.classList.remove("mark");
         });
         page.focusElement = null;

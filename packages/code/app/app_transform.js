@@ -374,6 +374,7 @@ package.app.transform = function AppTransform(me) {
                 return "." + modifier;
             });
             var reflowOptions = {
+                widgetClass: ["app.transform.widget", modifiers],
                 pageClass: ["app.transform.page", modifiers],
                 contentClass: ["app.transform.page.content", modifiers],
                 containerClass: ["app.transform.page.container", modifiers],
@@ -700,9 +701,11 @@ package.app.transform = function AppTransform(me) {
             var text = me.ui.layout.pageText(currentPage);
             var params = {
                 onstart: () => {
+                    console.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
                 onend: () => {
+                    console.log("onend");
                     me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
                     if(window.options.autoPlay) {
@@ -717,9 +720,8 @@ package.app.transform = function AppTransform(me) {
                     }
                 },
                 onchange: (index, text) => {
-                    setTimeout(() => {
-                        me.ui.layout.markPage(currentPage, index, text);
-                    }, 0);
+                    console.log("onchange: " + index + " text:" + text);
+                    me.ui.layout.markPage(currentPage, index, text);
                 },
                 rate: 1,
                 language: window.language

@@ -9,6 +9,7 @@ package.ui.class = function UIClass(me) {
     me.processClass = function(object, classList, callback) {
         if (Array.isArray(classList)) {
             classList = classList.join(" ");
+            classList = classList.replace(/,/g, " ");
         }
         if(classList && object.classList) {
             classList = classList.split(" ").map(function(className) {
@@ -85,6 +86,9 @@ package.ui.class = function UIClass(me) {
     };
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
+        if(path.startsWith(".")) {
+            path = path.substr(1);
+        }
         path = path.replace(/[\.\_]/g, "-");
         path = me.ui.theme.getMapping(path);
         return path;

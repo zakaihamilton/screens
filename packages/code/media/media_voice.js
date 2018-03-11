@@ -73,7 +73,7 @@ package.media.voice = function MediaVoice(me) {
                     if (!me.queueIndex && params.onstart) {
                         params.onstart();
                     }
-                    if(params.onchange) {
+                    if(params.onchange && processedText) {
                         params.onchange(index, processedText);
                     }
                 };
