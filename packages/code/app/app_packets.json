@@ -7,66 +7,115 @@
         "height": "450px"
     },
     "widget.menu.items": [
-        ["Options", [
-                ["Refresh", "app.packets.refreshData"],
-                ["Auto Refresh", "app.packets.autoRefresh", {
+        [
+            "Options",
+            [
+                [
+                    "Refresh",
+                    "app.packets.refreshData"
+                ],
+                [
+                    "Auto Refresh",
+                    "app.packets.autoRefresh",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Reset", "app.packets.reset", {
+                [
+                    "Reset",
+                    "app.packets.reset",
+                    {
                         "separator": true
                     }
                 ],
-                ["Auto Increase Packet Delay", "app.packets.autoIncreasePacketDelay", {
-                        "state":"select",
+                [
+                    "Auto Increase Packet Delay",
+                    "app.packets.autoIncreasePacketDelay",
+                    {
+                        "state": "select",
                         "separator": true
                     }
                 ],
-                ["Push Packets", "app.packets.pushPackets", {
-                        "state":"select",
+                [
+                    "Push Packets",
+                    "app.packets.pushPackets",
+                    {
+                        "state": "select",
                         "separator": true
                     }
                 ]
             ]
         ],
-        ["Data", [
-                ["Refresh", "app.packets.refreshDataList"],
-                ["Live", "app.packets.dataProfile", {
+        [
+            "Data",
+            [
+                [
+                    "Refresh",
+                    "app.packets.refreshDataList"
+                ],
+                [
+                    "Live",
+                    "app.packets.dataProfile",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Combined", "app.packets.dataProfile", {
+                [
+                    "Combined",
+                    "app.packets.dataProfile",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
                 "app.packets.dataMenuList",
-                ["Save", "app.packets.save", {
+                [
+                    "Save",
+                    "app.packets.save",
+                    {
                         "enabled": "select",
                         "separator": true
-                    }]
+                    }
+                ]
             ]
         ],
-        ["View", [
-                ["Auto", "app.packets.viewType", {
+        [
+            "View",
+            [
+                [
+                    "Auto",
+                    "app.packets.viewType",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Data by Time", "app.packets.viewType", {
+                [
+                    "Data by Time",
+                    "app.packets.viewType",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["ABR by Packet Delay", "app.packets.viewType", {
+                [
+                    "ABR by Packet Delay",
+                    "app.packets.viewType",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Duration by Packet Delay", "app.packets.viewType", {
+                [
+                    "Duration by Packet Delay",
+                    "app.packets.viewType",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Duration % by Packet Delay", "app.packets.viewType", {
+                [
+                    "Duration % by Packet Delay",
+                    "app.packets.viewType",
+                    {
                         "state": "select"
                     }
                 ]
@@ -121,7 +170,7 @@
                             "ui.property.after": {
                                 "storage.local.key": "@ui.windowkey.app-packets-video-duration-",
                                 "storage.local.restore": "ui.basic.text",
-                                "ui.monitor.change":"ui.basic.save"
+                                "ui.monitor.change": "ui.basic.save"
                             }
                         }
                     ]
@@ -211,15 +260,25 @@
                             "ui.basic.tag": "datalist",
                             "ui.basic.elementId": "packetLoss",
                             "ui.group.data": {
-                                "ui.data.keyList": ["ui.attribute.value"],
+                                "ui.data.keyList": [
+                                    "ui.attribute.value"
+                                ],
                                 "ui.data.default": {
                                     "ui.basic.tag": "option"
                                 },
                                 "ui.data.values": [
-                                    ["0.0001"],
-                                    ["0.001"],
-                                    ["0.1"],
-                                    ["1"]
+                                    [
+                                        "0.0001"
+                                    ],
+                                    [
+                                        "0.001"
+                                    ],
+                                    [
+                                        "0.1"
+                                    ],
+                                    [
+                                        "1"
+                                    ]
                                 ]
                             }
                         }
@@ -300,18 +359,24 @@
                         {
                             "ui.basic.text": "Combined",
                             "ui.style.width": "250px",
-                            "ui.basic.var":"streamIndex",
+                            "ui.basic.var": "streamIndex",
                             "core.link.onChange": "app.packets.onChangeStream",
                             "ui.element.count": 0,
                             "ui.group.data": {
-                                "ui.data.keyList": ["ui.basic.text"],
+                                "ui.data.keyList": [
+                                    "ui.basic.text"
+                                ],
                                 "ui.data.default": {
                                     "group": "one",
                                     "state": false
                                 },
                                 "ui.data.values": [
-                                    ["Combined"],
-                                    ["Last"],
+                                    [
+                                        "Combined"
+                                    ],
+                                    [
+                                        "Last"
+                                    ],
                                     "core.number.fillArray(1-@app.packets.streamRequestCount)"
                                 ]
                             }
@@ -323,18 +388,18 @@
         {
             "ui.element.component": "widget.chart",
             "ui.basic.var": "chart",
-            "ui.style.paddingLeft":"10%",
+            "ui.style.paddingLeft": "10%",
             "ui.style.width": "75%",
             "data": "@app.packets.chartData",
-            "options":"@app.packets.chartOptions",
-            "type":"@app.packets.chartType",
+            "options": "@app.packets.chartOptions",
+            "type": "@app.packets.chartType",
             "info": {}
         }
     ],
-    "app.packets.refreshData": null,
-    "app.packets.onChangeStream":null,
     "ui.property.after": {
         "storage.local.key": "app-packets-window",
-        "storage.local.restore": "widget.window.store"
+        "storage.local.restore": "widget.window.store",
+        "app.packets.refreshData": null,
+        "app.packets.onChangeStream": null
     }
 }

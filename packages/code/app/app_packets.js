@@ -121,6 +121,9 @@ package.app.packets = function AppPackets(me) {
             });
         }
     };
+    me.formatNumber = function(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
     me.formatBytes = function (number) {
         var set = false;
         if (number < 1000) {
@@ -222,7 +225,7 @@ package.app.packets = function AppPackets(me) {
                 if (window.var.packetDelay !== document.activeElement) {
                     me.core.property.set(window.var.packetDelay, "ui.basic.text", effects.packetDelay);
                 }
-                me.core.property.set(window.var.packetCount, "ui.basic.text", packetCount);
+                me.core.property.set(window.var.packetCount, "ui.basic.text", me.formatNumber(packetCount));
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
                 me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
@@ -269,7 +272,12 @@ package.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         if(viewType === "Auto") {
             if(window.streamIndex === -1) {
-                viewType = "Duration by Packet Delay";
+                if(me.videoDuration(window)) {
+                    viewType = "Duration % by Packet Delay";
+                }
+                else {
+                    viewType = "Duration by Packet Delay";
+                }
             }
             else {
                 viewType = "Data by Time";
@@ -475,8 +483,8 @@ package.app.packets = function AppPackets(me) {
                         }
                         var videoDuration = me.videoDuration(window);
                         var durationPercentage = duration;
-                        if(videoDuration) {
-                            durationPercentage = parseInt(duration * 100 / videoDuration);
+                        if(videoDuration && duration) {
+                            durationPercentage = parseInt(videoDuration * 100 / duration);
                         }
                         var values = {
                             Duration: duration,
