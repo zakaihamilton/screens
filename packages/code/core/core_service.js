@@ -4,53 +4,53 @@
  */
 
 package.core.service = function CoreService(me) {
-    me.init = function () {
+    me.init = function() {
         if (me.platform === "server") {
-            me.core.util.config(config => {
-                if (config.settings && config.settings.service && config.settings.service.port) {
-                    me.io = require("socket.io");
-                    me.core.console.log("listening for services on port: " + config.settings.service.port);
-                    me.server = me.io.listen(config.settings.service.port);
-                    me.clients = new Map();
-                    me.server.on("connection", (socket) => {
-                        me.core.console.log(`Service connected [id=${socket.id}]`);
-                        var ref = me.core.ref.gen();
-                        socket.on("disconnect", () => {
-                            var info = me.clients.get(socket);
-                            if (info) {
-                                me.clients.delete(socket);
-                                me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
-                            }
-                        });
-                        socket.on("method", (info) => {
-                            info.clientIp = socket.request.connection.remoteAddress;
-                            me.core.message.handleLocal((response) => {
-                                socket.emit("method", response);
-                            }, info, true);
-                        });
-                        me.core.console.log("Service setup request for ref: " + ref);
-                        me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
-                            me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
-                            me.clients.set(socket, {ref: ref, name: name});
-                            me.core.object.attach(socket, me);
-                            me.core.property.set(socket, "ready");
-                        }, ref);
-                    });
-                }
+            me.clients = new Map();
+            me.core.http.io.on("connection", (socket) => {
+                me.core.console.log(`Service connected [id=${socket.id}]`);
+                var ref = me.core.ref.gen();
+                socket.on("disconnect", () => {
+                    var info = me.clients.get(socket);
+                    if (info) {
+                        me.clients.delete(socket);
+                        me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
+                    }
+                });
+                socket.on("method", (info) => {
+                    info.clientIp = socket.request.connection.remoteAddress;
+                    me.core.message.handleLocal((response) => {
+                        socket.emit("method", response);
+                    }, info, true);
+                });
+                me.core.console.log("Service setup request for ref: " + ref);
+                me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
+                    me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
+                    me.clients.set(socket, { ref: ref, name: name });
+                    me.core.object.attach(socket, me);
+                    me.core.property.set(socket, "ready");
+                }, ref);
             });
         } else if (me.platform === "service") {
             me.io = require("socket.io-client");
             if (process.argv.length <= 3) {
-                console.log("params: service_name http://ip:port");
+                console.log("params: http://ip:port service_name");
                 process.exit(-1);
             }
             me.serverAddress = process.argv[2];
             me.serviceNames = process.argv.splice(3);
+            me.core.console.log("Connecting to server: " + me.serverAddress);
             me.client = me.io.connect(me.serverAddress);
-            me.client.on("method", (info) => {
-                me.core.message.handleLocal((response) => {
-                    me.client.emit("method", response);
-                }, info, true);
+            me.client.on("connect", (socket) => {
+                me.core.console.log("Connected to server: " + me.serverAddress);
+                me.client.on("disconnect", (info) => {
+                    me.core.console.log("Disconnected from server: " + me.serverAddress);
+                });
+                me.client.on("method", (info) => {
+                    me.core.message.handleLocal((response) => {
+                        me.client.emit("method", response);
+                    }, info, true);
+                });
             });
         }
     };
@@ -64,7 +64,7 @@ package.core.service = function CoreService(me) {
         callback(items);
     };
     me.setup = function (callback, ref) {
-        if(me.alreadySetup) {
+        if (me.alreadySetup) {
             callback(me.serviceNames, ref);
             return;
         }
@@ -108,7 +108,7 @@ package.core.service = function CoreService(me) {
         });
     };
     me.sendAll = function (method, callback, param) {
-        if(me.platform === "service") {
+        if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments);
             me.serviceNames.map((serviceName) => {
                 args[0] = "service." + serviceName + "." + method;
@@ -120,7 +120,7 @@ package.core.service = function CoreService(me) {
             var args = Array.prototype.slice.call(arguments);
             var count = 0;
             var responses = [];
-            args[1] = function() {
+            args[1] = function () {
                 var response = Array.prototype.slice.call(arguments);
                 responses.push(response);
                 count--;
@@ -129,7 +129,7 @@ package.core.service = function CoreService(me) {
                     callback.apply(null, responses);
                 }
             };
-            if(me.clients) {
+            if (me.clients) {
                 me.clients.forEach((info, socket) => {
                     me.core.message.send_service.apply(socket, args);
                     count++;
@@ -142,8 +142,8 @@ package.core.service = function CoreService(me) {
         }
     };
     me.ready = {
-        set: function(socket) {
-            
+        set: function (socket) {
+
         }
     };
 };

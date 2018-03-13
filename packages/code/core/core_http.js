@@ -14,6 +14,9 @@ package.core.http = function CoreHttp(me) {
     me.listeners = [];
     me.redirect = null;
     me.init = function (task) {
+        me.http = require("http");
+        me.https = require("https");
+        me.fs = require("fs");
         if (me.platform === "server" || me.platform === "service") {
             if (me.platform === "server") {
                 me.lock(task, (task) => {
@@ -23,6 +26,7 @@ package.core.http = function CoreHttp(me) {
                             return;
                         }
                         me.core.console.log("secure server is listening on " + port);
+                        me.signal(null, me.id + ".secureServer");
                         me.unlock(task);
                     }, true);
                 });
@@ -42,9 +46,6 @@ package.core.http = function CoreHttp(me) {
     me.createServer = function (callback, secure) {
         var server = null;
         var port = me.port;
-        me.http = require("http");
-        me.https = require("https");
-        me.fs = require("fs");
         var requestHandler = function (request, response) {
             if(!secure && me.redirect) {
                 me.core.console.log("redirect: " + me.redirect + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
@@ -96,6 +97,7 @@ package.core.http = function CoreHttp(me) {
         } else {
             me.core.console.log("using http");
             server = me.http.createServer(requestHandler);
+            me.io = require("socket.io")(server);
             server.listen(port, function (err) {
                 callback(server, port, err);
             });

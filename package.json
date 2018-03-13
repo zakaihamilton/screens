@@ -33,7 +33,6 @@
   },
   "settings": {
     "service": {
-      "port": 5050,
       "netmonitor": {
         "device": [
           "wlan0",
