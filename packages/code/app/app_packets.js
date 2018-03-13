@@ -435,7 +435,6 @@ package.app.packets = function AppPackets(me) {
                                         label: label,
                                         backgroundColor: color,
                                         borderColor: color,
-                                        fill: false,
                                         data: []
                                     };
                                     info[label] = dataset;
@@ -597,4 +596,40 @@ package.app.packets = function AppPackets(me) {
         var secs = videoDuration.split(':').reverse().reduce((prev, curr, i) => prev + curr*Math.pow(60, i), 0);
         return secs;
     };
+    me.export = {
+        set: function(object) {
+            var window = me.widget.window.window(object);
+            var chartData = me.core.property.get(window, "app.packets.chartData");
+            var csvColumns = [];
+            chartData.datasets.map((dataset) => {
+                dataset.data.map((data) => {
+                    if(!csvColumns.includes(data.x)) {
+                        csvColumns.push(data.x);
+                    }
+                });
+            });
+            csvColumns = csvColumns.sort((a, b) => a - b);
+            csvColumns.unshift("label");
+            var csvRows = chartData.datasets.map((dataset) => {
+                var row = {};
+                dataset.data.map((data) => {
+                    row[data.x] = data.y;
+                });
+                row.label = dataset.label;
+                return row;
+            });
+            var csvData = csvRows.map((row) => {
+                return csvColumns.map((column) => {
+                    var val = row[column];
+                    if(!val) {
+                        val = "";
+                    }
+                    return val;
+                });
+            });
+            csvData.unshift(csvColumns);
+            console.log(JSON.stringify(csvData));
+            me.content.csv.export(me.options.dataProfile + ".csv", csvData);
+        }
+    }
 };
