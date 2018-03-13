@@ -435,7 +435,8 @@ package.app.packets = function AppPackets(me) {
                                         label: label,
                                         backgroundColor: color,
                                         borderColor: color,
-                                        data: []
+                                        data: [],
+                                        fill: false
                                     };
                                     info[label] = dataset;
                                 }
@@ -628,7 +629,6 @@ package.app.packets = function AppPackets(me) {
                 });
             });
             csvData.unshift(csvColumns);
-            console.log(JSON.stringify(csvData));
             me.content.csv.export(me.options.dataProfile + ".csv", csvData);
         }
     }

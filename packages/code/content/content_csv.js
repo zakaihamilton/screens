@@ -24,8 +24,7 @@ package.content.csv = function ContentCsv(me) {
         }).join("\n");
         var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
         var link = document.createElement("a");
-        if (link.download !== undefined) { // feature detection
-            // Browsers that support HTML5 download attribute
+        if (link.download !== undefined) {
             var url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
             link.setAttribute("download", filename);
