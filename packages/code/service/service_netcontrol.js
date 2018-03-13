@@ -7,24 +7,30 @@ package.service.netcontrol = function ServiceNetControl(me) {
     me.setup = function (callback, ref) {
         callback();
     };
-    me.effects = {
+    me.defaultEffects = {
         autoIncreasePacketDelay:true,
-        packetDelay:0
+        packetDelay:0,
+        packetDelayIncrease:5,
+        packetDelayMax:300
     };
+    me.effects = Object.assign({}, me.defaultEffects);
     me.signal = function() {
         if(me.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.effects.packetDelay);
             if(!packetDelay || packetDelay < 0) {
                 packetDelay = 0;
             }
-            me.effects.packetDelay = packetDelay + 5;
+            me.effects.packetDelay = packetDelay + me.effects.packetDelayIncrease;
+            if(me.effects.packetDelay > me.effects.packetDelayMax) {
+                me.effects.packetDelay = 0;
+            }
             me.applyEffects(() => {
                 
             }, me.effects);
         }
     };
     me.reset = function(callback) {
-        me.effects = {autoIncreasePacketDelay:true};
+        me.effects = Object.assign({}, me.defaultEffects);
         me.applyEffects(callback, me.effects);
     };
     me.retrieveEffects = function(callback) {
