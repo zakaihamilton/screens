@@ -7,7 +7,9 @@ package.require("manager.packet", "server");
 
 package.manager.packet = function ManagerPacket(me) {
     me.packetInfo = {
-        streamRequests:[]
+        streamRequests:[],
+        effects:{},
+        runIndex:0
     };
     me.init = function() {
         me.core.property.link("core.service.ready", "manager.packet.ready", true);
@@ -19,12 +21,13 @@ package.manager.packet = function ManagerPacket(me) {
         }
         me.core.console.log("received " + packets.length + " packets");
         for(var packet of packets) {
-            if(packet.signal || !info.streamRequests.length) {
+            if(packet.runIndex !== me.packetInfo.runIndex || !info.streamRequests.length) {
                 info.streamRequests.push({
                     packetCount: 0,
                     dataSize: 0,
                     startTime: 0,
                     duration: 0,
+                    runIndex:packet.runIndex,
                     packets: {},
                     effects: packet.effects
                 });
@@ -79,7 +82,8 @@ package.manager.packet = function ManagerPacket(me) {
     me.reset = function (callback) {
         me.packetInfo = {
             streamRequests:[],
-            effects:{}
+            effects:{},
+            runIndex:0
         };
         me.core.service.sendAll("service.netmonitor.reset", () => {
             me.core.service.sendAll("service.netcontrol.reset", () => {

@@ -26,7 +26,6 @@ package.core.http = function CoreHttp(me) {
                             return;
                         }
                         me.core.console.log("secure server is listening on " + port);
-                        me.signal(null, me.id + ".secureServer");
                         me.unlock(task);
                     }, true);
                 });
