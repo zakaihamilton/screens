@@ -99,6 +99,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.reset = function(callback) {
         me.packets = [];
+        me.runIndex = 0;
         callback();
     };
     me.signal = function() {

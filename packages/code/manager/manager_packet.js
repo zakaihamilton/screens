@@ -32,6 +32,7 @@ package.manager.packet = function ManagerPacket(me) {
                     effects: packet.effects
                 });
                 me.packetInfo.effects = packet.effects;
+                me.packetInfo.runIndex = packet.runIndex;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
             streamRequest.packetCount++;
