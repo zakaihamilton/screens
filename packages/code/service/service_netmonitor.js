@@ -10,6 +10,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
         me.packets = [];
         me.timer = null;
         me.runIndex = 0;
+        me.streamIndex = 0;
         me.options = {enablePush:true};
         me.core.service.config(config => {
             if (config) {
@@ -60,6 +61,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                             size: packet_len,
                             time: packet_sec,
                             runIndex: me.runIndex,
+                            streamIndex: me.streamIndex,
                             effects: effects
                         };
                         me.packets.push(packet);
@@ -100,9 +102,13 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
     me.reset = function(callback) {
         me.packets = [];
         me.runIndex = 0;
+        me.streamIndex = 0;
         callback();
     };
-    me.signal = function() {
-        me.runIndex++;
+    me.newStream = function() {
+        me.streamIndex++;
     };
+    me.newRun = function() {
+        me.runIndex++;
+    }
 };

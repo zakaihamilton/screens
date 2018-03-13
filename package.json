@@ -43,7 +43,7 @@
       },
       "httpserver": {
         "path": "./",
-        "signalMatches": [
+        "newStreamMatch": [
           "segment_0.ts"
         ]
       }

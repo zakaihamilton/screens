@@ -9,6 +9,7 @@ package.manager.packet = function ManagerPacket(me) {
     me.packetInfo = {
         streamRequests:[],
         effects:{},
+        streamIndex:0,
         runIndex:0
     };
     me.init = function() {
@@ -21,18 +22,20 @@ package.manager.packet = function ManagerPacket(me) {
         }
         me.core.console.log("received " + packets.length + " packets");
         for(var packet of packets) {
-            if(packet.runIndex !== me.packetInfo.runIndex || !info.streamRequests.length) {
+            if(packet.streamIndex !== me.packetInfo.streamIndex || !info.streamRequests.length) {
                 info.streamRequests.push({
                     packetCount: 0,
                     dataSize: 0,
                     startTime: 0,
                     duration: 0,
                     runIndex:packet.runIndex,
+                    streamIndex:packet.streamIndex,
                     packets: {},
                     effects: packet.effects
                 });
                 me.packetInfo.effects = packet.effects;
                 me.packetInfo.runIndex = packet.runIndex;
+                me.packetInfo.streamIndex = packet.streamIndex;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length-1];
             streamRequest.packetCount++;

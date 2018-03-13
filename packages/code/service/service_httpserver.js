@@ -17,10 +17,10 @@ package.service.httpserver = function HttpServer(me) {
                     me.core.property.link("core.http.receive", "service.httpserver.receive", true);
                     me.filePrefix = path;
                 }
-                var signalMatches = config.signalMatches;
-                if(signalMatches) {
-                    me.core.console.log("signal matches: " + signalMatches);
-                    me.signalMatches = signalMatches;
+                var newStreamMatch = config.newStreamMatch;
+                if(newStreamMatch) {
+                    me.core.console.log("newStreamMatch: " + newStreamMatch);
+                    me.newStreamMatch = newStreamMatch;
                 }
                 callback();
             }
@@ -31,17 +31,17 @@ package.service.httpserver = function HttpServer(me) {
             if (info.method === "GET") {
                 var filePath = me.filePrefix + info.url.substring(1);
                 var extension = me.core.path.extension(filePath);
-                if(me.signalMatches && me.signalMatches.length) {
+                if(me.newStreamMatch && me.newStreamMatch.length) {
                     var match = true;
-                    me.signalMatches.map((signalMatch) => {
-                        if(!filePath.toLowerCase().includes(signalMatch.toLowerCase())) {
+                    me.newStreamMatch.map((streamMatch) => {
+                        if(!filePath.toLowerCase().includes(streamMatch.toLowerCase())) {
                             match = false;
                         }
                     });
                     if(match) {
-                        me.core.console.log("found match in " + filePath + ", sending signal");
-                        me.core.console.log("signal");
-                        me.core.service.sendAll("signal");
+                        me.core.console.log("found match in " + filePath + ", sending newStream message");
+                        me.core.console.log("newStream");
+                        me.core.service.sendAll("newStream");
                     }
                 }
                 if (extension === "mp4") {
@@ -49,8 +49,8 @@ package.service.httpserver = function HttpServer(me) {
                     info.custom = true;
                     var partial = me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                     if(!partial) {
-                        me.core.console.log("signal");
-                        me.core.service.sendAll("signal");
+                        me.core.console.log("newStream");
+                        me.core.service.sendAll("newStream");
                     }
                 }
                 else if(extension === "ts") {

@@ -14,7 +14,7 @@ package.service.netcontrol = function ServiceNetControl(me) {
         packetDelayMax:300
     };
     me.effects = Object.assign({}, me.defaultEffects);
-    me.signal = function() {
+    me.newStream = function() {
         if(me.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.effects.packetDelay);
             if(!packetDelay || packetDelay < 0) {
@@ -23,6 +23,8 @@ package.service.netcontrol = function ServiceNetControl(me) {
             me.effects.packetDelay = packetDelay + me.effects.packetDelayIncrease;
             if(me.effects.packetDelay > me.effects.packetDelayMax) {
                 me.effects.packetDelay = 0;
+                me.core.console.log("newRun");
+                me.core.service.sendAll("newRun");
             }
             me.applyEffects(() => {
                 
