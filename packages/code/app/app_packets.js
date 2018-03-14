@@ -453,7 +453,11 @@ package.app.packets = function AppPackets(me) {
                         if (effects && effects.packetDelay) {
                             packetDelay = effects.packetDelay;
                         }
-                        var label = dataProfileName + "(" + dataProfilePacketLoss + "%)";
+                        var streamName = dataProfileName;
+                        if(streamRequest.runIndex) {
+                            streamName += " #" + (streamRequest.runIndex + 1);
+                        }
+                        var label = streamName + " (" + dataProfilePacketLoss + "%)";
                         var dataset = info[label];
                         if (!dataset) {
                             var color = me.colors[label];

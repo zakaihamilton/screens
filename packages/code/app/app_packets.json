@@ -168,7 +168,7 @@
                             }
                         },
                         {
-                            "ui.basic.text": "",
+                            "ui.basic.text": "3:20",
                             "ui.property.style": {
                                 "width": "250px"
                             },
