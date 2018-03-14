@@ -14,11 +14,11 @@ package.core.http = function CoreHttp(me) {
     me.listeners = [];
     me.redirect = null;
     me.init = function (task) {
-        me.http = require("http");
-        me.https = require("https");
-        me.fs = require("fs");
         if (me.platform === "server" || me.platform === "service") {
-            if (me.platform === "server") {
+                me.http = require("http");
+                me.https = require("https");
+                me.fs = require("fs");
+                if (me.platform === "server") {
                 me.lock(task, (task) => {
                     me.createServer((server, port, err) => {
                         if (err) {

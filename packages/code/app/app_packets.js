@@ -46,8 +46,8 @@ package.app.packets = function AppPackets(me) {
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
                 });
-                me.include("lib.moment", function(info) {
-                    if(info.complete) {
+                me.include("lib.moment", function (info) {
+                    if (info.complete) {
                         me.unlock(task);
                     }
                 });
@@ -96,7 +96,7 @@ package.app.packets = function AppPackets(me) {
                 if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
                     window.packetInfo = Object.assign({}, info);
                     window.packetInfo.effects = Object.assign({}, info.effects);
-                    if(me.options.dataProfile === "Combined") {
+                    if (me.options.dataProfile === "Combined") {
                         autoRefresh = false;
                     }
                 } else if (me.dataList) {
@@ -121,7 +121,7 @@ package.app.packets = function AppPackets(me) {
             });
         }
     };
-    me.formatNumber = function(number) {
+    me.formatNumber = function (number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
     me.formatBytes = function (number) {
@@ -250,29 +250,16 @@ package.app.packets = function AppPackets(me) {
             });
         }
     };
-    me.streamRequestCount = {
-        get: function (object) {
-            var count = 0;
-            var window = me.widget.window.window(object);
-            if (window && window.packetInfo) {
-                var streamRequests = window.packetInfo.streamRequests;
-                if (streamRequests) {
-                    count = streamRequests.length;
-                }
-            }
-            return count;
-        }
-    };
     me.chartType = {
         get: function (object) {
             return "line";
         }
     };
-    me.calcViewType = function(window) {
+    me.calcViewType = function (window) {
         var viewType = me.options.viewType;
-        if(viewType === "Auto") {
-            if(window.streamIndex === -1) {
-                if(me.videoDuration(window)) {
+        if (viewType === "Auto") {
+            if (window.streamIndex === -1) {
+                if (me.videoDuration(window)) {
                     viewType = "Duration % by Packet Delay";
                 }
                 else {
@@ -301,26 +288,26 @@ package.app.packets = function AppPackets(me) {
                     },
                     "scales": {
                         "xAxes": [{
-                                "type": "time",
+                            "type": "time",
+                            "display": true,
+                            "scaleLabel": {
                                 "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Time"
-                                },
-                                "ticks": {
-                                    "major": {
-                                        "fontStyle": "bold",
-                                        "fontColor": "#FF0000"
-                                    }
+                                "labelString": "Time"
+                            },
+                            "ticks": {
+                                "major": {
+                                    "fontStyle": "bold",
+                                    "fontColor": "#FF0000"
                                 }
-                            }],
+                            }
+                        }],
                         "yAxes": [{
+                            "display": true,
+                            "scaleLabel": {
                                 "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": "Data"
-                                }
-                            }]
+                                "labelString": "Data"
+                            }
+                        }]
                     }
                 };
             }
@@ -338,26 +325,26 @@ package.app.packets = function AppPackets(me) {
                     },
                     "scales": {
                         "xAxes": [{
-                                "type": "linear",
+                            "type": "linear",
+                            "display": true,
+                            "scaleLabel": {
                                 "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": xAxis
-                                },
-                                "ticks": {
-                                    "major": {
-                                        "fontStyle": "bold",
-                                        "fontColor": "#FF0000"
-                                    }
+                                "labelString": xAxis
+                            },
+                            "ticks": {
+                                "major": {
+                                    "fontStyle": "bold",
+                                    "fontColor": "#FF0000"
                                 }
-                            }],
+                            }
+                        }],
                         "yAxes": [{
+                            "display": true,
+                            "scaleLabel": {
                                 "display": true,
-                                "scaleLabel": {
-                                    "display": true,
-                                    "labelString": yAxis
-                                }
-                            }]
+                                "labelString": yAxis
+                            }
+                        }]
                     }
                 };
             }
@@ -367,14 +354,14 @@ package.app.packets = function AppPackets(me) {
     me.chartData = {
         get: function (object) {
             me.colors = [];
-            var data = {datasets: [], labels: []};
+            var data = { datasets: [], labels: [] };
             var window = me.widget.window.window(object);
             if (!window || !window.packetInfo) {
                 return data;
             }
             var viewType = me.calcViewType(window);
             var dataProfiles = {};
-            if(me.options.dataProfile === "Combined") {
+            if (me.options.dataProfile === "Combined") {
                 me.dataList.map(function (item) {
                     var packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
                     dataProfiles[item.title] = packetInfo;
@@ -483,14 +470,14 @@ package.app.packets = function AppPackets(me) {
                         }
                         var videoDuration = me.videoDuration(window);
                         var durationPercentage = duration;
-                        if(videoDuration && duration) {
+                        if (videoDuration && duration) {
                             durationPercentage = parseInt(videoDuration * 100 / duration);
                         }
                         var values = {
                             Duration: duration,
                             ABR: parseInt(abr / 1000),
-                            "Packet Delay":packetDelay,
-                            "Duration %":durationPercentage
+                            "Packet Delay": packetDelay,
+                            "Duration %": durationPercentage
                         };
                         var data = {
                             x: values[xAxis],
@@ -565,7 +552,7 @@ package.app.packets = function AppPackets(me) {
     me.onChangeStream = {
         set: function (object) {
             var window = me.widget.window.window(object);
-            var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text");
+            var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text").split(":")[0];
             if (streamIndex === "Last") {
                 streamIndex = 0;
             }
@@ -592,19 +579,19 @@ package.app.packets = function AppPackets(me) {
             }, me.isPushEnabled);
         }
     };
-    me.videoDuration = function(window) {
+    me.videoDuration = function (window) {
         var videoDuration = me.core.property.get(window.var.videoDuration, "ui.basic.text");
-        var secs = videoDuration.split(':').reverse().reduce((prev, curr, i) => prev + curr*Math.pow(60, i), 0);
+        var secs = videoDuration.split(':').reverse().reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
         return secs;
     };
     me.export = {
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.window(object);
             var chartData = me.core.property.get(window, "app.packets.chartData");
             var csvColumns = [];
             chartData.datasets.map((dataset) => {
                 dataset.data.map((data) => {
-                    if(!csvColumns.includes(data.x)) {
+                    if (!csvColumns.includes(data.x)) {
                         csvColumns.push(data.x);
                     }
                 });
@@ -622,7 +609,7 @@ package.app.packets = function AppPackets(me) {
             var csvData = csvRows.map((row) => {
                 return csvColumns.map((column) => {
                     var val = row[column];
-                    if(!val) {
+                    if (!val) {
                         val = "";
                     }
                     return val;
@@ -631,5 +618,31 @@ package.app.packets = function AppPackets(me) {
             csvData.unshift(csvColumns);
             me.content.csv.export(me.options.dataProfile + ".csv", csvData);
         }
-    }
+    };
+    me.streamList = {
+        get: function (object) {
+            var count = 0;
+            var window = me.widget.window.window(object);
+            if (window && window.packetInfo) {
+                var streamRequests = window.packetInfo.streamRequests;
+                if (streamRequests) {
+                    var items = streamRequests.map(function (streamRequest, index) {
+                        var title = "";
+                        if(typeof streamRequest.runIndex === "undefined") {
+                            title = index+1;
+                        }
+                        else {
+                            title = (streamRequest.streamIndex+1) + ":" + (streamRequest.runIndex+1);
+                        }
+                        var result = [
+                            title,
+                        ];
+                        isFirst = false;
+                        return result;
+                    });
+                    return items;
+                }
+            }
+        }
+    };
 };

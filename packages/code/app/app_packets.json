@@ -384,7 +384,7 @@
                                     [
                                         "Last"
                                     ],
-                                    "core.number.fillArray(1-@app.packets.streamRequestCount)"
+                                    "app.packets.streamList"
                                 ]
                             }
                         }
