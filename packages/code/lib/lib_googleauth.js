@@ -37,7 +37,7 @@ package.lib.googleauth = function GoogleAuth(me) {
         return profile.getName();
     };
     me.signin = function (callback, object, googleUser) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window(object);
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!

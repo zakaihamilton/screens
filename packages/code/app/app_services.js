@@ -9,7 +9,7 @@ package.app.services = function AppServices(me) {
     };
     me.refresh = {
         set: function(object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.manager.service.items(function(items) {
                 var widgets = [];
                 for(var item of items) {

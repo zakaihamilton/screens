@@ -124,11 +124,11 @@ package.ui.focus = function UIFocus(me) {
     };
     me.active = {
         get: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             return me.is_active(window);
         },
         set: function (object, value) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var is_active = me.is_active(window);
             if (!is_active && value) {
                 me.focus(window);

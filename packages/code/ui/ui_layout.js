@@ -142,7 +142,7 @@ package.ui.layout = function UILayout(me) {
         var previousWidget = null, visibleWidget = null;
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
-            var window = me.widget.window.window(target);
+            var window = me.widget.window(target);
             for (; ; ) {
                 var concealed = me.core.property.get(window, "conceal");
                 var widget = source.firstChild;

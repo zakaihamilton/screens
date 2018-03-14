@@ -25,14 +25,14 @@ package.app.packets = function AppPackets(me) {
         });
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.viewType = me.ui.options.choiceSet(me, "viewType", (object, options, key, value) => {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.core.property.set(window.var.chart, "reset");
             me.core.property.set(window.var.chart, "type", "@app.packets.chartType");
             me.core.property.set(window.var.chart, "options", "@app.packets.chartOptions");
             me.core.property.set(window, "app.packets.refreshData");
         });
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window.streamIndex > 0) {
                 me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
             }
@@ -64,7 +64,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.dataMenuList = {
         get: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var dataList = me.dataList;
             if (!dataList) {
                 dataList = [];
@@ -90,7 +90,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.refreshData = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var autoRefresh = me.options.autoRefresh;
             me.manager.packet.info((info) => {
                 if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
@@ -163,7 +163,7 @@ package.app.packets = function AppPackets(me) {
     me.autoIncreasePacketDelay = {
         get: function (object) {
             var state = false;
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window.packetInfo) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
@@ -173,7 +173,7 @@ package.app.packets = function AppPackets(me) {
             return state;
         },
         set: function (object, value) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window.packetInfo) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
@@ -185,7 +185,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.updateData = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window.packetInfo) {
                 var packetCount = 0;
                 var dataSize = 0;
@@ -240,7 +240,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.reset = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.manager.packet.reset(() => {
                 if (window.streamIndex > 0) {
                     me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
@@ -274,7 +274,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.chartOptions = {
         get: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var viewType = me.calcViewType(window);
             var options = {};
             if (viewType.includes("Data by Time")) {
@@ -355,7 +355,7 @@ package.app.packets = function AppPackets(me) {
         get: function (object) {
             me.colors = [];
             var data = { datasets: [], labels: [] };
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (!window || !window.packetInfo) {
                 return data;
             }
@@ -498,7 +498,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.effects = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window.packetInfo && window.streamIndex <= 0) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
@@ -523,12 +523,12 @@ package.app.packets = function AppPackets(me) {
     };
     me.save = {
         get: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var text = JSON.stringify(window.packetInfo);
             return text;
         },
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var text = JSON.stringify(window.packetInfo);
             var date = new Date();
             var title = me.core.property.get(window.var.title, "ui.basic.text");
@@ -551,7 +551,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.onChangeStream = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text").split(":")[0];
             if (streamIndex === "Last") {
                 streamIndex = 0;
@@ -586,7 +586,7 @@ package.app.packets = function AppPackets(me) {
     };
     me.export = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var chartData = me.core.property.get(window, "app.packets.chartData");
             var csvColumns = [];
             chartData.datasets.map((dataset) => {
@@ -622,7 +622,7 @@ package.app.packets = function AppPackets(me) {
     me.streamList = {
         get: function (object) {
             var count = 0;
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (window && window.packetInfo) {
                 var streamRequests = window.packetInfo.streamRequests;
                 if (streamRequests) {

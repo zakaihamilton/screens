@@ -64,7 +64,7 @@ package.ui.property = function UIProperty(me) {
     };
     me.bubble = {
         set: function(object, properties) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var parent = me.widget.window.parent(window);
             if(parent) {
                 me.broadcast.set(parent, properties);

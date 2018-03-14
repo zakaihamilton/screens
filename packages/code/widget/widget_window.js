@@ -34,6 +34,7 @@ package.widget.window = function WidgetWindow(me) {
                 me.core.property.set(object, "ui.resize.enabled", !value && !maximized);
             }
         });
+        me.apply = me.window;
     };
     me.draw = {
         set: function(object) {

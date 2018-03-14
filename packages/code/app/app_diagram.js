@@ -55,7 +55,7 @@ package.app.diagram = function AppDiagram(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
@@ -71,7 +71,7 @@ package.app.diagram = function AppDiagram(me) {
                 });
             }
             me.viewType = me.ui.options.choiceSet(me, "viewType", function (object, options, key, value) {
-                var window = me.widget.window.window(object);
+                var window = me.widget.window(object);
                 me.core.property.notify(window, "app.diagram.reload");
             });
             me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.reload.set);
@@ -82,7 +82,7 @@ package.app.diagram = function AppDiagram(me) {
             me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.reload.set);
             me.headings = me.ui.options.toggleSet(me, "headings", me.reload.set);
             me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
-                var window = me.widget.window.window(object);
+                var window = me.widget.window(object);
                 me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                 me.core.property.notify(window, "reload");
                 me.core.property.notify(window, "update");
@@ -92,7 +92,7 @@ package.app.diagram = function AppDiagram(me) {
     };
     me.reload = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var path = me.core.property.get(window, "app.diagram.path");
             me.core.json.loadFile(function (diagramJson) {
                 me.core.property.set(window, "app.diagram.diagramData", diagramJson);
@@ -105,7 +105,7 @@ package.app.diagram = function AppDiagram(me) {
         get: function (object, info) {
             if (object && info) {
                 me.lock(info.task, task => {
-                    var window = me.widget.window.window(object);
+                    var window = me.widget.window(object);
                     me.kab.text.parse(function (value) {
                         info.value = value;
                         me.unlock(task);
@@ -114,7 +114,7 @@ package.app.diagram = function AppDiagram(me) {
             }
         },
         set: function (object, text) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.kab.text.parse(function (value) {
                 me.core.property.set(object, "ui.basic.html", value);
                 me.core.property.notify(window, "update");
@@ -123,7 +123,7 @@ package.app.diagram = function AppDiagram(me) {
     };
     me.refresh = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.core.property.set(window.var.viewer, {
                 "ui.basic.html":null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
@@ -134,14 +134,14 @@ package.app.diagram = function AppDiagram(me) {
     };
     me.viewAsText = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.core.property.set(window.var.viewer, "ui.basic.text", JSON.stringify(diagramData, null, 4));
         }
     };
     me.viewAsLayers = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {

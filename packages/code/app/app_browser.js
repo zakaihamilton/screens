@@ -9,7 +9,7 @@ package.app.browser = function AppBrowser(me) {
     };
     me.load = {
         set: function(object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var url = me.core.property.get(window.var.url, "text");
             if(!url.startsWith("www.")) {
                 url = "www." + url;

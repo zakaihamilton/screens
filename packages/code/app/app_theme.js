@@ -17,7 +17,7 @@ package.app.theme = function AppTheme(me) {
     };
     me.setTheme = {
         set: function(object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var theme = me.core.property.get(window.var.themeList, "selection")[0];
             theme = theme.toLowerCase();
             if(theme === "none") {

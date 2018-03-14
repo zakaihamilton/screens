@@ -8,7 +8,7 @@ package.ui.windowkey = function UIWindowKey(me) {
         return {
             get: function (object) {
                 if(property.endsWith("-")) {
-                    var window = me.widget.window.window(object);
+                    var window = me.widget.window(object);
                     var key = me.core.property.get(window, "key");
                     return property + key;
                 }

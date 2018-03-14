@@ -29,7 +29,7 @@ package.ui.resize = function UIResize(me) {
         set: function (object, event) {
             var target = object.resize_target;
             if (!target) {
-                target = me.widget.window.window(object);
+                target = me.widget.window(object);
             }
             if (!target.resize_enabled) {
                 event.preventDefault();
@@ -94,7 +94,7 @@ package.ui.resize = function UIResize(me) {
                 "resize": null,
                 "transition": false
             });
-            var window = me.widget.window.window(me.info.target);
+            var window = me.widget.window(me.info.target);
             me.core.property.notify(window, "update");
             var parent = me.widget.window.parent(me.info.target);
             me.core.property.notify(parent, "update");

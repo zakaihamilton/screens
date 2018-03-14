@@ -9,7 +9,7 @@ package.widget.tray = function WidgetTray(me) {
     };
     me.tray = {
         get: function(object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var parent = me.widget.window.parent(window);
             var type = "icon";
             if(parent) {

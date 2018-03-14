@@ -222,7 +222,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             }
             if (value) {
                 object.autoScrollTimer = setInterval(function () {
-                    var window = me.widget.window.window(object);
+                    var window = me.widget.window(object);
                     var hasParent = me.core.property.get(window, "ui.node.parent");
                     if (!hasParent) {
                         clearInterval(object.autoScrollTimer);

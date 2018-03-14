@@ -158,7 +158,7 @@ package.ui.basic = function UIBasic(me) {
             if(!value) {
                 value = object;
             }
-            object.window = me.widget.window.window(value);
+            object.window = me.widget.window(value);
         }
     };
     me.target = {

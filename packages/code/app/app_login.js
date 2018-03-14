@@ -30,7 +30,7 @@ package.app.login = function AppLogin(me) {
     me.attachGoogle = {
         set: function(object, value) {
             var widget = document.getElementById(value);
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var content = me.core.property.get(window, "widget.window.content");
             me.core.property.set(widget, "ui.node.parent", content);
             me.core.property.set(widget, "ui.property.style", {
@@ -47,7 +47,7 @@ package.app.login = function AppLogin(me) {
         }
     };
     me.signout = function(object, value) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window(object);
         me.core.property.set(object, "lib.googleauth.signout");
         me.core.property.set(window.var.userName, "ui.basic.text", "");
         me.core.property.set(object, "ui.basic.show", false);

@@ -26,7 +26,7 @@ package.app.folder = function AppFolder(me) {
     };
     me.refresh = {
         set: function (object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             var path = me.core.property.get(window, "app.folder.path");
             me.core.file.readDir(function (err, items) {
                 if (items) {

@@ -30,7 +30,7 @@ package.ui.arrange = function UIArrange(me) {
         }
     };
     me.reposition = function (object, callback) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window(object);
         me.core.property.set(window, "unmaximize");
         var parent = me.widget.window.parent(window);
         var content = null;
@@ -149,7 +149,7 @@ package.ui.arrange = function UIArrange(me) {
     };
     me.center = {
         set: function(object) {
-            var window = me.widget.window.window(object);
+            var window = me.widget.window(object);
             me.reposition(window, function(parent_region) {
                 parent_region.width /= 1.5;
                 parent_region.height /= 1.5;
