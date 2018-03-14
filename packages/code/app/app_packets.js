@@ -109,11 +109,11 @@ package.app.packets = function AppPackets(me) {
                     autoRefresh = false;
                 }
                 me.core.property.set(window, "app.packets.updateData");
+                if (me.timer) {
+                    clearTimeout(me.timer);
+                    me.timer = null;
+                }
                 if (autoRefresh) {
-                    if (me.timer) {
-                        clearTimeout(me.timer);
-                        me.timer = null;
-                    }
                     me.timer = setTimeout(() => {
                         me.core.property.set(window, "app.packets.refreshData");
                     }, 10000);
@@ -454,7 +454,7 @@ package.app.packets = function AppPackets(me) {
                             packetDelay = effects.packetDelay;
                         }
                         var streamName = dataProfileName;
-                        if(streamRequest.runIndex) {
+                        if (streamRequest.runIndex) {
                             streamName += " #" + (streamRequest.runIndex + 1);
                         }
                         var label = streamName + " (" + dataProfilePacketLoss + "%)";
@@ -632,11 +632,11 @@ package.app.packets = function AppPackets(me) {
                 if (streamRequests) {
                     var items = streamRequests.map(function (streamRequest, index) {
                         var title = "";
-                        if(typeof streamRequest.runIndex === "undefined") {
-                            title = index+1;
+                        if (typeof streamRequest.runIndex === "undefined") {
+                            title = index + 1;
                         }
                         else {
-                            title = (streamRequest.streamIndex+1) + ":" + (streamRequest.runIndex+1);
+                            title = (streamRequest.streamIndex + 1) + ":" + (streamRequest.runIndex + 1);
                         }
                         var result = [
                             title,
