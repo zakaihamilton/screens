@@ -33,7 +33,6 @@ package.app.player = function AppPlayer(me) {
             var window = me.singleton;
             me.core.property.set(window.var.tree, "clear");
             me.core.message.send_server("core.cache.use", (root) => {
-                console.log("groupListData:" + JSON.stringify(root));
                 me.groupListData = root;
                 me.core.property.set(window, "app.player.onChangeGroup", "");
             }, me.id, "storage.file.getChildren", me.rootPath, false);

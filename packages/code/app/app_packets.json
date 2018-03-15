@@ -120,6 +120,20 @@
                     }
                 ],
                 [
+                    "Average Duration by Packet Delay",
+                    "app.packets.viewType",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Average Duration % by Packet Delay",
+                    "app.packets.viewType",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Export",
                     "app.packets.export",
                     {

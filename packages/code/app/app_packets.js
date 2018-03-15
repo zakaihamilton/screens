@@ -259,12 +259,7 @@ package.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         if (viewType === "Auto") {
             if (window.streamIndex === -1) {
-                if (me.videoDuration(window)) {
-                    viewType = "Duration % by Packet Delay";
-                }
-                else {
-                    viewType = "Duration by Packet Delay";
-                }
+                viewType = "Average Duration by Packet Delay";
             }
             else {
                 viewType = "Data by Time";
@@ -354,10 +349,10 @@ package.app.packets = function AppPackets(me) {
     me.chartData = {
         get: function (object) {
             me.colors = [];
-            var data = { datasets: [], labels: [] };
+            var chartData = { datasets: [], labels: [] };
             var window = me.widget.window(object);
             if (!window || !window.packetInfo) {
-                return data;
+                return chartData;
             }
             var viewType = me.calcViewType(window);
             var dataProfiles = {};
@@ -372,6 +367,7 @@ package.app.packets = function AppPackets(me) {
             }
             var info = {};
             var colorIndex = 0;
+            var combinedCallback = false;
             Object.keys(dataProfiles).map((dataProfileName) => {
                 var dataProfile = dataProfiles[dataProfileName];
                 var effects = dataProfile.effects;
@@ -458,6 +454,10 @@ package.app.packets = function AppPackets(me) {
                             streamName += " #" + (streamRequest.runIndex + 1);
                         }
                         var label = streamName + " (" + dataProfilePacketLoss + "%)";
+                        if(yAxis.includes("Average")) {
+                            label = "Combined";
+                            combinedCallback = arr => parseInt(arr.reduce((a,b) => a + b, 0) / arr.length);
+                        }
                         var dataset = info[label];
                         if (!dataset) {
                             var color = me.colors[label];
@@ -468,14 +468,20 @@ package.app.packets = function AppPackets(me) {
                                 label: label,
                                 backgroundColor: color,
                                 borderColor: color,
-                                fill: false,
-                                data: []
+                                fill: false
                             };
+                            if(combinedCallback) {
+                                dataset.data = {};
+                            }
+                            else {
+                                dataset.data = [];
+                            }
                         }
                         var videoDuration = me.videoDuration(window);
                         var durationPercentage = duration;
                         if (videoDuration && duration) {
-                            durationPercentage = parseInt(videoDuration * 100 / duration);
+                            durationPercentage = parseInt(duration * 100 / videoDuration);
+                            durationPercentage = 100 - parseInt(durationPercentage / 10);
                         }
                         var values = {
                             Duration: duration,
@@ -483,21 +489,44 @@ package.app.packets = function AppPackets(me) {
                             "Packet Delay": packetDelay,
                             "Duration %": durationPercentage
                         };
-                        var data = {
-                            x: values[xAxis],
-                            y: values[yAxis]
-                        };
-                        dataset.data.push(data);
+                        var xValue = values[xAxis];
+                        var yValue = values[yAxis.replace(/Average\s/g, "")];
+                        var dataArray = dataset.data;
+                        if(combinedCallback) {
+                            var data = dataset.data[xValue];
+                            if(!data) {
+                                data = [];
+                                dataset.data[xValue] = data;
+                            }
+                            data.push(yValue);
+                        }
+                        else {
+                            var data = {
+                                x: xValue,
+                                y: yValue
+                            };
+                            dataset.data.push(data);
+                        }
                     }
                 });
             });
             Object.keys(info).sort().map((label) => {
                 var dataset = info[label];
+                if(combinedCallback) {
+                    var data = [];
+                    Object.keys(dataset.data).sort((a, b) => a - b).map((x) => {
+                        data.push({
+                            x:x,
+                            y:combinedCallback(dataset.data[x])
+                        });
+                    });
+                    dataset.data = data;
+                }
                 dataset.data.shift();
                 dataset.data.pop();
-                data.datasets.push(dataset);
+                chartData.datasets.push(dataset);
             });
-            return data;
+            return chartData;
         }
     };
     me.effects = {
