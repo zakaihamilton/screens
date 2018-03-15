@@ -259,7 +259,7 @@ package.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         if (viewType === "Auto") {
             if (window.streamIndex === -1) {
-                viewType = "Average Duration by Packet Delay";
+                viewType = "Average Duration % by Packet Delay";
             }
             else {
                 viewType = "Data by Time";
