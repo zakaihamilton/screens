@@ -87,7 +87,8 @@ package.manager.packet = function ManagerPacket(me) {
         me.packetInfo = {
             streamRequests:[],
             effects:{},
-            runIndex:0
+            runIndex:0,
+            streamIndex:0
         };
         me.core.service.sendAll("service.netmonitor.reset", () => {
             me.core.service.sendAll("service.netcontrol.reset", () => {

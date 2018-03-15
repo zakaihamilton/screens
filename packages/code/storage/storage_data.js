@@ -89,8 +89,7 @@ package.storage.data = function StorageData(me) {
     me.query = function (callback, type, order) {
         me.getService((service) => {
             const query = service.createQuery(type).order(order);
-            service
-                    .runQuery(query)
+            service.runQuery(query)
                     .then(results => {
                         const items = results[0];
                         items.forEach(task => {

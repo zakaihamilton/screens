@@ -13,5 +13,12 @@ package.ui.color = function UIColor(me) {
         "#ad0072",
         "#bf4a0f",
         "#ff7ba3",
-        "#6a0003"];
+        "#6a0003",
+        "red",
+        "blue",
+        "green",
+        "yellow",
+        "darkgray",
+        "brown"
+    ];
 };

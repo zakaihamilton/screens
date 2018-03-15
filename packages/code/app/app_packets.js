@@ -454,7 +454,7 @@ package.app.packets = function AppPackets(me) {
                             packetDelay = effects.packetDelay;
                         }
                         var streamName = dataProfileName;
-                        if (streamRequest.runIndex) {
+                        if (streamRequest.runIndex && !dataProfileName.includes("#")) {
                             streamName += " #" + (streamRequest.runIndex + 1);
                         }
                         var label = streamName + " (" + dataProfilePacketLoss + "%)";
@@ -525,6 +525,19 @@ package.app.packets = function AppPackets(me) {
             }
         }
     };
+    me.splitPacketInfo = function(callback, window) {
+        var runCount = window.packetInfo.runIndex + 1;
+        for(var runIndex = 0; runIndex < runCount; runIndex++) {
+            var packetInfo = Object.assign({}, window.packetInfo);
+            var streamRequests = packetInfo.streamRequests.filter((streamRequest) => {
+                return streamRequest.runIndex === runIndex;
+            });
+            packetInfo.streamRequests = streamRequests;
+            if(streamRequests.length) {
+                callback(packetInfo, runIndex);
+            }
+        }
+    };
     me.save = {
         get: function (object) {
             var window = me.widget.window(object);
@@ -533,24 +546,29 @@ package.app.packets = function AppPackets(me) {
         },
         set: function (object) {
             var window = me.widget.window(object);
-            var text = JSON.stringify(window.packetInfo);
-            var date = new Date();
-            var title = me.core.property.get(window.var.title, "ui.basic.text");
-            if (!title) {
-                title = date.toLocaleDateString();
-            }
-            var data = {
-                packetInfo: me.core.string.encode(text),
-                date: date.toString(),
-                title: title
-            };
-            me.storage.data.save(err => {
-                if (err) {
-                    me.core.console.error("Cannot save data: " + err.message);
-                } else {
-                    me.refreshDataList.set(object);
+            me.splitPacketInfo((packetInfo, runIndex) => {
+                var text = JSON.stringify(packetInfo);
+                var date = new Date();
+                var title = me.core.property.get(window.var.title, "ui.basic.text");
+                if (!title) {
+                    title = date.toLocaleDateString();
                 }
-            }, data, "app.packets.data", title, ["packetInfo"]);
+                if(runIndex) {
+                    title = title += " #" + (runIndex + 1);
+                }
+                var data = {
+                    packetInfo: me.core.string.encode(text),
+                    date: date.toString(),
+                    title: title
+                };
+                me.storage.data.save(err => {
+                    if (err) {
+                        me.core.console.error("Cannot save data: " + err.message);
+                    } else {
+                        me.refreshDataList.set(object);
+                    }
+                }, data, "app.packets.data", title, ["packetInfo"]);
+            }, window);
         }
     };
     me.onChangeStream = {
