@@ -124,6 +124,27 @@ package.app.packets = function AppPackets(me) {
     me.formatNumber = function (number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
+    me.formatDuration = function(duration) {
+        var sec = duration % 60;
+        var min = parseInt(duration / 60) % 60;
+        var hour = parseInt(duration / (60 * 60)) % 24;
+        var days = parseInt(duration / (24 * 60 * 60));
+        if(hour < 12) {
+            hour = "0" + hour;
+        }
+        if(min < 10) {
+            min = "0" + min;
+        }
+        if(sec < 10) {
+            sec = "0" + sec;
+        }
+        if(days) {
+            return days + " days" + " + " + hour + ":" + min + ":" + sec;
+        }
+        else {
+            return hour + ":" + min + ":" + sec;
+        }
+    };
     me.formatBytes = function (number) {
         var set = false;
         if (number < 1000) {
@@ -192,7 +213,17 @@ package.app.packets = function AppPackets(me) {
                 var abr = 0;
                 var duration = 0;
                 var effects = {};
-                var streamRequests = window.packetInfo.streamRequests;
+                var streamRequests = [];
+                if (me.options.dataProfile === "Combined") {
+                    me.dataList.map(function (item) {
+                        var packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                        streamRequests.push(...packetInfo.streamRequests);
+                    });
+                }
+                else {
+                    streamRequests = window.packetInfo.streamRequests;
+                }
+                var streamRequests = streamRequests;
                 if (streamRequests.length) {
                     var streamIndex = window.streamIndex;
                     if (!streamIndex || streamIndex > streamRequests.length) {
@@ -229,8 +260,7 @@ package.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
                 me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
-                var durationText = me.lib.moment().startOf('day').seconds(duration).format('HH:mm:ss');
-                me.core.property.set(window.var.duration, "ui.basic.text", durationText);
+                me.core.property.set(window.var.duration, "ui.basic.text", me.formatDuration(duration));
                 me.core.property.set(window.var.chart, "data", "@app.packets.chartData");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
@@ -264,6 +294,9 @@ package.app.packets = function AppPackets(me) {
             else {
                 viewType = "Data by Time";
             }
+        }
+        else if (window.streamIndex !== -1) {
+            viewType = "Data by Time";
         }
         return viewType;
     };
@@ -674,7 +707,7 @@ package.app.packets = function AppPackets(me) {
         get: function (object) {
             var count = 0;
             var window = me.widget.window(object);
-            if (window && window.packetInfo) {
+            if (window && window.packetInfo && me.options.dataProfile !== "Combined") {
                 var streamRequests = window.packetInfo.streamRequests;
                 if (streamRequests) {
                     var items = streamRequests.map(function (streamRequest, index) {
@@ -691,6 +724,7 @@ package.app.packets = function AppPackets(me) {
                         isFirst = false;
                         return result;
                     });
+                    items.unshift(["Last"]);
                     return items;
                 }
             }
