@@ -41,6 +41,13 @@ package.core.property = function CoreProperty(me) {
             });
             return results;
         }
+        if (name !== null && typeof name === "object") {
+            var results = {};
+            Object.keys(name).map(function (name) {
+                results[name] = me.core.property.get(object, name, value, method);
+            });
+            return results;
+        }
         if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
             var info = me.split(object, name, value);
             if (typeof info.value === "string") {

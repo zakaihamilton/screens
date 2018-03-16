@@ -159,6 +159,7 @@ package.core.module = function CoreModule(me) {
                 if (!startupArgs.endsWith("]")) {
                     startupArgs = startupArgs + "]";
                 }
+                startupArgs = startupArgs.replace(/[/"]/g, "'");
                 data = data.replace("__startup_app__", "'" + params.startupApp + "'");
                 data = data.replace("__startup_args__", startupArgs);
                 info.body = data;

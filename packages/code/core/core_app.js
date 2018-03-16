@@ -35,6 +35,9 @@ package.core.app = function CoreApp(me) {
                 if (Array.isArray(appArgs)) {
                     appArgs = appArgs.slice(0);
                 }
+                if(!appArgs) {
+                    appArgs = [];
+                }
                 result = me.core.message.send("app." + appName + ".launch", appArgs);
                 if (callback) {
                     callback(result);

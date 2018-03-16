@@ -6,14 +6,18 @@
 package.app.player = function AppPlayer(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
-    me.launch = function () {
+    me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.groupListData = [];
         me.sessionListData = [];
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        var params = {};
+        if(args.length > 0) {
+            params.groupName = args[0];
+        }
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         me.core.file.makeDir(null, me.cachePath);
         return me.singleton;
     };

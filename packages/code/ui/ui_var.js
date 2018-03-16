@@ -12,7 +12,7 @@ package.ui.var = function UIVar(me) {
                     variable = object.var[property];
                 } else if (object.parentNode && object.parentNode.var && object.parentNode.var[property]) {
                     variable = object.parentNode.var[property];
-                } else if (object.context && object.context && object.context.var[property]) {
+                } else if (object.context && object.context && object.context.var && object.context.var[property]) {
                     variable = object.context.var[property];
                 }
                 return variable;

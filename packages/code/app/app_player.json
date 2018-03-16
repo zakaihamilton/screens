@@ -24,7 +24,7 @@
         },
         {
             "ui.basic.var": "groupList",
-            "ui.basic.text": "American",
+            "ui.basic.text": "@ui.param.groupName(American)",
             "ui.property.style":{
                 "left":"10px",
                 "top":"30px",

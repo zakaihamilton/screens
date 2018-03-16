@@ -26,23 +26,8 @@ package.app.diagram = function AppDiagram(me) {
             }
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
-            json["ui.node.moveToFirst"] = true;
-            json["ui.style.breakInside"] = "avoid-column";
         }
         var window = me.ui.element.create(json, parent, "self");
-        if (args.length > 3) {
-            window.options = Object.assign({}, window.options, options);
-            window.options = options;
-            window.options.diagrams = false;
-            window.options.reload = false;
-            window.options.viewType = "Layers";
-            window.options.doExplanation = false;
-            window.options.headings = false;
-            window.options.phaseNumbers = false;
-            window.options.hoverCallback = null;
-            window.optionsLoaded = true;
-            me.core.property.set(window, "core.link.widget-window-restore", "app.diagram.restore");
-        }
         window.language = "english";
         return window;
     };

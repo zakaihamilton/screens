@@ -135,13 +135,13 @@ package.ui.element = function UIElement(me) {
             return object.component;
         }
     };
-    me.create = function (properties, parent, context=null) {
+    me.create = function (properties, parent, context=null, params=null) {
         if(typeof properties === "string") {
-            properties = me.core.property.get(parent, properties, context);
+            properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
-                me.create(item, parent, context);
+                me.create(item, parent, context, params);
             });
             return;
         }
@@ -186,6 +186,11 @@ package.ui.element = function UIElement(me) {
             context = object;
         }
         object.context = context ? context : parent;
+        if(params) {
+            for(var key in params) {
+                me.core.property.set(object, "ui.param." + key, params[key]);
+            }
+        }
         me.core.property.set(object, "ui.node.parent", parent);
         var constructor = component["ui.element.create"];
         if(constructor) {

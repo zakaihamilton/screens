@@ -8,18 +8,30 @@ package.ui.property = function UIProperty(me) {
         me.afterQueue = [];
         me.afterQueueTimer = null;
     };
+    me.handle = function(object, prefix, properties) {
+        if(Array.isArray(properties)) {
+            for (var property of properties) {
+                me.handle(object, prefix, property);
+            }
+        }
+        else {
+            for (var key in properties) {
+                var name = key;
+                if(prefix) {
+                    name = prefix + key;
+                }
+                me.core.property.set(object, name, properties[key]);
+            }
+        }
+    };
     me.attribute = {
         set: function(object, properties) {
-            for (var key in properties) {
-                me.core.property.set(object, "ui.attribute." + key, properties[key]);
-            }
+            me.handle(object, "ui.attribute.", properties);
         }
     };
     me.style = {
         set: function(object, properties) {
-            for (var key in properties) {
-                me.core.property.set(object, "ui.style." + key, properties[key]);
-            }
+            me.handle(object, "ui.style.", properties);
         }
     };
     me.after = {
@@ -31,9 +43,7 @@ package.ui.property = function UIProperty(me) {
                     var queue = me.afterQueue;
                     me.afterQueue = [];
                     queue.map(list => {
-                        for (var key in list.properties) {
-                            me.core.property.set(list.object, key, list.properties[key]);
-                        }
+                        me.handle(list.object, null, list.properties);
                     });
                 }, 0);
             }

@@ -26,9 +26,11 @@ package.app.packets = function AppPackets(me) {
         me.autoRefresh = me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
         me.viewType = me.ui.options.choiceSet(me, "viewType", (object, options, key, value) => {
             var window = me.widget.window(object);
-            me.core.property.set(window.var.chart, "reset");
-            me.core.property.set(window.var.chart, "type", "@app.packets.chartType");
-            me.core.property.set(window.var.chart, "options", "@app.packets.chartOptions");
+            me.core.property.set(window.var.chart, {
+                "reset": null,
+                "type": "@app.packets.chartType",
+                "options": "@app.packets.chartOptions"
+            });
             me.core.property.set(window, "app.packets.refreshData");
         });
         me.dataProfile = me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
@@ -124,21 +126,21 @@ package.app.packets = function AppPackets(me) {
     me.formatNumber = function (number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
-    me.formatDuration = function(duration) {
+    me.formatDuration = function (duration) {
         var sec = duration % 60;
         var min = parseInt(duration / 60) % 60;
         var hour = parseInt(duration / (60 * 60)) % 24;
         var days = parseInt(duration / (24 * 60 * 60));
-        if(hour < 12) {
+        if (hour < 12) {
             hour = "0" + hour;
         }
-        if(min < 10) {
+        if (min < 10) {
             min = "0" + min;
         }
-        if(sec < 10) {
+        if (sec < 10) {
             sec = "0" + sec;
         }
-        if(days) {
+        if (days) {
             return days + " days" + " + " + hour + ":" + min + ":" + sec;
         }
         else {
@@ -275,8 +277,10 @@ package.app.packets = function AppPackets(me) {
                 if (window.streamIndex > 0) {
                     me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
                 }
-                me.core.property.set(window, "app.packets.dataProfile", "Live");
-                me.core.property.set(window, "app.packets.refreshData");
+                me.core.property.set(window, {
+                    "app.packets.dataProfile": "Live",
+                    "app.packets.refreshData": null
+                });
             });
         }
     };
@@ -487,9 +491,9 @@ package.app.packets = function AppPackets(me) {
                             streamName += " #" + (streamRequest.runIndex + 1);
                         }
                         var label = streamName + " (" + dataProfilePacketLoss + "%)";
-                        if(yAxis.includes("Average")) {
+                        if (yAxis.includes("Average")) {
                             label = "Combined";
-                            combinedCallback = arr => parseInt(arr.reduce((a,b) => a + b, 0) / arr.length);
+                            combinedCallback = arr => parseInt(arr.reduce((a, b) => a + b, 0) / arr.length);
                         }
                         var dataset = info[label];
                         if (!dataset) {
@@ -503,7 +507,7 @@ package.app.packets = function AppPackets(me) {
                                 borderColor: color,
                                 fill: false
                             };
-                            if(combinedCallback) {
+                            if (combinedCallback) {
                                 dataset.data = {};
                             }
                             else {
@@ -525,9 +529,9 @@ package.app.packets = function AppPackets(me) {
                         var xValue = values[xAxis];
                         var yValue = values[yAxis.replace(/Average\s/g, "")];
                         var dataArray = dataset.data;
-                        if(combinedCallback) {
+                        if (combinedCallback) {
                             var data = dataset.data[xValue];
-                            if(!data) {
+                            if (!data) {
                                 data = [];
                                 dataset.data[xValue] = data;
                             }
@@ -545,12 +549,12 @@ package.app.packets = function AppPackets(me) {
             });
             Object.keys(info).sort().map((label) => {
                 var dataset = info[label];
-                if(combinedCallback) {
+                if (combinedCallback) {
                     var data = [];
                     Object.keys(dataset.data).sort((a, b) => a - b).map((x) => {
                         data.push({
-                            x:x,
-                            y:combinedCallback(dataset.data[x])
+                            x: x,
+                            y: combinedCallback(dataset.data[x])
                         });
                     });
                     dataset.data = data;
@@ -587,15 +591,15 @@ package.app.packets = function AppPackets(me) {
             }
         }
     };
-    me.splitPacketInfo = function(callback, window) {
+    me.splitPacketInfo = function (callback, window) {
         var runCount = window.packetInfo.runIndex + 1;
-        for(var runIndex = 0; runIndex < runCount; runIndex++) {
+        for (var runIndex = 0; runIndex < runCount; runIndex++) {
             var packetInfo = Object.assign({}, window.packetInfo);
             var streamRequests = packetInfo.streamRequests.filter((streamRequest) => {
                 return streamRequest.runIndex === runIndex;
             });
             packetInfo.streamRequests = streamRequests;
-            if(streamRequests.length) {
+            if (streamRequests.length) {
                 callback(packetInfo, runIndex);
             }
         }
@@ -615,7 +619,7 @@ package.app.packets = function AppPackets(me) {
                 if (!title) {
                     title = date.toLocaleDateString();
                 }
-                if(runIndex) {
+                if (runIndex) {
                     title = title += " #" + (runIndex + 1);
                 }
                 var data = {
@@ -644,9 +648,11 @@ package.app.packets = function AppPackets(me) {
                 streamIndex = -1;
             }
             window.streamIndex = streamIndex;
-            me.core.property.set(window.var.chart, "reset");
-            me.core.property.set(window.var.chart, "type", "@app.packets.chartType");
-            me.core.property.set(window.var.chart, "options", "@app.packets.chartOptions");
+            me.core.property.set(window.var.chart, {
+                "reset":null,
+                "type": "@app.packets.chartType",
+                "options": "@app.packets.chartOptions"
+            });
             me.core.property.notify(window, "app.packets.refreshData");
         }
     };
@@ -718,11 +724,7 @@ package.app.packets = function AppPackets(me) {
                         else {
                             title = (streamRequest.streamIndex + 1) + ":" + (streamRequest.runIndex + 1);
                         }
-                        var result = [
-                            title,
-                        ];
-                        isFirst = false;
-                        return result;
+                        return [title];
                     });
                     items.unshift(["Last"]);
                     return items;

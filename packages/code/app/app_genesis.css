@@ -1,0 +1,6 @@
+.app-genesis-canvas {
+    width: 100%;
+    height: calc(100% - 4px);
+    position: absolute;
+    top:2px;
+}

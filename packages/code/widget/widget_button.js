@@ -1,6 +1,6 @@
 /*
  @author Zakai Hamilton
- @component UIButton
+ @component WidgetButton
  */
 
 package.widget.button = function WidgetButton(me) {

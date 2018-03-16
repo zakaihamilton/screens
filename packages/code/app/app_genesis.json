@@ -1,0 +1,46 @@
+{
+    "title": "Genesis",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
+    "ui.resize.event": "app.genesis.update",
+    "ui.basic.elements": [
+        {
+            "ui.class.class": "app.genesis.canvas",
+            "mode": "2d",
+            "ui.basic.var":"canvas",
+            "ui.style.backgroundColor": "red",
+            "ui.property.after": [
+                {
+                    "stroke": {
+                        "start": {
+                            "x": 100,
+                            "y": 200
+                        },
+                        "end": {
+                            "x": 300,
+                            "y": 400
+                        }
+                    }
+                },
+                {
+                    "fillText": {
+                        "text": "Hello World!",
+                        "font": "30px Ariel",
+                        "pos": {
+                            "x": 500,
+                            "y": 600
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-genesis-window",
+        "storage.local.restore": "widget.window.store"
+    }
+}
