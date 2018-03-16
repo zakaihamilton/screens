@@ -12,35 +12,12 @@
             "ui.class.class": "app.genesis.canvas",
             "mode": "2d",
             "ui.basic.var":"canvas",
-            "ui.style.backgroundColor": "red",
-            "ui.property.after": [
-                {
-                    "stroke": {
-                        "start": {
-                            "x": 100,
-                            "y": 200
-                        },
-                        "end": {
-                            "x": 300,
-                            "y": 400
-                        }
-                    }
-                },
-                {
-                    "fillText": {
-                        "text": "Hello World!",
-                        "font": "30px Ariel",
-                        "pos": {
-                            "x": 500,
-                            "y": 600
-                        }
-                    }
-                }
-            ]
+            "ui.style.backgroundColor": "white"
         }
     ],
     "ui.property.after": {
         "storage.local.key": "app-genesis-window",
-        "storage.local.restore": "widget.window.store"
+        "storage.local.restore": "widget.window.store",
+        "app.genesis.update":null
     }
 }

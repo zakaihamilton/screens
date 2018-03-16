@@ -43,6 +43,13 @@ package.widget.button = function WidgetButton(me) {
         }
         return context;
     };
+    me.clear = function(object) {
+        var context = me.context(object);
+        context.save();
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.clearRect(0, 0, object.width, object.height);
+        context.restore();
+    };
     me.stroke = function(object, params) {
         if(!params || !params.start || !params.end) {
             return;
@@ -59,5 +66,22 @@ package.widget.button = function WidgetButton(me) {
         var context = me.context(object);
         context.font = params.font;
         context.fillText(params.text,params.pos.x,params.pos.y);        
+    };
+    me.fillRect = function(object, params) {
+        if(!params) {
+            return;
+        }
+        var context = me.context(object);
+        context.fillStyle = params.fillStyle;
+        context.fillRect(params.pos.x, params.pos.y, params.size.width, params.size.height);
+    };
+    me.circle = function(object, params) {
+        if(!params) {
+            return;
+        }
+        var context = me.context(object);
+        context.beginPath();
+        context.arc(params.center.x,params.center.y,params.radius,0,2*Math.PI);
+        context.stroke();
     };
 };
