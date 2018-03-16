@@ -7,9 +7,9 @@ package.require("storage.local", "browser");
 
 package.storage.local = function StorageLocal(me) {
     me.init = function () {
-        me.none = me.core.object.create(me);
-        me.local = me.core.object.create(me);
-        me.session = me.core.object.create(me);
+        me.none = me.core.object(me);
+        me.local = me.core.object(me);
+        me.session = me.core.object(me);
         if (me.isSupported()) {
             me.none.storage = null;
             me.none.members = function () {
@@ -32,8 +32,8 @@ package.storage.local = function StorageLocal(me) {
                 me.session.storage.clear();
             };
         }
-        me.key = me.core.object.property("storage.local.key");
-        me.location = me.core.object.property("storage.local.location");
+        me.core.object.property(me, "key");
+        me.core.object.property(me, "location");
     };
     me.isSupported = function () {
         try {

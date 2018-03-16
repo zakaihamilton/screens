@@ -14,7 +14,7 @@ package.widget.icon = function WidgetIcon(me) {
     me.extend = ["ui.drag.icon"];
     me["ui.element.default"] = __json__;
     me.init = function() {
-        me.type = me.core.object.property("widget.icon.type", {
+        me.core.object.property(me, "type", {
             set: function(object, value, name, oldValue) {
                 if(value === "icon") {
                     me.core.property.set(object.var.icon, "ui.attribute.width", "32px");

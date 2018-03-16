@@ -21,8 +21,8 @@ package.app.folder = function AppFolder(me) {
         return folder;
     };
     me.init = function () {
-        me.path = me.core.object.property("app.folder.path");
-        me.args = me.core.object.property("app.folder.args");
+        me.core.object.property(me, "path");
+        me.core.object.property(me, "args");
     };
     me.refresh = {
         set: function (object) {

@@ -3,7 +3,7 @@
  @component WidgetCanvas
  */
 
-package.widget.button = function WidgetButton(me) {
+package.widget.canvas = function WidgetCanvas(me) {
     me["ui.element.depends"] = {
         properties:["mode"]
     };

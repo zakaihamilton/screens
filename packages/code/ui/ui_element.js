@@ -179,7 +179,7 @@ package.ui.element = function UIElement(me) {
         else {
             object = document.createElement(tag);
         }
-        me.core.object.attach(object, component);
+        me.core.object(component, object);
         object.var = {};
             if(context === "self") {
             me.core.console.log("using self context");

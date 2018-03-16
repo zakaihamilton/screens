@@ -155,7 +155,7 @@ package.core.http = function CoreHttp(me) {
                 clientIp: me.clientIp(request),
                 responseHeaders: {}
             };
-            me.core.object.attach(info, me);
+            me.core.object(me, info);
             me.core.property.set(info, "check");
             if (!info.check) {
                 response.writeHead(403);
@@ -190,7 +190,7 @@ package.core.http = function CoreHttp(me) {
     };
     me.send = function (callback, info, async = true) {
         var headers = Object.assign({}, info.headers);
-        me.core.object.attach(info, me);
+        me.core.object(me, info);
         me.core.property.set(info, "headers", headers);
         if (me.platform === "service") {
             me.core.message.send_server(me.id + ".send", callback, info, async);

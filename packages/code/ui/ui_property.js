@@ -84,8 +84,7 @@ package.ui.property = function UIProperty(me) {
     };
     me.themedProperties = function (object, mapping) {
         for(var name in mapping) {
-            var callback = mapping[name];
-            var property = me.core.object.property(name, {
+            me.core.object.property(object, name, {
                 "set": function (object, value, name) {
                     if (value) {
                         me.core.property.set(object, "ui.property.broadcast", {
@@ -96,12 +95,12 @@ package.ui.property = function UIProperty(me) {
                             "ui.class.remove": name
                         });
                     }
+                    var callback = mapping[name];
                     if (callback) {
                         callback(object, value, name);
                     }
                 }
             });
-            object[name] = property;
         }
     };
 };

@@ -21,7 +21,7 @@ package.app.viewer = function AppViewer(me) {
         return me.singleton;
     };
     me.init = function () {
-        me.path = me.core.object.property("app.viewer.path");
+        me.core.object.property(me, "path");
     };
     me.reload = {
         set: function(object) {
