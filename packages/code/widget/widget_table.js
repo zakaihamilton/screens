@@ -8,7 +8,9 @@ package.widget.table = function WidgetTable(me) {
         "ui.basic.tag": "table"
     };
     me.init = function () {
-        me.core.object.property(me, "firstRowHeader");
+        me.core.property.set(me, {
+            "core.object.firstRowHeader":null
+        });
     };
     me["ui.element.create"] = function (object) {
         me.core.property.set(object, "firstRowHeader", true);

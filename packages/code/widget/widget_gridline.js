@@ -18,8 +18,10 @@ package.widget.gridline = function WidgetGridLine(me) {
         "borderStyle":"solid"
     };
     me.init = function() {
-        me.core.object.property(me, "color");
-        me.core.object.property(me, "borderStyle");
+        me.core.property.set(me, {
+            "core.object.color":null,
+            "core.object.borderStyle":null
+        });
     };
     me.line = {
         get: function(object) {

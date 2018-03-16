@@ -32,8 +32,10 @@ package.storage.local = function StorageLocal(me) {
                 me.session.storage.clear();
             };
         }
-        me.core.object.property(me, "key");
-        me.core.object.property(me, "location");
+        me.core.property.set(me, {
+            "core.object.key":null,
+            "core.object.location":null
+        });
     };
     me.isSupported = function () {
         try {

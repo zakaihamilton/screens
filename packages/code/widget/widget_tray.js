@@ -33,7 +33,7 @@ package.widget.tray = function WidgetTray(me) {
         }
     };
     me.init = function() {
-        me.core.object.property(me, "type", {
+        me.core.property.set(me, "core.object.type", {
             set: function(object, value) {
                 me.core.property.set(object, "ui.property.broadcast", {
                     "type":value
