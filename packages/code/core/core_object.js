@@ -19,6 +19,7 @@ package.core.object = function CoreObject(me) {
                 var componentId = object.id || object.component;
                 if (info && info.component) {
                     componentId = info.component;
+                    property = componentId + "." + property;
                 }
                 var name = componentId + "." + property;
                 object[property] = {

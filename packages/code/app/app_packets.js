@@ -48,11 +48,7 @@ package.app.packets = function AppPackets(me) {
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
                 });
-                me.include("lib.moment", function (info) {
-                    if (info.complete) {
-                        me.unlock(task);
-                    }
-                });
+                me.unlock(task);
             }, "app.packets.data", "title");
         });
     };
@@ -492,7 +488,7 @@ package.app.packets = function AppPackets(me) {
                         }
                         var label = streamName + " (" + dataProfilePacketLoss + "%)";
                         if (yAxis.includes("Average")) {
-                            label = "Combined";
+                            label = dataProfilePacketLoss + "% Packet Loss";
                             combinedCallback = arr => parseInt(arr.reduce((a, b) => a + b, 0) / arr.length);
                         }
                         var dataset = info[label];
