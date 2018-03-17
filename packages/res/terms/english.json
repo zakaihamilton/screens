@@ -136,7 +136,8 @@
             "Taamimof": "Taamim of",
             "Eser de Sefirot": "Eser Sefirot",
             "Torahall": "Torah all",
-            "\nOr a": "__Or a"
+            "\nOr a": "__Or a",
+            "west departs from the east":"__west departs from the __east"
         },
         "tags":{
             "<subtitle>": "\n<b>",
@@ -260,8 +261,8 @@
         },
         {
             "match": "/^Ohr Pnimi$",
-            "prefix": "<h3>",
-            "suffix": "</h3>"
+            "prefix": "<h4>",
+            "suffix": "</h4>"
         },
         {
             "find": "/([.?!:;,…]) \n",
@@ -3880,7 +3881,7 @@
         },
         {
             "translation": "First Overcoming",
-            "term": "Hitagbrut Aleph",
+            "term": "Hitgabrut Aleph",
             "hebrew": "התגברות א׳"
         },
         {
