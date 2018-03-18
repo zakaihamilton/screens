@@ -4,10 +4,10 @@
  */
 
 package.widget.canvas = function WidgetCanvas(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties:["mode"]
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag":"canvas",
         "dynamicSize":true
     };

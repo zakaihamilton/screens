@@ -4,7 +4,7 @@
  */
 
 package.widget.embed = function WidgetEmbed(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "iframe",
         "ui.class.class": "iframe"
     };

@@ -4,7 +4,7 @@
  */
 
 package.widget.bar = function WidgetBar(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "container"
     };
 };

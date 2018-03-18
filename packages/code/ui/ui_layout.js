@@ -269,7 +269,7 @@ package.ui.layout = function UILayout(me) {
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
         target = me.content(target);
-        var page = me.ui.element.create({
+        var page = me.ui.element({
             "ui.basic.tag": "div",
             "ui.class.class": options.pageClass,
             "ui.style.width": pageWidth + "px",
@@ -366,7 +366,7 @@ package.ui.layout = function UILayout(me) {
         return page;
     };
     me.createBreak = function (target) {
-        var page = me.ui.element.create({
+        var page = me.ui.element({
             "ui.basic.tag": "br"
         }, target);
         return page;

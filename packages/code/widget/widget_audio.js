@@ -4,7 +4,7 @@
  */
 
 package.widget.audio = function WidgetAudio(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag":"audio",
         "ui.attribute.controls":"",
         "ui.attriubte.preload":"auto",

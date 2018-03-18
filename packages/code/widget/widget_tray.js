@@ -4,7 +4,7 @@
  */
 
 package.widget.tray = function WidgetTray(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class":"container"
     };
     me.tray = {
@@ -23,7 +23,7 @@ package.widget.tray = function WidgetTray(me) {
                 parent.var = {};
             }
             if(!parent.var.tray) {
-                me.ui.element.create({
+                me.ui.element({
                     "ui.element.component":"widget.tray",
                     "ui.basic.var":"tray",
                     "type":type

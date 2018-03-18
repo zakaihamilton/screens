@@ -9,7 +9,7 @@ package.widget.container = function WidgetContainer(me) {
         "ui.basic.text": "text",
         "ui.basic.html": "html"
     };
-    me["ui.element.default"] = __json__;
+    me.properties = __json__;
     me.content = function (object) {
         return object.var.content;
     };
@@ -27,7 +27,7 @@ package.widget.container = function WidgetContainer(me) {
     me.elements = {
         set: function (object, value) {
             if (value) {
-                me.ui.element.create(value, object.var.content, object.context);
+                me.ui.element(value, object.var.content, object.context);
             }
         }
     };

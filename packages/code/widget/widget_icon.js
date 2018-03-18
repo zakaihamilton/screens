@@ -4,7 +4,7 @@
  */
 
 package.widget.icon = function WidgetIcon(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.basic.src", "text"]
     };
     me["core.property.redirect"] = {
@@ -12,7 +12,7 @@ package.widget.icon = function WidgetIcon(me) {
         "ui.basic.src" : "src"
     };
     me.extend = ["ui.drag.icon"];
-    me["ui.element.default"] = __json__;
+    me.properties = __json__;
     me.init = function() {
         me.core.property.set(me, "core.object.type", {
             set: function(object, value, name, oldValue) {

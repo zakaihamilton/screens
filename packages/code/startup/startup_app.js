@@ -5,7 +5,7 @@
 
 package.startup.app = function StartupApp(me) {
     me.run = function(task) {
-        me.ui.element.create([
+        me.ui.element([
             {
                 "ui.element.component":"widget.desktop",
                 "ui.basic.var":"desktop"

@@ -4,10 +4,10 @@
  */
 
 package.widget.terminal = function WidgetTerminal(me) {
-    me["ui.element.default"] = __json__;
+    me.properties = __json__;
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window(terminal);
-        var field = me.ui.element.create({
+        var field = me.ui.element({
             "ui.basic.tag": "input",
             "ui.class.class":"widget.terminal.field"
         }, window);
@@ -90,7 +90,7 @@ package.widget.terminal = function WidgetTerminal(me) {
     };
     me.print = {
         set: function (terminal, message) {
-            var print = me.ui.element.create({
+            var print = me.ui.element({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);

@@ -4,7 +4,7 @@
  */
 
 package.widget.menu = function WidgetMenu(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "horizontal",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
@@ -38,7 +38,7 @@ package.widget.menu = function WidgetMenu(me) {
                 if (object.var.header) {
                     parent = object.var.header;
                 }
-                object.var.menu = me.ui.element.create({
+                object.var.menu = me.ui.element({
                     "ui.element.component": "widget.menu",
                     "ui.style.position": "relative",
                     "ui.group.data": {
@@ -94,7 +94,7 @@ package.widget.menu = function WidgetMenu(me) {
         }
     };
     me.create_menu = function (window, object, region, values, bottomUp) {
-        var menu = me.ui.element.create({
+        var menu = me.ui.element({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.left": region.left + "px",
@@ -117,7 +117,7 @@ package.widget.menu = function WidgetMenu(me) {
 };
 
 package.widget.menu.popup = function WidgetMenuPopup(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "widget.menu.vertical",
         "ui.basic.elements": {
             "ui.basic.var": "modal",
@@ -141,11 +141,11 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
 };
 
 package.widget.menu.item = function WidgetMenuItem(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click"
     };
-    me["ui.element.depends"] = {
+    me.dependencies = {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
     };

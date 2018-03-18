@@ -4,7 +4,7 @@
  */
 
 package.widget.video = function WidgetVideo(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag":"video",
         "ui.attribute.controls":"",
         "ui.attriubte.preload":"auto",

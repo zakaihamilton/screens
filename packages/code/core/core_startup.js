@@ -10,7 +10,7 @@ package.core.startup = function CoreStartup(me) {
     };
     me.run = function(callback) {
         me.lock((task) => {
-            var startup = me["startup"];
+            var startup = package["startup"];
             if(startup) {
                 var components = Object.keys(startup);
                 if(components) {

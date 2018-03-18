@@ -16,7 +16,7 @@ package.app.folder = function AppFolder(me) {
         }
         json.title = "Folder - " + name;
         json["app.folder.path"] = path;
-        var folder = me.ui.element.create(json, "workspace", "self");
+        var folder = me.ui.element(json, "workspace", "self");
         me.core.property.notify(folder, "app.folder.refresh");
         return folder;
     };

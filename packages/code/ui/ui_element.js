@@ -4,6 +4,9 @@
  */
 
 package.ui.element = function UIElement(me) {
+    me.init = function() {
+        me.apply = me.createElements;
+    };
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -12,7 +15,7 @@ package.ui.element = function UIElement(me) {
                 return null;
             }
             var component = me.browse(component_name);
-            var depends = component["ui.element.depends"];
+            var depends = component.dependencies;
             if (depends) {
                 if (depends.parent) {
                     if (parent) {
@@ -44,7 +47,7 @@ package.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return me.browse(target)["ui.element.depends"].properties.length - me.browse(source)["ui.element.depends"].properties.length;
+            return me.browse(target).dependencies.properties.length - me.browse(source).dependencies.properties.length;
         });
         if(!matches.length) {
             return null;
@@ -52,7 +55,7 @@ package.ui.element = function UIElement(me) {
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (me.browse(matches[match_index])["ui.element.depends"].parent) {
+                if (me.browse(matches[match_index]).dependencies.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -125,13 +128,13 @@ package.ui.element = function UIElement(me) {
             return object.component;
         }
     };
-    me.create = function (properties, parent, context=null, params=null) {
+    me.createElements = function (properties, parent, context=null, params=null) {
         if(typeof properties === "string") {
             properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
             properties.map(function (item) {
-                me.create(item, parent, context, params);
+                me.createElements(item, parent, context, params);
             });
             return;
         }
@@ -154,7 +157,7 @@ package.ui.element = function UIElement(me) {
             component_name = "ui.element";
         }
         var component = me.browse(component_name);
-        var defaultProperties = component["ui.element.default"];
+        var defaultProperties = component.properties;
         me.core.console.log("creating element of " + component_name);
         if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
             tag = defaultProperties['ui.basic.tag'];
@@ -162,13 +165,7 @@ package.ui.element = function UIElement(me) {
         if(!tag) {
             tag = "div";
         }
-        var creationMethod = me.find(parent, "createElement");
-        if(creationMethod) {
-            object = creationMethod(tag);
-        }
-        else {
-            object = document.createElement(tag);
-        }
+        object = document.createElement(tag);
         me.core.object(component, object);
         object.var = {};
             if(context === "self") {
@@ -182,7 +179,7 @@ package.ui.element = function UIElement(me) {
             }
         }
         me.core.property.set(object, "ui.node.parent", parent);
-        var constructor = component["ui.element.create"];
+        var constructor = component.create;
         if(constructor) {
             constructor(object, parent);
         }

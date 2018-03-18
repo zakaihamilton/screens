@@ -20,7 +20,7 @@ package.app.player = function AppPlayer(me) {
         if(args.length > 1) {
             params.sessionName = args[1];
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
+        me.singleton = me.ui.element(__json__, "workspace", "self", params);
         me.core.file.makeDir(null, me.cachePath);
         return me.singleton;
     };

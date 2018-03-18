@@ -7,7 +7,7 @@ package.app.info = function AppInfo(me) {
     me.launch = function (args) {
         var json = {title:args[0],"ui.var.data":args[1]};
         Object.assign(json, __json__);
-        return me.ui.element.create(json, "workspace", "self");
+        return me.ui.element(json, "workspace", "self");
     };
     me.data = {
         get: function(object, value) {

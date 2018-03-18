@@ -4,10 +4,10 @@
  */
 
 package.widget.gridline = function WidgetGridLine(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["line"]
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "div",
         "ui.property.style": {
             "position": "absolute",

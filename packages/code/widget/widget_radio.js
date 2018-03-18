@@ -4,14 +4,14 @@
  */
 
 package.widget.radio = function WidgetRadio(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.basic.text","state","group"]
     };
     me["core.property.redirect"] = {
         "ui.basic.text": "text",
         "ui.monitor.change":"change"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "container",
         "ui.basic.elements":[{
                     "ui.basic.var": "input",

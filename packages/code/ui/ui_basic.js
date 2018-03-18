@@ -101,7 +101,7 @@ package.ui.basic = function UIBasic(me) {
     me.elements = {
         set: function(object, value) {
             if (value) {
-                me.ui.element.create(value, object, object.context);
+                me.ui.element(value, object, object.context);
             }
         }
     };

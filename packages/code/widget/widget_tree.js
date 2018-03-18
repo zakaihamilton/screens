@@ -4,13 +4,13 @@
  */
 
 package.widget.tree = function WidgetTree(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.element.count", "widget.tree.collapse"]
     };
     me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -61,7 +61,7 @@ package.widget.tree = function WidgetTree(me) {
     };
 };
 package.widget.tree.dropdown = function WidgetDropDownList(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
     };
     me["core.property.redirect"] = {
@@ -71,7 +71,7 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
         "ui.group.data": "data",
         "ui.monitor.change": "monitorChange"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "group",
         "ui.basic.elements": [
             {
@@ -109,7 +109,7 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.dropdown = {
         set: function (object, value) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            object.var.tree = me.ui.element.create({
+            object.var.tree = me.ui.element({
                 "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -165,7 +165,7 @@ package.widget.tree.popup = function WidgetListPopup(me) {
     me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -215,14 +215,14 @@ package.widget.tree.popup = function WidgetListPopup(me) {
 };
 
 package.widget.tree.list = function WidgetTreeList(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "ul",
         "ui.class.class": "widget.tree.list"
     };
 };
 
 package.widget.tree.item = function WidgetTreeItem(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "li",
         "ui.class.class": "widget.tree.item",
         "ui.basic.elements": [
@@ -258,7 +258,7 @@ package.widget.tree.item = function WidgetTreeItem(me) {
         "ui.basic.elements": "elements",
         "ui.basic.text": "text"
     };
-    me["ui.element.depends"] = {
+    me.dependencies = {
         parent: ["widget.tree", "widget.tree.popup", "widget.tree.item", "widget.tree.list"],
         properties: ["ui.basic.text"]
     };
@@ -283,13 +283,13 @@ package.widget.tree.item = function WidgetTreeItem(me) {
         set: function (object, value) {
             if (value) {
                 if (!object.var.list) {
-                    object.var.list = me.ui.element.create({
+                    object.var.list = me.ui.element({
                         "ui.element.component": "widget.tree.list",
                         "ui.basic.var": "list"
                     }, object, object.context);
                 }
                 me.core.property.set(object.var.icon, "ui.class.add", "parent");
-                me.ui.element.create(value, object.var.list, object.context);
+                me.ui.element(value, object.var.list, object.context);
                 me.core.property.set(object, "update");
             }
         }

@@ -4,7 +4,7 @@
  */
 
 package.widget.content = function WidgetContent(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "base",
         "ui.touch.wheel":"wheel"
     };

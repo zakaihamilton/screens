@@ -4,10 +4,10 @@
  */
 
 package.widget.image = function WidgetImage(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties:["ui.basic.src"]
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag" : "img"
     };
 };

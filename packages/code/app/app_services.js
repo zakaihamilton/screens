@@ -5,7 +5,7 @@
 
 package.app.services = function AppServices(me) {
     me.launch = function (args) {
-        return me.ui.element.create(__json__, "workspace", "self");
+        return me.ui.element(__json__, "workspace", "self");
     };
     me.refresh = {
         set: function(object) {

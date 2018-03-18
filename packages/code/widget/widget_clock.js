@@ -4,10 +4,10 @@
  */
 
 package.widget.clock = function WidgetClock(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "container"
     };
-    me["ui.element.create"] = function (object) {
+    me.create = function (object) {
         setInterval(function () {
             var today = new Date();
             var h = today.getHours();

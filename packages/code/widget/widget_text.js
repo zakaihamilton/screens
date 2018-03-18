@@ -4,10 +4,10 @@
  */
 
 package.widget.text = function WidgetText(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties:["ui.basic.text"]
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class":"normal"
     };
 };

@@ -4,7 +4,7 @@
  */
 
 package.widget.chart = function WidgetChart(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "div",
         "ui.basic.elements": {
             "ui.basic.tag": "canvas",

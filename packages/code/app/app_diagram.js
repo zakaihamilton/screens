@@ -27,7 +27,7 @@ package.app.diagram = function AppDiagram(me) {
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
         }
-        var window = me.ui.element.create(json, parent, "self");
+        var window = me.ui.element(json, parent, "self");
         window.language = "english";
         return window;
     };
@@ -130,7 +130,7 @@ package.app.diagram = function AppDiagram(me) {
         set: function (object) {
             var window = me.widget.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
-            me.ui.element.create(diagramData.layers, window.var.viewer);
+            me.ui.element(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
                 me.core.property.set(window, "title", diagramData.title);
             }

@@ -4,7 +4,7 @@
  */
 
 package.widget.spinner = function WidgetSpinner(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "container"
     };
 };

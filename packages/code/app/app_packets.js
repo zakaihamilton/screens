@@ -9,7 +9,7 @@ package.app.packets = function AppPackets(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element(__json__, "workspace", "self");
         if (me.options.dataProfile !== "Live" && me.options.dataProfile !== "Combined") {
             me.core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
         }

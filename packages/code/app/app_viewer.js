@@ -16,7 +16,7 @@ package.app.viewer = function AppViewer(me) {
         }
         json.title = "Viewer - " + name;
         json["app.viewer.path"] = path;
-        var viewer = me.ui.element.create(json, "workspace", "self");
+        var viewer = me.ui.element(json, "workspace", "self");
         me.core.property.notify(viewer, "app.viewer.reload");
         return me.singleton;
     };

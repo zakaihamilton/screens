@@ -4,7 +4,7 @@
  */
 
 package.widget.editor = function WidgetEditor(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "textarea",
         "ui.class.class": "border"
     };

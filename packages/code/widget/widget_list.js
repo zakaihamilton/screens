@@ -4,13 +4,13 @@
  */
 
 package.widget.list = function WidgetList(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.element.count"]
     };
     me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -72,7 +72,7 @@ package.widget.list = function WidgetList(me) {
 };
 
 package.widget.list.dropdown = function WidgetDropDownList(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text"]
     };
     me["core.property.redirect"] = {
@@ -82,7 +82,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
         "ui.group.data": "data",
         "ui.monitor.change":"monitorChange"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "group",
         "ui.basic.elements": [
             {
@@ -120,7 +120,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.dropdown = {
         set: function (object, value) {
             var region = me.ui.rect.absolute_region(object.parentNode);
-            object.var.list = me.ui.element.create({
+            object.var.list = me.ui.element({
                 "ui.element.component": "widget.list.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -177,7 +177,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
     me["core.property.redirect"] = {
         "ui.basic.elements": "elements"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.class.class": "border",
         "ui.basic.elements": [
             {
@@ -227,13 +227,13 @@ package.widget.list.popup = function WidgetListPopup(me) {
 };
 
 package.widget.list.item = function WidgetListItem(me) {
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",
         "ui.touch.default": "dblclick",
         "ui.class.class": "widget.list.item"
     };
-    me["ui.element.depends"] = {
+    me.dependencies = {
         parent: ["widget.list", "widget.list.popup"],
         properties: ["ui.basic.text"]
     };

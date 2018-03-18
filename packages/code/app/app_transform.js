@@ -9,7 +9,7 @@ package.app.transform = function AppTransform(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element(__json__, "workspace", "self");
     };
     me.initOptions = {
         set: function (object) {

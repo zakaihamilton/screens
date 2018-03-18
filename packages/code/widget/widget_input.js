@@ -4,13 +4,13 @@
  */
 
 package.widget.input = function WidgetInput(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties:["ui.basic.text","ui.basic.type"]
     };
     me["core.property.redirect"] = {
         "ui.basic.text":"text"
     };
-    me["ui.element.default"] = {
+    me.properties = {
         "ui.basic.tag" : "input",
         "ui.class.class" : "normal",
         "ui.attribute.tabindex":"0"

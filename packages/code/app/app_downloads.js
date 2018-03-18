@@ -5,7 +5,7 @@
 
 package.app.downloads = function AppDownloads(me) {
     me.launch = function (args) {
-        return me.ui.element.create(__json__, "workspace", "self");
+        return me.ui.element(__json__, "workspace", "self");
     };
     me.refresh = {
         set: function(object) {

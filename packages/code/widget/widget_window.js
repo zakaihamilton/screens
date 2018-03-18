@@ -6,7 +6,7 @@
 package.require("widget.window", "browser");
 
 package.widget.window = function WidgetWindow(me) {
-    me["ui.element.depends"] = {
+    me.dependencies = {
         properties: ["title"]
     };
     me.extend = ["ui.focus"];
@@ -15,7 +15,7 @@ package.widget.window = function WidgetWindow(me) {
         "ui.style.background": "background",
         "ui.basic.elements": "elements"
     };
-    me["ui.element.default"] = __json__;
+    me.properties = __json__;
     me.init = function () {
         me.ui.property.themedProperties(me, {
             "popup":null,
@@ -149,7 +149,7 @@ package.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             if (value) {
                 var content = me.core.property.get(object, "widget.window.content");
-                me.ui.element.create(value, content, object.context);
+                me.ui.element(value, content, object.context);
             }
         }
     };
