@@ -749,8 +749,17 @@ package.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var language = window.language;
         var voicelist = me.media.voice.voices(language);
+        var remote = false;
+        voicelist = voicelist.sort((a, b) => a.localService !== b.localService);
         voicelist = voicelist.map((voice) => {
+            var name = voice.name;
+            var separator = false;
+            if(!voice.localService && !remote) {
+                remote = true;
+                separator = true;
+            }
             return [voice.name, "app.transform.voice", {
+                    "separator":separator,
                     "state": "select"
                 }
             ];
