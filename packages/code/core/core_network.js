@@ -13,4 +13,17 @@ package.core.network = function CoreNetwork(me) {
         }
         callback(ip);
     };
+    me.isOnline = function() {
+        return navigator.onLine;
+    };
+    me.online = {
+        set: function (object, value) {
+            me.ui.event.register(null, object, "online", value, "online", window);
+        }
+    };
+    me.offline = {
+        set: function (object, value) {
+            me.ui.event.register(null, object, "offline", value, "offline", window);
+        }
+    };
 };

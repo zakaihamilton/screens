@@ -61,11 +61,9 @@ package.core.object = function CoreObject(me) {
                         return value;
                     },
                     set: function (object, value) {
+                        var result = object;
                         console.log("set property: " + property + " value: " + value);
                         if (!object) {
-                            return;
-                        }
-                        if (info && info.readOnly) {
                             return;
                         }
                         if (!object.values) {
@@ -75,18 +73,20 @@ package.core.object = function CoreObject(me) {
                             object.dirty = {};
                         }
                         var oldValue = object.values[name];
+                        object.dirty[name] = false;
                         if (oldValue === value) {
-                            object.dirty[name] = false;
                             return;
                         }
-                        object.values[name] = value;
-                        object.dirty[name] = false;
+                        if(!info || !info.immutable) {
+                            object.values[name] = value;
+                        }
                         if (info && "set" in info) {
                             var callback = info["set"];
                             if (callback) {
-                                callback(object, value, property, oldValue);
+                                result = callback(object, value, property, oldValue);
                             }
                         }
+                        return result;
                     },
                     dirty: function (object) {
                         if (!object) {

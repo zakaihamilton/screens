@@ -44,7 +44,7 @@
                 ]
             },
             "storage.local.key": "@ui.windowkey.app-player-group",
-            "storage.local.restore": "ui.basic.text"
+            "storage.local.restore": "@ui.param.groupName(ui.basic.text)"
         },
         {
             "ui.basic.text": "Count:",
@@ -161,6 +161,6 @@
     "ui.property.after":{
         "storage.local.key": "app-player-window",
         "storage.local.restore": "widget.window.store",
-        "app.player.update":null
+        "app.player.update":"@ui.param.sessionName"
     }
 }

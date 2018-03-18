@@ -17,6 +17,9 @@ package.app.player = function AppPlayer(me) {
         if(args.length > 0) {
             params.groupName = args[0];
         }
+        if(args.length > 1) {
+            params.sessionName = args[1];
+        }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         me.core.file.makeDir(null, me.cachePath);
         return me.singleton;
@@ -33,27 +36,32 @@ package.app.player = function AppPlayer(me) {
         }
     };
     me.update = {
-        set: function (object) {
+        set: function (object, value) {
             var window = me.singleton;
             me.core.property.set(window.var.tree, "clear");
             me.core.message.send_server("core.cache.use", (root) => {
                 me.groupListData = root;
-                me.core.property.set(window, "app.player.onChangeGroup", "");
+                me.core.property.set(window, "app.player.onChangeGroup", value);
             }, me.id, "storage.file.getChildren", me.rootPath, false);
         }
     };
     me.onChangeGroup = {
-        set: function (object, string) {
+        set: function (object, value) {
             var window = me.singleton;
+            var text = me.core.property.get(window.var.groupList, "ui.basic.text");
             me.core.property.set(window.var.sessionList, "ui.basic.text", "");
             me.core.property.set([window.var.audioType,window.var.videoType], "ui.style.visibility", "hidden");
             me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.groupList, "ui.basic.save", null);
-            me.updateSessions();
+            var sessionName = null;
+            if(text !== value) {
+                sessionName = value;
+            }
+            me.updateSessions(sessionName);
         }
     };
     me.onChangeSession = {
-        set: function (object, string) {
+        set: function (object, value) {
             me.updateSession();
         }
     };
@@ -81,7 +89,7 @@ package.app.player = function AppPlayer(me) {
         }
         me.core.property.notify(window, "app.player.updatePlayer");
     };
-    me.updateSessions = function () {
+    me.updateSessions = function (sessionName) {
         var window = me.singleton;
         var group = me.core.property.get(window.var.groupList, "ui.basic.text");
         if (group) {
@@ -92,6 +100,9 @@ package.app.player = function AppPlayer(me) {
                 if(sessions && sessions.length) {
                     sessionCount = sessions.length;
                     var name = sessions[0][0];
+                    if(sessionName) {
+                        name = sessionName;
+                    }
                     if (name) {
                         me.core.property.set(window.var.sessionList, "ui.basic.text", name);
                         me.updateSession();
