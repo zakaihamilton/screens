@@ -105,7 +105,7 @@ package.ui.resize = function UIResize(me) {
     };
     me.event = {
         set: function (object, value) {
-            me.ui.event.register(null, object, "resize", value, "resize", window);
+            me.core.event.register(null, object, "resize", value, "resize", window);
         }
     };
 };

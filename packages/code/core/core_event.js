@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component UIEvent
+ @component CoreEvent
  */
 
-package.ui.event = function UIEvent(me) {
+package.core.event = function CoreEvent(me) {
     me.send_event = function(object, method, event) {
         if(!object.getAttribute || !object.getAttribute('disabled')) {
             me.core.property.set(object, method, event);
@@ -14,7 +14,7 @@ package.ui.event = function UIEvent(me) {
             object.event_types = {};
         }
         if(method) {
-            method = me.ui.element.to_full_name(object, method);
+            method = me.core.property.to_full_name(object, method);
         }
         var listener_callback = function (event) {
             var result = true;

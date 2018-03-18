@@ -4,11 +4,6 @@
  */
 
 package.ui.key = function UIKey(me) {
-    me.init = function() {
-        me.send_event = me.ui.event.send_event;
-        me.register = me.ui.event.register;
-    }
-    me.keys = [];
     me.handle = {
         keydown: function(object, method, event) {
             return true;
@@ -19,12 +14,12 @@ package.ui.key = function UIKey(me) {
     };
     me.down = {
         set: function (object, value) {
-            me.register(me.handle, object, "keydown", value);
+            me.core.event.register(me.handle, object, "keydown", value);
         }
     };
     me.up = {
         set: function (object, value) {
-            me.register(me.handle, object, "keyup", value);
+            me.core.event.register(me.handle, object, "keyup", value);
         }
     };
 };

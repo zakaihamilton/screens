@@ -198,7 +198,7 @@ package.ui.scroll = function UIScroll(me) {
                 scrollbar = container.var[scroll_type];
             }
             else {
-                var method = me.ui.element.to_full_name(object, value);
+                var method = me.core.property.to_full_name(object, value);
                 scroll_type = me.core.property.get(object, method);
                 scrollbar = object.parentNode.parentNode;
             }
@@ -284,7 +284,7 @@ package.ui.scroll = function UIScroll(me) {
                 scrollbar = container.var[scroll_type];
             }
             else {
-                var method = me.ui.element.to_full_name(object, value);
+                var method = me.core.property.to_full_name(object, value);
                 scroll_type = me.core.property.get(object, method);
                 scrollbar = object.parentNode.parentNode;
             }

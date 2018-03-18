@@ -4,43 +4,39 @@
  */
 
 package.ui.drag = function UIDrag(me) {
-    me.init = function() {
-        me.register = me.ui.event.register;
-    }
-    me.handle = {};
     me.start = {
         set: function (object, value) {
-            me.register(me.handle, object, "dragstart", value);
+            me.core.event.register(null, object, "dragstart", value);
         }
     };
     me.enter = {
         set: function (object, value) {
-            me.register(me.handle, object, "dragenter", value);
+            me.core.event.register(null, object, "dragenter", value);
         }
     };
     me.over = {
         set: function (object, value) {
-            me.register(me.handle, object, "dragover", value);
+            me.core.event.register(null, object, "dragover", value);
         }
     };
     me.leave = {
         set: function (object, value) {
-            me.register(me.handle, object, "dragleave", value);
+            me.core.event.register(null, object, "dragleave", value);
         }
     };
     me.drop = {
         set: function (object, value) {
-            me.register(me.handle, object, "drop", value);
+            me.core.event.register(null, object, "drop", value);
         }
     };
     me.end = {
         set: function (object, value) {
-            me.register(me.handle, object, "dragend", value);
+            me.core.event.register(null, object, "dragend", value);
         }
     };
     me.drag = {
         set: function (object, value) {
-            me.register(me.handle, object, "drag", value);
+            me.core.event.register(null, object, "drag", value);
         }
     };
 }

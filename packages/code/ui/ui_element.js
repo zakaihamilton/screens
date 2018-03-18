@@ -107,16 +107,6 @@ package.ui.element = function UIElement(me) {
         }
         return combined;
     };
-    me.to_full_name = function(object, path) {
-        if(typeof path === "string") {
-            path = path.replace("@component", object.component);
-            if(object.context) {
-                object = object.context;
-            }
-            path = me.core.property.fullname(object, path, path);
-        }
-        return path;
-    };
     me.find = function(object, name) {
         var member = null;
         while(object) {

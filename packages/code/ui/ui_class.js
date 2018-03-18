@@ -118,7 +118,7 @@ package.ui.class = function UIClass(me) {
             class_name = path.substr(1);
         }
         else {
-            path = me.ui.element.to_full_name(object, path);
+            path = me.core.property.to_full_name(object, path);
             var class_name = me.to_class(object, path);
             var package_name = me.to_package(object, path);
             if(package_name) {

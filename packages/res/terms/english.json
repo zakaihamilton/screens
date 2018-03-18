@@ -137,7 +137,8 @@
             "Eser de Sefirot": "Eser Sefirot",
             "Torahall": "Torah all",
             "\nOr a": "__Or a",
-            "west departs from the east":"__west departs from the __east"
+            "west departs from the east":"__west departs from the __east",
+            "strong east wind":"strong __east wind"
         },
         "tags":{
             "<subtitle>": "\n<b>",
