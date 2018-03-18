@@ -4,7 +4,7 @@
  */
 
 package.widget.container = function WidgetContainer(me) {
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.elements": "elements",
         "ui.basic.text": "text",
         "ui.basic.html": "html"

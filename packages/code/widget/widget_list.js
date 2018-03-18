@@ -7,7 +7,7 @@ package.widget.list = function WidgetList(me) {
     me.dependencies = {
         properties: ["ui.element.count"]
     };
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.elements": "elements"
     };
     me.properties = {
@@ -75,7 +75,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text"]
     };
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",
         "ui.basic.elements": "elements",
@@ -174,7 +174,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
 };
 
 package.widget.list.popup = function WidgetListPopup(me) {
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.elements": "elements"
     };
     me.properties = {

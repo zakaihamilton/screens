@@ -184,14 +184,18 @@ package.ui.element = function UIElement(me) {
             constructor(object, parent);
         }
         object.context = object;
-        var redirect = component["core.property.redirect"];
-        component["core.property.redirect"] = null;
+        var redirect = component.redirect;
+        if(redirect) {
+            redirect.disabled = true;
+        }
         if(defaultProperties) {
             for (var key in defaultProperties) {
                 me.core.property.set(object, key, defaultProperties[key]);
             }
         }
-        component["core.property.redirect"] = redirect;
+        if(redirect) {
+            redirect.disabled = false;
+        }
         object.context = context ? context : parent;
         for (var key in properties) {
             me.core.property.set(object, key, properties[key]);

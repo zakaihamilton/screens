@@ -4,7 +4,7 @@
  */
 
 package.widget.dropdown = function WidgetDropDown(me) {
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",
         "ui.monitor.change":"monitorChange"

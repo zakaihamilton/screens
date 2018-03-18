@@ -8,7 +8,7 @@ package.widget.editor = function WidgetEditor(me) {
         "ui.basic.tag": "textarea",
         "ui.class.class": "border"
     };
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text":"text"
     };
     me.text = {

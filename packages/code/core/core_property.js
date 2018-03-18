@@ -24,8 +24,8 @@ package.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if ("component" in object) {
-            var redirect = me.browse(object.component)["core.property.redirect"];
-            if (redirect) {
+            var redirect = me.browse(object.component).redirect;
+            if (redirect && !redirect.disabled) {
                 if (name in redirect) {
                     name = me.fullname(object, redirect[name]);
                 }

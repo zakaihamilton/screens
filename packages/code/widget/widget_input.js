@@ -7,7 +7,7 @@ package.widget.input = function WidgetInput(me) {
     me.dependencies = {
         properties:["ui.basic.text","ui.basic.type"]
     };
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text":"text"
     };
     me.properties = {

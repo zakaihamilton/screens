@@ -10,7 +10,7 @@ package.widget.window = function WidgetWindow(me) {
         properties: ["title"]
     };
     me.extend = ["ui.focus"];
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text": "text",
         "ui.style.background": "background",
         "ui.basic.elements": "elements"

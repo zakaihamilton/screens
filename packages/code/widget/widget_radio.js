@@ -7,7 +7,7 @@ package.widget.radio = function WidgetRadio(me) {
     me.dependencies = {
         properties: ["ui.basic.text","state","group"]
     };
-    me["core.property.redirect"] = {
+    me.redirect = {
         "ui.basic.text": "text",
         "ui.monitor.change":"change"
     };
