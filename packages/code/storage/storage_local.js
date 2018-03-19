@@ -3,8 +3,6 @@
  @component StorageLocal
  */
 
-package.require("storage.local", "browser");
-
 package.storage.local = function StorageLocal(me) {
     me.init = function () {
         me.none = me.core.object(me);
@@ -103,4 +101,5 @@ package.storage.local = function StorageLocal(me) {
             }
         };
     };
+    return "browser";
 };

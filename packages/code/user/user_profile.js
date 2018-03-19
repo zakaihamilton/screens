@@ -3,7 +3,6 @@
  @component UserProfile
  */
 
-package.require("user.profile", "server");
 package.user.profile = function UserProfile(me) {
     me.nonIndexed = [];
     me.add = function (callback, name, password) {
@@ -78,4 +77,5 @@ package.user.profile = function UserProfile(me) {
             });
         });
     };
+    return "server";
 };

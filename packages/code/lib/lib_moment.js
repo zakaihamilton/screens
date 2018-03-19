@@ -6,7 +6,7 @@
 package.lib.moment = function LibMoment(me) {
     me.init = function (task) {
         me.lock(task, (task) => {
-            me.core.require.require((moment) => {
+            me.core.require((moment) => {
                 me.moment = moment;
                 me.apply = me.moment;
                 me.unlock(task);

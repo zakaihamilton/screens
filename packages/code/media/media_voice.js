@@ -3,7 +3,6 @@
  @component MediaVoice
  */
 
-package.require("media.voice", "browser");
 package.media.voice = function MediaVoice(me) {
     me.init = function () {
         me.synth = window.speechSynthesis;
@@ -144,5 +143,6 @@ package.media.voice = function MediaVoice(me) {
             return item.trim() !== "";
         }).join("\n");
         return text;
-    };    
+    };
+    return "browser";
 };

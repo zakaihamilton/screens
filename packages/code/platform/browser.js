@@ -22,8 +22,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "kab": [
-            "text",
-            "letters"
+            "*"
         ],
         "manager": [
             "*"

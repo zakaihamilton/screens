@@ -32,4 +32,5 @@ package.kab.data = function KabData(me) {
             me.reload(callback, language);
         }
     };
+    return "client";
 };

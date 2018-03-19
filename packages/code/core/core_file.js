@@ -3,7 +3,6 @@
  @component CoreFile
  */
 
-package.require("core.file", "server");
 package.core.file = function CoreFile(me) {
     me.init = function () {
         me.fs = require("fs");
@@ -114,4 +113,5 @@ package.core.file = function CoreFile(me) {
             });
         }, folder);
     };
+    return "server";
 };

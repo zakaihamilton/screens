@@ -3,8 +3,6 @@
  @component CoreModule
  */
 
-package.require("core.module", "server");
-
 package.core.module = function CoreModule(me) {
     var core = me.core;
     me.init = function () {
@@ -71,12 +69,17 @@ package.core.module = function CoreModule(me) {
             var target_platform = null;
             if (component_path) {
                 core.console.log("component_path: " + component_path);
-                target_platform = me.require(component_path);
+                try {
+                    target_platform = package(component_path).require;
+                }
+                catch(err) {
+
+                }
             }
             var source_platform = info.query["platform"];
             core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
             info["content-type"] = "application/javascript";
-            if (target_platform && !target_platform.includes(source_platform) && !target_platform.includes("/")) {
+            if (target_platform && target_platform !== source_platform) {
                 core.console.log("serving remote for:" + filePath);
                 filePath = "packages/code/remote.js";
             }
@@ -213,4 +216,5 @@ package.core.module = function CoreModule(me) {
             }
         }
     };
+    return "server";
 };

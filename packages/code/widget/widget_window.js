@@ -3,8 +3,6 @@
  @component WidgetWindow
  */
 
-package.require("widget.window", "browser");
-
 package.widget.window = function WidgetWindow(me) {
     me.dependencies = {
         properties: ["title"]
@@ -850,4 +848,5 @@ package.widget.window = function WidgetWindow(me) {
             me.ui.focus.updateOrder(window.parentNode, window);                
         }
     };
+    return "browser";
 };

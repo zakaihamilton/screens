@@ -3,8 +3,6 @@
  @component ManagerPacket
  */
 
-package.require("manager.packet", "server");
-
 package.manager.packet = function ManagerPacket(me) {
     me.packetInfo = {
         streamRequests:[],
@@ -138,4 +136,5 @@ package.manager.packet = function ManagerPacket(me) {
             }
         });
     };
+    return "server";
 };

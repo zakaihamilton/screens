@@ -3,7 +3,6 @@
     @component CoreHash
 */
 
-package.require("core.hash", "server");
 package.core.hash = function CoreHash(me) {
     me.init = function(task) {
         me.bcrypt = require('bcryptjs');
@@ -25,4 +24,5 @@ package.core.hash = function CoreHash(me) {
             callback(err, result);
         });
     };
+    return "server";
 };

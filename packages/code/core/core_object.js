@@ -62,7 +62,6 @@ package.core.object = function CoreObject(me) {
                     },
                     set: function (object, value) {
                         var result = object;
-                        console.log("set property: " + property + " value: " + value);
                         if (!object) {
                             return;
                         }

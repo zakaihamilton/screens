@@ -3,7 +3,6 @@
  @component KabText
  */
 
-package.require("kab.text", "client");
 package.kab.text = function KabText(me) {
     me.splitWords = function (session, wordsString) {
         wordsString = me.core.string.parseWords(function (words) {
@@ -358,4 +357,5 @@ package.kab.text = function KabText(me) {
         });
         dict["*"] = keys;
     };
+    return "client";
 };

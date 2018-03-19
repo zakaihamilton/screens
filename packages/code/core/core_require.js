@@ -4,7 +4,7 @@
  */
 
 package.core.require = function CoreRequire(me) {
-    me.require = function(callback, list) {
+    me.apply = function(callback, list) {
         if(!list) {
             if(callback) {
                 callback();

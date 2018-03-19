@@ -3,8 +3,6 @@
  @component MediaFFMpeg
  */
 
-package.require("media.ffmpeg", "server");
-
 package.media.ffmpeg = function MediaFFMpeg(me) {
     me.init = function () {
         const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -60,4 +58,5 @@ package.media.ffmpeg = function MediaFFMpeg(me) {
             });
         });
     };
+    return "server";
 };

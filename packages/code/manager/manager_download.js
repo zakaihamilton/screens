@@ -3,8 +3,6 @@
  @component ManagerDownload
  */
 
-package.require("manager.download", "server");
-
 package.manager.download = function ManagerDownload(me) {
     me.init = function () {
         me.queue = [];
@@ -134,4 +132,5 @@ package.manager.download = function ManagerDownload(me) {
         }
         callback(isDownloading);
     };
+    return "server";
 };

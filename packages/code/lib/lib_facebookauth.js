@@ -16,7 +16,7 @@ package.lib.facebookauth = function FacebookAuth(me) {
                 FB.AppEvents.logPageView();
                 me.unlock(task);
             };
-            me.core.require.require(() => {
+            me.core.require(() => {
             }, ["https://connect.facebook.net/en_US/sdk.js"]);
         });
     };

@@ -6,7 +6,7 @@
 package.lib.googleauth = function GoogleAuth(me) {
     me.init = function (task) {
         me.lock(task, (task) => {
-            me.core.require.require(() => {
+            me.core.require(() => {
                 gapi.load('auth2', function () {
                     // Retrieve the singleton for the GoogleAuth library and set up the client.
                     me.auth2 = gapi.auth2.init({

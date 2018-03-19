@@ -3,7 +3,6 @@
     @component CoreServer
 */
 
-package.require("core.server", "server");
 package.core.server = function CoreServer(me) {
     me.init = function() {
         me.cmd=require('node-cmd');
@@ -12,4 +11,5 @@ package.core.server = function CoreServer(me) {
         me.core.console.log("running: " + cmd);
         me.cmd.get(cmd, callback);
     };
+    return "server";
 };

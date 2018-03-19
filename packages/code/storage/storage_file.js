@@ -3,7 +3,6 @@
  @component StorageFile
  */
 
-package.require("storage.file", "server");
 package.storage.file = function StorageFile(me) {
     me.init = function () {
         me.dropbox = require("dropbox");
@@ -137,4 +136,5 @@ package.storage.file = function StorageFile(me) {
             }
         });
     };
+    return "server";
 };

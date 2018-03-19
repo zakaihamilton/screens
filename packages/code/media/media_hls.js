@@ -3,7 +3,6 @@
  @component MediaHls
  */
 
-package.require("media.hls", "server");
 package.media.hls = function MediaHLS(me) {
     me.download = function (callback, path, destination) {
         var name = me.core.path.fullName(path);
@@ -63,4 +62,5 @@ package.media.hls = function MediaHLS(me) {
             }, targetPlaylist);
         }, sourceFile, targetPlaylist);
     };
+    return "server";
 };

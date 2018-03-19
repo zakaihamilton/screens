@@ -3,8 +3,6 @@
  @component CoreNetwork
  */
 
-package.require("core.network", "server");
-
 package.core.network = function CoreNetwork(me) {
     me.ipAddress = function(callback) {
         var ip = null;
@@ -26,4 +24,5 @@ package.core.network = function CoreNetwork(me) {
             me.core.event.register(null, object, "offline", value, "offline", window);
         }
     };
+    return "server";
 };

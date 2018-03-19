@@ -3,7 +3,6 @@
  @component StorageData
  */
 
-package.require("storage.data", "server");
 package.storage.data = function StorageData(me) {
     me.init = function (task) {
         me.core.console.log("initialising storage data");
@@ -102,4 +101,5 @@ package.storage.data = function StorageData(me) {
                     });
         });
     };
+    return "server";
 };

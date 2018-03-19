@@ -3,8 +3,6 @@
  @component LibZLib
  */
 
-package.require("lib.zlib", "server");
-
 package.lib.zlib = function LibZLib(me) {
     me.init = function () {
         me.zlib = require('zlib');
@@ -38,4 +36,5 @@ package.lib.zlib = function LibZLib(me) {
             }
         }
     };
+    return "server";
 };

@@ -3,11 +3,11 @@
  @component CoreStream
  */
 
-package.require("core.stream", "server/service");
-
 package.core.stream = function CoreStream(me) {
     me.init = function () {
-        me.fs = require("fs");
+        if(package.platform === "server" || package.platform === "service") {
+            me.fs = require("fs");
+        }
     };
     me.serve = function (headers, response, path, contentType) {
         var stat = me.fs.statSync(path);

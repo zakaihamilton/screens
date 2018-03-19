@@ -36,32 +36,11 @@ function package_unlock(task, callback) {
 function package_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this.module !== module) {
-        if(global.platform) {
-            platform = global.platform;
-        }
-        else {
-            platform = "server";
-        }
+        platform = global.platform || "server";
     } else if (typeof importScripts !== 'undefined') {
         platform = "client";
     }
     return platform;
-}
-
-function package_component(id) {
-    var item = package.components[id];
-    if (!item) {
-        item = package.components[id] = {};
-    }
-    return item;
-}
-
-function package_require(id, platform) {
-    var component = package_component(id);
-    if (typeof platform !== "undefined") {
-        component.require = platform;
-    }
-    return component.require;
 }
 
 function package_setup(task, package_name, component_name, child_name, callback, node = null) {
@@ -82,7 +61,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
         }
     }
     /* Register component in package */
-    var component = package_component(component_id);
+    var component = package.components[id] = {};
     /* Create component proxy */
     var component_obj = new Proxy(() => {
         return { };
@@ -118,36 +97,37 @@ function package_setup(task, package_name, component_name, child_name, callback,
     if (typeof node !== "function") {
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
-    var requirement_platform = package.require(id);
-    var init = !requirement_platform || requirement_platform.includes(package.platform);
+    var requirement_platform = node(component_obj, child_name);
     if(requirement_platform && package.platform !== requirement_platform) {
-        node = function (me) {
-            console.log("registering:" + id);
-            me.get = function (object, property) {
-                return function () {
-                    var args = Array.prototype.slice.call(arguments);
-                    args.unshift(id + "." + property);
-                    me.core.message["send_" + requirement_platform].apply(null, args);
-                };
+        console.log("registering:" + id);
+        component_obj.apply = function (object, thisArg, argumentsList) {
+            return function () {
+                var args = Array.prototype.slice.call(argumentsList);
+                args.unshift(id);
+                me.core.message["send_" + requirement_platform].apply(null, args);
             };
         };
-        init = true;
+        component_obj.get = function (object, property) {
+            return function () {
+                var args = Array.prototype.slice.call(arguments);
+                args.unshift(id + "." + property);
+                me.core.message["send_" + requirement_platform].apply(null, args);
+            };
+        };
     }
-    if (init) {
-        node(component_obj, child_name);
-        var init_method = component_obj.init;
-        if (component_obj.get) {
-            component_obj.get.enabled = true;
-        }
-        if (init_method) {
-            if (callback) {
-                if (!component.init) {
-                    component.init = [];
-                }
-                component.init.push(init_method);
-            } else {
-                package_init(id, init_method, task);
+    component_obj.require = requirement_platform;
+    var init_method = component_obj.init;
+    if (component_obj.get) {
+        component_obj.get.enabled = true;
+    }
+    if (init_method) {
+        if (callback) {
+            if (!component.init) {
+                component.init = [];
             }
+            component.init.push(init_method);
+        } else {
+            package_init(id, init_method, task);
         }
     }
     console.log(package.platform + ": Loaded " + component_obj.id);
@@ -243,7 +223,7 @@ function package_complete(info, order, callback) {
                 });
             }
             ids.map((id) => {
-                var component = package_component(id);
+                var component = package.components[id];
                 if (component.init && component.init.length) {
                     console.log(package.platform + ": Initializing " + id);
                     do {
@@ -401,7 +381,6 @@ Object.assign(package, {
     components: {},
     id: "package",
     platform : package_platform(),
-    require: package_require,
     include: package_include,
     lock: package_lock,
     unlock: package_unlock
