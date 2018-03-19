@@ -81,21 +81,6 @@ function package_require(id, platform) {
     return component.require;
 }
 
-function package_remote(id, platform) {
-    var component = package_component(id);
-    var support = "";
-    if (typeof platform !== "undefined") {
-        component.remote = platform;
-    }
-    if(component.remote) {
-        support = component.remote;
-    }
-    else if(component.require) {
-        support = component.require;
-    }
-    return support;
-}
-
 function package_setup(task, package_name, component_name, child_name, callback, node = null) {
     var children = [];
     /* Retrieve component function */
@@ -153,21 +138,18 @@ function package_setup(task, package_name, component_name, child_name, callback,
     }
     var requirement_platform = package.require(id);
     var init = !requirement_platform || requirement_platform.includes(package.platform);
-    if(package.platform === "service") {
-        var remote = package.remote(id);
-        if(remote && remote.includes("server") && !remote.includes("service")) {
-            node = function (me) {
-                console.log("registering:" + id);
-                me.get = function (object, property) {
-                    return function () {
-                        var args = Array.prototype.slice.call(arguments);
-                        args.unshift(id + "." + property);
-                        me.core.message.send_server.apply(null, args);
-                    };
+    if(requirement_platform && package.platform !== requirement_platform) {
+        node = function (me) {
+            console.log("registering:" + id);
+            me.get = function (object, property) {
+                return function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(id + "." + property);
+                    me.core.message["send_" + requirement_platform].apply(null, args);
                 };
             };
-            init = true;
-        }
+        };
+        init = true;
     }
     if (init) {
         node(component_obj, child_name);
@@ -423,12 +405,6 @@ function package_include(packages, callback, package_type="code") {
     }
 }
 
-function package_alias(object, aliases) {
-    for(var alias in aliases) {
-        object[alias] = package_browse(aliases[alias]);
-    }
-}
-
 var package = {
     components: {},
     id: "package",
@@ -436,10 +412,8 @@ var package = {
     platform : package_platform(),
     require: package_require,
     include: package_include,
-    remote: package_remote,
     lock: package_lock,
     unlock: package_unlock,
-    alias: package_alias,
     import: package_script_load,
     count: 0
 };

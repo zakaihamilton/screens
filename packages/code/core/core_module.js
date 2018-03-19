@@ -71,7 +71,7 @@ package.core.module = function CoreModule(me) {
             var target_platform = null;
             if (component_path) {
                 core.console.log("component_path: " + component_path);
-                target_platform = me.remote(component_path);
+                target_platform = me.require(component_path);
             }
             var source_platform = info.query["platform"];
             core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);

@@ -3,6 +3,7 @@
  @component CoreApp
  */
 
+package.require("core.app", "browser");
 package.core.app = function CoreApp(me) {
     me.get = function (object, property) {
         return {

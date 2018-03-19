@@ -131,7 +131,7 @@ package.app.packets = function AppPackets(me) {
         var min = parseInt(duration / 60) % 60;
         var hour = parseInt(duration / (60 * 60)) % 24;
         var days = parseInt(duration / (24 * 60 * 60));
-        if (hour < 12) {
+        if (hour < 10) {
             hour = "0" + hour;
         }
         if (min < 10) {
