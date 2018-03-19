@@ -14,7 +14,7 @@ package.ui.element = function UIElement(me) {
             if(!(component_name.includes("widget."))) {
                 return null;
             }
-            var component = me.browse(component_name);
+            var component = package(component_name);
             var depends = component.dependencies;
             if (depends) {
                 if (depends.parent) {
@@ -47,7 +47,7 @@ package.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return me.browse(target).dependencies.properties.length - me.browse(source).dependencies.properties.length;
+            return package(target).dependencies.properties.length - package(source).dependencies.properties.length;
         });
         if(!matches.length) {
             return null;
@@ -55,7 +55,7 @@ package.ui.element = function UIElement(me) {
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (me.browse(matches[match_index]).dependencies.parent) {
+                if (package(matches[match_index]).dependencies.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -114,7 +114,7 @@ package.ui.element = function UIElement(me) {
         var member = null;
         while(object) {
             if(object.component) {
-                var component = me.browse(object.component);
+                var component = package(object.component);
                 if(name in component) {
                     member = component[name];
                 }
@@ -156,7 +156,7 @@ package.ui.element = function UIElement(me) {
         if(!component_name) {
             component_name = "ui.element";
         }
-        var component = me.browse(component_name);
+        var component = package(component_name);
         var defaultProperties = component.properties;
         me.core.console.log("creating element of " + component_name);
         if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {

@@ -24,7 +24,7 @@ package.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if ("component" in object) {
-            var redirect = me.browse(object.component).redirect;
+            var redirect = package(object.component).redirect;
             if (redirect && !redirect.disabled) {
                 if (name in redirect) {
                     name = me.fullname(object, redirect[name]);
@@ -83,7 +83,7 @@ package.core.property = function CoreProperty(me) {
             } else {
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
-                    var callback = me.browse(info.name, true);
+                    var callback = package(info.name, true);
                     if(!callback) {
                         me.core.console.log(info.name + " method not found");
                     }

@@ -7,8 +7,8 @@ package.core.test = function CoreTest(me) {
     me.run = function(path) {
         package.include(path + ".test", function(info) {
             if(info.complete) {
-                var component = me.browse(path);
-                var testing = me.browse(path + ".test");
+                var component = package(path);
+                var testing = package(path + ".test");
                 var methodNames = Object.getOwnPropertyNames(testing);
                 for(var methodName of methodNames) {
                     var tests = testing[methodName];

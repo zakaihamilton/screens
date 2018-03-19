@@ -87,7 +87,7 @@ function package_setup(task, package_name, component_name, child_name, callback,
     var id = package_name + "." + component_name;
     var component_id = id;
     if (!node) {
-        node = package.browse(id);
+        node = package(id);
     }
     if (child_name) {
         node = node[child_name];
@@ -100,7 +100,6 @@ function package_setup(task, package_name, component_name, child_name, callback,
     }
     /* Register component in package */
     var component = package_component(component_id);
-    package.count++;
     /* Create component proxy */
     var component_obj = new Proxy(() => {
         return { };
@@ -194,7 +193,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
     }
     console.log(package.platform + ": Loading " + code_name);
     if (package_name in package) {
-        if (package_browse(code_name, true)) {
+        if (package(code_name, true)) {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name, child_name:child_name}});
                 return;
@@ -405,18 +404,24 @@ function package_include(packages, callback, package_type="code") {
     }
 }
 
-var package = {
+var package = new Proxy(() => {
+    return {};
+}, {
+    apply: function(object, thisArg, argumentsList) {
+        return package_browse.apply(thisArg, argumentsList);
+    }
+});
+
+Object.assign(package, {
     components: {},
     id: "package",
-    browse : package_browse,
     platform : package_platform(),
     require: package_require,
     include: package_include,
     lock: package_lock,
     unlock: package_unlock,
-    import: package_script_load,
-    count: 0
-};
+    import: package_script_load
+});
 
 var platform = package_platform();
 if (platform === "server" || platform === "service") {

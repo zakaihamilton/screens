@@ -16,7 +16,7 @@ package.core.startup = function CoreStartup(me) {
                 if(components) {
                     components.map(function (component_name) {
                         me.lock(task, (task) => {
-                            var component = me.browse("startup." + component_name);
+                            var component = package("startup." + component_name);
                             if(component.run) {
                                 me.core.console.log("startup:" + component_name);
                                 component.run(task);
