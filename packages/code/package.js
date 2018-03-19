@@ -1,20 +1,3 @@
-function package_browse(path, optional) {
-    var items = path.split(".");
-    var item = package;
-    for (var part_index = 0; part_index < items.length; part_index++) {
-        item = item[items[part_index]];
-        if (!item) {
-            if(optional) {
-                return null;
-            }
-            else {
-                throw path + " not found";
-            }
-        }
-    }
-    return item;
-}
-
 function package_lock(parent_task, callback) {
     if(typeof(parent_task) === "function") {
         callback = parent_task;
@@ -193,7 +176,7 @@ function package_load(package_type, package_name, component_name, child_name, ca
     }
     console.log(package.platform + ": Loading " + code_name);
     if (package_name in package) {
-        if (package(code_name, true)) {
+        if(package[package_name][component_name]) {
             if (callback) {
                 callback({loaded: {package: package_name, component: component_name, child_name:child_name}});
                 return;
@@ -408,7 +391,9 @@ var package = new Proxy(() => {
     return {};
 }, {
     apply: function(object, thisArg, argumentsList) {
-        return package_browse.apply(thisArg, argumentsList);
+        return argumentsList[0].split('.').reduce((parent, name) => {
+            return parent[name];
+        }, package);
     }
 });
 
@@ -419,8 +404,7 @@ Object.assign(package, {
     require: package_require,
     include: package_include,
     lock: package_lock,
-    unlock: package_unlock,
-    import: package_script_load
+    unlock: package_unlock
 });
 
 var platform = package_platform();

@@ -83,17 +83,19 @@ package.core.property = function CoreProperty(me) {
             } else {
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
-                    var callback = package(info.name, true);
-                    if(!callback) {
-                        me.core.console.log(info.name + " method not found");
-                    }
-                    else if(typeof callback === "function") {
-                        result = callback(info.object, info.value);
-                    }
-                    else {
-                        if(callback[method]) {
-                            result = callback[method](info.object, info.value);
+                    try {
+                        var callback = package(info.name);
+                        if(typeof callback === "function") {
+                            result = callback(info.object, info.value);
                         }
+                        else {
+                            if(callback[method]) {
+                                result = callback[method](info.object, info.value);
+                            }
+                        }
+                    }
+                    catch(err) {
+                        me.core.console.log(info.name + " method not found");
                     }
                 }
             }
