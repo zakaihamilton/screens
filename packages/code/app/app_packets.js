@@ -48,7 +48,11 @@ package.app.packets = function AppPackets(me) {
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
                 });
-                me.unlock(task);
+                package.include("lib.moment", function (info) {
+                    if (info.complete) {
+                        me.unlock(task);
+                    }
+                });
             }, "app.packets.data", "title");
         });
     };
@@ -407,7 +411,7 @@ package.app.packets = function AppPackets(me) {
                 var dataProfilePacketLoss = effects.packetLoss || 0;
                 var streamRequests = dataProfile.streamRequests;
                 if (!streamRequests.length) {
-                    return data;
+                    return;
                 }
                 var streamIndex = window.streamIndex;
                 if (!streamIndex) {
@@ -419,7 +423,7 @@ package.app.packets = function AppPackets(me) {
                 streamRequests.map((streamRequest) => {
                     var packets = streamRequest.packets;
                     if (!packets) {
-                        return data;
+                        return;
                     }
                     function dateRel(sec) {
                         return me.widget.chart.dateRel(sec);
