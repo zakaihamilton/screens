@@ -4,7 +4,6 @@ package.include({
     "core": [
         "property",
         "console",
-        "test",
         "file",
         "private",
         "json",

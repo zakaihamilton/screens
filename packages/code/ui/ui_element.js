@@ -10,7 +10,7 @@ package.ui.element = function UIElement(me) {
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
-        var matches = Object.keys(me.components).map(function (component_name) {
+        var matches = me.components.map(function (component_name) {
             if(!(component_name.includes("widget."))) {
                 return null;
             }

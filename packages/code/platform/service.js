@@ -6,7 +6,6 @@ package.include({
     "core": [
         "console",
         "message",
-        "test",
         "type",
         "file",
         "ref",
