@@ -126,6 +126,7 @@ package.media.voice = function MediaVoice(me) {
         text = text.replace(/\s\n/g, "\n");
         text = text.replace(/\n\s/g, "\n");
         text = text.replace(/…/g, ", ");
+        text = text.replace(/\n[?]/g, "?\n");
         text = text.split("\n").map(item => {
             var original = null;
             var index = 0;
