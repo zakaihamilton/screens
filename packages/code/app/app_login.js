@@ -11,10 +11,8 @@ package.app.login = function AppLogin(me) {
                     "googleauth",
                     "facebookauth"
                 ]
-            }, function(info) {
-                if(info.complete) {
-                    me.unlock(task);
-                }
+            }, function() {
+                me.unlock(task);
             });
         });
     };

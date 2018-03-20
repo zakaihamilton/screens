@@ -33,10 +33,8 @@ package.include({
     "startup": [
         "version"
     ]
-}, function (info) {
-    if (info.complete) {
-        package.core.startup.run();
-    }
+}, function () {
+    package.core.startup.run();
 });
 
 process.on('uncaughtException', (err) => {

@@ -48,10 +48,8 @@ package.app.packets = function AppPackets(me) {
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
                 });
-                package.include("lib.moment", function (info) {
-                    if (info.complete) {
-                        me.unlock(task);
-                    }
+                package.include("lib.moment", function () {
+                    me.unlock(task);
                 });
             }, "app.packets.data", "title");
         });

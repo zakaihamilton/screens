@@ -73,15 +73,13 @@ package.core.service = function CoreService(me) {
             me.serviceNames.map((serviceName) => {
                 me.lock(task, (task) => {
                     me.core.console.log("loading service: " + serviceName + "...");
-                    me.include("service." + serviceName, function (info) {
-                        if (info.complete) {
-                            me.core.console.log("service loaded: " + serviceName);
-                            me.core.console.log("setup service: " + serviceName + "...");
-                            me.core.message.send("service." + serviceName + ".setup", () => {
-                                me.core.console.log("setup service: " + serviceName + " complete");
-                                me.unlock(task);
-                            }, ref);
-                        }
+                    me.include("service." + serviceName, function () {
+                        me.core.console.log("service loaded: " + serviceName);
+                        me.core.console.log("setup service: " + serviceName + "...");
+                        me.core.message.send("service." + serviceName + ".setup", () => {
+                            me.core.console.log("setup service: " + serviceName + " complete");
+                            me.unlock(task);
+                        }, ref);
                     });
                 });
             });

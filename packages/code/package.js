@@ -274,9 +274,7 @@ function package_include(packages, callback) {
                 for(package_name in packages) {
                     package_complete(task, collection[package_name]);
                 }
-                package.unlock(task, () => {
-                    callback({ complete: true });
-                });
+                package.unlock(task, callback);
             });
         });
     });

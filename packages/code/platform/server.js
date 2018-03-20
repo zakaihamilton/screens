@@ -49,10 +49,8 @@ package.include({
         "zlib"
     ]
 }, function (info) {
-    if (info.complete) {
-        package.core.console.log("server loaded");
-        package.core.startup.run();
-    }
+    package.core.console.log("server loaded");
+    package.core.startup.run();
 });
 
 process.on('uncaughtException', (err) => {
