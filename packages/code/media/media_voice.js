@@ -113,7 +113,9 @@ package.media.voice = function MediaVoice(me) {
                 text = text.replace(item.replace(",", "\n"), item);
             });
         }
-        text = text.replace(/[-\-”\".:;]/g, "\n");
+        text = text.replace(/^(\d+\))/g, "\n$1\n");
+        text = text.replace(/\s-\s/g, "\n");
+        text = text.replace(/[”\".:;—]/g, "\n");
         text = text.replace(/[\)\]]/g, ", ");
         text = text.replace(/[“\(\[]/g, ", ");
         text = text.replace(/\s[,]/g, ",");
@@ -123,14 +125,34 @@ package.media.voice = function MediaVoice(me) {
         text = text.replace(/  /g, " ");
         text = text.replace(/\s\n/g, "\n");
         text = text.replace(/\n\s/g, "\n");
-        text = text.replace(/…/g, "");
+        text = text.replace(/…/g, ", ");
         text = text.split("\n").map(item => {
-            if(item.split(" ").length >= 20) {
-                item = item.replace(/ that is that /g, " that\nis that ");
-                item = item.replace(/ because /g, "\nbecause ");
-                item = item.replace(/ and /g, "\nand ");
-                item = item.replace(/ or /g, "\nor ");
-            }
+            var original = null;
+            var index = 0;
+            do {
+                original = item;
+                if(item.length > 50 && item.length - item.lastIndexOf("\n") > 50) {
+                    switch(index) {
+                        case 0:
+                            item = item.replace(" that is that ", " that\nis that ");
+                            break;
+                        case 1:
+                            item = item.replace(" because ", "\nbecause ");
+                            break;
+                        case 2:
+                            item = item.replace(" and ", "\nand ");
+                            break;
+                        case 3:
+                            item = item.replace(" or ", "\nor ");
+                            break;
+                        default:
+                            original = null;
+                            index = -1;
+                            break;
+                    }
+                    index++;
+                }
+            } while(original !== item);
             return item;
         }).join("\n");
         text = text.split("\n").map(item => {
