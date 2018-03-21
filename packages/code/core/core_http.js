@@ -12,7 +12,7 @@ package.core.http = function CoreHttp(me) {
         me.port = 80;
     }
     me.listeners = [];
-    me.redirect = null;
+    me.forwardUrl = null;
     me.init = function (task) {
         if (me.platform === "server" || me.platform === "service") {
                 me.http = require("http");
@@ -46,10 +46,10 @@ package.core.http = function CoreHttp(me) {
         var server = null;
         var port = me.port;
         var requestHandler = function (request, response) {
-            if(!secure && me.redirect) {
-                me.core.console.log("redirect: " + me.redirect + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
+            if(!secure && me.forwardUrl) {
+                me.core.console.log("forwardUrl: " + me.forwardUrl + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
                 response.writeHead(301,{
-                    Location: me.redirect + request.url
+                    Location: me.forwardUrl + request.url
                 });
                 response.end();
                 return;
@@ -84,7 +84,7 @@ package.core.http = function CoreHttp(me) {
                             callback(server, port, e);
                         });
                         server.listen(port, function (err) {
-                            me.redirect = keys.redirect;
+                            me.forwardUrl = keys.redirect;
                             callback(server, port, err);
                         });
                     } catch (e) {

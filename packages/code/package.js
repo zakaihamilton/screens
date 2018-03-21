@@ -147,7 +147,7 @@ function package_push(package_name, component_name, callback) {
     return item;
 }
 
-function package_complete(task, items) {
+function package_init(task, items) {
     package.lock(task, task => {
         items.map(function (item) {
             var initializers = item.initializers;
@@ -171,7 +171,7 @@ function package_complete(task, items) {
     });
 }
 
-function package_script_load(callback, path) {
+function package_import(callback, path) {
     if (package.platform === "server" || package.platform === "service") {
         require(path);
         callback();
@@ -204,7 +204,7 @@ function package_load(task, items, callback) {
             items.map((item) => {
                 var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
                 package.lock(task, (task) => {
-                    package_script_load(() => {
+                    package_import(() => {
                         item.initializers = package_setup(item.package_name, item.component_name);
                         package.unlock(task);
                     }, path);
@@ -223,7 +223,7 @@ function package_load(task, items, callback) {
             });
             var path = paths.join(",") + "?platform=" + package.platform;
             package.lock(task, (task) => {
-                package_script_load(() => {
+                package_import(() => {
                     var firstItem = items[0];
                     if (firstItem.component_name === "*") {
                         items = Object.keys(package[firstItem.package_name]).map((component_name) => {
@@ -272,7 +272,7 @@ function package_include(packages, callback) {
         package.unlock(task, () => {
             package.lock((task) => {
                 for(package_name in packages) {
-                    package_complete(task, collection[package_name]);
+                    package_init(task, collection[package_name]);
                 }
                 package.unlock(task, callback);
             });
