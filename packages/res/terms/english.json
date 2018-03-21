@@ -1766,6 +1766,17 @@
         },
         {
             "style": {
+                "heading": "Holy Name",
+                "phase": "one",
+                "short": "Name of Internal Expression"
+            },
+            "term": "AB2",
+            "source":"AB",
+            "explanation":"72",
+            "hebrew": "ע״ב"
+        },
+        {
+            "style": {
                 "heading": "Face",
                 "phase": "one",
                 "tooltip": "72",
