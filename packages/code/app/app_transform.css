@@ -405,13 +405,14 @@
 
 .app-transform-play:after {
     position:absolute;
-    right:100px;
+    right:150px;
     width:50px;
-    bottom:30px;
+    bottom:50px;
     height:50px;
     text-align: center;
     content: "\23EF";
     margin:auto;
+    line-height: 150%;
 }
 
 .app-transform-play.play:after {
@@ -423,15 +424,15 @@
 }
 
 .app-transform-play:hover:after {
-    content: "\23EF\APlay";
+    content: "\23EF\A Play";
 }
 
 .app-transform-play.play:hover:after {
-    content: "\23F8\APause";
+    content: "\23F8\A Pause";
 }
 
 .app-transform-play.play.pause:hover:after {
-    content: "\23EF\AResume";
+    content: "\23EF\A Resume";
 }
 
 .app-transform-play.fullscreen:after {
@@ -446,16 +447,17 @@
     position:absolute;
     right:50px;
     width:50px;
-    bottom:30px;
+    bottom:50px;
     height:50px;
     text-align: center;
     content: "\23F9";
     display:none;
     margin:auto;
+    line-height: 150%;
 }
 
 .app-transform-stop:hover:after {
-    content: "\23F9\AStop";
+    content: "\23F9\A Stop";
 }
 
 .app-transform-stop.play:after {
@@ -467,6 +469,64 @@
 }
 
 .app-transform-stop.fullscreen:hover:after {
+    opacity:1;
+}
+
+.app-transform-rewind:after {
+    position:absolute;
+    right:200px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23EA";
+    display:none;
+    margin:auto;
+    line-height: 150%;
+}
+
+.app-transform-rewind:hover:after {
+    content: "\23EA\A Rewind";
+}
+
+.app-transform-rewind.play:after {
+    display:block;
+}
+
+.app-transform-rewind.fullscreen:after {
+    opacity:0;
+}
+
+.app-transform-rewind.fullscreen:hover:after {
+    opacity:1;
+}
+
+.app-transform-fastforward:after {
+    position:absolute;
+    right:100px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23E9";
+    display:none;
+    margin:auto;
+    line-height: 150%;
+}
+
+.app-transform-fastforward:hover:after {
+    content: "\23E9\A Fast Forward";
+}
+
+.app-transform-fastforward.play:after {
+    display:block;
+}
+
+.app-transform-fastforward.fullscreen:after {
+    opacity:0;
+}
+
+.app-transform-fastforward.fullscreen:hover:after {
     opacity:1;
 }
 

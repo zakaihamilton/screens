@@ -63,7 +63,7 @@ package.core.json = function CoreJson(me) {
         return true;
     };
     me.traverse = function(root, path, value) {
-        var item = root, parent = root;
+        var item = root, parent = root, found = false;
         if(root) {
             var tokens = path.split(".");
             for(var tokensIndex = 0; tokensIndex < tokens.length; tokensIndex++) {
@@ -74,10 +74,34 @@ package.core.json = function CoreJson(me) {
                     break;
                 }
             }
-            if(item) {
+            if(item && tokens.length) {
                 value = item;
+                found = true;
             }
         }
-        return {parent:parent,item:item,value:value};
+        return {parent, item, value, found};
+    };
+    me.value = function(root, paths, value) {
+        var found = false;
+        Object.entries(paths).forEach(([path, callback]) => {
+            if(found) {
+                return;
+            }
+            var info = me.traverse(root, path, value);
+            if(info.found) {
+                if(callback) {
+                    var result = callback(value, path);
+                    if(result) {
+                        info.value = result;
+                        found = true;
+                    }
+                }
+                else {
+                    value = info.value;
+                    found = true;
+                }
+            }
+        });
+        return value;
     };
 };

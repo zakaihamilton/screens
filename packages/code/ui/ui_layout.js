@@ -345,9 +345,23 @@ package.ui.layout = function UILayout(me) {
                 },
                 {
                     "ui.basic.tag": "div",
+                    "ui.class.class": options.rewindClass,
+                    "ui.basic.var": "rewind",
+                    "ui.touch.click": options.rewindMethod,
+                    "ui.basic.show": options.playEnabled
+                },
+                {
+                    "ui.basic.tag": "div",
                     "ui.class.class": options.playClass,
                     "ui.basic.var": "play",
                     "ui.touch.click": options.playMethod,
+                    "ui.basic.show": options.playEnabled
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": options.fastforwardClass,
+                    "ui.basic.var": "fastforward",
+                    "ui.touch.click": options.fastforwardMethod,
                     "ui.basic.show": options.playEnabled
                 },
                 {
@@ -534,15 +548,16 @@ package.ui.layout = function UILayout(me) {
         return isPaused;
     };
     me.setPlayState = function (page, play, pause) {
+        var widgets = [page.var.play, page.var.stop, page.var.rewind, page.var.fastforward];
         if (play) {
-            me.core.property.set([page.var.play, page.var.stop], "ui.class.add", "play");
+            me.core.property.set(widgets, "ui.class.add", "play");
         } else {
-            me.core.property.set([page.var.play, page.var.stop], "ui.class.remove", "play");
+            me.core.property.set(widgets, "ui.class.remove", "play");
         }
         if (pause) {
-            me.core.property.set([page.var.play, page.var.stop], "ui.class.add", "pause");
+            me.core.property.set(widgets, "ui.class.add", "pause");
         } else {
-            me.core.property.set([page.var.play, page.var.stop], "ui.class.remove", "pause");
+            me.core.property.set(widgets, "ui.class.remove", "pause");
         }
     };
     me.hasSeparator = function (page) {

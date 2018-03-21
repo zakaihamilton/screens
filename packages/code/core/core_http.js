@@ -105,25 +105,12 @@ package.core.http = function CoreHttp(me) {
     me.clientIp = function (request) {
         var ip = null;
         if (request) {
-            ip = request.headers['x-forwarded-for'];
-            if (ip) {
-                ip = request.headers['x-forwarded-for'].split(',').pop();
-            }
-            if (!ip) {
-                if (request.connection) {
-                    ip = request.connection.remoteAddress;
-                    if (!ip) {
-                        if (request.connection.socket) {
-                            ip = request.connection.socket.remoteAddress;
-                        }
-                    }
-                }
-            }
-            if (!ip) {
-                if (request.socket) {
-                    ip = request.socket.remoteAddress;
-                }
-            }
+            ip = me.core.json.value(request, {
+                "headers.x-forwarded-for":value => value.split(',').pop(),
+                "connection.remoteAddress":null,
+                "connection.socket.remoteAddress":null,
+                "socket.remoteAddress":null
+            });
         }
         return ip;
     };

@@ -7,7 +7,9 @@ package.media.voice = function MediaVoice(me) {
     me.init = function () {
         me.synth = window.speechSynthesis;
         me.utterances = [];
-        me.queueIndex = 0;
+        me.currentIndex = 0;
+        me.totalParts = 0;
+        me.params = null;
     };
     me.pause = function () {
         me.synth.pause();
@@ -40,18 +42,18 @@ package.media.voice = function MediaVoice(me) {
         }
         var voice = voices[0];
         me.utterances = [];
-        if(me.queueIndex) {
-            me.queueIndex = 0;
-            me.synth.cancel();
-            if (params.onstart) {
-                params.onstart();
-            }
+        me.params = params;
+        me.currentIndex = params.index || 0;
+        me.synth.cancel();
+        if (params.onstart) {
+            params.onstart();
         }
         var textArray = text;
         if(!Array.isArray(textArray)) {
             textArray = [text];
         }
         var processedTexts = textArray.map((text) => me.process(text));
+        me.totalParts = processedTexts.length;
         processedTexts.map((text, index) => {
             var parts = text.split("\n");
             if (!parts.length) {
@@ -61,6 +63,10 @@ package.media.voice = function MediaVoice(me) {
                 return;
             }
             parts.map(processedText => {
+                if(!processedText.trim().length) {
+                    me.totalParts--;
+                    return;
+                }
                 var utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
                 utterance.volume = volume; // 0 to 1
@@ -68,28 +74,72 @@ package.media.voice = function MediaVoice(me) {
                 utterance.pitch = pitch; //0 to 2
                 utterance.text = processedText;
                 utterance.lang = voice.lang;
+                utterance.index = index;
                 utterance.onstart = () => {
-                    if (!me.queueIndex && params.onstart) {
-                        params.onstart();
-                    }
+                    me.currentIndex = utterance.index;
                     if(params.onchange && processedText) {
-                        params.onchange(index, processedText);
+                        params.onchange(utterance.index, processedText);
                     }
                 };
                 utterance.onend = () => {
                     me.queueIndex++;
-                    if (me.queueIndex >= me.utterances.length && params.onend) {
+                    index = me.utterances.indexOf(utterance);
+                    if (index == me.utterances.length - 1 && params.onend) {
                         me.queueIndex = 0;
                         params.onend();
                     }
                 };
                 me.utterances.push(utterance);
-                me.synth.speak(utterance);
+                console.log(index + ":" + processedText);
             });
         });
+        me.replay();
+    };
+    me.replay = function() {
+        if(me.currentIndex < 0) {
+            me.currentIndex = me.totalParts;
+            me.rewind();
+            return;
+        }
+        console.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
+        var utterances = me.utterances.filter(utterances => utterances.index >= me.currentIndex);
+        me.synth.cancel();
+        utterances.map( utterance => me.synth.speak(utterance) );
+    };
+    me.rewind = function() {
+        var stop = false;
+        do {
+            me.currentIndex--;
+            if(me.currentIndex < 0) {
+                me.synth.cancel();
+                me.currentIndex = 0;
+                if(me.params) {
+                    me.params.onprevious();
+                }
+                return;
+            }
+            stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
+            me.replay();
+        } while(!stop);
+    };
+    me.fastforward = function() {
+        var stop = false;
+        do {
+            me.currentIndex++;
+            if(me.currentIndex >= me.totalParts) {
+                me.synth.cancel();
+                if(me.params) {
+                    me.params.onnext();
+                }
+                return;
+            }
+            stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
+            me.replay();
+        } while(!stop);
     };
     me.stop = function () {
         me.synth.cancel();
+        me.queueIndex = 0;
     };
     me.voices = function (language) {
         var voices = me.synth.getVoices();

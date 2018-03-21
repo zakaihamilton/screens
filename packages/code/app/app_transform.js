@@ -388,13 +388,17 @@ package.app.transform = function AppTransform(me) {
                 nextPageClass: ["app.transform.page.button", "app.transform.page.next", modifiers],
                 scrollToTopClass: ["app.transform.page.scrolltotop", modifiers],
                 separatorClass: ["app.transform.separator", modifiers],
+                rewindClass: ["app.transform.rewind", modifiers],
                 playClass: ["app.transform.play", modifiers],
+                fastforwardClass: ["app.transform.fastforward", modifiers],
                 stopClass: ["app.transform.stop", modifiers],
                 reloadMethod: "app.transform.transform",
                 fullscreenMethod: "widget.window.fullscreen",
                 previousPageMethod: "widget.scrollbar.vertical.before",
                 nextPageMethod: "widget.scrollbar.vertical.after",
                 playMethod: "app.transform.play",
+                rewindMethod: "app.transform.rewind",
+                fastforwardMethod: "app.transform.fastforward",
                 stopMethod: "app.transform.stop",
                 usePages: window.options.pages,
                 columnCount: columnCount,
@@ -684,7 +688,7 @@ package.app.transform = function AppTransform(me) {
             }, data, "app.transform.content", title, ["content"]);
         }
     };
-    me.play = function(object) {
+    me.play = function(object, value) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -698,8 +702,13 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
         else {
+            var index = 0;
+            if(typeof value === "number") {
+                index = value;
+            }
             var text = me.ui.layout.pageText(currentPage);
             var params = {
+                index:index,
                 onstart: () => {
                     console.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
@@ -718,6 +727,30 @@ package.app.transform = function AppTransform(me) {
                             }
                         }, 1000);
                     }
+                },
+                onprevious: () => {
+                    var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
+                    if(pageNumber > 1) {
+                        setTimeout(() => {
+                            me.core.property.set(object, "widget.scrollbar.vertical.before");
+                            setTimeout(() => {
+                                me.core.property.set(object, "app.transform.play", -1);
+                            }, 1000);
+                        }, 1000);
+                    }
+                    else {
+                        me.media.voice.replay();
+                    }
+                },
+                onnext: () => {
+                    setTimeout(() => {
+                        if(!currentPage.last) {
+                            me.core.property.set(object, "widget.scrollbar.vertical.after");
+                            setTimeout(() => {
+                                me.core.property.set(object, "app.transform.play");
+                            }, 1000);
+                        }
+                    }, 1000);
                 },
                 onchange: (index, text) => {
                     console.log("onchange: " + index + " text:" + text);
@@ -743,6 +776,22 @@ package.app.transform = function AppTransform(me) {
             me.ui.layout.clearPage(currentPage);
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
+        }
+    };
+    me.rewind = function(object) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        if(isPlaying) {
+            me.media.voice.rewind();
+        }
+    };
+    me.fastforward = function(object) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        if(isPlaying) {
+            me.media.voice.fastforward();
         }
     };
     me.voices = function(object) {
