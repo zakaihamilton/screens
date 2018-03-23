@@ -40,14 +40,14 @@ package.app.transform = function AppTransform(me) {
             });
             window.pageSize = { width: 0, height: 0 };
             window.options.autoScroll = false;
-            me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
-            me.doExplanation = me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
-            me.prioritizeExplanation = me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
-            me.addStyles = me.ui.options.toggleSet(me, "addStyles", me.transform.set);
-            me.phaseNumbers = me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
-            me.keepSource = me.ui.options.toggleSet(me, "keepSource", me.transform.set);
-            me.showHtml = me.ui.options.toggleSet(me, "showHtml", me.transform.set);
-            me.showInput = me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
+            me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
+            me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
+            me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
+            me.ui.options.toggleSet(me, "addStyles", me.transform.set);
+            me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
+            me.ui.options.toggleSet(me, "keepSource", me.transform.set);
+            me.ui.options.toggleSet(me, "showHtml", me.transform.set);
+            me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
                 var text = me.core.property.get(window.var.layout, "ui.basic.text");
                 if (!text) {
@@ -55,24 +55,24 @@ package.app.transform = function AppTransform(me) {
                 }
                 me.updateWidgets(window, value);
             });
-            me.autoScroll = me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
-            me.snapToPage = me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
-            me.language = me.ui.options.choiceSet(me, "language", me.transform.set);
-            me.fontSize = me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
+            me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
+            me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
+            me.ui.options.choiceSet(me, "language", me.transform.set);
+            me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
                 var window = me.widget.window.mainWindow(object);
                 me.core.property.set([window.var.layout, window.var.termTable], "ui.style.fontSize", value);
                 window.forceReflow = true;
                 me.core.property.notify(window, "update");
             });
-            me.pages = me.ui.options.toggleSet(me, "pages", me.reflow.set);
-            me.columns = me.ui.options.toggleSet(me, "columns", me.reflow.set);
-            me.headings = me.ui.options.toggleSet(me, "headings", me.transform.set);
-            me.subHeadings = me.ui.options.toggleSet(me, "subHeadings", me.transform.set);
-            me.diagrams = me.ui.options.toggleSet(me, "diagrams", me.transform.set);
-            me.pipVideo = me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
-            me.autoPlay = me.ui.options.toggleSet(me, "autoPlay");
-            me.voice = me.ui.options.choiceSet(me, "voice", me.reflow.set);
-            me.scrollPos = me.ui.options.choiceSet(me, "scrollPos");
+            me.ui.options.toggleSet(me, "pages", me.reflow.set);
+            me.ui.options.toggleSet(me, "columns", me.reflow.set);
+            me.ui.options.toggleSet(me, "headings", me.transform.set);
+            me.ui.options.toggleSet(me, "subHeadings", me.transform.set);
+            me.ui.options.toggleSet(me, "diagrams", me.transform.set);
+            me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
+            me.ui.options.toggleSet(me, "autoPlay");
+            me.ui.options.choiceSet(me, "voice", me.reflow.set);
+            me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet("kab");
         }
     };

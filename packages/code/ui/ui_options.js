@@ -42,7 +42,7 @@ package.ui.options = function UIOptions(me) {
         if(!component.options) {
             component.options = {};
         }
-        return {
+        component[key] = {
             get: function (object) {
                 var options = component.options;
                 var window = me.core.property.get(object, "widget.window.active");
@@ -77,7 +77,7 @@ package.ui.options = function UIOptions(me) {
         if(!component.options) {
             component.options = {};
         }
-        var methods = {
+        component[key] = {
             get: function (object, value) {
                 var options = component.options;
                 var window = me.core.property.get(object, "widget.window.active");
@@ -107,13 +107,12 @@ package.ui.options = function UIOptions(me) {
                 }
             }
         };
-        return methods;
     };
     me.inputSet = function (component, key, callback) {
         if(!component.options) {
             component.options = {};
         }
-        var methods = {
+        component[key] = {
             get: function (object) {
                 var options = component.options;
                 var window = me.core.property.get(object, "widget.window.active");
@@ -152,6 +151,5 @@ package.ui.options = function UIOptions(me) {
                 }
             }
         };
-        return methods;
     };
 };

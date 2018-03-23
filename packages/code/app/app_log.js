@@ -17,7 +17,7 @@ package.app.log = function AppLog(me) {
         me.ui.options.load(me, null, {
             "source": "Browser"
         });
-        me.source = me.ui.options.choiceSet(me, "source", function (object, options, key, value) {
+        me.ui.options.choiceSet(me, "source", function (object, options, key, value) {
             me.core.property.notify(me.singleton, "app.log.refresh");
         });
     };
