@@ -10,6 +10,7 @@ package.media.voice = function MediaVoice(me) {
         me.currentIndex = 0;
         me.totalParts = 0;
         me.params = null;
+        me.playTime = null;
     };
     me.pause = function () {
         me.synth.pause();
@@ -104,10 +105,15 @@ package.media.voice = function MediaVoice(me) {
         console.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
         var utterances = me.utterances.filter(utterances => utterances.index >= me.currentIndex);
         me.synth.cancel();
+        me.playTime = new Date().getTime();
         utterances.map( utterance => me.synth.speak(utterance) );
     };
     me.rewind = function() {
         var stop = false;
+        if(new Date().getTime() > me.playTime + 3000) {
+            me.replay();
+            return;
+        }
         do {
             me.currentIndex--;
             if(me.currentIndex < 0) {
