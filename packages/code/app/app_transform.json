@@ -330,8 +330,7 @@
                     "Copy All Pages",
                     "app.transform.copyAllPages",
                     {
-                        "visible":"select",
-                        "separator":true
+                        "visible":"select"
                     }
                 ]
             ]

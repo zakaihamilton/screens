@@ -133,6 +133,7 @@ package.media.voice = function MediaVoice(me) {
         do {
             me.currentIndex++;
             if(me.currentIndex >= me.totalParts) {
+                me.currentIndex = me.totalParts - 1;
                 me.synth.cancel();
                 if(me.params) {
                     me.params.onnext();

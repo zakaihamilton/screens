@@ -34,11 +34,11 @@ package.app.transform = function AppTransform(me) {
                 scrollPos: 0,
                 phaseNumbers: true,
                 diagrams: true,
-                pipVideo : false,
+                pipVideo: false,
                 autoPlay: true,
                 voice: "UK English Male"
             });
-            window.pageSize = {width: 0, height: 0};
+            window.pageSize = { width: 0, height: 0 };
             window.options.autoScroll = false;
             me.doTranslation = me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
             me.doExplanation = me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
@@ -89,7 +89,7 @@ package.app.transform = function AppTransform(me) {
         me.core.property.set(window.var.termTable, "ui.style.fontSize", window.options.fontSize);
         if (update) {
             me.core.property.notify(window, "update");
-    }
+        }
     };
     me.shouldReflow = function (object) {
         var window = me.widget.window.mainWindow(object);
@@ -117,7 +117,7 @@ package.app.transform = function AppTransform(me) {
             } else {
                 object.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
+                    me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
                     me.updateScrolling(object);
                 }, 250);
             }
@@ -132,11 +132,11 @@ package.app.transform = function AppTransform(me) {
             snapToPage = false;
         }
         me.core.property.set(scrollbar, {
-            "snapToPage" : snapToPage,
+            "snapToPage": snapToPage,
             "pageSize": pageSize.height,
             "autoScroll": window.options.autoScroll,
             "scrollTo": window.options.scrollPos,
-            "snap" : null
+            "snap": null
         });
     };
     me.clear = {
@@ -144,7 +144,8 @@ package.app.transform = function AppTransform(me) {
             var window = me.widget.window.mainWindow(object);
             me.core.property.set(window.var.input, {
                 "ui.basic.text": "",
-                "storage.local.store": ""});
+                "storage.local.store": ""
+            });
             me.core.property.set(window.var.output, "ui.basic.html", "");
             me.ui.node.removeChildren(window.var.filterList);
             me.ui.node.removeChildren(window.var.termTable);
@@ -231,7 +232,7 @@ package.app.transform = function AppTransform(me) {
         }
         for (var heading in table) {
             var row = table[heading];
-            var list = [{"ui.basic.text": heading, "ui.element.component": "widget.table.header"}];
+            var list = [{ "ui.basic.text": heading, "ui.element.component": "widget.table.header" }];
             var order = ["root", "one", "two", "three", "four"];
             order.map(function (phase) {
                 var properties = {};
@@ -364,10 +365,10 @@ package.app.transform = function AppTransform(me) {
             }
             var columnCount = window.options.columns ? 2 : 1;
             var modifiers = [window.language];
-            if(window.options.pipVideo) {
+            if (window.options.pipVideo) {
                 modifiers.push("pipVideo");
             }
-            if(me.core.property.get(window, "fullscreen")) {
+            if (me.core.property.get(window, "fullscreen")) {
                 modifiers.push("fullscreen");
             }
             modifiers = modifiers.map((modifier) => {
@@ -518,20 +519,20 @@ package.app.transform = function AppTransform(me) {
             var fullPath = me.fullPath(path);
             me.core.json.loadFile(function (json) {
                 if (json.title) {
-                    window.diagrams.push({title: json.title, path: path});
+                    window.diagrams.push({ title: json.title, path: path });
                 }
             }, fullPath, false);
         }
     };
-    me.fullPath = function(name) {
+    me.fullPath = function (name) {
         return "/packages/res/diagrams/" + name + ".json";
     };
-    me.showDescriptionBox = function(object, next, visible) {
+    me.showDescriptionBox = function (object, next, visible) {
         var descriptionType = null;
         var descriptionBox = null;
         var window = me.widget.window.mainWindow(object);
         var descriptionTypes = ["source", "related"];
-        if(window.options.prioritizeExplanation) {
+        if (window.options.prioritizeExplanation) {
             descriptionTypes.unshift("technical");
             descriptionTypes.unshift("explanation");
         }
@@ -540,13 +541,13 @@ package.app.transform = function AppTransform(me) {
             descriptionTypes.unshift("technical");
         }
         var descriptionIndex = 0;
-        if(next && object.descriptionType) {
+        if (next && object.descriptionType) {
             descriptionIndex = descriptionTypes.indexOf(object.descriptionType) + 1;
         }
-        for(var cycleIndex = 0; cycleIndex < descriptionTypes.length; cycleIndex++) {
-            descriptionType = descriptionTypes[(descriptionIndex+cycleIndex)%descriptionTypes.length];
+        for (var cycleIndex = 0; cycleIndex < descriptionTypes.length; cycleIndex++) {
+            descriptionType = descriptionTypes[(descriptionIndex + cycleIndex) % descriptionTypes.length];
             descriptionBox = me.ui.node.findById(object, descriptionType);
-            if(descriptionBox) {
+            if (descriptionBox) {
                 break;
             }
         }
@@ -688,115 +689,111 @@ package.app.transform = function AppTransform(me) {
             }, data, "app.transform.content", title, ["content"]);
         }
     };
-    me.play = function(object, value) {
+    me.play = function (object, value) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
-        if(isPlaying && !isPaused) {
+        if (isPlaying && !isPaused) {
             me.media.voice.pause();
             me.ui.layout.setPlayState(currentPage, true, true);
         }
-        else if(isPlaying && isPaused) {
+        else if (isPlaying && isPaused) {
             me.media.voice.resume();
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
         else {
             var index = 0;
-            if(typeof value === "number") {
+            if (typeof value === "number") {
                 index = value;
             }
             var text = me.ui.layout.pageText(currentPage);
             var params = {
-                index:index,
+                index: index,
                 onstart: () => {
-                    console.log("onstart");
+                    me.core.console.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
                 onend: () => {
-                    console.log("onend");
+                    me.core.console.log("onend");
                     me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
-                    if(window.options.autoPlay) {
-                        setTimeout(() => {
-                            if(!currentPage.last) {
+                    if (window.options.autoPlay) {
+                        if (!currentPage.last) {
+                            setTimeout(() => {
                                 me.core.property.set(object, "widget.scrollbar.vertical.after");
                                 setTimeout(() => {
                                     me.core.property.set(object, "app.transform.play");
                                 }, 1000);
-                            }
-                        }, 1000);
+                            }, 1000);
+                        }
                     }
                 },
                 onprevious: () => {
                     var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
-                    if(pageNumber > 1) {
+                    if (pageNumber > 1) {
                         me.ui.layout.clearPage(currentPage);
-                        setTimeout(() => {
-                            me.core.property.set(object, "widget.scrollbar.vertical.before");
-                            setTimeout(() => {
-                                me.core.property.set(object, "app.transform.play", -1);
-                            }, 1000);
-                        }, 1000);
+                        me.core.property.set(object, "widget.scrollbar.vertical.before");
+                        me.core.property.set(object, "app.transform.play", -1);
                     }
                     else {
                         me.media.voice.replay();
                     }
                 },
                 onnext: () => {
-                    setTimeout(() => {
-                        if(!currentPage.last) {
-                            me.ui.layout.clearPage(currentPage);
-                            me.core.property.set(object, "widget.scrollbar.vertical.after");
-                            setTimeout(() => {
-                                me.core.property.set(object, "app.transform.play");
-                            }, 1000);
-                        }
-                    }, 1000);
+                    me.ui.layout.clearPage(currentPage);
+                    if (currentPage.last) {
+                        me.ui.layout.setPlayState(currentPage, false, false);
+                        me.currentPlayingPage = null;
+                    }
+                    else {
+                        me.core.property.set(object, "widget.scrollbar.vertical.after");
+                        me.core.property.set(object, "app.transform.play");
+                    }
                 },
                 onchange: (index, text) => {
-                    console.log("onchange: " + index + " text:" + text);
+                    me.core.console.log("onchange: " + index + " text:" + text);
                     me.ui.layout.markPage(currentPage, index, text);
                 },
                 rate: 1,
                 language: window.language
             };
             me.media.voice.play(text, window.options.voice, params);
-            if(me.currentPlayingPage) {
+            if (me.currentPlayingPage) {
                 me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                 me.currentPlayingPage = null;
             }
             me.currentPlayingPage = currentPage;
         }
     };
-    me.stop = function(object) {
+    me.stop = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
-        if(isPlaying) {
+        if (isPlaying) {
             me.media.voice.stop();
             me.ui.layout.clearPage(currentPage);
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
-    me.rewind = function(object) {
+    me.rewind = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
-        if(isPlaying) {
+        if (isPlaying) {
             me.media.voice.rewind();
         }
     };
-    me.fastforward = function(object) {
+    me.fastforward = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
-        if(isPlaying) {
+        if (isPlaying) {
             me.media.voice.fastforward();
         }
     };
-    me.voices = function(object) {
+    me.voices = function (object) {
         var window = me.widget.window.mainWindow(object);
         var language = window.language;
         var voicelist = me.media.voice.voices(language);
@@ -805,33 +802,33 @@ package.app.transform = function AppTransform(me) {
         voicelist = voicelist.map((voice) => {
             var name = voice.name;
             var separator = false;
-            if(!voice.localService && !remote) {
+            if (!voice.localService && !remote) {
                 remote = true;
                 separator = true;
             }
             return [voice.name, "app.transform.voice", {
-                    "separator":separator,
-                    "state": "select"
-                }
+                "separator": separator,
+                "state": "select"
+            }
             ];
         });
         return voicelist;
     };
     me.copyPage = {
-        get: function(object) {
+        get: function (object) {
             return me.ui.clipboard.isSupported();
         },
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.ui.layout.pageText(currentPage).join("\n");
             me.ui.clipboard.copy(me.core.console.error, text);
         }
     };
     me.copyAllPages = {
-        get: function(object) {
+        get: function (object) {
             return me.ui.clipboard.isSupported();
         },
-        set: function(object) {
+        set: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = [];
             me.ui.layout.pageApply(window.var.layout, (page) => {
