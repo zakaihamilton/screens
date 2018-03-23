@@ -486,7 +486,7 @@
 }
 
 .app-transform-rewind:hover:after {
-    content: "\23EA\A Rewind";
+    content: "\23EA\A Previous";
 }
 
 .app-transform-rewind.play:after {
@@ -515,7 +515,7 @@
 }
 
 .app-transform-fastforward:hover:after {
-    content: "\23E9\A Fast Forward";
+    content: "\23E9\A Next";
 }
 
 .app-transform-fastforward.play:after {
