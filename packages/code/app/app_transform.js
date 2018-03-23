@@ -817,14 +817,28 @@ package.app.transform = function AppTransform(me) {
         });
         return voicelist;
     };
-    me.copyText = {
+    me.copyPage = {
         get: function(object) {
             return me.ui.clipboard.isSupported();
         },
         set: function(object) {
             var window = me.widget.window.mainWindow(object);
-            var text = me.ui.layout.pageText(currentPage);
-            me.ui.clipboard.copy(null, text);
+            var text = me.ui.layout.pageText(currentPage).join("\n");
+            me.ui.clipboard.copy(me.core.console.error, text);
+        }
+    };
+    me.copyAllPages = {
+        get: function(object) {
+            return me.ui.clipboard.isSupported();
+        },
+        set: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = [];
+            me.ui.layout.pageApply(window.var.layout, (page) => {
+                text.push(me.ui.layout.pageText(page).join("\n"));
+            });
+            text = text.join("\n");
+            me.ui.clipboard.copy(me.core.console.error, text);
         }
     };
 };

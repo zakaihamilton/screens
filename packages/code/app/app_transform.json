@@ -319,8 +319,16 @@
                     "ui.exec.strikeThrough"
                 ],
                 [
-                    "Copy Output",
-                    "app.transform.copyText",
+                    "Copy Page",
+                    "app.transform.copyPage",
+                    {
+                        "visible":"select",
+                        "separator":true
+                    }
+                ],
+                [
+                    "Copy All Pages",
+                    "app.transform.copyAllPages",
                     {
                         "visible":"select",
                         "separator":true

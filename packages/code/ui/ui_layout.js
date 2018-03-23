@@ -465,6 +465,16 @@ package.ui.layout = function UILayout(me) {
         let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
         return  (isTotal || isPartial);
     };
+    me.pageApply = function(target, callback) {
+        target = me.content(target);
+        var child = target.firstChild;
+        while (child) {
+            if (child.pageSize) {
+                callback(child);
+            }
+            child = child.nextSibling;
+        }
+    };
     me.updatePages = function (target) {
         target = me.content(target);
         var child = target.firstChild;

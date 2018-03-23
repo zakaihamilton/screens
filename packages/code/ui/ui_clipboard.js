@@ -30,18 +30,23 @@ package.ui.clipboard = function UIClipboard(me) {
         return navigator.clipboard && permissionStatus === "granted";
     };
     me.copy = function(callback, text) {
-        navigator.clipboard.writeText(text)
-        .then(() => {
-            me.core.console.log("clipboard text copied:" + text);
+        if(navigator.clipboard) {
+            navigator.clipboard.writeText(text)
+            .then(() => {
+                me.core.console.log("clipboard text copied:" + text);
+                if(callback) {
+                    callback();
+                }
+            })
+            .catch(err => {
+            me.core.console.error("Could not copy text: " + text + " error: " + err.message || err);
             if(callback) {
-                callback();
+                callback(err);
             }
-        })
-        .catch(err => {
-          me.core.console.error("Could not copy text: " + text + " error: " + err.message || err);
-          if(callback) {
-              callback(err);
-          }
-        });
+            });
+        }
+        else {
+            callback("Clipboard not supported");
+        }
     };
 };
