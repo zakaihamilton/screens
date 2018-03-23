@@ -10,217 +10,387 @@
     "ui.style.background": "white",
     "maximize": null,
     "widget.menu.items": [
-        ["Transform", [
-                ["Clear", "app.transform.clear"],
-                ["Refresh", "app.transform.transform", {
+        [
+            "Transform",
+            [
+                [
+                    "Clear",
+                    "app.transform.clear"
+                ],
+                [
+                    "Refresh",
+                    "app.transform.transform",
+                    {
                         "separator": true
                     }
                 ],
-                ["Translation", "app.transform.doTranslation", {
+                [
+                    "Translation",
+                    "app.transform.doTranslation",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Keep Source", "app.transform.keepSource", {
+                [
+                    "Keep Source",
+                    "app.transform.keepSource",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Explanation", "app.transform.doExplanation", {
+                [
+                    "Explanation",
+                    "app.transform.doExplanation",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Prioritize Explanation", "app.transform.prioritizeExplanation", {
+                [
+                    "Prioritize Explanation",
+                    "app.transform.prioritizeExplanation",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Styles", "app.transform.addStyles", {
+                [
+                    "Styles",
+                    "app.transform.addStyles",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Headings", "app.transform.headings", {
+                [
+                    "Headings",
+                    "app.transform.headings",
+                    {
                         "state": "select",
                         "enabled": "app.transform.addStyles"
                     }
                 ],
-                ["Phase Numbers", "app.transform.phaseNumbers", {
+                [
+                    "Phase Numbers",
+                    "app.transform.phaseNumbers",
+                    {
                         "state": "select",
                         "enabled": "app.transform.addStyles"
                     }
                 ],
-                ["Sub Headings", "app.transform.subHeadings", {
+                [
+                    "Sub Headings",
+                    "app.transform.subHeadings",
+                    {
                         "state": "select",
                         "enabled": "app.transform.addStyles"
                     }
                 ],
-                ["Diagrams", "app.transform.diagrams", {
+                [
+                    "Diagrams",
+                    "app.transform.diagrams",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Language", null, {
+                [
+                    "Language",
+                    null,
+                    {
                         "enabled": false,
                         "header": true
                     }
                 ],
-                ["Auto", "app.transform.language", {
+                [
+                    "Auto",
+                    "app.transform.language",
+                    {
                         "state": "select"
                     }
                 ],
-                ["English", "app.transform.language", {
+                [
+                    "English",
+                    "app.transform.language",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Hebrew", "app.transform.language", {
+                [
+                    "Hebrew",
+                    "app.transform.language",
+                    {
                         "state": "select"
                     }
                 ]
             ]
         ],
-        ["Layout", [
-                ["Reflow", "app.transform.reflow"],
-                ["Auto Scroll", "app.transform.autoScroll", {
+        [
+            "Layout",
+            [
+                [
+                    "Reflow",
+                    "app.transform.reflow"
+                ],
+                [
+                    "Auto Scroll",
+                    "app.transform.autoScroll",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Snap to Page", "app.transform.snapToPage", {
+                [
+                    "Snap to Page",
+                    "app.transform.snapToPage",
+                    {
                         "state": "select",
                         "enabled": "app.transform.pages"
                     }
                 ],
-                ["Pages", "app.transform.pages", {
+                [
+                    "Pages",
+                    "app.transform.pages",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Columns", "app.transform.columns", {
+                [
+                    "Columns",
+                    "app.transform.columns",
+                    {
                         "state": "select",
                         "enabled": "app.transform.pages"
                     }
                 ],
-                ["Input", "app.transform.showInput", {
+                [
+                    "Input",
+                    "app.transform.showInput",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Video Slot", "app.transform.pipVideo", {
+                [
+                    "Video Slot",
+                    "app.transform.pipVideo",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Voice", null, {
+                [
+                    "Voice",
+                    null,
+                    {
                         "enabled": false,
                         "header": true
                     }
                 ],
-                ["None", "app.transform.voice", {
+                [
+                    "None",
+                    "app.transform.voice",
+                    {
                         "state": "select"
                     }
                 ],
                 "app.transform.voices",
-                ["Auto Play", "app.transform.autoPlay", {
+                [
+                    "Auto Play",
+                    "app.transform.autoPlay",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Font Size", null, {
+                [
+                    "Font Size",
+                    null,
+                    {
                         "enabled": false,
                         "header": true
                     }
                 ],
-                ["12px", "app.transform.fontSize", {
+                [
+                    "12px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["14px", "app.transform.fontSize", {
+                [
+                    "14px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["16px", "app.transform.fontSize", {
+                [
+                    "16px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["18px", "app.transform.fontSize", {
+                [
+                    "18px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["20px", "app.transform.fontSize", {
+                [
+                    "20px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["22px", "app.transform.fontSize", {
+                [
+                    "22px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["24px", "app.transform.fontSize", {
+                [
+                    "24px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["26px", "app.transform.fontSize", {
+                [
+                    "26px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["28px", "app.transform.fontSize", {
+                [
+                    "28px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["30px", "app.transform.fontSize", {
+                [
+                    "30px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ],
-                ["32px", "app.transform.fontSize", {
+                [
+                    "32px",
+                    "app.transform.fontSize",
+                    {
                         "state": "select"
                     }
                 ]
             ]
         ],
-        ["Edit", [
-                ["Copy", "ui.exec.copy"],
-                ["Bold", "ui.exec.bold", {
+        [
+            "Edit",
+            [
+                [
+                    "Copy",
+                    "ui.exec.copy"
+                ],
+                [
+                    "Bold",
+                    "ui.exec.bold",
+                    {
                         "separator": true
                     }
                 ],
-                ["Italic", "ui.exec.italic"],
-                ["Underline", "ui.exec.underline"],
-                ["Strikethrough", "ui.exec.strikeThrough"]
+                [
+                    "Italic",
+                    "ui.exec.italic"
+                ],
+                [
+                    "Underline",
+                    "ui.exec.underline"
+                ],
+                [
+                    "Strikethrough",
+                    "ui.exec.strikeThrough"
+                ],
+                [
+                    "Copy Output",
+                    "app.transform.copyText",
+                    {
+                        "visible":"select",
+                        "separator":true
+                    }
+                ]
             ]
         ],
-        ["Content", [
-                ["Refresh", "app.transform.refreshContentList"],
+        [
+            "Content",
+            [
+                [
+                    "Refresh",
+                    "app.transform.refreshContentList"
+                ],
                 "app.transform.contentMenuList",
-                ["Save", "app.transform.save", {
+                [
+                    "Save",
+                    "app.transform.save",
+                    {
                         "enabled": "select",
                         "separator": true
-                    }]
+                    }
+                ]
             ]
         ],
-        ["Window", [
-                ["Cascade", "ui.arrange.cascade"],
-                ["Tile Horizontally", "ui.arrange.tileHorizontally"],
-                ["Tile Vertically", "ui.arrange.tileVertically"],
-                ["Table of Phases", "app.transform.toggleTerms", {
+        [
+            "Window",
+            [
+                [
+                    "Cascade",
+                    "ui.arrange.cascade"
+                ],
+                [
+                    "Tile Horizontally",
+                    "ui.arrange.tileHorizontally"
+                ],
+                [
+                    "Tile Vertically",
+                    "ui.arrange.tileVertically"
+                ],
+                [
+                    "Table of Phases",
+                    "app.transform.toggleTerms",
+                    {
                         "separator": true,
                         "state": "select",
                         "enabled": "app.transform.termsAvailable"
                     }
                 ],
-                ["Diagrams", null, {
-                        "visible":"app.transform.hasDiagrams",
+                [
+                    "Diagrams",
+                    null,
+                    {
+                        "visible": "app.transform.hasDiagrams",
                         "enabled": false,
                         "header": true
                     }
                 ],
                 "app.transform.diagramList",
-                ["Documents", null, {
+                [
+                    "Documents",
+                    null,
+                    {
                         "enabled": false,
                         "header": true
                     }
                 ],
                 "widget.window.childMenuList"
-            ]]
+            ]
+        ]
     ],
     "ui.group.data": {
         "ui.data.default": {

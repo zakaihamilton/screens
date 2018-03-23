@@ -817,4 +817,14 @@ package.app.transform = function AppTransform(me) {
         });
         return voicelist;
     };
+    me.copyText = {
+        get: function(object) {
+            return me.ui.clipboard.isSupported();
+        },
+        set: function(object) {
+            var window = me.widget.window.mainWindow(object);
+            var text = me.ui.layout.pageText(currentPage);
+            me.ui.clipboard.copy(null, text);
+        }
+    };
 };

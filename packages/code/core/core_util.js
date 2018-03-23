@@ -32,4 +32,7 @@ package.core.util = function CoreUtil(me) {
             }
         }, "/package.json");
     };
+    me.isSecure = function() {
+        return location.protocol === 'https:';
+    }
 };

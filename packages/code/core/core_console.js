@@ -5,9 +5,17 @@
 
 package.core.console = function CoreConsole(me) {
     me.messages = [];
-    me.enabled = (me.platform !== "browser");
+    me.enabled = true;
     me.clear = function() {
         me.messages = [];
+    };
+    me.init = function() {
+        if(me.platform === "browser") {
+            me.enabled = !me.core.util.isSecure();
+        }
+        else {
+            me.enabled = true;
+        }
     };
     me.log = function(message) {
         if(me.enabled) {
