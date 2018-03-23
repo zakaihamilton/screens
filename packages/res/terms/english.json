@@ -2230,6 +2230,14 @@
             "hebrew": "ספר הבהיר"
         },
         {
+            "translation": "The Bright Light",
+            "style": {
+                "heading": "Book"
+            },
+            "term": "Ohr HaBahir",
+            "hebrew": "אור הבהיר"
+        },
+        {
             "translation": "Book",
             "term": "Sefer",
             "hebrew": "ספר"
@@ -6571,6 +6579,26 @@
                 "phase":"root"
             },
             "hebrew":"עולם הצמצום"
+        },
+        {
+            "term":"Matsil",
+            "hebrew":"מציל",
+            "translation":"Saviour"
+        },
+        {
+            "term":"Ohr Ruchani",
+            "hebrew":"אור רוחני",
+            "translation":"Spiritual Light"
+        },
+        {
+            "term":"Ohr Zachar",
+            "hebrew":"אור זכר",
+            "translation":"Male Light"
+        },
+        {
+            "term":"Ohr Nekeva",
+            "hebrew":"אור נקבה",
+            "translation":"Female Light"
         }
     ],
     "style": {

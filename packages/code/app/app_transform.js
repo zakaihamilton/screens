@@ -731,6 +731,7 @@ package.app.transform = function AppTransform(me) {
                 onprevious: () => {
                     var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
                     if(pageNumber > 1) {
+                        me.ui.layout.clearPage(currentPage);
                         setTimeout(() => {
                             me.core.property.set(object, "widget.scrollbar.vertical.before");
                             setTimeout(() => {
@@ -745,6 +746,7 @@ package.app.transform = function AppTransform(me) {
                 onnext: () => {
                     setTimeout(() => {
                         if(!currentPage.last) {
+                            me.ui.layout.clearPage(currentPage);
                             me.core.property.set(object, "widget.scrollbar.vertical.after");
                             setTimeout(() => {
                                 me.core.property.set(object, "app.transform.play");
