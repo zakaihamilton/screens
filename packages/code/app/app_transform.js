@@ -73,7 +73,7 @@ package.app.transform = function AppTransform(me) {
             me.ui.options.toggleSet(me, "autoPlay");
             me.ui.options.choiceSet(me, "voice", me.reflow.set);
             me.ui.options.choiceSet(me, "scrollPos");
-            me.ui.class.useStylesheet("kab");
+            me.ui.class.useStylesheet(null, "kab");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
@@ -587,17 +587,22 @@ package.app.transform = function AppTransform(me) {
     };
     me.refreshContentList = {
         set: function (object) {
-            me.storage.data.query((err, items) => {
-                me.core.console.error(err);
-                me.contentList = items;
-            }, "app.transform.content", "title");
+            me.core.message.send_server("core.cache.reset", () => {
+                    me.storage.data.query((err, items) => {
+                    me.core.console.error(err);
+                    me.contentList = items;
+                }, "app.transform.content", "title");
+            }, me.id);
         }
     };
     me.init = function (task) {
-        me.storage.data.query((err, items) => {
-            me.core.console.error(err);
-            me.contentList = items;
-        }, "app.transform.content", "title");
+        me.lock(task, (task) => {
+            me.core.message.send_server("core.cache.use", (err, items) => {
+                me.core.console.error(err);
+                me.contentList = items;
+                me.unlock(task);
+            }, me.id, "storage.data.query", "app.transform.content", "title");
+        });
     };
     me.contentMenuList = {
         get: function (object) {

@@ -6,14 +6,18 @@
 package.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
-    me.init = function() {
+    me.init = function(task) {
         me.updateList();
         var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
         if(current_theme !== "none") {
-            me.load(null, current_theme);
+            me.lock((task) => {
+                me.load(() => {
+                    me.unlock(task);
+                }, current_theme);
+            });
         }
     };
     me.themeList = {
@@ -82,7 +86,11 @@ package.ui.theme = function UITheme(me) {
             if(data) {
                 me.unload();
                 me.currentTheme = data;
-                me.currentTheme.link = me.ui.class.loadStylesheet(path + ".css");
+                me.currentTheme.link = me.ui.class.loadStylesheet(() => {
+                    if(callback) {
+                        callback(data);
+                    }
+                }, path + ".css");
                 me.applyTheme(function(element, classItem) {
                     var mapping = me.findMapping(classItem);
                     if(!mapping) {
@@ -96,9 +104,6 @@ package.ui.theme = function UITheme(me) {
                     }
                 });
                 me.core.property.set(me.storage.local.local, "ui-theme-current", name);
-            }
-            if(callback) {
-                callback(data);
             }
         }, path + ".json", "utf8");
     };
