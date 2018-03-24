@@ -406,10 +406,29 @@ package.widget.window = function WidgetWindow(me) {
             me.core.property.notify(window.child_window, "update");
         }
     };
+    me.fixRegion = function(object) {
+        var window = me.window(object);
+        var region = me.ui.rect.absolute_region(window);
+        var workspace_region = me.ui.rect.absolute_region(me.ui.element.workspace());
+        var update = false;
+        if(region.left <= workspace_region.left || region.left >= workspace_region.right) {
+            me.core.property.set(window, "ui.style.left", "0px");
+        }
+        if(region.top <= workspace_region.top || region.top >= workspace_region.bottom) {
+            me.core.property.set(window, "ui.style.top", "0px");
+        }
+        if(region.right >= workspace_region.right && !fixed) {
+            me.core.property.set(window, "ui.style.width", workspace_region.right - workspace_region.left);
+        }
+        if(region.bottom >= workspace_region.bottom && !fixed) {
+            me.core.property.set(window, "ui.style.height", workspace_region.bottom - workspace_region.top);
+        }
+    };
     me.show = {
         set: function (object, value) {
             var window = me.window(object);
             var parent_window = me.parent(window);
+            var fixed = me.core.property.get(window, "widget.window.fixed");
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             if (value) {
                 if (parent_window && parent_window.child_window && parent_window.child_window !== window) {
@@ -419,21 +438,7 @@ package.widget.window = function WidgetWindow(me) {
                 } else if(!me.core.property.get(window, "embed")) {
                     me.core.property.set(window, "ui.focus.active", true);
                 }
-                var region = me.ui.rect.absolute_region(window);
-                var workspace_region = me.ui.rect.absolute_region(me.ui.element.workspace());
-                var update = false;
-                if(region.left <= workspace_region.left || region.left >= workspace_region.right) {
-                    me.core.property.set(window, "ui.style.left", "0px");
-                }
-                if(region.top <= workspace_region.top || region.top >= workspace_region.bottom) {
-                    me.core.property.set(window, "ui.style.top", "0px");
-                }
-                if(region.right >= workspace_region.right) {
-                    me.core.property.set(window, "ui.style.width", workspace_region.right - workspace_region.left);
-                }
-                if(region.bottom >= workspace_region.bottom) {
-                    me.core.property.set(window, "ui.style.height", workspace_region.bottom - workspace_region.top);
-                }
+                me.fixRegion(window);
                 if(update) {
                     me.core.property.notify(window, "update");
                 }
@@ -677,10 +682,12 @@ package.widget.window = function WidgetWindow(me) {
         get: function (object) {
             if(!me.core.property.get(object, "embed")) {
                 var options = {
-                    "region": me.core.property.get(object, "region"),
                     "titleOrder": me.core.property.get(object, "titleOrder"),
                     "title": me.core.property.get(object, "title")
                 };
+                if(!me.core.property.get(object, "fixed")) {
+                    options["region"] = me.core.property.get(object, "region")
+                }
                 var keys = ["maximize", "restore", "minimize"];
                 keys.map(function (key) {
                     var enabled = me.core.property.get(object, "ui.class.contains", key);
@@ -698,6 +705,7 @@ package.widget.window = function WidgetWindow(me) {
                     var optionValue = options[optionKey];
                     me.core.property.set(object, optionKey, optionValue);
                 }
+                me.fixRegion(object);
             }
         }
     };
