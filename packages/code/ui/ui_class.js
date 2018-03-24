@@ -67,17 +67,14 @@ package.ui.class = function UIClass(me) {
         link.rel = "stylesheet";
         link.media = "screen,print";
         link.onload = function() {
-            me.core.console.log("stylesheet loaded: " + path);
-            me.styleSheetsLeftToLoad--;
-            if(!me.styleSheetsLeftToLoad) {
-                if(callback) {
-                    callback();
-                }
+            me.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
+            if(callback) {
+                callback();
             }
         };
         me.styleSheetsLeftToLoad++;
         document.getElementsByTagName("head")[0].appendChild(link);
-        me.core.console.log("Loaded css stylesheet: " + path + "=" + link.href);
+        me.core.console.log("Loading css stylesheet: " + path + "=" + link.href);
         return link;
     };
     me.loadPackageStylesheets = function (callback, package_name) {
