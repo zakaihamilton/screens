@@ -33,11 +33,14 @@ package.core.console = function CoreConsole(me) {
             console.warn(fullMessage);
         }
     };
-    me.error = function(message) {
+    me.error = function(message, stack) {
         if(me.enabled) {
             if(message) {
+                if(!stack) {
+                    stack = new Error().stack;
+                }
                 var date = new Date();
-                var fullMessage = date.toUTCString() + " error [" + me.platform + "] " + message;
+                var fullMessage = date.toUTCString() + " error [" + me.platform + "] " + message + " stack: " + stack;
                 me.messages.push(fullMessage);
                 console.error(fullMessage);
             }

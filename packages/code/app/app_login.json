@@ -38,24 +38,6 @@
             "ui.basic.var":"signout",
             "ui.touch.click":"app.login.signout",
             "ui.basic.show":"@lib.googleauth.isSignedIn"
-        },
-        {
-            "ui.basic.tag":"fb:login-button",
-            "ui.property.style":{
-                "visibility":"",
-                "position":"absolute",
-                "left":"10%",
-                "bottom":"50px"
-            },
-            "ui.property.attribute":{
-                "scope":"public_profile",
-                "onlogin":"app.login.checkFBLoginState",
-                "data-max-rows":"1",
-                "data-size":"large",
-                "data-button-type":"continue_with",
-                "data-auto-logout-link":true
-            }
         }
-    ],
-    "app.login.checkFBLoginState":null
+    ]
 }

@@ -8,8 +8,7 @@ package.app.login = function AppLogin(me) {
         me.lock(task, (task) => {
             me.include({
                 "lib":[
-                    "googleauth",
-                    "facebookauth"
+                    "googleauth"
                 ]
             }, function() {
                 me.unlock(task);
@@ -49,10 +48,5 @@ package.app.login = function AppLogin(me) {
         me.core.property.set(object, "lib.googleauth.signout");
         me.core.property.set(window.var.userName, "ui.basic.text", "");
         me.core.property.set(object, "ui.basic.show", false);
-    };
-    me.checkFBLoginState = function() {
-        me.lib.facebookauth.status((response) => {
-            console.log("fb status: " + JSON.stringify(response));
-        });
     };
 };

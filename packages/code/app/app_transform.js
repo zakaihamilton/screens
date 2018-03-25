@@ -588,10 +588,10 @@ package.app.transform = function AppTransform(me) {
     me.refreshContentList = {
         set: function (object) {
             me.core.message.send_server("core.cache.reset", () => {
-                    me.storage.data.query((err, items) => {
+                me.core.message.send_server("core.cache.use", (err, items) => {
                     me.core.console.error(err);
                     me.contentList = items;
-                }, "app.transform.content", "title", true);
+                }, me.id, "storage.data.query", "app.transform.content", true);
             }, me.id);
         }
     };

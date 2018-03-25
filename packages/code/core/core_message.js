@@ -130,7 +130,7 @@ package.core.message = function CoreMessage(me) {
                         core.message.send.apply(info, args);
                     }
                     catch(e) {
-                        me.core.console.log("error: " + e.message + " " + JSON.stringify(args));
+                        me.core.console.error(e.message + " " + JSON.stringify(args), e.stack);
                         info.body = e.message;
                         me.unlock(task);
                     }

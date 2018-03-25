@@ -87,7 +87,7 @@ package.storage.data = function StorageData(me) {
     };
     me.query = function (callback, type, idOnly) {
         me.getService((service) => {
-            const query = service.createQuery(type);
+            var query = service.createQuery(type);
             if(idOnly) {
                 query = query.select("__key__");
             }
