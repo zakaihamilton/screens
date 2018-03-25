@@ -88,7 +88,7 @@ package.core.http = function CoreHttp(me) {
                             callback(server, port, err);
                         });
                     } catch (e) {
-                        me.core.console.error("Cannot create secure server, error: " + e.message);
+                        me.core.console.log("Cannot create secure server, error: " + e.message);
                         callback(server, port, e);
                     }
                 }
@@ -142,6 +142,7 @@ package.core.http = function CoreHttp(me) {
                 clientIp: me.clientIp(request),
                 responseHeaders: {}
             };
+            console.log("headers: " + JSON.stringify(info.headers));
             me.core.object(me, info);
             me.core.property.set(info, "check");
             if (!info.check) {
@@ -176,9 +177,12 @@ package.core.http = function CoreHttp(me) {
         return array;
     };
     me.send = function (callback, info, async = true) {
-        var headers = Object.assign({}, info.headers);
         me.core.object(me, info);
+        if(!info.headers) {
+            info.headers = {}
+        }
         me.core.property.set(info, "headers", headers);
+        var headers = Object.assign({}, info.headers);
         if (me.platform === "service") {
             me.core.message.send_server(me.id + ".send", callback, info, async);
         } else if (me.platform === "server") {
@@ -196,7 +200,7 @@ package.core.http = function CoreHttp(me) {
                     }
                 }
             };
-            me.core.console.log("sending request:" + JSON.stringify(request) + " body: " + info.body);
+            me.core.console.log("sending request:" + JSON.stringify(request) + " body: " + info.body + " headers: " + JSON.stringify(info.headers));
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();

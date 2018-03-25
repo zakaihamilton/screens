@@ -48,7 +48,7 @@ package.include({
     "lib": [
         "zlib"
     ]
-}, function (info) {
+}, function () {
     package.core.console.log("server loaded");
     package.core.startup.run();
 });

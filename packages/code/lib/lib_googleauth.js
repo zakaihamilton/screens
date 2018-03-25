@@ -5,6 +5,7 @@
 
 package.lib.googleauth = function GoogleAuth(me) {
     me.init = function (task) {
+        me.core.property.link("core.http.headers", "lib.googleauth.headers", true);
         me.lock(task, (task) => {
             me.core.require(() => {
                 gapi.load('auth2', function () {
@@ -55,6 +56,14 @@ package.lib.googleauth = function GoogleAuth(me) {
             callback();
         }
     };
+    me.token = function() {
+        var token = null;
+        if(me.isSignedIn()) {
+            var user = me.currentUser();
+            token = user.getAuthResponse().id_token
+        }
+        return token;
+    };
     me.signout = {
         set: function (object) {
             me.auth2.signOut().then(function () {
@@ -77,5 +86,11 @@ package.lib.googleauth = function GoogleAuth(me) {
     };
     me.userChanged = function (user) {
         console.log('User now: ', user);
+    };
+    me.headers = function(info) {
+        var token = me.token();
+        if(token) {
+            info.headers["user_id"] = token;
+        }
     };
 };

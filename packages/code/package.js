@@ -33,6 +33,28 @@ function package_unlock(task, callback) {
     }
 }
 
+function package_forEach(task, array, callback) {
+    var index = 0;
+    function iterate() {
+        var exit = false;
+        while (index < array.length && !exit) {
+            package_lock(task, (task) => {
+                var lock = task.lock;
+                callback(task, array[index], index++, array);
+                if (lock !== task.lock) {
+                    package_unlock(task, () => {
+                        setTimeout(iterate, 0);
+                    });
+                    exit = true;
+                    return;
+                }
+                package_unlock(task);
+            });
+        }
+    }
+    iterate();
+}
+
 function package_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this.module !== module) {
@@ -271,9 +293,9 @@ function package_include(packages, callback) {
         });
         package.unlock(task, () => {
             package.lock((task) => {
-                for(package_name in packages) {
+                package.forEach(task, Object.keys(packages), (task, package_name) => {
                     package_init(task, collection[package_name]);
-                }
+                });
                 package.unlock(task, callback);
             });
         });
@@ -296,7 +318,8 @@ Object.assign(package, {
     platform: package_platform(),
     include: package_include,
     lock: package_lock,
-    unlock: package_unlock
+    unlock: package_unlock,
+    forEach: package_forEach
 });
 
 var platform = package_platform();

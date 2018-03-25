@@ -3,6 +3,9 @@ function startBrowser(appName, appArgs) {
         "core": [
             "*"
         ],
+        "lib":[
+            "googleauth"
+        ],
         "storage": [
             "*"
         ],
@@ -33,7 +36,8 @@ function startBrowser(appName, appArgs) {
         "startup": [
             "*"
         ]
-    }, function (info) {
+    }, function () {
+        console.log("finished");
         package.core.startup.app = {
             name: appName,
             params: appArgs
