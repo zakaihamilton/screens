@@ -51,7 +51,7 @@ package.app.packets = function AppPackets(me) {
                 package.include("lib.moment", function () {
                     me.unlock(task);
                 });
-            }, "app.packets.data", "title");
+            }, "app.packets.data");
         });
     };
     me.refreshDataList = {
@@ -59,7 +59,7 @@ package.app.packets = function AppPackets(me) {
             me.storage.data.query((err, items) => {
                 me.core.console.error(err);
                 me.dataList = items;
-            }, "app.packets.data", "title");
+            }, "app.packets.data");
         }
     };
     me.dataMenuList = {

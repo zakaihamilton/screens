@@ -591,7 +591,7 @@ package.app.transform = function AppTransform(me) {
                     me.storage.data.query((err, items) => {
                     me.core.console.error(err);
                     me.contentList = items;
-                }, "app.transform.content", "title");
+                }, "app.transform.content", "title", true);
             }, me.id);
         }
     };
@@ -601,7 +601,7 @@ package.app.transform = function AppTransform(me) {
                 me.core.console.error(err);
                 me.contentList = items;
                 me.unlock(task);
-            }, me.id, "storage.data.query", "app.transform.content", "title");
+            }, me.id, "storage.data.query", "app.transform.content", true);
         });
     };
     me.contentMenuList = {
@@ -614,17 +614,16 @@ package.app.transform = function AppTransform(me) {
                 contentList = [];
             }
             var items = contentList.map(function (item) {
-                var content = me.core.string.decode(item.content);
                 var result = [
-                    item.title,
+                    item.key.name,
                     function () {
-                        me.core.property.set(window.var.input, "ui.basic.text", content);
-                        me.core.property.set(window, "app.transform.transform");
+                        me.storage.data.load((err, item) => {
+                            var content = me.core.string.decode(item.content);
+                            me.core.property.set(window.var.input, "ui.basic.text", content);
+                            me.core.property.set(window, "app.transform.transform");
+                        }, "app.transform.content", item.key.name);
                     },
                     {
-                        "state": function () {
-                            return text === content;
-                        },
                         "separator": isFirst
                     }
                 ];

@@ -64,7 +64,7 @@ package.content.text = function ContentText(me) {
                 me.storage.data.query((err, items) => {
                     me.core.console.error(err);
                     window.contentTextList = items;
-                }, window.contentTextName, "date");
+                }, window.contentTextName);
             }
         }
     };

@@ -85,14 +85,17 @@ package.storage.data = function StorageData(me) {
             }, value, type, id);
         }, value, type, id, nonIndexed);
     };
-    me.query = function (callback, type, order) {
+    me.query = function (callback, type, idOnly) {
         me.getService((service) => {
-            const query = service.createQuery(type).order(order);
+            const query = service.createQuery(type);
+            if(idOnly) {
+                query = query.select("__key__");
+            }
             service.runQuery(query)
                     .then(results => {
                         const items = results[0];
-                        items.forEach(task => {
-                            task.key = task[service.KEY];
+                        items.forEach(item => {
+                            item.key = item[service.KEY];
                         });
                         callback(null, items);
                     })
