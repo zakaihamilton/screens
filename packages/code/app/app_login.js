@@ -36,8 +36,10 @@ package.app.login = function AppLogin(me) {
         }
     };
     me.signin = function(object) {
-        me.core.property.set(me.singleton, "close");
-        me.startup.app.start();
+        if(me.core.startup.app.name !== "login") {
+            me.core.property.set(me.singleton, "close");
+            me.startup.app.start();
+        }
     };
     me.signout = function(object, value) {
         var window = me.widget.window(object);
