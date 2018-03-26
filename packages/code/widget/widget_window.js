@@ -440,9 +440,6 @@ package.widget.window = function WidgetWindow(me) {
                     me.core.property.set(window, "ui.focus.active", true);
                 }
                 me.fixRegion(window);
-                if(update) {
-                    me.core.property.notify(window, "update");
-                }
             } else if (!minimized) {
                 me.core.property.set(window, "minimize");
             }

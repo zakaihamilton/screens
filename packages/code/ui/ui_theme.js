@@ -7,7 +7,6 @@ package.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
     me.init = function(task) {
-        me.updateList();
         var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
@@ -25,7 +24,7 @@ package.ui.theme = function UITheme(me) {
             return me.themes;
         }
     };
-    me.updateList = function() {
+    me.updateList = function(callback) {
         me.themes = [];
         var path = "packages/res/themes";
         me.core.file.readDir(function(err, items) {
@@ -43,6 +42,7 @@ package.ui.theme = function UITheme(me) {
                     me.themes.push(name);
                 }
             }
+            callback();
         }, path);
     };
     me.applyTheme = function(elementCallback, parent) {

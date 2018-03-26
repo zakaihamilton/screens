@@ -88,9 +88,13 @@ package.lib.google = function LibGoogle(me) {
         me.core.listener.signal(null, me.id);
     };
     me.userChanged = function (user) {
-        var profile = user.getBasicProfile();
-        me.log('User now: ', profile.getName());
-        me.core.listener.signal(null, me.id);
+        if(user) {
+            var profile = user.getBasicProfile();
+            if(profile) {
+                me.log('User now: ', profile.getName());
+                me.core.listener.signal(null, me.id);
+            }
+        }
     };
     me.headers = function(info) {
         var token = null;

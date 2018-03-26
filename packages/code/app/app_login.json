@@ -16,6 +16,12 @@
             "ui.basic.tag": "div",
             "ui.basic.elements": [
                 {
+                    "ui.basic.text": "Please login with your Google account to continue:",
+                    "ui.property.style": {
+                        "paddingTop": "10px"
+                    }
+                },
+                {
                     "ui.basic.text": "User Name",
                     "ui.property.style": {
                         "paddingTop": "10px"
