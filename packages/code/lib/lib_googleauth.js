@@ -7,21 +7,23 @@ package.lib.googleauth = function GoogleAuth(me) {
     me.init = function (task) {
         me.core.property.link("core.http.headers", "lib.googleauth.headers", true);
         me.lock(task, (task) => {
-            me.core.require(() => {
-                gapi.load('auth2', function () {
-                    // Retrieve the singleton for the GoogleAuth library and set up the client.
-                    me.auth2 = gapi.auth2.init({
-                        client_id: '635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com'
+            me.core.util.config((google) => {
+                me.core.require(() => {
+                    gapi.load('auth2', function () {
+                        // Retrieve the singleton for the GoogleAuth library and set up the client.
+                        me.auth2 = gapi.auth2.init({
+                            client_id: google.client_id
+                        });
+                        me.auth2.isSignedIn.listen(me.signInChanged);
+                        me.auth2.currentUser.listen(me.userChanged);
+                        if (me.auth2.isSignedIn.get() === true) {
+                            me.log("googleauth:" + "signing in");
+                            me.auth2.signIn();
+                        }
+                        me.unlock(task);
                     });
-                    me.auth2.isSignedIn.listen(me.signInChanged);
-                    me.auth2.currentUser.listen(me.userChanged);
-                    if (me.auth2.isSignedIn.get() === true) {
-                        me.log("googleauth:" + "signing in");
-                        me.auth2.signIn();
-                    }
-                    me.unlock(task);
-                });
-            }, ["https://apis.google.com/js/api:client.js"]);
+                }, ["https://apis.google.com/js/api:client.js"]);
+            }, "settings.google");
         });
     };
     me.currentUser = function () {

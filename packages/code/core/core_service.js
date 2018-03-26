@@ -89,21 +89,7 @@ package.core.service = function CoreService(me) {
         });
     };
     me.config = function (callback, name) {
-        me.core.util.config(config => {
-            var response = null;
-            if (config && config.settings) {
-                var services = config.settings.service;
-                if (services) {
-                    if (services) {
-                        var service = services[name];
-                        if (service) {
-                            response = service;
-                        }
-                    }
-                }
-            }
-            callback(response);
-        });
+        me.core.util.config(callback, "settings.service." + name);
     };
     me.sendAll = function (method, callback, param) {
         if (me.platform === "service") {

@@ -1,10 +1,9 @@
 /*
  @author Zakai Hamilton
- @component CoreMessage
+ @component me.coreMessage
  */
 
 package.core.message = function CoreMessage(me) {
-    var core = me.core;
     me.init = function () {
         if (package.platform === "server") {
             me.core.property.link("core.http.receive", "core.message.receive", true);
@@ -57,7 +56,7 @@ package.core.message = function CoreMessage(me) {
                 altCallback: callback,
                 body: me.core.type.wrap_args(args)
             };
-            core.http.send(me.handleRemote, info);
+            me.core.http.send(me.handleRemote, info);
         } else if (me.platform === "server") {
             var args = Array.prototype.slice.call(arguments, 0);
             me.send.apply(null, args);
@@ -117,7 +116,7 @@ package.core.message = function CoreMessage(me) {
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);
-                var args = core.type.unwrap_args(core.http.parse_query(info.body));
+                var args = me.core.type.unwrap_args(me.core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
                 if(!info.headers["user_id"]) {
@@ -128,11 +127,11 @@ package.core.message = function CoreMessage(me) {
                 me.lock(info.task, task => {
                     args[1] = function (response) {
                         var args = Array.prototype.slice.call(arguments, 0);
-                        info.body = core.type.wrap_args(args);
+                        info.body = me.core.type.wrap_args(args);
                         me.unlock(task);
                     };
                     try {
-                        core.message.send.apply(info, args);
+                        me.core.message.send.apply(info, args);
                     }
                     catch(e) {
                         me.error(e.message + " " + JSON.stringify(args), e.stack);

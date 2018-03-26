@@ -144,7 +144,7 @@ package.core.http = function CoreHttp(me) {
                 clientIp: me.clientIp(request),
                 responseHeaders: {}
             };
-            me.log("url: " + info.url + "query: " + info.query + " headers: " + JSON.stringify(info.headers));
+            me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
             me.core.object(me, info);
             me.core.property.set(info, "check");
             if (!info.check) {
@@ -177,6 +177,9 @@ package.core.http = function CoreHttp(me) {
             }
         }
         return array;
+    };
+    me.headers = function(info) {
+
     };
     me.send = function (callback, info, async = true) {
         me.core.object(me, info);

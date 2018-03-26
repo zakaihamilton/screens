@@ -22,10 +22,14 @@ package.core.json = function CoreJson(me) {
             if(path && path.startsWith("/")) {
                 path = path.substring(1);
             }
-            me.core.file.readFile(function(err, data) {
-                var json = {};
-                if(data) {
-                    json = JSON.parse(data);
+            var info = {
+                method: "GET",
+                url: "/" + path
+            };
+            me.core.http.send((info) => {
+                var json = null;
+                if(info.response) {
+                    json = JSON.parse(info.response);
                 }
                 if(useCache) {
                     me.files[path] = json;
@@ -33,7 +37,7 @@ package.core.json = function CoreJson(me) {
                 if(callback) {
                     callback(json);
                 }
-            }, path, 'utf8');
+            }, info);
         }
     };
     me.log = function(json) {

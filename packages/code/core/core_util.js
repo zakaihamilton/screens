@@ -22,14 +22,12 @@ package.core.util = function CoreUtil(me) {
             return arg;
         });
     };
-    me.config = function(callback) {
-        me.core.json.loadFile(function(json) {
-            if(json) {
-                callback(json);
+    me.config = function(callback, path) {
+        me.core.json.loadFile(function(item) {
+            if(item && path) {
+                item = me.core.json.traverse(item, path).value;
             }
-            else {
-                callback(null);
-            }
+            callback(item);
         }, "/package.json");
     };
     me.isSecure = function() {
