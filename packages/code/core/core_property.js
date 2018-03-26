@@ -53,8 +53,9 @@ package.core.property = function CoreProperty(me) {
         }
         if (name !== null && typeof name === "object") {
             var results = {};
-            Object.keys(name).map(function (name) {
-                results[name] = me.core.property.get(object, name, value, method);
+            Object.keys(name).map(function (subName) {
+                var subValue = name[subName];
+                results[subName] = me.core.property.get(object, subName, subValue, method);
             });
             return results;
         }
@@ -83,19 +84,28 @@ package.core.property = function CoreProperty(me) {
             } else {
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
+                    var callback = null;
                     try {
                         var callback = package(info.name);
-                        if(typeof callback === "function") {
-                            result = callback(info.object, info.value);
-                        }
-                        else {
-                            if(callback[method]) {
-                                result = callback[method](info.object, info.value);
-                            }
-                        }
                     }
                     catch(err) {
-                        me.log(info.name + " method not found");
+                        me.log("no callback for: " + info.name);
+                    }
+                    if(callback) {
+                        try {
+                            if(typeof callback === "function") {
+                                result = callback(info.object, info.value);
+                            }
+                            else {
+                                if(callback[method]) {
+                                    result = callback[method](info.object, info.value);
+                                }
+                            }
+                        }
+                        catch(err) {
+                            err.message += " name: " + info.name + " method: " + method;
+                            throw err;
+                        }
                     }
                 }
             }
@@ -181,9 +191,8 @@ package.core.property = function CoreProperty(me) {
             var results = {};
             for(var key in name) {
                 var value = name[key];
-                results[key] = me.core.property.set(object, key, value);
+                me.core.property.set(object, key, value);
             }
-            return results;
         }
         me.core.property.get(object, name, value, "set");
     };

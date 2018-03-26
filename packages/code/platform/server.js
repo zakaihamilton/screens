@@ -31,7 +31,7 @@ package.include({
         "data"
     ],
     "user": [
-        "profile"
+        "verify"
     ],
     "manager": [
         "download",

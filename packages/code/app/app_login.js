@@ -4,6 +4,9 @@
  */
 
 package.app.login = function AppLogin(me) {
+    me.init = function() {
+        me.core.listener.register(me.signin, me.lib.google.id);
+    };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -26,15 +29,19 @@ package.app.login = function AppLogin(me) {
                 "bottom":"100px",
                 "textAlign":"center"
             });
-            me.core.property.set(widget, "lib.googleauth.attachSignIn", () => {
-              me.core.property.set(window.var.userName, "ui.basic.text", "@lib.googleauth.currentName");
+            me.core.property.set(widget, "lib.google.attachSignIn", () => {
+              me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
               me.core.property.set(window.var.signout, "ui.basic.show", true);
             });
         }
     };
+    me.signin = function(object) {
+        me.core.property.set(me.singleton, "close");
+        me.startup.app.start();
+    };
     me.signout = function(object, value) {
         var window = me.widget.window(object);
-        me.core.property.set(object, "lib.googleauth.signout");
+        me.core.property.set(object, "lib.google.signout");
         me.core.property.set(window.var.userName, "ui.basic.text", "");
         me.core.property.set(object, "ui.basic.show", false);
     };

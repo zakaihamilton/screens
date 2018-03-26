@@ -1,26 +1,30 @@
 /*
  @author Zakai Hamilton
- @component GoogleAuth
+ @component LibGoogle
  */
 
-package.lib.googleauth = function GoogleAuth(me) {
+package.lib.google = function LibGoogle(me) {
     me.init = function (task) {
-        me.core.property.link("core.http.headers", "lib.googleauth.headers", true);
+        me.core.property.link("core.http.headers", "lib.google.headers", true);
         me.lock(task, (task) => {
             me.core.util.config((google) => {
                 me.core.require(() => {
                     gapi.load('auth2', function () {
-                        // Retrieve the singleton for the GoogleAuth library and set up the client.
                         me.auth2 = gapi.auth2.init({
                             client_id: google.client_id
                         });
                         me.auth2.isSignedIn.listen(me.signInChanged);
                         me.auth2.currentUser.listen(me.userChanged);
                         if (me.auth2.isSignedIn.get() === true) {
-                            me.log("googleauth:" + "signing in");
+                            me.log("signing in");
                             me.auth2.signIn();
+                            me.core.listener.wait(() => {
+                                me.unlock(task);
+                            }, me.id);
                         }
-                        me.unlock(task);
+                        else {
+                            me.unlock(task);
+                        }
                     });
                 }, ["https://apis.google.com/js/api:client.js"]);
             }, "settings.google");
@@ -59,14 +63,6 @@ package.lib.googleauth = function GoogleAuth(me) {
             callback();
         }
     };
-    me.token = function() {
-        var token = null;
-        if(me.isSignedIn()) {
-            var user = me.currentUser();
-            token = user.getAuthResponse().id_token
-        }
-        return token;
-    };
     me.signout = {
         set: function (object) {
             me.auth2.signOut().then(function () {
@@ -82,18 +78,28 @@ package.lib.googleauth = function GoogleAuth(me) {
         }
     };
     me.isSignedIn = function() {
+        if(!me.auth2) {
+            return false;
+        }
         return me.auth2.isSignedIn.get();
     };
     me.signInChanged = function (state) {
         me.log('Signin state changed to ', state);
+        me.core.listener.signal(null, me.id);
     };
     me.userChanged = function (user) {
         me.log('User now: ', user);
     };
     me.headers = function(info) {
-        var token = me.token();
-        if(token) {
-            info.headers["user_id"] = token;
+        var token = null;
+        if(me.isSignedIn()) {
+            var user = me.currentUser();
+            token = user.getAuthResponse().id_token
+            if(token) {
+                var profile = user.getBasicProfile();
+                info.headers["user_name"] = profile.getName();
+                info.headers["user_id"] = token;
+            }
         }
     };
 };

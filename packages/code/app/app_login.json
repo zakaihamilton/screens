@@ -22,7 +22,7 @@
                     }
                 },
                 {
-                    "ui.basic.text": "@lib.googleauth.currentName",
+                    "ui.basic.text": "@lib.google.currentName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
                         "width": "250px",
@@ -37,7 +37,7 @@
             "ui.basic.text":"Sign out",
             "ui.basic.var":"signout",
             "ui.touch.click":"app.login.signout",
-            "ui.basic.show":"@lib.googleauth.isSignedIn"
+            "ui.basic.show":"@lib.google.isSignedIn"
         }
     ]
 }

@@ -4,7 +4,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "lib":[
-            "googleauth"
+            "google"
         ],
         "storage": [
             "*"

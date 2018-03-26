@@ -32,7 +32,7 @@ function package_unlock(task, callback) {
     }
 }
 
-function package_forEach(task, array, callback) {
+function package_forEach(task, array, callback, abortCallback) {
     var index = 0;
     package_lock(task, (task) => {
         function iterate() {
@@ -40,7 +40,16 @@ function package_forEach(task, array, callback) {
             while (index < array.length && !exit) {
                 package_lock(task, (task) => {
                     var lock = task.lock;
-                    callback(task, array[index], index++, array);
+                    var result = callback(task, array[index], index, array);
+                    if(result) {
+                        package_unlock(task);
+                        if(abortCallback) {
+                            abortCallback(task, array[index], index, array);
+                        }
+                        exit = true;
+                        return;
+                    }
+                    index++;
                     if (lock !== task.lock) {
                         package_unlock(task, () => {
                             setTimeout(iterate, 0);
@@ -59,6 +68,21 @@ function package_forEach(task, array, callback) {
             iterate();
         }, 0);
     });
+}
+
+async function package_async(task, promise) {
+    var result;
+    package_lock(task, async (task) => {
+        try {
+            result = await promise;
+            package_unlock(task);
+        }
+        catch(err) {
+            package_unlock(task);
+            throw err;
+        }
+    });
+    return result;
 }
 
 function package_platform() {
@@ -327,7 +351,8 @@ Object.assign(package, {
     include: package_include,
     lock: package_lock,
     unlock: package_unlock,
-    forEach: package_forEach
+    forEach: package_forEach,
+    async: package_async
 });
 
 var platform = package_platform();

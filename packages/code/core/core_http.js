@@ -15,10 +15,10 @@ package.core.http = function CoreHttp(me) {
     me.forwardUrl = null;
     me.init = function (task) {
         if (me.platform === "server" || me.platform === "service") {
-                me.http = require("http");
-                me.https = require("https");
-                me.fs = require("fs");
-                if (me.platform === "server") {
+            me.http = require("http");
+            me.https = require("https");
+            me.fs = require("fs");
+            if (me.platform === "server") {
                 me.lock(task, (task) => {
                     me.createServer((server, port, err) => {
                         if (err) {
@@ -48,9 +48,9 @@ package.core.http = function CoreHttp(me) {
         var server = null;
         var port = me.port;
         var requestHandler = function (request, response) {
-            if(!secure && me.forwardUrl) {
+            if (!secure && me.forwardUrl) {
                 me.log("forwardUrl: " + me.forwardUrl + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
-                response.writeHead(301,{
+                response.writeHead(301, {
                     Location: me.forwardUrl + request.url
                 });
                 response.end();
@@ -108,10 +108,10 @@ package.core.http = function CoreHttp(me) {
         var ip = null;
         if (request) {
             ip = me.core.json.value(request, {
-                "headers.x-forwarded-for":value => value.split(',').pop(),
-                "connection.remoteAddress":null,
-                "connection.socket.remoteAddress":null,
-                "socket.remoteAddress":null
+                "headers.x-forwarded-for": value => value.split(',').pop(),
+                "connection.remoteAddress": null,
+                "connection.socket.remoteAddress": null,
+                "socket.remoteAddress": null
             });
         }
         return ip;
@@ -120,51 +120,39 @@ package.core.http = function CoreHttp(me) {
         if (body) {
             body = Buffer.concat(body).toString();
         }
-        me.lock(task => {
-            var url = request.url;
-            var query = "";
-            var query_offset = url.lastIndexOf("?");
-            if (query_offset !== -1) {
-                url = request.url.substring(0, query_offset);
-                query = request.url.substring(query_offset + 1);
+        var url = request.url;
+        var query = "";
+        var query_offset = url.lastIndexOf("?");
+        if (query_offset !== -1) {
+            url = request.url.substring(0, query_offset);
+            query = request.url.substring(query_offset + 1);
+        }
+        var info = {
+            secure: secure,
+            method: request.method,
+            url: decodeURIComponent(url),
+            query: me.core.http.parse_query(query),
+            headers: request.headers,
+            code: 200,
+            "content-type": "application/json",
+            body: body,
+            response: response,
+            custom: false,
+            stop: false,
+            clientIp: me.clientIp(request),
+            responseHeaders: {}
+        };
+        me.core.object(me, info);
+        me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
+        me.forEach(null, ["check", "receive", "compress", "end"], (task, message) => {
+            info.task = task;
+            me.core.property.set(info, message);
+            if(info.stop) {
+                return true;
             }
-            var info = {
-                secure: secure,
-                method: request.method,
-                url: decodeURIComponent(url),
-                query: me.core.http.parse_query(query),
-                headers: request.headers,
-                code: 200,
-                "content-type": "application/json",
-                body: body,
-                task: task,
-                response: response,
-                custom: false,
-                check: true,
-                clientIp: me.clientIp(request),
-                responseHeaders: {}
-            };
-            me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
-            me.core.object(me, info);
-            me.core.property.set(info, "check");
-            if (!info.check) {
-                response.writeHead(403);
-                response.end();
-            }
-            me.core.property.set(info, "receive");
-            me.unlock(task, () => {
-                me.lock((task) => {
-                    info.task = task;
-                    me.core.property.set(info, "compress");
-                    me.unlock(task, () => {
-                        if (info.custom === false) {
-                            info.responseHeaders["Content-Type"] = info["content-type"];
-                            response.writeHead(info.code, info.responseHeaders);
-                            response.end(info.body);
-                        }
-                    });
-                });
-            });
+        }, () => {
+            response.writeHead(403);
+            response.end();
         });
     };
     me.parse_query = function (query) {
@@ -178,12 +166,12 @@ package.core.http = function CoreHttp(me) {
         }
         return array;
     };
-    me.headers = function(info) {
+    me.headers = function (info) {
 
     };
     me.send = function (callback, info, async = true) {
         me.core.object(me, info);
-        if(!info.headers) {
+        if (!info.headers) {
             info.headers = {}
         }
         me.core.property.set(info, "headers", headers);
@@ -240,26 +228,35 @@ package.core.http = function CoreHttp(me) {
             if (!async && request.status === 200) {
                 return request.responseText;
             }
-    }
+        }
     };
     me.compress = {
         set: function (info) {
-            
+
         }
     };
     me.check = {
         set: function (info) {
-            
+
         }
     };
     me.parse = {
         set: function (info) {
-            
+
         }
     };
     me.receive = {
         set: function (info) {
-            
+
+        }
+    };
+    me.end = {
+        set: function (info) {
+            if (info.custom === false) {
+                info.responseHeaders["Content-Type"] = info["content-type"];
+                info.response.writeHead(info.code, info.responseHeaders);
+                info.response.end(info.body);
+            }
         }
     };
 };

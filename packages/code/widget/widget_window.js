@@ -411,6 +411,7 @@ package.widget.window = function WidgetWindow(me) {
         var region = me.ui.rect.absolute_region(window);
         var workspace_region = me.ui.rect.absolute_region(me.ui.element.workspace());
         var update = false;
+        var fixed = me.core.property.get(window, "fixed");
         if(region.left <= workspace_region.left || region.left >= workspace_region.right) {
             me.core.property.set(window, "ui.style.left", "0px");
         }

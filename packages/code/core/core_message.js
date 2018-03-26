@@ -119,11 +119,6 @@ package.core.message = function CoreMessage(me) {
                 var args = me.core.type.unwrap_args(me.core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
-                if(!info.headers["user_id"]) {
-                    me.log("No user identifier on message, url:" + info.url + 
-                    " args: " + JSON.stringify(args) + 
-                    " headers: " + JSON.stringify(info.headers));
-                }
                 me.lock(info.task, task => {
                     args[1] = function (response) {
                         var args = Array.prototype.slice.call(arguments, 0);
