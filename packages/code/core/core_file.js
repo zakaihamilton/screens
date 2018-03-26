@@ -52,7 +52,7 @@ package.core.file = function CoreFile(me) {
     };
     me.readDir = function (callback, path) {
         me.fs.readdir(path, function (err, items) {
-            me.core.console.log("path:" + path + " items:" + JSON.stringify(items));
+            me.log("path:" + path + " items:" + JSON.stringify(items));
             callback(err, items);
         });
     };
@@ -90,7 +90,7 @@ package.core.file = function CoreFile(me) {
     };
     me.download = function (callback, source, target) {
         var folder = me.core.path.goto(target, "..");
-        me.core.console.log("downloading: " + source + " to: " + target);
+        me.log("downloading: " + source + " to: " + target);
         me.makeDirEx(() => {
             var file = me.fs.createWriteStream(target);
             if(!file) {
@@ -104,7 +104,7 @@ package.core.file = function CoreFile(me) {
             protocol.get(source, function (response) {
                 response.pipe(file);
                 file.on('finish', function () {
-                    me.core.console.log("downloaded: " + source + " to: " + target);
+                    me.log("downloaded: " + source + " to: " + target);
                     file.close(callback);
                 });
             }).on('error', function (err) {

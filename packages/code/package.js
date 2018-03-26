@@ -3,56 +3,62 @@ function package_lock(parent_task, callback) {
         callback = parent_task;
         parent_task = null;
     }
-    while (parent_task && !parent_task.state) {
-        parent_task = parent_task.parent;
+    var task = { state: true, lock: 0, parent: parent_task};
+    var next = task;
+    while (next) {
+        next.lock++;
+        next = next.parent;
     }
-    var task = { state: true, lock: 0, parent: parent_task };
-    if (parent_task) {
-        parent_task.lock++;
-    }
-    task.lock++;
     if (callback) {
         callback(task);
     }
 }
 
 function package_unlock(task, callback) {
-    task.lock--;
     if (callback) {
         task.callback = callback;
     }
-    if (task.lock <= 0 && task.state) {
-        task.lock = 0;
-        task.state = false;
-        if (task.callback) {
-            task.callback(task);
+    var next = task;
+    while (next) {
+        next.lock--;
+        if (next.lock <= 0 && next.state) {
+            next.lock = 0;
+            if (next.callback) {
+                next.callback(next);
+            }
+            next.state = false;
         }
-        if (task.parent) {
-            package_unlock(task.parent);
-        }
+        next = next.parent;
     }
 }
 
 function package_forEach(task, array, callback) {
     var index = 0;
-    function iterate() {
-        var exit = false;
-        while (index < array.length && !exit) {
-            package_lock(task, (task) => {
-                var lock = task.lock;
-                callback(task, array[index], index++, array);
-                if (lock !== task.lock) {
-                    package_unlock(task, () => {
-                        setTimeout(iterate, 0);
-                    });
-                    exit = true;
-                    return;
-                }
+    package_lock(task, (task) => {
+        function iterate() {
+            var exit = false;
+            while (index < array.length && !exit) {
+                package_lock(task, (task) => {
+                    var lock = task.lock;
+                    callback(task, array[index], index++, array);
+                    if (lock !== task.lock) {
+                        package_unlock(task, () => {
+                            setTimeout(iterate, 0);
+                        });
+                        exit = true;
+                        return;
+                    }
+                    package_unlock(task);
+                });
+            }
+            if(!exit) {
                 package_unlock(task);
-            });
+            }
         }
-    }
-    iterate();
+        setTimeout(() => {
+            iterate();
+        }, 0);
+    });
 }
 
 function package_platform() {
@@ -170,26 +176,24 @@ function package_push(package_name, component_name, callback) {
 }
 
 function package_init(task, items) {
-    package.lock(task, task => {
-        items.map(function (item) {
-            var initializers = item.initializers;
-            if (initializers) {
-                do {
-                    var init = initializers.shift();
-                    if (init) {
-                        try {
-                            init(task);
-                        }
-                        catch (err) {
-                            var message = err.message || err;
-                            console.error("Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
-                        }
-                        console.log("initialized: " + item.package_name + "." + item.component_name);
+    package.forEach(task, items, (task, item) => {
+        var initializers = item.initializers;
+        if (initializers) {
+            console.log("initializing: " + item.package_name + "." + item.component_name);
+            do {
+                var init = initializers.shift();
+                if (init) {
+                    try {
+                        init(task);
                     }
-                } while (init);
-            }
-        });
-        package.unlock(task);
+                    catch (err) {
+                        var message = err.message || err;
+                        console.error("Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
+                    }
+                }
+            } while (init);
+            console.log("initialized: " + item.package_name + "." + item.component_name + (task.lock > 1 ? " waiting..." : ""));
+        }
     });
 }
 
@@ -222,51 +226,51 @@ function package_import(callback, path) {
 function package_load(task, items, callback) {
     package.lock(task, (task) => {
         if (items && items.length) {
-        if (package.platform === "server" || package.platform === "service") {
-            items.map((item) => {
-                var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+            if (package.platform === "server" || package.platform === "service") {
+                items.map((item) => {
+                    var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+                    package.lock(task, (task) => {
+                        package_import(() => {
+                            item.initializers = package_setup(item.package_name, item.component_name);
+                            package.unlock(task);
+                        }, path);
+                    });
+                });
+            }
+            else {
+                var first = true;
+                var paths = items.map((item) => {
+                    var path = item.package_name + "_" + item.component_name;
+                    if (first) {
+                        path = "/packages/code/" + item.package_name + "/" + path;
+                        first = false;
+                    }
+                    return path + ".js";
+                });
+                var path = paths.join(",") + "?platform=" + package.platform;
                 package.lock(task, (task) => {
                     package_import(() => {
-                        item.initializers = package_setup(item.package_name, item.component_name);
+                        var firstItem = items[0];
+                        if (firstItem.component_name === "*") {
+                            items = Object.keys(package[firstItem.package_name]).map((component_name) => {
+                                return {
+                                    package_name: firstItem.package_name,
+                                    component_name: component_name
+                                };
+                            });
+                        }
+                        items.map((item) => {
+                            item.initializers = package_setup(item.package_name, item.component_name);
+                        });
                         package.unlock(task);
                     }, path);
                 });
-            });
+            }
         }
-        else {
-            var first = true;
-            var paths = items.map((item) => {
-                var path = item.package_name + "_" + item.component_name;
-                if (first) {
-                    path = "/packages/code/" + item.package_name + "/" + path;
-                    first = false;
-                }
-                return path + ".js";
-            });
-            var path = paths.join(",") + "?platform=" + package.platform;
-            package.lock(task, (task) => {
-                package_import(() => {
-                    var firstItem = items[0];
-                    if (firstItem.component_name === "*") {
-                        items = Object.keys(package[firstItem.package_name]).map((component_name) => {
-                            return {
-                                package_name: firstItem.package_name,
-                                component_name: component_name
-                            };
-                        });
-                    }
-                    items.map((item) => {
-                        item.initializers = package_setup(item.package_name, item.component_name);
-                    });
-                    package.unlock(task);
-                }, path);
-            });
-        }
-    }
-    package.unlock(task, () => {
-        callback(items);
+        package.unlock(task, () => {
+            callback(items);
+        });
     });
-});
 }
 
 function package_include(packages, callback) {
@@ -296,7 +300,11 @@ function package_include(packages, callback) {
                 package.forEach(task, Object.keys(packages), (task, package_name) => {
                     package_init(task, collection[package_name]);
                 });
-                package.unlock(task, callback);
+                package.unlock(task, () => {
+                    if(callback) {
+                        callback();
+                    }
+                });
             });
         });
     });

@@ -25,7 +25,7 @@ package.lib.zlib = function LibZLib(me) {
                 me.lock(info.task, task => {
                     compressMethod(info.body, (err, buf) => {
                         if (err) {
-                            me.core.console.log("compress encoding failed for encoding: " + encoding + " error: " + JSON.stringify(err));
+                            me.log("compress encoding failed for encoding: " + encoding + " error: " + JSON.stringify(err));
                         } else {
                             info.responseHeaders['Content-Encoding'] = encoding;
                             info.body = buf;

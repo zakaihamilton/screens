@@ -37,7 +37,6 @@ function startBrowser(appName, appArgs) {
             "*"
         ]
     }, function () {
-        console.log("finished");
         package.core.startup.app = {
             name: appName,
             params: appArgs

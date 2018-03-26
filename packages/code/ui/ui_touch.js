@@ -9,7 +9,7 @@ package.ui.touch = function UITouch(me) {
         me.click_repeat_delay = 250;
         me.click_repeat_interval = 50;
         if (window.PointerEvent) {
-            me.core.console.log("using pointer events");
+            me.log("using pointer events");
             me.eventNames = {
                 down:"pointerdown",
                 enter:"pointerenter",
@@ -22,7 +22,7 @@ package.ui.touch = function UITouch(me) {
             };
         }
         else {
-            me.core.console.log("no pointer events support");
+            me.log("no pointer events support");
             me.eventNames = {
                 down:"mousedown",
                 enter:"mouseenter",

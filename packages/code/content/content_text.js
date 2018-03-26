@@ -62,7 +62,7 @@ package.content.text = function ContentText(me) {
             var window = me.object(object);
             if(window.contentTextName) {
                 me.storage.data.query((err, items) => {
-                    me.core.console.error(err);
+                    me.error(err);
                     window.contentTextList = items;
                 }, window.contentTextName);
             }
@@ -114,7 +114,7 @@ package.content.text = function ContentText(me) {
             data[window.contentTextField] = me.core.string.encode(window.contentText);
             me.storage.data.save(err => {
                 if (err) {
-                    me.core.console.error("Cannot save data: " + err.message);
+                    me.error("Cannot save data: " + err.message);
                 } else {
                     me.refresh.set(window);
                 }

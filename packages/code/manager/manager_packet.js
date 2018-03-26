@@ -18,7 +18,7 @@ package.manager.packet = function ManagerPacket(me) {
         if(!Array.isArray(packets)) {
             packets = [packets];
         }
-        me.core.console.log("received " + packets.length + " packets");
+        me.log("received " + packets.length + " packets");
         for(var packet of packets) {
             if(packet.streamIndex !== me.packetInfo.streamIndex || !info.streamRequests.length) {
                 info.streamRequests.push({
@@ -108,7 +108,7 @@ package.manager.packet = function ManagerPacket(me) {
                 if(!effects) {
                     effects = {};
                 }
-                me.core.console.log("recieved effects: " + JSON.stringify(effects));
+                me.log("recieved effects: " + JSON.stringify(effects));
                 me.packetInfo.effects = effects;
                 callback(effects);
             }
@@ -116,7 +116,7 @@ package.manager.packet = function ManagerPacket(me) {
     };
     me.applyEffects = function (callback, params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
-        me.core.console.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
+        me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
         me.core.service.sendAll("service.netcontrol.applyEffects", (response) => {
             var error = response[0];
             callback(error);

@@ -43,7 +43,7 @@ package.app.packets = function AppPackets(me) {
         });
         me.lock(task, (task) => {
             me.storage.data.query((err, items) => {
-                me.core.console.error(err);
+                me.error(err);
                 me.dataList = items;
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
@@ -57,7 +57,7 @@ package.app.packets = function AppPackets(me) {
     me.refreshDataList = {
         set: function (object) {
             me.storage.data.query((err, items) => {
-                me.core.console.error(err);
+                me.error(err);
                 me.dataList = items;
             }, "app.packets.data");
         }
@@ -627,7 +627,7 @@ package.app.packets = function AppPackets(me) {
                 };
                 me.storage.data.save(err => {
                     if (err) {
-                        me.core.console.error("Cannot save data: " + err.message);
+                        me.error("Cannot save data: " + err.message);
                     } else {
                         me.refreshDataList.set(object);
                     }

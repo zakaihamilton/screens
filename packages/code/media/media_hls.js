@@ -15,7 +15,7 @@ package.media.hls = function MediaHLS(me) {
                 callback(err);
                 return;
             }
-            me.core.console.log("opening " + targetPlaylist);
+            me.log("opening " + targetPlaylist);
             me.core.file.readFile((err, data) => {
                 if (err) {
                     callback(new Error("Cannot open" + targetPlaylist + " err: " + err.message));
@@ -51,7 +51,7 @@ package.media.hls = function MediaHLS(me) {
                         }
                         flow.wait((err) => {
                             if(err) {
-                                me.core.console.log("error: " + err.message);
+                                me.log("error: " + err.message);
                             }
                             flow.error(err, "failed to download in playlist: " + targetPlaylist);
                         }, () => {

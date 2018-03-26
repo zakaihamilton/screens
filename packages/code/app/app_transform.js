@@ -279,7 +279,7 @@ package.app.transform = function AppTransform(me) {
             var language = window.options.language.toLowerCase();
             if (language === "auto") {
                 language = me.core.string.language(text);
-                me.core.console.log("detected language: " + language);
+                me.log("detected language: " + language);
             }
             window.options.hoverCallback = "package.app.transform.hoverDescription";
             window.options.diagramCallback = "package.app.transform.loadDiagram";
@@ -589,7 +589,7 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             me.core.message.send_server("core.cache.reset", () => {
                 me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.core.console.error(err);
+                    me.error(err);
                     me.contentList = items;
                 }, me.id, "storage.data.query", "app.transform.content", true);
             }, me.id);
@@ -598,7 +598,7 @@ package.app.transform = function AppTransform(me) {
     me.init = function (task) {
         me.lock(task, (task) => {
             me.core.message.send_server("core.cache.use", (err, items) => {
-                me.core.console.error(err);
+                me.error(err);
                 me.contentList = items;
                 me.unlock(task);
             }, me.id, "storage.data.query", "app.transform.content", true);
@@ -686,7 +686,7 @@ package.app.transform = function AppTransform(me) {
             };
             me.storage.data.save(err => {
                 if (err) {
-                    me.core.console.error("Cannot save content: " + err.message);
+                    me.error("Cannot save content: " + err.message);
                 } else {
                     me.refreshContentList.set(object);
                 }
@@ -715,11 +715,11 @@ package.app.transform = function AppTransform(me) {
             var params = {
                 index: index,
                 onstart: () => {
-                    me.core.console.log("onstart");
+                    me.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
                 },
                 onend: () => {
-                    me.core.console.log("onend");
+                    me.log("onend");
                     me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
                     if (window.options.autoPlay) {
@@ -756,7 +756,7 @@ package.app.transform = function AppTransform(me) {
                     }
                 },
                 onchange: (index, text) => {
-                    me.core.console.log("onchange: " + index + " text:" + text);
+                    me.log("onchange: " + index + " text:" + text);
                     me.ui.layout.markPage(currentPage, index, text);
                 },
                 rate: 1,
@@ -825,7 +825,7 @@ package.app.transform = function AppTransform(me) {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.ui.layout.pageText(currentPage).join("\n");
-            me.ui.clipboard.copy(me.core.console.error, text);
+            me.ui.clipboard.copy(me.error, text);
         }
     };
     me.copyAllPages = {
@@ -839,7 +839,7 @@ package.app.transform = function AppTransform(me) {
                 text.push(me.ui.layout.pageText(page).join("\n"));
             });
             text = text.join("\n");
-            me.ui.clipboard.copy(me.core.console.error, text);
+            me.ui.clipboard.copy(me.error, text);
         }
     };
 };

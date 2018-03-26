@@ -22,10 +22,11 @@ package.core.http = function CoreHttp(me) {
                 me.lock(task, (task) => {
                     me.createServer((server, port, err) => {
                         if (err) {
-                            me.core.console.log("cannot create secure server, error: " + err);
+                            me.log("cannot create secure server, error: " + err);
+                            me.unlock(task);
                             return;
                         }
-                        me.core.console.log("secure server is listening on " + port);
+                        me.log("secure server is listening on " + port);
                         me.unlock(task);
                     }, true);
                 });
@@ -33,10 +34,11 @@ package.core.http = function CoreHttp(me) {
             me.lock(task, (task) => {
                 me.createServer((server, port, err) => {
                     if (err) {
-                        me.core.console.log("cannot create normal server, error: " + err);
+                        me.log("cannot create normal server, error: " + err);
+                        me.unlock(task);
                         return;
                     }
-                    me.core.console.log("normal server is listening on " + port);
+                    me.log("normal server is listening on " + port);
                     me.unlock(task);
                 }, false);
             });
@@ -47,7 +49,7 @@ package.core.http = function CoreHttp(me) {
         var port = me.port;
         var requestHandler = function (request, response) {
             if(!secure && me.forwardUrl) {
-                me.core.console.log("forwardUrl: " + me.forwardUrl + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
+                me.log("forwardUrl: " + me.forwardUrl + " headers: " + JSON.stringify(request.headers) + " url: " + request.url);
                 response.writeHead(301,{
                     Location: me.forwardUrl + request.url
                 });
@@ -88,13 +90,13 @@ package.core.http = function CoreHttp(me) {
                             callback(server, port, err);
                         });
                     } catch (e) {
-                        me.core.console.log("Cannot create secure server, error: " + e.message);
+                        me.log("Cannot create secure server, error: " + e.message);
                         callback(server, port, e);
                     }
                 }
             }, "https");
         } else {
-            me.core.console.log("using http");
+            me.log("using http");
             server = me.http.createServer(requestHandler);
             me.io = require("socket.io")(server);
             server.listen(port, function (err) {
@@ -142,7 +144,7 @@ package.core.http = function CoreHttp(me) {
                 clientIp: me.clientIp(request),
                 responseHeaders: {}
             };
-            console.log("headers: " + JSON.stringify(info.headers));
+            me.log("url: " + info.url + "query: " + info.query + " headers: " + JSON.stringify(info.headers));
             me.core.object(me, info);
             me.core.property.set(info, "check");
             if (!info.check) {
@@ -200,14 +202,14 @@ package.core.http = function CoreHttp(me) {
                     }
                 }
             };
-            me.core.console.log("sending request:" + JSON.stringify(request) + " body: " + info.body + " headers: " + JSON.stringify(info.headers));
+            me.log("sending request:" + JSON.stringify(request) + " body: " + info.body + " headers: " + JSON.stringify(info.headers));
             me.handleRequest(request, response, info.body);
         } else {
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            me.core.console.log("sending request info:" + JSON.stringify(info));
+            me.log("sending request info:" + JSON.stringify(info));
             request.open(info.method, info.url, async);
             if (async) {
                 request.onreadystatechange = function (e) {

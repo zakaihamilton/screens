@@ -11,19 +11,19 @@ package.ui.clipboard = function UIClipboard(me) {
                 navigator.permissions.query({
                     name: 'clipboard-read'
                 }).then(permissionStatus => {
-                    me.core.console.log("clipboard permission:" + permissionStatus.state);
+                    me.log("clipboard permission:" + permissionStatus.state);
                     me.permissionStatus = permissionStatus;
                     permissionStatus.onchange = () => {
-                    me.core.console.log("clipboard permission:" + permissionStatus.state);
+                    me.log("clipboard permission:" + permissionStatus.state);
                     me.permissionStatus = permissionStatus;
                     };
                 }).catch(err => {
-                    me.core.console.log("Clipboard not supported: " + err.message || err);
+                    me.log("Clipboard not supported: " + err.message || err);
                 });
             }
         }
         catch(err) {
-            me.core.console.log("Clipboard not supported: " + err.message || err);
+            me.log("Clipboard not supported: " + err.message || err);
         }
     };
     me.isSupported = function() {
@@ -33,13 +33,13 @@ package.ui.clipboard = function UIClipboard(me) {
         if(navigator.clipboard) {
             navigator.clipboard.writeText(text)
             .then(() => {
-                me.core.console.log("clipboard text copied:" + text);
+                me.log("clipboard text copied:" + text);
                 if(callback) {
                     callback();
                 }
             })
             .catch(err => {
-            me.core.console.error("Could not copy text: " + text + " error: " + err.message || err);
+            me.error("Could not copy text: " + text + " error: " + err.message || err);
             if(callback) {
                 callback(err);
             }

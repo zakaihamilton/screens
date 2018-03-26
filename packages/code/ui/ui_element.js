@@ -158,7 +158,7 @@ package.ui.element = function UIElement(me) {
         }
         var component = package(component_name);
         var defaultProperties = component.properties;
-        me.core.console.log("creating element of " + component_name);
+        me.log("creating element of " + component_name);
         if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
             tag = defaultProperties['ui.basic.tag'];
         }
@@ -169,7 +169,7 @@ package.ui.element = function UIElement(me) {
         me.core.object(component, object);
         object.var = {};
             if(context === "self") {
-            me.core.console.log("using self context");
+            me.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;

@@ -13,13 +13,13 @@ package.service.httpserver = function HttpServer(me) {
             if (config) {
                 var path = config.path;
                 if (path) {
-                    me.core.console.log("serving files from: " + path);
+                    me.log("serving files from: " + path);
                     me.core.property.link("core.http.receive", "service.httpserver.receive", true);
                     me.filePrefix = path;
                 }
                 var newStreamMatch = config.newStreamMatch;
                 if(newStreamMatch) {
-                    me.core.console.log("newStreamMatch: " + newStreamMatch);
+                    me.log("newStreamMatch: " + newStreamMatch);
                     me.newStreamMatch = newStreamMatch;
                 }
                 callback();
@@ -39,8 +39,8 @@ package.service.httpserver = function HttpServer(me) {
                         }
                     });
                     if(match) {
-                        me.core.console.log("found match in " + filePath + ", sending newStream message");
-                        me.core.console.log("newStream");
+                        me.log("found match in " + filePath + ", sending newStream message");
+                        me.log("newStream");
                         me.core.service.sendAll("newStream");
                     }
                 }
@@ -49,7 +49,7 @@ package.service.httpserver = function HttpServer(me) {
                     info.custom = true;
                     var partial = me.core.stream.serve(info.headers, info.response, filePath, mimeType);
                     if(!partial) {
-                        me.core.console.log("newStream");
+                        me.log("newStream");
                         me.core.service.sendAll("newStream");
                     }
                 }

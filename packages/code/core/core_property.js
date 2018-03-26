@@ -95,7 +95,7 @@ package.core.property = function CoreProperty(me) {
                         }
                     }
                     catch(err) {
-                        me.core.console.log(info.name + " method not found");
+                        me.log(info.name + " method not found");
                     }
                 }
             }

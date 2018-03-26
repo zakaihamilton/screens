@@ -19,7 +19,7 @@ package.core.require = function CoreRequire(me) {
                     module = require(path);
                 }
                 catch(e) {
-                    me.core.console.error(e);
+                    me.error(e);
                 }
                 modules.push(module);
             });

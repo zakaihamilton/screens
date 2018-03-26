@@ -37,7 +37,7 @@ package.core.json = function CoreJson(me) {
         }
     };
     me.log = function(json) {
-        me.core.console.log(JSON.stringify(json, null, 4));        
+        me.log(JSON.stringify(json, null, 4));        
     };
     me.compare = function(source, target) {
         if(source === target) {

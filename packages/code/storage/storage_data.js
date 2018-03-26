@@ -5,7 +5,7 @@
 
 package.storage.data = function StorageData(me) {
     me.init = function (task) {
-        me.core.console.log("initialising storage data");
+        me.log("initialising storage data");
         me.datastore = null;
         try {
             me.datastore = require('@google-cloud/datastore');
@@ -13,6 +13,7 @@ package.storage.data = function StorageData(me) {
             me.lock(task, task => {
                 me.core.server.run(() => {
                     me.datastore = require('@google-cloud/datastore');
+                    me.log("me.datastore:" + me.datastore);
                     me.unlock(task);
                 }, "npm rebuild");
             });
@@ -22,6 +23,10 @@ package.storage.data = function StorageData(me) {
         if (me.service) {
             callback(me.service);
             return;
+        }
+        if(!me.datastore) {
+            me.error("Datastore not initialized");
+            callback(null);
         }
         me.service = me.datastore({
             keyFilename: me.core.private.path("google")

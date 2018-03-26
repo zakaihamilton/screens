@@ -42,7 +42,7 @@ package.core.stream = function CoreStream(me) {
             else {
                 response.end();                
             }
-            me.core.console.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
+            me.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
             var stream = me.fs.createReadStream(path);
@@ -58,11 +58,11 @@ package.core.stream = function CoreStream(me) {
             };
             response.writeHead(200, headers);
             if(stream) {
-                me.core.console.log("serving: " + path + " with contentType:" + contentType);
+                me.log("serving: " + path + " with contentType:" + contentType);
                 stream.pipe(response);
             }
             else {
-                me.core.console.log("cannot serve: " + path + " with contentType:" + contentType);
+                me.log("cannot serve: " + path + " with contentType:" + contentType);
                 response.end();                
             }
         }

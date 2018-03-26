@@ -5,7 +5,7 @@
 
 package.startup.version = function StartupVersion(me) {
     me.run = function(task) {
-        me.core.console.log("retrieving version information");
+        me.log("retrieving version information");
         me.core.util.config(config => {
             me.core.network.ipAddress(ip => {
                 var date = new Date();
@@ -19,13 +19,13 @@ package.startup.version = function StartupVersion(me) {
                     ip: ip,
                     app: appName
                 };
-                me.core.console.log("startup: " + JSON.stringify(data) + " id: " + id);
+                me.log("startup: " + JSON.stringify(data) + " id: " + id);
                 me.storage.data.saveAndVerify(err => {
                     if (err) {
-                        me.core.console.log("failed to save startup to cloud: " + err.message);
+                        me.log("failed to save startup to cloud: " + err.message);
                         me.unlock(task);
                     } else {
-                        me.core.console.log("startup verification complete");
+                        me.log("startup verification complete");
                     }
                     me.unlock(task);
                 }, data, "startup", id);

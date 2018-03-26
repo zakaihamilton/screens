@@ -13,15 +13,15 @@ package.media.ffmpeg = function MediaFFMpeg(me) {
         me.ffmpeg(source)
                 .toFormat(format)
                 .on('error', function (err) {
-                    me.core.console.log('An error occurred: ' + err.message);
+                    me.log('An error occurred: ' + err.message);
                     callback(err, null);
                 })
                 .on('progress', function (progress) {
-                    me.core.console.log('Processing: ' + source + ' to ' + target + ' ' + progress.targetSize + ' KB converted = ' + JSON.stringify(progress));
+                    me.log('Processing: ' + source + ' to ' + target + ' ' + progress.targetSize + ' KB converted = ' + JSON.stringify(progress));
                     callback(null, progress);
                 })
                 .on('end', function () {
-                    me.core.console.log('Processing finished for ' + source + ' to ' + target);
+                    me.log('Processing finished for ' + source + ' to ' + target);
                     callback(null, null);
                 })
                 .save(target);

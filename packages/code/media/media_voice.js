@@ -91,7 +91,7 @@ package.media.voice = function MediaVoice(me) {
                     }
                 };
                 me.utterances.push(utterance);
-                console.log(index + ":" + processedText);
+                me.log(index + ":" + processedText);
             });
         });
         me.replay();
@@ -102,7 +102,7 @@ package.media.voice = function MediaVoice(me) {
             me.rewind();
             return;
         }
-        console.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
+        me.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
         var utterances = me.utterances.filter(utterances => utterances.index >= me.currentIndex);
         me.synth.cancel();
         me.playTime = new Date().getTime();
@@ -215,7 +215,7 @@ package.media.voice = function MediaVoice(me) {
         }).join("\n");
         text = text.split("\n").map(item => {
             if(item.split(" ").length >= 20) {
-                console.log("long text: " + item);
+                me.log("long text: " + item);
             }
             return item;
         }).join("\n");

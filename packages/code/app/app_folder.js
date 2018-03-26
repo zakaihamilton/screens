@@ -69,7 +69,7 @@ package.app.folder = function AppFolder(me) {
         set: function (object) {
             var args = me.core.cmd.split(me.core.property.get(object, "app.folder.args"));
             if (args) {
-                me.core.console.log("folder launch args: " + JSON.stringify(args));
+                me.log("folder launch args: " + JSON.stringify(args));
                 me.launch(args);
             }
         }

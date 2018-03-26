@@ -16,6 +16,7 @@ package.lib.googleauth = function GoogleAuth(me) {
                     me.auth2.isSignedIn.listen(me.signInChanged);
                     me.auth2.currentUser.listen(me.userChanged);
                     if (me.auth2.isSignedIn.get() === true) {
+                        me.log("googleauth:" + "signing in");
                         me.auth2.signIn();
                     }
                     me.unlock(task);
@@ -41,16 +42,16 @@ package.lib.googleauth = function GoogleAuth(me) {
         var window = me.widget.window(object);
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
+        me.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        me.log('Full Name: ' + profile.getName());
+        me.log('Given Name: ' + profile.getGivenName());
+        me.log('Family Name: ' + profile.getFamilyName());
+        me.log("Image URL: " + profile.getImageUrl());
+        me.log("Email: " + profile.getEmail());
 
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+        me.log("ID Token: " + id_token);
 
         if (callback) {
             callback();
@@ -67,7 +68,7 @@ package.lib.googleauth = function GoogleAuth(me) {
     me.signout = {
         set: function (object) {
             me.auth2.signOut().then(function () {
-                console.log('User signed out.');
+                me.log('User signed out.');
             });
         }
     };
@@ -75,17 +76,17 @@ package.lib.googleauth = function GoogleAuth(me) {
         set: function (object, value) {
             me.auth2.attachClickHandler(object, {}, (googleUser) => {
                 me.signin(value, object, googleUser);
-            }, me.core.console.error);
+            }, me.error);
         }
     };
     me.isSignedIn = function() {
         return me.auth2.isSignedIn.get();
     };
     me.signInChanged = function (state) {
-        console.log('Signin state changed to ', state);
+        me.log('Signin state changed to ', state);
     };
     me.userChanged = function (user) {
-        console.log('User now: ', user);
+        me.log('User now: ', user);
     };
     me.headers = function(info) {
         var token = me.token();

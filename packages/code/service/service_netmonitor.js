@@ -24,7 +24,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                 var filter = config.filter;
                 if(filter) {
                     filter = filter.replace("@port", me.core.http.port);
-                    me.core.console.log("using filter: " + filter);
+                    me.log("using filter: " + filter);
                 }
                 for (var device of devices) {
                     me.session = null;
@@ -34,7 +34,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
 
                     }
                     if (me.session) {
-                        me.core.console.log("connected through device: " + device + " filter: " + filter);
+                        me.log("connected through device: " + device + " filter: " + filter);
                         me.device = device;
                         break;
                     }
@@ -68,10 +68,10 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                     });
                     if (filter && filter.includes("tcp")) {
                         me.tracker.on('start', function (session) {
-                            me.core.console.log("Start of TCP session between " + session.src_name + " and " + session.dst_name);
+                            me.log("Start of TCP session between " + session.src_name + " and " + session.dst_name);
                         });
                         me.tracker.on('end', function (session) {
-                            me.core.console.log("End of TCP session between " + session.src_name + " and " + session.dst_name);
+                            me.log("End of TCP session between " + session.src_name + " and " + session.dst_name);
                         });
                     }
                     setInterval(() => {
@@ -86,7 +86,7 @@ package.service.netmonitor = function ServiceNetMonitor(me) {
                         }
                     }, parseInt(config.delay));
                 } else {
-                    me.core.console.log("cannot connect through any of the following devices: " + devices);
+                    me.log("cannot connect through any of the following devices: " + devices);
                 }
                 callback();
             }

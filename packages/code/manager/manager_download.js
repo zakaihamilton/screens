@@ -32,26 +32,26 @@ package.manager.download = function ManagerDownload(me) {
             if(item.isDownloading) {
                 return;
             }
-            me.core.console.log("checking if file exists, path: " + item.to);
+            me.log("checking if file exists, path: " + item.to);
             me.core.file.isFile(function(isFile) {
                 if(isFile) {
                     var index = me.queue.indexOf(item);
                     me.queue.splice(index, 1);
-                    me.core.console.log("found file: " + item.to);
+                    me.log("found file: " + item.to);
                     me.private.notify(item, null, item.to);
                 }
                 else {
                     item.isDownloading = true;
-                    me.core.console.log("downloading: " + item.from + " to: " + item.to);
+                    me.log("downloading: " + item.from + " to: " + item.to);
                     me.storage.file.downloadFile(function(err) {
-                        me.core.console.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
+                        me.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
                         var index = me.queue.indexOf(item);
                         if(index !== -1) {
                             me.queue.splice(index, 1);
                         }
                         if(item.convert) {
                             var path = me.core.path.replaceExtension(item.to, item.convert);
-                            me.core.console.log("converting file from: " + item.to + " to: " + path);
+                            me.log("converting file from: " + item.to + " to: " + path);
                             me.media.ffmpeg.convert((err, progress) => {
                                 if(!progress) {
                                     me.private.notify(item, err, path);
@@ -93,7 +93,7 @@ package.manager.download = function ManagerDownload(me) {
                     callback(null, path);
                 }
                 else {
-                    me.core.console.log("pushing to download queue: " + from + " to: " + to);
+                    me.log("pushing to download queue: " + from + " to: " + to);
                     item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
                     me.queue.push(item);
                     me.private.update();

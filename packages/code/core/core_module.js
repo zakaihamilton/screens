@@ -4,7 +4,6 @@
  */
 
 package.core.module = function CoreModule(me) {
-    var core = me.core;
     me.init = function () {
         me.core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require('autoprefixer');
@@ -21,9 +20,9 @@ package.core.module = function CoreModule(me) {
     me.loadTextFile = function (task, filePath, callback) {
         me.lock(task, task => {
             me.core.file.readFile(function (err, data) {
-                core.console.log("serving text file: " + filePath);
+                me.log("serving text file: " + filePath);
                 if (err) {
-                    core.console.log(JSON.stringify(err));
+                    me.log(JSON.stringify(err));
                     callback(null, task);
                 } else {
                     callback(data, task);
@@ -35,9 +34,9 @@ package.core.module = function CoreModule(me) {
     me.loadBinaryFile = function (task, filePath, callback) {
         me.lock(task, task => {
             me.core.file.readFile(function (err, data) {
-                core.console.log("serving binary file: " + filePath);
+                me.log("serving binary file: " + filePath);
                 if (err) {
-                    core.console.log(JSON.stringify(err));
+                    me.log(JSON.stringify(err));
                     callback(JSON.stringify(err), task);
                 } else {
                     callback(data, task);
@@ -52,7 +51,7 @@ package.core.module = function CoreModule(me) {
             me.lock(task, task => {
                 me.postcss([me.autoprefixer]).process(data).then(function (result) {
                     result.warnings().forEach(function (warn) {
-                        me.core.console.warn(warn.toString());
+                        me.warn(warn.toString());
                     });
                     info.body += result.css;
                     me.unlock(task, callback);
@@ -65,10 +64,10 @@ package.core.module = function CoreModule(me) {
             if(filePath.startsWith("/")) {
                 filePath = filePath.substring(1);
             }
-            var component_path = core.module.path_file_to_component(filePath);
+            var component_path = me.core.module.path_file_to_component(filePath);
             var target_platform = null;
             if (component_path) {
-                core.console.log("component_path: " + component_path);
+                me.log("component_path: " + component_path);
                 try {
                     target_platform = package(component_path).require;
                 }
@@ -77,10 +76,10 @@ package.core.module = function CoreModule(me) {
                 }
             }
             var source_platform = info.query["platform"];
-            core.console.log("source_platform:" + source_platform + " target_platform: " + target_platform);
+            me.log("source_platform:" + source_platform + " target_platform: " + target_platform);
             info["content-type"] = "application/javascript";
             if (target_platform && target_platform !== source_platform) {
-                core.console.log("serving remote for:" + filePath);
+                me.log("serving remote for:" + filePath);
                 filePath = "packages/code/remote.js";
             }
             info["content-type"] = "application/javascript";
@@ -89,12 +88,12 @@ package.core.module = function CoreModule(me) {
                     me.loadTextFile(info.task, filePath.replace(".js", ".json"), function (jsonData) {
                         info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
                         info.body += data;
-                        core.property.set(info, "parse");
+                        me.core.property.set(info, "parse");
                     });
                 } else {
                     info.vars = {"component": component_path, "platform": target_platform};
                     info.body += data;
-                    core.property.set(info, "parse");
+                    me.core.property.set(info, "parse");
                 }
             });
             me.unlock(task, callback);

@@ -8,13 +8,13 @@ package.core.service = function CoreService(me) {
         if (me.platform === "server") {
             me.clients = new Map();
             me.core.http.io.on("connection", (socket) => {
-                me.core.console.log(`Service connected [id=${socket.id}]`);
+                me.log(`Service connected [id=${socket.id}]`);
                 var ref = me.core.ref.gen();
                 socket.on("disconnect", () => {
                     var info = me.clients.get(socket);
                     if (info) {
                         me.clients.delete(socket);
-                        me.core.console.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
+                        me.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
                     }
                 });
                 socket.on("method", (info) => {
@@ -23,9 +23,9 @@ package.core.service = function CoreService(me) {
                         socket.emit("method", response);
                     }, info, true);
                 });
-                me.core.console.log("Service setup request for ref: " + ref);
+                me.log("Service setup request for ref: " + ref);
                 me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
-                    me.core.console.log("Service setup complete for service: " + name + " ref: " + ref);
+                    me.log("Service setup complete for service: " + name + " ref: " + ref);
                     me.clients.set(socket, { ref: ref, name: name });
                     me.core.object(me, socket);
                     me.core.property.set(socket, "ready");
@@ -34,17 +34,17 @@ package.core.service = function CoreService(me) {
         } else if (me.platform === "service") {
             me.io = require("socket.io-client");
             if (process.argv.length <= 3) {
-                console.log("params: http://ip:port service_name");
+                me.log("params: http://ip:port service_name");
                 process.exit(-1);
             }
             me.serverAddress = process.argv[2];
             me.serviceNames = process.argv.splice(3);
-            me.core.console.log("Connecting to server: " + me.serverAddress);
+            me.log("Connecting to server: " + me.serverAddress);
             me.client = me.io.connect(me.serverAddress);
             me.client.on("connect", (socket) => {
-                me.core.console.log("Connected to server: " + me.serverAddress);
+                me.log("Connected to server: " + me.serverAddress);
                 me.client.on("disconnect", (info) => {
-                    me.core.console.log("Disconnected from server: " + me.serverAddress);
+                    me.log("Disconnected from server: " + me.serverAddress);
                 });
                 me.client.on("method", (info) => {
                     me.core.message.handleLocal((response) => {
@@ -72,12 +72,12 @@ package.core.service = function CoreService(me) {
         me.lock((task) => {
             me.serviceNames.map((serviceName) => {
                 me.lock(task, (task) => {
-                    me.core.console.log("loading service: " + serviceName + "...");
+                    me.log("loading service: " + serviceName + "...");
                     me.include("service." + serviceName, function () {
-                        me.core.console.log("service loaded: " + serviceName);
-                        me.core.console.log("setup service: " + serviceName + "...");
+                        me.log("service loaded: " + serviceName);
+                        me.log("setup service: " + serviceName + "...");
                         me.core.message.send("service." + serviceName + ".setup", () => {
-                            me.core.console.log("setup service: " + serviceName + " complete");
+                            me.log("setup service: " + serviceName + " complete");
                             me.unlock(task);
                         }, ref);
                     });
@@ -122,7 +122,7 @@ package.core.service = function CoreService(me) {
                 var response = Array.prototype.slice.call(arguments);
                 responses.push(response);
                 count--;
-                me.core.console.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
+                me.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
                 if (!count) {
                     callback.apply(null, responses);
                 }
@@ -136,7 +136,7 @@ package.core.service = function CoreService(me) {
             else {
                 callback();
             }
-            me.core.console.log("sent " + method + "' to " + count + " devices");
+            me.log("sent " + method + "' to " + count + " devices");
         }
     };
     me.ready = {

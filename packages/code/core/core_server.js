@@ -8,7 +8,7 @@ package.core.server = function CoreServer(me) {
         me.cmd=require('node-cmd');
     };
     me.run = function(callback, cmd) {
-        me.core.console.log("running: " + cmd);
+        me.log("running: " + cmd);
         me.cmd.get(cmd, callback);
     };
     return "server";

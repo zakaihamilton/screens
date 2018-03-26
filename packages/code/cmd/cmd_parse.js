@@ -12,7 +12,7 @@ package.cmd.parse = function CmdParse(me) {
         var path = me.core.path.goto(terminal.current_dir, args[1]);
         me.core.json.loadFile(function(json) {
             me.parse(function(json) {
-                me.core.console.log(JSON.stringify(json, null, 4));
+                me.log(JSON.stringify(json, null, 4));
                 me.core.cmd.exit(terminal);
             }, json);
         }, path);

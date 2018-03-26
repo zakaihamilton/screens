@@ -12,7 +12,7 @@ package.core.message = function CoreMessage(me) {
 
         } else if (me.platform === "client") {
             self.onmessage = function (event) {
-                me.core.console.log("Receiving message");
+                me.log("Receiving message");
                 me.handleLocal(self.postMessage, event.data);
             };
         }
@@ -113,13 +113,18 @@ package.core.message = function CoreMessage(me) {
     };
     me.receive = {
         set: function (info) {
-            me.core.console.log("matching url: " + info.url);
+            me.log("matching url: " + info.url);
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);
                 var args = core.type.unwrap_args(core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
+                if(!info.headers["user_id"]) {
+                    me.log("No user identifier on message, url:" + info.url + 
+                    " args: " + JSON.stringify(args) + 
+                    " headers: " + JSON.stringify(info.headers));
+                }
                 me.lock(info.task, task => {
                     args[1] = function (response) {
                         var args = Array.prototype.slice.call(arguments, 0);
@@ -130,7 +135,7 @@ package.core.message = function CoreMessage(me) {
                         core.message.send.apply(info, args);
                     }
                     catch(e) {
-                        me.core.console.error(e.message + " " + JSON.stringify(args), e.stack);
+                        me.error(e.message + " " + JSON.stringify(args), e.stack);
                         info.body = e.message;
                         me.unlock(task);
                     }
@@ -151,15 +156,15 @@ package.core.message = function CoreMessage(me) {
         try {
             callback = package(path);
         } catch (error) {
-            //me.core.console.log(error);
+            //me.log(error);
             return undefined;
         }
-        me.core.console.log("sending: " + path + " with " + args.length + " arguments, ip: " + this.clientIp);
+        me.log("sending: " + path + " with " + args.length + " arguments, ip: " + this.clientIp);
         if (typeof callback === "function") {
             var result = callback.apply(this, args);
             return result;
         } else {
-            me.core.console.log("callback is not a function but rather " + JSON.stringify(callback));
+            me.log("callback is not a function but rather " + JSON.stringify(callback));
         }
     };
     me.handleRemote = function (info) {
