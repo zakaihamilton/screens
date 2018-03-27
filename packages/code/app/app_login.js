@@ -48,8 +48,4 @@ package.app.login = function AppLogin(me) {
             me.core.property.set(window.var.userName, "ui.basic.text", "");
         }
     };
-    me.signout = function(object, value) {
-        var window = me.singleton;
-        me.core.property.set(object, "lib.google.signout");
-    };
 };

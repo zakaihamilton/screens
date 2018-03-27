@@ -42,7 +42,7 @@
         {
             "ui.basic.text":"Sign out",
             "ui.basic.var":"signout",
-            "ui.touch.click":"app.login.signout"
+            "ui.touch.click":"lib.google.signout"
         }
     ]
 }
