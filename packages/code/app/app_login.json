@@ -6,7 +6,7 @@
         "ui.property.style":{
             "left":"30%",
             "top":"20%",
-            "width": "400px",
+            "width": "450px",
             "height": "300px"
         }
     },
@@ -36,6 +36,22 @@
                     },
                     "ui.basic.type": "text",
                     "ui.basic.var": "userName"
+                },
+                {
+                    "ui.basic.text": "Status:",
+                    "ui.property.style": {
+                        "paddingTop": "10px"
+                    }
+                },
+                {
+                    "ui.basic.text": "@lib.google.currentStatus",
+                    "ui.basic.type": "text",
+                    "ui.basic.readOnly": true,
+                    "ui.basic.var":"status",
+                    "ui.property.style": {
+                        "width": "300px",
+                        "display": "inline-block"
+                    }
                 }
             ]
         },

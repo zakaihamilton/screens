@@ -13,6 +13,7 @@ screens.app.login = function AppLogin(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.signin();
         return me.singleton;
     };
     me.attachGoogle = {
@@ -36,7 +37,9 @@ screens.app.login = function AppLogin(me) {
     };
     me.signin = function() {
         var state = me.lib.google.signInState();
+        var status = me.lib.google.status;
         var window = me.singleton;
+        me.core.property.set(window.var.status, "ui.basic.text", status);
         if(state) {
             me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
             if(me.core.startup.app.name !== "login") {
