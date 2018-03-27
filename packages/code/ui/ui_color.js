@@ -3,7 +3,7 @@
  @component UIColor
  */
 
-package.ui.color = function UIColor(me) {
+screens.ui.color = function UIColor(me) {
     me.colors = ["#a7309f",
         "#c0d547",
         "#005dc4",

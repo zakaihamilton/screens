@@ -3,7 +3,7 @@
  @component WidgetGridLine
  */
 
-package.widget.gridline = function WidgetGridLine(me) {
+screens.widget.gridline = function WidgetGridLine(me) {
     me.dependencies = {
         properties: ["line"]
     };

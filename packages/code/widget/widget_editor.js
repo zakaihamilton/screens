@@ -3,7 +3,7 @@
  @component WidgetEditor
  */
 
-package.widget.editor = function WidgetEditor(me) {
+screens.widget.editor = function WidgetEditor(me) {
     me.properties = {
         "ui.basic.tag": "textarea",
         "ui.class.class": "border"

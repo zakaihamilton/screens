@@ -3,7 +3,7 @@
  @component UIScreenshot
  */
 
-package.ui.screenshot = function UIScreenshot(me) {
+screens.ui.screenshot = function UIScreenshot(me) {
     me.capture = function() {
         function urlsToAbsolute(nodeList) {
             if (!nodeList.length) {

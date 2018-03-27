@@ -3,7 +3,7 @@
  @component UIOptions
  */
 
-package.ui.options = function UIOptions(me) {
+screens.ui.options = function UIOptions(me) {
     me.getStorage = function(component, object) {
         var storage = "local";
         if(object && object.storageName) {

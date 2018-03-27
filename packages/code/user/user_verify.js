@@ -3,7 +3,7 @@
  @component UserVerify
  */
 
-package.user.verify = function UserVerify(me) {
+screens.user.verify = function UserVerify(me) {
     me.init = function (task) {
         me.lock(task, (task) => {
             me.core.util.config((google) => {

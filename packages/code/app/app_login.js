@@ -3,7 +3,7 @@
  @component AppLogin
  */
 
-package.app.login = function AppLogin(me) {
+screens.app.login = function AppLogin(me) {
     me.init = function() {
         me.core.listener.register(me.signin, me.lib.google.id);
     };

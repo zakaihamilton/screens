@@ -3,7 +3,7 @@
  @component AppFolder
  */
 
-package.app.folder = function AppFolder(me) {
+screens.app.folder = function AppFolder(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;

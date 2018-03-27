@@ -3,7 +3,7 @@
  @component WidgetDesktop
  */
 
-package.widget.desktop = function WidgetDesktop(me) {
+screens.widget.desktop = function WidgetDesktop(me) {
     me.properties = {
         "ui.basic.tag": "div",
         "ui.class.class": "container",

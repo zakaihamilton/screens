@@ -3,7 +3,7 @@
  @component StorageData
  */
 
-package.storage.data = function StorageData(me) {
+screens.storage.data = function StorageData(me) {
     me.init = function (task) {
         me.log("initialising storage data");
         me.datastore = null;

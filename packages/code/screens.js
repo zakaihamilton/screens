@@ -1,4 +1,4 @@
-function package_lock(parent_task, callback) {
+function screens_lock(parent_task, callback) {
     if (typeof (parent_task) === "function") {
         callback = parent_task;
         parent_task = null;
@@ -14,7 +14,7 @@ function package_lock(parent_task, callback) {
     }
 }
 
-function package_unlock(task, callback) {
+function screens_unlock(task, callback) {
     if (callback) {
         task.callback = callback;
     }
@@ -32,17 +32,17 @@ function package_unlock(task, callback) {
     }
 }
 
-function package_forEach(task, array, callback, abortCallback) {
+function screens_forEach(task, array, callback, abortCallback) {
     var index = 0;
-    package_lock(task, (task) => {
+    screens_lock(task, (task) => {
         function iterate() {
             var exit = false;
             while (index < array.length && !exit) {
-                package_lock(task, (task) => {
+                screens_lock(task, (task) => {
                     var lock = task.lock;
                     var result = callback(task, array[index], index, array);
                     if(result) {
-                        package_unlock(task);
+                        screens_unlock(task);
                         if(abortCallback) {
                             abortCallback(task, array[index], index, array);
                         }
@@ -51,17 +51,17 @@ function package_forEach(task, array, callback, abortCallback) {
                     }
                     index++;
                     if (lock !== task.lock) {
-                        package_unlock(task, () => {
+                        screens_unlock(task, () => {
                             setTimeout(iterate, 0);
                         });
                         exit = true;
                         return;
                     }
-                    package_unlock(task);
+                    screens_unlock(task);
                 });
             }
             if(!exit) {
-                package_unlock(task);
+                screens_unlock(task);
             }
         }
         setTimeout(() => {
@@ -70,22 +70,22 @@ function package_forEach(task, array, callback, abortCallback) {
     });
 }
 
-async function package_async(task, promise) {
+async function screens_async(task, promise) {
     var result;
-    package_lock(task, async (task) => {
+    screens_lock(task, async (task) => {
         try {
             result = await promise;
-            package_unlock(task);
+            screens_unlock(task);
         }
         catch(err) {
-            package_unlock(task);
+            screens_unlock(task);
             throw err;
         }
     });
     return result;
 }
 
-function package_platform() {
+function screens_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this.module !== module) {
         platform = global.platform || "server";
@@ -95,7 +95,7 @@ function package_platform() {
     return platform;
 }
 
-function package_setup(package_name, component_name, child_name, node) {
+function screens_setup(package_name, component_name, child_name, node) {
     var children = [];
     var id = package_name + "." + component_name;
     var component_id = id;
@@ -103,7 +103,7 @@ function package_setup(package_name, component_name, child_name, node) {
         node = node[child_name];
         id += "." + child_name;
     } else {
-        node = package(id);
+        node = screens(id);
         for (var key in node) {
             children.push(key);
         }
@@ -115,8 +115,8 @@ function package_setup(package_name, component_name, child_name, node) {
             get: function (object, property) {
                 if (Reflect.has(object, property)) {
                     return Reflect.get(object, property);
-                } else if (property in package) {
-                    return package[property];
+                } else if (property in screens) {
+                    return screens[property];
                 } else {
                     var get = Reflect.get(object, "get");
                     if (get && get.enabled) {
@@ -136,15 +136,15 @@ function package_setup(package_name, component_name, child_name, node) {
     component_obj.__package = package_name;
     component_obj.__component = component_name;
     if (child_name) {
-        package[package_name][component_name][child_name] = component_obj;
+        screens[package_name][component_name][child_name] = component_obj;
     } else {
-        package[package_name][component_name] = component_obj;
+        screens[package_name][component_name] = component_obj;
     }
     if (typeof node !== "function") {
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var platform = node(component_obj, child_name);
-    if (platform && package.platform !== platform) {
+    if (platform && screens.platform !== platform) {
         component_obj.apply = function (object, thisArg, argumentsList) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
@@ -165,23 +165,23 @@ function package_setup(package_name, component_name, child_name, node) {
     if (component_obj.get) {
         component_obj.get.enabled = true;
     }
-    console.log(package.platform + ": Loaded " + component_obj.id);
-    package.components.push(component_obj.id);
+    console.log(screens.platform + ": Loaded " + component_obj.id);
+    screens.components.push(component_obj.id);
     /* Load child components */
     var initializers = children.map(function (child) {
-        return package_setup(package_name, component_name, child, node);
+        return screens_setup(package_name, component_name, child, node);
     });
     initializers.unshift(init);
     initializers = initializers.reduce((a, b) => a.concat(b), []);
     return initializers;
 }
 
-function package_push(package_name, component_name, callback) {
+function screens_push(package_name, component_name, callback) {
     var file_name = package_name + "_" + component_name;
     var code_name = package_name + "." + component_name;
-    console.log(package.platform + ": Loading " + code_name);
-    if (package_name in package) {
-        if (package[package_name][component_name]) {
+    console.log(screens.platform + ": Loading " + code_name);
+    if (package_name in screens) {
+        if (screens[package_name][component_name]) {
             if (callback) {
                 callback();
                 return null;
@@ -189,7 +189,7 @@ function package_push(package_name, component_name, callback) {
         }
     }
     else {
-        package[package_name] = {};
+        screens[package_name] = {};
     }
     var item = {
         package_name: package_name,
@@ -199,8 +199,8 @@ function package_push(package_name, component_name, callback) {
     return item;
 }
 
-function package_init(task, items) {
-    package.forEach(task, items, (task, item) => {
+function screens_init(task, items) {
+    screens.forEach(task, items, (task, item) => {
         var initializers = item.initializers;
         if (initializers) {
             console.log("initializing: " + item.package_name + "." + item.component_name);
@@ -221,16 +221,16 @@ function package_init(task, items) {
     });
 }
 
-function package_import(callback, path) {
-    if (package.platform === "server" || package.platform === "service") {
+function screens_import(callback, path) {
+    if (screens.platform === "server" || screens.platform === "service") {
         require(path);
         callback();
     }
-    else if (package.platform === "client") {
+    else if (screens.platform === "client") {
         importScripts(path);
         callback();
     }
-    else if (package.platform === "browser") {
+    else if (screens.platform === "browser") {
         var scripts = document.getElementsByTagName("script");
         for (var i = scripts.length; i--;) {
             if (scripts[i].src === path) {
@@ -247,16 +247,16 @@ function package_import(callback, path) {
     }
 }
 
-function package_load(task, items, callback) {
-    package.lock(task, (task) => {
+function screens_load(task, items, callback) {
+    screens.lock(task, (task) => {
         if (items && items.length) {
-            if (package.platform === "server" || package.platform === "service") {
+            if (screens.platform === "server" || screens.platform === "service") {
                 items.map((item) => {
                     var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
-                    package.lock(task, (task) => {
-                        package_import(() => {
-                            item.initializers = package_setup(item.package_name, item.component_name);
-                            package.unlock(task);
+                    screens.lock(task, (task) => {
+                        screens_import(() => {
+                            item.initializers = screens_setup(item.package_name, item.component_name);
+                            screens.unlock(task);
                         }, path);
                     });
                 });
@@ -271,12 +271,12 @@ function package_load(task, items, callback) {
                     }
                     return path + ".js";
                 });
-                var path = paths.join(",") + "?platform=" + package.platform;
-                package.lock(task, (task) => {
-                    package_import(() => {
+                var path = paths.join(",") + "?platform=" + screens.platform;
+                screens.lock(task, (task) => {
+                    screens_import(() => {
                         var firstItem = items[0];
                         if (firstItem.component_name === "*") {
-                            items = Object.keys(package[firstItem.package_name]).map((component_name) => {
+                            items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
                                 return {
                                     package_name: firstItem.package_name,
                                     component_name: component_name
@@ -284,20 +284,20 @@ function package_load(task, items, callback) {
                             });
                         }
                         items.map((item) => {
-                            item.initializers = package_setup(item.package_name, item.component_name);
+                            item.initializers = screens_setup(item.package_name, item.component_name);
                         });
-                        package.unlock(task);
+                        screens.unlock(task);
                     }, path);
                 });
             }
         }
-        package.unlock(task, () => {
+        screens.unlock(task, () => {
             callback(items);
         });
     });
 }
 
-function package_include(packages, callback) {
+function screens_include(packages, callback) {
     if (typeof packages === "string" && packages) {
         var names = packages.split(".");
         var package_name = names[0];
@@ -306,25 +306,25 @@ function package_include(packages, callback) {
         packages[package_name] = [component_name];
     }
     var collection = {};
-    package.lock((task) => {
+    screens.lock((task) => {
         Object.entries(packages).forEach(([package_name, components]) => {
-            package.lock(task, (task) => {
+            screens.lock(task, (task) => {
                 var items = [];
                 components.forEach((component_name) => {
-                    items.push(package_push(package_name, component_name));
+                    items.push(screens_push(package_name, component_name));
                 });
-                package_load(task, items, (items) => {
+                screens_load(task, items, (items) => {
                     collection[package_name] = items;
                 });
-                package.unlock(task);
+                screens.unlock(task);
             });
         });
-        package.unlock(task, () => {
-            package.lock((task) => {
-                package.forEach(task, Object.keys(packages), (task, package_name) => {
-                    package_init(task, collection[package_name]);
+        screens.unlock(task, () => {
+            screens.lock((task) => {
+                screens.forEach(task, Object.keys(packages), (task, package_name) => {
+                    screens_init(task, collection[package_name]);
                 });
-                package.unlock(task, () => {
+                screens.unlock(task, () => {
                     if(callback) {
                         callback();
                     }
@@ -334,29 +334,29 @@ function package_include(packages, callback) {
     });
 }
 
-var package = new Proxy(() => {
+var screens = new Proxy(() => {
     return {};
 }, {
         apply: function (object, thisArg, argumentsList) {
             return argumentsList[0].split('.').reduce((parent, name) => {
                 return parent[name];
-            }, package);
+            }, screens);
         }
     });
 
-Object.assign(package, {
+Object.assign(screens, {
     components: [],
     id: "package",
-    platform: package_platform(),
-    include: package_include,
-    lock: package_lock,
-    unlock: package_unlock,
-    forEach: package_forEach,
-    async: package_async
+    platform: screens_platform(),
+    include: screens_include,
+    lock: screens_lock,
+    unlock: screens_unlock,
+    forEach: screens_forEach,
+    async: screens_async
 });
 
-var platform = package_platform();
+var platform = screens_platform();
 if (platform === "server" || platform === "service") {
-    global.package = package;
+    global.screens = screens;
     global.__json__ = {};
 }

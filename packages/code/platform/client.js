@@ -1,6 +1,6 @@
-importScripts("/packages/code/package.js?platform=client");
+importScripts("/packages/code/screens.js?platform=client");
 
-package.include({
+screens.include({
     "core": [
         "*"
     ],
@@ -8,8 +8,8 @@ package.include({
         "*"
     ]
 }, function () {
-    package.core.startup.run(() => {
-        package.core.message.workerReady(() => {
+    screens.core.startup.run(() => {
+        screens.core.message.workerReady(() => {
 
         });
     });

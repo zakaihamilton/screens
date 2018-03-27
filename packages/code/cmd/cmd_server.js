@@ -3,7 +3,7 @@
     @component CmdServer
 */
 
-package.cmd.server = function CmdServer(me) {
+screens.cmd.server = function CmdServer(me) {
     me.cmd = function(terminal, args) {
         var cmd = args.slice(1).join(" ");
         me.core.server.run(function(err, data, stderr) {

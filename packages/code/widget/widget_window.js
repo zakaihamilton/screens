@@ -3,7 +3,7 @@
  @component WidgetWindow
  */
 
-package.widget.window = function WidgetWindow(me) {
+screens.widget.window = function WidgetWindow(me) {
     me.dependencies = {
         properties: ["title"]
     };

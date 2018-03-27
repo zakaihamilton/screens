@@ -3,7 +3,7 @@
  @component WidgetDropdown
  */
 
-package.widget.dropdown = function WidgetDropDown(me) {
+screens.widget.dropdown = function WidgetDropDown(me) {
     me.redirect = {
         "ui.basic.text": "text",
         "ui.basic.readOnly": "readOnly",

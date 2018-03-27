@@ -3,7 +3,7 @@
  @component WidgetClock
  */
 
-package.widget.clock = function WidgetClock(me) {
+screens.widget.clock = function WidgetClock(me) {
     me.properties = {
         "ui.class.class": "container"
     };

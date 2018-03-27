@@ -3,7 +3,7 @@
  @component CoreFile
  */
 
-package.core.file = function CoreFile(me) {
+screens.core.file = function CoreFile(me) {
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");

@@ -3,7 +3,7 @@
  @component CoreModule
  */
 
-package.core.module = function CoreModule(me) {
+screens.core.module = function CoreModule(me) {
     me.init = function () {
         me.core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require('autoprefixer');
@@ -69,7 +69,7 @@ package.core.module = function CoreModule(me) {
             if (component_path) {
                 me.log("component_path: " + component_path);
                 try {
-                    target_platform = package(component_path).require;
+                    target_platform = screens(component_path).require;
                 }
                 catch(err) {
 

@@ -3,9 +3,9 @@
  @component me.coreMessage
  */
 
-package.core.message = function CoreMessage(me) {
+screens.core.message = function CoreMessage(me) {
     me.init = function () {
-        if (package.platform === "server") {
+        if (screens.platform === "server") {
             me.core.property.link("core.http.receive", "core.message.receive", true);
         } else if (me.platform === "browser") {
 
@@ -20,14 +20,14 @@ package.core.message = function CoreMessage(me) {
         me.core.listener.wait(callback, me.id);
     };
     me.loadWorker = function(path) {
-        package.worker = new Worker(path);
-        package.worker.onmessage = function (event) {
-            package.core.console.log("Receiving message");
-            package.core.message.handleLocal((info) => {
-                package.worker.postMessage(info);
+        screens.worker = new Worker(path);
+        screens.worker.onmessage = function (event) {
+            screens.core.console.log("Receiving message");
+            screens.core.message.handleLocal((info) => {
+                screens.worker.postMessage(info);
             }, event.data);
         };
-        package.worker.postMessage(null);
+        screens.worker.postMessage(null);
     };
     me.workerReady = function(callback) {
         if (me.platform === "client") {
@@ -71,7 +71,7 @@ package.core.message = function CoreMessage(me) {
                 params: args,
                 callback: me.core.handle.push(callback)
             };
-            package.worker.postMessage(info);
+            screens.worker.postMessage(info);
         } else if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 0);
             me.send.apply(this, args);
@@ -148,7 +148,7 @@ package.core.message = function CoreMessage(me) {
             return result;
         }
         try {
-            callback = package(path);
+            callback = screens(path);
         } catch (error) {
             //me.log(error);
             return undefined;

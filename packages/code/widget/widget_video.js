@@ -3,7 +3,7 @@
  @component WidgetVideo
  */
 
-package.widget.video = function WidgetVideo(me) {
+screens.widget.video = function WidgetVideo(me) {
     me.properties = {
         "ui.basic.tag":"video",
         "ui.attribute.controls":"",

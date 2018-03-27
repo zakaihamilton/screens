@@ -3,7 +3,7 @@
  @component WidgetContent
  */
 
-package.widget.content = function WidgetContent(me) {
+screens.widget.content = function WidgetContent(me) {
     me.properties = {
         "ui.class.class": "base",
         "ui.touch.wheel":"wheel"

@@ -3,7 +3,7 @@
  @component UINode
  */
 
-package.ui.node = function UINode(me) {
+screens.ui.node = function UINode(me) {
     me.childList = function (object) {
         var childNodes = me.childNodes(object);
         if(!childNodes) {

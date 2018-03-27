@@ -3,7 +3,7 @@
  @component CoreUtil
  */
 
-package.core.util = function CoreUtil(me) {
+screens.core.util = function CoreUtil(me) {
     me.removeLast = function (string, separator) {
         var array = string.split(separator);
         array.pop();

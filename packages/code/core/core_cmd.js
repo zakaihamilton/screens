@@ -3,7 +3,7 @@
     @component CoreCmd
 */
 
-package.core.cmd = function CoreCmd(me) {
+screens.core.cmd = function CoreCmd(me) {
     me.application = function(terminal) {
         return terminal.application;
     };
@@ -30,7 +30,7 @@ package.core.cmd = function CoreCmd(me) {
             return;
         }
         var application = "cmd." + args[0];
-        package.include(application, function (info) {
+        screens.include(application, function (info) {
             terminal.application = application;
             terminal.handle = me.core.message.send(application + ".cmd", terminal, args);
         });

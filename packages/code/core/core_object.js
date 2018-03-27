@@ -3,7 +3,7 @@
     @component CoreObject
 */
 
-package.core.object = function CoreObject(me) {
+screens.core.object = function CoreObject(me) {
     me.apply = function (component, object = null) {
         if (!object) {
             object = {};

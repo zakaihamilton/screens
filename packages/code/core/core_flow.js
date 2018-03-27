@@ -3,9 +3,9 @@
     @component CoreFlow
 */
 
-package.core.flow = function CoreFlow(me) {
+screens.core.flow = function CoreFlow(me) {
     me.init = function() {
-        package.flow = me.flow;
+        screens.flow = me.flow;
     };
     me.flow = function(endCallback, startCallback) {
         var flow = {

@@ -3,7 +3,7 @@
  @component MediaVoice
  */
 
-package.media.voice = function MediaVoice(me) {
+screens.media.voice = function MediaVoice(me) {
     me.init = function () {
         me.synth = window.speechSynthesis;
         me.utterances = [];

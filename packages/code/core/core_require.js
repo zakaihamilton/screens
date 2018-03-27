@@ -3,7 +3,7 @@
  @component CoreRequire
  */
 
-package.core.require = function CoreRequire(me) {
+screens.core.require = function CoreRequire(me) {
     me.apply = function(callback, list) {
         if(!list) {
             if(callback) {

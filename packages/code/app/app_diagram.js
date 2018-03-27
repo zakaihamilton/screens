@@ -3,7 +3,7 @@
  @component AppDiagram
  */
 
-package.app.diagram = function AppDiagram(me) {
+screens.app.diagram = function AppDiagram(me) {
     me.launch = function (args) {
         if (!args) {
             args = [""];

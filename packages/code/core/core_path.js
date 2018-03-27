@@ -3,7 +3,7 @@
     @component CorePath
 */
 
-package.core.path = function CorePath(me) {
+screens.core.path = function CorePath(me) {
     me.goto = function(oldPath, newPath) {
         var path = oldPath;
         if(!path) {

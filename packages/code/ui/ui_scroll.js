@@ -3,7 +3,7 @@
  @component UIScroll
  */
 
-package.ui.scroll = function UIScroll(me) {
+screens.ui.scroll = function UIScroll(me) {
     me.other_scroll = function(type) {
         if (type === "vertical") {
             return "horizontal";

@@ -3,7 +3,7 @@
     @component CmdExec
 */
 
-package.cmd.exec = function CmdExec(me) {
+screens.cmd.exec = function CmdExec(me) {
     me.cmd = function(terminal, args) {
         args = args.slice(1);
         var result = me.core.message.send.apply(null, args);

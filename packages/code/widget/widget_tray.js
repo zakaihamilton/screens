@@ -3,7 +3,7 @@
  @component WidgetTray
  */
 
-package.widget.tray = function WidgetTray(me) {
+screens.widget.tray = function WidgetTray(me) {
     me.properties = {
         "ui.class.class":"container"
     };

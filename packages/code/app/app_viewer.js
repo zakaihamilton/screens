@@ -3,7 +3,7 @@
  @component AppViewer
  */
 
-package.app.viewer = function AppViewer(me) {
+screens.app.viewer = function AppViewer(me) {
     me.launch = function (args) {
         var path = args[0];
         var json = __json__;

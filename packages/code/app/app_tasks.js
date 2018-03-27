@@ -3,7 +3,7 @@
  @component AppTasks
  */
 
-package.app.tasks = function AppTasks(me) {
+screens.app.tasks = function AppTasks(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);

@@ -3,7 +3,7 @@
  @component UITheme
  */
 
-package.ui.theme = function UITheme(me) {
+screens.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
     me.init = function(task) {

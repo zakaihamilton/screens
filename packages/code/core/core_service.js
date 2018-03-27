@@ -3,7 +3,7 @@
  @component CoreService
  */
 
-package.core.service = function CoreService(me) {
+screens.core.service = function CoreService(me) {
     me.init = function() {
         if (me.platform === "server") {
             me.clients = new Map();

@@ -3,7 +3,7 @@
  @component WidgetButton
  */
 
-package.widget.button = function WidgetButton(me) {
+screens.widget.button = function WidgetButton(me) {
     me.dependencies = {
         properties:["ui.basic.text","ui.touch.click"]
     };

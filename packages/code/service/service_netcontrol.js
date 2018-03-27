@@ -3,7 +3,7 @@
  @component ServiceNetControl
  */
 
-package.service.netcontrol = function ServiceNetControl(me) {
+screens.service.netcontrol = function ServiceNetControl(me) {
     me.setup = function (callback, ref) {
         callback();
     };

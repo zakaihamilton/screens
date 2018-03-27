@@ -3,7 +3,7 @@
  @component CmdClean
  */
 
-package.cmd.clean = function CmdClean(me) {
+screens.cmd.clean = function CmdClean(me) {
     me.cmd = function (terminal, args) {
         var cache_dir = "cache";
         me.lock(task => {

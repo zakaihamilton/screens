@@ -3,7 +3,7 @@
  @component CoreNetwork
  */
 
-package.core.network = function CoreNetwork(me) {
+screens.core.network = function CoreNetwork(me) {
     me.ipAddress = function(callback) {
         var ip = null;
         if(this && this.clientIp) {

@@ -3,7 +3,7 @@
  @component CoreProperty
  */
 
-package.core.property = function CoreProperty(me) {
+screens.core.property = function CoreProperty(me) {
     me.init = function () {
         me._forwarding_list = {};
     };
@@ -11,20 +11,20 @@ package.core.property = function CoreProperty(me) {
         if (typeof name !== "string") {
             throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;
         }
-        name = name.replace("package.", "");
+        name = name.replace("screens.", "");
         var separator = name.indexOf(".");
         var package_name = null;
         if (separator !== -1) {
             package_name = name.substr(0, separator);
         }
-        if (!package_name || !(package_name in package)) {
+        if (!package_name || !(package_name in screens)) {
             if (!object || !object.component) {
                 return default_name;
             }
             name = object.component + "." + name;
         }
         if ("component" in object) {
-            var redirect = package(object.component).redirect;
+            var redirect = screens(object.component).redirect;
             if (redirect && !redirect.disabled) {
                 if (name in redirect) {
                     name = me.fullname(object, redirect[name]);
@@ -86,7 +86,7 @@ package.core.property = function CoreProperty(me) {
                 if (info.name) {
                     var callback = null;
                     try {
-                        var callback = package(info.name);
+                        var callback = screens(info.name);
                     }
                     catch(err) {
                         me.log("no callback for: " + info.name);

@@ -3,7 +3,7 @@
  @component CoreEvent
  */
 
-package.core.event = function CoreEvent(me) {
+screens.core.event = function CoreEvent(me) {
     me.send_event = function(object, method, event) {
         if(!object.getAttribute || !object.getAttribute('disabled')) {
             me.core.property.set(object, method, event);

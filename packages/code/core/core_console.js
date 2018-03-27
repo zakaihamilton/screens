@@ -3,16 +3,16 @@
  @component CoreConsole
  */
 
-package.core.console = function CoreConsole(me) {
+screens.core.console = function CoreConsole(me) {
     me.messages = [];
     me.enabled = true;
     me.clear = function() {
         me.messages = [];
     };
     me.init = function() {
-        package.log = me.log;
-        package.error = me.error;
-        package.warn = me.warn;
+        screens.log = me.log;
+        screens.error = me.error;
+        screens.warn = me.warn;
         if(me.platform === "browser") {
             me.enabled = !me.core.util.isSecure();
         }

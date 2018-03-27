@@ -3,7 +3,7 @@
  @component UIGroup
  */
 
-package.ui.group = function UIGroup(me) {
+screens.ui.group = function UIGroup(me) {
     me.get = function (object, property) {
         return {
             set: function (object, value) {

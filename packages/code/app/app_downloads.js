@@ -3,7 +3,7 @@
  @component AppDownloads
  */
 
-package.app.downloads = function AppDownloads(me) {
+screens.app.downloads = function AppDownloads(me) {
     me.launch = function (args) {
         return me.ui.element(__json__, "workspace", "self");
     };

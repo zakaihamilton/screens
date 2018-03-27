@@ -3,11 +3,11 @@
  @component CoreApp
  */
 
-package.core.app = function CoreApp(me) {
+screens.core.app = function CoreApp(me) {
     me.get = function (object, property) {
         return {
             set: function (object, value) {
-                package.include("app." + property, function () {
+                screens.include("app." + property, function () {
                     if (Array.isArray(value)) {
                         value = value.slice(0);
                         value.unshift("app." + property + ".launch");
@@ -20,13 +20,13 @@ package.core.app = function CoreApp(me) {
         };
     };
     me.preload = function(callback, appName) {
-        package.include("app." + appName, function () {
+        screens.include("app." + appName, function () {
             callback();
         });
     };
     me.launch = function (callback, appName, appArgs) {
         var result = null;
-        package.include("app." + appName, function () {
+        screens.include("app." + appName, function () {
             if (Array.isArray(appArgs)) {
                 appArgs = appArgs.slice(0);
             }

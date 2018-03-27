@@ -3,7 +3,7 @@
  @component AppInfo
  */
 
-package.app.info = function AppInfo(me) {
+screens.app.info = function AppInfo(me) {
     me.launch = function (args) {
         var json = {title:args[0],"ui.var.data":args[1]};
         Object.assign(json, __json__);

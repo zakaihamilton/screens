@@ -3,7 +3,7 @@
  @component ContentCsv
  */
 
-package.content.csv = function ContentCsv(me) {
+screens.content.csv = function ContentCsv(me) {
     me.export = function(filename, rows) {
         var csvFile = '';
         csvFile = rows.map((row) => {

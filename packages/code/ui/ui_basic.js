@@ -3,7 +3,7 @@
  @component UIBasic
  */
 
-package.ui.basic = function UIBasic(me) {
+screens.ui.basic = function UIBasic(me) {
     me.tag = {
         get: function (object) {
             return object.tagName;

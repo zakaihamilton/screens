@@ -3,7 +3,7 @@
  @component AppTransform
  */
 
-package.app.transform = function AppTransform(me) {
+screens.app.transform = function AppTransform(me) {
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -281,9 +281,9 @@ package.app.transform = function AppTransform(me) {
                 language = me.core.string.language(text);
                 me.log("detected language: " + language);
             }
-            window.options.hoverCallback = "package.app.transform.hoverDescription";
-            window.options.diagramCallback = "package.app.transform.loadDiagram";
-            window.options.toggleCallback = "package.app.transform.cycleDescription";
+            window.options.hoverCallback = "screens.app.transform.hoverDescription";
+            window.options.diagramCallback = "screens.app.transform.loadDiagram";
+            window.options.toggleCallback = "screens.app.transform.cycleDescription";
             window.options.reload = true;
             me.core.message.waitForWorker(() => {
                 me.media.voice.stop();

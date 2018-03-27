@@ -3,7 +3,7 @@
     @component CoreServer
 */
 
-package.core.server = function CoreServer(me) {
+screens.core.server = function CoreServer(me) {
     me.init = function() {
         me.cmd=require('node-cmd');
     };

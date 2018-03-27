@@ -3,10 +3,10 @@
  @component CoreHttp
  */
 
-package.core.http = function CoreHttp(me) {
-    if (package.platform === "server") {
+screens.core.http = function CoreHttp(me) {
+    if (screens.platform === "server") {
         me.port = process.env.PORT || 4040;
-    } else if (package.platform === "service") {
+    } else if (screens.platform === "service") {
         me.port = 4050;
     } else {
         me.port = 80;

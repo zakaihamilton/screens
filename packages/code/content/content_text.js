@@ -3,7 +3,7 @@
  @component ContentText
  */
 
-package.content.text = function ContentText(me) {
+screens.content.text = function ContentText(me) {
     me.object = function(object) {
         var window = me.widget.window.mainWindow(object);
         if(window) {

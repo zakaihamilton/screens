@@ -3,7 +3,7 @@
     @component CoreType
 */
 
-package.core.type = function CoreType(me) {
+screens.core.type = function CoreType(me) {
     me.wrap = function(unwrapped_data) {
         var result = null;
         if(unwrapped_data instanceof Error) {

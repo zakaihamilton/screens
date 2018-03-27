@@ -3,7 +3,7 @@
  @component LibMoment
  */
 
-package.lib.moment = function LibMoment(me) {
+screens.lib.moment = function LibMoment(me) {
     me.init = function (task) {
         me.lock(task, (task) => {
             me.core.require((moment) => {

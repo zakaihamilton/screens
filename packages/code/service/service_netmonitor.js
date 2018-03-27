@@ -4,7 +4,7 @@
  @prerequisites npm install https://github.com/mranney/node_pcap.git
  */
 
-package.service.netmonitor = function ServiceNetMonitor(me) {
+screens.service.netmonitor = function ServiceNetMonitor(me) {
     me.setup = function (callback, ref) {
         me.device = null;
         me.packets = [];

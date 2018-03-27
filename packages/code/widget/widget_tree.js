@@ -3,7 +3,7 @@
  @component WidgetTree
  */
 
-package.widget.tree = function WidgetTree(me) {
+screens.widget.tree = function WidgetTree(me) {
     me.dependencies = {
         properties: ["ui.element.count", "widget.tree.collapse"]
     };
@@ -60,7 +60,7 @@ package.widget.tree = function WidgetTree(me) {
         }
     };
 };
-package.widget.tree.dropdown = function WidgetDropDownList(me) {
+screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
     };
@@ -161,7 +161,7 @@ package.widget.tree.dropdown = function WidgetDropDownList(me) {
         }
     };
 };
-package.widget.tree.popup = function WidgetListPopup(me) {
+screens.widget.tree.popup = function WidgetListPopup(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
@@ -214,14 +214,14 @@ package.widget.tree.popup = function WidgetListPopup(me) {
     };
 };
 
-package.widget.tree.list = function WidgetTreeList(me) {
+screens.widget.tree.list = function WidgetTreeList(me) {
     me.properties = {
         "ui.basic.tag": "ul",
         "ui.class.class": "widget.tree.list"
     };
 };
 
-package.widget.tree.item = function WidgetTreeItem(me) {
+screens.widget.tree.item = function WidgetTreeItem(me) {
     me.properties = {
         "ui.basic.tag": "li",
         "ui.class.class": "widget.tree.item",

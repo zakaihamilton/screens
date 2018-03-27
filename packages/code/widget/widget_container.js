@@ -3,7 +3,7 @@
  @component WidgetContainer
  */
 
-package.widget.container = function WidgetContainer(me) {
+screens.widget.container = function WidgetContainer(me) {
     me.redirect = {
         "ui.basic.elements": "elements",
         "ui.basic.text": "text",

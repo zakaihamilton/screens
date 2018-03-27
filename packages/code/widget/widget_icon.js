@@ -3,7 +3,7 @@
  @component WidgetIcon
  */
 
-package.widget.icon = function WidgetIcon(me) {
+screens.widget.icon = function WidgetIcon(me) {
     me.dependencies = {
         properties: ["ui.basic.src", "text"]
     };

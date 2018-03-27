@@ -3,7 +3,7 @@
     @component CorePrivate
 */
 
-package.core.private = function CorePrivate(me) {
+screens.core.private = function CorePrivate(me) {
     me.keys = function(callback, name) {
         me.core.file.readFile(function(err, data) {
             var json = {};

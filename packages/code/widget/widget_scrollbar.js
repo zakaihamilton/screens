@@ -346,9 +346,9 @@ function WidgetScrollbarTemplate(me, scroll_type) {
     };
 }
 
-package.widget.scrollbar = function WidgetScroll(me) {
+screens.widget.scrollbar = function WidgetScroll(me) {
 
 };
 
-package.widget.scrollbar.horizontal = WidgetScrollbarTemplate;
-package.widget.scrollbar.vertical = WidgetScrollbarTemplate;
+screens.widget.scrollbar.horizontal = WidgetScrollbarTemplate;
+screens.widget.scrollbar.vertical = WidgetScrollbarTemplate;

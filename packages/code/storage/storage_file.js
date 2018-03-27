@@ -3,7 +3,7 @@
  @component StorageFile
  */
 
-package.storage.file = function StorageFile(me) {
+screens.storage.file = function StorageFile(me) {
     me.init = function () {
         me.dropbox = require("dropbox");
         me.fs = require("fs");

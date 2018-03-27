@@ -3,7 +3,7 @@
  @component UIFocus
  */
 
-package.ui.focus = function UIFocus(me) {
+screens.ui.focus = function UIFocus(me) {
     me.focus_window = null;
     me.extend = {
         set: function (object) {

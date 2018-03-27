@@ -1,6 +1,6 @@
-require("../package.js");
+require("../screens.js");
 
-package.include({
+screens.include({
     "core": [
         "property",
         "console",
@@ -49,7 +49,7 @@ package.include({
         "zlib"
     ]
 }, function () {
-    package.core.startup.run();
+    screens.core.startup.run();
 });
 
 process.on('uncaughtException', (err) => {

@@ -3,7 +3,7 @@
     @component CmdParse
 */
 
-package.cmd.parse = function CmdParse(me) {
+screens.cmd.parse = function CmdParse(me) {
     me.cmd = function(terminal, args) {
         if(args.length <= 1) {
             me.core.cmd.exit(terminal);

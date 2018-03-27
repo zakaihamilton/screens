@@ -3,7 +3,7 @@
  @component UIVar
  */
 
-package.ui.var = function UIVar(me) {
+screens.ui.var = function UIVar(me) {
     me.get = function (object, property) {
         return {
             get: function (object) {

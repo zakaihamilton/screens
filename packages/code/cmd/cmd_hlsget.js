@@ -3,7 +3,7 @@
     @component HlsGet
 */
 
-package.cmd.hlsget = function CmdHlsGet(me) {
+screens.cmd.hlsget = function CmdHlsGet(me) {
     me.cmd = function(terminal, args) {
         if(args.length <= 2) {
             me.core.property.set(terminal, "print", "hlsget path.m3u8 files");

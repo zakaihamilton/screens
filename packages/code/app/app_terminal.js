@@ -3,7 +3,7 @@
  @component AppTerminal
  */
 
-package.app.terminal = function AppTerminal(me) {
+screens.app.terminal = function AppTerminal(me) {
     me.launch = function () {
         me.singleton = me.ui.element(__json__);
         return me.singleton;

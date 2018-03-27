@@ -3,7 +3,7 @@
  @component KabText
  */
 
-package.kab.text = function KabText(me) {
+screens.kab.text = function KabText(me) {
     me.splitWords = function (session, wordsString) {
         wordsString = me.core.string.parseWords(function (words) {
             if (session.json.options && session.json.options.splitPartial) {

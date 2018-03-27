@@ -3,7 +3,7 @@
  @component StorageLocal
  */
 
-package.storage.local = function StorageLocal(me) {
+screens.storage.local = function StorageLocal(me) {
     me.init = function () {
         me.none = me.core.object(me);
         me.local = me.core.object(me);

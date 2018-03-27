@@ -3,7 +3,7 @@
  @component CoreLink
  */
 
-package.core.link = function CoreLink(me) {
+screens.core.link = function CoreLink(me) {
     me.get = function (object, property) {
         return {
             set: function (object, value) {

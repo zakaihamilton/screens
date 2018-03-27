@@ -1,8 +1,8 @@
 global.platform = "service";
 
-require("../package.js");
+require("../screens.js");
 
-package.include({
+screens.include({
     "core": [
         "console",
         "message",
@@ -34,7 +34,7 @@ package.include({
         "version"
     ]
 }, function () {
-    package.core.startup.run();
+    screens.core.startup.run();
 });
 
 process.on('uncaughtException', (err) => {

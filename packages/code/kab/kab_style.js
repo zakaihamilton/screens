@@ -3,7 +3,7 @@
  @component KabStyle
  */
 
-package.kab.style = function KabStyle(me) {
+screens.kab.style = function KabStyle(me) {
     me.process = function (session, instance, replacement, expansion) {
         var styles = instance.item.style;
         var html = "";

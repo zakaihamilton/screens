@@ -3,7 +3,7 @@
  @component WidgetEmbed
  */
 
-package.widget.embed = function WidgetEmbed(me) {
+screens.widget.embed = function WidgetEmbed(me) {
     me.properties = {
         "ui.basic.tag": "iframe",
         "ui.class.class": "iframe"

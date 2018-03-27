@@ -1,5 +1,5 @@
 function startBrowser(appName, appArgs) {
-    package.include({
+    screens.include({
         "core": [
             "*"
         ],
@@ -37,12 +37,12 @@ function startBrowser(appName, appArgs) {
             "*"
         ]
     }, function () {
-        package.core.startup.app = {
+        screens.core.startup.app = {
             name: appName,
             params: appArgs
         };
-        package.core.message.loadWorker("packages/code/platform/client.js");
-        package.core.startup.run(() => {
+        screens.core.message.loadWorker("packages/code/platform/client.js");
+        screens.core.startup.run(() => {
             
         });
     });

@@ -3,7 +3,7 @@
  @component UIClass
  */
 
-package.ui.class = function UIClass(me) {
+screens.ui.class = function UIClass(me) {
     me.stylesheets = {};
     me.styleSheetsLeftToLoad = 0;
     me.processClass = function(object, classList, callback) {

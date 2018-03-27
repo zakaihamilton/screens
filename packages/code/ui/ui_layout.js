@@ -3,7 +3,7 @@
  @component UILayout
  */
 
-package.ui.layout = function UILayout(me) {
+screens.ui.layout = function UILayout(me) {
     me.content = function (target) {
         if (target && target.component === me.widget.container.id) {
             target = me.widget.container.content(target);

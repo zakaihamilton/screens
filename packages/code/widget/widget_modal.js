@@ -3,7 +3,7 @@
  @component UIModal
  */
 
-package.widget.modal = function WidgetModal(me) {
+screens.widget.modal = function WidgetModal(me) {
     me.properties = {
         "ui.touch.click":"click",
         "ui.class.class" : "overlay"

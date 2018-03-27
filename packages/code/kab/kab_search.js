@@ -3,7 +3,7 @@
  @component KabSearch
  */
 
-package.kab.search = function KabSearch(me) {
+screens.kab.search = function KabSearch(me) {
     me.init = function () {
         me.terms = {};
     };

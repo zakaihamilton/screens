@@ -3,7 +3,7 @@
  @component AppServices
  */
 
-package.app.services = function AppServices(me) {
+screens.app.services = function AppServices(me) {
     me.launch = function (args) {
         return me.ui.element(__json__, "workspace", "self");
     };

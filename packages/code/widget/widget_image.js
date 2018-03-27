@@ -3,7 +3,7 @@
  @component WidgetImage
  */
 
-package.widget.image = function WidgetImage(me) {
+screens.widget.image = function WidgetImage(me) {
     me.dependencies = {
         properties:["ui.basic.src"]
     };

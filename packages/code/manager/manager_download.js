@@ -3,7 +3,7 @@
  @component ManagerDownload
  */
 
-package.manager.download = function ManagerDownload(me) {
+screens.manager.download = function ManagerDownload(me) {
     me.init = function () {
         me.queue = [];
         me.downloadLimit = 5;

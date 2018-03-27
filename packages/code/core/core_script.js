@@ -3,7 +3,7 @@
  @component CoreScript
  */
 
-package.core.script = function CoreScript(me) {
+screens.core.script = function CoreScript(me) {
     var core = me.core;
     me.init = function() {
         me.core.property.link("core.http.parse", "core.script.parse", true);

@@ -3,7 +3,7 @@
  @component AppPackets
  */
 
-package.app.packets = function AppPackets(me) {
+screens.app.packets = function AppPackets(me) {
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -48,7 +48,7 @@ package.app.packets = function AppPackets(me) {
                 me.manager.packet.isPushEnabled((isPushEnabled) => {
                     me.isPushEnabled = isPushEnabled;
                 });
-                package.include("lib.moment", function () {
+                screens.include("lib.moment", function () {
                     me.unlock(task);
                 });
             }, "app.packets.data");

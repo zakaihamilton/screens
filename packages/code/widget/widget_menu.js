@@ -3,7 +3,7 @@
  @component WidgetMenu
  */
 
-package.widget.menu = function WidgetMenu(me) {
+screens.widget.menu = function WidgetMenu(me) {
     me.properties = {
         "ui.class.class": "horizontal",
         "ui.basic.elements": {
@@ -116,7 +116,7 @@ package.widget.menu = function WidgetMenu(me) {
     };
 };
 
-package.widget.menu.popup = function WidgetMenuPopup(me) {
+screens.widget.menu.popup = function WidgetMenuPopup(me) {
     me.properties = {
         "ui.class.class": "widget.menu.vertical",
         "ui.basic.elements": {
@@ -140,7 +140,7 @@ package.widget.menu.popup = function WidgetMenuPopup(me) {
     };
 };
 
-package.widget.menu.item = function WidgetMenuItem(me) {
+screens.widget.menu.item = function WidgetMenuItem(me) {
     me.properties = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click"

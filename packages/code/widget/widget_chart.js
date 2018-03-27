@@ -3,7 +3,7 @@
  @component WidgetChart
  */
 
-package.widget.chart = function WidgetChart(me) {
+screens.widget.chart = function WidgetChart(me) {
     me.properties = {
         "ui.basic.tag": "div",
         "ui.basic.elements": {

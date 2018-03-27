@@ -3,7 +3,7 @@
  @component StartupVersion
  */
 
-package.startup.version = function StartupVersion(me) {
+screens.startup.version = function StartupVersion(me) {
     me.run = function(task) {
         me.log("retrieving version information");
         me.core.util.config(config => {

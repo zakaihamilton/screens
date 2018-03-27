@@ -3,7 +3,7 @@
  @component WidgetBar
  */
 
-package.widget.bar = function WidgetBar(me) {
+screens.widget.bar = function WidgetBar(me) {
     me.properties = {
         "ui.class.class": "container"
     };

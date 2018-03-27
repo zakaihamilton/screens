@@ -3,7 +3,7 @@
  @component UIWindowKey
  */
 
-package.ui.windowkey = function UIWindowKey(me) {
+screens.ui.windowkey = function UIWindowKey(me) {
     me.get = function (object, property) {
         return {
             get: function (object) {

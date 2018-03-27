@@ -3,7 +3,7 @@
  @component MenuContext
  */
 
-package.menu.context = function MenuContext(me) {
+screens.menu.context = function MenuContext(me) {
     me.resizable = {
         get: function (object) {
             var window = me.widget.window(object);

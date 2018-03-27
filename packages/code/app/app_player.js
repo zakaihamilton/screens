@@ -3,7 +3,7 @@
  @component AppPlayer
  */
 
-package.app.player = function AppPlayer(me) {
+screens.app.player = function AppPlayer(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.launch = function (args) {

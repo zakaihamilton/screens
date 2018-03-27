@@ -3,7 +3,7 @@
  @component UIExec
  */
 
-package.ui.exec = function UIExec(me) {
+screens.ui.exec = function UIExec(me) {
     me.get = function (object, property) {
         return {
             set: function (object, value) {

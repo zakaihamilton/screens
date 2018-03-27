@@ -1,6 +1,6 @@
 /* remote component __component__ */
 
-package.__component__ = function (me) {
+screens.__component__ = function (me) {
     me.apply = function (object, thisArg, argumentsList) {
         return function () {
             var args = Array.prototype.slice.call(argumentsList);

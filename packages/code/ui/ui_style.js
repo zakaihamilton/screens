@@ -3,7 +3,7 @@
  @component UIStyle
  */
 
-package.ui.style = function UIStyle(me) {
+screens.ui.style = function UIStyle(me) {
     me.stylesheets = {};
     me.get = function (object, property) {
         return {

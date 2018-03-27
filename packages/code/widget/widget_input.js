@@ -3,7 +3,7 @@
  @component WidgetInput
  */
 
-package.widget.input = function WidgetInput(me) {
+screens.widget.input = function WidgetInput(me) {
     me.dependencies = {
         properties:["ui.basic.text","ui.basic.type"]
     };

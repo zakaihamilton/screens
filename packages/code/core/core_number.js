@@ -3,7 +3,7 @@
  @component CoreNumber
  */
 
-package.core.number = function CoreNumber(me) {
+screens.core.number = function CoreNumber(me) {
     me.fillArray = {
         get: function(object, range) {
             var result = [];

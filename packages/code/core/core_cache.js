@@ -3,7 +3,7 @@
  @component CoreCache
  */
 
-package.core.cache = function CoreCache(me) {
+screens.core.cache = function CoreCache(me) {
     me.init = function() {
         me.cache = {};
     };

@@ -3,7 +3,7 @@
     @component CoreHandle
 */
 
-package.core.handle = function CoreHandle(me) {
+screens.core.handle = function CoreHandle(me) {
     me.init = function() {
         me.handles = {};
     };

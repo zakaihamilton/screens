@@ -3,7 +3,7 @@
  @component MediaHls
  */
 
-package.media.hls = function MediaHLS(me) {
+screens.media.hls = function MediaHLS(me) {
     me.download = function (callback, path, destination) {
         var name = me.core.path.fullName(path);
         var targetPlaylist = me.core.path.goto(destination, name);

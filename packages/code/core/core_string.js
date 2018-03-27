@@ -3,7 +3,7 @@
  @component CoreString
  */
 
-package.core.string = function CoreString(me) {
+screens.core.string = function CoreString(me) {
     me.delimiters = function() {
         var delimiters = [
             "\n",";",":",".",",","—","–","-","(",")","[","]","{","}","+","<",">","?","/","\\","”","“","!","\"","…","'","‘","’"

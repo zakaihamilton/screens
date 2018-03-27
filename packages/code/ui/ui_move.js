@@ -3,7 +3,7 @@
  @component UIMove
  */
 
-package.ui.move = function UIMove(me) {
+screens.ui.move = function UIMove(me) {
     me.enabled = {
         get: function (object) {
             return object.move_enabled;

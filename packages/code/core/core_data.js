@@ -3,7 +3,7 @@
  @component CoreData
  */
 
-package.core.data = function CoreData(me) {
+screens.core.data = function CoreData(me) {
     me.get = function (object, property) {
         return {
             get: function (object) {

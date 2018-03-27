@@ -3,7 +3,7 @@
  @component UIResize
  */
 
-package.ui.resize = function UIResize(me) {
+screens.ui.resize = function UIResize(me) {
     me.enabled = {
         get: function (object) {
             return object.resize_enabled;

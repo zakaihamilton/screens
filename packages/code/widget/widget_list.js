@@ -3,7 +3,7 @@
  @component WidgetList
  */
 
-package.widget.list = function WidgetList(me) {
+screens.widget.list = function WidgetList(me) {
     me.dependencies = {
         properties: ["ui.element.count"]
     };
@@ -71,7 +71,7 @@ package.widget.list = function WidgetList(me) {
     };
 };
 
-package.widget.list.dropdown = function WidgetDropDownList(me) {
+screens.widget.list.dropdown = function WidgetDropDownList(me) {
     me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text"]
     };
@@ -173,7 +173,7 @@ package.widget.list.dropdown = function WidgetDropDownList(me) {
     };
 };
 
-package.widget.list.popup = function WidgetListPopup(me) {
+screens.widget.list.popup = function WidgetListPopup(me) {
     me.redirect = {
         "ui.basic.elements": "elements"
     };
@@ -226,7 +226,7 @@ package.widget.list.popup = function WidgetListPopup(me) {
     };
 };
 
-package.widget.list.item = function WidgetListItem(me) {
+screens.widget.list.item = function WidgetListItem(me) {
     me.properties = {
         "ui.basic.tag": "span",
         "ui.touch.click": "click",

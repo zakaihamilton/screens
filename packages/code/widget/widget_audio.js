@@ -3,7 +3,7 @@
  @component WidgetAudio
  */
 
-package.widget.audio = function WidgetAudio(me) {
+screens.widget.audio = function WidgetAudio(me) {
     me.properties = {
         "ui.basic.tag":"audio",
         "ui.attribute.controls":"",

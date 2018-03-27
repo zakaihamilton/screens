@@ -3,7 +3,7 @@
  @component StartupApp
  */
 
-package.startup.app = function StartupApp(me) {
+screens.startup.app = function StartupApp(me) {
     me.run = function (task) {
         me.lock(task, (task) => {
             me.ui.class.useStylesheet(() => {

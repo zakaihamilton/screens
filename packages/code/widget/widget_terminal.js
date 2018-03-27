@@ -3,7 +3,7 @@
  @component WidgetTerminal
  */
 
-package.widget.terminal = function WidgetTerminal(me) {
+screens.widget.terminal = function WidgetTerminal(me) {
     me.properties = __json__;
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window(terminal);

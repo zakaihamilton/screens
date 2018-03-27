@@ -3,7 +3,7 @@
  @component WidgetCheckBox
  */
 
-package.widget.checkbox = function WidgetCheckBox(me) {
+screens.widget.checkbox = function WidgetCheckBox(me) {
     me.dependencies = {
         properties: ["ui.basic.text","state"]
     };

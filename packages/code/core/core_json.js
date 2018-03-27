@@ -3,7 +3,7 @@
     @component CoreJson
 */
 
-package.core.json = function CoreJson(me) {
+screens.core.json = function CoreJson(me) {
     me.init = function() {
         me.files = {};
     };

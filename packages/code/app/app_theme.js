@@ -3,7 +3,7 @@
  @component AppTheme
  */
 
-package.app.theme = function AppTheme(me) {
+screens.app.theme = function AppTheme(me) {
     me.init = function(task) {
         me.lock((task) => {
             me.ui.theme.updateList(() => {

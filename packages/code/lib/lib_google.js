@@ -3,7 +3,7 @@
  @component LibGoogle
  */
 
-package.lib.google = function LibGoogle(me) {
+screens.lib.google = function LibGoogle(me) {
     me.init = function (task) {
         me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);

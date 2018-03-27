@@ -3,7 +3,7 @@
  @component UIWork
  */
 
-package.ui.work = function UIWork(me) {
+screens.ui.work = function UIWork(me) {
     me.state = {
         get: function(object) {
             return object.inWork;
