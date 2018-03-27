@@ -2,5 +2,5 @@ indexes:
 
 - kind: app.transform.content
   properties:
-  - name: user
+  - name: owner
   - name: title

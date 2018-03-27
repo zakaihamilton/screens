@@ -599,7 +599,7 @@ screens.app.transform = function AppTransform(me) {
                     me.privateContentList = items;
                 }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
                         {
-                            "name": "user",
+                            "name": "owner",
                             "operator": "=",
                             "value": "$user"
                         }
@@ -622,7 +622,7 @@ screens.app.transform = function AppTransform(me) {
                 me.unlock(task);
             }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
                     {
-                        "name": "user",
+                        "name": "owner",
                         "operator": "=",
                         "value": "$user"
                     }
@@ -724,10 +724,10 @@ screens.app.transform = function AppTransform(me) {
             content: me.core.string.encode(text),
             date: date.toString(),
             title: title,
-            createdBy: "$user"
+            user: "$user"
         };
         if (private) {
-            data.user = "$user";
+            data.owner = "$user";
             title = "$user." + title;
         }
         me.storage.data.save(err => {
