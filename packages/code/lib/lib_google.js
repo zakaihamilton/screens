@@ -62,6 +62,11 @@ screens.lib.google = function LibGoogle(me) {
             });
         }
     };
+    me.disconnect = {
+        set: function (object) {
+            me.auth2.disconnect();
+        }
+    };
     me.attachSignIn = {
         set: function (object, value) {
             me.auth2.attachClickHandler(object, {}, (googleUser) => {

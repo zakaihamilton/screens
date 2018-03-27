@@ -62,6 +62,14 @@
             "ui.property.style": {
                 "marginTop": "20px"
             }
+        },
+        {
+            "ui.basic.text":"Disconnect",
+            "ui.basic.var":"disconnect",
+            "ui.touch.click":"lib.google.disconnect",
+            "ui.property.style": {
+                "marginTop": "20px"
+            }
         }
     ]
 }
