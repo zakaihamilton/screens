@@ -18,7 +18,9 @@ screens.lib.google = function LibGoogle(me) {
                         me.auth2.currentUser.listen(me.userChanged);
                         if (me.auth2.isSignedIn.get() === true) {
                             me.status = "Signing in...";
-                            me.auth2.signIn();
+                            me.auth2.signIn().catch(err => {
+                                me.status = err.message || err;
+                            });
                             me.core.listener.wait(() => {
                                 me.unlock(task);
                             }, me.id);
