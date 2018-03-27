@@ -143,7 +143,7 @@ package.core.http = function CoreHttp(me) {
             responseHeaders: {}
         };
         me.core.object(me, info);
-        me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
+        //me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
         me.forEach(null, ["check", "receive", "compress", "end"], (task, message) => {
             info.task = task;
             me.core.property.set(info, message);

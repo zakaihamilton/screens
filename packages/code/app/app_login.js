@@ -13,7 +13,6 @@ package.app.login = function AppLogin(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element(__json__, "workspace", "self");
-        me.singleton.isEnabled = false;
         return me.singleton;
     };
     me.attachGoogle = {
@@ -25,26 +24,32 @@ package.app.login = function AppLogin(me) {
             me.core.property.set(widget, "ui.property.style", {
                 "visibility":"",
                 "position":"absolute",
-                "left":"10%",
-                "bottom":"100px",
+                "left":"18px",
+                "width":"200px",
+                "top":"50px",
                 "textAlign":"center"
             });
             me.core.property.set(widget, "lib.google.attachSignIn", () => {
               me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
-              me.core.property.set(window.var.signout, "ui.basic.show", true);
             });
         }
     };
-    me.signin = function(object) {
-        if(me.core.startup.app.name !== "login") {
-            me.core.property.set(me.singleton, "close");
-            me.startup.app.start();
+    me.signin = function() {
+        var state = me.lib.google.signInState();
+        var window = me.singleton;
+        if(state) {
+            me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
+            if(me.core.startup.app.name !== "login") {
+                me.core.property.set(me.singleton, "close");
+                me.startup.app.start();
+            }
+        }
+        else {
+            me.core.property.set(window.var.userName, "ui.basic.text", "");
         }
     };
     me.signout = function(object, value) {
-        var window = me.widget.window(object);
+        var window = me.singleton;
         me.core.property.set(object, "lib.google.signout");
-        me.core.property.set(window.var.userName, "ui.basic.text", "");
-        me.core.property.set(object, "ui.basic.show", false);
     };
 };

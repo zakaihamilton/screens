@@ -15,9 +15,9 @@ package.user.verify = function UserVerify(me) {
     };
     me.check = function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
-            var user_id = info.headers["user_id"];
-            if(!user_id) {
-                me.error("no user_id token passed in header");
+            var token = info.headers["token"];
+            if(!token) {
+                me.error("no token passed in header");
                 info.stop = true;
                 return;
             }
@@ -25,14 +25,16 @@ package.user.verify = function UserVerify(me) {
             const client = new OAuth2Client(me.client_id);
             async function verify() {
                 const ticket = await client.verifyIdToken({
-                    idToken: user_id,
-                    audience: google.client_id,
+                    idToken: token,
+                    audience: me.client_id,
                 });
                 const payload = ticket.getPayload();
                 const userid = payload['sub'];
+                info.user = userid;
+                me.log("user authenticated: " + info.headers["user_name"] + " = " + userid);
             }
             me.async(info.task, verify()).catch(() => {
-                me.error("failed to verify user id");
+                me.error("failed to verify token");
                 info.stop = true;
             });
         }

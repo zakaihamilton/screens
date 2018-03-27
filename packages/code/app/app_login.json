@@ -6,8 +6,8 @@
         "ui.property.style":{
             "left":"30%",
             "top":"20%",
-            "width": "40%",
-            "height": "400px"
+            "width": "400px",
+            "height": "300px"
         }
     },
     "app.login.attachGoogle":"signin",
@@ -22,16 +22,16 @@
                     }
                 },
                 {
-                    "ui.basic.text": "User Name",
+                    "ui.basic.text": "User Name:",
                     "ui.property.style": {
-                        "paddingTop": "10px"
+                        "paddingTop": "100px"
                     }
                 },
                 {
                     "ui.basic.text": "@lib.google.currentName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
-                        "width": "250px",
+                        "width": "300px",
                         "display": "inline-block"
                     },
                     "ui.basic.type": "text",
@@ -42,8 +42,7 @@
         {
             "ui.basic.text":"Sign out",
             "ui.basic.var":"signout",
-            "ui.touch.click":"app.login.signout",
-            "ui.basic.show":"@lib.google.isSignedIn"
+            "ui.touch.click":"app.login.signout"
         }
     ]
 }

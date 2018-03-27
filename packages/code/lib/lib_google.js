@@ -5,6 +5,7 @@
 
 package.lib.google = function LibGoogle(me) {
     me.init = function (task) {
+        me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);
         me.lock(task, (task) => {
             me.core.util.config((google) => {
@@ -83,8 +84,12 @@ package.lib.google = function LibGoogle(me) {
         }
         return me.auth2.isSignedIn.get();
     };
+    me.signInState = function() {
+        return me.state;
+    };
     me.signInChanged = function (state) {
-        me.log('Signin state changed to ', state);
+        me.log('Signin state changed to ' + state);
+        me.state = state;
         me.core.listener.signal(null, me.id);
     };
     me.userChanged = function (user) {
@@ -104,7 +109,7 @@ package.lib.google = function LibGoogle(me) {
             if(token) {
                 var profile = user.getBasicProfile();
                 info.headers["user_name"] = profile.getName();
-                info.headers["user_id"] = token;
+                info.headers["token"] = token;
             }
         }
     };
