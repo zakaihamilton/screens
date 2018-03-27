@@ -590,47 +590,79 @@ package.app.transform = function AppTransform(me) {
             me.core.message.send_server("core.cache.reset", () => {
                 me.core.message.send_server("core.cache.use", (err, items) => {
                     me.error(err);
-                    me.contentList = items;
-                }, me.id, "storage.data.query", "app.transform.content", true);
-            }, me.id);
+                    me.publicContentList = items;
+                }, me.id + ".public", "storage.data.query", "app.transform.content", true);
+            }, me.id + ".public");
+            me.core.message.send_server("core.cache.reset", () => {
+                me.core.message.send_server("core.cache.use", (err, items) => {
+                    me.error(err);
+                    me.privateContentList = items;
+                }, me.id + ".private", "storage.data.query", "app.transform.content", true, [
+                    {
+                        "name":"user",
+                        "operator":"=",
+                        "value":"$user"
+                    }
+                ]);
+            }, me.id + ".private");
         }
     };
     me.init = function (task) {
         me.lock(task, (task) => {
             me.core.message.send_server("core.cache.use", (err, items) => {
                 me.error(err);
-                me.contentList = items;
+                me.publicContentList = items;
                 me.unlock(task);
-            }, me.id, "storage.data.query", "app.transform.content", true);
+            }, me.id + ".public", "storage.data.query", "app.transform.content", true);
+        });
+        me.lock(task, (task) => {
+            me.core.message.send_server("core.cache.use", (err, items) => {
+                me.error(err);
+                me.privateContentList = items;
+                me.unlock(task);
+            }, me.id + ".private", "storage.data.query", "app.transform.content", true, [
+                {
+                    "name":"user",
+                    "operator":"=",
+                    "value":"$user"
+                }
+            ]);
         });
     };
-    me.contentMenuList = {
+    me.menuList = function(object, list) {
+        var isFirst = true;
+        var window = me.widget.window.mainWindow(object);
+        var text = me.core.property.get(window.var.input, "ui.basic.text");
+        if (!list) {
+            list = [];
+        }
+        var items = list.map(function (item) {
+            var result = [
+                item.key.name,
+                function () {
+                    me.storage.data.load((err, item) => {
+                        var content = me.core.string.decode(item.content);
+                        me.core.property.set(window.var.input, "ui.basic.text", content);
+                        me.core.property.set(window, "app.transform.transform");
+                    }, "app.transform.content", item.key.name);
+                },
+                {
+                    "separator": isFirst
+                }
+            ];
+            isFirst = false;
+            return result;
+        });
+        return items;
+    };
+    me.publicContentMenuList = {
         get: function (object) {
-            var isFirst = true;
-            var window = me.widget.window.mainWindow(object);
-            var text = me.core.property.get(window.var.input, "ui.basic.text");
-            var contentList = me.contentList;
-            if (!contentList) {
-                contentList = [];
-            }
-            var items = contentList.map(function (item) {
-                var result = [
-                    item.key.name,
-                    function () {
-                        me.storage.data.load((err, item) => {
-                            var content = me.core.string.decode(item.content);
-                            me.core.property.set(window.var.input, "ui.basic.text", content);
-                            me.core.property.set(window, "app.transform.transform");
-                        }, "app.transform.content", item.key.name);
-                    },
-                    {
-                        "separator": isFirst
-                    }
-                ];
-                isFirst = false;
-                return result;
-            });
-            return items;
+            return me.menuList(object, me.publicContentList);
+        }
+    };
+    me.privateContentMenuList = {
+        get: function (object) {
+            return me.menuList(object, me.privateContentList);
         }
     };
     me.documentIndex = {
@@ -644,7 +676,7 @@ package.app.transform = function AppTransform(me) {
         get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var title = me.ui.layout.firstWidget(window.var.layout);
-            if (title && title.tagName.toLowerCase() === "h4") {
+            if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
                 return title.innerText;
             }
             return null;
@@ -682,7 +714,8 @@ package.app.transform = function AppTransform(me) {
             var data = {
                 content: me.core.string.encode(text),
                 date: date.toString(),
-                title: title
+                title: title,
+                user: "$user"
             };
             me.storage.data.save(err => {
                 if (err) {

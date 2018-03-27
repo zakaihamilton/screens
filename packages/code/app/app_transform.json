@@ -342,7 +342,8 @@
                     "Refresh",
                     "app.transform.refreshContentList"
                 ],
-                "app.transform.contentMenuList",
+                "app.transform.publicContentMenuList",
+                "app.transform.privateContentMenuList",
                 [
                     "Save",
                     "app.transform.save",

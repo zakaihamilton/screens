@@ -33,12 +33,16 @@ package.storage.data = function StorageData(me) {
         });
         callback(me.service);
     };
-    me.toDataStore = function (json, nonIndexed) {
+    me.toDataStore = function (json, nonIndexed, user) {
         nonIndexed = nonIndexed || [];
         let results = [];
         Object.keys(json).forEach((key) => {
             if (json[key] === undefined) {
                 return;
+            }
+            if(json[key] === "$user") {
+                json[key] = user;
+                me.log("storing with user: " + JSON.stringify(user));
             }
             results.push({
                 name: key,
@@ -49,11 +53,12 @@ package.storage.data = function StorageData(me) {
         return results;
     };
     me.save = function (callback, value, type, id, nonIndexed) {
+        var user = this.user;
         me.getService((service) => {
             const key = service.key([type, id]);
             service.save({
                 key: key,
-                data: me.toDataStore(value, nonIndexed)
+                data: me.toDataStore(value, nonIndexed, user)
             }, function (err) {
                 callback(err);
             });
@@ -90,11 +95,21 @@ package.storage.data = function StorageData(me) {
             }, value, type, id);
         }, value, type, id, nonIndexed);
     };
-    me.query = function (callback, type, idOnly) {
+    me.query = function (callback, type, idOnly, filters) {
+        var user = this.user;
         me.getService((service) => {
             var query = service.createQuery(type);
             if(idOnly) {
                 query = query.select("__key__");
+            }
+            if(filters) {
+                filters.map(filter => {
+                    if(filter.value === "$user") {
+                        me.log("query with user: " + JSON.stringify(user));
+                        filter.value = user;
+                    }
+                    query = query.filter(filter.name, filter.operator, filter.value);
+                });
             }
             service.runQuery(query)
                     .then(results => {

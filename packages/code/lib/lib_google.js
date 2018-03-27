@@ -49,7 +49,7 @@ package.lib.google = function LibGoogle(me) {
         var window = me.widget.window(object);
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
-        me.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        me.log("ID: " + profile.getId());
         me.log('Full Name: ' + profile.getName());
         me.log('Given Name: ' + profile.getGivenName());
         me.log('Family Name: ' + profile.getFamilyName());
