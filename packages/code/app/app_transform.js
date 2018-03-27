@@ -723,7 +723,8 @@ screens.app.transform = function AppTransform(me) {
         var data = {
             content: me.core.string.encode(text),
             date: date.toString(),
-            title: title
+            title: title,
+            createdBy: "$user"
         };
         if (private) {
             data.user = "$user";
