@@ -614,7 +614,7 @@ screens.app.transform = function AppTransform(me) {
                 me.error(err);
                 me.privateContentList = items;
                 me.unlock(task);
-            }, me.id + ".private", "storage.data.query", "app.transform.content.$user", "title");
+            }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
         });
     };
     me.menuList = function (object, list) {
