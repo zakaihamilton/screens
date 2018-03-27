@@ -598,12 +598,12 @@ screens.app.transform = function AppTransform(me) {
                     me.error(err);
                     me.privateContentList = items;
                 }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
-                    {
-                        "name":"user",
-                        "operator":"=",
-                        "value":"$user"
-                    }
-                ]);
+                        {
+                            "name": "user",
+                            "operator": "=",
+                            "value": "$user"
+                        }
+                    ]);
             }, me.id + ".private");
         }
     };
@@ -621,16 +621,15 @@ screens.app.transform = function AppTransform(me) {
                 me.privateContentList = items;
                 me.unlock(task);
             }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
-                {
-                    "name":"user",
-                    "operator":"=",
-                    "value":"$user"
-                }
-            ]);
+                    {
+                        "name": "user",
+                        "operator": "=",
+                        "value": "$user"
+                    }
+                ]);
         });
     };
-    me.menuList = function(object, list) {
-        var isFirst = true;
+    me.menuList = function (object, list) {
         var window = me.widget.window.mainWindow(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         if (!list) {
@@ -645,12 +644,8 @@ screens.app.transform = function AppTransform(me) {
                         me.core.property.set(window.var.input, "ui.basic.text", content);
                         me.core.property.set(window, "app.transform.transform");
                     }, "app.transform.content", item.key.name);
-                },
-                {
-                    "separator": isFirst
                 }
             ];
-            isFirst = false;
             return result;
         });
         return items;
@@ -693,38 +688,54 @@ screens.app.transform = function AppTransform(me) {
             return key;
         }
     };
-    me.save = {
+    me.savePublic = {
         get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             return text;
         },
         set: function (object) {
+            me.save(object);
+        }
+    };
+    me.savePrivate = {
+        get: function (object) {
             var window = me.widget.window.mainWindow(object);
             var text = me.core.property.get(window.var.input, "ui.basic.text");
-            var date = new Date();
-            var title = me.core.property.get(window, "app.transform.contentTitle");
-            var key = me.core.property.get(window, "widget.window.key");
-            if (!title) {
-                title = key;
-            }
-            if (!title) {
-                title = date.toLocaleDateString();
-            }
-            var data = {
-                content: me.core.string.encode(text),
-                date: date.toString(),
-                title: title,
-                user: "$user"
-            };
-            me.storage.data.save(err => {
-                if (err) {
-                    me.error("Cannot save content: " + err.message);
-                } else {
-                    me.refreshContentList.set(object);
-                }
-            }, data, "app.transform.content", "$user." + title, ["content"]);
+            return text;
+        },
+        set: function (object) {
+            me.save(object, true);
         }
+    };
+    me.save = function (object, private) {
+        var window = me.widget.window.mainWindow(object);
+        var text = me.core.property.get(window.var.input, "ui.basic.text");
+        var date = new Date();
+        var title = me.core.property.get(window, "app.transform.contentTitle");
+        var key = me.core.property.get(window, "widget.window.key");
+        if (!title) {
+            title = key;
+        }
+        if (!title) {
+            title = date.toLocaleDateString();
+        }
+        var data = {
+            content: me.core.string.encode(text),
+            date: date.toString(),
+            title: title
+        };
+        if (private) {
+            data.user = "$user";
+            title = "$user." + title;
+        }
+        me.storage.data.save(err => {
+            if (err) {
+                me.error("Cannot save content: " + err.message);
+            } else {
+                me.refreshContentList.set(object);
+            }
+        }, data, "app.transform.content", title, ["content"]);
     };
     me.play = function (object, value) {
         var window = me.widget.window.mainWindow(object);

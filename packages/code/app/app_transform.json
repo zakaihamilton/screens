@@ -342,11 +342,35 @@
                     "Refresh",
                     "app.transform.refreshContentList"
                 ],
+                [
+                    "Public",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
                 "app.transform.publicContentMenuList",
+                [
+                    "Save",
+                    "app.transform.savePublic",
+                    {
+                        "enabled": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Private",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
                 "app.transform.privateContentMenuList",
                 [
                     "Save",
-                    "app.transform.save",
+                    "app.transform.savePrivate",
                     {
                         "enabled": "select",
                         "separator": true
