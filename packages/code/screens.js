@@ -87,7 +87,7 @@ async function screens_async(task, promise) {
 
 function screens_platform() {
     var platform = "browser";
-    if (typeof module !== 'undefined' && this.module !== module) {
+    if (typeof module !== 'undefined' && this && this.module !== module) {
         platform = global.platform || "server";
     } else if (typeof importScripts !== 'undefined') {
         platform = "client";
