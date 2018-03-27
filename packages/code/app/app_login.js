@@ -27,11 +27,11 @@ screens.app.login = function AppLogin(me) {
                 "position":"absolute",
                 "left":"18px",
                 "width":"200px",
-                "top":"50px",
+                "top":"70px",
                 "textAlign":"center"
             });
             me.core.property.set(widget, "lib.google.attachSignIn", () => {
-              me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
+              me.signin();
             });
         }
     };

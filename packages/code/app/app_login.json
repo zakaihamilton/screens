@@ -6,8 +6,8 @@
         "ui.property.style":{
             "left":"30%",
             "top":"20%",
-            "width": "450px",
-            "height": "300px"
+            "width": "500px",
+            "height": "400px"
         }
     },
     "app.login.attachGoogle":"signin",
@@ -24,7 +24,7 @@
                 {
                     "ui.basic.text": "User Name:",
                     "ui.property.style": {
-                        "paddingTop": "100px"
+                        "paddingTop": "110px"
                     }
                 },
                 {
@@ -58,7 +58,10 @@
         {
             "ui.basic.text":"Sign out",
             "ui.basic.var":"signout",
-            "ui.touch.click":"lib.google.signout"
+            "ui.touch.click":"lib.google.signout",
+            "ui.property.style": {
+                "marginTop": "20px"
+            }
         }
     ]
 }

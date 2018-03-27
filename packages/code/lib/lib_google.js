@@ -50,20 +50,7 @@ screens.lib.google = function LibGoogle(me) {
         return profile.getName();
     };
     me.signin = function (callback, object, googleUser) {
-        var window = me.widget.window(object);
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        me.log("ID: " + profile.getId());
-        me.log('Full Name: ' + profile.getName());
-        me.log('Given Name: ' + profile.getGivenName());
-        me.log('Family Name: ' + profile.getFamilyName());
-        me.log("Image URL: " + profile.getImageUrl());
-        me.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        me.log("ID Token: " + id_token);
-
+        me.status = "Received sign in";
         if (callback) {
             callback();
         }
