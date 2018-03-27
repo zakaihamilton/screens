@@ -597,14 +597,8 @@ screens.app.transform = function AppTransform(me) {
                 me.core.message.send_server("core.cache.use", (err, items) => {
                     me.error(err);
                     me.privateContentList = items;
-                }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
-                        {
-                            "name": "owner",
-                            "operator": "=",
-                            "value": "$user"
-                        }
-                    ]);
-            }, me.id + ".private");
+                }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
+            }, me.id + ".private.$user");
         }
     };
     me.init = function (task) {
@@ -620,13 +614,7 @@ screens.app.transform = function AppTransform(me) {
                 me.error(err);
                 me.privateContentList = items;
                 me.unlock(task);
-            }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
-                    {
-                        "name": "owner",
-                        "operator": "=",
-                        "value": "$user"
-                    }
-                ]);
+            }, me.id + ".private", "storage.data.query", "app.transform.content.$user", "title");
         });
     };
     me.menuList = function (object, list) {
@@ -726,9 +714,10 @@ screens.app.transform = function AppTransform(me) {
             title: title,
             user: "$user"
         };
+        var kind = "app.transform.content";
         if (private) {
             data.owner = "$user";
-            title = "$user." + title;
+            kind += ".$user";
         }
         me.storage.data.save(err => {
             if (err) {
@@ -736,7 +725,7 @@ screens.app.transform = function AppTransform(me) {
             } else {
                 me.refreshContentList.set(object);
             }
-        }, data, "app.transform.content", title, ["content"]);
+        }, data, kind, title, ["content"]);
     };
     me.play = function (object, value) {
         var window = me.widget.window.mainWindow(object);
