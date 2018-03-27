@@ -126,6 +126,14 @@ screens.core.message = function CoreMessage(me) {
                         me.unlock(task);
                     };
                     try {
+                        args = args.map((arg)=>{
+                            if(arg && typeof arg === "string" && arg.includes("$user")) {
+                                me.log("replacing: $user with: " + info.user + " arg: " + arg);
+                                arg = arg.replace(/\$user/, info.user);
+                                me.log("result:" + arg);
+                            }
+                            return arg;
+                        });
                         me.core.message.send.apply(info, args);
                     }
                     catch(e) {

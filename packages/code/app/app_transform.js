@@ -591,13 +591,13 @@ screens.app.transform = function AppTransform(me) {
                 me.core.message.send_server("core.cache.use", (err, items) => {
                     me.error(err);
                     me.publicContentList = items;
-                }, me.id + ".public", "storage.data.query", "app.transform.content", true);
+                }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
             }, me.id + ".public");
             me.core.message.send_server("core.cache.reset", () => {
                 me.core.message.send_server("core.cache.use", (err, items) => {
                     me.error(err);
                     me.privateContentList = items;
-                }, me.id + ".private", "storage.data.query", "app.transform.content", true, [
+                }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
                     {
                         "name":"user",
                         "operator":"=",
@@ -613,14 +613,14 @@ screens.app.transform = function AppTransform(me) {
                 me.error(err);
                 me.publicContentList = items;
                 me.unlock(task);
-            }, me.id + ".public", "storage.data.query", "app.transform.content", true);
+            }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
         });
         me.lock(task, (task) => {
             me.core.message.send_server("core.cache.use", (err, items) => {
                 me.error(err);
                 me.privateContentList = items;
                 me.unlock(task);
-            }, me.id + ".private", "storage.data.query", "app.transform.content", true, [
+            }, me.id + ".private", "storage.data.query", "app.transform.content", "title", [
                 {
                     "name":"user",
                     "operator":"=",
@@ -638,7 +638,7 @@ screens.app.transform = function AppTransform(me) {
         }
         var items = list.map(function (item) {
             var result = [
-                item.key.name,
+                item.title,
                 function () {
                     me.storage.data.load((err, item) => {
                         var content = me.core.string.decode(item.content);
@@ -723,7 +723,7 @@ screens.app.transform = function AppTransform(me) {
                 } else {
                     me.refreshContentList.set(object);
                 }
-            }, data, "app.transform.content", title, ["content"]);
+            }, data, "app.transform.content", "$user." + title, ["content"]);
         }
     };
     me.play = function (object, value) {

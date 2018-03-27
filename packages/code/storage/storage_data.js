@@ -95,12 +95,12 @@ screens.storage.data = function StorageData(me) {
             }, value, type, id);
         }, value, type, id, nonIndexed);
     };
-    me.query = function (callback, type, idOnly, filters) {
+    me.query = function (callback, type, select, filters) {
         var user = this.user;
         me.getService((service) => {
             var query = service.createQuery(type);
-            if(idOnly) {
-                query = query.select("__key__");
+            if(select) {
+                query = query.select(select);
             }
             if(filters) {
                 filters.map(filter => {
@@ -120,6 +120,10 @@ screens.storage.data = function StorageData(me) {
                         callback(null, items);
                     })
                     .catch(err => {
+                        me.error("failure to execute query, type: " + type + 
+                            " select: " + JSON.stringify(select) +
+                            " filters: " + JSON.stringify(filters) +
+                            " error: " + err.message);
                         callback(err, null);
                     });
         });
