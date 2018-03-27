@@ -66,7 +66,10 @@ screens.ui.data = function UIData(me) {
                 var data_key = object.data_keys[data_key_index];
                 var data_value = values[data_key_index];
                 if (typeof data_value !== "undefined") {
-                    if(data_key === "ui.data.items") {
+                    if(data_key === "properties") {
+                        properties = me.ui.element.combine(properties, data_value);
+                    }
+                    else if(data_key === "ui.data.items") {
                         var subElements = [];
                         me.collect(object, subElements, data_value);
                         properties["ui.basic.elements"] = subElements;

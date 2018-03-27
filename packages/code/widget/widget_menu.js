@@ -42,7 +42,7 @@ screens.widget.menu = function WidgetMenu(me) {
                     "ui.element.component": "widget.menu",
                     "ui.style.position": "relative",
                     "ui.group.data": {
-                        "ui.data.keyList": ["ui.basic.text", "select", "options"],
+                        "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
                         "ui.data.values": value
                     }
                 }, parent);
@@ -102,7 +102,7 @@ screens.widget.menu = function WidgetMenu(me) {
             "ui.basic.window": window,
             "ui.basic.target": object,
             "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text", "select", "options"],
+                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
                 "ui.data.values": values
             }
         });
@@ -148,6 +148,82 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     me.dependencies = {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text"]
+    };
+    me.handleValue = function (object, values, key, callback) {
+        if (key in values) {
+            var value = values[key];
+            if (typeof value === "string" || typeof value === "function") {
+                if(value === "select") {
+                    value = object.menu_select;
+                }
+                value = me.core.property.get(object.parentNode.window, value, me.core.property.get(object, "ui.basic.text"));
+            }
+            callback(value);
+        }
+    };
+    me.options = {
+        set: function (object, options) {
+            if (options) {
+                me.handleValue(object, options, "enabled", function (value) {
+                    me.core.property.set(object, "ui.basic.enabled", value);
+                });
+                me.handleValue(object, options, "visible", function (value) {
+                    me.core.property.set(object, "ui.style.display", value ? "block" : "none");
+                });
+                me.handleValue(object, options, "state", function (value) {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "checked");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "checked");
+                    }
+                });
+                me.handleValue(object, options, "separator", function (value) {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "separator");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "separator");
+                    }
+                });
+                me.handleValue(object, options, "header", function (value) {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "header");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "header");
+                    }
+                });
+            }
+        }
+    };
+    me.select = {
+        get: function (object) {
+            return object.menu_select;
+        },
+        set: function (object, value) {
+            object.menu_select = value;
+        }
+    };
+    me.hover = {
+        set: function (object, value) {
+            if (object.parentNode.selected_item !== object && object.menu_select) {
+                me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
+            }
+        }
+    };
+    me.click = {
+        set: function (object) {
+            me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
+        }
+    };
+};
+
+screens.widget.menu.listItem = function WidgetMenuListItem(me) {
+    me.properties = {
+        "ui.basic.tag": "span",
+        "ui.touch.click": "click"
+    };
+    me.dependencies = {
+        parent: ["widget.menu", "widget.menu.popup"],
+        properties: ["ui.basic.text", "list"]
     };
     me.handleValue = function (object, values, key, callback) {
         if (key in values) {

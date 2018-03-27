@@ -632,6 +632,10 @@ screens.app.transform = function AppTransform(me) {
                         me.core.property.set(window.var.input, "ui.basic.text", content);
                         me.core.property.set(window, "app.transform.transform");
                     }, "app.transform.content", item.key.name);
+                },
+                null,
+                {
+                    "list":null
                 }
             ];
             return result;
