@@ -178,6 +178,10 @@ screens.ui.element = function UIElement(me) {
                 me.core.property.set(object, "ui.param." + key, params[key]);
             }
         }
+        var container = component.container;
+        if(container) {
+            parent = container(object, parent, properties) || parent;
+        }
         me.core.property.set(object, "ui.node.parent", parent);
         var constructor = component.create;
         if(constructor) {

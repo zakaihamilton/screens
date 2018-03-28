@@ -194,6 +194,9 @@
                     "app.transform.voice",
                     {
                         "state": "select"
+                    },
+                    {
+                        "group":"voices"
                     }
                 ],
                 "app.transform.voices",
@@ -213,83 +216,7 @@
                         "header": true
                     }
                 ],
-                [
-                    "12px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "14px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "16px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "18px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "20px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "22px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "24px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "26px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "28px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "30px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "32px",
-                    "app.transform.fontSize",
-                    {
-                        "state": "select"
-                    }
-                ]
+                "app.transform.fontSizes"
             ]
         ],
         [

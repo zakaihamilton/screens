@@ -318,7 +318,17 @@
     background-color: white;
     box-shadow: 1px 1px 0px 0px #808080;
     z-index: 1000;
-    overflow: hidden;    
+    overflow: hidden;
+}
+
+.glow-menu-vertical.list {
+    position:relative;
+    overflow: scroll;
+    max-height: 100px;
+    border:none;
+    z-index:0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .glow-menu-vertical.bottom-up {

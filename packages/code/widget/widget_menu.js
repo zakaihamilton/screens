@@ -216,6 +216,31 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     };
 };
 
+screens.widget.menu.list = function WidgetMenuList(me) {
+    me.properties = {
+        "ui.basic.tag": "div",
+        "ui.class.class": "widget.menu.vertical",
+        "ui.class.add":"list"
+    };
+    me.parent = function(object) {
+        return object.parentNode;
+    };
+    me.use = function(object, name) {
+        if(!object.lists) {
+            object.lists = [];
+        }
+        var list = object.lists[name];
+        if(list) {
+            return list;
+        }
+        list = me.ui.element({
+            "ui.element.component":"widget.menu.list"
+        }, object);
+        object.lists[name] = list;
+        return list;
+    };
+};
+
 screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.properties = {
         "ui.basic.tag": "span",
@@ -223,16 +248,20 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     };
     me.dependencies = {
         parent: ["widget.menu", "widget.menu.popup"],
-        properties: ["ui.basic.text", "list"]
+        properties: ["ui.basic.text", "group"]
+    };
+    me.container = function(object, parent, properties) {
+        return me.widget.menu.list.use(parent, properties["group"]);
     };
     me.handleValue = function (object, values, key, callback) {
+        var parentMenu = me.parentMenu(object);
         if (key in values) {
             var value = values[key];
             if (typeof value === "string" || typeof value === "function") {
                 if(value === "select") {
                     value = object.menu_select;
                 }
-                value = me.core.property.get(object.parentNode.window, value, me.core.property.get(object, "ui.basic.text"));
+                value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
             }
             callback(value);
         }
@@ -278,16 +307,23 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
             object.menu_select = value;
         }
     };
+    me.parentMenu = function(object) {
+        var parent = object.parentNode;
+        parent = me.core.property.get(parent, "parent");
+        return parent;
+    };
     me.hover = {
         set: function (object, value) {
-            if (object.parentNode.selected_item !== object && object.menu_select) {
-                me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
+            var parentMenu = me.parentMenu(object);
+            if (parentMenu.selected_item !== object && object.menu_select) {
+                me.core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
         }
     };
     me.click = {
         set: function (object) {
-            me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
+            var parentMenu = me.parentMenu(object);
+            me.core.property.set(parentMenu, "select", [object, object.menu_select]);
         }
     };
 };

@@ -617,7 +617,7 @@ screens.app.transform = function AppTransform(me) {
             }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
         });
     };
-    me.menuList = function (object, list) {
+    me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         if (!list) {
@@ -635,7 +635,7 @@ screens.app.transform = function AppTransform(me) {
                 },
                 null,
                 {
-                    "list":null
+                    "group":group
                 }
             ];
             return result;
@@ -644,12 +644,12 @@ screens.app.transform = function AppTransform(me) {
     };
     me.publicContentMenuList = {
         get: function (object) {
-            return me.menuList(object, me.publicContentList);
+            return me.menuList(object, me.publicContentList, "public");
         }
     };
     me.privateContentMenuList = {
         get: function (object) {
-            return me.menuList(object, me.privateContentList);
+            return me.menuList(object, me.privateContentList, "private");
         }
     };
     me.documentIndex = {
@@ -851,10 +851,30 @@ screens.app.transform = function AppTransform(me) {
             return [voice.name, "app.transform.voice", {
                 "separator": separator,
                 "state": "select"
+            },
+            {
+                "group":"voices"
             }
-            ];
+        ];
         });
         return voicelist;
+    };
+    me.fontSizes = function(object) {
+        var fontSizeList = [];
+        for(var fontSize = 12; fontSize <= 32; fontSize += 2) {
+            var item = [
+                fontSize + "px",
+                "app.transform.fontSize",
+                {
+                    "state": "select"
+                },
+                {
+                    "group":"fontSize"
+                }
+            ];
+            fontSizeList.push(item);
+        }
+        return fontSizeList;
     };
     me.copyPage = {
         get: function (object) {
