@@ -21,12 +21,15 @@
                     }
                 },
                 {
+                    "ui.basic.show":"@lib.google.isSignedIn",
                     "ui.basic.text": "User Name:",
+                    "ui.basic.var": "userNameLabel",
                     "ui.property.style": {
                         "paddingTop": "40px"
                     }
                 },
                 {
+                    "ui.basic.show":"@lib.google.isSignedIn",
                     "ui.basic.text": "@lib.google.currentName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
