@@ -9,7 +9,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         object.autoScrollSpeed = 250;
         object.autoScrollSize = 1;
         object.deltaSpeed = 25;
-        object.snapToScrollWait = 500;
+        object.snapToScrollWait = 1000;
         object.snapToPageUnits = 50;
         object.scrollSize = 10;
         object.delayTimeout = 10;
@@ -311,7 +311,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 var targetPos = currentPos;
                 var delta = currentPos % pageSize;
                 var direction = 0;
-                if (delta) {
+                if (delta && currentPos) {
                     targetPos = Math.round(currentPos / pageSize) * pageSize;
                 }
                 if (currentPos < targetPos) {

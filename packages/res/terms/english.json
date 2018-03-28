@@ -6188,6 +6188,10 @@
             "case": "ignore"
         },
         {
+            "term": "“ And It Came to pass",
+            "case": "ignore"
+        },
+        {
             "term": "“ And It Came",
             "style": "72 names - left line verse",
             "case": "ignore"

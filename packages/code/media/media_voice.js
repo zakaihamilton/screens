@@ -179,6 +179,7 @@ screens.media.voice = function MediaVoice(me) {
         return voices;
     };
     me.process = function (text) {
+        text = text.replace(/[,] too/g, " too");
         var items = text.match(/-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?/g);
         text = text.replace(/[,]/g, "\n");
         if(items) {
