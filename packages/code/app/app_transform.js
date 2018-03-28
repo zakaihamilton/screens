@@ -36,7 +36,8 @@ screens.app.transform = function AppTransform(me) {
                 diagrams: true,
                 pipVideo: false,
                 autoPlay: true,
-                voice: "UK English Male"
+                voice: "Google UK English Male",
+                speed: "Normal"
             });
             window.pageSize = { width: 0, height: 0 };
             window.options.autoScroll = false;
@@ -47,7 +48,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
             me.ui.options.toggleSet(me, "keepSource", me.transform.set);
             me.ui.options.toggleSet(me, "showHtml", me.transform.set);
-            me.ui.options.toggleSet(me, "showInput", function (object, options, key, value) {
+            me.ui.options.toggleSet(me, "showInput", function (object, value, key, options) {
                 var window = me.widget.window.mainWindow(object);
                 var text = me.core.property.get(window.var.layout, "ui.basic.text");
                 if (!text) {
@@ -58,7 +59,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
             me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
             me.ui.options.choiceSet(me, "language", me.transform.set);
-            me.ui.options.choiceSet(me, "fontSize", function (object, options, key, value) {
+            me.ui.options.choiceSet(me, "fontSize", function (object, value, key, options) {
                 var window = me.widget.window.mainWindow(object);
                 me.core.property.set([window.var.layout, window.var.termTable], "ui.style.fontSize", value);
                 window.forceReflow = true;
@@ -72,6 +73,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.ui.options.toggleSet(me, "autoPlay");
             me.ui.options.choiceSet(me, "voice", me.reflow.set);
+            me.ui.options.choiceSet(me, "speed", me.changeSpeed);
             me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet(null, "kab");
         }
@@ -731,16 +733,25 @@ screens.app.transform = function AppTransform(me) {
             }
         }, data, kind, title, ["content"]);
     };
-    me.play = function (object, value) {
+    me.changeSpeed = function(object, value) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
         if (isPlaying && !isPaused) {
+            me.play(object, me.media.voice.currentIndex, false);
+        }
+    };
+    me.play = function (object, value, toggle=true) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var isPaused = me.ui.layout.isPaused(currentPage);
+        if (toggle ? (isPlaying && !isPaused) : (isPlaying && isPaused)) {
             me.media.voice.pause();
             me.ui.layout.setPlayState(currentPage, true, true);
         }
-        else if (isPlaying && isPaused) {
+        else if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
         }
@@ -797,11 +808,11 @@ screens.app.transform = function AppTransform(me) {
                     me.log("onchange: " + index + " text:" + text);
                     me.ui.layout.markPage(currentPage, index, text);
                 },
-                rate: 1,
+                rate: window.options.speed,
                 language: window.language
             };
             me.media.voice.play(text, window.options.voice, params);
-            if (me.currentPlayingPage) {
+            if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
                 me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
                 me.currentPlayingPage = null;
             }
@@ -858,6 +869,23 @@ screens.app.transform = function AppTransform(me) {
         ];
         });
         return voicelist;
+    };
+    me.speeds = function(object) {
+        var speedList = Object.keys(me.media.voice.speeds);
+        speedList.map(name => {
+            var item = [
+                name,
+                "app.transform.speed",
+                {
+                    "state": "select"
+                },
+                {
+                    "group":"speed"
+                }
+            ];
+            speedList.push(item);
+        });
+        return speedList;
     };
     me.fontSizes = function(object) {
         var fontSizeList = [];

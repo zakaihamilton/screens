@@ -3,7 +3,7 @@
  @component AppLog
  */
 
-screens.app.log = function AppLog(me) {
+package.app.log = function AppLog(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -17,7 +17,7 @@ screens.app.log = function AppLog(me) {
         me.ui.options.load(me, null, {
             "source": "Browser"
         });
-        me.ui.options.choiceSet(me, "source", function (object, options, key, value) {
+        me.ui.options.choiceSet(me, "source", function (object, value, key, options) {
             me.core.property.notify(me.singleton, "app.log.refresh");
         });
     };

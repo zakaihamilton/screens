@@ -60,7 +60,7 @@ screens.ui.options = function UIOptions(me) {
                 }
                 options[key] = !options[key];
                 if(callback) {
-                    callback(object, options, key, options[key]);
+                    callback(object, options[key], key, options);
                 }
                 if(storage) {
                     var storageKey = component.id + ".options";
@@ -95,7 +95,7 @@ screens.ui.options = function UIOptions(me) {
                 }
                 options[key] = value;
                 if(callback) {
-                    callback(object, options, key, options[key]);
+                    callback(object, options[key], key, options);
                 }
                 if(storage) {
                     var storageKey = component.id + ".options";

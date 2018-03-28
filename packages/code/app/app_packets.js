@@ -24,7 +24,7 @@ screens.app.packets = function AppPackets(me) {
             "viewType": "Auto"
         });
         me.ui.options.toggleSet(me, "autoRefresh", me.refreshData.set);
-        me.ui.options.choiceSet(me, "viewType", (object, options, key, value) => {
+        me.ui.options.choiceSet(me, "viewType", (object, value, key, options) => {
             var window = me.widget.window(object);
             me.core.property.set(window.var.chart, {
                 "reset": null,
@@ -33,7 +33,7 @@ screens.app.packets = function AppPackets(me) {
             });
             me.core.property.set(window, "app.packets.refreshData");
         });
-        me.ui.options.choiceSet(me, "dataProfile", (object, options, key, value) => {
+        me.ui.options.choiceSet(me, "dataProfile", (object, value, key, options) => {
             var window = me.widget.window(object);
             if (window.streamIndex > 0) {
                 me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");

@@ -18,6 +18,13 @@ screens.media.voice = function MediaVoice(me) {
     me.resume = function () {
         me.synth.resume();
     };
+    me.speeds = {
+        "Slow":0.5,
+        "Slower":0.75,
+        "Normal":1.0,
+        "Faster":1.25,
+        "Fast":1.5
+    };
     me.play = function (text, voiceName, params) {
         var voices = me.voices(params.language);
         var voices = voices.filter((voice) => {
@@ -31,6 +38,15 @@ screens.media.voice = function MediaVoice(me) {
         }
         if(typeof params.rate !== "undefined") {
             rate = params.rate;
+            if(typeof rate === "string") {
+                if(me.speeds[rate]) {
+                    me.log("using speed: " + rate);
+                    rate = me.speeds[rate];
+                }
+                else {
+                    rate = 1.0
+                }
+            }
         }
         if(typeof params.pitch !== "undefined") {
             pitch = params.pitch;

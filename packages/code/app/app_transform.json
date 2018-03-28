@@ -201,6 +201,15 @@
                 ],
                 "app.transform.voices",
                 [
+                    "Speed",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.transform.speeds",
+                [
                     "Auto Play",
                     "app.transform.autoPlay",
                     {
