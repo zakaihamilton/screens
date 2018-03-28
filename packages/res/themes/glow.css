@@ -325,7 +325,7 @@
     position:relative;
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 100px;
+    max-height: 150px;
     border:none;
     z-index:0;
     border-radius: 0;

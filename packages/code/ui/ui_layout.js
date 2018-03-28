@@ -62,7 +62,7 @@ screens.ui.layout = function UILayout(me) {
         var pageHeight = container.offsetHeight;
         var pageWidth = container.parentNode.offsetWidth;
         pageWidth -= scrollbar.offsetWidth + 1;
-        return {width: pageWidth, height: pageHeight};
+        return { width: pageWidth, height: pageHeight };
     };
     me.firstPage = function (target) {
         target = me.content(target);
@@ -113,7 +113,7 @@ screens.ui.layout = function UILayout(me) {
             }
         }
     };
-    me.options = function(target) {
+    me.options = function (target) {
         var layoutContent = me.content(target);
         return layoutContent.options;
     };
@@ -148,7 +148,7 @@ screens.ui.layout = function UILayout(me) {
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
             var window = me.widget.window(target);
-            for (; ; ) {
+            for (; ;) {
                 var concealed = me.core.property.get(window, "conceal");
                 var widget = source.firstChild;
                 if (!widget || concealed) {
@@ -256,7 +256,7 @@ screens.ui.layout = function UILayout(me) {
                 me.scrollToWidget(options.scrollWidget, layoutContent);
             }
             me.core.property.notify(target, "update");
-    }
+        }
     };
     me.widgetByOrder = function (page, order) {
         var widget = page.firstChild;
@@ -414,6 +414,13 @@ screens.ui.layout = function UILayout(me) {
         match = widget.textContent.toUpperCase().includes(options.filter.toUpperCase());
         return match;
     };
+    me.cleanMarks = function (widget) {
+        if (widget.innerHTML.includes("mark")) {
+            widget.innerHTML = widget.innerHTML.replace(/<\/mark>/gi, "");
+            widget.innerHTML = widget.innerHTML.replace(/<mark>/gi, "");
+            widget.innerHTML = widget.innerHTML.replace(/<mark style=\"\">/gi, "");
+        }
+    };
     me.styleParagraph = function (widget, options) {
         if (widget && widget.style) {
             widget.style.display = "flex-inline";
@@ -422,17 +429,32 @@ screens.ui.layout = function UILayout(me) {
                     widget.style.display = "none";
                 }
             }
+            var parentMatch = options.filter && me.widgetMatch(widget, options);
             var child = widget.firstChild;
-            while(child) {
-                var text = child.textContent;
-                if(child.style) {
-                    if(me.widgetMatch(child, options)) {
+            while (child) {
+                if (child.style) {
+                    child.style.fontWeight = "";
+                    child.style.backgroundColor = "";
+                }
+                child = child.nextSibling;
+            }
+            me.cleanMarks(widget);
+            if (parentMatch) {
+                var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
+                var replace = "<mark>$1</mark>";
+                widget.innerHTML = widget.innerHTML.replace(find, replace);
+            }
+            var child = widget.firstChild;
+            while (child) {
+                if (child.tagName && child.tagName.toLowerCase === "mark") {
+                    child = child.nextSibling;
+                    continue;
+                }
+                if (child.style) {
+                    me.cleanMarks(child);
+                    if (options.filter && me.widgetMatch(child, options)) {
                         child.style.fontWeight = "bold";
                         child.style.backgroundColor = "#FFFF00";
-                    }
-                    else {
-                        child.style.fontWeight = "";
-                        child.style.backgroundColor = "";
                     }
                 }
                 child = child.nextSibling;
@@ -476,9 +498,9 @@ screens.ui.layout = function UILayout(me) {
         let childBottom = childTop + page.pageSize;
         let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
         let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
-        return  (isTotal || isPartial);
+        return (isTotal || isPartial);
     };
-    me.pageApply = function(target, callback) {
+    me.pageApply = function (target, callback) {
         target = me.content(target);
         var child = target.firstChild;
         while (child) {
@@ -601,22 +623,22 @@ screens.ui.layout = function UILayout(me) {
             }
         }
     };
-    me.markElement = function(element, mark) {
-        if(mark) {
+    me.markElement = function (element, mark) {
+        if (mark) {
             element.style.color = "";
         }
         else {
             element.style.color = "rgba(0,0,0,0.5)";
         }
     };
-    me.clearPage = function(page) {
+    me.clearPage = function (page) {
         var content = page.var.content;
         Array.from(content.children).map(element => {
             if (element.getAttribute('hidden')) {
                 return;
             }
             me.markElement(element, true);
-            if(element.innerText) {
+            if (element.innerText) {
                 me.core.property.set(element, page.options.widgetProperties);
             }
             element.classList.remove("mark");
@@ -631,7 +653,7 @@ screens.ui.layout = function UILayout(me) {
             if (element.getAttribute('hidden')) {
                 return;
             }
-            if(element === focusElement) {
+            if (element === focusElement) {
                 return;
             }
             me.markElement(element, false);
