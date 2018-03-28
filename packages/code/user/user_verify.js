@@ -17,7 +17,7 @@ screens.user.verify = function UserVerify(me) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
             var token = info.headers["token"];
             if(!token) {
-                me.error("no token passed in header");
+                me.error("no token passed in header, url: " + info.url);
                 info.stop = true;
                 return;
             }

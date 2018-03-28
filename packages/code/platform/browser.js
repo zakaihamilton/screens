@@ -34,7 +34,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "startup": [
-            "*"
+            "app"
         ]
     }, function () {
         screens.core.startup.app = {
