@@ -401,7 +401,7 @@ screens.ui.layout = function UILayout(me) {
             widget = widget.nextSibling;
         }
     };
-    me.paragraphMatch = function (widget, options) {
+    me.widgetMatch = function (widget, options) {
         var match = false;
         if (!options.filter) {
             return false;
@@ -413,16 +413,24 @@ screens.ui.layout = function UILayout(me) {
         if (widget && widget.style) {
             widget.style.display = "flex-inline";
             if (!options.usePages) {
-                if (options.filter && !me.paragraphMatch(widget, options)) {
+                if (options.filter && !me.widgetMatch(widget, options)) {
                     widget.style.display = "none";
                 }
             }
-            widget.innerHTML = widget.innerHTML.replace(/<\/mark>/g, "");
-            widget.innerHTML = widget.innerHTML.replace(/<mark>/g, "");
-            if (options.filter) {
-                var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
-                var replace = "<mark>$1</mark>";
-                widget.innerHTML = widget.innerHTML.replace(find, replace);
+            var child = widget.firstChild;
+            while(child) {
+                var text = child.textContent;
+                if(child.style) {
+                    if(me.widgetMatch(child, options)) {
+                        child.style.fontWeight = "bold";
+                        child.style.backgroundColor = "#FFFF00";
+                    }
+                    else {
+                        child.style.fontWeight = "";
+                        child.style.backgroundColor = "";
+                    }
+                }
+                child = child.nextSibling;
             }
         }
     };
@@ -435,7 +443,7 @@ screens.ui.layout = function UILayout(me) {
             var widget = page.var.content.firstChild;
             var found = false;
             while (widget) {
-                if (me.paragraphMatch(widget, options)) {
+                if (me.widgetMatch(widget, options)) {
                     found = true;
                     break;
                 }

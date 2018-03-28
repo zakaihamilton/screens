@@ -186,6 +186,7 @@ screens.media.voice = function MediaVoice(me) {
                 text = text.replace(item.replace(",", "\n"), item);
             });
         }
+        text = text.replace(/No\./g, "No");
         text = text.replace(/^(\d+\))/g, "\n$1\n");
         text = text.replace(/\s-\s/g, "\n");
         text = text.replace(/[”\".:;—]/g, "\n");
