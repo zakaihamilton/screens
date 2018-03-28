@@ -177,6 +177,13 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                         me.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
+                me.handleValue(object, options, "mark", function (value) {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "mark");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "mark");
+                    }
+                });
                 me.handleValue(object, options, "separator", function (value) {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "separator");
@@ -317,6 +324,13 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
                         me.core.property.set(object, "ui.class.add", "checked");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "checked");
+                    }
+                });
+                me.handleValue(object, options, "mark", function (value) {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "mark");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
                 me.handleValue(object, options, "separator", function (value) {

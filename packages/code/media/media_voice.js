@@ -26,6 +26,13 @@ screens.media.voice = function MediaVoice(me) {
         "Fast":1.5
     };
     me.play = function (text, voiceName, params) {
+        if(voiceName === "None") {
+            me.stop();
+            if(params.oncancel) {
+                params.oncancel();
+            }
+            return;
+        }
         var voices = me.voices(params.language);
         var voices = voices.filter((voice) => {
             return voice.name.includes(voiceName);

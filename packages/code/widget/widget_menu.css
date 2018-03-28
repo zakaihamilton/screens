@@ -93,6 +93,12 @@
     left:3px;
 }
 
+.widget-menu-vertical span.mark:after {
+    content:'\2022';
+    position:absolute;
+    right:3px;
+}
+
 .widget-menu-vertical span.separator {
     margin-top: 3px;
     border-top: 3px solid white;

@@ -369,10 +369,16 @@
     color:lightgray;
 }
 
-.glow-menu-vertical span.checked:after {
+.glow-menu-vertical span.checked:before {
     content:'\2713';
     position:absolute;
     left:3px;
+}
+
+.glow-menu-vertical span.mark:after {
+    content:'\2022';
+    position:absolute;
+    right:3px;
 }
 
 .glow-menu-vertical span.separator {

@@ -72,7 +72,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.toggleSet(me, "diagrams", me.transform.set);
             me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
             me.ui.options.toggleSet(me, "autoPlay");
-            me.ui.options.choiceSet(me, "voice", me.reflow.set);
+            me.ui.options.choiceSet(me, "voice", me.changeVoice);
             me.ui.options.choiceSet(me, "speed", me.changeSpeed);
             me.ui.options.choiceSet(me, "scrollPos");
             me.ui.class.useStylesheet(null, "kab");
@@ -740,7 +740,22 @@ screens.app.transform = function AppTransform(me) {
             }
         }, data, kind, title, ["content"]);
     };
-    me.changeSpeed = function (object, value) {
+    me.changeVoice = function (object) {
+        var window = me.widget.window.mainWindow(object);
+        var currentPage = me.ui.layout.currentPage(window.var.layout);
+        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var isPaused = me.ui.layout.isPaused(currentPage);
+        var playWillEnable = window.options.voice !== "None";
+        var playEnabled = me.ui.layout.options(window.var.layout).playEnabled;
+        if(playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
+            me.reflow.set(object);
+            return;
+        }
+        if (isPlaying && !isPaused) {
+            me.play(object, me.media.voice.currentIndex, false);
+        }
+    };
+    me.changeSpeed = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -773,6 +788,11 @@ screens.app.transform = function AppTransform(me) {
                 onstart: () => {
                     me.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
+                },
+                oncancel: () => {
+                    me.log("oncancel");
+                    me.ui.layout.clearPage(currentPage);
+                    me.ui.layout.setPlayState(currentPage, false, false);
                 },
                 onend: () => {
                     me.log("onend");
@@ -857,18 +877,16 @@ screens.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var language = window.language;
         var voicelist = me.media.voice.voices(language);
-        var remote = false;
-        voicelist = voicelist.sort((a, b) => a.localService !== b.localService);
+        voicelist = voicelist.sort((a, b) => {
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            return 0;
+        });
         voicelist = voicelist.map((voice) => {
             var name = voice.name;
-            var separator = false;
-            if (!voice.localService && !remote) {
-                remote = true;
-                separator = true;
-            }
             return [voice.name, "app.transform.voice", {
-                "separator": separator,
-                "state": "select"
+                "state": "select",
+                "mark": !voice.localService
             },
             {
                 "group": "voices"

@@ -182,6 +182,27 @@
                     }
                 ],
                 [
+                    "Font Size",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.transform.fontSizes"
+            ]
+        ],
+        [
+            "Audio",
+            [
+                [
+                    "Auto Play",
+                    "app.transform.autoPlay",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Voice",
                     null,
                     {
@@ -196,7 +217,7 @@
                         "state": "select"
                     },
                     {
-                        "group":"voices"
+                        "group": "voices"
                     }
                 ],
                 "app.transform.voices",
@@ -208,24 +229,7 @@
                         "header": true
                     }
                 ],
-                "app.transform.speeds",
-                [
-                    "Auto Play",
-                    "app.transform.autoPlay",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Font Size",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.fontSizes"
+                "app.transform.speeds"
             ]
         ],
         [
@@ -258,15 +262,15 @@
                     "Copy Page",
                     "app.transform.copyPage",
                     {
-                        "visible":"select",
-                        "separator":true
+                        "visible": "select",
+                        "separator": true
                     }
                 ],
                 [
                     "Copy All Pages",
                     "app.transform.copyAllPages",
                     {
-                        "visible":"select"
+                        "visible": "select"
                     }
                 ]
             ]
@@ -415,7 +419,7 @@
                         "ui.attribute.list": "@ui.windowkey.app-transform-filter-"
                     },
                     "ui.monitor.change": "app.transform.filterChange",
-                    "core.event.search":"app.transform.filterChange"
+                    "core.event.search": "app.transform.filterChange"
                 },
                 {
                     "ui.basic.tag": "datalist",
