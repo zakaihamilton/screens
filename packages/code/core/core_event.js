@@ -4,6 +4,13 @@
  */
 
 screens.core.event = function CoreEvent(me) {
+    me.get = function (object, property) {
+        return {
+            set: function (object, value) {
+                me.register(null, object, property, value);
+            }
+        };
+    };
     me.send_event = function(object, method, event) {
         if(!object.getAttribute || !object.getAttribute('disabled')) {
             return me.core.property.set(object, method, event);

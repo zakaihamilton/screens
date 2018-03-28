@@ -9,11 +9,11 @@ screens.widget.menu = function WidgetMenu(me) {
         "ui.basic.elements": {
             "ui.basic.var": "modal",
             "ui.element.component": "widget.modal",
-            "ui.style.display":"none"
+            "ui.style.display": "none"
         }
     };
-    me.updateTheme = function(object) {
-        if(object.var.menu) {
+    me.updateTheme = function (object) {
+        if (object.var.menu) {
             me.core.property.set(object, "ui.property.broadcast", {
                 "ui.class.add": "menu"
             });
@@ -106,7 +106,7 @@ screens.widget.menu = function WidgetMenu(me) {
                 "ui.data.values": values
             }
         });
-        if(bottomUp) {
+        if (bottomUp) {
             me.core.property.set(menu, "ui.class.add", "bottom-up");
         }
         if (object.component === me.id) {
@@ -153,7 +153,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         if (key in values) {
             var value = values[key];
             if (typeof value === "string" || typeof value === "function") {
-                if(value === "select") {
+                if (value === "select") {
                     value = object.menu_select;
                 }
                 value = me.core.property.get(object.parentNode.window, value, me.core.property.get(object, "ui.basic.text"));
@@ -217,27 +217,64 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
 };
 
 screens.widget.menu.list = function WidgetMenuList(me) {
+    me.filterMinCount = 15;
     me.properties = {
         "ui.basic.tag": "div",
         "ui.class.class": "widget.menu.vertical",
-        "ui.class.add":"list"
+        "ui.class.add": "list",
+        "ui.basic.elements": [
+            {
+                "ui.basic.tag":"div",
+                "ui.basic.var": "headers"
+            },
+            {
+                "ui.basic.tag": "div",
+                "ui.basic.var": "members"
+            }
+        ]
     };
-    me.parent = function(object) {
-        return object.parentNode;
-    };
-    me.use = function(object, name) {
-        if(!object.lists) {
+    me.use = function (object, name) {
+        if (!object.lists) {
             object.lists = [];
         }
         var list = object.lists[name];
-        if(list) {
-            return list;
+        if (!list) {
+            list = me.ui.element({
+                "ui.element.component": "widget.menu.list"
+            }, object);
+            object.lists[name] = list;
         }
-        list = me.ui.element({
-            "ui.element.component":"widget.menu.list"
-        }, object);
-        object.lists[name] = list;
-        return list;
+        if (!list.var.filter) {
+            if (list.var.members.childNodes.length >= me.filterMinCount) {
+                me.ui.element({
+                    "ui.element.component":"widget.input",
+                    "ui.basic.type": "search",
+                    "ui.basic.text": "",
+                    "ui.basic.var": "filter",
+                    "ui.attribute.placeholder": "Filter",
+                    "ui.style.width":"80%",
+                    "ui.key.up":"widget.menu.list.filter",
+                    "core.event.search":"widget.menu.list.filter"
+                }, list.var.headers, list);
+            }
+        }
+        return list.var.members;
+    };
+    me.filter = function(object) {
+        var filterText = me.core.property.get(object, "ui.basic.text");
+        var list = me.ui.node.container(object, "widget.menu.list");
+        var members = list.var.members;
+        var child = members.firstChild;
+        while(child) {
+            var childText = me.core.property.get(child, "ui.basic.text");
+            if(!filterText || childText.toUpperCase().includes(filterText.toUpperCase())) {
+                child.style.display = "";
+            }
+            else {
+                child.style.display = "none";
+            }
+            child = child.nextSibling;
+        }
     };
 };
 
@@ -250,7 +287,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
         parent: ["widget.menu", "widget.menu.popup"],
         properties: ["ui.basic.text", "group"]
     };
-    me.container = function(object, parent, properties) {
+    me.container = function (object, parent, properties) {
         return me.widget.menu.list.use(parent, properties["group"]);
     };
     me.handleValue = function (object, values, key, callback) {
@@ -258,7 +295,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
         if (key in values) {
             var value = values[key];
             if (typeof value === "string" || typeof value === "function") {
-                if(value === "select") {
+                if (value === "select") {
                     value = object.menu_select;
                 }
                 value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
@@ -307,9 +344,9 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
             object.menu_select = value;
         }
     };
-    me.parentMenu = function(object) {
+    me.parentMenu = function (object) {
         var parent = object.parentNode;
-        parent = me.core.property.get(parent, "parent");
+        parent = me.ui.node.container(object, "widget.menu.popup");
         return parent;
     };
     me.hover = {

@@ -445,8 +445,12 @@ screens.app.transform = function AppTransform(me) {
     me.filterChange = {
         set: function (object) {
             var window = me.widget.window.mainWindow(object);
-            me.core.property.set(window.var.filter, "storage.local.store", me.core.property.get(window.var.filter, "ui.basic.text"));
-            me.core.property.set(window, "app.transform.reflow");
+            var currentFilter = me.ui.layout.options(window.var.layout);
+            var newFilter = me.core.property.get(window.var.filter, "ui.basic.text");
+            me.core.property.set(window.var.filter, "storage.local.store", newFilter);
+            if(currentFilter && currentFilter.filter !== newFilter) {
+                me.core.property.set(window, "app.transform.reflow");
+            }
         }
     };
     me.termsAvailable = {

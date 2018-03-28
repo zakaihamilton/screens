@@ -414,7 +414,8 @@
                         "storage.local.restore": "ui.basic.text",
                         "ui.attribute.list": "@ui.windowkey.app-transform-filter-"
                     },
-                    "ui.monitor.change": "app.transform.filterChange"
+                    "ui.monitor.change": "app.transform.filterChange",
+                    "core.event.search":"app.transform.filterChange"
                 },
                 {
                     "ui.basic.tag": "datalist",

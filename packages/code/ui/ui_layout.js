@@ -113,8 +113,13 @@ screens.ui.layout = function UILayout(me) {
             }
         }
     };
+    me.options = function(target) {
+        var layoutContent = me.content(target);
+        return layoutContent.options;
+    };
     me.reflow = function (callback, source, target, options) {
         var layoutContent = me.content(target);
+        layoutContent.options = options;
         if (target.reflowInterval) {
             clearInterval(target.reflowInterval);
             target.reflowInterval = null;
