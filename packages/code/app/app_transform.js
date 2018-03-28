@@ -378,8 +378,8 @@ screens.app.transform = function AppTransform(me) {
             });
             var reflowOptions = {
                 widgetProperties: {
-                    "ui.class.add": ["app.transform.widget", "notes", modifiers],
-                    "ui.touch.contextmenu": "app.transform.notes"
+                    "ui.class.add": ["app.transform.widget", modifiers],
+                    "!ui.touch.contextmenu": "app.transform.notes"
                 },
                 pageClass: ["app.transform.page", modifiers],
                 contentClass: ["app.transform.page.content", modifiers],
