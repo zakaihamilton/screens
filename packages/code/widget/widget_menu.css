@@ -48,6 +48,15 @@
     z-index: 1000;
 }
 
+.glow-menu-vertical.list {
+    position:relative;
+    overflow: scroll;
+    max-height: 100px;
+    border:none;
+    z-index:0;
+    box-shadow: none;
+}
+
 .widget-menu-vertical span {
     background-color: white;
     color: black;
