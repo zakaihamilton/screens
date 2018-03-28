@@ -5,7 +5,7 @@
 
 screens.app.theme = function AppTheme(me) {
     me.init = function(task) {
-        me.lock((task) => {
+        me.lock(task, (task) => {
             me.ui.theme.updateList(() => {
                 me.unlock(task);
             });

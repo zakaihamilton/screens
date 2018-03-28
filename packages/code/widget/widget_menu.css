@@ -48,7 +48,7 @@
     z-index: 1000;
 }
 
-.glow-menu-vertical.list {
+.widget-menu-vertical.list {
     position:relative;
     overflow: scroll;
     max-height: 100px;
