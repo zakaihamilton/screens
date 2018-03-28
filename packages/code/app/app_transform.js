@@ -377,7 +377,10 @@ screens.app.transform = function AppTransform(me) {
                 return "." + modifier;
             });
             var reflowOptions = {
-                widgetClass: ["app.transform.widget", modifiers],
+                widgetProperties: {
+                    "ui.class.add": ["app.transform.widget", "notes", modifiers],
+                    "ui.touch.contextmenu": "app.transform.notes"
+                },
                 pageClass: ["app.transform.page", modifiers],
                 contentClass: ["app.transform.page.content", modifiers],
                 containerClass: ["app.transform.page.container", modifiers],
@@ -637,7 +640,7 @@ screens.app.transform = function AppTransform(me) {
                 },
                 null,
                 {
-                    "group":group
+                    "group": group
                 }
             ];
             return result;
@@ -733,7 +736,7 @@ screens.app.transform = function AppTransform(me) {
             }
         }, data, kind, title, ["content"]);
     };
-    me.changeSpeed = function(object, value) {
+    me.changeSpeed = function (object, value) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -742,7 +745,7 @@ screens.app.transform = function AppTransform(me) {
             me.play(object, me.media.voice.currentIndex, false);
         }
     };
-    me.play = function (object, value, toggle=true) {
+    me.play = function (object, value, toggle = true) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -864,13 +867,13 @@ screens.app.transform = function AppTransform(me) {
                 "state": "select"
             },
             {
-                "group":"voices"
+                "group": "voices"
             }
-        ];
+            ];
         });
         return voicelist;
     };
-    me.speeds = function(object) {
+    me.speeds = function (object) {
         var speedList = Object.keys(me.media.voice.speeds);
         speedList.map(name => {
             var item = [
@@ -880,16 +883,16 @@ screens.app.transform = function AppTransform(me) {
                     "state": "select"
                 },
                 {
-                    "group":"speed"
+                    "group": "speed"
                 }
             ];
             speedList.push(item);
         });
         return speedList;
     };
-    me.fontSizes = function(object) {
+    me.fontSizes = function (object) {
         var fontSizeList = [];
-        for(var fontSize = 12; fontSize <= 32; fontSize += 2) {
+        for (var fontSize = 12; fontSize <= 32; fontSize += 2) {
             var item = [
                 fontSize + "px",
                 "app.transform.fontSize",
@@ -897,7 +900,7 @@ screens.app.transform = function AppTransform(me) {
                     "state": "select"
                 },
                 {
-                    "group":"fontSize"
+                    "group": "fontSize"
                 }
             ];
             fontSizeList.push(item);
@@ -927,5 +930,9 @@ screens.app.transform = function AppTransform(me) {
             text = text.join("\n");
             me.ui.clipboard.copy(me.error, text);
         }
+    };
+    me.notes = function(object, event) {
+        event.preventDefault();
+        return false;
     };
 };

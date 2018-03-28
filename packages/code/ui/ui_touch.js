@@ -159,4 +159,9 @@ screens.ui.touch = function UITouch(me) {
             me.core.event.register(me.handle, object, "wheel", value, "wheel", object, {passive:true});
         }
     };
+    me.contextmenu = {
+        set: function (object, value) {
+            me.core.event.register(me.handle, object, "contextmenu", value);
+        }
+    };
 };

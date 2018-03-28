@@ -612,7 +612,7 @@ screens.ui.layout = function UILayout(me) {
             }
             me.markElement(element, true);
             if(element.innerText) {
-                me.core.property.set(element, "ui.class.add", page.options.widgetClass);
+                me.core.property.set(element, page.options.widgetProperties);
             }
             element.classList.remove("mark");
         });

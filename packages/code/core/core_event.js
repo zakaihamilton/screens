@@ -6,7 +6,7 @@
 screens.core.event = function CoreEvent(me) {
     me.send_event = function(object, method, event) {
         if(!object.getAttribute || !object.getAttribute('disabled')) {
-            me.core.property.set(object, method, event);
+            return me.core.property.set(object, method, event);
         }
     };
     me.register = function (handlers, object, type, method, name=type, target=object, options=null) {
@@ -17,12 +17,15 @@ screens.core.event = function CoreEvent(me) {
             method = me.core.property.to_full_name(object, method);
         }
         var listener_callback = function (event) {
-            var result = true;
+            var enabled = true;
             if (handlers && name in handlers) {
-                result = handlers[name](object, method, event);
+                enabled = handlers[name](object, method, event);
             }
-            if (result === true) {
-                me.send_event(object, method, event);
+            if (enabled) {
+                var result = me.send_event(object, method, event);
+                if(typeof result !== "undefined") {
+                    return result;
+                }
             }
         };
         var listener = object.event_types[name];

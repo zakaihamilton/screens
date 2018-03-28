@@ -30,7 +30,7 @@ screens.lib.google = function LibGoogle(me) {
                             me.unlock(task);
                         }
                     });
-                }, ["https://apis.google.com/js/api:client.js"]);
+                }, ["https://apis.google.com/js/platform.js"]);
             }, "settings.google");
         });
     };
@@ -51,10 +51,11 @@ screens.lib.google = function LibGoogle(me) {
         }
         return profile.getName();
     };
-    me.signin = function (callback, object, googleUser) {
-        me.status = "Received sign in";
-        if (callback) {
-            callback();
+    me.signin = {
+        set: function (object) {
+            me.auth2.signIn().then(function () {
+                me.log('User signed in.');
+            });
         }
     };
     me.signout = {
@@ -69,18 +70,18 @@ screens.lib.google = function LibGoogle(me) {
             me.auth2.disconnect();
         }
     };
-    me.attachSignIn = {
-        set: function (object, value) {
-            me.auth2.attachClickHandler(object, {}, (googleUser) => {
-                me.signin(value, object, googleUser);
-            }, me.error);
-        }
-    };
     me.isSignedIn = function() {
-        if(!me.auth2) {
-            return false;
+        var isSignedIn = false;
+        if(me.auth2 && me.auth2.isSignedIn.get() === true) {
+            var user = me.auth2.currentUser.get();
+            if(user) {
+                var profile = user.getBasicProfile();
+                if(profile) {
+                    isSignedIn = true;
+                }
+            }
         }
-        return me.auth2.isSignedIn.get();
+        return isSignedIn;
     };
     me.signInState = function() {
         return me.state;

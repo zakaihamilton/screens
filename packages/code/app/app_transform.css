@@ -553,6 +553,21 @@ h4.app-transform-widget {
     opacity:0;
 }
 
+.app-transform-widget:after {
+    content:"\2606\00a0";
+    display: inline-block;
+    opacity:0;
+    font-size: 75%;
+}
+
+.app-transform-widget.notes:after {
+    opacity:1;
+}
+
+.app-transform-widget.notes:hover:after {
+    content:"\2605\00a0";
+}
+
 .app-transform-widget.mark:before {
     opacity:1;
 }

@@ -16,30 +16,14 @@ screens.app.login = function AppLogin(me) {
         me.signin();
         return me.singleton;
     };
-    me.attachGoogle = {
-        set: function(object, value) {
-            var widget = document.getElementById(value);
-            var window = me.widget.window(object);
-            var content = me.core.property.get(window, "widget.window.content");
-            me.core.property.set(widget, "ui.node.parent", content);
-            me.core.property.set(widget, "ui.property.style", {
-                "visibility":"",
-                "position":"absolute",
-                "left":"18px",
-                "width":"200px",
-                "top":"70px",
-                "textAlign":"center"
-            });
-            me.core.property.set(widget, "lib.google.attachSignIn", () => {
-              me.signin();
-            });
-        }
-    };
     me.signin = function() {
         var state = me.lib.google.signInState();
         var status = me.lib.google.status;
         var window = me.singleton;
         me.core.property.set(window.var.status, "ui.basic.text", status);
+        me.core.property.set(window.var.signin, "ui.basic.hide", "@lib.google.isSignedIn");
+        me.core.property.set(window.var.signout, "ui.basic.show", "@lib.google.isSignedIn");
+        me.core.property.set(window.var.disconnect, "ui.basic.show", "@lib.google.isSignedIn");
         if(state) {
             me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
             if(me.core.startup.app.name !== "login") {

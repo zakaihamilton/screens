@@ -194,7 +194,7 @@ screens.core.property = function CoreProperty(me) {
                 me.core.property.set(object, key, value);
             }
         }
-        me.core.property.get(object, name, value, "set");
+        return me.core.property.get(object, name, value, "set");
     };
     me.setTo = function (list, object, name, value) {
         if (list) {
