@@ -27,6 +27,13 @@ screens.ui.class = function UIClass(me) {
             }
         }
     };
+    me.classExtra = {
+        set: function (object, value) {
+            if(value) {
+                me.set_class(object, value, true);
+            }
+        }
+    };
     me.contains = {
         get: function(object, value) {
             var containCount = 0, itemCount = 0;

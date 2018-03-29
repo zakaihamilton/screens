@@ -8,3 +8,14 @@
     border-top:1px solid black;
     box-sizing: border-box;
 }
+
+.widget-bar-launcher {
+    top:3px;
+    right:7px;
+    position:absolute;
+    padding:3px;
+}
+
+.widget-bar-launcher:hover:active {
+    background-color:#0f2777;
+}

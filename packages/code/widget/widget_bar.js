@@ -5,6 +5,15 @@
 
 screens.widget.bar = function WidgetBar(me) {
     me.properties = {
-        "ui.class.class": "container"
+        "ui.class.class": "container",
+        "ui.basic.elements":[
+            {
+                "ui.basic.tag":"img",
+                "ui.basic.src":"/packages/res/icons/launcher.png",
+                "ui.touch.click":"core.app.launcher",
+                "ui.class.class":"launcher",
+                "ui.basic.var":"launcher"
+            }
+        ]
     };
 };

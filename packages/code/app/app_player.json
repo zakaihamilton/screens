@@ -1,5 +1,6 @@
 {
     "title": "Player",
+    "icon": "/packages/res/icons/player_tray.png",
     "ui.property.style":{
         "left": "150px",
         "top": "150px",

@@ -633,14 +633,6 @@ screens.widget.window = function WidgetWindow(me) {
             }
         }
     };
-    me.blur = {
-        set: function (object) {
-            var window = me.window(object);
-            if (me.core.property.get(window, "temp") && window.parentNode) {
-                me.core.property.set(window, "close");
-            }
-        }
-    };
     me.region = {
         get: function (object) {
             var window = me.window(object);
@@ -841,6 +833,9 @@ screens.widget.window = function WidgetWindow(me) {
         set: function(object) {
             var window = me.window(object);
             me.core.property.set(window.var.icon, "ui.class.remove", "focus");
+            if (me.core.property.get(window, "temp") && window.parentNode) {
+                me.core.property.set(window, "close");
+            }
         }
     };
     me.alwaysOnTop = {

@@ -3,7 +3,7 @@
  @component AppLog
  */
 
-package.app.log = function AppLog(me) {
+screens.app.log = function AppLog(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);

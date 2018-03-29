@@ -39,12 +39,6 @@ screens.startup.app = function StartupApp(me) {
                     }
                 }, app.name, app.params);
             }
-            else {
-                me.core.app.launch(function (window) {
-                    me.core.property.set(window, "widget.window.show", true);
-                    me.core.property.set(window, "widget.window.maximize");
-                }, "progman");
-            }
         }        
     }
 };

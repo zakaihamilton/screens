@@ -1,0 +1,34 @@
+{
+    "title": "Launcher",
+    "temp": true,
+    "icon": "/packages/res/icons/launcher.png",
+    "ui.property.style": {
+        "left": "400px",
+        "top": "150px",
+        "width": "600px",
+        "height": "450px"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.basic.type": "search",
+            "ui.attribute.placeholder": "Search",
+            "ui.basic.text": "",
+            "ui.class.classExtra": "app.launcher.search"
+        },
+        {
+            "ui.basic.tag": "hr"
+        },
+        {
+            "text": "Transform",
+            "ui.basic.src": "/packages/res/icons/transform.png",
+            "app.progman.args": "transform",
+            "ui.touch.click": "core.app.transform"
+        },
+        {
+            "text": "Player",
+            "ui.basic.src": "/packages/res/icons/player.png",
+            "app.progman.args": "player",
+            "ui.touch.click": "core.app.player"
+        }
+    ]
+}
