@@ -17,6 +17,9 @@ screens.app.login = function AppLogin(me) {
         return me.singleton;
     };
     me.signin = function() {
+        if (!me.core.property.get(me.singleton, "ui.node.parent")) {
+            return;
+        }
         var state = me.lib.google.signInState();
         var status = me.lib.google.status;
         var window = me.singleton;
