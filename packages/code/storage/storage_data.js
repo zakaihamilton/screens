@@ -98,8 +98,10 @@ screens.storage.data = function StorageData(me) {
     me.query = function (callback, type, select, filters) {
         var user = this.user;
         me.getService((service) => {
+            me.log("query type: " + type);
             var query = service.createQuery(type);
             if(select) {
+                me.log("query select: " + JSON.stringify(select));
                 query = query.select(select);
             }
             if(filters) {

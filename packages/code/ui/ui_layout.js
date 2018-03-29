@@ -414,13 +414,6 @@ screens.ui.layout = function UILayout(me) {
         match = widget.textContent.toUpperCase().includes(options.filter.toUpperCase());
         return match;
     };
-    me.cleanMarks = function (widget) {
-        if (widget.innerHTML.includes("mark")) {
-            widget.innerHTML = widget.innerHTML.replace(/<\/mark>/gi, "");
-            widget.innerHTML = widget.innerHTML.replace(/<mark>/gi, "");
-            widget.innerHTML = widget.innerHTML.replace(/<mark style=\"\">/gi, "");
-        }
-    };
     me.styleParagraph = function (widget, options) {
         if (widget && widget.style) {
             widget.style.display = "flex-inline";
@@ -438,11 +431,11 @@ screens.ui.layout = function UILayout(me) {
                 }
                 child = child.nextSibling;
             }
-            me.cleanMarks(widget);
             if (parentMatch) {
-                var find = me.core.string.regex("/(" + me.core.string.escape(options.filter) + ")", 'gi');
-                var replace = "<mark>$1</mark>";
-                widget.innerHTML = widget.innerHTML.replace(find, replace);
+                me.ui.mark.widget(widget, options.filter);
+            }
+            else {
+                me.ui.mark.widget(widget, null);
             }
             var child = widget.firstChild;
             while (child) {
@@ -451,7 +444,7 @@ screens.ui.layout = function UILayout(me) {
                     continue;
                 }
                 if (child.style) {
-                    me.cleanMarks(child);
+                    me.ui.mark.widget(child, null);
                     if (options.filter && me.widgetMatch(child, options)) {
                         child.style.fontWeight = "bold";
                         child.style.backgroundColor = "#FFFF00";

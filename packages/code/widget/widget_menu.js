@@ -275,6 +275,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         while(child) {
             var childText = me.core.property.get(child, "ui.basic.text");
             if(!filterText || childText.toUpperCase().includes(filterText.toUpperCase())) {
+                me.ui.mark.widget(child, filterText);
                 child.style.display = "";
             }
             else {
@@ -367,6 +368,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
         set: function (object, value) {
             var parentMenu = me.parentMenu(object);
             if (parentMenu.selected_item !== object && object.menu_select) {
+                me.ui.mark.widget(object, null);
                 me.core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
         }
@@ -374,6 +376,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.click = {
         set: function (object) {
             var parentMenu = me.parentMenu(object);
+            me.ui.mark.widget(object, null);
             me.core.property.set(parentMenu, "select", [object, object.menu_select]);
         }
     };
