@@ -11,7 +11,7 @@ screens.lib.google = function LibGoogle(me) {
             me.core.util.config((google) => {
                 me.core.require(() => {
                     gapi.load('auth2', function () {
-                        auth2 = gapi.auth2.init({
+                        me.auth2 = gapi.auth2.init({
                             client_id: google.client_id
                         }).then((auth2) => {
                             me.auth2 = auth2;
