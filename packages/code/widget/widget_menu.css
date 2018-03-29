@@ -50,9 +50,9 @@
 
 .widget-menu-vertical.list {
     position:relative;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
-    max-height: 150px;
+    max-height: 100px;
     border:none;
     z-index:0;
     box-shadow: none;

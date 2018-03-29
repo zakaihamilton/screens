@@ -800,6 +800,9 @@ screens.widget.window = function WidgetWindow(me) {
                         "state": function () {
                             return me.core.property.get(child, "ui.focus.active");
                         }
+                    },
+                    {
+                        "group":"windows"
                     }
                 ];
                 return result;
