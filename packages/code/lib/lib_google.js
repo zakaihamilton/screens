@@ -11,28 +11,39 @@ screens.lib.google = function LibGoogle(me) {
             me.core.util.config((google) => {
                 me.core.require(() => {
                     gapi.load('auth2', function () {
-                        me.auth2 = gapi.auth2.init({
+                        auth2 = gapi.auth2.init({
                             client_id: google.client_id
-                        });
-                        me.auth2.isSignedIn.listen(me.signInChanged);
-                        me.auth2.currentUser.listen(me.userChanged);
-                        if (me.auth2.isSignedIn.get() === true) {
-                            me.status = "Signing in...";
-                            me.auth2.signIn().catch(err => {
-                                me.status = "Error: " + err.message || err;
-                            });
-                            me.core.listener.wait(() => {
+                        }).then((auth2) => {
+                            me.auth2 = auth2;
+                            me.auth2.isSignedIn.listen(me.signInChanged);
+                            me.auth2.currentUser.listen(me.userChanged);
+                            var state = me.auth2.isSignedIn.get();
+                            if (state) {
+                                me.setStatus("Signing in...");
+                                me.auth2.signIn().catch(err => {
+                                    me.setStatus("Error: " + err.message || err);
+                                });
+                                me.core.listener.wait(() => {
+                                    me.setStatus("Sign in occured");
+                                    me.unlock(task);
+                                }, me.id);
+                            }
+                            else {
+                                me.setStatus("Not signed in");
                                 me.unlock(task);
-                            }, me.id);
-                        }
-                        else {
-                            me.status = "Not signed in";
+                            }
+                        }, (error) => {
+                            me.setStatus("Cannot initialize google authenticiation: " + error);
                             me.unlock(task);
-                        }
+                        });
                     });
                 }, ["https://apis.google.com/js/platform.js"]);
             }, "settings.google");
         });
+    };
+    me.setStatus = function(status) {
+        me.status = status;
+        me.log("status: " + status);
     };
     me.currentStatus = function() {
         return me.status;
@@ -42,7 +53,10 @@ screens.lib.google = function LibGoogle(me) {
     };
     me.currentProfile = function() {
         var googleUser = me.auth2.currentUser.get();
-        return googleUser.getBasicProfile();
+        if(googleUser) {
+            return googleUser.getBasicProfile();
+        }
+        return null;
     };
     me.currentName = function() {
         var profile = me.currentProfile();
@@ -53,21 +67,27 @@ screens.lib.google = function LibGoogle(me) {
     };
     me.signin = {
         set: function (object) {
-            me.auth2.signIn().then(function () {
-                me.log('User signed in.');
+            me.core.listener.reset(null, me.id);
+            me.auth2.signIn().then(() => {
+                me.core.listener.signal(null, me.id);
             });
         }
     };
     me.signout = {
         set: function (object) {
-            me.auth2.signOut().then(function () {
-                me.log('User signed out.');
+            me.core.listener.reset(null, me.id);
+            me.auth2.signOut().then(() => {
+                me.setStatus("Signed out");
+                me.core.listener.signal(null, me.id);
             });
         }
     };
     me.disconnect = {
         set: function (object) {
-            me.auth2.disconnect();
+            me.auth2.disconnect().then(() => {
+                me.setStatus("Disconnected");
+                me.core.listener.signal(null, me.id);
+            });
         }
     };
     me.isSignedIn = function() {
@@ -90,28 +110,34 @@ screens.lib.google = function LibGoogle(me) {
         me.log("Signin state changed to " + state);
         me.state = state;
         if(state) {
-            me.status = "Signed in";
+            me.setStatus("Changed to signed in");
+            me.core.listener.signal(null, me.id);
         }
         else {
-            me.status = "Not signed in";
+            me.setStatus("Changed to not signed in");
+            me.core.listener.signal(null, me.id);
         }
-        me.core.listener.signal(null, me.id);
     };
     me.userChanged = function (user) {
         if(user) {
-            var profile = user.getBasicProfile();
-            if(profile) {
-                var name = profile.getName();
-                me.status = "Sign in successful";
-                me.log("User now: " + name);
-                me.core.listener.signal(null, me.id);
+            if(user.isSignedIn()) {
+                var profile = user.getBasicProfile();
+                if(profile) {
+                    var name = profile.getName();
+                    me.setStatus("Sign in successful");
+                    me.log("User now: " + name);
+                    me.core.listener.signal(null, me.id);
+                }
+                else {
+                    me.setStatus("No profile for signed in user");
+                }
             }
             else {
-                me.status = "No signed in user (No profile)";
+                me.setStatus("User not signed in");
             }
         }
         else {
-            me.status = "No signed in user";
+            me.setStatus("No user");
         }
     };
     me.headers = function(info) {

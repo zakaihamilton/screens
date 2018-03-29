@@ -22,6 +22,7 @@ screens.app.login = function AppLogin(me) {
         var window = me.singleton;
         me.core.property.set(window.var.status, "ui.basic.text", status);
         me.core.property.set(window.var.signin, "ui.basic.hide", "@lib.google.isSignedIn");
+        me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
         me.core.property.set([
             window.var.signout,
             window.var.disconnect,
@@ -29,14 +30,10 @@ screens.app.login = function AppLogin(me) {
             window.var.userName
         ], "ui.basic.show", "@lib.google.isSignedIn");
         if(state) {
-            me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
             if(me.core.startup.app.name !== "login") {
                 me.core.property.set(me.singleton, "close");
                 me.startup.app.start();
             }
-        }
-        else {
-            me.core.property.set(window.var.userName, "ui.basic.text", "");
         }
     };
 };
