@@ -39,6 +39,9 @@ screens.startup.app = function StartupApp(me) {
                     }
                 }, app.name, app.params);
             }
-        }        
+            else {
+                me.core.app.launch(null, "launcher");
+            }
+        }
     }
 };

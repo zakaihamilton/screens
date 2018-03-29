@@ -3,10 +3,10 @@
     "temp": true,
     "icon": "/packages/res/icons/launcher.png",
     "ui.property.style": {
-        "left": "400px",
-        "top": "150px",
-        "width": "600px",
-        "height": "450px"
+        "left": "15%",
+        "top": "15%",
+        "width": "70%",
+        "height": "70%"
     },
     "ui.basic.elements": [
         {
