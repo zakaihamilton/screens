@@ -32,7 +32,7 @@ screens.lib.google = function LibGoogle(me) {
                                 me.setStatus("Not signed in");
                                 me.unlock(task);
                             }
-                        }, (error) => {
+                        }).catch((error) => {
                             me.setStatus("Cannot initialize google authenticiation: " + error);
                             me.unlock(task);
                         });
@@ -65,10 +65,18 @@ screens.lib.google = function LibGoogle(me) {
         }
         return profile.getName();
     };
+    me.errors = {
+        popup_closed_by_user:"Popup Closed by User",
+        access_denied: "Access Denied",
+        immediate_failed: "Immediate Failed"
+    };
     me.signin = {
         set: function (object) {
             me.core.listener.reset(null, me.id);
             me.auth2.signIn().then(() => {
+                me.core.listener.signal(null, me.id);
+            }).catch((err) => {
+                me.setStatus(me.errors[err.error]);
                 me.core.listener.signal(null, me.id);
             });
         }
