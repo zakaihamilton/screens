@@ -514,7 +514,7 @@ screens.app.transform = function AppTransform(me) {
                     item.title,
                     function () {
                         var isFullscreen = me.core.property.get(window, "fullscreen");
-                        me.core.app.launch(null, "diagram", [item.path, window.options, isFullscreen]);
+                        me.core.app(null, "diagram", item.path, window.options, isFullscreen);
                     }
                 ];
                 return result;
@@ -611,19 +611,30 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.init = function (task) {
-        me.lock(task, (task) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.publicContentList = items;
-                me.unlock(task);
-            }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
+        var progress = me.ui.popup("progress", {
+            "context":"Content",
+            "title":"Transform",
+            "delay":"250",
+            "message":"Loading from Server..."
         });
         me.lock(task, (task) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.privateContentList = items;
-                me.unlock(task);
-            }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
+            me.lock(task, (task) => {
+                me.core.message.send_server("core.cache.use", (err, items) => {
+                    me.error(err);
+                    me.publicContentList = items;
+                    me.unlock(task);
+                }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
+            });
+            me.lock(task, (task) => {
+                me.core.message.send_server("core.cache.use", (err, items) => {
+                    me.error(err);
+                    me.privateContentList = items;
+                    me.unlock(task);
+                }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
+            });
+            me.unlock(task, () => {
+                me.core.property.set(progress, "close");
+            });
         });
     };
     me.menuList = function (object, list, group) {

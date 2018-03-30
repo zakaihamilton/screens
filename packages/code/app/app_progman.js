@@ -34,7 +34,7 @@ screens.app.progman = function AppProgman(me) {
                 if (me.options["minimize_on_use"]) {
                     me.core.property.set(me.singleton, "minimize");
                 }
-                me.core.app.launch(() => {}, args[0], args.slice(1));
+                me.core.app(() => {}, args[0], args.slice(1));
             }
         }
     };

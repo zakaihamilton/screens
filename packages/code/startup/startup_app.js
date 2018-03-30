@@ -13,11 +13,11 @@ screens.startup.app = function StartupApp(me) {
                         "ui.basic.var": "desktop"
                     }
                 ]);
-                if(me.lib.google.isSignedIn()) {
+                if (me.lib.google.isSignedIn()) {
                     me.start();
                 }
                 else {
-                    me.core.app.launch(function (window) {
+                    me.core.app((window) => {
                         if (window) {
                             me.core.property.set(window, "widget.window.show", true);
                             me.core.property.set(window, "widget.window.maximize");
@@ -28,19 +28,23 @@ screens.startup.app = function StartupApp(me) {
             }, "widget");
         });
     };
-    me.start = function() {
+    me.start = function () {
         var app = me.core.startup.app;
         if (!app.name || app.name !== "none") {
             if (app.name) {
-                me.core.app.launch(function (window) {
+                var args = [function (window) {
                     if (window) {
                         me.core.property.set(window, "widget.window.show", true);
                         me.core.property.set(window, "widget.window.maximize");
                     }
-                }, app.name, app.params);
+                }, app.name];
+                if (app.params) {
+                    args.push(...app.params);
+                }
+                me.core.app.apply.apply(null, args);
             }
             else {
-                me.core.app.launch(null, "launcher");
+                me.core.app(null, "launcher");
             }
         }
     }

@@ -187,6 +187,9 @@ screens.widget.window = function WidgetWindow(me) {
             } else {
                 me.core.property.set(me.ui.element.workspace(), "widget.window.refocus");
             }
+            if(window.delayTimer) {
+                clearTimeout(window.delayTimer);
+            }
         }
     };
     me.icon = {
@@ -423,6 +426,27 @@ screens.widget.window = function WidgetWindow(me) {
         }
         if(region.bottom >= workspace_region.bottom && !fixed) {
             me.core.property.set(window, "ui.style.height", workspace_region.bottom - workspace_region.top);
+        }
+    };
+    me.delay = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.delay;
+        },
+        set: function(object, value) {
+            var window = me.window(object);
+            window.delay = value;
+            if(value) {
+                me.core.property.set(window, "ui.basic.show", false);
+                clearTimeout(window.delayTimer);
+                window.delayTimer = setTimeout(() => {
+                    me.core.property.set(window, "ui.basic.show", true);
+                }, value);
+            }
+            else {
+                clearTimeout(window.delayTimer);
+                window.delayTimer = null;
+            }
         }
     };
     me.show = {

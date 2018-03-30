@@ -11,8 +11,13 @@ screens.widget.tray = function WidgetTray(me) {
         get: function(object) {
             var window = me.widget.window(object);
             var parent = me.widget.window.parent(window);
+            var isPopup = me.core.property.get(window, "popup");
             var type = "icon";
-            if(parent) {
+            if(isPopup) {
+                type = "hidden";
+            }
+            else if(parent) {
+                type = "hidden";
                 parent = me.core.property.get(parent, "content");
             }
             else {

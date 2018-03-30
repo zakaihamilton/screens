@@ -24,6 +24,9 @@ function startBrowser(appName, appArgs) {
         "widget": [
             "*"
         ],
+        "popup": [
+            "*"
+        ],
         "kab": [
             "*"
         ],

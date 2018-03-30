@@ -122,6 +122,7 @@ screens.storage.data = function StorageData(me) {
                         items.forEach(item => {
                             item.key = item[service.KEY];
                         });
+                        me.log("query returning " + items.length + " results");
                         callback(null, items);
                     })
                     .catch(err => {

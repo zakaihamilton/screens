@@ -159,7 +159,7 @@ screens.app.player = function AppPlayer(me) {
                 me.core.property.set(window, "ui.work.state", true);
                 me.manager.download.push(function(err, target) {
                     if(err) {
-                       me.core.app.launch(null, "info", [target, err]);
+                       me.core.app(null, "info", target, err);
                     }
                     else {
                         me.core.property.set(player, "source", target);

@@ -24,15 +24,10 @@ screens.core.app = function CoreApp(me) {
             callback();
         });
     };
-    me.launch = function (callback, appName, appArgs) {
+    me.apply = function (callback, appName) {
         var result = null;
-        screens.include("app." + appName, function () {
-            if (Array.isArray(appArgs)) {
-                appArgs = appArgs.slice(0);
-            }
-            if(!appArgs) {
-                appArgs = [];
-            }
+        screens.include("app." + appName, () => {
+            var appArgs = Array.prototype.slice.call(arguments, 2);
             result = me.core.message.send("app." + appName + ".launch", appArgs);
             if (callback) {
                 callback(result);
