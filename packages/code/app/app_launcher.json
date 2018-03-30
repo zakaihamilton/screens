@@ -21,13 +21,11 @@
         {
             "text": "Transform",
             "ui.basic.src": "/packages/res/icons/transform.png",
-            "app.progman.args": "transform",
             "ui.touch.click": "core.app.transform"
         },
         {
             "text": "Player",
             "ui.basic.src": "/packages/res/icons/player.png",
-            "app.progman.args": "player",
             "ui.touch.click": "core.app.player"
         }
     ]

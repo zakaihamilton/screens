@@ -200,9 +200,11 @@
 
 .glow-window-close {
     flex:none;
-    width:18px;
+    width:28px;
     height:18px;
     background-color: white;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .glow-window-close::after {
@@ -212,7 +214,7 @@
     content: '';
     display: inline-block;
     height: 3px;
-    left: 7px;
+    left: 12px;
     position: relative;
     vertical-align: top;
     width: 3px;
@@ -231,9 +233,10 @@
 
 .glow-window-action {
     flex: none;
-    width:18px;
+    width:28px;
     height:18px;
     margin-left: auto;
+    margin-right: auto;
 }
 
 .glow-window-action:hover:active {
@@ -253,7 +256,7 @@
     background:#0f2777;
     position: relative;
     top:7px;
-    left:7px;
+    left:12px;
     width:4px;
     height:4px;
     box-sizing: border-box;
@@ -263,7 +266,7 @@
 .glow-window-maximize-arrow {
     border-radius: 2px;
     position: relative;
-    left:4px;
+    left:9px;
     top:5px;
     width:8px;
     height:8px;
