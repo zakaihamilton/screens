@@ -60,6 +60,9 @@ screens.storage.data = function StorageData(me) {
                 key: key,
                 data: me.toDataStore(value, nonIndexed, user)
             }, function (err) {
+                if(err) {
+                    me.error("error saving data for type: " + type + " id: " + id + " err:" + err);
+                }
                 callback(err);
             });
         });

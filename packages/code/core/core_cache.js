@@ -10,9 +10,11 @@ screens.core.cache = function CoreCache(me) {
     me.use = function(callback, id, method, params) {
         var item = me.cache[id];
         if(item) {
+            me.log("using cache for: " + id + " method: " + method);
             callback.apply(this, item);
             return;
         }
+        me.log("storing cache for: " + id + " method: " + method);
         function handler() {
             var args = Array.prototype.slice.call(arguments, 0);
             me.cache[id] = args;

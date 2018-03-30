@@ -10,10 +10,14 @@
     },
     "ui.basic.elements": [
         {
-            "ui.basic.type": "search",
-            "ui.attribute.placeholder": "Search",
-            "ui.basic.text": "",
-            "ui.class.classExtra": "app.launcher.search"
+            "ui.basic.tag":"div",
+            "ui.class.class":"app.launcher.search.container",
+            "ui.basic.elements": {
+                "ui.basic.type": "search",
+                "ui.attribute.placeholder": "Search",
+                "ui.basic.text": "",
+                "ui.class.classExtra": "app.launcher.search"
+            }
         },
         {
             "ui.basic.tag": "hr"

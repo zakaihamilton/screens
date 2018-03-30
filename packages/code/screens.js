@@ -3,7 +3,7 @@ function screens_lock(parent_task, callback) {
         callback = parent_task;
         parent_task = null;
     }
-    var task = { state: true, lock: 0, parent: parent_task};
+    var task = { state: true, lock: 0, parent: parent_task };
     var next = task;
     while (next) {
         next.lock++;
@@ -41,9 +41,9 @@ function screens_forEach(task, array, callback, abortCallback) {
                 screens_lock(task, (task) => {
                     var lock = task.lock;
                     var result = callback(task, array[index], index, array);
-                    if(result) {
+                    if (result) {
                         screens_unlock(task);
-                        if(abortCallback) {
+                        if (abortCallback) {
                             abortCallback(task, array[index], index, array);
                         }
                         exit = true;
@@ -60,7 +60,7 @@ function screens_forEach(task, array, callback, abortCallback) {
                     screens_unlock(task);
                 });
             }
-            if(!exit) {
+            if (!exit) {
                 screens_unlock(task);
             }
         }
@@ -77,7 +77,7 @@ async function screens_async(task, promise) {
             result = await promise;
             screens_unlock(task);
         }
-        catch(err) {
+        catch (err) {
             screens_unlock(task);
             throw err;
         }
@@ -252,7 +252,7 @@ function screens_load(task, items, callback) {
         if (items && items.length) {
             if (screens.platform === "server" || screens.platform === "service") {
                 items.map((item) => {
-                    if(item.package_name in screens && item.component_name in screens[item.package_name]) {
+                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
                         return;
                     }
                     var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
@@ -267,7 +267,7 @@ function screens_load(task, items, callback) {
             else {
                 var first = true;
                 var paths = items.map((item) => {
-                    if(item.package_name in screens && item.component_name in screens[item.package_name]) {
+                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
                         return null;
                     }
                     var path = item.package_name + "_" + item.component_name;
@@ -278,7 +278,7 @@ function screens_load(task, items, callback) {
                     return path + ".js";
                 });
                 paths = paths.filter(Boolean);
-                if(paths.length) {
+                if (paths.length) {
                     var path = paths.join(",") + "?platform=" + screens.platform;
                     screens.lock(task, (task) => {
                         screens_import(() => {
@@ -334,7 +334,7 @@ function screens_include(packages, callback) {
                     screens_init(task, collection[package_name]);
                 });
                 screens.unlock(task, () => {
-                    if(callback) {
+                    if (callback) {
                         callback();
                     }
                 });

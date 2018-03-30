@@ -151,6 +151,7 @@ screens.core.http = function CoreHttp(me) {
                 return true;
             }
         }, () => {
+            me.log("error in: " + info.url);
             response.writeHead(403);
             response.end();
         });

@@ -30,8 +30,18 @@ screens.user.verify = function UserVerify(me) {
                 });
                 const payload = ticket.getPayload();
                 const userid = payload['sub'];
+                var name = info.headers["user_name"];
                 info.user = userid;
-                me.log("user authenticated: " + info.headers["user_name"] + " = " + userid);
+                var profile = {
+                    name,
+                    userid
+                };
+                me.log("storing user: " + name);
+                await new Promise(resolve => {
+                    me.log("Storing profile: " + JSON.stringify(profile));
+                    me.storage.data.save(resolve, profile, "user.verify", userid);
+                });
+                me.log("user authenticated: " + name + " = " + userid);
             }
             me.async(info.task, verify()).catch(() => {
                 me.error("failed to verify token");
