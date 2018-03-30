@@ -34,7 +34,8 @@ screens.user.verify = function UserVerify(me) {
                 info.user = userid;
                 var profile = {
                     name,
-                    userid
+                    userid,
+                    date: new Date().toString()
                 };
                 me.log("storing user: " + name);
                 await new Promise(resolve => {
