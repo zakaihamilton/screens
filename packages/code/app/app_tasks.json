@@ -4,7 +4,7 @@
     "popup": true,
     "temp": true,
     "ui.property.style":{
-        "width": "300px",
+        "width": "290px",
         "height": "220px"
     },
     "ui.basic.elements": [
@@ -30,20 +30,20 @@
     ],
     "ui.group.data": {
         "ui.data.default": {
-            "ui.style.marginLeft": "2px",
+            "ui.style.marginLeft": "4px",
             "ui.style.marginRight": "10px",
             "ui.style.marginTop": "9px",
             "ui.style.float": "left",
             "ui.style.width": "73px"
         },
-        "ui.data.keyList": ["ui.basic.text", "ui.touch.click", "ui.style.width", "ui.style.marginRight"],
+        "ui.data.keyList": ["ui.basic.text", "ui.touch.click", "ui.style.marginRight"],
         "ui.data.values": [
             ["Switch to", "app.tasks.switchTo"],
-            ["End Task", "app.tasks.closeTask"],
-            ["Cancel", "widget.window.close", "90px", "0px"],
+            ["Close", "app.tasks.closeTask"],
+            ["Restart", "core.util.restart", "0px"],
             ["Cascade", "app.tasks.cascade"],
             ["Tile", "app.tasks.tile"],
-            ["Arrange Icons", "ui.arrange.arrangeIcons", "90px", "0px"]
+            ["Launcher", "core.app.launcher", "0px"]
         ]
     }
 }

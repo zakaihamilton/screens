@@ -32,5 +32,8 @@ screens.core.util = function CoreUtil(me) {
     };
     me.isSecure = function() {
         return location.protocol === 'https:';
+    };
+    me.restart = function() {
+        location.reload(true);
     }
 };
