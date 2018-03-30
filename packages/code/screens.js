@@ -252,6 +252,9 @@ function screens_load(task, items, callback) {
         if (items && items.length) {
             if (screens.platform === "server" || screens.platform === "service") {
                 items.map((item) => {
+                    if(item.package_name in screens && item.component_name in screens[item.package_name]) {
+                        return;
+                    }
                     var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
                     screens.lock(task, (task) => {
                         screens_import(() => {
@@ -264,6 +267,9 @@ function screens_load(task, items, callback) {
             else {
                 var first = true;
                 var paths = items.map((item) => {
+                    if(item.package_name in screens && item.component_name in screens[item.package_name]) {
+                        return null;
+                    }
                     var path = item.package_name + "_" + item.component_name;
                     if (first) {
                         path = "/packages/code/" + item.package_name + "/" + path;
@@ -271,24 +277,27 @@ function screens_load(task, items, callback) {
                     }
                     return path + ".js";
                 });
-                var path = paths.join(",") + "?platform=" + screens.platform;
-                screens.lock(task, (task) => {
-                    screens_import(() => {
-                        var firstItem = items[0];
-                        if (firstItem.component_name === "*") {
-                            items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
-                                return {
-                                    package_name: firstItem.package_name,
-                                    component_name: component_name
-                                };
+                paths = paths.filter(Boolean);
+                if(paths.length) {
+                    var path = paths.join(",") + "?platform=" + screens.platform;
+                    screens.lock(task, (task) => {
+                        screens_import(() => {
+                            var firstItem = items[0];
+                            if (firstItem.component_name === "*") {
+                                items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
+                                    return {
+                                        package_name: firstItem.package_name,
+                                        component_name: component_name
+                                    };
+                                });
+                            }
+                            items.map((item) => {
+                                item.initializers = screens_setup(item.package_name, item.component_name);
                             });
-                        }
-                        items.map((item) => {
-                            item.initializers = screens_setup(item.package_name, item.component_name);
-                        });
-                        screens.unlock(task);
-                    }, path);
-                });
+                            screens.unlock(task);
+                        }, path);
+                    });
+                }
             }
         }
         screens.unlock(task, () => {
