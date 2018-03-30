@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.widget-icon-icon:hover:active {
+    font-weight: bold;
+}
+
 .widget-icon-icon+.widget-icon-icon
 {
     margin-left:0px;
