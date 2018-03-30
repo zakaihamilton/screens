@@ -446,6 +446,10 @@
     display:none;
 }
 
+.widget-window-minimize.temp {
+    display:none;
+}
+
 .widget-window-minimize.child {
     display:none;
 }

@@ -4,8 +4,8 @@
     "popup": true,
     "temp": true,
     "ui.property.style":{
-        "width": "288px",
-        "height": "201px"
+        "width": "300px",
+        "height": "220px"
     },
     "ui.basic.elements": [
         {

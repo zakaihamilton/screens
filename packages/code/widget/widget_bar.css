@@ -11,9 +11,14 @@
 
 .widget-bar-launcher {
     top:3px;
-    right:7px;
+    right:0px;
     position:absolute;
     padding:3px;
+    padding-right:10px;
+    padding-left:10px;
+    user-select: none;
+    -webkit-user-drag: none;
+    cursor:default;
 }
 
 .widget-bar-launcher:hover:active {
