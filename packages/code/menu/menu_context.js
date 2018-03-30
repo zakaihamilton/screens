@@ -10,6 +10,12 @@ screens.menu.context = function MenuContext(me) {
             return !me.core.property.get(window, "fixed");
         }
     };
+    me.minimizable = {
+        get: function (object) {
+            var window = me.widget.window(object);
+            return !me.core.property.get(window, "temp") && !me.core.property.get(window, "popup");
+        }
+    };
     me.maximizable = {
         get: function (object) {
             var window = me.widget.window(object);

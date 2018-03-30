@@ -17,8 +17,8 @@ screens.widget.icon = function WidgetIcon(me) {
         me.core.property.set(me, "core.object.type", {
             set: function(object, value, name, oldValue) {
                 if(value === "icon") {
-                    me.core.property.set(object.var.icon, "ui.attribute.width", "32px");
-                    me.core.property.set(object.var.icon, "ui.attribute.height", "32px");
+                    me.core.property.set(object.var.icon, "ui.attribute.width", "64px");
+                    me.core.property.set(object.var.icon, "ui.attribute.height", "64px");
                 }
                 else if(value === "list") {
                     me.core.property.set(object.var.icon, "ui.attribute.width", "16px");

@@ -15,7 +15,7 @@
     ],
     ["Minimize", "widget.window.minimize", {
             "enabled": "select",
-            "visible": "menu.context.notPopup"
+            "visible": "menu.context.minimizable"
         }
     ],
     ["Maximize", "widget.window.maximize", {
