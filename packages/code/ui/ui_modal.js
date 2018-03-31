@@ -1,18 +1,18 @@
 /*
  @author Zakai Hamilton
- @component UIPopup
+ @component UIModal
  */
 
-screens.ui.popup = function UIPopup(me) {
+screens.ui.modal = function UIModal(me) {
     me.get = function (object, property) {
         return {
             set: function (object, value) {
                 if (Array.isArray(value)) {
                     value = value.slice(0);
-                    value.unshift("popup." + property + ".launch");
+                    value.unshift("modal." + property + ".launch");
                     return me.core.message.send.apply(null, value);
                 } else {
-                    return me.core.message.send("popup." + property + ".launch", value);
+                    return me.core.message.send("modal." + property + ".launch", value);
                 }
             }
         };
@@ -20,7 +20,7 @@ screens.ui.popup = function UIPopup(me) {
     me.apply = function (appName) {
         var result = null;
         var appArgs = Array.prototype.slice.call(arguments, 1);
-        return me.core.message.send("popup." + appName + ".launch", appArgs);
+        return me.core.message.send("modal." + appName + ".launch", appArgs);
     };
     return "browser";
 };

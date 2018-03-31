@@ -1,4 +1,4 @@
-.popup-progress-bar {
+.modal-progress-bar {
     position:relative;
     top:60px;
     left:10%;
@@ -18,7 +18,7 @@
     animation: popup-progress-move .5s linear infinite;
   }
   
-  @keyframes popup-progress-move {
+  @keyframes modal-progress-move {
     0% {
       background-position: 0 0;
     }

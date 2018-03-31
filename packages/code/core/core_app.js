@@ -10,7 +10,7 @@ screens.core.app = function CoreApp(me) {
                 if(!property) {
                     return;
                 }
-                var progress = me.ui.popup("progress", {
+                var progress = me.ui.modal("progress", {
                     "title":property.charAt(0).toUpperCase() + property.slice(1),
                     "delay":"250"
                 });
@@ -38,7 +38,7 @@ screens.core.app = function CoreApp(me) {
             return null;
         }
         var result = null;
-        var progress = me.ui.popup("progress", {
+        var progress = me.ui.modal("progress", {
             "title":appName.charAt(0).toUpperCase() + appName.slice(1),
             "delay":"250"
         });
