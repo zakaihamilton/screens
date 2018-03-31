@@ -1,0 +1,22 @@
+{
+    "title": "Library",
+    "icon": "/packages/res/icons/library_tray.png",
+    "ui.property.style": {
+        "left": "15%",
+        "top": "15%",
+        "width": "70%",
+        "height": "70%"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag":"div",
+            "ui.class.class":"app.launcher.search.container",
+            "ui.basic.elements": {
+                "ui.basic.type": "search",
+                "ui.attribute.placeholder": "Search",
+                "ui.basic.text": "",
+                "ui.class.classExtra": "app.launcher.search"
+            }
+        }
+    ]
+}
