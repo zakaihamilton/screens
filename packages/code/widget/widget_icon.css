@@ -22,11 +22,11 @@
 }
 
 .widget-icon-list {
-    min-width:150px;
+    min-width:100px;
     position:relative;
     float:left;
     top: 12px;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
