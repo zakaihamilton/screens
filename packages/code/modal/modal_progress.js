@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component PopupProgress
+ @component ModalProgress
  */
 
-screens.popup.progress = function PopupProgress(me) {
+screens.modal.progress = function ModalProgress(me) {
     me.launch = function (args) {
         var json = __json__;
         var params = args[0];

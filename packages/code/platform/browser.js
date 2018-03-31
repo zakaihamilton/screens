@@ -24,7 +24,7 @@ function startBrowser(appName, appArgs) {
         "widget": [
             "*"
         ],
-        "popup": [
+        "modal": [
             "*"
         ],
         "kab": [

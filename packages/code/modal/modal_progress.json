@@ -10,7 +10,7 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag":"div",
-            "ui.class.class":"popup.progress.bar"
+            "ui.class.class":"modal.progress.bar"
         }
     ]
 }
