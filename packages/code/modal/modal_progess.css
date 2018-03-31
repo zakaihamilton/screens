@@ -15,7 +15,7 @@
         #eee 20px /* determines size */
       );
     background-size: 28px 28px;
-    animation: popup-progress-move .5s linear infinite;
+    animation: modal-progress-move .5s linear infinite;
   }
   
   @keyframes modal-progress-move {
