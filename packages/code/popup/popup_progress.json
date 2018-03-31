@@ -5,27 +5,12 @@
     "ui.property.style":{
         "left": "30%",
         "top": "30%",
-        "width": "40%",
-        "height": "20%"
+        "width": "40%"
     },
     "ui.basic.elements": [
         {
-            "ui.basic.tag":"h2",
-            "ui.basic.var": "app",
-            "ui.basic.text": "@ui.param.context(System)",
-            "ui.property.style":{
-                "padding":"10px",
-                "marginLeft":"10px"
-            }
-        },
-        {
-            "ui.basic.tag":"h4",
-            "ui.basic.var": "app",
-            "ui.basic.text": "@ui.param.message(Message)",
-            "ui.property.style":{
-                "padding":"10px",
-                "marginLeft":"10px"
-            }
+            "ui.basic.tag":"div",
+            "ui.class.class":"popup.progress.bar"
         }
     ]
 }

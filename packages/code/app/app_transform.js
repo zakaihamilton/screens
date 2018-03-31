@@ -448,7 +448,7 @@ screens.app.transform = function AppTransform(me) {
             var currentFilter = me.ui.layout.options(window.var.layout);
             var newFilter = me.core.property.get(window.var.filter, "ui.basic.text");
             me.core.property.set(window.var.filter, "storage.local.store", newFilter);
-            if(currentFilter && currentFilter.filter !== newFilter) {
+            if (currentFilter && currentFilter.filter !== newFilter) {
                 me.core.property.set(window, "app.transform.reflow");
             }
         }
@@ -611,30 +611,19 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.init = function (task) {
-        var progress = me.ui.popup("progress", {
-            "context":"Content",
-            "title":"Transform",
-            "delay":"250",
-            "message":"Loading from Server..."
+        me.lock(task, (task) => {
+            me.core.message.send_server("core.cache.use", (err, items) => {
+                me.error(err);
+                me.publicContentList = items;
+                me.unlock(task);
+            }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
         });
         me.lock(task, (task) => {
-            me.lock(task, (task) => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.publicContentList = items;
-                    me.unlock(task);
-                }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
-            });
-            me.lock(task, (task) => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.privateContentList = items;
-                    me.unlock(task);
-                }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
-            });
-            me.unlock(task, () => {
-                me.core.property.set(progress, "close");
-            });
+            me.core.message.send_server("core.cache.use", (err, items) => {
+                me.error(err);
+                me.privateContentList = items;
+                me.unlock(task);
+            }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
         });
     };
     me.menuList = function (object, list, group) {
@@ -758,7 +747,7 @@ screens.app.transform = function AppTransform(me) {
         var isPaused = me.ui.layout.isPaused(currentPage);
         var playWillEnable = window.options.voice !== "None";
         var playEnabled = me.ui.layout.options(window.var.layout).playEnabled;
-        if(playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
+        if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
             me.reflow.set(object);
             return;
         }
@@ -889,8 +878,8 @@ screens.app.transform = function AppTransform(me) {
         var language = window.language;
         var voicelist = me.media.voice.voices(language);
         voicelist = voicelist.sort((a, b) => {
-            if(a.name < b.name) return -1;
-            if(a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         });
         voicelist = voicelist.map((voice) => {
@@ -964,7 +953,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.clipboard.copy(me.error, text);
         }
     };
-    me.notes = function(object, event) {
+    me.notes = function (object, event) {
         event.preventDefault();
         return false;
     };
