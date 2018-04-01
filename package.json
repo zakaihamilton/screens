@@ -22,6 +22,8 @@
     "ip": "^1.1.5",
     "mime": "^2.2.0",
     "moment": "^2.20.0",
+    "mongodb": "^3.0.5",
+    "mongorito": "^3.0.4",
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.6.2",
     "openssl": "^1.1.0",
@@ -33,8 +35,8 @@
     "xmlhttprequest": "^1.8.0"
   },
   "settings": {
-    "google":{
-      "client_id":"635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
+    "google": {
+      "client_id": "635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
     },
     "service": {
       "netmonitor": {

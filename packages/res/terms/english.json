@@ -138,7 +138,8 @@
             "Torahall": "Torah all",
             "\nOr": "__Or",
             "west departs from the east":"__west departs from the __east",
-            "strong east wind":"strong __east wind"
+            "strong east wind":"strong __east wind",
+            "Balaam":"Bilʻam"
         },
         "tags":{
             "<subtitle>": "\n<b>",
