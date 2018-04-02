@@ -13,38 +13,26 @@ screens.core.http = function CoreHttp(me) {
     }
     me.listeners = [];
     me.forwardUrl = null;
-    me.init = function (task) {
+    me.init = async function () {
         if (me.platform === "server" || me.platform === "service") {
             me.http = require("http");
             me.https = require("https");
             me.fs = require("fs");
             if (me.platform === "server") {
-                me.lock(task, (task) => {
-                    me.createServer((server, port, err) => {
-                        if (err) {
-                            me.log("cannot create secure server, error: " + err);
-                            me.unlock(task);
-                            return;
-                        }
-                        me.log("secure server is listening on " + port);
-                        me.unlock(task);
-                    }, true);
+                await me.createServer(true).then(port => {
+                    me.log("secure server is listening on " + port);
+                }).catch(err => {
+                    me.log("cannot create secure server, error: " + err);
                 });
             }
-            me.lock(task, (task) => {
-                me.createServer((server, port, err) => {
-                    if (err) {
-                        me.log("cannot create normal server, error: " + err);
-                        me.unlock(task);
-                        return;
-                    }
-                    me.log("normal server is listening on " + port);
-                    me.unlock(task);
-                }, false);
+            await me.createServer(false).then(port => {
+                me.log("normal server is listening on " + port);
+            }).catch(err => {
+                me.log("cannot create normal server, error: " + err);
             });
         }
     };
-    me.createServer = function (callback, secure) {
+    me.createServer = function (secure) {
         var server = null;
         var port = me.port;
         var requestHandler = function (request, response) {
@@ -71,36 +59,45 @@ screens.core.http = function CoreHttp(me) {
             });
         };
         if (secure) {
-            me.core.private.keys((keys) => {
-                if (keys && keys.key && keys.cert && keys.ca) {
-                    try {
-                        var options = {
-                            ca: me.fs.readFileSync(keys.ca),
-                            key: me.fs.readFileSync(keys.key),
-                            cert: me.fs.readFileSync(keys.cert)
-                        };
-                        var https = require("https");
-                        server = https.createServer(options, requestHandler);
-                        port = 443;
-                        server.on('error', function (e) {
-                            callback(server, port, e);
-                        });
-                        server.listen(port, function (err) {
-                            me.forwardUrl = keys.redirect;
-                            callback(server, port, err);
-                        });
-                    } catch (e) {
-                        me.log("Cannot create secure server, error: " + e.message);
-                        callback(server, port, e);
+            return new Promise((resolve, reject) => {
+                me.core.private.keys((keys) => {
+                    if (keys && keys.key && keys.cert && keys.ca) {
+                        try {
+                            var options = {
+                                ca: me.fs.readFileSync(keys.ca),
+                                key: me.fs.readFileSync(keys.key),
+                                cert: me.fs.readFileSync(keys.cert)
+                            };
+                            var https = require("https");
+                            server = https.createServer(options, requestHandler);
+                            port = 443;
+                            server.on('error', function (e) {
+                                reject(e);
+                            });
+                            server.listen(port, function (err) {
+                                me.forwardUrl = keys.redirect;
+                                resolve(port);
+                            });
+                        } catch (e) {
+                            me.log("Cannot create secure server, error: " + e.message);
+                            reject(e);
+                        }
                     }
-                }
-            }, "https");
+                }, "https");
+            });
         } else {
             me.log("using http");
-            server = me.http.createServer(requestHandler);
-            me.io = require("socket.io")(server);
-            server.listen(port, function (err) {
-                callback(server, port, err);
+            return new Promise((resolve, reject) => {
+                server = me.http.createServer(requestHandler);
+                me.io = require("socket.io")(server);
+                server.listen(port, function (err) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(port);
+                    }
+                });
             });
         }
     };
@@ -116,7 +113,7 @@ screens.core.http = function CoreHttp(me) {
         }
         return ip;
     };
-    me.handleRequest = function (request, response, body, secure) {
+    me.handleRequest = async function (request, response, body, secure) {
         if (body) {
             body = Buffer.concat(body).toString();
         }
@@ -144,17 +141,30 @@ screens.core.http = function CoreHttp(me) {
         };
         me.core.object(me, info);
         //me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
-        me.forEach(null, ["check", "receive", "compress", "end"], (task, message) => {
-            info.task = task;
-            me.core.property.set(info, message);
-            if(info.stop) {
-                return true;
+        var messages = ["check", "receive", "compress", "end"];
+        for (var message of messages) {
+            if (info.stop) {
+                break;
             }
-        }, () => {
-            me.log("error in: " + info.url);
-            response.writeHead(403);
-            response.end();
-        });
+            await new Promise((resolve, reject) => {
+                try {
+                    me.lock((task) => {
+                        info.task = task;
+                        me.core.property.set(info, message);
+                        me.unlock(task, () => {
+                            resolve();
+                        });
+                    });
+                }
+                catch (err) {
+                    info.stop = true;
+                    me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
+                    response.writeHead(403);
+                    response.end();
+                    reject();
+                }
+            });
+        }
     };
     me.parse_query = function (query) {
         var array = {};

@@ -15,7 +15,7 @@ screens.app.packets = function AppPackets(me) {
         }
         return me.singleton;
     };
-    me.init = function (task) {
+    me.init = function () {
         me.colors = [];
         me.isPushEnabled = false;
         me.ui.options.load(me, null, {
@@ -41,7 +41,7 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData");
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
-        me.lock(task, (task) => {
+        return new Promise((resolve, reject) => {
             me.storage.data.query((err, items) => {
                 me.error(err);
                 me.dataList = items;
@@ -49,7 +49,7 @@ screens.app.packets = function AppPackets(me) {
                     me.isPushEnabled = isPushEnabled;
                 });
                 screens.include("lib.moment", function () {
-                    me.unlock(task);
+                    resolve();
                 });
             }, "app.packets.data");
         });

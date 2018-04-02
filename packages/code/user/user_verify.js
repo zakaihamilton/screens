@@ -4,14 +4,14 @@
  */
 
 screens.user.verify = function UserVerify(me) {
-    me.init = function (task) {
-        me.lock(task, (task) => {
+    me.init = function () {
+        me.core.property.link("core.http.check", "user.verify.check", true);
+        return new Promise((resolve, reject) => {
             me.core.util.config((google) => {
                 me.client_id = google.client_id;
+                resolve();
             }, "settings.google");
-            me.unlock(task);
         });
-        me.core.property.link("core.http.check", "user.verify.check", true);
     };
     me.check = function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {

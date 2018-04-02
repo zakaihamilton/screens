@@ -4,7 +4,7 @@
 */
 
 screens.core.hash = function CoreHash(me) {
-    me.init = function(task) {
+    me.init = function() {
         me.bcrypt = require('bcryptjs');
     };
     me.gen = function(callback, password) {

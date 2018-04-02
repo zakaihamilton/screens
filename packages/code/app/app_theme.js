@@ -4,12 +4,8 @@
  */
 
 screens.app.theme = function AppTheme(me) {
-    me.init = function(task) {
-        me.lock(task, (task) => {
-            me.ui.theme.updateList(() => {
-                me.unlock(task);
-            });
-        });
+    me.init = async function() {
+        await me.ui.theme.updateList();
     };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

@@ -6,17 +6,13 @@
 screens.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
-    me.init = function(task) {
+    me.init = async function() {
         var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
         if(current_theme !== "none") {
-            me.lock((task) => {
-                me.load(() => {
-                    me.unlock(task);
-                }, current_theme);
-            });
+            await me.load(current_theme);
         }
     };
     me.themeList = {
@@ -24,26 +20,28 @@ screens.ui.theme = function UITheme(me) {
             return me.themes;
         }
     };
-    me.updateList = function(callback) {
+    me.updateList = function() {
         me.themes = [];
         var path = "packages/res/themes";
-        me.core.file.readDir(function(err, items) {
-            if(items) {
-                for(let item of items) {
-                    var period = item.lastIndexOf(".");
-                    if(period === -1) {
-                        continue;
+        return new Promise((resolve, reject) => {
+            me.core.file.readDir(function(err, items) {
+                if(items) {
+                    for(let item of items) {
+                        var period = item.lastIndexOf(".");
+                        if(period === -1) {
+                            continue;
+                        }
+                        var name = item.substring(0, period);
+                        var extension = item.substring(period+1);
+                        if(extension !== "json") {
+                            continue;
+                        }
+                        me.themes.push(name);
                     }
-                    var name = item.substring(0, period);
-                    var extension = item.substring(period+1);
-                    if(extension !== "json") {
-                        continue;
-                    }
-                    me.themes.push(name);
                 }
-            }
-            callback();
-        }, path);
+                resolve();
+            }, path);
+        });
     };
     me.applyTheme = function(elementCallback, parent) {
         if(!parent) {
@@ -80,32 +78,32 @@ screens.ui.theme = function UITheme(me) {
             me.core.property.set(me.storage.local.local, "ui-theme-current", "none");
         }
     };
-    me.load = function(callback, name) {
+    me.load = function(name) {
         var path = "/packages/res/themes/" + name.toLowerCase();
-        me.core.json.loadFile(function(data) {
-            if(data) {
-                me.unload();
-                me.currentTheme = data;
-                me.currentTheme.link = me.ui.class.loadStylesheet(() => {
-                    if(callback) {
-                        callback(data);
-                    }
-                }, path + ".css");
-                me.applyTheme(function(element, classItem) {
-                    var mapping = me.findMapping(classItem);
-                    if(!mapping) {
-                        return;
-                    }
-                    if(mapping.source === classItem) {
-                        element.classList.add(mapping.target);
-                        if(mapping.replace) {
-                            element.classList.remove(mapping.source);
+        return new Promise((resolve, reject) => {
+            me.core.json.loadFile(function(data) {
+                if(data) {
+                    me.unload();
+                    me.currentTheme = data;
+                    me.currentTheme.link = me.ui.class.loadStylesheet(() => {
+                        resolve(data);
+                    }, path + ".css");
+                    me.applyTheme(function(element, classItem) {
+                        var mapping = me.findMapping(classItem);
+                        if(!mapping) {
+                            return;
                         }
-                    }
-                });
-                me.core.property.set(me.storage.local.local, "ui-theme-current", name);
-            }
-        }, path + ".json", "utf8");
+                        if(mapping.source === classItem) {
+                            element.classList.add(mapping.target);
+                            if(mapping.replace) {
+                                element.classList.remove(mapping.source);
+                            }
+                        }
+                    });
+                    me.core.property.set(me.storage.local.local, "ui-theme-current", name);
+                }
+            }, path + ".json", "utf8");
+        });
     };
     me.findMapping = function(classItem) {
         if(me.currentTheme) {

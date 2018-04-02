@@ -4,7 +4,7 @@
  */
 
 screens.db.passage = function DbPassage(me) {
-    me.init = function(task) {
-        
+    me.init = function() {
+
     };
 };

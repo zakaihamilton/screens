@@ -4,10 +4,10 @@
  */
 
 screens.lib.google = function LibGoogle(me) {
-    me.init = function (task) {
+    me.init = function () {
         me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);
-        me.lock(task, (task) => {
+        return new Promise((resolve, reject) => {
             me.core.util.config((google) => {
                 me.core.require(() => {
                     gapi.load('auth2', function () {
@@ -25,16 +25,16 @@ screens.lib.google = function LibGoogle(me) {
                                 });
                                 me.core.listener.wait(() => {
                                     me.setStatus("Sign in occured");
-                                    me.unlock(task);
+                                    resolve();
                                 }, me.id);
                             }
                             else {
                                 me.setStatus("Not signed in");
-                                me.unlock(task);
+                                resolve();
                             }
                         }).catch((error) => {
                             me.setStatus("Cannot initialize google authenticiation: " + error);
-                            me.unlock(task);
+                            reject();
                         });
                     });
                 }, ["https://apis.google.com/js/platform.js"]);

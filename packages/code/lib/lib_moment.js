@@ -4,12 +4,12 @@
  */
 
 screens.lib.moment = function LibMoment(me) {
-    me.init = function (task) {
-        me.lock(task, (task) => {
+    me.init = function () {
+        return new Promise((resolve, reject) => {
             me.core.require((moment) => {
                 me.moment = moment;
                 me.apply = me.moment;
-                me.unlock(task);
+                resolve();
             }, ['/node_modules/moment/moment.js']);
         });
     };

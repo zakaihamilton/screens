@@ -32,44 +32,6 @@ function screens_unlock(task, callback) {
     }
 }
 
-function screens_forEach(task, array, callback, abortCallback) {
-    var index = 0;
-    screens_lock(task, (task) => {
-        function iterate() {
-            var exit = false;
-            while (index < array.length && !exit) {
-                screens_lock(task, (task) => {
-                    var lock = task.lock;
-                    var result = callback(task, array[index], index, array);
-                    if (result) {
-                        screens_unlock(task);
-                        if (abortCallback) {
-                            abortCallback(task, array[index], index, array);
-                        }
-                        exit = true;
-                        return;
-                    }
-                    index++;
-                    if (lock !== task.lock) {
-                        screens_unlock(task, () => {
-                            setTimeout(iterate, 0);
-                        });
-                        exit = true;
-                        return;
-                    }
-                    screens_unlock(task);
-                });
-            }
-            if (!exit) {
-                screens_unlock(task);
-            }
-        }
-        setTimeout(() => {
-            iterate();
-        }, 0);
-    });
-}
-
 async function screens_async(task, promise) {
     var result;
     screens_lock(task, async (task) => {
@@ -199,8 +161,8 @@ function screens_push(package_name, component_name, callback) {
     return item;
 }
 
-function screens_init(task, items) {
-    screens.forEach(task, items, (task, item) => {
+async function screens_init(items) {
+    for (item of items) {
         var initializers = item.initializers;
         if (initializers) {
             console.log("initializing: " + item.package_name + "." + item.component_name);
@@ -208,7 +170,10 @@ function screens_init(task, items) {
                 var init = initializers.shift();
                 if (init) {
                     try {
-                        init(task);
+                        var promise = init();
+                        if (promise && promise.then) {
+                            await promise;
+                        }
                     }
                     catch (err) {
                         var message = err.message || err;
@@ -216,97 +181,84 @@ function screens_init(task, items) {
                     }
                 }
             } while (init);
-            console.log("initialized: " + item.package_name + "." + item.component_name + (task.lock > 1 ? " waiting..." : ""));
+            console.log("initialized: " + item.package_name + "." + item.component_name);
         }
-    });
+    }
 }
 
-function screens_import(callback, path) {
+async function screens_import(path) {
     if (screens.platform === "server" || screens.platform === "service") {
         require(path);
-        callback();
     }
     else if (screens.platform === "client") {
         importScripts(path);
-        callback();
     }
     else if (screens.platform === "browser") {
         var scripts = document.getElementsByTagName("script");
         for (var i = scripts.length; i--;) {
             if (scripts[i].src === path) {
-                callback();
                 return;
             }
         }
-        var ref = scripts[0];
-        var script = document.createElement("script");
-        script.src = path;
-        script.async = true;
-        script.onload = callback;
-        ref.parentNode.insertBefore(script, ref);
+        return new Promise((resolve, reject) => {
+            var ref = scripts[0];
+            var script = document.createElement("script");
+            script.src = path;
+            script.async = true;
+            script.onload = resolve;
+            ref.parentNode.insertBefore(script, ref);
+        });
     }
 }
 
-function screens_load(task, items, callback) {
-    screens.lock(task, (task) => {
-        if (items && items.length) {
-            if (screens.platform === "server" || screens.platform === "service") {
-                items.map((item) => {
-                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
-                        return;
-                    }
-                    var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
-                    screens.lock(task, (task) => {
-                        screens_import(() => {
-                            item.initializers = screens_setup(item.package_name, item.component_name);
-                            screens.unlock(task);
-                        }, path);
-                    });
-                });
-            }
-            else {
-                var first = true;
-                var paths = items.map((item) => {
-                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
-                        return null;
-                    }
-                    var path = item.package_name + "_" + item.component_name;
-                    if (first) {
-                        path = "/packages/code/" + item.package_name + "/" + path;
-                        first = false;
-                    }
-                    return path + ".js";
-                });
-                paths = paths.filter(Boolean);
-                if (paths.length) {
-                    var path = paths.join(",") + "?platform=" + screens.platform;
-                    screens.lock(task, (task) => {
-                        screens_import(() => {
-                            var firstItem = items[0];
-                            if (firstItem.component_name === "*") {
-                                items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
-                                    return {
-                                        package_name: firstItem.package_name,
-                                        component_name: component_name
-                                    };
-                                });
-                            }
-                            items.map((item) => {
-                                item.initializers = screens_setup(item.package_name, item.component_name);
-                            });
-                            screens.unlock(task);
-                        }, path);
-                    });
+async function screens_load(items) {
+    if (items && items.length) {
+        if (screens.platform === "server" || screens.platform === "service") {
+            for(var item of items) {
+                if (item.package_name in screens && item.component_name in screens[item.package_name]) {
+                    return;
                 }
+                var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+                await screens_import(path);
+                item.initializers = screens_setup(item.package_name, item.component_name);
             }
         }
-        screens.unlock(task, () => {
-            callback(items);
-        });
-    });
+        else {
+            var first = true;
+            var paths = items.map((item) => {
+                if (item.package_name in screens && item.component_name in screens[item.package_name]) {
+                    return null;
+                }
+                var path = item.package_name + "_" + item.component_name;
+                if (first) {
+                    path = "/packages/code/" + item.package_name + "/" + path;
+                    first = false;
+                }
+                return path + ".js";
+            });
+            paths = paths.filter(Boolean);
+            if (paths.length) {
+                var path = paths.join(",") + "?platform=" + screens.platform;
+                await screens_import(path);
+                var firstItem = items[0];
+                if (firstItem.component_name === "*") {
+                    items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
+                        return {
+                            package_name: firstItem.package_name,
+                            component_name: component_name
+                        };
+                    });
+                }
+                items.map((item) => {
+                    item.initializers = screens_setup(item.package_name, item.component_name);
+                });
+            }
+        }
+    }
+    return items;
 }
 
-function screens_include(packages, callback) {
+async function screens_include(packages, callback) {
     if (typeof packages === "string" && packages) {
         var names = packages.split(".");
         var package_name = names[0];
@@ -315,32 +267,22 @@ function screens_include(packages, callback) {
         packages[package_name] = [component_name];
     }
     var collection = {};
-    screens.lock((task) => {
-        Object.entries(packages).forEach(([package_name, components]) => {
-            screens.lock(task, (task) => {
-                var items = [];
-                components.forEach((component_name) => {
-                    items.push(screens_push(package_name, component_name));
-                });
-                screens_load(task, items, (items) => {
-                    collection[package_name] = items;
-                });
-                screens.unlock(task);
-            });
+    for(var package_name in packages) {
+        var components = packages[package_name];
+        var items = [];
+        components.forEach((component_name) => {
+            items.push(screens_push(package_name, component_name));
         });
-        screens.unlock(task, () => {
-            screens.lock((task) => {
-                screens.forEach(task, Object.keys(packages), (task, package_name) => {
-                    screens_init(task, collection[package_name]);
-                });
-                screens.unlock(task, () => {
-                    if (callback) {
-                        callback();
-                    }
-                });
-            });
-        });
-    });
+        items = await screens_load(items);
+        collection[package_name] = items;
+    }
+    for (package_name in packages) {
+        console.log("initializing package: " + package_name);
+        await screens_init(collection[package_name]);
+    }
+    if (callback) {
+        callback();
+    }
 }
 
 var screens = new Proxy(() => {
@@ -360,7 +302,6 @@ Object.assign(screens, {
     include: screens_include,
     lock: screens_lock,
     unlock: screens_unlock,
-    forEach: screens_forEach,
     async: screens_async
 });
 

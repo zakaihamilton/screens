@@ -4,13 +4,13 @@
  */
 
 screens.storage.data = function StorageData(me) {
-    me.init = function (task) {
+    me.init = function () {
         me.log("initialising storage data");
         me.datastore = null;
         try {
             me.datastore = require('@google-cloud/datastore');
         } catch (e) {
-            me.lock(task, task => {
+            return new Promise((resolve, reject) => {
                 me.core.server.run(() => {
                     me.datastore = require('@google-cloud/datastore');
                     me.log("me.datastore:" + me.datastore);
@@ -24,7 +24,7 @@ screens.storage.data = function StorageData(me) {
             callback(me.service);
             return;
         }
-        if(!me.datastore) {
+        if (!me.datastore) {
             me.error("Datastore not initialized");
             callback(null);
         }
@@ -40,7 +40,7 @@ screens.storage.data = function StorageData(me) {
             if (json[key] === undefined) {
                 return;
             }
-            if(json[key] === "$user") {
+            if (json[key] === "$user") {
                 json[key] = user;
                 me.log("storing with user: " + JSON.stringify(user));
             }
@@ -60,7 +60,7 @@ screens.storage.data = function StorageData(me) {
                 key: key,
                 data: me.toDataStore(value, nonIndexed, user)
             }, function (err) {
-                if(err) {
+                if (err) {
                     me.error("error saving data for type: " + type + " id: " + id + " err:" + err);
                 }
                 callback(err);
@@ -103,13 +103,13 @@ screens.storage.data = function StorageData(me) {
         me.getService((service) => {
             me.log("query type: " + type);
             var query = service.createQuery(type);
-            if(select) {
+            if (select) {
                 me.log("query select: " + JSON.stringify(select));
                 query = query.select(select);
             }
-            if(filters) {
+            if (filters) {
                 filters.map(filter => {
-                    if(filter.value === "$user") {
+                    if (filter.value === "$user") {
                         me.log("query with user: " + JSON.stringify(user));
                         filter.value = user;
                     }
@@ -117,21 +117,21 @@ screens.storage.data = function StorageData(me) {
                 });
             }
             service.runQuery(query)
-                    .then(results => {
-                        const items = results[0];
-                        items.forEach(item => {
-                            item.key = item[service.KEY];
-                        });
-                        me.log("query returning " + items.length + " results");
-                        callback(null, items);
-                    })
-                    .catch(err => {
-                        me.error("failure to execute query, type: " + type + 
-                            " select: " + JSON.stringify(select) +
-                            " filters: " + JSON.stringify(filters) +
-                            " error: " + err.message);
-                        callback(err, null);
+                .then(results => {
+                    const items = results[0];
+                    items.forEach(item => {
+                        item.key = item[service.KEY];
                     });
+                    me.log("query returning " + items.length + " results");
+                    callback(null, items);
+                })
+                .catch(err => {
+                    me.error("failure to execute query, type: " + type +
+                        " select: " + JSON.stringify(select) +
+                        " filters: " + JSON.stringify(filters) +
+                        " error: " + err.message);
+                    callback(err, null);
+                });
         });
     };
     return "server";

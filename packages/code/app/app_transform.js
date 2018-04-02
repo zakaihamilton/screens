@@ -610,19 +610,19 @@ screens.app.transform = function AppTransform(me) {
             }, me.id + ".private.$user");
         }
     };
-    me.init = function (task) {
-        me.lock(task, (task) => {
+    me.init = async function () {
+        await new Promise((resolve, reject) => {
             me.core.message.send_server("core.cache.use", (err, items) => {
                 me.error(err);
                 me.publicContentList = items;
-                me.unlock(task);
+                resolve();
             }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
         });
-        me.lock(task, (task) => {
+        await new Promise((resolve, reject) => {
             me.core.message.send_server("core.cache.use", (err, items) => {
                 me.error(err);
                 me.privateContentList = items;
-                me.unlock(task);
+                resolve();
             }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
         });
     };
