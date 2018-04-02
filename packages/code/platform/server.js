@@ -28,10 +28,14 @@ screens.include({
     ],
     "storage": [
         "file",
-        "data"
+        "data",
+        "db"
     ],
     "user": [
         "verify"
+    ],
+    "db": [
+        "passage"
     ],
     "manager": [
         "download",

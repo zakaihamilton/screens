@@ -9,37 +9,11 @@ screens.storage.db = function StorageDB(me) {
         me.Database = Database;
         me.Model = Model;
         me.databases = {};
-        me.initModels();
-    };
-    me.initModels = function() {
-        me.lock((task) => {
-            var db = screens["db"];
-            if(db) {
-                var components = Object.keys(db);
-                if(components) {
-                    components.map(function (component_name) {
-                        me.lock(task, (task) => {
-                            var component = screens("db." + component_name);
-                            if(component.register) {
-                                me.log("db: " + component_name);
-                                component.register(task);
-                            }
-                            me.unlock(task);
-                        });
-                    });
-                }
-            }
-            me.unlock(task, () => {
-                if(callback) {
-                    callback();
-                }
-            });
-        });
     };
     me.database = function (callback, name) {
-        var dbHandle = me.databases[name];
-        if (dbHandle) {
-            callback(null, dbHandle);
+        var database = me.databases[name];
+        if (database) {
+            callback(null, database);
             return;
         }
         me.core.private.keys(async (keys) => {
@@ -52,11 +26,11 @@ screens.storage.db = function StorageDB(me) {
             }
             var url = info.url;
             try {
-                dbHandle = new Database(url);
-                await dbHandle.connect();
+                database = new Database(url);
+                await database.connect();
                 me.log("Connected correctly to server");
-                me.databases[name] = dbHandle;
-                callback(null, dbHandle);
+                me.databases[name] = database;
+                callback(null, database);
             }
             catch(err) {
                 err = "Failed to connect to server, url: " + url + " err: " + err;
