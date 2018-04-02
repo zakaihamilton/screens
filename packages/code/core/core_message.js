@@ -29,12 +29,14 @@ screens.core.message = function CoreMessage(me) {
         };
         screens.worker.postMessage(null);
     };
-    me.workerReady = function(callback) {
-        if (me.platform === "client") {
-            me.send_browser("core.listener.signal", () => {
-                callback();
-            }, me.id);
-        }
+    me.workerReady = async function() {
+        return new Promise((resolve, reject) => {
+            if (me.platform === "client") {
+                me.send_browser("core.listener.signal", () => {
+                    resolve();
+                }, me.id);
+            }
+        });
     };
     me.send_server = function (path, callback, params) {
         if (me.platform === "service") {

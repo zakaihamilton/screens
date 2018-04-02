@@ -67,26 +67,26 @@ screens.ui.class = function UIClass(me) {
             });
         }
     };
-    me.loadStylesheet = function(callback, path) {
+    me.loadStylesheet = async function(path) {
+        me.styleSheetsLeftToLoad++;
         var link = document.createElement("link");
         link.href = path;
         link.type = "text/css";
         link.rel = "stylesheet";
         link.media = "screen,print";
-        link.onload = function() {
-            me.log("Loaded css stylesheet: " + path + "=" + link.href);
-            if(callback) {
-                callback();
-            }
-        };
-        me.styleSheetsLeftToLoad++;
-        document.getElementsByTagName("head")[0].appendChild(link);
-        me.log("Loading css stylesheet: " + path + "=" + link.href);
+        await new Promise((resolve, reject) => {
+            link.onload = () => {
+                me.log("Loaded css stylesheet: " + path + "=" + link.href);
+                resolve();
+            };
+            document.getElementsByTagName("head")[0].appendChild(link);
+            me.log("Loading css stylesheet: " + path + "=" + link.href);
+        });
         return link;
     };
-    me.loadPackageStylesheets = function (callback, package_name) {
+    me.loadPackageStylesheets = async function (package_name) {
         var fullPath = "/packages/code/" + package_name + "/" + package_name + "_*.css";
-        return me.loadStylesheet(callback, fullPath);
+        return await me.loadStylesheet(fullPath);
     };
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
@@ -126,20 +126,17 @@ screens.ui.class = function UIClass(me) {
             var class_name = me.to_class(object, path);
             var package_name = me.to_package(object, path);
             if(package_name) {
-                me.useStylesheet(null, package_name);
+                me.useStylesheet(package_name);
             }
         }
         me.processClass(object, class_name, function(item) {
             object.classList.add(item);
         });
     };
-    me.useStylesheet = function(callback, package_name) {
+    me.useStylesheet = async function(package_name) {
         if (!me.stylesheets[package_name]) {
             me.log("loading css stylesheets for package: " + package_name);
-            me.stylesheets[package_name] = me.loadPackageStylesheets(callback, package_name);
-        }
-        else if(callback) {
-            callback();
+            me.stylesheets[package_name] = await me.loadPackageStylesheets(package_name);
         }
     };
 };

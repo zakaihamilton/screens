@@ -74,7 +74,7 @@ screens.app.diagram = function AppDiagram(me) {
                 me.core.property.notify(window, "reload");
                 me.core.property.notify(window, "update");
             });
-            me.ui.class.useStylesheet(null, "kab");
+            me.ui.class.useStylesheet("kab");
         }
     };
     me.reload = {

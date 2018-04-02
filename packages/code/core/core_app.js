@@ -27,14 +27,8 @@ screens.core.app = function CoreApp(me) {
             }
         };
     };
-    me.preload = function(callback, appName) {
-        screens.include("app." + appName, function () {
-            callback();
-        });
-    };
-    me.apply = function (callback, appName) {
+    me.apply = async function (appName) {
         if(!appName) {
-            callback();
             return null;
         }
         var result = null;
@@ -42,14 +36,11 @@ screens.core.app = function CoreApp(me) {
             "title":appName.charAt(0).toUpperCase() + appName.slice(1),
             "delay":"250"
         });
-        screens.include("app." + appName, () => {
-            me.core.property.set(progress, "close");
-            var appArgs = Array.prototype.slice.call(arguments, 2);
-            result = me.core.message.send("app." + appName + ".launch", appArgs);
-            if (callback) {
-                callback(result);
-            }
-        });
+        await screens.include("app." + appName);
+        me.core.property.set(progress, "close");
+        var appArgs = Array.prototype.slice.call(arguments, 2);
+        result = me.core.message.send("app." + appName + ".launch", appArgs);
+        return result;
     };
     return "browser";
 };

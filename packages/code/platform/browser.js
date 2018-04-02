@@ -45,8 +45,6 @@ function startBrowser(appName, appArgs) {
             params: appArgs
         };
         screens.core.message.loadWorker("packages/code/platform/client.js");
-        screens.core.startup.run(() => {
-            
-        });
+        screens.core.startup.run();
     });
 }

@@ -7,10 +7,7 @@ screens.include({
     "kab": [
         "*"
     ]
-}, function () {
-    screens.core.startup.run(() => {
-        screens.core.message.workerReady(() => {
-
-        });
-    });
+}, async function () {
+    await screens.core.startup.run();
+    screens.core.message.workerReady();
 });

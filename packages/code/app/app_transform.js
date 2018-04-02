@@ -75,7 +75,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.choiceSet(me, "voice", me.changeVoice);
             me.ui.options.choiceSet(me, "speed", me.changeSpeed);
             me.ui.options.choiceSet(me, "scrollPos");
-            me.ui.class.useStylesheet(null, "kab");
+            me.ui.class.useStylesheet("kab");
         }
     };
     me.updateWidgets = function (object, showInput, update = true) {
@@ -514,7 +514,7 @@ screens.app.transform = function AppTransform(me) {
                     item.title,
                     function () {
                         var isFullscreen = me.core.property.get(window, "fullscreen");
-                        me.core.app(null, "diagram", item.path, window.options, isFullscreen);
+                        me.core.app("diagram", item.path, window.options, isFullscreen);
                     }
                 ];
                 return result;

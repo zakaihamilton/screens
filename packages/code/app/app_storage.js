@@ -47,7 +47,7 @@ screens.app.storage = function AppStorage(me) {
             var metadata = me.core.property.get(selection, "ui.basic.metadata");
             me.storage.file.metadata(function(data) {
                 metadata.data = data;
-                me.core.app(null, "info", me.core.property.get(selection, "ui.basic.text"), metadata);
+                me.core.app("info", me.core.property.get(selection, "ui.basic.text"), metadata);
             }, metadata.path);
         }
     };
