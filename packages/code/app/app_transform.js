@@ -523,14 +523,13 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.loadDiagram = {
-        set: function (object, path) {
+        set: async function (object, path) {
             var window = me.widget.window.mainWindow(object);
             var fullPath = me.fullPath(path);
-            me.core.json.loadFile(function (json) {
-                if (json.title) {
-                    window.diagrams.push({ title: json.title, path: path });
-                }
-            }, fullPath, false);
+            var json = me.core.json.loadFile(fullPath, false);
+            if (json.title) {
+                window.diagrams.push({ title: json.title, path: path });
+            }
         }
     };
     me.fullPath = function (name) {

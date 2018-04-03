@@ -4,16 +4,12 @@
  */
 
 screens.user.verify = function UserVerify(me) {
-    me.init = function () {
+    me.init = async function () {
         me.core.property.link("core.http.check", "user.verify.check", true);
-        return new Promise((resolve, reject) => {
-            me.core.util.config((google) => {
-                me.client_id = google.client_id;
-                resolve();
-            }, "settings.google");
-        });
+        var google = await me.core.util.config("settings.google");
+        me.client_id = google.client_id;
     };
-    me.check = function (info) {
+    me.check = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
             var token = info.headers["token"];
             if(!token) {
@@ -22,8 +18,8 @@ screens.user.verify = function UserVerify(me) {
                 return;
             }
             const { OAuth2Client } = require('google-auth-library');
-            const client = new OAuth2Client(me.client_id);
-            async function verify() {
+            try {
+                const client = new OAuth2Client(me.client_id);
                 const ticket = await client.verifyIdToken({
                     idToken: token,
                     audience: me.client_id,
@@ -38,16 +34,15 @@ screens.user.verify = function UserVerify(me) {
                     date: new Date().toString()
                 };
                 me.log("storing user: " + name);
-                await new Promise(resolve => {
-                    me.log("Storing profile: " + JSON.stringify(profile));
-                    me.storage.data.save(resolve, profile, "user.verify", userid);
-                });
+                me.log("Storing profile: " + JSON.stringify(profile));
+                await me.storage.data.save(profile, "user.verify", userid);
                 me.log("user authenticated: " + name + " = " + userid);
             }
-            me.async(info.task, verify()).catch(() => {
-                me.error("failed to verify token");
+            catch(err) {
+                err = "failed to verify token, err: " + err;
+                me.error(err);
                 info.stop = true;
-            });
+            }
         }
     };
     return "server";
