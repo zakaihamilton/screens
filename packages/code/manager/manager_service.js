@@ -4,8 +4,8 @@
  */
 
 screens.manager.service = function ManagerService(me) {
-    me.items = function(callback) {
-        me.core.service.list(callback);
+    me.items = function() {
+        return me.core.service.list();
     };
     return "server";
 };

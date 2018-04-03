@@ -4,13 +4,6 @@
  */
 
 screens.core.network = function CoreNetwork(me) {
-    me.ipAddress = function(callback) {
-        var ip = null;
-        if(this && this.clientIp) {
-            ip = this.clientIp;
-        }
-        callback(ip);
-    };
     me.isOnline = function() {
         return navigator.onLine;
     };

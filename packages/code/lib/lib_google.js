@@ -9,7 +9,7 @@ screens.lib.google = function LibGoogle(me) {
         me.core.property.link("core.http.headers", "lib.google.headers", true);
         return new Promise((resolve, reject) => {
             me.core.util.config((google) => {
-                me.core.require(() => {
+                me.core.require("https://apis.google.com/js/platform.js").then(() => {
                     gapi.load('auth2', function () {
                         me.auth2 = gapi.auth2.init({
                             client_id: google.client_id
@@ -37,7 +37,7 @@ screens.lib.google = function LibGoogle(me) {
                             reject();
                         });
                     });
-                }, ["https://apis.google.com/js/platform.js"]);
+                });
             }, "settings.google");
         });
     };

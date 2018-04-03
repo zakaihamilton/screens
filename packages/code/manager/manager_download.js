@@ -28,44 +28,39 @@ screens.manager.download = function ManagerDownload(me) {
                 downloadCount++;
             }
         },
-        download : function(item) {
+        download : async function(item) {
             if(item.isDownloading) {
                 return;
             }
             me.log("checking if file exists, path: " + item.to);
-            me.core.file.isFile(function(isFile) {
-                if(isFile) {
-                    var index = me.queue.indexOf(item);
+            var isFile = await me.core.file.isFile(item.to);
+            if(isFile) {
+                var index = me.queue.indexOf(item);
+                me.queue.splice(index, 1);
+                me.log("found file: " + item.to);
+                me.private.notify(item, null, item.to);
+            }
+            else {
+                item.isDownloading = true;
+                me.log("downloading: " + item.from + " to: " + item.to);
+                await me.storage.file.downloadFile(item.from, item.to);
+                me.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
+                var index = me.queue.indexOf(item);
+                if(index !== -1) {
                     me.queue.splice(index, 1);
-                    me.log("found file: " + item.to);
-                    me.private.notify(item, null, item.to);
+                }
+                if(item.convert) {
+                    var path = me.core.path.replaceExtension(item.to, item.convert);
+                    me.log("converting file from: " + item.to + " to: " + path);
+                    await me.media.ffmpeg.convert(item.to, item.convert, path);
+                    me.private.notify(item, err, path);
+                    me.private.update();
                 }
                 else {
-                    item.isDownloading = true;
-                    me.log("downloading: " + item.from + " to: " + item.to);
-                    me.storage.file.downloadFile(function(err) {
-                        me.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
-                        var index = me.queue.indexOf(item);
-                        if(index !== -1) {
-                            me.queue.splice(index, 1);
-                        }
-                        if(item.convert) {
-                            var path = me.core.path.replaceExtension(item.to, item.convert);
-                            me.log("converting file from: " + item.to + " to: " + path);
-                            me.media.ffmpeg.convert((err, progress) => {
-                                if(!progress) {
-                                    me.private.notify(item, err, path);
-                                    me.private.update();
-                                }
-                            }, item.to, item.convert, path);
-                        }
-                        else {
-                            me.private.notify(item, err, item.to);
-                            me.private.update();
-                        }
-                    }, item.from, item.to);
+                    me.private.notify(item, err, item.to);
+                    me.private.update();
                 }
-            }, item.to);
+            }
         },
         notify : function(item, err, target) {
             var callback = item.callbacks.pop();
@@ -75,7 +70,7 @@ screens.manager.download = function ManagerDownload(me) {
             }
         }
     };
-    me.push = function(callback, from, to, convert) {
+    me.push = async function(callback, from, to, convert) {
         var item = me.private.findItem(from, to);
         if(item) {
             var index = me.queue.indexOf(item);
@@ -88,17 +83,16 @@ screens.manager.download = function ManagerDownload(me) {
             if(convert) {
                 path = me.core.path.replaceExtension(to, convert);
             }
-            me.core.file.isFile(function(isFile) {
-                if(isFile) {
-                    callback(null, path);
-                }
-                else {
-                    me.log("pushing to download queue: " + from + " to: " + to);
-                    item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
-                    me.queue.push(item);
-                    me.private.update();
-                }
-            }, path);
+            var isFile = await me.core.file.isFile(path);
+            if(isFile) {
+                callback(null, path);
+            }
+            else {
+                me.log("pushing to download queue: " + from + " to: " + to);
+                item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
+                me.queue.push(item);
+                me.private.update();
+            }
         }
     };
     me.exists = function(callback, from, to) {

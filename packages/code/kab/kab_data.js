@@ -4,32 +4,27 @@
  */
 
 screens.kab.data = function KabData(me) {
-    me.init = function() {
+    me.init = function () {
         me.files = {};
     };
-    me.reload = function(callback, language) {
+    me.reload = async function (language) {
         language = language.toLowerCase();
-        me.core.json.loadFile(function (json) {
+        var json = await me.core.json.loadFile("/packages/res/terms/" + language + ".json", false);
+        if (json) {
+            me.files[language] = json;
             if (json) {
-                me.files[language] = json;
-                if(json) {
-                    json.language = language;
-                }
-                if (callback) {
-                    callback(json);
-                }
+                json.language = language;
             }
-        }, "/packages/res/terms/" + language + ".json", false);
+            return json;
+        }
     };
-    me.load = function (callback, language, reload=false) {
+    me.load = function (language, reload = false) {
         language = language.toLowerCase();
         if (!reload && me.files[language]) {
             var json = me.files[language];
-            if (callback) {
-                callback(json);
-            }
+            return json;
         } else {
-            me.reload(callback, language);
+            return await me.reload(language);
         }
     };
     return "client";

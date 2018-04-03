@@ -4,28 +4,22 @@
  */
 
 screens.core.require = function CoreRequire(me) {
-    me.apply = function(callback, list) {
-        if(!list) {
-            if(callback) {
-                callback();
-            }
+    me.apply = function(path) {
+        if(!path) {
             return;
         }
-        require(list, function () {
-            var modules = [];
-            list.map((path) => {
+        return new Promise((resolve, reject) => {
+            require(list, function () {
                 var module = null;
                 try {
                     module = require(path);
+                    resolve(module);
                 }
-                catch(e) {
-                    me.error(e);
+                catch(err) {
+                    me.error(err);
+                    reject(err);
                 }
-                modules.push(module);
             });
-            if(callback) {
-                callback.apply(null, modules);
-            }
         });
     };
 };

@@ -81,10 +81,10 @@ screens.widget.chart = function WidgetChart(me) {
                 }
                 var context = me.core.property.get(object, "context");
                 if(!me.chart) {
-                    me.core.require((chart) => {
+                    me.core.require("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
                         me.chart = chart;
                         object.chart = new me.chart.Chart(context, object.chartInfo);
-                    }, ['/node_modules/chart.js/dist/Chart.bundle.js']);
+                    });
                 }
                 else {
                     object.chart = new me.chart.Chart(context, object.chartInfo);

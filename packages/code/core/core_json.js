@@ -7,16 +7,17 @@ screens.core.json = function CoreJson(me) {
     me.init = function() {
         me.files = {};
     };
-    me.loadComponent = function(callback, path, useCache=true) {
+    me.loadComponent = async function(path, useCache=true) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
         var url = "/packages/code/" + package_name + "/" + package_name + "_" + component_name + ".json";
-        me.loadFile(callback, url, useCache);
+        var json = await me.loadFile(url, useCache);
+        return json;
     };
-    me.loadFile = function(callback, path, useCache=true) {
+    me.loadFile = async function(path, useCache=true) {
         if(useCache && path in me.files) {
-            callback(me.files[path]);
+            return me.files[path];
         }
         else {
             if(path && path.startsWith("/")) {
@@ -26,18 +27,14 @@ screens.core.json = function CoreJson(me) {
                 method: "GET",
                 url: "/" + path
             };
-            me.core.http.send((info) => {
-                var json = null;
-                if(info.response) {
-                    json = JSON.parse(info.response);
-                }
-                if(useCache) {
-                    me.files[path] = json;
-                }
-                if(callback) {
-                    callback(json);
-                }
-            }, info);
+            var json = await me.core.http.send(info);
+            if(json) {
+                json = JSON.parse(json);
+            }
+            if(useCache) {
+                me.files[path] = json;
+            }
+            return json;
         }
     };
     me.log = function(json) {

@@ -49,18 +49,16 @@ screens.core.console = function CoreConsole(me) {
             }
         }
     };
-    me.isEnabled = function(callback) {
-        callback(me.enabled);
+    me.isEnabled = function() {
+        return me.enabled;
     };
-    me.enable = function(callback, flag) {
+    me.enable = function(flag) {
         me.enabled = flag;
-        callback();
     };
-    me.retrieveMessages = function(callback) {
-        callback(me.messages);
+    me.retrieveMessages = function() {
+        return me.messages;
     };
-    me.clearMessages = function(callback) {
+    me.clearMessages = function() {
         me.clear();
-        callback();
     };
 };

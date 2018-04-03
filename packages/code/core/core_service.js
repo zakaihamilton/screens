@@ -17,11 +17,13 @@ screens.core.service = function CoreService(me) {
                         me.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
                     }
                 });
-                socket.on("method", (info) => {
-                    info.clientIp = socket.request.connection.remoteAddress;
-                    me.core.message.handleLocal((response) => {
-                        socket.emit("method", response);
-                    }, info, true);
+                socket.on("method", async (info) => {
+                    var _this = {clientIp:socket.request.connection.remoteAddress};
+                    var args = await me.core.message.handleLocal(_this, info.args);
+                    if(args && info.callback) {
+                        info.args = args;
+                        socket.emit("method", info);
+                    }
                 });
                 me.log("Service setup request for ref: " + ref);
                 me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
@@ -46,10 +48,12 @@ screens.core.service = function CoreService(me) {
                 me.client.on("disconnect", (info) => {
                     me.log("Disconnected from server: " + me.serverAddress);
                 });
-                me.client.on("method", (info) => {
-                    me.core.message.handleLocal((response) => {
-                        me.client.emit("method", response);
-                    }, info, true);
+                me.client.on("method", async (info) => {
+                    var args = await me.core.message.handleLocal(this, info.args);
+                    if(args && info.callback) {
+                        info.args = args;
+                        socket.emit("method", info);
+                    }
                 });
             });
         }

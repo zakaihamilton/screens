@@ -4,28 +4,26 @@
  */
 
 screens.cmd.clean = function CmdClean(me) {
-    me.cmd = function (terminal, args) {
+    me.cmd = async function (terminal, args) {
         var cache_dir = "cache";
-        me.lock(task => {
-            me.core.file.readDir(function (err, items) {
-                if (items) {
-                    for (let item of items) {
-                        me.lock(task, task => {
-                            me.core.file.delete(function (err) {
-                                if (err) {
-                                    me.core.property.set(terminal, "print", "cannot delete " + item);
-                                } else {
-                                    me.core.property.set(terminal, "print", item);
-                                }
-                                me.unlock(task);
-                            }, cache_dir + "/" + item);
-                        });
-                    }
+        var items = null;
+        try {
+            items = await me.core.file.readDir(cache_dir);
+        }
+        catch(err) {
+            me.log("Cannot read cache dir, err: " + err.message || err);
+        }
+        if (items) {
+            for (let item of items) {
+                try {
+                    await me.core.file.delete(cache_dir + "/" + item);
+                    me.core.property.set(terminal, "print", item);
                 }
-                me.unlock(task, () => {
-                    me.core.cmd.exit(terminal);
-                });
-            }, cache_dir);
-        });
+                catch(err) {
+                    me.core.property.set(terminal, "print", "cannot delete " + item);
+                }
+            }
+        }
+        me.core.cmd.exit(terminal);
     };
 };

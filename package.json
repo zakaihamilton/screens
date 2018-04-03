@@ -28,6 +28,7 @@
     "node-gyp": "^3.6.2",
     "openssl": "^1.1.0",
     "postcss": "^6.0.17",
+    "promise-worker": "^1.1.1",
     "socket.io": "^2.0.4",
     "socket.io-client": "^2.0.4",
     "video.js": "^6.6.3",

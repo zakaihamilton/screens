@@ -14,18 +14,18 @@ screens.app.player = function AppPlayer(me) {
         me.groupListData = [];
         me.sessionListData = [];
         var params = {};
-        if(args.length > 0) {
+        if (args.length > 0) {
             params.groupName = args[0];
         }
-        if(args.length > 1) {
+        if (args.length > 1) {
             params.sessionName = args[1];
         }
         me.singleton = me.ui.element(__json__, "workspace", "self", params);
-        me.core.file.makeDir(null, me.cachePath);
+        me.core.file.makeDir(me.cachePath);
         return me.singleton;
     };
     me.refresh = {
-        set: function(object) {
+        set: function (object) {
             var window = me.singleton;
             var group = me.core.property.get(window.var.groupList, "ui.basic.text");
             me.core.message.send_server("core.cache.reset", () => {
@@ -36,13 +36,16 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.update = {
-        set: function (object, value) {
+        set: async function (object, value) {
             var window = me.singleton;
             me.core.property.set(window.var.tree, "clear");
-            me.core.message.send_server("core.cache.use", (root) => {
-                me.groupListData = root;
-                me.core.property.set(window, "app.player.onChangeGroup", value);
-            }, me.id, "storage.file.getChildren", me.rootPath, false);
+            me.groupListData = await me.core.message.send_server(
+                "core.cache.use",
+                me.id,
+                "storage.file.getChildren",
+                me.rootPath,
+                false);
+            me.core.property.set(window, "app.player.onChangeGroup", value);
         }
     };
     me.onChangeGroup = {
@@ -50,11 +53,11 @@ screens.app.player = function AppPlayer(me) {
             var window = me.singleton;
             var text = me.core.property.get(window.var.groupList, "ui.basic.text");
             me.core.property.set(window.var.sessionList, "ui.basic.text", "");
-            me.core.property.set([window.var.audioType,window.var.videoType], "ui.style.visibility", "hidden");
-            me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
+            me.core.property.set([window.var.audioType, window.var.videoType], "ui.style.visibility", "hidden");
+            me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.groupList, "ui.basic.save", null);
             var sessionName = null;
-            if(text !== value) {
+            if (text !== value) {
                 sessionName = value;
             }
             me.updateSessions(sessionName);
@@ -89,32 +92,35 @@ screens.app.player = function AppPlayer(me) {
         }
         me.core.property.notify(window, "app.player.updatePlayer");
     };
-    me.updateSessions = function (sessionName) {
+    me.updateSessions = async function (sessionName) {
         var window = me.singleton;
         var group = me.core.property.get(window.var.groupList, "ui.basic.text");
         if (group) {
-            me.core.message.send_server("core.cache.use", (root) => {
-                me.sessionListData = root;
-                var sessions = me.core.property.get(window, "app.player.sessionList");
-                var sessionCount = 0;
-                if(sessions && sessions.length) {
-                    sessionCount = sessions.length;
-                    var name = sessions[0][0];
-                    if(sessionName) {
-                        name = sessionName;
-                    }
-                    if (name) {
-                        me.core.property.set(window.var.sessionList, "ui.basic.text", name);
-                        me.updateSession();
-                    }
+            me.sessionListData = await me.core.message.send_server(
+                "core.cache.use",
+                me.id + "-" + group,
+                "storage.file.getChildren",
+                me.rootPath + "/" + group.toLowerCase(),
+                false);
+            var sessions = me.core.property.get(window, "app.player.sessionList");
+            var sessionCount = 0;
+            if (sessions && sessions.length) {
+                sessionCount = sessions.length;
+                var name = sessions[0][0];
+                if (sessionName) {
+                    name = sessionName;
                 }
-                me.core.property.set(window.var.sessionCount, "ui.basic.text", sessionCount);
-            }, me.id + "-" + group, "storage.file.getChildren", me.rootPath + "/" + group.toLowerCase(), false);
+                if (name) {
+                    me.core.property.set(window.var.sessionList, "ui.basic.text", name);
+                    me.updateSession();
+                }
+            }
+            me.core.property.set(window.var.sessionCount, "ui.basic.text", sessionCount);
         }
     };
     me.groupList = {
         get: function (object) {
-            if(!me.groupListData) {
+            if (!me.groupListData) {
                 return [];
             }
             var items = me.groupListData.map(function (item) {
@@ -149,17 +155,17 @@ screens.app.player = function AppPlayer(me) {
             var sessionName = me.core.property.get(window.var.sessionList, "ui.basic.text");
             var audioPath = sessionName + "." + "m4a";
             var videoPath = sessionName + "." + "mp4";
-            if(showAudioPlayer || showVideoPlayer) {
+            if (showAudioPlayer || showVideoPlayer) {
                 var player = window.var.audioPlayer;
                 var path = audioPath;
-                if(showVideoPlayer) {
+                if (showVideoPlayer) {
                     player = window.var.videoPlayer;
                     path = videoPath;
                 }
                 me.core.property.set(window, "ui.work.state", true);
-                me.manager.download.push(function(err, target) {
-                    if(err) {
-                       me.core.app("info", target, err);
+                me.manager.download.push(function (err, target) {
+                    if (err) {
+                        me.core.app("info", target, err);
                     }
                     else {
                         me.core.property.set(player, "source", target);
@@ -171,7 +177,7 @@ screens.app.player = function AppPlayer(me) {
     };
     me.work = {
         set: function (object, value) {
-            if(me.workTimeout) {
+            if (me.workTimeout) {
                 clearTimeout(me.workTimeout);
                 me.workTimeout = null;
             }

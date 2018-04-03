@@ -13,17 +13,16 @@ screens.app.storage = function AppStorage(me) {
         return me.singleton;
     };
     me.refresh = {
-        set: function(object) {
+        set: async function(object) {
             me.core.property.set(me.singleton.var.tree, "clear");
-            me.storage.file.getChildren(function(root) {
-                me.core.property.set(me.singleton.var.tree, "ui.group.data", {
-                    "ui.data.keyList": ["ui.basic.text", "ui.basic.metadata", "ui.data.items"],
-                    "ui.data.default": {
-                        "state": false
-                    },
-                    "ui.data.values" : me.collectItems(root)
-                });
-            }, "/Kab/concepts", true);            
+            var root = await me.storage.file.getChildren("/Kab/concepts", true);
+            me.core.property.set(me.singleton.var.tree, "ui.group.data", {
+                "ui.data.keyList": ["ui.basic.text", "ui.basic.metadata", "ui.data.items"],
+                "ui.data.default": {
+                    "state": false
+                },
+                "ui.data.values" : me.collectItems(root)
+            });
         }
     };
     me.collectItems = function(root) {
@@ -42,28 +41,20 @@ screens.app.storage = function AppStorage(me) {
         return items;
     };
     me.info = {
-        set: function(object) {
+        set: async function(object) {
             var selection = me.core.property.get(me.singleton.var.tree, "selection");
             var metadata = me.core.property.get(selection, "ui.basic.metadata");
-            me.storage.file.metadata(function(data) {
-                metadata.data = data;
-                me.core.app("info", me.core.property.get(selection, "ui.basic.text"), metadata);
-            }, metadata.path);
+            var data = await me.storage.file.metadata(metadata.path);
+            metadata.data = data;
+            me.core.app("info", me.core.property.get(selection, "ui.basic.text"), metadata);
         }
     };
     me.download = {
         set: function(object) {
             var selection = me.core.property.get(me.singleton.var.tree, "selection");
             var metadata = me.core.property.get(selection, "ui.basic.metadata");
-            me.storage.file.downloadData(function(data, error) {
-                if(error) {
-                    metadata.data = error;
-                }
-                else {
-                    metadata.data = data;
-                }
-                alert(JSON.stringify(metadata));
-            }, metadata.path);
+            metadata.data = await me.storage.file.downloadData(metadata.path);
+            alert(JSON.stringify(metadata));
         }
     };
 };

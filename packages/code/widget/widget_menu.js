@@ -164,38 +164,38 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     me.options = {
         set: function (object, options) {
             if (options) {
-                me.handleValue(object, options, "enabled", function (value) {
-                    me.core.property.set(object, "ui.basic.enabled", value);
+                me.handleValue(object, options, "enabled", async (value) => {
+                    await me.core.property.set(object, "ui.basic.enabled", value);
                 });
-                me.handleValue(object, options, "visible", function (value) {
-                    me.core.property.set(object, "ui.style.display", value ? "block" : "none");
+                me.handleValue(object, options, "visible", async (value) => {
+                    await me.core.property.set(object, "ui.style.display", value ? "block" : "none");
                 });
-                me.handleValue(object, options, "state", function (value) {
+                me.handleValue(object, options, "state", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "checked");
+                        await me.core.property.set(object, "ui.class.add", "checked");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "checked");
+                        await me.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
-                me.handleValue(object, options, "mark", function (value) {
+                me.handleValue(object, options, "mark", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "mark");
+                        await me.core.property.set(object, "ui.class.add", "mark");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "mark");
+                        await me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
-                me.handleValue(object, options, "separator", function (value) {
+                me.handleValue(object, options, "separator", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "separator");
+                        await me.core.property.set(object, "ui.class.add", "separator");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "separator");
+                        await me.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
-                me.handleValue(object, options, "header", function (value) {
+                me.handleValue(object, options, "header", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "header");
+                        await me.core.property.set(object, "ui.class.add", "header");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "header");
+                        await me.core.property.set(object, "ui.class.remove", "header");
                     }
                 });
             }
@@ -298,7 +298,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.container = function (object, parent, properties) {
         return me.widget.menu.list.use(parent, properties["group"]);
     };
-    me.handleValue = function (object, values, key, callback) {
+    me.handleValue = async function (object, values, key, callback) {
         var parentMenu = me.parentMenu(object);
         if (key in values) {
             var value = values[key];
@@ -306,46 +306,46 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
                 if (value === "select") {
                     value = object.menu_select;
                 }
-                value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
+                value = await me.core.property.get(parentMenu.window, value, await me.core.property.get(object, "ui.basic.text"));
             }
-            callback(value);
+            await callback(value);
         }
     };
     me.options = {
-        set: function (object, options) {
+        set: async function (object, options) {
             if (options) {
-                me.handleValue(object, options, "enabled", function (value) {
-                    me.core.property.set(object, "ui.basic.enabled", value);
+                await me.handleValue(object, options, "enabled", async (value) => {
+                    await me.core.property.set(object, "ui.basic.enabled", value);
                 });
-                me.handleValue(object, options, "visible", function (value) {
-                    me.core.property.set(object, "ui.style.display", value ? "block" : "none");
+                await me.handleValue(object, options, "visible", async (value) => {
+                    await me.core.property.set(object, "ui.style.display", value ? "block" : "none");
                 });
-                me.handleValue(object, options, "state", function (value) {
+                await me.handleValue(object, options, "state", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "checked");
+                        await me.core.property.set(object, "ui.class.add", "checked");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "checked");
+                        await me.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
-                me.handleValue(object, options, "mark", function (value) {
+                await me.handleValue(object, options, "mark", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "mark");
+                        await me.core.property.set(object, "ui.class.add", "mark");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "mark");
+                        await me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
-                me.handleValue(object, options, "separator", function (value) {
+                await me.handleValue(object, options, "separator", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "separator");
+                        await me.core.property.set(object, "ui.class.add", "separator");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "separator");
+                        await me.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
-                me.handleValue(object, options, "header", function (value) {
+                await me.handleValue(object, options, "header", async (value) => {
                     if (value) {
-                        me.core.property.set(object, "ui.class.add", "header");
+                        await me.core.property.set(object, "ui.class.add", "header");
                     } else {
-                        me.core.property.set(object, "ui.class.remove", "header");
+                        await me.core.property.set(object, "ui.class.remove", "header");
                     }
                 });
             }

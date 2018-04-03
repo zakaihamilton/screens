@@ -32,7 +32,7 @@ screens.core.http = function CoreHttp(me) {
             });
         }
     };
-    me.createServer = function (secure) {
+    me.createServer = async function (secure) {
         var server = null;
         var port = me.port;
         var requestHandler = function (request, response) {
@@ -59,32 +59,31 @@ screens.core.http = function CoreHttp(me) {
             });
         };
         if (secure) {
-            return new Promise((resolve, reject) => {
-                me.core.private.keys((keys) => {
-                    if (keys && keys.key && keys.cert && keys.ca) {
-                        try {
-                            var options = {
-                                ca: me.fs.readFileSync(keys.ca),
-                                key: me.fs.readFileSync(keys.key),
-                                cert: me.fs.readFileSync(keys.cert)
-                            };
-                            var https = require("https");
-                            server = https.createServer(options, requestHandler);
-                            port = 443;
-                            server.on('error', function (e) {
-                                reject(e);
-                            });
-                            server.listen(port, function (err) {
-                                me.forwardUrl = keys.redirect;
-                                resolve(port);
-                            });
-                        } catch (e) {
-                            me.log("Cannot create secure server, error: " + e.message);
+            var keys = await me.core.private.keys("http");
+            if (keys && keys.key && keys.cert && keys.ca) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var options = {
+                            ca: me.fs.readFileSync(keys.ca),
+                            key: me.fs.readFileSync(keys.key),
+                            cert: me.fs.readFileSync(keys.cert)
+                        };
+                        var https = require("https");
+                        server = https.createServer(options, requestHandler);
+                        port = 443;
+                        server.on('error', function (e) {
                             reject(e);
-                        }
+                        });
+                        server.listen(port, function (err) {
+                            me.forwardUrl = keys.redirect;
+                            resolve(port);
+                        });
+                    } catch (e) {
+                        me.log("Cannot create secure server, error: " + e.message);
+                        reject(e);
                     }
-                }, "https");
-            });
+                });
+            }
         } else {
             me.log("using http");
             return new Promise((resolve, reject) => {
@@ -146,24 +145,15 @@ screens.core.http = function CoreHttp(me) {
             if (info.stop) {
                 break;
             }
-            await new Promise((resolve, reject) => {
-                try {
-                    me.lock((task) => {
-                        info.task = task;
-                        me.core.property.set(info, message);
-                        me.unlock(task, () => {
-                            resolve();
-                        });
-                    });
-                }
-                catch (err) {
-                    info.stop = true;
-                    me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
-                    response.writeHead(403);
-                    response.end();
-                    reject();
-                }
-            });
+            try {
+                await me.core.property.set(info, message);
+            }
+            catch (err) {
+                info.stop = true;
+                me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
+                response.writeHead(403);
+                response.end();
+            }
         }
     };
     me.parse_query = function (query) {
@@ -180,7 +170,7 @@ screens.core.http = function CoreHttp(me) {
     me.headers = function (info) {
 
     };
-    me.send = function (callback, info, async = true) {
+    me.send = async function (info) {
         me.core.object(me, info);
         if (!info.headers) {
             info.headers = {}
@@ -188,57 +178,55 @@ screens.core.http = function CoreHttp(me) {
         me.core.property.set(info, "headers", headers);
         var headers = Object.assign({}, info.headers);
         if (me.platform === "service") {
-            me.core.message.send_server(me.id + ".send", callback, info, async);
+            return me.core.message.send_server(me.id + ".send", info);
         } else if (me.platform === "server") {
-            var request = {
-                url: info.url,
-                headers: headers,
-                method: info.method.toUpperCase()
-            };
-            var response = {
-                writeHead: function () { },
-                end: function (body) {
-                    if (callback) {
-                        info.response = body;
-                        callback(info);
+            return new Promise((resolve, reject) => {
+                var request = {
+                    url: info.url,
+                    headers: headers,
+                    method: info.method.toUpperCase()
+                };
+                var response = {
+                    writeHead: function () { },
+                    end: function (body) {
+                        resolve(body);
                     }
+                };
+                me.log("sending request:" + JSON.stringify(request) + " body: " + info.body + " headers: " + JSON.stringify(info.headers));
+                try {
+                    me.handleRequest(request, response, info.body);
                 }
-            };
-            me.log("sending request:" + JSON.stringify(request) + " body: " + info.body + " headers: " + JSON.stringify(info.headers));
-            me.handleRequest(request, response, info.body);
+                catch (err) {
+                    reject(err);
+                }
+            });
         } else {
             var request = new XMLHttpRequest();
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
             me.log("sending request info:" + JSON.stringify(info));
-            request.open(info.method, info.url, async);
-            if (async) {
-                request.onreadystatechange = function (e) {
+            request.open(info.method, info.url, true);
+            return new Promise((resolve, reject) => {
+                request.onreadystatechange = function (err) {
+                    if (err) {
+                        reject(err);
+                    }
                     if (request.readyState === 4) {
                         if (request.status === 200 || request.status === 201) {
-                            if (callback) {
-                                info.response = request.responseText;
-                                callback(info);
-                            }
-                        } else if (info.hasOwnProperty("failure")) {
-                            if (callback) {
-                                info.status = request.status;
-                                callback(info);
-                            }
+                            resolve(request.responseText);
                         }
+                    } {
+                        reject(request.status);
                     }
                 };
-            }
-            if (headers) {
-                for (var key in headers) {
-                    request.setRequestHeader(key, headers[key]);
+                if (headers) {
+                    for (var key in headers) {
+                        request.setRequestHeader(key, headers[key]);
+                    }
                 }
-            }
-            request.send(info.body);
-            if (!async && request.status === 200) {
-                return request.responseText;
-            }
+                request.send(info.body);
+            });
         }
     };
     me.compress = {

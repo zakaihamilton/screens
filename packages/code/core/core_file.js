@@ -9,109 +9,153 @@ screens.core.file = function CoreFile(me) {
         me.http = require("http");
         me.https = require("https");
     };
-    me.readFile = function (callback, path, options) {
-        try {
-            me.fs.readFile(path, options, function (err, data) {
-                callback(err, data);
-            });
-        }
-        catch(e) {
-            callback(e);
-        }
-    };
-    me.makeDir = function (callback, path) {
-        me.fs.mkdir(path, function (err) {
-            callback(err);
+    me.readFile = function (path, options) {
+        return new Promise((resolve, reject) => {
+            try {
+                me.fs.readFile(path, options, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(data);
+                    }
+                });
+            }
+            catch (err) {
+                reject(err);
+            }
         });
     };
-    me.makeDirEx = function(callback, path) {
+    me.makeDir = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.mkdir(path, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
+    };
+    me.makeDirEx = async function (path) {
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
-        me.flow(callback, (flow) => {
-            tokens.map((token) => {
-                if(mkdirPath) {
-                    mkdirPath += "/" + token;
+        tokens.map((token) => {
+            if (mkdirPath) {
+                mkdirPath += "/" + token;
+            }
+            else {
+                mkdirPath = token;
+            }
+            await me.makeDir(mkdirPath);
+        });
+    };
+    me.readDir = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.readdir(path, function (err, items) {
+                me.log("path:" + path + " items:" + JSON.stringify(items));
+                if (err) {
+                    reject(err);
                 }
                 else {
-                    mkdirPath = token;
+                    resolve(items);
                 }
-                flow.async(me.makeDir, flow.callback, mkdirPath);
             });
-            flow.wait((err) => {
-                if(err) {
-                    error = err;
+        });
+    };
+    me.delete = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.stat(path, function (err, stats) {
+                if (err) {
+                    reject(err);
+                    return;
                 }
-            }, () => {
-                if(error) {
-                    flow.error(error, "failed to create directory " + path);
+                if (stats && stats.isDirectory()) {
+                    me.fs.rmdir(path, function (err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve();
+                        }
+                    });
+                } else {
+                    me.fs.unlink(path, function (err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve();
+                        }
+                    });
                 }
-                flow.end();
-            }, 1);
+            });
         });
     };
-    me.readDir = function (callback, path) {
-        me.fs.readdir(path, function (err, items) {
-            me.log("path:" + path + " items:" + JSON.stringify(items));
-            callback(err, items);
+    me.isFile = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.stat(path, function (err, stats) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    var isFile = stats ? stats.isFile() : false;
+                    resolve(isFile);
+                }
+            });
         });
     };
-    me.delete = function (callback, path) {
-        me.fs.stat(path, function (err, stats) {
-            if (err) {
-                callback(err);
-                return;
-            }
-            if (stats && stats.isDirectory()) {
-                me.fs.rmdir(path, function (err) {
-                    callback(err);
-                });
-            } else {
-                me.fs.unlink(path, function (err) {
-                    callback(err);
-                });
-            }
+    me.isDirectory = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.stat(path, function (err, stats) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    var isDirectory = stats ? stats.isDirectory() : false;
+                    resolve(isDirectory);
+                }
+            });
         });
     };
-    me.isFile = function (callback, path) {
-        me.fs.stat(path, function (err, stats) {
-            callback(stats ? stats.isFile() : false);
+    me.size = function (path) {
+        return new Promise((resolve, reject) => {
+            me.fs.stat(path, function (err, stats) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(stats.size);
+                }
+            });
         });
     };
-    me.isDirectory = function (callback, path) {
-        me.fs.stat(path, function (err, stats) {
-            callback(stats ? stats.isDirectory() : false);
-        });
-    };
-    me.size = function (callback, path) {
-        me.fs.stat(path, function (err, stats) {
-            callback(err, stats.size);
-        });
-    };
-    me.download = function (callback, source, target) {
+    me.download = async function (source, target) {
         var folder = me.core.path.goto(target, "..");
         me.log("downloading: " + source + " to: " + target);
-        me.makeDirEx(() => {
-            var file = me.fs.createWriteStream(target);
-            if(!file) {
-                callback(new Error("Cannot create stream: " + target));
-                return;
-            }
-            var protocol = me.http;
-            if(source.startsWith("https:")) {
-                protocol = me.https;
-            }
+        await me.makeDirEx(folder);
+        var file = me.fs.createWriteStream(target);
+        if (!file) {
+            throw "Cannot create stream: " + target;
+        }
+        var protocol = me.http;
+        if (source.startsWith("https:")) {
+            protocol = me.https;
+        }
+        return new Promise((resolve, reject) => {
             protocol.get(source, function (response) {
                 response.pipe(file);
                 file.on('finish', function () {
                     me.log("downloaded: " + source + " to: " + target);
-                    file.close(callback);
+                    file.close(resolve);
                 });
             }).on('error', function (err) {
                 me.fs.unlink(target);
-                callback(err);
+                reject(err);
             });
-        }, folder);
+        });
     };
     return "server";
 };

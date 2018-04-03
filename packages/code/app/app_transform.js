@@ -287,7 +287,6 @@ screens.app.transform = function AppTransform(me) {
             window.options.diagramCallback = "screens.app.transform.loadDiagram";
             window.options.toggleCallback = "screens.app.transform.cycleDescription";
             window.options.reload = true;
-            await me.core.message.waitForWorker();
             me.media.voice.stop();
             var info = await me.kab.text.parse(null, language, text, window.options);
             text = info.text;

@@ -43,11 +43,11 @@ screens.core.property = function CoreProperty(me) {
         }
         return path;
     };
-    me.get = function (object, name, value = null, method = "get") {
+    me.get = async function (object, name, value = null, method = "get") {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.core.property.get(item, name, value, method);
+                return await me.core.property.get(item, name, value, method);
             });
             return results;
         }
@@ -55,7 +55,7 @@ screens.core.property = function CoreProperty(me) {
             var results = {};
             Object.keys(name).map(function (subName) {
                 var subValue = name[subName];
-                results[subName] = me.core.property.get(object, subName, subValue, method);
+                results[subName] = await me.core.property.get(object, subName, subValue, method);
             });
             return results;
         }
@@ -63,20 +63,7 @@ screens.core.property = function CoreProperty(me) {
             var info = me.split(object, name, value);
             if (typeof info.value === "string") {
                 if (info.value.startsWith("@")) {
-                    info.value = me.core.property.get(info.object, info.value.substring(1));
-                }
-            }
-            if (typeof info.value === "string") {
-                if (info.value.startsWith("^")) {
-                    var subInfo = me.split(info.object, info.value, null);
-                    me.lock(task => {
-                        var paramInfo = {value: subInfo.name, task:task};
-                        me.core.property.get(subInfo.object, subInfo.name.substring(1), paramInfo);
-                        me.unlock(task, () => {
-                            me.core.property.get(info.object, info.name, paramInfo.value, method);
-                        });
-                    });
-                    return;
+                    info.value = await me.core.property.get(info.object, info.value.substring(1));
                 }
             }
             if (typeof info.name === "function") {
@@ -94,11 +81,11 @@ screens.core.property = function CoreProperty(me) {
                     if(callback) {
                         try {
                             if(typeof callback === "function") {
-                                result = callback(info.object, info.value);
+                                result = await callback(info.object, info.value);
                             }
                             else {
                                 if(callback[method]) {
-                                    result = callback[method](info.object, info.value);
+                                    result = await callback[method](info.object, info.value);
                                 }
                             }
                         }
@@ -166,19 +153,19 @@ screens.core.property = function CoreProperty(me) {
             me.core.property.set(object, name, value);
         }, 250);
     };
-    me.set = function (object, name, value) {
+    me.set = async function (object, name, value) {
         if (!object || !name) {
             return;
         }
         if (Array.isArray(object)) {
             var results = object.map(function (item) {
-                return me.core.property.set(item, name, value);
+                return await me.core.property.set(item, name, value);
             });
             return results;
         }
         if (Array.isArray(name)) {
             var results = name.map(function (item) {
-                return me.core.property.set(object, item, value);
+                return await me.core.property.set(object, item, value);
             });
             return results;
         }
@@ -194,7 +181,7 @@ screens.core.property = function CoreProperty(me) {
                 me.core.property.set(object, key, value);
             }
         }
-        return me.core.property.get(object, name, value, "set");
+        return await me.core.property.get(object, name, value, "set");
     };
     me.setTo = function (list, object, name, value) {
         if (list) {

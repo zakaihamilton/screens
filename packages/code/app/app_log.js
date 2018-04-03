@@ -21,7 +21,7 @@ screens.app.log = function AppLog(me) {
             me.core.property.notify(me.singleton, "app.log.refresh");
         });
     };
-    me.send = function (method, callback) {
+    me.send = function (method) {
         var source = me.options["source"];
         var send = null;
         if (source === "Server") {

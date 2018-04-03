@@ -20,28 +20,24 @@ screens.ui.theme = function UITheme(me) {
             return me.themes;
         }
     };
-    me.updateList = function() {
+    me.updateList = async function() {
         me.themes = [];
         var path = "packages/res/themes";
-        return new Promise((resolve, reject) => {
-            me.core.file.readDir(function(err, items) {
-                if(items) {
-                    for(let item of items) {
-                        var period = item.lastIndexOf(".");
-                        if(period === -1) {
-                            continue;
-                        }
-                        var name = item.substring(0, period);
-                        var extension = item.substring(period+1);
-                        if(extension !== "json") {
-                            continue;
-                        }
-                        me.themes.push(name);
-                    }
+        var items = await me.core.file.readDir(path);
+        if(items) {
+            for(let item of items) {
+                var period = item.lastIndexOf(".");
+                if(period === -1) {
+                    continue;
                 }
-                resolve();
-            }, path);
-        });
+                var name = item.substring(0, period);
+                var extension = item.substring(period+1);
+                if(extension !== "json") {
+                    continue;
+                }
+                me.themes.push(name);
+            }
+        }
     };
     me.applyTheme = function(elementCallback, parent) {
         if(!parent) {
@@ -78,32 +74,27 @@ screens.ui.theme = function UITheme(me) {
             me.core.property.set(me.storage.local.local, "ui-theme-current", "none");
         }
     };
-    me.load = function(name) {
+    me.load = async function(name) {
         var path = "/packages/res/themes/" + name.toLowerCase();
-        return new Promise((resolve, reject) => {
-            me.core.json.loadFile(function(data) {
-                if(data) {
-                    me.unload();
-                    me.currentTheme = data;
-                    me.currentTheme.link = me.ui.class.loadStylesheet(path + ".css").then(() => {
-                        resolve(data);
-                    });
-                    me.applyTheme(function(element, classItem) {
-                        var mapping = me.findMapping(classItem);
-                        if(!mapping) {
-                            return;
-                        }
-                        if(mapping.source === classItem) {
-                            element.classList.add(mapping.target);
-                            if(mapping.replace) {
-                                element.classList.remove(mapping.source);
-                            }
-                        }
-                    });
-                    me.core.property.set(me.storage.local.local, "ui-theme-current", name);
+        var data = await me.core.json.loadFile(path + ".json", "utf8");
+        if(data) {
+            me.unload();
+            me.currentTheme = data;
+            me.currentTheme.link = await me.ui.class.loadStylesheet(path + ".css");
+            me.applyTheme(function(element, classItem) {
+                var mapping = me.findMapping(classItem);
+                if(!mapping) {
+                    return;
                 }
-            }, path + ".json", "utf8");
-        });
+                if(mapping.source === classItem) {
+                    element.classList.add(mapping.target);
+                    if(mapping.replace) {
+                        element.classList.remove(mapping.source);
+                    }
+                }
+            });
+            me.core.property.set(me.storage.local.local, "ui-theme-current", name);
+        }
     };
     me.findMapping = function(classItem) {
         if(me.currentTheme) {
