@@ -4,34 +4,29 @@
  */
 
 screens.storage.data = function StorageData(me) {
-    me.init = function () {
+    me.init = async function () {
         me.log("initialising storage data");
         me.datastore = null;
         try {
             me.datastore = require('@google-cloud/datastore');
         } catch (e) {
-            return new Promise((resolve, reject) => {
-                me.core.server.run(() => {
-                    me.datastore = require('@google-cloud/datastore');
-                    me.log("me.datastore:" + me.datastore);
-                    me.unlock(task);
-                }, "npm rebuild");
-            });
+            await me.core.server.run(null, "npm rebuild");
+            me.datastore = require('@google-cloud/datastore');
+            me.log("me.datastore:" + me.datastore);
         }
     };
-    me.getService = function (callback) {
+    me.getService = function () {
         if (me.service) {
-            callback(me.service);
-            return;
+            return me.service;
         }
         if (!me.datastore) {
             me.error("Datastore not initialized");
-            callback(null);
+            return null;
         }
         me.service = me.datastore({
             keyFilename: me.core.private.path("google")
         });
-        callback(me.service);
+        return me.service;
     };
     me.toDataStore = function (json, nonIndexed, user) {
         nonIndexed = nonIndexed || [];
@@ -54,7 +49,8 @@ screens.storage.data = function StorageData(me) {
     };
     me.save = function (callback, value, type, id, nonIndexed) {
         var user = this.user;
-        me.getService((service) => {
+        var service = me.getService();
+        if (service) {
             const key = service.key([type, id]);
             service.save({
                 key: key,
@@ -65,15 +61,16 @@ screens.storage.data = function StorageData(me) {
                 }
                 callback(err);
             });
-        });
+        }
     };
     me.load = function (callback, type, id) {
-        me.getService((service) => {
+        var service = me.getService();
+        if (service) {
             const key = service.key([type, id]);
             service.get(key, function (err, value) {
                 callback(err, value);
             });
-        });
+        }
     };
     me.verify = function (callback, value, type, id) {
         me.load((err, compare) => {
@@ -98,9 +95,10 @@ screens.storage.data = function StorageData(me) {
             }, value, type, id);
         }, value, type, id, nonIndexed);
     };
-    me.query = function (callback, type, select, filters) {
+    me.query = async function (callback, type, select, filters) {
         var user = this.user;
-        me.getService((service) => {
+        var service = me.getService();
+        if (service) {
             me.log("query type: " + type);
             var query = service.createQuery(type);
             if (select) {
@@ -116,23 +114,24 @@ screens.storage.data = function StorageData(me) {
                     query = query.filter(filter.name, filter.operator, filter.value);
                 });
             }
-            service.runQuery(query)
-                .then(results => {
-                    const items = results[0];
-                    items.forEach(item => {
-                        item.key = item[service.KEY];
-                    });
-                    me.log("query returning " + items.length + " results");
-                    callback(null, items);
-                })
-                .catch(err => {
-                    me.error("failure to execute query, type: " + type +
-                        " select: " + JSON.stringify(select) +
-                        " filters: " + JSON.stringify(filters) +
-                        " error: " + err.message);
-                    callback(err, null);
+            try {
+                var results = await service.runQuery(query);
+                const items = results[0];
+                items.forEach(item => {
+                    item.key = item[service.KEY];
                 });
-        });
+                me.log("query returning " + items.length + " results");
+                return items;
+            }
+            catch (err) {
+                err = "failure to execute query, type: " + type +
+                    " select: " + JSON.stringify(select) +
+                    " filters: " + JSON.stringify(filters) +
+                    " error: " + err.message || err;
+                me.error(err);
+                return err;
+            }
+        }
     };
     return "server";
 };

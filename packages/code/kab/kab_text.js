@@ -165,22 +165,25 @@ screens.kab.text = function KabText(me) {
         return wordsString;
     };
     me.parse = function (callback, language, wordsString, options) {
-        me.kab.data.load(function (json) {
-            me.core.message.send("kab.search.clear");
-            wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
-            if(wordsString.includes("\n")) {
-                wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
-            }
-            var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
-            var session = {language: language, text: wordsString, options: options, terms: terms, json: json};
-            wordsString = me.splitWords(session, wordsString);
-            session.text = wordsString;
-            if (session.terms) {
-                wordsString = me.parseSingle(session, null, wordsString);
-            }
-            wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
-            callback(wordsString, me.kab.search.terms, json.data);
-        }, language, options.reload);
+        return new Promise((resolve, reject) => {
+            me.kab.data.load(function (json) {
+                me.core.message.send("kab.search.clear");
+                wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
+                if(wordsString.includes("\n")) {
+                    wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
+                }
+                var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
+                var session = {language: language, text: wordsString, options: options, terms: terms, json: json};
+                wordsString = me.splitWords(session, wordsString);
+                session.text = wordsString;
+                if (session.terms) {
+                    wordsString = me.parseSingle(session, null, wordsString);
+                }
+                wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
+                var info = {text:wordsString, terms:me.kab.search.terms, data:json.data};
+                resolve(info);
+            }, language, options.reload);
+        });
     };
     me.handleInstance = function (session, instance) {
         var modify = me.modify;

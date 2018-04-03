@@ -6,7 +6,7 @@
 screens.core.message = function CoreMessage(me) {
     me.init = function () {
         if (screens.platform === "server") {
-            me.core.property.link("core.http.receive", "core.message.receive", true);
+            me.core.property.link("core.http.receive", "core.message.receiveHttp", true);
         } else if (me.platform === "browser") {
 
         } else if (me.platform === "client") {
@@ -16,20 +16,22 @@ screens.core.message = function CoreMessage(me) {
             };
         }
     };
-    me.waitForWorker = function(callback) {
-        me.core.listener.wait(callback, me.id);
+    me.waitForWorker = async function () {
+        return new Promise((resolve, reject) => {
+            me.core.listener.wait(resolve, me.id);
+        });
     };
-    me.loadWorker = function(path) {
+    me.loadWorker = function (path) {
         screens.worker = new Worker(path);
         screens.worker.onmessage = function (event) {
-            screens.core.console.log("Receiving message");
-            screens.core.message.handleLocal((info) => {
+            me.log("Receiving message");
+            me.handleLocal((info) => {
                 screens.worker.postMessage(info);
             }, event.data);
         };
         screens.worker.postMessage(null);
     };
-    me.workerReady = async function() {
+    me.workerReady = async function () {
         return new Promise((resolve, reject) => {
             if (me.platform === "client") {
                 me.send_browser("core.listener.signal", () => {
@@ -40,13 +42,26 @@ screens.core.message = function CoreMessage(me) {
     };
     me.send_server = function (path, callback, params) {
         if (me.platform === "service") {
-            var args = Array.prototype.slice.call(arguments, 1);
-            args[0] = null;
-            var info = {
-                path: path,
-                params: me.core.type.wrap_args(args),
-                callback: me.core.handle.push(callback)
-            };
+            return new Promise((resolve, reject) => {
+                var responseCallback = (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                    if (callback) {
+                        callback(err, result);
+                    }
+                };
+                var args = Array.prototype.slice.call(arguments, 1);
+                args[0] = null;
+                var info = {
+                    path: path,
+                    params: me.core.type.wrap_args(args),
+                    callback: me.core.handle.push(responseCallback)
+                };
+            });
             me.core.service.client.emit("method", info);
         }
         else if (me.platform !== "server") {
@@ -61,58 +76,97 @@ screens.core.message = function CoreMessage(me) {
             me.core.http.send(me.handleRemote, info);
         } else if (me.platform === "server") {
             var args = Array.prototype.slice.call(arguments, 0);
-            me.send.apply(null, args);
+            return me.send.apply(null, args);
         }
     };
     me.send_client = function (path, callback, params) {
         if (me.platform === "browser") {
-            var args = Array.prototype.slice.call(arguments, 1);
-            args[0] = null;
-            var info = {
-                path: path,
-                params: args,
-                callback: me.core.handle.push(callback)
-            };
-            screens.worker.postMessage(info);
+            return new Promise((resolve, reject) => {
+                var responseCallback = (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                    if (callback) {
+                        callback(err, result);
+                    }
+                };
+                var args = Array.prototype.slice.call(arguments, 1);
+                args[0] = null;
+                var info = {
+                    path: path,
+                    params: args,
+                    callback: me.core.handle.push(responseCallback)
+                };
+                screens.worker.postMessage(info);
+            });
         } else if (me.platform === "client") {
             var args = Array.prototype.slice.call(arguments, 0);
-            me.send.apply(this, args);
+            return me.send.apply(this, args);
         }
     };
     me.send_service = function (path, callback, params) {
         if (me.platform === "server") {
-            var args = Array.prototype.slice.call(arguments, 1);
-            args[0] = null;
-            var info = {
-                path: path,
-                params: me.core.type.wrap_args(args),
-                callback: me.core.handle.push(callback)
-            };
-            this.emit("method", info);
+            return new Promise((resolve, reject) => {
+                var responseCallback = (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                    if (callback) {
+                        callback(err, result);
+                    }
+                };
+                var args = Array.prototype.slice.call(arguments, 1);
+                args[0] = null;
+                var info = {
+                    path: path,
+                    params: me.core.type.wrap_args(args),
+                    callback: me.core.handle.push(responseCallback)
+                };
+                this.emit("method", info);
+            });
         } else if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 0);
-            me.send.apply(this, args);
+            return me.send.apply(this, args);
         }
     };
-    me.send_platform = function(platform, path, callback, params) {
+    me.send_platform = function (platform, path, callback, params) {
         var args = Array.prototype.slice.call(arguments, 1);
-        if(!platform) {
+        if (!platform) {
             platform = me.platform;
         }
-        me["send_" + platform].apply(null, args);
+        return me["send_" + platform].apply(null, args);
     };
     me.send_browser = function (path, callback, params) {
         if (me.platform === "client") {
-            var args = Array.prototype.slice.call(arguments, 1);
-            args[0] = null;
-            var info = {path: path, params: args, callback: me.core.handle.push(callback)};
-            postMessage(info);
+            return new Promise((resolve, reject) => {
+                var responseCallback = (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                    if (callback) {
+                        callback(err, result);
+                    }
+                };
+                var args = Array.prototype.slice.call(arguments, 1);
+                args[0] = null;
+                var info = { path: path, params: args, callback: me.core.handle.push(responseCallback) };
+                postMessage(info);
+            });
         } else if (me.platform === "browser") {
             var args = Array.prototype.slice.call(arguments, 0);
-            me.send.apply(null, args);
+            return me.send.apply(null, args);
         }
     };
-    me.receive = {
+    me.receiveHttp = {
         set: function (info) {
             me.log("matching url: " + info.url);
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
@@ -128,17 +182,31 @@ screens.core.message = function CoreMessage(me) {
                         me.unlock(task);
                     };
                     try {
-                        args = args.map((arg)=>{
-                            if(arg && typeof arg === "string" && arg.includes("$user")) {
+                        args = args.map((arg) => {
+                            if (arg && typeof arg === "string" && arg.includes("$user")) {
                                 me.log("replacing: $user with: " + info.user + " arg: " + arg);
                                 arg = arg.replace(/\$user/, info.user);
-                                me.log("result:" + arg);
                             }
                             return arg;
                         });
-                        me.core.message.send.apply(info, args);
+                        var promise = me.core.message.send.apply(info, args);
+                        me.log("result on: " + path + " promise: " + promise);
+                        if (promise && promise.then) {
+                            me.log("waiting for promise on: " + path);
+                            promise.then((result) => {
+                                me.log("promise resolved " + path);
+                                var args = [null, result];
+                                info.body = me.core.type.wrap_args(args);
+                                me.unlock(task);
+                            }).catch((err) => {
+                                me.log("promise catch " + path);
+                                me.error(e.message || e + " " + JSON.stringify(args), e.stack || "");
+                                info.body = me.core.type.wrap_args([e]);
+                                me.unlock(task);
+                            });
+                        }
                     }
-                    catch(e) {
+                    catch (e) {
                         me.error(e.message + " " + JSON.stringify(args), e.stack);
                         info.body = e.message;
                         me.unlock(task);
@@ -150,7 +218,7 @@ screens.core.message = function CoreMessage(me) {
     me.send = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 1);
         var callback = null;
-        if(!path) {
+        if (!path) {
             return undefined;
         }
         if (typeof path === "function") {
@@ -173,7 +241,7 @@ screens.core.message = function CoreMessage(me) {
     };
     me.handleRemote = function (info) {
         info.response = me.core.type.unwrap_args(info.response);
-        if(!info.response) {
+        if (!info.response) {
             info.response = [];
         }
         if (info.altCallback) {
@@ -181,12 +249,12 @@ screens.core.message = function CoreMessage(me) {
         }
     };
     me.handleLocal = function (callback, info, remote) {
-        if(!info) {
+        if (!info) {
             return;
         }
         info = Object.assign({}, info);
         if (typeof info.response !== "undefined") {
-            if(remote) {
+            if (remote) {
                 info.response = me.core.type.unwrap_args(info.response);
             }
             var infoCallback = me.core.handle.pop(info.callback);
@@ -195,24 +263,32 @@ screens.core.message = function CoreMessage(me) {
             }
             return;
         }
-        if(remote) {
+        if (remote) {
             info.params = me.core.type.unwrap_args(info.params);
         }
         var args = info.params;
         args.unshift(info.path);
         var responseCallback = info.callback;
-        args[1] = function(result) {
+        var resolveCallback = function (result) {
             var args = Array.prototype.slice.call(arguments, 0);
             info.params = null;
             info.response = args;
             info.callback = responseCallback;
-            if(remote) {
+            if (remote) {
                 info.response = me.core.type.wrap_args(info.response);
             }
-            if(callback) {
+            if (callback) {
                 callback(info);
             }
         };
-        me.send.apply(info, args);
+        args[1] = resolveCallback;
+        var promise = me.send.apply(info, args);
+        if (promise && promise.then) {
+            promise.then(result => {
+                resolveCallback(null, result);
+            }).catch(err => {
+                resolveCallback(err);
+            });
+        }
     };
 };

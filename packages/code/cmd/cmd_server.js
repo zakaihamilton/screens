@@ -4,19 +4,15 @@
 */
 
 screens.cmd.server = function CmdServer(me) {
-    me.cmd = function(terminal, args) {
+    me.cmd = async function(terminal, args) {
         var cmd = args.slice(1).join(" ");
-        me.core.server.run(function(err, data, stderr) {
-            if(err && err.message) {
-                me.core.property.set(terminal, "print", err.message);
-            }
-            else if(stderr) {
-                me.core.property.set(terminal, "print", stderr);
-            }
-            else {
-                me.core.property.set(terminal, "print", data);
-            }
-            me.core.cmd.exit(terminal);
-        }, cmd);
+        try {
+            var data = await me.core.server.run(cmd);
+            me.core.property.set(terminal, "print", data);
+        }
+        catch(err) {
+            me.core.property.set(terminal, "print", err.message || err);
+        }
+        me.core.cmd.exit(terminal);
     };
 };

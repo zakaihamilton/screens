@@ -20,7 +20,7 @@ screens.core.listener = function CoreListener(me) {
         }
         listener.signal = false;
         if(callback) {
-            callback(id);
+            callback(null, id);
         }
     };
     me.signal = function(callback, id) {
@@ -30,10 +30,10 @@ screens.core.listener = function CoreListener(me) {
         }
         listener.signal = true;
         for(var callbackItem of listener.callbacks) {
-            callbackItem(id);
+            callbackItem(null, id);
         }
         if(callback) {
-            callback(id);
+            callback(null, id);
         }
     };
     me.wait = function(callback, id) {
@@ -42,7 +42,7 @@ screens.core.listener = function CoreListener(me) {
             listener = me.listener[id] = {callbacks:[], signal:false};
         }
         if(listener.signal) {
-            callback(id);
+            callback(null, id);
         }
         else {
             me.register(callback, id);

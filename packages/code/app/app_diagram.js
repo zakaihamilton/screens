@@ -93,19 +93,18 @@ screens.app.diagram = function AppDiagram(me) {
             if (object && info) {
                 me.lock(info.task, task => {
                     var window = me.widget.window(object);
-                    me.kab.text.parse(function (value) {
-                        info.value = value;
+                    me.kab.text.parse(null, window.language, info.value, window.options).then(parseInfo => {
+                        info.value = parseInfo.text;
                         me.unlock(task);
-                    }, window.language, info.value, window.options);
+                    });
                 });
             }
         },
-        set: function (object, text) {
+        set: async function (object, text) {
             var window = me.widget.window(object);
-            me.kab.text.parse(function (value) {
-                me.core.property.set(object, "ui.basic.html", value);
-                me.core.property.notify(window, "update");
-            }, window.language, text, window.options);
+            var info = await me.kab.text.parse(null, window.language, text, window.options);
+            me.core.property.set(object, "ui.basic.html", info.text);
+            me.core.property.notify(window, "update");
         }
     };
     me.refresh = {

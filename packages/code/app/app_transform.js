@@ -266,7 +266,7 @@ screens.app.transform = function AppTransform(me) {
         me.core.property.set(window.var.termTable, "dataByRows", data);
     };
     me.transform = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window.mainWindow(object);
             me.ui.layout.clear(window.var.layout);
             me.core.property.set(window.var.input, "ui.basic.save");
@@ -287,44 +287,45 @@ screens.app.transform = function AppTransform(me) {
             window.options.diagramCallback = "screens.app.transform.loadDiagram";
             window.options.toggleCallback = "screens.app.transform.cycleDescription";
             window.options.reload = true;
-            me.core.message.waitForWorker(() => {
-                me.media.voice.stop();
-                me.kab.text.parse((text, terms, data) => {
-                    if (data) {
-                        me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
-                    }
-                    if (window.language) {
-                        me.core.property.set([
-                            window.var.input,
-                            window.var.filter,
-                            window.var.termTable,
-                            window.var.toggleGlossary,
-                            window.var.layout
-                        ], "ui.class.remove", window.language);
-                    }
-                    me.core.property.set([
-                        window.var.input,
-                        window.var.filter,
-                        window.var.termTable,
-                        window.var.toggleGlossary,
-                        window.var.layout
-                    ], "ui.class.add", language);
-                    me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
-                    me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
-                    window.language = language;
-                    me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
-                    me.updateFilterList(window, terms);
-                    if (data) {
-                        me.updateTermTable(window, terms, data.termTable, language);
-                    }
-                    me.ui.layout.move(window.var.output, window.var.layout);
-                    window.forceReflow = true;
-                    window.contentChanged = true;
-                    window.inTransform = false;
-                    me.core.property.notify(window, "update");
-                    me.core.property.set(window, "ui.work.state", false);
-                }, language, text, window.options);
-            });
+            await me.core.message.waitForWorker();
+            me.media.voice.stop();
+            var info = await me.kab.text.parse(null, language, text, window.options);
+            text = info.text;
+            var terms = info.terms;
+            var data = info.data;
+            if (data) {
+                me.core.property.set(window.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
+            }
+            if (window.language) {
+                me.core.property.set([
+                    window.var.input,
+                    window.var.filter,
+                    window.var.termTable,
+                    window.var.toggleGlossary,
+                    window.var.layout
+                ], "ui.class.remove", window.language);
+            }
+            me.core.property.set([
+                window.var.input,
+                window.var.filter,
+                window.var.termTable,
+                window.var.toggleGlossary,
+                window.var.layout
+            ], "ui.class.add", language);
+            me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
+            me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
+            window.language = language;
+            me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
+            me.updateFilterList(window, terms);
+            if (data) {
+                me.updateTermTable(window, terms, data.termTable, language);
+            }
+            me.ui.layout.move(window.var.output, window.var.layout);
+            window.forceReflow = true;
+            window.contentChanged = true;
+            window.inTransform = false;
+            me.core.property.notify(window, "update");
+            me.core.property.set(window, "ui.work.state", false);
         }
     };
     me.reflow = {

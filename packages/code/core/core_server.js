@@ -7,9 +7,18 @@ screens.core.server = function CoreServer(me) {
     me.init = function() {
         me.cmd=require('node-cmd');
     };
-    me.run = function(callback, cmd) {
+    me.run = async function(callback, cmd) {
         me.log("running: " + cmd);
-        me.cmd.get(cmd, callback);
+        return new Promise((resolve, reject) => {
+            me.cmd.get(cmd, (err, data, stderr) => {
+                if(err) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
     };
     return "server";
 };
