@@ -4,7 +4,7 @@
  */
 
 screens.startup.version = function StartupVersion(me) {
-    me.run = async function(task) {
+    me.run = async function() {
         me.log("retrieving version information");
         var config = await me.core.util.config();
         var date = new Date();

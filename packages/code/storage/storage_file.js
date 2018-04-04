@@ -27,24 +27,24 @@ screens.storage.file = function StorageFile(me) {
         me.log("requesting items for path: " + path + " recursive: " + recursive);
         var entries = [];
         var service = await me.getService();
-        await me.iterate(task, service, entries, path, null, recursive);
+        await me.iterate(service, entries, path, null, recursive);
         me.log("returning " + entries.length + " items for path: " + path + " recursive: " + recursive);
         return entries;
     };
-    me.iterate = async function (task, service, entries, path, cursor, recursive) {
+    me.iterate = async function (service, entries, path, cursor, recursive) {
         var method = cursor ? "filesListFolderContinue" : "filesListFolder";
         path = me.fixPath(path);
         var response = await service[method]({ path: path });
         entries.push(...response.entries);
         if (response.has_more) {
-            await me.iterate(task, service, entries, path, response.cursor, recursive);
+            await me.iterate(service, entries, path, response.cursor, recursive);
         } else if (recursive) {
             for (let item of response.entries) {
                 if (item[".tag"] !== "folder") {
                     continue;
                 }
                 item.entries = [];
-                await me.iterate(task, service, item.entries, item.path_lower, null, recursive);
+                await me.iterate(service, item.entries, item.path_lower, null, recursive);
             }
         }
     };

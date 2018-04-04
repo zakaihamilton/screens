@@ -97,7 +97,12 @@ screens.manager.download = function ManagerDownload(me) {
             else {
                 return new Promise((resolve, reject) => {
                     me.log("pushing to download queue: " + from + " to: " + to);
-                    item = {from:from, to:to, isDownloading:false, promises:[{resolve,reject}], convert:convert};
+                    item = {
+                        from:from,
+                        to:to,
+                        isDownloading:false,
+                        promises:[{resolve,reject}],
+                        convert:convert};
                     me.queue.push(item);
                     me.private.update();
                 });
@@ -121,7 +126,12 @@ screens.manager.download = function ManagerDownload(me) {
     me.items = function() {
         var items = [];
         for(var item of me.queue) {
-            items.push({from:item.from,to:item.to,isDownloading:item.isDownloading,convert:item.convert});
+            items.push({
+                from:item.from,
+                to:item.to,
+                isDownloading:item.isDownloading,
+                convert:item.convert
+            });
         }
         return items;
     };
