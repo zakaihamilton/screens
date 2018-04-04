@@ -61,7 +61,10 @@ screens.core.property = function CoreProperty(me) {
             return results;
         }
         if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
-            var info = me.split(object, name, value);
+            var info = await me.split(object, name, value);
+            if(!info.object) {
+                return;
+            }
             if (typeof info.value === "string") {
                 if (info.value.startsWith("@")) {
                     info.value = await me.core.property.get(info.object, info.value.substring(1));
@@ -70,6 +73,10 @@ screens.core.property = function CoreProperty(me) {
             if (typeof info.name === "function") {
                 result = info.name(info.object, info.value);
             } else {
+                if (info.name.startsWith(">")) {
+                    info.name = info.name.substring(1);
+                    debugger;
+                }
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
                     var callback = null;
@@ -100,7 +107,7 @@ screens.core.property = function CoreProperty(me) {
         }
         return result;
     };
-    me.split = function (object, name, value) {
+    me.split = async function (object, name, value) {
         if (typeof name === "string") {
             var openIdx = name.indexOf("(");
             var closeIdx = name.lastIndexOf(")");
@@ -109,7 +116,7 @@ screens.core.property = function CoreProperty(me) {
                 name = name.substr(0, openIdx);
                 if (args.length > 1) {
                     if (args[0] !== "this") {
-                        object = me.core.property.get(object, args[0]);
+                        object = await me.core.property.get(object, args[0]);
                     }
                     value = args[1];
                 } else if (args.length === 1) {
@@ -117,6 +124,7 @@ screens.core.property = function CoreProperty(me) {
                 }
             }
         }
+        value = await value;
         return {object: object, name: name, value: value};
     };
     me.link = function (source, target, enabled, object) {

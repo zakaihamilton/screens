@@ -9,5 +9,4 @@ screens.include({
     ]
 }, async function () {
     await screens.core.startup.run();
-    screens.core.message.workerReady();
 });

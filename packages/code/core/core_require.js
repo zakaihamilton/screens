@@ -8,6 +8,9 @@ screens.core.require = function CoreRequire(me) {
         if(!path) {
             return;
         }
+        if(me.platform === "client") {
+            importScripts("/external/require.js");
+        }
         return new Promise((resolve, reject) => {
             require([path], function () {
                 var module = null;

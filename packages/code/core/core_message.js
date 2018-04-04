@@ -4,18 +4,18 @@
  */
 
 screens.core.message = function CoreMessage(me) {
-    me.init = function () {
+    me.init = async function () {
         if (screens.platform === "server") {
             me.core.property.link("core.http.receive", "core.message.receiveHttp", true);
         } else if (me.platform === "client") {
-            var registerPromiseWorker = require('promise-worker/register');
+            var registerPromiseWorker = await me.core.require('/node_modules/promise-worker/dist/promise-worker.register.js');
             registerPromiseWorker(async (message) => {
                 return await me.send.apply(null, message);
             });
         }
     };
-    me.loadWorker = function (path) {
-        var PromiseWorker = require('promise-worker');
+    me.loadWorker = async function (path) {
+        var PromiseWorker = await me.core.require('/node_modules/promise-worker/dist/promise-worker.js');
         screens.worker = new PromiseWorker(new Worker(path));
         screens.worker.postMessage(null);
     };

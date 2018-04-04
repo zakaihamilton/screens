@@ -223,7 +223,7 @@ async function screens_import(path) {
             script.src = path;
             script.async = true;
             script.onload = resolve;
-            ref.parentNode.insertBefore(script, ref);
+            ref.parentNode.appendChild(script);
         });
     }
 }

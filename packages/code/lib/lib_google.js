@@ -23,10 +23,10 @@ screens.lib.google = function LibGoogle(me) {
                         me.auth2.signIn().catch(err => {
                             me.setStatus("Error: " + err.message || err);
                         });
-                        me.core.listener.wait(() => {
+                        me.core.listener.wait(me.id).then(() => {
                             me.setStatus("Sign in occured");
                             resolve();
-                        }, me.id);
+                        });
                     }
                     else {
                         me.setStatus("Not signed in");

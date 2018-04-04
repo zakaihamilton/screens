@@ -99,9 +99,9 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.elements = {
-        set: function(object, value) {
+        set: async function(object, value) {
             if (value) {
-                me.ui.element(value, object, object.context);
+                await me.ui.element(value, object, object.context);
             }
         }
     };

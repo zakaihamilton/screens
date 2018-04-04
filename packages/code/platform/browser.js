@@ -39,12 +39,12 @@ function startBrowser(appName, appArgs) {
         "startup": [
             "app"
         ]
-    }, function () {
+    }, async () => {
         screens.core.startup.app = {
             name: appName,
             params: appArgs
         };
-        screens.core.message.loadWorker("packages/code/platform/client.js");
+        await screens.core.message.loadWorker("packages/code/platform/client.js");
         screens.core.startup.run();
     });
 }
