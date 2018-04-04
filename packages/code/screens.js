@@ -1,20 +1,3 @@
-async function screens_map(object, callback) {
-    if(Array.isArray(object)) {
-        var results = [];
-        for(var index = 0; index < object.length; index++) {
-            results.push(await callback(object[index], index, object));
-        }
-        return results;
-    }
-    else {
-        var results = {};
-        for(var key in object) {
-            results[item] = await callback(object[key], key, object);
-        }
-        return results;
-    }
-};
-
 function screens_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this && this.module !== module) {
@@ -264,8 +247,7 @@ Object.assign(screens, {
     components: [],
     id: "package",
     platform: screens_platform(),
-    include: screens_include,
-    map: screens_map,
+    include: screens_include
 });
 
 var platform = screens_platform();

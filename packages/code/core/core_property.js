@@ -174,9 +174,10 @@ screens.core.property = function CoreProperty(me) {
             return results;
         }
         if (Array.isArray(name)) {
-            var results = name.map((item) => {
-                return me.core.property.set(object, item, value);
-            });
+            var results = [];
+            for(var item of name) {
+                results.push(me.core.property.set(object, item, value));
+            }
             return results;
         }
         var promises = [];

@@ -46,7 +46,7 @@ screens.core.file = function CoreFile(me) {
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
-        await me.map(tokens, async (token) => {
+        for(var token of tokens) {
             if (mkdirPath) {
                 mkdirPath += "/" + token;
             }
@@ -54,7 +54,7 @@ screens.core.file = function CoreFile(me) {
                 mkdirPath = token;
             }
             await me.makeDir(mkdirPath);
-        });
+        }
     };
     me.readDir = function (path) {
         return new Promise((resolve, reject) => {

@@ -109,9 +109,9 @@ screens.core.module = function CoreModule(me) {
             files.unshift(file);
         }
         data = "";
-        await me.map(files, async (filePath) => {
+        for(var filePath of files) {
             data += await params.method(filePath, params, info);
-        });
+        }
         me.log("handleMultiFiles: size: " + data.length);
         info.body = data;
     };
