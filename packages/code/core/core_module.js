@@ -18,8 +18,16 @@ screens.core.module = function CoreModule(me) {
         return component_path;
     };
     me.loadTextFile = async function (filePath) {
-        var data = await me.core.file.readFile(filePath, 'utf8');
-        me.log("serving text file: " + filePath);
+        me.log("loading text file: " + filePath);
+        try {
+            var data = await me.core.file.readFile(filePath, 'utf8');
+            me.log("serving text file: " + filePath + " length: " + data ? data.length : 0);
+        }
+        catch(err) {
+            err = "Cannot load text file: " + filePath + " err: " + err;
+            me.error(err);
+            throw err;
+        }
         return data;
     };
     me.loadBinaryFile = async function (filePath) {
@@ -73,6 +81,7 @@ screens.core.module = function CoreModule(me) {
         return data;
     };
     me.handleMultiFiles = async function (filePath, params, info) {
+        me.log("handleMultiFiles: " + JSON.stringify(params));
         var files = filePath.split(",");
         info.body = "";
         if(params.contentType) {
@@ -97,7 +106,7 @@ screens.core.module = function CoreModule(me) {
             files.unshift(file);
         }
         data = "";
-        files.map((filePath) => {
+        me.map(files, async (filePath) => {
             data += await params.method(filePath, params, info);
         });
         info.body = data;

@@ -11,17 +11,21 @@ screens.core.file = function CoreFile(me) {
     };
     me.readFile = function (path, options) {
         return new Promise((resolve, reject) => {
+            me.log("reading file: " + path + " options: " + JSON.stringify(options));
             try {
                 me.fs.readFile(path, options, function (err, data) {
                     if (err) {
+                        me.error(err);
                         reject(err);
                     }
                     else {
+                        me.log("success in reading file: " + path + " length: " + data.length);
                         resolve(data);
                     }
                 });
             }
-            catch (err) {
+            catch(err) {
+                me.error(err);
                 reject(err);
             }
         });
@@ -42,7 +46,7 @@ screens.core.file = function CoreFile(me) {
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
-        tokens.map((token) => {
+        me.map(tokens, async (token) => {
             if (mkdirPath) {
                 mkdirPath += "/" + token;
             }

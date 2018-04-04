@@ -5,6 +5,7 @@
 
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
+        return;
         const {Database, Model} = require('mongorito');
         me.Database = Database;
         me.Model = Model;

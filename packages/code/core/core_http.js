@@ -19,17 +19,17 @@ screens.core.http = function CoreHttp(me) {
             me.https = require("https");
             me.fs = require("fs");
             if (me.platform === "server") {
-                await me.createServer(true).then(port => {
+                try {
+                    var port = await me.createServer(true);
                     me.log("secure server is listening on " + port);
-                }).catch(err => {
-                    me.log("cannot create secure server, error: " + err);
-                });
+                }
+                catch(err) {
+                    me.error("cannot create secure server, error: " + err);
+                }
             }
-            await me.createServer(false).then(port => {
-                me.log("normal server is listening on " + port);
-            }).catch(err => {
-                me.log("cannot create normal server, error: " + err);
-            });
+            me.log("creating normal server");
+            var port = await me.createServer(false);
+            me.log("normal server is listening on " + port);
         }
     };
     me.createServer = async function (secure) {
@@ -59,7 +59,7 @@ screens.core.http = function CoreHttp(me) {
             });
         };
         if (secure) {
-            var keys = await me.core.private.keys("http");
+            var keys = await me.core.private.keys("https");
             if (keys && keys.key && keys.cert && keys.ca) {
                 return new Promise((resolve, reject) => {
                     try {
@@ -79,7 +79,7 @@ screens.core.http = function CoreHttp(me) {
                             resolve(port);
                         });
                     } catch (e) {
-                        me.log("Cannot create secure server, error: " + e.message);
+                        me.log("Failed to create secure server, error: " + e.message);
                         reject(e);
                     }
                 });
@@ -89,6 +89,9 @@ screens.core.http = function CoreHttp(me) {
             return new Promise((resolve, reject) => {
                 server = me.http.createServer(requestHandler);
                 me.io = require("socket.io")(server);
+                server.on('error', function (e) {
+                    reject(e);
+                });
                 server.listen(port, function (err) {
                     if (err) {
                         reject(err);
@@ -139,7 +142,7 @@ screens.core.http = function CoreHttp(me) {
             responseHeaders: {}
         };
         me.core.object(me, info);
-        //me.log("url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
+        me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
         var messages = ["check", "receive", "compress", "end"];
         for (var message of messages) {
             if (info.stop) {
@@ -175,7 +178,7 @@ screens.core.http = function CoreHttp(me) {
         if (!info.headers) {
             info.headers = {}
         }
-        me.core.property.set(info, "headers", headers);
+        await me.core.property.set(info, "headers", headers);
         var headers = Object.assign({}, info.headers);
         if (me.platform === "service") {
             return me.core.message.send_server(me.id + ".send", info);
@@ -189,6 +192,12 @@ screens.core.http = function CoreHttp(me) {
                 var response = {
                     writeHead: function () { },
                     end: function (body) {
+                        if(body) {
+                            me.log("returning body of length: " + body.length);
+                        }
+                        else {
+                            me.log("returning no result");
+                        }
                         resolve(body);
                     }
                 };

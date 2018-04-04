@@ -118,7 +118,6 @@ screens.core.message = function CoreMessage(me) {
     };
     me.receiveHttp = {
         set: function (info) {
-            me.log("matching url: " + info.url);
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);

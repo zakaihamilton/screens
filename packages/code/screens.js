@@ -47,6 +47,23 @@ async function screens_async(task, promise) {
     return result;
 }
 
+async function screens_map(object, callback) {
+    if(Array.isArray(object)) {
+        var results = [];
+        for(var index = 0; index < object.length; index++) {
+            results.push(await callback(object[index], index, object));
+        }
+        return results;
+    }
+    else {
+        var results = {};
+        for(var key in object) {
+            results[item] = await callback(object[key], key, object);
+        }
+        return results;
+    }
+};
+
 function screens_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this && this.module !== module) {
@@ -302,7 +319,8 @@ Object.assign(screens, {
     include: screens_include,
     lock: screens_lock,
     unlock: screens_unlock,
-    async: screens_async
+    async: screens_async,
+    map: screens_map
 });
 
 var platform = screens_platform();

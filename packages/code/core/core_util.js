@@ -22,8 +22,8 @@ screens.core.util = function CoreUtil(me) {
             return arg;
         });
     };
-    me.config = function(path) {
-        var item = me.core.json.loadFile("/package.json");
+    me.config = async function(path) {
+        var item = await me.core.json.loadFile("/package.json");
         if(item && path) {
             item = me.core.json.traverse(item, path).value;
         }
@@ -34,5 +34,5 @@ screens.core.util = function CoreUtil(me) {
     };
     me.restart = function() {
         location.reload(true);
-    }
+    };
 };

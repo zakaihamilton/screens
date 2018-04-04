@@ -37,9 +37,6 @@ screens.core.json = function CoreJson(me) {
             return json;
         }
     };
-    me.log = function(json) {
-        me.log(JSON.stringify(json, null, 4));        
-    };
     me.compare = function(source, target) {
         if(source === target) {
             return true;

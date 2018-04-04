@@ -66,7 +66,7 @@ screens.storage.file = function StorageFile(me) {
         var response = await service.filesUpload({ path: path, contents: data });
         return reponse;
     };
-    me.metadata = function (path) {
+    me.metadata = async function (path) {
         var service = await me.getService();
         path = me.fixPath(path);
         var response = service.filesGetMetadata({ path: path });

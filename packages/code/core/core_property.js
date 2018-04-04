@@ -46,17 +46,18 @@ screens.core.property = function CoreProperty(me) {
     me.get = async function (object, name, value = null, method = "get") {
         var result = undefined;
         if (Array.isArray(object)) {
-            var results = object.map(function (item) {
-                return await me.core.property.get(item, name, value, method);
-            });
+            var results = [];
+            for(item of object) {
+                results.push(await me.core.property.get(item, name, value, method));
+            }
             return results;
         }
         if (name !== null && typeof name === "object") {
             var results = {};
-            Object.keys(name).map(function (subName) {
+            for(subName in name) {
                 var subValue = name[subName];
                 results[subName] = await me.core.property.get(object, subName, subValue, method);
-            });
+            }
             return results;
         }
         if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
@@ -158,39 +159,39 @@ screens.core.property = function CoreProperty(me) {
             return;
         }
         if (Array.isArray(object)) {
-            var results = object.map(function (item) {
+            var results = me.map(object, async (item) => {
                 return await me.core.property.set(item, name, value);
             });
             return results;
         }
         if (Array.isArray(name)) {
-            var results = name.map(function (item) {
+            var results = me.map(name, async (item) => {
                 return await me.core.property.set(object, item, value);
             });
             return results;
         }
         if(typeof name === "string") {
             var source_method = me.core.property.fullname(object, name);
-            me.setTo(me._forwarding_list, object, source_method, value);
-            me.setTo(object._forwarding_list, object, source_method, value);
+            await me.setTo(me._forwarding_list, object, source_method, value);
+            await me.setTo(object._forwarding_list, object, source_method, value);
         }
         else if(typeof name !== "function") {
             var results = {};
             for(var key in name) {
                 var value = name[key];
-                me.core.property.set(object, key, value);
+                await me.core.property.set(object, key, value);
             }
         }
         return await me.core.property.get(object, name, value, "set");
     };
-    me.setTo = function (list, object, name, value) {
+    me.setTo = async function (list, object, name, value) {
         if (list) {
             var forwarding_list = list[name];
             if (forwarding_list) {
                 for (var target in forwarding_list) {
                     var enabled = forwarding_list[target];
                     if (enabled) {
-                        me.core.property.set(object, target, value);
+                        await me.core.property.set(object, target, value);
                     }
                 }
             }
