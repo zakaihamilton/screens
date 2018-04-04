@@ -103,7 +103,7 @@ screens.kab.text = function KabText(me) {
                                 continue;
                             }
                         }
-                        if(!word) {
+                        if (!word) {
                             numTermWords++;
                             continue;
                         }
@@ -121,7 +121,7 @@ screens.kab.text = function KabText(me) {
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
                         if (!item.case || item.case !== "sensitive") {
                             match = term.toUpperCase();
-                            if(item.case === "ignore") {
+                            if (item.case === "ignore") {
                                 if (me.core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
                                     term = collectedWords;
                                 }
@@ -153,7 +153,7 @@ screens.kab.text = function KabText(me) {
                         prefixLetters: me.core.string.prefixLetters(collectedWords, match),
                         suffixLetters: me.core.string.suffixLetters(collectedWords, match)
                     };
-                    if(item.debug) {
+                    if (item.debug) {
                         debugger
                     }
                     me.handleInstance(session, instance);
@@ -164,26 +164,23 @@ screens.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
-    me.parse = function (callback, language, wordsString, options) {
-        return new Promise((resolve, reject) => {
-            me.kab.data.load(function (json) {
-                me.core.message.send("kab.search.clear");
-                wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
-                if(wordsString.includes("\n")) {
-                    wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
-                }
-                var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
-                var session = {language: language, text: wordsString, options: options, terms: terms, json: json};
-                wordsString = me.splitWords(session, wordsString);
-                session.text = wordsString;
-                if (session.terms) {
-                    wordsString = me.parseSingle(session, null, wordsString);
-                }
-                wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
-                var info = {text:wordsString, terms:me.kab.search.terms, data:json.data};
-                resolve(info);
-            }, language, options.reload);
-        });
+    me.parse = async function (language, wordsString, options) {
+        var json = await me.kab.data.load(language, options.reload);
+        me.core.message.send("kab.search.clear");
+        wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
+        if (wordsString.includes("\n")) {
+            wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
+        }
+        var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
+        var session = { language: language, text: wordsString, options: options, terms: terms, json: json };
+        wordsString = me.splitWords(session, wordsString);
+        session.text = wordsString;
+        if (session.terms) {
+            wordsString = me.parseSingle(session, null, wordsString);
+        }
+        wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
+        var info = { text: wordsString, terms: me.kab.search.terms, data: json.data };
+        return info;
     };
     me.handleInstance = function (session, instance) {
         var modify = me.modify;
@@ -226,7 +223,7 @@ screens.kab.text = function KabText(me) {
         if (expansion) {
             if (Array.isArray(expansion)) {
                 expansion = expansion.map(function (text, index) {
-                    if(index === expansion.length - 1 && expansion.length > 1) {
+                    if (index === expansion.length - 1 && expansion.length > 1) {
                         text = lastExpansion + text;
                     }
                     if (!text.includes(instance.target)) {
@@ -275,7 +272,7 @@ screens.kab.text = function KabText(me) {
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {
         var term = instance.target;
-        if(!translation) {
+        if (!translation) {
             translation = "";
         }
         var replacement = translation;
@@ -302,7 +299,7 @@ screens.kab.text = function KabText(me) {
         }
         me.kab.format.replaceDuplicate(session, instance, replacement);
         var prefixLetters = instance.prefixLetters;
-        if(!prefixLetters && instance.parent) {
+        if (!prefixLetters && instance.parent) {
             prefixLetters = instance.prefixLetters = instance.parent.prefixLetters;
             instance.parent.prefixLetters = null;
         }
@@ -315,7 +312,7 @@ screens.kab.text = function KabText(me) {
             replacementWithStyles = prefixLetters + replacementWithStyles;
         }
         var insert = replacementWithStyles;
-        if(instance.suffixLetters) {
+        if (instance.suffixLetters) {
             insert = "<span style=\"white-space: nowrap\">" + replacementWithStyles + instance.suffixLetters + "</span>";
         }
         instance.words.splice(instance.wordIndex, 0, insert);

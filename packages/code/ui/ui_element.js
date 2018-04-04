@@ -128,13 +128,13 @@ screens.ui.element = function UIElement(me) {
             return object.component;
         }
     };
-    me.createElements = async function (properties, parent, context=null, params=null) {
+    me.createElements = function (properties, parent, context=null, params=null) {
         if(typeof properties === "string") {
             properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
             for(var item of properties) {
-                await me.createElements(item, parent, context, params);
+                me.createElements(item, parent, context, params);
             }
             return;
         }
@@ -175,17 +175,17 @@ screens.ui.element = function UIElement(me) {
         object.context = context ? context : parent;
         if(params) {
             for(var key in params) {
-                await me.core.property.set(object, "ui.param." + key, params[key]);
+                me.core.property.set(object, "ui.param." + key, params[key]);
             }
         }
         var container = component.container;
         if(container) {
             parent = container(object, parent, properties) || parent;
         }
-        await me.core.property.set(object, "ui.node.parent", parent);
+        me.core.property.set(object, "ui.node.parent", parent);
         var constructor = component.create;
         if(constructor) {
-            await constructor(object, parent);
+            constructor(object, parent);
         }
         object.context = object;
         var redirect = component.redirect;
@@ -194,7 +194,7 @@ screens.ui.element = function UIElement(me) {
         }
         if(defaultProperties) {
             for (var key in defaultProperties) {
-                await me.core.property.set(object, key, defaultProperties[key]);
+                me.core.property.set(object, key, defaultProperties[key]);
             }
         }
         if(redirect) {
@@ -202,15 +202,15 @@ screens.ui.element = function UIElement(me) {
         }
         object.context = context ? context : parent;
         for (var key in properties) {
-            await me.core.property.set(object, key, properties[key]);
+            me.core.property.set(object, key, properties[key]);
         }
         if (component.extend) {
             for(var extension of component.extend) {
-                await me.core.property.set(object, extension + ".extend");
+                me.core.property.set(object, extension + ".extend");
             }
         }
         if (component_name !== me.id) {
-            await me.core.property.set(object, "draw");
+            me.core.property.set(object, "draw");
         }
         return object;
     };

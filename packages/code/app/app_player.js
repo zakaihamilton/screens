@@ -25,14 +25,12 @@ screens.app.player = function AppPlayer(me) {
         return me.singleton;
     };
     me.refresh = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.singleton;
             var group = me.core.property.get(window.var.groupList, "ui.basic.text");
-            me.core.message.send_server("core.cache.reset", () => {
-                me.core.message.send_server("core.cache.reset", () => {
-                    me.core.property.set(window, "app.player.update");
-                }, me.id + "-" + group);
-            }, me.id);
+            await me.core.message.send_server("core.cache.reset", me.id);
+            await me.core.message.send_server("core.cache.reset", me.id + "-" + group);
+            me.core.property.set(window, "app.player.update");
         }
     };
     me.update = {

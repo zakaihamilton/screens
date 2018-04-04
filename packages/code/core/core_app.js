@@ -10,18 +10,18 @@ screens.core.app = function CoreApp(me) {
                 if(!property) {
                     return;
                 }
-                var progress = await me.ui.modal("progress", {
+                var progress = me.ui.modal("progress", {
                     "title":property.charAt(0).toUpperCase() + property.slice(1),
                     "delay":"250"
                 });
                 await screens.include("app." + property);
-                await me.core.property.set(progress, "close");
+                me.core.property.set(progress, "close");
                 if (Array.isArray(value)) {
                     value = value.slice(0);
                     value.unshift("app." + property + ".launch");
-                    await me.core.message.send.apply(null, value);
+                    me.core.message.send.apply(null, value);
                 } else {
-                    await me.core.message.send("app." + property + ".launch", value);
+                    me.core.message.send("app." + property + ".launch", value);
                 }
             }
         };
@@ -31,7 +31,7 @@ screens.core.app = function CoreApp(me) {
             return null;
         }
         var result = null;
-        var progress = await me.ui.modal("progress", {
+        var progress = me.ui.modal("progress", {
             "title":appName.charAt(0).toUpperCase() + appName.slice(1),
             "delay":"250"
         });

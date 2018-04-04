@@ -21,7 +21,7 @@ screens.app.log = function AppLog(me) {
             me.core.property.notify(me.singleton, "app.log.refresh");
         });
     };
-    me.send = function (method) {
+    me.send = async function (method) {
         var source = me.options["source"];
         var send = null;
         if (source === "Server") {
@@ -32,27 +32,23 @@ screens.app.log = function AppLog(me) {
             send = me.core.message.send_browser;
         }
         var args = Array.prototype.slice.call(arguments, 0);
-        send.apply(null, args);
+        await send.apply(null, args);
     };
     me.clear = {
         set: function (object) {
             var log = me.singleton.var.log;
             me.core.property.set(log, "ui.basic.text", "");
-            me.send("core.console.clearMessages", function () {
-
-            });
+            me.send("core.console.clearMessages");
         }
     };
     me.refresh = {
-        set: function (object) {
+        set: async function (object) {
             var log = me.singleton.var.log;
             me.core.property.set(log, "ui.basic.text", "");
-            me.send("core.console.retrieveMessages", function (messages) {
-                me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));
-            });
-            me.send("core.console.isEnabled", function (isEnabled) {
-                me.singleton.isEnabled = isEnabled;
-            });
+            var messages = await me.send("core.console.retrieveMessages");
+            me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));
+            var isEnabled = await me.send("core.console.isEnabled");
+            me.singleton.isEnabled = isEnabled;
         }
     };
     me.enable = {
@@ -61,9 +57,7 @@ screens.app.log = function AppLog(me) {
         },
         set: function (object) {
             me.singleton.isEnabled = !me.singleton.isEnabled;
-            me.send("core.console.enable", function () {
-
-            }, me.singleton.isEnabled);
+            me.send("core.console.enable", me.singleton.isEnabled);
         }
     };
 };

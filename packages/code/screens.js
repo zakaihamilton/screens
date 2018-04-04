@@ -32,21 +32,6 @@ function screens_unlock(task, callback) {
     }
 }
 
-async function screens_async(task, promise) {
-    var result;
-    screens_lock(task, async (task) => {
-        try {
-            result = await promise;
-            screens_unlock(task);
-        }
-        catch (err) {
-            screens_unlock(task);
-            throw err;
-        }
-    });
-    return result;
-}
-
 async function screens_map(object, callback) {
     if(Array.isArray(object)) {
         var results = [];
@@ -316,8 +301,7 @@ Object.assign(screens, {
     include: screens_include,
     lock: screens_lock,
     unlock: screens_unlock,
-    async: screens_async,
-    map: screens_map
+    map: screens_map,
 });
 
 var platform = screens_platform();

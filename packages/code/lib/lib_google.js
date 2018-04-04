@@ -33,7 +33,8 @@ screens.lib.google = function LibGoogle(me) {
                         resolve();
                     }
                 }).catch((error) => {
-                    me.setStatus("Cannot initialize google authenticiation: " + error);
+                    error = "Cannot initialize google authenticiation: " + JSON.stringify(error);
+                    me.setStatus(error);
                     reject(error);
                 });
             });

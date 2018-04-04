@@ -4,7 +4,7 @@
 */
 
 screens.cmd.cd = function CmdCd(me) {
-    me.cmd = async function(terminal, args) {
+    me.cmd = function(terminal, args) {
         var current_dir = terminal.current_dir;
         if(!current_dir) {
             current_dir = ".";

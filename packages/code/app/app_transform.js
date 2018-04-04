@@ -594,36 +594,32 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.refreshContentList = {
-        set: function (object) {
-            me.core.message.send_server("core.cache.reset", () => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.publicContentList = items;
-                }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
-            }, me.id + ".public");
-            me.core.message.send_server("core.cache.reset", () => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.privateContentList = items;
-                }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
-            }, me.id + ".private.$user");
+        set: async function (object) {
+            await me.core.message.send_server("core.cache.reset", me.id + ".public");
+            me.publicContentList = await me.core.message.send_server("core.cache.use",
+                me.id + ".public",
+                "storage.data.query",
+                "app.transform.content",
+                "title");
+            await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
+            me.privateContentList = await me.core.message.send_server("core.cache.use",
+                me.id + ".private.$user",
+                "storage.data.query",
+                "app.transform.content.$user",
+                "title");
         }
     };
     me.init = async function () {
-        await new Promise((resolve, reject) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.publicContentList = items;
-                resolve();
-            }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
-        });
-        await new Promise((resolve, reject) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.privateContentList = items;
-                resolve();
-            }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
-        });
+        me.publicContentList = await me.core.message.send_server("core.cache.use",
+            me.id + ".public",
+            "storage.data.query",
+            "app.transform.content",
+            "title");
+        me.privateContentList = await me.core.message.send_server("core.cache.use",
+            me.id + ".private.$user",
+            "storage.data.query",
+            "app.transform.content.$user",
+            "title");
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);
