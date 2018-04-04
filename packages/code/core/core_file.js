@@ -19,7 +19,7 @@ screens.core.file = function CoreFile(me) {
                         reject(err);
                     }
                     else {
-                        me.log("success in reading file: " + path + " length: " + data.length);
+                        me.log("success in reading file: " + path + " length: " + (data ? data.length: 0));
                         resolve(data);
                     }
                 });
@@ -46,7 +46,7 @@ screens.core.file = function CoreFile(me) {
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
-        me.map(tokens, async (token) => {
+        await me.map(tokens, async (token) => {
             if (mkdirPath) {
                 mkdirPath += "/" + token;
             }

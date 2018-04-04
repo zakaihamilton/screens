@@ -27,7 +27,14 @@ screens.core.json = function CoreJson(me) {
                 method: "GET",
                 url: "/" + path
             };
-            var json = await me.core.http.send(info);
+            var json = "{}";
+            try {
+                json = await me.core.http.send(info);
+            }
+            catch(err) {
+                err = "Cannot load json file: " + path + " err: " + err.message || err;
+                me.error(err);
+            }
             if(json) {
                 json = JSON.parse(json);
             }

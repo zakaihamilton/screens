@@ -34,7 +34,7 @@ screens.lib.google = function LibGoogle(me) {
                     }
                 }).catch((error) => {
                     me.setStatus("Cannot initialize google authenticiation: " + error);
-                    reject();
+                    reject(error);
                 });
             });
         });
@@ -70,21 +70,21 @@ screens.lib.google = function LibGoogle(me) {
     };
     me.signin = {
         set: function (object) {
-            me.core.listener.reset(null, me.id);
+            me.core.listener.reset(me.id);
             me.auth2.signIn().then(() => {
-                me.core.listener.signal(null, me.id);
+                me.core.listener.signal(me.id);
             }).catch((err) => {
                 me.setStatus(me.errors[err.error]);
-                me.core.listener.signal(null, me.id);
+                me.core.listener.signal(me.id);
             });
         }
     };
     me.signout = {
         set: function (object) {
-            me.core.listener.reset(null, me.id);
+            me.core.listener.reset(me.id);
             me.auth2.signOut().then(() => {
                 me.setStatus("Signed out");
-                me.core.listener.signal(null, me.id);
+                me.core.listener.signal(me.id);
             });
         }
     };
@@ -92,7 +92,7 @@ screens.lib.google = function LibGoogle(me) {
         set: function (object) {
             me.auth2.disconnect().then(() => {
                 me.setStatus("Disconnected");
-                me.core.listener.signal(null, me.id);
+                me.core.listener.signal(me.id);
             });
         }
     };
@@ -117,11 +117,11 @@ screens.lib.google = function LibGoogle(me) {
         me.state = state;
         if (state) {
             me.setStatus("Changed to signed in");
-            me.core.listener.signal(null, me.id);
+            me.core.listener.signal(me.id);
         }
         else {
             me.setStatus("Changed to not signed in");
-            me.core.listener.signal(null, me.id);
+            me.core.listener.signal(me.id);
         }
     };
     me.userChanged = function (user) {
@@ -132,7 +132,7 @@ screens.lib.google = function LibGoogle(me) {
                     var name = profile.getName();
                     me.setStatus("Sign in successful");
                     me.log("User now: " + name);
-                    me.core.listener.signal(null, me.id);
+                    me.core.listener.signal(me.id);
                 }
                 else {
                     me.setStatus("No profile for signed in user");

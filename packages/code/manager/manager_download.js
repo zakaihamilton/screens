@@ -63,20 +63,27 @@ screens.manager.download = function ManagerDownload(me) {
             }
         },
         notify : function(item, err, target) {
-            var callback = item.callbacks.pop();
-            while(callback) {
-                callback(err, target);
-                callback = item.callbacks.pop();
+            var promise = item.promises.pop();
+            while(promise) {
+                if(err) {
+                    promise.reject(err);
+                }
+                else {
+                    promise.resolve(target);
+                }
+                promise = item.promises.pop();
             }
         }
     };
-    me.push = async function(callback, from, to, convert) {
+    me.push = async function(from, to, convert) {
         var item = me.private.findItem(from, to);
         if(item) {
-            var index = me.queue.indexOf(item);
-            me.queue.splice(index, 1);
-            item.callbacks.push(callback);
-            me.queue.push(item);
+            return new Promise((resolve, reject) => {
+                var index = me.queue.indexOf(item);
+                me.queue.splice(index, 1);
+                item.promises.push(resolve);
+                me.queue.push(item);
+            });
         }
         else {
             var path = to;
@@ -85,46 +92,46 @@ screens.manager.download = function ManagerDownload(me) {
             }
             var isFile = await me.core.file.isFile(path);
             if(isFile) {
-                callback(null, path);
+                return path;
             }
             else {
-                me.log("pushing to download queue: " + from + " to: " + to);
-                item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
-                me.queue.push(item);
-                me.private.update();
+                return new Promise((resolve, reject) => {
+                    me.log("pushing to download queue: " + from + " to: " + to);
+                    item = {from:from, to:to, isDownloading:false, promises:[{resolve,reject}], convert:convert};
+                    me.queue.push(item);
+                    me.private.update();
+                });
             }
         }
     };
-    me.exists = function(callback, from, to) {
+    me.exists = function(from, to) {
         var item = me.private.findItem(from, to);
-        callback(item ? true : false);
+        return (item ? true : false);
     };
-    me.removeall = function(callback) {
+    me.removeall = function() {
         me.queue = [];
-        callback();
     };
-    me.remove = function(callback, from, to) {
+    me.remove = function(from, to) {
         var item = me.private.findItem(from, to);
         if(item) {
             var index = me.queue.indexOf(item);
             me.queue.splice(index, 1);
         }
-        callback();
     };
-    me.items = function(callback) {
+    me.items = function() {
         var items = [];
         for(var item of me.queue) {
             items.push({from:item.from,to:item.to,isDownloading:item.isDownloading,convert:item.convert});
         }
-        callback(items);
+        return items;
     };
-    me.isDownloading = function(callback, from, to) {
+    me.isDownloading = async function(from, to) {
         var item = me.private.findItem(from, to);
         var isDownloading = false;
         if(item) {
             isDownloading = item.isDownloading;
         }
-        callback(isDownloading);
+        return isDownloading;
     };
     return "server";
 };

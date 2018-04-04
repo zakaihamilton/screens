@@ -217,16 +217,14 @@ screens.core.http = function CoreHttp(me) {
             me.log("sending request info:" + JSON.stringify(info));
             request.open(info.method, info.url, true);
             return new Promise((resolve, reject) => {
-                request.onreadystatechange = function (err) {
-                    if (err) {
-                        reject(err);
-                    }
+                request.onreadystatechange = function () {
                     if (request.readyState === 4) {
                         if (request.status === 200 || request.status === 201) {
                             resolve(request.responseText);
                         }
-                    } {
-                        reject(request.status);
+                        else {
+                            reject(request.status);
+                        }
                     }
                 };
                 if (headers) {

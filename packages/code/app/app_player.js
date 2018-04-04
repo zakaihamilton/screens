@@ -143,7 +143,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.updatePlayer = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.singleton;
             var showAudioPlayer = me.core.property.get(window.var.audioType, "state");
             var showVideoPlayer = me.core.property.get(window.var.videoType, "state");
@@ -163,15 +163,9 @@ screens.app.player = function AppPlayer(me) {
                     path = videoPath;
                 }
                 me.core.property.set(window, "ui.work.state", true);
-                me.manager.download.push(function (err, target) {
-                    if (err) {
-                        me.core.app("info", target, err);
-                    }
-                    else {
-                        me.core.property.set(player, "source", target);
-                    }
-                    me.core.property.set(window, "ui.work.state", false);
-                }, me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                await me.manager.download.push(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                me.core.property.set(player, "source", target);
+                me.core.property.set(window, "ui.work.state", false);
             }
         }
     };

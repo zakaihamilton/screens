@@ -27,7 +27,7 @@ screens.app.theme = function AppTheme(me) {
                 me.ui.theme.unload();
             }
             else {
-                me.ui.theme.load(null, theme);
+                me.ui.theme.load(theme);
             }
         }
     };

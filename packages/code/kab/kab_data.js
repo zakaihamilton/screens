@@ -18,7 +18,7 @@ screens.kab.data = function KabData(me) {
             return json;
         }
     };
-    me.load = function (language, reload = false) {
+    me.load = async function (language, reload = false) {
         language = language.toLowerCase();
         if (!reload && me.files[language]) {
             var json = me.files[language];

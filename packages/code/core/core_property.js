@@ -159,13 +159,13 @@ screens.core.property = function CoreProperty(me) {
             return;
         }
         if (Array.isArray(object)) {
-            var results = me.map(object, async (item) => {
+            var results = await me.map(object, async (item) => {
                 return await me.core.property.set(item, name, value);
             });
             return results;
         }
         if (Array.isArray(name)) {
-            var results = me.map(name, async (item) => {
+            var results = await me.map(name, async (item) => {
                 return await me.core.property.set(object, item, value);
             });
             return results;

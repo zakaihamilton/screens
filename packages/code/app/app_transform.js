@@ -288,7 +288,7 @@ screens.app.transform = function AppTransform(me) {
             window.options.toggleCallback = "screens.app.transform.cycleDescription";
             window.options.reload = true;
             me.media.voice.stop();
-            var info = await me.kab.text.parse(null, language, text, window.options);
+            var info = await me.kab.text.parse(language, text, window.options);
             text = info.text;
             var terms = info.terms;
             var data = info.data;

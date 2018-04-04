@@ -21,7 +21,7 @@ screens.core.module = function CoreModule(me) {
         me.log("loading text file: " + filePath);
         try {
             var data = await me.core.file.readFile(filePath, 'utf8');
-            me.log("serving text file: " + filePath + " length: " + data ? data.length : 0);
+            me.log("serving text file: " + filePath + " length: " + (data ? data.length : 0));
         }
         catch(err) {
             err = "Cannot load text file: " + filePath + " err: " + err;
@@ -43,7 +43,7 @@ screens.core.module = function CoreModule(me) {
         });
         return result.css;
     };
-    me.handleCode = async function (filePath, info) {
+    me.handleCode = async function (filePath, params, info) {
         if (filePath.startsWith("/")) {
             filePath = filePath.substring(1);
         }
@@ -66,18 +66,21 @@ screens.core.module = function CoreModule(me) {
         }
         var data = await me.loadTextFile(filePath);
         var jsonData = "{}";
-        if (data && data.includes("__json__")) {
-            jsonData = me.loadTextFile(filePath.replace(".js", ".json"));
+        var vars = { "component": component_path, "platform": target_platform};
+        if (data && data.includes("__json__") && !data.includes("global" + ".__json__")) {
+            me.log("including json data in javascript file");
+            var jsonFilePath = filePath.replace(".js", ".json");
+            jsonData = await me.loadTextFile(jsonFilePath);
+            me.log("jsonData path: " + jsonFilePath + " length: " + jsonData.length);
+            vars.json = jsonData;
         }
-        var vars = { "component": component_path, "platform": target_platform, "json": jsonData };
         /* Apply variables */
         if (data) {
-            for (var key in info.vars) {
-                if (info.vars.hasOwnProperty(key)) {
-                    data = data.split("__" + key + "__").join(info.vars[key]);
-                }
+            for (var key in vars) {
+                data = data.split("__" + key + "__").join(vars[key]);
             }
         }
+        me.log("code size: " + data.length);
         return data;
     };
     me.handleMultiFiles = async function (filePath, params, info) {
@@ -106,9 +109,10 @@ screens.core.module = function CoreModule(me) {
             files.unshift(file);
         }
         data = "";
-        me.map(files, async (filePath) => {
+        await me.map(files, async (filePath) => {
             data += await params.method(filePath, params, info);
         });
+        me.log("handleMultiFiles: size: " + data.length);
         info.body = data;
     };
     me.handleFile = async function (filePath, params, info) {

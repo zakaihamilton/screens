@@ -7,11 +7,12 @@ screens.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
     me.init = async function() {
-        var current_theme = me.core.property.get(me.storage.local.local, "ui-theme-current");
+        var current_theme = await me.core.property.get(me.storage.local.local, "ui-theme-current");
         if(!current_theme) {
             current_theme = "glow";
         }
         if(current_theme !== "none") {
+            me.log("loading theme: " + current_theme);
             await me.load(current_theme);
         }
     };

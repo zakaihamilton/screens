@@ -9,7 +9,7 @@ screens.core.require = function CoreRequire(me) {
             return;
         }
         return new Promise((resolve, reject) => {
-            require(list, function () {
+            require([path], function () {
                 var module = null;
                 try {
                     module = require(path);
