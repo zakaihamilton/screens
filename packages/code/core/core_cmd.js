@@ -17,7 +17,7 @@ screens.core.cmd = function CoreCmd(me) {
             return [];
         }
     };
-    me.handle = function(terminal, args) {
+    me.handle = async function(terminal, args) {
         if(!Array.isArray(args)) {
             args = me.split(args);
         }
@@ -30,10 +30,9 @@ screens.core.cmd = function CoreCmd(me) {
             return;
         }
         var application = "cmd." + args[0];
-        screens.include(application, function (info) {
-            terminal.application = application;
-            terminal.handle = me.core.message.send(application + ".cmd", terminal, args);
-        });
+        await screens.include(application);
+        terminal.application = application;
+        terminal.handle = await me.core.message.send(application + ".cmd", terminal, args);
     };
     me.exit = function(terminal) {
         terminal.application = null;

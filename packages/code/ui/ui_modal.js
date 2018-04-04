@@ -6,21 +6,21 @@
 screens.ui.modal = function UIModal(me) {
     me.get = function (object, property) {
         return {
-            set: function (object, value) {
+            set: async function (object, value) {
                 if (Array.isArray(value)) {
                     value = value.slice(0);
                     value.unshift("modal." + property + ".launch");
-                    return me.core.message.send.apply(null, value);
+                    return await me.core.message.send.apply(null, value);
                 } else {
-                    return me.core.message.send("modal." + property + ".launch", value);
+                    return await me.core.message.send("modal." + property + ".launch", value);
                 }
             }
         };
     };
-    me.apply = function (appName) {
+    me.apply = async function (appName) {
         var result = null;
         var appArgs = Array.prototype.slice.call(arguments, 1);
-        return me.core.message.send("modal." + appName + ".launch", appArgs);
+        return await me.core.message.send("modal." + appName + ".launch", appArgs);
     };
     return "browser";
 };

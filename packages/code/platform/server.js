@@ -50,7 +50,7 @@ screens.include({
     "lib": [
         "zlib"
     ]
-}, function () {
+}).then(() => {
     screens.core.startup.run();
 });
 

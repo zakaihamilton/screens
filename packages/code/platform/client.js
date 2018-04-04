@@ -7,6 +7,6 @@ screens.include({
     "kab": [
         "*"
     ]
-}, async function () {
+}).then(async () => {
     await screens.core.startup.run();
 });

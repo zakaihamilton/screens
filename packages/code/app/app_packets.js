@@ -15,7 +15,7 @@ screens.app.packets = function AppPackets(me) {
         }
         return me.singleton;
     };
-    me.init = function () {
+    me.init = async function () {
         me.colors = [];
         me.isPushEnabled = false;
         me.ui.options.load(me, null, {
@@ -41,18 +41,9 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData");
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
-        return new Promise((resolve, reject) => {
-            me.storage.data.query((err, items) => {
-                me.error(err);
-                me.dataList = items;
-                me.manager.packet.isPushEnabled((isPushEnabled) => {
-                    me.isPushEnabled = isPushEnabled;
-                });
-                screens.include("lib.moment", function () {
-                    resolve();
-                });
-            }, "app.packets.data");
-        });
+        me.dataList = await me.storage.data.query("app.packets.data");
+        me.isPushEnabled = await me.manager.packet.isPushEnabled();
+        await screens.include("lib.moment");
     };
     me.refreshDataList = {
         set: function (object) {

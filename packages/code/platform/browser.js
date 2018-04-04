@@ -39,7 +39,7 @@ function startBrowser(appName, appArgs) {
         "startup": [
             "app"
         ]
-    }, async () => {
+    }).then(async () => {
         screens.core.startup.app = {
             name: appName,
             params: appArgs

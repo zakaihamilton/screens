@@ -275,7 +275,7 @@ async function screens_load(items) {
     return items;
 }
 
-async function screens_include(packages, callback) {
+async function screens_include(packages) {
     if (typeof packages === "string" && packages) {
         var names = packages.split(".");
         var package_name = names[0];
@@ -296,9 +296,6 @@ async function screens_include(packages, callback) {
     for (package_name in packages) {
         console.log("initializing package: " + package_name);
         await screens_init(collection[package_name]);
-    }
-    if (callback) {
-        callback();
     }
 }
 
