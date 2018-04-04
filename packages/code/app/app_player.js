@@ -21,7 +21,12 @@ screens.app.player = function AppPlayer(me) {
             params.sessionName = args[1];
         }
         me.singleton = me.ui.element(__json__, "workspace", "self", params);
-        me.core.file.makeDir(me.cachePath);
+        try {
+            me.core.file.makeDir(me.cachePath);
+        }
+        catch(err) {
+            me.log(me.cachePath + " err: " + err.message || err);
+        }
         return me.singleton;
     };
     me.refresh = {
@@ -161,7 +166,7 @@ screens.app.player = function AppPlayer(me) {
                     path = videoPath;
                 }
                 me.core.property.set(window, "ui.work.state", true);
-                await me.manager.download.push(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                var target = await me.manager.download.push(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
                 me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
             }

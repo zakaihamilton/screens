@@ -73,7 +73,7 @@ screens.storage.file = function StorageFile(me) {
         return response;
     };
     me.downloadFile = async function (from, to) {
-        var service = awaitme.getService();
+        var service = await me.getService();
         var path = me.fixPath(from);
         var result = await service.filesGetTemporaryLink({ path: path });
         const req = me.https.get(result.link, res => {

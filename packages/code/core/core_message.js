@@ -133,6 +133,7 @@ screens.core.message = function CoreMessage(me) {
                         return arg;
                     });
                     var result = await me.core.message.send.apply(info, args);
+                    me.log("method: " + path + " result type: " + typeof result);
                     info.body = me.core.type.wrap_args([null, result]);
                 }
                 catch (e) {

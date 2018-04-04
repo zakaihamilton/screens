@@ -79,14 +79,14 @@ function screens_setup(package_name, component_name, child_name, node) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
                 args.unshift(id);
-                me.core.message["send_" + platform].apply(null, args);
+                return me.core.message["send_" + platform].apply(null, args);
             };
         };
         component_obj.get = function (object, property) {
             return function () {
                 var args = Array.prototype.slice.call(arguments);
                 args.unshift(id + "." + property);
-                me.core.message["send_" + platform].apply(null, args);
+                return me.core.message["send_" + platform].apply(null, args);
             };
         };
     }

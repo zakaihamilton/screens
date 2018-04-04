@@ -136,6 +136,9 @@ screens.core.file = function CoreFile(me) {
             });
         });
     };
+    me.exists = function(path) {
+        return me.fs.existsSync(path);
+    };
     me.download = async function (source, target) {
         var folder = me.core.path.goto(target, "..");
         me.log("downloading: " + source + " to: " + target);
