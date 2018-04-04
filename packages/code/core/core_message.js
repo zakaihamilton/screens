@@ -117,51 +117,28 @@ screens.core.message = function CoreMessage(me) {
         }
     };
     me.receiveHttp = {
-        set: function (info) {
+        set: async function (info) {
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
                 var find = "/method/";
                 var path = info.url.substring(info.url.indexOf(find) + find.length);
                 var args = me.core.type.unwrap_args(me.core.http.parse_query(info.body));
                 info.body = null;
                 args.unshift(path);
-                me.lock(info.task, task => {
-                    try {
-                        args = args.map((arg) => {
-                            if (arg && typeof arg === "string" && arg.includes("$user")) {
-                                me.log("replacing: $user with: " + info.user + " arg: " + arg);
-                                arg = arg.replace(/\$user/, info.user);
-                            }
-                            return arg;
-                        });
-                        var promise = me.core.message.send.apply(info, args);
-                        me.log("result on: " + path + " promise: " + promise);
-                        if (promise && promise.then) {
-                            me.log("waiting for promise on: " + path);
-                            promise.then((result) => {
-                                me.log("promise resolved " + path);
-                                var args = [null, result];
-                                info.body = me.core.type.wrap_args(args);
-                                me.unlock(task);
-                            }).catch((err) => {
-                                me.log("promise catch " + path);
-                                me.error(e.message || e + " " + JSON.stringify(args), e.stack || "");
-                                info.body = me.core.type.wrap_args([e]);
-                                me.unlock(task);
-                            });
+                try {
+                    args = args.map((arg) => {
+                        if (arg && typeof arg === "string" && arg.includes("$user")) {
+                            me.log("replacing: $user with: " + info.user + " arg: " + arg);
+                            arg = arg.replace(/\$user/, info.user);
                         }
-                        else {
-                            me.log("no promise for " + path);
-                            var args = [null, result];
-                            info.body = me.core.type.wrap_args(args);
-                            me.unlock(task);
-                        }
-                    }
-                    catch (e) {
-                        me.error(e.message + " " + JSON.stringify(args), e.stack);
-                        info.body = e.message;
-                        me.unlock(task);
-                    }
-                });
+                        return arg;
+                    });
+                    var result = await me.core.message.send.apply(info, args);
+                    info.body = me.core.type.wrap_args([null, result]);
+                }
+                catch (e) {
+                    me.error(e.message || e);
+                    info.body = me.core.type.wrap_args([e]);
+                }
             }
         }
     };

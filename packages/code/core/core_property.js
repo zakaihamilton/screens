@@ -179,10 +179,17 @@ screens.core.property = function CoreProperty(me) {
             });
             return results;
         }
+        var promises = [];
         if(typeof name === "string") {
             var source_method = me.core.property.fullname(object, name);
-            me.setTo(me._forwarding_list, object, source_method, value);
-            me.setTo(object._forwarding_list, object, source_method, value);
+            var promise = me.setTo(me._forwarding_list, object, source_method, value);
+            if(promise) {
+                promises.push(promise);
+            }
+            promise = me.setTo(object._forwarding_list, object, source_method, value);
+            if(promise) {
+                promises.push(promise);
+            }
         }
         else if(typeof name !== "function") {
             var results = {};
@@ -191,19 +198,34 @@ screens.core.property = function CoreProperty(me) {
                 me.core.property.set(object, key, value);
             }
         }
-        return me.core.property.get(object, name, value, "set");
+        var result = me.core.property.get(object, name, value, "set");
+        if(result && result.then) {
+            promises.push(result);
+        }
+        else if(promises.length) {
+            promises.push(Promise.resolve(result));
+            result = Promise.all(promises);
+        }
+        return result;
     };
     me.setTo = function (list, object, name, value) {
+        var promises = [];
         if (list) {
             var forwarding_list = list[name];
             if (forwarding_list) {
                 for (var target in forwarding_list) {
                     var enabled = forwarding_list[target];
                     if (enabled) {
-                        me.core.property.set(object, target, value);
+                        var result = me.core.property.set(object, target, value);
+                        if(result && result.then) {
+                            promises.push(result);
+                        }
                     }
                 }
             }
+        }
+        if(promises.length) {
+            return Promise.all(promises);
         }
     };
     me.group = {

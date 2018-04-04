@@ -1,37 +1,3 @@
-function screens_lock(parent_task, callback) {
-    if (typeof (parent_task) === "function") {
-        callback = parent_task;
-        parent_task = null;
-    }
-    var task = { state: true, lock: 0, parent: parent_task };
-    var next = task;
-    while (next) {
-        next.lock++;
-        next = next.parent;
-    }
-    if (callback) {
-        callback(task);
-    }
-}
-
-function screens_unlock(task, callback) {
-    if (callback) {
-        task.callback = callback;
-    }
-    var next = task;
-    while (next) {
-        next.lock--;
-        if (next.lock <= 0 && next.state) {
-            next.lock = 0;
-            if (next.callback) {
-                next.callback(next);
-            }
-            next.state = false;
-        }
-        next = next.parent;
-    }
-}
-
 async function screens_map(object, callback) {
     if(Array.isArray(object)) {
         var results = [];
@@ -299,8 +265,6 @@ Object.assign(screens, {
     id: "package",
     platform: screens_platform(),
     include: screens_include,
-    lock: screens_lock,
-    unlock: screens_unlock,
     map: screens_map,
 });
 
