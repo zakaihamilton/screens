@@ -6,9 +6,9 @@
 screens.lib.moment = function LibMoment(me) {
     me.init = async function () {
         me.moment = await me.core.require("/node_modules/moment/moment.js");
-        me.apply = me.moment;
+        me.proxy.apply = me.moment;
     };
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return function () {
             var args = Array.prototype.slice.call(arguments);
             return me.moment[property].apply(this, args);

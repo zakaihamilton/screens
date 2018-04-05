@@ -31,20 +31,21 @@ function screens_setup(package_name, component_name, child_name, node) {
                 } else if (property in screens) {
                     return screens[property];
                 } else {
-                    var get = Reflect.get(object, "get");
-                    if (get && get.enabled) {
-                        return get(object, property);
+                    var proxy = Reflect.get(object, "proxy");
+                    if (proxy && proxy.get && proxy.get.enabled) {
+                        return proxy.get(object, property);
                     }
                 }
                 return undefined;
             },
             apply: function (object, thisArg, argumentsList) {
-                var apply = Reflect.get(object, "apply");
-                if (apply) {
-                    return apply.apply(thisArg, argumentsList);
+                var proxy = Reflect.get(object, "proxy");
+                if (proxy && proxy.apply) {
+                    return proxy.apply.apply(thisArg, argumentsList);
                 }
             }
         });
+    component_obj.proxy = {};
     component_obj.id = id;
     component_obj.__package = package_name;
     component_obj.__component = component_name;
@@ -58,14 +59,14 @@ function screens_setup(package_name, component_name, child_name, node) {
     }
     var platform = node(component_obj, child_name);
     if (platform && screens.platform !== platform) {
-        component_obj.apply = function (object, thisArg, argumentsList) {
+        component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
                 args.unshift(id);
                 return me.core.message["send_" + platform].apply(null, args);
             };
         };
-        component_obj.get = function (object, property) {
+        component_obj.proxy.get = function (object, property) {
             return function () {
                 var args = Array.prototype.slice.call(arguments);
                 args.unshift(id + "." + property);
@@ -165,7 +166,7 @@ async function screens_import(path) {
 async function screens_load(items) {
     if (items && items.length) {
         if (screens.platform === "server" || screens.platform === "service") {
-            for(var item of items) {
+            for (var item of items) {
                 if (item.package_name in screens && item.component_name in screens[item.package_name]) {
                     return;
                 }
@@ -218,7 +219,7 @@ async function screens_include(packages) {
         packages[package_name] = [component_name];
     }
     var collection = {};
-    for(var package_name in packages) {
+    for (var package_name in packages) {
         var components = packages[package_name];
         var items = [];
         components.forEach((component_name) => {

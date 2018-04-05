@@ -4,7 +4,7 @@
  */
 
 screens.ui.windowkey = function UIWindowKey(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object) {
                 if(property.endsWith("-")) {

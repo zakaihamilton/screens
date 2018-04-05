@@ -4,7 +4,7 @@
  */
 
 screens.core.data = function CoreData(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object) {
                 var data = null;

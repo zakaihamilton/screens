@@ -5,7 +5,6 @@
 
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
-        return;
         const {Database, Model} = require('mongorito');
         me.Database = Database;
         me.Model = Model;
@@ -25,7 +24,7 @@ screens.storage.db = function StorageDB(me) {
         }
         var url = info.url;
         try {
-            database = new Database(url);
+            database = new me.Database(url);
             await database.connect();
             me.log("Connected correctly to server");
             me.databases[name] = database;
@@ -36,6 +35,12 @@ screens.storage.db = function StorageDB(me) {
             me.error(err);
             throw err;
         }
+    };
+    me.createModel = async function(dbName) {
+        var db = await me.database(dbName);
+        var model = class extends me.Model {};
+        db.register(model);
+        return model;
     };
     return "server";
 };

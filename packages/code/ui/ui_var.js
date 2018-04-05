@@ -4,7 +4,7 @@
  */
 
 screens.ui.var = function UIVar(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object) {
                 var variable = null;

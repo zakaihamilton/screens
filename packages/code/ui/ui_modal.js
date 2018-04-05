@@ -4,7 +4,7 @@
  */
 
 screens.ui.modal = function UIModal(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             set: function (object, value) {
                 if (Array.isArray(value)) {
@@ -17,7 +17,7 @@ screens.ui.modal = function UIModal(me) {
             }
         };
     };
-    me.apply = function (appName) {
+    me.proxy.apply = function (appName) {
         var result = null;
         var appArgs = Array.prototype.slice.call(arguments, 1);
         return me.core.message.send("modal." + appName + ".launch", appArgs);

@@ -4,7 +4,7 @@
  */
 
 screens.core.require = function CoreRequire(me) {
-    me.apply = function(path) {
+    me.proxy.apply = function(path) {
         if(!path) {
             return;
         }

@@ -5,7 +5,7 @@
 
 screens.ui.element = function UIElement(me) {
     me.init = function() {
-        me.apply = me.createElements;
+        me.proxy.apply = me.createElements;
     };
     me.matches = function (properties, parent) {
         /* Find matching components */

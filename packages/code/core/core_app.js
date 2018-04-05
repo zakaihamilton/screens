@@ -4,7 +4,7 @@
  */
 
 screens.core.app = function CoreApp(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             set: async function (object, value) {
                 if(!property) {
@@ -26,7 +26,7 @@ screens.core.app = function CoreApp(me) {
             }
         };
     };
-    me.apply = async function (appName) {
+    me.proxy.apply = async function (appName) {
         if(!appName) {
             return null;
         }
