@@ -81,41 +81,32 @@ screens.core.service = function CoreService(me) {
         }
         return me.serviceNames;
     };
-    me.config = function (callback, name) {
-        me.core.util.config(callback, "settings.service." + name);
+    me.config = async function (name) {
+        return await me.core.util.config("settings.service." + name);
     };
-    me.sendAll = function (method, callback, param) {
+    me.sendAll = async function (method, param) {
+        var responses = [];
         if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments);
-            me.serviceNames.map((serviceName) => {
+            for(var serviceName of me.serviceNames) {
                 args[0] = "service." + serviceName + "." + method;
-                me.core.message.send.apply(null, args);
-            });
+                responses.push(await me.core.message.send.apply(null, args));
+            }
+            return responses;
         }
         else {
             var errors = null;
             var args = Array.prototype.slice.call(arguments);
             var count = 0;
-            var responses = [];
-            args[1] = function () {
-                var response = Array.prototype.slice.call(arguments);
-                responses.push(response);
-                count--;
-                me.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
-                if (!count) {
-                    callback.apply(null, responses);
-                }
-            };
             if (me.clients) {
-                me.clients.forEach((info, socket) => {
-                    me.core.message.send_service.apply(socket, args);
-                    count++;
-                });
-            }
-            else {
-                callback();
+                for(var socket in me.clients) {
+                    var info = me.clients[socket];
+                    var response = await me.core.message.send_service.apply(socket, args);
+                    responses.push(response);
+                }
             }
             me.log("sent " + method + "' to " + count + " devices");
+            return responses;
         }
     };
     me.ready = {

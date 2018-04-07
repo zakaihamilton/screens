@@ -26,9 +26,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
                 me.log("newRun");
                 me.core.service.sendAll("newRun");
             }
-            me.applyEffects(() => {
-
-            }, me.effects);
+            me.applyEffects(me.effects);
         }
     };
     me.reset = async function () {
