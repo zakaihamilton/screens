@@ -704,7 +704,7 @@ screens.app.transform = function AppTransform(me) {
             me.save(object, true);
         }
     };
-    me.save = function (object, private) {
+    me.save = async function (object, private) {
         var window = me.widget.window.mainWindow(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         var date = new Date();
@@ -727,13 +727,8 @@ screens.app.transform = function AppTransform(me) {
             data.owner = "$user";
             kind += ".$user";
         }
-        me.storage.data.save(err => {
-            if (err) {
-                me.error("Cannot save content: " + err.message);
-            } else {
-                me.refreshContentList.set(object);
-            }
-        }, data, kind, title, ["content"]);
+        await me.storage.data.save(data, kind, title, ["content"]);
+        await me.refreshContentList.set(object);
     };
     me.changeVoice = function (object) {
         var window = me.widget.window.mainWindow(object);

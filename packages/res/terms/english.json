@@ -131,7 +131,6 @@
             "we’ve": "we have",
             "OhrElyon": "Ohr Elyon",
             "OhrHassadim": "Ohr Hassadim",
-            "Midatha": "Midat ha",
             "Yomincovered": "Yomin covered",
             "Taamimof": "Taamim of",
             "Eser de Sefirot": "Eser Sefirot",
@@ -139,7 +138,10 @@
             "\nOr": "__Or",
             "west departs from the east":"__west departs from the __east",
             "strong east wind":"strong __east wind",
-            "Balaam":"Bilʻam"
+            "Balaam":"Bilʻam",
+            "“World":"“World2",
+            "“Year":"“Year2",
+            "“Soul":"“Soul2"
         },
         "tags":{
             "<subtitle>": "\n<b>",
@@ -6613,6 +6615,31 @@
             "term":"Ohr Nekeva",
             "hebrew":"אור נקבה",
             "translation":"Female Light"
+        },
+        {
+            "term":"WYS",
+            "expansion":["World2","Year2","Soul2"]
+        },
+        {
+            "term":"World2",
+            "hebrew":"עולם",
+            "source":"Olam",
+            "translation": "World",
+            "explanation":"Space"
+        },
+        {
+            "term":"Year2",
+            "hebrew":"שנה",
+            "translation": "Year",
+            "source":"Shana",
+            "explanation":"Time"
+        },
+        {
+            "term":"Soul2",
+            "hebrew":"נפש",
+            "translation": "Soul",
+            "source":"Nefesh",
+            "explanation":"Motion"
         }
     ],
     "style": {
