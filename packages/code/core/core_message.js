@@ -36,7 +36,7 @@ screens.core.message = function CoreMessage(me) {
                     params: me.core.type.wrap_args(args),
                     callback: me.core.handle.push(responseCallback)
                 };
-                me.core.service.client.emit("method", info);
+                me.core.service.client.emit("send", info);
             });
         }
         else if (me.platform !== "server") {
@@ -81,7 +81,7 @@ screens.core.message = function CoreMessage(me) {
                     args: me.core.type.wrap_args(args),
                     callback: me.core.handle.push(responseCallback)
                 };
-                this.emit("method", info);
+                this.emit("send", info);
             });
         } else if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 0);
@@ -94,27 +94,6 @@ screens.core.message = function CoreMessage(me) {
             platform = me.platform;
         }
         return me["send_" + platform].apply(null, args);
-    };
-    me.send_browser = function (path, params) {
-        if (me.platform === "client") {
-            return new Promise((resolve, reject) => {
-                var responseCallback = (err, result) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        resolve(result);
-                    }
-                };
-                var args = Array.prototype.slice.call(arguments, 1);
-                args[0] = null;
-                var info = { path: path, params: args, callback: me.core.handle.push(responseCallback) };
-                postMessage(info);
-            });
-        } else if (me.platform === "browser") {
-            var args = Array.prototype.slice.call(arguments, 0);
-            return me.send.apply(null, args);
-        }
     };
     me.receiveHttp = {
         set: async function (info) {
@@ -173,7 +152,7 @@ screens.core.message = function CoreMessage(me) {
         }
         try {
             var result = await me.send.apply(info, args);
-            return [null, err];
+            return [null, result];
         }
         catch (err) {
             return [err];
