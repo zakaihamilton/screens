@@ -76,8 +76,8 @@ function screens_setup(package_name, component_name, child_name, node) {
     }
     component_obj.require = platform;
     var init = component_obj.init;
-    if (component_obj.get) {
-        component_obj.get.enabled = true;
+    if (component_obj.proxy.get) {
+        component_obj.proxy.get.enabled = true;
     }
     console.log(screens.platform + ": Loaded " + component_obj.id);
     screens.components.push(component_obj.id);
