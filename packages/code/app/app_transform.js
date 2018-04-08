@@ -623,14 +623,14 @@ screens.app.transform = function AppTransform(me) {
                 items = [];
             }
             var items = items.map(function (item) {
+                var currentItem = item;
                 var result = [
                     item.title,
-                    function () {
-                        me.storage.data.load((err, item) => {
-                            var content = me.core.string.decode(item.content);
-                            me.core.property.set(window.var.input, "ui.basic.text", content);
-                            me.core.property.set(window, "app.transform.transform");
-                        }, "app.transform.content", item.key.name);
+                    async function () {
+                        var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
+                        var content = me.core.string.decode(fullItem.content);
+                        me.core.property.set(window.var.input, "ui.basic.text", content);
+                        me.core.property.set(window, "app.transform.transform");
                     },
                     null,
                     {
