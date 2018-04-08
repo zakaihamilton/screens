@@ -12,7 +12,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.runIndex = 0;
         me.streamIndex = 0;
         me.options = {enablePush:true};
-        var config = await me.core.service.config(me.__component);
+        var config = await me.core.service.config(me.id);
         if (config) {
             me.pcap = require('pcap');
             me.tracker = new me.pcap.TCPTracker();

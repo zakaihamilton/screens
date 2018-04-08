@@ -6,7 +6,7 @@
 screens.user.verify = function UserVerify(me) {
     me.init = async function () {
         me.core.property.link("core.http.check", "user.verify.check", true);
-        var google = await me.core.util.config("settings.google");
+        var google = await me.core.util.config("settings.lib.google");
         me.client_id = google.client_id;
     };
     me.check = async function (info) {

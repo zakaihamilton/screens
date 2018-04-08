@@ -90,7 +90,7 @@ screens.core.service = function CoreService(me) {
         return me.serviceNames;
     };
     me.config = async function (name) {
-        return await me.core.util.config("settings.service." + name);
+        return await me.core.util.config("settings." + name);
     };
     me.sendAll = async function (method, param) {
         var responses = [];

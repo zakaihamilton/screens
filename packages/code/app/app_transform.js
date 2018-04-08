@@ -593,23 +593,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
         }
     };
-    me.refreshContentList = {
-        set: async function (object) {
-            await me.core.message.send_server("core.cache.reset", me.id + ".public");
-            me.publicContentList = me.core.message.send_server("core.cache.use",
-                me.id + ".public",
-                "storage.data.query",
-                "app.transform.content",
-                "title");
-            await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
-            me.privateContentList = me.core.message.send_server("core.cache.use",
-                me.id + ".private.$user",
-                "storage.data.query",
-                "app.transform.content.$user",
-                "title");
-        }
-    };
-    me.init = async function () {
+    me.updateContentList = function() {
         me.publicContentList = me.core.message.send_server("core.cache.use",
             me.id + ".public",
             "storage.data.query",
@@ -620,6 +604,16 @@ screens.app.transform = function AppTransform(me) {
             "storage.data.query",
             "app.transform.content.$user",
             "title");
+    };
+    me.refreshContentList = {
+        set: async function (object) {
+            await me.core.message.send_server("core.cache.reset", me.id + ".public");
+            await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
+            me.updateContentList();
+        }
+    };
+    me.init = async function () {
+        me.updateContentList();
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);

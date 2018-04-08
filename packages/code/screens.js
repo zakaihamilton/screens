@@ -47,10 +47,9 @@ function screens_setup(package_name, component_name, child_name, node) {
         });
     component_obj.proxy = {};
     component_obj.id = id;
-    component_obj.__package = package_name;
-    component_obj.__component = component_name;
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
+        component_obj.upper = screens[package_name][component_name];
     } else {
         screens[package_name][component_name] = component_obj;
     }

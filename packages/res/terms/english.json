@@ -4388,6 +4388,21 @@
             "hebrew": "בראשית"
         },
         {
+            "term":"Hulin",
+            "hebrew":"חולין",
+            "style":{
+                "heading":"Tractate"
+            }
+        },
+        {
+            "style":{
+                "heading":"Book"
+            },
+            "translation": "Genesis Rabba",
+            "term": "Beresheet Rabba",
+            "hebrew": "בראשית רבה"
+        },
+        {
             "translation": "Impurity",
             "explanation": "Fulfillment",
             "term": "Tuma ’ a",

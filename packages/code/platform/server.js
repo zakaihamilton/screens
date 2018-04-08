@@ -33,7 +33,7 @@ screens.include({
         "verify"
     ],
     "db": [
-        "passage"
+        "library"
     ],
     "manager": [
         "download",

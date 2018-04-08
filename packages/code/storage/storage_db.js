@@ -5,7 +5,7 @@
 
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
-        me.client = require('mongodb').MongoClient;
+        me.mongodb = require('mongodb');
     };
     me.database = async function (name) {
         var database = me.databases[name];
@@ -21,7 +21,7 @@ screens.storage.db = function StorageDB(me) {
         }
         var url = info.url;
         return new Promise((resolve, reject) => {
-            me.client.connect(url, function(err, db) {
+            me.mongodb.MongoClient.connect(url, function(err, db) {
                 if(err) {
                     reject(err);
                 }
@@ -37,10 +37,15 @@ screens.storage.db = function StorageDB(me) {
         var collection = db.collection(location.collection);
         return collection;
     };
-    me.load = async function(location, query) {
+    me.objectId = function(id) {
+        return me.mongodb.ObjectId(id);
+    }
+    me.get = async function(location, objectId) {
         var collection = await me.collection(location);
+        var result = await collection.findOne({_id:objectId});
+        return result;
     };
-    me.save = async function(location, data) {
+    me.set = async function(location, data) {
         var collection = await me.collection(location);
         var single = false;
         if(!Array.isArray(data)) {

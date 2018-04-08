@@ -7,7 +7,7 @@ screens.lib.google = function LibGoogle(me) {
     me.init = async function () {
         me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);
-        var google = await me.core.util.config("settings.google");
+        var google = await me.core.util.config("settings.lib.google");
         await me.core.require("https://apis.google.com/js/platform.js");
         return new Promise((resolve, reject) => {
             gapi.load('auth2', function () {

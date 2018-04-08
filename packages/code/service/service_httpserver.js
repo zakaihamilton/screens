@@ -9,7 +9,7 @@ screens.service.httpserver = function HttpServer(me) {
         me.mime = require('mime');
     };
     me.setup = async function (ref) {
-        var config = await me.core.service.config(me.__component);
+        var config = await me.core.service.config(me.id);
         if (config) {
             var path = config.path;
             if (path) {
