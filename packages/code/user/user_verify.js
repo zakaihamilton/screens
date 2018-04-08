@@ -11,13 +11,15 @@ screens.user.verify = function UserVerify(me) {
     };
     me.check = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
+            var name = info.headers["user_name"];
             var token = info.headers["token"];
             if(!token) {
-                me.error("no token passed in header, url: " + info.url);
+                me.error("no token passed in header, url: " + info.url + " name: " + name);
                 info.stop = true;
                 return;
             }
             const { OAuth2Client } = require('google-auth-library');
+            me.log("verifying user: " + name);
             try {
                 const client = new OAuth2Client(me.client_id);
                 const ticket = await client.verifyIdToken({
@@ -26,17 +28,14 @@ screens.user.verify = function UserVerify(me) {
                 });
                 const payload = ticket.getPayload();
                 const userid = payload['sub'];
-                var name = info.headers["user_name"];
                 info.user = userid;
                 var profile = {
                     name,
                     userid,
                     date: new Date().toString()
                 };
-                me.log("storing user: " + name);
                 me.log("Storing profile: " + JSON.stringify(profile));
                 await me.storage.data.save(profile, "user.verify", userid);
-                me.log("user authenticated: " + name + " = " + userid);
             }
             catch(err) {
                 err = "failed to verify token, err: " + err;

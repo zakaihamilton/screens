@@ -50,7 +50,6 @@ screens.core.module = function CoreModule(me) {
         var component_path = me.core.module.path_file_to_component(filePath);
         var target_platform = null;
         if (component_path) {
-            me.log("component_path: " + component_path);
             try {
                 target_platform = screens(component_path).require;
             }
@@ -59,9 +58,8 @@ screens.core.module = function CoreModule(me) {
             }
         }
         var source_platform = info.query["platform"];
-        me.log("source_platform:" + source_platform + " target_platform: " + target_platform);
         if (target_platform && target_platform !== source_platform) {
-            me.log("serving remote for:" + filePath);
+            me.log("serving remote for:" + filePath + " source_platform: " + source_platform + " target_platform: " + target_platform);
             filePath = "packages/code/remote.js";
         }
         var data = await me.loadTextFile(filePath);
