@@ -4,20 +4,18 @@
 */
 
 screens.cmd.parse = function CmdParse(me) {
-    me.cmd = function(terminal, args) {
+    me.cmd = async function(terminal, args) {
         if(args.length <= 1) {
             me.core.cmd.exit(terminal);
             return;
         }
         var path = me.core.path.goto(terminal.current_dir, args[1]);
-        me.core.json.loadFile(function(json) {
-            me.parse(function(json) {
-                me.log(JSON.stringify(json, null, 4));
-                me.core.cmd.exit(terminal);
-            }, json);
-        }, path);
+        var json = await me.core.json.loadFile(path);
+        json = me.parse(json);
+        me.log(JSON.stringify(json, null, 4));
+        me.core.cmd.exit(terminal);
     };
-    me.parse = function(callback, json) {
+    me.parse = function(json) {
         if(json.term) {
             var result = [];
             for(var itemName in json.term) {
@@ -26,6 +24,6 @@ screens.cmd.parse = function CmdParse(me) {
                 result.push(item);
             }
         }
-        callback(result);
+        return result;
     };
 };

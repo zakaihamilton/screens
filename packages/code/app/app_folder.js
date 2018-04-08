@@ -27,42 +27,40 @@ screens.app.folder = function AppFolder(me) {
         });
     };
     me.refresh = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
             var path = me.core.property.get(window, "app.folder.path");
-            me.core.file.readDir(function (err, items) {
-                if (items) {
-                    for (let item of items) {
-                        var itemPath = path + "/" + item;
-                        me.core.property.set(object, "app.folder.refreshElement", itemPath);
-                    }
+            var items = await me.core.file.readDir(path);
+            if (items) {
+                for (let item of items) {
+                    var itemPath = path + "/" + item;
+                    me.core.property.set(object, "app.folder.refreshElement", itemPath);
                 }
-            }, path);
+            }
         }
     };
     me.refreshElement = {
         set: function (object, path) {
             var name = me.core.path.fullName(path);
-            me.core.file.isDirectory(function (isDirectory) {
-                var properties = null;
-                if (isDirectory) {
-                    properties = {
-                        "text": name,
-                        "ui.basic.src": "/packages/res/icons/folder.svg",
-                        "app.folder.args": path,
-                        "ui.touch.dblclick": "app.folder.shell"
-                    };
-                } else {
-                    properties = {
-                        "text": name,
-                        "ui.basic.src": "/packages/res/icons/file.png",
-                        "app.progman.args": "viewer " + path,
-                        "ui.touch.dblclick": "app.progman.shell"
-                    };
-                }
-                me.core.property.set(object, "elements", properties);
-                me.core.property.notify(object, "update");
-            }, path);
+            var isDirectory = await me.core.file.isDirectory(path);
+            var properties = null;
+            if (isDirectory) {
+                properties = {
+                    "text": name,
+                    "ui.basic.src": "/packages/res/icons/folder.svg",
+                    "app.folder.args": path,
+                    "ui.touch.dblclick": "app.folder.shell"
+                };
+            } else {
+                properties = {
+                    "text": name,
+                    "ui.basic.src": "/packages/res/icons/file.png",
+                    "app.progman.args": "viewer " + path,
+                    "ui.touch.dblclick": "app.progman.shell"
+                };
+            }
+            me.core.property.set(object, "elements", properties);
+            me.core.property.notify(object, "update");
         }
     };
     me.shell = {

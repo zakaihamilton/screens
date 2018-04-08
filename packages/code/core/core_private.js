@@ -4,16 +4,13 @@
 */
 
 screens.core.private = function CorePrivate(me) {
-    me.keys = function(callback, name) {
-        me.core.file.readFile(function(err, data) {
-            var json = {};
-            if(data) {
-                json = JSON.parse(data);
-            }
-            if(callback) {
-                callback(json);
-            }
-        }, "private/" + name + ".json", 'utf8');
+    me.keys = async function(name) {
+        var data = await me.core.file.readFile("private/" + name + ".json", 'utf8');
+        var json = {};
+        if(data) {
+            json = JSON.parse(data);
+        }
+        return json;
     };
     me.path = function(name) {
         return "private/" + name + ".json";

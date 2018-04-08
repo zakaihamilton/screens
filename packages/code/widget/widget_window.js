@@ -32,7 +32,7 @@ screens.widget.window = function WidgetWindow(me) {
                 me.core.property.set(object, "ui.resize.enabled", !value && !maximized);
             }
         });
-        me.apply = me.window;
+        me.proxy.apply = me.window;
     };
     me.draw = {
         set: function(object) {
@@ -165,11 +165,13 @@ screens.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
-            if (me.core.property.get(window, "static")) {
+            var isStatic = me.core.property.get(window, "static");
+            if (isStatic) {
                 me.core.property.set(window, "minimize");
                 return;
             }
-            if (me.core.property.get(window, "embed")) {
+            var isEmbed = me.core.property.get(window, "embed");
+            if (isEmbed) {
                 me.core.property.set(window, "restore");
                 return;
             }

@@ -4,7 +4,7 @@
  */
 
 screens.ui.param = function UIParam(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object, value) {
                 var param = value;

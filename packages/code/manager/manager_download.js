@@ -9,128 +9,146 @@ screens.manager.download = function ManagerDownload(me) {
         me.downloadLimit = 5;
     };
     me.private = {
-        findItem : function(from, to) {
-            return me.queue.find(function(element) {
+        findItem: function (from, to) {
+            return me.queue.find(function (element) {
                 return element.from === from && element.to === to;
             });
         },
-        update : function() {
+        update: function () {
             var downloadCount = 0;
-            for(var itemIndex = me.queue.length - 1; itemIndex >= 0; itemIndex--) {
+            for (var itemIndex = me.queue.length - 1; itemIndex >= 0; itemIndex--) {
                 var item = me.queue[itemIndex];
-                if(item.isDownloading) {
+                if (item.isDownloading) {
                     continue;
                 }
-                if(downloadCount >= me.downloadLimit) {
+                if (downloadCount >= me.downloadLimit) {
                     break;
                 }
                 me.private.download(item);
                 downloadCount++;
             }
         },
-        download : function(item) {
-            if(item.isDownloading) {
+        download: function (item) {
+            if (item.isDownloading) {
                 return;
             }
             me.log("checking if file exists, path: " + item.to);
-            me.core.file.isFile(function(isFile) {
-                if(isFile) {
+            var exists = me.core.file.exists(item.to);
+            if (exists) {
+                var index = me.queue.indexOf(item);
+                me.queue.splice(index, 1);
+                me.log("found file: " + item.to);
+                me.private.notify(item, null, item.to);
+            }
+            else {
+                item.isDownloading = true;
+                me.log("downloading: " + item.from + " to: " + item.to);
+                me.storage.file.downloadFile(item.from, item.to).then(() => {
+                    me.log("downloaded: " + item.from + " to: " + item.to);
                     var index = me.queue.indexOf(item);
-                    me.queue.splice(index, 1);
-                    me.log("found file: " + item.to);
-                    me.private.notify(item, null, item.to);
-                }
-                else {
-                    item.isDownloading = true;
-                    me.log("downloading: " + item.from + " to: " + item.to);
-                    me.storage.file.downloadFile(function(err) {
-                        me.log("downloaded: " + item.from + " to: " + item.to + " err: " + err);
-                        var index = me.queue.indexOf(item);
-                        if(index !== -1) {
-                            me.queue.splice(index, 1);
-                        }
-                        if(item.convert) {
-                            var path = me.core.path.replaceExtension(item.to, item.convert);
-                            me.log("converting file from: " + item.to + " to: " + path);
-                            me.media.ffmpeg.convert((err, progress) => {
-                                if(!progress) {
-                                    me.private.notify(item, err, path);
-                                    me.private.update();
-                                }
-                            }, item.to, item.convert, path);
-                        }
-                        else {
+                    if (index !== -1) {
+                        me.queue.splice(index, 1);
+                    }
+                    if (item.convert) {
+                        var path = me.core.path.replaceExtension(item.to, item.convert);
+                        me.log("converting file from: " + item.to + " to: " + path);
+                        me.media.ffmpeg.convert(item.to, item.convert, path).then(() => {
+                            me.private.notify(item, null, path);
+                            me.private.update();
+                        }).catch(err => {
                             me.private.notify(item, err, item.to);
                             me.private.update();
-                        }
-                    }, item.from, item.to);
-                }
-            }, item.to);
+                        });
+                    }
+                    else {
+                        me.private.notify(item, null, item.to);
+                        me.private.update();
+                    }
+                }).catch(err => {
+                    me.private.notify(item, err, item.to);
+                    me.private.update();
+                });
+            }
         },
-        notify : function(item, err, target) {
-            var callback = item.callbacks.pop();
-            while(callback) {
-                callback(err, target);
-                callback = item.callbacks.pop();
+        notify: function (item, err, target) {
+            var promise = item.promises.pop();
+            while (promise) {
+                if (err) {
+                    promise.reject(err);
+                }
+                else {
+                    promise.resolve(target);
+                }
+                promise = item.promises.pop();
             }
         }
     };
-    me.push = function(callback, from, to, convert) {
+    me.push = function (from, to, convert) {
         var item = me.private.findItem(from, to);
-        if(item) {
-            var index = me.queue.indexOf(item);
-            me.queue.splice(index, 1);
-            item.callbacks.push(callback);
-            me.queue.push(item);
+        if (item) {
+            return new Promise((resolve, reject) => {
+                item.promises.push({ resolve, reject });
+            });
         }
         else {
             var path = to;
-            if(convert) {
+            if (convert) {
                 path = me.core.path.replaceExtension(to, convert);
             }
-            me.core.file.isFile(function(isFile) {
-                if(isFile) {
-                    callback(null, path);
-                }
-                else {
+            var exists = me.core.file.exists(path);
+            if (exists) {
+                me.log(path + " already downloaded");
+                return path;
+            }
+            else {
+                return new Promise((resolve, reject) => {
                     me.log("pushing to download queue: " + from + " to: " + to);
-                    item = {from:from, to:to, isDownloading:false, callbacks:[callback], convert:convert};
+                    item = {
+                        from: from,
+                        to: to,
+                        isDownloading: false,
+                        promises: [{ resolve, reject }],
+                        convert: convert
+                    };
                     me.queue.push(item);
                     me.private.update();
-                }
-            }, path);
+                });
+            }
         }
     };
-    me.exists = function(callback, from, to) {
+    me.exists = function (from, to) {
         var item = me.private.findItem(from, to);
-        callback(item ? true : false);
+        return (item ? true : false);
     };
-    me.removeall = function(callback) {
+    me.removeall = function () {
         me.queue = [];
-        callback();
     };
-    me.remove = function(callback, from, to) {
+    me.remove = function (from, to) {
         var item = me.private.findItem(from, to);
-        if(item) {
+        if (item) {
             var index = me.queue.indexOf(item);
             me.queue.splice(index, 1);
         }
-        callback();
     };
-    me.items = function(callback) {
+    me.items = function () {
         var items = [];
-        for(var item of me.queue) {
-            items.push({from:item.from,to:item.to,isDownloading:item.isDownloading,convert:item.convert});
+        for (var item of me.queue) {
+            items.push({
+                from: item.from,
+                to: item.to,
+                isDownloading: item.isDownloading,
+                convert: item.convert
+            });
         }
-        callback(items);
+        return items;
     };
-    me.isDownloading = function(callback, from, to) {
+    me.isDownloading = function (from, to) {
         var item = me.private.findItem(from, to);
         var isDownloading = false;
-        if(item) {
+        if (item) {
             isDownloading = item.isDownloading;
         }
-        callback(isDownloading);
+        return isDownloading;
     };
     return "server";
 };

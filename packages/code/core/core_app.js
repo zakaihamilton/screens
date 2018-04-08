@@ -4,9 +4,9 @@
  */
 
 screens.core.app = function CoreApp(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
-            set: function (object, value) {
+            set: async function (object, value) {
                 if(!property) {
                     return;
                 }
@@ -14,20 +14,19 @@ screens.core.app = function CoreApp(me) {
                     "title":property.charAt(0).toUpperCase() + property.slice(1),
                     "delay":"250"
                 });
-                screens.include("app." + property, function () {
-                    me.core.property.set(progress, "close");
-                    if (Array.isArray(value)) {
-                        value = value.slice(0);
-                        value.unshift("app." + property + ".launch");
-                        me.core.message.send.apply(null, value);
-                    } else {
-                        me.core.message.send("app." + property + ".launch", value);
-                    }
-                });
+                await screens.include("app." + property);
+                me.core.property.set(progress, "close");
+                if (Array.isArray(value)) {
+                    value = value.slice(0);
+                    value.unshift("app." + property + ".launch");
+                    me.core.message.send.apply(null, value);
+                } else {
+                    me.core.message.send("app." + property + ".launch", value);
+                }
             }
         };
     };
-    me.apply = async function (appName) {
+    me.proxy.apply = async function (appName) {
         if(!appName) {
             return null;
         }

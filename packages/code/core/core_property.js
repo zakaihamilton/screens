@@ -46,42 +46,39 @@ screens.core.property = function CoreProperty(me) {
     me.get = function (object, name, value = null, method = "get") {
         var result = undefined;
         if (Array.isArray(object)) {
-            var results = object.map(function (item) {
-                return me.core.property.get(item, name, value, method);
-            });
+            var results = [];
+            for(item of object) {
+                var result = me.core.property.get(item, name, value, method);
+                results.push(result);
+            }
             return results;
         }
         if (name !== null && typeof name === "object") {
             var results = {};
-            Object.keys(name).map(function (subName) {
+            for(subName in name) {
                 var subValue = name[subName];
-                results[subName] = me.core.property.get(object, subName, subValue, method);
-            });
+                var result = me.core.property.get(object, subName, subValue, method);
+                results[subName] = result;
+            }
             return results;
         }
         if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
             var info = me.split(object, name, value);
+            if(!info.object) {
+                return;
+            }
             if (typeof info.value === "string") {
                 if (info.value.startsWith("@")) {
                     info.value = me.core.property.get(info.object, info.value.substring(1));
                 }
             }
-            if (typeof info.value === "string") {
-                if (info.value.startsWith("^")) {
-                    var subInfo = me.split(info.object, info.value, null);
-                    me.lock(task => {
-                        var paramInfo = {value: subInfo.name, task:task};
-                        me.core.property.get(subInfo.object, subInfo.name.substring(1), paramInfo);
-                        me.unlock(task, () => {
-                            me.core.property.get(info.object, info.name, paramInfo.value, method);
-                        });
-                    });
-                    return;
-                }
-            }
             if (typeof info.name === "function") {
                 result = info.name(info.object, info.value);
             } else {
+                if (info.name.startsWith(">")) {
+                    info.name = info.name.substring(1);
+                    debugger;
+                }
                 info.name = me.fullname(info.object, info.name);
                 if (info.name) {
                     var callback = null;
@@ -171,21 +168,29 @@ screens.core.property = function CoreProperty(me) {
             return;
         }
         if (Array.isArray(object)) {
-            var results = object.map(function (item) {
+            var results = object.map((item) => {
                 return me.core.property.set(item, name, value);
             });
             return results;
         }
         if (Array.isArray(name)) {
-            var results = name.map(function (item) {
-                return me.core.property.set(object, item, value);
-            });
+            var results = [];
+            for(var item of name) {
+                results.push(me.core.property.set(object, item, value));
+            }
             return results;
         }
+        var promises = [];
         if(typeof name === "string") {
             var source_method = me.core.property.fullname(object, name);
-            me.setTo(me._forwarding_list, object, source_method, value);
-            me.setTo(object._forwarding_list, object, source_method, value);
+            var promise = me.setTo(me._forwarding_list, object, source_method, value);
+            if(promise) {
+                promises.push(promise);
+            }
+            promise = me.setTo(object._forwarding_list, object, source_method, value);
+            if(promise) {
+                promises.push(promise);
+            }
         }
         else if(typeof name !== "function") {
             var results = {};
@@ -194,19 +199,34 @@ screens.core.property = function CoreProperty(me) {
                 me.core.property.set(object, key, value);
             }
         }
-        return me.core.property.get(object, name, value, "set");
+        var result = me.core.property.get(object, name, value, "set");
+        if(result && result.then) {
+            promises.push(result);
+        }
+        else if(promises.length) {
+            promises.push(Promise.resolve(result));
+            result = Promise.all(promises);
+        }
+        return result;
     };
     me.setTo = function (list, object, name, value) {
+        var promises = [];
         if (list) {
             var forwarding_list = list[name];
             if (forwarding_list) {
                 for (var target in forwarding_list) {
                     var enabled = forwarding_list[target];
                     if (enabled) {
-                        me.core.property.set(object, target, value);
+                        var result = me.core.property.set(object, target, value);
+                        if(result && result.then) {
+                            promises.push(result);
+                        }
                     }
                 }
             }
+        }
+        if(promises.length) {
+            return Promise.all(promises);
         }
     };
     me.group = {

@@ -13,13 +13,9 @@ screens.app.version = function AppVersion(me) {
         return me.singleton;
     };
     me.version = {
-        get: function(object, info) {
-            me.lock(info.task, task => {
-                me.core.json.loadFile(function(json) {
-                    info.value = json.version;
-                    me.unlock(task);
-                }, "/package.json");
-            });
+        get: async function(object) {
+            var json = await me.core.json.loadFile("/package.json");
+            return json.version;
         }
     };
 };

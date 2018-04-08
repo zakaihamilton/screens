@@ -116,3 +116,33 @@
 .widget-menu-vertical span.header:hover {
     color:black;
 }
+
+.widget-menu-progress-bar {
+    display:none;
+    position:relative;
+    left:10%;
+    width: 80%;
+    height: 20px;
+    border: 1px solid #2980b9;
+    margin:3px;
+    border-radius: 3px;
+    background-image: 
+      repeating-linear-gradient(
+        -45deg,
+        #2980b9,
+        #2980b9 11px,
+        #eee 10px,
+        #eee 20px /* determines size */
+      );
+    background-size: 28px 28px;
+    animation: widget-menu-progress-move .5s linear infinite;
+  }
+  
+  @keyframes widget-menu-progress-move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 28px 0;
+    }
+  }

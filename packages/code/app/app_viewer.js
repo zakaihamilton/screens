@@ -26,13 +26,12 @@ screens.app.viewer = function AppViewer(me) {
         });
     };
     me.reload = {
-        set: function(object) {
+        set: async function(object) {
             var window = me.widget.window(object);
             var path = me.core.property.get(window, "app.viewer.path");
-            me.core.file.readFile(function(err, data) {
-                me.core.property.set(window.var.viewer, "ui.basic.text", err ? err : data);
-                me.core.property.notify(window, "update");
-            }, path, 'utf8');
+            var data = await me.core.file.readFile(path, 'utf8');
+            me.core.property.set(window.var.viewer, "ui.basic.text", data);
+            me.core.property.notify(window, "update");
         }
     };
 };

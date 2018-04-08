@@ -31,7 +31,7 @@ screens.startup.app = function StartupApp(me) {
                 if (app.params) {
                     args.push(...app.params);
                 }
-                me.core.app.apply.apply(null, args).then((window) => {
+                me.core.app.apply(null, args).then((window) => {
                     if (window) {
                         me.core.property.set(window, "widget.window.show", true);
                         me.core.property.set(window, "widget.window.maximize");

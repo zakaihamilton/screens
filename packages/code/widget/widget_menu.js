@@ -101,10 +101,7 @@ screens.widget.menu = function WidgetMenu(me) {
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
             "ui.basic.target": object,
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                "ui.data.values": values
-            }
+            "values":values
         });
         if (bottomUp) {
             me.core.property.set(menu, "ui.class.add", "bottom-up");
@@ -124,6 +121,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             "ui.element.component": "widget.modal"
         }
     };
+    me.values = function(object, values) {
+        me.core.property.set(object, "ui.group.data", {
+            "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+            "ui.data.values": values
+        });
+    }
     me.back = {
         set: function (object, value) {
             me.core.property.set(object.target, "back", value);
@@ -164,34 +167,34 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     me.options = {
         set: function (object, options) {
             if (options) {
-                me.handleValue(object, options, "enabled", function (value) {
+                me.handleValue(object, options, "enabled", (value) => {
                     me.core.property.set(object, "ui.basic.enabled", value);
                 });
-                me.handleValue(object, options, "visible", function (value) {
+                me.handleValue(object, options, "visible", (value) => {
                     me.core.property.set(object, "ui.style.display", value ? "block" : "none");
                 });
-                me.handleValue(object, options, "state", function (value) {
+                me.handleValue(object, options, "state", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "checked");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
-                me.handleValue(object, options, "mark", function (value) {
+                me.handleValue(object, options, "mark", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "mark");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
-                me.handleValue(object, options, "separator", function (value) {
+                me.handleValue(object, options, "separator", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "separator");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
-                me.handleValue(object, options, "header", function (value) {
+                me.handleValue(object, options, "header", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "header");
                     } else {
@@ -235,10 +238,19 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 "ui.basic.var": "headers"
             },
             {
+                "ui.basic.tag":"div",
+                "ui.class.class":"widget.menu.progress.bar",
+                "ui.basic.var":"progress"
+            },
+            {
                 "ui.basic.tag": "div",
                 "ui.basic.var": "members"
             }
         ]
+    };
+    me.work = function(object, state) {
+        me.log("menu state: " + state);
+        me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
     };
     me.use = function (object, name) {
         if (!object.lists) {
@@ -298,6 +310,18 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.container = function (object, parent, properties) {
         return me.widget.menu.list.use(parent, properties["group"]);
     };
+    me.promise = function(object, info) {
+        if(!info) {
+            return;
+        }
+        var parent = me.ui.node.container(object, me.widget.menu.list.id);
+        me.core.property.set(parent, "ui.work.state", true);
+        info.promise.then((items) => {
+            me.core.property.set(parent, "ui.work.state", false);
+            items = info.callback(items);
+            me.core.property.set(me.parentMenu(object), "values", items);
+        });
+    };
     me.handleValue = function (object, values, key, callback) {
         var parentMenu = me.parentMenu(object);
         if (key in values) {
@@ -314,34 +338,34 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.options = {
         set: function (object, options) {
             if (options) {
-                me.handleValue(object, options, "enabled", function (value) {
+                me.handleValue(object, options, "enabled", (value) => {
                     me.core.property.set(object, "ui.basic.enabled", value);
                 });
-                me.handleValue(object, options, "visible", function (value) {
+                me.handleValue(object, options, "visible", (value) => {
                     me.core.property.set(object, "ui.style.display", value ? "block" : "none");
                 });
-                me.handleValue(object, options, "state", function (value) {
+                me.handleValue(object, options, "state", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "checked");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "checked");
                     }
                 });
-                me.handleValue(object, options, "mark", function (value) {
+                me.handleValue(object, options, "mark", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "mark");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
-                me.handleValue(object, options, "separator", function (value) {
+                me.handleValue(object, options, "separator", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "separator");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "separator");
                     }
                 });
-                me.handleValue(object, options, "header", function (value) {
+                me.handleValue(object, options, "header", (value) => {
                     if (value) {
                         me.core.property.set(object, "ui.class.add", "header");
                     } else {

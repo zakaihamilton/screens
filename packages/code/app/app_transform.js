@@ -287,9 +287,8 @@ screens.app.transform = function AppTransform(me) {
             window.options.diagramCallback = "screens.app.transform.loadDiagram";
             window.options.toggleCallback = "screens.app.transform.cycleDescription";
             window.options.reload = true;
-            await me.core.message.waitForWorker();
             me.media.voice.stop();
-            var info = await me.kab.text.parse(null, language, text, window.options);
+            var info = await me.kab.text.parse(language, text, window.options);
             text = info.text;
             var terms = info.terms;
             var data = info.data;
@@ -524,14 +523,13 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.loadDiagram = {
-        set: function (object, path) {
+        set: async function (object, path) {
             var window = me.widget.window.mainWindow(object);
             var fullPath = me.fullPath(path);
-            me.core.json.loadFile(function (json) {
-                if (json.title) {
-                    window.diagrams.push({ title: json.title, path: path });
-                }
-            }, fullPath, false);
+            var json = me.core.json.loadFile(fullPath, false);
+            if (json.title) {
+                window.diagrams.push({ title: json.title, path: path });
+            }
         }
     };
     me.fullPath = function (name) {
@@ -596,36 +594,32 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.refreshContentList = {
-        set: function (object) {
-            me.core.message.send_server("core.cache.reset", () => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.publicContentList = items;
-                }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
-            }, me.id + ".public");
-            me.core.message.send_server("core.cache.reset", () => {
-                me.core.message.send_server("core.cache.use", (err, items) => {
-                    me.error(err);
-                    me.privateContentList = items;
-                }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
-            }, me.id + ".private.$user");
+        set: async function (object) {
+            await me.core.message.send_server("core.cache.reset", me.id + ".public");
+            me.publicContentList = me.core.message.send_server("core.cache.use",
+                me.id + ".public",
+                "storage.data.query",
+                "app.transform.content",
+                "title");
+            await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
+            me.privateContentList = me.core.message.send_server("core.cache.use",
+                me.id + ".private.$user",
+                "storage.data.query",
+                "app.transform.content.$user",
+                "title");
         }
     };
     me.init = async function () {
-        await new Promise((resolve, reject) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.publicContentList = items;
-                resolve();
-            }, me.id + ".public", "storage.data.query", "app.transform.content", "title");
-        });
-        await new Promise((resolve, reject) => {
-            me.core.message.send_server("core.cache.use", (err, items) => {
-                me.error(err);
-                me.privateContentList = items;
-                resolve();
-            }, me.id + ".private.$user", "storage.data.query", "app.transform.content.$user", "title");
-        });
+        me.publicContentList = me.core.message.send_server("core.cache.use",
+            me.id + ".public",
+            "storage.data.query",
+            "app.transform.content",
+            "title");
+        me.privateContentList = me.core.message.send_server("core.cache.use",
+            me.id + ".private.$user",
+            "storage.data.query",
+            "app.transform.content.$user",
+            "title");
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);
@@ -633,23 +627,42 @@ screens.app.transform = function AppTransform(me) {
         if (!list) {
             list = [];
         }
-        var items = list.map(function (item) {
-            var result = [
-                item.title,
-                function () {
-                    me.storage.data.load((err, item) => {
-                        var content = me.core.string.decode(item.content);
-                        me.core.property.set(window.var.input, "ui.basic.text", content);
-                        me.core.property.set(window, "app.transform.transform");
-                    }, "app.transform.content", item.key.name);
-                },
+        var parseItems = (items) => {
+            var items = items.map(function (item) {
+                var result = [
+                    item.title,
+                    function () {
+                        me.storage.data.load((err, item) => {
+                            var content = me.core.string.decode(item.content);
+                            me.core.property.set(window.var.input, "ui.basic.text", content);
+                            me.core.property.set(window, "app.transform.transform");
+                        }, "app.transform.content", item.key.name);
+                    },
+                    null,
+                    {
+                        "group": group
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+        if (list.then) {
+            return [[
+                "",
                 null,
                 {
-                    "group": group
+                    "visible":false
+                },
+                {
+                    "group": group,
+                    "promise": {promise:list,callback:parseItems}
                 }
-            ];
-            return result;
-        });
+            ]];
+        }
+        else {
+            items = parseItems(items);
+        }
         return items;
     };
     me.publicContentMenuList = {
@@ -710,7 +723,7 @@ screens.app.transform = function AppTransform(me) {
             me.save(object, true);
         }
     };
-    me.save = function (object, private) {
+    me.save = async function (object, private) {
         var window = me.widget.window.mainWindow(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         var date = new Date();
@@ -733,13 +746,8 @@ screens.app.transform = function AppTransform(me) {
             data.owner = "$user";
             kind += ".$user";
         }
-        me.storage.data.save(err => {
-            if (err) {
-                me.error("Cannot save content: " + err.message);
-            } else {
-                me.refreshContentList.set(object);
-            }
-        }, data, kind, title, ["content"]);
+        await me.storage.data.save(data, kind, title, ["content"]);
+        await me.refreshContentList.set(object);
     };
     me.changeVoice = function (object) {
         var window = me.widget.window.mainWindow(object);

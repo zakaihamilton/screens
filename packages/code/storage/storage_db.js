@@ -5,39 +5,67 @@
 
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
-        const {Database, Model} = require('mongorito');
-        me.Database = Database;
-        me.Model = Model;
-        me.databases = {};
+        me.client = require('mongodb').MongoClient;
     };
-    me.database = function (callback, name) {
+    me.database = async function (name) {
         var database = me.databases[name];
         if (database) {
-            callback(null, database);
-            return;
+            return database;
         }
-        me.core.private.keys(async (keys) => {
-            var info = keys[name];
-            if (!info) {
-                err = name + " mongodb key not defined in private";
-                me.error(err);
-                callback(err);
-                return;
+        var keys = await me.core.private.keys("mongodb");
+        var info = keys[name];
+        if (!info) {
+            err = name + " mongodb key not defined in private";
+            me.error(err);
+            throw err;
+        }
+        var url = info.url;
+        return new Promise((resolve, reject) => {
+            me.client.connect(url, function(err, db) {
+                if(err) {
+                    reject(err);
+                }
+                else {
+                    me.databases[name] = db;
+                    resolve(db);
+                }
+            });
+        });
+    };
+    me.collection = async function(location) {
+        var db = await me.database(location.db);
+        var collection = db.collection(location.collection);
+        return collection;
+    };
+    me.load = async function(location, query) {
+        var collection = await me.collection(location);
+    };
+    me.save = async function(location, data) {
+        var collection = await me.collection(location);
+        var single = false;
+        if(!Array.isArray(data)) {
+            data = [data];
+            single = true;
+        }
+        for(item in data) {
+            var res = await new Promise((resolve, reject) => {
+                collection.save(data, (err, res) => {
+                    if(err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(res);
+                    }
+                });
+            });
+            if(res._id) {
+                item._id = res._id;
             }
-            var url = info.url;
-            try {
-                database = new Database(url);
-                await database.connect();
-                me.log("Connected correctly to server");
-                me.databases[name] = database;
-                callback(null, database);
-            }
-            catch(err) {
-                err = "Failed to connect to server, url: " + url + " err: " + err;
-                me.error(err);
-                callback(err);
-            }
-        }, "mongodb");
+        }
+        if(single) {
+            data = data[0];
+        }
+        return data;
     };
     return "server";
 };

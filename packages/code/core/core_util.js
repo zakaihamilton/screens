@@ -22,18 +22,17 @@ screens.core.util = function CoreUtil(me) {
             return arg;
         });
     };
-    me.config = function(callback, path) {
-        me.core.json.loadFile(function(item) {
-            if(item && path) {
-                item = me.core.json.traverse(item, path).value;
-            }
-            callback(item);
-        }, "/package.json");
+    me.config = async function(path) {
+        var item = await me.core.json.loadFile("/package.json");
+        if(item && path) {
+            item = me.core.json.traverse(item, path).value;
+        }
+        return item;
     };
     me.isSecure = function() {
         return location.protocol === 'https:';
     };
     me.restart = function() {
         location.reload(true);
-    }
+    };
 };

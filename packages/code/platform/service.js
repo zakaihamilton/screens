@@ -33,7 +33,7 @@ screens.include({
     "startup": [
         "version"
     ]
-}, function () {
+}).then(() => {
     screens.core.startup.run();
 });
 

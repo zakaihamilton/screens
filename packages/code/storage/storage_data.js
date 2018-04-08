@@ -47,55 +47,59 @@ screens.storage.data = function StorageData(me) {
         });
         return results;
     };
-    me.save = function (callback, value, type, id, nonIndexed) {
+    me.save = async function (value, type, id, nonIndexed) {
         var user = this.user;
         var service = me.getService();
         if (service) {
             const key = service.key([type, id]);
-            service.save({
-                key: key,
-                data: me.toDataStore(value, nonIndexed, user)
-            }, function (err) {
-                if (err) {
-                    me.error("error saving data for type: " + type + " id: " + id + " err:" + err);
-                }
-                callback(err);
+            return new Promise((resolve, reject) => {
+                service.save({
+                    key: key,
+                    data: me.toDataStore(value, nonIndexed, user)
+                }, function (err) {
+                    if (err) {
+                        err = "error saving data for type: " + type + " id: " + id + " err:" + err;
+                        me.error(err);
+                        reject(err);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
             });
         }
     };
-    me.load = function (callback, type, id) {
+    me.load = async function (type, id) {
         var service = me.getService();
         if (service) {
             const key = service.key([type, id]);
-            service.get(key, function (err, value) {
-                callback(err, value);
+            return new Promise((resolve, reject) => {
+                service.get(key, function (err, value) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(value);
+                    }
+                });
             });
         }
     };
-    me.verify = function (callback, value, type, id) {
-        me.load((err, compare) => {
-            callback(err, me.core.json.compare(compare, value), compare);
-        }, type, id);
+    me.verify = async function (value, type, id) {
+        var compare = await me.load(type, id);
+        var result = me.core.json.compare(compare, value);
+        if(!result) {
+            var err = "verification mismatch between: " + JSON.stringify(value) + " and " + JSON.stringify(compare);
+            throw err;
+        }
+        return result;
     };
-    me.saveAndVerify = function (callback, value, type, id, nonIndexed) {
-        me.save(err => {
-            if (err) {
-                callback(err);
-            }
-            me.verify((err, result, compare) => {
-                if (err) {
-                    callback(err);
-                } else if (!result) {
-                    var message = "verification mismatch between: " + JSON.stringify(value) + " and " + JSON.stringify(compare);
-                    var error = new Error(message);
-                    callback(error);
-                } else {
-                    callback(null);
-                }
-            }, value, type, id);
-        }, value, type, id, nonIndexed);
+    me.saveAndVerify = async function (value, type, id, nonIndexed) {
+        await me.save(value, type, id, nonIndexed);
+        var result = await me.verify(value, type, id);
+        return result;
     };
-    me.query = async function (callback, type, select, filters) {
+    me.query = async function (type, select, filters) {
         var user = this.user;
         var service = me.getService();
         if (service) {

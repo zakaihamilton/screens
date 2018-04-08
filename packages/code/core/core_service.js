@@ -7,7 +7,7 @@ screens.core.service = function CoreService(me) {
     me.init = function() {
         if (me.platform === "server") {
             me.clients = new Map();
-            me.core.http.io.on("connection", (socket) => {
+            me.core.http.io.on("connection", async (socket) => {
                 me.log(`Service connected [id=${socket.id}]`);
                 var ref = me.core.ref.gen();
                 socket.on("disconnect", () => {
@@ -17,19 +17,24 @@ screens.core.service = function CoreService(me) {
                         me.log(`Service disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
                     }
                 });
-                socket.on("method", (info) => {
-                    info.clientIp = socket.request.connection.remoteAddress;
-                    me.core.message.handleLocal((response) => {
-                        socket.emit("method", response);
-                    }, info, true);
+                socket.on("send", async (info) => {
+                    var _this = {clientIp:socket.request.connection.remoteAddress};
+                    var args = await me.core.message.handleLocal(_this, info.args);
+                    if(args) {
+                        info.args = args;
+                        socket.emit("receive", info);
+                    }
+                });
+                socket.on("receive", async (info) => {
+                    var callback = me.core.handle.pop(info.callback);
+                    callback.apply(null, info.args);
                 });
                 me.log("Service setup request for ref: " + ref);
-                me.core.message.send_service.call(socket, "core.service.setup", (name, ref) => {
-                    me.log("Service setup complete for service: " + name + " ref: " + ref);
-                    me.clients.set(socket, { ref: ref, name: name });
-                    me.core.object(me, socket);
-                    me.core.property.set(socket, "ready");
-                }, ref);
+                var name = await me.core.message.send_service.call(socket, "core.service.setup", ref);
+                me.log("Service setup complete for service: " + name + " ref: " + ref);
+                me.clients.set(socket, { ref: ref, name: name });
+                me.core.object(me, socket);
+                me.core.property.set(socket, "ready");
             });
         } else if (me.platform === "service") {
             me.io = require("socket.io-client");
@@ -46,10 +51,16 @@ screens.core.service = function CoreService(me) {
                 me.client.on("disconnect", (info) => {
                     me.log("Disconnected from server: " + me.serverAddress);
                 });
-                me.client.on("method", (info) => {
-                    me.core.message.handleLocal((response) => {
-                        me.client.emit("method", response);
-                    }, info, true);
+                me.client.on("send", async (info) => {
+                    var args = await me.core.message.handleLocal(this, info.args);
+                    if(args) {
+                        info.args = args;
+                        socket.emit("method", info);
+                    }
+                });
+                me.client.on("receive", async (info) => {
+                    var callback = me.core.handle.pop(info.callback);
+                    callback.apply(null, info.args);
                 });
             });
         }
@@ -63,66 +74,47 @@ screens.core.service = function CoreService(me) {
         }
         callback(items);
     };
-    me.setup = function (callback, ref) {
+    me.setup = async function (ref) {
         if (me.alreadySetup) {
-            callback(me.serviceNames, ref);
-            return;
+            return me.serviceNames;
         }
         me.alreadySetup = true;
-        me.lock((task) => {
-            me.serviceNames.map((serviceName) => {
-                me.lock(task, (task) => {
-                    me.log("loading service: " + serviceName + "...");
-                    me.include("service." + serviceName, function () {
-                        me.log("service loaded: " + serviceName);
-                        me.log("setup service: " + serviceName + "...");
-                        me.core.message.send("service." + serviceName + ".setup", () => {
-                            me.log("setup service: " + serviceName + " complete");
-                            me.unlock(task);
-                        }, ref);
-                    });
-                });
-            });
-            me.unlock(task, () => {
-                callback(me.serviceNames, ref);
-            });
-        });
+        for(serviceName in me.serviceNames) {
+            me.log("loading service: " + serviceName + "...");
+            await me.include("service." + serviceName);
+            me.log("service loaded: " + serviceName);
+            me.log("setup service: " + serviceName + "...");
+            await me.core.message.send("service." + serviceName + ".setup", ref);
+            me.log("setup service: " + serviceName + " complete");
+        }
+        return me.serviceNames;
     };
-    me.config = function (callback, name) {
-        me.core.util.config(callback, "settings.service." + name);
+    me.config = async function (name) {
+        return await me.core.util.config("settings.service." + name);
     };
-    me.sendAll = function (method, callback, param) {
+    me.sendAll = async function (method, param) {
+        var responses = [];
         if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments);
-            me.serviceNames.map((serviceName) => {
+            for(var serviceName of me.serviceNames) {
                 args[0] = "service." + serviceName + "." + method;
-                me.core.message.send.apply(null, args);
-            });
+                responses.push(await me.core.message.send.apply(null, args));
+            }
+            return responses;
         }
         else {
             var errors = null;
             var args = Array.prototype.slice.call(arguments);
             var count = 0;
-            var responses = [];
-            args[1] = function () {
-                var response = Array.prototype.slice.call(arguments);
-                responses.push(response);
-                count--;
-                me.log("recieved from a device, " + count + " devices left" + "responses: " + JSON.stringify(responses));
-                if (!count) {
-                    callback.apply(null, responses);
-                }
-            };
             if (me.clients) {
-                me.clients.forEach((info, socket) => {
-                    me.core.message.send_service.apply(socket, args);
-                    count++;
-                });
-            }
-            else {
-                callback();
+                for(var socket in me.clients) {
+                    var info = me.clients[socket];
+                    var response = await me.core.message.send_service.apply(socket, args);
+                    responses.push(response);
+                }
             }
             me.log("sent " + method + "' to " + count + " devices");
+            return responses;
         }
     };
     me.ready = {

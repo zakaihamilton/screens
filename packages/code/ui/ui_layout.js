@@ -490,7 +490,8 @@ screens.ui.layout = function UILayout(me) {
         let childTop = page.pageOffset;
         let childBottom = childTop + page.pageSize;
         let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
-        let isPartial = partial && ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
+        let isPartial = partial && ((childBottom > parentTop) ||
+            (childTop < parentBottom));
         return (isTotal || isPartial);
     };
     me.pageApply = function (target, callback) {

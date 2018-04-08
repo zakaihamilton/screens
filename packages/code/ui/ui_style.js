@@ -5,7 +5,7 @@
 
 screens.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object) {
                 var styles = null;

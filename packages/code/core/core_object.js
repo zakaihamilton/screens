@@ -4,7 +4,7 @@
 */
 
 screens.core.object = function CoreObject(me) {
-    me.apply = function (component, object = null) {
+    me.proxy.apply = function (component, object = null) {
         if (!object) {
             object = {};
         }
@@ -13,7 +13,7 @@ screens.core.object = function CoreObject(me) {
         object.component = component.id;
         return object;
     };
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             set: function (object, info) {
                 var componentId = object.id || object.component;

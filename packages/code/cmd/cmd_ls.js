@@ -9,14 +9,12 @@ screens.cmd.ls = function CmdLs(me) {
         if(!current_dir) {
             current_dir = ".";
         }
-        me.core.file.readDir(function(err, items) {
-            if(items) {
-                for(let item of items) {
-                    me.core.property.set(terminal, "print", item);
-                }
+        var items = await me.core.file.readDir(current_dir);
+        if(items) {
+            for(let item of items) {
+                me.core.property.set(terminal, "print", item);
             }
-            me.core.cmd.exit(terminal);
-        }, current_dir);
+        }
+        me.core.cmd.exit(terminal);
     };
-    
 };

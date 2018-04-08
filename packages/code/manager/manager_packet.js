@@ -5,29 +5,29 @@
 
 screens.manager.packet = function ManagerPacket(me) {
     me.packetInfo = {
-        streamRequests:[],
-        effects:{},
-        streamIndex:0,
-        runIndex:0
+        streamRequests: [],
+        effects: {},
+        streamIndex: 0,
+        runIndex: 0
     };
-    me.init = function() {
+    me.init = function () {
         me.core.property.link("core.service.ready", "manager.packet.ready", true);
     };
-    me.push = function (callback, packets, service) {
+    me.push = function (packets, service) {
         var info = me.packetInfo;
-        if(!Array.isArray(packets)) {
+        if (!Array.isArray(packets)) {
             packets = [packets];
         }
         me.log("received " + packets.length + " packets");
-        for(var packet of packets) {
-            if(packet.streamIndex !== me.packetInfo.streamIndex || !info.streamRequests.length) {
+        for (var packet of packets) {
+            if (packet.streamIndex !== me.packetInfo.streamIndex || !info.streamRequests.length) {
                 info.streamRequests.push({
                     packetCount: 0,
                     dataSize: 0,
                     startTime: 0,
                     duration: 0,
-                    runIndex:packet.runIndex,
-                    streamIndex:packet.streamIndex,
+                    runIndex: packet.runIndex,
+                    streamIndex: packet.streamIndex,
                     packets: {},
                     effects: packet.effects
                 });
@@ -35,12 +35,12 @@ screens.manager.packet = function ManagerPacket(me) {
                 me.packetInfo.runIndex = packet.runIndex;
                 me.packetInfo.streamIndex = packet.streamIndex;
             }
-            var streamRequest = info.streamRequests[info.streamRequests.length-1];
+            var streamRequest = info.streamRequests[info.streamRequests.length - 1];
             streamRequest.packetCount++;
             var packet_source = packet.source;
             var packet_target = packet.target;
             streamRequest.dataSize += packet.size;
-            if(!streamRequest.startTime) {
+            if (!streamRequest.startTime) {
                 streamRequest.startTime = packet.time;
             }
             streamRequest.duration = packet.time - streamRequest.startTime;
@@ -70,71 +70,59 @@ screens.manager.packet = function ManagerPacket(me) {
                 var key = parseInt(packet.time / 10);
                 var item = items[key];
                 if (!item) {
-                    item = items[key] = {len: 0, start: packet.time, end: 0};
+                    item = items[key] = { len: 0, start: packet.time, end: 0 };
                 }
                 item.len += packet.size;
                 item.end = packet.time;
             }
         }
-        callback();
     };
-    me.info = function (callback) {
-        callback(me.packetInfo);
+    me.info = function () {
+        return me.packetInfo;
     };
-    me.reset = function (callback) {
+    me.reset = async function () {
         me.packetInfo = {
-            streamRequests:[],
-            effects:{},
-            runIndex:0,
-            streamIndex:0
+            streamRequests: [],
+            effects: {},
+            runIndex: 0,
+            streamIndex: 0
         };
-        me.core.service.sendAll("service.netmonitor.reset", () => {
-            me.core.service.sendAll("service.netcontrol.reset", () => {
-                me.retrieveEffects(callback);
-            });
-        });
+        await me.core.service.sendAll("service.netmonitor.reset");
+        await me.core.service.sendAll("service.netcontrol.reset");
+        var effects = await me.retrieveEffects();
+        resolve(effects);
     };
     me.ready = {
-        set: function() {
-            me.retrieveEffects(() => {
-                
-            });
+        set: async function () {
+            await me.retrieveEffects();
         }
     };
-    me.retrieveEffects = function (callback) {
-        me.core.service.sendAll("service.netcontrol.retrieveEffects", (response) => {
-            if(response) {
-                var effects = response[0];
-                if(!effects) {
-                    effects = {};
-                }
-                me.log("recieved effects: " + JSON.stringify(effects));
-                me.packetInfo.effects = effects;
-                callback(effects);
+    me.retrieveEffects = async function () {
+        var response = await me.core.service.sendAll("service.netcontrol.retrieveEffects");
+        if (response) {
+            var effects = response[0];
+            if (!effects) {
+                effects = {};
             }
-        });
+            me.log("recieved effects: " + JSON.stringify(effects));
+            me.packetInfo.effects = effects;
+            return effects;
+        }
     };
-    me.applyEffects = function (callback, params) {
+    me.applyEffects = async function ( params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
         me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
-        me.core.service.sendAll("service.netcontrol.applyEffects", (response) => {
-            var error = response[0];
-            callback(error);
-        }, me.packetInfo.effects);
+        await me.core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
     };
-    me.enablePush = function(callback, flag) {
-        me.core.service.sendAll("service.netmonitor.enablePush", (response) => {
-            var error = response[0];
-            callback(error);
-        }, flag);
+    me.enablePush = async function (callback, flag) {
+        await me.core.service.sendAll("service.netmonitor.enablePush", flag);
     };
-    me.isPushEnabled = function(callback) {
-        me.core.service.sendAll("service.netmonitor.isPushEnabled", (response) => {
-            if(response) {
-                var isPushEnabled = response[0];
-                callback(isPushEnabled);
-            }
-        });
+    me.isPushEnabled = async function () {
+        var response = await me.core.service.sendAll("service.netmonitor.isPushEnabled");
+        if (response) {
+            var isPushEnabled = response[0];
+            return isPushEnabled;
+        }
     };
     return "server";
 };

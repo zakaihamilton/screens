@@ -17,175 +17,144 @@ screens.core.module = function CoreModule(me) {
         var component_path = filePath.replace(/_/g, ".").replace(".js", "");
         return component_path;
     };
-    me.loadTextFile = function (task, filePath, callback) {
-        me.lock(task, task => {
-            me.core.file.readFile(function (err, data) {
-                me.log("serving text file: " + filePath);
-                if (err) {
-                    me.log(JSON.stringify(err));
-                    callback(null, task);
-                } else {
-                    callback(data, task);
-                }
-                me.unlock(task);
-            }, filePath, 'utf8');
-        });
+    me.loadTextFile = async function (filePath) {
+        me.log("loading text file: " + filePath);
+        try {
+            var data = await me.core.file.readFile(filePath, 'utf8');
+            me.log("serving text file: " + filePath + " length: " + (data ? data.length : 0));
+        }
+        catch(err) {
+            err = "Cannot load text file: " + filePath + " err: " + err;
+            me.error(err);
+            throw err;
+        }
+        return data;
     };
-    me.loadBinaryFile = function (task, filePath, callback) {
-        me.lock(task, task => {
-            me.core.file.readFile(function (err, data) {
-                me.log("serving binary file: " + filePath);
-                if (err) {
-                    me.log(JSON.stringify(err));
-                    callback(JSON.stringify(err), task);
-                } else {
-                    callback(data, task);
-                }
-                me.unlock(task);
-            }, filePath);
-        });
+    me.loadBinaryFile = async function (filePath) {
+        var data = await me.core.file.readFile(filePath);
+        me.log("serving binary file: " + filePath);
+        return data;
     };
-    me.handleStylesheet = function(callback, info, filePath, params) {
-        info["content-type"] = "text/css";
-        me.loadTextFile(info.task, filePath, function (data, task) {
-            me.lock(task, task => {
-                me.postcss([me.autoprefixer]).process(data).then(function (result) {
-                    result.warnings().forEach(function (warn) {
-                        me.warn(warn.toString());
-                    });
-                    info.body += result.css;
-                    me.unlock(task, callback);
-                });
-            });
+    me.handleStylesheet = async function (filePath) {
+        var data = await me.loadTextFile(filePath);
+        var result = await me.postcss([me.autoprefixer]).process(data);
+        result.warnings().forEach(function (warn) {
+            me.warn(warn.toString());
         });
+        return result.css;
     };
-    me.handleCode = function (callback, info, filePath, params) {
-        me.lock(info.task, (task) => {
-            if(filePath.startsWith("/")) {
-                filePath = filePath.substring(1);
+    me.handleCode = async function (filePath, params, info) {
+        if (filePath.startsWith("/")) {
+            filePath = filePath.substring(1);
+        }
+        var component_path = me.core.module.path_file_to_component(filePath);
+        var target_platform = null;
+        if (component_path) {
+            try {
+                target_platform = screens(component_path).require;
             }
-            var component_path = me.core.module.path_file_to_component(filePath);
-            var target_platform = null;
-            if (component_path) {
-                me.log("component_path: " + component_path);
-                try {
-                    target_platform = screens(component_path).require;
-                }
-                catch(err) {
+            catch (err) {
 
-                }
             }
-            var source_platform = info.query["platform"];
-            me.log("source_platform:" + source_platform + " target_platform: " + target_platform);
-            info["content-type"] = "application/javascript";
-            if (target_platform && target_platform !== source_platform) {
-                me.log("serving remote for:" + filePath);
-                filePath = "packages/code/remote.js";
+        }
+        var source_platform = info.query["platform"];
+        if (target_platform && target_platform !== source_platform) {
+            me.log("serving remote for:" + filePath + " source_platform: " + source_platform + " target_platform: " + target_platform);
+            filePath = "packages/code/remote.js";
+        }
+        var data = await me.loadTextFile(filePath);
+        var jsonData = "{}";
+        var vars = { "component": component_path, "platform": target_platform};
+        if (data && data.includes("__json__") && !data.includes("global" + ".__json__")) {
+            me.log("including json data in javascript file");
+            var jsonFilePath = filePath.replace(".js", ".json");
+            jsonData = await me.loadTextFile(jsonFilePath);
+            me.log("jsonData path: " + jsonFilePath + " length: " + jsonData.length);
+            vars.json = jsonData;
+        }
+        /* Apply variables */
+        if (data) {
+            for (var key in vars) {
+                data = data.split("__" + key + "__").join(vars[key]);
             }
-            info["content-type"] = "application/javascript";
-            me.loadTextFile(task, filePath, function (data, task) {
-                if (data && data.includes("__json__")) {
-                    me.loadTextFile(info.task, filePath.replace(".js", ".json"), function (jsonData) {
-                        info.vars = {"component": component_path, "platform": target_platform, "json": jsonData};
-                        info.body += data;
-                        me.core.property.set(info, "parse");
-                    });
-                } else {
-                    info.vars = {"component": component_path, "platform": target_platform};
-                    info.body += data;
-                    me.core.property.set(info, "parse");
-                }
+        }
+        me.log("code size: " + data.length);
+        return data;
+    };
+    me.handleMultiFiles = async function (filePath, params, info) {
+        me.log("handleMultiFiles: " + JSON.stringify(params));
+        var files = filePath.split(",");
+        info.body = "";
+        if(params.contentType) {
+            info["content-type"] = params.contentType;
+        }
+        var file = files[0];
+        var folder = me.core.path.folderPath(file);
+        var name = me.core.path.fileName(file);
+        if (name.includes("*")) {
+            var items = await me.core.file.readDir(folder);
+            files = items.map((filePath) => {
+                return folder + "/" + filePath;
             });
-            me.unlock(task, callback);
-        });
+            files = files.filter((filePath) => {
+                return filePath.endsWith(params.extension);
+            });
+        }
+        else if (files.length > 1) {
+            files = files.slice(1).map((filePath) => {
+                return folder + "/" + filePath;
+            });
+            files.unshift(file);
+        }
+        data = "";
+        for(var filePath of files) {
+            data += await params.method(filePath, params, info);
+        }
+        me.log("handleMultiFiles: size: " + data.length);
+        info.body = data;
     };
-    me.handleMultiFiles = function(info, filePath, params) {
-            var files = filePath.split(",");
-            info.body = "";
-            me.lock(info.task, (task) => {
-                var file = files[0];
-                var folder = me.core.path.folderPath(file);
-                var name = me.core.path.fileName(file);
-                if(name.includes("*")) {
-                    me.lock(task, (task) => {
-                        me.core.file.readDir((err, items) => {
-                            files = items.map((filePath) => {
-                                return folder + "/" + filePath;
-                            });
-                            files = files.filter((filePath) => {
-                                return filePath.endsWith(params.extension);
-                            });
-                            me.unlock(task);
-                        }, folder);
-                    });
-                }
-                else if(files.length > 1) {
-                    files = files.slice(1).map((filePath) => {
-                        return folder + "/" + filePath;
-                    });
-                    files.unshift(file);
-                }
-                me.unlock(task, () => {
-                    me.flow(null, (flow) => {
-                        files.map((filePath) => {
-                            flow.async(params.method, flow.callback, info, filePath, params);
-                        });
-                        flow.wait(null, () => {
-                            flow.end();
-                        }, 1);
-                    });
-                });
-            });        
-    };
-    me.handleFile = function (info, filePath, params) {
+    me.handleFile = async function (filePath, params, info) {
         if (filePath.endsWith(".js")) {
             params = Object.assign({}, params);
             params.method = me.handleCode;
             params.extension = ".js";
-            me.handleMultiFiles(info, filePath, params);
+            params.contentType = "application/javascript";
+            await me.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".css")) {
             params = Object.assign({}, params);
             params.method = me.handleStylesheet;
+            params.contentType = "text/css";
             params.extension = ".css";
-            me.handleMultiFiles(info, filePath, params);
+            await me.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            me.loadTextFile(info.task, filePath, function (data) {
-                var startupArgs = info.query["args"];
-                if (!startupArgs) {
-                    startupArgs = "";
-                }
-                if (!startupArgs.startsWith("[")) {
-                    startupArgs = "[" + startupArgs;
-                }
-                if (!startupArgs.endsWith("]")) {
-                    startupArgs = startupArgs + "]";
-                }
-                startupArgs = startupArgs.replace(/[/"]/g, "'");
-                data = data.replace("__startup_app__", "'" + params.startupApp + "'");
-                data = data.replace("__startup_args__", startupArgs);
-                info.body = data;
-            });
+            var data = await me.loadTextFile(filePath);
+            var startupArgs = info.query["args"];
+            if (!startupArgs) {
+                startupArgs = "";
+            }
+            if (!startupArgs.startsWith("[")) {
+                startupArgs = "[" + startupArgs;
+            }
+            if (!startupArgs.endsWith("]")) {
+                startupArgs = startupArgs + "]";
+            }
+            startupArgs = startupArgs.replace(/[/"]/g, "'");
+            data = data.replace("__startup_app__", "'" + params.startupApp + "'");
+            data = data.replace("__startup_args__", startupArgs);
+            info.body = data;
         } else if (filePath.endsWith(".png")) {
             info["content-type"] = "image/png";
-            me.loadBinaryFile(info.task, filePath, function (data) {
-                info.body = data;
-            });
+            info.body = await me.loadBinaryFile(filePath);
         } else if (filePath.endsWith(".svg")) {
             info["content-type"] = "image/svg+xml";
-            me.loadBinaryFile(info.task, filePath, function (data) {
-                info.body = data;
-            });
+            info.body = await me.loadBinaryFile(filePath);
         } else if (filePath.endsWith(".json")) {
             info["content-type"] = "application/json";
-            me.loadTextFile(info.task, filePath, function (data) {
-                info.body = data;
-            });
+            info.body = await me.loadTextFile(filePath);
         } else if (filePath.endsWith(".txt")) {
             info["content-type"] = "text/plain";
-            me.loadTextFile(info.task, filePath, function (data) {
-                info.body = data;
-            });
+            info.body = await me.loadTextFile(filePath);
         } else if (filePath.endsWith(".m4a")) {
             var mimeType = "audio/mp4";
             info.custom = true;
@@ -201,7 +170,7 @@ screens.core.module = function CoreModule(me) {
         }
     };
     me.receive = {
-        set: function (info) {
+        set: async function (info) {
             if (me.platform === "server") {
                 if (info.method === "GET") {
                     var params = {};
@@ -210,7 +179,7 @@ screens.core.module = function CoreModule(me) {
                         info.url = "/main.html";
                     }
                     var filePath = info.url.substring(1);
-                    me.handleFile(info, filePath, params);
+                    await me.handleFile(filePath, params, info);
                 }
             }
         }

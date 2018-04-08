@@ -5,7 +5,7 @@
 
 screens.ui.element = function UIElement(me) {
     me.init = function() {
-        me.apply = me.createElements;
+        me.proxy.apply = me.createElements;
     };
     me.matches = function (properties, parent) {
         /* Find matching components */
@@ -133,9 +133,9 @@ screens.ui.element = function UIElement(me) {
             properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
-            properties.map(function (item) {
+            for(var item of properties) {
                 me.createElements(item, parent, context, params);
-            });
+            }
             return;
         }
         if(!properties) {
@@ -205,9 +205,9 @@ screens.ui.element = function UIElement(me) {
             me.core.property.set(object, key, properties[key]);
         }
         if (component.extend) {
-            component.extend.map(function (extension) {
+            for(var extension of component.extend) {
                 me.core.property.set(object, extension + ".extend");
-            });
+            }
         }
         if (component_name !== me.id) {
             me.core.property.set(object, "draw");

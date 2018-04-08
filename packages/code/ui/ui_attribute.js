@@ -5,7 +5,7 @@
 
 screens.ui.attribute = function UIAttribute(me) {
     me.stylesheets = {};
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             get: function (object) {
                 return object.getAttribute(property);

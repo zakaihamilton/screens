@@ -21,7 +21,7 @@ screens.app.diagram = function AppDiagram(me) {
         if (args.length > 3) {
             parent = args[2];
             fullscreen = args[3];
-            if(fullscreen) {
+            if (fullscreen) {
                 json["widget.window.fullscreen"] = null;
             }
             json["ui.style.left"] = "0px";
@@ -31,13 +31,13 @@ screens.app.diagram = function AppDiagram(me) {
         window.language = "english";
         return window;
     };
-    me.fullPath = function(name) {
+    me.fullPath = function (name) {
         return "/packages/res/diagrams/" + name + ".json";
     };
     me.init = function () {
         me.core.property.set(me, {
-            "core.object.path":null,
-            "core.object.diagramData":null
+            "core.object.path": null,
+            "core.object.diagramData": null
         });
     };
     me.initOptions = {
@@ -78,28 +78,16 @@ screens.app.diagram = function AppDiagram(me) {
         }
     };
     me.reload = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
             var path = me.core.property.get(window, "app.diagram.path");
-            me.core.json.loadFile(function (diagramJson) {
-                me.core.property.set(window, "app.diagram.diagramData", diagramJson);
-                me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-                me.core.property.notify(window, "app.diagram.refresh");
-            }, path, false);
+            var diagramJson = await me.core.json.loadFile(path, false);
+            me.core.property.set(window, "app.diagram.diagramData", diagramJson);
+            me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+            me.core.property.notify(window, "app.diagram.refresh");
         }
     };
     me.term = {
-        get: function (object, info) {
-            if (object && info) {
-                me.lock(info.task, task => {
-                    var window = me.widget.window(object);
-                    me.kab.text.parse(null, window.language, info.value, window.options).then(parseInfo => {
-                        info.value = parseInfo.text;
-                        me.unlock(task);
-                    });
-                });
-            }
-        },
         set: async function (object, text) {
             var window = me.widget.window(object);
             var info = await me.kab.text.parse(null, window.language, text, window.options);
@@ -111,7 +99,7 @@ screens.app.diagram = function AppDiagram(me) {
         set: function (object) {
             var window = me.widget.window(object);
             me.core.property.set(window.var.viewer, {
-                "ui.basic.html":null,
+                "ui.basic.html": null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
             });
             me.core.property.notify(window, "app.diagram.viewAs" + window.options.viewType);

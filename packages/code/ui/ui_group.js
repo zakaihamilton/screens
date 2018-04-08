@@ -4,7 +4,7 @@
  */
 
 screens.ui.group = function UIGroup(me) {
-    me.get = function (object, property) {
+    me.proxy.get = function (object, property) {
         return {
             set: function (object, value) {
                 if (Array.isArray(value)) {

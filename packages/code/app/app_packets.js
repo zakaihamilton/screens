@@ -15,7 +15,7 @@ screens.app.packets = function AppPackets(me) {
         }
         return me.singleton;
     };
-    me.init = function () {
+    me.init = async function () {
         me.colors = [];
         me.isPushEnabled = false;
         me.ui.options.load(me, null, {
@@ -41,25 +41,13 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData");
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
-        return new Promise((resolve, reject) => {
-            me.storage.data.query((err, items) => {
-                me.error(err);
-                me.dataList = items;
-                me.manager.packet.isPushEnabled((isPushEnabled) => {
-                    me.isPushEnabled = isPushEnabled;
-                });
-                screens.include("lib.moment", function () {
-                    resolve();
-                });
-            }, "app.packets.data");
-        });
+        me.dataList = await me.storage.data.query("app.packets.data");
+        me.isPushEnabled = await me.manager.packet.isPushEnabled();
+        await screens.include("lib.moment");
     };
     me.refreshDataList = {
-        set: function (object) {
-            me.storage.data.query((err, items) => {
-                me.error(err);
-                me.dataList = items;
-            }, "app.packets.data");
+        set: async function (object) {
+            me.dataList = await me.storage.data.query("app.packets.data");
         }
     };
     me.dataMenuList = {
@@ -89,36 +77,35 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.refreshData = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
             var autoRefresh = me.options.autoRefresh;
-            me.manager.packet.info((info) => {
-                if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
-                    window.packetInfo = Object.assign({}, info);
-                    window.packetInfo.effects = Object.assign({}, info.effects);
-                    if (me.options.dataProfile === "Combined") {
-                        autoRefresh = false;
-                    }
-                } else if (me.dataList) {
-                    var item = me.dataList.find((item) => {
-                        return item.title === me.options.dataProfile;
-                    });
-                    if (item) {
-                        window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
-                    }
+            var info = await me.manager.packet.info();
+            if (me.options.dataProfile === "Live" || me.options.dataProfile === "Combined") {
+                window.packetInfo = Object.assign({}, info);
+                window.packetInfo.effects = Object.assign({}, info.effects);
+                if (me.options.dataProfile === "Combined") {
                     autoRefresh = false;
                 }
-                me.core.property.set(window, "app.packets.updateData");
-                if (me.timer) {
-                    clearTimeout(me.timer);
-                    me.timer = null;
+            } else if (me.dataList) {
+                var item = me.dataList.find((item) => {
+                    return item.title === me.options.dataProfile;
+                });
+                if (item) {
+                    window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
                 }
-                if (autoRefresh) {
-                    me.timer = setTimeout(() => {
-                        me.core.property.set(window, "app.packets.refreshData");
-                    }, 10000);
-                }
-            });
+                autoRefresh = false;
+            }
+            me.core.property.set(window, "app.packets.updateData");
+            if (me.timer) {
+                clearTimeout(me.timer);
+                me.timer = null;
+            }
+            if (autoRefresh) {
+                me.timer = setTimeout(() => {
+                    me.core.property.set(window, "app.packets.refreshData");
+                }, 10000);
+            }
         }
     };
     me.formatNumber = function (number) {
@@ -269,16 +256,15 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.reset = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
-            me.manager.packet.reset(() => {
-                if (window.streamIndex > 0) {
-                    me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
-                }
-                me.core.property.set(window, {
-                    "app.packets.dataProfile": "Live",
-                    "app.packets.refreshData": null
-                });
+            await me.manager.packet.reset();
+            if (window.streamIndex > 0) {
+                me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
+            }
+            me.core.property.set(window, {
+                "app.packets.dataProfile": "Live",
+                "app.packets.refreshData": null
             });
         }
     };
@@ -565,7 +551,7 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.effects = {
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
             if (window.packetInfo && window.streamIndex <= 0) {
                 var effects = window.packetInfo.effects;
@@ -580,16 +566,12 @@ screens.app.packets = function AppPackets(me) {
                         effects.packetDelay = 0;
                         me.core.property.set(window.var.packetDelay, "ui.basic.text", "0");
                     }
-                    me.manager.packet.applyEffects((err) => {
-                        if (err) {
-                            alert("Cannot apply effects: " + err.message);
-                        }
-                    }, effects);
+                    await me.manager.packet.applyEffects(effects);
                 }
             }
         }
     };
-    me.splitPacketInfo = function (callback, window) {
+    me.splitPacketInfo = async function (callback, window) {
         var runCount = window.packetInfo.runIndex + 1;
         for (var runIndex = 0; runIndex < runCount; runIndex++) {
             var packetInfo = Object.assign({}, window.packetInfo);
@@ -598,7 +580,7 @@ screens.app.packets = function AppPackets(me) {
             });
             packetInfo.streamRequests = streamRequests;
             if (streamRequests.length) {
-                callback(packetInfo, runIndex);
+                await callback(packetInfo, runIndex);
             }
         }
     };
@@ -608,9 +590,9 @@ screens.app.packets = function AppPackets(me) {
             var text = JSON.stringify(window.packetInfo);
             return text;
         },
-        set: function (object) {
+        set: async function (object) {
             var window = me.widget.window(object);
-            me.splitPacketInfo((packetInfo, runIndex) => {
+            await me.splitPacketInfo(async (packetInfo, runIndex) => {
                 var text = JSON.stringify(packetInfo);
                 var date = new Date();
                 var title = me.core.property.get(window.var.title, "ui.basic.text");
@@ -625,13 +607,8 @@ screens.app.packets = function AppPackets(me) {
                     date: date.toString(),
                     title: title
                 };
-                me.storage.data.save(err => {
-                    if (err) {
-                        me.error("Cannot save data: " + err.message);
-                    } else {
-                        me.refreshDataList.set(object);
-                    }
-                }, data, "app.packets.data", title, ["packetInfo"]);
+                await me.storage.data.save(data, "app.packets.data", title, ["packetInfo"]);
+                me.refreshDataList.set(object);
             }, window);
         }
     };
@@ -658,13 +635,9 @@ screens.app.packets = function AppPackets(me) {
         get: function (object) {
             return me.isPushEnabled;
         },
-        set: function (object, value) {
+        set: async function (object, value) {
             me.isPushEnabled = !me.isPushEnabled;
-            me.manager.packet.enablePush((err) => {
-                if (err) {
-                    alert("Cannot set packet loss: " + err.message);
-                }
-            }, me.isPushEnabled);
+            await me.manager.packet.enablePush(me.isPushEnabled);
         }
     };
     me.videoDuration = function (window) {

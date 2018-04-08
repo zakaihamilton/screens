@@ -13,14 +13,12 @@ screens.include({
         "type",
         "ref",
         "module",
-        "script",
         "object",
         "stream",
         "path",
         "util",
         "server",
         "hash",
-        "flow",
         "startup",
         "network",
         "service",
@@ -52,7 +50,7 @@ screens.include({
     "lib": [
         "zlib"
     ]
-}, function () {
+}).then(() => {
     screens.core.startup.run();
 });
 

@@ -8,23 +8,21 @@ screens.service.httpserver = function HttpServer(me) {
         me.fs = require("fs");
         me.mime = require('mime');
     };
-    me.setup = function (callback, ref) {
-        me.core.service.config(config => {
-            if (config) {
-                var path = config.path;
-                if (path) {
-                    me.log("serving files from: " + path);
-                    me.core.property.link("core.http.receive", "service.httpserver.receive", true);
-                    me.filePrefix = path;
-                }
-                var newStreamMatch = config.newStreamMatch;
-                if(newStreamMatch) {
-                    me.log("newStreamMatch: " + newStreamMatch);
-                    me.newStreamMatch = newStreamMatch;
-                }
-                callback();
+    me.setup = async function (ref) {
+        var config = await me.core.service.config(me.__component);
+        if (config) {
+            var path = config.path;
+            if (path) {
+                me.log("serving files from: " + path);
+                me.core.property.link("core.http.receive", "service.httpserver.receive", true);
+                me.filePrefix = path;
             }
-        }, me.__component);
+            var newStreamMatch = config.newStreamMatch;
+            if(newStreamMatch) {
+                me.log("newStreamMatch: " + newStreamMatch);
+                me.newStreamMatch = newStreamMatch;
+            }
+        }
     };
     me.receive = {
         set: function (info) {

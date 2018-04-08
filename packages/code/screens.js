@@ -1,52 +1,3 @@
-function screens_lock(parent_task, callback) {
-    if (typeof (parent_task) === "function") {
-        callback = parent_task;
-        parent_task = null;
-    }
-    var task = { state: true, lock: 0, parent: parent_task };
-    var next = task;
-    while (next) {
-        next.lock++;
-        next = next.parent;
-    }
-    if (callback) {
-        callback(task);
-    }
-}
-
-function screens_unlock(task, callback) {
-    if (callback) {
-        task.callback = callback;
-    }
-    var next = task;
-    while (next) {
-        next.lock--;
-        if (next.lock <= 0 && next.state) {
-            next.lock = 0;
-            if (next.callback) {
-                next.callback(next);
-            }
-            next.state = false;
-        }
-        next = next.parent;
-    }
-}
-
-async function screens_async(task, promise) {
-    var result;
-    screens_lock(task, async (task) => {
-        try {
-            result = await promise;
-            screens_unlock(task);
-        }
-        catch (err) {
-            screens_unlock(task);
-            throw err;
-        }
-    });
-    return result;
-}
-
 function screens_platform() {
     var platform = "browser";
     if (typeof module !== 'undefined' && this && this.module !== module) {
@@ -80,20 +31,21 @@ function screens_setup(package_name, component_name, child_name, node) {
                 } else if (property in screens) {
                     return screens[property];
                 } else {
-                    var get = Reflect.get(object, "get");
-                    if (get && get.enabled) {
-                        return get(object, property);
+                    var proxy = Reflect.get(object, "proxy");
+                    if (proxy && proxy.get && proxy.get.enabled) {
+                        return proxy.get(object, property);
                     }
                 }
                 return undefined;
             },
             apply: function (object, thisArg, argumentsList) {
-                var apply = Reflect.get(object, "apply");
-                if (apply) {
-                    return apply.apply(thisArg, argumentsList);
+                var proxy = Reflect.get(object, "proxy");
+                if (proxy && proxy.apply) {
+                    return proxy.apply.apply(thisArg, argumentsList);
                 }
             }
         });
+    component_obj.proxy = {};
     component_obj.id = id;
     component_obj.__package = package_name;
     component_obj.__component = component_name;
@@ -107,25 +59,25 @@ function screens_setup(package_name, component_name, child_name, node) {
     }
     var platform = node(component_obj, child_name);
     if (platform && screens.platform !== platform) {
-        component_obj.apply = function (object, thisArg, argumentsList) {
+        component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
                 args.unshift(id);
-                me.core.message["send_" + platform].apply(null, args);
+                return me.core.message["send_" + platform].apply(null, args);
             };
         };
-        component_obj.get = function (object, property) {
+        component_obj.proxy.get = function (object, property) {
             return function () {
                 var args = Array.prototype.slice.call(arguments);
                 args.unshift(id + "." + property);
-                me.core.message["send_" + platform].apply(null, args);
+                return me.core.message["send_" + platform].apply(null, args);
             };
         };
     }
     component_obj.require = platform;
     var init = component_obj.init;
-    if (component_obj.get) {
-        component_obj.get.enabled = true;
+    if (component_obj.proxy.get) {
+        component_obj.proxy.get.enabled = true;
     }
     console.log(screens.platform + ": Loaded " + component_obj.id);
     screens.components.push(component_obj.id);
@@ -206,7 +158,7 @@ async function screens_import(path) {
             script.src = path;
             script.async = true;
             script.onload = resolve;
-            ref.parentNode.insertBefore(script, ref);
+            ref.parentNode.appendChild(script);
         });
     }
 }
@@ -214,7 +166,7 @@ async function screens_import(path) {
 async function screens_load(items) {
     if (items && items.length) {
         if (screens.platform === "server" || screens.platform === "service") {
-            for(var item of items) {
+            for (var item of items) {
                 if (item.package_name in screens && item.component_name in screens[item.package_name]) {
                     return;
                 }
@@ -258,7 +210,7 @@ async function screens_load(items) {
     return items;
 }
 
-async function screens_include(packages, callback) {
+async function screens_include(packages) {
     if (typeof packages === "string" && packages) {
         var names = packages.split(".");
         var package_name = names[0];
@@ -267,7 +219,7 @@ async function screens_include(packages, callback) {
         packages[package_name] = [component_name];
     }
     var collection = {};
-    for(var package_name in packages) {
+    for (var package_name in packages) {
         var components = packages[package_name];
         var items = [];
         components.forEach((component_name) => {
@@ -279,9 +231,6 @@ async function screens_include(packages, callback) {
     for (package_name in packages) {
         console.log("initializing package: " + package_name);
         await screens_init(collection[package_name]);
-    }
-    if (callback) {
-        callback();
     }
 }
 
@@ -299,10 +248,7 @@ Object.assign(screens, {
     components: [],
     id: "package",
     platform: screens_platform(),
-    include: screens_include,
-    lock: screens_lock,
-    unlock: screens_unlock,
-    async: screens_async
+    include: screens_include
 });
 
 var platform = screens_platform();
