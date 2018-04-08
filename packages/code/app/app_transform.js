@@ -596,13 +596,13 @@ screens.app.transform = function AppTransform(me) {
     me.refreshContentList = {
         set: async function (object) {
             await me.core.message.send_server("core.cache.reset", me.id + ".public");
-            me.publicContentList = await me.core.message.send_server("core.cache.use",
+            me.publicContentList = me.core.message.send_server("core.cache.use",
                 me.id + ".public",
                 "storage.data.query",
                 "app.transform.content",
                 "title");
             await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
-            me.privateContentList = await me.core.message.send_server("core.cache.use",
+            me.privateContentList = me.core.message.send_server("core.cache.use",
                 me.id + ".private.$user",
                 "storage.data.query",
                 "app.transform.content.$user",
@@ -610,12 +610,12 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.init = async function () {
-        me.publicContentList = await me.core.message.send_server("core.cache.use",
+        me.publicContentList = me.core.message.send_server("core.cache.use",
             me.id + ".public",
             "storage.data.query",
             "app.transform.content",
             "title");
-        me.privateContentList = await me.core.message.send_server("core.cache.use",
+        me.privateContentList = me.core.message.send_server("core.cache.use",
             me.id + ".private.$user",
             "storage.data.query",
             "app.transform.content.$user",
@@ -627,23 +627,42 @@ screens.app.transform = function AppTransform(me) {
         if (!list) {
             list = [];
         }
-        var items = list.map(function (item) {
-            var result = [
-                item.title,
-                function () {
-                    me.storage.data.load((err, item) => {
-                        var content = me.core.string.decode(item.content);
-                        me.core.property.set(window.var.input, "ui.basic.text", content);
-                        me.core.property.set(window, "app.transform.transform");
-                    }, "app.transform.content", item.key.name);
-                },
+        var parseItems = (items) => {
+            var items = items.map(function (item) {
+                var result = [
+                    item.title,
+                    function () {
+                        me.storage.data.load((err, item) => {
+                            var content = me.core.string.decode(item.content);
+                            me.core.property.set(window.var.input, "ui.basic.text", content);
+                            me.core.property.set(window, "app.transform.transform");
+                        }, "app.transform.content", item.key.name);
+                    },
+                    null,
+                    {
+                        "group": group
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+        if (list.then) {
+            return [[
+                "",
                 null,
                 {
-                    "group": group
+                    "visible":false
+                },
+                {
+                    "group": group,
+                    "promise": {promise:list,callback:parseItems}
                 }
-            ];
-            return result;
-        });
+            ]];
+        }
+        else {
+            items = parseItems(items);
+        }
         return items;
     };
     me.publicContentMenuList = {

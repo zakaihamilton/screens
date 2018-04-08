@@ -101,10 +101,7 @@ screens.widget.menu = function WidgetMenu(me) {
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
             "ui.basic.target": object,
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                "ui.data.values": values
-            }
+            "values":values
         });
         if (bottomUp) {
             me.core.property.set(menu, "ui.class.add", "bottom-up");
@@ -124,6 +121,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             "ui.element.component": "widget.modal"
         }
     };
+    me.values = function(object, values) {
+        me.core.property.set(object, "ui.group.data", {
+            "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+            "ui.data.values": values
+        });
+    }
     me.back = {
         set: function (object, value) {
             me.core.property.set(object.target, "back", value);
@@ -235,10 +238,19 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 "ui.basic.var": "headers"
             },
             {
+                "ui.basic.tag":"div",
+                "ui.class.class":"widget.menu.progress.bar",
+                "ui.basic.var":"progress"
+            },
+            {
                 "ui.basic.tag": "div",
                 "ui.basic.var": "members"
             }
         ]
+    };
+    me.work = function(object, state) {
+        me.log("menu state: " + state);
+        me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
     };
     me.use = function (object, name) {
         if (!object.lists) {
@@ -297,6 +309,18 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     };
     me.container = function (object, parent, properties) {
         return me.widget.menu.list.use(parent, properties["group"]);
+    };
+    me.promise = function(object, info) {
+        if(!info) {
+            return;
+        }
+        var parent = me.ui.node.container(object, me.widget.menu.list.id);
+        me.core.property.set(parent, "ui.work.state", true);
+        info.promise.then((items) => {
+            me.core.property.set(parent, "ui.work.state", false);
+            items = info.callback(items);
+            me.core.property.set(me.parentMenu(object), "values", items);
+        });
     };
     me.handleValue = function (object, values, key, callback) {
         var parentMenu = me.parentMenu(object);
