@@ -32,7 +32,7 @@ screens.app.log = function AppLog(me) {
             send = me.core.message.send_browser;
         }
         var args = Array.prototype.slice.call(arguments, 0);
-        await send.apply(null, args);
+        return await send.apply(null, args);
     };
     me.clear = {
         set: function (object) {
@@ -46,6 +46,9 @@ screens.app.log = function AppLog(me) {
             var log = me.singleton.var.log;
             me.core.property.set(log, "ui.basic.text", "");
             var messages = await me.send("core.console.retrieveMessages");
+            if(!messages) {
+                messages = [];
+            }
             me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));
             var isEnabled = await me.send("core.console.isEnabled");
             me.singleton.isEnabled = isEnabled;

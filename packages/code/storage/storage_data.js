@@ -10,7 +10,12 @@ screens.storage.data = function StorageData(me) {
         try {
             me.datastore = require('@google-cloud/datastore');
         } catch (e) {
-            await me.core.server.run(null, "npm rebuild");
+            await me.core.server.run("npm rebuild");
+            me.datastore = require('@google-cloud/datastore');
+            me.log("me.datastore:" + me.datastore);
+        }
+        if(!me.datastore) {
+            await me.core.server.run("npm rebuild");
             me.datastore = require('@google-cloud/datastore');
             me.log("me.datastore:" + me.datastore);
         }
