@@ -7,15 +7,37 @@
         "width": "70%",
         "height": "70%"
     },
+    "widget.menu.items": [
+        [
+            "Tags",
+            [
+                [
+                    "Refresh",
+                    "app.library.refresh"
+                ],
+                [
+                    "Public",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.library.tagMenuList"
+            ]
+        ]
+    ],
     "ui.basic.elements": [
         {
-            "ui.basic.tag":"div",
-            "ui.class.class":"app.launcher.search.container",
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.library.search.container",
             "ui.basic.elements": {
+                "ui.basic.var":"search",
                 "ui.basic.type": "search",
                 "ui.attribute.placeholder": "Search",
                 "ui.basic.text": "",
-                "ui.class.classExtra": "app.launcher.search"
+                "ui.class.classExtra": "app.library.search",
+                "core.event.input":"app.library.changedSearch"
             }
         }
     ]

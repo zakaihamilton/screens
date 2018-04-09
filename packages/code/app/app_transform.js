@@ -617,7 +617,6 @@ screens.app.transform = function AppTransform(me) {
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);
-        var text = me.core.property.get(window.var.input, "ui.basic.text");
         var parseItems = (items) => {
             if(!items) {
                 items = [];

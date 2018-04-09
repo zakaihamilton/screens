@@ -74,7 +74,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         };
     }
     component_obj.require = platform;
-    var init = component_obj.init;
+    var init = {callback:component_obj.init,args:[component_obj]};
     if (component_obj.proxy.get) {
         component_obj.proxy.get.enabled = true;
     }
@@ -119,9 +119,9 @@ async function screens_init(items) {
             console.log("initializing: " + item.package_name + "." + item.component_name);
             do {
                 var init = initializers.shift();
-                if (init) {
+                if (init && init.callback) {
                     try {
-                        var promise = init();
+                        var promise = init.callback.apply(null, init.args);
                         if (promise && promise.then) {
                             await promise;
                         }

@@ -9,6 +9,9 @@ function startBrowser(appName, appArgs) {
         "storage": [
             "*"
         ],
+        "db": [
+            "*"
+        ],
         "user": [
             "*"
         ],

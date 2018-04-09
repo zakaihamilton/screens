@@ -1,0 +1,13 @@
+.app-library-search-container {
+    margin-top:10px;
+    margin-left:30px;
+    margin-right:30px;
+    height:30px;
+}
+
+.app-library-search {
+    margin-left:0px;
+    width:100%;
+    position:relative;
+    text-align: center;
+}

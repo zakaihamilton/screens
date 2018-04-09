@@ -60,6 +60,7 @@ screens.widget.tree = function WidgetTree(me) {
         }
     };
 };
+
 screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.dependencies = {
         properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]

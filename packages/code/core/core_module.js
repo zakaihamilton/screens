@@ -51,20 +51,29 @@ screens.core.module = function CoreModule(me) {
         var target_platform = null;
         if (component_path) {
             try {
-                target_platform = screens(component_path).require;
+                var component = screens(component_path);
+                target_platform = component.require;
             }
             catch (err) {
 
             }
         }
+        var components = [component_path];
         var source_platform = info.query["platform"];
         if (target_platform && target_platform !== source_platform) {
             me.log("serving remote for:" + filePath + " source_platform: " + source_platform + " target_platform: " + target_platform);
             filePath = "packages/code/remote.js";
+            components = me.components.map(function (component_name) {
+                if(!(component_name.includes(component_path))) {
+                    return null;
+                }
+                return component_name;
+            });
+            components = components.filter(Boolean);
         }
         var data = await me.loadTextFile(filePath);
         var jsonData = "{}";
-        var vars = { "component": component_path, "platform": target_platform};
+        var vars = { "platform": target_platform};
         if (data && data.includes("__json__") && !data.includes("global" + ".__json__")) {
             me.log("including json data in javascript file");
             var jsonFilePath = filePath.replace(".js", ".json");
@@ -72,10 +81,17 @@ screens.core.module = function CoreModule(me) {
             me.log("jsonData path: " + jsonFilePath + " length: " + jsonData.length);
             vars.json = jsonData;
         }
-        /* Apply variables */
-        if (data) {
-            for (var key in vars) {
-                data = data.split("__" + key + "__").join(vars[key]);
+        var originalData = data;
+        for(var componentIndex = 0; componentIndex < components.length; componentIndex++) {
+            vars.component = components[componentIndex];
+            /* Apply variables */
+            if (data) {
+                for (var key in vars) {
+                    data = data.split("__" + key + "__").join(vars[key]);
+                }
+            }
+            if(componentIndex < components.length - 2) {
+                data += originalData;
             }
         }
         me.log("code size: " + data.length);

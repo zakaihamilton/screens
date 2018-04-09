@@ -47,7 +47,12 @@ screens.core.message = function CoreMessage(me) {
                 body: me.core.type.wrap_args(args)
             };
             var response = await me.core.http.send(info);
-            response = me.core.type.unwrap_args(response);
+            try {
+                response = me.core.type.unwrap_args(response);
+            }
+            catch(err) {
+                throw "invalid response for method: " + path + " err: " + err.message || err;
+            }
             if (response && response[0]) {
                 throw response[0];
             }
@@ -116,7 +121,7 @@ screens.core.message = function CoreMessage(me) {
                     info.body = me.core.type.wrap_args([null, result]);
                 }
                 catch (e) {
-                    me.error(e.message || e);
+                    me.error("method: " + path + " err: " + (e.message || e), e.stack);
                     info.body = me.core.type.wrap_args([e]);
                 }
             }
