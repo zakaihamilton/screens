@@ -59,10 +59,12 @@ screens.db.library = function DbLibrary(me) {
     me.query = async function (userId, query) {
         var tags = db.library.query.tags(query);
         var filter = db.library.query.filter(query);
-        var list = await me.db.library.tag.list(userId, tags, {});
         var params = {};
         if (filter) {
             params["$text"] = { "$search": filter };
+        }
+        if (tags) {
+            var list = await me.db.library.tag.list(userId, tags, {});
             params["_id"] = { "$in:" : list.map(item => item._id)};
         }
         list = await me.db.library.content.list(userId, params);
