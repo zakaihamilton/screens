@@ -38,7 +38,7 @@
                 "bottom": "5px",
                 "gridGap": "0.5% 1px",
                 "alignItems": "stretch",
-                "lineHeight": "2"
+                "lineHeight": "2em"
             },
             "core.property.group": [
                 {

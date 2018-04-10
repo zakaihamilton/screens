@@ -33,7 +33,6 @@ screens.app.transform = function AppTransform(me) {
                 fontSize: "18px",
                 scrollPos: 0,
                 phaseNumbers: true,
-                diagrams: true,
                 pipVideo: false,
                 autoPlay: true,
                 voice: "Google UK English Male",
@@ -526,7 +525,7 @@ screens.app.transform = function AppTransform(me) {
         set: async function (object, path) {
             var window = me.widget.window.mainWindow(object);
             var fullPath = me.fullPath(path);
-            var json = me.core.json.loadFile(fullPath, false);
+            var json = await me.core.json.loadFile(fullPath, false);
             if (json.title) {
                 window.diagrams.push({ title: json.title, path: path });
             }
@@ -582,16 +581,6 @@ screens.app.transform = function AppTransform(me) {
     };
     me.cycleDescription = function (object) {
         me.showDescriptionBox(object, true, true);
-    };
-    me.toggleSeparator = {
-        get: function (object, value) {
-            var window = me.widget.window.mainWindow(object);
-            return me.ui.layout.hasSeparator(me.ui.layout.currentPage(window.var.layout));
-        },
-        set: function (object, value) {
-            var window = me.widget.window.mainWindow(object);
-            me.ui.layout.toggleSeparator(me.ui.layout.currentPage(window.var.layout));
-        }
     };
     me.updateContentList = function() {
         me.publicContentList = me.core.message.send_server("core.cache.use",
@@ -670,9 +659,12 @@ screens.app.transform = function AppTransform(me) {
     };
     me.documentIndex = {
         set: function (object, value) {
-            var baseTitle = "Document " + value;
-            me.core.property.set(object, "widget.window.key", baseTitle);
-            me.core.property.set(object, "widget.window.title", baseTitle);
+            var title = value;
+            if(!isNaN(value)) {
+                title = "Document " + value;
+            }
+            me.core.property.set(object, "widget.window.key", title);
+            me.core.property.set(object, "widget.window.title", title);
         }
     };
     me.contentTitle = {

@@ -37,7 +37,7 @@ screens.core.app = function CoreApp(me) {
         });
         await screens.include("app." + appName);
         me.core.property.set(progress, "close");
-        var appArgs = Array.prototype.slice.call(arguments, 2);
+        var appArgs = Array.prototype.slice.call(arguments, 1);
         result = me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };

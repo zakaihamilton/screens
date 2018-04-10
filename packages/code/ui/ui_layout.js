@@ -608,15 +608,6 @@ screens.ui.layout = function UILayout(me) {
         }
         return hasSeparator;
     };
-    me.toggleSeparator = function (page) {
-        if (page) {
-            if (page.var.separator.style.display === "none") {
-                page.var.separator.style.display = "block";
-            } else {
-                page.var.separator.style.display = "none";
-            }
-        }
-    };
     me.markElement = function (element, mark) {
         if (mark) {
             element.style.color = "";

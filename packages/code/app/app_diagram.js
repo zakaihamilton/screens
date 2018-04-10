@@ -90,7 +90,7 @@ screens.app.diagram = function AppDiagram(me) {
     me.term = {
         set: async function (object, text) {
             var window = me.widget.window(object);
-            var info = await me.kab.text.parse(null, window.language, text, window.options);
+            var info = await me.kab.text.parse(window.language, text, window.options);
             me.core.property.set(object, "ui.basic.html", info.text);
             me.core.property.notify(window, "update");
         }

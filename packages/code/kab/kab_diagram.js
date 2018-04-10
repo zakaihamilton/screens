@@ -9,7 +9,7 @@ screens.kab.diagram = function KabDiagram(me) {
     };
     me.matchingDiagram = function(session, term) {
         var matchingDiagram = null;
-        if(!session.json || !session.options.diagrams || !session.json.diagrams) {
+        if(!session.json || !session.json.diagrams) {
             return null;
         }
         for(let diagram of session.json.diagrams) {
