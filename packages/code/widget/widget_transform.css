@@ -1,0 +1,420 @@
+.widget-transform-output {
+    display:none;
+}
+
+.widget-transform-layout {
+    position:relative;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    overflow:hidden;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    line-height:2em;
+    font-size:24px;
+    direction: ltr;
+    display:flex;
+    flex:1;
+    flex-direction:column;
+    transform: rotate(0deg);
+    user-select: text;
+}
+
+.widget-transform-layout.hebrew {
+    direction: rtl;
+}
+
+.widget-transform-page {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+    border-top:1px solid gray;
+    margin:0;
+    background: repeating-linear-gradient(
+      45deg,
+      #fefefe,
+      #fefefe 10px,
+      #fcfcfc 10px,
+      #fcfcfc 20px
+    );    
+}
+
+.widget-transform-page-container {
+    display:flex;
+    box-sizing:border-box;
+    margin:0;
+}
+
+.widget-transform-page-content {
+    padding-left:3em;
+    padding-right:3em;
+    padding-bottom:5em;
+    position:relative;
+    text-align:justify;
+    box-sizing:border-box;
+    column-gap: 3em;
+    column-fill:balance;
+}
+
+.widget-transform-page-content br {
+    display:none;
+}
+
+.widget-transform-page-header {
+    height:60px;
+}
+
+.widget-transform-page-header.pipVideo {
+   height:160px;
+}
+
+.widget-transform-page-number{
+    position: absolute;
+    width:10%;
+    height:30px;
+    left:45%;
+    top: 30px;
+    text-align: center;
+}
+
+.widget-transform-page-number:after{
+    position:absolute;
+    font-size:75%;
+    color:gray;
+    content:attr(shortPageNumberText);
+    text-align:center;
+    top:0px;
+    left:0%;
+    width:100%;
+    height:20px;
+}
+
+.widget-transform-page-number:hover:after {
+    font-size:100%;
+    font-weight: bold;
+    color:black;
+    content:attr(longPageNumberText);
+}
+
+.widget-transform-page-scrolltotop {
+    position: absolute;
+    width:10%;
+    height:20px;
+    left:45%;
+    top: 10px;
+}
+
+.widget-transform-page-scrolltotop:after {
+    border-style: solid;
+    content: '';
+    position: absolute;
+    left:50%;
+    top:0.5em;
+    margin-left: -0.125em;
+    transform: rotate(-45deg);
+    text-align:center;
+    border-width: 0.05em 0.05em 0 0;
+    width: 0.2em;
+    height: 0.2em;
+    color:gray;
+}
+
+.widget-transform-page-scrolltotop:hover:after{
+    color:black;
+    top:0.25em;
+    border-width: 0.25em 0.25em 0 0;
+    margin-left: -0.35em;
+    width: 0.45em;
+    height: 0.45em;
+}
+
+.widget-transform-page-button {
+    position: absolute;
+    width:10%;
+    height:40px;
+    top: 10px;
+}
+
+.widget-transform-page-button:after {
+    position:absolute;
+    font-size:50%;
+    color:gray;
+    text-align:center;
+    top:10px;
+    left:0%;
+    width:100%;
+    height:30px;
+}
+
+.widget-transform-page-button:hover:after {
+    font-size:100%;
+    font-weight: bold;
+    color:black;
+}
+
+.widget-transform-page-reload {
+    left:25%;
+}
+
+.widget-transform-page-reload:after {
+    content: '\21BB';
+}
+
+.widget-transform-page-reload:hover:after {
+    content: '\21BB\A Reload';
+}
+
+.widget-transform-page-reload.hebrew:hover:after {
+    content: '\21BB\A טען מחדש';
+}
+
+.widget-transform-page-fullscreen {
+    left:35%;
+}
+
+.widget-transform-page-fullscreen:after {
+    content: '\25FB';
+}
+
+.widget-transform-page-fullscreen:hover:after {
+    content: '\25FB\A Fullcreen';
+}
+
+.widget-transform-page-fullscreen.hebrew:hover:after {
+    content: '\25FB\A מסך מלא';
+}
+
+.widget-transform-page-fullscreen.fullscreen:after {
+    content: '\25F3';
+}
+
+.widget-transform-page-fullscreen.fullscreen:hover:after {
+    content: '\25F3\A Restore';
+}
+
+.widget-transform-page-fullscreen.hebrew.fullscreen:hover:after {
+    content: '\25F3\A החזר';
+}
+
+.widget-transform-page-previous {
+    left:55%;
+}
+
+.widget-transform-page-previous:after {
+    content: '\21E6';
+}
+
+.widget-transform-page-previous:hover:after {
+    content: '\21E6\Previous Page';
+}
+
+.widget-transform-page-previous.hebrew:hover:after {
+    content: '\21E6\A עמוד קודם';
+}
+
+.widget-transform-page-next {
+    left:65%;
+}
+
+.widget-transform-page-next:after {
+    content: '\21E8';
+}
+
+.widget-transform-page-next:hover:after {
+    content: '\21E8\Next Page';
+}
+
+.widget-transform-page-next.hebrew:hover:after {
+    content: '\21E8\A עמוד הבא';
+}
+
+.widget-transform-separator {
+    position:absolute;
+    left:40%;
+    right:40%;
+    bottom:30px;
+    height:5px;
+    background: gray;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+.widget-transform-separator.last {
+    background: black;
+}
+
+.widget-transform-play:after {
+    position:absolute;
+    right:150px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23EF";
+    margin:auto;
+    line-height: 150%;
+}
+
+.widget-transform-play.play:after {
+    content:"\23F8";
+}
+
+.widget-transform-play.play.pause:after {
+    content: "\23EF";
+}
+
+.widget-transform-play:hover:after {
+    content: "\23EF\A Play";
+}
+
+.widget-transform-play.play:hover:after {
+    content: "\23F8\A Pause";
+}
+
+.widget-transform-play.play.pause:hover:after {
+    content: "\23EF\A Resume";
+}
+
+.widget-transform-play.fullscreen:after {
+    opacity: 0;
+}
+
+.widget-transform-play.fullscreen:hover:after {
+    opacity: 1;
+}
+
+.widget-transform-stop:after {
+    position:absolute;
+    right:50px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23F9";
+    display:none;
+    margin:auto;
+    line-height: 150%;
+}
+
+.widget-transform-stop:hover:after {
+    content: "\23F9\A Stop";
+}
+
+.widget-transform-stop.play:after {
+    display:block;
+}
+
+.widget-transform-stop.fullscreen:after {
+    opacity:0;
+}
+
+.widget-transform-stop.fullscreen:hover:after {
+    opacity:1;
+}
+
+.widget-transform-rewind:after {
+    position:absolute;
+    right:200px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23EA";
+    display:none;
+    margin:auto;
+    line-height: 150%;
+}
+
+.widget-transform-rewind:hover:after {
+    content: "\23EA\A Previous";
+}
+
+.widget-transform-rewind.play:after {
+    display:block;
+}
+
+.widget-transform-rewind.fullscreen:after {
+    opacity:0;
+}
+
+.widget-transform-rewind.fullscreen:hover:after {
+    opacity:1;
+}
+
+.widget-transform-fastforward:after {
+    position:absolute;
+    right:100px;
+    width:50px;
+    bottom:50px;
+    height:50px;
+    text-align: center;
+    content: "\23E9";
+    display:none;
+    margin:auto;
+    line-height: 150%;
+}
+
+.widget-transform-fastforward:hover:after {
+    content: "\23E9\A Next";
+}
+
+.widget-transform-fastforward.play:after {
+    display:block;
+}
+
+.widget-transform-fastforward.fullscreen:after {
+    opacity:0;
+}
+
+.widget-transform-fastforward.fullscreen:hover:after {
+    opacity:1;
+}
+
+.widget-transform-widget {
+    min-height:3em;
+    padding:0;
+    margin:0;
+}
+
+p.widget-transform-widget {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+h4.widget-transform-widget {
+    text-align: center;
+    width:100%;
+}
+
+.widget-transform-widget:before {
+    content:"\25B6\00a0";
+    margin-left: -1.0em;
+    display: inline-block;
+    opacity:0;
+}
+
+.widget-transform-widget.hebrew:before {
+    content:"\25C0\00a0";
+    margin-left: 1.0em;
+    display: inline-block;
+    opacity:0;
+}
+
+.widget-transform-widget:after {
+    content:"\2606\00a0";
+    display: inline-block;
+    opacity:0;
+    font-size: 75%;
+}
+
+.widget-transform-widget.notes:after {
+    opacity:1;
+}
+
+.widget-transform-widget.notes:hover:after {
+    content:"\2605\00a0";
+}
+
+.widget-transform-widget.mark:before {
+    opacity:1;
+}

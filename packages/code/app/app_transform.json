@@ -421,13 +421,6 @@
                     }
                 },
                 {
-                    "ui.element.component": "widget.icon",
-                    "ui.class.add": "app.transform.toggleGlossary",
-                    "ui.basic.src": "/packages/res/icons/glossary.png",
-                    "ui.basic.var": "toggleGlossary",
-                    "ui.touch.click": "app.transform.toggleGlossary"
-                },
-                {
                     "ui.basic.tag": "div",
                     "ui.class.add": "app.transform.termPopup",
                     "ui.basic.var": "termPopup",

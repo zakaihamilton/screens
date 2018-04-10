@@ -33,23 +33,26 @@ screens.widget.menu = function WidgetMenu(me) {
     };
     me.items = {
         set: function (object, value) {
+            object = me.widget.window(object);
             if (!object.var.menu) {
                 var parent = object;
                 if (object.var.header) {
                     parent = object.var.header;
                 }
-                object.var.menu = me.ui.element({
-                    "ui.element.component": "widget.menu",
-                    "ui.style.position": "relative",
-                    "ui.group.data": {
-                        "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                        "ui.data.values": value
-                    }
-                }, parent);
-                me.core.property.set(object, "ui.property.broadcast", {
-                    "ui.class.add": "menu"
-                });
+                if (!object.var.menu) {
+                    object.var.menu = me.ui.element({
+                        "ui.element.component": "widget.menu",
+                        "ui.style.position": "relative"
+                    }, parent);
+                }
             }
+            me.core.property.set(object.var.menu, "ui.group.data", {
+                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+                "ui.data.values": value
+            });
+            me.core.property.set(object, "ui.property.broadcast", {
+                "ui.class.add": "menu"
+            });
         }
     };
     me.back = {
@@ -101,7 +104,7 @@ screens.widget.menu = function WidgetMenu(me) {
             "ui.style.top": region.bottom + "px",
             "ui.basic.window": window,
             "ui.basic.target": object,
-            "values":values
+            "values": values
         });
         if (bottomUp) {
             me.core.property.set(menu, "ui.class.add", "bottom-up");
@@ -121,7 +124,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             "ui.element.component": "widget.modal"
         }
     };
-    me.values = function(object, values) {
+    me.values = function (object, values) {
         me.core.property.set(object, "ui.group.data", {
             "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
             "ui.data.values": values
@@ -234,13 +237,13 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         "ui.class.add": "list",
         "ui.basic.elements": [
             {
-                "ui.basic.tag":"div",
+                "ui.basic.tag": "div",
                 "ui.basic.var": "headers"
             },
             {
-                "ui.basic.tag":"div",
-                "ui.class.class":"widget.menu.progress.bar",
-                "ui.basic.var":"progress"
+                "ui.basic.tag": "div",
+                "ui.class.class": "widget.menu.progress.bar",
+                "ui.basic.var": "progress"
             },
             {
                 "ui.basic.tag": "div",
@@ -248,7 +251,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             }
         ]
     };
-    me.work = function(object, state) {
+    me.work = function (object, state) {
         me.log("menu state: " + state);
         me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
     };
@@ -266,27 +269,27 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         if (!list.var.filter) {
             if (list.var.members.childNodes.length >= me.filterMinCount) {
                 me.ui.element({
-                    "ui.element.component":"widget.input",
+                    "ui.element.component": "widget.input",
                     "ui.basic.type": "search",
                     "ui.basic.text": "",
                     "ui.basic.var": "filter",
                     "ui.attribute.placeholder": "Filter",
-                    "ui.style.width":"80%",
-                    "ui.key.up":"widget.menu.list.filter",
-                    "core.event.search":"widget.menu.list.filter"
+                    "ui.style.width": "80%",
+                    "ui.key.up": "widget.menu.list.filter",
+                    "core.event.search": "widget.menu.list.filter"
                 }, list.var.headers, list);
             }
         }
         return list.var.members;
     };
-    me.filter = function(object) {
+    me.filter = function (object) {
         var filterText = me.core.property.get(object, "ui.basic.text");
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
         var child = members.firstChild;
-        while(child) {
+        while (child) {
             var childText = me.core.property.get(child, "ui.basic.text");
-            if(!filterText || childText.toUpperCase().includes(filterText.toUpperCase())) {
+            if (!filterText || childText.toUpperCase().includes(filterText.toUpperCase())) {
                 me.ui.mark.widget(child, filterText);
                 child.style.display = "";
             }
@@ -310,8 +313,8 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.container = function (object, parent, properties) {
         return me.widget.menu.list.use(parent, properties["group"]);
     };
-    me.promise = function(object, info) {
-        if(!info) {
+    me.promise = function (object, info) {
+        if (!info) {
             return;
         }
         var parent = me.ui.node.container(object, me.widget.menu.list.id);

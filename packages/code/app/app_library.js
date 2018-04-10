@@ -34,7 +34,10 @@ screens.app.library = function AppLibrary(me) {
                     async function () {
                         var search = me.core.property.get(window.var.search, "ui.basic.text");
                         if(search) {
-                            search += " AND ";
+                            if(search.includes(name)) {
+                                return;
+                            }
+                            search += " ";
                         }
                         search += name;
                         me.core.property.set(window.var.search, "ui.basic.text", search);
@@ -84,6 +87,7 @@ screens.app.library = function AppLibrary(me) {
     me.search = function(object) {
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
-        /* TODO */
+        me.db.library.query(0, search);
+        me.transform(object);
     }
 };

@@ -11,3 +11,29 @@
     position:relative;
     text-align: center;
 }
+
+.app-library-output {
+    display:none;
+}
+
+.app-library-layout {
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    overflow:hidden;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    line-height:2em;
+    font-size:24px;
+    direction: ltr;
+    display:flex;
+    flex:1;
+    flex-direction:column;
+    transform: rotate(0deg);
+    user-select: text;
+}
+
+.app-library-layout.hebrew {
+    direction: rtl;
+}

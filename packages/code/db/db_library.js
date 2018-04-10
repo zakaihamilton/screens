@@ -51,7 +51,14 @@ screens.db.library = function DbLibrary(me) {
         return object;
     };
     me.list = async function(userId, name) {
-        var object = await me.storage.db.list(me.location(name || this.id), {user:userId || 0});
+        var list = await me.storage.db.list(me.location(name || this.id), {user:userId || 0});
+        return list;
+    };
+    me.query = async function(userId, query) {
+        var tags = db.library.query.tags(query);
+        tags.user = userId;
+        var list = await me.storage.db.list(me.location(name || this.id), tags);
+        
         return object;
     };
     return "server";
@@ -63,4 +70,18 @@ screens.db.library.tag = function DbLibraryTag(me) {
 
 screens.db.library.content = function DbLibraryContent(me) {
     me.init = me.upper.extend;
+};
+
+screens.db.library.query = function DbLibraryQuery(me) {
+    me.tags = function(query) {
+        var tags = {};
+        var tokens = query.split(" ");
+        for(var token in tokens) {
+            if(token.includes(":")) {
+                var [key, value] = str.split(":");
+                tags[key] = value;
+            }
+        }
+        return tags;
+    };
 };

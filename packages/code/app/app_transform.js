@@ -113,12 +113,12 @@ screens.app.transform = function AppTransform(me) {
                 object.workTimeout = null;
             }
             if (value) {
-                me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
+                me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
                 me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
             } else {
                 object.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    me.core.property.set([object.var.layout, object.var.toggleGlossary, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
+                    me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
                     me.updateScrolling(object);
                 }, 250);
             }
@@ -299,7 +299,6 @@ screens.app.transform = function AppTransform(me) {
                     window.var.input,
                     window.var.filter,
                     window.var.termTable,
-                    window.var.toggleGlossary,
                     window.var.layout
                 ], "ui.class.remove", window.language);
             }
@@ -307,10 +306,8 @@ screens.app.transform = function AppTransform(me) {
                 window.var.input,
                 window.var.filter,
                 window.var.termTable,
-                window.var.toggleGlossary,
                 window.var.layout
             ], "ui.class.add", language);
-            me.core.property.set(window.var.toggleGlossary, "ui.basic.text", data.glossaryTitle);
             me.core.property.set(window.var.termPopup, "title", data.termTableTitle);
             window.language = language;
             me.core.property.set(window.var.output, window.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
@@ -476,11 +473,6 @@ screens.app.transform = function AppTransform(me) {
                     "height": ""
                 }
             });
-        }
-    };
-    me.toggleGlossary = {
-        set: function (object) {
-            var window = me.widget.window.mainWindow(object);
         }
     };
     me.resetDescription = function (object) {
@@ -737,6 +729,9 @@ screens.app.transform = function AppTransform(me) {
     me.changeVoice = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
+        if(!currentPage) {
+            return;
+        }
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
         var playWillEnable = window.options.voice !== "None";
@@ -752,6 +747,9 @@ screens.app.transform = function AppTransform(me) {
     me.changeSpeed = function (object) {
         var window = me.widget.window.mainWindow(object);
         var currentPage = me.ui.layout.currentPage(window.var.layout);
+        if(!currentPage) {
+            return;
+        }
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
         if (isPlaying && !isPaused) {

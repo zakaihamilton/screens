@@ -32,13 +32,26 @@
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.search.container",
             "ui.basic.elements": {
-                "ui.basic.var":"search",
+                "ui.basic.var": "search",
                 "ui.basic.type": "search",
                 "ui.attribute.placeholder": "Search",
                 "ui.basic.text": "",
                 "ui.class.classExtra": "app.library.search",
-                "core.event.input":"app.library.changedSearch"
+                "core.event.input": "app.library.changedSearch"
             }
+        },
+        {
+            "ui.element.component": "widget.transform",
+            "ui.basic.var": "transform"
         }
-    ]
+    ],
+    "ui.property.after": {
+        "widget.scrollbar.vertical.alwaysHide": true,
+        "widget.scrollbar.horizontal.alwaysHide": true,
+        "storage.local.key": "@ui.windowkey.app-library-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "widget.transform.reflow",
+        "widget.transform.initOptions": null,
+        "widget.transform.transform": null
+    }
 }
