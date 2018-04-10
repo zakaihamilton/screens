@@ -11,7 +11,7 @@ screens.user.verify = function UserVerify(me) {
     };
     me.check = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
-            var name = info.headers["user_name"];
+            var name = decodeURIComponent(info.headers["user_name"]);
             var token = info.headers["token"];
             if(!token) {
                 me.error("no token passed in header, url: " + info.url + " name: " + name);

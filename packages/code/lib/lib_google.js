@@ -154,7 +154,7 @@ screens.lib.google = function LibGoogle(me) {
             token = user.getAuthResponse().id_token
             if (token) {
                 var profile = user.getBasicProfile();
-                info.headers["user_name"] = profile.getName();
+                info.headers["user_name"] = encodeURIComponent(profile.getName());
                 info.headers["token"] = token;
             }
         }
