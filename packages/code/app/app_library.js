@@ -84,10 +84,15 @@ screens.app.library = function AppLibrary(me) {
             me.search(object);
         }, 2000);
     };
-    me.search = function(object) {
+    me.search = async function(object) {
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
-        me.db.library.query(0, search);
-        me.transform(object);
+        var list = await me.db.library.query(0, search);
+        var text = "";
+        if(list) {
+            text = list.map(item => item.content).join("<br>");
+        }
+        me.core.property.set(window.var.transform, "text", text);
+        me.core.property.set(window.var.transform, "transform");
     }
 };
