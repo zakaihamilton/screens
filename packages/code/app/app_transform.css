@@ -553,6 +553,13 @@ h4.app-transform-widget {
     opacity:0;
 }
 
+.app-transform-widget.hebrew:before {
+    content:"\25C0\00a0";
+    margin-left: 1.0em;
+    display: inline-block;
+    opacity:0;
+}
+
 .app-transform-widget:after {
     content:"\2606\00a0";
     display: inline-block;
