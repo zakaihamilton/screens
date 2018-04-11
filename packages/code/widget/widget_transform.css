@@ -1,3 +1,13 @@
+.widget-transform-container {
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:50px;
+    bottom:0px;
+    display:flex;
+    flex:1;
+}
+
 .widget-transform-output {
     display:none;
 }

@@ -47,12 +47,12 @@ screens.widget.transform = function WidgetTransform(me) {
             widget.forceReflow = true;
             me.core.property.notify(widget, "update");
         });
-        me.ui.options.toggleSet(me, "pages", me.reflow.set);
-        me.ui.options.toggleSet(me, "columns", me.reflow.set);
+        me.ui.options.toggleSet(me, "pages", me.reflow);
+        me.ui.options.toggleSet(me, "columns", me.reflow);
         me.ui.options.toggleSet(me, "headings", me.transform);
         me.ui.options.toggleSet(me, "subHeadings", me.transform);
         me.ui.options.toggleSet(me, "diagrams", me.transform);
-        me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
+        me.ui.options.toggleSet(me, "pipVideo", me.reflow);
         me.ui.options.toggleSet(me, "autoPlay");
         me.ui.options.choiceSet(me, "voice", me.changeVoice);
         me.ui.options.choiceSet(me, "speed", me.changeSpeed);
@@ -94,9 +94,9 @@ screens.widget.transform = function WidgetTransform(me) {
             language = me.core.string.language(text);
             me.log("detected language: " + language);
         }
-        widget.options.hoverCallback = "screens.app.transform.hoverDescription";
-        widget.options.diagramCallback = "screens.app.transform.loadDiagram";
-        widget.options.toggleCallback = "screens.app.transform.cycleDescription";
+        widget.options.hoverCallback = "screens.widget.transform.hoverDescription";
+        widget.options.diagramCallback = "screens.widget.transform.loadDiagram";
+        widget.options.toggleCallback = "screens.widget.transform.cycleDescription";
         widget.options.reload = true;
         me.media.voice.stop();
         var info = await me.kab.text.parse(language, text, widget.options);
@@ -210,29 +210,28 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = true;
         me.core.property.notify(widget, "update");
     };
-    me.work = {
-        set: function (object, value) {
-            if (object.workTimeout) {
-                clearTimeout(object.workTimeout);
-                object.workTimeout = null;
-            }
-            if (value) {
-                me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
-                me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
-            } else {
-                object.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
-                    me.updateScrolling(object);
-                }, 250);
-            }
+    me.work = function (object, value) {
+        if (object.workTimeout) {
+            clearTimeout(object.workTimeout);
+            object.workTimeout = null;
+        }
+        if (value) {
+            me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", 0);
+            me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+        } else {
+            object.workTimeout = setTimeout(function () {
+                me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                me.core.property.set([object.var.layout, object.var.termPopup, object.var.filter], "ui.style.opacity", "");
+                me.updateScrolling(object);
+            }, 250);
         }
     };
     me.shouldReflow = function (object) {
         var widget = me.findWidget(object);
         var reflow = false;
         var pageSize = me.ui.layout.pageSize(widget.var.layout);
-        if (me.core.property.get(widget, "visible") && !me.core.property.get(widget, "conceal")) {
+        var window = me.widget.window(object);
+        if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
             if (widget.pageSize && (pageSize.height !== widget.pageSize.height || pageSize.width !== widget.pageSize.width)) {
                 reflow = true;
             }
@@ -259,11 +258,12 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.contentChanged = false;
         widget.pageSize = me.ui.layout.pageSize(widget.var.layout);
         me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid darkblue");
-        var fullscreen = me.core.property.get(widget, "fullscreen");
+        var window = me.widget.window(object);
+        var fullscreen = me.core.property.get(window, "fullscreen");
         me.core.property.set(object.var.filter, "ui.style.visibility", !text || fullscreen ? "hidden" : "visible");
         me.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
         me.core.property.set(widget, "ui.work.state", true);
-        var target = me.findWidget.container.content(widget.var.layout);
+        var target = me.widget.container.content(widget.var.layout);
         widget.var.layout.style.opacity = 0;
         if (widget.options.pages) {
             target.style.margin = "";
@@ -382,7 +382,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.changeVoice = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        if(!currentPage) {
+        if (!currentPage) {
             return;
         }
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -390,7 +390,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var playWillEnable = widget.options.voice !== "None";
         var playEnabled = me.ui.layout.options(widget.var.layout).playEnabled;
         if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
-            me.reflow.set(object);
+            me.reflow(object);
             return;
         }
         if (isPlaying && !isPaused) {
@@ -400,7 +400,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.changeSpeed = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        if(!currentPage) {
+        if (!currentPage) {
             return;
         }
         var isPlaying = me.ui.layout.isPlaying(currentPage);
@@ -448,7 +448,7 @@ screens.widget.transform = function WidgetTransform(me) {
                             setTimeout(() => {
                                 me.core.property.set(object, "widget.scrollbar.vertical.after");
                                 setTimeout(() => {
-                                    me.core.property.set(object, "app.transform.play");
+                                    me.core.property.set(object, "widget.transform.play");
                                 }, 1000);
                             }, 1000);
                         }
@@ -459,7 +459,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     if (pageNumber > 1) {
                         me.ui.layout.clearPage(currentPage);
                         me.core.property.set(object, "widget.scrollbar.vertical.before");
-                        me.core.property.set(object, "app.transform.play", -1);
+                        me.core.property.set(object, "widget.transform.play", -1);
                     }
                     else {
                         me.media.voice.replay();
@@ -473,7 +473,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     }
                     else {
                         me.core.property.set(object, "widget.scrollbar.vertical.after");
-                        me.core.property.set(object, "app.transform.play");
+                        me.core.property.set(object, "widget.transform.play");
                     }
                 },
                 onchange: (index, text) => {
@@ -529,7 +529,7 @@ screens.widget.transform = function WidgetTransform(me) {
         });
         voicelist = voicelist.map((voice) => {
             var name = voice.name;
-            return [voice.name, "app.transform.voice", {
+            return [voice.name, "widget.transform.voice", {
                 "state": "select",
                 "mark": !voice.localService
             },
@@ -612,5 +612,108 @@ screens.widget.transform = function WidgetTransform(me) {
                 }
             });
         }
+    };
+    me.updateTermTable = function (widget, terms, data, language) {
+        widget.dataExists = false;
+        var table = {};
+        for (var termName in terms) {
+            var term = terms[termName];
+            if (term.heading && term.phase) {
+                var phase = term.phase;
+                if (typeof phase !== "string") {
+                    if (phase.minor) {
+                        phase = phase.minor;
+                    } else {
+                        phase = phase.major;
+                    }
+                }
+                term.heading.split("/").map(function (subHeading) {
+                    var column = table[subHeading];
+                    if (!column) {
+                        column = table[subHeading] = {};
+                    }
+                    var row = column[phase];
+                    if (!row) {
+                        row = column[phase] = [];
+                    }
+                    term.name = termName;
+                    row.push(term);
+                });
+            }
+        }
+        for (var heading in table) {
+            var row = table[heading];
+            var usedRow = false;
+            for (var phase in row) {
+                var usedColumn = false;
+                var column = row[phase];
+                for (var name in column) {
+                    var item = column[name];
+                    if (item.used) {
+                        usedRow = true;
+                        usedColumn = true;
+                    }
+                }
+                if (usedColumn) {
+                    for (var name in column) {
+                        var item = column[name];
+                        if (!item.used) {
+                            delete column[name];
+                        }
+                    }
+                }
+            }
+            if (!usedRow) {
+                delete table[heading];
+            }
+        }
+        for (var heading in table) {
+            var row = table[heading];
+            var list = [{ "ui.basic.text": heading, "ui.element.component": "widget.table.header" }];
+            var order = ["root", "one", "two", "three", "four"];
+            order.map(function (phase) {
+                var properties = {};
+                if (row[phase]) {
+                    properties["ui.basic.elements"] = row[phase].map(function (item) {
+                        var styles = ["kab.term.phase." + phase, "kab.term.phase." + phase + ".border", language];
+                        if (!item.used) {
+                            styles.push("widget.transform.placeholder");
+                        }
+                        var itemProperties = {
+                            "ui.class.class": "widget.transform.termItem",
+                            "ui.class.add": styles
+                        };
+                        if (widget.options.keepSource) {
+                            itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
+                        } else {
+                            itemProperties["ui.basic.text"] = item.name;
+                            itemProperties["ui.attribute.app-transform-tooltip"] = item.source;
+                        }
+                        return itemProperties;
+                    });
+                    widget.dataExists = true;
+                }
+                properties["ui.class.add"] = "kab.term.phase." + phase;
+                list.push(properties);
+            });
+            data.push(list);
+        }
+        me.core.property.set(widget.var.termTable, "dataByRows", data);
+    };
+    me.updateScrolling = function (object) {
+        var widget = me.findWidget(object);
+        var scrollbar = widget.var.layout.var.vertical;
+        var pageSize = me.ui.layout.pageSize(widget.var.layout);
+        var snapToPage = widget.options.snapToPage;
+        if (!widget.options.pages) {
+            snapToPage = false;
+        }
+        me.core.property.set(scrollbar, {
+            "snapToPage": snapToPage,
+            "pageSize": pageSize.height,
+            "autoScroll": widget.options.autoScroll,
+            "scrollTo": widget.options.scrollPos,
+            "snap": null
+        });
     };
 };

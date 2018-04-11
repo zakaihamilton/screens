@@ -75,5 +75,9 @@ screens.storage.db = function StorageDB(me) {
         me.log("found " + array.length + " items for query: " + JSON.stringify(query));
         return array;
     };
+    me.createIndex = async function(location, index) {
+        var collection = await me.collection(location);
+        collection.createIndex(index);
+    };
     return "server";
 };

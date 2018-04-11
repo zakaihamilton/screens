@@ -87,10 +87,10 @@ screens.app.library = function AppLibrary(me) {
     me.search = async function(object) {
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
-        var list = await me.db.library.query(0, search);
+        var list = await me.db.library.find(0, search);
         var text = "";
         if(list) {
-            text = list.map(item => item.content).join("<br>");
+            text = list.map(item => item.text).join("<br>");
         }
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
