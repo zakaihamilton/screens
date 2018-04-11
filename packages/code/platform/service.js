@@ -15,7 +15,6 @@ screens.include({
         "string",
         "object",
         "property",
-        "flow",
         "service",
         "util",
         "stream",
