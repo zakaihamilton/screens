@@ -46,7 +46,7 @@ screens.core.service = function CoreService(me) {
             me.serviceNames = process.argv.splice(3);
             me.log("Connecting to server: " + me.serverAddress);
             me.client = me.io.connect(me.serverAddress);
-            me.client.on("connect", (socket) => {
+            me.client.on("connect", () => {
                 me.log("Connected to server: " + me.serverAddress);
                 me.client.on("disconnect", (info) => {
                     me.log("Disconnected from server: " + me.serverAddress);
@@ -55,7 +55,7 @@ screens.core.service = function CoreService(me) {
                     var args = await me.core.message.handleLocal(this, info.args);
                     if(args) {
                         info.args = args;
-                        socket.emit("method", info);
+                        me.client.emit("method", info);
                     }
                 });
                 me.client.on("receive", async (info) => {
