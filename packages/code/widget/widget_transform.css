@@ -5,6 +5,7 @@
     top:50px;
     bottom:0px;
     display:flex;
+    overflow:hidden;
     flex:1;
 }
 

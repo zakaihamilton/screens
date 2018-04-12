@@ -25,14 +25,20 @@ screens.ui.options = function UIOptions(me) {
     me.load = function(component, object, defaults) {
         var storage = me.getStorage(component, object);
         var storageKey = component.id + ".options";
+        var window = null;
         if(object) {
-            storageKey += "." + me.core.property.get(object, "key");
+            window = me.widget.window(object);
+            storageKey += "." + me.core.property.get(window, "key");
         }
         var validKey = me.storage.local.validKey(storageKey);
         var value = me.core.property.get(me.storage.local[storage], validKey);
-        var options = Object.assign({}, defaults, value ? JSON.parse(value) : {});
-        if(object) {
-            object.options = options;
+        var options = component.options;
+        if(window) {
+            options = window.options;
+        }
+        options = Object.assign({}, options, defaults, value ? JSON.parse(value) : {});
+        if(window) {
+            window.options = options;
         }
         else {
             component.options = options;

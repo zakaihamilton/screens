@@ -1,6 +1,9 @@
 {
     "ui.basic.tag":"div",
     "ui.class.class": "widget.transform.container",
+    "ui.property.after":{
+        "initOptions":null                          
+    },
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",

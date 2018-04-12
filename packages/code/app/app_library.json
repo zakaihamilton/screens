@@ -50,8 +50,6 @@
         "widget.scrollbar.horizontal.alwaysHide": true,
         "storage.local.key": "@ui.windowkey.app-library-window",
         "storage.local.restore": "widget.window.store",
-        "ui.resize.event": "widget.transform.reflow",
-        "widget.transform.initOptions": null,
-        "widget.transform.transform": null
+        "ui.resize.event": "widget.transform.reflow"
     }
 }

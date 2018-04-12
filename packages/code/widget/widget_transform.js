@@ -7,6 +7,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.properties = __json__;
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
+        var window = me.widget.window(widget);
         widget.language = null;
         me.ui.options.load(me, widget, {
             doTranslation: true,
@@ -30,6 +31,7 @@ screens.widget.transform = function WidgetTransform(me) {
             voice: "Google UK English Male",
             speed: "Normal"
         });
+        widget.options = window.options;
         widget.pageSize = { width: 0, height: 0 };
         widget.options.autoScroll = false;
         me.ui.options.toggleSet(me, "doTranslation", me.transform);
