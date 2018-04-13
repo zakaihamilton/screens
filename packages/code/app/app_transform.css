@@ -74,6 +74,7 @@
     box-sizing:border-box;
     column-gap: 3em;
     column-fill:balance;
+    overflow:hidden;
 }
 
 .app-transform-page-content br {

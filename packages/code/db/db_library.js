@@ -65,15 +65,26 @@ screens.db.library = function DbLibrary(me) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
+        var doQuery = false;
         if (filter) {
             params["$text"] = { "$search": filter };
+            doQuery = true;
         }
         if (tags && tags.length) {
-            var list = await me.db.library.tag.list(userId, tags, {});
-            params["_id"] = { "$in" : list.map(item => item._id)};
+            var tagList = await me.db.library.tag.list(userId, tags, {});
+            if(tagList.length) {
+                params["_id"] = { "$in" : tagList.map(item => item._id)};
+                doQuery = true;
+            }
+            else {
+                doQuery = false;
+            }
         }
-        me.log("params: " + JSON.stringify(params));
-        list = await me.db.library.content.list(userId, params);
+        var list = [];
+        if(doQuery) {
+            me.log("params: " + JSON.stringify(params));
+            list = await me.db.library.content.list(userId, params);
+        }
         return list;
     };
     return "server";

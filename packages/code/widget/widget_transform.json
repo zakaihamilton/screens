@@ -28,6 +28,7 @@
             "ui.basic.text": "",
             "ui.basic.type": "search",
             "ui.basic.var": "filter",
+            "ui.style.display":"none",
             "ui.property.after": {
                 "storage.local.restore": "ui.basic.text",
                 "ui.attribute.list": "transform-filter-list"

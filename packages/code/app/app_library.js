@@ -85,6 +85,7 @@ screens.app.library = function AppLibrary(me) {
         }, 2000);
     };
     me.search = async function(object) {
+        clearTimeout(me.searchTimer);
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
         var list = await me.db.library.find(0, search);

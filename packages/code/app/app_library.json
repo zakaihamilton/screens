@@ -37,7 +37,8 @@
                 "ui.attribute.placeholder": "Search",
                 "ui.basic.text": "",
                 "ui.class.classExtra": "app.library.search",
-                "core.event.input": "app.library.changedSearch"
+                "core.event.input": "app.library.changedSearch",
+                "ui.monitor.change": "app.library.search"
             }
         },
         {

@@ -197,6 +197,12 @@ screens.ui.layout = function UILayout(me) {
                 if (pageContent.scrollWidth > pageContent.clientWidth) {
                     newPage = true;
                 }
+                if (pageContent.scrollHeight > target.page.clientHeight) {
+                    newPage = true;
+                }
+                if (pageContent.scrollWidth > target.page.clientWidth) {
+                    newPage = true;
+                }
                 if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
                     previousWidget = null;
                 }
@@ -338,8 +344,7 @@ screens.ui.layout = function UILayout(me) {
                         "ui.basic.tag": "div",
                         "ui.class.class": options.contentClass,
                         "ui.style.columnCount": options.columnCount,
-                        "ui.basic.var": "content",
-                        "ui.style.overflow": "hidden"
+                        "ui.basic.var": "content"
                     }
                 },
                 {

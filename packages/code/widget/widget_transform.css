@@ -66,6 +66,7 @@
     box-sizing:border-box;
     column-gap: 3em;
     column-fill:balance;
+    overflow:hidden;
 }
 
 .widget-transform-page-content br {
@@ -428,4 +429,25 @@ h4.widget-transform-widget {
 
 .widget-transform-widget.mark:before {
     opacity:1;
+}
+
+.widget-transform-filter {
+    position: absolute;
+    width:20%;
+    margin-top:5px;
+    border: 1px solid black;
+    transition: width 0.4s ease-in-out;
+}
+
+.widget-transform-filter.english {
+    left:20px;
+}
+
+.widget-transform-filter.hebrew {
+    right:20px;
+    direction: rtl;
+}
+
+.widget-transform-filter:focus {
+    width:40%;
 }

@@ -467,8 +467,7 @@
             "app.transform.documentIndex"
         ],
         "ui.data.values": [
-            "core.number.fillArray(1-9)",
-            ["Library"]
+            "core.number.fillArray(1-9)"
         ]
     },
     "ui.property.after": {
