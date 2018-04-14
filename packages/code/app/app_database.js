@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component AppLibrary
+ @component AppDatabase
  */
 
-screens.app.library = function AppLibrary(me) {
+screens.app.database = function AppDatabase(me) {
     me.launch = function (args) {
         return me.ui.element(__json__, "workspace", "self");
     };

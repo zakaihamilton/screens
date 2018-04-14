@@ -6655,6 +6655,14 @@
             "translation": "Soul",
             "source":"Nefesh",
             "explanation":"Motion"
+        },
+        {
+            "term":"Hakdamat Sefer HaZohar",
+            "translation":"Introduction of The Book of Zohar",
+            "hebrew":"הקדמת ספר הזוהר",
+            "style":{
+                "heading":"Book"
+            }
         }
     ],
     "style": {

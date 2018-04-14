@@ -2,10 +2,10 @@
     "title": "Player",
     "icon": "/packages/res/icons/player_tray.png",
     "ui.property.style":{
-        "left": "150px",
-        "top": "150px",
-        "width": "950px",
-        "height": "650px"
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
     },
     "widget.menu.items": [
         ["File", [

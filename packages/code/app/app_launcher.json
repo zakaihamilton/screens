@@ -31,6 +31,16 @@
             "text": "Player",
             "ui.basic.src": "/packages/res/icons/player.png",
             "ui.touch.click": "core.app.player"
+        },
+        {
+            "text": "Library",
+            "ui.basic.src": "/packages/res/icons/library.png",
+            "ui.touch.click": "core.app.library"
+        },
+        {
+            "text": "Database",
+            "ui.basic.src": "/packages/res/icons/database.png",
+            "ui.touch.click": "core.app.database"
         }
     ]
 }
