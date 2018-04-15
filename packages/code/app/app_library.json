@@ -61,6 +61,7 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.editor.container",
+            "ui.basic.var":"editorContainer",
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.library.editor",

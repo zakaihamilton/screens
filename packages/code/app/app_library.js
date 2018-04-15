@@ -31,7 +31,7 @@ screens.app.library = function AppLibrary(me) {
             var window = me.widget.window(object);
             var editMode = window.options.editMode;
             me.core.property.set(window.var.transform, "ui.style.opacity", editMode ? "0" : "");
-            me.core.property.set([window.var.editor,window.var.delete,window.var.update], "ui.basic.show", editMode);
+            me.core.property.set([window.var.editor,window.var.editorContainer,window.var.delete,window.var.update], "ui.basic.show", editMode);
             me.updateText(object);
             me.core.property.set(window.var.transform, "transform");
         }
