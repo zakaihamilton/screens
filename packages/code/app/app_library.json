@@ -25,6 +25,18 @@
                 ],
                 "app.library.tagMenuList"
             ]
+        ],
+        [
+            "View",
+            [
+                [
+                    "Edit Mode",
+                    "app.library.editMode",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
         ]
     ],
     "ui.basic.elements": [
@@ -43,7 +55,32 @@
         },
         {
             "ui.element.component": "widget.transform",
-            "ui.basic.var": "transform"
+            "ui.basic.var": "transform",
+            "ui.style.top": "50px"
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.library.editor.container",
+            "ui.basic.elements": {
+                "ui.element.component": "widget.editor",
+                "ui.class.class": "app.library.editor",
+                "ui.basic.var": "editor"
+            }
+        },
+        {
+            "ui.basic.tag": "br"
+        },
+        {
+            "ui.basic.text": "Delete",
+            "ui.touch.click": "app.library.deleteRecord",
+            "ui.class.classExtra":"app.library.delete",
+            "ui.basic.var": "delete"
+        },
+        {
+            "ui.basic.text": "Update",
+            "ui.touch.click": "app.library.updateRecord",
+            "ui.class.classExtra":"app.library.update",
+            "ui.basic.var": "update"
         }
     ],
     "ui.property.after": {
@@ -51,6 +88,7 @@
         "widget.scrollbar.horizontal.alwaysHide": true,
         "storage.local.key": "@ui.windowkey.app-library-window",
         "storage.local.restore": "widget.window.store",
-        "ui.resize.event": "widget.transform.reflow"
+        "ui.resize.event": "widget.transform.reflow",
+        "app.library.initOptions": null
     }
 }
