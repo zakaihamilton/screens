@@ -32,6 +32,8 @@ screens.app.library = function AppLibrary(me) {
             var editMode = window.options.editMode;
             me.core.property.set(window.var.transform, "ui.style.opacity", editMode ? "0" : "");
             me.core.property.set([window.var.editor,window.var.delete,window.var.update], "ui.basic.show", editMode);
+            me.updateText(object);
+            me.core.property.set(window.var.transform, "transform");
         }
     };
     me.menuList = function (object, list, group) {
@@ -128,12 +130,17 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
     };
+    me.updateText = function(object) {
+        var window = me.widget.window.window(object);
+        var text = me.core.property.get(window.var.editor, "text");
+        me.core.property.set(window.var.transform, "text", text);
+    };
     me.parseRecords = function(object) {
         var records = {ids:[], tags:{}, content:{}};
         var window = me.widget.window.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         var articles = text.split("<article>");
-
+        
         return records;
     };
     me.updateRecord = async function(object) {

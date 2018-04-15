@@ -65,7 +65,8 @@
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.library.editor",
                 "ui.basic.var": "editor"
-            }
+            },
+            "ui.monitor.change": "app.library.updateText"
         },
         {
             "ui.basic.tag": "br"

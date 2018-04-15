@@ -87,10 +87,9 @@ screens.db.library = function DbLibrary(me) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params);
             result.content = list;
-            if(!result.tags) {
-                list = await me.db.library.content.list(userId, {_id:{"$in":result.ids}});
-                result.tags = list;
-            }
+            result.ids = list.map(item => item._id);
+            list = await me.db.library.content.list(userId, {_id:{"$in":result.ids}});
+            result.tags = list;
         }
         return result;
     };
