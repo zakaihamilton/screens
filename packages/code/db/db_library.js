@@ -12,14 +12,14 @@ screens.db.library = function DbLibrary(me) {
         child.insert = async function (userId, data) {
             return await me.insert(userId, child.id, data, child.index);
         };
-        child.remove = async function (objectId, data) {
+        child.remove = async function (objectId) {
             return await me.remove(objectId, child.id);
         };
         child.get = async function (objectId) {
             return await me.get(objectId, child.id);
         };
-        child.set = async function (objectId, data) {
-            return await me.set(objectId, child.id, data);
+        child.update = async function (objectId, data) {
+            return await me.update(objectId, child.id, data);
         };
         child.list = async function (userId, params) {
             return await me.list(userId, child.id, params);
@@ -43,16 +43,16 @@ screens.db.library = function DbLibrary(me) {
         return object;
     };
     me.remove = async function (objectId, name) {
-        var object = await me.storage.db.removeOne(me.location(name || this.id), objectId);
+        var object = await me.storage.db.remove(me.location(name || this.id), objectId);
         return object;
     };
     me.get = async function (objectId, name) {
         var object = await me.storage.db.findOne(me.location(name || this.id), objectId);
         return object;
     };
-    me.set = async function (objectId, name, data) {
-        var object = await me.storage.db.updateOne(me.location(name || this.id), objectId, data);
-        return object;
+    me.update = async function (objectId, name, data) {
+        var result = await me.storage.db.update(me.location(name || this.id), objectId, data);
+        return result;
     };
     me.list = async function (userId, name, params) {
         params = Object.assign({}, params);
@@ -65,6 +65,7 @@ screens.db.library = function DbLibrary(me) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
+        var result = {};
         var doQuery = false;
         if (filter) {
             params["$text"] = { "$search": filter };
@@ -79,13 +80,19 @@ screens.db.library = function DbLibrary(me) {
             else {
                 doQuery = false;
             }
+            result.tags = tagList;
         }
         var list = [];
         if(doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params);
+            result.content = list;
+            if(!result.tags) {
+                list = await me.db.library.content.list(userId, {_id:{"$in":result.ids}});
+                result.tags = list;
+            }
         }
-        return list;
+        return result;
     };
     return "server";
 };

@@ -146,6 +146,7 @@
         "tags":{
             "<subtitle>": "\n<b>",
             "</subtitle>": "</b>",
+            "<article>": "<br>",
             "<title>": "<br>\n<b>",
             "</title>": "</b>",
             "<rtl>": "<span dir=\"rtl\">",

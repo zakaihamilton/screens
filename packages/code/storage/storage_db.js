@@ -54,15 +54,31 @@ screens.storage.db = function StorageDB(me) {
         var result = await collection.insertOne(data);
         return result.insertedId;
     };
-    me.updateOne = async function(location, id, data) {
+    me.update = async function(location, idorList, data) {
+        var count = 0;
         var collection = await me.collection(location);
-        var result = await collection.updateOne({_id:id}, data);
-        return result.modifiedCount;
+        if(Array.isArray(idOrList)) {
+            for(var id of idorList) {
+                var result = await collection.updateOne({_id:id}, data[id]);
+                count += result.modifiedCount;
+            }
+        }
+        else {
+            var result = await collection.updateOne({_id:id}, data);
+            count = result.modifiedCount;
+        }
+        return count;
     };
-    me.removeOne = async function(location, id) {
+    me.remove = async function(location, idOrList) {
         var collection = await me.collection(location);
-        var result = await collection.remove({_id:id}, true);
-        return result.nRemoved;
+        if(Array.isArray(idOrList)) {
+            var result = await collection.remove({_id:{"$in":idOrList}});
+            return result.nRemoved;
+        }
+        else {
+            var result = await collection.remove({_id:idOrList}, true);
+            return result.nRemoved;
+        }
     };
     me.removeAll = async function(location) {
         var collection = await me.collection(location);
