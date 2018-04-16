@@ -8,10 +8,10 @@ screens.app.library = function AppLibrary(me) {
         return me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
-        me.tagList = me.db.library.tag.list();
+        me.tagList = me.db.library.tags.list();
     };
     me.refresh = async function () {
-        me.tagList = me.db.library.tag.list();
+        me.tagList = me.db.library.tags.list();
     };
     me.initOptions = async function (object) {
         var window = me.widget.window(object);
@@ -109,52 +109,88 @@ screens.app.library = function AppLibrary(me) {
     };
     me.reset = function(object) {
         var window = me.widget.window.window(object);
-        window.records = {content:[], tags:[]};
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.transform, "text", "");
         me.core.property.set(window.var.transform, "transform");
     };
     me.search = async function (object) {
-        me.reset(object);
-        clearTimeout(me.searchTimer);
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
+        if(search === window.searchText) {
+            return;
+        }
+        window.searchText = search;
+        me.reset(object);
+        clearTimeout(me.searchTimer);
         var text = "";
         if (search) {
-            window.records = await me.db.library.find(0, search);
-            if (window.records) {
-                text = window.records.content.map(item => item.text).join("<article>");
-            }
+            var records = await me.db.library.find(0, search);
+            text = JSON.stringify(me.toRecordArray(records),null,4);
         }
         me.core.property.set(window.var.editor, "text", text);
-        me.core.property.set(window.var.transform, "text", text);
+        me.updateText(object);
         me.core.property.set(window.var.transform, "transform");
     };
     me.updateText = function(object) {
         var window = me.widget.window.window(object);
-        var text = me.core.property.get(window.var.editor, "text");
+        var records = me.parseRecords(window);
+        var text = records.content.map(record => record.text).join("<article>");
         me.core.property.set(window.var.transform, "text", text);
     };
+    me.removeExtra = function(json) {
+        json = Object.assign({}, json);
+        delete json._id
+        delete json.user
+        return json;
+    };
+    me.addExtra = function(json, record) {
+        json = Object.assign({}, json);
+        json._id = record.id;
+        json.user = record.user;
+        return json;
+    };
+    me.toRecordArray = function(json) {
+        var array = [];
+        for(var id of json.ids) {
+            var tags = json.tags.find(item => item._id === id);
+            var content = json.content.find(item => item._id === id);
+            array.push({
+                id:id,
+                tags:me.removeExtra(tags),
+                content:me.removeExtra(content)
+            });
+        }
+        return array;
+    };
+    me.fromRecordArray = function(array) {
+        var dict = {tags:[], content:[], ids:[]};
+        for(record of array) {
+            dict.tags.push(me.addExtra(record.tags, record));
+            dict.content.push(me.addExtra(record.content, record));
+            dict.ids.push(record.id);
+        }
+        return dict;
+    };
     me.parseRecords = function(object) {
-        var records = {ids:[], tags:{}, content:{}};
         var window = me.widget.window.window(object);
         var text = me.core.property.get(window.var.editor, "text");
-        var articles = text.split("<article>");
-        
+        var records = me.fromRecordArray(JSON.parse(text));
         return records;
     };
     me.updateRecord = async function(object) {
-        var records = parseRecords(object);
-        if(records.ids) {
-            await me.db.tags.update(ids, records.tags);
-            await me.db.content.update(ids, records.content);
+        var records = me.parseRecords(object);
+        if(records.tags) {
+            await me.db.library.tags.replace(records.tags);
+        }
+        if(records.content) {
+            await me.db.library.content.replace(records.content);
         }
     };
     me.deleteRecord = async function(object) {
-        var records = parseRecords(object);
+        var records = me.parseRecords(object);
         if(records.ids) {
-            await me.db.tags.remove(ids);
-            await me.db.content.remove(ids);
+            await me.db.library.tags.remove(records.ids);
+            await me.db.library.content.remove(records.ids);
         }
     };
 };

@@ -8,10 +8,10 @@ screens.app.database = function AppDatabase(me) {
         return me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
-        me.tagList = me.db.library.tag.list();
+        me.tagList = me.db.library.tags.list();
     };
     me.refresh = async function() {
-        me.tagList = me.db.library.tag.list();
+        me.tagList = me.db.library.tags.list();
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.window(object);

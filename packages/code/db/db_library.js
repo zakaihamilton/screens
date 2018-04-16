@@ -18,8 +18,8 @@ screens.db.library = function DbLibrary(me) {
         child.get = async function (objectId) {
             return await me.get(objectId, child.id);
         };
-        child.update = async function (objectId, data) {
-            return await me.update(objectId, child.id, data);
+        child.replace = async function (data) {
+            return await me.replace(child.id, data);
         };
         child.list = async function (userId, params) {
             return await me.list(userId, child.id, params);
@@ -50,8 +50,8 @@ screens.db.library = function DbLibrary(me) {
         var object = await me.storage.db.findOne(me.location(name || this.id), objectId);
         return object;
     };
-    me.update = async function (objectId, name, data) {
-        var result = await me.storage.db.update(me.location(name || this.id), objectId, data);
+    me.replace = async function (name, data) {
+        var result = await me.storage.db.replace(me.location(name || this.id), data);
         return result;
     };
     me.list = async function (userId, name, params) {
@@ -72,7 +72,7 @@ screens.db.library = function DbLibrary(me) {
             doQuery = true;
         }
         if (tags && tags.length) {
-            var tagList = await me.db.library.tag.list(userId, tags, {});
+            var tagList = await me.db.library.tags.list(userId, tags, {});
             if(tagList.length) {
                 params["_id"] = { "$in" : tagList.map(item => item._id)};
                 doQuery = true;
@@ -88,7 +88,7 @@ screens.db.library = function DbLibrary(me) {
             list = await me.db.library.content.list(userId, params);
             result.content = list;
             result.ids = list.map(item => item._id);
-            list = await me.db.library.content.list(userId, {_id:{"$in":result.ids}});
+            list = await me.db.library.tags.list(userId, {_id:{"$in":result.ids}});
             result.tags = list;
         }
         return result;
@@ -96,7 +96,7 @@ screens.db.library = function DbLibrary(me) {
     return "server";
 };
 
-screens.db.library.tag = function DbLibraryTag(me) {
+screens.db.library.tags = function DbLibraryTag(me) {
     me.init = me.upper.extend;
 };
 
@@ -111,7 +111,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
         var tokens = query.split(" ");
         for (var token of tokens) {
             if (token.includes(":")) {
-                var [key, value] = str.split(":");
+                var [key, value] = token.split(":");
                 tags[key] = value;
             }
         }
