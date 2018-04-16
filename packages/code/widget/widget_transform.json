@@ -74,6 +74,10 @@
             "Transform",
             [
                 [
+                    "Clear",
+                    "widget.transform.clear"
+                ],
+                [
                     "Refresh",
                     "widget.transform.transform"
                 ],
