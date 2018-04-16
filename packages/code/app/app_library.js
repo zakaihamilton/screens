@@ -60,7 +60,7 @@ screens.app.library = function AppLibrary(me) {
                             if (search.includes(name)) {
                                 return;
                             }
-                            search += " ";
+                            search += " AND ";
                         }
                         search += name;
                         me.core.property.set(window.var.search, "ui.basic.text", search);

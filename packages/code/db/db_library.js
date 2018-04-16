@@ -61,7 +61,6 @@ screens.db.library = function DbLibrary(me) {
         return list;
     };
     me.find = async function (userId, query) {
-        me.log("query: " + query + " userId: " + userId);
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -71,8 +70,10 @@ screens.db.library = function DbLibrary(me) {
             params["$text"] = { "$search": filter };
             doQuery = true;
         }
-        if (tags && tags.length) {
+        me.log("query: " + query + " userId: " + userId + " tags: " + JSON.stringify(tags) + " filter: " + filter);
+        if (tags) {
             var tagList = await me.db.library.tags.list(userId, tags, {});
+            me.log("found " + tagList.length + " matching tags");
             if(tagList.length) {
                 params["_id"] = { "$in" : tagList.map(item => item._id)};
                 doQuery = true;
@@ -86,6 +87,7 @@ screens.db.library = function DbLibrary(me) {
         if(doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params);
+            me.log("returning " + list.length + " results");
             result.content = list;
             result.ids = list.map(item => item._id);
             list = await me.db.library.tags.list(userId, {_id:{"$in":result.ids}});
@@ -108,7 +110,7 @@ screens.db.library.content = function DbLibraryContent(me) {
 screens.db.library.query = function DbLibraryQuery(me) {
     me.tags = function (query) {
         var tags = {};
-        var tokens = query.split(" ");
+        var tokens = query.split(" AND ");
         for (var token of tokens) {
             if (token.includes(":")) {
                 var [key, value] = token.split(":");
@@ -119,7 +121,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
     };
     me.filter = function (query) {
         var filter = "";
-        var tokens = query.split(" ");
+        var tokens = query.split(" AND ");
         for (var token of tokens) {
             if (!token.includes(":")) {
                 if (filter) {
