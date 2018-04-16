@@ -21,7 +21,7 @@ screens.app.library = function AppLibrary(me) {
         });
         me.ui.options.toggleSet(me, "editMode", me.updateEditMode.set);
         me.updateEditMode.set(window);
-        me.clear(object);
+        me.reset(object);
     };
     me.updateEditMode = {
         get: function (object) {
@@ -110,9 +110,15 @@ screens.app.library = function AppLibrary(me) {
     };
     me.clear = function(object) {
         var window = me.widget.window.window(object);
+        me.core.property.set(window.var.search, "ui.basic.text", "");
+        me.reset(object);
+    };
+    me.reset = function(object) {
+        var window = me.widget.window.window(object);
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.transform, "text", "");
         me.core.property.set(window.var.transform, "transform");
+        window.searchText = "";
     };
     me.search = async function (object) {
         var window = me.widget.window.window(object);
@@ -120,8 +126,8 @@ screens.app.library = function AppLibrary(me) {
         if(search === window.searchText) {
             return;
         }
+        me.reset(object);
         window.searchText = search;
-        me.clear(object);
         clearTimeout(me.searchTimer);
         var text = "";
         if (search) {
