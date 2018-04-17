@@ -22,8 +22,8 @@ screens.storage.db = function StorageDB(me) {
         }
         var url = info.url;
         return new Promise((resolve, reject) => {
-            me.mongodb.MongoClient.connect(url, function(err, client) {
-                if(err) {
+            me.mongodb.MongoClient.connect(url, function (err, client) {
+                if (err) {
                     reject(err);
                 }
                 else {
@@ -35,65 +35,77 @@ screens.storage.db = function StorageDB(me) {
             });
         });
     };
-    me.collection = async function(location) {
+    me.collection = async function (location) {
         var db = await me.database(location.db);
         var collectionName = location.collection;
         var collection = db.collection(collectionName);
         return collection;
     };
-    me.objectId = function(id) {
+    me.objectId = function (id) {
         return me.mongodb.ObjectId(id);
     }
-    me.findOne = async function(location, id) {
+    me.findOne = async function (location, id) {
         var collection = await me.collection(location);
-        var result = await collection.findOne({_id:id});
+        var result = await collection.findOne({ _id: id });
         return result;
     };
-    me.insertOne = async function(location, data) {
+    me.insertOne = async function (location, data) {
         var collection = await me.collection(location);
         var result = await collection.insertOne(data);
         return result.insertedId;
     };
-    me.replace = async function(location, data) {
+    me.set = async function (location, data) {
         var count = 0;
         var collection = await me.collection(location);
-        if(Array.isArray(data)) {
-            data.map(async data => {
-                if(data) {
-                    var result = await collection.replaceOne({_id:data._id}, data, {upsert:true});
-                    count += result.modifiedCount;
+        var isArray = true;
+        if (!Array.isArray(data)) {
+            isArray = true;
+            data = [data];
+        }
+        data.map(async data => {
+            if (data) {
+                if (data._id) {
+                    var result = await collection.replaceOne({ _id: data._id }, data, { upsert: true });
+                    me.log("replace result: " + JSON.stringify(result));
                 }
-            });
+                else {
+                    var result = await collection.insertOne(data);
+                    me.log("insert result: " + JSON.stringify(result));
+                    data._id = result.insertedId;
+                }
+            }
+        });
+        if (!isArray) {
+            data = data[0]
         }
-        else {
-            var result = await collection.replaceOne({_id:data._id}, data, {upsert:true});
-            count = result.modifiedCount;
-        }
-        return count;
+        return data;
     };
-    me.remove = async function(location, idOrList) {
+    me.remove = async function (location, idOrList) {
         var collection = await me.collection(location);
-        if(Array.isArray(idOrList)) {
-            var result = await collection.remove({_id:{"$in":idOrList}});
+        if (Array.isArray(idOrList)) {
+            var result = await collection.remove({ _id: { "$in": idOrList } });
             return result.nRemoved;
         }
         else {
-            var result = await collection.remove({_id:idOrList}, true);
+            var result = await collection.remove({ _id: idOrList }, true);
             return result.nRemoved;
         }
     };
-    me.removeAll = async function(location) {
+    me.removeAll = async function (location) {
         var collection = await me.collection(location);
-        var result = await collection.remove({_id:id});
+        var result = await collection.remove({ _id: id });
         return result.nRemoved;
     };
-    me.list = async function(location, query, projection) {
+    me.list = async function (location, query) {
         var collection = await me.collection(location);
-        var array = await collection.find(query, projection).toArray();
-        me.log("found " + array.length + " items for query: " + JSON.stringify(query));
+        query = JSON.stringify(query);
+        var array = await collection.find(query).toArray();
+        me.log("found " + array.length +
+            " items for query: " + query +
+            " location: " + JSON.stringify(location));
         return array;
     };
-    me.createIndex = async function(location, index) {
+    me.createIndex = async function (location, index) {
         var collection = await me.collection(location);
         collection.createIndex(index);
     };

@@ -18,8 +18,8 @@ screens.db.library = function DbLibrary(me) {
         child.get = async function (objectId) {
             return await me.get(objectId, child.id);
         };
-        child.replace = async function (data) {
-            return await me.replace(child.id, data);
+        child.set = async function (data) {
+            return await me.set(child.id, data);
         };
         child.list = async function (userId, params) {
             return await me.list(userId, child.id, params);
@@ -36,7 +36,7 @@ screens.db.library = function DbLibrary(me) {
     me.insert = async function (userId, name, data, index) {
         data = Object.assign({ user: userId || 0 }, data);
         var location = me.location(name || this.id);
-        if(index) {
+        if (index) {
             await me.storage.db.createIndex(location, index);
         }
         var object = await me.storage.db.insertOne(location, data);
@@ -50,8 +50,8 @@ screens.db.library = function DbLibrary(me) {
         var object = await me.storage.db.findOne(me.location(name || this.id), objectId);
         return object;
     };
-    me.replace = async function (name, data) {
-        var result = await me.storage.db.replace(me.location(name || this.id), data);
+    me.set = async function (name, data) {
+        var result = await me.storage.db.set(me.location(name || this.id), data);
         return result;
     };
     me.list = async function (userId, name, params) {
@@ -71,11 +71,11 @@ screens.db.library = function DbLibrary(me) {
             doQuery = true;
         }
         me.log("query: " + query + " userId: " + userId + " tags: " + JSON.stringify(tags) + " filter: " + filter);
-        if (tags) {
+        if (tags && Object.keys(tags).length) {
             var tagList = await me.db.library.tags.list(userId, tags, {});
             me.log("found " + tagList.length + " matching tags");
-            if(tagList.length) {
-                params["_id"] = { "$in" : tagList.map(item => item._id)};
+            if (tagList.length) {
+                params["_id"] = { $in: tagList.map(item => item._id) };
                 doQuery = true;
             }
             else {
@@ -84,13 +84,12 @@ screens.db.library = function DbLibrary(me) {
             result.tags = tagList;
         }
         var list = [];
-        if(doQuery) {
+        if (doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params);
             me.log("returning " + list.length + " results");
             result.content = list;
-            result.ids = list.map(item => item._id);
-            list = await me.db.library.tags.list(userId, {_id:{"$in":result.ids}});
+            list = await me.db.library.tags.list(userId, { _id: { $in: result.ids } });
             result.tags = list;
         }
         return result;
@@ -104,7 +103,7 @@ screens.db.library.tags = function DbLibraryTag(me) {
 
 screens.db.library.content = function DbLibraryContent(me) {
     me.init = me.upper.extend;
-    me.index = {text:"text"};
+    me.index = { text: "text" };
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {

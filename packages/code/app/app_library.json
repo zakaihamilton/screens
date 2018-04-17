@@ -35,6 +35,14 @@
                     {
                         "state": "select"
                     }
+                ],
+                [
+                    "Structured",
+                    "app.library.structuredMode",
+                    {
+                        "state":"select",
+                        "visible":"app.library.editMode"
+                    }
                 ]
             ]
         ]
