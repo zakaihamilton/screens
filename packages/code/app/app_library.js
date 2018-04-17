@@ -163,18 +163,27 @@ screens.app.library = function AppLibrary(me) {
         }
         else {
             for(var item of json) {
+                if(text) {
+                    text += "\n";
+                }
                 if(item.id) {
-                    text += "#id:" + item.id + "\n";
+                    text += "#id:" + item.id;
                 }
                 else {
-                    text += "#id:\n";
+                    text += "#id:";
                 }
                 if(item.tags) {
                     for(var tag in item.tags) {
-                        text += "#" + tag + ":" + item.tags[tag] + "\n"
+                        if(text) {
+                            text += "\n";
+                        }
+                        text += "#" + tag + ":" + item.tags[tag]
                     }
                 }
                 if(item.content && item.content.text) {
+                    if(text) {
+                        text += "\n";
+                    }
                     text += item.content.text;
                 }
             }
