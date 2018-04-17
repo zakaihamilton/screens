@@ -42,8 +42,16 @@ screens.storage.db = function StorageDB(me) {
         return collection;
     };
     me.objectId = function (id) {
-        return me.mongodb.ObjectId(id);
+        var object = me.mongodb.ObjectID(id);
+        return object;
     }
+    me.findByIds = async function(location, ids) {
+        var collection = await me.collection(location);
+        var results = [];
+        ids = ids.map(id => id.toString());
+        var results = await collection.find({"_id":{"$in":ids}}).toArray();
+        return results;
+    };
     me.findOne = async function (location, id) {
         var collection = await me.collection(location);
         var result = await collection.findOne({ _id: id });
@@ -97,11 +105,11 @@ screens.storage.db = function StorageDB(me) {
         return result.nRemoved;
     };
     me.list = async function (location, query) {
+        
         var collection = await me.collection(location);
-        query = JSON.stringify(query);
         var array = await collection.find(query).toArray();
         me.log("found " + array.length +
-            " items for query: " + query +
+            " items for query: " + JSON.stringify(query) +
             " location: " + JSON.stringify(location));
         return array;
     };

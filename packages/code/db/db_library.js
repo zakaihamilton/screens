@@ -24,6 +24,9 @@ screens.db.library = function DbLibrary(me) {
         child.list = async function (userId, params) {
             return await me.list(userId, child.id, params);
         };
+        child.findByIds = async function(ids) {
+            return await me.findByIds(child.id, ids);
+        };
     };
     me.location = function (name) {
         var location = me.defaultLocation;
@@ -54,6 +57,10 @@ screens.db.library = function DbLibrary(me) {
         var result = await me.storage.db.set(me.location(name || this.id), data);
         return result;
     };
+    me.findByIds = async function(name, ids) {
+        var result = await me.storage.db.findByIds(me.location(name || this.id), ids);
+        return result;
+    };
     me.list = async function (userId, name, params) {
         params = Object.assign({}, params);
         params.user = userId || 0;
@@ -72,10 +79,10 @@ screens.db.library = function DbLibrary(me) {
         }
         me.log("query: " + query + " userId: " + userId + " tags: " + JSON.stringify(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
-            var tagList = await me.db.library.tags.list(userId, tags, {});
+            var tagList = await me.db.library.tags.list(userId, tags);
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
-                params["_id"] = { $in: tagList.map(item => item._id) };
+                params["_id"] = { $in: tagList.map(item => me.storage.db.objectId(item._id)) };
                 doQuery = true;
             }
             else {
@@ -87,10 +94,9 @@ screens.db.library = function DbLibrary(me) {
         if (doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params);
-            me.log("returning " + list.length + " results");
             result.content = list;
-            list = await me.db.library.tags.list(userId, { _id: { $in: result.ids } });
-            result.tags = list;
+            result.tags = await me.db.library.tags.findByIds(list.map(item => item._id));
+            me.log("tags: " + JSON.stringify(result.tags));
         }
         return result;
     };

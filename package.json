@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "0.7",
+  "version": "0.7.1",
   "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
@@ -23,9 +23,9 @@
     "mime": "^2.2.0",
     "moment": "^2.20.0",
     "mongodb": "^3.0.5",
-    "mongorito": "^3.0.4",
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.6.2",
+    "npm": "^5.8.0",
     "openssl": "^1.1.0",
     "postcss": "^6.0.17",
     "promise-worker": "^1.1.1",
@@ -36,7 +36,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "settings": {
-    "lib":{
+    "lib": {
       "google": {
         "client_id": "635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
       }
