@@ -36,7 +36,7 @@ screens.app.library = function AppLibrary(me) {
             var structuredMode = window.options.structuredMode;
             me.core.property.set(window.var.transform, "ui.style.opacity", editMode ? "0" : "");
             me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
-            me.core.property.set(window.var.process, "ui.basic.hide", structuredMode);
+            me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
             me.updateText(object);
         }
     };

@@ -232,9 +232,22 @@ screens.ui.layout = function UILayout(me) {
                     if (widget) {
                         pageContent.appendChild(widget);
                     }
-                    for (var fontSize = 100; fontSize >= 20; fontSize -= 2) {
-                        if (pageContent.scrollHeight > pageContent.clientHeight || pageContent.scrollWidth > pageContent.clientWidth) {
-                            widget.style.fontSize = fontSize + "%";
+                    for (var fontSize = parseInt(target.style.fontSize); fontSize >= 12; fontSize -= 2) {
+                        var changeFontSize = false;
+                        if (pageContent.scrollHeight > pageContent.clientHeight) {
+                            changeFontSize = true;
+                        }
+                        if (pageContent.scrollWidth > pageContent.clientWidth) {
+                            changeFontSize = true;
+                        }
+                        if (pageContent.scrollHeight > target.page.clientHeight) {
+                            changeFontSize = true;
+                        }
+                        if (pageContent.scrollWidth > target.page.clientWidth) {
+                            changeFontSize = true;
+                        }
+                        if (changeFontSize) {
+                            target.page.style.fontSize = fontSize + "px";
                         } else {
                             break;
                         }

@@ -9,7 +9,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         var window = me.widget.window(widget);
         widget.language = null;
-        me.ui.options.load(me, widget, {
+        me.ui.options.load(me, window, {
             doTranslation: true,
             doExplanation: true,
             prioritizeExplanation: true,
