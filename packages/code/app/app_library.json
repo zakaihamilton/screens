@@ -9,8 +9,39 @@
     },
     "widget.menu.items": [
         [
-            "Tags",
+            "Library",
             [
+                [
+                    "Search",
+                    "app.library.reSearch"
+                ],
+                [
+                    "Number of Results",
+                    null,
+                    {
+                        "enabled":false,
+                        "header":true
+                    }
+                ],
+                [
+                    "Unlimited",
+                    "widget.transform.findCount",
+                    {
+                        "state": "select"
+                    },
+                    {
+                        "group": "findCount"
+                    }
+                ],
+                "app.library.findCountMenuList",
+                [
+                    "Tags",
+                    null,
+                    {
+                        "enabled":false,
+                        "header":true
+                    }
+                ],
                 [
                     "Refresh",
                     "app.library.refresh"

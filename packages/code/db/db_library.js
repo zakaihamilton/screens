@@ -21,8 +21,8 @@ screens.db.library = function DbLibrary(me) {
         child.set = async function (data) {
             return await me.set(child.id, data);
         };
-        child.list = async function (userId, params) {
-            return await me.list(userId, child.id, params);
+        child.list = async function (userId, params, count) {
+            return await me.list(userId, child.id, params, count);
         };
         child.findByIds = async function(ids) {
             return await me.findByIds(child.id, ids);
@@ -61,13 +61,13 @@ screens.db.library = function DbLibrary(me) {
         var result = await me.storage.db.findByIds(me.location(name || this.id), ids);
         return result;
     };
-    me.list = async function (userId, name, params) {
+    me.list = async function (userId, name, params, count) {
         params = Object.assign({}, params);
         params.user = userId || 0;
-        var list = await me.storage.db.list(me.location(name || this.id), params);
+        var list = await me.storage.db.list(me.location(name || this.id), params, count);
         return list;
     };
-    me.find = async function (userId, query) {
+    me.find = async function (userId, query, count) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -93,7 +93,7 @@ screens.db.library = function DbLibrary(me) {
         var list = [];
         if (doQuery) {
             me.log("params: " + JSON.stringify(params));
-            list = await me.db.library.content.list(userId, params);
+            list = await me.db.library.content.list(userId, params, count);
             result.content = list;
             result.tags = await me.db.library.tags.findByIds(list.map(item => item._id));
             me.log("tags: " + JSON.stringify(result.tags));

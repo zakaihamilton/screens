@@ -18,10 +18,12 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
             editMode: false,
-            structuredMode: false
+            structuredMode: false,
+            findCount: "10"
         });
         me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode.set);
         me.ui.options.toggleSet(me, window, "structuredMode", me.updateEditMode.set);
+        me.ui.options.choiceSet(me, window, "findCount", me.reSearch);
         me.updateEditMode.set(window);
         me.reset(object);
     };
@@ -39,6 +41,23 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
             me.updateText(object);
         }
+    };
+    me.findCountMenuList = function (object) {
+        var findCountMenuList = [];
+        for (var findCount = 10; findCount <= 100; findCount += 10) {
+            var item = [
+                findCount,
+                "app.library.findCount",
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "findCount"
+                }
+            ];
+            findCountMenuList.push(item);
+        }
+        return findCountMenuList;
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.window(object);
@@ -140,6 +159,10 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.transform, "transform");
         window.searchText = "";
     };
+    me.reSearch = function(object) {
+        window.searchText = "";
+        me.search(object);
+    };
     me.search = async function (object) {
         var window = me.widget.window.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
@@ -151,7 +174,12 @@ screens.app.library = function AppLibrary(me) {
         clearTimeout(me.searchTimer);
         var text = "";
         if (search) {
-            var records = await me.db.library.find(0, search);
+            var findCount = window.options.findCount;
+            me.log("findCount: " + findCount);
+            if(findCount === "Unlimited") {
+                findCount = 0;
+            }
+            var records = await me.db.library.find(0, search, findCount);
             me.updateTextFromRecords(window, records);
         }
     };
