@@ -87,6 +87,12 @@
             "ui.basic.var": "delete"
         },
         {
+            "ui.basic.text": "Process",
+            "ui.touch.click": "app.library.process",
+            "ui.class.classExtra":"app.library.process",
+            "ui.basic.var": "process"
+        },
+        {
             "ui.basic.text": "Update",
             "ui.touch.click": "app.library.updateRecord",
             "ui.class.classExtra":"app.library.update",

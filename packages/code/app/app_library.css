@@ -71,6 +71,12 @@
     bottom: 10px;
 }
 
+.app-library-process {
+    position: absolute;
+    right: 100px;
+    bottom: 10px;
+}
+
 .app-library-update {
     position: absolute;
     right: 10px;

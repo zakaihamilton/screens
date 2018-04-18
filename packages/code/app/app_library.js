@@ -33,8 +33,10 @@ screens.app.library = function AppLibrary(me) {
         set: function (object) {
             var window = me.widget.window(object);
             var editMode = window.options.editMode;
+            var structuredMode = window.options.structuredMode;
             me.core.property.set(window.var.transform, "ui.style.opacity", editMode ? "0" : "");
             me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
+            me.core.property.set(window.var.process, "ui.basic.hide", structuredMode);
             me.updateText(object);
         }
     };
@@ -155,33 +157,52 @@ screens.app.library = function AppLibrary(me) {
     };
     me.updateTextFromRecords = function (object, records) {
         var window = me.widget.window.window(object);
-        var json = me.toRecordArray(records);
+        if(!Array.isArray(records)) {
+            records = me.toRecordArray(records);
+        }
         var structuredMode = window.options.structuredMode;
         var text = "";
-        if(structuredMode) {
-            text = JSON.stringify(json, null, 4);
+        if (structuredMode) {
+            text = JSON.stringify(records, null, 4);
         }
         else {
-            for(var item of json) {
-                if(text) {
+            var tags = {};
+            for (var item of records) {
+                if (text) {
                     text += "\n";
                 }
-                if(item.id) {
+                if (item.id) {
                     text += "#id:" + item.id;
                 }
                 else {
                     text += "#id:";
                 }
-                if(item.tags) {
-                    for(var tag in item.tags) {
-                        if(text) {
+                var diff = [];
+                if (item.tags) {
+                    for (var tag in item.tags) {
+                        if (tag in tags && tags[tag] === item.tags[tag]) {
+                            continue;
+                        }
+                        if (text) {
                             text += "\n";
                         }
                         text += "#" + tag + ":" + item.tags[tag]
+                        tags[tag] = item.tags[tag]
                     }
+                    diff = Object.keys(tags).filter((i) => Object.keys(item.tags).indexOf(i) < 0);
                 }
-                if(item.content && item.content.text) {
-                    if(text) {
+                else {
+                    diff = Object.keys(tags);
+                    tags = {};
+                }
+                for (var tag of diff) {
+                    if (text) {
+                        text += "\n";
+                    }
+                    text += "#" + tag + ":"
+                }
+                if (item.content && item.content.text) {
+                    if (text) {
                         text += "\n";
                     }
                     text += item.content.text;
@@ -189,53 +210,78 @@ screens.app.library = function AppLibrary(me) {
             }
         }
         var transformText = "";
-        if(records.content) {
+        for(var record of records) {
+            if(transformText) {
+                transformText += "<article>";
+            }
+            if(record.tags) {
+                var getTag = (tag) => { if(tag in record.tags) { return record.tags[tag] + "\n"} else {return ""}};
+                transformText += getTag("article");
+                transformText += getTag("chapter");
+                transformText += getTag("volume");
+                transformText += getTag("book");
+                transformText += getTag("author");
+            }
+            transformText += record.content.text;
+        };
+        if (records.content) {
             transformText = records.content.map(record => record.text).join("<article>");
         }
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.transform, "text", transformText);
-        me.core.property.set(window.var.transform, "transform");
+        if (!window.options.editMode) {
+            me.core.property.set(window.var.transform, "transform");
+        }
     };
     me.parseRecordsFromText = function (object) {
         var window = me.widget.window.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         var records = {};
         var array = [];
-        if(text) {
-            if(text[0] === "[") {
+        if (text) {
+            if (text[0] === "[") {
                 array = JSON.parse(text);
             }
             else {
-                for(line of text.split("\n")) {
+                var tags = {};
+                for (line of text.split("\n")) {
                     var last = array[array.length - 1];
-                    if(line[0] === "#") {
+                    if (line[0] === "#") {
                         var [key, value] = line.substring(1).split(":").map(string => string.trim());
-                        if(key === "id") {
-                            array.push({id:value});
+                        if (key === "id") {
+                            if (last) {
+                                last.tags = Object.assign({}, tags);
+                            }
+                            array.push({ id: value });
                         }
                         else {
-                            if(!last) {
+                            if (!last) {
                                 array.push({});
                                 last = array[array.length - 1];
                             }
-                            if(!last.tags) {
-                                last.tags = {};
+                            if (value) {
+                                tags[key] = value;
                             }
-                            last.tags[key] = value;
+                            else {
+                                delete tags[key]
+                            }
                         }
                     }
                     else {
-                        if(!last) {
+                        if (!last) {
                             array.push({});
                             last = array[array.length - 1];
                         }
-                        if(last.content && last.content.text) {
+                        if (last.content && last.content.text) {
                             last.content.text += "\n" + line;
                         }
                         else {
-                            last.content = {text:line};
+                            last.content = { text: line };
                         }
                     }
+                }
+                if (last) {
+                    last.tags = Object.assign({}, tags);
                 }
             }
             records = me.fromRecordArray(array);
@@ -244,11 +290,17 @@ screens.app.library = function AppLibrary(me) {
     };
     me.toRecordArray = function (json) {
         var array = [];
-        if(json.content) {
-            var ids = json.content.map(item => item._id);
-            for (var id of ids) {
-                var tags = json.tags.find(item => item._id === id);
-                var content = json.content.find(item => item._id === id);
+        if (json.content) {
+            for (var index = 0; index < json.content.length; index++) {
+                var id = 0;
+                var tags = json.tags[index];
+                var content = json.content[index];
+                if(json.ids) {
+                    id = json.ids[index];
+                }
+                else {
+                    id = content._id || content.id;
+                }
                 array.push({
                     id: id,
                     tags: me.removeExtra(tags),
@@ -289,5 +341,21 @@ screens.app.library = function AppLibrary(me) {
             await me.db.library.tags.remove(records.ids);
             await me.db.library.content.remove(records.ids);
         }
+    };
+    me.process = function(object) {
+        var window = me.widget.window.window(object);
+        var window = me.widget.window.window(object);
+        var text = me.core.property.get(window.var.editor, "text");
+        text = text.split("\n").map(line => {
+            if(line.startsWith("#")) {
+                return line;
+            }
+            if(line.match(/[^.?!:;,\\\"'”…\\)]$/)) {
+                line = "#id:\n#article:" + line;
+            }
+            return line;
+        }).join("\n");
+        me.core.property.set(window.var.editor, "text", text);
+        me.updateText(object);
     };
 };
