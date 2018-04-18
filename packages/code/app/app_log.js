@@ -17,7 +17,7 @@ screens.app.log = function AppLog(me) {
         me.ui.options.load(me, null, {
             "source": "Browser"
         });
-        me.ui.options.choiceSet(me, "source", function (object, value, key, options) {
+        me.ui.options.choiceSet(me, null, "source", function (object, value, key, options) {
             me.core.property.notify(me.singleton, "app.log.refresh");
         });
     };

@@ -9,7 +9,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         var window = me.widget.window(widget);
         widget.language = null;
-        me.ui.options.load(me, window, {
+        me.ui.options.load(me, widget, {
             doTranslation: true,
             doExplanation: true,
             prioritizeExplanation: true,
@@ -31,34 +31,33 @@ screens.widget.transform = function WidgetTransform(me) {
             voice: "Google UK English Male",
             speed: "Normal"
         });
-        widget.options = window.options;
         widget.pageSize = { width: 0, height: 0 };
         widget.options.autoScroll = false;
-        me.ui.options.toggleSet(me, "doTranslation", me.transform);
-        me.ui.options.toggleSet(me, "doExplanation", me.transform);
-        me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform);
-        me.ui.options.toggleSet(me, "addStyles", me.transform);
-        me.ui.options.toggleSet(me, "phaseNumbers", me.transform);
-        me.ui.options.toggleSet(me, "keepSource", me.transform);
-        me.ui.options.toggleSet(me, "showHtml", me.transform);
-        me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
-        me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
-        me.ui.options.choiceSet(me, "language", me.transform);
-        me.ui.options.choiceSet(me, "fontSize", function (object, value, key, options) {
+        me.ui.options.toggleSet(me, widget, "doTranslation", me.transform);
+        me.ui.options.toggleSet(me, widget, "doExplanation", me.transform);
+        me.ui.options.toggleSet(me, widget, "prioritizeExplanation", me.transform);
+        me.ui.options.toggleSet(me, widget, "addStyles", me.transform);
+        me.ui.options.toggleSet(me, widget, "phaseNumbers", me.transform);
+        me.ui.options.toggleSet(me, widget, "keepSource", me.transform);
+        me.ui.options.toggleSet(me, widget, "showHtml", me.transform);
+        me.ui.options.toggleSet(me, widget, "autoScroll", me.updateScrolling);
+        me.ui.options.toggleSet(me, widget, "snapToPage", me.updateScrolling);
+        me.ui.options.choiceSet(me, widget, "language", me.transform);
+        me.ui.options.choiceSet(me, widget, "fontSize", function (object, value, key, options) {
             me.core.property.set([widget.var.layout, widget.var.termTable], "ui.style.fontSize", value);
             widget.forceReflow = true;
             me.core.property.notify(widget, "update");
         });
-        me.ui.options.toggleSet(me, "pages", me.reflow);
-        me.ui.options.toggleSet(me, "columns", me.reflow);
-        me.ui.options.toggleSet(me, "headings", me.transform);
-        me.ui.options.toggleSet(me, "subHeadings", me.transform);
-        me.ui.options.toggleSet(me, "diagrams", me.transform);
-        me.ui.options.toggleSet(me, "pipVideo", me.reflow);
-        me.ui.options.toggleSet(me, "autoPlay");
-        me.ui.options.choiceSet(me, "voice", me.changeVoice);
-        me.ui.options.choiceSet(me, "speed", me.changeSpeed);
-        me.ui.options.choiceSet(me, "scrollPos");
+        me.ui.options.toggleSet(me, widget, "pages", me.reflow);
+        me.ui.options.toggleSet(me, widget, "columns", me.reflow);
+        me.ui.options.toggleSet(me, widget, "headings", me.transform);
+        me.ui.options.toggleSet(me, widget, "subHeadings", me.transform);
+        me.ui.options.toggleSet(me, widget, "diagrams", me.transform);
+        me.ui.options.toggleSet(me, widget, "pipVideo", me.reflow);
+        me.ui.options.toggleSet(me, widget, "autoPlay");
+        me.ui.options.choiceSet(me, widget, "voice", me.changeVoice);
+        me.ui.options.choiceSet(me, widget, "speed", me.changeSpeed);
+        me.ui.options.choiceSet(me, widget, "scrollPos");
         me.ui.class.useStylesheet("kab");
     };
     me.findWidget = function (object) {

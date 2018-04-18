@@ -57,19 +57,17 @@ screens.app.diagram = function AppDiagram(me) {
                     fontSize: "22px"
                 });
             }
-            me.ui.options.choiceSet(me, "viewType", function (object, value, key, options) {
-                var window = me.widget.window(object);
+            me.ui.options.choiceSet(me, window, "viewType", function (object, value, key, options) {
                 me.core.property.notify(window, "app.diagram.reload");
             });
-            me.ui.options.toggleSet(me, "doTranslation", me.reload.set);
-            me.ui.options.toggleSet(me, "doExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, "prioritizeExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, "addStyles", me.reload.set);
-            me.ui.options.toggleSet(me, "phaseNumbers", me.reload.set);
-            me.ui.options.toggleSet(me, "keepSource", me.reload.set);
-            me.ui.options.toggleSet(me, "headings", me.reload.set);
-            me.ui.options.choiceSet(me, "fontSize", function (object, value, key, options) {
-                var window = me.widget.window(object);
+            me.ui.options.toggleSet(me, window, "doTranslation", me.reload.set);
+            me.ui.options.toggleSet(me, window, "doExplanation", me.reload.set);
+            me.ui.options.toggleSet(me, window, "prioritizeExplanation", me.reload.set);
+            me.ui.options.toggleSet(me, window, "addStyles", me.reload.set);
+            me.ui.options.toggleSet(me, window, "phaseNumbers", me.reload.set);
+            me.ui.options.toggleSet(me, window, "keepSource", me.reload.set);
+            me.ui.options.toggleSet(me, window, "headings", me.reload.set);
+            me.ui.options.choiceSet(me, window, "fontSize", function (object, value, key, options) {
                 me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                 me.core.property.notify(window, "reload");
                 me.core.property.notify(window, "update");

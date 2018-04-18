@@ -40,14 +40,14 @@ screens.app.transform = function AppTransform(me) {
             });
             window.pageSize = { width: 0, height: 0 };
             window.options.autoScroll = false;
-            me.ui.options.toggleSet(me, "doTranslation", me.transform.set);
-            me.ui.options.toggleSet(me, "doExplanation", me.transform.set);
-            me.ui.options.toggleSet(me, "prioritizeExplanation", me.transform.set);
-            me.ui.options.toggleSet(me, "addStyles", me.transform.set);
-            me.ui.options.toggleSet(me, "phaseNumbers", me.transform.set);
-            me.ui.options.toggleSet(me, "keepSource", me.transform.set);
-            me.ui.options.toggleSet(me, "showHtml", me.transform.set);
-            me.ui.options.toggleSet(me, "showInput", function (object, value, key, options) {
+            me.ui.options.toggleSet(me, window, "doTranslation", me.transform.set);
+            me.ui.options.toggleSet(me, window, "doExplanation", me.transform.set);
+            me.ui.options.toggleSet(me, window, "prioritizeExplanation", me.transform.set);
+            me.ui.options.toggleSet(me, window, "addStyles", me.transform.set);
+            me.ui.options.toggleSet(me, window, "phaseNumbers", me.transform.set);
+            me.ui.options.toggleSet(me, window, "keepSource", me.transform.set);
+            me.ui.options.toggleSet(me, window, "showHtml", me.transform.set);
+            me.ui.options.toggleSet(me, window, "showInput", function (object, value, key, options) {
                 var window = me.widget.window.mainWindow(object);
                 var text = me.core.property.get(window.var.layout, "ui.basic.text");
                 if (!text) {
@@ -55,25 +55,25 @@ screens.app.transform = function AppTransform(me) {
                 }
                 me.updateWidgets(window, value);
             });
-            me.ui.options.toggleSet(me, "autoScroll", me.updateScrolling);
-            me.ui.options.toggleSet(me, "snapToPage", me.updateScrolling);
-            me.ui.options.choiceSet(me, "language", me.transform.set);
-            me.ui.options.choiceSet(me, "fontSize", function (object, value, key, options) {
+            me.ui.options.toggleSet(me, window, "autoScroll", me.updateScrolling);
+            me.ui.options.toggleSet(me, window, "snapToPage", me.updateScrolling);
+            me.ui.options.choiceSet(me, window, "language", me.transform.set);
+            me.ui.options.choiceSet(me, window, "fontSize", function (object, value, key, options) {
                 var window = me.widget.window.mainWindow(object);
                 me.core.property.set([window.var.layout, window.var.termTable], "ui.style.fontSize", value);
                 window.forceReflow = true;
                 me.core.property.notify(window, "update");
             });
-            me.ui.options.toggleSet(me, "pages", me.reflow.set);
-            me.ui.options.toggleSet(me, "columns", me.reflow.set);
-            me.ui.options.toggleSet(me, "headings", me.transform.set);
-            me.ui.options.toggleSet(me, "subHeadings", me.transform.set);
-            me.ui.options.toggleSet(me, "diagrams", me.transform.set);
-            me.ui.options.toggleSet(me, "pipVideo", me.reflow.set);
-            me.ui.options.toggleSet(me, "autoPlay");
-            me.ui.options.choiceSet(me, "voice", me.changeVoice);
-            me.ui.options.choiceSet(me, "speed", me.changeSpeed);
-            me.ui.options.choiceSet(me, "scrollPos");
+            me.ui.options.toggleSet(me, window, "pages", me.reflow.set);
+            me.ui.options.toggleSet(me, window, "columns", me.reflow.set);
+            me.ui.options.toggleSet(me, window, "headings", me.transform.set);
+            me.ui.options.toggleSet(me, window, "subHeadings", me.transform.set);
+            me.ui.options.toggleSet(me, window, "diagrams", me.transform.set);
+            me.ui.options.toggleSet(me, window, "pipVideo", me.reflow.set);
+            me.ui.options.toggleSet(me, window, "autoPlay");
+            me.ui.options.choiceSet(me, window, "voice", me.changeVoice);
+            me.ui.options.choiceSet(me, window, "speed", me.changeSpeed);
+            me.ui.options.choiceSet(me, window, "scrollPos");
             me.ui.class.useStylesheet("kab");
         }
     };

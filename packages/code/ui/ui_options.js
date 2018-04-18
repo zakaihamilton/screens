@@ -4,74 +4,79 @@
  */
 
 screens.ui.options = function UIOptions(me) {
-    me.getStorage = function(component, object) {
+    me.getStorage = function (component, object) {
         var storage = "local";
-        if(object && object.storageName) {
+        if (object && object.storageName) {
             storage = object.storageName;
         }
-        else if(component && component.storageName) {
+        else if (component && component.storageName) {
             storage = component.storageName;
         }
         return storage;
     };
-    me.setStorage = function(component, object, storage) {
-        if(object) {
+    me.setStorage = function (component, object, storage) {
+        if (object) {
             object.storageName = storage;
         }
-        if(component) {
+        if (component) {
             component.storageName = storage;
         }
     };
-    me.load = function(component, object, defaults) {
+    me.load = function (component, object, defaults) {
         var storage = me.getStorage(component, object);
         var storageKey = component.id + ".options";
         var window = null;
-        if(object) {
+        if (object) {
             window = me.widget.window(object);
             storageKey += "." + me.core.property.get(window, "key");
         }
         var validKey = me.storage.local.validKey(storageKey);
         var value = me.core.property.get(me.storage.local[storage], validKey);
         var options = component.options;
-        if(window) {
-            options = window.options;
+        if (object) {
+            options = object.options;
         }
         options = Object.assign({}, options, defaults, value ? JSON.parse(value) : {});
-        if(window) {
-            window.options = options;
+        if (object) {
+            object.options = options;
         }
         else {
             component.options = options;
         }
     };
-    me.toggleSet = function (component, key, callback) {
-        if(!component.options) {
+    me.toggleSet = function (component, target, key, callback) {
+        if (!component.options) {
             component.options = {};
         }
         component[key] = {
             get: function (object) {
+                if (target) {
+                    object = target;
+                }
                 var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
+                if (object && object.options) {
+                    options = object.options;
                 }
                 return options[key];
             },
             set: function (object, value) {
+                if (target) {
+                    object = target;
+                }
                 var storage = me.getStorage(component, object);
                 var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
+                if (object && object.options) {
+                    options = object.options;
                 }
                 options[key] = !options[key];
-                if(callback) {
+                if (callback) {
                     callback(object, options[key], key, options);
                 }
-                if(storage) {
+                if (storage) {
                     var storageKey = component.id + ".options";
-                    if(object && object.options) {
-                        storageKey += "." + me.core.property.get(object, "key");
+                    if (object && object.options) {
+                        window = me.widget.window(object);
+                        storageKey += "." + me.core.property.get(window, "key");
                     }
                     var validKey = me.storage.local.validKey(storageKey);
                     me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
@@ -79,78 +84,39 @@ screens.ui.options = function UIOptions(me) {
             }
         };
     };
-    me.choiceSet = function (component, key, callback) {
-        if(!component.options) {
+    me.choiceSet = function (component, target, key, callback) {
+        if (!component.options) {
             component.options = {};
         }
         component[key] = {
             get: function (object, value) {
+                if (target) {
+                    object = target;
+                }
                 var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
+                if (object && object.options) {
+                    options = object.options;
                 }
                 return options[key] === value;
             },
             set: function (object, value) {
+                if (target) {
+                    object = target;
+                }
                 var storage = me.getStorage(component, object);
                 var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
+                if (object && object.options) {
+                    options = object.options;
                 }
                 options[key] = value;
-                if(callback) {
+                if (callback) {
                     callback(object, options[key], key, options);
                 }
-                if(storage) {
+                if (storage) {
                     var storageKey = component.id + ".options";
-                    if(object && object.options) {
-                        storageKey += "." + me.core.property.get(object, "widget.window.key");
-                    }
-                    var validKey = me.storage.local.validKey(storageKey);
-                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
-                }
-            }
-        };
-    };
-    me.inputSet = function (component, key, callback) {
-        if(!component.options) {
-            component.options = {};
-        }
-        component[key] = {
-            get: function (object) {
-                var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
-                }
-                return options[key];
-            },
-            set: function (object, value) {
-                var storage = me.getStorage(component, object);
-                var options = component.options;
-                var window = me.core.property.get(object, "widget.window.active");
-                if(window && window.options) {
-                    options = window.options;
-                }
-                var text = me.core.property.get(window.var[key], "ui.basic.text");
-                if(typeof value === "string" || typeof value === "number") {
-                    if(text !== value) {
-                        me.core.property.set(window.var[key], "ui.basic.text", value);
-                    }
-                }
-                else {
-                    value = text;
-                }
-                options[key] = value;
-                if(callback) {
-                    callback(object, options, key, options[key]);
-                }
-                if(storage) {
-                    var storageKey = component.id + ".options";
-                    if(object && object.options) {
-                        storageKey += "." + me.core.property.get(object, "key");
+                    if (object && object.options) {
+                        window = me.widget.window(object);
+                        storageKey += "." + me.core.property.get(window, "key");
                     }
                     var validKey = me.storage.local.validKey(storageKey);
                     me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
