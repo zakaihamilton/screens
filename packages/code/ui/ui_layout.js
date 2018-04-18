@@ -248,6 +248,7 @@ screens.ui.layout = function UILayout(me) {
                         }
                         if (changeFontSize) {
                             target.page.style.fontSize = fontSize + "px";
+                            target.page.style.lineHeight = "2em";
                         } else {
                             break;
                         }

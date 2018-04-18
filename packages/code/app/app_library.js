@@ -60,13 +60,30 @@ screens.app.library = function AppLibrary(me) {
                     name,
                     async function () {
                         var search = me.core.property.get(window.var.search, "ui.basic.text");
+                        var insert = true;
                         if (search) {
-                            if (search.includes(name)) {
-                                return;
+                            var [nameKey, nameValue] = name.split(":");
+                            nameKey = nameKey.trim();
+                            nameValue = nameValue.trim();
+                            search = search.split(" AND ").map((item) => {
+                                if(item.includes(":")) {
+                                    var [itemKey, itemValue] = item.split(":");
+                                    itemKey = itemKey.trim();
+                                    itemValue = itemValue.trim();
+                                    if(itemKey == nameKey) {
+                                        insert = false;
+                                        return name;
+                                    }
+                                    return item;
+                                }
+                            }).join(" AND ")
+                            if(insert) {
+                                search += " AND ";
                             }
-                            search += " AND ";
                         }
-                        search += name;
+                        if(insert) {
+                            search += name;
+                        }
                         me.core.property.set(window.var.search, "ui.basic.text", search);
                         me.changedSearch(window.var.search);
                     },
