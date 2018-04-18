@@ -82,13 +82,11 @@ screens.app.library = function AppLibrary(me) {
                         var insert = true;
                         if (search) {
                             var [nameKey, nameValue] = name.split(":");
-                            nameKey = nameKey.trim();
-                            nameValue = nameValue.trim();
+                            nameKey = nameKey.trim().toLowerCase();
                             search = search.split(" AND ").map((item) => {
                                 if(item.includes(":")) {
-                                    var [itemKey, itemValue] = item.split(":");
-                                    itemKey = itemKey.trim();
-                                    itemValue = itemValue.trim();
+                                    var [itemKey] = item.split(":");
+                                    itemKey = itemKey.trim().toLowerCase();
                                     if(itemKey == nameKey) {
                                         insert = false;
                                         return name;

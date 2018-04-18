@@ -124,7 +124,8 @@ screens.db.library.query = function DbLibraryQuery(me) {
         for (var token of tokens) {
             if (token.includes(":")) {
                 var [key, value] = token.split(":");
-                tags[key] = value;
+                var regex = new RegExp(["^", value.trim(), "$"].join(""), "i");
+                tags[key.trim().toLowerCase()] = regex;
             }
         }
         return tags;
@@ -137,7 +138,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
                 if (filter) {
                     filter += " ";
                 }
-                filter += token;
+                filter += token.trim();
             }
         }
         return filter;
