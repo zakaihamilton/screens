@@ -9,9 +9,6 @@ screens.db.library = function DbLibrary(me) {
         collection: "object"
     };
     me.extend = function (child) {
-        child.insert = async function (userId, data) {
-            return await me.insert(userId, child.id, data, child.index);
-        };
         child.remove = async function (objectId) {
             return await me.remove(objectId, child.id);
         };
@@ -35,15 +32,6 @@ screens.db.library = function DbLibrary(me) {
             location = Object.assign({}, location, { collection: name });
         }
         return location;
-    };
-    me.insert = async function (userId, name, data, index) {
-        data = Object.assign({ user: userId || 0 }, data);
-        var location = me.location(name || this.id);
-        if (index) {
-            await me.storage.db.createIndex(location, index);
-        }
-        var object = await me.storage.db.insertOne(location, data);
-        return object;
     };
     me.remove = async function (objectId, name) {
         var object = await me.storage.db.remove(me.location(name || this.id), objectId);
@@ -124,7 +112,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
         for (var token of tokens) {
             if (token.includes(":")) {
                 var [key, value] = token.split(":");
-                var regex = new RegExp(["^", value.trim(), "$"].join(""), "i");
+                var regex = new RegExp(["^", me.core.string.escape(value.trim()), "$"].join(""), "i");
                 tags[key.trim().toLowerCase()] = regex;
             }
         }

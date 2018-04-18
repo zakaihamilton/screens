@@ -58,11 +58,6 @@ screens.storage.db = function StorageDB(me) {
         var result = await collection.findOne({ _id: id });
         return result;
     };
-    me.insertOne = async function (location, data) {
-        var collection = await me.collection(location);
-        var result = await collection.insertOne(data);
-        return result.insertedId;
-    };
     me.set = async function (location, data) {
         var count = 0;
         var collection = await me.collection(location);
@@ -73,14 +68,12 @@ screens.storage.db = function StorageDB(me) {
         }
         data.map(async data => {
             if (data) {
+                if (!data._id) {
+                    data._id = me.mongodb.ObjectID().toString();
+                }
                 if (data._id) {
                     var result = await collection.replaceOne({ _id: data._id }, data, { upsert: true });
                     me.log("replace result: " + JSON.stringify(result));
-                }
-                else {
-                    var result = await collection.insertOne(data);
-                    me.log("insert result: " + JSON.stringify(result));
-                    data._id = result.insertedId;
                 }
             }
         });

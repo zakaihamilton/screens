@@ -22,7 +22,8 @@ screens.include({
         "startup",
         "network",
         "service",
-        "cache"
+        "cache",
+        "string"
     ],
     "storage": [
         "file",
