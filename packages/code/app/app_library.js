@@ -369,7 +369,7 @@ screens.app.library = function AppLibrary(me) {
             if(line.startsWith("#")) {
                 return line;
             }
-            if(line.match(/[^.?!:;,\\\"'”…\\)]$/)) {
+            if(line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
                 if(line.startsWith("Items")) {
                     return "";
                 }
