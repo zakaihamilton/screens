@@ -22,16 +22,22 @@ screens.ui.options = function UIOptions(me) {
             component.storageName = storage;
         }
     };
-    me.load = function (component, object, defaults) {
-        var storage = me.getStorage(component, object);
+    me.storageKey = function(component, object) {
         var storageKey = component.id + ".options";
-        var window = null;
         if (object) {
-            window = me.widget.window(object);
-            storageKey += "." + me.core.property.get(window, "key");
+            var window = me.widget.window(object);
+            var key = me.core.property.get(window, "key");
+            if(key) {
+                storageKey += "." + key;
+            }
         }
         var validKey = me.storage.local.validKey(storageKey);
-        var value = me.core.property.get(me.storage.local[storage], validKey);
+        return validKey;
+    };
+    me.load = function (component, object, defaults) {
+        var storage = me.getStorage(component, object);
+        var window = null;
+        var value = me.core.property.get(me.storage.local[storage], me.storageKey(component, object));
         var options = component.options;
         if (object) {
             options = object.options;
@@ -73,13 +79,7 @@ screens.ui.options = function UIOptions(me) {
                     callback(object, options[key], key, options);
                 }
                 if (storage) {
-                    var storageKey = component.id + ".options";
-                    if (object && object.options) {
-                        window = me.widget.window(object);
-                        storageKey += "." + me.core.property.get(window, "key");
-                    }
-                    var validKey = me.storage.local.validKey(storageKey);
-                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
+                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
@@ -113,13 +113,7 @@ screens.ui.options = function UIOptions(me) {
                     callback(object, options[key], key, options);
                 }
                 if (storage) {
-                    var storageKey = component.id + ".options";
-                    if (object && object.options) {
-                        window = me.widget.window(object);
-                        storageKey += "." + me.core.property.get(window, "key");
-                    }
-                    var validKey = me.storage.local.validKey(storageKey);
-                    me.core.property.set(me.storage.local[storage], validKey, JSON.stringify(options));
+                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
