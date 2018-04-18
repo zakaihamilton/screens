@@ -82,7 +82,12 @@ screens.db.library = function DbLibrary(me) {
             var tagList = await me.db.library.tags.list(userId, tags);
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
-                params["_id"] = { $in: tagList.map(item => me.storage.db.objectId(item._id)) };
+                if(tagList.length > 1) {
+                    params["_id"] = { $in: tagList.map(item => item._id) };
+                }
+                else {
+                    params["_id"] = tagList[0]._id;
+                }
                 doQuery = true;
             }
             else {

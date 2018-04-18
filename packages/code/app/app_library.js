@@ -19,7 +19,7 @@ screens.app.library = function AppLibrary(me) {
         me.ui.options.load(me, window, {
             editMode: false,
             structuredMode: false,
-            findCount: "10"
+            findCount: "1"
         });
         me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode.set);
         me.ui.options.toggleSet(me, window, "structuredMode", me.updateEditMode.set);
@@ -44,7 +44,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.findCountMenuList = function (object) {
         var findCountMenuList = [];
-        for (var findCount = 10; findCount <= 100; findCount += 10) {
+        for (var findCount = 1; findCount <= 10; findCount += 1) {
             var item = [
                 findCount,
                 "app.library.findCount",

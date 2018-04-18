@@ -25,7 +25,7 @@
                 ],
                 [
                     "Unlimited",
-                    "widget.transform.findCount",
+                    "app.library.findCount",
                     {
                         "state": "select"
                     },

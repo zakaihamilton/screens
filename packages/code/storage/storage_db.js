@@ -42,6 +42,7 @@ screens.storage.db = function StorageDB(me) {
         return collection;
     };
     me.objectId = function (id) {
+        id = id.toString();
         var object = me.mongodb.ObjectID(id);
         return object;
     }
@@ -105,7 +106,6 @@ screens.storage.db = function StorageDB(me) {
         return result.nRemoved;
     };
     me.list = async function (location, query, count) {
-        
         var collection = await me.collection(location);
         var cursor = await collection.find(query);
         if(count) {
