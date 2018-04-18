@@ -232,9 +232,10 @@ screens.app.library = function AppLibrary(me) {
                 transformText += "<article>";
             }
             if(record.tags) {
-                var getTag = (tag) => { if(tag in record.tags) { return record.tags[tag] + "\n"} else {return ""}};
+                var getTag = (tag, prefix="") => { if(tag in record.tags) { return prefix + record.tags[tag] + "\n"} else {return ""}};
                 transformText += getTag("article");
-                transformText += getTag("chapter");
+                transformText += getTag("chapter", "Chapter ");
+                transformText += getTag("part", "Part ");
                 transformText += getTag("volume");
                 transformText += getTag("book");
                 transformText += getTag("author");
@@ -363,13 +364,23 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window.window(object);
         var window = me.widget.window.window(object);
         var text = me.core.property.get(window.var.editor, "text");
+        var prevLine = "";
         text = text.split("\n").map(line => {
             if(line.startsWith("#")) {
                 return line;
             }
             if(line.match(/[^.?!:;,\\\"'”…\\)]$/)) {
-                line = "#id:\n#article:" + line;
+                if(line.startsWith("Items")) {
+                    return "";
+                }
+                if(prevLine.includes("article")) {
+                    line = "#title:" + line;
+                }
+                else {
+                    line = "#id:\n#article:" + line;
+                }
             }
+            prevLine = line;
             return line;
         }).join("\n");
         me.core.property.set(window.var.editor, "text", text);
