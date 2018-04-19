@@ -54,17 +54,13 @@
                         "header": true
                     }
                 ],
-                "app.library.tagMenuList"
-            ]
-        ],
-        [
-            "View",
-            [
+                "app.library.tagMenuList",
                 [
                     "Edit Mode",
                     "app.library.editMode",
                     {
-                        "state": "select"
+                        "state": "select",
+                        "separator":true
                     }
                 ],
                 [
