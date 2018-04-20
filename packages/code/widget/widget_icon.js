@@ -4,26 +4,28 @@
  */
 
 screens.widget.icon = function WidgetIcon(me) {
-    me.dependencies = {
-        properties: ["ui.basic.src", "text"]
+    me.element = {
+        dependencies : {
+            properties: ["ui.basic.src", "text"]
+        },
+        redirect : {
+            "ui.basic.text": "text",
+            "ui.basic.src": "src"
+        },
+        extend :["ui.drag.icon"],
+        properties : __json__
     };
-    me.redirect = {
-        "ui.basic.text" : "text",
-        "ui.basic.src" : "src"
-    };
-    me.extend = ["ui.drag.icon"];
-    me.properties = __json__;
-    me.init = function() {
+    me.init = function () {
         me.core.property.set(me, "core.object.type", {
-            set: function(object, value, name, oldValue) {
-                if(value === "hidden") {
+            set: function (object, value, name, oldValue) {
+                if (value === "hidden") {
                     me.core.property.set(object, "ui.basic.show", false);
                 }
-                else if(value === "icon") {
+                else if (value === "icon") {
                     me.core.property.set(object.var.icon, "ui.attribute.width", "64px");
                     me.core.property.set(object.var.icon, "ui.attribute.height", "64px");
                 }
-                else if(value === "list") {
+                else if (value === "list") {
                     me.core.property.set(object.var.icon, "ui.attribute.width", "16px");
                     me.core.property.set(object.var.icon, "ui.attribute.height", "16px");
                 }
@@ -38,7 +40,7 @@ screens.widget.icon = function WidgetIcon(me) {
         get: function (object) {
             return object.var.label.innerHTML;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.var.label.innerHTML = value;
         }
     };

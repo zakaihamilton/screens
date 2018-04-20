@@ -4,11 +4,13 @@
  */
 
 screens.widget.chart = function WidgetChart(me) {
-    me.properties = {
-        "ui.basic.tag": "div",
-        "ui.basic.elements": {
-            "ui.basic.tag": "canvas",
-            "ui.basic.var": "canvas"
+    me.element = {
+        properties : {
+            "ui.basic.tag": "div",
+            "ui.basic.elements": {
+                "ui.basic.tag": "canvas",
+                "ui.basic.var": "canvas"
+            }
         }
     };
     me.context = {
@@ -46,7 +48,7 @@ screens.widget.chart = function WidgetChart(me) {
             return object.chartInfo;
         },
         set: function (object, value) {
-            if(!value) {
+            if (!value) {
                 value = {};
             }
             object.chartInfo = value;
@@ -54,11 +56,11 @@ screens.widget.chart = function WidgetChart(me) {
         }
     };
     me.reset = {
-        get: function(object) {
+        get: function (object) {
             return !object.chart;
         },
-        set: function(object) {
-            if(object.chart) {
+        set: function (object) {
+            if (object.chart) {
                 object.chart.destroy();
                 object.chart = null;
             }
@@ -66,21 +68,21 @@ screens.widget.chart = function WidgetChart(me) {
     };
     me.update = {
         set: function (object, value) {
-            if(object.chartData) {
+            if (object.chartData) {
                 object.chartInfo.data = object.chartData;
             }
             if (object.chart) {
                 object.chart.data = object.chartInfo.data;
                 object.chart.update(value);
             } else {
-                if(object.chartOptions) {
+                if (object.chartOptions) {
                     object.chartInfo.options = object.chartOptions;
                 }
-                if(object.chartType) {
+                if (object.chartType) {
                     object.chartInfo.type = object.chartType;
                 }
                 var context = me.core.property.get(object, "context");
-                if(!me.chart) {
+                if (!me.chart) {
                     me.core.require("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
                         me.chart = chart;
                         object.chart = new me.chart.Chart(context, object.chartInfo);
@@ -95,7 +97,7 @@ screens.widget.chart = function WidgetChart(me) {
     me.dateNow = function (amount, type) {
         return me.lib.moment().add(amount, type).toDate();
     };
-    me.dateRel = function(unixTimestamp) {
+    me.dateRel = function (unixTimestamp) {
         return me.lib.moment.unix(unixTimestamp).toDate();
     };
 };

@@ -4,17 +4,19 @@
  */
 
 function WidgetScrollbarTemplate(me, scroll_type) {
-    me.properties = __json__;
-    me.create = function (object) {
-        object.autoScrollSpeed = 250;
-        object.autoScrollSize = 1;
-        object.deltaSpeed = 25;
-        object.snapToScrollWait = 1000;
-        object.snapToPageUnits = 50;
-        object.scrollSize = 10;
-        object.delayTimeout = 10;
-        object.deltaDistance = 0;
-        object.has_scroll = false;
+    me.element = {
+        properties : __json__,
+        create : function (object) {
+            object.autoScrollSpeed = 250;
+            object.autoScrollSize = 1;
+            object.deltaSpeed = 25;
+            object.snapToScrollWait = 1000;
+            object.snapToPageUnits = 50;
+            object.scrollSize = 10;
+            object.delayTimeout = 10;
+            object.deltaDistance = 0;
+            object.has_scroll = false;
+        }
     };
     me.scrollType = {
         get: function (object) {
@@ -89,7 +91,7 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             me.core.property.set(container.var.footer, "ui.property.broadcast", {
                 "ui.class.add": class_name
             });
-            if(me.core.device.isMobile()) {
+            if (me.core.device.isMobile()) {
                 me.core.property.set(container, "ui.scroll.swipe", "vertical");
             }
         }

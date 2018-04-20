@@ -4,7 +4,9 @@
  */
 
 screens.widget.transform = function WidgetTransform(me) {
-    me.properties = __json__;
+    me.element = {
+        properties : __json__
+    };
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
         var window = me.widget.window(widget);
@@ -88,7 +90,7 @@ screens.widget.transform = function WidgetTransform(me) {
             me.clear(object);
             return;
         }
-        me.core.property.set([widget.var.layout,widget.var.filter], "ui.style.display", "");
+        me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
         widget.inTransform = true;
         me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid purple");
         me.core.property.set(widget, "ui.work.state", true);
@@ -728,6 +730,6 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
-        me.core.property.set([widget.var.layout,widget.var.filter], "ui.style.display", "none");
+        me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "none");
     };
 };

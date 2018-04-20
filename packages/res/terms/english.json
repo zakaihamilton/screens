@@ -141,7 +141,8 @@
             "Balaam":"Bilʻam",
             "“World":"“World2",
             "“Year":"“Year2",
-            "“Soul":"“Soul2"
+            "“Soul":"“Soul2",
+            "Alone":"__Alone"
         },
         "tags":{
             "<subtitle>": "\n<b>",

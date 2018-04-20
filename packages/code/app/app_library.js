@@ -5,7 +5,11 @@
 
 screens.app.library = function AppLibrary(me) {
     me.launch = function (args) {
-        return me.ui.element(__json__, "workspace", "self");
+        if (me.core.property.get(me.singleton, "ui.node.parent")) {
+            me.core.property.set(me.singleton, "widget.window.show", true);
+            return me.singleton;
+        }
+        me.singleton = me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
         me.tagList = me.db.library.tags.list();

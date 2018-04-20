@@ -4,20 +4,22 @@
  */
 
 screens.widget.tree = function WidgetTree(me) {
-    me.dependencies = {
-        properties: ["ui.element.count", "widget.tree.collapse"]
-    };
-    me.redirect = {
-        "ui.basic.elements": "elements"
-    };
-    me.properties = {
-        "ui.class.class": "border",
-        "ui.basic.elements": [
-            {
-                "ui.basic.var": "container",
-                "ui.element.component": "widget.container"
-            }
-        ]
+    me.element = {
+        dependencies: {
+            properties: ["ui.element.count", "widget.tree.collapse"]
+        },
+        redirect: {
+            "ui.basic.elements": "elements"
+        },
+        properties: {
+            "ui.class.class": "border",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.var": "container",
+                    "ui.element.component": "widget.container"
+                }
+            ]
+        }
     };
     me.clear = {
         set: function (object, value) {
@@ -62,41 +64,43 @@ screens.widget.tree = function WidgetTree(me) {
 };
 
 screens.widget.tree.dropdown = function WidgetDropDownList(me) {
-    me.dependencies = {
-        properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
-    };
-    me.redirect = {
-        "ui.basic.text": "text",
-        "ui.basic.readOnly": "readOnly",
-        "ui.basic.elements": "elements",
-        "ui.group.data": "data",
-        "ui.monitor.change": "monitorChange"
-    };
-    me.properties = {
-        "ui.class.class": "group",
-        "ui.basic.elements": [
-            {
-                "ui.element.component": "widget.input",
-                "ui.basic.text": "",
-                "ui.basic.type": "text",
-                "ui.basic.var": "selection",
-                "ui.class.class": "selection",
-                "ui.basic.readOnly": true,
-                "ui.touch.click": "dropdown"
-            },
-            {
-                "ui.class.class": "button",
-                "ui.touch.click": "dropdown",
-                "ui.basic.elements": [
-                    {
-                        "ui.class.class": "button.arrow"
-                    },
-                    {
-                        "ui.class.class": "button.line"
-                    }
-                ]
-            }
-        ]
+    me.element = {
+        dependencies: {
+            properties: ["ui.element.count", "ui.basic.text", "widget.tree.collapse"]
+        },
+        redirect: {
+            "ui.basic.text": "text",
+            "ui.basic.readOnly": "readOnly",
+            "ui.basic.elements": "elements",
+            "ui.group.data": "data",
+            "ui.monitor.change": "monitorChange"
+        },
+        properties: {
+            "ui.class.class": "group",
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.input",
+                    "ui.basic.text": "",
+                    "ui.basic.type": "text",
+                    "ui.basic.var": "selection",
+                    "ui.class.class": "selection",
+                    "ui.basic.readOnly": true,
+                    "ui.touch.click": "dropdown"
+                },
+                {
+                    "ui.class.class": "button",
+                    "ui.touch.click": "dropdown",
+                    "ui.basic.elements": [
+                        {
+                            "ui.class.class": "button.arrow"
+                        },
+                        {
+                            "ui.class.class": "button.line"
+                        }
+                    ]
+                }
+            ]
+        }
     };
     me.back = {
         set: function (object, value) {
@@ -163,21 +167,23 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     };
 };
 screens.widget.tree.popup = function WidgetListPopup(me) {
-    me.redirect = {
-        "ui.basic.elements": "elements"
-    };
-    me.properties = {
-        "ui.class.class": "border",
-        "ui.basic.elements": [
-            {
-                "ui.basic.var": "modal",
-                "ui.element.component": "widget.modal"
-            },
-            {
-                "ui.basic.var": "container",
-                "ui.element.component": "widget.container"
-            }
-        ]
+    me.element = {
+        redirect: {
+            "ui.basic.elements": "elements"
+        },
+        properties: {
+            "ui.class.class": "border",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.var": "modal",
+                    "ui.element.component": "widget.modal"
+                },
+                {
+                    "ui.basic.var": "container",
+                    "ui.element.component": "widget.container"
+                }
+            ]
+        }
     };
     me.back = {
         set: function (object, value) {
@@ -216,52 +222,56 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
 };
 
 screens.widget.tree.list = function WidgetTreeList(me) {
-    me.properties = {
-        "ui.basic.tag": "ul",
-        "ui.class.class": "widget.tree.list"
+    me.element = {
+        properties: {
+            "ui.basic.tag": "ul",
+            "ui.class.class": "widget.tree.list"
+        }
     };
 };
 
 screens.widget.tree.item = function WidgetTreeItem(me) {
-    me.properties = {
-        "ui.basic.tag": "li",
-        "ui.class.class": "widget.tree.item",
-        "ui.basic.elements": [
-            {
-                "ui.basic.tag": "container",
-                "ui.class.class": "widget.tree.item.container",
-                "ui.basic.elements": [
-                    {
-                        "ui.basic.var": "input",
-                        "ui.basic.tag": "input",
-                        "ui.basic.type": "checkbox",
-                        "ui.class.class": "widget.tree.item.original",
-                        "ui.basic.elementId": "@ui.basic.ref",
-                        "ui.monitor.change": "update"
-                    },
-                    {
-                        "ui.basic.tag": "label",
-                        "ui.basic.htmlFor": "@ui.basic.ref",
-                        "ui.class.class": "widget.tree.item.icon",
-                        "ui.basic.var": "icon"
-                    },
-                    {
-                        "ui.basic.var": "label",
-                        "ui.class.class": "widget.tree.item.label",
-                        "ui.touch.click": "click",
-                        "ui.touch.default": "dblclick"
-                    }
-                ]
-            }
-        ]
-    };
-    me.redirect = {
-        "ui.basic.elements": "elements",
-        "ui.basic.text": "text"
-    };
-    me.dependencies = {
-        parent: ["widget.tree", "widget.tree.popup", "widget.tree.item", "widget.tree.list"],
-        properties: ["ui.basic.text"]
+    me.element = {
+        properties: {
+            "ui.basic.tag": "li",
+            "ui.class.class": "widget.tree.item",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag": "container",
+                    "ui.class.class": "widget.tree.item.container",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.var": "input",
+                            "ui.basic.tag": "input",
+                            "ui.basic.type": "checkbox",
+                            "ui.class.class": "widget.tree.item.original",
+                            "ui.basic.elementId": "@ui.basic.ref",
+                            "ui.monitor.change": "update"
+                        },
+                        {
+                            "ui.basic.tag": "label",
+                            "ui.basic.htmlFor": "@ui.basic.ref",
+                            "ui.class.class": "widget.tree.item.icon",
+                            "ui.basic.var": "icon"
+                        },
+                        {
+                            "ui.basic.var": "label",
+                            "ui.class.class": "widget.tree.item.label",
+                            "ui.touch.click": "click",
+                            "ui.touch.default": "dblclick"
+                        }
+                    ]
+                }
+            ]
+        },
+        redirect: {
+            "ui.basic.elements": "elements",
+            "ui.basic.text": "text"
+        },
+        dependencies: {
+            parent: ["widget.tree", "widget.tree.popup", "widget.tree.item", "widget.tree.list"],
+            properties: ["ui.basic.text"]
+        }
     };
     me.value = function (object, value) {
         if (typeof value === "string") {
@@ -302,19 +312,19 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
         }
     };
     me.select = {
-        set: function(object) {
+        set: function (object) {
             var container = me.ui.node.container(object, me.widget.container.id);
-            if(container.selected) {
+            if (container.selected) {
                 me.core.property.set(container.selected, "ui.property.broadcast", {
-                    "ui.class.remove" : "selected"
+                    "ui.class.remove": "selected"
                 });
             }
             container.selected = object;
             me.core.property.set(object, "ui.property.broadcast", {
-                "ui.class.add" : "selected"
+                "ui.class.add": "selected"
             });
             me.core.property.set(object.var.list, "ui.property.broadcast", {
-                "ui.class.remove" : "selected"
+                "ui.class.remove": "selected"
             });
             var popup = me.ui.node.container(object, "widget.tree.popup");
             me.core.property.set(popup, "select", object);
@@ -337,7 +347,7 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
     me.update = {
         set: function (object) {
             var item = me.ui.node.container(object, me.id);
-            if(item) {
+            if (item) {
                 me.core.property.set(item.var.list, "ui.style.display", item.var.input.checked ? "block" : "none");
             }
             me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");

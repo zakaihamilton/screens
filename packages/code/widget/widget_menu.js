@@ -4,12 +4,14 @@
  */
 
 screens.widget.menu = function WidgetMenu(me) {
-    me.properties = {
-        "ui.class.class": "horizontal",
-        "ui.basic.elements": {
-            "ui.basic.var": "modal",
-            "ui.element.component": "widget.modal",
-            "ui.style.display": "none"
+    me.element = {
+        properties : {
+            "ui.class.class": "horizontal",
+            "ui.basic.elements": {
+                "ui.basic.var": "modal",
+                "ui.element.component": "widget.modal",
+                "ui.style.display": "none"
+            }
         }
     };
     me.updateTheme = function (object) {
@@ -117,11 +119,13 @@ screens.widget.menu = function WidgetMenu(me) {
 };
 
 screens.widget.menu.popup = function WidgetMenuPopup(me) {
-    me.properties = {
-        "ui.class.class": "widget.menu.vertical",
-        "ui.basic.elements": {
-            "ui.basic.var": "modal",
-            "ui.element.component": "widget.modal"
+    me.element = {
+        properties : {
+            "ui.class.class": "widget.menu.vertical",
+            "ui.basic.elements": {
+                "ui.basic.var": "modal",
+                "ui.element.component": "widget.modal"
+            }
         }
     };
     me.values = function (object, values) {
@@ -147,13 +151,15 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
 };
 
 screens.widget.menu.item = function WidgetMenuItem(me) {
-    me.properties = {
-        "ui.basic.tag": "span",
-        "ui.touch.click": "click"
-    };
-    me.dependencies = {
-        parent: ["widget.menu", "widget.menu.popup"],
-        properties: ["ui.basic.text"]
+    me.element = {
+        properties : {
+            "ui.basic.tag": "span",
+            "ui.touch.click": "click"
+        },
+        dependencies : {
+            parent: ["widget.menu", "widget.menu.popup"],
+            properties: ["ui.basic.text"]
+        }
     };
     me.handleValue = function (object, values, key, callback) {
         if (key in values) {
@@ -231,25 +237,27 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
 
 screens.widget.menu.list = function WidgetMenuList(me) {
     me.filterMinCount = 15;
-    me.properties = {
-        "ui.basic.tag": "div",
-        "ui.class.class": "widget.menu.vertical",
-        "ui.class.add": "list",
-        "ui.basic.elements": [
-            {
-                "ui.basic.tag": "div",
-                "ui.basic.var": "headers"
-            },
-            {
-                "ui.basic.tag": "div",
-                "ui.class.class": "widget.menu.progress.bar",
-                "ui.basic.var": "progress"
-            },
-            {
-                "ui.basic.tag": "div",
-                "ui.basic.var": "members"
-            }
-        ]
+    me.element = {
+        properties : {
+            "ui.basic.tag": "div",
+            "ui.class.class": "widget.menu.vertical",
+            "ui.class.add": "list",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "headers"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": "widget.menu.progress.bar",
+                    "ui.basic.var": "progress"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "members"
+                }
+            ]
+        }
     };
     me.work = function (object, state) {
         me.log("menu state: " + state);
@@ -302,16 +310,18 @@ screens.widget.menu.list = function WidgetMenuList(me) {
 };
 
 screens.widget.menu.listItem = function WidgetMenuListItem(me) {
-    me.properties = {
-        "ui.basic.tag": "span",
-        "ui.touch.click": "click"
-    };
-    me.dependencies = {
-        parent: ["widget.menu", "widget.menu.popup"],
-        properties: ["ui.basic.text", "group"]
-    };
-    me.container = function (object, parent, properties) {
-        return me.widget.menu.list.use(parent, properties["group"]);
+    me.element = {
+        properties : {
+            "ui.basic.tag": "span",
+            "ui.touch.click": "click"
+        },
+        dependencies : {
+            parent: ["widget.menu", "widget.menu.popup"],
+            properties: ["ui.basic.text", "group"]
+        },
+        container : function (object, parent, properties) {
+            return me.widget.menu.list.use(parent, properties["group"]);
+        }
     };
     me.promise = function (object, info) {
         if (!info) {

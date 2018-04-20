@@ -4,18 +4,21 @@
  */
 
 screens.ui.element = function UIElement(me) {
-    me.init = function() {
+    me.init = function () {
         me.proxy.apply = me.createElements;
     };
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
         var matches = me.components.map(function (component_name) {
-            if(!(component_name.includes("widget."))) {
+            if (!(component_name.includes("widget."))) {
                 return null;
             }
             var component = screens(component_name);
-            var depends = component.dependencies;
+            if (!component || !component.element) {
+                return null;
+            }
+            var depends = component.element.dependencies;
             if (depends) {
                 if (depends.parent) {
                     if (parent) {
@@ -47,15 +50,15 @@ screens.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return screens(target).dependencies.properties.length - screens(source).dependencies.properties.length;
+            return screens(target).element.dependencies.properties.length - screens(source).element.dependencies.properties.length;
         });
-        if(!matches.length) {
+        if (!matches.length) {
             return null;
         }
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (screens(matches[match_index]).dependencies.parent) {
+                if (screens(matches[match_index]).element.dependencies.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -64,33 +67,33 @@ screens.ui.element = function UIElement(me) {
         return match;
     };
     me.document = {
-        get: function(object) {
+        get: function (object) {
             return document;
         }
     };
     me.body = {
-        get: function(object) {
+        get: function (object) {
             return document.getElementsByTagName("body")[0];
         }
     };
-    me.desktop = function() {
-        if(document.body.var) {
+    me.desktop = function () {
+        if (document.body.var) {
             return document.body.var.desktop;
         }
         else {
             return document.body;
         }
     };
-    me.bar = function() {
-        if(document.body.var) {
+    me.bar = function () {
+        if (document.body.var) {
             return document.body.var.desktop.var.bar;
         }
         else {
             return document.body;
         }
     };
-    me.workspace = function() {
-        if(document.body.var) {
+    me.workspace = function () {
+        if (document.body.var) {
             return document.body.var.desktop.var.workspace;
         }
         else {
@@ -110,12 +113,12 @@ screens.ui.element = function UIElement(me) {
         }
         return combined;
     };
-    me.find = function(object, name) {
+    me.find = function (object, name) {
         var member = null;
-        while(object) {
-            if(object.component) {
+        while (object) {
+            if (object.component) {
                 var component = screens(object.component);
-                if(name in component) {
+                if (name in component) {
                     member = component[name];
                 }
             }
@@ -124,27 +127,27 @@ screens.ui.element = function UIElement(me) {
         return member;
     };
     me.component = {
-        get: function(object) {
+        get: function (object) {
             return object.component;
         }
     };
-    me.createElements = function (properties, parent, context=null, params=null) {
-        if(typeof properties === "string") {
+    me.createElements = function (properties, parent, context = null, params = null) {
+        if (typeof properties === "string") {
             properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
-            for(var item of properties) {
+            for (var item of properties) {
                 me.createElements(item, parent, context, params);
             }
             return;
         }
-        if(!properties) {
+        if (!properties) {
             return;
         }
-        if(!Object.keys(properties).length) {
+        if (!Object.keys(properties).length) {
             return;
         }
-        if (!parent || parent==="workspace") {
+        if (!parent || parent === "workspace") {
             parent = me.workspace();
         }
         var object = null;
@@ -153,59 +156,76 @@ screens.ui.element = function UIElement(me) {
         if (!tag && !component_name) {
             component_name = me.matches(properties, parent);
         }
-        if(!component_name) {
+        if (!component_name) {
             component_name = "ui.element";
         }
         var component = screens(component_name);
-        var defaultProperties = component.properties;
+        var defaultProperties = null;
+        if(component.element) {
+            defaultProperties = component.element.properties;
+        }
         me.log("creating element of " + component_name);
-        if(!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
+        if (!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
             tag = defaultProperties['ui.basic.tag'];
         }
-        if(!tag) {
+        if (!tag) {
             tag = "div";
         }
-        object = document.createElement(tag);
-        me.core.object(component, object);
+        if (component.element && component.element.use) {
+            object = component.element.use(properties, parent, context, params);
+        }
+        if (!object) {
+            object = document.createElement(tag);
+            me.core.object(component, object);
+        }
         object.var = {};
-            if(context === "self") {
+        if (context === "self") {
             me.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;
-        if(params) {
-            for(var key in params) {
+        if (params) {
+            for (var key in params) {
                 me.core.property.set(object, "ui.param." + key, params[key]);
             }
         }
-        var container = component.container;
-        if(container) {
-            parent = container(object, parent, properties) || parent;
+        if (component.element) {
+            var container = component.element.container;
+            if (container) {
+                parent = container(object, parent, properties) || parent;
+            }
         }
         me.core.property.set(object, "ui.node.parent", parent);
-        var constructor = component.create;
-        if(constructor) {
-            constructor(object, parent);
+        if (component.element) {
+            var create = component.element.create;
+            if (create) {
+                create(object, parent);
+            }
         }
         object.context = object;
-        var redirect = component.redirect;
-        if(redirect) {
-            redirect.disabled = true;
+        var redirect = null;
+        if (component.element) {
+            redirect = component.element.redirect;
+            component.redirect = Object.assign({}, redirect, component.redirect);
+            redirect = component.redirect;
+            if (redirect) {
+                redirect.disabled = true;
+            }
         }
-        if(defaultProperties) {
+        if (defaultProperties) {
             for (var key in defaultProperties) {
                 me.core.property.set(object, key, defaultProperties[key]);
             }
         }
-        if(redirect) {
+        if (redirect) {
             redirect.disabled = false;
         }
         object.context = context ? context : parent;
         for (var key in properties) {
             me.core.property.set(object, key, properties[key]);
         }
-        if (component.extend) {
-            for(var extension of component.extend) {
+        if (component.element && component.element.extend) {
+            for (var extension of component.element.extend) {
                 me.core.property.set(object, extension + ".extend");
             }
         }

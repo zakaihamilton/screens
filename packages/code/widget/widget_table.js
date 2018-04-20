@@ -4,16 +4,18 @@
  */
 
 screens.widget.table = function WidgetTable(me) {
-    me.properties = {
-        "ui.basic.tag": "table"
+    me.element = {
+        properties : {
+            "ui.basic.tag": "table"
+        },
+        create : function (object) {
+            me.core.property.set(object, "firstRowHeader", true);
+        }
     };
     me.init = function () {
         me.core.property.set(me, {
-            "core.object.firstRowHeader":null
+            "core.object.firstRowHeader": null
         });
-    };
-    me.create = function (object) {
-        me.core.property.set(object, "firstRowHeader", true);
     };
     me.dataByColumns = {
         set: function (object, data) {
@@ -54,19 +56,25 @@ screens.widget.table = function WidgetTable(me) {
 };
 
 screens.widget.table.header = function WidgetTableHeader(me) {
-    me.properties = {
-        "ui.basic.tag": "th"
+    me.element = {
+        properties : {
+            "ui.basic.tag": "th"
+        }
     };
 };
 
 screens.widget.table.row = function WidgetTableRow(me) {
-    me.properties = {
-        "ui.basic.tag": "tr"
+    me.element = {
+        properties : {
+            "ui.basic.tag": "tr"
+        }
     };
 };
 
 screens.widget.table.data = function WidgetTableData(me) {
-    me.properties = {
-        "ui.basic.tag": "td"
+    me.element = {
+        properties : {
+            "ui.basic.tag": "td"
+        }
     };
 };

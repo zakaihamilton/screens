@@ -4,21 +4,23 @@
  */
 
 screens.widget.container = function WidgetContainer(me) {
-    me.redirect = {
-        "ui.basic.elements": "elements",
-        "ui.basic.text": "text",
-        "ui.basic.html": "html"
+    me.element = {
+        redirect : {
+            "ui.basic.elements": "elements",
+            "ui.basic.text": "text",
+            "ui.basic.html": "html"
+        },
+        properties : __json__
     };
-    me.properties = __json__;
     me.content = function (object) {
         return object.var.content;
     };
-    me.isChild = function(container) {
+    me.isChild = function (container) {
         var isChild = false;
         var window = me.widget.window(container);
-        if(window && window.var.container === container) {
+        if (window && window.var.container === container) {
             var parent = me.widget.window.parent(window);
-            if(!parent && window.child_window) {
+            if (!parent && window.child_window) {
                 isChild = true;
             }
         }
@@ -32,13 +34,13 @@ screens.widget.container = function WidgetContainer(me) {
         }
     };
     me.update = {
-        set: function(object, value) {
-            setTimeout( function() {
+        set: function (object, value) {
+            setTimeout(function () {
                 me.core.property.notify(object.var.vertical, "update");
                 me.core.property.notify(object.var.horizontal, "update");
             }, 0);
             var containers = me.ui.node.members(object.var.content, me.id);
-            containers.map(function(container) {
+            containers.map(function (container) {
                 me.core.property.notify(container, "update");
             });
         }
@@ -60,7 +62,7 @@ screens.widget.container = function WidgetContainer(me) {
         }
     };
     me.empty = {
-        set: function(object) {
+        set: function (object) {
             me.ui.node.empty(object.var.content);
             me.core.property.notify(object, "update");
         }

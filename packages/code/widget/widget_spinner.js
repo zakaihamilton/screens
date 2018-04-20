@@ -4,7 +4,9 @@
  */
 
 screens.widget.spinner = function WidgetSpinner(me) {
-    me.properties = {
-        "ui.class.class": "container"
+    me.element = {
+        properties : {
+            "ui.class.class": "container"
+        }
     };
 };

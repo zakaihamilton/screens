@@ -4,12 +4,14 @@
  */
 
 screens.widget.terminal = function WidgetTerminal(me) {
-    me.properties = __json__;
+    me.element = {
+        properties : __json__
+    };
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window(terminal);
         var field = me.ui.element({
             "ui.basic.tag": "input",
-            "ui.class.class":"widget.terminal.field"
+            "ui.class.class": "widget.terminal.field"
         }, window);
         terminal.field = field;
         me.core.property.set(terminal.var.inputLine, "ui.basic.text", "");
@@ -31,7 +33,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
             me.blinkCursor(terminal, field);
         };
         window.onclick = function () {
-            if(!terminal.cursorTimeout) {
+            if (!terminal.cursorTimeout) {
                 setTimeout(() => {
                     field.focus();
                 }, 1500);
@@ -98,7 +100,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
         }
     };
     me.scroll = {
-        set: function(terminal) {
+        set: function (terminal) {
             var container = me.ui.node.container(terminal, me.widget.container.id);
             var content = me.widget.container.content(container);
             content.scrollTop = content.scrollHeight;
@@ -116,8 +118,8 @@ screens.widget.terminal = function WidgetTerminal(me) {
         }
     };
     me.focus = {
-        set: function(terminal) {
-            if(terminal.field) {
+        set: function (terminal) {
+            if (terminal.field) {
                 terminal.field.focus();
             }
         }

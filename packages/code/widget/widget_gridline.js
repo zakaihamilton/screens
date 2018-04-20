@@ -4,18 +4,20 @@
  */
 
 screens.widget.gridline = function WidgetGridLine(me) {
-    me.dependencies = {
-        properties: ["line"]
-    };
-    me.properties = {
-        "ui.basic.tag": "div",
-        "ui.property.style": {
-            "position": "absolute",
-            "width":"100%",
-            "height":"100%"
+    me.element = {
+        dependencies : {
+            properties: ["line"]
         },
-        "color":"black",
-        "borderStyle":"solid"
+        properties : {
+            "ui.basic.tag": "div",
+            "ui.property.style": {
+                "position": "absolute",
+                "width":"100%",
+                "height":"100%"
+            },
+            "color":"black",
+            "borderStyle":"solid"
+        }
     };
     me.init = function() {
         me.core.property.set(me, {

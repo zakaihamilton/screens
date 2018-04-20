@@ -4,16 +4,18 @@
  */
 
 screens.widget.tray = function WidgetTray(me) {
-    me.properties = {
-        "ui.class.class":"container"
+    me.element = {
+        properties : {
+            "ui.class.class": "container"
+        }
     };
     me.tray = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window(object);
             var parent = me.widget.window.parent(window);
             var isPopup = me.core.property.get(window, "popup");
             var type = "icon";
-            if(parent) {
+            if (parent) {
                 type = "hidden";
                 parent = me.core.property.get(parent, "content");
             }
@@ -21,27 +23,27 @@ screens.widget.tray = function WidgetTray(me) {
                 parent = me.ui.element.bar();
                 type = "list";
             }
-            if(isPopup) {
+            if (isPopup) {
                 type = "hidden";
             }
-            if(!parent.var) {
+            if (!parent.var) {
                 parent.var = {};
             }
-            if(!parent.var.tray) {
+            if (!parent.var.tray) {
                 me.ui.element({
-                    "ui.element.component":"widget.tray",
-                    "ui.basic.var":"tray",
-                    "type":type
+                    "ui.element.component": "widget.tray",
+                    "ui.basic.var": "tray",
+                    "type": type
                 }, parent);
             }
             return parent.var.tray;
         }
     };
-    me.init = function() {
+    me.init = function () {
         me.core.property.set(me, "core.object.type", {
-            set: function(object, value) {
+            set: function (object, value) {
                 me.core.property.set(object, "ui.property.broadcast", {
-                    "type":value
+                    "type": value
                 });
             }
         });

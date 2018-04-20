@@ -4,15 +4,16 @@
  */
 
 screens.widget.checkbox = function WidgetCheckBox(me) {
-    me.dependencies = {
-        properties: ["ui.basic.text","state"]
-    };
-    me.redirect = {
-        "ui.basic.text": "text"
-    };
-    me.properties = {
-        "ui.class.class": "container",
-        "ui.basic.elements": [{
+    me.element = {
+        dependencies : {
+            properties: ["ui.basic.text", "state"]
+        },
+        redirect : {
+            "ui.basic.text": "text"
+        },
+        properties : {
+            "ui.class.class": "container",
+            "ui.basic.elements": [{
                 "ui.basic.var": "input",
                 "ui.basic.tag": "input",
                 "ui.basic.type": "checkbox",
@@ -29,7 +30,8 @@ screens.widget.checkbox = function WidgetCheckBox(me) {
                 "ui.class.class": "label",
                 "ui.touch.click": "toggle"
             }
-        ]
+            ]
+        }
     };
     me.state = {
         get: function (object) {

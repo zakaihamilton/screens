@@ -4,10 +4,12 @@
  */
 
 screens.widget.text = function WidgetText(me) {
-    me.dependencies = {
-        properties:["ui.basic.text"]
-    };
-    me.properties = {
-        "ui.class.class":"normal"
+    me.element = {
+        dependencies : {
+            properties: ["ui.basic.text"]
+        },
+        properties : {
+            "ui.class.class": "normal"
+        }
     };
 };
