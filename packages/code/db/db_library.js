@@ -55,7 +55,7 @@ screens.db.library = function DbLibrary(me) {
         var list = await me.storage.db.list(me.location(name || this.id), params, count);
         return list;
     };
-    me.find = async function (userId, query, count) {
+    me.find = async function (userId, query, count, tagsOnly) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -87,7 +87,9 @@ screens.db.library = function DbLibrary(me) {
         if (doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params, count);
-            result.content = list;
+            if(!tagsOnly) {
+                result.content = list;
+            }
             result.tags = await me.db.library.tags.findByIds(list.map(item => item._id));
             me.log("tags: " + JSON.stringify(result.tags));
         }

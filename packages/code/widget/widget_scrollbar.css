@@ -9,10 +9,15 @@
     border-left: 1px solid black;
     border-right: 1px solid black;
     flex-direction:column;
+    visibility: hidden;
 }
 
-.widget-scrollbar-vertical-border.vertical-scroll {
+.widget-scrollbar-vertical-border.vertical-bar {
     display:flex;
+}
+
+.widget-scrollbar-vertical-border.vertical-bar.vertical-scroll {
+    visibility: visible;
 }
 
 .widget-scrollbar-horizontal-border {
@@ -23,10 +28,15 @@
     height:16px;
     background: #c0c0c0;
     border-top: 1px solid black;
+    visibility: hidden;
 }
 
-.widget-scrollbar-horizontal-border.horizontal-scroll {
+.widget-scrollbar-horizontal-border.horizontal-bar {
     display:flex;
+}
+
+.widget-scrollbar-horizontal-border.horizontal-bar.horizontal-scroll {
+    visibility: visible;
 }
 
 .widget-scrollbar-horizontal-track {
@@ -50,7 +60,7 @@
     background:#c0c0c0;
 }
 
-.widget-scrollbar-corner.vertical-scroll.horizontal-scroll {
+.widget-scrollbar-corner.vertical-bar.horizontal-bar {
     display:flex;
 }
 

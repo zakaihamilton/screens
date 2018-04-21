@@ -24,7 +24,7 @@ screens.ui.clipboard = function UIClipboard(me) {
         }
     };
     me.isSupported = function () {
-        return navigator.clipboard && permissionStatus === "granted";
+        return navigator.clipboard && me.permissionStatus === "granted";
     };
     me.copy = async function (text) {
         if (navigator.clipboard) {

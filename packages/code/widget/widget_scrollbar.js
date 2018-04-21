@@ -61,16 +61,13 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         if (!scrollbar) {
             return;
         }
-        var has_class = me.core.property.get(container, "ui.class.contains", scroll_type + "_scroll");
-        var class_name = scroll_type + "_scroll";
+        var has_class = me.core.property.get(container, "ui.class.contains", scroll_type + "_bar");
         if (has_class) {
-            me.core.property.set(container, "ui.class.remove", class_name);
-            me.core.property.set(container.var.vertical, "ui.property.broadcast", {
-                "ui.class.remove": class_name
-            });
-            me.core.property.set(container.var.footer, "ui.property.broadcast", {
-                "ui.class.remove": class_name
-            });
+            var properties = {
+                "ui.class.remove": [scroll_type + "_bar", scroll_type + "_scroll"],
+            };
+            me.core.property.set(container, properties);
+            me.core.property.set([container.var.vertical,container.var.footer], "ui.property.broadcast", properties);
             me.core.property.set(container, "ui.scroll.swipe", "");
         }
     };
@@ -80,17 +77,19 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             return;
         }
         var content = me.widget.container.content(container);
-        var has_scroll = (me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
-        has_scroll = has_scroll && !me.widget.container.isChild(container);
-        var class_name = scroll_type + "_scroll";
-        if (has_scroll) {
-            me.core.property.set(container, "ui.class.add", class_name);
-            me.core.property.set(container.var.vertical, "ui.property.broadcast", {
-                "ui.class.add": class_name
-            });
-            me.core.property.set(container.var.footer, "ui.property.broadcast", {
-                "ui.class.add": class_name
-            });
+        var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
+        var show_scroll = (has_scroll || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
+        show_scroll = show_scroll && !me.widget.container.isChild(container);
+        if (show_scroll) {
+            var classes = [scroll_type + "_bar"];
+            if(has_scroll) {
+                classes.push(scroll_type + "_scroll");
+            }
+            var properties = {
+                "ui.class.add": classes,
+            };
+            me.core.property.set(container, properties);
+            me.core.property.set([container.var.footer,container.var.vertical], "ui.property.broadcast", properties);
             if (me.core.device.isMobile()) {
                 me.core.property.set(container, "ui.scroll.swipe", "vertical");
             }
@@ -101,14 +100,14 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.container(object);
             var scrollbar = container.var[scroll_type];
             var content = me.widget.container.content(container);
-            var has_scroll = (me.ui.scroll.has_scroll(content, scroll_type) || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
-            if (scrollbar.has_scroll !== has_scroll) {
+            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
+            var show_scroll = (has_scroll || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
+            if (scrollbar.has_scroll !== has_scroll || scrollbar.show_scroll !== show_scroll) {
                 me.remove_scroll_class(container, scroll_type);
                 me.update_scroll_class(container, scroll_type);
-                me.core.property.set(scrollbar, "ui.style.visibility", has_scroll ? "visible" : "hidden");
                 scrollbar.has_scroll = has_scroll;
+                scrollbar.show_scroll = show_scroll;
             }
-            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
             var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
             var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
             var track_region = me.ui.rect.relative_region(scrollbar.var.track);

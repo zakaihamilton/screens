@@ -422,7 +422,7 @@
     border:none;
 }
 
-.glow-scrollbar-corner.vertical-scroll.horizontal-scroll {
+.glow-scrollbar-corner.vertical-bar.horizontal-bar {
     display:flex;
 }
 
