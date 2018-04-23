@@ -349,7 +349,7 @@ screens.app.transform = function AppTransform(me) {
             window.forceReflow = false;
             window.contentChanged = false;
             window.pageSize = me.ui.layout.pageSize(window.var.layout);
-            me.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkblue");
+            me.core.property.set(window.var.spinner, "ui.style.borderTop", "16px solid darkgreen");
             var fullscreen = me.core.property.get(window, "fullscreen");
             me.core.property.set(object.var.filter, "ui.style.visibility", !text || fullscreen ? "hidden" : "visible");
             me.core.property.set(object.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);

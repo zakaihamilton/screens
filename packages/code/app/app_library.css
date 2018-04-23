@@ -16,34 +16,22 @@
     display:none;
 }
 
-.app-library-layout {
-    position:absolute;
-    left:0px;
-    right:0px;
-    top:0px;
-    bottom:0px;
-    overflow:hidden;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    line-height:2em;
-    font-size:24px;
-    direction: ltr;
-    display:flex;
-    flex:1;
-    flex-direction:column;
-    transform: rotate(0deg);
-    user-select: text;
-}
-
-.app-library-layout.hebrew {
-    direction: rtl;
-}
-
-.app-library-container {
+.app-library-editor-container {
     position: absolute;
     left: 0px;
     right: 0px;
     top: 50px;
     bottom: 60px;
+    margin-left:30px;
+    margin-right:30px;
+}
+
+.app-library-results-container {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50px;
+    bottom: 0px;
     margin-left:30px;
     margin-right:30px;
 }

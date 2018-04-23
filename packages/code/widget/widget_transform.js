@@ -264,7 +264,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = false;
         widget.contentChanged = false;
         widget.pageSize = me.ui.layout.pageSize(widget.var.layout);
-        me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid darkblue");
+        me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid darkgreen");
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         me.core.property.set(widget.var.filter, "ui.basic.hide", fullscreen);

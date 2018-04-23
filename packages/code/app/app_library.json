@@ -84,7 +84,7 @@
         },
         {
             "ui.basic.tag": "div",
-            "ui.class.class": "app.library.container",
+            "ui.class.class": "app.library.editor.container",
             "ui.basic.var":"editorContainer",
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
@@ -95,7 +95,7 @@
         },
         {
             "ui.basic.tag": "div",
-            "ui.class.class": "app.library.container",
+            "ui.class.class": "app.library.results.container",
             "ui.basic.var":"resultsContainer",
             "ui.basic.elements": [
                 {
