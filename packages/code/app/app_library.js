@@ -173,11 +173,13 @@ screens.app.library = function AppLibrary(me) {
     me.removeExtra = function (json) {
         json = Object.assign({}, json);
         delete json._id
+        delete json.id
         delete json.user
         return json;
     };
     me.addExtra = function (json, record) {
         json = Object.assign({}, json);
+        delete json.id
         json._id = record.id || record._id;
         json.user = record.user || 0;
         return json;
@@ -201,6 +203,12 @@ screens.app.library = function AppLibrary(me) {
                 if (item.id) {
                     text += "#id:" + item.id;
                 }
+                else if(item._id) {
+                    text += "#id:" + item._id;
+                }
+                else if(item.tags && item.tags._id) {
+                    text += "#id:" + item.tags._id;
+                }
                 else {
                     text += "#id:";
                 }
@@ -208,6 +216,9 @@ screens.app.library = function AppLibrary(me) {
                 if (item.tags) {
                     for (var tag in item.tags) {
                         if (tag in tags && tags[tag] === item.tags[tag]) {
+                            continue;
+                        }
+                        if(tag === "id" || tag === "_id") {
                             continue;
                         }
                         if (text) {
@@ -244,6 +255,7 @@ screens.app.library = function AppLibrary(me) {
             if(record.tags) {
                 var getTag = (tag, prefix="") => { if(tag in record.tags) { return prefix + record.tags[tag] + "\n"} else {return ""}};
                 transformText += getTag("article");
+                transformText += getTag("title");
                 transformText += getTag("chapter", "Chapter ");
                 transformText += getTag("part", "Part ");
                 transformText += getTag("volume");
@@ -424,6 +436,7 @@ screens.app.library = function AppLibrary(me) {
         var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
             return { name: name, title: me.core.string.title(name), type: "text"};
         });
+        $(window.var.resultsGrid).jsGrid("clearFilter");
         $(window.var.resultsGrid).jsGrid({
             width: "100%",
             height: "100%",

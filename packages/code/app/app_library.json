@@ -12,14 +12,6 @@
             "Library",
             [
                 [
-                    "Tags",
-                    null,
-                    {
-                        "enabled":false,
-                        "header":true
-                    }
-                ],
-                [
                     "Refresh",
                     "app.library.refresh"
                 ],
