@@ -158,6 +158,7 @@ screens.app.library = function AppLibrary(me) {
         clearTimeout(me.searchTimer);
         var records = null;
         if (search) {
+            me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             records = await me.db.library.find(0, search);
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
@@ -428,15 +429,42 @@ screens.app.library = function AppLibrary(me) {
             height: "100%",
 
             inserting: false,
+            filtering: true,
+            clearFilterButton: true,
+            noDataContent: "No Results Found",
             editing: false,
             sorting: true,
-            paging: true,
      
-            data: results,
-
             fields: fields,
-
-            rowClick: gotoArticle
+            autoload: true,
+            rowClick: gotoArticle,
+            controller: {
+                data:results,
+                loadData: function (filter) {
+                    var filterCount = 0;
+                    for(var key in filter) {
+                        if(filter[key]) {
+                            filterCount++;
+                        }
+                    }
+                    if(!filterCount) {
+                        return this.data;
+                    }
+                    return $.grep(this.data, function (item) {
+                        var filterIndex = 0;
+                        for(key in filter) {
+                            var filterValue = filter[key];
+                            var itemValue = item[key];
+                            if(filterValue && itemValue) {
+                                if(itemValue.toLowerCase().includes(filterValue.toLowerCase())) {
+                                    filterIndex++;
+                                }
+                            }
+                        }
+                        return filterIndex === filterCount;
+                    });
+                },          
+            }            
         });
     };
 };
