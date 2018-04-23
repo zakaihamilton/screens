@@ -427,8 +427,10 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window.window(object);
         window.showResults = true;
         me.updateMode(window);
+        var noSearch = false;
         if(!results) {
             results = [];
+            noSearch = true;
         }
         var gotoArticle = function(info) {
             me.gotoArticle(object, info.item);
@@ -444,7 +446,7 @@ screens.app.library = function AppLibrary(me) {
             inserting: false,
             filtering: true,
             clearFilterButton: true,
-            noDataContent: "No Results Found",
+            noDataContent: noSearch ? "": "No Results Found",
             editing: false,
             sorting: true,
      
