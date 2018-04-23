@@ -12,18 +12,6 @@
             "Library",
             [
                 [
-                    "Search",
-                    "app.library.reSearch"
-                ],
-                [
-                    "Number of Results",
-                    null,
-                    {
-                        "enabled":false,
-                        "header":true
-                    }
-                ],
-                [
                     "Tags",
                     null,
                     {
