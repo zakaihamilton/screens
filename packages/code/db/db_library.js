@@ -55,7 +55,7 @@ screens.db.library = function DbLibrary(me) {
         var list = await me.storage.db.list(me.location(name || this.id), params, count);
         return list;
     };
-    me.find = async function (userId, query, count, tagsOnly) {
+    me.find = async function (userId, query, count) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -81,17 +81,14 @@ screens.db.library = function DbLibrary(me) {
             else {
                 doQuery = false;
             }
-            result.tags = tagList;
+            result = tagList;
         }
         var list = [];
         if (doQuery) {
             me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params, count);
-            if(!tagsOnly) {
-                result.content = list;
-            }
-            result.tags = await me.db.library.tags.findByIds(list.map(item => item._id));
-            me.log("tags: " + JSON.stringify(result.tags));
+            result = await me.db.library.tags.findByIds(list.map(item => item._id));
+            me.log("number of results: " + result.length);
         }
         return result;
     };
@@ -110,7 +107,7 @@ screens.db.library.content = function DbLibraryContent(me) {
 screens.db.library.query = function DbLibraryQuery(me) {
     me.tags = function (query) {
         var tags = {};
-        var tokens = query.split(" AND ");
+        var tokens = query.split(" AND ").sort();
         for (var token of tokens) {
             if (token.includes(":")) {
                 var [key, value] = token.split(":");
@@ -122,7 +119,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
     };
     me.filter = function (query) {
         var filter = "";
-        var tokens = query.split(" AND ");
+        var tokens = query.split(" AND ").sort();
         for (var token of tokens) {
             if (!token.includes(":")) {
                 if (filter) {

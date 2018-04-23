@@ -22,46 +22,28 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
             editMode: false,
-            structuredMode: false,
-            findCount: "1"
+            structuredMode: false
         });
-        me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode.set);
-        me.ui.options.toggleSet(me, window, "structuredMode", me.updateEditMode.set);
-        me.ui.options.choiceSet(me, window, "findCount", me.reSearch);
-        me.updateEditMode.set(window);
+        me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode);
+        me.ui.options.toggleSet(me, window, "structuredMode", me.updateMode);
+        window.showResults = true;
+        me.updateMode(window);
         me.reset(object);
     };
-    me.updateEditMode = {
-        get: function (object) {
-            var window = me.widget.window(object);
-            return window.options.editMode;
-        },
-        set: function (object) {
-            var window = me.widget.window(object);
-            var editMode = window.options.editMode;
-            var structuredMode = window.options.structuredMode;
-            me.core.property.set(window.var.transform, "ui.style.opacity", editMode ? "0" : "");
-            me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
-            me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
-            me.updateText(object);
-        }
+    me.updateEditMode = function(object) {
+        me.updateMode(object);
+        me.updateText(object);
     };
-    me.findCountMenuList = function (object) {
-        var findCountMenuList = [];
-        for (var findCount = 1; findCount <= 10; findCount += 1) {
-            var item = [
-                findCount,
-                "app.library.findCount",
-                {
-                    "state": "select"
-                },
-                {
-                    "group": "findCount"
-                }
-            ];
-            findCountMenuList.push(item);
-        }
-        return findCountMenuList;
+    me.updateMode = function(object) {
+        var window = me.widget.window(object);
+        var showResults = window.showResults;
+        var editMode = window.options.editMode && !showResults;
+        var structuredMode = window.options.structuredMode;
+        me.core.property.set(window.var.transform, "ui.style.opacity", showResults || editMode ? "0" : "");
+        me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
+        me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
+        me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
+        me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults);
     };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.window(object);
@@ -174,16 +156,13 @@ screens.app.library = function AppLibrary(me) {
         me.reset(object);
         window.searchText = search;
         clearTimeout(me.searchTimer);
-        var text = "";
+        var records = null;
         if (search) {
-            var findCount = window.options.findCount;
-            me.log("findCount: " + findCount);
-            if(findCount === "Unlimited") {
-                findCount = 0;
-            }
-            var records = await me.db.library.find(0, search, findCount);
-            me.updateTextFromRecords(window, records);
+            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+            records = await me.db.library.find(0, search);
+            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
+        me.updateResults(object, records);
     };
     me.updateText = function (object) {
         var window = me.widget.window.window(object);
@@ -392,7 +371,6 @@ screens.app.library = function AppLibrary(me) {
     };
     me.process = function(object) {
         var window = me.widget.window.window(object);
-        var window = me.widget.window.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
         text = text.split("\n").map(line => {
@@ -415,5 +393,50 @@ screens.app.library = function AppLibrary(me) {
         }).join("\n");
         me.core.property.set(window.var.editor, "text", text);
         me.updateText(object);
+    };
+    me.gotoArticle = async function(object, tags) {
+        var window = me.widget.window.window(object);
+        me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
+        me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+        var content = await me.db.library.content.get(tags._id);
+        me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
+        var records = [{content:content,tags:tags}];
+        me.updateTextFromRecords(window, records);
+        window.showResults = false;
+        me.updateMode(window);
+    };
+    me.showResults = function(object) {
+        var window = me.widget.window.window(object);
+        window.showResults = true;
+        me.updateMode(window);
+    };
+    me.updateResults = function(object, results) {
+        var window = me.widget.window.window(object);
+        window.showResults = true;
+        me.updateMode(window);
+        if(!results) {
+            results = [];
+        }
+        var gotoArticle = function(info) {
+            me.gotoArticle(object, info.item);
+        };
+        var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
+            return { name: name, title: me.core.string.title(name), type: "text"};
+        });
+        $(window.var.resultsGrid).jsGrid({
+            width: "100%",
+            height: "100%",
+
+            inserting: false,
+            editing: false,
+            sorting: true,
+            paging: true,
+     
+            data: results,
+
+            fields: fields,
+
+            rowClick: gotoArticle
+        });
     };
 };

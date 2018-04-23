@@ -38,7 +38,7 @@
     direction: rtl;
 }
 
-.app-library-editor-container {
+.app-library-container {
     position: absolute;
     left: 0px;
     right: 0px;
@@ -73,11 +73,17 @@
 
 .app-library-process {
     position: absolute;
-    right: 100px;
+    right: 200px;
     bottom: 10px;
 }
 
 .app-library-update {
+    position: absolute;
+    right: 100px;
+    bottom: 10px;
+}
+
+.app-library-showResults {
     position: absolute;
     right: 10px;
     bottom: 10px;

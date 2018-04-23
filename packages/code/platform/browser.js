@@ -4,7 +4,9 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "lib":[
-            "google"
+            "google",
+            "jquery",
+            "jsgrid"
         ],
         "storage": [
             "*"
