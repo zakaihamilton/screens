@@ -45,6 +45,13 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
         me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults);
     };
+    me.cleanSearchText = function(search) {
+        search = search.replace(/\s+/g, " ");
+        search = search.replace(/AND AND/g, "AND").trim();
+        search = search.replace(/^AND/g, "").trim();
+        search = search.replace(/AND$/g, "").trim();
+        return search;
+    };
     me.menuList = function (object, list, group) {
         var window = me.widget.window(object);
         var parseItems = (items) => {
@@ -69,18 +76,19 @@ screens.app.library = function AppLibrary(me) {
                         if (search) {
                             var [nameKey, nameValue] = name.split(":");
                             nameKey = nameKey.trim().toLowerCase();
-                            search = search.split(" AND ").map((item) => {
+                            search = search.split("AND").map((item) => {
                                 if(item.includes(":")) {
                                     var [itemKey] = item.split(":");
                                     itemKey = itemKey.trim().toLowerCase();
-                                    if(itemKey == nameKey) {
+                                    if(itemKey === nameKey) {
                                         insert = false;
-                                        return name;
+                                        return " " + name + " ";
                                     }
                                 }
                                 return item;
-                            }).join(" AND ")
-                            if(insert) {
+                            }).join("AND");
+                            search = me.cleanSearchText(search);
+                            if(search && insert) {
                                 search += " AND ";
                             }
                         }
@@ -150,6 +158,8 @@ screens.app.library = function AppLibrary(me) {
     me.search = async function (object) {
         var window = me.widget.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
+        search = me.cleanSearchText(search);
+        me.core.property.set(window.var.search, "ui.basic.text", search);
         if (search === window.searchText) {
             return;
         }
