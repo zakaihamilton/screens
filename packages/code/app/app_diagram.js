@@ -42,7 +42,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.mainWindow(object);
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
@@ -57,17 +57,17 @@ screens.app.diagram = function AppDiagram(me) {
                     fontSize: "22px"
                 });
             }
-            me.ui.options.choiceSet(me, window, "viewType", function (object, value, key, options) {
+            me.ui.options.choiceSet(me, null, "viewType", function (object, value, key, options) {
                 me.core.property.notify(window, "app.diagram.reload");
             });
-            me.ui.options.toggleSet(me, window, "doTranslation", me.reload.set);
-            me.ui.options.toggleSet(me, window, "doExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, window, "prioritizeExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, window, "addStyles", me.reload.set);
-            me.ui.options.toggleSet(me, window, "phaseNumbers", me.reload.set);
-            me.ui.options.toggleSet(me, window, "keepSource", me.reload.set);
-            me.ui.options.toggleSet(me, window, "headings", me.reload.set);
-            me.ui.options.choiceSet(me, window, "fontSize", function (object, value, key, options) {
+            me.ui.options.toggleSet(me, null, "doTranslation", me.reload.set);
+            me.ui.options.toggleSet(me, null, "doExplanation", me.reload.set);
+            me.ui.options.toggleSet(me, null, "prioritizeExplanation", me.reload.set);
+            me.ui.options.toggleSet(me, null, "addStyles", me.reload.set);
+            me.ui.options.toggleSet(me, null, "phaseNumbers", me.reload.set);
+            me.ui.options.toggleSet(me, null, "keepSource", me.reload.set);
+            me.ui.options.toggleSet(me, null, "headings", me.reload.set);
+            me.ui.options.choiceSet(me, null, "fontSize", function (object, value, key, options) {
                 me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                 me.core.property.notify(window, "reload");
                 me.core.property.notify(window, "update");
