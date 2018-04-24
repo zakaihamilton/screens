@@ -25,6 +25,15 @@
                 ],
                 "app.library.tagMenuList",
                 [
+                    "Export",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.library.exportMenuList",
+                [
                     "Edit Mode",
                     "app.library.editMode",
                     {

@@ -43,7 +43,10 @@ screens.core.property = function CoreProperty(me) {
         }
         return path;
     };
-    me.get = function (object, name, value = null, method = "get") {
+    me.has = function (object, name) {
+        return me.get(object, name, null, "set", true);
+    };
+    me.get = function (object, name, value = null, method = "get", check=false) {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = [];
@@ -91,10 +94,16 @@ screens.core.property = function CoreProperty(me) {
                     if(callback) {
                         try {
                             if(typeof callback === "function") {
+                                if(check) {
+                                    return true;
+                                }
                                 result = callback(info.object, info.value);
                             }
                             else {
                                 if(callback[method]) {
+                                    if(check) {
+                                        return true;
+                                    }
                                     result = callback[method](info.object, info.value);
                                 }
                             }
@@ -103,6 +112,9 @@ screens.core.property = function CoreProperty(me) {
                             err.message += " name: " + info.name + " method: " + method;
                             throw err;
                         }
+                    }
+                    if(check) {
+                        return false;
                     }
                 }
             }

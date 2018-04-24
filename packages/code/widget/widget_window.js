@@ -141,6 +141,52 @@ screens.widget.window = function WidgetWindow(me) {
             return me.ui.node.members(content, me.id);
         }
     };
+    me.app = {
+        get: function(object) {
+            var window = me.window(object);
+            return window.app_component;
+        },
+        set: function(object, app_component) {
+            var window = me.window(object);
+            window.app_component = app_component;
+        }
+    };
+    me.child = function(object) {
+        var window = me.window(object);
+        if(window && window.child_window) {
+            return window.child_window;
+        }
+        return window;
+    };
+    me.export = {
+        get: function(object) {
+            var window = me.child(object);
+            if(window.app_component) {
+                return me.core.property.has(window, window.app_component.id + ".export");
+            }
+        },
+        set: function(object, data) {
+            var window = me.child(object);
+            if(window.app_component) {
+                me.core.property.set(window, window.app_component.id + ".export", data);
+            }
+        }
+    };
+    me.import = {
+        get: function(object) {
+            var window = me.child(object);
+            if(window.app_component) {
+                return me.core.property.has(window, window.app_component.id + ".import");
+            }
+        },
+        set: function(object, data) {
+            var window = me.child(object);
+            if(window.app_component) {
+                me.core.property.set(window, window.app_component.id + ".import", data);
+                me.core.property.set(window, "show", true);
+            }
+        }
+    };
     me.elements = {
         get: function (object) {
             var content = me.core.property.get(object, "widget.window.content");

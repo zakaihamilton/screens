@@ -74,6 +74,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.choiceSet(me, window, "voice", me.changeVoice);
             me.ui.options.choiceSet(me, window, "speed", me.changeSpeed);
             me.ui.options.choiceSet(me, window, "scrollPos");
+            me.core.property.set(window, "app", me);
             me.ui.class.useStylesheet("kab");
         }
     };
@@ -596,6 +597,11 @@ screens.app.transform = function AppTransform(me) {
     me.init = async function () {
         me.updateContentList();
     };
+    me.import = function(object, text) {
+        var window = me.widget.window.mainWindow(object);
+        me.core.property.set(window.var.input, "ui.basic.text", text);
+        me.core.property.set(window, "app.transform.transform");
+    };
     me.menuList = function (object, list, group) {
         var window = me.widget.window.mainWindow(object);
         var parseItems = (items) => {
@@ -609,8 +615,7 @@ screens.app.transform = function AppTransform(me) {
                     async function () {
                         var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
                         var content = me.core.string.decode(fullItem.content);
-                        me.core.property.set(window.var.input, "ui.basic.text", content);
-                        me.core.property.set(window, "app.transform.transform");
+                        me.import(window, content);
                     },
                     null,
                     {

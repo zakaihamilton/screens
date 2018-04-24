@@ -14,7 +14,7 @@ screens.app.database = function AppDatabase(me) {
         me.tagList = me.db.library.tags.list();
     };
     me.menuList = function (object, list, group) {
-        var window = me.widget.window.window(object);
+        var window = me.widget.window(object);
         var parseItems = (items) => {
             var names = new Set();
             if (!items) {
@@ -86,7 +86,7 @@ screens.app.database = function AppDatabase(me) {
     };
     me.search = async function(object) {
         clearTimeout(me.searchTimer);
-        var window = me.widget.window.window(object);
+        var window = me.widget.window(object);
         var search = me.core.property.get(window.var.search, "ui.basic.text");
         var text = "";
         if(search) {
