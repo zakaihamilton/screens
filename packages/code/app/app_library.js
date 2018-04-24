@@ -77,8 +77,8 @@ screens.app.library = function AppLibrary(me) {
                                         insert = false;
                                         return name;
                                     }
-                                    return item;
                                 }
+                                return item;
                             }).join(" AND ")
                             if(insert) {
                                 search += " AND ";
