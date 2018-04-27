@@ -123,7 +123,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
                 "ui.basic.elements": object.parentNode.treeElements,
                 "ui.group.data": object.parentNode.treeData,
                 "widget.tree.popup.selection": me.core.property.get(object.parentNode, "text"),
-                "ui.var.parentList": object.parentNode
+                "ui.basic.window": object.parentNode
             });
         }
     };
@@ -187,7 +187,7 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.core.property.set(object.var.parentList, "back", value);
+            me.core.property.set(object.window, "back", value);
             me.core.property.set(object, "ui.node.parent");
         }
     };

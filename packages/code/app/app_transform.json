@@ -171,6 +171,8 @@
         ]
     },
     "ui.property.after": {
+        "widget.scrollbar.vertical.alwaysHide": true,
+        "widget.scrollbar.horizontal.alwaysHide": true,
         "storage.local.key": "app-transform-window",
         "storage.local.restore": "widget.window.store"
     }

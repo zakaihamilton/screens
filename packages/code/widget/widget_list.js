@@ -130,7 +130,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
                 "ui.style.top": region.bottom + "px",
                 "ui.style.width": region.width + "px",
                 "ui.style.height": "200px",
-                "ui.var.parentList": object.parentNode,
+                "ui.basic.window": object.parentNode,
                 "ui.basic.elements": object.parentNode.listElements,
                 "ui.group.data": object.parentNode.listData,
                 "widget.list.popup.selection": me.core.property.get(object.parentNode, "text")
@@ -198,7 +198,7 @@ screens.widget.list.popup = function WidgetListPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.core.property.set(object.var.parentList, "back", value);
+            me.core.property.set(object.window, "back", value);
             me.core.property.set(object, "ui.node.parent");
         }
     };
