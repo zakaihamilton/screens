@@ -305,7 +305,8 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.switch = function (parent, child) {
         me.update_title(parent);
-        me.widget.menu.switch(parent, child);
+        me.widget.menu.updateTheme(child);
+        me.widget.menu.updateTheme(parent);
         me.core.property.set(child, "ui.property.broadcast", {
             "ui.class.toggle": "child"
         });
@@ -343,10 +344,10 @@ screens.widget.window = function WidgetWindow(me) {
         me.switch(parent_window, window);
         me.core.property.set([
             window.var.close,
-            window.var.menu,
+            parent_window.var.menu,
             window.var.minimize,
             window.var.maximize
-        ], "ui.node.parent", window.var.header);
+        ], "ui.node.parent", parent_window.var.header);
     };
     me.detach = function (parent_window) {
         if (parent_window && parent_window.child_window) {

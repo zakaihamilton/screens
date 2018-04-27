@@ -75,7 +75,10 @@
             [
                 [
                     "Clear",
-                    "widget.transform.clear"
+                    "widget.transform.clear",
+                    {
+                        "separator": true
+                    }
                 ],
                 [
                     "Refresh",

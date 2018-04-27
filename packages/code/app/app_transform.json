@@ -43,31 +43,26 @@
                 [
                     "Transform",
                     [
-                        "Input",
-                        "app.transform.showInput",
-                        {
-                            "state": "select",
-                            "separator": true
-                        }
+                        [
+                            "Input",
+                            "app.transform.showInput",
+                            {
+                                "state": "select"
+                            }
+                        ]
                     ]
                 ],
                 [
                     "Layout",
-                    [
-
-                    ]
+                    []
                 ],
                 [
                     "Audio",
-                    [
-
-                    ]
+                    []
                 ],
                 [
                     "Edit",
-                    [
-
-                    ]
+                    []
                 ],
                 [
                     "Content",
@@ -129,23 +124,23 @@
                         ],
                         [
                             "Table of Phases",
-                            "app.transform.toggleTerms",
+                            "widget.transform.toggleTerms",
                             {
                                 "separator": true,
                                 "state": "select",
-                                "enabled": "app.transform.termsAvailable"
+                                "enabled": "widget.transform.termsAvailable"
                             }
                         ],
                         [
                             "Diagrams",
                             null,
                             {
-                                "visible": "app.transform.hasDiagrams",
+                                "visible": "widget.transform.hasDiagrams",
                                 "enabled": false,
                                 "header": true
                             }
                         ],
-                        "app.transform.diagramList",
+                        "widget.transform.diagramList",
                         [
                             "Documents",
                             null,
@@ -159,14 +154,11 @@
                 ]
             ],
             "maximize": true,
-            "core.link.update": "app.transform.update",
-            "core.link.work": "app.transform.work",
             "ui.property.after": {
                 "widget.scrollbar.vertical.alwaysHide": true,
                 "widget.scrollbar.horizontal.alwaysHide": true,
                 "storage.local.key": "@ui.windowkey.app-transform-window-",
                 "storage.local.restore": "widget.window.store",
-                "ui.resize.event": "app.transform.reflow",
                 "app.transform.initOptions": null,
                 "app.transform.transform": null
             }

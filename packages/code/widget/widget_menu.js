@@ -26,16 +26,13 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
-    me.switch = function (source, target) {
-        var target_menu = target.var.menu;
-        target.var.menu = source.var.menu;
-        source.var.menu = target_menu;
-        me.updateTheme(source);
-        me.updateTheme(target);
-    };
     me.items = {
         set: function (object, value) {
             var window = me.widget.window(object);
+            var parent = me.widget.window.parent(window);
+            if(parent) {
+                window = parent;
+            }
             if (!window.var.menu) {
                 var parent = window;
                 if (window.var.header) {
@@ -203,7 +200,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     }
                 });
                 me.handleValue(object, options, "separator", (value) => {
-                    if (value) {
+                    if (value && object.parentNode.firstChild !== object.previousSibling) {
                         me.core.property.set(object, "ui.class.add", "separator");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "separator");
@@ -225,7 +222,11 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         },
         set: function (object, value) {
             if(object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
-                object.menu_select.push(value);
+                for(var target of value) {
+                    if(!object.menu_select.find((source) => source[0] === target[0])) {
+                        object.menu_select.push(target);
+                    }
+                }
             }
             else {
                 object.menu_select = value;
@@ -383,7 +384,7 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
                     }
                 });
                 me.handleValue(object, options, "separator", (value) => {
-                    if (value) {
+                    if (value && object.parentNode.firstChild !== object.previousSibling) {
                         me.core.property.set(object, "ui.class.add", "separator");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "separator");

@@ -546,7 +546,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.speeds = function (object) {
         var speedList = Object.keys(me.media.voice.speeds);
-        speedList.map(name => {
+        speedList = speedList.map(name => {
             var item = [
                 name,
                 "widget.transform.speed",
@@ -557,7 +557,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     "group": "speed"
                 }
             ];
-            speedList.push(item);
+            return item;
         });
         return speedList;
     };
