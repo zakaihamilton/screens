@@ -95,11 +95,17 @@ screens.ui.resize = function UIResize(me) {
                 "transition": false
             });
             var window = me.widget.window(me.info.target);
-            me.core.property.notify(window, "update");
+            me.core.property.set(window, "ui.property.broadcast", {
+                "update":null
+            });
             var parent = me.widget.window.parent(me.info.target);
-            me.core.property.notify(parent, "update");
+            me.core.property.set(parent, "ui.property.broadcast", {
+                "update":null
+            });
             if(window.child_window) {
-                me.core.property.notify(window.child_window, "update");
+                me.core.property.set(window.child_window, "ui.property.broadcast", {
+                    "update":null
+                });
             }
         }
     };

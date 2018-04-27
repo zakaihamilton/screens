@@ -83,8 +83,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.transform = async function (object) {
         var widget = me.findWidget(object);
         me.ui.layout.clear(widget.var.layout);
-        me.core.property.set(widget.var.input, "ui.basic.save");
-        var text = me.core.property.get(widget, "text");
+        var text = widget.transformText;
         me.updateWidgets(widget, text, false);
         if (!text) {
             me.clear(object);
@@ -113,14 +112,12 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         if (widget.language) {
             me.core.property.set([
-                widget.var.input,
                 widget.var.filter,
                 widget.var.termTable,
                 widget.var.layout
             ], "ui.class.remove", widget.language);
         }
         me.core.property.set([
-            widget.var.input,
             widget.var.filter,
             widget.var.termTable,
             widget.var.layout
@@ -256,7 +253,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!me.shouldReflow(object)) {
             return;
         }
-        var text = me.core.property.get(widget.var.input, "ui.basic.text");
+        var text = widget.transformText;
         var visibleWidget = null;
         if (!widget.contentChanged) {
             visibleWidget = me.ui.layout.firstVisibleWidget(widget.var.layout);

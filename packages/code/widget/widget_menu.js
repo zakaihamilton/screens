@@ -5,7 +5,7 @@
 
 screens.widget.menu = function WidgetMenu(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.class.class": "horizontal",
             "ui.basic.elements": {
                 "ui.basic.var": "modal",
@@ -14,14 +14,14 @@ screens.widget.menu = function WidgetMenu(me) {
             }
         }
     };
-    me.updateTheme = function (object) {
-        if (object.var.menu) {
-            me.core.property.set(object, "ui.property.broadcast", {
+    me.updateTheme = function (window) {
+        if (window.var.menu) {
+            me.core.property.set(window, "ui.property.broadcast", {
                 "ui.class.add": "menu"
             });
         }
         else {
-            me.core.property.set(object, "ui.property.broadcast", {
+            me.core.property.set(window, "ui.property.broadcast", {
                 "ui.class.remove": "menu"
             });
         }
@@ -35,26 +35,24 @@ screens.widget.menu = function WidgetMenu(me) {
     };
     me.items = {
         set: function (object, value) {
-            object = me.widget.window(object);
-            if (!object.var.menu) {
-                var parent = object;
-                if (object.var.header) {
-                    parent = object.var.header;
+            var window = me.widget.window(object);
+            if (!window.var.menu) {
+                var parent = window;
+                if (window.var.header) {
+                    parent = window.var.header;
                 }
-                if (!object.var.menu) {
-                    object.var.menu = me.ui.element({
+                if (!window.var.menu) {
+                    window.var.menu = me.ui.element({
                         "ui.element.component": "widget.menu",
                         "ui.style.position": "relative"
                     }, parent);
                 }
             }
-            me.core.property.set(object.var.menu, "ui.group.data", {
+            me.core.property.set(window.var.menu, "ui.group.data", {
                 "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
                 "ui.data.values": value
             });
-            me.core.property.set(object, "ui.property.broadcast", {
-                "ui.class.add": "menu"
-            });
+            me.updateTheme(window);
         }
     };
     me.back = {
@@ -120,7 +118,7 @@ screens.widget.menu = function WidgetMenu(me) {
 
 screens.widget.menu.popup = function WidgetMenuPopup(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.class.class": "widget.menu.vertical",
             "ui.basic.elements": {
                 "ui.basic.var": "modal",
@@ -152,13 +150,21 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
 
 screens.widget.menu.item = function WidgetMenuItem(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "span",
             "ui.touch.click": "click"
         },
-        dependencies : {
+        dependencies: {
             parent: ["widget.menu", "widget.menu.popup"],
             properties: ["ui.basic.text"]
+        },
+        use: (properties, parent) => {
+            var text = properties["ui.basic.text"];
+            var element = me.ui.node.findByText(parent, text);
+            if (element) {
+                me.core.property.set(element, properties);
+            }
+            return element;
         }
     };
     me.handleValue = function (object, values, key, callback) {
@@ -218,7 +224,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             return object.menu_select;
         },
         set: function (object, value) {
-            object.menu_select = value;
+            if(object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
+                object.menu_select.push(value);
+            }
+            else {
+                object.menu_select = value;
+            }
         }
     };
     me.hover = {
@@ -238,7 +249,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
 screens.widget.menu.list = function WidgetMenuList(me) {
     me.filterMinCount = 15;
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "div",
             "ui.class.class": "widget.menu.vertical",
             "ui.class.add": "list",
@@ -311,15 +322,15 @@ screens.widget.menu.list = function WidgetMenuList(me) {
 
 screens.widget.menu.listItem = function WidgetMenuListItem(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "span",
             "ui.touch.click": "click"
         },
-        dependencies : {
+        dependencies: {
             parent: ["widget.menu", "widget.menu.popup"],
             properties: ["ui.basic.text", "group"]
         },
-        container : function (object, parent, properties) {
+        container: function (object, parent, properties) {
             return me.widget.menu.list.use(parent, properties["group"]);
         }
     };

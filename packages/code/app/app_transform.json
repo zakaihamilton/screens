@@ -9,353 +9,6 @@
     "icon": "/packages/res/icons/transform_tray.png",
     "ui.style.background": "white",
     "maximize": null,
-    "widget.menu.items": [
-        [
-            "Transform",
-            [
-                [
-                    "Clear",
-                    "app.transform.clear"
-                ],
-                [
-                    "Refresh",
-                    "app.transform.transform",
-                    {
-                        "separator": true
-                    }
-                ],
-                [
-                    "Translation",
-                    "app.transform.doTranslation",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Keep Source",
-                    "app.transform.keepSource",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Explanation",
-                    "app.transform.doExplanation",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Prioritize Explanation",
-                    "app.transform.prioritizeExplanation",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Styles",
-                    "app.transform.addStyles",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Headings",
-                    "app.transform.headings",
-                    {
-                        "state": "select",
-                        "enabled": "app.transform.addStyles"
-                    }
-                ],
-                [
-                    "Phase Numbers",
-                    "app.transform.phaseNumbers",
-                    {
-                        "state": "select",
-                        "enabled": "app.transform.addStyles"
-                    }
-                ],
-                [
-                    "Sub Headings",
-                    "app.transform.subHeadings",
-                    {
-                        "state": "select",
-                        "enabled": "app.transform.addStyles"
-                    }
-                ],
-                [
-                    "Language",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                [
-                    "Auto",
-                    "app.transform.language",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "English",
-                    "app.transform.language",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Hebrew",
-                    "app.transform.language",
-                    {
-                        "state": "select"
-                    }
-                ]
-            ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Reflow",
-                    "app.transform.reflow"
-                ],
-                [
-                    "Auto Scroll",
-                    "app.transform.autoScroll",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Snap to Page",
-                    "app.transform.snapToPage",
-                    {
-                        "state": "select",
-                        "enabled": "app.transform.pages"
-                    }
-                ],
-                [
-                    "Pages",
-                    "app.transform.pages",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Columns",
-                    "app.transform.columns",
-                    {
-                        "state": "select",
-                        "enabled": "app.transform.pages"
-                    }
-                ],
-                [
-                    "Input",
-                    "app.transform.showInput",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Video Slot",
-                    "app.transform.pipVideo",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Font Size",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.fontSizes"
-            ]
-        ],
-        [
-            "Audio",
-            [
-                [
-                    "Auto Play",
-                    "app.transform.autoPlay",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Voice",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                [
-                    "None",
-                    "app.transform.voice",
-                    {
-                        "state": "select"
-                    },
-                    {
-                        "group": "voices"
-                    }
-                ],
-                "app.transform.voices",
-                [
-                    "Speed",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.speeds"
-            ]
-        ],
-        [
-            "Edit",
-            [
-                [
-                    "Copy",
-                    "ui.exec.copy"
-                ],
-                [
-                    "Bold",
-                    "ui.exec.bold",
-                    {
-                        "separator": true
-                    }
-                ],
-                [
-                    "Italic",
-                    "ui.exec.italic"
-                ],
-                [
-                    "Underline",
-                    "ui.exec.underline"
-                ],
-                [
-                    "Strikethrough",
-                    "ui.exec.strikeThrough"
-                ],
-                [
-                    "Copy Page",
-                    "app.transform.copyPage",
-                    {
-                        "visible": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Copy All Pages",
-                    "app.transform.copyAllPages",
-                    {
-                        "visible": "select"
-                    }
-                ]
-            ]
-        ],
-        [
-            "Content",
-            [
-                [
-                    "Refresh",
-                    "app.transform.refreshContentList"
-                ],
-                [
-                    "Public",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.publicContentMenuList",
-                [
-                    "Save",
-                    "app.transform.savePublic",
-                    {
-                        "enabled": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Private",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.privateContentMenuList",
-                [
-                    "Save",
-                    "app.transform.savePrivate",
-                    {
-                        "enabled": "select",
-                        "separator": true
-                    }
-                ]
-            ]
-        ],
-        [
-            "Window",
-            [
-                [
-                    "Cascade",
-                    "ui.arrange.cascade"
-                ],
-                [
-                    "Tile Horizontally",
-                    "ui.arrange.tileHorizontally"
-                ],
-                [
-                    "Tile Vertically",
-                    "ui.arrange.tileVertically"
-                ],
-                [
-                    "Table of Phases",
-                    "app.transform.toggleTerms",
-                    {
-                        "separator": true,
-                        "state": "select",
-                        "enabled": "app.transform.termsAvailable"
-                    }
-                ],
-                [
-                    "Diagrams",
-                    null,
-                    {
-                        "visible": "app.transform.hasDiagrams",
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "app.transform.diagramList",
-                [
-                    "Documents",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "widget.window.childMenuList"
-            ]
-        ]
-    ],
     "ui.group.data": {
         "ui.data.default": {
             "ui.basic.context": "self",
@@ -365,7 +18,6 @@
                 "ui.style.width": "500px",
                 "ui.style.height": "500px"
             },
-            "maximize": true,
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.editor",
@@ -383,74 +35,130 @@
                     "ui.class.add": "app.transform.transform"
                 },
                 {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": "app.transform.output",
-                    "ui.basic.var": "output"
-                },
-                {
-                    "ui.element.component": "widget.container",
-                    "ui.basic.var": "layout",
-                    "ui.class.class": "app.transform.layout",
-                    "widget.scrollbar.vertical.alwaysShow": true,
-                    "widget.scrollbar.horizontal.alwaysHide": true,
-                    "core.link.scrolled": "app.transform.scrolled",
-                    "ui.attribute.noBroadcast": true
-                },
-                {
-                    "ui.element.component": "widget.spinner",
-                    "ui.basic.var": "spinner"
-                },
-                {
-                    "ui.class.class": "app.transform.filter",
-                    "ui.basic.text": "",
-                    "ui.basic.type": "search",
-                    "ui.basic.var": "filter",
-                    "ui.property.after": {
-                        "storage.local.key": "@ui.windowkey.app-transform-filter-",
-                        "storage.local.restore": "ui.basic.text",
-                        "ui.attribute.list": "@ui.windowkey.app-transform-filter-"
-                    },
-                    "ui.monitor.change": "app.transform.filterChange",
-                    "core.event.search": "app.transform.filterChange"
-                },
-                {
-                    "ui.basic.tag": "datalist",
-                    "ui.basic.var": "filterList",
-                    "ui.property.after": {
-                        "ui.basic.elementId": "@ui.windowkey.app-transform-filter-"
-                    }
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.add": "app.transform.termPopup",
-                    "ui.basic.var": "termPopup",
-                    "ui.element.component": "widget.window",
-                    "title": "Tables of Phases",
-                    "ui.property.style": {
-                        "left": "25px",
-                        "top": "50px",
-                        "right": "25px",
-                        "bottom": "100px",
-                        "width": "",
-                        "height": ""
-                    },
-                    "popup": true,
-                    "static": true,
-                    "minimize": true,
-                    "ui.basic.elements": [
-                        {
-                            "ui.element.component": "widget.table",
-                            "ui.class.class": "app.transform.termTable",
-                            "ui.basic.var": "termTable"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": "app.transform.description",
-                    "ui.basic.var": "description"
+                    "ui.element.component": "widget.transform",
+                    "ui.basic.var": "transform"
                 }
             ],
+            "widget.menu.items": [
+                [
+                    "Transform",
+                    [
+                        "Input",
+                        "app.transform.showInput",
+                        {
+                            "state": "select",
+                            "separator": true
+                        }
+                    ]
+                ],
+                [
+                    "Layout",
+                    [
+
+                    ]
+                ],
+                [
+                    "Audio",
+                    [
+
+                    ]
+                ],
+                [
+                    "Edit",
+                    [
+
+                    ]
+                ],
+                [
+                    "Content",
+                    [
+                        [
+                            "Refresh",
+                            "app.transform.refreshContentList"
+                        ],
+                        [
+                            "Public",
+                            null,
+                            {
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
+                        "app.transform.publicContentMenuList",
+                        [
+                            "Save",
+                            "app.transform.savePublic",
+                            {
+                                "enabled": "select",
+                                "separator": true
+                            }
+                        ],
+                        [
+                            "Private",
+                            null,
+                            {
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
+                        "app.transform.privateContentMenuList",
+                        [
+                            "Save",
+                            "app.transform.savePrivate",
+                            {
+                                "enabled": "select",
+                                "separator": true
+                            }
+                        ]
+                    ]
+                ],
+                [
+                    "Window",
+                    [
+                        [
+                            "Cascade",
+                            "ui.arrange.cascade"
+                        ],
+                        [
+                            "Tile Horizontally",
+                            "ui.arrange.tileHorizontally"
+                        ],
+                        [
+                            "Tile Vertically",
+                            "ui.arrange.tileVertically"
+                        ],
+                        [
+                            "Table of Phases",
+                            "app.transform.toggleTerms",
+                            {
+                                "separator": true,
+                                "state": "select",
+                                "enabled": "app.transform.termsAvailable"
+                            }
+                        ],
+                        [
+                            "Diagrams",
+                            null,
+                            {
+                                "visible": "app.transform.hasDiagrams",
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
+                        "app.transform.diagramList",
+                        [
+                            "Documents",
+                            null,
+                            {
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
+                        "widget.window.childMenuList"
+                    ]
+                ]
+            ],
+            "maximize": true,
             "core.link.update": "app.transform.update",
             "core.link.work": "app.transform.work",
             "ui.property.after": {
