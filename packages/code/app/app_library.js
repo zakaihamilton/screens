@@ -24,8 +24,8 @@ screens.app.library = function AppLibrary(me) {
             editMode: false,
             structuredMode: false
         });
-        me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode);
-        me.ui.options.toggleSet(me, window, "structuredMode", me.updateMode);
+        me.ui.options.toggleSet(me, null, "editMode", me.updateEditMode);
+        me.ui.options.toggleSet(me, null, "structuredMode", me.updateMode);
         window.showResults = true;
         me.updateMode(window);
         me.reset(object);
