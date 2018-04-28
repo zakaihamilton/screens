@@ -156,6 +156,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             properties: ["ui.basic.text"]
         },
         use: (properties, parent) => {
+            if(properties["options"] && properties["options"].unique === false) {
+                return null;
+            }
             var text = properties["ui.basic.text"];
             var element = me.ui.node.findByText(parent, text);
             if (element) {

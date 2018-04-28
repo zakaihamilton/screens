@@ -31,7 +31,7 @@
                 {
                     "ui.basic.text": "Transform",
                     "ui.touch.click": "app.transform.transform",
-                    "ui.basic.var": "transform",
+                    "ui.basic.var": "doTransform",
                     "ui.class.add": "app.transform.transform"
                 },
                 {
@@ -47,7 +47,8 @@
                             "Input",
                             "app.transform.showInput",
                             {
-                                "state": "select"
+                                "state": "select",
+                                "separator":true
                             }
                         ]
                     ]
@@ -85,7 +86,8 @@
                             "app.transform.savePublic",
                             {
                                 "enabled": "select",
-                                "separator": true
+                                "separator": true,
+                                "unique": false
                             }
                         ],
                         [
@@ -102,7 +104,8 @@
                             "app.transform.savePrivate",
                             {
                                 "enabled": "select",
-                                "separator": true
+                                "separator": true,
+                                "unique": false
                             }
                         ]
                     ]

@@ -328,7 +328,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.layout.reflow(function () {
             me.core.property.set(widget, "ui.work.state", false);
             var title = me.core.property.get(widget, "widget.transform.title");
-            me.core.property.set(widget, "widget.container.title", title);
+            me.core.property.set(widget, "widget.window.title", title);
         }, widget.var.output, widget.var.layout, reflowOptions);
     };
     me.scrolled = {
@@ -729,5 +729,27 @@ screens.widget.transform = function WidgetTransform(me) {
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
         me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "none");
+    };
+    me.contentTitle = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            var title = me.ui.layout.firstWidget(widget.var.layout);
+            if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
+                return title.innerText;
+            }
+            return null;
+        }
+    };
+    me.title = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            var window = me.widget.window(widget);
+            var title = me.core.property.get(widget, "widget.transform.contentTitle");
+            var key = me.core.property.get(window, "widget.window.key");
+            if (title) {
+                return key + " - " + title;
+            }
+            return key;
+        }
     };
 };

@@ -29,6 +29,7 @@ screens.app.transform = function AppTransform(me) {
                     value = true;
                 }
                 me.updateWidgets(window, value);
+                me.core.property.set(window.var.transform, "reflow");
             });
             me.core.property.set(window, "app", me);
             me.ui.class.useStylesheet("kab");
@@ -36,7 +37,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.updateWidgets = function (object, showInput, update = true) {
         var window = me.widget.window.mainWindow(object);
-        me.core.property.set(window.var.input, "ui.style.display", showInput ? "inline-block" : "none");
+        me.core.property.set([window.var.input,window.var.doTransform], "ui.style.display", showInput ? "inline-block" : "none");
         me.core.property.set(window.var.transform, "ui.style.top", showInput ? "250px" : "0px");
         if (update) {
             me.core.property.notify(window, "update");
@@ -175,7 +176,7 @@ screens.app.transform = function AppTransform(me) {
     me.savePublic = {
         get: function (object) {
             var window = me.widget.window.mainWindow(object);
-            var text = me.core.property.get(window.var.input, "ui.basic.text");
+            var text = me.core.property.get(window.var.transform, "text");
             return text;
         },
         set: function (object) {
@@ -185,7 +186,7 @@ screens.app.transform = function AppTransform(me) {
     me.savePrivate = {
         get: function (object) {
             var window = me.widget.window.mainWindow(object);
-            var text = me.core.property.get(window.var.input, "ui.basic.text");
+            var text = me.core.property.get(window.var.transform, "text");
             return text;
         },
         set: function (object) {
@@ -194,7 +195,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.save = async function (object, private) {
         var window = me.widget.window.mainWindow(object);
-        var text = me.core.property.get(window.var.input, "ui.basic.text");
+        var text = me.core.property.get(window.var.transform, "text");
         var date = new Date();
         var title = me.core.property.get(window, "app.transform.contentTitle");
         var key = me.core.property.get(window, "widget.window.key");
