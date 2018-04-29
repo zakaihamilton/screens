@@ -297,16 +297,17 @@ screens.widget.window = function WidgetWindow(me) {
             me.core.property.set(content, "ui.style.background", value);
         }
     };
-    me.switch = function (parent, child) {
+    me.updateParentChild = function (parent, child) {
         me.update_title(parent);
         me.widget.menu.updateTheme(child);
         me.widget.menu.updateTheme(parent);
-        me.core.property.set(child, "ui.property.broadcast", {
-            "ui.class.toggle": "child"
-        });
-        me.core.property.set(parent, "ui.property.broadcast", {
-            "ui.class.toggle": "parent"
-        });
+        var isChild = parent && parent.child_window === child;
+        var property = isChild ? "ui.class.add" : "ui.class.remove";
+        var properties = {};
+        properties[property] = "child";
+        me.core.property.set(child, "ui.property.broadcast", properties);
+        properties[property] = "parent";
+        me.core.property.set(parent, "ui.property.broadcast", properties);
     };
     me.siblings = {
         set: function (object, properties) {
@@ -335,7 +336,7 @@ screens.widget.window = function WidgetWindow(me) {
             "conceal": true
         });
         parent_window.child_window = window;
-        me.switch(parent_window, window);
+        me.updateParentChild(parent_window, window);
         me.core.property.set([
             window.var.close,
             parent_window.var.menu,
@@ -348,7 +349,6 @@ screens.widget.window = function WidgetWindow(me) {
             var window = parent_window.child_window;
             parent_window.child_window = null;
             me.core.property.set(window.var.menu, "ui.node.parent", parent_window.var.header);
-            me.switch(parent_window, window);
             me.core.property.set(window, "siblings", {
                 "conceal": false
             });
@@ -358,6 +358,7 @@ screens.widget.window = function WidgetWindow(me) {
                 window.var.minimize,
                 window.var.maximize
             ], "ui.node.parent", window.var.title);
+            me.updateParentChild(parent_window, window);
         }
     };
     me.minimize = {

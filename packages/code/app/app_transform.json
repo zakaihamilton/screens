@@ -157,9 +157,9 @@
                 ]
             ],
             "maximize": true,
+            "widget.scrollbar.vertical.alwaysHide": true,
+            "widget.scrollbar.horizontal.alwaysHide": true,
             "ui.property.after": {
-                "widget.scrollbar.vertical.alwaysHide": true,
-                "widget.scrollbar.horizontal.alwaysHide": true,
                 "storage.local.key": "@ui.windowkey.app-transform-window-",
                 "storage.local.restore": "widget.window.store",
                 "app.transform.initOptions": null,
@@ -173,9 +173,9 @@
             "core.number.fillArray(1-9)"
         ]
     },
+    "widget.scrollbar.vertical.alwaysHide": true,
+    "widget.scrollbar.horizontal.alwaysHide": true,
     "ui.property.after": {
-        "widget.scrollbar.vertical.alwaysHide": true,
-        "widget.scrollbar.horizontal.alwaysHide": true,
         "storage.local.key": "app-transform-window",
         "storage.local.restore": "widget.window.store"
     }
