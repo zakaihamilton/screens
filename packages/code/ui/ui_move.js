@@ -44,6 +44,7 @@ screens.ui.move = function UIMove(me) {
                 height: target.offsetHeight
             };
             me.core.property.set(target, "ui.property.broadcast", {
+                "ui.focus.active":true,
                 "transition": true
             });
             event.preventDefault();
