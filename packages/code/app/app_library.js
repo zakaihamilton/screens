@@ -440,7 +440,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.exportMenuList = function(object) {
         var window = me.widget.window(object);
-        var tasks = me.core.app.tasks();
+        var tasks = me.widget.window.tasks();
         var items = tasks.filter(task => {
             return me.core.property.get(task.window, "import");
         }).map(task => {

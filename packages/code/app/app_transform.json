@@ -72,6 +72,10 @@
                     []
                 ],
                 [
+                    "Diagrams",
+                    []
+                ],
+                [
                     "Content",
                     [
                         [
@@ -130,33 +134,6 @@
                         [
                             "Tile Vertically",
                             "ui.arrange.tileVertically"
-                        ],
-                        [
-                            "Table of Phases",
-                            "widget.transform.toggleTerms",
-                            {
-                                "separator": true,
-                                "state": "select",
-                                "enabled": "widget.transform.termsAvailable"
-                            }
-                        ],
-                        [
-                            "Diagrams",
-                            null,
-                            {
-                                "visible": "widget.transform.hasDiagrams",
-                                "enabled": false,
-                                "header": true
-                            }
-                        ],
-                        "widget.transform.diagramList",
-                        [
-                            "Documents",
-                            null,
-                            {
-                                "enabled": false,
-                                "header": true
-                            }
                         ],
                         "widget.window.childMenuList"
                     ]

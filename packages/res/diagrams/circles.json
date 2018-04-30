@@ -11,7 +11,7 @@
             "ui.style.height": "45%",
             "ui.style.gridAutoColumns": "auto",
             "ui.style.gridAutoRows": "auto",
-            "ui.style.lineHeight": "2",
+            "ui.style.lineHeight": "2em",
             "core.property.group": [
                 {
                     "ui.group.data": {

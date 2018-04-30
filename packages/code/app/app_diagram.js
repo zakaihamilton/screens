@@ -42,7 +42,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {

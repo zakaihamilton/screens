@@ -451,3 +451,69 @@ h4.widget-transform-widget {
 .widget-transform-filter:focus {
     width:40%;
 }
+
+.widget-transform-separator.last {
+    background: black;
+}
+
+.widget-transform-termPopup {
+    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+.widget-transform-termTable {
+    text-align: center;
+    border-collapse: separate;
+    margin-left: auto;
+    margin-right: auto;
+    width:95%;
+    height:95%;
+    padding-top:1.5%;
+    padding-bottom:1.5%;
+    line-height: 2em,
+}
+
+.widget-transform-termTable.hebrew {
+    direction: rtl;
+}
+
+
+.widget-transform-termTable th {
+    background: black;
+    color:white;
+    padding:5px;
+}
+
+.widget-transform-termTable td {
+    padding-left:5px;
+    outline-color: transparent;
+    border:1px solid black;
+}
+
+.widget-transform-termItem {
+    position: relative;
+    white-space:nowrap;
+    display:inline-block;
+    outline-color: transparent;
+    margin:3px;
+    color:black;
+}
+
+.widget-transform-termItem.hebrew {
+    float:right;
+    clear:right;
+    text-align: right;
+}
+
+.widget-transform-termItem.english {
+    float:left;
+    clear:left;
+    text-align: left;
+}
+
+.widget-transform-termItem.widget-transform-placeholder {
+    outline-style:dashed;
+}
+
+.widget-transform-termItem.widget-transform-placeholder:hover:after {
+    border-style:dashed;
+}

@@ -318,6 +318,21 @@
                     }
                 ]
             ]
+        ],
+        [
+            "Diagrams",
+            [
+                [
+                    "Table of Phases",
+                    "widget.transform.toggleTerms",
+                    {
+                        "separator": true,
+                        "state": "select",
+                        "enabled": "widget.transform.termsAvailable"
+                    }
+                ],
+                "widget.transform.diagramList"
+            ]          
         ]
     ]
 }

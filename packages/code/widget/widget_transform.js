@@ -382,6 +382,34 @@ screens.widget.transform = function WidgetTransform(me) {
             }
         });
     };
+    me.diagramList = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            var diagrams = widget.diagrams;
+            if (!diagrams) {
+                diagrams = [];
+            }
+            var isFirst = true;
+            var items = diagrams.map(function (item) {
+                var result = [
+                    item.title,
+                    function () {
+                        var window = me.widget.window(widget);
+                        var isFullscreen = me.core.property.get(window, "fullscreen");
+                        me.core.app("diagram", item.path, widget.options, isFullscreen);
+                    },
+                    {
+                        separator:isFirst
+                    }
+                ];
+                if(isFirst) {
+                    isFirst = false;
+                }
+                return result;
+            });
+            return items;
+        }
+    };
     me.loadDiagram = {
         set: async function (object, path) {
             var widget = me.findWidget(object);
@@ -605,6 +633,12 @@ screens.widget.transform = function WidgetTransform(me) {
             me.core.property.notify(widget, "update");
         }
     };
+    me.termsAvailable = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            return widget.dataExists;
+        }
+    };
     me.toggleTerms = {
         get: function (object) {
             var widget = me.findWidget(object);
@@ -695,12 +729,7 @@ screens.widget.transform = function WidgetTransform(me) {
                             "ui.class.class": "widget.transform.termItem",
                             "ui.class.add": styles
                         };
-                        if (widget.options.keepSource) {
-                            itemProperties["ui.basic.text"] = item.source + " [" + item.name + "]";
-                        } else {
-                            itemProperties["ui.basic.text"] = item.name;
-                            itemProperties["ui.attribute.app-transform-tooltip"] = item.source;
-                        }
+                        itemProperties["widget.transform.term"] = item.name;
                         return itemProperties;
                     });
                     widget.dataExists = true;
@@ -711,6 +740,14 @@ screens.widget.transform = function WidgetTransform(me) {
             data.push(list);
         }
         me.core.property.set(widget.var.termTable, "dataByRows", data);
+    };
+    me.term = {
+        set: async function (object, text) {
+            var widget = me.findWidget(object);
+            var options = Object.assign({}, widget.options, {headings:false});
+            var info = await me.kab.text.parse(widget.language, text, options);
+            me.core.property.set(object, "ui.basic.html", info.text);
+        }
     };
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);

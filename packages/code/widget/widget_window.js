@@ -946,5 +946,17 @@ screens.widget.window = function WidgetWindow(me) {
             me.ui.focus.updateOrder(window.parentNode, window);
         }
     };
+    me.tasks = function () {
+        var isFirst = true;
+        var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
+        var items = windows.reverse().map((window) => {
+            var label = me.core.property.get(window, "label");
+            if (label === "Task List" || label === "Launcher") {
+                return null;
+            }
+            return {label,window};
+        });
+        return items;
+    };
     return "browser";
 };
