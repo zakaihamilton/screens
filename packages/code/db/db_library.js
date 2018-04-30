@@ -107,7 +107,7 @@ screens.db.library.content = function DbLibraryContent(me) {
 screens.db.library.query = function DbLibraryQuery(me) {
     me.tags = function (query) {
         var tags = {};
-        var tokens = query.split(" AND ").sort();
+        var tokens = me.core.string.split(query).sort();
         for (var token of tokens) {
             if (token.includes(":")) {
                 var [key, value] = token.split(":");
@@ -119,7 +119,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
     };
     me.filter = function (query) {
         var filter = "";
-        var tokens = query.split(" AND ").sort();
+        var tokens = me.core.string.split(query).sort();
         for (var token of tokens) {
             if (!token.includes(":")) {
                 if (filter) {

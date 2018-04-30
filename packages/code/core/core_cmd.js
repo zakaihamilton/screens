@@ -7,19 +7,9 @@ screens.core.cmd = function CoreCmd(me) {
     me.application = function(terminal) {
         return terminal.application;
     };
-    me.split = function(args, separator=' ') {
-        if(args) {
-            return [].concat.apply([], args.split('"').map(function(v,i){
-               return i%2 ? v : v.split(separator);
-            })).filter(Boolean);
-        }
-        else {
-            return [];
-        }
-    };
     me.handle = async function(terminal, args) {
         if(!Array.isArray(args)) {
-            args = me.split(args);
+            args = me.core.string.split(args);
         }
         if(!args.length) {
             me.exit(terminal);

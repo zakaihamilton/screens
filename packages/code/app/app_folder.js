@@ -65,7 +65,7 @@ screens.app.folder = function AppFolder(me) {
     };
     me.shell = {
         set: function (object) {
-            var args = me.core.cmd.split(me.core.property.get(object, "app.folder.args"));
+            var args = me.core.string.split(me.core.property.get(object, "app.folder.args"));
             if (args) {
                 me.log("folder launch args: " + JSON.stringify(args));
                 me.launch(args);

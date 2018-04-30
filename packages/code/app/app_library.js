@@ -47,9 +47,6 @@ screens.app.library = function AppLibrary(me) {
     };
     me.cleanSearchText = function(search) {
         search = search.replace(/\s+/g, " ");
-        search = search.replace(/AND AND/g, "AND").trim();
-        search = search.replace(/^AND/g, "").trim();
-        search = search.replace(/AND$/g, "").trim();
         return search;
     };
     me.menuList = function (object, list, group) {
@@ -76,24 +73,32 @@ screens.app.library = function AppLibrary(me) {
                         if (search) {
                             var [nameKey, nameValue] = name.split(":");
                             nameKey = nameKey.trim().toLowerCase();
-                            search = search.split("AND").map((item) => {
+                            search = me.core.string.split(search).map((item) => {
                                 if(item.includes(":")) {
                                     var [itemKey] = item.split(":");
                                     itemKey = itemKey.trim().toLowerCase();
                                     if(itemKey === nameKey) {
                                         insert = false;
-                                        return " " + name + " ";
                                     }
                                 }
+                                if(item.includes(" ")) {
+                                    item = "\"" + item + "\"";
+                                }
                                 return item;
-                            }).join("AND");
+                            }).join(" ");
                             search = me.cleanSearchText(search);
                             if(search && insert) {
-                                search += " AND ";
+                                search += " ";
                             }
                         }
                         if(insert) {
+                            if(name.includes(" ")) {
+                                search += "\"";
+                            }
                             search += name;
+                            if(name.includes(" ")) {
+                                search += "\"";
+                            }
                         }
                         me.core.property.set(window.var.search, "ui.basic.text", search);
                         me.changedSearch(window.var.search);
