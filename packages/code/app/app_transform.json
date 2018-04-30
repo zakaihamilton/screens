@@ -9,6 +9,12 @@
     "icon": "/packages/res/icons/transform_tray.png",
     "ui.style.background": "white",
     "maximize": null,
+    "widget.scrollbar.vertical.alwaysHide": true,
+    "widget.scrollbar.horizontal.alwaysHide": true,
+    "ui.property.after": {
+        "storage.local.key": "app-transform-window",
+        "storage.local.restore": "widget.window.store"
+    },
     "ui.group.data": {
         "ui.data.default": {
             "ui.basic.context": "self",
@@ -172,11 +178,5 @@
         "ui.data.values": [
             "core.number.fillArray(1-9)"
         ]
-    },
-    "widget.scrollbar.vertical.alwaysHide": true,
-    "widget.scrollbar.horizontal.alwaysHide": true,
-    "ui.property.after": {
-        "storage.local.key": "app-transform-window",
-        "storage.local.restore": "widget.window.store"
     }
 }

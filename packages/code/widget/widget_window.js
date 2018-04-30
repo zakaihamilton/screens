@@ -387,6 +387,9 @@ screens.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window.var.icon, "ui.class.add", "minimize");
             }
             if (parent_window) {
+                if(parent_window.child_window && parent_window.child_window !== window) {
+                    return;
+                }
                 if (maximized) {
                     me.detach(parent_window);
                 }
@@ -525,14 +528,21 @@ screens.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.window(object);
+            var parent_window = me.parent(window);
             var minimized = me.core.property.get(window, "ui.class.contains", "minimize");
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
             if (!minimized && !maximized && !embed) {
+                if(parent_window.child_window) {
+                    var child_maximized = me.core.property.get(parent_window.child_window, "ui.class.contains", "maximize");
+                    if(child_maximized) {
+                        me.core.property.set(parent_window.child_window, "unmaximize");
+                        me.core.property.set(window, "ui.focus.active", true);
+                    }
+                }
                 return;
             }
             if (embed) {
-                var parent_window = me.parent(window);
                 if (parent_window) {
                     parent_window.focus_window = null;
                 }
@@ -558,7 +568,6 @@ screens.widget.window = function WidgetWindow(me) {
                         "ui.class.remove": "minimize",
                         "ui.focus.active": true
                     });
-                    var parent_window = me.parent(window);
                     var content = null;
                     if (parent_window) {
                         content = me.core.property.get(parent_window, "widget.window.content");
@@ -743,17 +752,18 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.store = {
         get: function (object) {
-            if (!me.core.property.get(object, "embed")) {
+            var window = me.window(object);
+            if (!me.core.property.get(window, "embed")) {
                 var options = {
-                    "titleOrder": me.core.property.get(object, "titleOrder"),
-                    "title": me.core.property.get(object, "title")
+                    "titleOrder": me.core.property.get(window, "titleOrder"),
+                    "title": me.core.property.get(window, "title")
                 };
-                if (!me.core.property.get(object, "fixed")) {
-                    options["region"] = me.core.property.get(object, "region")
+                if (!me.core.property.get(window, "fixed")) {
+                    options["region"] = me.core.property.get(window, "region")
                 }
                 var keys = ["maximize", "restore", "minimize"];
                 keys.map(function (key) {
-                    var enabled = me.core.property.get(object, "ui.class.contains", key);
+                    var enabled = me.core.property.get(window, "ui.class.contains", key);
                     if (enabled) {
                         options[key] = null;
                     }
@@ -762,13 +772,24 @@ screens.widget.window = function WidgetWindow(me) {
             }
         },
         set: function (object, value) {
-            if (!me.core.property.get(object, "embed")) {
+            var window = me.window(object);
+            if (!me.core.property.get(window, "embed")) {
                 var options = JSON.parse(value);
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];
-                    me.core.property.set(object, optionKey, optionValue);
+                    if(optionKey === "maximize" || optionKey === "restore") {
+                        var parent = me.parent(window);
+                        if(parent) {
+                            var windows = me.core.property.get(parent, "widget.window.visibleWindows");
+                            if(windows && windows.length > 1 && window !== windows[windows.length-1]) {
+                                continue;
+                            }
+                        }
+                    }
+                    me.core.property.set(window, optionKey, optionValue);
+                    me.core.console.log("store_set: " + me.core.property.get(window, "title") + ":" + optionKey + "=" + optionValue);
                 }
-                me.fixRegion(object);
+                me.fixRegion(window);
             }
         }
     };
