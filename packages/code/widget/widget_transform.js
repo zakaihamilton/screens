@@ -236,8 +236,12 @@ screens.widget.transform = function WidgetTransform(me) {
         var reflow = false;
         var pageSize = me.ui.layout.pageSize(widget.var.layout);
         var window = me.widget.window(object);
+        var fullscreen = me.core.property.get(window, "fullscreen");
         if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
             if (widget.pageSize && (pageSize.height !== widget.pageSize.height || pageSize.width !== widget.pageSize.width)) {
+                reflow = true;
+            }
+            if(widget.fullscreen !== fullscreen) {
                 reflow = true;
             }
             if (widget.forceReflow) {
@@ -254,6 +258,9 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!me.shouldReflow(object)) {
             return;
         }
+        if(!widget.options) {
+            return;
+        }
         var text = widget.transformText;
         var visibleWidget = null;
         if (!widget.contentChanged) {
@@ -265,6 +272,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid darkgreen");
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
+        widget.fullscreen = fullscreen;
         me.core.property.set(widget.var.filter, "ui.basic.hide", fullscreen);
         me.core.property.set(widget.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
         me.core.property.set(widget, "ui.work.state", true);
@@ -309,7 +317,7 @@ screens.widget.transform = function WidgetTransform(me) {
             fastforwardClass: ["widget.transform.fastforward", modifiers],
             stopClass: ["widget.transform.stop", modifiers],
             reloadMethod: "widget.transform.transform",
-            fullscreenMethod: "widget.container.fullscreen",
+            fullscreenMethod: "widget.window.fullscreen",
             previousPageMethod: "widget.scrollbar.vertical.before",
             nextPageMethod: "widget.scrollbar.vertical.after",
             playMethod: "widget.transform.play",
