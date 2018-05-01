@@ -29,7 +29,7 @@ screens.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
-    me.parseSingle = function (session, parentInstance, wordsString) {
+    me.parseSingle = function (session, parentInstance, wordsString, textOnly) {
         var prefix = session.json.prefix;
         var suffix = session.json.suffix;
         var ignore = session.json.ignore;
@@ -151,7 +151,8 @@ screens.kab.text = function KabText(me) {
                         wordIndex: wordIndex,
                         span: numTermWords,
                         prefixLetters: me.core.string.prefixLetters(collectedWords, match),
-                        suffixLetters: me.core.string.suffixLetters(collectedWords, match)
+                        suffixLetters: me.core.string.suffixLetters(collectedWords, match),
+                        textOnly:textOnly
                     };
                     if (item.debug) {
                         debugger
@@ -227,7 +228,7 @@ screens.kab.text = function KabText(me) {
                         text = lastExpansion + text;
                     }
                     if (!text.includes(instance.target)) {
-                        text = parseSingle(session, instance, text);
+                        text = parseSingle(session, instance, text, true);
                     }
                     return text;
                 });
@@ -237,13 +238,13 @@ screens.kab.text = function KabText(me) {
                     expansion = expansion.slice(-1).toString();
                 }
             } else {
-                expansion = parseSingle(session, instance, expansion);
+                expansion = parseSingle(session, instance, expansion, true);
             }
             modify(session, instance, " (", expansion, null, ")", true, session.options.keepSource);
         } else if (translation || explanation) {
             if (translation) {
                 if (!instance.item.fixed && translation !== instance.target) {
-                    translation = parseSingle(session, instance, translation);
+                    translation = parseSingle(session, instance, translation, true);
                 }
             }
             me.kab.search.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
@@ -305,7 +306,7 @@ screens.kab.text = function KabText(me) {
         }
         var text = replacement;
         var replacementWithStyles = replacement;
-        if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
+        if (!instance.textOnly && session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
         else {

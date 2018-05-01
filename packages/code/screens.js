@@ -8,19 +8,7 @@ function screens_platform() {
     return platform;
 }
 
-function screens_setup(package_name, component_name, child_name, node) {
-    var children = [];
-    var id = package_name + "." + component_name;
-    var component_id = id;
-    if (child_name) {
-        node = node[child_name];
-        id += "." + child_name;
-    } else {
-        node = screens(id);
-        for (var key in node) {
-            children.push(key);
-        }
-    }
+function screens_create_proxy(id) {
     /* Create component proxy */
     var component_obj = new Proxy(() => {
         return {};
@@ -47,6 +35,24 @@ function screens_setup(package_name, component_name, child_name, node) {
         });
     component_obj.proxy = {};
     component_obj.id = id;
+    return component_obj;
+}
+
+function screens_setup(package_name, component_name, child_name, node) {
+    var children = [];
+    var id = package_name + "." + component_name;
+    var component_id = id;
+    if (child_name) {
+        node = node[child_name];
+        id += "." + child_name;
+    } else {
+        node = screens(id);
+        for (var key in node) {
+            children.push(key);
+        }
+    }
+    /* Create component proxy */
+    var component_obj = screens_create_proxy(id);
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
         component_obj.upper = screens[package_name][component_name];
@@ -57,35 +63,48 @@ function screens_setup(package_name, component_name, child_name, node) {
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var platform = node(component_obj, child_name);
+    var init = null;
     if (platform && screens.platform !== platform) {
+        console.log("remote component: " + id + " = " + platform + " for: " + screens.platform);
+        component_obj = screens_create_proxy(id);
         component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
                 args.unshift(id);
-                return me.core.message["send_" + platform].apply(null, args);
+                return component_obj.core.message["send_" + platform].apply(null, args);
             };
         };
         component_obj.proxy.get = function (object, property) {
             return function () {
                 var args = Array.prototype.slice.call(arguments);
                 args.unshift(id + "." + property);
-                return me.core.message["send_" + platform].apply(null, args);
+                return component_obj.core.message["send_" + platform].apply(null, args);
             };
         };
+        if (child_name) {
+            screens[package_name][component_name][child_name] = component_obj;
+            component_obj.upper = screens[package_name][component_name];
+        } else {
+            screens[package_name][component_name] = component_obj;
+        }
+    }
+    else {
+        init = { callback: component_obj.init, args: [component_obj] };
     }
     component_obj.require = platform;
-    var init = {callback:component_obj.init,args:[component_obj]};
-    if (component_obj.proxy.get) {
+    if (component_obj.proxy && component_obj.proxy.get) {
         component_obj.proxy.get.enabled = true;
     }
-    console.log(screens.platform + ": Loaded " + component_obj.id);
-    screens.components.push(component_obj.id);
+    console.log(screens.platform + ": Loaded " + id);
+    screens.components.push(id);
     /* Load child components */
     var initializers = children.map(function (child) {
         return screens_setup(package_name, component_name, child, node);
     });
-    initializers.unshift(init);
-    initializers = initializers.reduce((a, b) => a.concat(b), []);
+    if(init) {
+        initializers.unshift(init);
+        initializers = initializers.reduce((a, b) => a.concat(b), []);
+    }
     return initializers;
 }
 
