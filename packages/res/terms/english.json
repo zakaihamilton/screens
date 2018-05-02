@@ -1793,7 +1793,7 @@
             "style": {
                 "heading": "Face",
                 "phase": "one",
-                "tooltip": "72",
+                "tooltip": "72\nע״ב",
                 "short": "Second Face in the World of Primordial Man"
             },
             "term": "AB",
@@ -1803,7 +1803,7 @@
             "style": {
                 "heading": "Face",
                 "phase": "two",
-                "tooltip": "63",
+                "tooltip": "63ֿ\nס״ג",
                 "short": "Third Face in the World of Primordial Man"
             },
             "term": "SAG",
@@ -1813,7 +1813,7 @@
             "style": {
                 "heading": "Face",
                 "phase": "three",
-                "tooltip": "45",
+                "tooltip": "45\nמ״ה",
                 "short": "Fourth Face in the World of Primordial Man"
             },
             "term": "MA",
@@ -1823,7 +1823,7 @@
             "style": {
                 "heading": "Face",
                 "phase": "four",
-                "tooltip": "52",
+                "tooltip": "52\nב״ן",
                 "short": "Fifth Face in the World of Primordial Man"
             },
             "term": "BON",

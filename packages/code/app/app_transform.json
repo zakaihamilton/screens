@@ -135,6 +135,14 @@
                             "Tile Vertically",
                             "ui.arrange.tileVertically"
                         ],
+                        [
+                            "Documents",
+                            null,
+                            {
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
                         "widget.window.childMenuList"
                     ]
                 ]

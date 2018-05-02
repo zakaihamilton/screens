@@ -97,7 +97,7 @@ screens.app.diagram = function AppDiagram(me) {
                 var info = await me.kab.text.parse(window.language, text, window.options);
                 return info.text;
             });
-            me.core.property.set(object, "ui.basic.html", result.join("\n"));
+            me.core.property.set(object, "ui.basic.html", result.join("<br>"));
             me.core.property.notify(window, "update");
     }
     };

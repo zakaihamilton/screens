@@ -132,11 +132,11 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.notify(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
     };
-    me.updateFilterList = function (object, terms) {
+    me.updateFilterList = function (object, filterList) {
         var widget = me.findWidget(object);
         me.ui.node.removeChildren(widget.var.filterList);
-        var searchItems = Object.keys(terms).map(function (key) {
-            return [key, terms[key]];
+        var searchItems = Object.keys(filterList).map(function (key) {
+            return [key, filterList[key]];
         });
         searchItems.sort(function (first, second) {
             return second[1].count - first[1].count;
@@ -384,7 +384,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            diagrams.push({title:"Table of Phases",path:"table_of_phases",params:me.tableOfPhasesParams(widget)});
+            diagrams.unshift({title:"Table of Phases",path:"table_of_phases",params:me.tableOfPhasesParams(widget)});
             var isFirst = true;
             var items = diagrams.map(function (item) {
                 var result = [
@@ -668,7 +668,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     if(!list) {
                         list = row[phase] = [];
                     }
-                    list.push(name);
+                    list.push(term.term);
                 });
             }
         }
