@@ -42,31 +42,6 @@
             "ui.property.after": {
                 "ui.basic.elementId": "transform-filter-list"
             }
-        },
-        {
-            "ui.basic.tag": "div",
-            "ui.class.add": "widget.transform.termPopup",
-            "ui.basic.var": "termPopup",
-            "ui.element.component": "widget.window",
-            "title": "Tables of Phases",
-            "ui.property.style": {
-                "left": "25px",
-                "top": "50px",
-                "right": "25px",
-                "bottom": "100px",
-                "width": "",
-                "height": ""
-            },
-            "popup": true,
-            "static": true,
-            "minimize": true,
-            "ui.basic.elements": [
-                {
-                    "ui.element.component": "widget.table",
-                    "ui.class.class": "widget.transform.termTable",
-                    "ui.basic.var": "termTable"
-                }
-            ]
         }
     ],
     "widget.menu.items": [
@@ -322,15 +297,6 @@
         [
             "Diagrams",
             [
-                [
-                    "Table of Phases",
-                    "widget.transform.toggleTerms",
-                    {
-                        "separator": true,
-                        "state": "select",
-                        "enabled": "widget.transform.termsAvailable"
-                    }
-                ],
                 "widget.transform.diagramList"
             ]          
         ]

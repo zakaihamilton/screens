@@ -47,7 +47,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.choiceSet(me, me.findWidget, "language", me.transform);
         me.ui.options.choiceSet(me, me.findWidget, "fontSize", function (object, value, key, options) {
             var widget = me.findWidget(object);
-            me.core.property.set([widget.var.layout, widget.var.termTable], "ui.style.fontSize", value);
+            me.core.property.set([widget.var.layout], "ui.style.fontSize", value);
             widget.forceReflow = true;
             me.core.property.notify(widget, "update");
         });
@@ -114,22 +114,17 @@ screens.widget.transform = function WidgetTransform(me) {
         if (widget.language) {
             me.core.property.set([
                 widget.var.filter,
-                widget.var.termTable,
                 widget.var.layout
             ], "ui.class.remove", widget.language);
         }
         me.core.property.set([
             widget.var.filter,
-            widget.var.termTable,
             widget.var.layout
         ], "ui.class.add", language);
-        me.core.property.set(widget.var.termPopup, "title", data.termTableTitle);
         widget.language = language;
         me.core.property.set(widget.var.output, widget.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
         me.updateFilterList(widget, terms);
-        if (data) {
-            me.updateTermTable(widget, terms, data.termTable, language);
-        }
+        widget.tableOfPhases = {terms,data};
         me.ui.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
@@ -221,12 +216,12 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         var text = me.core.property.get(widget, "text");
         if (value && text) {
-            me.core.property.set([widget.var.layout, widget.var.termPopup, widget.var.filter], "ui.style.opacity", 0);
+            me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.opacity", 0);
             me.core.property.set(widget.var.spinner, "ui.style.visibility", "visible");
         } else {
             widget.workTimeout = setTimeout(function () {
                 me.core.property.set(widget.var.spinner, "ui.style.visibility", "hidden");
-                me.core.property.set([widget.var.layout, widget.var.termPopup, widget.var.filter], "ui.style.opacity", "");
+                me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.opacity", "");
                 me.updateScrolling(widget);
             }, 250);
         }
@@ -389,14 +384,14 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
+            diagrams.push({title:"Table of Phases",path:"table_of_phases",params:me.tableOfPhasesParams(widget)});
             var isFirst = true;
             var items = diagrams.map(function (item) {
                 var result = [
                     item.title,
                     function () {
                         var window = me.widget.window(widget);
-                        var isFullscreen = me.core.property.get(window, "fullscreen");
-                        me.core.app("diagram", item.path, widget.options, isFullscreen);
+                        me.core.app("diagram", item.path, widget.options, null, item.params);
                     },
                     {
                         separator:isFirst
@@ -628,42 +623,33 @@ screens.widget.transform = function WidgetTransform(me) {
             "ui.style.fontSize": widget.options.fontSize,
             "ui.scroll.swipe": widget.options.swipe ? "vertical" : ""
         });
-        me.core.property.set(widget.var.termTable, "ui.style.fontSize", widget.options.fontSize);
         if (update) {
             me.core.property.notify(widget, "update");
         }
     };
-    me.termsAvailable = {
-        get: function (object) {
-            var widget = me.findWidget(object);
-            return widget.dataExists;
-        }
+    me.color = {
+        root:"white",
+        one:"#FFF3CA",
+        two:"#C8D9F9",
+        three:"#F5CCCB",
+        four:"#D9EAD2",
+        collective:"Plum"
     };
-    me.toggleTerms = {
-        get: function (object) {
-            var widget = me.findWidget(object);
-            return me.core.property.get(widget.var.termPopup, "minimize");
-        },
-        set: function (object) {
-            var widget = me.findWidget(object);
-            me.core.property.set(widget.var.termPopup, {
-                "show": !me.core.property.get(widget.var.termPopup, "minimize"),
-                "ui.property.style": {
-                    "left": "25px",
-                    "top": "50px",
-                    "right": "25px",
-                    "bottom": "100px",
-                    "width": "",
-                    "height": ""
-                }
-            });
-        }
+    me.phases = {
+        root:2,
+        one:3,
+        two:4,
+        three:5,
+        four:6,
+        collective:7
     };
-    me.updateTermTable = function (widget, terms, data, language) {
-        widget.dataExists = false;
-        var table = {};
-        for (var termName in terms) {
-            var term = terms[termName];
+    me.tableOfPhasesParams = function(object) {
+        var params = {gridData:[]};
+        var widget = me.findWidget(object);
+        var rows = {};
+        var terms = widget.tableOfPhases.terms;
+        for (var name in terms) {
+            var term = terms[name];
             if (term.heading && term.phase) {
                 var phase = term.phase;
                 if (typeof phase !== "string") {
@@ -673,73 +659,40 @@ screens.widget.transform = function WidgetTransform(me) {
                         phase = phase.major;
                     }
                 }
-                term.heading.split("/").map(function (subHeading) {
-                    var column = table[subHeading];
-                    if (!column) {
-                        column = table[subHeading] = {};
+                term.heading.split("/").map(function (heading) {
+                    var row = rows[heading];
+                    if(!row) {
+                        row = rows[heading] = {};
                     }
-                    var row = column[phase];
-                    if (!row) {
-                        row = column[phase] = [];
+                    var list = row[phase];
+                    if(!list) {
+                        list = row[phase] = [];
                     }
-                    term.name = termName;
-                    row.push(term);
+                    list.push(name);
                 });
             }
         }
-        for (var heading in table) {
-            var row = table[heading];
-            var usedRow = false;
-            for (var phase in row) {
-                var usedColumn = false;
-                var column = row[phase];
-                for (var name in column) {
-                    var item = column[name];
-                    if (item.used) {
-                        usedRow = true;
-                        usedColumn = true;
-                    }
-                }
-                if (usedColumn) {
-                    for (var name in column) {
-                        var item = column[name];
-                        if (!item.used) {
-                            delete column[name];
-                        }
-                    }
-                }
-            }
-            if (!usedRow) {
-                delete table[heading];
-            }
+        var rowIndex = 2;
+        for(var phase in me.phases) {
+            var columnIndex = me.phases[phase];
+            var name = phase.charAt(0).toUpperCase() + phase.slice(1);
+            params.gridData.push([1, columnIndex, name, "black", "white", "bold"]);
         }
-        for (var heading in table) {
-            var row = table[heading];
-            var list = [{ "ui.basic.text": heading, "ui.element.component": "widget.table.header" }];
-            var order = ["root", "one", "two", "three", "four"];
-            order.map(function (phase) {
-                var properties = {};
-                if (row[phase]) {
-                    properties["ui.basic.elements"] = row[phase].map(function (item) {
-                        var styles = ["kab.term.phase." + phase, "kab.term.phase." + phase + ".border", language];
-                        if (!item.used) {
-                            styles.push("widget.transform.placeholder");
-                        }
-                        var itemProperties = {
-                            "ui.class.class": "widget.transform.termItem",
-                            "ui.class.add": styles
-                        };
-                        itemProperties["widget.transform.term"] = item.name;
-                        return itemProperties;
-                    });
-                    widget.dataExists = true;
+        for(var heading in rows) {
+            var row = rows[heading];
+            var name = heading.charAt(0).toUpperCase() + heading.slice(1);
+            params.gridData.push([rowIndex, 1, name, "black", "white", "bold"]);
+            for(var phase in me.phases) {
+                var list = row[phase];
+                if(!list) {
+                    list = [];
                 }
-                properties["ui.class.add"] = "kab.term.phase." + phase;
-                list.push(properties);
-            });
-            data.push(list);
+                var columnIndex = me.phases[phase];
+                params.gridData.push([rowIndex, columnIndex, list, me.color[phase]]);
+            }
+            rowIndex++;
         }
-        me.core.property.set(widget.var.termTable, "dataByRows", data);
+        return params;
     };
     me.term = {
         set: async function (object, text) {
@@ -769,7 +722,6 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         me.core.property.set(widget.var.output, "ui.basic.html", "");
         me.ui.node.removeChildren(widget.var.filterList);
-        me.ui.node.removeChildren(widget.var.termTable);
         me.ui.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;

@@ -35,4 +35,11 @@ screens.core.util = function CoreUtil(me) {
     me.restart = function() {
         location.reload(true);
     };
+    me.map = async function(object, callback, thisArg) {
+        var result = [];
+        for(var index = 0; index < object.length; index++) {
+            result.push(await callback.call(thisArg, object[index], index, object));
+        }
+        return result;
+    };
 };

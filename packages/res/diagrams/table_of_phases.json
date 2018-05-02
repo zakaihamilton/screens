@@ -1,0 +1,43 @@
+{
+    "title": "Table of Phases",
+    "layers": [
+        {
+            "ui.style.display": "grid",
+            "ui.style.position": "absolute",
+            "ui.style.margin": "2px",
+            "ui.style.left": "0px",
+            "ui.style.top": "0px",
+            "ui.style.right": "0px",
+            "ui.style.bottom": "0px",
+            "ui.style.gridAutoColumns": "auto",
+            "ui.style.gridAutoRows": "auto",
+            "core.property.group": [
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "app.diagram.term",
+                            "ui.style.backgroundColor",
+                            "ui.style.color",
+                            "ui.style.fontWeight"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.style.lineHeight": "2em",
+                            "ui.style.border": "1px solid black",
+                            "ui.style.margin": "3px",
+                            "ui.style.padding": "3px",
+                            "ui.style.gridColumn": "1",
+                            "ui.style.textAlign": "center",
+                            "ui.style.verticalAlign": "middle"
+                        },
+                        "ui.data.values": [
+                            "ui.param.gridData"
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

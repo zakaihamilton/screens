@@ -8,12 +8,18 @@ screens.ui.param = function UIParam(me) {
         return {
             get: function (object, value) {
                 var param = value;
-                if (object.params && object.params[property]) {
-                    param = object.params[property];
-                } else if (object.parentNode && object.parentNode.params && object.parentNode.params[property]) {
-                    param = object.parentNode.params[property];
-                } else if (object.context && object.context && object.context.params && object.context.params[property]) {
-                    param = object.context.params[property];
+                while(object) {
+                    if (object.params && object.params[property]) {
+                        param = object.params[property];
+                    } else if (object.parentNode && object.parentNode.params && object.parentNode.params[property]) {
+                        param = object.parentNode.params[property];
+                    } else if (object.context && object.context && object.context.params && object.context.params[property]) {
+                        param = object.context.params[property];
+                    }
+                    if(param) {
+                        break;
+                    }
+                    object = object.parentNode;
                 }
                 return param;
             },
