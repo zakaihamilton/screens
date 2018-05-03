@@ -64,7 +64,7 @@
     position:relative;
     text-align:justify;
     box-sizing:border-box;
-    column-gap: 2em;
+    column-gap: 4em;
     column-fill:balance;
 }
 
