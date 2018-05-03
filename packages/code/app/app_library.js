@@ -79,6 +79,7 @@ screens.app.library = function AppLibrary(me) {
                                     itemKey = itemKey.trim().toLowerCase();
                                     if(itemKey === nameKey) {
                                         insert = false;
+                                        item = nameKey + ":" + nameValue;
                                     }
                                 }
                                 if(item.includes(" ")) {

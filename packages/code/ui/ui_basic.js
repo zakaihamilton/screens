@@ -150,6 +150,17 @@ screens.ui.basic = function UIBasic(me) {
             object.draggable = value;
         }
     };
+    me.parentWidget = {
+        get: function (object) {
+            return object.parentWidget;
+        },
+        set: function (object, value) {
+            if(!value) {
+                value = object;
+            }
+            object.parentWidget = value;
+        }
+    };
     me.window = {
         get: function (object) {
             return object.window;

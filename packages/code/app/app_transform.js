@@ -29,6 +29,7 @@ screens.app.transform = function AppTransform(me) {
                     value = true;
                 }
                 me.updateWidgets(window, value);
+                me.core.property.set(window.var.transform, "useTitle", true);
                 me.core.property.set(window.var.transform, "reflow");
             });
             me.core.property.set(window, "app", me);
@@ -152,20 +153,10 @@ screens.app.transform = function AppTransform(me) {
             me.core.property.set(object, "widget.window.title", title);
         }
     };
-    me.contentTitle = {
-        get: function (object) {
-            var window = me.widget.window.mainWindow(object);
-            var title = me.ui.layout.firstWidget(window.var.layout);
-            if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
-                return title.innerText;
-            }
-            return null;
-        }
-    };
     me.title = {
         get: function (object) {
             var window = me.widget.window.mainWindow(object);
-            var title = me.core.property.get(window, "app.transform.contentTitle");
+            var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
             if (title) {
                 return key + " - " + title;
@@ -197,7 +188,7 @@ screens.app.transform = function AppTransform(me) {
         var window = me.widget.window.mainWindow(object);
         var text = me.core.property.get(window.var.transform, "text");
         var date = new Date();
-        var title = me.core.property.get(window, "app.transform.contentTitle");
+        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
         var key = me.core.property.get(window, "widget.window.key");
         if (!title) {
             title = key;

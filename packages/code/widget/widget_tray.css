@@ -1,4 +1,7 @@
 .widget-tray-container {
     bottom:0px;
     position:absolute;
+    display:flex;
+    align-items:stretch;
+    flex-wrap: nowrap;
 }

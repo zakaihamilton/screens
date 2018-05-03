@@ -533,7 +533,7 @@ screens.widget.window = function WidgetWindow(me) {
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
             if (!minimized && !maximized && !embed) {
-                if(parent_window.child_window) {
+                if(parent_window && parent_window.child_window) {
                     var child_maximized = me.core.property.get(parent_window.child_window, "ui.class.contains", "maximize");
                     if(child_maximized) {
                         me.core.property.set(parent_window.child_window, "unmaximize");

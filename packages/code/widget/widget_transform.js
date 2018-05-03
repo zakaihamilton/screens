@@ -71,6 +71,16 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         return widget;
     };
+    me.useTitle = {
+        get: function(object) {
+            var widget = me.findWidget(object);
+            return widget.useTitle;
+        },
+        set: function(object) {
+            var widget = me.findWidget(object);
+            widget.useTitle = useTitle;
+        }
+    };
     me.text = {
         get: function (object) {
             var widget = me.findWidget(object);
@@ -330,8 +340,10 @@ screens.widget.transform = function WidgetTransform(me) {
         me.media.voice.stop();
         me.ui.layout.reflow(function () {
             me.core.property.set(widget, "ui.work.state", false);
-            var title = me.core.property.get(widget, "widget.transform.title");
-            me.core.property.set(widget, "widget.window.title", title);
+            if(widget.useTitle) {
+                var title = me.core.property.get(widget, "widget.transform.title");
+                me.core.property.set(widget, "widget.window.title", title);
+            }
         }, widget.var.output, widget.var.layout, reflowOptions);
     };
     me.scrolled = {
