@@ -168,8 +168,8 @@ screens.widget.transform = function WidgetTransform(me) {
     me.showDescriptionBox = function (object, next, visible) {
         var descriptionType = null;
         var descriptionBox = null;
-        var widget = me.findWidget(object);
         var descriptionTypes = ["source", "related"];
+        var widget = me.findWidget(object);
         if (widget.options.prioritizeExplanation) {
             descriptionTypes.unshift("technical");
             descriptionTypes.unshift("explanation");
@@ -189,11 +189,11 @@ screens.widget.transform = function WidgetTransform(me) {
                 break;
             }
         }
-        widget.descriptionType = descriptionType;
-        if (widget.hoverTimer) {
-            clearTimeout(widget.hoverTimer);
+        object.descriptionType = descriptionType;
+        if (object.hoverTimer) {
+            clearTimeout(object.hoverTimer);
         }
-        widget.hoverTimer = setTimeout(function () {
+        object.hoverTimer = setTimeout(function () {
             me.resetDescription(object);
             if (visible) {
                 if (descriptionBox && descriptionBox.resetTimer) {
@@ -381,8 +381,8 @@ screens.widget.transform = function WidgetTransform(me) {
         var descriptionTypes = ["explanation", "technical", "source", "related"];
         descriptionTypes.map(function (descriptionType) {
             var descriptionBox = me.ui.node.findById(object, descriptionType);
-            me.core.property.set(descriptionBox, "ui.class.remove", "show");
             if (descriptionBox) {
+                me.core.property.set(descriptionBox, "ui.class.remove", "show");
                 descriptionBox.resetTimer = setTimeout(function () {
                     me.core.property.set(descriptionBox, "ui.style.display", "none");
                 }, 1000);
