@@ -184,7 +184,7 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         for (var cycleIndex = 0; cycleIndex < descriptionTypes.length; cycleIndex++) {
             descriptionType = descriptionTypes[(descriptionIndex + cycleIndex) % descriptionTypes.length];
-            descriptionBox = me.ui.node.findById(widget, descriptionType);
+            descriptionBox = me.ui.node.findById(object, descriptionType);
             if (descriptionBox) {
                 break;
             }
@@ -194,7 +194,7 @@ screens.widget.transform = function WidgetTransform(me) {
             clearTimeout(widget.hoverTimer);
         }
         widget.hoverTimer = setTimeout(function () {
-            me.resetDescription(widget);
+            me.resetDescription(object);
             if (visible) {
                 if (descriptionBox && descriptionBox.resetTimer) {
                     clearTimeout(descriptionBox.resetTimer);
