@@ -32,6 +32,7 @@ screens.ui.move = function UIMove(me) {
                 target = me.widget.window(object);
             }
             if (!target.move_enabled) {
+                me.core.property.set(target, "ui.focus.active", true);
                 event.preventDefault();
                 return;
             }
