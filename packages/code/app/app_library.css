@@ -2,11 +2,12 @@
     margin-top:10px;
     margin-left:40px;
     margin-right:40px;
-    height:30px;
+    height:40px;
+    display:flex;
+    align-items:center;
 }
 
 .app-library-search {
-    margin-left:0px;
     width:100%;
     position:relative;
     text-align: center;
@@ -72,7 +73,6 @@
 }
 
 .app-library-showResults {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+    position: relative;
+    flex:0;
 }
