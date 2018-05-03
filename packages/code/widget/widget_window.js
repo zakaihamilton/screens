@@ -285,6 +285,7 @@ screens.widget.window = function WidgetWindow(me) {
                 me.update_title(parent_window);
             }
             me.core.property.set(window.var.icon, "ui.basic.text", value);
+            me.updateStorage(window);
         }
     };
     me.background = {
@@ -799,6 +800,10 @@ screens.widget.window = function WidgetWindow(me) {
             me.core.property.notify(window.var.container, "update");
             me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
         }
+    };
+    me.updateStorage = function(object) {
+        var window = me.window(object);
+        me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
     };
     me.findWindowByKey = function (object, key) {
         var windows = me.core.property.get(object, "widget.window.visibleWindows");

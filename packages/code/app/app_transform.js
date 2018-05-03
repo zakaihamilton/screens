@@ -29,7 +29,6 @@ screens.app.transform = function AppTransform(me) {
                     value = true;
                 }
                 me.updateWidgets(window, value);
-                me.core.property.set(window.var.transform, "useTitle", true);
                 me.core.property.set(window.var.transform, "reflow");
             });
             me.core.property.set(window, "app", me);

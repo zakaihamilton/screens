@@ -76,9 +76,9 @@ screens.widget.transform = function WidgetTransform(me) {
             var widget = me.findWidget(object);
             return widget.useTitle;
         },
-        set: function(object) {
+        set: function(object, value) {
             var widget = me.findWidget(object);
-            widget.useTitle = useTitle;
+            widget.useTitle = value;
         }
     };
     me.text = {
@@ -305,8 +305,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 "!ui.touch.contextmenu": "widget.transform.notes"
             },
             pageClass: ["widget.transform.page", modifiers],
+            containerClass: ["widget.transform.page.container", modifiers],
             contentClass: ["widget.transform.page.content", modifiers],
-            widgetClass: ["widget.transform.page.container", modifiers],
             videoSlotClass: ["widget.transform.page.video.slot", modifiers],
             marginRightClass: ["widget.transform.page.margin.right", modifiers],
             headerClass: ["widget.transform.page.header", modifiers],

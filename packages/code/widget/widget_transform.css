@@ -55,18 +55,17 @@
     display:flex;
     box-sizing:border-box;
     margin:0;
-}
-
-.widget-transform-page-content {
     padding-left:3em;
     padding-right:3em;
     padding-bottom:5em;
+}
+
+.widget-transform-page-content {
     position:relative;
     text-align:justify;
     box-sizing:border-box;
-    column-gap: 3em;
+    column-gap: 2em;
     column-fill:balance;
-    overflow:hidden;
 }
 
 .widget-transform-page-content br {

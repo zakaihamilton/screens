@@ -228,7 +228,7 @@ screens.kab.text = function KabText(me) {
                         text = lastExpansion + text;
                     }
                     if (!text.includes(instance.target)) {
-                        text = parseSingle(session, instance, text, true);
+                        text = parseSingle(session, instance, text);
                     }
                     return text;
                 });
@@ -238,7 +238,7 @@ screens.kab.text = function KabText(me) {
                     expansion = expansion.slice(-1).toString();
                 }
             } else {
-                expansion = parseSingle(session, instance, expansion, true);
+                expansion = parseSingle(session, instance, expansion);
             }
             modify(session, instance, " (", expansion, null, ")", true, session.options.keepSource);
         } else if (translation || explanation) {
@@ -309,7 +309,7 @@ screens.kab.text = function KabText(me) {
         if (!instance.textOnly && session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
-        else {
+        else if(prefixLetters) {
             replacementWithStyles = prefixLetters + replacementWithStyles;
         }
         var insert = replacementWithStyles;
