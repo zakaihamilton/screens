@@ -90,7 +90,7 @@ screens.app.diagram = function AppDiagram(me) {
         set: async function (object, text) {
             var window = me.widget.window(object);
             var array = text;
-            if(!Array.isArray(text)) {
+            if (!Array.isArray(text)) {
                 array = [text];
             }
             var result = await me.core.util.map(array, async (text) => {
@@ -99,7 +99,7 @@ screens.app.diagram = function AppDiagram(me) {
             });
             me.core.property.set(object, "ui.basic.html", result.join("<br>"));
             me.core.property.notify(window, "update");
-    }
+        }
     };
     me.refresh = {
         set: function (object) {

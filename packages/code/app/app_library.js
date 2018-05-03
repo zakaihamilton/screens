@@ -143,7 +143,7 @@ screens.app.library = function AppLibrary(me) {
         me.searchTimer = setTimeout(() => {
             me.searchTimer = null;
             me.search(object);
-        }, 2000);
+        }, 1000);
     };
     me.clear = function (object) {
         var window = me.widget.window(object);
@@ -474,7 +474,9 @@ screens.app.library = function AppLibrary(me) {
             noSearch = true;
         }
         var gotoArticle = function(info) {
-            me.gotoArticle(object, info.item);
+            setTimeout(() => {
+                me.gotoArticle(object, info.item);
+            }, 250);
         };
         var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
             return { name: name, title: me.core.string.title(name), type: "text"};
