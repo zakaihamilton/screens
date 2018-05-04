@@ -12,12 +12,12 @@ screens.storage.data = function StorageData(me) {
         } catch (e) {
             await me.core.server.run("npm rebuild");
             me.datastore = require('@google-cloud/datastore');
-            me.log("me.datastore:" + me.datastore);
+            me.log("me.datastore:" + me.datastore !== null);
         }
         if(!me.datastore) {
             await me.core.server.run("npm rebuild");
             me.datastore = require('@google-cloud/datastore');
-            me.log("me.datastore:" + me.datastore);
+            me.log("me.datastore:" + me.datastore !== null);
         }
     };
     me.getService = function () {

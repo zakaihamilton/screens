@@ -18,10 +18,8 @@ screens.core.module = function CoreModule(me) {
         return component_path;
     };
     me.loadTextFile = async function (filePath) {
-        me.log("loading text file: " + filePath);
         try {
             var data = await me.core.file.readFile(filePath, 'utf8');
-            me.log("serving text file: " + filePath + " length: " + (data ? data.length : 0));
         }
         catch(err) {
             err = "Cannot load text file: " + filePath + " err: " + err;
@@ -94,11 +92,9 @@ screens.core.module = function CoreModule(me) {
                 data += originalData;
             }
         }
-        me.log("code size: " + data.length);
         return data;
     };
     me.handleMultiFiles = async function (filePath, params, info) {
-        me.log("handleMultiFiles: " + JSON.stringify(params));
         var files = filePath.split(",");
         info.body = "";
         if(params.contentType) {
@@ -126,7 +122,6 @@ screens.core.module = function CoreModule(me) {
         for(var filePath of files) {
             data += await params.method(filePath, params, info);
         }
-        me.log("handleMultiFiles: size: " + data.length);
         info.body = data;
     };
     me.handleFile = async function (filePath, params, info) {

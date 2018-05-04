@@ -65,7 +65,7 @@ function screens_setup(package_name, component_name, child_name, node) {
     var platform = node(component_obj, child_name);
     var init = null;
     if (platform && screens.platform !== platform) {
-        console.log("remote component: " + id + " = " + platform + " for: " + screens.platform);
+        console.log(screens.platform + ": remote component: " + id + " = " + platform);
         component_obj = screens_create_proxy(id);
         component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
@@ -147,11 +147,11 @@ async function screens_init(items) {
                     }
                     catch (err) {
                         var message = err.message || err;
-                        console.error("Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
+                        console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
                     }
                 }
             } while (init);
-            console.log("initialized: " + item.package_name + "." + item.component_name);
+            console.log(screens.platform + ": initialized: " + item.package_name + "." + item.component_name);
         }
     }
 }
@@ -247,7 +247,7 @@ async function screens_include(packages) {
         collection[package_name] = items;
     }
     for (package_name in packages) {
-        console.log("initializing package: " + package_name);
+        console.log(screens.platform + ": initializing package: " + package_name);
         await screens_init(collection[package_name]);
     }
 }
