@@ -88,10 +88,6 @@
     display:flex;
 }
 
-.widget-window-header.child {
-    display:flex;
-}
-
 .widget-window-header.embed {
     display:none;
 }

@@ -23,8 +23,8 @@ screens.app.packets = function AppPackets(me) {
             "dataProfile": "Live",
             "viewType": "Auto"
         });
-        me.ui.options.toggleSet(me, window, "autoRefresh", me.refreshData.set);
-        me.ui.options.choiceSet(me, window, "viewType", (object, value, key, options) => {
+        me.ui.options.toggleSet(me, null, "autoRefresh", me.refreshData.set);
+        me.ui.options.choiceSet(me, null, "viewType", (object, value, key, options) => {
             var window = me.widget.window(object);
             me.core.property.set(window.var.chart, {
                 "reset": null,

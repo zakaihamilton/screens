@@ -166,7 +166,14 @@ screens.app.player = function AppPlayer(me) {
                     path = videoPath;
                 }
                 me.core.property.set(window, "ui.work.state", true);
-                var target = await me.manager.download.push(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                var target = null;
+                while(true) {
+                    target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
+                    if(target) {
+                        break;
+                    }
+                    await me.core.util.sleep(5000);
+                }
                 me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
             }

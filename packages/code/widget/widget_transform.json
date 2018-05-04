@@ -31,7 +31,7 @@
             "ui.style.display":"none",
             "ui.property.after": {
                 "storage.local.restore": "ui.basic.text",
-                "ui.attribute.list": "transform-filter-list"
+                "ui.attribute.list": "@ui.basic.ref"
             },
             "ui.monitor.change": "widget.transform.filterChange",
             "core.event.search": "widget.transform.filterChange"
@@ -40,33 +40,8 @@
             "ui.basic.tag": "datalist",
             "ui.basic.var": "filterList",
             "ui.property.after": {
-                "ui.basic.elementId": "transform-filter-list"
+                "ui.basic.elementId": "@ui.basic.ref"
             }
-        },
-        {
-            "ui.basic.tag": "div",
-            "ui.class.add": "widget.transform.termPopup",
-            "ui.basic.var": "termPopup",
-            "ui.element.component": "widget.window",
-            "title": "Tables of Phases",
-            "ui.property.style": {
-                "left": "25px",
-                "top": "50px",
-                "right": "25px",
-                "bottom": "100px",
-                "width": "",
-                "height": ""
-            },
-            "popup": true,
-            "static": true,
-            "minimize": true,
-            "ui.basic.elements": [
-                {
-                    "ui.element.component": "widget.table",
-                    "ui.class.class": "widget.transform.termTable",
-                    "ui.basic.var": "termTable"
-                }
-            ]
         }
     ],
     "widget.menu.items": [
@@ -75,7 +50,10 @@
             [
                 [
                     "Clear",
-                    "widget.transform.clear"
+                    "widget.transform.clear",
+                    {
+                        "separator": true
+                    }
                 ],
                 [
                     "Refresh",
@@ -315,6 +293,12 @@
                     }
                 ]
             ]
+        ],
+        [
+            "Diagrams",
+            [
+                "widget.transform.diagramList"
+            ]          
         ]
     ]
 }

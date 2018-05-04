@@ -37,12 +37,13 @@ screens.core.stream = function CoreStream(me) {
             var stream = null;
             stream = me.fs.createReadStream(path, {start: start, end: end});
             if(stream) {
+                me.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
                 stream.pipe(response);
             }
             else {
-                response.end();                
+                me.log("cannot stream:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
+                response.end();
             }
-            me.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
         }
         else {
             var stream = me.fs.createReadStream(path);

@@ -29,7 +29,7 @@ screens.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
-    me.parseSingle = function (session, parentInstance, wordsString) {
+    me.parseSingle = function (session, parentInstance, wordsString, textOnly) {
         var prefix = session.json.prefix;
         var suffix = session.json.suffix;
         var ignore = session.json.ignore;
@@ -151,7 +151,8 @@ screens.kab.text = function KabText(me) {
                         wordIndex: wordIndex,
                         span: numTermWords,
                         prefixLetters: me.core.string.prefixLetters(collectedWords, match),
-                        suffixLetters: me.core.string.suffixLetters(collectedWords, match)
+                        suffixLetters: me.core.string.suffixLetters(collectedWords, match),
+                        textOnly:textOnly
                     };
                     if (item.debug) {
                         debugger
@@ -243,7 +244,7 @@ screens.kab.text = function KabText(me) {
         } else if (translation || explanation) {
             if (translation) {
                 if (!instance.item.fixed && translation !== instance.target) {
-                    translation = parseSingle(session, instance, translation);
+                    translation = parseSingle(session, instance, translation, true);
                 }
             }
             me.kab.search.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
@@ -305,10 +306,10 @@ screens.kab.text = function KabText(me) {
         }
         var text = replacement;
         var replacementWithStyles = replacement;
-        if (session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
+        if (!instance.textOnly && session.options.addStyles && (instance.item.style || translation.toLowerCase() !== instance.target.toLowerCase())) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
-        else {
+        else if(prefixLetters) {
             replacementWithStyles = prefixLetters + replacementWithStyles;
         }
         var insert = replacementWithStyles;

@@ -12,11 +12,16 @@ screens.app.library = function AppLibrary(me) {
         me.singleton = me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
-        me.tagList = me.db.library.tags.list();
+        me.tagList = me.core.message.send_server("core.cache.use",
+            me.id,
+            "db.library.tags.list");
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
     };
     me.refresh = async function () {
-        me.tagList = me.db.library.tags.list();
+        me.core.message.send_server("core.cache.reset", me.id);
+        me.tagList = me.core.message.send_server("core.cache.use",
+            me.id,
+            "db.library.tags.list");
     };
     me.initOptions = async function (object) {
         var window = me.widget.window(object);
@@ -24,17 +29,17 @@ screens.app.library = function AppLibrary(me) {
             editMode: false,
             structuredMode: false
         });
-        me.ui.options.toggleSet(me, window, "editMode", me.updateEditMode);
-        me.ui.options.toggleSet(me, window, "structuredMode", me.updateMode);
+        me.ui.options.toggleSet(me, null, "editMode", me.updateEditMode);
+        me.ui.options.toggleSet(me, null, "structuredMode", me.updateMode);
         window.showResults = true;
         me.updateMode(window);
         me.reset(object);
     };
-    me.updateEditMode = function(object) {
+    me.updateEditMode = function (object) {
         me.updateMode(object);
         me.updateText(object);
     };
-    me.updateMode = function(object) {
+    me.updateMode = function (object) {
         var window = me.widget.window(object);
         var showResults = window.showResults;
         var editMode = window.options.editMode && !showResults;
@@ -45,11 +50,8 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
         me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults);
     };
-    me.cleanSearchText = function(search) {
+    me.cleanSearchText = function (search) {
         search = search.replace(/\s+/g, " ");
-        search = search.replace(/AND AND/g, "AND").trim();
-        search = search.replace(/^AND/g, "").trim();
-        search = search.replace(/AND$/g, "").trim();
         return search;
     };
     me.menuList = function (object, list, group) {
@@ -76,24 +78,33 @@ screens.app.library = function AppLibrary(me) {
                         if (search) {
                             var [nameKey, nameValue] = name.split(":");
                             nameKey = nameKey.trim().toLowerCase();
-                            search = search.split("AND").map((item) => {
-                                if(item.includes(":")) {
+                            search = me.core.string.split(search).map((item) => {
+                                if (item.includes(":")) {
                                     var [itemKey] = item.split(":");
                                     itemKey = itemKey.trim().toLowerCase();
-                                    if(itemKey === nameKey) {
+                                    if (itemKey === nameKey) {
                                         insert = false;
-                                        return " " + name + " ";
+                                        item = nameKey + ":" + nameValue;
                                     }
                                 }
+                                if (item.includes(" ")) {
+                                    item = "\"" + item + "\"";
+                                }
                                 return item;
-                            }).join("AND");
+                            }).join(" ");
                             search = me.cleanSearchText(search);
-                            if(search && insert) {
-                                search += " AND ";
+                            if (search && insert) {
+                                search += " ";
                             }
                         }
-                        if(insert) {
+                        if (insert) {
+                            if (name.includes(" ")) {
+                                search += "\"";
+                            }
                             search += name;
+                            if (name.includes(" ")) {
+                                search += "\"";
+                            }
                         }
                         me.core.property.set(window.var.search, "ui.basic.text", search);
                         me.changedSearch(window.var.search);
@@ -137,7 +148,7 @@ screens.app.library = function AppLibrary(me) {
         me.searchTimer = setTimeout(() => {
             me.searchTimer = null;
             me.search(object);
-        }, 2000);
+        }, 1000);
     };
     me.clear = function (object) {
         var window = me.widget.window(object);
@@ -151,7 +162,7 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.transform, "transform");
         window.searchText = "";
     };
-    me.reSearch = function(object) {
+    me.reSearch = function (object) {
         window.searchText = "";
         me.search(object);
     };
@@ -196,7 +207,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.updateTextFromRecords = function (object, records) {
         var window = me.widget.window(object);
-        if(!Array.isArray(records)) {
+        if (!Array.isArray(records)) {
             records = me.toRecordArray(records);
         }
         var structuredMode = window.options.structuredMode;
@@ -213,10 +224,10 @@ screens.app.library = function AppLibrary(me) {
                 if (item.id) {
                     text += "#id:" + item.id;
                 }
-                else if(item._id) {
+                else if (item._id) {
                     text += "#id:" + item._id;
                 }
-                else if(item.tags && item.tags._id) {
+                else if (item.tags && item.tags._id) {
                     text += "#id:" + item.tags._id;
                 }
                 else {
@@ -228,7 +239,7 @@ screens.app.library = function AppLibrary(me) {
                         if (tag in tags && tags[tag] === item.tags[tag]) {
                             continue;
                         }
-                        if(tag === "id" || tag === "_id") {
+                        if (tag === "id" || tag === "_id") {
                             continue;
                         }
                         if (text) {
@@ -258,12 +269,12 @@ screens.app.library = function AppLibrary(me) {
             }
         }
         var transformText = "";
-        for(var record of records) {
-            if(transformText) {
+        for (var record of records) {
+            if (transformText) {
                 transformText += "<article>";
             }
-            if(record.tags) {
-                var getTag = (tag, prefix="") => { if(tag in record.tags) { return prefix + record.tags[tag] + "\n"} else {return ""}};
+            if (record.tags) {
+                var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n" } else { return "" } };
                 transformText += getTag("article");
                 transformText += getTag("title");
                 transformText += getTag("chapter", "Chapter ");
@@ -345,7 +356,7 @@ screens.app.library = function AppLibrary(me) {
                 var id = 0;
                 var tags = json.tags[index];
                 var content = json.content[index];
-                if(json.ids) {
+                if (json.ids) {
                     id = json.ids[index];
                 }
                 else {
@@ -392,19 +403,19 @@ screens.app.library = function AppLibrary(me) {
             await me.db.library.content.remove(records.ids);
         }
     };
-    me.process = function(object) {
+    me.process = function (object) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
         text = text.split("\n").map(line => {
-            if(line.startsWith("#")) {
+            if (line.startsWith("#")) {
                 return line;
             }
-            if(line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
-                if(line.startsWith("Items")) {
+            if (line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
+                if (line.startsWith("Items")) {
                     return "";
                 }
-                if(prevLine.includes("article")) {
+                if (prevLine.includes("article")) {
                     line = "#title:" + line;
                 }
                 else {
@@ -417,25 +428,25 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.editor, "text", text);
         me.updateText(object);
     };
-    me.gotoArticle = async function(object, tags) {
+    me.gotoArticle = async function (object, tags) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         var content = await me.db.library.content.get(tags._id);
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
-        var records = [{content:content,tags:tags}];
+        var records = [{ content: content, tags: tags }];
         me.updateTextFromRecords(window, records);
         window.showResults = false;
         me.updateMode(window);
     };
-    me.showResults = function(object) {
+    me.showResults = function (object) {
         var window = me.widget.window(object);
         window.showResults = true;
         me.updateMode(window);
     };
-    me.exportMenuList = function(object) {
+    me.exportMenuList = function (object) {
         var window = me.widget.window(object);
-        var tasks = me.core.app.tasks();
+        var tasks = me.widget.window.tasks();
         var items = tasks.filter(task => {
             return me.core.property.get(task.window, "import");
         }).map(task => {
@@ -447,31 +458,33 @@ screens.app.library = function AppLibrary(me) {
                 }
             ];
         });
-        if(!items.length) {
+        if (!items.length) {
             items = [[
                 "No Open Compatible Applications",
                 null,
                 {
-                    enabled:false
+                    enabled: false
                 }
             ]]
         }
         return items;
     };
-    me.updateResults = function(object, results) {
+    me.updateResults = function (object, results) {
         var window = me.widget.window(object);
         window.showResults = true;
         me.updateMode(window);
         var noSearch = false;
-        if(!results) {
+        if (!results) {
             results = [];
             noSearch = true;
         }
-        var gotoArticle = function(info) {
-            me.gotoArticle(object, info.item);
+        var gotoArticle = function (info) {
+            setTimeout(() => {
+                me.gotoArticle(object, info.item);
+            }, 250);
         };
         var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
-            return { name: name, title: me.core.string.title(name), type: "text"};
+            return { name: name, title: me.core.string.title(name), type: "text" };
         });
         $(window.var.resultsGrid).jsGrid("clearFilter");
         $(window.var.resultsGrid).jsGrid({
@@ -481,40 +494,40 @@ screens.app.library = function AppLibrary(me) {
             inserting: false,
             filtering: true,
             clearFilterButton: true,
-            noDataContent: noSearch ? "": "No Results Found",
+            noDataContent: noSearch ? "" : "No Results Found",
             editing: false,
             sorting: true,
-     
+
             fields: fields,
             autoload: true,
             rowClick: gotoArticle,
             controller: {
-                data:results,
+                data: results,
                 loadData: function (filter) {
                     var filterCount = 0;
-                    for(var key in filter) {
-                        if(filter[key]) {
+                    for (var key in filter) {
+                        if (filter[key]) {
                             filterCount++;
                         }
                     }
-                    if(!filterCount) {
+                    if (!filterCount) {
                         return this.data;
                     }
                     return $.grep(this.data, function (item) {
                         var filterIndex = 0;
-                        for(key in filter) {
+                        for (key in filter) {
                             var filterValue = filter[key];
                             var itemValue = item[key];
-                            if(filterValue && itemValue) {
-                                if(itemValue.toLowerCase().includes(filterValue.toLowerCase())) {
+                            if (filterValue && itemValue) {
+                                if (itemValue.toLowerCase().includes(filterValue.toLowerCase())) {
                                     filterIndex++;
                                 }
                             }
                         }
                         return filterIndex === filterCount;
                     });
-                },          
-            }            
+                },
+            }
         });
     };
 };

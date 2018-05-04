@@ -1,6 +1,5 @@
 .widget-icon-icon {
-    padding-top: 4px;
-    min-width:76px;
+    min-width:70px;
     margin-left:10px;
     margin-right:0px;
     float:left;
@@ -8,7 +7,7 @@
 }
 
 .widget-icon-icon:hover:active {
-    font-weight: bold;
+    opacity:0.5;
 }
 
 .widget-icon-icon+.widget-icon-icon
@@ -22,42 +21,35 @@
 }
 
 .widget-icon-list {
-    min-width:100px;
+    display:flex;
+    align-items:stretch;
+    flex-wrap: nowrap;
+    min-width:50px;
     position:relative;
-    float:left;
-    top: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .widget-icon-image-icon {
     pointer-events:none;
     object-fit: none;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .widget-icon-image-list {
-    object-fit: none;
-    position:relative;
-    margin-left:3px;
-    margin-top:3px;
+    margin:3px;
+    flex:0;
 }
 
 .widget-icon-label-icon {
-    margin-bottom:2px;
+    position: relative;
     font-family: "MS Sans Serif";
     font-size: 16px;
     user-select: none;
 }
 
 .widget-icon-label-list {
-    position: absolute;
-    left:25px;
-    top:4px;
     font-family: "MS Sans Serif";
+    margin:3px;
     font-size: 13px;
     user-select: none;
+    white-space: nowrap;
 }

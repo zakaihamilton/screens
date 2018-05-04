@@ -41,12 +41,12 @@ screens.kab.search = function KabSearch(me) {
                 searchTerm = me.terms[term] = {count: 0};
             }
             searchTerm.count++;
-            searchTerm.term = term;
+            searchTerm.term = item.term;
             searchTerm.used = used;
             if (item.label) {
                 searchTerm.source = item.label;
             } else {
-                searchTerm.source = item.source ? item.source : source;
+                searchTerm.source = source;
             }
             searchTerm.source = me.core.string.unparseWords(searchTerm.source);
             if (item.style) {

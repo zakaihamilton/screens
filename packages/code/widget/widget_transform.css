@@ -55,18 +55,17 @@
     display:flex;
     box-sizing:border-box;
     margin:0;
-}
-
-.widget-transform-page-content {
     padding-left:3em;
     padding-right:3em;
     padding-bottom:5em;
+}
+
+.widget-transform-page-content {
     position:relative;
     text-align:justify;
     box-sizing:border-box;
-    column-gap: 3em;
+    column-gap: 4em;
     column-fill:balance;
-    overflow:hidden;
 }
 
 .widget-transform-page-content br {
@@ -450,4 +449,8 @@ h4.widget-transform-widget {
 
 .widget-transform-filter:focus {
     width:40%;
+}
+
+.widget-transform-separator.last {
+    background: black;
 }

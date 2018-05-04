@@ -12,6 +12,7 @@ screens.app.diagram = function AppDiagram(me) {
         var json = __json__;
         var options = null;
         var parent = "workspace";
+        var params = null;
         var fullscreen = false;
         json["app.diagram.path"] = path;
         if (args.length > 1) {
@@ -19,15 +20,15 @@ screens.app.diagram = function AppDiagram(me) {
             options.original = args[1];
         }
         if (args.length > 3) {
-            parent = args[2];
-            fullscreen = args[3];
+            parent = args[2] || "workspace";
+            params = args[3];
             if (fullscreen) {
                 json["widget.window.fullscreen"] = null;
             }
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
         }
-        var window = me.ui.element(json, parent, "self");
+        var window = me.ui.element(json, parent, "self", params);
         window.language = "english";
         return window;
     };
@@ -42,7 +43,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.mainWindow(object);
+            var window = me.widget.window.mainWindow(object);
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
@@ -88,8 +89,15 @@ screens.app.diagram = function AppDiagram(me) {
     me.term = {
         set: async function (object, text) {
             var window = me.widget.window(object);
-            var info = await me.kab.text.parse(window.language, text, window.options);
-            me.core.property.set(object, "ui.basic.html", info.text);
+            var array = text;
+            if (!Array.isArray(text)) {
+                array = [text];
+            }
+            var result = await me.core.util.map(array, async (text) => {
+                var info = await me.kab.text.parse(window.language, text, window.options);
+                return info.text;
+            });
+            me.core.property.set(object, "ui.basic.html", result.join("<br>"));
             me.core.property.notify(window, "update");
         }
     };

@@ -56,15 +56,24 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.search.container",
-            "ui.basic.elements": {
-                "ui.basic.var": "search",
-                "ui.basic.type": "search",
-                "ui.attribute.placeholder": "Search",
-                "ui.basic.text": "",
-                "ui.class.classExtra": "app.library.search",
-                "core.event.input": "app.library.changedSearch",
-                "ui.monitor.change": "app.library.search"
-            }
+            "ui.basic.elements": [
+                {
+                    "ui.basic.var": "search",
+                    "ui.basic.type": "search",
+                    "ui.attribute.placeholder": "Search",
+                    "ui.basic.text": "",
+                    "ui.class.classExtra": "app.library.search",
+                    "core.event.input": "app.library.changedSearch",
+                    "ui.monitor.change": "app.library.search"
+                },
+                {
+                    "ui.basic.text": "Results",
+                    "ui.touch.click": "app.library.showResults",
+                    "ui.class.classExtra":"app.library.showResults",
+                    "ui.basic.var": "showResults",
+                    "ui.basic.show":false
+                }
+            ]
         },
         {
             "ui.element.component": "widget.transform",
@@ -99,13 +108,6 @@
         },
         {
             "ui.basic.tag": "br"
-        },
-        {
-            "ui.basic.text": "Results",
-            "ui.touch.click": "app.library.showResults",
-            "ui.class.classExtra":"app.library.showResults",
-            "ui.basic.var": "showResults",
-            "ui.basic.show":false
         },
         {
             "ui.basic.text": "Delete",

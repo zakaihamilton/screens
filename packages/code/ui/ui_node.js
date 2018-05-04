@@ -6,7 +6,7 @@
 screens.ui.node = function UINode(me) {
     me.childList = function (object) {
         var childNodes = me.childNodes(object);
-        if(!childNodes) {
+        if (!childNodes) {
             return [];
         }
         var childList = Array(childNodes.length).fill(null);
@@ -19,17 +19,27 @@ screens.ui.node = function UINode(me) {
             if (!order || order === "auto" || order < 0 || order >= childNodes.length) {
                 order = 0;
             }
-            for (; childList[order] && order < childNodes.length; order++)
-                ;
+            for (; childList[order] && order < childNodes.length; order++);
             childList[order] = child;
         }
         childList = childList.filter(Boolean);
         return childList;
     };
-    me.findById = function(object, id) {
+    me.findById = function (object, id) {
         var element = object.firstChild;
-        while(element) {
-            if(element.id === id) {
+        while (element) {
+            if (element.id === id) {
+                break;
+            }
+            element = element.nextSibling;
+        }
+        return element;
+    };
+    me.findByText = function (object, text) {
+        var element = object.firstChild;
+        while (element) {
+            var elementText = me.core.property.get(element, "ui.basic.text");
+            if (text === elementText) {
                 break;
             }
             element = element.nextSibling;
@@ -120,7 +130,7 @@ screens.ui.node = function UINode(me) {
         return array;
     };
     me.appendChild = function (parent, child) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_appendChild" in parent) {
@@ -130,7 +140,7 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.insertBefore = function (parent, child, sibling) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_insertBefore" in parent) {
@@ -140,14 +150,14 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.removeChildren = function (parent) {
-        if(parent) {
+        if (parent) {
             while (parent.lastChild) {
                 me.removeChild(parent, parent.lastChild);
             }
         }
     };
     me.removeChild = function (parent, child) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_removeChild" in parent) {
@@ -157,7 +167,7 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.firstChild = function (parent) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_firstChild" in parent) {
@@ -167,7 +177,7 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.lastChild = function (parent) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_lastChild" in parent) {
@@ -177,7 +187,7 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.childNodes = function (parent) {
-        if(!parent) {
+        if (!parent) {
             return null;
         }
         if ("_childNodes" in parent) {
@@ -237,7 +247,7 @@ screens.ui.node = function UINode(me) {
         }
     };
     me.empty = function (object) {
-        if(object) {
+        if (object) {
             while (object.firstChild) {
                 object.removeChild(object.firstChild);
             }

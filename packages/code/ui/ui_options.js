@@ -50,14 +50,14 @@ screens.ui.options = function UIOptions(me) {
             component.options = options;
         }
     };
-    me.toggleSet = function (component, target, key, callback) {
+    me.toggleSet = function (component, toTargetCallback, key, callback) {
         if (!component.options) {
             component.options = {};
         }
         component[key] = {
             get: function (object) {
-                if (target) {
-                    object = target;
+                if (toTargetCallback) {
+                    object = toTargetCallback(object);
                 }
                 var options = component.options;
                 if (object && object.options) {
@@ -66,8 +66,8 @@ screens.ui.options = function UIOptions(me) {
                 return options[key];
             },
             set: function (object, value) {
-                if (target) {
-                    object = target;
+                if (toTargetCallback) {
+                    object = toTargetCallback(object);
                 }
                 var storage = me.getStorage(component, object);
                 var options = component.options;
@@ -84,14 +84,14 @@ screens.ui.options = function UIOptions(me) {
             }
         };
     };
-    me.choiceSet = function (component, target, key, callback) {
+    me.choiceSet = function (component, toTargetCallback, key, callback) {
         if (!component.options) {
             component.options = {};
         }
         component[key] = {
             get: function (object, value) {
-                if (target) {
-                    object = target;
+                if (toTargetCallback) {
+                    object = toTargetCallback(object);
                 }
                 var options = component.options;
                 if (object && object.options) {
@@ -100,8 +100,8 @@ screens.ui.options = function UIOptions(me) {
                 return options[key] === value;
             },
             set: function (object, value) {
-                if (target) {
-                    object = target;
+                if (toTargetCallback) {
+                    object = toTargetCallback(object);
                 }
                 var storage = me.getStorage(component, object);
                 var options = component.options;

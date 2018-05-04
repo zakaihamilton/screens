@@ -46,6 +46,7 @@
                     "ui.class.class": "title",
                     "ui.basic.elements": [
                         {
+                            "ui.basic.window":"@ui.node.parent",
                             "ui.basic.var": "close",
                             "ui.class.class": "close",
                             "ui.touch.click": "menu.context.show",
@@ -60,6 +61,7 @@
                             "ui.touch.dblclick": "toggleSize"
                         },
                         {
+                            "ui.basic.window":"@ui.node.parent",
                             "ui.basic.var": "minimize",
                             "ui.class.class": ["action", "minimize"],
                             "ui.touch.click": "minimize",
@@ -68,6 +70,7 @@
                             }
                         },
                         {
+                            "ui.basic.window":"@ui.node.parent",
                             "ui.basic.var": "maximize",
                             "ui.class.class": ["action", "maximize"],
                             "ui.touch.click": "toggleSize",

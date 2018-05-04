@@ -39,10 +39,6 @@ screens.widget.container = function WidgetContainer(me) {
                 me.core.property.notify(object.var.vertical, "update");
                 me.core.property.notify(object.var.horizontal, "update");
             }, 0);
-            var containers = me.ui.node.members(object.var.content, me.id);
-            containers.map(function (container) {
-                me.core.property.notify(container, "update");
-            });
         }
     };
     me.text = {

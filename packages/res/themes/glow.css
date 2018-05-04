@@ -593,8 +593,8 @@
     font-size: 16px;
     text-align:left;
     padding:3px;
-    margin-top:2px;
-    margin-bottom:2px;
+    margin-top:5px;
+    margin-bottom:5px;
     border:1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
 }
@@ -618,12 +618,14 @@
     text-align:left;
     border:1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
-    margin-top:2px;
-    margin-bottom:2px;
     margin-right:-18px;
+    margin-top:5px;
+    margin-bottom:5px;
     position:relative;
     padding-left:6px;
     padding-right:6px;
+    padding-top:3px;
+    padding-bottom:3px;
     flex:1;
     height:19px;
     width:100%;
@@ -642,6 +644,8 @@
     width:18px;
     height:18px;
     background-color: white;
+    margin-top:5px;
+    margin-bottom:5px;
 }
 
 .glow-list-dropdown-button::after {
@@ -672,7 +676,7 @@
     background:white;
     border:1px solid #0f2777;
     z-index:1000;
-    margin-top:-3px;
+    margin-top:-6px;
     box-sizing: border-box;
     display:flex;
     border-radius: 5px 5px 5px 5px;
@@ -849,18 +853,19 @@
 }
 
 .glow-window-icon.widget-icon-list {
-    display:block;
+    display:flex;
+    margin-left:6px;
+    margin-right:6px;
+    align-items:stretch;
+    flex-wrap: nowrap;
+    position:relative;
+    min-width:50px;
     box-shadow: 0px 0px 15px 3px #0f2777;
     background-color: transparent;
     color:white;
     border:1px solid darkgray;
     border-radius: 5px;
-    padding-right:6px;
-    -webkit-margin-start:6px;
-    -webkit-margin-end:6px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    padding:3px;
 }
 
 .glow-window-icon.widget-icon-list.minimize {

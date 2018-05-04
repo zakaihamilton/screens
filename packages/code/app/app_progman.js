@@ -29,7 +29,7 @@ screens.app.progman = function AppProgman(me) {
     };
     me.shell = {
         set: function (object, value) {
-            var args = me.core.cmd.split(object.args);
+            var args = me.core.string.split(object.args);
             if (args) {
                 if (me.options["minimize_on_use"]) {
                     me.core.property.set(me.singleton, "minimize");
