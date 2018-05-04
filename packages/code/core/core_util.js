@@ -4,6 +4,9 @@
  */
 
 screens.core.util = function CoreUtil(me) {
+    me.init = function() {
+        screens.performance = me.performance;
+    };
     me.removeLast = function (string, separator) {
         var array = string.split(separator);
         array.pop();
@@ -48,5 +51,31 @@ screens.core.util = function CoreUtil(me) {
                 resolve();
             }, time);
         });
+    };
+    me.start = function() {
+        if (me.platform === "server" || me.platform === "service") {
+            const time = process.hrtime();
+            return time;
+        }
+        else {
+            return performance.now();
+        }
+    };
+    me.end = function(start) {
+        if (me.platform === "server" || me.platform === "service") {
+            const NS_PER_SEC = 1e9;
+            const diff = process.hrtime(start);
+            return (diff[0] * NS_PER_SEC + diff[1]) / 1000000;
+        }
+        else {
+            const end = performance.now();
+            return end - start;
+        }
+    };
+    me.performance = async function(name, callback) {
+        var start = me.start();
+        await callback();
+        var duration = me.end(start);
+        me.log("performance: " + this.id + " - " + name + " took " + duration + " ms");
     };
 };

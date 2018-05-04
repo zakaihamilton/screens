@@ -144,20 +144,22 @@ screens.core.http = function CoreHttp(me) {
         me.core.object(me, info);
         me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
         var messages = ["check", "receive", "compress", "end"];
-        for (var message of messages) {
-            if (info.stop) {
-                break;
+        me.performance("http request url: " + info.url, async () => {
+            for (var message of messages) {
+                if (info.stop) {
+                    break;
+                }
+                try {
+                    await me.core.property.set(info, message);
+                }
+                catch (err) {
+                    info.stop = true;
+                    me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
+                    response.writeHead(403);
+                    response.end();
+                }
             }
-            try {
-                await me.core.property.set(info, message);
-            }
-            catch (err) {
-                info.stop = true;
-                me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
-                response.writeHead(403);
-                response.end();
-            }
-        }
+        });
     };
     me.parse_query = function (query) {
         var array = {};
