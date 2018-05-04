@@ -23,4 +23,7 @@ screens.core.cache = function CoreCache(me) {
     me.reset = function(id) {
         delete me.cache[id];
     };
+    me.resetAll = function() {
+        me.cache = {}
+    }
 };

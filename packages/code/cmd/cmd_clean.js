@@ -5,6 +5,7 @@
 
 screens.cmd.clean = function CmdClean(me) {
     me.cmd = async function (terminal, args) {
+        me.core.message.send_server("core.cache.resetAll");
         var cache_dir = "cache";
         var items = null;
         try {

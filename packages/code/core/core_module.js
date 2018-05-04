@@ -96,10 +96,6 @@ screens.core.module = function CoreModule(me) {
     };
     me.handleMultiFiles = async function (filePath, params, info) {
         var files = filePath.split(",");
-        info.body = "";
-        if(params.contentType) {
-            info["content-type"] = params.contentType;
-        }
         var file = files[0];
         var folder = me.core.path.folderPath(file);
         var name = me.core.path.fileName(file);
@@ -122,7 +118,7 @@ screens.core.module = function CoreModule(me) {
         for(var filePath of files) {
             data += await params.method(filePath, params, info);
         }
-        info.body = data;
+        return data;
     };
     me.handleFile = async function (filePath, params, info) {
         if (filePath.endsWith(".js")) {
@@ -130,13 +126,19 @@ screens.core.module = function CoreModule(me) {
             params.method = me.handleCode;
             params.extension = ".js";
             params.contentType = "application/javascript";
-            await me.handleMultiFiles(filePath, params, info);
+            if(params.contentType) {
+                info["content-type"] = params.contentType;
+            }
+            info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
         } else if (filePath.endsWith(".css")) {
             params = Object.assign({}, params);
             params.method = me.handleStylesheet;
             params.contentType = "text/css";
             params.extension = ".css";
-            await me.handleMultiFiles(filePath, params, info);
+            if(params.contentType) {
+                info["content-type"] = params.contentType;
+            }
+            info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
             var data = await me.loadTextFile(filePath);
