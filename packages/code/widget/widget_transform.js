@@ -659,6 +659,9 @@ screens.widget.transform = function WidgetTransform(me) {
         var params = {gridData:[]};
         var widget = me.findWidget(object);
         var rows = {};
+        if(!widget.tableOfPhases) {
+            return params;
+        }
         var terms = widget.tableOfPhases.terms;
         for (var name in terms) {
             var term = terms[name];

@@ -135,7 +135,7 @@ async function screens_init(items) {
     for (item of items) {
         var initializers = item.initializers;
         if (initializers) {
-            console.log("initializing: " + item.package_name + "." + item.component_name);
+            console.log(screens.platform + ": initializing: " + item.package_name + "." + item.component_name);
             do {
                 var init = initializers.shift();
                 if (init && init.callback) {
