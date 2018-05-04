@@ -22,24 +22,31 @@ screens.core.util = function CoreUtil(me) {
             return arg;
         });
     };
-    me.config = async function(path) {
+    me.config = async function (path) {
         var item = await me.core.json.loadFile("/package.json");
-        if(item && path) {
+        if (item && path) {
             item = me.core.json.traverse(item, path).value;
         }
         return item;
     };
-    me.isSecure = function() {
+    me.isSecure = function () {
         return location.protocol === 'https:';
     };
-    me.restart = function() {
+    me.restart = function () {
         location.reload(true);
     };
-    me.map = async function(object, callback, thisArg) {
+    me.map = async function (object, callback, thisArg) {
         var result = [];
-        for(var index = 0; index < object.length; index++) {
+        for (var index = 0; index < object.length; index++) {
             result.push(await callback.call(thisArg, object[index], index, object));
         }
         return result;
+    };
+    me.sleep = async function (time) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, time);
+        });
     };
 };
