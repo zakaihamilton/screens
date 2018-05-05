@@ -51,6 +51,9 @@ function screens_setup(package_name, component_name, child_name, node) {
             children.push(key);
         }
     }
+    if(node && node.id) {
+        return [];
+    }
     /* Create component proxy */
     var component_obj = screens_create_proxy(id);
     if (child_name) {
@@ -101,34 +104,11 @@ function screens_setup(package_name, component_name, child_name, node) {
     var initializers = children.map(function (child) {
         return screens_setup(package_name, component_name, child, node);
     });
-    if(init) {
+    if (init) {
         initializers.unshift(init);
         initializers = initializers.reduce((a, b) => a.concat(b), []);
     }
     return initializers;
-}
-
-function screens_push(package_name, component_name, callback) {
-    var file_name = package_name + "_" + component_name;
-    var code_name = package_name + "." + component_name;
-    console.log(screens.platform + ": Loading " + code_name);
-    if (package_name in screens) {
-        if (screens[package_name][component_name]) {
-            if (callback) {
-                callback();
-                return null;
-            }
-        }
-    }
-    else {
-        screens[package_name] = {};
-    }
-    var item = {
-        package_name: package_name,
-        component_name: component_name,
-        callback: callback
-    };
-    return item;
 }
 
 async function screens_init(items) {
@@ -156,7 +136,7 @@ async function screens_init(items) {
     }
 }
 
-async function screens_import(path) {
+function screens_import(path) {
     if (screens.platform === "server" || screens.platform === "service") {
         require(path);
     }
@@ -181,23 +161,30 @@ async function screens_import(path) {
     }
 }
 
-async function screens_load(items) {
+function screens_load(items, state) {
     if (items && items.length) {
         if (screens.platform === "server" || screens.platform === "service") {
             for (var item of items) {
-                if (item.package_name in screens && item.component_name in screens[item.package_name]) {
-                    return;
+                if (state === "import") {
+                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
+                        continue;
+                    }
+                    var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
+                    console.log(screens.platform + ": Loading " + path);
+                    item.promise = screens_import(path);
                 }
-                var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
-                await screens_import(path);
-                item.initializers = screens_setup(item.package_name, item.component_name);
+                else if (state === "setup") {
+                    item.initializers = screens_setup(item.package_name, item.component_name);
+                }
             }
         }
         else {
             var first = true;
             var paths = items.map((item) => {
-                if (item.package_name in screens && item.component_name in screens[item.package_name]) {
-                    return null;
+                if (state === "import") {
+                    if (item.package_name in screens && item.component_name in screens[item.package_name]) {
+                        return null;
+                    }
                 }
                 var path = item.package_name + "_" + item.component_name;
                 if (first) {
@@ -209,19 +196,24 @@ async function screens_load(items) {
             paths = paths.filter(Boolean);
             if (paths.length) {
                 var path = paths.join(",") + "?platform=" + screens.platform;
-                await screens_import(path);
-                var firstItem = items[0];
-                if (firstItem.component_name === "*") {
-                    items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
-                        return {
-                            package_name: firstItem.package_name,
-                            component_name: component_name
-                        };
+                if (state === "import") {
+                    console.log(screens.platform + ": Loading " + path);
+                    items[0].promise = screens_import(path);
+                }
+                else if (state === "setup") {
+                    var firstItem = items[0];
+                    if (firstItem.component_name === "*") {
+                        items = Object.keys(screens[firstItem.package_name]).map((component_name) => {
+                            return {
+                                package_name: firstItem.package_name,
+                                component_name: component_name
+                            };
+                        });
+                    }
+                    items.map((item) => {
+                        item.initializers = screens_setup(item.package_name, item.component_name);
                     });
                 }
-                items.map((item) => {
-                    item.initializers = screens_setup(item.package_name, item.component_name);
-                });
             }
         }
     }
@@ -240,11 +232,32 @@ async function screens_include(packages) {
     for (var package_name in packages) {
         var components = packages[package_name];
         var items = [];
+        if (!(package_name in screens)) {
+            screens[package_name] = {};
+        }
         components.forEach((component_name) => {
-            items.push(screens_push(package_name, component_name));
+            var item = {
+                package_name: package_name,
+                component_name: component_name
+            };
+            items.push(item);
         });
-        items = await screens_load(items);
+        items = screens_load(items, "import");
         collection[package_name] = items;
+    }
+    var promises = [];
+    for (package_name in packages) {
+        for(var item of collection[package_name]) {
+            if(item.promise) {
+                promises.push(item.promise);
+            }
+        }
+    }
+    if(promises) {
+        await Promise.all(promises);
+    }
+    for (package_name in packages) {
+        collection[package_name] = screens_load(collection[package_name], "setup");
     }
     for (package_name in packages) {
         console.log(screens.platform + ": initializing package: " + package_name);
