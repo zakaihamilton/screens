@@ -136,12 +136,18 @@ async function screens_init(items) {
     }
 }
 
-function screens_import(path) {
+function screens_import(path, optional) {
     if (screens.platform === "server" || screens.platform === "service") {
         require(path);
     }
     else if (screens.platform === "client") {
-        importScripts(path);
+        try {
+            importScripts(path);
+        }
+        catch(e) {
+            console.error("Failure in importing: " + path);
+            throw e;
+        }
     }
     else if (screens.platform === "browser") {
         var isScript = path.includes(".js");
@@ -153,10 +159,11 @@ function screens_import(path) {
         else if(isStylesheet) {
             tagName = "link";
         }
-        var items = document.getElementsByTagName("tagName");
+        var items = document.getElementsByTagName(tagName);
         for (var i = items.length; i--;) {
-            if (items[i].src === path || items[i].href === path) {
-                return;
+            var target = items[i].src || items[i].href;
+            if (target.includes(path)) {
+                return items[i];
             }
         }
         return new Promise((resolve, reject) => {
@@ -179,7 +186,13 @@ function screens_import(path) {
                 item.rel = "stylesheet";
                 item.media = "screen,print";
             }
-            item.onload = resolve;
+            item.onload = () => {
+                resolve(item);
+            };
+            item.onerror = () => {
+                me.error("Failure in stylesheet: " + path);
+                reject();
+            };
             parentNode.appendChild(item);
         });
     }
@@ -195,7 +208,7 @@ function screens_load(items, state) {
                     }
                     var path = "../code/" + item.package_name + "/" + item.package_name + "_" + item.component_name;
                     console.log(screens.platform + ": Loading " + path);
-                    item.promise = screens_import(path);
+                    item.promises = [screens_import(path)];
                 }
                 else if (state === "setup") {
                     item.initializers = screens_setup(item.package_name, item.component_name);
@@ -222,7 +235,12 @@ function screens_load(items, state) {
                 var path = paths.join(",") + "?platform=" + screens.platform;
                 if (state === "import") {
                     console.log(screens.platform + ": Loading " + path);
-                    items[0].promise = screens_import(path);
+                    var promises = items[0].promises = [];
+                    promises.push(screens_import(path));
+                    var firstItem = items[0];
+                    if (firstItem.component_name === "*" && screens.platform === "browser") {
+                        promises.push(screens_import(path.replace(/\.js/gi, ".css"), true));
+                    }
                 }
                 else if (state === "setup") {
                     var firstItem = items[0];
@@ -272,8 +290,8 @@ async function screens_include(packages) {
     var promises = [];
     for (package_name in packages) {
         for(var item of collection[package_name]) {
-            if(item.promise) {
-                promises.push(item.promise);
+            if(item.promises) {
+                promises.push(...item.promises);
             }
         }
     }
@@ -303,7 +321,8 @@ Object.assign(screens, {
     components: [],
     id: "package",
     platform: screens_platform(),
-    include: screens_include
+    include: screens_include,
+    import: screens_import
 });
 
 var platform = screens_platform();

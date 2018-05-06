@@ -81,7 +81,7 @@ screens.ui.theme = function UITheme(me) {
         if(data) {
             me.unload();
             me.currentTheme = data;
-            me.currentTheme.link = await me.ui.class.loadStylesheet(path + ".css");
+            me.currentTheme.link = await me.import(path + ".css");
             me.applyTheme(function(element, classItem) {
                 var mapping = me.findMapping(classItem);
                 if(!mapping) {

@@ -5,7 +5,6 @@
 
 screens.ui.class = function UIClass(me) {
     me.stylesheets = {};
-    me.styleSheetsLeftToLoad = 0;
     me.processClass = function(object, classList, callback) {
         if (Array.isArray(classList)) {
             classList = classList.join(" ");
@@ -67,27 +66,6 @@ screens.ui.class = function UIClass(me) {
             });
         }
     };
-    me.loadStylesheet = async function(path) {
-        me.styleSheetsLeftToLoad++;
-        var link = document.createElement("link");
-        link.href = path;
-        link.type = "text/css";
-        link.rel = "stylesheet";
-        link.media = "screen,print";
-        await new Promise((resolve, reject) => {
-            link.onload = () => {
-                me.log("Loaded css stylesheet: " + path + "=" + link.href);
-                resolve();
-            };
-            document.getElementsByTagName("head")[0].appendChild(link);
-            me.log("Loading css stylesheet: " + path + "=" + link.href);
-        });
-        return link;
-    };
-    me.loadPackageStylesheets = async function (package_name) {
-        var fullPath = "/packages/code/" + package_name + "/" + package_name + "_*.css";
-        return await me.loadStylesheet(fullPath);
-    };
     me.to_class = function (object, path) {
         path = path.replace("@component", object.component);
         if(path.startsWith(".")) {
@@ -134,9 +112,6 @@ screens.ui.class = function UIClass(me) {
         });
     };
     me.useStylesheet = async function(package_name) {
-        if (!me.stylesheets[package_name]) {
-            me.log("loading css stylesheets for package: " + package_name);
-            me.stylesheets[package_name] = await me.loadPackageStylesheets(package_name);
-        }
+        await me.import("/packages/code/" + package_name + "/" + package_name + "_*.css");
     };
 };

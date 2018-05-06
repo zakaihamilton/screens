@@ -6,8 +6,8 @@
 screens.lib.jsgrid = function LibJSGrid(me) {
     me.init = async function () {
         me.jsgrid = await me.core.require("/external/jsgrid-1.5.3/jsgrid.js");
-        me.ui.class.loadStylesheet("/external/jsgrid-1.5.3/jsgrid.css");
-        me.ui.class.loadStylesheet("/external/jsgrid-1.5.3/jsgrid-theme.css");
+        me.import("/external/jsgrid-1.5.3/jsgrid.css");
+        me.import("/external/jsgrid-1.5.3/jsgrid-theme.css");
         me.proxy.apply = me.jsgrid;
     };
     me.proxy.get = function (object, property) {
