@@ -85,7 +85,7 @@ screens.app.transform = function AppTransform(me) {
             me.updateContentList();
         }
     };
-    me.import = function(object, text) {
+    me.importData = function(object, text) {
         var window = me.widget.window.mainWindow(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
@@ -103,7 +103,7 @@ screens.app.transform = function AppTransform(me) {
                     async function () {
                         var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
                         var content = me.core.string.decode(fullItem.content);
-                        me.import(window, content);
+                        me.importData(window, content);
                     },
                     null,
                     {

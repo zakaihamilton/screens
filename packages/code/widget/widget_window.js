@@ -152,31 +152,31 @@ screens.widget.window = function WidgetWindow(me) {
         }
         return window;
     };
-    me.export = {
+    me.exportData = {
         get: function (object) {
             var window = me.child(object);
             if (window.app_component) {
-                return me.core.property.has(window, window.app_component.id + ".export");
+                return me.core.property.has(window, window.app_component.id + ".exportData");
             }
         },
         set: function (object, data) {
             var window = me.child(object);
             if (window.app_component) {
-                me.core.property.set(window, window.app_component.id + ".export", data);
+                me.core.property.set(window, window.app_component.id + ".exportData", data);
             }
         }
     };
-    me.import = {
+    me.importData = {
         get: function (object) {
             var window = me.child(object);
             if (window.app_component) {
-                return me.core.property.has(window, window.app_component.id + ".import");
+                return me.core.property.has(window, window.app_component.id + ".importData");
             }
         },
         set: function (object, data) {
             var window = me.child(object);
             if (window.app_component) {
-                me.core.property.set(window, window.app_component.id + ".import", data);
+                me.core.property.set(window, window.app_component.id + ".importData", data);
                 me.core.property.set(window, "show", true);
             }
         }

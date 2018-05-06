@@ -12,7 +12,11 @@ screens.app.library = function AppLibrary(me) {
         me.singleton = me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
-        await me.core.require("/node_modules/jquery/dist/jquery.js");
+        var promises = [];
+        promises.push(me.import("external/jsgrid-1.5.3/jsgrid.css"));
+        promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.css"));
+        promises.push(me.import("node_modules/jquery/dist/jquery.js"));
+        await Promise.all(promises);
         await me.core.require("/external/jsgrid-1.5.3/jsgrid.js");
         me.tagList = me.core.message.send_server("core.cache.use",
             me.id,
@@ -450,13 +454,13 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         var tasks = me.widget.window.tasks();
         var items = tasks.filter(task => {
-            return me.core.property.get(task.window, "import");
+            return me.core.property.get(task.window, "importData");
         }).map(task => {
             return [
                 task.label,
                 () => {
                     var text = me.core.property.get(window.var.transform, "text");
-                    me.core.property.set(task.window, "import", text);
+                    me.core.property.set(task.window, "importData", text);
                 }
             ];
         });
