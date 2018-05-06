@@ -5,13 +5,13 @@
 
 screens.startup.app = function StartupApp(me) {
     me.run = async function () {
-        await me.ui.class.useStylesheet("widget");
         me.ui.element([
             {
                 "ui.element.component": "widget.desktop",
                 "ui.basic.var": "desktop"
             }
         ]);
+        await me.lib.google.load();
         if (me.lib.google.isSignedIn()) {
             me.start();
         }

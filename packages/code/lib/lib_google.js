@@ -7,14 +7,16 @@ screens.lib.google = function LibGoogle(me) {
     me.init = async function () {
         me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);
-        var google = await me.core.util.config("settings.lib.google");
-        await me.core.require("https://apis.google.com/js/platform.js");
+    }
+    me.load = function() {
+        var google = me.core.util.config("settings.lib.google");
         return new Promise((resolve, reject) => {
-            gapi.load('auth2', function () {
-                me.auth2 = gapi.auth2.init({
-                    client_id: google.client_id
-                }).then((auth2) => {
-                    me.auth2 = auth2;
+            gapi.load('auth2', async function () {
+                google = await google;
+                try {
+                    me.auth2 = await gapi.auth2.init({
+                        client_id: google.client_id
+                    });
                     me.auth2.isSignedIn.listen(me.signInChanged);
                     me.auth2.currentUser.listen(me.userChanged);
                     var state = me.auth2.isSignedIn.get();
@@ -23,20 +25,19 @@ screens.lib.google = function LibGoogle(me) {
                         me.auth2.signIn().catch(err => {
                             me.setStatus("Error: " + err.message || err);
                         });
-                        me.core.listener.wait(me.id).then(() => {
-                            me.setStatus("Sign in occured");
-                            resolve();
-                        });
+                        await me.core.listener.wait(me.id);
+                        me.setStatus("Sign in occured");
                     }
                     else {
                         me.setStatus("Not signed in");
-                        resolve();
                     }
-                }).catch((error) => {
+                    resolve();
+                }
+                catch(error) {
                     error = "Cannot initialize google authenticiation: " + JSON.stringify(error);
                     me.setStatus(error);
                     reject(error);
-                });
+                }
             });
         });
     };
