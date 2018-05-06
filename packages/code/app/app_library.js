@@ -12,12 +12,6 @@ screens.app.library = function AppLibrary(me) {
         me.singleton = me.ui.element(__json__, "workspace", "self");
     };
     me.init = async function () {
-        await screens.include({
-            "lib":[
-                "jquery",
-                "jsgrid"
-            ]
-        });
         me.tagList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
