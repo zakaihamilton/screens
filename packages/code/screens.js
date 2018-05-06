@@ -144,19 +144,43 @@ function screens_import(path) {
         importScripts(path);
     }
     else if (screens.platform === "browser") {
-        var scripts = document.getElementsByTagName("script");
-        for (var i = scripts.length; i--;) {
-            if (scripts[i].src === path) {
+        var isScript = path.includes(".js");
+        var isStylesheet = path.includes(".css");
+        var tagName = "";
+        if(isScript) {
+            tagName = "script";
+        }
+        else if(isStylesheet) {
+            tagName = "link";
+        }
+        var items = document.getElementsByTagName("tagName");
+        for (var i = items.length; i--;) {
+            if (items[i].src === path || items[i].href === path) {
                 return;
             }
         }
         return new Promise((resolve, reject) => {
-            var ref = scripts[0];
-            var script = document.createElement("script");
-            script.src = path;
-            script.async = true;
-            script.onload = resolve;
-            ref.parentNode.appendChild(script);
+            var ref = items[0];
+            var parentNode = null;
+            if(ref) {
+                parentNode = ref.parentNode;
+            }
+            else {
+                parentNode = document.getElementsByTagName("head")[0];
+            }
+            var item = document.createElement(tagName);
+            if(isScript) {
+                item.src = path;
+                item.async = true;
+            }
+            if(isStylesheet) {
+                item.href = path;
+                item.type = "text/css";
+                item.rel = "stylesheet";
+                item.media = "screen,print";
+            }
+            item.onload = resolve;
+            parentNode.appendChild(item);
         });
     }
 }
