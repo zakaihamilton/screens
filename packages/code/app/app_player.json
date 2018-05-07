@@ -129,27 +129,27 @@
             "ui.touch.click":"app.player.updatePlayer"
         },
         {
-            "ui.element.component":"widget.audio",
+            "ui.element.component":"widget.player.audio",
             "ui.attribute.preload":"auto",
             "ui.basic.var":"audioPlayer",
             "ui.property.style" : {
                 "display":"none",
                 "left":"5%",
-                "top":"160px",
+                "top":"180px",
                 "width":"90%",
                 "height":"100px",
                 "position":"absolute"
             }
         },
         {
-            "ui.element.component":"widget.video",
+            "ui.element.component":"widget.player.video",
             "ui.basic.var":"videoPlayer",
             "ui.property.style" : {
                 "display":"none",
                 "left":"5%",
-                "top":"160px",
+                "top":"180px",
                 "width":"90%",
-                "height":"70%",
+                "height":"60%",
                 "position":"absolute"
             }
         },

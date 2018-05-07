@@ -24,7 +24,7 @@ screens.app.player = function AppPlayer(me) {
         try {
             me.core.file.makeDir(me.cachePath);
         }
-        catch(err) {
+        catch (err) {
             me.log(me.cachePath + " err: " + err.message || err);
         }
         return me.singleton;
@@ -150,8 +150,8 @@ screens.app.player = function AppPlayer(me) {
             var window = me.singleton;
             var showAudioPlayer = me.core.property.get(window.var.audioType, "state");
             var showVideoPlayer = me.core.property.get(window.var.videoType, "state");
-            me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "block" : "none");
-            me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "block" : "none");
+            me.core.property.set(window.var.audioPlayer, "ui.style.display", "none");
+            me.core.property.set(window.var.videoPlayer, "ui.style.display", "none");
             me.core.property.set(window.var.audioPlayer, "source", "");
             me.core.property.set(window.var.videoPlayer, "source", "");
             var groupName = me.core.property.get(window.var.groupList, "ui.basic.text");
@@ -167,15 +167,17 @@ screens.app.player = function AppPlayer(me) {
                 }
                 me.core.property.set(window, "ui.work.state", true);
                 var target = null;
-                while(true) {
+                while (true) {
                     target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
-                    if(target) {
+                    if (target) {
                         break;
                     }
                     await me.core.util.sleep(5000);
                 }
                 me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
+                me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "block" : "none");
+                me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "block" : "none");
             }
         }
     };
@@ -188,10 +190,12 @@ screens.app.player = function AppPlayer(me) {
             if (value) {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "hidden");
                 }, 250);
             } else {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "visible");
                 }, 500);
             }
         }

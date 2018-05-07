@@ -12,7 +12,12 @@ screens.ui.attribute = function UIAttribute(me) {
             },
             set: function (object, value) {
                 if (typeof value !== "undefined") {
-                    object.setAttribute(property, value);
+                    if(value === null) {
+                        object.removeAttribute(property);
+                    }
+                    else {
+                        object.setAttribute(property, value);
+                    }
                 }
             }
         };

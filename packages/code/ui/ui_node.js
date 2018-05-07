@@ -47,11 +47,18 @@ screens.ui.node = function UINode(me) {
         return element;
     };
     me.container = function (object, component_name) {
+        var component_names = [];
+        if(Array.isArray(component_name)) {
+            component_names = component_name;
+        }
+        else {
+            component_names = [component_name];
+        }
         while (object) {
             if (object === me.ui.element.workspace()) {
                 return null;
             }
-            if (object.component === component_name) {
+            if(component_names.includes(object.component)) {
                 return object;
             }
             object = object.parentNode;

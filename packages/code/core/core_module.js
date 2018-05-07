@@ -129,6 +129,7 @@ screens.core.module = function CoreModule(me) {
             if(params.contentType) {
                 info["content-type"] = params.contentType;
             }
+            me.core.cache.reset(me.id + "." + filePath);
             info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
         } else if (filePath.endsWith(".css")) {
             params = Object.assign({}, params);
@@ -138,6 +139,7 @@ screens.core.module = function CoreModule(me) {
             if(params.contentType) {
                 info["content-type"] = params.contentType;
             }
+            me.core.cache.reset(me.id + "." + filePath);
             info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";

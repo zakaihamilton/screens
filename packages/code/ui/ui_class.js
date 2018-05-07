@@ -5,6 +5,21 @@
 
 screens.ui.class = function UIClass(me) {
     me.stylesheets = {};
+    me.proxy.get = function (object, property) {
+        return {
+            get: function (object) {
+                return me.core.property.get(object, "ui.class.contains", property);
+            },
+            set: function (object, value) {
+                if(value) {
+                    me.core.property.set(object, "ui.class.add", property);
+                }
+                else {
+                    me.core.property.set(object, "ui.class.remove", property);
+                }
+            }
+        };
+    };
     me.processClass = function(object, classList, callback) {
         if (Array.isArray(classList)) {
             classList = classList.join(" ");
