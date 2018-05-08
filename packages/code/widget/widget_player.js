@@ -162,11 +162,12 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                 },
                 {
                     "ui.basic.tag": "a",
-                    "ui.basic.var": "link",
+                    "ui.basic.var": "download",
                     "ui.class.class": [
                         "button",
-                        "link"
-                    ]
+                        "download"
+                    ],
+                    "ui.attribute.download":"download"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -222,7 +223,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var widget = me.mainWidget(object);
         var controls = widget.var.controls;
         var player = widget.var.player;
-        me.core.property.set(controls.var.link, "ui.attribute.href", player.src);
+        me.core.property.set(controls.var.download, "ui.attribute.href", player.src);
     }
     me.formatTime = function (currentTime) {
         var current_hour = parseInt(currentTime / 3600) % 24,
