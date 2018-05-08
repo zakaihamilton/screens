@@ -11,6 +11,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",
+            "ui.class.class": "widget",
             "ui.basic.elements": [
                 {
                     "ui.basic.elements": [
@@ -50,6 +51,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "div",
+            "ui.class.class": "widget",
             "ui.basic.elements": [
                 {
                     "ui.basic.elements": [
@@ -65,8 +67,8 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "ui.basic.var": "player",
-                    "ui.style.height":"100%",
-                    "ui.style.width":"100%"
+                    "ui.attribute.height": "90%",
+                    "ui.attribute.width": "90%"
                 },
                 {
                     "ui.element.component": "widget.player.controls",
@@ -90,79 +92,75 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
 screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.element = {
         properties: {
+            "ui.basic.var": "controls",
+            "ui.class.class": "container",
             "ui.basic.elements": [
                 {
-                    "ui.basic.var": "controls",
-                    "ui.class.class": "container",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.basic.var": "play",
-                            "ui.class.class": [
-                                "button",
-                                "play"
-                            ],
-                            "ui.touch.click": "play"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.basic.var": "stop",
-                            "ui.class.class": [
-                                "button",
-                                "stop"
-                            ],
-                            "ui.touch.click": "stop"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.basic.var": "rewind",
-                            "ui.class.class": [
-                                "button",
-                                "rewind"
-                            ],
-                            "ui.touch.click": "rewind"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.basic.var": "forward",
-                            "ui.class.class": [
-                                "button",
-                                "forward"
-                            ],
-                            "ui.touch.click": "forward"
-                        },
-                        {
-                            "ui.element.component": "widget.progress",
-                            "ui.class.classExtra": "progress",
-                            "ui.basic.var": "progress",
-                            "min": "0",
-                            "max": "100",
-                            "value": "0",
-                            "ui.touch.down": "seekStart",
-                            "ui.touch.move": "seekMove",
-                            "ui.touch.up": "seekEnd",
-                            "ui.touch.over": "seekOver",
-                            "ui.touch.leave": "seekLeave"
-                        },
-                        {
-                            "ui.basic.tag": "a",
-                            "ui.basic.var": "link",
-                            "ui.class.class": [
-                                "button",
-                                "link"
-                            ]
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.basic.var": "fullscreen",
-                            "ui.class.class": [
-                                "button",
-                                "fullscreen"
-                            ],
-                            "ui.touch.click": "widget.window.fullscreen"
-                        },
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "play",
+                    "ui.class.class": [
+                        "button",
+                        "play"
+                    ],
+                    "ui.touch.click": "play"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "stop",
+                    "ui.class.class": [
+                        "button",
+                        "stop"
+                    ],
+                    "ui.touch.click": "stop"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "rewind",
+                    "ui.class.class": [
+                        "button",
+                        "rewind"
+                    ],
+                    "ui.touch.click": "rewind"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "forward",
+                    "ui.class.class": [
+                        "button",
+                        "forward"
+                    ],
+                    "ui.touch.click": "forward"
+                },
+                {
+                    "ui.element.component": "widget.progress",
+                    "ui.class.classExtra": "progress",
+                    "ui.basic.var": "progress",
+                    "min": "0",
+                    "max": "100",
+                    "value": "0",
+                    "ui.touch.down": "seekStart",
+                    "ui.touch.move": "seekMove",
+                    "ui.touch.up": "seekEnd",
+                    "ui.touch.over": "seekOver",
+                    "ui.touch.leave": "seekLeave"
+                },
+                {
+                    "ui.basic.tag": "a",
+                    "ui.basic.var": "link",
+                    "ui.class.class": [
+                        "button",
+                        "link"
                     ]
-                }
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "fullscreen",
+                    "ui.class.class": [
+                        "button",
+                        "fullscreen"
+                    ],
+                    "ui.touch.click": "widget.window.fullscreen"
+                },
             ]
         }
     };
@@ -196,7 +194,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         me.updateLink(object);
         me.updateFullscreen(object);
     };
-    me.updateFullscreen = function(object) {
+    me.updateFullscreen = function (object) {
         var window = me.widget.window(object);
         var widget = me.mainWidget(object);
         var controls = widget.var.controls;
@@ -204,7 +202,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var fullscreen = me.core.property.get(window, "fullscreen");
         me.core.property.set(widget, "ui.class.fullscreen", fullscreen);
     };
-    me.updateLink = function(object) {
+    me.updateLink = function (object) {
         var widget = me.mainWidget(object);
         var controls = widget.var.controls;
         var player = widget.var.player;

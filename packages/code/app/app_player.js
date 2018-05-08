@@ -150,8 +150,7 @@ screens.app.player = function AppPlayer(me) {
             var window = me.singleton;
             var showAudioPlayer = me.core.property.get(window.var.audioType, "state");
             var showVideoPlayer = me.core.property.get(window.var.videoType, "state");
-            me.core.property.set(window.var.audioPlayer, "ui.style.display", "none");
-            me.core.property.set(window.var.videoPlayer, "ui.style.display", "none");
+            me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.audioPlayer, "source", "");
             me.core.property.set(window.var.videoPlayer, "source", "");
             var groupName = me.core.property.get(window.var.groupList, "ui.basic.text");
@@ -176,8 +175,8 @@ screens.app.player = function AppPlayer(me) {
                 }
                 me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
-                me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "block" : "none");
-                me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "block" : "none");
+                me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
+                me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
             }
         }
     };

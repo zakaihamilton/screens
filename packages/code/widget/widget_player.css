@@ -1,7 +1,25 @@
+.widget-player-audio-widget {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin:10px;
+}
+
+.widget-player-video-widget {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin:10px;
+}
+
 .widget-player-controls-container {
     display:flex;
     height:48px;
     flex-wrap: wrap;
+    flex:0 0 48px;
+    margin:10px;
 }
 
 .widget-player-controls-button {

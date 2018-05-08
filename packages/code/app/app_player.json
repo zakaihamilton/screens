@@ -132,12 +132,14 @@
             "ui.element.component":"widget.player.audio",
             "ui.attribute.preload":"auto",
             "ui.basic.var":"audioPlayer",
-            "ui.class.class":"app.player.audioPlayer"
+            "ui.class.classExtra":"app.player.audioPlayer",
+            "ui.style.display":"none"
         },
         {
             "ui.element.component":"widget.player.video",
             "ui.basic.var":"videoPlayer",
-            "ui.class.class":"app.player.videoPlayer"
+            "ui.class.classExtra":"app.player.videoPlayer",
+            "ui.style.display":"none"
         },
         {
             "ui.element.component":"widget.spinner",
