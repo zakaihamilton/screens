@@ -3,7 +3,6 @@
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin:10px;
 }
 
 .widget-player-video-widget {
@@ -11,15 +10,14 @@
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin:10px;
+    overflow: hidden;
 }
 
 .widget-player-controls-container {
     display:flex;
-    height:48px;
     flex-wrap: wrap;
-    flex:0 0 48px;
     margin:10px;
+    flex:0 0 auto;    
 }
 
 .widget-player-controls-button {
@@ -77,7 +75,7 @@
     flex:1;
     background-color:white;
     border:1px solid black;
-    height:48px;
+    min-height:48px;
     min-width: 300px;
     padding:3px;
     margin-left:3px;

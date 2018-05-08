@@ -26,7 +26,8 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
-                    "ui.basic.var": "player"
+                    "ui.basic.var": "player",
+                    "ui.class.class":"player"
                 },
                 {
                     "ui.element.component": "widget.player.controls",
@@ -67,8 +68,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "ui.basic.var": "player",
-                    "ui.attribute.height": "90%",
-                    "ui.attribute.width": "90%"
+                    "ui.class.class":"player"
                 },
                 {
                     "ui.element.component": "widget.player.controls",
@@ -76,6 +76,22 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                 }
             ]
         }
+    };
+    me.update = function(object) {
+        var left = object.parentNode.offsetLeft;
+        var top = object.parentNode.offsetTop;
+        var width = object.parentNode.clientWidth;
+        var height = object.parentNode.clientHeight;
+        var widthText = "";
+        var heightText = "";
+        if(width > height) {
+            heightText = "90%";
+        }
+        else {
+            widthText = "90%";
+        }
+        me.core.property.set(object.var.player, "ui.style.width", widthText);
+        me.core.property.set(object.var.player, "ui.style.height", heightText);
     };
     me.source = {
         set: function (object, path) {
