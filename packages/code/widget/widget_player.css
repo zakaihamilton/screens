@@ -1,6 +1,7 @@
 .widget-player-controls-container {
     display:flex;
     height:48px;
+    flex-wrap: wrap;
 }
 
 .widget-player-controls-button {
@@ -53,6 +54,7 @@
     background-color:white;
     border:1px solid black;
     height:48px;
+    min-width: 300px;
     padding:3px;
     margin-left:3px;
     margin-right:3px;

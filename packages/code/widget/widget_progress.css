@@ -5,7 +5,7 @@
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
     background-color: #eee;
-    border-radius: 2px;    
+    border-radius: 2px;   
 }
 
 .widget-progress-bar {
@@ -26,12 +26,11 @@
 .widget-progress-label {
     position: absolute;
     top: 50%;
-    overflow: hidden;
     text-align: center;
     left:0px;
     right:0px;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size:24px;
+    font-size:20px;
     margin-top: -12px;
     color:black;
     user-select: none;

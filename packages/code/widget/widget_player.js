@@ -213,7 +213,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var label = me.formatTime(player.currentTime);
         if (player.duration) {
             label += " / " + me.formatTime(player.duration) +
-                " ( " + me.formatTime(player.duration - player.currentTime) + " remaining)";
+                " ( " + me.formatTime(player.duration - player.currentTime) + " left)";
         }
         me.core.property.set(progress, "label", label);
     };
