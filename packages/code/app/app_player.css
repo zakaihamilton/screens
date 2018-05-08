@@ -1,0 +1,34 @@
+
+.app-player-audioPlayer {
+    display:none;
+    left:5%;
+    top:180px;
+    width:90%;
+    height:100px;
+    position:absolute;
+    background-color:white;
+}
+
+.app-player-audioPlayer.fullscreen {
+    left:0px;
+    top:0px;
+    width:100%;
+    height:90%;
+}
+
+.app-player-videoPlayer {
+    display:none;
+    left:5%;
+    top:180px;
+    width:90%;
+    height:60%;
+    position:absolute;
+    background-color:white;
+}
+
+.app-player-videoPlayer.fullscreen {
+    left:0px;
+    top:0px;
+    width:100%;
+    height:90%;
+}

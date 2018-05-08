@@ -132,26 +132,12 @@
             "ui.element.component":"widget.player.audio",
             "ui.attribute.preload":"auto",
             "ui.basic.var":"audioPlayer",
-            "ui.property.style" : {
-                "display":"none",
-                "left":"5%",
-                "top":"180px",
-                "width":"90%",
-                "height":"100px",
-                "position":"absolute"
-            }
+            "ui.class.class":"app.player.audioPlayer"
         },
         {
             "ui.element.component":"widget.player.video",
             "ui.basic.var":"videoPlayer",
-            "ui.property.style" : {
-                "display":"none",
-                "left":"5%",
-                "top":"180px",
-                "width":"90%",
-                "height":"60%",
-                "position":"absolute"
-            }
+            "ui.class.class":"app.player.videoPlayer"
         },
         {
             "ui.element.component":"widget.spinner",

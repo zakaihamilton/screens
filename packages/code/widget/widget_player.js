@@ -59,7 +59,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                         }
                     ],
                     "ui.basic.tag": "video",
-                    "ui.attribute.controls": "",
+                    "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
@@ -152,6 +152,15 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                                 "link"
                             ]
                         },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.basic.var": "fullscreen",
+                            "ui.class.class": [
+                                "button",
+                                "fullscreen"
+                            ],
+                            "ui.touch.click": "widget.window.fullscreen"
+                        },
                     ]
                 }
             ]
@@ -185,6 +194,15 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         me.updateProgress(object);
         me.updateButtons(object);
         me.updateLink(object);
+        me.updateFullscreen(object);
+    };
+    me.updateFullscreen = function(object) {
+        var window = me.widget.window(object);
+        var widget = me.mainWidget(object);
+        var controls = widget.var.controls;
+        var player = widget.var.player;
+        var fullscreen = me.core.property.get(window, "fullscreen");
+        me.core.property.set(widget, "ui.class.fullscreen", fullscreen);
     };
     me.updateLink = function(object) {
         var widget = me.mainWidget(object);
