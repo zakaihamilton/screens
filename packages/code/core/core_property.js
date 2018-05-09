@@ -140,7 +140,7 @@ screens.core.property = function CoreProperty(me) {
         }
         return {object: object, name: name, value: value};
     };
-    me.link = function (source, target, enabled, object) {
+    me.link = function (source, target, beforeProperty, object) {
         if (!object) {
             object = me;
         }
@@ -158,7 +158,7 @@ screens.core.property = function CoreProperty(me) {
             source_list = {};
             forwarding_list[source] = source_list;
         }
-        source_list[target] = enabled;
+        source_list[target] = beforeProperty;
     };
     me.notify = function (object, name, value) {
         if (!object) {
@@ -174,6 +174,19 @@ screens.core.property = function CoreProperty(me) {
             object.notifications[name] = null;
             me.core.property.set(object, name, value);
         }, 250);
+    };
+    me.sendToLinks = function(object, name, value, beforeProperty) {
+        var allPromises = [];
+        var source_method = me.core.property.fullname(object, name);
+        var promises = me.setTo(me._forwarding_list, object, source_method, value, beforeProperty);
+        if(promises) {
+            allPromises.push(...promises);
+        }
+        promises = me.setTo(object._forwarding_list, object, source_method, value, beforeProperty);
+        if(promises) {
+            allPromises.push(...promises);
+        }
+        return allPromises;
     };
     me.set = function (object, name, value) {
         if (!object || !name) {
@@ -194,14 +207,9 @@ screens.core.property = function CoreProperty(me) {
         }
         var promises = [];
         if(typeof name === "string") {
-            var source_method = me.core.property.fullname(object, name);
-            var promise = me.setTo(me._forwarding_list, object, source_method, value);
-            if(promise) {
-                promises.push(promise);
-            }
-            promise = me.setTo(object._forwarding_list, object, source_method, value);
-            if(promise) {
-                promises.push(promise);
+            var subPromises = me.sendToLinks(object, name, value, true);
+            if(subPromises.length) {
+                promises.push(...subPromises);
             }
         }
         else if(typeof name !== "function") {
@@ -212,23 +220,24 @@ screens.core.property = function CoreProperty(me) {
             }
         }
         var result = me.core.property.get(object, name, value, "set");
-        if(result && result.then) {
-            promises.push(result);
+        if(typeof name === "string") {
+            var subPromises = me.sendToLinks(object, name, value, false);
+            if(subPromises.length) {
+                promises.push(...subPromises);
+            }
         }
-        else if(promises.length) {
-            promises.push(Promise.resolve(result));
-            result = Promise.all(promises);
-        }
+        promises.push(result);
+        result = Promise.all(promises);
         return result;
     };
-    me.setTo = function (list, object, name, value) {
+    me.setTo = function (list, object, name, value, beforeProperty) {
         var promises = [];
         if (list) {
             var forwarding_list = list[name];
             if (forwarding_list) {
                 for (var target in forwarding_list) {
-                    var enabled = forwarding_list[target];
-                    if (enabled) {
+                    var propertyState = forwarding_list[target];
+                    if (propertyState === beforeProperty) {
                         var result = me.core.property.set(object, target, value);
                         if(result && result.then) {
                             promises.push(result);
@@ -237,9 +246,7 @@ screens.core.property = function CoreProperty(me) {
                 }
             }
         }
-        if(promises.length) {
-            return Promise.all(promises);
-        }
+        return promises;
     };
     me.group = {
         set: function(object, properties) {

@@ -49,6 +49,9 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
 };
 
 screens.widget.player.video = function WidgetPlayerVideo(me) {
+    me.init = function() {
+        me.core.property.link("ui.style.display", "update", false);
+    };
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -67,6 +70,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
+                    "ui.resize.event": "update",
                     "ui.basic.var": "player",
                     "ui.class.class":"player"
                 },
@@ -78,18 +82,17 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
         }
     };
     me.update = function(object) {
+        var window = me.widget.window(object);
         var left = object.parentNode.offsetLeft;
         var top = object.parentNode.offsetTop;
         var width = object.parentNode.clientWidth;
         var height = object.parentNode.clientHeight;
+        var windowRegion = me.ui.rect.absolute_region(window);
+        var playerRegion = me.ui.rect.relative_region(object, window);
         var widthText = "";
         var heightText = "";
-        if(width > height) {
-            heightText = "90%";
-        }
-        else {
-            widthText = "90%";
-        }
+        var percent = (((windowRegion.height - playerRegion.top) / windowRegion.height) * 100) - 10;
+        heightText = parseInt(percent) + "%";
         me.core.property.set(object.var.player, "ui.style.width", widthText);
         me.core.property.set(object.var.player, "ui.style.height", heightText);
     };
@@ -100,6 +103,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
             me.core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
             object.var.player.src = path;
             object.var.player.load();
+            me.update(object);
             me.core.property.set(object, "widget.player.controls.update");
         }
     };
@@ -148,19 +152,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     "ui.touch.click": "forward"
                 },
                 {
-                    "ui.element.component": "widget.progress",
-                    "ui.class.classExtra": "progress",
-                    "ui.basic.var": "progress",
-                    "min": "0",
-                    "max": "100",
-                    "value": "0",
-                    "ui.touch.down": "seekStart",
-                    "ui.touch.move": "seekMove",
-                    "ui.touch.up": "seekEnd",
-                    "ui.touch.over": "seekOver",
-                    "ui.touch.leave": "seekLeave"
-                },
-                {
                     "ui.basic.tag": "a",
                     "ui.basic.var": "download",
                     "ui.class.class": [
@@ -178,6 +169,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     ],
                     "ui.touch.click": "widget.window.fullscreen"
                 },
+                {
+                    "ui.element.component": "widget.progress",
+                    "ui.class.classExtra": "progress",
+                    "ui.basic.var": "progress",
+                    "min": "0",
+                    "max": "100",
+                    "value": "0",
+                    "ui.touch.down": "seekStart",
+                    "ui.touch.move": "seekMove",
+                    "ui.touch.up": "seekEnd",
+                    "ui.touch.over": "seekOver",
+                    "ui.touch.leave": "seekLeave"
+                }
             ]
         }
     };
