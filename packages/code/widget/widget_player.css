@@ -23,7 +23,7 @@
 }
 
 .widget-player-controls-button {
-    flex:0 0 36px;
+    flex:0 0 32px;
     border:1px solid transparent;
     width:32px;
     height:32px;
@@ -77,8 +77,8 @@
     flex:1;
     background-color:white;
     border:1px solid black;
-    min-height:36px;
-    min-width: 200px;
+    min-height:32px;
+    min-width: 250px;
     padding:4px;
     margin-left:4px;
     margin-right:4px;
