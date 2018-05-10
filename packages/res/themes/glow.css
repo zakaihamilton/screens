@@ -865,7 +865,8 @@
     color:white;
     border:1px solid darkgray;
     border-radius: 5px;
-    padding:3px;
+    padding:2px;
+    margin:2px;
 }
 
 .glow-window-icon.widget-icon-list.minimize {
