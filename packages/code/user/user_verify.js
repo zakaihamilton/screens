@@ -30,6 +30,9 @@ screens.user.verify = function UserVerify(me) {
                 const userid = payload['sub'];
                 info.user = userid;
                 var profile = await me.storage.data.load(me.id, userid);
+                if(!profile) {
+                    profile = {};
+                }
                 me.log("Found profile: " + JSON.stringify(profile));
                 profile.userid = userid;
                 profile.name = name;
