@@ -281,9 +281,10 @@ screens.app.library = function AppLibrary(me) {
             }
             if (record.tags) {
                 var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n" } else { return "" } };
-                transformText += getTag("article");
                 transformText += getTag("title");
+                transformText += getTag("article");
                 transformText += getTag("chapter", "Chapter ");
+                transformText += getTag("section");
                 transformText += getTag("part", "Part ");
                 transformText += getTag("volume");
                 transformText += getTag("book");
@@ -414,6 +415,7 @@ screens.app.library = function AppLibrary(me) {
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
         text = text.split("\n").map(line => {
+            line = line.trim();
             if (line.startsWith("#")) {
                 return line;
             }
@@ -421,7 +423,10 @@ screens.app.library = function AppLibrary(me) {
                 if (line.startsWith("Items")) {
                     return "";
                 }
-                if (prevLine.includes("article")) {
+                if(line.startsWith("Chapter")) {
+                    line = line.replace("Chapter ", "#id:\n#chapter:");
+                }
+                else if (prevLine.includes("article")) {
                     line = "#title:" + line;
                 }
                 else {

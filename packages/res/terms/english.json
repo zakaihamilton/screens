@@ -142,7 +142,8 @@
             "“World":"“World2",
             "“Year":"“Year2",
             "“Soul":"“Soul2",
-            "Alone":"__Alone"
+            "Alone":"__Alone",
+            "Ish [person] Tam":"Ish Tam"
         },
         "tags":{
             "<subtitle>": "\n<b>",
@@ -6670,6 +6671,25 @@
             "style":{
                 "heading":"Book"
             }
+        },
+        {
+            "includePrefix": true,
+            "prefix":"a",
+            "term":"Ish",
+            "hebrew":"איש",
+            "translation":"Person"
+        },
+        {
+            "term":"Tam",
+            "hebrew":"תם",
+            "translation":"Naive"
+        },
+        {
+            "includePrefix": true,
+            "prefix":"a",
+            "term":"Ish Tam",
+            "hebrew":"איש תם",
+            "translation":"Naive Person"
         }
     ],
     "style": {
