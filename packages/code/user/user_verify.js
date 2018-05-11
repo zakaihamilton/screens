@@ -29,24 +29,16 @@ screens.user.verify = function UserVerify(me) {
                 const payload = ticket.getPayload();
                 const userid = payload['sub'];
                 info.user = userid;
-                var profile = me.storage.data.load(me.id, userid);
+                var profile = await me.storage.data.load(me.id, userid);
                 me.log("Found profile: " + JSON.stringify(profile));
-                if(!profile) {
-                    var profile = {
-                        userid,
-                        request : 0
-                    };
-                }
                 profile.userid = userid;
                 profile.name = name;
                 profile.date = new Date().toString();
                 profile.utc = Date.now();
-                if(profile.request) {
-                    profile.request++;
-                }
-                else {
+                if(!profile.request) {
                     profile.request = 0;
                 }
+                profile.request++;
                 me.log("Storing profile: " + JSON.stringify(profile));
                 await me.storage.data.save(profile, me.id, userid);
             }
