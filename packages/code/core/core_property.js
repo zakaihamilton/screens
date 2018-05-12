@@ -78,44 +78,52 @@ screens.core.property = function CoreProperty(me) {
             if (typeof info.name === "function") {
                 result = info.name(info.object, info.value);
             } else {
-                if (info.name.startsWith(">")) {
-                    info.name = info.name.substring(1);
-                    debugger;
-                }
-                info.name = me.fullname(info.object, info.name);
-                if (info.name) {
-                    var callback = null;
-                    try {
-                        var callback = screens(info.name);
+                var callback = null;
+                if (typeof info.name === "string") {
+                    if (info.name.startsWith(">")) {
+                        info.name = info.name.substring(1);
+                        debugger;
                     }
-                    catch(err) {
-                        me.log("no callback for: " + info.name);
-                    }
-                    if(callback) {
+                    info.name = me.fullname(info.object, info.name);
+                    if (info.name) {
                         try {
-                            if(typeof callback === "function") {
+                            var callback = screens(info.name);
+                        }
+                        catch(err) {
+                            me.log("no callback for: " + info.name);
+                        }
+                    }
+                }
+                else {
+                    callback = info.name;
+                }
+                if(callback) {
+                    try {
+                        if(typeof callback === "function") {
+                            if(check) {
+                                return true;
+                            }
+                            result = callback(info.object, info.value);
+                        }
+                        else if(typeof callback === "object") {
+                            if(callback[method]) {
                                 if(check) {
                                     return true;
                                 }
-                                result = callback(info.object, info.value);
-                            }
-                            else {
-                                if(callback[method]) {
-                                    if(check) {
-                                        return true;
-                                    }
-                                    result = callback[method](info.object, info.value);
-                                }
+                                result = callback[method](info.object, info.value);
                             }
                         }
-                        catch(err) {
-                            err.message += " name: " + info.name + " method: " + method;
-                            throw err;
+                        else {
+                            result = callback;
                         }
                     }
-                    if(check) {
-                        return false;
+                    catch(err) {
+                        err.message += " name: " + info.name + " method: " + method;
+                        throw err;
                     }
+                }
+                if(check) {
+                    return false;
                 }
             }
         }

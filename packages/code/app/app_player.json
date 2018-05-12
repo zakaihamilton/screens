@@ -1,155 +1,87 @@
 {
     "title": "Player",
     "icon": "/packages/res/icons/player_tray.png",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "10%",
         "top": "10%",
         "width": "80%",
         "height": "80%"
     },
     "widget.menu.items": [
-        ["File", [
-                ["Refresh", "app.player.refresh"]
+        [
+            "Session",
+            [
+                [
+                    "Refresh",
+                    "app.player.refresh"
+                ],
+                [
+                    "Group",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.player.groupMenuList",
+                [
+                    "Session",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.player.sessionMenuList"
+            ]
+        ],
+        [
+            "Player",
+            [
+                [
+                    "Audio",
+                    "app.player.setFormat",
+                    {
+                        "state":"select",
+                        "enabled":"app.player.hasAudio"
+                    }
+                ],
+                [
+                    "Video",
+                    "app.player.setFormat",
+                    {
+                        "state":"select",
+                        "enabled":"app.player.hasVideo"
+                    }
+                ]
             ]
         ]
     ],
     "ui.basic.elements": [
         {
-            "ui.basic.text": "Group:",
-            "ui.property.style":{
-                "left":"10px",
-                "top":"10px",
-                "width":"100px",
-                "position":"absolute"
-            }
+            "ui.element.component": "widget.player.audio",
+            "ui.attribute.preload": "auto",
+            "ui.basic.var": "audioPlayer",
+            "ui.class.classExtra": "app.player.audioPlayer",
+            "ui.style.display": "none"
         },
         {
-            "ui.basic.var": "groupList",
-            "ui.basic.text": "@ui.param.groupName(American)",
-            "ui.property.style":{
-                "left":"10px",
-                "top":"30px",
-                "width":"200px",
-                "position":"absolute"
-            },
-            "ui.element.count": 0,
-            "core.link.onChange": "app.player.onChangeGroup",
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
-                "ui.data.default": {
-                    "group": "one",
-                    "state": false
-                },
-                "ui.data.values": [
-                    "app.player.groupList"
-                ]
-            },
-            "storage.local.key": "@ui.windowkey.app-player-group",
-            "storage.local.restore": "@ui.param.groupName(ui.basic.text)"
+            "ui.element.component": "widget.player.video",
+            "ui.basic.var": "videoPlayer",
+            "ui.class.classExtra": "app.player.videoPlayer",
+            "ui.style.display": "none"
         },
         {
-            "ui.basic.text": "Count:",
-            "ui.property.style":{
-                "left":"230px",
-                "top":"10px",
-                "width":"100px",
-                "position":"absolute"
-            }
-        },
-        {
-            "ui.basic.text":"",
-            "ui.basic.type":"number",
-            "ui.property.style":{
-                "left":"230px",
-                "top":"30px",
-                "width":"100px",
-                "position":"absolute"
-            },
-            "ui.basic.readOnly":true,
-            "ui.basic.var":"sessionCount"
-        },
-        {
-            "ui.basic.text": "Session:",
-            "ui.property.style":{
-                "left":"10px",
-                "top":"70px",
-                "width":"100px",
-                "position":"absolute"
-            }
-        },
-        {
-            "ui.basic.var": "sessionList",
-            "ui.basic.text": "",
-            "ui.property.style":{
-                "left":"10px",
-                "top":"90px",
-                "width":"90%",
-                "position":"absolute"
-            },
-            "ui.element.count": 0,
-            "core.link.onChange": "app.player.onChangeSession",
-            "ui.monitor.change": "app.player.onChangeSession",
-            "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
-                "ui.data.default": {
-                    "group": "one",
-                    "state": false
-                },
-                "ui.data.values": [
-                    "app.player.sessionList"
-                ]
-            }
-        },
-        {
-            "state": true,
-            "group": "type",
-            "ui.basic.text": "Audio",
-            "ui.property.style":{
-                "left":"10px",
-                "top":"130px",
-                "width":"100px",
-                "position":"absolute",
-                "visibility":"hidden"
-            },
-            "ui.basic.var":"audioType",
-            "ui.touch.click":"app.player.updatePlayer"
-        },
-        {
-            "state": false,
-            "group": "type",
-            "ui.basic.text": "Video",
-            "ui.property.style":{
-                "left":"100px",
-                "top":"130px",
-                "width":"100px",
-                "position":"absolute",
-                "visibility":"hidden"
-            },
-            "ui.basic.var":"videoType",
-            "ui.touch.click":"app.player.updatePlayer"
-        },
-        {
-            "ui.element.component":"widget.player.audio",
-            "ui.attribute.preload":"auto",
-            "ui.basic.var":"audioPlayer",
-            "ui.class.classExtra":"app.player.audioPlayer",
-            "ui.style.display":"none"
-        },
-        {
-            "ui.element.component":"widget.player.video",
-            "ui.basic.var":"videoPlayer",
-            "ui.class.classExtra":"app.player.videoPlayer",
-            "ui.style.display":"none"
-        },
-        {
-            "ui.element.component":"widget.spinner",
+            "ui.element.component": "widget.spinner",
             "ui.basic.var": "spinner"
         }
     ],
     "core.link.work": "app.player.work",
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-player-window",
         "storage.local.restore": "widget.window.store",
-        "app.player.update":"@ui.param.sessionName"
+        "app.player.initOptions": null,
+        "app.player.onChangeGroup": "@ui.param.groupName",
+        "app.player.onChangeSession": "@ui.param.sessionName"
     }
 }

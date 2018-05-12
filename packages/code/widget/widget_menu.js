@@ -26,6 +26,55 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
+    me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
+        var window = me.widget.window.mainWindow(object);
+        var parseItems = (items) => {
+            if(!items) {
+                items = [];
+            }
+            if(listMethod) {
+                items = me.core.property.get(object, listMethod, items);
+                if(!items) {
+                    items = [];
+                }
+            }
+            items = items.map(function (item) {
+                var currentItem = item;
+                var title = item[property];
+                if(!title) {
+                    return null;
+                }
+                title = [title.charAt(0).toUpperCase() + title.slice(1)];
+                var result = [
+                    title,
+                    itemMethod,
+                    properties,
+                    {
+                        "group": group
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+        if(!list) {
+            return null;
+        }
+        if (list.then) {
+            return [[
+                "",
+                null,
+                {
+                    "visible":false
+                },
+                {
+                    "group": group,
+                    "promise": {promise:list,callback:parseItems}
+                }
+            ]];
+        }
+        return parseItems(list);
+    };
     me.items = {
         set: function (object, value) {
             var window = me.widget.window(object);
@@ -174,7 +223,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 if (value === "select") {
                     value = object.menu_select;
                 }
-                value = me.core.property.get(object.parentNode.window, value, me.core.property.get(object, "ui.basic.text"));
+                value = me.core.property.get(object.parentNode.window,
+                                             value,
+                                             me.core.property.get(object, "ui.basic.text"));
             }
             callback(value);
         }

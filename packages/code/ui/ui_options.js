@@ -50,6 +50,23 @@ screens.ui.options = function UIOptions(me) {
             component.options = options;
         }
     };
+    me.save = function(component, object, options) {
+        if (object) {
+            var allOptions = object.options;
+        }
+        else {
+            var allOptions = component.options;
+        }
+        allOptions = Object.assign({}, allOptions, options);
+        if (object) {
+            object.options = allOptions;
+        }
+        else {
+            component.options = allOptions;
+        }
+        var storage = me.getStorage(component, object);
+        me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(allOptions));
+    };
     me.toggleSet = function (component, toTargetCallback, key, callback) {
         if (!component.options) {
             component.options = {};

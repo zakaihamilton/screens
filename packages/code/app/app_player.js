@@ -6,12 +6,20 @@
 screens.app.player = function AppPlayer(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
+    me.useFormat = "Audio";
+    me.init = async function() {
+        me.groupListData = me.core.message.send_server(
+            "core.cache.use",
+            me.id,
+            "storage.file.getChildren",
+            me.rootPath,
+            false);
+    };
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.groupListData = [];
         me.sessionListData = [];
         var params = {};
         if (args.length > 0) {
@@ -29,82 +37,121 @@ screens.app.player = function AppPlayer(me) {
         }
         return me.singleton;
     };
+    me.initOptions = async function (object) {
+        var window = me.widget.window(object);
+        me.ui.options.load(me, window, {
+            groupName:"American",
+            sessionName:"",
+        });
+    };
+    me.sortSessions = function(object, items) {
+        if(!items || items.then) {
+            return [];
+        }
+        items = items.map(function (item) {
+            var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
+            return me.core.path.fileName(name);
+        }).reverse();
+        items = Array.from(new Set(items));
+        items = items.map(function (item) {
+            return {name:item};
+        });
+        return items;
+    };
+    me.groupMenuList = {
+        get: function (object) {
+            return me.widget.menu.collect(object, me.groupListData, "name", {"state":"select"}, "group", null, "app.player.onChangeGroup");
+        }
+    };
+    me.sessionMenuList = {
+        get: function (object) {
+            return me.widget.menu.collect(object, me.sessionListData, "name", {"state":"select"}, "session", me.sortSessions, "app.player.onChangeSession");
+        }
+    };
     me.refresh = {
         set: async function (object) {
             var window = me.singleton;
-            var group = me.core.property.get(window.var.groupList, "ui.basic.text");
             await me.core.message.send_server("core.cache.reset", me.id);
-            await me.core.message.send_server("core.cache.reset", me.id + "-" + group);
-            me.core.property.set(window, "app.player.update");
-        }
-    };
-    me.update = {
-        set: async function (object, value) {
-            var window = me.singleton;
-            me.core.property.set(window.var.tree, "clear");
-            me.groupListData = await me.core.message.send_server(
-                "core.cache.use",
-                me.id,
-                "storage.file.getChildren",
-                me.rootPath,
-                false);
-            me.core.property.set(window, "app.player.onChangeGroup", value);
+            await me.core.message.send_server("core.cache.reset", me.id + "-" + window.options.groupName);
+            me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
         }
     };
     me.onChangeGroup = {
-        set: function (object, value) {
+        get: function(object, value) {
             var window = me.singleton;
-            var text = me.core.property.get(window.var.groupList, "ui.basic.text");
-            me.core.property.set(window.var.sessionList, "ui.basic.text", "");
-            me.core.property.set([window.var.audioType, window.var.videoType], "ui.style.visibility", "hidden");
-            me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-            me.core.property.set(window.var.groupList, "ui.basic.save", null);
-            var sessionName = null;
-            if (text !== value) {
-                sessionName = value;
+            return window.options.groupName === value;
+        },
+        set: function (object, name) {
+            var window = me.singleton;
+            if(name) {
+                me.ui.options.save(me, window, {groupName:name});
             }
-            me.updateSessions(sessionName);
+            me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
+            me.updateSessions();
         }
     };
     me.onChangeSession = {
-        set: function (object, value) {
-            me.updateSession();
+        get: function (object, name) {
+            var window = me.singleton;
+            return window.options.sessionName === name;
+        },
+        set: function (object, name) {
+            var audioFound = false, videoFound = false;
+            var window = me.singleton;
+            var sessions = me.sortSessions(object, me.sessionListData);
+            if(sessions.length) {
+                if(!name) {
+                    name = sessions[0].name;
+                }
+                me.sessionListData.map(function (item) {
+                    if (item.name.indexOf(name) !== -1) {
+                        var extension = me.core.path.extension(item.name);
+                        if (extension === "m4a") {
+                            audioFound = true;
+                        }
+                        if (extension === "mp4") {
+                            videoFound = true;
+                        }
+                    }
+                });
+            }
+            if(name) {
+                me.core.property.set(window, "title", "Player - " + name);
+            }
+            else {
+                me.core.property.set(window, "title", "Player");
+            }
+            me.ui.options.save(me, window, {sessionName:name});
+            me.hasAudio = audioFound;
+            me.hasVideo = videoFound;
+            if (audioFound && !videoFound) {
+                me.useFormat = "Audio";
+            } else if (!audioFound && videoFound) {
+                me.useFormat = "Video";
+            }
+            me.core.property.notify(window, "app.player.updatePlayer");
         }
     };
-    me.updateSession = function () {
-        var audioFound = false, videoFound = false;
-        var window = me.singleton;
-        var name = me.core.property.get(window.var.sessionList, "ui.basic.text");
-        me.sessionListData.map(function (item) {
-            if (item.name.indexOf(name) !== -1) {
-                var extension = me.core.path.extension(item.name);
-                if (extension === "m4a") {
-                    audioFound = true;
-                }
-                if (extension === "mp4") {
-                    videoFound = true;
-                }
-            }
-        });
-        me.core.property.set(window.var.audioType, "ui.style.visibility", audioFound ? "visible" : "hidden");
-        me.core.property.set(window.var.videoType, "ui.style.visibility", videoFound ? "visible" : "hidden");
-        if (audioFound && !videoFound) {
-            me.core.property.set(window.var.audioType, "state", true);
-        } else if (!audioFound && videoFound) {
-            me.core.property.set(window.var.videoType, "state", true);
+    me.setFormat = {
+        get: function(object, value) {
+            return me.useFormat === value;
+        },
+        set: function(object, value) {
+            me.useFormat = value;
+            me.core.property.notify(window, "app.player.updatePlayer");
         }
-        me.core.property.notify(window, "app.player.updatePlayer");
     };
     me.updateSessions = async function (sessionName) {
         var window = me.singleton;
-        var group = me.core.property.get(window.var.groupList, "ui.basic.text");
+        var group = window.options.groupName;
         if (group) {
-            me.sessionListData = await me.core.message.send_server(
+            me.sessionListData = me.core.message.send_server(
                 "core.cache.use",
                 me.id + "-" + group,
                 "storage.file.getChildren",
                 me.rootPath + "/" + group.toLowerCase(),
                 false);
+            me.sessionListData = await me.sessionListData;
             var sessions = me.core.property.get(window, "app.player.sessionList");
             var sessionCount = 0;
             if (sessions && sessions.length) {
@@ -114,8 +161,7 @@ screens.app.player = function AppPlayer(me) {
                     name = sessionName;
                 }
                 if (name) {
-                    me.core.property.set(window.var.sessionList, "ui.basic.text", name);
-                    me.updateSession();
+                    me.core.property.set(window, "app.player.onChangeSession", name);
                 }
             }
             me.core.property.set(window.var.sessionCount, "ui.basic.text", sessionCount);
@@ -148,13 +194,13 @@ screens.app.player = function AppPlayer(me) {
     me.updatePlayer = {
         set: async function (object) {
             var window = me.singleton;
-            var showAudioPlayer = me.core.property.get(window.var.audioType, "state");
-            var showVideoPlayer = me.core.property.get(window.var.videoType, "state");
+            var groupName = window.options.groupName;
+            var sessionName = window.options.sessionName;
+            var showAudioPlayer = groupName && sessionName && me.useFormat === "Audio";
+            var showVideoPlayer = groupName && sessionName && me.useFormat === "Video";
             me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.audioPlayer, "source", "");
             me.core.property.set(window.var.videoPlayer, "source", "");
-            var groupName = me.core.property.get(window.var.groupList, "ui.basic.text");
-            var sessionName = me.core.property.get(window.var.sessionList, "ui.basic.text");
             var audioPath = sessionName + "." + "m4a";
             var videoPath = sessionName + "." + "mp4";
             if (showAudioPlayer || showVideoPlayer) {

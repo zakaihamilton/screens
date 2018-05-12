@@ -1,34 +1,20 @@
 
 .app-player-audioPlayer {
     left:0px;
-    top:180px;
+    top:0px;
     right:0px;
     bottom:0px;
     padding:10px;
     position:absolute;
     background-color:white;
-}
-
-.app-player-audioPlayer.fullscreen {
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
 }
 
 .app-player-videoPlayer {
     left:0px;
-    top:180px;
+    top:0px;
     right:0px;
     bottom:0px;
     padding:10px;
     position:absolute;
     background-color:white;
-}
-
-.app-player-videoPlayer.fullscreen {
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
 }

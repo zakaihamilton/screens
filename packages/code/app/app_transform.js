@@ -90,56 +90,20 @@ screens.app.transform = function AppTransform(me) {
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
     };
-    me.menuList = function (object, list, group) {
+    me.importItem = function (object, item) {
         var window = me.widget.window.mainWindow(object);
-        var parseItems = (items) => {
-            if(!items) {
-                items = [];
-            }
-            var items = items.map(function (item) {
-                var currentItem = item;
-                var result = [
-                    item.title,
-                    async function () {
-                        var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
-                        var content = me.core.string.decode(fullItem.content);
-                        me.importData(window, content);
-                    },
-                    null,
-                    {
-                        "group": group
-                    }
-                ];
-                return result;
-            });
-            return items;
-        }
-        if (list.then) {
-            return [[
-                "",
-                null,
-                {
-                    "visible":false
-                },
-                {
-                    "group": group,
-                    "promise": {promise:list,callback:parseItems}
-                }
-            ]];
-        }
-        else {
-            items = parseItems(items);
-        }
-        return items;
-    };
+        var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
+        var content = me.core.string.decode(fullItem.content);
+        me.importData(window, content);
+    },
     me.publicContentMenuList = {
         get: function (object) {
-            return me.menuList(object, me.publicContentList, "public");
+            return me.widget.menu.collect(object, me.publicContentList, "title", null, "public", null, me.importItem);
         }
     };
     me.privateContentMenuList = {
         get: function (object) {
-            return me.menuList(object, me.privateContentList, "private");
+            return me.widget.menu.collect(object, me.privateContentList, "title", null, "private", null, me.importItem);
         }
     };
     me.documentIndex = {
