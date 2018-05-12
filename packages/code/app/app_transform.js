@@ -90,7 +90,7 @@ screens.app.transform = function AppTransform(me) {
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
     };
-    me.importItem = function (object, item) {
+    me.importItem = async function (object, item) {
         var window = me.widget.window.mainWindow(object);
         var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
         var content = me.core.string.decode(fullItem.content);

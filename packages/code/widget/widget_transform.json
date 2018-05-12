@@ -252,49 +252,6 @@
             ]
         ],
         [
-            "Edit",
-            [
-                [
-                    "Copy",
-                    "ui.exec.copy"
-                ],
-                [
-                    "Bold",
-                    "ui.exec.bold",
-                    {
-                        "separator": true
-                    }
-                ],
-                [
-                    "Italic",
-                    "ui.exec.italic"
-                ],
-                [
-                    "Underline",
-                    "ui.exec.underline"
-                ],
-                [
-                    "Strikethrough",
-                    "ui.exec.strikeThrough"
-                ],
-                [
-                    "Copy Page",
-                    "widget.transform.copyPage",
-                    {
-                        "visible": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Copy All Pages",
-                    "widget.transform.copyAllPages",
-                    {
-                        "visible": "select"
-                    }
-                ]
-            ]
-        ],
-        [
             "Diagrams",
             [
                 "widget.transform.diagramList"
