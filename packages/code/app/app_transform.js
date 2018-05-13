@@ -92,7 +92,11 @@ screens.app.transform = function AppTransform(me) {
     };
     me.importItem = async function (object, item) {
         var window = me.widget.window.mainWindow(object);
-        var fullItem = await me.storage.data.load("app.transform.content", item.key.name);
+        var name = item;
+        if(typeof item !== "string") {
+            name = item.key.name;
+        }
+        var fullItem = await me.storage.data.load("app.transform.content", name);
         var content = me.core.string.decode(fullItem.content);
         me.importData(window, content);
     },

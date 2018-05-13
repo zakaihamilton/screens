@@ -95,12 +95,11 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         me.ui.layout.clear(widget.var.layout);
         var text = widget.transformText;
+        widget.title = "";
         me.updateWidgets(widget, text, false);
-        if (!text) {
-            me.clear(object);
-            return;
+        if(text) {
+            me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
         }
-        me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
         widget.inTransform = true;
         me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid purple");
         me.core.property.set(widget, "ui.work.state", true);
@@ -735,21 +734,28 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.clear = function (object) {
         var widget = me.findWidget(object);
+        widget.transformText = "";
         me.core.property.set(widget.var.output, "ui.basic.html", "");
         me.ui.node.removeChildren(widget.var.filterList);
         me.ui.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
         me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "none");
+        me.transform(object);
     };
     me.contentTitle = {
         get: function (object) {
             var widget = me.findWidget(object);
             var title = me.ui.layout.firstWidget(widget.var.layout);
             if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
-                return title.innerText;
+                title = title.innerText;
+                widget.title = title;
+                return title;
             }
-            return null;
+            else {
+                title = widget.title;
+            }
+            return title;
         }
     };
     me.title = {
