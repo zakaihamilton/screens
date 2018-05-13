@@ -13,11 +13,11 @@ screens.app.library = function AppLibrary(me) {
     };
     me.init = async function () {
         var promises = [];
-        promises.push(me.import("external/jsgrid-1.5.3/jsgrid.css"));
-        promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.css"));
-        promises.push(me.import("node_modules/jquery/dist/jquery.js"));
+        promises.push(me.import("external/jsgrid-1.5.3/jsgrid.min.css"));
+        promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.min.css"));
+        promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
         await Promise.all(promises);
-        await me.core.require("/external/jsgrid-1.5.3/jsgrid.js");
+        await me.core.require("/external/jsgrid-1.5.3/jsgrid.min.js");
         me.tagList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");

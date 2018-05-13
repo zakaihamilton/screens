@@ -137,6 +137,10 @@ async function screens_init(items) {
 }
 
 function screens_import(path, optional) {
+    if(screens.imports[path]) {
+        return true;
+    }
+    screens.imports.push(path);
     if (screens.platform === "server" || screens.platform === "service") {
         require(path);
     }
@@ -319,6 +323,7 @@ var screens = new Proxy(() => {
 
 Object.assign(screens, {
     components: [],
+    imports: [],
     id: "package",
     platform: screens_platform(),
     include: screens_include,

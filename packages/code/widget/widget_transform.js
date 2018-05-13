@@ -405,7 +405,8 @@ screens.widget.transform = function WidgetTransform(me) {
                         me.core.app("diagram", item.path, widget.options, null, item.params);
                     },
                     {
-                        separator:isFirst
+                        separator:isFirst,
+                        enabled:widget.transformText
                     }
                 ];
                 if(isFirst) {

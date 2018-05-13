@@ -702,18 +702,12 @@ screens.widget.window = function WidgetWindow(me) {
             list = list.filter(function (item, pos, self) {
                 return self.indexOf(item) === pos;
             });
-            if (fullscreen) {
-                me.core.property.set(list, "ui.property.broadcast", {
-                    "ui.class.remove": "fullscreen",
-                    "update":null
-                });
-            }
-            else {
-                me.core.property.set(list, "ui.property.broadcast", {
-                    "ui.class.add": "fullscreen",
-                    "update":null
-                });
-            }
+            me.core.property.set(list, "ui.property.broadcast", {
+                "ui.class.fullscreen": !fullscreen
+            });
+            me.core.property.set(list, "ui.property.broadcast", {
+                "update":null
+            });
         }
     };
     me.region = {
