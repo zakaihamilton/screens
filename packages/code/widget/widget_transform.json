@@ -4,6 +4,7 @@
     "ui.property.after":{
         "initOptions":null                          
     },
+    "ui.resize.event": "widget.transform.reflow",
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
