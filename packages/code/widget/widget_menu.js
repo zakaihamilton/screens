@@ -107,7 +107,7 @@ screens.widget.menu = function WidgetMenu(me) {
             me.core.property.set(object.var.modal, "ui.style.display", "none");
             me.core.property.set(object.var.menu, "ui.node.parent");
             me.core.property.set(object, "ui.property.broadcast", {
-                "ui.class.remove": "select"
+                "ui.class.remove": "selected"
             });
             me.core.property.set(object, "ui.property.broadcast", {
                 "ui.touch.over": null
@@ -129,9 +129,9 @@ screens.widget.menu = function WidgetMenu(me) {
                 "ui.touch.over": "widget.menu.item.hover"
             });
             me.core.property.set(object, "ui.property.broadcast", {
-                "ui.class.remove": "select"
+                "ui.class.remove": "selected"
             });
-            me.core.property.set(item, "ui.class.add", "select");
+            me.core.property.set(item, "ui.class.add", "selected");
             me.core.property.set(object.var.menu, "ui.node.parent");
             me.core.property.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {

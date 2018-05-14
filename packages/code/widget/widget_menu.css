@@ -22,7 +22,7 @@
     user-select:none;
 }
 
-.widget-menu-horizontal span.select {
+.widget-menu-horizontal span.selected {
     background-color: #000080;
     color:white;
     border-right: 1px solid black;

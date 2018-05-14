@@ -213,11 +213,11 @@
     border-width: 2px 2px 0 0;
     content: '';
     display: inline-block;
-    height: 3px;
+    height: 6px;
     left: 12px;
     position: relative;
     vertical-align: top;
-    width: 3px;
+    width: 6px;
     top: 5px;
     transform: rotate(135deg);
 }
@@ -289,7 +289,6 @@
 
 .glow-menu-horizontal span {
     color: black;
-    padding-top: 1px;
     padding-left: 4px;
     padding-right:4px;
     padding-bottom: 0px;
@@ -302,7 +301,7 @@
     user-select:none;
 }
 
-.glow-menu-horizontal span.select {
+.glow-menu-horizontal span.selected {
     background-color: #0f2777;
     color:white;
     border-right: 1px solid black;

@@ -77,7 +77,6 @@
 
 .widget-window-header {
     flex:none;
-    height:18px;
     display:none;
     background-color:white;
     border-bottom: 1px solid black;

@@ -29,6 +29,7 @@
     flex-direction:column;
     transform: rotate(0deg);
     user-select: text;
+    color:black;
 }
 
 .widget-transform-layout.hebrew {
