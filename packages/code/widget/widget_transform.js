@@ -138,7 +138,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
-        me.core.property.notify(widget, "update");
+        me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
     };
     me.updateFilterList = function (object, filterList) {
@@ -406,7 +406,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     },
                     {
                         separator:isFirst,
-                        enabled:widget.transformText
+                        enabled:widget.transformText !== null
                     }
                 ];
                 if(isFirst) {
