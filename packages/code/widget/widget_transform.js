@@ -140,6 +140,11 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.inTransform = false;
         me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
+        /* hack for bug of widget not being cut when out of page */
+        setTimeout(() => {
+            widget.forceReflow = true;
+            me.core.property.set(widget, "update");
+        }, 0);
     };
     me.updateFilterList = function (object, filterList) {
         var widget = me.findWidget(object);

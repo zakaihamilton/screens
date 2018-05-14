@@ -258,7 +258,7 @@ screens.ui.layout = function UILayout(me) {
                     if (showInProgress) {
                         me.completeReflow(callback, target, options);
                     }
-                    me.core.property.notify(target, "update");
+                    me.core.property.set(target, "update");
                     break;
                 } else if (widget) {
                     previousWidget = widget;
@@ -275,7 +275,7 @@ screens.ui.layout = function UILayout(me) {
             if (options.scrollWidget && scrollToWidget) {
                 me.scrollToWidget(options.scrollWidget, layoutContent);
             }
-            me.core.property.notify(target, "update");
+            me.core.property.set(target, "update");
         }
     };
     me.widgetByOrder = function (page, order) {
