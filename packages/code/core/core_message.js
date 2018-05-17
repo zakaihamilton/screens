@@ -111,8 +111,8 @@ screens.core.message = function CoreMessage(me) {
                 try {
                     args = args.map((arg) => {
                         if (arg && typeof arg === "string" && arg.includes("$user")) {
-                            me.log("replacing: $user with: " + info.user + " arg: " + arg);
-                            arg = arg.replace(/\$user/, info.user);
+                            me.log("replacing: $user with: " + info.userId + " arg: " + arg);
+                            arg = arg.replace(/\$user/, info.userId);
                         }
                         return arg;
                     });

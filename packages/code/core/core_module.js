@@ -21,7 +21,7 @@ screens.core.module = function CoreModule(me) {
         try {
             var data = await me.core.file.readFile(filePath, 'utf8');
         }
-        catch(err) {
+        catch (err) {
             err = "Cannot load text file: " + filePath + " err: " + err;
             me.error(err);
             throw err;
@@ -62,7 +62,7 @@ screens.core.module = function CoreModule(me) {
             me.log("serving remote for:" + filePath + " source_platform: " + source_platform + " target_platform: " + target_platform);
             filePath = "packages/code/remote.js";
             components = me.components.map(function (component_name) {
-                if(!(component_name.includes(component_path))) {
+                if (!(component_name.includes(component_path))) {
                     return null;
                 }
                 return component_name;
@@ -71,16 +71,24 @@ screens.core.module = function CoreModule(me) {
         }
         var data = await me.loadTextFile(filePath);
         var jsonData = "{}";
-        var vars = { "platform": target_platform};
-        if (data && data.includes("__json__") && !data.includes("global" + ".__json__")) {
-            me.log("including json data in javascript file");
-            var jsonFilePath = filePath.replace(".js", ".json");
-            jsonData = await me.loadTextFile(jsonFilePath);
-            me.log("jsonData path: " + jsonFilePath + " length: " + jsonData.length);
-            vars.json = jsonData;
+        var vars = { "platform": target_platform };
+        var extensions = {json:false, html:true};
+        var extFilePath = filePath;
+        for (var extension in extensions) {
+            var isString = extensions[extension];
+            if (data && data.includes("__" + extension + "__") && !data.includes("global" + ".__" + extension + "__")) {
+                me.log("including " + extension + " data in javascript file");
+                var extFilePath = filePath.replace(".js", "." + extension);
+                extData = await me.loadTextFile(extFilePath);
+                me.log(extension + " data path: " + extFilePath + " length: " + extData.length);
+                if(isString) {
+                    extData = JSON.stringify(extData)
+                }
+                vars[extension] = extData;
+            }
         }
         var originalData = data;
-        for(var componentIndex = 0; componentIndex < components.length; componentIndex++) {
+        for (var componentIndex = 0; componentIndex < components.length; componentIndex++) {
             vars.component = components[componentIndex];
             /* Apply variables */
             if (data) {
@@ -88,7 +96,7 @@ screens.core.module = function CoreModule(me) {
                     data = data.split("__" + key + "__").join(vars[key]);
                 }
             }
-            if(componentIndex < components.length - 2) {
+            if (componentIndex < components.length - 2) {
                 data += originalData;
             }
         }
@@ -115,7 +123,7 @@ screens.core.module = function CoreModule(me) {
             files.unshift(file);
         }
         data = "";
-        for(var filePath of files) {
+        for (var filePath of files) {
             data += await params.method(filePath, params, info);
         }
         return data;
@@ -126,7 +134,7 @@ screens.core.module = function CoreModule(me) {
             params.method = me.handleCode;
             params.extension = ".js";
             params.contentType = "application/javascript";
-            if(params.contentType) {
+            if (params.contentType) {
                 info["content-type"] = params.contentType;
             }
             me.core.cache.reset(me.id + "." + filePath);
@@ -136,7 +144,7 @@ screens.core.module = function CoreModule(me) {
             params.method = me.handleStylesheet;
             params.contentType = "text/css";
             params.extension = ".css";
-            if(params.contentType) {
+            if (params.contentType) {
                 info["content-type"] = params.contentType;
             }
             me.core.cache.reset(me.id + "." + filePath);

@@ -9,6 +9,9 @@ screens.user.verify = function UserVerify(me) {
         var google = await me.core.util.config("settings.lib.google");
         me.client_id = google.client_id;
     };
+    me.match = function(name) {
+        return this.userName === name;
+    };
     me.check = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
             var name = decodeURIComponent(info.headers["user_name"]);
@@ -28,7 +31,8 @@ screens.user.verify = function UserVerify(me) {
                 });
                 const payload = ticket.getPayload();
                 const userid = payload['sub'];
-                info.user = userid;
+                info.userId = userid;
+                info.userName = name;
                 var profile = await me.storage.data.load(me.id, userid);
                 if(!profile) {
                     profile = {};

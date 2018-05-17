@@ -1,0 +1,20 @@
+{
+    "title": "Profile",
+    "icon": "/packages/res/icons/profile_tray.png",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "widget.menu.items": [
+
+    ],
+    "ui.class.load":"app.profile",
+    "ui.basic.html": "@app.profile.html",
+    "ui.property.after": {
+        "storage.local.key": "app-profile-window",
+        "storage.local.restore": "widget.window.store",
+        "app.profile.initOptions": null
+    }
+}

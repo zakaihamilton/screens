@@ -12,7 +12,8 @@ screens.widget.window = function WidgetWindow(me) {
         redirect: {
             "ui.basic.text": "text",
             "ui.style.background": "background",
-            "ui.basic.elements": "elements"
+            "ui.basic.elements": "elements",
+            "ui.basic.html":"html"
         },
         properties: __json__
     }
@@ -190,6 +191,18 @@ screens.widget.window = function WidgetWindow(me) {
             if (value) {
                 var content = me.core.property.get(object, "widget.window.content");
                 me.ui.element(value, content, object.context);
+            }
+        }
+    };
+    me.html = {
+        get: function (object) {
+            var content = me.core.property.get(object, "widget.window.content");
+            return content.innerHTML;
+        },
+        set: function (object, value) {
+            if (value) {
+                var content = me.core.property.get(object, "widget.window.content");
+                content.innerHTML = value;
             }
         }
     };

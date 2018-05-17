@@ -98,6 +98,13 @@ screens.ui.class = function UIClass(me) {
         }
         return null;
     };
+    me.load = function(object, path) {
+        path = me.core.property.to_full_name(object, path);
+        var package_name = me.to_package(object, path);
+        if(package_name) {
+            me.useStylesheet(package_name);
+        }
+    };
     me.set_class = function (object, path, add=false) {
         if(!path) {
             return;
@@ -111,12 +118,13 @@ screens.ui.class = function UIClass(me) {
             });
             return;
         }
+        var class_name;
         if(typeof path === "string" && path.startsWith(".")) {
             class_name = path.substr(1);
         }
         else {
             path = me.core.property.to_full_name(object, path);
-            var class_name = me.to_class(object, path);
+            class_name = me.to_class(object, path);
             var package_name = me.to_package(object, path);
             if(package_name) {
                 me.useStylesheet(package_name);

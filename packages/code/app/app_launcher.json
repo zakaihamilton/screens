@@ -36,6 +36,12 @@
             "text": "Library",
             "ui.basic.src": "/packages/res/icons/library.png",
             "ui.touch.click": "core.app.library"
+        },
+        {
+            "text": "Profile",
+            "ui.basic.src": "/packages/res/icons/profile.png",
+            "ui.touch.click": "core.app.profile",
+            "ui.basic.show":"user.verify.match(Zakai Hamilton)"
         }
     ]
 }

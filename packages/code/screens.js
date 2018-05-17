@@ -334,4 +334,5 @@ var platform = screens_platform();
 if (platform === "server" || platform === "service") {
     global.screens = screens;
     global.__json__ = {};
+    global.__html__ = {};
 }
