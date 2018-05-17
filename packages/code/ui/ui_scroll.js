@@ -357,7 +357,6 @@ screens.ui.scroll = function UIScroll(me) {
                 me.core.property.set(object, "ui.touch.up", release_method);
                 me.core.property.set(object, "ui.touch.contextmenu", block_method);
                 me.core.property.set(object, "ui.touch.cancel", block_method);
-                event.preventDefault();
             });
         }
     };

@@ -29,10 +29,7 @@ screens.core.event = function CoreEvent(me) {
                 enabled = handlers[name](object, method, event);
             }
             if (enabled) {
-                var result = me.send_event(object, method, event);
-                if(typeof result !== "undefined") {
-                    return result;
-                }
+                me.send_event(object, method, event);
             }
         };
         var listener = object.event_types[name];
