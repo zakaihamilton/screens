@@ -36,13 +36,21 @@ screens.core.type = function CoreType(me) {
     me.wrap_args = function(unwrapped_args) {
         var query = null;
         if(unwrapped_args) {
+            var first = true;
+            var value = null;
             for(var i = 0; i < unwrapped_args.length; i++) {
-                var value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
-                if(i === 0) {
-                    query = "?" + i + "=" + value;
+                try {
+                    value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
+                    if(first) {
+                        query = "?" + i + "=" + value;
+                        first = false;
+                    }
+                    else {
+                        query += "&" + i + "=" + value;
+                    }
                 }
-                else {
-                    query += "&" + i + "=" + value;
+                catch(e) {
+
                 }
             }
         }

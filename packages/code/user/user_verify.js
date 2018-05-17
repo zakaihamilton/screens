@@ -10,7 +10,10 @@ screens.user.verify = function UserVerify(me) {
         me.client_id = google.client_id;
     };
     me.match = function(name) {
-        return this.userName === name;
+        var names = name.split("/");
+        var isMatch = names.includes(this.userName);
+        me.log("name: " + name + " isMatch:" + isMatch);
+        return isMatch;
     };
     me.check = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
