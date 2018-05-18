@@ -59,7 +59,10 @@ screens.app.profile = function AppProfile(me) {
         for(var id in bindings) {
             profile[id] = bindings[id].value;
         }
+        var button = document.getElementById("app.profile.save");
+        me.core.property.set(button, "ui.class.is_loading", true);
         await me.storage.data.save(profile, me.id, "$userId");
+        me.core.property.set(button, "ui.class.is_loading", false);
     };
     me.update = function(object) {
         var window = me.widget.window(object);
