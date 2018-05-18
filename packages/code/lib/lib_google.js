@@ -65,6 +65,13 @@ screens.lib.google = function LibGoogle(me) {
         }
         return profile.getName();
     };
+    me.currentAddress = function () {
+        var profile = me.currentProfile();
+        if (!profile) {
+            return "";
+        }
+        return profile.getEmail();
+    };
     me.errors = {
         popup_closed_by_user: "Popup Closed by User",
         access_denied: "Access Denied",

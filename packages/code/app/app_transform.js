@@ -73,15 +73,15 @@ screens.app.transform = function AppTransform(me) {
             "app.transform.content",
             "title");
         me.privateContentList = me.core.message.send_server("core.cache.use",
-            me.id + ".private.$user",
+            me.id + ".private.$userId",
             "storage.data.query",
-            "app.transform.content.$user",
+            "app.transform.content.$userId",
             "title");
     };
     me.refreshContentList = {
         set: async function (object) {
             await me.core.message.send_server("core.cache.reset", me.id + ".public");
-            await me.core.message.send_server("core.cache.reset", me.id + ".private.$user");
+            await me.core.message.send_server("core.cache.reset", me.id + ".private.$userId");
             me.updateContentList();
         }
     };
@@ -167,12 +167,12 @@ screens.app.transform = function AppTransform(me) {
             content: me.core.string.encode(text),
             date: date.toString(),
             title: title,
-            user: "$user"
+            user: "$userId"
         };
         var kind = "app.transform.content";
         if (private) {
-            data.owner = "$user";
-            kind += ".$user";
+            data.owner = "$userId";
+            kind += ".$userId";
         }
         await me.storage.data.save(data, kind, title, ["content"]);
         await me.refreshContentList.set(object);

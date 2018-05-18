@@ -110,9 +110,12 @@ screens.core.message = function CoreMessage(me) {
                 args.unshift(path);
                 try {
                     args = args.map((arg) => {
-                        if (arg && typeof arg === "string" && arg.includes("$user")) {
-                            me.log("replacing: $user with: " + info.userId + " arg: " + arg);
-                            arg = arg.replace(/\$user/, info.userId);
+                        var varNames = ["userId", "userName"];
+                        for(var varName of varNames) {
+                            if (arg && typeof arg === "string" && arg.includes("$" + varName)) {
+                                me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
+                                arg = arg.replace("$" + varName, info[varName]);
+                            }
                         }
                         return arg;
                     });

@@ -16,5 +16,6 @@
         "storage.local.key": "app-profile-window",
         "storage.local.restore": "widget.window.store",
         "app.profile.initOptions": null
-    }
+    },
+    "app.profile.load":null
 }

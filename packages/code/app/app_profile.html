@@ -6,7 +6,7 @@
         <div class="field-body">
             <div class="field">
                 <p class="control is-expanded has-icons-left">
-                    <input class="input" type="text" placeholder="Name">
+                    <input id="app.profile.name" class="input" type="text" placeholder="Name">
                     <span class="icon is-small is-left">
                         <i class="fas fa-user"></i>
                     </span>
@@ -14,7 +14,7 @@
             </div>
             <div class="field">
                 <p class="control is-expanded has-icons-left has-icons-right">
-                    <input class="input" type="email" placeholder="Email" value="">
+                    <input id="app.profile.email" class="input" type="email" placeholder="Email" value="">
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -31,7 +31,7 @@
             <div class="field">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select>
+                        <select id="app.profile.tier" onchange="screens.app.profile.update(this)">
                             <option>Preparation (Before the Barrier)</option>
                             <option>Training (After the Barrier)</option>
                             <option>Work (End of Correction)</option>
@@ -39,18 +39,19 @@
                             <option>Sage (Ancient of Days)</option>
                             <option>Master (Head of Ancient)</option>
                             <option>Observer (Primordial Man)</option>
-                            <option>??? (Infinity)</option>
+                            <option>Player (Infinity)</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="field-label is-normal">
+            <div id="app.profile.phaseLabel" class="field-label is-normal">
                 <label class="label">Phase</label>
             </div>
-            <div class="field has-addons">
+            <div id="app.profile.phaseField" class="field has-addons">
                 <div class="control">
                     <div class="select is-fullwidth">
                         <select id="app.profile.phaseMajor" onchange="screens.app.profile.update(this)">
+                            <option>Unknown</option>
                             <option>Unformed</option>
                             <option>Chaos</option>
                             <option>Darkness</option>
@@ -61,6 +62,7 @@
                 <div class="control">
                     <div class="select is-fullwidth">
                         <select id="app.profile.phaseMinor" onchange="screens.app.profile.update(this)">
+                            <option>Unknown</option>
                             <option>Unformed</option>
                             <option>Chaos</option>
                             <option>Darkness</option>
@@ -79,13 +81,14 @@
 
     <div class="field is-horizontal">
         <div class="field-label is-normal">
-            <label class="label">Group/Teacher</label>
+            <label class="label">Group Teacher</label>
         </div>
         <div class="field-body">
             <div class="field is-narrow">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select>
+                        <select id="app.profile.group">
+                            <option>None</option>
                             <option>Zakai Hamilton</option>
                             <option>Azaryah Hamilton</option>
                             <option>Andie Sheppard</option>
@@ -104,7 +107,8 @@
             <div class="field">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select>
+                        <select id="app.profile.mainClass">
+                            <option>Unknown</option>
                             <option>Abraham</option>
                             <option>Isaac</option>
                             <option>Jacob</option>
@@ -119,7 +123,8 @@
             <div class="field">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select>
+                        <select id="app.profile.subClass">
+                            <option>Unknown</option>
                             <option>Abraham</option>
                             <option>Isaac</option>
                             <option>Jacob</option>
@@ -138,7 +143,7 @@
         <div class="field-body">
             <div class="field">
                 <div class="control">
-                    <button class="button is-primary">
+                    <button class="button is-primary" onclick="screens.app.profile.save(this)">
                         Save
                     </button>
                 </div>

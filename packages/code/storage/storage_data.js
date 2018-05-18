@@ -40,7 +40,7 @@ screens.storage.data = function StorageData(me) {
             if (json[key] === undefined) {
                 return;
             }
-            if (json[key] === "$user") {
+            if (json[key] === "$userId") {
                 json[key] = user;
                 me.log("storing with user: " + JSON.stringify(user));
             }
@@ -116,7 +116,7 @@ screens.storage.data = function StorageData(me) {
             }
             if (filters) {
                 filters.map(filter => {
-                    if (filter.value === "$user") {
+                    if (filter.value === "$userId") {
                         me.log("query with user: " + JSON.stringify(user));
                         filter.value = user;
                     }

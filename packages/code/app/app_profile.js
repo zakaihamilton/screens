@@ -10,10 +10,12 @@ screens.app.profile = function AppProfile(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element(__json__, "workspace", "self", null);
-        me.update(me.singleton);
     };
     me.html = function() {
         return __html__;
+    };
+    me.init = async function() {
+        me.data = await me.storage.data.load(me.id, "$userId");
     };
     me.phases = {
         Unformed:1,
@@ -21,11 +23,66 @@ screens.app.profile = function AppProfile(me) {
         Darkness:3,
         Spirit:4
     };
+    me.bindings = function(object) {
+        var ids = ["phaseMajor", "phaseMinor", "name", "email", "tier", "group", "mainClass", "subClass"];
+        var bindings = {};
+        for(var id of ids) {
+            bindings[id] = document.getElementById("app.profile." + id);
+        }
+        return bindings;
+    };
+    me.load = async function(object) {
+        var bindings = me.bindings(object);
+        var profile = me.data;
+        if(!profile) {
+            profile = {};
+        }
+        if(!profile.name) {
+            profile.name = me.lib.google.currentName();
+        }
+        if(!profile.email) {
+            profile.email = me.lib.google.currentAddress();
+        }
+        for(var id in bindings) {
+            if(profile[id]) {
+                bindings[id].value = profile[id];
+            }
+        }
+        me.update(object);
+    };
+    me.save = async function(object) {
+        var bindings = me.bindings(object);
+        var profile = me.data;
+        if(!profile) {
+            profile = {};
+        }
+        for(var id in bindings) {
+            profile[id] = bindings[id].value;
+        }
+        await me.storage.data.save(profile, me.id, "$userId");
+    };
     me.update = function(object) {
         var window = me.widget.window(object);
+        var tier = document.getElementById("app.profile.tier");
+        var phaseField = document.getElementById("app.profile.phaseLabel");
+        var phaseLabel = document.getElementById("app.profile.phaseField");
         var phaseMajor = document.getElementById("app.profile.phaseMajor");
         var phaseMinor = document.getElementById("app.profile.phaseMinor");
         var phaseText = document.getElementById("app.profile.phaseText");
-        phaseText.textContent = me.phases[phaseMajor.value] + "." + me.phases[phaseMinor.value];
+        var text = "";
+        var showPhases = true;
+        if(tier.value.includes("Infinity")) {
+            showPhases = false;
+            phaseMajor.value = "";
+            phaseMinor.value = "";
+        }
+        me.core.property.set(phaseField, "ui.basic.show", showPhases);
+        me.core.property.set(phaseLabel, "ui.basic.show", showPhases);
+        if(showPhases) {
+            if(me.phases[phaseMajor.value] && me.phases[phaseMinor.value]) {
+                text = me.phases[phaseMajor.value] + "." + me.phases[phaseMinor.value];
+            }
+        }
+        phaseText.textContent = text;
     };
 };
