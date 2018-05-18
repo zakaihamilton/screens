@@ -1,7 +1,7 @@
 <div class="app-profile-v-center">
     <div class="field is-horizontal">
         <div class="field-label is-normal">
-            <label class="label">From</label>
+            <label class="label">Personal</label>
         </div>
         <div class="field-body">
             <div class="field">
@@ -14,12 +14,9 @@
             </div>
             <div class="field">
                 <p class="control is-expanded has-icons-left has-icons-right">
-                    <input class="input is-success" type="email" placeholder="Email" value="alex@smith.com">
+                    <input class="input" type="email" placeholder="Email" value="">
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
-                    </span>
-                    <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
                     </span>
                 </p>
             </div>
@@ -27,36 +24,71 @@
     </div>
 
     <div class="field is-horizontal">
-        <div class="field-label"></div>
+        <div class="field-label is-normal">
+            <label class="label">Tier</label>
+        </div>
         <div class="field-body">
-            <div class="field is-expanded">
-                <div class="field has-addons">
-                    <p class="control">
-                        <a class="button is-static">
-                            +44
-                        </a>
-                    </p>
-                    <p class="control is-expanded">
-                        <input class="input" type="tel" placeholder="Your phone number">
-                    </p>
+            <div class="field">
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>Preparation (Before the Barrier)</option>
+                            <option>Training (After the Barrier)</option>
+                            <option>Work (End of Correction)</option>
+                            <option>Expert (Eye Has Not Seen)</option>
+                            <option>Sage (Ancient of Days)</option>
+                            <option>Master (Head of Ancient)</option>
+                            <option>Observer (Primordial Man)</option>
+                            <option>??? (Infinity)</option>
+                        </select>
+                    </div>
                 </div>
-                <p class="help">Do not enter the first zero</p>
+            </div>
+            <div class="field-label is-normal">
+                <label class="label">Phase</label>
+            </div>
+            <div class="field has-addons">
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select id="app.profile.phaseMajor" onchange="screens.app.profile.update(this)">
+                            <option>Unformed</option>
+                            <option>Chaos</option>
+                            <option>Darkness</option>
+                            <option>Spirit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select id="app.profile.phaseMinor" onchange="screens.app.profile.update(this)">
+                            <option>Unformed</option>
+                            <option>Chaos</option>
+                            <option>Darkness</option>
+                            <option>Spirit</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="control">
+                    <a class="button is-static is-fullwidth" id="app.profile.phaseText">
+                        1.x
+                    </a>
+                </p>
             </div>
         </div>
     </div>
 
     <div class="field is-horizontal">
         <div class="field-label is-normal">
-            <label class="label">Department</label>
+            <label class="label">Group/Teacher</label>
         </div>
         <div class="field-body">
             <div class="field is-narrow">
                 <div class="control">
                     <div class="select is-fullwidth">
                         <select>
-                            <option>Business development</option>
-                            <option>Marketing</option>
-                            <option>Sales</option>
+                            <option>Zakai Hamilton</option>
+                            <option>Azaryah Hamilton</option>
+                            <option>Andie Sheppard</option>
                         </select>
                     </div>
                 </div>
@@ -65,47 +97,35 @@
     </div>
 
     <div class="field is-horizontal">
-        <div class="field-label">
-            <label class="label">Already a member?</label>
-        </div>
-        <div class="field-body">
-            <div class="field is-narrow">
-                <div class="control">
-                    <label class="radio">
-                        <input type="radio" name="member"> Yes
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="member"> No
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="field is-horizontal">
         <div class="field-label is-normal">
-            <label class="label">Subject</label>
+            <label class="label">Class</label>
         </div>
         <div class="field-body">
             <div class="field">
                 <div class="control">
-                    <input class="input is-danger" type="text" placeholder="e.g. Partnership opportunity">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>Abraham</option>
+                            <option>Isaac</option>
+                            <option>Jacob</option>
+                            <option>Joseph</option>
+                        </select>
+                    </div>
                 </div>
-                <p class="help is-danger">
-                    This field is required
-                </p>
             </div>
-        </div>
-    </div>
-
-    <div class="field is-horizontal">
-        <div class="field-label is-normal">
-            <label class="label">Question</label>
-        </div>
-        <div class="field-body">
+            <div class="field-label is-normal">
+                <label class="label">Sub Class</label>
+            </div>
             <div class="field">
                 <div class="control">
-                    <textarea class="textarea" placeholder="Explain how we can help you"></textarea>
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>Abraham</option>
+                            <option>Isaac</option>
+                            <option>Jacob</option>
+                            <option>Joseph</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,7 +139,7 @@
             <div class="field">
                 <div class="control">
                     <button class="button is-primary">
-                        Send message
+                        Save
                     </button>
                 </div>
             </div>

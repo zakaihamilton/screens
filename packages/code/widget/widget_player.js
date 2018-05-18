@@ -158,7 +158,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "download"
                     ],
-                    "ui.attribute.download":"download"
+                    "ui.attribute.download":""
                 },
                 {
                     "ui.basic.tag": "div",

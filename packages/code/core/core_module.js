@@ -8,6 +8,7 @@ screens.core.module = function CoreModule(me) {
         me.core.property.link("core.http.receive", "core.module.receive", true);
         me.autoprefixer = require('autoprefixer');
         me.postcss = require('postcss');
+        me.mime = require('mime');
     };
     me.path_file_to_component = function (filePath) {
         filePath = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -188,6 +189,12 @@ screens.core.module = function CoreModule(me) {
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else if (filePath.endsWith(".mp3")) {
             var mimeType = "audio/mpeg";
+            info.custom = true;
+            me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+        }
+        else {
+            var extension = me.core.path.extension(filePath);
+            var mimeType = me.mime.getType(extension);
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         }

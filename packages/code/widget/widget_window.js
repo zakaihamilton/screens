@@ -43,6 +43,7 @@ screens.widget.window = function WidgetWindow(me) {
             if (!isEmbed) {
                 me.core.property.set(object, "ui.focus.active", true);
             }
+            me.core.property.set(object, "update");
         }
     };
     me.storeRegion = function (object) {
