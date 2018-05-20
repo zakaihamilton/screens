@@ -53,7 +53,7 @@ screens.storage.data = function StorageData(me) {
         return results;
     };
     me.save = async function (value, type, id, nonIndexed) {
-        var user = this.user;
+        var user = this.userId;
         var service = me.getService();
         if (service) {
             const key = service.key([type, id]);
@@ -105,7 +105,7 @@ screens.storage.data = function StorageData(me) {
         return result;
     };
     me.query = async function (type, select, filters) {
-        var user = this.user;
+        var user = this.userId;
         var service = me.getService();
         if (service) {
             me.log("query type: " + type);

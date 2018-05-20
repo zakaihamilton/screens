@@ -17,5 +17,6 @@
         "storage.local.restore": "widget.window.store",
         "app.profile.initOptions": null
     },
-    "app.profile.load":null
+    "app.profile.load":null,
+    "widget.window.maximize":null
 }
