@@ -354,6 +354,7 @@
     display: block;
     cursor:default;
     user-select:none;
+    position: relative;
 }
 
 .glow-menu-vertical span:hover {

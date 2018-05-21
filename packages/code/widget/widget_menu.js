@@ -29,19 +29,19 @@ screens.widget.menu = function WidgetMenu(me) {
     me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
         var window = me.widget.window.mainWindow(object);
         var parseItems = (items) => {
-            if(!items) {
+            if (!items) {
                 items = [];
             }
-            if(listMethod) {
+            if (listMethod) {
                 items = me.core.property.get(object, listMethod, items);
-                if(!items) {
+                if (!items) {
                     items = [];
                 }
             }
             items = items.map(function (item) {
                 var currentItem = item;
                 var title = item[property];
-                if(!title) {
+                if (!title) {
                     return null;
                 }
                 title = [title.charAt(0).toUpperCase() + title.slice(1)];
@@ -57,7 +57,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
             return items;
         }
-        if(!list) {
+        if (!list) {
             return null;
         }
         if (list.then) {
@@ -65,11 +65,11 @@ screens.widget.menu = function WidgetMenu(me) {
                 "",
                 null,
                 {
-                    "visible":false
+                    "visible": false
                 },
                 {
                     "group": group,
-                    "promise": {promise:list,callback:parseItems}
+                    "promise": { promise: list, callback: parseItems }
                 }
             ]];
         }
@@ -79,7 +79,7 @@ screens.widget.menu = function WidgetMenu(me) {
         set: function (object, value) {
             var window = me.widget.window(object);
             var parent = me.widget.window.parent(window);
-            if(parent) {
+            if (parent) {
                 window = parent;
             }
             if (!window.var.menu) {
@@ -194,113 +194,6 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     };
 };
 
-screens.widget.menu.item = function WidgetMenuItem(me) {
-    me.element = {
-        properties: {
-            "ui.basic.tag": "span",
-            "ui.touch.click": "click"
-        },
-        dependencies: {
-            parent: ["widget.menu", "widget.menu.popup"],
-            properties: ["ui.basic.text"]
-        },
-        use: (properties, parent) => {
-            if(properties["options"] && properties["options"].unique === false) {
-                return null;
-            }
-            var text = properties["ui.basic.text"];
-            var element = me.ui.node.findByText(parent, text);
-            if (element) {
-                me.core.property.set(element, properties);
-            }
-            return element;
-        }
-    };
-    me.handleValue = function (object, values, key, callback) {
-        if (key in values) {
-            var value = values[key];
-            if (typeof value === "string" || typeof value === "function") {
-                if (value === "select") {
-                    value = object.menu_select;
-                }
-                value = me.core.property.get(object.parentNode.window,
-                                             value,
-                                             me.core.property.get(object, "ui.basic.text"));
-            }
-            callback(value);
-        }
-    };
-    me.options = {
-        set: function (object, options) {
-            if (options) {
-                me.handleValue(object, options, "enabled", (value) => {
-                    me.core.property.set(object, "ui.basic.enabled", value);
-                });
-                me.handleValue(object, options, "visible", (value) => {
-                    me.core.property.set(object, "ui.style.display", value ? "block" : "none");
-                });
-                me.handleValue(object, options, "state", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "checked");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "checked");
-                    }
-                });
-                me.handleValue(object, options, "mark", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "mark");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "mark");
-                    }
-                });
-                me.handleValue(object, options, "separator", (value) => {
-                    if (value && object.parentNode.firstChild !== object.previousSibling) {
-                        me.core.property.set(object, "ui.class.add", "separator");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "separator");
-                    }
-                });
-                me.handleValue(object, options, "header", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "header");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "header");
-                    }
-                });
-            }
-        }
-    };
-    me.select = {
-        get: function (object) {
-            return object.menu_select;
-        },
-        set: function (object, value) {
-            if(object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
-                for(var target of value) {
-                    if(!object.menu_select.find((source) => source[0] === target[0])) {
-                        object.menu_select.push(target);
-                    }
-                }
-            }
-            else {
-                object.menu_select = value;
-            }
-        }
-    };
-    me.hover = {
-        set: function (object, value) {
-            if (object.parentNode.selected_item !== object && object.menu_select) {
-                me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
-            }
-        }
-    };
-    me.click = {
-        set: function (object) {
-            me.core.property.set(object.parentNode, "select", [object, object.menu_select]);
-        }
-    };
-};
-
 screens.widget.menu.list = function WidgetMenuList(me) {
     me.filterMinCount = 15;
     me.element = {
@@ -375,7 +268,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     };
 };
 
-screens.widget.menu.listItem = function WidgetMenuListItem(me) {
+screens.widget.menu.item = function WidgetMenuItem(me) {
     me.element = {
         properties: {
             "ui.basic.tag": "span",
@@ -383,10 +276,27 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
         },
         dependencies: {
             parent: ["widget.menu", "widget.menu.popup"],
-            properties: ["ui.basic.text", "group"]
+            properties: ["ui.basic.text"]
+        },
+        use: (properties, parent) => {
+            if (properties["options"] && properties["options"].unique === false) {
+                return null;
+            }
+            var text = properties["ui.basic.text"];
+            if (!text) {
+                return null;
+            }
+            var element = me.ui.node.findByText(parent, text);
+            if (element) {
+                me.core.property.set(element, properties);
+            }
+            return element;
         },
         container: function (object, parent, properties) {
-            return me.widget.menu.list.use(parent, properties["group"]);
+            var groupName = properties["group"];
+            if (groupName) {
+                return me.widget.menu.list.use(parent, groupName);
+            }
         }
     };
     me.promise = function (object, info) {
@@ -394,6 +304,9 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
             return;
         }
         var parent = me.ui.node.container(object, me.widget.menu.list.id);
+        if (!parent) {
+            return;
+        }
         me.core.property.set(parent, "ui.work.state", true);
         info.promise.then((items) => {
             me.core.property.set(parent, "ui.work.state", false);
@@ -411,12 +324,23 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
                 }
                 value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
             }
-            callback(value);
+            if(value && value.then) {
+                callback(false);
+                value.then(callback);
+            }
+            else {
+                callback(value);
+            }
         }
     };
     me.options = {
         set: function (object, options) {
             if (options) {
+                me.handleValue(object, options, "debugger", (value) => {
+                    if(value) {
+                        debugger;
+                    }
+                });
                 me.handleValue(object, options, "enabled", (value) => {
                     me.core.property.set(object, "ui.basic.enabled", value);
                 });
@@ -459,12 +383,24 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
             return object.menu_select;
         },
         set: function (object, value) {
-            object.menu_select = value;
+            if (object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
+                for (var target of value) {
+                    if (!object.menu_select.find((source) => source[0] === target[0])) {
+                        object.menu_select.push(target);
+                    }
+                }
+            }
+            else {
+                object.menu_select = value;
+            }
         }
     };
     me.parentMenu = function (object) {
         var parent = object.parentNode;
-        parent = me.ui.node.container(object, "widget.menu.popup");
+        var popup = me.ui.node.container(object, "widget.menu.popup");
+        if (popup) {
+            parent = popup;
+        }
         return parent;
     };
     me.hover = {
@@ -481,6 +417,21 @@ screens.widget.menu.listItem = function WidgetMenuListItem(me) {
             var parentMenu = me.parentMenu(object);
             me.ui.mark.widget(object, null);
             me.core.property.set(parentMenu, "select", [object, object.menu_select]);
+        }
+    };
+    me.upload = {
+        set: function (object, value) {
+            if (!object.var.upload) {
+                me.ui.element({
+                    "ui.basic.tag": "input",
+                    "ui.basic.type": "file",
+                    "ui.basic.text": "",
+                    "ui.class.class": "widget.menu.item.upload",
+                    "ui.basic.var": "upload",
+                    "ui.attribute.multiple": "multiple",
+                    "core.event.change": value
+                }, object, object);
+            }
         }
     };
 };

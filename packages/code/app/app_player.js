@@ -7,7 +7,7 @@ screens.app.player = function AppPlayer(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.useFormat = "Audio";
-    me.init = async function() {
+    me.init = async function () {
         me.groupListData = me.core.message.send_server(
             "core.cache.use",
             me.id,
@@ -40,12 +40,12 @@ screens.app.player = function AppPlayer(me) {
     me.initOptions = async function (object) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
-            groupName:"American",
-            sessionName:"",
+            groupName: "American",
+            sessionName: "",
         });
     };
-    me.sortSessions = function(object, items) {
-        if(!items || items.then) {
+    me.sortSessions = function (object, items) {
+        if (!items || items.then) {
             return [];
         }
         items = items.map(function (item) {
@@ -54,18 +54,18 @@ screens.app.player = function AppPlayer(me) {
         }).reverse();
         items = Array.from(new Set(items));
         items = items.map(function (item) {
-            return {name:item};
+            return { name: item };
         });
         return items;
     };
     me.groupMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.groupListData, "name", {"state":"select"}, "group", null, "app.player.onChangeGroup");
+            return me.widget.menu.collect(object, me.groupListData, "name", { "state": "select" }, "group", null, "app.player.onChangeGroup");
         }
     };
     me.sessionMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.sessionListData, "name", {"state":"select"}, "session", me.sortSessions, "app.player.onChangeSession");
+            return me.widget.menu.collect(object, me.sessionListData, "name", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession");
         }
     };
     me.refresh = {
@@ -77,14 +77,14 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.onChangeGroup = {
-        get: function(object, value) {
+        get: function (object, value) {
             var window = me.singleton;
             return window.options.groupName === value;
         },
         set: function (object, name) {
             var window = me.singleton;
-            if(name) {
-                me.ui.options.save(me, window, {groupName:name});
+            if (name) {
+                me.ui.options.save(me, window, { groupName: name });
             }
             me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
             me.updateSessions();
@@ -99,8 +99,8 @@ screens.app.player = function AppPlayer(me) {
             var audioFound = false, videoFound = false;
             var window = me.singleton;
             var sessions = me.sortSessions(object, me.sessionListData);
-            if(sessions.length) {
-                if(!name) {
+            if (sessions.length) {
+                if (!name) {
                     name = sessions[0].name;
                 }
                 me.sessionListData.map(function (item) {
@@ -115,13 +115,13 @@ screens.app.player = function AppPlayer(me) {
                     }
                 });
             }
-            if(name) {
+            if (name) {
                 me.core.property.set(window, "title", "Player - " + name);
             }
             else {
                 me.core.property.set(window, "title", "Player");
             }
-            me.ui.options.save(me, window, {sessionName:name});
+            me.ui.options.save(me, window, { sessionName: name });
             me.hasAudio = audioFound;
             me.hasVideo = videoFound;
             if (audioFound && !videoFound) {
@@ -133,10 +133,10 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.setFormat = {
-        get: function(object, value) {
+        get: function (object, value) {
             return me.useFormat === value;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             me.useFormat = value;
             me.core.property.notify(window, "app.player.updatePlayer");
         }
@@ -198,7 +198,7 @@ screens.app.player = function AppPlayer(me) {
             var sessionName = window.options.sessionName;
             var showAudioPlayer = groupName && sessionName && me.useFormat === "Audio";
             var showVideoPlayer = groupName && sessionName && me.useFormat === "Video";
-            me.core.property.set([window.var.audioPlayer,window.var.videoPlayer], "ui.style.display", "none");
+            me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
             me.core.property.set(window.var.audioPlayer, "source", "");
             me.core.property.set(window.var.videoPlayer, "source", "");
             var audioPath = sessionName + "." + "m4a";
@@ -242,6 +242,19 @@ screens.app.player = function AppPlayer(me) {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "visible");
                 }, 500);
+            }
+        }
+    };
+    me.upload = {
+        get: function(object) {
+            return true;
+        },
+        set: async function (object) {
+            if (!object.files.length) {
+                return;
+            }
+            for (var file of object.files) {
+                await me.storage.upload.file(file, me.cachePath);
             }
         }
     };

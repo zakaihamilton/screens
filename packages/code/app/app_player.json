@@ -32,7 +32,18 @@
                         "header": true
                     }
                 ],
-                "app.player.sessionMenuList"
+                "app.player.sessionMenuList",
+                [
+                    "Upload",
+                    null,
+                    {
+                        "separator":true,
+                        "visible":"user.verify.match(Zakai Hamilton)"
+                    },
+                    {
+                        "upload":"app.player.upload"
+                    }
+                ]
             ]
         ],
         [

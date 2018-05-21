@@ -92,5 +92,50 @@ screens.storage.file = function StorageFile(me) {
         var data = await me.fs.readFile(from, "binary");
         await me.uploadData(to, data);
     };
+    me.uploadFile = async function (from, to) {
+        const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+        var service = await me.getService();
+        var fileSize = await me.core.file.size(from);
+        var fileData = await me.core.file.readFile(from, "binary");
+        var result = false;
+        if (fileSize < UPLOAD_FILE_SIZE_LIMIT) { // File is smaller than 150 Mb - use filesUpload API
+            result = await dbx.filesUpload({ path: to, contents: fileData, mode: 'overwrite' });
+        } else { // File is bigger than 150 Mb - use filesUploadSession* API
+            const maxBlob = 8 * 1000 * 1000; // 8Mb - Dropbox JavaScript API suggested max file / chunk size
+            var workItems = [];
+
+            var offset = 0;
+            while (offset < fileSize) {
+                var chunkSize = Math.min(maxBlob, fileSize - offset);
+                workItems.push(file.slice(offset, offset + chunkSize));
+                offset += chunkSize;
+            }
+
+            const task = workItems.reduce((acc, blob, idx, items) => {
+                if (idx == 0) {
+                    // Starting multipart upload of file
+                    return acc.then(function () {
+                        return dbx.filesUploadSessionStart({ close: false, contents: blob })
+                            .then(response => response.session_id)
+                    });
+                } else if (idx < items.length - 1) {
+                    // Append part to the upload session
+                    return acc.then(function (sessionId) {
+                        var cursor = { session_id: sessionId, offset: idx * maxBlob };
+                        return dbx.filesUploadSessionAppendV2({ cursor: cursor, close: false, contents: blob }).then(() => sessionId);
+                    });
+                } else {
+                    // Last chunk of data, close session
+                    return acc.then(function (sessionId) {
+                        var cursor = { session_id: sessionId, offset: file.size - blob.size };
+                        var commit = { path: '/' + file.name, mode: 'overwrite', mute: false };
+                        return dbx.filesUploadSessionFinish({ cursor: cursor, commit: commit, contents: blob });
+                    });
+                }
+            }, Promise.resolve());
+
+            result = await task;
+        }
+    };
     return "server";
 };
