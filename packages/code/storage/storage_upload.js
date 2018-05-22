@@ -5,7 +5,7 @@
 
 screens.storage.upload = function StorageUpload(me) {
     me.chunkSize = 1024 * 1024;
-    me.file = async function(file, path) {
+    me.file = async function(file, path, progress) {
         var chunkSize = me.chunkSize;
         var chunkCount = file.size / chunkSize;
         console.log("size: " + file.size + " chunks: " + chunkCount);
@@ -18,6 +18,9 @@ screens.storage.upload = function StorageUpload(me) {
             }
             var chunk = await me.readChunk(file, start, end);
             await me.core.file.write(fileHandle, chunk);
+            if(progress) {
+                progress(chunkIndex, chunkCount);
+            }
             console.log(start + "-" + end + ":" + chunk);
         }
         await me.core.file.close(fileHandle);

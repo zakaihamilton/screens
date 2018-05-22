@@ -428,6 +428,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     "ui.basic.text": "",
                     "ui.class.class": "widget.menu.item.upload",
                     "ui.basic.var": "upload",
+                    "ui.style.userSelect":"none",
                     "ui.attribute.multiple": "multiple",
                     "core.event.change": value
                 }, object, object);

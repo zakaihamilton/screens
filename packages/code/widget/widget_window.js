@@ -144,6 +144,9 @@ screens.widget.window = function WidgetWindow(me) {
         },
         set: function (object, app_component) {
             var window = me.window(object);
+            if(typeof app_component === "string") {
+                app_component = me[app_component];
+            }
             window.app_component = app_component;
         }
     };

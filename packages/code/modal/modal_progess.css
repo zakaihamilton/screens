@@ -1,10 +1,20 @@
-.modal-progress-bar {
+.modal-progress-specific {
+  position:relative;
+  top:60px;
+  left:10%;
+  width: 80%;
+  min-height:32px;
+  display:none;
+}
+
+.modal-progress-general {
     position:relative;
     top:60px;
     left:10%;
     width: 80%;
-    height: 20px;
+    min-height:26px;
     border: 1px solid #2980b9;
+    text-align: center;
     border-radius: 3px;
     background-image: 
       repeating-linear-gradient(

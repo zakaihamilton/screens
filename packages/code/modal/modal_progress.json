@@ -3,14 +3,24 @@
     "delay":"@ui.param.delay(0)",
     "popup":true,
     "ui.property.style":{
-        "left": "30%",
+        "left": "20%",
         "top": "30%",
-        "width": "40%"
+        "width": "60%"
     },
     "ui.basic.elements": [
         {
             "ui.basic.tag":"div",
-            "ui.class.class":"modal.progress.bar"
+            "ui.class.class":"modal.progress.general",
+            "ui.basic.var":"general"
+        },
+        {
+            "ui.basic.tag":"div",
+            "ui.class.classExtra":"modal.progress.specific",
+            "ui.basic.elements":{
+                "ui.element.component":"widget.progress",
+                "ui.basic.var":"progress"
+            },
+            "ui.basic.var":"specific"
         }
     ]
 }

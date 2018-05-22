@@ -64,6 +64,9 @@ screens.widget.progress = function WidgetProgress(me) {
     };
     me.update = function(object) {
         me.core.property.set(object.var.bar, "ui.style.left", 0);
+        if(!object.min) {
+            object.min = 0;
+        }
         var percent = (object.value - object.min) / (object.max - object.min) * 100;
         me.core.property.set(object.var.label, "ui.basic.text", object.label);
         me.core.property.set(object.var.bar, "ui.style.width", percent + "%");
