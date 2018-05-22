@@ -246,16 +246,30 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.upload = {
-        get: function(object) {
+        get: function (object) {
             return true;
         },
         set: async function (object) {
+            var window = me.singleton;
+            var groupName = window.options.groupName;
             if (!object.files.length) {
                 return;
             }
+            var progress = me.ui.modal("progress", {
+                "title": "Uploading",
+                "delay": "250"
+            });
             for (var file of object.files) {
-                await me.storage.upload.file(file, me.cachePath + "/" + file.name);
+                var serverPath = me.cachePath + "/" + file.name;
+                var remotePath = me.rootPath + "/" + groupName + "/" + file.name;
+                await me.storage.upload.file(file, serverPath, (index, count) => {
+                    var data = { label: serverPath, max: count, value: index };
+                    me.core.property.set(progress, "modal.progress.specific", data);
+                });
+                me.core.property.set(progress, "modal.progress.specific", null);
+                await me.storage.file.uploadFile(serverPath, remotePath);
             }
+            me.core.property.set(progress, "close");
         }
     };
 };

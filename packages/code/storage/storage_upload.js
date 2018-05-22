@@ -21,7 +21,6 @@ screens.storage.upload = function StorageUpload(me) {
             if(progress) {
                 progress(chunkIndex, chunkCount);
             }
-            console.log(start + "-" + end + ":" + chunk);
         }
         await me.core.file.close(fileHandle);
     };
