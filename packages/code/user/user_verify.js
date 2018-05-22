@@ -8,6 +8,9 @@ screens.user.verify = function UserVerify(me) {
         me.core.property.link("core.http.check", "user.verify.check", true);
         var google = await me.core.util.config("settings.lib.google");
         me.client_id = google.client_id;
+        me.tokens = {};
+        const { OAuth2Client } = require('google-auth-library');
+        me.client = new OAuth2Client(me.client_id);
     };
     me.match = function(name) {
         var names = name.split("/");
@@ -24,33 +27,38 @@ screens.user.verify = function UserVerify(me) {
                 info.stop = true;
                 return;
             }
-            const { OAuth2Client } = require('google-auth-library');
             me.log("verifying user: " + name);
             try {
-                const client = new OAuth2Client(me.client_id);
-                const ticket = await client.verifyIdToken({
-                    idToken: token,
-                    audience: me.client_id,
-                });
-                const payload = ticket.getPayload();
-                const userid = payload['sub'];
-                info.userId = userid;
-                info.userName = name;
-                var profile = await me.storage.data.load(me.id, userid);
+                var profile = me.tokens[token];
                 if(!profile) {
-                    profile = {};
+                    const ticket = await me.client.verifyIdToken({
+                        idToken: token,
+                        audience: me.client_id,
+                    });
+                    const payload = ticket.getPayload();
+                    const userid = payload['sub'];
+                    var profile = await me.storage.data.load(me.id, userid);
+                    if(!profile) {
+                        profile = {};
+                    }
+                    me.log("Found profile: " + JSON.stringify(profile));
+                    profile.userid = userid;
+                    profile.name = name;
+                    if(!profile.request) {
+                        profile.request = 0;
+                    }
+                    me.tokens[token] = profile;
                 }
-                me.log("Found profile: " + JSON.stringify(profile));
-                profile.userid = userid;
-                profile.name = name;
                 profile.date = new Date().toString();
+                profile.previous = profile.utc;
                 profile.utc = Date.now();
-                if(!profile.request) {
-                    profile.request = 0;
-                }
                 profile.request++;
-                me.log("Storing profile: " + JSON.stringify(profile));
-                await me.storage.data.save(profile, me.id, userid);
+                if(profile.previous + 10000 < profile.utc) {
+                    me.log("Storing profile: " + JSON.stringify(profile));
+                    me.storage.data.save(profile, me.id, profile.userid);
+                }
+                info.userId = profile.userid;
+                info.userName = profile.name;
             }
             catch(err) {
                 err = "failed to verify token, err: " + err;

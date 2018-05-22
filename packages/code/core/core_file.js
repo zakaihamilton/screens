@@ -19,12 +19,12 @@ screens.core.file = function CoreFile(me) {
                         reject(err);
                     }
                     else {
-                        me.log("success in reading file: " + path + " length: " + (data ? data.length: 0));
+                        me.log("success in reading file: " + path + " length: " + (data ? data.length : 0));
                         resolve(data);
                     }
                 });
             }
-            catch(err) {
+            catch (err) {
                 me.error(err);
                 reject(err);
             }
@@ -46,7 +46,7 @@ screens.core.file = function CoreFile(me) {
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
-        for(var token of tokens) {
+        for (var token of tokens) {
             if (mkdirPath) {
                 mkdirPath += "/" + token;
             }
@@ -136,7 +136,7 @@ screens.core.file = function CoreFile(me) {
             });
         });
     };
-    me.exists = function(path) {
+    me.exists = function (path) {
         return me.fs.existsSync(path);
     };
     me.download = async function (source, target) {
@@ -164,31 +164,70 @@ screens.core.file = function CoreFile(me) {
             });
         });
     };
-    me.open = function(path) {
+    me.open = function (path) {
         var session = me.core.session.open();
         session.path = path;
         return session.handle;
     };
-    me.write = function(handle, data) {
+    me.pause = function(handle) {
+        var session = me.core.session.get(handle);
+        if (session.stream) {
+            session.stream.pause();
+        }
+    };
+    me.resume = function(handle) {
+        var session = me.core.session.get(handle);
+        if (session.stream) {
+            session.stream.resume();
+        }
+    };
+    me.read = function (handle, callback, chunkSize) {
         var result = false;
         var session = me.core.session.get(handle);
-        if(!session.stream) {
+        if (!session.stream) {
+            var params = {};
+            if(chunkSize) {
+                params.highWaterMark = chunkSize;
+            }
+            session.stream = me.fs.createReadStream(session.path, params);
+            if (session.stream) {
+                session.stream.on('data', data => {
+                    callback(data);
+                });
+                session.stream.on('close', () => {
+                    callback(null);
+                });
+                session.close = () => {
+                    if (session.stream) {
+                        session.stream.destroy();
+                        session.stream = null;
+                    }
+                };
+                result = true;
+            }
+        }
+        return result;
+    };
+    me.write = function (handle, data) {
+        var result = false;
+        var session = me.core.session.get(handle);
+        if (!session.stream) {
             session.stream = me.fs.createWriteStream(session.path);
             session.close = () => {
-                if(session.stream) {
+                if (session.stream) {
                     session.stream.end();
                     session.stream = null;
                 }
             };
         }
-        if(session.stream) {
+        if (session.stream) {
             var buffer = Buffer.from(data);
             session.stream.write(buffer);
             result = true;
         }
         return result;
     };
-    me.close = function(handle) {
+    me.close = function (handle) {
         me.core.session.close(handle);
     };
     return "server";
