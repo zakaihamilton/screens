@@ -142,7 +142,7 @@ screens.core.http = function CoreHttp(me) {
             responseHeaders: {}
         };
         me.core.object(me, info);
-        me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query) + " headers: " + JSON.stringify(info.headers));
+        me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query));
         var messages = ["check", "receive", "compress", "end"];
         me.performance("http request url: " + info.url, async () => {
             for (var message of messages) {

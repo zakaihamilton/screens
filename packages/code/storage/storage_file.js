@@ -95,42 +95,66 @@ screens.storage.file = function StorageFile(me) {
         var fileSession = me.core.file.open(from);
         var cursor = { session_id: null, offset: 0 };
         return new Promise((resolve, reject) => {
-            const chunkSize = 8 * 1000 * 1000;            
-            me.core.file.read(fileSession, data => {
-                if (data) {
-                    if (cursor.offset) {
-                        me.core.file.pause(fileSession);
-                        service.filesUploadSessionAppendV2({
-                            cursor: cursor,
-                            close: false,
-                            contents: data
-                        }).then(() => {
-                            me.core.file.resume(fileSession);
-                        });
+            const chunkSize = 8 * 1000 * 1000;
+            me.core.file.read(fileSession, async data => {
+                if(!data) {
+                    return;
+                }
+                if (cursor.offset + data.length >= fileSize) {
+                    if(cursor.offset) {
+                        var commit = { path: to, mode: 'overwrite', mute: false };
+                        try {
+                            var result = await service.filesUploadSessionFinish({
+                                cursor: cursor,
+                                commit: commit,
+                                contents: data
+                            });
+                            me.log("finished uploading in parts: " + to + " size: " + fileSize + " result: " + result);
+                            resolve();
+                        }
+                        catch(err) {
+                            me.log("failed to upload in parts: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                            reject(err);
+                        }
                     }
                     else {
-                        me.core.file.pause(fileSession);
-                        service.filesUploadSessionStart({
-                            close: false,
-                            contents: data
-                        }).then(response => {
-                            cursor.session_id = response.session_id;
-                            me.core.file.resume(fileSession);
-                        });
+                        try {
+                            var result = await service.filesUpload({
+                                path: to,
+                                contents: data
+                            });
+                            me.log("finished uploading: " + to + " size: " + fileSize + " result: " + JSON.stringify(result));
+                            resolve();
+                        }
+                        catch(err) {
+                            me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                            reject(err);
+                        }
                     }
-                    cursor.offset += data.length;
-                    me.log("uploading: " + cursor.offset + " / " + fileSize);
+                }
+                else if(cursor.offset) {
+                    me.core.file.pause(fileSession);
+                    service.filesUploadSessionAppendV2({
+                        cursor: cursor,
+                        close: false,
+                        contents: data
+                    }).then(() => {
+                        cursor.offset += data.length;
+                        me.core.file.resume(fileSession);
+                    });
                 }
                 else {
-                    var commit = { path: '/' + to, mode: 'overwrite', mute: false };
-                    service.filesUploadSessionFinish({
-                        cursor: cursor,
-                        commit: commit,
-                        contents: null
+                    me.core.file.pause(fileSession);
+                    service.filesUploadSessionStart({
+                        close: false,
+                        contents: data
+                    }).then(response => {
+                        cursor.session_id = response.session_id;
+                        cursor.offset += data.length;
+                        me.core.file.resume(fileSession);
                     });
-                    me.log("finished uploading: " + to + " size: " + fileSize);
-                    resolve();
                 }
+                me.log("uploading: " + cursor.offset + " / " + fileSize);
             }, chunkSize);
         });
     };
