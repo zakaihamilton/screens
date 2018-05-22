@@ -5,10 +5,11 @@
 
 screens.storage.upload = function StorageUpload(me) {
     me.chunkSize = 1024 * 1024;
-    me.file = async function(file, to) {
+    me.file = async function(file, path) {
         var chunkSize = me.chunkSize;
         var chunkCount = file.size / chunkSize;
         console.log("size: " + file.size + " chunks: " + chunkCount);
+        var fileHandle = await me.core.file.open(path);
         for(chunkIndex = 0; chunkIndex < chunkCount; chunkIndex++) {
             var start = chunkIndex * chunkSize;
             var end = start + chunkSize;
@@ -16,8 +17,10 @@ screens.storage.upload = function StorageUpload(me) {
                 end = file.size;
             }
             var chunk = await me.readChunk(file, start, end);
+            await me.core.file.write(fileHandle, chunk);
             console.log(start + "-" + end + ":" + chunk);
         }
+        await me.core.file.close(fileHandle);
     };
     me.readChunk = function(file, start, end) {
         return new Promise((resolve, reject) => {

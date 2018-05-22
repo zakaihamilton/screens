@@ -254,7 +254,7 @@ screens.app.player = function AppPlayer(me) {
                 return;
             }
             for (var file of object.files) {
-                await me.storage.upload.file(file, me.cachePath);
+                await me.storage.upload.file(file, me.cachePath + "/" + file.name);
             }
         }
     };

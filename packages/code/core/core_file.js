@@ -164,5 +164,32 @@ screens.core.file = function CoreFile(me) {
             });
         });
     };
+    me.open = function(path) {
+        var session = me.core.session.open();
+        session.path = path;
+        return session.handle;
+    };
+    me.write = function(handle, data) {
+        var result = false;
+        var session = me.core.session.get(handle);
+        if(!session.stream) {
+            session.stream = me.fs.createWriteStream(session.path);
+            session.close = () => {
+                if(session.stream) {
+                    session.stream.end();
+                    session.stream = null;
+                }
+            };
+        }
+        if(session.stream) {
+            var buffer = Buffer.from(data);
+            session.stream.write(buffer);
+            result = true;
+        }
+        return result;
+    };
+    me.close = function(handle) {
+        me.core.session.close(handle);
+    };
     return "server";
 };

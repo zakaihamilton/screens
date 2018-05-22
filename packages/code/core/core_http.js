@@ -154,7 +154,7 @@ screens.core.http = function CoreHttp(me) {
                 }
                 catch (err) {
                     info.stop = true;
-                    me.log("error in: " + info.url + " message: " + message + " err: " + err.message || err);
+                    me.log("error in: " + info.url + " message: " + message + " err: " + (err.message || err) + " stack: " + err.stack);
                     response.writeHead(403);
                     response.end();
                 }

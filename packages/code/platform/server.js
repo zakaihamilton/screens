@@ -23,7 +23,8 @@ screens.include({
         "network",
         "service",
         "cache",
-        "string"
+        "string",
+        "session"
     ],
     "storage": [
         "file",
