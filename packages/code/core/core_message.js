@@ -62,6 +62,12 @@ screens.core.message = function CoreMessage(me) {
             return me.send.apply(null, args);
         }
     };
+    me.send_browser = async function(path, params) {
+        var args = Array.prototype.slice.call(arguments, 0);
+        if (me.platform === "browser") {
+            return me.send.apply(this, args);
+        }
+    }
     me.send_client = async function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "browser") {

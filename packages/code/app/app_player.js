@@ -259,18 +259,22 @@ screens.app.player = function AppPlayer(me) {
                 "title": "Uploading",
                 "delay": "250"
             });
-            for (var file of object.files) {
-                var serverPath = me.cachePath + "/" + file.name;
-                var remotePath = me.rootPath + "/" + groupName + "/" + file.name;
-                await me.storage.upload.file(file, serverPath, (index, count) => {
-                    var data = { label: serverPath, max: count, value: index };
-                    me.core.property.set(progress, "modal.progress.specific", data);
-                });
-                me.core.property.set(progress, "modal.progress.specific", null);
-                await me.storage.file.uploadFile(serverPath, remotePath);
+            try {
+                for (var file of object.files) {
+                    var serverPath = me.cachePath + "/" + file.name;
+                    var remotePath = me.rootPath + "/" + groupName + "/" + file.name;
+                    await me.storage.upload.file(file, serverPath, (index, count) => {
+                        var data = { label: serverPath, max: count, value: index };
+                        me.core.property.set(progress, "modal.progress.specific", data);
+                    });
+                    me.core.property.set(progress, "modal.progress.specific", null);
+                    await me.storage.file.uploadFile(serverPath, remotePath);
+                }
+                await me.refresh.set(window);
             }
-            me.core.property.set(progress, "close");
-            await me.refresh.set(window);
+            finally {
+                me.core.property.set(progress, "close");
+            }
         }
     };
 };

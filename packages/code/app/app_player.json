@@ -37,8 +37,7 @@
                     "Upload",
                     null,
                     {
-                        "separator":true,
-                        "visible":"user.verify.match(Zakai Hamilton)"
+                        "separator":true
                     },
                     {
                         "upload":"app.player.upload"

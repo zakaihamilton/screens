@@ -7,9 +7,6 @@
         "width": "80%",
         "height": "80%"
     },
-    "widget.menu.items": [
-
-    ],
     "ui.class.load":"app.profile",
     "ui.basic.html": "@app.profile.html",
     "ui.property.after": {

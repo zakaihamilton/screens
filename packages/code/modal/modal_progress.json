@@ -2,10 +2,11 @@
     "title":"@ui.param.title(Progress)",
     "delay":"@ui.param.delay(0)",
     "popup":true,
+    "fixed":true,
     "ui.property.style":{
-        "left": "20%",
+        "left": "10%",
         "top": "30%",
-        "width": "60%"
+        "width": "80%"
     },
     "ui.basic.elements": [
         {
