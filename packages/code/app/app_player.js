@@ -270,6 +270,7 @@ screens.app.player = function AppPlayer(me) {
                 await me.storage.file.uploadFile(serverPath, remotePath);
             }
             me.core.property.set(progress, "close");
+            await me.refresh.set(window);
         }
     };
 };
