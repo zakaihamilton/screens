@@ -180,7 +180,7 @@ screens.core.http = function CoreHttp(me) {
         if (!info.headers) {
             info.headers = {}
         }
-        await me.core.property.set(info, "headers", headers);
+        await me.core.property.set(info, "headers", null);
         var headers = Object.assign({}, info.headers);
         if (me.platform === "service") {
             return await me.core.message.send_server(me.id + ".send", info);

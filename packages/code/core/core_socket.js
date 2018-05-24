@@ -4,7 +4,7 @@
  */
 
 screens.core.socket = function CoreSocket(me) {
-    me.init = function () {
+    me.init = async function () {
         if (me.platform === "server") {
             me.sockets = new Map();
             me.io = me.core.http.io;
@@ -43,6 +43,7 @@ screens.core.socket = function CoreSocket(me) {
             });
         }
         else if (me.platform === "browser") {
+            var io = await me.core.require("/socket.io/socket.io.js");
             me.io = io();
             me.register(me.io);
         }
@@ -52,7 +53,9 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.register = function (socket) {
         socket.on("send", async (info) => {
-            info.clientIp = socket.request.connection.remoteAddress;
+            if(socket.request && socket.request.connection) {
+                info.clientIp = socket.request.connection.remoteAddress;
+            }
             me.core.object(me, info);
             await me.core.property.set(info, "check");
             info.args = me.core.message.fillArgs(info, info.args);
