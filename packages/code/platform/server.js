@@ -21,6 +21,7 @@ screens.include({
         "hash",
         "startup",
         "network",
+        "socket",
         "service",
         "cache",
         "string",

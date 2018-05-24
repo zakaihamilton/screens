@@ -15,6 +15,7 @@ screens.include({
         "string",
         "object",
         "property",
+        "socket",
         "service",
         "util",
         "stream",

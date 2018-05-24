@@ -3718,7 +3718,7 @@
             "style": {
                 "heading": "Vessel"
             },
-            "term": "Hochma Stima'a",
+            "term": "Hochma Stima ' a",
             "hebrew": "חכמה סתימאה"
         },
         {
@@ -6690,6 +6690,11 @@
             "term":"Ish Tam",
             "hebrew":"איש תם",
             "translation":"Naive Person"
+        },
+        {
+            "term":"Metzah",
+            "translation":"Forehead",
+            "hebrew":"מצח"
         }
     ],
     "style": {

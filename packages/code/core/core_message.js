@@ -12,6 +12,19 @@ screens.core.message = function CoreMessage(me) {
             registerPromiseWorker(async (message) => {
                 return await me.send.apply(null, message);
             });
+        } else if (me.platform === "browser") {
+            me.socket = io();
+            me.socket.on("send", async (info) => {
+                var args = await me.handleLocal(this, info.args);
+                if (args) {
+                    info.args = args;
+                    me.socket.emit("receive", info);
+                }
+            });
+            me.socket.on("receive", async (info) => {
+                var callback = me.core.handle.pop(info.callback);
+                callback.apply(null, info.args);
+            });
         }
     };
     me.loadWorker = async function (path) {
@@ -50,7 +63,7 @@ screens.core.message = function CoreMessage(me) {
             try {
                 response = me.core.type.unwrap_args(response);
             }
-            catch(err) {
+            catch (err) {
                 throw "invalid response for method: " + path + " err: " + err.message || err;
             }
             if (response && response[0]) {
@@ -62,10 +75,12 @@ screens.core.message = function CoreMessage(me) {
             return me.send.apply(null, args);
         }
     };
-    me.send_browser = async function(path, params) {
+    me.send_browser = async function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "browser") {
             return me.send.apply(this, args);
+        } else if (me.platform === "server") {
+            return me.send_socket.call(this, path, params);
         }
     }
     me.send_client = async function (path, params) {
@@ -76,24 +91,27 @@ screens.core.message = function CoreMessage(me) {
             return me.send.apply(this, args);
         }
     };
+    me.send_socket = function(path, params) {
+        return new Promise((resolve, reject) => {
+            var responseCallback = (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            };
+            var args = Array.prototype.slice.call(arguments, 0);
+            var info = {
+                args: me.core.type.wrap_args(args),
+                callback: me.core.handle.push(responseCallback)
+            };
+            this.emit("send", info);
+        });
+    };
     me.send_service = function (path, params) {
         if (me.platform === "server") {
-            return new Promise((resolve, reject) => {
-                var responseCallback = (err, result) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    else {
-                        resolve(result);
-                    }
-                };
-                var args = Array.prototype.slice.call(arguments, 0);
-                var info = {
-                    args: me.core.type.wrap_args(args),
-                    callback: me.core.handle.push(responseCallback)
-                };
-                this.emit("send", info);
-            });
+            return me.send_socket.call(this, path, params);
         } else if (me.platform === "service") {
             var args = Array.prototype.slice.call(arguments, 0);
             return me.send.apply(this, args);
@@ -117,7 +135,7 @@ screens.core.message = function CoreMessage(me) {
                 try {
                     args = args.map((arg) => {
                         var varNames = ["userId", "userName"];
-                        for(var varName of varNames) {
+                        for (var varName of varNames) {
                             if (arg && typeof arg === "string" && arg.includes("$" + varName)) {
                                 me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
                                 arg = arg.replace("$" + varName, info[varName]);
@@ -130,7 +148,7 @@ screens.core.message = function CoreMessage(me) {
                     info.body = me.core.type.wrap_args([null, result]);
                 }
                 catch (e) {
-                    me.error("method: " + path + " err: " + (e.message || e), e.stack);
+                    me.error("method: " + path + " err: " + (e.message || JSON.stringify(e)), e.stack);
                     info.body = me.core.type.wrap_args([e]);
                 }
             }
