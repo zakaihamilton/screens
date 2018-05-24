@@ -7,7 +7,8 @@ screens.core.socket = function CoreSocket(me) {
     me.init = function () {
         if (me.platform === "server") {
             me.sockets = new Map();
-            me.core.http.io.on("connection", async (socket) => {
+            me.io = me.core.http.io;
+            me.io.on("connection", async (socket) => {
                 me.log(`Socket connected [id=${socket.id}]`);
                 var ref = me.core.ref.gen();
                 socket.on("disconnect", () => {
@@ -51,8 +52,11 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.register = function (socket) {
         socket.on("send", async (info) => {
-            this.clientIp = socket.request.connection.remoteAddress;
-            var args = await me.core.message.handleLocal(this, info.args);
+            info.clientIp = socket.request.connection.remoteAddress;
+            me.core.object(me, info);
+            await me.core.property.set(info, "check");
+            info.args = me.core.message.fillArgs(info, info.args);
+            var args = await me.core.message.handleLocal(info, info.args);
             if (args) {
                 info.args = args;
                 socket.emit("receive", info);

@@ -92,7 +92,7 @@ screens.core.message = function CoreMessage(me) {
         }
     };
     me.send_socket = function(path, params) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             var responseCallback = (err, result) => {
                 if (err) {
                     reject(err);
@@ -106,6 +106,11 @@ screens.core.message = function CoreMessage(me) {
                 args: me.core.type.wrap_args(args),
                 callback: me.core.handle.push(responseCallback)
             };
+            me.core.object(me, info);
+            if (!info.headers) {
+                info.headers = {}
+            }
+            await me.core.property.set(info, "headers", headers);
             this.emit("send", info);
         });
     };
@@ -124,6 +129,19 @@ screens.core.message = function CoreMessage(me) {
         }
         return me["send_" + platform].apply(null, args);
     };
+    me.fillArgs = function(info, args) {
+        args = args.map((arg) => {
+            var varNames = ["userId", "userName"];
+            for (var varName of varNames) {
+                if (arg && typeof arg === "string" && arg.includes("$" + varName)) {
+                    me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
+                    arg = arg.replace("$" + varName, info[varName]);
+                }
+            }
+            return arg;
+        });
+        return args;
+    };
     me.receiveHttp = {
         set: async function (info) {
             if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
@@ -133,16 +151,7 @@ screens.core.message = function CoreMessage(me) {
                 info.body = null;
                 args.unshift(path);
                 try {
-                    args = args.map((arg) => {
-                        var varNames = ["userId", "userName"];
-                        for (var varName of varNames) {
-                            if (arg && typeof arg === "string" && arg.includes("$" + varName)) {
-                                me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
-                                arg = arg.replace("$" + varName, info[varName]);
-                            }
-                        }
-                        return arg;
-                    });
+                    args = me.fillArgs(info, args);
                     var result = await me.core.message.send.apply(info, args);
                     me.log("method: " + path + " result type: " + typeof result);
                     info.body = me.core.type.wrap_args([null, result]);
@@ -189,5 +198,8 @@ screens.core.message = function CoreMessage(me) {
         catch (err) {
             return [err];
         }
+    };
+    me.headers = function (info) {
+
     };
 };

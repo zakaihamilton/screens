@@ -7,6 +7,7 @@ screens.lib.google = function LibGoogle(me) {
     me.init = async function () {
         me.state = false;
         me.core.property.link("core.http.headers", "lib.google.headers", true);
+        me.core.property.link("core.message.headers", "lib.google.headers", true);
     }
     me.load = function() {
         var google = me.core.util.config("settings.lib.google");
@@ -162,6 +163,9 @@ screens.lib.google = function LibGoogle(me) {
             token = user.getAuthResponse().id_token
             if (token) {
                 var profile = user.getBasicProfile();
+                if(!info.headers) {
+                    info.headers = {};
+                }
                 info.headers["user_name"] = encodeURIComponent(profile.getName());
                 info.headers["token"] = token;
             }
