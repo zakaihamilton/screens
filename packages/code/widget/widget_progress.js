@@ -67,13 +67,21 @@ screens.widget.progress = function WidgetProgress(me) {
             me.update(object);
         }
     };
+    me.showPercentage = {
+        get: function(object) {
+            return me.core.property.set(object.var.percent, "ui.basic.show");
+        },
+        set: function(object, show) {
+            me.core.property.set(object.var.percent, "ui.basic.show", show);
+        }
+    };
     me.update = function(object) {
         me.core.property.set(object.var.bar, "ui.style.left", 0);
         if(!object.min) {
             object.min = 0;
         }
-        var percent = parseInt((object.value - object.min) / (object.max - object.min) * 100);
-        me.core.property.set(object.var.percent, "ui.basic.text", percent + "%");
+        var percent = (object.value - object.min) / (object.max - object.min) * 100;
+        me.core.property.set(object.var.percent, "ui.basic.text", parseInt(percent) + "%");
         me.core.property.set(object.var.label, "ui.basic.text", object.label);
         me.core.property.set(object.var.bar, "ui.style.width", percent + "%");
     };

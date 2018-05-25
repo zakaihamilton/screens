@@ -180,7 +180,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     "ui.touch.move": "seekMove",
                     "ui.touch.up": "seekEnd",
                     "ui.touch.over": "seekOver",
-                    "ui.touch.leave": "seekLeave"
+                    "ui.touch.leave": "seekLeave",
+                    "showPercentage":false
                 }
             ]
         }

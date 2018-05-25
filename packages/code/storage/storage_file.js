@@ -95,7 +95,7 @@ screens.storage.file = function StorageFile(me) {
         var fileSession = me.core.file.open(from);
         var cursor = { session_id: null, offset: 0 };
         return new Promise((resolve, reject) => {
-            const chunkSize = 8 * 1000 * 1000;
+            const chunkSize = 1000 * 1000;
             me.core.file.read(fileSession, async data => {
                 if(!data) {
                     return;
