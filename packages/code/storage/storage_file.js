@@ -95,16 +95,16 @@ screens.storage.file = function StorageFile(me) {
         var fileSession = me.core.file.open(from);
         var cursor = { session_id: null, offset: 0 };
         return new Promise((resolve, reject) => {
-            const chunkSize = 1000 * 1000;
+            const chunkSize = 8 * 1000 * 1000;
             me.core.file.read(fileSession, async data => {
-                if(!data) {
+                if (!data) {
                     return;
                 }
-                if(progressCallback) {
+                if (progressCallback) {
                     progressCallback(cursor.offset, fileSize);
                 }
                 if (cursor.offset + data.length >= fileSize) {
-                    if(cursor.offset) {
+                    if (cursor.offset) {
                         var commit = { path: to, mode: 'overwrite', mute: false };
                         try {
                             var result = await service.filesUploadSessionFinish({
@@ -115,7 +115,7 @@ screens.storage.file = function StorageFile(me) {
                             me.log("finished uploading in parts: " + to + " size: " + fileSize + " result: " + result);
                             resolve();
                         }
-                        catch(err) {
+                        catch (err) {
                             me.log("failed to upload in parts: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
                             reject(err);
                         }
@@ -129,33 +129,49 @@ screens.storage.file = function StorageFile(me) {
                             me.log("finished uploading: " + to + " size: " + fileSize + " result: " + JSON.stringify(result));
                             resolve();
                         }
-                        catch(err) {
+                        catch (err) {
                             me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
                             reject(err);
                         }
                     }
+                    return;
                 }
-                else if(cursor.offset) {
+                else if (cursor.offset) {
                     me.core.file.pause(fileSession);
-                    await service.filesUploadSessionAppendV2({
-                        cursor: cursor,
-                        close: false,
-                        contents: data
-                    });
+                    try {
+                        await service.filesUploadSessionAppendV2({
+                            cursor: cursor,
+                            close: false,
+                            contents: data
+                        });
+                    }
+                    catch (err) {
+                        me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                        reject(err);
+                        return;
+                    }
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
+                    me.log("uploading: " + cursor.offset + " / " + fileSize);
                 }
                 else {
                     me.core.file.pause(fileSession);
-                    var response = await service.filesUploadSessionStart({
-                        close: false,
-                        contents: data
-                    });
+                    try {
+                        var response = await service.filesUploadSessionStart({
+                            close: false,
+                            contents: data
+                        });
+                    }
+                    catch (err) {
+                        me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                        reject(err);
+                        return;
+                    }
                     cursor.session_id = response.session_id;
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
+                    me.log("uploading: " + cursor.offset + " / " + fileSize);
                 }
-                me.log("uploading: " + cursor.offset + " / " + fileSize);
             }, chunkSize);
         });
     };
