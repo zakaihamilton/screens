@@ -15,9 +15,14 @@ screens.widget.progress = function WidgetProgress(me) {
                     "ui.basic.var":"bar"
                 },
                 {
-                    "ui.basic.tag":"span",
+                    "ui.basic.tag":"div",
                     "ui.class.class":"label",
                     "ui.basic.var":"label"
+                },
+                {
+                    "ui.basic.tag":"div",
+                    "ui.class.class":"percent",
+                    "ui.basic.var":"percent"
                 }
             ]
         }
@@ -67,7 +72,8 @@ screens.widget.progress = function WidgetProgress(me) {
         if(!object.min) {
             object.min = 0;
         }
-        var percent = (object.value - object.min) / (object.max - object.min) * 100;
+        var percent = parseInt((object.value - object.min) / (object.max - object.min) * 100);
+        me.core.property.set(object.var.percent, "ui.basic.text", percent + "%");
         me.core.property.set(object.var.label, "ui.basic.text", object.label);
         me.core.property.set(object.var.bar, "ui.style.width", percent + "%");
     };

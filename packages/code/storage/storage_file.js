@@ -88,7 +88,7 @@ screens.storage.file = function StorageFile(me) {
             });
         });
     };
-    me.uploadFile = async function (from, to) {
+    me.uploadFile = async function (from, to, progressCallback) {
         const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
         var service = await me.getService();
         var fileSize = await me.core.file.size(from);
@@ -99,6 +99,9 @@ screens.storage.file = function StorageFile(me) {
             me.core.file.read(fileSession, async data => {
                 if(!data) {
                     return;
+                }
+                if(progressCallback) {
+                    progressCallback(cursor.offset, fileSize);
                 }
                 if (cursor.offset + data.length >= fileSize) {
                     if(cursor.offset) {
@@ -134,25 +137,23 @@ screens.storage.file = function StorageFile(me) {
                 }
                 else if(cursor.offset) {
                     me.core.file.pause(fileSession);
-                    service.filesUploadSessionAppendV2({
+                    await service.filesUploadSessionAppendV2({
                         cursor: cursor,
                         close: false,
                         contents: data
-                    }).then(() => {
-                        cursor.offset += data.length;
-                        me.core.file.resume(fileSession);
                     });
+                    cursor.offset += data.length;
+                    me.core.file.resume(fileSession);
                 }
                 else {
                     me.core.file.pause(fileSession);
-                    service.filesUploadSessionStart({
+                    var response = await service.filesUploadSessionStart({
                         close: false,
                         contents: data
-                    }).then(response => {
-                        cursor.session_id = response.session_id;
-                        cursor.offset += data.length;
-                        me.core.file.resume(fileSession);
                     });
+                    cursor.session_id = response.session_id;
+                    cursor.offset += data.length;
+                    me.core.file.resume(fileSession);
                 }
                 me.log("uploading: " + cursor.offset + " / " + fileSize);
             }, chunkSize);

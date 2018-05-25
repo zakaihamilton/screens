@@ -5,9 +5,7 @@
 
 screens.core.message = function CoreMessage(me) {
     me.init = async function () {
-        if (screens.platform === "server") {
-            me.core.property.link("core.http.receive", "core.message.receiveHttp", true);
-        } else if (me.platform === "client") {
+        if (me.platform === "client") {
             var registerPromiseWorker = await me.core.require('/node_modules/promise-worker/dist/promise-worker.register.js');
             registerPromiseWorker(async (message) => {
                 return await me.send.apply(null, message);
@@ -78,6 +76,7 @@ screens.core.message = function CoreMessage(me) {
                 args: args,
                 callback: me.core.handle.push(responseCallback)
             };
+            me.prepareArgs(info);
             me.core.object(me, info);
             if (!info.headers) {
                 info.headers = {}
@@ -101,41 +100,60 @@ screens.core.message = function CoreMessage(me) {
         }
         return me["send_" + platform].apply(null, args);
     };
-    me.fillArgs = function(info, args) {
+    me.prepareArgs = function(info) {
+        var args = info.args;
         if(args) {
             args = args.map((arg) => {
-                var varNames = ["userId", "userName"];
-                for (var varName of varNames) {
-                    if (arg && typeof arg === "string" && arg.includes("$" + varName)) {
-                        me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
-                        arg = arg.replace("$" + varName, info[varName]);
+                if(!arg) {
+                    return null;
+                }
+                if(me.platform === "server") {
+                    if(typeof arg === "string") {
+                        var varNames = ["userId", "userName"];
+                        for (var varName of varNames) {
+                            if (arg.includes("$" + varName)) {
+                                me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
+                                arg = arg.replace("$" + varName, info[varName]);
+                            }
+                        }
+                        if(me.core.handle.isHandle(arg, "function")) {
+                            var handle = arg;
+                            arg = function() {
+                                var sendArgs = Array.prototype.slice.call(arguments);
+                                var sendInfo = {args:sendArgs,callback:handle};
+                                info.socket.emit("notify", sendInfo);
+                            };
+                        }
+                    }
+                }
+                else if(me.platform === "browser") {
+                    if(typeof arg === "function") {
+                        arg = me.core.handle.push(arg, typeof arg);
                     }
                 }
                 return arg;
             });
         }
-        return args;
+        info.args = args;
     };
-    me.receiveHttp = {
-        set: async function (info) {
-            if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/method/")) {
-                var find = "/method/";
-                var path = info.url.substring(info.url.indexOf(find) + find.length);
-                var args = me.core.type.unwrap_args(me.core.http.parse_query(info.body));
-                info.body = null;
-                args.unshift(path);
-                try {
-                    args = me.fillArgs(info, args);
-                    var result = await me.core.message.send.apply(info, args);
-                    me.log("method: " + path + " result type: " + typeof result);
-                    info.body = me.core.type.wrap_args([null, result]);
+    me.releaseArgs = function(info) {
+        var args = info.args;
+        if(args) {
+            args = args.map((arg) => {
+                if(!arg) {
+                    return null;
                 }
-                catch (e) {
-                    me.error("method: " + path + " err: " + (e.message || JSON.stringify(e)), e.stack);
-                    info.body = me.core.type.wrap_args([e]);
+                if(me.platform === "browser") {
+                    if(typeof arg === "string") {
+                        if(me.core.handle.isHandle(arg, "function")) {
+                            arg = me.core.handle.pop(arg, "function");
+                        }
+                    }
                 }
-            }
+                return arg;
+            });
         }
+        info.args = args;
     };
     me.send = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 1);

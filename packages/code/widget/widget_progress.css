@@ -35,3 +35,17 @@
     pointer-events: none;
     z-index: 1;
 }
+
+.widget-progress-percent {
+    position: absolute;
+    margin-left:3px;
+    margin-right:3px;
+    right:3px;
+    text-align: right;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size:16px;
+    color:black;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+}

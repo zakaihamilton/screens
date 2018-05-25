@@ -58,12 +58,19 @@ screens.core.socket = function CoreSocket(me) {
             }
             me.core.object(me, info);
             await me.core.property.set(info, "check");
-            info.args = me.core.message.fillArgs(info, info.args);
+            info.socket = socket;
+            me.core.message.prepareArgs(info);
             var args = await me.core.message.handleLocal(info, info.args);
+            me.core.message.releaseArgs(info);
             if (args) {
+                info.socket = null;
                 info.args = args;
                 socket.emit("receive", info);
             }
+        });
+        socket.on("notify", async (info) => {
+            var callback = me.core.handle.find(info.callback);
+            callback.apply(null, info.args);
         });
         socket.on("receive", async (info) => {
             var callback = me.core.handle.pop(info.callback);

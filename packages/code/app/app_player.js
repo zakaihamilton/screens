@@ -268,7 +268,10 @@ screens.app.player = function AppPlayer(me) {
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
                     me.core.property.set(progress, "modal.progress.specific", null);
-                    await me.storage.file.uploadFile(serverPath, remotePath);
+                    await me.storage.file.uploadFile(serverPath, remotePath, (offset, size) => {
+                        var data = { label: remotePath, max: size, value: offset };
+                        me.core.property.set(progress, "modal.progress.specific", data);
+                    });
                 }
                 await me.refresh.set(window);
             }
