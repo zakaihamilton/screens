@@ -16,6 +16,7 @@ screens.widget.transform = function WidgetTransform(me) {
             doExplanation: true,
             prioritizeExplanation: true,
             addStyles: true,
+            abridged: false,
             keepSource: false,
             showHtml: false,
             autoScroll: false,
@@ -41,6 +42,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.toggleSet(me, me.findWidget, "addStyles", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "phaseNumbers", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "keepSource", me.transform);
+        me.ui.options.toggleSet(me, me.findWidget, "abridged", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "showHtml", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "autoScroll", me.updateScrolling);
         me.ui.options.toggleSet(me, me.findWidget, "snapToPage", me.updateScrolling);

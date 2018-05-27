@@ -16,7 +16,7 @@
         }
     },
     "data": {
-        "lastExpansion": " and ",
+        "lastFieldSeparator": " and ",
         "filterPlaceholder": "Search...",
         "glossaryTitle": "Glossary",
         "termTableTitle": "Table of Phases",
@@ -1183,7 +1183,12 @@
                 "Hod",
                 "Yesod"
             ],
+            "abridged":"Regesh",
             "term": "HGTNHY"
+        },
+        {
+            "term":"Bina and TM",
+            "abridged":"Regesh"
         },
         {
             "expansion": [
@@ -6695,6 +6700,10 @@
             "term":"Metzah",
             "translation":"Forehead",
             "hebrew":"מצח"
+        },
+        {
+            "term":"Malchut to Bina",
+            "abridged":"Katnut"
         }
     ],
     "style": {

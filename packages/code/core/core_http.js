@@ -20,16 +20,20 @@ screens.core.http = function CoreHttp(me) {
             me.fs = require("fs");
             if (me.platform === "server") {
                 try {
-                    var port = await me.createServer(true);
-                    me.log("secure server is listening on " + port);
+                    var server = await me.createServer(true);
+                    me.log("secure server is listening");
+                    me.io = require("socket.io")(server);
                 }
-                catch(err) {
+                catch (err) {
                     me.error("cannot create secure server, error: " + err);
                 }
             }
             me.log("creating normal server");
-            var port = await me.createServer(false);
-            me.log("normal server is listening on " + port);
+            var server = await me.createServer(false);
+            if(!me.io) {
+                me.io = require("socket.io")(server);
+            }
+            me.log("normal server is listening");
         }
     };
     me.createServer = async function (secure) {
@@ -76,7 +80,7 @@ screens.core.http = function CoreHttp(me) {
                         });
                         server.listen(port, function (err) {
                             me.forwardUrl = keys.redirect;
-                            resolve(port);
+                            resolve(server);
                         });
                     } catch (e) {
                         me.log("Failed to create secure server, error: " + e.message);
@@ -88,7 +92,6 @@ screens.core.http = function CoreHttp(me) {
             me.log("using http");
             return new Promise((resolve, reject) => {
                 server = me.http.createServer(requestHandler);
-                me.io = require("socket.io")(server);
                 server.on('error', function (e) {
                     reject(e);
                 });
@@ -97,7 +100,7 @@ screens.core.http = function CoreHttp(me) {
                         reject(err);
                     }
                     else {
-                        resolve(port);
+                        resolve(server);
                     }
                 });
             });
@@ -194,7 +197,7 @@ screens.core.http = function CoreHttp(me) {
                 var response = {
                     writeHead: function () { },
                     end: function (body) {
-                        if(body) {
+                        if (body) {
                             me.log("returning body of length: " + body.length);
                         }
                         else {

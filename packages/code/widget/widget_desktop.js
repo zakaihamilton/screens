@@ -24,8 +24,7 @@ screens.widget.desktop = function WidgetDesktop(me) {
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "background",
-                            "ui.touch.dblclick": "core.app.tasks"
+                            "ui.class.class": "background"
                         }
                     ]
                 }

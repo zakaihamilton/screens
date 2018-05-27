@@ -43,7 +43,7 @@ screens.core.socket = function CoreSocket(me) {
             });
         }
         else if (me.platform === "browser") {
-            var io = await me.core.require("/socket.io/socket.io.js");
+            var io = await me.core.require("/node_modules/socket.io-client/dist/socket.io.js");
             me.io = io();
             me.register(me.io);
         }

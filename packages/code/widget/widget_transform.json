@@ -76,6 +76,13 @@
                     }
                 ],
                 [
+                    "Abridged",
+                    "widget.transform.abridged",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Explanation",
                     "widget.transform.doExplanation",
                     {

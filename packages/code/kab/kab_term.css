@@ -27,11 +27,11 @@
     padding-right:2px;
     left:0em;
     right:0em;
-    bottom:1.2em;
+    bottom:1.6em;
     text-align: center;
     vertical-align:middle;
     height:1em;
-    font-size:60%;
+    font-size:50%;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-sub-heading);
@@ -46,7 +46,8 @@
     pointer-events: none;
     transition: border 0.10s ease-in;
     top: -2px;
-    left: -2px;
+    left:-2px;
+    right:-2px;
     position: absolute;
     line-height: 1em;
     padding:0.2em;
@@ -73,7 +74,7 @@
     margin:0.1em;
     padding:0.2em;
     border-radius: 5px;
-    min-width:5em;
+    min-width:8em;
     text-align:center;
     break-after: avoid;
 }
