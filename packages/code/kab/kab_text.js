@@ -171,6 +171,9 @@ screens.kab.text = function KabText(me) {
         var json = await me.kab.data.load(language, options.reload);
         me.core.message.send("kab.search.clear");
         wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
+        if(options.abridged) {
+            wordsString = me.core.message.send("kab.format.replace", wordsString, json.abridged);
+        }
         if (wordsString.includes("\n")) {
             wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
         }

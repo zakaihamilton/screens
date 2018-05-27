@@ -56,6 +56,9 @@
         "four": "4"
     },
     "ignore": ["of", "de", "De", "OF", "DE"],
+    "abridged":{
+        
+    },
     "replace": {
         "spelling":{
             "Hakaaof": "Hakaa of",
