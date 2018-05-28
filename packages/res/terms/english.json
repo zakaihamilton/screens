@@ -57,7 +57,7 @@
     },
     "ignore": ["of", "de", "De", "OF", "DE"],
     "abridged":{
-        
+
     },
     "replace": {
         "spelling":{
@@ -1015,7 +1015,8 @@
                 "Haya",
                 "Yechida"
             ],
-            "term": "NRNHY"
+            "term": "NRNHY",
+            "abridged":["Katnut","Gadlut"]
         },
         {
             "expansion": [
@@ -1058,7 +1059,8 @@
                 "Nefesh",
                 "Ruach"
             ],
-            "term": "NR"
+            "term": "NR",
+            "abridged":"Katnut"
         },
         {
             "expansion": [
@@ -1092,7 +1094,8 @@
                 "Keter",
                 "Hochma"
             ],
-            "term": "KH"
+            "term": "KH",
+            "abridged":"Machshava"
         },
         {
             "expansion": [
@@ -1124,7 +1127,8 @@
                 "Yetzira",
                 "Assiya"
             ],
-            "term": "ABYA"
+            "term": "ABYA",
+            "abridged":["Boreh","Nivrah"]
         },
         {
             "expansion": [
@@ -6144,6 +6148,11 @@
             "hebrew": "רגש"
         },
         {
+            "term": "Machshava",
+            "translation": "Thought",
+            "hebrew": "מחשבה"
+        },
+        {
             "term": "Sechel",
             "translation": "Thought",
             "hebrew": "שכל"
@@ -6707,6 +6716,18 @@
         {
             "term":"Malchut to Bina",
             "abridged":"Katnut"
+        },
+        {
+            "term":"Bina and ZON",
+            "abridged":"Regesh"
+        },
+        {
+            "term":"Bina , Tifferet , and Malchut",
+            "abridged":"Regesh"
+        },
+        {
+            "term":"Neshama , Haya , Yechida",
+            "abridged":"Gadlut"
         }
     ],
     "style": {

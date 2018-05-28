@@ -45,9 +45,8 @@
     visibility: hidden;
     pointer-events: none;
     transition: border 0.10s ease-in;
-    top: -2px;
-    left:-2px;
-    right:-2px;
+    left:0px;
+    top:-1px;
     position: absolute;
     line-height: 1em;
     padding:0.2em;
@@ -55,6 +54,7 @@
     text-align:center;
     white-space: pre;
     min-width: 100%;
+    min-height: 100%;
     vertical-align: middle;
     border-radius: 5px;
 }
