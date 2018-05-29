@@ -97,7 +97,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         me.ui.layout.clear(widget.var.layout);
         var text = widget.transformText;
-        widget.title = "";
+        widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
         if(text) {
             me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
@@ -757,11 +757,11 @@ screens.widget.transform = function WidgetTransform(me) {
             var title = me.ui.layout.firstWidget(widget.var.layout);
             if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
                 title = title.innerText;
-                widget.title = title;
+                widget.contentTitle = title;
                 return title;
             }
             else {
-                title = widget.title;
+                title = widget.contentTitle;
             }
             return title;
         }
