@@ -89,6 +89,11 @@ screens.kab.text = function KabText(me) {
                         }
                         var word = words[wordIndex + termWordIndex];
                         if(!word) {
+                            numTermWords++;
+                            continue;
+                        }
+                        if(word === ",") {
+                            numTermWords++;
                             continue;
                         }
                         var prefixTerm = prefix ? word.toLowerCase() in prefix && !termWordIndex : false;
@@ -105,10 +110,6 @@ screens.kab.text = function KabText(me) {
                                 numTermWords++;
                                 continue;
                             }
-                        }
-                        if (!word) {
-                            numTermWords++;
-                            continue;
                         }
                         if (collectedWords) {
                             collectedWords += " " + word;

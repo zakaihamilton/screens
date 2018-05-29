@@ -146,7 +146,9 @@
             "“Year":"“Year2",
             "“Soul":"“Soul2",
             "Alone":"__Alone",
-            "Ish [person] Tam":"Ish Tam"
+            "Ish [person] Tam":"Ish Tam",
+            "[quality of judgement]":" ",
+            "[quality of mercy]":" "
         },
         "insert":{
             "Partzuf Keter":"Partzuf de Keter",
@@ -6728,11 +6730,11 @@
             "abridged":"Regesh"
         },
         {
-            "term":"Bina , Tifferet , and Malchut",
+            "term":"Bina Tifferet and Malchut",
             "abridged":"Regesh"
         },
         {
-            "term":"Neshama , Haya , Yechida",
+            "term":"Neshama Haya Yechida",
             "abridged":"Gadlut"
         },
         {
