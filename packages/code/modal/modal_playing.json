@@ -24,7 +24,7 @@
                 "display":"block",
                 "border":"1px solid black",
                 "box-shadow":"5px 10px 18px lightgray",
-                "padding":"10px",
+                "padding":"3em",
                 "background":"white",
                 "pointerEvents":"all"
             }
