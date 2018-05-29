@@ -208,7 +208,7 @@ screens.kab.text = function KabText(me) {
         if(!session.options.abridged) {
             abridged = null;
         }
-        if (!session.options.doTranslation) {
+        if (!session.options.doTranslation && !abridged) {
             if (session.options.doExplanation && !explanation) {
                 explanation = translation;
             }
@@ -279,11 +279,11 @@ screens.kab.text = function KabText(me) {
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(source)) {
                 instance.words.splice(instance.wordIndex, 0, ...source);
+                instance.wordIndex-= source.length;
             } else {
                 instance.words.splice(instance.wordIndex, 0, source);
+                instance.wordIndex--;
             }
-            instance.wordIndex--;
-            match = true;
         }
         /*else {
             modify(session, instance, "", instance.source, null, "", false, false);
@@ -325,7 +325,11 @@ screens.kab.text = function KabText(me) {
         }
         var text = replacement;
         var replacementWithStyles = replacement;
-        if (!instance.textOnly && session.options.addStyles && (instance.item.style || (translation && translation.toLowerCase() !== instance.target.toLowerCase()))) {
+        var applyStyles = false;
+        if (!instance.textOnly && session.options.addStyles) {
+            applyStyles = true;
+        }
+        if(applyStyles) {
             replacementWithStyles = me.kab.style.process(session, instance, replacement, expansion);
         }
         else if(prefixLetters) {

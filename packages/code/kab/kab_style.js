@@ -40,7 +40,7 @@ screens.kab.style = function KabStyle(me) {
             if (styles && styles.heading && session.options.headings) {
                 heading = styles.heading;
             }
-            if (!session.options.keepSource && !expansion && (session.options.doTranslation || term !== replacement)) {
+            if (!session.options.keepSource && !expansion && (!session.options.doTranslation || term !== replacement)) {
                 tooltip = term;
             }
         } else if (!session.options.keepSource && !expansion) {

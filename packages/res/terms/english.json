@@ -148,6 +148,12 @@
             "Alone":"__Alone",
             "Ish [person] Tam":"Ish Tam"
         },
+        "insert":{
+            "Partzuf Keter":"Partzuf de Keter",
+            "Partzuf Atik":"Partzuf de Atik",
+            "Partzuf AK":"Partzuf de Adam Kadmon",
+            "Partzuf Adam Kadmon":"Partzuf de Adam Kadmon"
+        },
         "tags":{
             "<subtitle>": "\n<b>",
             "</subtitle>": "</b>",
@@ -6728,6 +6734,18 @@
         {
             "term":"Neshama , Haya , Yechida",
             "abridged":"Gadlut"
+        },
+        {
+            "term":"Malchut AK",
+            "prefix":"the",
+            "abridged":"Malchut AK2"
+        },
+        {
+            "term":"Malchut AK2",
+            "explanation":"Attitude towards the Individual",
+            "translation":"Kingdom of Primordal Man",
+            "hebrew":"מלכות דא״ק",
+            "source":"Malchut de AK"
         }
     ],
     "style": {
