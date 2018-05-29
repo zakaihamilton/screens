@@ -25,6 +25,10 @@
     background:white;
 }
 
+.widget-window-border.popup.transparent {
+    background:none;
+}
+
 .widget-window-border.embed {
     float:right;
 }

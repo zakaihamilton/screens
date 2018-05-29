@@ -1,0 +1,33 @@
+{
+    "title":"@ui.param.title",
+    "popup":true,
+    "fullscreen":true,
+    "fixed":true,
+    "temp":true,
+    "static":true,
+    "nobar":true,
+    "transparent":true,
+    "ui.property.style":{
+        "left": "5%",
+        "top": "5%",
+        "height": "90%",
+        "width": "90%",
+        "pointerEvents":"none"
+    },
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag":"div",
+            "ui.class.class":"widget.transform.layout",
+            "ui.basic.var":"layout",
+            "ui.basic.html":"@ui.param.layout",
+            "ui.property.style":{
+                "display":"block",
+                "border":"1px solid black",
+                "box-shadow":"5px 10px 18px lightgray",
+                "padding":"10px",
+                "background":"white",
+                "pointerEvents":"all"
+            }
+        }
+    ]
+}

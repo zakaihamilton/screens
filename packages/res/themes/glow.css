@@ -56,6 +56,10 @@
     min-height:200px;
 }
 
+.glow-window-border.transparent {
+    background:none;
+}
+
 .glow-window-border.see-through {
     opacity:0.25;
 }
@@ -123,6 +127,10 @@
     background:white;
     border-radius: 15px;
     margin:2px;
+}
+
+.glow-window-margin.transparent {
+    background:none;
 }
 
 .glow-window-margin.maximize {

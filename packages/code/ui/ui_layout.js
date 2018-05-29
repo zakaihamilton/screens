@@ -674,4 +674,7 @@ screens.ui.layout = function UILayout(me) {
             page.focusElement = focusElement;
         }
     };
+    me.focusElement = function(page) {
+        return page.focusElement;        
+    };
 };

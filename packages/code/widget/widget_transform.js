@@ -5,7 +5,7 @@
 
 screens.widget.transform = function WidgetTransform(me) {
     me.element = {
-        properties : __json__
+        properties: __json__
     };
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
@@ -30,6 +30,7 @@ screens.widget.transform = function WidgetTransform(me) {
             scrollPos: 0,
             phaseNumbers: true,
             pipVideo: false,
+            playingPopup: false,
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal"
@@ -60,6 +61,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.toggleSet(me, me.findWidget, "diagrams", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "pipVideo", me.reflow);
         me.ui.options.toggleSet(me, me.findWidget, "autoPlay");
+        me.ui.options.toggleSet(me, me.findWidget, "playingPopup", me.reflow);
         me.ui.options.choiceSet(me, me.findWidget, "voice", me.changeVoice);
         me.ui.options.choiceSet(me, me.findWidget, "speed", me.changeSpeed);
         me.ui.options.choiceSet(me, me.findWidget, "scrollPos");
@@ -69,16 +71,18 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.ui.node.container(object, me.id);
         if (!widget) {
             var window = me.widget.window(object);
-            widget = window.var.transform;
+            if(window) {
+                widget = window.var.transform;
+            }
         }
         return widget;
     };
     me.useTitle = {
-        get: function(object) {
+        get: function (object) {
             var widget = me.findWidget(object);
             return widget.useTitle;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var widget = me.findWidget(object);
             widget.useTitle = value;
         }
@@ -99,7 +103,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var text = widget.transformText;
         widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
-        if(text) {
+        if (text) {
             me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
         }
         widget.inTransform = true;
@@ -135,7 +139,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.language = language;
         me.core.property.set(widget.var.output, widget.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
         me.updateFilterList(widget, terms);
-        widget.tableOfPhases = {terms,data};
+        widget.tableOfPhases = { terms, data };
         me.ui.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
@@ -176,6 +180,9 @@ screens.widget.transform = function WidgetTransform(me) {
         var descriptionBox = null;
         var descriptionTypes = ["source", "related"];
         var widget = me.findWidget(object);
+        if(!widget) {
+            return;
+        }
         if (widget.options.prioritizeExplanation) {
             descriptionTypes.unshift("technical");
             descriptionTypes.unshift("explanation");
@@ -252,7 +259,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (widget.pageSize && (pageSize.height !== widget.pageSize.height || pageSize.width !== widget.pageSize.width)) {
                 reflow = true;
             }
-            if(widget.fullscreen !== fullscreen) {
+            if (widget.fullscreen !== fullscreen) {
                 reflow = true;
             }
             if (widget.forceReflow) {
@@ -269,7 +276,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!me.shouldReflow(object)) {
             return;
         }
-        if(!widget.options) {
+        if (!widget.options) {
             return;
         }
         var text = widget.transformText;
@@ -346,7 +353,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.media.voice.stop();
         me.ui.layout.reflow(function () {
             me.core.property.set(widget, "ui.work.state", false);
-            if(widget.useTitle) {
+            if (widget.useTitle) {
                 var title = me.core.property.get(widget, "widget.transform.title");
                 me.core.property.set(widget, "widget.window.title", title);
             }
@@ -402,7 +409,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            diagrams.unshift({title:"Table of Phases",path:"table_of_phases",params:me.tableOfPhasesParams(widget)});
+            diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             var isFirst = true;
             var items = diagrams.map(function (item) {
                 var result = [
@@ -412,11 +419,11 @@ screens.widget.transform = function WidgetTransform(me) {
                         me.core.app("diagram", item.path, widget.options, null, item.params);
                     },
                     {
-                        separator:isFirst,
-                        enabled:widget.transformText !== null
+                        separator: isFirst,
+                        enabled: widget.transformText !== null
                     }
                 ];
-                if(isFirst) {
+                if (isFirst) {
                     isFirst = false;
                 }
                 return result;
@@ -470,12 +477,15 @@ screens.widget.transform = function WidgetTransform(me) {
         var isPlaying = me.ui.layout.isPlaying(currentPage);
         var isPaused = me.ui.layout.isPaused(currentPage);
         if (toggle ? (isPlaying && !isPaused) : (isPlaying && isPaused)) {
+            me.focusParagraph(object, null);
             me.media.voice.pause();
             me.ui.layout.setPlayState(currentPage, true, true);
         }
         else if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
             me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
+            var focusElement = me.ui.layout.focusElement(me.currentPlayingPage);
+            me.focusParagraph(object, focusElement);
         }
         else {
             var index = 0;
@@ -488,16 +498,19 @@ screens.widget.transform = function WidgetTransform(me) {
                 onstart: () => {
                     me.log("onstart");
                     me.ui.layout.setPlayState(currentPage, true, false);
+                    me.focusParagraph(object, null);
                 },
                 oncancel: () => {
                     me.log("oncancel");
                     me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
+                    me.focusParagraph(object, null);
                 },
                 onend: () => {
                     me.log("onend");
                     me.ui.layout.clearPage(currentPage);
                     me.ui.layout.setPlayState(currentPage, false, false);
+                    me.focusParagraph(object, null);
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
                             setTimeout(() => {
@@ -513,6 +526,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
                     if (pageNumber > 1) {
                         me.ui.layout.clearPage(currentPage);
+                        me.focusParagraph(object, null);
                         me.core.property.set(object, "widget.scrollbar.vertical.before");
                         me.core.property.set(object, "widget.transform.play", -1);
                     }
@@ -524,6 +538,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     me.ui.layout.clearPage(currentPage);
                     if (currentPage.last) {
                         me.ui.layout.setPlayState(currentPage, false, false);
+                        me.focusParagraph(object, null);
                         me.currentPlayingPage = null;
                     }
                     else {
@@ -534,6 +549,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 onchange: (index, text) => {
                     me.log("onchange: " + index + " text:" + text);
                     me.ui.layout.markPage(currentPage, index, text);
+                    var focusElement = me.ui.layout.focusElement(currentPage);
+                    me.focusParagraph(object, focusElement);
                 },
                 rate: widget.options.speed,
                 language: widget.language
@@ -553,6 +570,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (isPlaying) {
             me.media.voice.stop();
             me.ui.layout.clearPage(currentPage);
+            me.focusParagraph(object, null);
             me.ui.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
@@ -647,26 +665,26 @@ screens.widget.transform = function WidgetTransform(me) {
         }
     };
     me.color = {
-        root:"white",
-        one:"#FFF3CA",
-        two:"#C8D9F9",
-        three:"#F5CCCB",
-        four:"#D9EAD2",
-        collective:"Plum"
+        root: "white",
+        one: "#FFF3CA",
+        two: "#C8D9F9",
+        three: "#F5CCCB",
+        four: "#D9EAD2",
+        collective: "Plum"
     };
     me.phases = {
-        root:2,
-        one:3,
-        two:4,
-        three:5,
-        four:6,
-        collective:7
+        root: 2,
+        one: 3,
+        two: 4,
+        three: 5,
+        four: 6,
+        collective: 7
     };
-    me.tableOfPhasesParams = function(object) {
-        var params = {gridData:[]};
+    me.tableOfPhasesParams = function (object) {
+        var params = { gridData: [] };
         var widget = me.findWidget(object);
         var rows = {};
-        if(!widget.tableOfPhases) {
+        if (!widget.tableOfPhases) {
             return params;
         }
         var terms = widget.tableOfPhases.terms;
@@ -683,11 +701,11 @@ screens.widget.transform = function WidgetTransform(me) {
                 }
                 term.heading.split("/").map(function (heading) {
                     var row = rows[heading];
-                    if(!row) {
+                    if (!row) {
                         row = rows[heading] = {};
                     }
                     var list = row[phase];
-                    if(!list) {
+                    if (!list) {
                         list = row[phase] = [];
                     }
                     list.push(term.term);
@@ -695,18 +713,18 @@ screens.widget.transform = function WidgetTransform(me) {
             }
         }
         var rowIndex = 2;
-        for(var phase in me.phases) {
+        for (var phase in me.phases) {
             var columnIndex = me.phases[phase];
             var name = phase.charAt(0).toUpperCase() + phase.slice(1);
             params.gridData.push([1, columnIndex, name, "black", "white", "bold"]);
         }
-        for(var heading in rows) {
+        for (var heading in rows) {
             var row = rows[heading];
             var name = heading.charAt(0).toUpperCase() + heading.slice(1);
             params.gridData.push([rowIndex, 1, name, "black", "white", "bold"]);
-            for(var phase in me.phases) {
+            for (var phase in me.phases) {
                 var list = row[phase];
-                if(!list) {
+                if (!list) {
                     list = [];
                 }
                 var columnIndex = me.phases[phase];
@@ -719,7 +737,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.term = {
         set: async function (object, text) {
             var widget = me.findWidget(object);
-            var options = Object.assign({}, widget.options, {headings:false});
+            var options = Object.assign({}, widget.options, { headings: false });
             var info = await me.kab.text.parse(widget.language, text, options);
             me.core.property.set(object, "ui.basic.html", info.text);
         }
@@ -777,5 +795,32 @@ screens.widget.transform = function WidgetTransform(me) {
             }
             return key;
         }
+    };
+    me.focusParagraph = function (object, paragraph) {
+        var widget = me.findWidget(object);
+        if (widget.options.playingPopup) {
+            if (widget.playingPopupParagraph != paragraph) {
+                if (widget.playingPopupHandle) {
+                    me.core.property.set(widget.playingPopupHandle, "show", false);
+                }
+                if (paragraph) {
+                    if (widget.playingPopupHandle) {
+                        me.core.property.set(widget.playingPopupHandle, "show", true);
+                        me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
+                    }
+                    else {
+                        var title = me.core.property.get(widget, "widget.transform.contentTitle");
+                        widget.playingPopupHandle = me.ui.modal("playing", {
+                            "title": title,
+                            "layout": paragraph.innerHTML
+                        });
+                    }
+                }
+            }
+        }
+        else if (widget.playingPopupHandle) {
+            me.core.property.set(widget.playingPopupHandle, "show", false);
+        }
+        widget.playingPopupParagraph = paragraph;
     };
 };

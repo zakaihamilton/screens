@@ -30,6 +30,15 @@ screens.widget.window = function WidgetWindow(me) {
             },
             "temp": null,
             "static": null,
+            "transparent":null,
+            "nobar" : function(object, value) {
+                if(value) {
+                    me.core.property.set(object.var.icon, "ui.node.parent");
+                }
+                else {
+                    me.core.property.set(object.var.icon, "@widget.tray.tray");
+                }
+            },
             "fixed": function (object, value) {
                 var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
                 me.core.property.set(object, "ui.resize.enabled", !value && !maximized);

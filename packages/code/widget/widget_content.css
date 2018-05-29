@@ -5,3 +5,7 @@
     position: relative;
     display:block;
 }
+
+.widget-content-base.transparent {
+    background:none;
+}

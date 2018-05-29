@@ -230,6 +230,13 @@
                     }
                 ],
                 [
+                    "Popup Playing Paragraph",
+                    "widget.transform.playingPopup",
+                    {
+                        "state":"select"
+                    }
+                ],
+                [
                     "Voice",
                     null,
                     {
