@@ -67,6 +67,7 @@
     box-sizing:border-box;
     column-gap: 4em;
     column-fill:balance;
+    border:1px solid transparent;
 }
 
 .widget-transform-page-content br {

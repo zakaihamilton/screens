@@ -191,18 +191,7 @@ screens.ui.layout = function UILayout(me) {
                 }
                 var newPage = false;
                 me.cleanupWidget(widget);
-                if (pageContent.scrollHeight > pageContent.clientHeight) {
-                    newPage = true;
-                }
-                if (pageContent.scrollWidth > pageContent.clientWidth) {
-                    newPage = true;
-                }
-                if (pageContent.scrollHeight > target.page.clientHeight) {
-                    newPage = true;
-                }
-                if (pageContent.scrollWidth > target.page.clientWidth) {
-                    newPage = true;
-                }
+                newPage = !me.widgetFitInPage(widget, target.page);
                 if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
                     previousWidget = null;
                 }
@@ -233,25 +222,11 @@ screens.ui.layout = function UILayout(me) {
                         pageContent.appendChild(widget);
                     }
                     for (var fontSize = parseInt(target.style.fontSize); fontSize >= 12; fontSize -= 2) {
-                        var changeFontSize = false;
-                        if (pageContent.scrollHeight > pageContent.clientHeight) {
-                            changeFontSize = true;
-                        }
-                        if (pageContent.scrollWidth > pageContent.clientWidth) {
-                            changeFontSize = true;
-                        }
-                        if (pageContent.scrollHeight > target.page.clientHeight) {
-                            changeFontSize = true;
-                        }
-                        if (pageContent.scrollWidth > target.page.clientWidth) {
-                            changeFontSize = true;
-                        }
-                        if (changeFontSize) {
-                            target.page.style.fontSize = fontSize + "px";
-                            target.page.style.lineHeight = "2em";
-                        } else {
+                        if (me.widgetFitInPage(null, target.page)) {
                             break;
                         }
+                        target.page.style.fontSize = fontSize + "px";
+                        target.page.style.lineHeight = "2em";
                     }
                     previousWidget = null;
                     me.activateOnLoad(target.page ? target.page : widget, widget);
@@ -266,6 +241,25 @@ screens.ui.layout = function UILayout(me) {
                 }
             }
         }, 0);
+    };
+    me.widgetFitInContainer = function (widget, container) {
+        var result = true;
+        if (container.scrollWidth > container.offsetWidth) {
+            result = false;
+        }
+        if (container.scrollHeight > container.offsetHeight) {
+            result = false;
+        }
+        return result;
+    };
+    me.widgetFitInPage = function (widget, page) {
+        var pageContent = page.var.content;
+        var pageContainer = page.var.container;
+        var result = true;
+        result = me.widgetFitInContainer(widget, page);
+        result = result && me.widgetFitInContainer(widget, pageContainer);
+        result = result && me.widgetFitInContainer(widget, pageContent);
+        return result;
     };
     me.completeReflow = function (callback, target, options, scrollToWidget = true) {
         var layoutContent = me.content(target);
@@ -571,6 +565,7 @@ screens.ui.layout = function UILayout(me) {
                 child = child.nextSibling;
             }
         }
+        widget.style.border = "1px solid transparent";
     };
     me.currentPage = function (target) {
         target = me.content(target);
@@ -674,7 +669,7 @@ screens.ui.layout = function UILayout(me) {
             page.focusElement = focusElement;
         }
     };
-    me.focusElement = function(page) {
-        return page.focusElement;        
+    me.focusElement = function (page) {
+        return page.focusElement;
     };
 };
