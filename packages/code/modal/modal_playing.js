@@ -13,4 +13,14 @@ screens.modal.playing = function ModalPlaying(me) {
          var window = me.widget.window(object);
          me.core.property.set(window.var.layout, "ui.basic.html", value);
     };
+    me.fontSize = {
+        get: function(object) {
+            var window = me.widget.window(object);
+            return me.core.property.get(window.var.layout, "ui.style.fontSize");
+        },
+        set: function(object, value) {
+            var window = me.widget.window(object);
+            me.core.property.set(window.var.layout, "ui.style.fontSize", value);
+        }
+    };
 };

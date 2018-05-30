@@ -793,6 +793,10 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.focusParagraph = function (object, paragraph) {
         var widget = me.findWidget(object);
+        if(!widget) {
+            return;
+        }
+        var fontSize = (parseInt(widget.options.fontSize) + 4) + "px";
         if (widget.options.playingPopup) {
             if (widget.playingPopupParagraph != paragraph) {
                 if (widget.playingPopupHandle) {
@@ -802,12 +806,14 @@ screens.widget.transform = function WidgetTransform(me) {
                     if (widget.playingPopupHandle) {
                         me.core.property.set(widget.playingPopupHandle, "show", true);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
+                        me.core.property.set(widget.playingPopupHandle, "modal.playing.fontSize", fontSize);
                     }
                     else {
                         var title = me.core.property.get(widget, "widget.transform.contentTitle");
                         widget.playingPopupHandle = me.ui.modal("playing", {
                             "title": title,
-                            "layout": paragraph.innerHTML
+                            "layout": paragraph.innerHTML,
+                            "fontSize": fontSize
                         });
                     }
                 }
