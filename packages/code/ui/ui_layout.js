@@ -391,9 +391,6 @@ screens.ui.layout = function UILayout(me) {
                 }
             ]
         }, target, "self");
-        if (me.core.device.isMobile()) {
-            me.core.property.set(page, "ui.scroll.swipe", "vertical");
-        }
         page.options = options;
         return page;
     };
