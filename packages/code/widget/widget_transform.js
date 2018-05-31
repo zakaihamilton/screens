@@ -287,7 +287,6 @@ screens.widget.transform = function WidgetTransform(me) {
         var fullscreen = me.core.property.get(window, "fullscreen");
         widget.fullscreen = fullscreen;
         me.core.property.set(widget.var.filter, "ui.basic.hide", fullscreen);
-        me.core.property.set(widget.var.layout, "widget.scrollbar.vertical.alwaysHide", fullscreen);
         me.core.property.set(widget, "ui.work.state", true);
         var target = me.widget.container.content(widget.var.layout);
         widget.var.layout.style.opacity = 0;

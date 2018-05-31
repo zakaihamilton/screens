@@ -5,16 +5,13 @@
 
 function WidgetScrollbarTemplate(me, scroll_type) {
     me.element = {
-        properties : __json__,
-        create : function (object) {
+        properties: __json__,
+        create: function (object) {
             object.autoScrollSpeed = 250;
             object.autoScrollSize = 1;
-            object.deltaSpeed = 25;
             object.snapToScrollWait = 1000;
-            object.snapToPageUnits = 50;
             object.scrollSize = 10;
             object.delayTimeout = 10;
-            object.deltaDistance = 0;
             object.has_scroll = false;
         }
     };
@@ -32,119 +29,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
         }
         return container;
     };
-    me.alwaysShow = {
-        get: function (object) {
-            var container = me.container(object);
-            var scrollbar = container.var[scroll_type];
-            return scrollbar.alwaysShow;
-        },
-        set: function (object, value) {
-            var container = me.container(object);
-            var scrollbar = container.var[scroll_type];
-            scrollbar.alwaysShow = value;
-        }
-    };
-    me.alwaysHide = {
-        get: function (object) {
-            var container = me.container(object);
-            var scrollbar = container.var[scroll_type];
-            return scrollbar.alwaysHide;
-        },
-        set: function (object, value) {
-            var container = me.container(object);
-            var scrollbar = container.var[scroll_type];
-            scrollbar.alwaysHide = value;
-        }
-    };
-    me.remove_scroll_class = function (container, scroll_type) {
-        var scrollbar = container.var[scroll_type];
-        if (!scrollbar) {
-            return;
-        }
-        var has_class = me.core.property.get(container, "ui.class.contains", scroll_type + "_bar");
-        if (has_class) {
-            var properties = {
-                "ui.class.remove": [scroll_type + "_bar", scroll_type + "_scroll"],
-            };
-            me.core.property.set(container, properties);
-            me.core.property.set([container.var.vertical,container.var.footer], "ui.property.broadcast", properties);
-            me.core.property.set(container, "ui.scroll.swipe", "");
-        }
-    };
-    me.update_scroll_class = function (container, scroll_type) {
-        var scrollbar = container.var[scroll_type];
-        if (!scrollbar) {
-            return;
-        }
-        var content = me.widget.container.content(container);
-        var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
-        var show_scroll = (has_scroll || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
-        show_scroll = show_scroll && !me.widget.container.isChild(container);
-        if (show_scroll) {
-            var classes = [scroll_type + "_bar"];
-            if(has_scroll) {
-                classes.push(scroll_type + "_scroll");
-            }
-            var properties = {
-                "ui.class.add": classes,
-            };
-            me.core.property.set(container, properties);
-            me.core.property.set([container.var.footer,container.var.vertical], "ui.property.broadcast", properties);
-            if (me.core.device.isMobile()) {
-                me.core.property.set(container, "ui.scroll.swipe", "vertical");
-            }
-        }
-    };
-    me.update = {
-        set: function (object) {
-            var container = me.container(object);
-            var scrollbar = container.var[scroll_type];
-            var content = me.widget.container.content(container);
-            var has_scroll = me.ui.scroll.has_scroll(content, scroll_type);
-            var show_scroll = (has_scroll || scrollbar.alwaysShow) && !scrollbar.alwaysHide;
-            if (scrollbar.has_scroll !== has_scroll || scrollbar.show_scroll !== show_scroll) {
-                me.remove_scroll_class(container, scroll_type);
-                me.update_scroll_class(container, scroll_type);
-                scrollbar.has_scroll = has_scroll;
-                scrollbar.show_scroll = show_scroll;
-            }
-            var scroll_percent = me.ui.scroll.scroll_percent(content, scroll_type);
-            var thumb_percent = me.ui.scroll.thumb_percent(content, scroll_type);
-            var track_region = me.ui.rect.relative_region(scrollbar.var.track);
-            var thumb_region = me.ui.rect.relative_region(scrollbar.var.thumb);
-            var position = 0, size = 0;
-            if (scroll_percent) {
-                var scrollSize = me.ui.scroll.size(scroll_type, track_region, thumb_region);
-                position = me.ui.scroll.percent_to_pos(scrollSize, scroll_percent);
-            }
-            if (thumb_percent) {
-                size = me.ui.scroll.size(scroll_type, track_region, null);
-                size = me.ui.scroll.percent_to_pos(size, thumb_percent);
-            }
-            if (has_scroll) {
-                me.ui.scroll.set_size(scrollbar.var.thumb, scroll_type, size);
-            }
-            me.ui.scroll.set_pos(scrollbar.var.thumb, scroll_type, position);
-            var current_pos = me.ui.scroll.current_pos(content, scroll_type);
-            if (current_pos !== scrollbar.prev_pos) {
-                scrollbar.prev_pos = current_pos;
-                var scrolledInfo = {};
-                scrolledInfo[scroll_type] = current_pos;
-                me.core.property.set(container, "scrolled", scrolledInfo);
-            }
-        }
-    };
-    me.refresh = {
-        set: function (object) {
-            me.update.set(object);
-            me.update.set(object);
-        }
-    };
-    me.draw = {
-        set: function (object, value) {
-            me.refresh.set(object);
-        }
-    };
     me.before = {
         set: function (object, value) {
             var container = me.container(object);
@@ -155,7 +39,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 scrollSize = scrollbar.pageSize;
             }
             me.ui.scroll.by(content, scroll_type, -scrollSize);
-            me.refresh.set(container);
             me.core.property.set(scrollbar, "snap");
         }
     };
@@ -169,9 +52,13 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 scrollSize = scrollbar.pageSize;
             }
             me.ui.scroll.by(content, scroll_type, scrollSize);
-            me.refresh.set(container);
             me.core.property.set(scrollbar, "snap");
         }
+    };
+    me.scroll = function (object) {
+        var container = me.container(object);
+        var scrollbar = container.var[scroll_type];
+        me.core.property.set(scrollbar, "snap");
     };
     me.scrollTo = {
         get: function (object) {
@@ -183,31 +70,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             var container = me.container(object);
             var content = me.widget.container.content(container);
             me.ui.scroll.set_current_pos(content, scroll_type, value);
-            me.refresh.set(container);
-        }
-    };
-    me.track = {
-        set: function (object, value) {
-            if (!object.parentNode || value.target !== object.parentNode.var.track) {
-                return;
-            }
-            var container = me.container(object);
-            var content = me.widget.container.content(container);
-            var thumb_region = me.ui.rect.absolute_region(object.parentNode.var.thumb);
-            var scroll_direction = me.ui.scroll.direction(value, scroll_type, thumb_region);
-            var scrollbar = container.var[scroll_type];
-            var scrollSize = scrollbar.scrollSize;
-            if (scrollbar.snapToPage) {
-                scrollSize = scrollbar.pageSize;
-            }
-            if (scroll_direction < 0) {
-                me.ui.scroll.by(content, scroll_type, 0 - scrollSize);
-            }
-            if (scroll_direction > 0) {
-                me.ui.scroll.by(content, scroll_type, scrollSize);
-            }
-            me.refresh.set(container);
-            me.core.property.set(scrollbar, "snap");
         }
     };
     me.autoScroll = {
@@ -235,7 +97,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                     var container = me.container(object);
                     var content = me.widget.container.content(container);
                     me.ui.scroll.by(content, scroll_type, scrollbar.autoScrollSize);
-                    me.refresh.set(container);
                 }, scrollbar.autoScrollSpeed);
             }
         }
@@ -272,24 +133,6 @@ function WidgetScrollbarTemplate(me, scroll_type) {
             object.autoScrollSpeed = value;
         }
     };
-    me.delta = {
-        set: function (object, value) {
-            var container = me.container(object);
-            var content = me.widget.container.content(container);
-            var scrollbar = container.var[scroll_type];
-            scrollbar.deltaDistance += value;
-            if (scrollbar.delta_timer) {
-                return;
-            }
-            scrollbar.delta_timer = setTimeout(function () {
-                me.ui.scroll.by(content, scroll_type, scrollbar.deltaDistance);
-                me.refresh.set(container);
-                me.core.property.set(scrollbar, "snap");
-                scrollbar.deltaDistance = 0;
-                scrollbar.delta_timer = null;
-            }, scrollbar.delayTimeout);
-        }
-    };
     me.snap = {
         set: function (object, value) {
             var container = me.container(object);
@@ -299,15 +142,11 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 return;
             }
             var pageSize = scrollbar.pageSize;
-            if (scrollbar.deltaTimeout) {
-                clearTimeout(scrollbar.deltaTimeout);
-                scrollbar.deltaTimeout = null;
+            if (scrollbar.snapTimeout) {
+                clearTimeout(scrollbar.snapTimeout);
+                scrollbar.snapTimeout = null;
             }
-            if (scrollbar.deltaInterval) {
-                clearInterval(scrollbar.deltaInterval);
-                scrollbar.deltaInterval = null;
-            }
-            scrollbar.deltaTimeout = setTimeout(function () {
+            scrollbar.snapTimeout = setTimeout(function () {
                 var currentPos = me.ui.scroll.current_pos(content, scroll_type);
                 var targetPos = currentPos;
                 var delta = currentPos % pageSize;
@@ -320,28 +159,15 @@ function WidgetScrollbarTemplate(me, scroll_type) {
                 } else if (currentPos > targetPos) {
                     direction = -1;
                 }
-                scrollbar.deltaInterval = setInterval(function () {
-                    currentPos = me.ui.scroll.current_pos(content, scroll_type);
-                    var scrollBy = 0;
-                    if (direction > 0) {
-                        scrollBy = scrollbar.snapToPageUnits;
-                        if (currentPos + scrollBy > targetPos) {
-                            scrollBy = targetPos - currentPos;
-                        }
-                    } else if (direction < 0) {
-                        scrollBy = 0 - scrollbar.snapToPageUnits;
-                        if (currentPos + scrollBy < targetPos) {
-                            scrollBy = targetPos - currentPos;
-                        }
-                    }
-                    if (scrollBy) {
-                        me.ui.scroll.by(content, scroll_type, scrollBy);
-                        me.refresh.set(container);
-                    } else {
-                        clearInterval(scrollbar.deltaInterval);
-                        scrollbar.deltaInterval = null;
-                    }
-                }, scrollbar.deltaSpeed);
+                var scroll_key = {
+                    horizontal: "left",
+                    vertical: "top"
+                };
+                var params = {
+                    behavior: 'smooth'
+                };
+                params[scroll_key[scroll_type]] = targetPos;
+                content.scroll(params);
             }, scrollbar.snapToScrollWait);
         }
     };

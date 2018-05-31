@@ -15,8 +15,6 @@
             "ui.element.component": "widget.container",
             "ui.basic.var": "layout",
             "ui.class.class": "widget.transform.layout",
-            "widget.scrollbar.vertical.alwaysShow": true,
-            "widget.scrollbar.horizontal.alwaysHide": true,
             "core.link.scrolled": "widget.transform.scrolled",
             "ui.attribute.noBroadcast": true
         },

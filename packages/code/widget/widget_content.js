@@ -5,20 +5,17 @@
 
 screens.widget.content = function WidgetContent(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.class.class": "base",
-            "ui.touch.wheel": "wheel"
+            "core.event.scroll": "scroll"
         }
     };
-    me.wheel = {
-        set: function (object, event) {
-            var container = me.ui.node.container(object, me.widget.container.id);
-            if (container) {
-                if (!me.widget.container.isChild(container)) {
-                    var scrollbar = container.var.vertical;
-                    var delta = event.deltaY;
-                    me.core.property.set(scrollbar, "delta", delta);
-                }
+    me.scroll = function (object) {
+        var container = me.ui.node.container(object, me.widget.container.id);
+        if (container) {
+            if (!me.widget.container.isChild(container)) {
+                var scrollbar = container.var.vertical;
+                me.core.property.set(scrollbar, "scroll");
             }
         }
     };

@@ -9,8 +9,6 @@
     "icon": "/packages/res/icons/transform_tray.png",
     "ui.style.background": "white",
     "maximize": null,
-    "widget.scrollbar.vertical.alwaysHide": true,
-    "widget.scrollbar.horizontal.alwaysHide": true,
     "ui.property.after": {
         "storage.local.key": "app-transform-window",
         "storage.local.restore": "widget.window.store"
@@ -145,8 +143,6 @@
                 ]
             ],
             "maximize": true,
-            "widget.scrollbar.vertical.alwaysHide": true,
-            "widget.scrollbar.horizontal.alwaysHide": true,
             "ui.property.after": {
                 "storage.local.key": "@ui.windowkey.app-transform-window-",
                 "storage.local.restore": "widget.window.store",

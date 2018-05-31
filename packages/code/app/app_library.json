@@ -132,8 +132,6 @@
         }
     ],
     "ui.property.after": {
-        "widget.scrollbar.vertical.alwaysHide": true,
-        "widget.scrollbar.horizontal.alwaysHide": true,
         "storage.local.key": "@ui.windowkey.app-library-window",
         "storage.local.restore": "widget.window.store",
         "ui.resize.event": "widget.transform.reflow",
