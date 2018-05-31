@@ -11,7 +11,12 @@ screens.startup.app = function StartupApp(me) {
                 "ui.basic.var": "desktop"
             }
         ]);
-        await me.lib.google.load();
+        try {
+            await me.lib.google.load();
+        }
+        catch(err) {
+            document.body.innerHTML = __html__.replace("__error__", err.message || err);
+        }
         if (me.lib.google.isSignedIn()) {
             me.start();
         }
