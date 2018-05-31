@@ -260,4 +260,20 @@ screens.ui.node = function UINode(me) {
             }
         }
     };
+    me.iterate = function(object, callback, recursive=true) {
+        var elements = me.childList(object);
+        for(var element of elements) {
+            callback(element);
+            if(recursive) {
+                me.iterate(element, callback);
+            }
+        }
+    };
+    me.bubble = function(object, callback) {
+        var parent = object.parentNode;
+        while(parent) {
+            callback(parent);
+            parent = parent.parentNode;
+        }
+    };
 };

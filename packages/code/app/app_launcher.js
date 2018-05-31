@@ -7,4 +7,7 @@ screens.app.launcher = function AppLauncher(me) {
     me.launch = function (args) {
         return me.ui.element(__json__, "workspace", "self");
     };
+    me.html = function() {
+        return __html__;
+    };
 };

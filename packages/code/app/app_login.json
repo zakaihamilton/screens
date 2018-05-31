@@ -2,6 +2,7 @@
     "title": "Login",
     "fixed": true,
     "popup": true,
+    "icon": "/packages/res/icons/login_tray.png",
     "ui.property.after":{
         "ui.property.style":{
             "left":"30%",

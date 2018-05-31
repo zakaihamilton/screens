@@ -11,36 +11,41 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag":"div",
-            "ui.class.class":"app.launcher.search.container",
-            "ui.basic.elements": {
-                "ui.basic.type": "search",
-                "ui.attribute.placeholder": "Search",
-                "ui.basic.text": "",
-                "ui.class.classExtra": "app.launcher.search"
+            "ui.basic.html": "@app.launcher.html",
+            "ui.tab.control":null,
+            "ui.property.after":{
+                "ui.tab.activate":null
             }
         },
         {
-            "ui.basic.tag": "hr"
-        },
-        {
             "text": "Transform",
+            "ui.tab.owner":"kab",
             "ui.basic.src": "/packages/res/icons/transform.png",
             "ui.touch.click": "core.app.transform"
         },
         {
             "text": "Player",
+            "ui.tab.owner":"kab",
             "ui.basic.src": "/packages/res/icons/player.png",
             "ui.touch.click": "core.app.player"
         },
         {
             "text": "Library",
+            "ui.tab.owner":"kab",
             "ui.basic.src": "/packages/res/icons/library.png",
             "ui.touch.click": "core.app.library"
         },
         {
             "text": "Profile",
+            "ui.tab.owner":"kab",
             "ui.basic.src": "/packages/res/icons/profile.png",
             "ui.touch.click": "core.app.profile"
+        },
+        {
+            "text": "Login",
+            "ui.tab.owner":"utilities",
+            "ui.basic.src": "/packages/res/icons/login.png",
+            "ui.touch.click": "core.app.login"
         }
     ]
 }

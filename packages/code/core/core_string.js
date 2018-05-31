@@ -166,5 +166,11 @@ screens.core.string = function CoreString(me) {
         else {
             return [];
         }
-    }
+    };
+    me.fill = function(string, params, prefix="") {
+        for(var param in params) {
+            string = string.split(prefix + param).join(params[param]);
+        }
+        return string;
+    };
 };

@@ -40,5 +40,5 @@ screens.ui.html = function UIHtml(me) {
             }
             return html;
         }
-    };    
+    };
 };
