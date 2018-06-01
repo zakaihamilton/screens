@@ -27,7 +27,6 @@
     display:flex;
     flex:1;
     flex-direction:column;
-    transform: rotate(0deg);
     user-select: text;
     color:black;
 }

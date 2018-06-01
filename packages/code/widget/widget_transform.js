@@ -19,8 +19,6 @@ screens.widget.transform = function WidgetTransform(me) {
             abridged: false,
             keepSource: false,
             showHtml: false,
-            autoScroll: false,
-            snapToPage: true,
             headings: true,
             subHeadings: true,
             pages: true,
@@ -36,7 +34,6 @@ screens.widget.transform = function WidgetTransform(me) {
             speed: "Normal"
         });
         widget.pageSize = { width: 0, height: 0 };
-        widget.options.autoScroll = false;
         me.ui.options.toggleSet(me, me.findWidget, "doTranslation", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "doExplanation", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "prioritizeExplanation", me.transform);
@@ -45,8 +42,6 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.toggleSet(me, me.findWidget, "keepSource", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "abridged", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "showHtml", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "autoScroll", me.updateScrolling);
-        me.ui.options.toggleSet(me, me.findWidget, "snapToPage", me.updateScrolling);
         me.ui.options.choiceSet(me, me.findWidget, "language", me.transform);
         me.ui.options.choiceSet(me, me.findWidget, "fontSize", function (object, value, key, options) {
             var widget = me.findWidget(object);
@@ -330,8 +325,8 @@ screens.widget.transform = function WidgetTransform(me) {
             stopClass: ["widget.transform.stop", modifiers],
             reloadMethod: "widget.transform.transform",
             fullscreenMethod: "widget.window.fullscreen",
-            previousPageMethod: "widget.scrollbar.vertical.before",
-            nextPageMethod: "widget.scrollbar.vertical.after",
+            previousPageMethod: "ui.scroll.previousPage",
+            nextPageMethod: "ui.scroll.nextPage",
             playMethod: "widget.transform.play",
             rewindMethod: "widget.transform.rewind",
             fastforwardMethod: "widget.transform.fastforward",
@@ -509,7 +504,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
                             setTimeout(() => {
-                                me.core.property.set(object, "widget.scrollbar.vertical.after");
+                                me.core.property.set(object, "ui.scroll.nextPage");
                                 setTimeout(() => {
                                     me.core.property.set(object, "widget.transform.play");
                                 }, 1000);
@@ -522,7 +517,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     if (pageNumber > 1) {
                         me.ui.layout.clearPage(currentPage);
                         me.focusParagraph(object, null);
-                        me.core.property.set(object, "widget.scrollbar.vertical.before");
+                        me.core.property.set(object, "ui.scroll.previousPage");
                         me.core.property.set(object, "widget.transform.play", -1);
                     }
                     else {
@@ -537,7 +532,7 @@ screens.widget.transform = function WidgetTransform(me) {
                         me.currentPlayingPage = null;
                     }
                     else {
-                        me.core.property.set(object, "widget.scrollbar.vertical.after");
+                        me.core.property.set(object, "ui.scroll.nextPage");
                         me.core.property.set(object, "widget.transform.play");
                     }
                 },
@@ -652,8 +647,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.updateWidgets = function (object, hasText, update = true) {
         var widget = me.findWidget(object);
         me.core.property.set(widget.var.layout, {
-            "ui.style.fontSize": widget.options.fontSize,
-            "ui.scroll.swipe": widget.options.swipe ? "vertical" : ""
+            "ui.style.fontSize": widget.options.fontSize
         });
         if (update) {
             me.core.property.notify(widget, "update");
@@ -739,18 +733,11 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);
-        var scrollbar = widget.var.layout.var.vertical;
         var pageSize = me.ui.layout.pageSize(widget.var.layout);
-        var snapToPage = widget.options.snapToPage;
-        if (!widget.options.pages) {
-            snapToPage = false;
-        }
-        me.core.property.set(scrollbar, {
-            "snapToPage": snapToPage,
-            "pageSize": pageSize.height,
-            "autoScroll": widget.options.autoScroll,
-            "scrollTo": widget.options.scrollPos,
-            "snap": null
+        me.core.property.set(widget.var.layout, {
+            "ui.scroll.pageSize": pageSize.height,
+            "ui.scroll.scrollTo": widget.options.scrollPos,
+            "ui.scroll.snap": null
         });
     };
     me.clear = function (object) {

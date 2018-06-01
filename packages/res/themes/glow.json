@@ -68,60 +68,6 @@
             "replace":true
         },
         {
-            "source":"widget-scrollbar-vertical-border",
-            "target":"glow-scrollbar-vertical-border"
-        },
-        {
-            "source":"widget-scrollbar-horizontal-border",
-            "target":"glow-scrollbar-horizontal-border"
-        },
-        {
-            "source":"widget-scrollbar-vertical-border",
-            "target":"glow-scrollbar-vertical-border"
-        },
-        {
-            "source":"widget-scrollbar-horizontal-border",
-            "target":"glow-scrollbar-horizontal-border"
-        },
-        {
-            "source":"widget-scrollbar-corner",
-            "target":"glow-scrollbar-corner",
-            "replace":true
-        },
-        {
-            "source":"widget-scrollbar-button",
-            "target":"glow-scrollbar-button",
-            "replace":true
-        },
-        {
-            "source":"widget-scrollbar-horizontal-track",
-            "target":"glow-scrollbar-horizontal-track"
-        },
-        {
-            "source":"widget-scrollbar-vertical-track",
-            "target":"glow-scrollbar-vertical-track"
-        },
-        {
-            "source":"widget-scrollbar-vertical-before-arrow",
-            "target":"glow-scrollbar-vertical-before-arrow",
-            "replace":true
-        },
-        {
-            "source":"widget-scrollbar-vertical-after-arrow",
-            "target":"glow-scrollbar-vertical-after-arrow",
-            "replace":true
-        },
-        {
-            "source":"widget-scrollbar-horizontal-before-arrow",
-            "target":"glow-scrollbar-horizontal-before-arrow",
-            "replace":true
-        },
-        {
-            "source":"widget-scrollbar-horizontal-after-arrow",
-            "target":"glow-scrollbar-horizontal-after-arrow",
-            "replace":true
-        },
-        {
             "source":"widget-window-footer",
             "target":"glow-window-footer",
             "replace":true

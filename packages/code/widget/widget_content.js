@@ -14,8 +14,7 @@ screens.widget.content = function WidgetContent(me) {
         var container = me.ui.node.container(object, me.widget.container.id);
         if (container) {
             if (!me.widget.container.isChild(container)) {
-                var scrollbar = container.var.vertical;
-                me.core.property.set(scrollbar, "scroll");
+                me.core.property.set(container, "ui.scroll.snap");
             }
         }
     };

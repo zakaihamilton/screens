@@ -58,10 +58,8 @@ screens.ui.layout = function UILayout(me) {
     };
     me.pageSize = function (target) {
         var container = me.ui.node.container(target, me.widget.container.id);
-        var scrollbar = container.var.vertical;
         var pageHeight = container.offsetHeight;
         var pageWidth = container.parentNode.offsetWidth;
-        pageWidth -= scrollbar.offsetWidth + 1;
         return { width: pageWidth, height: pageHeight };
     };
     me.firstPage = function (target) {
@@ -106,7 +104,7 @@ screens.ui.layout = function UILayout(me) {
             var parent = widget.parentNode;
             while (parent) {
                 if (parent.parentNode === target) {
-                    me.core.property.set(target, "widget.scrollbar.vertical.scrollTo", parent.offsetTop);
+                    me.core.property.set(target, "ui.scroll.to", parent.offsetTop);
                     break;
                 }
                 parent = parent.parentNode;
@@ -403,7 +401,7 @@ screens.ui.layout = function UILayout(me) {
     me.scrollToTop = {
         set: function (object) {
             var target = me.content(object);
-            me.core.property.set(target, "widget.scrollbar.vertical.scrollTo", 0);
+            me.core.property.set(target, "ui.scroll.to", 0);
         }
     };
     me.applyNumPages = function (target, numPages) {

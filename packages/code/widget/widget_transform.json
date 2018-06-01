@@ -167,22 +167,6 @@
                     "widget.transform.reflow"
                 ],
                 [
-                    "Auto Scroll",
-                    "widget.transform.autoScroll",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Snap to Page",
-                    "widget.transform.snapToPage",
-                    {
-                        "state": "select",
-                        "enabled": "widget.transform.pages"
-                    }
-                ],
-                [
                     "Pages",
                     "widget.transform.pages",
                     {
