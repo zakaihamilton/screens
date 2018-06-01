@@ -23,8 +23,7 @@ screens.widget.tree = function WidgetTree(me) {
     };
     me.clear = {
         set: function (object, value) {
-            var content = me.widget.container.content(object.var.container);
-            me.ui.node.empty(content);
+            me.ui.node.empty(object.var.container);
         }
     };
     me.collapse = {
@@ -37,14 +36,12 @@ screens.widget.tree = function WidgetTree(me) {
     };
     me.elements = {
         get: function (object) {
-            var content = me.widget.container.content(object.var.container);
-            return me.ui.node.childList(content);
+            return me.ui.node.childList(object.var.container);
         },
         set: function (object, value) {
             if (value) {
                 object.treeElements = value;
-                var content = me.widget.container.content(object.var.container);
-                me.core.property.set(content, "ui.basic.elements", value);
+                me.core.property.set(object.var.container, "ui.basic.elements", value);
                 me.core.property.notify(object.var.container, "update");
             }
         }
@@ -198,7 +195,7 @@ screens.widget.tree.popup = function WidgetListPopup(me) {
     };
     me.selection = {
         set: function (object, value) {
-            var childList = me.ui.node.childList(me.widget.container.content(object.var.container));
+            var childList = me.ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];

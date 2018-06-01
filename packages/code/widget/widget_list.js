@@ -44,8 +44,7 @@ screens.widget.list = function WidgetList(me) {
     me.selection = {
         get: function (object, value) {
             var selection = [];
-            var content = me.widget.container.content(object.var.container);
-            var childList = me.ui.node.childList(content);
+            var childList = me.ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -60,8 +59,7 @@ screens.widget.list = function WidgetList(me) {
             return selection;
         },
         set: function (object, value) {
-            var content = me.widget.container.content(object.var.container);
-            var childList = me.ui.node.childList(content);
+            var childList = me.ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];
@@ -209,7 +207,7 @@ screens.widget.list.popup = function WidgetListPopup(me) {
     };
     me.selection = {
         set: function (object, value) {
-            var childList = me.ui.node.childList(me.widget.container.content(object.var.container));
+            var childList = me.ui.node.childList(object.var.container);
             if (childList) {
                 for (var childIndex = 0; childIndex < childList.length; childIndex++) {
                     var child = childList[childIndex];

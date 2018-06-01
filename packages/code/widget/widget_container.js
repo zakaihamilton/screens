@@ -5,15 +5,10 @@
 
 screens.widget.container = function WidgetContainer(me) {
     me.element = {
-        redirect : {
-            "ui.basic.elements": "elements",
-            "ui.basic.text": "text",
-            "ui.basic.html": "html"
-        },
-        properties : __json__
-    };
-    me.content = function (object) {
-        return object.var.content;
+        properties : {
+            "ui.class.class": "root",
+            "core.event.scroll": "scroll"
+        }
     };
     me.isChild = function (container) {
         var isChild = false;
@@ -26,41 +21,18 @@ screens.widget.container = function WidgetContainer(me) {
         }
         return isChild;
     };
-    me.elements = {
-        set: function (object, value) {
-            if (value) {
-                me.ui.element(value, object.var.content, object.context);
-            }
-        }
-    };
-    me.update = {
-        set: function (object, value) {
-            setTimeout(function () {
-                me.core.property.notify(object.var.vertical, "update");
-                me.core.property.notify(object.var.horizontal, "update");
-            }, 0);
-        }
-    };
-    me.text = {
-        get: function (object) {
-            return me.core.property.get(object.var.content, "ui.basic.text");
-        },
-        set: function (object, value) {
-            me.core.property.set(object.var.content, "ui.basic.text", value);
-        }
-    };
-    me.html = {
-        get: function (object) {
-            return me.core.property.get(object.var.content, "ui.basic.html");
-        },
-        set: function (object, value) {
-            me.core.property.set(object.var.content, "ui.basic.html", value);
-        }
-    };
     me.empty = {
         set: function (object) {
-            me.ui.node.empty(object.var.content);
+            me.ui.node.empty(object);
             me.core.property.notify(object, "update");
+        }
+    };
+    me.scroll = function (object) {
+        var container = me.ui.node.container(object, me.widget.container.id);
+        if (container) {
+            if (!me.widget.container.isChild(container)) {
+                me.core.property.set(container, "ui.scroll.snap");
+            }
         }
     };
 };

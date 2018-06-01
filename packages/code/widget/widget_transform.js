@@ -283,12 +283,11 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.fullscreen = fullscreen;
         me.core.property.set(widget.var.filter, "ui.basic.hide", fullscreen);
         me.core.property.set(widget, "ui.work.state", true);
-        var target = me.widget.container.content(widget.var.layout);
         widget.var.layout.style.opacity = 0;
         if (widget.options.pages) {
-            target.style.margin = "";
+            widget.var.layout.style.margin = "";
         } else {
-            target.style.margin = "20px 40px";
+            widget.var.layout.style.margin = "20px 40px";
         }
         var columnCount = widget.options.columns ? 2 : 1;
         var modifiers = [widget.language];

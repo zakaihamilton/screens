@@ -19,16 +19,17 @@
     right:0px;
     top:0px;
     bottom:0px;
-    overflow:hidden;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     line-height:2em;
     font-size:22px;
     direction: ltr;
-    display:flex;
+    display:block;
     flex:1;
     flex-direction:column;
     user-select: text;
     color:black;
+    background:white;
+    overflow:auto;
 }
 
 .widget-transform-layout.hebrew {

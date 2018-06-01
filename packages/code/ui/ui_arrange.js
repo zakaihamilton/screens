@@ -33,18 +33,16 @@ screens.ui.arrange = function UIArrange(me) {
         var window = me.widget.window(object);
         me.core.property.set(window, "unmaximize");
         var parent = me.widget.window.parent(window);
-        var content = null;
         var container = null;
         if (parent) {
             container = parent.var.container;
-            content = container.var.content;
         } else {
-            container = content = me.ui.element.workspace();
+            container = me.ui.element.workspace();
         }
         var parent_region = me.ui.rect.relative_region(container);
         var isFixed = me.core.property.get(window, "fixed");
         callback(parent_region);
-        me.ui.rect.set_relative_region(window, parent_region, content, isFixed);
+        me.ui.rect.set_relative_region(window, parent_region, container, isFixed);
         me.core.property.notify(window, "update");
         me.core.property.notify(parent, "update");
     };

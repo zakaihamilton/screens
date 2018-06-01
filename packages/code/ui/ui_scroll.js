@@ -13,51 +13,50 @@ screens.ui.scroll = function UIScroll(me) {
             object.scrollTop += distance;
         }
     };
-    me.content = function (object) {
+    me.container = function (object) {
         var container = null;
         if (object.component === me.widget.window.id) {
             container = object.var.container;
         } else {
             container = me.ui.node.container(object, me.widget.container.id);
         }
-        var content = me.widget.container.content(container);
-        return content;
+        return container;
     };
     me.previousPage = function (object, value) {
-        var content = me.content(object);
-        me.by(content, -content.ui_scroll_pageSize);
-        me.core.property.set(content, "snap");
+        var container = me.container(object);
+        me.by(container, -container.ui_scroll_pageSize);
+        me.core.property.set(container, "snap");
     };
     me.nextPage = function (object, value) {
-        var content = me.content(object);
-        me.by(content, content.ui_scroll_pageSize);
-        me.core.property.set(content, "snap");
+        var container = me.container(object);
+        me.by(container, container.ui_scroll_pageSize);
+        me.core.property.set(container, "snap");
     };
     me.to = function (object, value) {
-        var content = me.content(object);
-        content.scrollTop = value;
-        me.core.property.set(content, "snap");
+        var container = me.container(object);
+        container.scrollTop = value;
+        me.core.property.set(container, "snap");
     };
     me.pageSize = {
         get: function (object) {
-            var content = me.content(object);
-            return content.ui_scroll_pageSize;
+            var container = me.container(object);
+            return container.ui_scroll_pageSize;
         },
         set: function (object, value) {
-            var content = me.content(object);
-            content.ui_scroll_pageSize = value;
+            var container = me.container(object);
+            container.ui_scroll_pageSize = value;
         }
     };
     me.snap = {
         set: function (object, value) {
-            var content = me.content(object);
-            var pageSize = content.ui_scroll_pageSize;
-            if (content.ui_scroll_snapTimeout) {
-                clearTimeout(content.ui_scroll_snapTimeout);
-                content.ui_scroll_snapTimeout = null;
+            var container = me.container(object);
+            var pageSize = container.ui_scroll_pageSize;
+            if (container.ui_scroll_snapTimeout) {
+                clearTimeout(container.ui_scroll_snapTimeout);
+                container.ui_scroll_snapTimeout = null;
             }
-            content.ui_scroll_snapTimeout = setTimeout(function () {
-                var currentPos = content.scrollTop;
+            container.ui_scroll_snapTimeout = setTimeout(function () {
+                var currentPos = container.scrollTop;
                 var targetPos = currentPos;
                 var delta = currentPos % pageSize;
                 var direction = 0;
@@ -77,7 +76,7 @@ screens.ui.scroll = function UIScroll(me) {
                     top: targetPos,
                     behavior: 'smooth'
                 };
-                content.scroll(params);
+                container.scroll(params);
             }, 1000);
         }
     };

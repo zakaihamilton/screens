@@ -102,8 +102,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
     me.scroll = {
         set: function (terminal) {
             var container = me.ui.node.container(terminal, me.widget.container.id);
-            var content = me.widget.container.content(container);
-            content.scrollTop = content.scrollHeight;
+            container.scrollTop = container.scrollHeight;
             me.core.property.notify(container, "update");
         }
     };

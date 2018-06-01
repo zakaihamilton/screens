@@ -1,19 +1,11 @@
 .widget-container-root {
-    display:flex;
     flex:1;
-    flex-direction:column;
+    background: white;
+    overflow: auto;
+    position: relative;
+    display:block;
 }
 
-.widget-container-center {
-    display:flex;
-    flex:1;
-}
-
-.widget-container-footer {
-    display:none;
-    flex:none;
-}
-
-.widget-container-footer.horizontal-bar {
-    display:flex;
+.widget-container-root.transparent {
+    background:none;
 }

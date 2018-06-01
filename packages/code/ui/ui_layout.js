@@ -4,14 +4,7 @@
  */
 
 screens.ui.layout = function UILayout(me) {
-    me.content = function (target) {
-        if (target && target.component === me.widget.container.id) {
-            target = me.widget.container.content(target);
-        }
-        return target;
-    };
     me.move = function (source, target) {
-        target = me.content(target);
         do {
             var widget = source.firstChild;
             if (widget) {
@@ -20,7 +13,6 @@ screens.ui.layout = function UILayout(me) {
         } while (widget);
     };
     me.clear = function (target) {
-        target = me.content(target);
         do {
             var widget = target.firstChild;
             if (widget) {
@@ -29,7 +21,6 @@ screens.ui.layout = function UILayout(me) {
         } while (widget);
     };
     me.prepare = function (source, target) {
-        target = me.content(target);
         do {
             var widget = target.firstChild;
             if (widget) {
@@ -63,12 +54,10 @@ screens.ui.layout = function UILayout(me) {
         return { width: pageWidth, height: pageHeight };
     };
     me.firstPage = function (target) {
-        target = me.content(target);
         var page = target.firstChild;
         return page;
     };
     me.firstVisiblePage = function (target) {
-        target = me.content(target);
         var page = null;
         var widget = target.firstChild;
         while (widget) {
@@ -100,7 +89,6 @@ screens.ui.layout = function UILayout(me) {
     };
     me.scrollToWidget = function (widget, target) {
         if (widget) {
-            target = me.content(target);
             var parent = widget.parentNode;
             while (parent) {
                 if (parent.parentNode === target) {
@@ -112,11 +100,10 @@ screens.ui.layout = function UILayout(me) {
         }
     };
     me.options = function (target) {
-        var layoutContent = me.content(target);
-        return layoutContent.options;
+        return target.options;
     };
     me.reflow = function (callback, source, target, options) {
-        var layoutContent = me.content(target);
+        var layoutContent = target;
         layoutContent.options = options;
         if (target.reflowInterval) {
             clearInterval(target.reflowInterval);
@@ -260,12 +247,11 @@ screens.ui.layout = function UILayout(me) {
         return result;
     };
     me.completeReflow = function (callback, target, options, scrollToWidget = true) {
-        var layoutContent = me.content(target);
         if (!target.notified && callback) {
             callback(true);
             target.notified = true;
             if (options.scrollWidget && scrollToWidget) {
-                me.scrollToWidget(options.scrollWidget, layoutContent);
+                me.scrollToWidget(options.scrollWidget, target);
             }
             me.core.property.set(target, "update");
         }
@@ -285,7 +271,6 @@ screens.ui.layout = function UILayout(me) {
         return match;
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
-        target = me.content(target);
         var page = me.ui.element({
             "ui.basic.tag": "div",
             "ui.class.class": options.pageClass,
@@ -400,8 +385,7 @@ screens.ui.layout = function UILayout(me) {
     };
     me.scrollToTop = {
         set: function (object) {
-            var target = me.content(object);
-            me.core.property.set(target, "ui.scroll.to", 0);
+            me.core.property.set(object, "ui.scroll.to", 0);
         }
     };
     me.applyNumPages = function (target, numPages) {
@@ -503,7 +487,6 @@ screens.ui.layout = function UILayout(me) {
         return (isTotal || isPartial);
     };
     me.pageApply = function (target, callback) {
-        target = me.content(target);
         var child = target.firstChild;
         while (child) {
             if (child.pageSize) {
@@ -513,7 +496,6 @@ screens.ui.layout = function UILayout(me) {
         }
     };
     me.updatePages = function (target) {
-        target = me.content(target);
         var child = target.firstChild;
         while (child) {
             if (child.pageSize) {
@@ -563,7 +545,6 @@ screens.ui.layout = function UILayout(me) {
         widget.style.border = "1px solid transparent";
     };
     me.currentPage = function (target) {
-        target = me.content(target);
         var child = target.firstChild;
         while (child) {
             if (child.pageSize) {
