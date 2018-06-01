@@ -177,5 +177,4 @@ screens.widget.scrollbar = function WidgetScroll(me) {
 
 };
 
-screens.widget.scrollbar.horizontal = WidgetScrollbarTemplate;
 screens.widget.scrollbar.vertical = WidgetScrollbarTemplate;

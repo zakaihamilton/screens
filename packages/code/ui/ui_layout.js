@@ -351,7 +351,7 @@ screens.ui.layout = function UILayout(me) {
                     "ui.basic.elements": {
                         "ui.basic.tag": "div",
                         "ui.class.class": options.contentClass,
-                        "ui.style.columnCount": options.columnCount,
+                        "ui.style.columns": options.columnCount + " " + options.columnWidth,
                         "ui.basic.var": "content"
                     }
                 },

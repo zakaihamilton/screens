@@ -338,6 +338,7 @@ screens.widget.transform = function WidgetTransform(me) {
             stopMethod: "widget.transform.stop",
             usePages: widget.options.pages,
             columnCount: columnCount,
+            columnWidth: "400px",
             scrollWidget: visibleWidget,
             scrollPos: widget.options.scrollPos,
             playEnabled: widget.options.voice !== "None",

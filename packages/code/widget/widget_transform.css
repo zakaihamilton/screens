@@ -49,7 +49,8 @@
       #fefefe 10px,
       #fcfcfc 10px,
       #fcfcfc 20px
-    );    
+    );
+    transform: translateZ(0);
 }
 
 .widget-transform-page-container {
@@ -64,10 +65,8 @@
 .widget-transform-page-content {
     position:relative;
     text-align:justify;
-    box-sizing:border-box;
     column-gap: 4em;
     column-fill:balance;
-    border:1px solid transparent;
 }
 
 .widget-transform-page-content br {

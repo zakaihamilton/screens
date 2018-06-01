@@ -77,6 +77,7 @@
     min-width:8em;
     text-align:center;
     break-after: avoid;
+    break-inside: avoid-column;
 }
 
 [kab-term-phase-number]:after {

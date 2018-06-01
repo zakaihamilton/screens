@@ -13,19 +13,6 @@
                     "ui.basic.var": "vertical"
                 }
             ]
-        },
-        {
-            "ui.basic.var": "footer",
-            "ui.class.class":"footer",
-            "ui.basic.elements": [
-                {
-                    "ui.element.component": "widget.scrollbar.horizontal",
-                    "ui.basic.var": "horizontal"
-                },
-                {
-                    "ui.class.class": "widget.scrollbar.corner"
-                }
-            ]
         }
     ]
 }
