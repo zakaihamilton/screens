@@ -336,3 +336,7 @@ if (platform === "server" || platform === "service") {
     global.__json__ = {};
     global.__html__ = {};
 }
+
+if(platform === "browser" || platform === "client") {
+    var module = screens;
+}

@@ -5,17 +5,22 @@
 
 screens.core.message = function CoreMessage(me) {
     me.init = async function () {
+        if(me.platform === "client" || me.platform === "browser") {
+            await me.import('/node_modules/promise-worker-bi/dist/index.js');
+        }
         if (me.platform === "client") {
-            var registerPromiseWorker = await me.core.require('/node_modules/promise-worker/dist/promise-worker.register.js');
-            registerPromiseWorker(async (message) => {
+            me.worker = new PromiseWorker();
+            me.worker.register(async (message) => {
                 return await me.send.apply(null, message);
             });
         }
     };
     me.loadWorker = async function (path) {
-        var PromiseWorker = await me.core.require('/node_modules/promise-worker/dist/promise-worker.js');
-        screens.worker = new PromiseWorker(new Worker(path));
-        screens.worker.postMessage(null);
+        me.worker = new PromiseWorker(new Worker(path));
+        me.worker.postMessage(null);
+        me.worker.register(async (message) => {
+            return await me.send.apply(null, message);
+        });
     };
     me.send_server = async function (path, params) {
         if (me.platform === "service") {
@@ -47,7 +52,9 @@ screens.core.message = function CoreMessage(me) {
     };
     me.send_browser = async function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
-        if (me.platform === "browser") {
+        if (me.platform === "client") {
+            return me.worker.postMessage(args);
+        } else if (me.platform === "browser") {
             return me.send.apply(this, args);
         } else if (me.platform === "server") {
             return me.send_socket.call(this, path, params);
@@ -56,7 +63,7 @@ screens.core.message = function CoreMessage(me) {
     me.send_client = async function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "browser") {
-            return screens.worker.postMessage(args);
+            return me.worker.postMessage(args);
         } else if (me.platform === "client") {
             return me.send.apply(this, args);
         }
