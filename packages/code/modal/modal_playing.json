@@ -9,8 +9,8 @@
     "transparent":true,
     "ui.property.style":{
         "left": "5%",
-        "top": "5%",
-        "height": "90%",
+        "top": "@ui.param.top(5%)",
+        "height": "@ui.param.height(5%)",
         "width": "90%",
         "pointerEvents":"none"
     },
