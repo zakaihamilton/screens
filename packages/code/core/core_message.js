@@ -10,17 +10,24 @@ screens.core.message = function CoreMessage(me) {
         }
         if (me.platform === "client") {
             me.worker = new PromiseWorker();
-            me.worker.register(async (info) => {
-                return await me.send.apply(null, info.args);
-            });
+            me.register();
         }
+    };
+    me.register = function() {
+        me.worker.register(async (info) => {
+            if (info.callback) {
+                info.callback = me.core.handle.pop(info.callback, "function");
+                return await info.callback.apply(null, info.args);
+            }
+            else {
+                return await me.send.apply(null, info.args);
+            }
+        });
     };
     me.loadWorker = async function (path) {
         me.worker = new PromiseWorker(new Worker(path));
+        me.register();
         me.worker.postMessage(null);
-        me.worker.register(async (info) => {
-            return await me.send.apply(null, info.args);
-        });
     };
     me.send_server = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
@@ -104,11 +111,21 @@ screens.core.message = function CoreMessage(me) {
                         if (me.core.handle.isHandle(arg, "function")) {
                             var handle = arg;
                             arg = function () {
-                                var sendArgs = Array.prototype.slice.call(arguments);
+                                var sendArgs = Array.prototype.slice.call(arguments, 0);
                                 var sendInfo = { args: sendArgs, callback: handle };
                                 info.socket.emit("notify", sendInfo);
                             };
                         }
+                    }
+                }
+                else if (me.platform === "client") {
+                    if (me.core.handle.isHandle(arg, "function")) {
+                        var handle = arg;
+                        arg = function () {
+                            var sendArgs = Array.prototype.slice.call(arguments, 0);
+                            var sendInfo = { args: sendArgs, callback: handle };
+                            return me.worker.postMessage(sendInfo);
+                        };
                     }
                 }
                 else if (me.platform === "browser") {
