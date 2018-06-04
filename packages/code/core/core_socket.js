@@ -51,6 +51,22 @@ screens.core.socket = function CoreSocket(me) {
     me.setup = async function (ref) {
         return {platform:me.platform,name:me.serviceNames};
     };
+    me.send = async function(socket, name, info) {
+        return new Promise((resolve, reject) => {
+            var responseCallback = (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            };
+            var args = Array.prototype.slice.call(arguments, 1);
+            info = Object.assign({}, info);
+            info.callback = me.core.handle.push(responseCallback);
+            socket.emit(name, info);
+        });
+    };
     me.register = function (socket) {
         socket.on("send", async (info) => {
             if(socket.request && socket.request.connection) {
