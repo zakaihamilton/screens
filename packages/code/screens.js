@@ -126,8 +126,7 @@ async function screens_init(items) {
                         }
                     }
                     catch (err) {
-                        var message = err.message || err;
-                        console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
+                        console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + JSON.stringify(err));
                     }
                 }
             } while (init);
