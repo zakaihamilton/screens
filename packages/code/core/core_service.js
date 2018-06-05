@@ -12,7 +12,7 @@ screens.core.service = function CoreService(me) {
                 process.exit(-1);
             }
             me.serviceNames = process.argv.splice(3);
-            for (serviceName in me.serviceNames) {
+            for (serviceName of me.serviceNames) {
                 me.log("loading service: " + serviceName + "...");
                 await me.include("service." + serviceName);
                 me.log("setup service: " + serviceName + "...");
