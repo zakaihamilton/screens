@@ -1,7 +1,6 @@
 /*
  @author Zakai Hamilton
  @component ServiceNetMonitor
- @prerequisites npm install https://github.com/mranney/node_pcap.git
  */
 
 screens.service.netmonitor = function ServiceNetMonitor(me) {
@@ -14,7 +13,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.options = {enablePush:true};
         var config = await me.core.service.config(me.id);
         if (config) {
-            me.pcap = require('pcap');
+            me.pcap = require('pcap2');
             me.tracker = new me.pcap.TCPTracker();
             me.util = require('util');
             var devices = config.device;
@@ -29,7 +28,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             for (var device of devices) {
                 me.session = null;
                 try {
-                    me.session = me.pcap.createSession(device, filter);
+                    me.session = me.pcap.Session(device, filter);
                 } catch (e) {
 
                 }

@@ -29,6 +29,7 @@
     "node-gyp": "^3.6.2",
     "npm": "^5.10.0",
     "openssl": "^1.1.0",
+    "pcap2": "^3.0.4",
     "postcss": "^6.0.22",
     "promise-worker-bi": "^3.0.0",
     "socket.io": "^2.1.1",
