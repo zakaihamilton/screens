@@ -4,7 +4,7 @@
  */
 
 screens.service.netmonitor = function ServiceNetMonitor(me) {
-    me.setup = async function (ref) {
+    me.setup = async function () {
         me.device = null;
         me.packets = [];
         me.timer = null;
@@ -80,7 +80,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         if(packets && packets.length) {
                             me.manager.packet.push(() => {
 
-                            }, packets, ref);
+                            }, packets, me.core.socket.ref);
                         }
                     }
                 }, parseInt(config.delay));

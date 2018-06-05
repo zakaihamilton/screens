@@ -16,7 +16,7 @@ screens.core.service = function CoreService(me) {
                 me.log("loading service: " + serviceName + "...");
                 await me.include("service." + serviceName);
                 me.log("setup service: " + serviceName + "...");
-                await me.core.message.send("service." + serviceName + ".setup", ref);
+                await me.core.message.send("service." + serviceName + ".setup");
                 me.log("setup service: " + serviceName + " complete");
             }
         }

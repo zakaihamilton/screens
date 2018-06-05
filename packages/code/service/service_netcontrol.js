@@ -14,6 +14,9 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         packetDelayMax: 300
     };
     me.effects = Object.assign({}, me.defaultEffects);
+    me.init = function() {
+        me.cmd = require('node-cmd');
+    };
     me.newStream = function () {
         if (me.effects.autoIncreasePacketDelay) {
             var packetDelay = parseInt(me.effects.packetDelay);
@@ -41,9 +44,11 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         return new Promise((resolve, reject) => {
             me.cmd.get(cmd, (err, data, stderr) => {
                 if (err) {
+                    me.log(cmd + " returned error: " + err);
                     reject(err);
                 }
                 else {
+                    me.log(cmd + " returned data: " + data);
                     resolve(data);
                 }
             });
@@ -59,7 +64,6 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.effects = effects;
         me.log("using device: " + device + " to set effects: " + JSON.stringify(effects));
-        var cmd = require('node-cmd');
         var currentDir = await me.run("pwd");
         var data = await me.run("sudo tc qdisc del root dev " + device);
         me.log("reset device output: " + data);

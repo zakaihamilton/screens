@@ -15,9 +15,14 @@ screens.core.message = function CoreMessage(me) {
     };
     me.register = function() {
         me.worker.register(async (info) => {
+            if(!info) {
+                return;
+            }
             if (info.callback) {
                 info.callback = me.core.handle.pop(info.callback, "function");
-                return await info.callback.apply(null, info.args);
+                if(info.callback) {
+                    return await info.callback.apply(null, info.args);
+                }
             }
             else {
                 return await me.send.apply(null, info.args);
@@ -69,7 +74,8 @@ screens.core.message = function CoreMessage(me) {
     me.send_info = async function (send_callback, args) {
         var info = {
             args,
-            headers: {}
+            headers: {},
+            platform: me.platform
         };
         me.prepareArgs(info);
         me.core.object(me, info);

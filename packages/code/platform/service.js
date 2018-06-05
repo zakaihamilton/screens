@@ -29,9 +29,6 @@ screens.include({
     "storage": [
         "file",
         "data"
-    ],
-    "startup": [
-        "version"
     ]
 }).then(() => {
     screens.core.startup.run();

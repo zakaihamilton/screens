@@ -15,7 +15,7 @@ screens.core.socket = function CoreSocket(me) {
                     var info = me.sockets.get(socket);
                     if (info) {
                         me.sockets.delete(socket);
-                        me.log(`Socket disconnected [id=${socket.id} name=${info.name} ref=${info.ref}]`);
+                        me.log(`Socket disconnected [id=${socket.id} name=${info.platform} ref=${info.ref}]`);
                     }
                 });
                 me.register(socket);
@@ -23,23 +23,26 @@ screens.core.socket = function CoreSocket(me) {
                 me.sockets.set(socket, info);
                 me.core.object(me, socket);
                 me.core.property.set(socket, "ready");
-                me.log("Socket ready for ref: " + ref);
+                me.log("Socket ready for ref: " + ref + " platform: " + info.platform);
             });
         } else if (me.platform === "service") {
-            me.io = require("socket.io-client");
+            me.client = require("socket.io-client");
             if (process.argv.length < 3) {
                 me.log("params: http://ip:port");
                 process.exit(-1);
             }
             me.serverAddress = process.argv[2];
             me.log("Connecting to server: " + me.serverAddress);
-            me.io = me.io.connect(me.serverAddress);
-            me.io.on("connect", () => {
-                me.log("Connected to server: " + me.serverAddress);
-                me.io.on("disconnect", (info) => {
-                    me.log("Disconnected from server: " + me.serverAddress);
+            me.io = me.client.connect(me.serverAddress);
+            return new Promise((resolve, reject) => {
+                me.io.on("connect", () => {
+                    me.log("Connected to server: " + me.serverAddress);
+                    me.io.on("disconnect", (info) => {
+                        me.log("Disconnected from server: " + me.serverAddress);
+                    });
+                    me.register(me.io);
+                    resolve();
                 });
-                me.register(me.io);
             });
         }
         else if (me.platform === "browser") {
@@ -49,7 +52,8 @@ screens.core.socket = function CoreSocket(me) {
         }
     };
     me.setup = async function (ref) {
-        return {platform:me.platform,name:me.serviceNames};
+        me.ref = ref;
+        return {platform:me.platform};
     };
     me.send = async function(socket, name, info) {
         return new Promise((resolve, reject) => {
@@ -63,6 +67,7 @@ screens.core.socket = function CoreSocket(me) {
             };
             var args = Array.prototype.slice.call(arguments, 1);
             info = Object.assign({}, info);
+            info.platform = me.platform;
             info.callback = me.core.handle.push(responseCallback);
             socket.emit(name, info);
         });
@@ -81,16 +86,21 @@ screens.core.socket = function CoreSocket(me) {
             if (args) {
                 info.socket = null;
                 info.args = args;
+                info.platform = me.platform;
                 socket.emit("receive", info);
             }
         });
         socket.on("notify", async (info) => {
             var callback = me.core.handle.find(info.callback);
-            callback.apply(null, info.args);
+            if(callback) {
+                callback.apply(null, info.args);
+            }
         });
         socket.on("receive", async (info) => {
             var callback = me.core.handle.pop(info.callback);
-            callback.apply(null, info.args);
+            if(callback) {
+                callback.apply(null, info.args);
+            }
         });
     };
     me.list = function (platform) {
@@ -107,16 +117,16 @@ screens.core.socket = function CoreSocket(me) {
     me.sendAll = async function (platform, method, param) {
         var promises = [];
         var errors = null;
-        var args = Array.prototype.slice.call(arguments);
+        var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
         if (me.sockets) {
-            for (var socket in me.sockets) {
-                var info = me.sockets[socket];
+            me.sockets.forEach((info, socket) => {
                 if(!platform || info.platform === platform) {
                     var promise = me.core.message.send_socket.apply(socket, args);
                     promises.push(promise);
+                    count++;
                 }
-            }
+            });
         }
         me.log("sent " + method + "' to " + count + " devices");
         var responses = Promise.all(promises);
