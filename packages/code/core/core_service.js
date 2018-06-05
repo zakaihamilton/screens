@@ -6,6 +6,7 @@
 screens.core.service = function CoreService(me) {
     me.init = async function () {
         if (me.platform === "service") {
+            me.log("arguments: " + JSON.stringify(process.argv));
             if (process.argv.length < 4) {
                 me.log("params: http://ip:port service_name");
                 process.exit(-1);
