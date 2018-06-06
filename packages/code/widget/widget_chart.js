@@ -88,7 +88,7 @@ screens.widget.chart = function WidgetChart(me) {
                         clearTimeout(object.chartTimer);
                         object.chartTimer = setTimeout(() => {
                             object.chart = new me.chart.Chart(context, object.chartInfo);
-                        }, 1000);
+                        }, 0);
                     });
                 }
                 else {

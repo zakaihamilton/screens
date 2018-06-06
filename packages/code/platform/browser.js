@@ -47,7 +47,7 @@ function startBrowser(appName, appArgs) {
             name: appName,
             params: appArgs
         };
-        await screens.core.message.loadWorker("packages/code/platform/client.js");
+        await screens.core.message.worker.load("packages/code/platform/client.js");
         screens.core.startup.run();
     });
 }

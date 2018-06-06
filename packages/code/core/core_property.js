@@ -18,12 +18,12 @@ screens.core.property = function CoreProperty(me) {
             package_name = name.substr(0, separator);
         }
         if (!package_name || !(package_name in screens)) {
-            if (!object || !object.component) {
+            if (!object || !object.component || object === "none") {
                 return default_name;
             }
             name = object.component + "." + name;
         }
-        if ("component" in object) {
+        if (typeof object === "object" && "component" in object) {
             var redirect = screens(object.component).redirect;
             if (redirect && !redirect.disabled) {
                 if (name in redirect) {
@@ -113,7 +113,12 @@ screens.core.property = function CoreProperty(me) {
                             if(check) {
                                 return true;
                             }
-                            result = callback(info.object, info.value);
+                            if(info.object === "none") {
+                                result = callback(info.value);
+                            }
+                            else {
+                                result = callback(info.object, info.value);
+                            }
                         }
                         else if(typeof callback === "object") {
                             if(callback[method]) {
@@ -147,7 +152,10 @@ screens.core.property = function CoreProperty(me) {
                 var args = name.substr(openIdx + 1, closeIdx - openIdx - 1).split(",");
                 name = name.substr(0, openIdx);
                 if (args.length > 1) {
-                    if (args[0] !== "this") {
+                    if(args[0] === "none") {
+                        object = args[0];
+                    }
+                    else if (args[0] !== "this") {
                         object = me.core.property.get(object, args[0]);
                     }
                     value = args[1];

@@ -1,39 +1,9 @@
 /*
  @author Zakai Hamilton
- @component me.coreMessage
+ @component CoreMessage
  */
 
 screens.core.message = function CoreMessage(me) {
-    me.init = async function () {
-        if (me.platform === "client" || me.platform === "browser") {
-            await me.import('/node_modules/promise-worker-bi/dist/index.js');
-        }
-        if (me.platform === "client") {
-            me.worker = new PromiseWorker();
-            me.register();
-        }
-    };
-    me.register = function() {
-        me.worker.register(async (info) => {
-            if(!info) {
-                return;
-            }
-            if (info.callback) {
-                info.callback = me.core.handle.pop(info.callback, "function");
-                if(info.callback) {
-                    return await info.callback.apply(null, info.args);
-                }
-            }
-            else {
-                return await me.send.apply(null, info.args);
-            }
-        });
-    };
-    me.loadWorker = async function (path) {
-        me.worker = new PromiseWorker(new Worker(path));
-        me.register();
-        me.worker.postMessage(null);
-    };
     me.send_server = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "server") {
@@ -138,6 +108,9 @@ screens.core.message = function CoreMessage(me) {
                     if (typeof arg === "function") {
                         arg = me.core.handle.push(arg, typeof arg);
                     }
+                    else if(arg instanceof Element) {
+                        arg = me.core.handle.push(arg, "element");
+                    }
                 }
                 return arg;
             });
@@ -155,6 +128,9 @@ screens.core.message = function CoreMessage(me) {
                     if (typeof arg === "string") {
                         if (me.core.handle.isHandle(arg, "function")) {
                             arg = me.core.handle.pop(arg, "function");
+                        }
+                        if (me.core.handle.isHandle(arg, "element")) {
+                            arg = me.core.handle.pop(arg, "element");
                         }
                     }
                 }
@@ -201,5 +177,43 @@ screens.core.message = function CoreMessage(me) {
     };
     me.headers = function (info) {
 
+    };
+};
+
+screens.core.message.worker = function CoreMessageWorker(me) {
+    me.init = async function () {
+        if (me.platform === "client" || me.platform === "browser") {
+            await me.import('/node_modules/promise-worker-bi/dist/index.js');
+        }
+        if (me.platform === "client") {
+            me.handle = new PromiseWorker();
+            me.register();
+        }
+    };
+    me.register = function() {
+        me.handle.register(async (info) => {
+            if(!info) {
+                return;
+            }
+            if (info.callback) {
+                info.callback = me.core.handle.pop(info.callback, "function");
+                if(info.callback) {
+                    return await info.callback.apply(null, info.args);
+                }
+            }
+            else {
+                return await me.core.message.send.apply(null, info.args);
+            }
+        });
+    };
+    me.load = async function (path) {
+        me.handle = new PromiseWorker(new Worker(path));
+        me.register();
+        me.handle.postMessage(null);
+    };
+    me.postMessage = function(info) {
+        if(me.handle) {
+            return me.handle.postMessage(info);
+        }
     };
 };

@@ -1,5 +1,6 @@
 {
     "title": "Packets",
+    "icon": "/packages/res/icons/packets_tray.png",
     "ui.property.style": {
         "left": "450px",
         "top": "250px",

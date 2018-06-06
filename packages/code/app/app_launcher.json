@@ -46,6 +46,13 @@
             "ui.tab.owner":"utilities",
             "ui.basic.src": "/packages/res/icons/login.png",
             "ui.touch.click": "core.app.login"
+        },
+        {
+            "text": "Packets",
+            "ui.tab.owner":"work",
+            "ui.basic.src": "/packages/res/icons/packets.png",
+            "ui.touch.click": "core.app.packets",
+            "ui.basic.show":"@user.verify.match(none,Zakai Hamilton)"
         }
     ]
 }
