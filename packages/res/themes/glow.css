@@ -538,7 +538,7 @@
     padding-top:3px;
     padding-bottom:3px;
     flex:1;
-    height:19px;
+    height:26px;
     width:100%;
     user-select:none;
     cursor:default;
@@ -565,11 +565,11 @@
     border-width: 0.10em 0.10em 0 0;
     content: '';
     display: inline-block;
-    height: 0.20em;
-    left: 0.35em;
+    height: 0.40em;
+    left: 0.25em;
     position: relative;
     vertical-align: top;
-    width: 0.20em;
+    width: 0.40em;
     top: 0.55em;
     transform: rotate(135deg);
 }

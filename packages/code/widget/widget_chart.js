@@ -85,10 +85,14 @@ screens.widget.chart = function WidgetChart(me) {
                 if (!me.chart) {
                     me.core.require("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
                         me.chart = chart;
-                        object.chart = new me.chart.Chart(context, object.chartInfo);
+                        clearTimeout(object.chartTimer);
+                        object.chartTimer = setTimeout(() => {
+                            object.chart = new me.chart.Chart(context, object.chartInfo);
+                        }, 1000);
                     });
                 }
                 else {
+                    clearTimeout(object.chartTimer);
                     object.chart = new me.chart.Chart(context, object.chartInfo);
                 }
             }
