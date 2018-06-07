@@ -285,9 +285,9 @@ screens.app.library = function AppLibrary(me) {
                 var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n" } else { return "" } };
                 transformText += getTag("title");
                 transformText += getTag("article");
-                transformText += getTag("chapter", "Chapter ");
+                transformText += getTag("chapter", "Chapter: ");
                 transformText += getTag("section");
-                transformText += getTag("part", "Part ");
+                transformText += getTag("part", "Part: ");
                 transformText += getTag("volume");
                 transformText += getTag("book");
                 transformText += getTag("author");
