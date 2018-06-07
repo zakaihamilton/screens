@@ -180,7 +180,7 @@ screens.app.packets = function AppPackets(me) {
             }
             return state;
         },
-        set: function (object, value) {
+        set: async function (object, value) {
             var window = me.widget.window(object);
             if (window.packetInfo) {
                 var effects = window.packetInfo.effects;
