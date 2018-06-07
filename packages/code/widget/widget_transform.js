@@ -102,7 +102,7 @@ screens.widget.transform = function WidgetTransform(me) {
             me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
         }
         widget.inTransform = true;
-        me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid purple");
+        me.core.property.set(widget.var.spinner, "text", "Transform");
         me.core.property.set(widget, "ui.work.state", true);
         var language = widget.options.language.toLowerCase();
         if (language === "auto") {
@@ -114,7 +114,12 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.options.toggleCallback = "screens.widget.transform.cycleDescription";
         widget.options.reload = true;
         me.media.voice.stop();
-        var info = await me.kab.text.parse(language, text, widget.options);
+        var info = await me.kab.text.parse(language, text, widget.options, (percent) => {
+            me.core.property.set(widget.var.spinner, "percent", percent);
+        });
+        if(!info) {
+            info = {text:"",terms:{},data:null};
+        }
         text = info.text;
         var terms = info.terms;
         var data = info.data;
@@ -277,7 +282,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = false;
         widget.contentChanged = false;
         widget.pageSize = me.ui.layout.pageSize(widget.var.layout);
-        me.core.property.set(widget.var.spinner, "ui.style.borderTop", "16px solid darkgreen");
+        me.core.property.set(widget.var.spinner, "text", "Layout");
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         widget.fullscreen = fullscreen;

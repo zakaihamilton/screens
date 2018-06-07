@@ -186,6 +186,7 @@ screens.app.library = function AppLibrary(me) {
         var records = null;
         if (search) {
             me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
+            me.core.property.set(window.var.resultsSpinner, "text", "Loading");
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             records = await me.db.library.find(0, search);
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");

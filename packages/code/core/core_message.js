@@ -164,7 +164,7 @@ screens.core.message = function CoreMessage(me) {
         }
     };
     me.handleLocal = async function (_this, args) {
-        if (!args) {
+        if (!args || !args.length) {
             return;
         }
         try {
@@ -196,13 +196,17 @@ screens.core.message.worker = function CoreMessageWorker(me) {
                 return;
             }
             if (info.callback) {
-                info.callback = me.core.handle.pop(info.callback, "function");
+                info.callback = me.core.handle.find(info.callback, "function");
                 if(info.callback) {
                     return await info.callback.apply(null, info.args);
                 }
             }
             else {
-                return await me.core.message.send.apply(null, info.args);
+                me.core.object(me, info);
+                me.core.message.prepareArgs(info);
+                var args = await me.core.message.send.apply(null, info.args);
+                me.core.message.releaseArgs(info);
+                return args;
             }
         });
     };
