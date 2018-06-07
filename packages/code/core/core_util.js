@@ -78,4 +78,13 @@ screens.core.util = function CoreUtil(me) {
         var duration = me.end(start);
         me.log("performance: " + this.id + " - " + name + " took " + duration + " ms");
     };
+    me.condense = function(callback) {
+        if(callback.timer) {
+            return;
+        }
+        callback();
+        callback.timer = setTimeout(() => {
+            callback.timer = null;
+        }, 250);
+    };
 };

@@ -44,7 +44,9 @@ screens.kab.text = function KabText(me) {
                     var percent = parseInt(wordIndex / words.length * 100);
                     if(session.percent !== percent) {
                         session.percent = percent;
-                        session.progressCallback(percent);
+                        me.core.util.condense(() => {
+                            session.progressCallback(percent);
+                        });
                     }
                 }
                 var word = words[wordIndex];
