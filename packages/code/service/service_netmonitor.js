@@ -1,6 +1,7 @@
 /*
  @author Zakai Hamilton
  @component ServiceNetMonitor
+ @prerequisites npm install pcap2
  */
 
 screens.service.netmonitor = function ServiceNetMonitor(me) {
