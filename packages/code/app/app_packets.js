@@ -186,7 +186,7 @@ screens.app.packets = function AppPackets(me) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
                     effects.autoIncreasePacketDelay = !effects.autoIncreasePacketDelay;
-                    me.core.property.notify(window, "app.packets.applyEffects");
+                    await me.manager.packet.applyEffects(effects);
                 }
             }
         }
