@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component AppLog
+ @component AppLogger
  */
 
-screens.app.log = function AppLog(me) {
+screens.app.logger = function AppLogger(me) {
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -18,7 +18,7 @@ screens.app.log = function AppLog(me) {
             "source": "Browser"
         });
         me.ui.options.choiceSet(me, null, "source", function (object, value, key, options) {
-            me.core.property.notify(me.singleton, "app.log.refresh");
+            me.core.property.notify(me.singleton, "app.logger.refresh");
         });
     };
     me.send = async function (method) {
@@ -36,14 +36,14 @@ screens.app.log = function AppLog(me) {
     };
     me.clear = {
         set: function (object) {
-            var log = me.singleton.var.log;
+            var log = me.singleton.var.logger;
             me.core.property.set(log, "ui.basic.text", "");
             me.send("core.console.clearMessages");
         }
     };
     me.refresh = {
         set: async function (object) {
-            var log = me.singleton.var.log;
+            var log = me.singleton.var.logger;
             me.core.property.set(log, "ui.basic.text", "");
             var messages = await me.send("core.console.retrieveMessages");
             if(!messages) {

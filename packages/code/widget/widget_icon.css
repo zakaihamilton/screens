@@ -38,6 +38,7 @@
 .widget-icon-image-list {
     margin:3px;
     flex:0;
+    filter: invert(100%);
 }
 
 .widget-icon-label-icon {

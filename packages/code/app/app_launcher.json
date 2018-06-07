@@ -53,6 +53,13 @@
             "ui.basic.src": "/packages/res/icons/packets.png",
             "ui.touch.click": "core.app.packets",
             "ui.basic.show":"@user.verify.match(none,Zakai Hamilton)"
+        },
+        {
+            "text": "Logger",
+            "ui.tab.owner":"utilities",
+            "ui.basic.src": "/packages/res/icons/logger.png",
+            "ui.touch.click": "core.app.logger",
+            "ui.basic.show":"@user.verify.match(none,Zakai Hamilton)"
         }
     ]
 }

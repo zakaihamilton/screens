@@ -10,6 +10,7 @@
 }
 
 .widget-bar-launcher {
+    border:1px solid transparent;
     top:3px;
     right:0px;
     position:absolute;
@@ -19,8 +20,9 @@
     user-select: none;
     -webkit-user-drag: none;
     cursor:default;
+    filter: invert(100%);
 }
 
 .widget-bar-launcher:hover:active {
-    background-color:#0f2777;
+    border:1px solid black;
 }

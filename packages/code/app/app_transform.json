@@ -6,7 +6,7 @@
         "width": "1000px",
         "height": "500px"
     },
-    "icon": "/packages/res/icons/transform_tray.png",
+    "icon": "/packages/res/icons/transform.png",
     "ui.style.background": "white",
     "maximize": null,
     "ui.property.after": {

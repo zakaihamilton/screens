@@ -194,7 +194,7 @@ function screens_import(path, optional) {
                 resolve(item);
             };
             item.onerror = () => {
-                me.error("Failure in stylesheet: " + path);
+                screens.error("Failure in stylesheet: " + path);
                 reject();
             };
             parentNode.appendChild(item);

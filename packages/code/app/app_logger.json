@@ -1,27 +1,28 @@
 {
-    "title": "Log",
+    "title": "Logger",
     "ui.property.style":{
         "left": "120px",
         "top": "120px",
         "width": "640px",
         "height": "480px"
     },
+    "icon": "/packages/res/icons/logger.png",
     "widget.menu.items": [
         ["File", [
-                ["Refresh", "app.log.refresh"],
-                ["Clear","app.log.clear"],
-                ["Enabled", "app.log.enable", {
+                ["Refresh", "app.logger.refresh"],
+                ["Clear","app.logger.clear"],
+                ["Enabled", "app.logger.enable", {
                     "state": "select",
                     "separator":true
                 }],
-                ["Server","app.log.source", {
+                ["Server","app.logger.source", {
                         "state": "select",
                         "separator":true
                 }],
-                ["Client","app.log.source", {
+                ["Client","app.logger.source", {
                         "state": "select"
                 }],
-                ["Browser","app.log.source", {
+                ["Browser","app.logger.source", {
                         "state": "select"
                 }]
             ]
@@ -29,7 +30,7 @@
     ],
     "ui.basic.elements": [
         {
-            "ui.basic.var": "log",
+            "ui.basic.var": "logger",
             "ui.element.component": "widget.editor",
             "ui.property.style": {
                 "left":"5px",
@@ -44,8 +45,8 @@
         }
     ],
     "ui.property.after":{
-        "storage.local.key": "app-log-window",
+        "storage.local.key": "app-logger-window",
         "storage.local.restore": "widget.window.store",
-        "app.log.refresh":null
+        "app.logger.refresh":null
     }
 }

@@ -32,6 +32,7 @@ screens.include({
     ]
 }).then(() => {
     screens.core.startup.run();
+    screens.log("Service loading complete");
 });
 
 process.on('uncaughtException', (err) => {
