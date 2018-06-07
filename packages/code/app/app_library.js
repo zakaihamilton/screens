@@ -36,7 +36,7 @@ screens.app.library = function AppLibrary(me) {
             structuredMode: false
         });
         me.ui.options.toggleSet(me, null, "editMode", me.updateEditMode);
-        me.ui.options.toggleSet(me, null, "structuredMode", me.updateMode);
+        me.ui.options.toggleSet(me, null, "structuredMode", me.updateEditMode);
         window.showResults = true;
         me.updateMode(window);
         me.reset(object);
@@ -48,13 +48,13 @@ screens.app.library = function AppLibrary(me) {
     me.updateMode = function (object) {
         var window = me.widget.window(object);
         var showResults = window.showResults;
-        var editMode = window.options.editMode && !showResults;
+        var editMode = window.options.editMode && (!showResults || !window.searchText);
         var structuredMode = window.options.structuredMode;
         me.core.property.set(window.var.transform, "ui.style.opacity", showResults || editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
         me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
-        me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults);
+        me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults && window.searchText);
     };
     me.cleanSearchText = function (search) {
         search = search.replace(/\s+/g, " ");
@@ -169,6 +169,7 @@ screens.app.library = function AppLibrary(me) {
         window.searchText = "";
     };
     me.reSearch = function (object) {
+        var window = me.widget.window(object);
         window.searchText = "";
         me.search(object);
     };
@@ -307,6 +308,7 @@ screens.app.library = function AppLibrary(me) {
         var text = me.core.property.get(window.var.editor, "text");
         var records = {};
         var array = [];
+        var isTag = false;
         if (text) {
             if (text[0] === "[") {
                 array = JSON.parse(text);
@@ -316,6 +318,14 @@ screens.app.library = function AppLibrary(me) {
                 for (line of text.split("\n")) {
                     var last = array[array.length - 1];
                     if (line[0] === "#") {
+                        if(!isTag && !line.startsWith("#id:")) {
+                            if (last) {
+                                last.tags = Object.assign({}, tags);
+                            }
+                            array.push({ id: "" });
+                            last = array[array.length - 1];
+                        }
+                        isTag = true;
                         var [key, value] = line.substring(1).split(":").map(string => string.trim());
                         if (key === "id") {
                             if (last) {
@@ -336,7 +346,8 @@ screens.app.library = function AppLibrary(me) {
                             }
                         }
                     }
-                    else {
+                    else if(line.trim() !== "") {
+                        isTag = false;
                         if (!last) {
                             array.push({});
                             last = array[array.length - 1];
@@ -415,12 +426,21 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
+        var isTag = false, isTagged = false;
         text = text.split("\n").map(line => {
             line = line.trim();
             if (line.startsWith("#")) {
+                isTagged = true;
+                if(!isTag && !line.startsWith("#id:")) {
+                    line = "#id:\n" + line;
+                }
+                isTag = true;
                 return line;
             }
-            if (line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
+            else {
+                isTag = false;
+            }
+            if (!isTagged && line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
                 if (line.startsWith("Items")) {
                     return "";
                 }

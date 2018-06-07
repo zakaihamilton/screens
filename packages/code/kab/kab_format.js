@@ -22,6 +22,7 @@ screens.kab.format = function KabFormat(me) {
                         itemJoin = item.join;
                     }
                     wordsString = wordsString.split(itemSplit).map(function (selection) {
+                        selection = selection.trim();
                         var inSplit = selection.match(itemSplit);
                         var matches = selection.match(me.core.string.regex(item.match));
                         if (matches && (inSplit || !checkInSplit)) {

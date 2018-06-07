@@ -12,8 +12,15 @@
             "Library",
             [
                 [
+                    "Search",
+                    "app.library.reSearch"
+                ],
+                [
                     "Refresh",
-                    "app.library.refresh"
+                    "app.library.refresh",
+                    {
+                        "separator":true
+                    }
                 ],
                 [
                     "Public",
