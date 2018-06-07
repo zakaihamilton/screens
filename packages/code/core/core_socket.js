@@ -15,7 +15,7 @@ screens.core.socket = function CoreSocket(me) {
                     var info = me.sockets.get(socket);
                     if (info) {
                         me.sockets.delete(socket);
-                        me.log(`Socket disconnected [id=${socket.id} name=${info.platform} ref=${info.ref}]`);
+                        me.log(`Socket disconnected [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
                     }
                 });
                 me.register(socket);
@@ -23,7 +23,9 @@ screens.core.socket = function CoreSocket(me) {
                 me.sockets.set(socket, info);
                 me.core.object(me, socket);
                 me.core.property.set(socket, "ready");
-                me.log("Socket ready for ref: " + ref + " platform: " + info.platform);
+                me.log("Socket ready for ref: " + ref +
+                    " platform: " + info.platform +
+                    ", sockets size: " + me.sockets.size);
             });
         } else if (me.platform === "service") {
             me.client = require("socket.io-client");
@@ -53,9 +55,9 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.setup = async function (ref) {
         me.ref = ref;
-        return {platform:me.platform};
+        return { platform: me.platform };
     };
-    me.send = async function(socket, name, info) {
+    me.send = async function (socket, name, info) {
         return new Promise((resolve, reject) => {
             var responseCallback = (err, result) => {
                 if (err) {
@@ -74,7 +76,7 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.register = function (socket) {
         socket.on("send", async (info) => {
-            if(socket.request && socket.request.connection) {
+            if (socket.request && socket.request.connection) {
                 info.clientIp = socket.request.connection.remoteAddress;
             }
             me.core.object(me, info);
@@ -92,13 +94,13 @@ screens.core.socket = function CoreSocket(me) {
         });
         socket.on("notify", async (info) => {
             var callback = me.core.handle.find(info.callback);
-            if(callback) {
+            if (callback) {
                 callback.apply(null, info.args);
             }
         });
         socket.on("receive", async (info) => {
             var callback = me.core.handle.pop(info.callback);
-            if(callback) {
+            if (callback) {
                 callback.apply(null, info.args);
             }
         });
@@ -107,7 +109,7 @@ screens.core.socket = function CoreSocket(me) {
         var items = [];
         if (me.sockets) {
             me.sockets.forEach((info, socket) => {
-                if(!platform || info.platform === platform) {
+                if (!platform || info.platform === platform) {
                     items.push(info);
                 }
             });
@@ -121,7 +123,7 @@ screens.core.socket = function CoreSocket(me) {
         var count = 0;
         if (me.sockets) {
             me.sockets.forEach((info, socket) => {
-                if(!platform || info.platform === platform) {
+                if (!platform || info.platform === platform) {
                     var promise = me.core.message.send_socket.apply(socket, args);
                     promises.push(promise);
                     count++;
