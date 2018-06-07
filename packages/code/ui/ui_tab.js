@@ -54,6 +54,7 @@ screens.ui.tab = function UITab(me) {
         },
         set: function (object, value) {
             object.ui_tab_owner = value;
+            me.core.property.set(object, "ui.style.display", "none");
         }
     };
 };
