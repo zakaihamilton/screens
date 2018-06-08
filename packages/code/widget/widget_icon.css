@@ -43,14 +43,15 @@
 
 .widget-icon-label-icon {
     position: relative;
-    font-family: "MS Sans Serif";
     font-size: 16px;
     user-select: none;
 }
 
 .widget-icon-label-list {
-    font-family: "MS Sans Serif";
     margin:2px;
+    max-width: 200px;
+    overflow:hidden;
+    text-overflow: ellipsis;
     font-size: 13px;
     user-select: none;
     white-space: nowrap;
