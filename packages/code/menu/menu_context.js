@@ -74,7 +74,7 @@ screens.menu.context = function MenuContext(me) {
                 if(!parent) {
                     parent = me.ui.element.workspace();
                 }
-                padding = -6;
+                padding = 0;
                 var menu_region = me.ui.rect.absolute_region(menu);
                 var icon_region = me.ui.rect.absolute_region(window.var.icon);
                 var icon_icon_region = me.ui.rect.absolute_region(window.var.icon.var.icon);
