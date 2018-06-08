@@ -229,8 +229,11 @@ screens.ui.element = function UIElement(me) {
                 me.core.property.set(object, extension + ".extend");
             }
         }
-        if (component_name !== me.id) {
-            me.core.property.set(object, "draw");
+        if (component.element) {
+            var draw = component.element.draw;
+            if (draw) {
+                draw(object);
+            }
         }
         return object;
     };

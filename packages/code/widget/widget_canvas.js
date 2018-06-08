@@ -5,12 +5,15 @@
 
 screens.widget.canvas = function WidgetCanvas(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["mode"]
         },
-        properties : {
+        properties: {
             "ui.basic.tag": "canvas",
             "dynamicSize": true
+        },
+        draw: function (object) {
+            me.context(object);
         }
     };
     me.mode = {
@@ -28,9 +31,6 @@ screens.widget.canvas = function WidgetCanvas(me) {
         set: function (object, value) {
             object.dynamicSize = value;
         }
-    };
-    me.draw = function (object) {
-        me.context(object);
     };
     me.context = function (object) {
         var contextMode = object.contextMode || "2d";

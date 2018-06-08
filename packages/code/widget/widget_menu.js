@@ -189,7 +189,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             var item = value[0];
             var method = value[1];
             me.core.property.set(object, "back", item);
-            me.core.property.set(object.window, method, me.core.property.get(item, "ui.basic.text"));
+            var prefix = me.core.property.get(item, "prefix");
+            var text = me.core.property.get(item, "ui.basic.text");
+            if(prefix) {
+                text = prefix + text;
+            }
+            me.core.property.set(object.window, method, text);
         }
     };
 };
@@ -236,34 +241,49 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         if (!list.var.filter) {
             if (list.var.members.childNodes.length >= me.filterMinCount) {
                 me.ui.element({
-                    "ui.element.component": "widget.input",
-                    "ui.basic.type": "search",
-                    "ui.basic.text": "",
-                    "ui.basic.var": "filter",
-                    "ui.attribute.placeholder": "Filter",
-                    "ui.style.width": "80%",
-                    "ui.key.up": "widget.menu.list.filter",
-                    "core.event.search": "widget.menu.list.filter"
+                    "ui.element.component": "widget.filter",
+                    "filter":"widget.menu.list.filter",
+                    "prefixes":"widget.menu.list.prefixes",
+                    "ui.basic.var":"filter"
                 }, list.var.headers, list);
             }
         }
         return list.var.members;
     };
-    me.filter = function (object) {
-        var filterText = me.core.property.get(object, "ui.basic.text");
+    me.prefixes = function (object) {
+        var prefixes = [];
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
-        var child = members.firstChild;
-        while (child) {
+        for(var child = members.firstChild; child; child = child.nextSibling) {
+            var prefix = me.core.property.get(child, "prefix");
+            if(!prefix) {
+                continue;
+            }
+            if(!prefixes.includes(prefix)) {
+                prefixes.push(prefix);
+            }
+        }
+        return prefixes;
+    };
+    me.filter = function (object, info) {
+        var list = me.ui.node.container(object, "widget.menu.list");
+        var members = list.var.members;
+        for(var child = members.firstChild; child; child = child.nextSibling) {
+            var prefix = me.core.property.get(child, "prefix");
             var childText = me.core.property.get(child, "ui.basic.text");
-            if (!filterText || childText.toUpperCase().includes(filterText.toUpperCase())) {
-                me.ui.mark.widget(child, filterText);
+            if(!childText) {
+                continue;
+            }
+            var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
+            mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
+            if (mark) {
+                me.ui.mark.widget(child, info.text);
                 child.style.display = "";
             }
             else {
+                me.ui.mark.widget(child, "");
                 child.style.display = "none";
             }
-            child = child.nextSibling;
         }
     };
 };
@@ -376,6 +396,14 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     }
                 });
             }
+        }
+    };
+    me.prefix = {
+        get: function(object) {
+            return object.menu_prefix;
+        },
+        set: function(object, value) {
+            object.menu_prefix = value;
         }
     };
     me.select = {

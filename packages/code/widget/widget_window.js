@@ -13,7 +13,14 @@ screens.widget.window = function WidgetWindow(me) {
             "ui.basic.text": "text",
             "ui.style.background": "background",
             "ui.basic.elements": "elements",
-            "ui.basic.html":"html"
+            "ui.basic.html": "html"
+        },
+        draw: function (object) {
+            var isEmbed = me.core.property.get(object, "embed");
+            if (!isEmbed) {
+                me.core.property.set(object, "ui.focus.active", true);
+            }
+            me.core.property.set(object, "update");
         },
         properties: __json__
     }
@@ -30,9 +37,9 @@ screens.widget.window = function WidgetWindow(me) {
             },
             "temp": null,
             "static": null,
-            "transparent":null,
-            "nobar" : function(object, value) {
-                if(value) {
+            "transparent": null,
+            "nobar": function (object, value) {
+                if (value) {
                     me.core.property.set(object.var.icon, "ui.node.parent");
                 }
                 else {
@@ -45,15 +52,6 @@ screens.widget.window = function WidgetWindow(me) {
             }
         });
         me.proxy.apply = me.window;
-    };
-    me.draw = {
-        set: function (object) {
-            var isEmbed = me.core.property.get(object, "embed");
-            if (!isEmbed) {
-                me.core.property.set(object, "ui.focus.active", true);
-            }
-            me.core.property.set(object, "update");
-        }
     };
     me.storeRegion = function (object) {
         var window = me.window(object);
@@ -152,7 +150,7 @@ screens.widget.window = function WidgetWindow(me) {
         },
         set: function (object, app_component) {
             var window = me.window(object);
-            if(typeof app_component === "string") {
+            if (typeof app_component === "string") {
                 app_component = me[app_component];
             }
             window.app_component = app_component;
@@ -413,7 +411,7 @@ screens.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window.var.icon, "ui.class.add", "minimize");
             }
             if (parent_window) {
-                if(parent_window.child_window && parent_window.child_window !== window) {
+                if (parent_window.child_window && parent_window.child_window !== window) {
                     return;
                 }
                 if (maximized) {
@@ -559,9 +557,9 @@ screens.widget.window = function WidgetWindow(me) {
             var maximized = me.core.property.get(window, "ui.class.contains", "maximize");
             var embed = me.core.property.get(window, "ui.class.contains", "embed");
             if (!minimized && !maximized && !embed) {
-                if(parent_window && parent_window.child_window) {
+                if (parent_window && parent_window.child_window) {
                     var child_maximized = me.core.property.get(parent_window.child_window, "ui.class.contains", "maximize");
-                    if(child_maximized) {
+                    if (child_maximized) {
                         me.core.property.set(parent_window.child_window, "unmaximize");
                         me.core.property.set(window, "ui.focus.active", true);
                     }
@@ -731,7 +729,7 @@ screens.widget.window = function WidgetWindow(me) {
                 "ui.class.fullscreen": !fullscreen
             });
             me.core.property.set(list, "ui.property.broadcast", {
-                "update":null
+                "update": null
             });
         }
     };
@@ -797,11 +795,11 @@ screens.widget.window = function WidgetWindow(me) {
                 var options = JSON.parse(value);
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];
-                    if(optionKey === "maximize" || optionKey === "restore") {
+                    if (optionKey === "maximize" || optionKey === "restore") {
                         var parent = me.parent(window);
-                        if(parent) {
+                        if (parent) {
                             var windows = me.core.property.get(parent, "widget.window.visibleWindows");
-                            if(windows && windows.length > 1 && window !== windows[windows.length-1]) {
+                            if (windows && windows.length > 1 && window !== windows[windows.length - 1]) {
                                 continue;
                             }
                         }
@@ -820,7 +818,7 @@ screens.widget.window = function WidgetWindow(me) {
             me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
         }
     };
-    me.updateStorage = function(object) {
+    me.updateStorage = function (object) {
         var window = me.window(object);
         me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
     };
@@ -978,7 +976,7 @@ screens.widget.window = function WidgetWindow(me) {
             if (label === "Task List" || label === "Launcher") {
                 return null;
             }
-            return {label,window};
+            return { label, window };
         });
         return items;
     };

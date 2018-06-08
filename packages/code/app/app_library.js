@@ -76,13 +76,13 @@ screens.app.library = function AppLibrary(me) {
                 }
             }
             names = Array.from(names).sort().map((name) => {
+                var [nameKey, nameValue] = name.split(":");
                 var result = [
-                    name,
+                    nameValue,
                     async function () {
                         var search = me.core.property.get(window.var.search, "ui.basic.text");
                         var insert = true;
                         if (search) {
-                            var [nameKey, nameValue] = name.split(":");
                             nameKey = nameKey.trim().toLowerCase();
                             search = me.core.string.split(search).map((item) => {
                                 if (item.includes(":")) {
@@ -117,7 +117,8 @@ screens.app.library = function AppLibrary(me) {
                     },
                     null,
                     {
-                        "group": group
+                        "group": group,
+                        "prefix": nameKey
                     }
                 ];
                 return result;
