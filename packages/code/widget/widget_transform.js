@@ -139,7 +139,12 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.language = language;
         me.core.property.set(widget.var.output, widget.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
         me.updateFilterList(widget, terms);
-        widget.tableOfPhases = { terms, data };
+        if(text) {
+            widget.tableOfPhases = { terms, data };
+        }
+        else {
+            widget.tableOfPhases = null;
+        }
         me.ui.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
@@ -403,7 +408,9 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
+            if(widget.tableOfPhases) {
+                diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
+            }
             var isFirst = true;
             var items = diagrams.map(function (item) {
                 var result = [
