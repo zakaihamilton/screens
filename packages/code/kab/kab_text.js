@@ -37,6 +37,10 @@ screens.kab.text = function KabText(me) {
         if (!wordStyle) {
             wordStyle = "whole";
         }
+        if(session.options.abridged) {
+            wordsString = wordsString.replace(/ *\([^)]*\) */g, " ");
+            wordsString = wordsString.replace(/ *\[[^\]]*\] */g, " ");
+        }
         wordsString = me.core.string.parseWords(function (words) {
             var wasPrefix = false;
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
