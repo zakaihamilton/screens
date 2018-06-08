@@ -27,7 +27,6 @@ screens.widget.menu = function WidgetMenu(me) {
         }
     };
     me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
-        var window = me.widget.window.mainWindow(object);
         var parseItems = (items) => {
             if (!items) {
                 items = [];
@@ -39,7 +38,6 @@ screens.widget.menu = function WidgetMenu(me) {
                 }
             }
             items = items.map(function (item) {
-                var currentItem = item;
                 var title = item[property];
                 if (!title) {
                     return null;
@@ -412,10 +410,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         },
         set: function (object, value) {
             if (object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
+                var menu_select = [];
                 for (var target of value) {
                     if (!object.menu_select.find((source) => source[0] === target[0])) {
-                        object.menu_select.push(target);
+                        menu_select.push(target);
                     }
+                    object.menu_select = object.menu_select.concat(menu_select);
                 }
             }
             else {
