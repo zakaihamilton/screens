@@ -6,6 +6,7 @@
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
         me.mongodb = require('mongodb');
+        me.split = require('split-string');
         me.databases = {};
     };
     me.database = async function (name) {

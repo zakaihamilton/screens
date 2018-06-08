@@ -85,7 +85,6 @@ screens.db.library = function DbLibrary(me) {
         }
         var list = [];
         if (doQuery) {
-            me.log("params: " + JSON.stringify(params));
             list = await me.db.library.content.list(userId, params, count);
             result = await me.db.library.tags.findByIds(list.map(item => item._id));
             me.log("number of results: " + result.length);
@@ -119,7 +118,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
     };
     me.filter = function (query) {
         var filter = "";
-        var tokens = me.core.string.split(query).sort();
+        var tokens = me.storage.db.split(query, {keepQuotes: true, separator:' '});
         for (var token of tokens) {
             if (!token.includes(":")) {
                 if (filter) {

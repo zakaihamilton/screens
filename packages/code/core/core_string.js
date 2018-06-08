@@ -157,9 +157,9 @@ screens.core.string = function CoreString(me) {
         }
         return result;
     };
-    me.split = function(string, delimiter=' ') {
+    me.split = function(string, delimiter=' ', quote="\"") {
         if(string) {
-            return [].concat.apply([], string.split('"').map(function(v,i){
+            return [].concat.apply([], string.split(quote).map(function(v,i){
                 return i%2 ? v : v.split(delimiter);
             })).filter(Boolean);
         }
