@@ -1,6 +1,6 @@
 {
     "title": "Logger",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "120px",
         "top": "120px",
         "width": "640px",
@@ -8,23 +8,54 @@
     },
     "icon": "/packages/res/icons/logger.png",
     "widget.menu.items": [
-        ["File", [
-                ["Refresh", "app.logger.refresh"],
-                ["Clear","app.logger.clear"],
-                ["Enabled", "app.logger.enable", {
-                    "state": "select",
-                    "separator":true
-                }],
-                ["Server","app.logger.source", {
+        [
+            "File",
+            [
+                [
+                    "Refresh",
+                    "app.logger.refresh"
+                ],
+                [
+                    "Clear",
+                    "app.logger.clear"
+                ],
+                [
+                    "Enabled",
+                    "app.logger.enable",
+                    {
                         "state": "select",
-                        "separator":true
-                }],
-                ["Client","app.logger.source", {
+                        "separator": true
+                    }
+                ],
+                [
+                    "Server",
+                    "app.logger.source",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Client",
+                    "app.logger.source",
+                    {
                         "state": "select"
-                }],
-                ["Browser","app.logger.source", {
+                    }
+                ],
+                [
+                    "Browser",
+                    "app.logger.source",
+                    {
                         "state": "select"
-                }]
+                    }
+                ],
+                [
+                    "Service",
+                    "app.logger.service",
+                    {
+                        "state": "select"
+                    }
+                ]
             ]
         ]
     ],
@@ -33,20 +64,20 @@
             "ui.basic.var": "logger",
             "ui.element.component": "widget.editor",
             "ui.property.style": {
-                "left":"5px",
-                "top":"5px",
-                "width":"95%",
-                "bottom":"5px",
-                "position":"absolute",
-                "resize":"none",
-                "overflow":"auto",
-                "fontSize":"16px"
+                "left": "5px",
+                "top": "5px",
+                "width": "95%",
+                "bottom": "5px",
+                "position": "absolute",
+                "resize": "none",
+                "overflow": "auto",
+                "fontSize": "16px"
             }
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-logger-window",
         "storage.local.restore": "widget.window.store",
-        "app.logger.refresh":null
+        "app.logger.refresh": null
     }
 }

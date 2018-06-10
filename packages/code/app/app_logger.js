@@ -30,6 +30,8 @@ screens.app.logger = function AppLogger(me) {
             send = me.core.message.send_client;
         } else if (source === "Browser") {
             send = me.core.message.send_browser;
+        } else if (source === "Service") {
+            send = me.core.message.send_service;
         }
         var args = Array.prototype.slice.call(arguments, 0);
         return await send.apply(null, args);
@@ -46,7 +48,7 @@ screens.app.logger = function AppLogger(me) {
             var log = me.singleton.var.logger;
             me.core.property.set(log, "ui.basic.text", "");
             var messages = await me.send("core.console.retrieveMessages");
-            if(!messages) {
+            if (!messages) {
                 messages = [];
             }
             me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));

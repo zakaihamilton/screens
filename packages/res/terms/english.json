@@ -148,7 +148,8 @@
             "Alone":"__Alone",
             "Ish [person] Tam":"Ish Tam",
             "[quality of judgement]":" ",
-            "[quality of mercy]":" "
+            "[quality of mercy]":" ",
+            "Av in heaven":"Av2 in heaven"
         },
         "insert":{
             "Partzuf Keter":"Partzuf de Keter",
@@ -6741,6 +6742,19 @@
             "translation":"Kingdom of Primordal Man",
             "hebrew":"מלכות דא״ק",
             "source":"Malchut de AK"
+        },
+        {
+            "term":"Ah Av",
+            "hebrew":"אח אב",
+            "style":{
+                "heading":"King of Israel"
+            }
+        },
+        {
+            "term":"Av2",
+            "hebrew":"אב",
+            "source":"Av",
+            "translation":"Father"
         }
     ],
     "style": {
