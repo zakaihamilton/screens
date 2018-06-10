@@ -3,7 +3,6 @@
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin:10px;
 }
 
 .widget-player-video-widget {
@@ -12,7 +11,6 @@
     justify-content:center;
     align-items:center;
     overflow: hidden;
-    margin:10px;
 }
 
 .widget-player-controls-container {
