@@ -85,7 +85,7 @@
         {
             "ui.element.component": "widget.transform",
             "ui.basic.var": "transform",
-            "ui.style.top": "50px"
+            "ui.class.classExtra":"app.library.transform"
         },
         {
             "ui.basic.tag": "div",

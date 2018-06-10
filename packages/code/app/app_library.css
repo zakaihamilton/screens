@@ -8,6 +8,10 @@
     align-items:center;
 }
 
+.app-library-search-container.fullscreen {
+    display: none;
+}
+
 .app-library-search {
     width:100%;
     position:relative;
@@ -28,6 +32,18 @@
     margin-right:30px;
 }
 
+.app-library-editor-container.fullscreen {
+    top:0px;
+}
+
+.app-library-transform {
+    top:50px;
+}
+
+.app-library-transform.fullscreen {
+    top:0px;
+}
+
 .app-library-results-container {
     position: absolute;
     left: 0px;
@@ -36,6 +52,10 @@
     bottom: 0px;
     margin-left:30px;
     margin-right:30px;
+}
+
+.app-library-results-container.fullscreen {
+    top:0px;
 }
 
 .app-library-editor {
