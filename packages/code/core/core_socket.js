@@ -122,7 +122,7 @@ screens.core.socket = function CoreSocket(me) {
         var count = 0;
         if (me.sockets) {
             me.sockets.forEach((info, socket) => {
-                if(!count) {
+                if(count) {
                     return;
                 }
                 if (!platform || info.platform === platform) {
