@@ -6,6 +6,7 @@
         "width": "1200px",
         "height": "600px"
     },
+    "icon": "/packages/res/icons/diagram.png",
     "widget.menu.items": [
         ["View", [
                 ["Layers", "app.diagram.viewType", {
