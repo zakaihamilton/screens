@@ -42,6 +42,8 @@ screens.manager.download = function ManagerDownload(me) {
             }
             else {
                 item.isDownloading = true;
+                item.isDownloaded = false;
+                item.isFailed = false;
                 me.log("downloading: " + item.from + " to: " + item.to);
                 me.storage.file.downloadFile(item.from, item.to).then(() => {
                     me.log("downloaded: " + item.from + " to: " + item.to);
@@ -91,7 +93,8 @@ screens.manager.download = function ManagerDownload(me) {
                 from: item.from,
                 to: item.to,
                 isDownloading: item.isDownloading,
-                isDownloaded: item.isDownloaded
+                isDownloaded: item.isDownloaded,
+                isFailed: item.isFailed
             });
         }
         return items;
