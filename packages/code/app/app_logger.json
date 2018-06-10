@@ -51,7 +51,7 @@
                 ],
                 [
                     "Service",
-                    "app.logger.service",
+                    "app.logger.source",
                     {
                         "state": "select"
                     }
