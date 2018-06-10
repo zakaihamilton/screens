@@ -116,14 +116,34 @@ screens.core.socket = function CoreSocket(me) {
         }
         return items;
     };
+    me.sendFirst = async function (platform, method, param) {
+        var promise = null;
+        var args = Array.prototype.slice.call(arguments, 1);
+        var count = 0;
+        if (me.sockets) {
+            me.sockets.forEach((info, socket) => {
+                if(!count) {
+                    return;
+                }
+                if (!platform || info.platform === platform) {
+                    me.log("sending to ref: " + info.ref + " platform: " + info.platform + " match: " + platform);
+                    promise = me.core.message.send_socket.apply(socket, args);
+                    count++;
+                }
+            });
+        }
+        me.log("sent " + method + "' to " + count + " devices");
+        var response = await promise;
+        return response;
+    };
     me.sendAll = async function (platform, method, param) {
         var promises = [];
-        var errors = null;
         var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
         if (me.sockets) {
             me.sockets.forEach((info, socket) => {
                 if (!platform || info.platform === platform) {
+                    me.log("sending to ref: " + info.ref + " platform: " + info.platform + " match: " + platform);
                     var promise = me.core.message.send_socket.apply(socket, args);
                     promises.push(promise);
                     count++;

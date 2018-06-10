@@ -59,6 +59,10 @@ screens.core.message = function CoreMessage(me) {
             return me.send_socket.apply(this, args);
         } else if (me.platform === "service") {
             return me.send.apply(this, args);
+        } else if(me.platform === "browser") {
+            args.unshift("service");
+            args.unshift("core.socket.sendFirst");
+            return me.send_server.apply(this, args);
         }
     };
     me.send_platform = function (platform, path, params) {
