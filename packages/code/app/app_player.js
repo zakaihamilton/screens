@@ -116,7 +116,7 @@ screens.app.player = function AppPlayer(me) {
                 });
             }
             if (name) {
-                me.core.property.set(window, "title", "Player - " + name);
+                me.core.property.set(window, "title", "Player: " + name);
             }
             else {
                 me.core.property.set(window, "title", "Player");
