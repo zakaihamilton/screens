@@ -32,7 +32,6 @@ screens.ui.resize = function UIResize(me) {
                 target = me.widget.window(object);
             }
             if (!target.resize_enabled) {
-                event.preventDefault();
                 return;
             }
             var target_region = me.ui.rect.absolute_region(target);

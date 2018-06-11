@@ -6,7 +6,7 @@
     flex:1;
     margin-left: auto;
     margin-right: auto;
-    cursor: default;
+    cursor: auto;
     user-select: none;
     color:#0f2777;
     border:Solid 1px #0f2777;
@@ -14,6 +14,10 @@
     box-sizing: border-box;
     margin-top:-2px;
     height:20px;
+}
+
+.glow-window-label.maximize {
+    user-select: text;
 }
 
 .glow-window-label.focus {

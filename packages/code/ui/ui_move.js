@@ -33,7 +33,6 @@ screens.ui.move = function UIMove(me) {
             }
             if (!target.move_enabled) {
                 me.core.property.set(target, "ui.focus.active", true);
-                event.preventDefault();
                 return;
             }
             var target_region = me.ui.rect.absolute_region(target);
