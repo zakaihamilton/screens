@@ -219,8 +219,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.updateFullscreen = function (object) {
         var window = me.widget.window(object);
         var widget = me.mainWidget(object);
-        var controls = widget.var.controls;
-        var player = widget.var.player;
         var fullscreen = me.core.property.get(window, "fullscreen");
         me.core.property.set(widget, "ui.class.fullscreen", fullscreen);
     };

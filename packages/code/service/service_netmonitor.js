@@ -29,7 +29,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             for (var device of devices) {
                 me.session = null;
                 try {
-                    me.session = me.pcap.Session(device, filter);
+                    me.session = new me.pcap.Session(device, {filter});
                 } catch (e) {
 
                 }
