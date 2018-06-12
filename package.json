@@ -48,7 +48,7 @@
     "service": {
       "netmonitor": {
         "device": [
-          "wlan0",
+          "eth0",
           "en0"
         ],
         "filter": "port @port",
