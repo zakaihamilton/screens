@@ -49,13 +49,13 @@ screens.db.library = function DbLibrary(me) {
         var result = await me.storage.db.findByIds(me.location(name || this.id), ids);
         return result;
     };
-    me.list = async function (userId, name, params, count) {
+    me.list = async function (userId, name, params, projection) {
         params = Object.assign({}, params);
         params.user = userId || 0;
-        var list = await me.storage.db.list(me.location(name || this.id), params, count);
+        var list = await me.storage.db.list(me.location(name || this.id), params, projection);
         return list;
     };
-    me.find = async function (userId, query, count) {
+    me.find = async function (userId, query) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -85,7 +85,7 @@ screens.db.library = function DbLibrary(me) {
         }
         var list = [];
         if (doQuery) {
-            list = await me.db.library.content.list(userId, params, count);
+            list = await me.db.library.content.list(userId, params, {});
             result = await me.db.library.tags.findByIds(list.map(item => item._id));
             me.log("number of results: " + result.length);
         }

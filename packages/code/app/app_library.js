@@ -22,6 +22,7 @@ screens.app.library = function AppLibrary(me) {
             me.id,
             "db.library.tags.list");
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
+        me.searchCounter = 0;
     };
     me.refresh = async function () {
         me.core.message.send_server("core.cache.reset", me.id);
@@ -155,7 +156,7 @@ screens.app.library = function AppLibrary(me) {
         me.searchTimer = setTimeout(() => {
             me.searchTimer = null;
             me.search(object);
-        }, 1000);
+        }, 2000);
     };
     me.clear = function (object) {
         var window = me.widget.window(object);
@@ -182,6 +183,7 @@ screens.app.library = function AppLibrary(me) {
         if (search === window.searchText) {
             return;
         }
+        var counter = ++me.searchCounter;
         me.reset(object);
         window.searchText = search;
         clearTimeout(me.searchTimer);
@@ -191,6 +193,10 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "text", "Loading");
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             records = await me.db.library.find(0, search);
+            if(counter !== me.searchCounter) {
+                me.log("counter: " + counter + " does not match: " + me.searchCounter);
+                return;
+            }
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
