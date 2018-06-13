@@ -58,20 +58,17 @@ screens.widget.menu = function WidgetMenu(me) {
         if (!list) {
             return null;
         }
-        if (list.then) {
-            return [[
-                "",
-                null,
-                {
-                    "visible": false
-                },
-                {
-                    "group": group,
-                    "promise": { promise: list, callback: parseItems }
-                }
-            ]];
-        }
-        return parseItems(list);
+        return [[
+            "",
+            null,
+            {
+                "visible": false
+            },
+            {
+                "group": group,
+                "promise": { promise: list, callback: parseItems }
+            }
+        ]];
     };
     me.items = {
         set: function (object, value) {
@@ -322,6 +319,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
         }
     };
+    me.init = function() {
+        me.sleepThreshold = {length:50, sleep:500};
+    };
     me.promise = async function (object, info) {
         if (!info) {
             return;
@@ -332,8 +332,8 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
         me.core.property.set(parent, "ui.work.state", true);
         var items = await info.promise;
-        if (items.length > 50) {
-            await me.core.util.sleep(500);
+        if (items.length > me.sleepThreshold.length) {
+            await me.core.util.sleep(me.sleepThreshold.sleep);
         }
         me.core.property.set(parent, "ui.work.state", false);
         items = info.callback(items);
