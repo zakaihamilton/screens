@@ -171,10 +171,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         }
     };
     me.values = function (object, values) {
-        me.core.property.set(object, "ui.group.data", {
-            "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-            "ui.data.values": values
-        });
+        if (me.core.property.get(object, "ui.node.parent")) {
+            me.core.property.set(object, "ui.group.data", {
+                "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+                "ui.data.values": values
+            });
+        }
     }
     me.back = {
         set: function (object, value) {
@@ -189,7 +191,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             me.core.property.set(object, "back", item);
             var prefix = me.core.property.get(item, "prefix");
             var text = me.core.property.get(item, "ui.basic.text");
-            if(prefix) {
+            if (prefix) {
                 text = prefix + text;
             }
             me.core.property.set(object.window, method, text);
@@ -240,9 +242,9 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             if (list.var.members.childNodes.length >= me.filterMinCount) {
                 me.ui.element({
                     "ui.element.component": "widget.filter",
-                    "filter":"widget.menu.list.filter",
-                    "prefixes":"widget.menu.list.prefixes",
-                    "ui.basic.var":"filter"
+                    "filter": "widget.menu.list.filter",
+                    "prefixes": "widget.menu.list.prefixes",
+                    "ui.basic.var": "filter"
                 }, list.var.headers, list);
             }
         }
@@ -252,12 +254,12 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         var prefixes = [];
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
-        for(var child = members.firstChild; child; child = child.nextSibling) {
+        for (var child = members.firstChild; child; child = child.nextSibling) {
             var prefix = me.core.property.get(child, "prefix");
-            if(!prefix) {
+            if (!prefix) {
                 continue;
             }
-            if(!prefixes.includes(prefix)) {
+            if (!prefixes.includes(prefix)) {
                 prefixes.push(prefix);
             }
         }
@@ -266,21 +268,24 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     me.filter = function (object, info) {
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
-        for(var child = members.firstChild; child; child = child.nextSibling) {
+        for (var child = members.firstChild; child; child = child.nextSibling) {
             var prefix = me.core.property.get(child, "prefix");
             var childText = me.core.property.get(child, "ui.basic.text");
-            if(!childText) {
+            if (!childText) {
                 continue;
             }
             var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
             mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
-            if (mark) {
-                me.ui.mark.widget(child, info.text);
-                child.style.display = "";
-            }
-            else {
-                me.ui.mark.widget(child, "");
-                child.style.display = "none";
+            if (child.isMarked !== mark) {
+                child.isMarked = mark;
+                if (mark) {
+                    me.ui.mark.widget(child, info.text);
+                    child.style.display = "";
+                }
+                else {
+                    me.ui.mark.widget(child, "");
+                    child.style.display = "none";
+                }
             }
         }
     };
@@ -317,7 +322,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
         }
     };
-    me.promise = function (object, info) {
+    me.promise = async function (object, info) {
         if (!info) {
             return;
         }
@@ -326,11 +331,13 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             return;
         }
         me.core.property.set(parent, "ui.work.state", true);
-        info.promise.then((items) => {
-            me.core.property.set(parent, "ui.work.state", false);
-            items = info.callback(items);
-            me.core.property.set(me.parentMenu(object), "values", items);
-        });
+        var items = await info.promise;
+        if (items.length > 50) {
+            await me.core.util.sleep(500);
+        }
+        me.core.property.set(parent, "ui.work.state", false);
+        items = info.callback(items);
+        me.core.property.set(me.parentMenu(object), "values", items);
     };
     me.handleValue = function (object, values, key, callback) {
         var parentMenu = me.parentMenu(object);
@@ -342,7 +349,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 }
                 value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
             }
-            if(value && value.then) {
+            if (value && value.then) {
                 callback(false);
                 value.then(callback);
             }
@@ -355,7 +362,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, options) {
             if (options) {
                 me.handleValue(object, options, "debugger", (value) => {
-                    if(value) {
+                    if (value) {
                         debugger;
                     }
                 });
@@ -397,10 +404,10 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
     };
     me.prefix = {
-        get: function(object) {
+        get: function (object) {
             return object.menu_prefix;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.menu_prefix = value;
         }
     };
@@ -456,7 +463,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     "ui.basic.text": "",
                     "ui.class.class": "widget.menu.item.upload",
                     "ui.basic.var": "upload",
-                    "ui.style.userSelect":"none",
+                    "ui.style.userSelect": "none",
                     "ui.attribute.multiple": "multiple",
                     "core.event.change": value
                 }, object, object);

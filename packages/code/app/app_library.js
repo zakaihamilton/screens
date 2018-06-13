@@ -139,10 +139,7 @@ screens.app.library = function AppLibrary(me) {
                 }
             ]];
         }
-        else {
-            items = parseItems(items);
-        }
-        return items;
+        return parseItems(items);
     };
     me.tagMenuList = {
         get: function (object) {

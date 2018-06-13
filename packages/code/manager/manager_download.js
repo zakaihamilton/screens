@@ -49,6 +49,7 @@ screens.manager.download = function ManagerDownload(me) {
                     me.log("downloaded: " + item.from + " to: " + item.to);
                     item.isDownloading = false;
                     item.isDownloaded = true;
+                    me.private.update();
                 }).catch(err => {
                     item.isDownloading = false;
                     item.isFailed = true;
