@@ -253,6 +253,10 @@
     border-radius: 15px;
 }
 
+.glow-window-close.night-mode:hover:active {
+    box-shadow: 0px 0px 15px 3px white;
+}
+
 .glow-window-close.child::after {
     top:8px;
 }
@@ -272,6 +276,10 @@
 .glow-window-action:hover:active {
     box-shadow: 0px 0px 15px 3px #0f2777;
     border-radius: 15px;
+}
+
+.glow-window-action.night-mode:hover:active {
+    box-shadow: 0px 0px 15px 3px white;
 }
 
 .glow-window-action.fullscreen {
