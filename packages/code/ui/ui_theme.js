@@ -7,19 +7,21 @@ screens.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
     me.init = async function() {
-        var current_theme = await me.core.property.get(me.storage.local.local, "ui-theme-current");
-        if(!current_theme) {
-            current_theme = "glow";
-        }
-        if(current_theme !== "none") {
-            me.log("loading theme: " + current_theme);
-            await me.load(current_theme);
-        }
+        me.ui.options.load(me, null, {
+            nightMode: false,
+            theme:"glow"
+        });
+        me.ui.options.toggleSet(me, me, "nightMode", me.update);
+        me.ui.options.listSet(me, me, "theme", me.update);
+        me.update();
     };
     me.themeList = {
         get: function(object) {
             return me.themes;
         }
+    };
+    me.update = function() {
+        me.load(me.options.theme);
     };
     me.updateList = async function() {
         me.themes = [];
@@ -41,12 +43,19 @@ screens.ui.theme = function UITheme(me) {
         }
     };
     me.applyTheme = function(elementCallback, parent) {
+        var nightMode = me.options.nightMode;
         if(!parent) {
             parent = document.body;
         }
         var element = parent.firstChild;
         while(element) {
             if(element.classList) {
+                if(nightMode) {
+                    element.classList.add("night-mode");
+                }
+                else {
+                    element.classList.remove("night-mode");
+                }
                 element.classList.forEach(function(classItem) {
                     elementCallback(element, classItem);
                 });
@@ -72,11 +81,11 @@ screens.ui.theme = function UITheme(me) {
                 }
             });
             me.currentTheme = null;
-            me.core.property.set(me.storage.local.local, "ui-theme-current", "none");
         }
     };
     me.load = async function(name) {
-        var path = "/packages/res/themes/" + name.toLowerCase();
+        name = name.toLowerCase();
+        var path = "/packages/res/themes/" + name;
         var data = await me.core.json.loadFile(path + ".json", "utf8");
         if(data) {
             me.unload();
@@ -94,7 +103,6 @@ screens.ui.theme = function UITheme(me) {
                     }
                 }
             });
-            me.core.property.set(me.storage.local.local, "ui-theme-current", name);
         }
     };
     me.findMapping = function(classItem) {

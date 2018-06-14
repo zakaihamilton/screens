@@ -9,3 +9,11 @@
 .widget-container-root.transparent {
     background:none;
 }
+
+.widget-container-root.night-mode {
+    background:black;
+}
+
+.widget-container-root.transparent.night-mode {
+    background:none;
+}

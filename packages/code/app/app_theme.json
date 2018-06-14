@@ -1,40 +1,56 @@
 {
     "title": "Theme",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "150px",
         "top": "150px",
         "width": "500px",
-        "height": "120px"
+        "height": "220px"
     },
+    "icon": "/packages/res/icons/theme.png",
     "fixed": true,
+    "widget.menu.items": [
+        [
+            "Options",
+            [
+                [
+                    "Night Mode",
+                    "ui.theme.nightMode",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ]
+    ],
     "ui.basic.elements": [
         {
             "ui.basic.var": "themeList",
             "ui.element.count": 8,
-            "ui.property.style":{
+            "ui.property.style": {
                 "margin": "10px",
-                "height":"91px"
+                "height": "91px"
             },
             "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.keyList": [
+                    "ui.basic.text"
+                ],
                 "ui.data.default": {
                     "group": "one",
                     "state": false,
-                    "ui.touch.default":"app.theme.setTheme"
+                    "ui.touch.default": "app.theme.setTheme"
                 },
                 "ui.data.values": [
-                    ["None"],
                     "app.theme.themeList"
                 ]
             }
         },
         {
-            "ui.style.marginTop":"10px",
+            "ui.style.marginTop": "10px",
             "ui.basic.text": "Set",
             "ui.touch.click": "app.theme.setTheme"
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-theme-window",
         "storage.local.restore": "widget.window.store"
     }

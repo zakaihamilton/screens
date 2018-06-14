@@ -60,6 +60,12 @@
             "ui.basic.src": "/packages/res/icons/logger.png",
             "ui.touch.click": "core.app.logger",
             "ui.basic.show":"@user.verify.match(none,Zakai Hamilton)"
+        },
+        {
+            "text": "Theme",
+            "ui.tab.owner":"utilities",
+            "ui.basic.src": "/packages/res/icons/theme.png",
+            "ui.touch.click": "core.app.theme"
         }
     ]
 }

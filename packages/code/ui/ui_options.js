@@ -74,7 +74,12 @@ screens.ui.options = function UIOptions(me) {
         component[key] = {
             get: function (object) {
                 if (toTargetCallback) {
-                    object = toTargetCallback(object);
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
                 }
                 var options = component.options;
                 if (object && object.options) {
@@ -84,7 +89,12 @@ screens.ui.options = function UIOptions(me) {
             },
             set: function (object, value) {
                 if (toTargetCallback) {
-                    object = toTargetCallback(object);
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
                 }
                 var storage = me.getStorage(component, object);
                 var options = component.options;
@@ -108,7 +118,12 @@ screens.ui.options = function UIOptions(me) {
         component[key] = {
             get: function (object, value) {
                 if (toTargetCallback) {
-                    object = toTargetCallback(object);
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
                 }
                 var options = component.options;
                 if (object && object.options) {
@@ -118,7 +133,56 @@ screens.ui.options = function UIOptions(me) {
             },
             set: function (object, value) {
                 if (toTargetCallback) {
-                    object = toTargetCallback(object);
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
+                }
+                var storage = me.getStorage(component, object);
+                var options = component.options;
+                if (object && object.options) {
+                    options = object.options;
+                }
+                options[key] = value;
+                if (callback) {
+                    callback(object, options[key], key, options);
+                }
+                if (storage) {
+                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
+                }
+            }
+        };
+    };
+    me.listSet = function (component, toTargetCallback, key, callback) {
+        if (!component.options) {
+            component.options = {};
+        }
+        component[key] = {
+            get: function (object, value) {
+                if (toTargetCallback) {
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
+                }
+                var options = component.options;
+                if (object && object.options) {
+                    options = object.options;
+                }
+                return options[key];
+            },
+            set: function (object, value) {
+                if (toTargetCallback) {
+                    if(component === toTargetCallback) {
+                        object = component;
+                    }
+                    else {
+                        object = toTargetCallback(object);
+                    }
                 }
                 var storage = me.getStorage(component, object);
                 var options = component.options;

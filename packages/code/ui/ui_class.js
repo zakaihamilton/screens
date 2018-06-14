@@ -125,6 +125,10 @@ screens.ui.class = function UIClass(me) {
         else {
             path = me.core.property.to_full_name(object, path);
             class_name = me.to_class(object, path);
+            var nightMode = me.ui.theme.options.nightMode;
+            if(nightMode) {
+                class_name += " night-mode";
+            }
             var package_name = me.to_package(object, path);
             if(package_name) {
                 me.useStylesheet(package_name);

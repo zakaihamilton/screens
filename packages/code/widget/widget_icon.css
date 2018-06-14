@@ -35,6 +35,10 @@
     display: block;
 }
 
+.widget-icon-image-icon.night-mode {
+    filter: invert(100%);
+}
+
 .widget-icon-image-list {
     margin:3px;
     flex:0;
@@ -45,6 +49,10 @@
     position: relative;
     font-size: 16px;
     user-select: none;
+}
+
+.widget-icon-label-icon.night-mode {
+    color:white;
 }
 
 .widget-icon-label-list {
