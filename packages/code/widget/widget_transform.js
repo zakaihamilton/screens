@@ -114,7 +114,8 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.options.toggleCallback = "screens.widget.transform.cycleDescription";
         widget.options.reload = true;
         me.media.voice.stop();
-        var info = await me.kab.text.parse(language, text, widget.options, (percent) => {
+        var options = Object.assign({}, widget.options, {nightMode:me.ui.theme.options.nightMode});
+        var info = await me.kab.text.parse(language, text, options, (percent) => {
             me.core.property.set(widget.var.spinner, "percent", percent);
         });
         if(!info) {

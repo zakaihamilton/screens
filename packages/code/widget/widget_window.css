@@ -87,6 +87,11 @@
     position: relative;
 }
 
+.widget-window-header.night-mode {
+    background-color:black;
+    border-bottom: 1px solid darkgray;
+}
+
 .widget-window-header.menu {
     display:flex;
 }

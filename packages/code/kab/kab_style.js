@@ -5,6 +5,7 @@
 
 screens.kab.style = function KabStyle(me) {
     me.process = function (session, instance, replacement, expansion) {
+        var nightModeClass = session.options.nightMode ? "night-mode" : "";
         var styles = instance.item.style;
         var html = "";
         var subHeading = "";
@@ -69,7 +70,7 @@ screens.kab.style = function KabStyle(me) {
             tooltip = styles.tooltip;
         }
         if (phase) {
-            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border\"";
+            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border " + nightModeClass + "\"";
             if (numDescriptions) {
                 html += " kab-term-toast";
             }
@@ -90,14 +91,14 @@ screens.kab.style = function KabStyle(me) {
             if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
                 var phaseNumber = session.json.phaseNumber[phase];
                 if (phaseNumber) {
-                    html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-" + session.language + "\"></span>";
+                    html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-" + session.language + " " + nightModeClass + "\"></span>";
                 }
             }
             if (heading) {
-                html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + "\"></span>";
+                html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
             }
             if (subHeading) {
-                html += "<span kab-term-sub-heading=\"" + subHeading + "\" class=\"kab-term-" + session.language + "\"></span>";
+                html += "<span kab-term-sub-heading=\"" + subHeading + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
             }
             if (numDescriptions) {
                 if (phase === "none") {
@@ -105,20 +106,20 @@ screens.kab.style = function KabStyle(me) {
                 }
                 for(var descriptionType in descriptions) {
                     var description = descriptions[descriptionType];
-                    html += "<span id=\"" + descriptionType + "\" style=\"display:none;\" class=\"kab-term-description-box kab-term-" + descriptionType + " kab-term-phase-" + phase + "-border\">";
+                    html += "<span id=\"" + descriptionType + "\" style=\"display:none;\" class=\"kab-term-description-box kab-term-" + descriptionType + " kab-term-phase-" + phase + "-border " + nightModeClass + "\">";
                     var short = description.short;
                     if (!short) {
                         short = "";
                     }
-                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline\"><b>" + replacement;
+                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline " + nightModeClass + "\"><b>" + replacement;
                     if(tooltip && !session.json.options.keepExpandedSource) {
                         html +=" [" + tooltip + "]";
                     }
                     html += ":</b> " + short + "</span>";
-                    html += "<span class=\"kab-term-description-type kab-term-" + session.language + "\">" + descriptionType + "</span>";
+                    html += "<span class=\"kab-term-description-type kab-term-" + session.language + " " + nightModeClass + "\">" + descriptionType + "</span>";
                     var long = description.long;
                     if (long) {
-                        html += "<span class=\"kab-term-long\">" + long + "</span>";
+                        html += "<span class=\"kab-term-long " + nightModeClass + "\">" + long + "</span>";
                     }
                     html += "</span>";
                 }

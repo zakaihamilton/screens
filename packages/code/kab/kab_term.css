@@ -111,6 +111,10 @@
     border:2px solid gray;
 }
 
+.kab-term-phase-none.night-mode:hover:after {
+    background-color:black;
+}
+
 .kab-term-phase-root-border {
     border:1px solid gray;
 }
@@ -124,8 +128,16 @@
     border:2px solid gray;
 }
 
+.kab-term-phase-root.night-mode:hover:after {
+    background-color:black;
+}
+
 .kab-term-phase-one {
     background-color:#FFF3CA;
+}
+
+.kab-term-phase-one.night-mode {
+    background-color:#999900;
 }
 
 .kab-term-phase-one-border {
@@ -141,8 +153,16 @@
     border:2px solid orange;
 }
 
+.kab-term-phase-one.night-mode:hover:after {
+    background-color:#999900;
+}
+
 .kab-term-phase-two {
     background-color:#C8D9F9;
+}
+
+.kab-term-phase-two.night-mode {
+    background-color:midnightblue;
 }
 
 .kab-term-phase-two-border {
@@ -158,8 +178,16 @@
     border:2px solid darkblue;
 }
 
+.kab-term-phase-two.night-mode:hover:after {
+    background-color:midnightblue;
+}
+
 .kab-term-phase-three {
     background-color:#F5CCCB;
+}
+
+.kab-term-phase-three.night-mode {
+    background-color:firebrick;
 }
 
 .kab-term-phase-three-border {
@@ -175,8 +203,16 @@
     border:2px solid coral;
 }
 
+.kab-term-phase-three.night-mode:hover:after {
+    background-color:firebrick;
+}
+
 .kab-term-phase-four {
     background-color:#D9EAD2;
+}
+
+.kab-term-phase-four.night-mode {
+    background-color:darkgreen;
 }
 
 .kab-term-phase-four-border {
@@ -190,6 +226,10 @@
 .kab-term-phase-four:hover:after {
     background-color:#D9EAD2;
     border:2px solid green;
+}
+
+.kab-term-phase-four.night-mode:hover:after {
+    background-color:darkgreen;
 }
 
 .kab-term-phase-collective {
@@ -221,6 +261,10 @@
     text-align: left;
     font-weight:normal;
     border-width:3px;
+}
+
+.kab-term-description-box.night-mode {
+    background-color: black;
 }
 
 .kab-term-description-box.show {

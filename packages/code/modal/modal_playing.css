@@ -1,0 +1,15 @@
+
+.modal-playing-layout {
+    display:block;
+    border:1px solid black;
+    box-shadow:5px 10px 18px lightgray;
+    padding:3em;
+    background:white;
+    pointer-events:all;
+}
+
+.modal-playing-layout.night-mode {
+    background:black;
+    border:1px solid white;
+    box-shadow:5px 10px 18px darkgray;
+}

@@ -18,17 +18,10 @@
         {
             "ui.basic.tag":"div",
             "ui.class.class":"widget.transform.layout",
+            "ui.class.classExtra":"modal.playing.layout",
             "ui.basic.var":"layout",
             "ui.basic.html":"@ui.param.layout",
-            "ui.property.style":{
-                "display":"block",
-                "border":"1px solid black",
-                "box-shadow":"5px 10px 18px lightgray",
-                "padding":"3em",
-                "background":"white",
-                "pointerEvents":"all",
-                "fontSize":"@ui.param.fontSize"
-            }
+            "ui.style.fontSize":"@ui.param.fontSize"
         }
     ]
 }
