@@ -18,6 +18,12 @@
     text-align: center;
 }
 
+.app-library-search.night-mode {
+    color:white;
+    background-color:black;
+    border:1px solid white;
+}
+
 .app-library-output {
     display:none;
 }
