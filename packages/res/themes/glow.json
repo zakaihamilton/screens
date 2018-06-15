@@ -1,210 +1,211 @@
 {
-    "colors":{
-        "--background":"#383B3D",
-        "--color":"lightgray",
-        "--highlight-color":"white",
-        "--disabled-color":"darkgray",
-        "--border-color":"lightgray",
-        "--chrome-background":"black",
-        "--chrome-color":"lightgray",
-        "--chrome-highlight-color":"white",
-        "--chrome-disabled-color":"darkgray",
-        "--filter-percentage":"70%",
-        "--field-background":"black",
-        "--field-color":"lightgray",
-        "--spinner-color":"white"
+    "colors": {},
+    "night-mode": {
+        "--background": "#383B3D",
+        "--color": "lightgray",
+        "--highlight-color": "white",
+        "--disabled-color": "darkgray",
+        "--border-color": "lightgray",
+        "--chrome-background": "black",
+        "--chrome-color": "lightgray",
+        "--chrome-highlight-color": "white",
+        "--chrome-disabled-color": "darkgray",
+        "--filter-percentage": "70%",
+        "--field-background": "black",
+        "--field-color": "lightgray",
+        "--spinner-color": "white"
     },
-    "mapping":[
+    "mapping": [
         {
-            "source":"widget-window-label",
-            "target":"glow-window-label",
-            "replace":true
+            "source": "widget-window-label",
+            "target": "glow-window-label",
+            "replace": true
         },
         {
-            "source":"widget-window-border",
-            "target":"glow-window-border",
-            "replace":true
+            "source": "widget-window-border",
+            "target": "glow-window-border",
+            "replace": true
         },
         {
-            "source":"widget-window-margin",
-            "target":"glow-window-margin",
-            "replace":true
+            "source": "widget-window-margin",
+            "target": "glow-window-margin",
+            "replace": true
         },
         {
-            "source":"widget-window-top-left",
-            "target":"glow-window-top-left"
+            "source": "widget-window-top-left",
+            "target": "glow-window-top-left"
         },
         {
-            "source":"widget-window-top-right",
-            "target":"glow-window-top-right"
+            "source": "widget-window-top-right",
+            "target": "glow-window-top-right"
         },
         {
-            "source":"widget-window-bottom-left",
-            "target":"glow-window-bottom-left"
+            "source": "widget-window-bottom-left",
+            "target": "glow-window-bottom-left"
         },
         {
-            "source":"widget-window-bottom-right",
-            "target":"glow-window-bottom-right"
+            "source": "widget-window-bottom-right",
+            "target": "glow-window-bottom-right"
         },
         {
-            "source":"widget-window-title",
-            "target":"glow-window-title",
-            "replace":true
+            "source": "widget-window-title",
+            "target": "glow-window-title",
+            "replace": true
         },
         {
-            "source":"widget-window-close",
-            "target":"glow-window-close",
-            "replace":true
+            "source": "widget-window-close",
+            "target": "glow-window-close",
+            "replace": true
         },
         {
-            "source":"widget-window-action",
-            "target":"glow-window-action",
-            "replace":true
+            "source": "widget-window-action",
+            "target": "glow-window-action",
+            "replace": true
         },
         {
-            "source":"widget-window-minimize-arrow",
-            "target":"glow-window-minimize-arrow",
-            "replace":true
+            "source": "widget-window-minimize-arrow",
+            "target": "glow-window-minimize-arrow",
+            "replace": true
         },
         {
-            "source":"widget-window-maximize-arrow",
-            "target":"glow-window-maximize-arrow",
-            "replace":true
+            "source": "widget-window-maximize-arrow",
+            "target": "glow-window-maximize-arrow",
+            "replace": true
         },
         {
-            "source":"widget-menu-horizontal",
-            "target":"glow-menu-horizontal",
-            "replace":true
+            "source": "widget-menu-horizontal",
+            "target": "glow-menu-horizontal",
+            "replace": true
         },
         {
-            "source":"widget-menu-vertical",
-            "target":"glow-menu-vertical",
-            "replace":true
+            "source": "widget-menu-vertical",
+            "target": "glow-menu-vertical",
+            "replace": true
         },
         {
-            "source":"widget-window-footer",
-            "target":"glow-window-footer",
-            "replace":true
+            "source": "widget-window-footer",
+            "target": "glow-window-footer",
+            "replace": true
         },
         {
-            "source":"widget-button-standard",
-            "target":"glow-button-standard",
-            "replace":true
+            "source": "widget-button-standard",
+            "target": "glow-button-standard",
+            "replace": true
         },
         {
-            "source":"widget-checkbox-icon",
-            "target":"glow-checkbox-icon",
-            "replace":true
+            "source": "widget-checkbox-icon",
+            "target": "glow-checkbox-icon",
+            "replace": true
         },
         {
-            "source":"widget-radio-icon",
-            "target":"glow-radio-icon",
-            "replace":true
+            "source": "widget-radio-icon",
+            "target": "glow-radio-icon",
+            "replace": true
         },
         {
-            "source":"widget-list-border",
-            "target":"glow-list-border",
-            "replace":true
+            "source": "widget-list-border",
+            "target": "glow-list-border",
+            "replace": true
         },
         {
-            "source":"widget-list-dropdown-selection",
-            "target":"glow-list-dropdown-selection",
-            "replace":true
+            "source": "widget-list-dropdown-selection",
+            "target": "glow-list-dropdown-selection",
+            "replace": true
         },
         {
-            "source":"widget-list-dropdown-button",
-            "target":"glow-list-dropdown-button",
-            "replace":true
+            "source": "widget-list-dropdown-button",
+            "target": "glow-list-dropdown-button",
+            "replace": true
         },
         {
-            "source":"widget-list-dropdown-button-arrow",
-            "target":"glow-list-dropdown-button-arrow",
-            "replace":true
+            "source": "widget-list-dropdown-button-arrow",
+            "target": "glow-list-dropdown-button-arrow",
+            "replace": true
         },
         {
-            "source":"widget-list-dropdown-button-line",
-            "target":"glow-list-dropdown-button-line",
-            "replace":true
+            "source": "widget-list-dropdown-button-line",
+            "target": "glow-list-dropdown-button-line",
+            "replace": true
         },
         {
-            "source":"widget-list-popup-border",
-            "target":"glow-list-popup-border",
-            "replace":true
+            "source": "widget-list-popup-border",
+            "target": "glow-list-popup-border",
+            "replace": true
         },
         {
-            "source":"widget-list-item",
-            "target":"glow-list-item",
-            "replace":true
+            "source": "widget-list-item",
+            "target": "glow-list-item",
+            "replace": true
         },
         {
-            "source":"widget-tree-border",
-            "target":"glow-tree-border",
-            "replace":true
+            "source": "widget-tree-border",
+            "target": "glow-tree-border",
+            "replace": true
         },
         {
-            "source":"widget-tree-dropdown-selection",
-            "target":"glow-tree-dropdown-selection",
-            "replace":true
+            "source": "widget-tree-dropdown-selection",
+            "target": "glow-tree-dropdown-selection",
+            "replace": true
         },
         {
-            "source":"widget-tree-dropdown-button",
-            "target":"glow-tree-dropdown-button",
-            "replace":true
+            "source": "widget-tree-dropdown-button",
+            "target": "glow-tree-dropdown-button",
+            "replace": true
         },
         {
-            "source":"widget-tree-dropdown-button-arrow",
-            "target":"glow-tree-dropdown-button-arrow",
-            "replace":true
+            "source": "widget-tree-dropdown-button-arrow",
+            "target": "glow-tree-dropdown-button-arrow",
+            "replace": true
         },
         {
-            "source":"widget-tree-dropdown-button-line",
-            "target":"glow-tree-dropdown-button-line",
-            "replace":true
+            "source": "widget-tree-dropdown-button-line",
+            "target": "glow-tree-dropdown-button-line",
+            "replace": true
         },
         {
-            "source":"widget-tree-popup-border",
-            "target":"glow-tree-popup-border",
-            "replace":true
+            "source": "widget-tree-popup-border",
+            "target": "glow-tree-popup-border",
+            "replace": true
         },
         {
-            "source":"widget-tree-item",
-            "target":"glow-tree-item",
-            "replace":true
+            "source": "widget-tree-item",
+            "target": "glow-tree-item",
+            "replace": true
         },
         {
-            "source":"widget-tree-item-container",
-            "target":"glow-tree-item-container",
-            "replace":true
+            "source": "widget-tree-item-container",
+            "target": "glow-tree-item-container",
+            "replace": true
         },
         {
-            "source":"widget-tree-item-original",
-            "target":"glow-tree-item-original",
-            "replace":true
+            "source": "widget-tree-item-original",
+            "target": "glow-tree-item-original",
+            "replace": true
         },
         {
-            "source":"widget-tree-item-label",
-            "target":"glow-tree-item-label",
-            "replace":true
+            "source": "widget-tree-item-label",
+            "target": "glow-tree-item-label",
+            "replace": true
         },
         {
-            "source":"widget-tree-item-icon",
-            "target":"glow-tree-item-icon",
-            "replace":true
+            "source": "widget-tree-item-icon",
+            "target": "glow-tree-item-icon",
+            "replace": true
         },
         {
-            "source":"widget-input-normal",
-            "target":"glow-input-normal",
-            "replace":true
+            "source": "widget-input-normal",
+            "target": "glow-input-normal",
+            "replace": true
         },
         {
-            "source":"widget-window-icon",
-            "target":"glow-window-icon",
-            "replace":true
+            "source": "widget-window-icon",
+            "target": "glow-window-icon",
+            "replace": true
         },
         {
-            "source":"widget-bar-container",
-            "target":"glow-bar-container",
-            "replace":true
+            "source": "widget-bar-container",
+            "target": "glow-bar-container",
+            "replace": true
         }
     ]
 }

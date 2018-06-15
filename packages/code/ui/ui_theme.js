@@ -172,6 +172,9 @@ screens.ui.theme = function UITheme(me) {
             var colors = {};
             if (me.currentTheme) {
                 colors = me.currentTheme.colors;
+                if(me.options.nightMode) {
+                    colors = Object.assign({}, colors, me.currentTheme["night-mode"]);
+                }
             }
             colors = Object.assign({}, colors, me.options.colors);
             return colors;
