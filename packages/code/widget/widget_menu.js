@@ -273,16 +273,13 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             }
             var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
             mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
-            if (child.isMarked !== mark) {
-                child.isMarked = mark;
-                if (mark) {
-                    me.ui.mark.widget(child, info.text);
-                    child.style.display = "";
-                }
-                else {
-                    me.ui.mark.widget(child, "");
-                    child.style.display = "none";
-                }
+            if (mark) {
+                me.ui.mark.widget(child, info.text);
+                child.style.display = "";
+            }
+            else {
+                me.ui.mark.widget(child, "");
+                child.style.display = "none";
             }
         }
     };
