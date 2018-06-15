@@ -1,13 +1,13 @@
 {
     "title": "Theme",
     "ui.property.style": {
-        "left": "150px",
-        "top": "150px",
+        "left": "50px",
+        "top": "50px",
         "width": "500px",
         "height": "220px"
     },
     "icon": "/packages/res/icons/theme.png",
-    "fixed": true,
+    "maximize":true,
     "widget.menu.items": [
         [
             "Theme",
@@ -20,7 +20,7 @@
                         "separator":true,
                         "state": "select"
                     }
-                ],
+                ]
             ]
         ]
     ],
