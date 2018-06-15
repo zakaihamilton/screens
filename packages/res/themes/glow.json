@@ -2,10 +2,12 @@
     "colors":{
         "--background":"#383B3D",
         "--color":"lightgray",
+        "--highlight-color":"white",
         "--disabled-color":"darkgray",
         "--border-color":"lightgray",
         "--chrome-background":"black",
         "--chrome-color":"lightgray",
+        "--chrome-highlight-color":"white",
         "--chrome-disabled-color":"darkgray",
         "--filter-percentage":"70%",
         "--field-background":"black",

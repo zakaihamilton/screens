@@ -1,13 +1,38 @@
 .app-launcher-html {
-    background:var(--chrome-background);
     margin-bottom:10px;
-    padding:10px
+    padding-top:10px
 }
 
-.app-launcher-tabs a {
-    color:lightgray;
+.app-launcher-html.night-mode {
+    background:var(--chrome-background);
 }
 
-.app-launcher-tabs a:hover {
-    color:black;
+.app-launcher-tabs a.night-mode {
+    background-color:var(--chrome-background);
+    color:var(--chrome-color);
+    border-bottom-color: var(--chrome-color);
+}
+
+.app-launcher-tabs.is-boxed li a.night-mode {
+    background-color:var(--chrome-background);
+    color:var(--chrome-color);
+    border-bottom-color: var(--chrome-color);
+}
+
+.app-launcher-tabs.is-boxed li a.night-mode:hover {
+    background-color:var(--background);
+    color:var(--chrome-highlight-color);
+    border-bottom-color: var(--background);
+}
+
+.app-launcher-tabs.is-boxed li.is-active a.night-mode {
+    background-color:var(--background);
+    color:var(--chrome-color);
+    border-bottom-color: var(--chrome-color);
+}
+
+.app-launcher-tabs.is-boxed li.is-active a.night-mode:hover {
+    background-color:var(--background);
+    color:var(--chrome-color);
+    border-bottom-color: var(--chrome-color);
 }
