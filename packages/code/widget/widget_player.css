@@ -35,7 +35,7 @@
 }
 
 .widget-player-controls-button.night-mode{
-    filter: invert(100%);
+    filter: invert(var(--filter-percentage));
 }
 
 .widget-player-controls-button:hover:active {

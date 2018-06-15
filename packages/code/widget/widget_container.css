@@ -11,7 +11,7 @@
 }
 
 .widget-container-root.night-mode {
-    background:black;
+    background:var(--background);
 }
 
 .widget-container-root.transparent.night-mode {

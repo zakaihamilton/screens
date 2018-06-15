@@ -10,45 +10,21 @@
     "fixed": true,
     "widget.menu.items": [
         [
-            "Options",
+            "Theme",
             [
+                "ui.theme.menuList",
                 [
                     "Night Mode",
                     "ui.theme.nightMode",
                     {
+                        "separator":true,
                         "state": "select"
                     }
-                ]
+                ],
             ]
         ]
     ],
     "ui.basic.elements": [
-        {
-            "ui.basic.var": "themeList",
-            "ui.element.count": 8,
-            "ui.property.style": {
-                "margin": "10px",
-                "height": "91px"
-            },
-            "ui.group.data": {
-                "ui.data.keyList": [
-                    "ui.basic.text"
-                ],
-                "ui.data.default": {
-                    "group": "one",
-                    "state": false,
-                    "ui.touch.default": "app.theme.setTheme"
-                },
-                "ui.data.values": [
-                    "app.theme.themeList"
-                ]
-            }
-        },
-        {
-            "ui.style.marginTop": "10px",
-            "ui.basic.text": "Set",
-            "ui.touch.click": "app.theme.setTheme"
-        }
     ],
     "ui.property.after": {
         "storage.local.key": "app-theme-window",

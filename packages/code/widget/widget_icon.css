@@ -36,7 +36,7 @@
 }
 
 .widget-icon-image-icon.night-mode {
-    filter: invert(100%);
+    filter: invert(var(--filter-percentage));
 }
 
 .widget-icon-image-list {
@@ -52,7 +52,7 @@
 }
 
 .widget-icon-label-icon.night-mode {
-    color:white;
+    color:var(--color);
 }
 
 .widget-icon-label-list {

@@ -34,7 +34,7 @@
 
 .widget-transform-layout.night-mode {
     color:white;
-    background:black;
+    background:var(--background);
 }
 
 .widget-transform-layout.hebrew {
@@ -59,7 +59,7 @@
 }
 
 .widget-transform-page.night-mode {
-    background:black;
+    background:var(--background);
 }
 
 .widget-transform-page-container {
@@ -455,7 +455,7 @@ h4.widget-transform-widget {
 
 .widget-transform-filter.night-mode {
     border: 1px solid darkgray;
-    background-color:black;
+    background-color:var(--background);
     color:white;
 }
 

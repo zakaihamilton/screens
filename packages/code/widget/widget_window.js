@@ -213,6 +213,7 @@ screens.widget.window = function WidgetWindow(me) {
             if (value) {
                 var content = me.core.property.get(object, "widget.window.content");
                 content.innerHTML = value;
+                me.ui.theme.updateElements(object);
             }
         }
     };

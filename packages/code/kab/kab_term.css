@@ -112,7 +112,7 @@
 }
 
 .kab-term-phase-none.night-mode:hover:after {
-    background-color:black;
+    background-color:var(--background);
 }
 
 .kab-term-phase-root-border {
@@ -129,7 +129,7 @@
 }
 
 .kab-term-phase-root.night-mode:hover:after {
-    background-color:black;
+    background-color:var(--background);
 }
 
 .kab-term-phase-one {
@@ -264,7 +264,7 @@
 }
 
 .kab-term-description-box.night-mode {
-    background-color: black;
+    background-color: var(--background);
 }
 
 .kab-term-description-box.show {

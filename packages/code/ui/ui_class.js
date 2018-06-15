@@ -127,7 +127,7 @@ screens.ui.class = function UIClass(me) {
             class_name = me.to_class(object, path);
             var nightMode = me.ui.theme.options.nightMode;
             if(nightMode) {
-                class_name += " night-mode";
+                class_name += " night-mode is-dark";
             }
             var package_name = me.to_package(object, path);
             if(package_name) {

@@ -20,7 +20,7 @@
 
 .app-library-search.night-mode {
     color:white;
-    background-color:black;
+    background-color:var(--background);
     border:1px solid white;
 }
 

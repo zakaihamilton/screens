@@ -6,57 +6,83 @@
 screens.ui.theme = function UITheme(me) {
     me.themes = [];
     me.currentTheme = null;
-    me.init = async function() {
+    me.init = async function () {
         me.ui.options.load(me, null, {
             nightMode: false,
-            theme:"glow"
+            theme: "glow",
+            colors: {}
         });
         me.ui.options.toggleSet(me, me, "nightMode", me.update);
-        me.ui.options.listSet(me, me, "theme", me.update);
+        me.ui.options.choiceSet(me, me, "theme", me.update);
+        me.ui.options.listSet(me, me, "colors", me.update);
         me.update();
     };
     me.themeList = {
-        get: function(object) {
+        get: function (object) {
             return me.themes;
         }
     };
-    me.update = function() {
+    me.menuList = {
+        get: function (object) {
+            var items = me.themes.map(function (name) {
+                var result = [
+                    me.core.string.title(name),
+                    function () {
+                        me.core.property.set(object, "ui.theme.theme", name);
+                    },
+                    {
+                        "state": function () {
+                            return me.currentTheme ? me.currentTheme.name === name : false;
+                        }
+                    },
+                    {
+                        "group": "themes"
+                    }
+                ];
+                return result;
+            });
+            return items;
+        }
+    };    
+    me.update = function () {
         me.load(me.options.theme);
     };
-    me.updateList = async function() {
+    me.updateList = async function () {
         me.themes = [];
         var path = "packages/res/themes";
         var items = await me.core.file.readDir(path);
-        if(items) {
-            for(let item of items) {
+        if (items) {
+            for (let item of items) {
                 var period = item.lastIndexOf(".");
-                if(period === -1) {
+                if (period === -1) {
                     continue;
                 }
                 var name = item.substring(0, period);
-                var extension = item.substring(period+1);
-                if(extension !== "json") {
+                var extension = item.substring(period + 1);
+                if (extension !== "json") {
                     continue;
                 }
                 me.themes.push(name);
             }
         }
     };
-    me.applyTheme = function(elementCallback, parent) {
+    me.applyTheme = function (elementCallback, parent) {
         var nightMode = me.options.nightMode;
-        if(!parent) {
+        if (!parent) {
             parent = document.body;
         }
         var element = parent.firstChild;
-        while(element) {
-            if(element.classList) {
-                if(nightMode) {
+        while (element) {
+            if (element.classList) {
+                if (nightMode) {
                     element.classList.add("night-mode");
+                    element.classList.add("is-dark");
                 }
                 else {
                     element.classList.remove("night-mode");
+                    element.classList.remove("is-dark");
                 }
-                element.classList.forEach(function(classItem) {
+                element.classList.forEach(function (classItem) {
                     elementCallback(element, classItem);
                 });
             }
@@ -64,18 +90,18 @@ screens.ui.theme = function UITheme(me) {
             element = element.nextSibling;
         }
     };
-    me.unload = function() {
-        if(me.currentTheme) {
+    me.unload = function () {
+        if (me.currentTheme) {
             me.currentTheme.link.parentNode.removeChild(me.currentTheme.link);
             me.currentTheme.link = null;
-            me.applyTheme(function(element, classItem) {
+            me.applyTheme(function (element, classItem) {
                 var mapping = me.findMapping(classItem);
-                if(!mapping) {
+                if (!mapping) {
                     return;
                 }
-                if(mapping.target === classItem) {
+                if (mapping.target === classItem) {
                     element.classList.remove(classItem);
-                    if(mapping.replace) {
+                    if (mapping.replace) {
                         element.classList.add(mapping.source);
                     }
                 }
@@ -83,50 +109,55 @@ screens.ui.theme = function UITheme(me) {
             me.currentTheme = null;
         }
     };
-    me.load = async function(name) {
+    me.updateElements = function(parent) {
+        me.applyTheme(function (element, classItem) {
+            var mapping = me.findMapping(classItem);
+            if (!mapping) {
+                return;
+            }
+            if (mapping.source === classItem) {
+                element.classList.add(mapping.target);
+                if (mapping.replace) {
+                    element.classList.remove(mapping.source);
+                }
+            }
+        }, parent);
+    };
+    me.load = async function (name) {
         name = name.toLowerCase();
         var path = "/packages/res/themes/" + name;
         var data = await me.core.json.loadFile(path + ".json", "utf8");
-        if(data) {
+        if (data) {
             me.unload();
             me.currentTheme = data;
+            me.currentTheme.name = name;
+            me.updateColors();
             me.currentTheme.link = await me.import(path + ".css");
-            me.applyTheme(function(element, classItem) {
-                var mapping = me.findMapping(classItem);
-                if(!mapping) {
-                    return;
-                }
-                if(mapping.source === classItem) {
-                    element.classList.add(mapping.target);
-                    if(mapping.replace) {
-                        element.classList.remove(mapping.source);
-                    }
-                }
-            });
+            me.updateElements();
         }
     };
-    me.findMapping = function(classItem) {
-        if(me.currentTheme) {
+    me.findMapping = function (classItem) {
+        if (me.currentTheme) {
             var list = me.currentTheme.mapping;
-            for(let item of list) {
-                if(item.source === classItem || item.target === classItem) {
+            for (let item of list) {
+                if (item.source === classItem || item.target === classItem) {
                     return item;
                 }
             }
         }
         return null;
     };
-    me.getMapping = function(source) {
-        if(me.currentTheme) {
+    me.getMapping = function (source) {
+        if (me.currentTheme) {
             var list = me.currentTheme.mapping;
-            for(let item of list) {
-                if(item.source !== source) {
+            for (let item of list) {
+                if (item.source !== source) {
                     continue;
                 }
-                if(!item.target) {
+                if (!item.target) {
                     continue;
                 }
-                if(item.replace) {
+                if (item.replace) {
                     return item.target;
                 }
                 else {
@@ -135,5 +166,25 @@ screens.ui.theme = function UITheme(me) {
             }
         }
         return source;
+    };
+    me.colorList = {
+        get: function (object) {
+            var colors = {};
+            if (me.currentTheme) {
+                colors = me.currentTheme.colors;
+            }
+            colors = Object.assign({}, colors, me.options.colors);
+            return colors;
+        },
+        set: function (object, colors) {
+            me.options.colors = colors;
+        }
+    };
+    me.updateColors = function () {
+        var colors = me.colorList.get(null);
+        for(var name in colors) {
+            var color = colors[name];
+            me.ui.color.set(name, color);
+        }
     };
 };

@@ -88,7 +88,7 @@
 }
 
 .widget-window-header.night-mode {
-    background-color:black;
+    background-color:var(--chrome-background);
     border-bottom: 1px solid darkgray;
 }
 

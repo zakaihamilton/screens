@@ -1,0 +1,13 @@
+.app-launcher-html {
+    background:var(--chrome-background);
+    margin-bottom:10px;
+    padding:10px
+}
+
+.app-launcher-tabs a {
+    color:lightgray;
+}
+
+.app-launcher-tabs a:hover {
+    color:black;
+}

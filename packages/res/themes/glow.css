@@ -133,7 +133,7 @@
 }
 
 .glow-window-margin.night-mode {
-    background:black;
+    background:var(--chrome-background);
 }
 
 .glow-window-margin.night-mode.transparent {
@@ -226,7 +226,7 @@
 }
 
 .glow-window-close.night-mode {
-    background-color:black;
+    background-color:var(--chrome-background);
 }
 
 .glow-window-close::after {
@@ -338,7 +338,7 @@
 }
 
 .glow-menu-horizontal.night-mode {
-    background-color:black;
+    background-color:var(--chrome-background);
 }
 
 .glow-menu-horizontal span {
@@ -356,7 +356,7 @@
 }
 
 .glow-menu-horizontal.night-mode span {
-    color:white;
+    color:var(--chrome-color);
 }
 
 .glow-menu-horizontal span.selected {
@@ -382,7 +382,7 @@
 }
 
 .glow-menu-vertical.night-mode {
-    background-color:black;
+    background-color:var(--chrome-background);
 }
 
 .glow-menu-vertical.list {
@@ -419,8 +419,8 @@
 }
 
 .glow-menu-vertical.night-mode span {
-    background-color: black;
-    color:white;
+    background-color: var(--chrome-background);
+    color:var(--chrome-color);
 }
 
 .glow-menu-vertical span:hover {
@@ -434,8 +434,8 @@
 }
 
 .glow-menu-vertical.night-mode span[disabled="true"] {
-    background-color: black;
-    color:darkgray;
+    background-color: var(--chrome-background);
+    color:var(--chrome-disabled-color);
 }
 
 .glow-menu-vertical span[disabled="true"]:hover {
@@ -462,7 +462,7 @@
 }
 
 .glow-menu-vertical.night-mode span.separator {
-    border-top: 3px solid black;
+    border-top: 3px solid var(--chrome-background);
     box-shadow: 0px -1px 0px 0px darkgray;
 }
 
@@ -475,8 +475,8 @@
 }
 
 .glow-menu-vertical.night-mode span.header {
-    color:white;
-    background: linear-gradient(to right, black, #5e6d9e);
+    color:var(--chrome-color);
+    background: linear-gradient(to right, var(--chrome-background), #5e6d9e);
 }
 
 .glow-menu-vertical span.header:hover {
@@ -484,7 +484,7 @@
 }
 
 .glow-menu-vertical.night-mode span.header:hover {
-    color:white;
+    color:var(--chrome-color);
 }
 
 .glow-window-footer {
@@ -523,10 +523,22 @@
     cursor:default;
 }
 
+.glow-button-standard.night-mode {
+    background:var(--background);
+    color:var(--color);
+    border:1px solid var(--border-color);
+}
+
 .glow-button-standard:hover:active {
     color: white;
     background: #0f2777;
     box-shadow: 0px 0px 15px 3px #0f2777;
+}
+
+.glow-button-standard.night-mode:hover:active {
+    color:var(--background);
+    background: var(--color);
+    box-shadow: 0px 0px 15px 3px var(--color);
 }
 
 .glow-checkbox-icon {
@@ -873,4 +885,22 @@
     background:black;
     border-top:1px solid gray;
     box-sizing: border-box;
+}
+
+.label.night-mode {
+    color:var(--chrome-color);
+}
+
+.input.night-mode {
+    background-color:var(--chrome-background);
+    color:var(--chrome-color);
+}
+
+.input.night-mode::placeholder {
+    color:var(--chrome-disabled-color);
+}
+
+.select select.night-mode {
+    background-color:var(--field-background);
+    color:var(--field-color);
 }

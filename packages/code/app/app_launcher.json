@@ -12,6 +12,7 @@
         {
             "ui.basic.tag":"div",
             "ui.basic.html": "@app.launcher.html",
+            "ui.class.class":"app.launcher.html",
             "ui.tab.control":null,
             "ui.property.after":{
                 "ui.tab.activate":null

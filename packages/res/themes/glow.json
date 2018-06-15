@@ -1,5 +1,17 @@
 {
-    "name":"Glow",
+    "colors":{
+        "--background":"#383B3D",
+        "--color":"lightgray",
+        "--disabled-color":"darkgray",
+        "--border-color":"lightgray",
+        "--chrome-background":"black",
+        "--chrome-color":"lightgray",
+        "--chrome-disabled-color":"darkgray",
+        "--filter-percentage":"70%",
+        "--field-background":"black",
+        "--field-color":"lightgray",
+        "--spinner-color":"white"
+    },
     "mapping":[
         {
             "source":"widget-window-label",

@@ -132,6 +132,7 @@ screens.ui.basic = function UIBasic(me) {
         },
         set : function(object, value) {
             object.innerHTML = value;
+            me.ui.theme.updateElements(object.parentNode);
         }
     };
     me.readOnly = {

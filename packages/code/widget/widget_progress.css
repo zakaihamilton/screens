@@ -11,6 +11,10 @@
     justify-content: center;
 }
 
+.widget-progress-container.night-mode {
+    background-color:var(--background);
+}
+
 .widget-progress-bar {
     position: absolute;
     top:3px;
