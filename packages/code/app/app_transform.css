@@ -9,6 +9,11 @@
     direction: ltr;
 }
 
+.app-transform-input.night-mode {
+    background:var(--background);
+    color:var(--color);
+}
+
 .app-transform-input.hebrew {
     direction: rtl;
 }

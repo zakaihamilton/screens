@@ -13,6 +13,7 @@
 
 .widget-progress-container.night-mode {
     background-color:var(--background);
+    border:1px solid var(--border-color);
 }
 
 .widget-progress-bar {
@@ -38,6 +39,10 @@
     user-select: none;
     pointer-events: none;
     z-index: 1;
+}
+
+.widget-progress-label.night-mode {
+    color:var(--color);
 }
 
 .widget-progress-percent {
