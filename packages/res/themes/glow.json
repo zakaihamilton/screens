@@ -18,14 +18,14 @@
         "--phase-root-border":"#45494d",
         "--phase-one-border":"#ba8200",
         "--phase-two-border":"#2f5397",
-        "--phase-three-border":"#196a19",
-        "--phase-four-border":"#b24846",
+        "--phase-three-border":"#b24846",
+        "--phase-four-border":"#196a19",
         "--phase-collective-border":"#814d8e",
         "--phase-root-background":"#45494d",
         "--phase-one-background":"#e8a200",
         "--phase-two-background":"#5274b6",
-        "--phase-three-background":"#418842",
-        "--phase-four-background":"#cc6e6d",
+        "--phase-three-background":"#cc6e6d",
+        "--phase-four-background":"#418842",
         "--phase-collective-background":"#814d8e"
     },
     "mapping": [
