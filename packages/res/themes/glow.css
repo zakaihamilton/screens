@@ -26,6 +26,12 @@
     box-shadow: 0px 0px 15px 3px #0f2777;
 }
 
+.glow-window-label.focus.night-mode {
+    background-color: var(--title-color);
+    box-shadow: 0px 0px 15px 3px var(--title-color);
+    border:Solid 1px var(--title-color);
+}
+
 .glow-window-label.child {
     display:none;
 }

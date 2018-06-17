@@ -3,6 +3,7 @@
     "night-mode": {
         "--background": "#3c3f42",
         "--color": "#e5e5e5",
+        "--title-color":"#062340",
         "--highlight-color": "white",
         "--disabled-color": "darkgray",
         "--border-color": "#e5e5e5",

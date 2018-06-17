@@ -16,7 +16,7 @@
   color: black;
 }
 
-.widget-spinner-loader span.night-mode {
+.widget-spinner-loader.night-mode span {
   color: var(--spinner-color);
 }
 
