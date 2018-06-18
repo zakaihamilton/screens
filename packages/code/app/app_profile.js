@@ -34,7 +34,8 @@ screens.app.profile = function AppProfile(me) {
             "mainClass",
             "subClass",
             "upper",
-            "individual"
+            "individual",
+            "method"
         ];
         var bindings = {};
         for (var id of ids) {
