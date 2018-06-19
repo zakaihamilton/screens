@@ -292,6 +292,7 @@ screens.app.library = function AppLibrary(me) {
                 transformText += getTag("chapter", "Chapter: ");
                 transformText += getTag("section");
                 transformText += getTag("part", "Part: ");
+                transformText += getTag("portion");
                 transformText += getTag("volume");
                 transformText += getTag("book");
                 transformText += getTag("author");
