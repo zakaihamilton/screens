@@ -260,6 +260,17 @@
     box-shadow: 5px 5px 5px lightgray;
 }
 
+.widget-transform-separator.night-mode {
+    background: repeating-linear-gradient(
+        -55deg,
+        darkgray,
+        darkgray 10px,
+        lightgray 10px,
+        lightgray 20px
+      );
+    box-shadow: none;
+}
+
 .widget-transform-separator.last {
     background: black;
 }
