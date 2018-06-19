@@ -7,7 +7,7 @@
         "height": "220px"
     },
     "icon": "/packages/res/icons/theme.png",
-    "maximize":true,
+    "maximize": true,
     "widget.menu.items": [
         [
             "Theme",
@@ -17,14 +17,12 @@
                     "Night Mode",
                     "ui.theme.nightMode",
                     {
-                        "separator":true,
+                        "separator": true,
                         "state": "select"
                     }
                 ]
             ]
         ]
-    ],
-    "ui.basic.elements": [
     ],
     "ui.property.after": {
         "storage.local.key": "app-theme-window",

@@ -70,6 +70,17 @@ screens.core.property = function CoreProperty(me) {
             if(!info.object) {
                 return;
             }
+            if (typeof info.name === "string") {
+                if(info.name.startsWith("@")) {
+                    info.value = me.core.property.get(info.object, info.name.substring(1), info.value);
+                    if(info.value && info.value.then) {
+                        info.value.then((newValue) => {
+                            me.get(object, info.name, newValue, method, check);
+                        });
+                        return info.value;
+                    }
+                }
+            }
             if (typeof info.value === "string") {
                 if (info.value.startsWith("~")) {
                     info.value = info.value.substring(1);
@@ -79,7 +90,7 @@ screens.core.property = function CoreProperty(me) {
                     info.value = me.core.property.get(info.object, info.value.substring(1));
                     if(info.value && info.value.then) {
                         info.value.then((newValue) => {
-                            me.get(object, name, newValue, method, check);
+                            me.get(object, info.name, newValue, method, check);
                         });
                         return info.value;
                     }
