@@ -13,25 +13,25 @@
     border-bottom-color: var(--chrome-color);
 }
 
-.app-launcher-tabs.is-boxed li a.night-mode {
+.app-launcher-tabs.is-boxed.night-mode li a {
     background-color:var(--chrome-background);
     color:var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }
 
-.app-launcher-tabs.is-boxed li a.night-mode:hover {
+.app-launcher-tabs.is-boxed.night-mode li a:hover {
     background-color:var(--background);
     color:var(--chrome-highlight-color);
     border-bottom-color: var(--background);
 }
 
-.app-launcher-tabs.is-boxed li.is-active a.night-mode {
+.app-launcher-tabs.is-boxed.night-mode li.is-active a {
     background-color:var(--background);
     color:var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }
 
-.app-launcher-tabs.is-boxed li.is-active a.night-mode:hover {
+.app-launcher-tabs.is-boxed.night-mode li.is-active a:hover {
     background-color:var(--background);
     color:var(--chrome-color);
     border-bottom-color: var(--chrome-color);

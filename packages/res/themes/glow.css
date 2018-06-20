@@ -371,6 +371,12 @@ p    border:Solid 1px var(--title-color);
     border-right: 1px solid black;
 }
 
+.glow-menu-horizontal.night-mode span.selected {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+    border-right: 1px solid transparent;
+}
+
 .glow-menu-horizontal span[disabled="true"] {
     background-color: white;
     color:lightgray;
@@ -389,6 +395,7 @@ p    border:Solid 1px var(--title-color);
 
 .glow-menu-vertical.night-mode {
     background-color:var(--chrome-background);
+    border: 2px solid var(--chrome-border);
 }
 
 .glow-menu-vertical.list {
@@ -429,9 +436,19 @@ p    border:Solid 1px var(--title-color);
     color:var(--chrome-color);
 }
 
+.glow-menu-vertical.night-mode span.selected {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}
+
 .glow-menu-vertical span:hover {
     background-color: #0f2777;
     color:white;
+}
+
+.glow-menu-vertical.night-mode span:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
 }
 
 .glow-menu-vertical span[disabled="true"] {

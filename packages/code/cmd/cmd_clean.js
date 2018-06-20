@@ -25,6 +25,7 @@ screens.cmd.clean = function CmdClean(me) {
                 }
             }
         }
+        await me.manager.download.removeall();
         me.core.cmd.exit(terminal);
     };
 };
