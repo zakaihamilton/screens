@@ -118,6 +118,11 @@
     content:attr(longPageNumberText);
 }
 
+.widget-transform-page-number.night-mode:hover:after {
+    filter: none;
+    color:white;
+}
+
 .widget-transform-page-scrolltotop {
     position: absolute;
     width:10%;
@@ -150,6 +155,11 @@
     height: 0.5em;
 }
 
+.widget-transform-page-scrolltotop.night-mode:hover:after{
+    color:white;
+    filter: none;
+}
+
 .widget-transform-page-button {
     position: absolute;
     width:10%;
@@ -172,6 +182,11 @@
     font-size:100%;
     font-weight: bold;
     filter: invert(100%);
+}
+
+.widget-transform-page-button.night-mode:hover:after{
+    color:white;
+    filter: none;
 }
 
 .widget-transform-page-reload {
