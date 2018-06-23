@@ -4199,6 +4199,10 @@
             "hebrew": "נקבי עיינים"
         },
         {
+            "term":"NE",
+            "expansion":"Nikvey Eynaim"
+        },
+        {
             "translation": "Luck",
             "term": "Mazla",
             "hebrew": "מזלא"
