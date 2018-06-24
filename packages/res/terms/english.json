@@ -149,7 +149,8 @@
             "Ish [person] Tam":"Ish Tam",
             "[quality of judgement]":" ",
             "[quality of mercy]":" ",
-            "Av in heaven":"Av2 in heaven"
+            "Av in heaven":"Av2 in heaven",
+            "without Hochma":"without Hochma2"
         },
         "insert":{
             "Partzuf Keter":"Partzuf de Keter",
@@ -6759,6 +6760,23 @@
             "hebrew":"אב",
             "source":"Av",
             "translation":"Father"
+        },
+        {
+            "term":"MI",
+            "hebrew":"מי",
+            "explanation":"Thought"
+        },
+        {
+            "term":"ELEH",
+            "hebrew":"אלה",
+            "explanation":"Emotion"
+        },
+        {
+            "term":"Elokim",
+            "hebrew":"אלהים",
+            "style":{
+                "heading":"Name of God"
+            }
         }
     ],
     "style": {
