@@ -94,7 +94,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.transform = async function (object) {
         var widget = me.findWidget(object);
-        me.ui.layout.clear(widget.var.layout);
+        me.widget.layout.clear(widget.var.layout);
         var text = widget.transformText;
         widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
@@ -146,7 +146,7 @@ screens.widget.transform = function WidgetTransform(me) {
         else {
             widget.tableOfPhases = null;
         }
-        me.ui.layout.move(widget.var.output, widget.var.layout);
+        me.widget.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
@@ -253,7 +253,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.shouldReflow = function (object) {
         var widget = me.findWidget(object);
         var reflow = false;
-        var pageSize = me.ui.layout.pageSize(widget.var.layout);
+        var pageSize = me.widget.layout.pageSize(widget.var.layout);
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
@@ -283,11 +283,11 @@ screens.widget.transform = function WidgetTransform(me) {
         var text = widget.transformText;
         var visibleWidget = null;
         if (!widget.contentChanged) {
-            visibleWidget = me.ui.layout.firstVisibleWidget(widget.var.layout);
+            visibleWidget = me.widget.layout.firstVisibleWidget(widget.var.layout);
         }
         widget.forceReflow = false;
         widget.contentChanged = false;
-        widget.pageSize = me.ui.layout.pageSize(widget.var.layout);
+        widget.pageSize = me.widget.layout.pageSize(widget.var.layout);
         me.core.property.set(widget.var.spinner, "text", "Layout");
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
@@ -351,7 +351,7 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         widget.diagrams = [];
         me.media.voice.stop();
-        me.ui.layout.reflow(function () {
+        me.widget.layout.reflow(function () {
             me.core.property.set(widget, "ui.work.state", false);
             if (widget.useTitle) {
                 var title = me.core.property.get(widget, "widget.transform.title");
@@ -365,7 +365,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (me.core.property.get(widget, "ui.work.state") || me.core.property.get(widget, "conceal")) {
                 return;
             }
-            me.ui.layout.updatePages(widget.var.layout);
+            me.widget.layout.updatePages(widget.var.layout);
             if (widget.scrolledTimer) {
                 clearTimeout(widget.scrolledTimer);
             }
@@ -382,7 +382,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.filterChange = {
         set: function (object) {
             var widget = me.findWidget(object);
-            var currentFilter = me.ui.layout.options(widget.var.layout);
+            var currentFilter = me.widget.layout.options(widget.var.layout);
             var newFilter = me.core.property.get(widget.var.filter, "ui.basic.text");
             me.core.property.set(widget.var.filter, "storage.local.store", newFilter);
             if (currentFilter && currentFilter.filter !== newFilter) {
@@ -445,14 +445,14 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.changeVoice = function (object) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
         if (!currentPage) {
             return;
         }
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
-        var isPaused = me.ui.layout.isPaused(currentPage);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
+        var isPaused = me.widget.layout.isPaused(currentPage);
         var playWillEnable = widget.options.voice !== "None";
-        var playEnabled = me.ui.layout.options(widget.var.layout).playEnabled;
+        var playEnabled = me.widget.layout.options(widget.var.layout).playEnabled;
         if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
             me.reflow(object);
             return;
@@ -463,30 +463,30 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.changeSpeed = function (object) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
         if (!currentPage) {
             return;
         }
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
-        var isPaused = me.ui.layout.isPaused(currentPage);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
+        var isPaused = me.widget.layout.isPaused(currentPage);
         if (isPlaying && !isPaused) {
             me.play(object, me.media.voice.currentIndex, false);
         }
     };
     me.play = function (object, value, toggle = true) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
-        var isPaused = me.ui.layout.isPaused(currentPage);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
+        var isPaused = me.widget.layout.isPaused(currentPage);
         if (toggle ? (isPlaying && !isPaused) : (isPlaying && isPaused)) {
             me.focusParagraph(object, null);
             me.media.voice.pause();
-            me.ui.layout.setPlayState(currentPage, true, true);
+            me.widget.layout.setPlayState(currentPage, true, true);
         }
         else if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
-            me.ui.layout.setPlayState(me.currentPlayingPage, true, false);
-            var focusElement = me.ui.layout.focusElement(me.currentPlayingPage);
+            me.widget.layout.setPlayState(me.currentPlayingPage, true, false);
+            var focusElement = me.widget.layout.focusElement(me.currentPlayingPage);
             me.focusParagraph(object, focusElement);
         }
         else {
@@ -494,24 +494,24 @@ screens.widget.transform = function WidgetTransform(me) {
             if (typeof value === "number") {
                 index = value;
             }
-            var text = me.ui.layout.pageText(currentPage);
+            var text = me.widget.layout.pageText(currentPage);
             var params = {
                 index: index,
                 onstart: () => {
                     me.log("onstart");
-                    me.ui.layout.setPlayState(currentPage, true, false);
+                    me.widget.layout.setPlayState(currentPage, true, false);
                     me.focusParagraph(object, null);
                 },
                 oncancel: () => {
                     me.log("oncancel");
-                    me.ui.layout.clearPage(currentPage);
-                    me.ui.layout.setPlayState(currentPage, false, false);
+                    me.widget.layout.clearPage(currentPage);
+                    me.widget.layout.setPlayState(currentPage, false, false);
                     me.focusParagraph(object, null);
                 },
                 onend: () => {
                     me.log("onend");
-                    me.ui.layout.clearPage(currentPage);
-                    me.ui.layout.setPlayState(currentPage, false, false);
+                    me.widget.layout.clearPage(currentPage);
+                    me.widget.layout.setPlayState(currentPage, false, false);
                     me.focusParagraph(object, null);
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
@@ -527,7 +527,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 onprevious: () => {
                     var pageNumber = me.core.property.get(currentPage, "ui.attribute.pageNumber");
                     if (pageNumber > 1) {
-                        me.ui.layout.clearPage(currentPage);
+                        me.widget.layout.clearPage(currentPage);
                         me.focusParagraph(object, null);
                         me.core.property.set(object, "ui.scroll.previousPage");
                         me.core.property.set(object, "widget.transform.play", -1);
@@ -537,9 +537,9 @@ screens.widget.transform = function WidgetTransform(me) {
                     }
                 },
                 onnext: () => {
-                    me.ui.layout.clearPage(currentPage);
+                    me.widget.layout.clearPage(currentPage);
                     if (currentPage.last) {
-                        me.ui.layout.setPlayState(currentPage, false, false);
+                        me.widget.layout.setPlayState(currentPage, false, false);
                         me.focusParagraph(object, null);
                         me.currentPlayingPage = null;
                     }
@@ -550,8 +550,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 },
                 onchange: (index, text) => {
                     me.log("onchange: " + index + " text:" + text);
-                    me.ui.layout.markPage(currentPage, index, text);
-                    var focusElement = me.ui.layout.focusElement(currentPage);
+                    me.widget.layout.markPage(currentPage, index, text);
+                    var focusElement = me.widget.layout.focusElement(currentPage);
                     me.focusParagraph(object, focusElement);
                 },
                 rate: widget.options.speed,
@@ -559,7 +559,7 @@ screens.widget.transform = function WidgetTransform(me) {
             };
             me.media.voice.play(text, widget.options.voice, params);
             if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
-                me.ui.layout.setPlayState(me.currentPlayingPage, false, false);
+                me.widget.layout.setPlayState(me.currentPlayingPage, false, false);
                 me.currentPlayingPage = null;
             }
             me.currentPlayingPage = currentPage;
@@ -567,28 +567,28 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.stop = function (object) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.stop();
-            me.ui.layout.clearPage(currentPage);
+            me.widget.layout.clearPage(currentPage);
             me.focusParagraph(object, null);
-            me.ui.layout.setPlayState(currentPage, false, false);
+            me.widget.layout.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
     me.rewind = function (object) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.rewind();
         }
     };
     me.fastforward = function (object) {
         var widget = me.findWidget(object);
-        var currentPage = me.ui.layout.currentPage(widget.var.layout);
-        var isPlaying = me.ui.layout.isPlaying(currentPage);
+        var currentPage = me.widget.layout.currentPage(widget.var.layout);
+        var isPlaying = me.widget.layout.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.fastforward();
         }
@@ -745,7 +745,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);
-        var pageSize = me.ui.layout.pageSize(widget.var.layout);
+        var pageSize = me.widget.layout.pageSize(widget.var.layout);
         me.core.property.set(widget.var.layout, {
             "ui.scroll.pageSize": pageSize.height,
             "ui.scroll.scrollTo": widget.options.scrollPos,
@@ -757,7 +757,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.transformText = "";
         me.core.property.set(widget.var.output, "ui.basic.html", "");
         me.ui.node.removeChildren(widget.var.filterList);
-        me.ui.layout.clear(widget.var.layout);
+        me.widget.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
         me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "none");
@@ -766,7 +766,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.contentTitle = {
         get: function (object) {
             var widget = me.findWidget(object);
-            var title = me.ui.layout.firstWidget(widget.var.layout);
+            var title = me.widget.layout.firstWidget(widget.var.layout);
             if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
                 title = title.innerText;
                 widget.contentTitle = title;

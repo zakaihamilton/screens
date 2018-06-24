@@ -3,7 +3,7 @@
  @component UILayout
  */
 
-screens.ui.layout = function UILayout(me) {
+screens.widget.layout = function UILayout(me) {
     me.move = function (source, target) {
         do {
             var widget = source.firstChild;
@@ -308,7 +308,7 @@ screens.ui.layout = function UILayout(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": options.scrollToTopClass,
                             "ui.basic.var": "scrollToTop",
-                            "ui.touch.click": "ui.layout.scrollToTop",
+                            "ui.touch.click": "widget.layout.scrollToTop",
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         },
                         {
