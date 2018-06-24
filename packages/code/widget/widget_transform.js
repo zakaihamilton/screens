@@ -681,14 +681,7 @@ screens.widget.transform = function WidgetTransform(me) {
         four: 6,
         collective: 7
     };
-    me.tableOfPhasesParams = function (object) {
-        var params = { gridData: [] };
-        var widget = me.findWidget(object);
-        var rows = {};
-        if (!widget.tableOfPhases) {
-            return params;
-        }
-        var terms = widget.tableOfPhases.terms;
+    me.addTerms = function(terms, rows, used) {
         for (var name in terms) {
             var term = terms[name];
             if (term.heading && term.phase) {
@@ -705,6 +698,12 @@ screens.widget.transform = function WidgetTransform(me) {
                     if (!row) {
                         row = rows[heading] = {};
                     }
+                    if(used !== term.used) {
+                        return;
+                    }
+                    if(!term.used && !Object.keys(row).length) {
+                        return;
+                    }
                     var list = row[phase];
                     if (!list) {
                         list = row[phase] = [];
@@ -713,6 +712,18 @@ screens.widget.transform = function WidgetTransform(me) {
                 });
             }
         }
+    };
+    me.tableOfPhasesParams = function (object) {
+        var params = { gridData: [] };
+        var widget = me.findWidget(object);
+        var rows = {};
+        if (!widget.tableOfPhases) {
+            return params;
+        }
+        var terms = widget.tableOfPhases.terms;
+        console.log("terms: " + JSON.stringify(terms));
+        me.addTerms(terms, rows, true);
+        me.addTerms(terms, rows, false);
         var rowIndex = 2;
         for (var phase in me.phases) {
             var columnIndex = me.phases[phase];
@@ -722,15 +733,20 @@ screens.widget.transform = function WidgetTransform(me) {
         for (var heading in rows) {
             var row = rows[heading];
             var name = heading.charAt(0).toUpperCase() + heading.slice(1);
-            params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
+            var found = false;
             for (var phase in me.phases) {
                 var list = row[phase];
-                if (!list) {
-                    list = [];
+                if (!list || !list.length) {
+                    continue;
                 }
                 var columnIndex = me.phases[phase];
                 params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
+                found = true;
             }
+            if(!found) {
+                continue;
+            }
+            params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
             rowIndex++;
         }
         for (var row of params.gridData) {

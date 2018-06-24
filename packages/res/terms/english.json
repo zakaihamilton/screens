@@ -11,9 +11,7 @@
             "replaceOnly": true,
             "match": "/^[aeiouAEIOU]"
         },
-        "the": {
-
-        }
+        "the": {}
     },
     "data": {
         "lastFieldSeparator": " and ",
@@ -55,12 +53,16 @@
         "three": "3",
         "four": "4"
     },
-    "ignore": ["of", "de", "De", "OF", "DE"],
-    "abridged":{
-
-    },
+    "ignore": [
+        "of",
+        "de",
+        "De",
+        "OF",
+        "DE"
+    ],
+    "abridged": {},
     "replace": {
-        "spelling":{
+        "spelling": {
             "Hakaaof": "Hakaa of",
             "onionskins": "onion skins",
             "Agolon": "Agol on",
@@ -139,27 +141,27 @@
             "Eser de Sefirot": "Eser Sefirot",
             "Torahall": "Torah all",
             "\nOr": "__Or",
-            "west departs from the east":"__west departs from the __east",
-            "strong east wind":"strong __east wind",
-            "Balaam":"Bilʻam",
-            "“World":"“World2",
-            "“Year":"“Year2",
-            "“Soul":"“Soul2",
-            "Alone":"__Alone",
-            "Ish [person] Tam":"Ish Tam",
-            "[quality of judgement]":" ",
-            "[quality of mercy]":" ",
-            "Av in heaven":"Av2 in heaven",
-            "without Hochma":"without Hochma2",
-            "the light of Hochma is without Hesed":"the light of Hochma2 is without Hesed2"
+            "west departs from the east": "__west departs from the __east",
+            "strong east wind": "strong __east wind",
+            "Balaam": "Bilʻam",
+            "“World": "“World2",
+            "“Year": "“Year2",
+            "“Soul": "“Soul2",
+            "Alone": "__Alone",
+            "Ish [person] Tam": "Ish Tam",
+            "[quality of judgement]": " ",
+            "[quality of mercy]": " ",
+            "Av in heaven": "Av2 in heaven",
+            "without Hochma": "without Hochma2",
+            "the light of Hochma is without Hesed": "the light of Hochma2 is without Hesed2"
         },
-        "insert":{
-            "Partzuf Keter":"Partzuf de Keter",
-            "Partzuf Atik":"Partzuf de Atik",
-            "Partzuf AK":"Partzuf de Adam Kadmon",
-            "Partzuf Adam Kadmon":"Partzuf de Adam Kadmon"
+        "insert": {
+            "Partzuf Keter": "Partzuf de Keter",
+            "Partzuf Atik": "Partzuf de Atik",
+            "Partzuf AK": "Partzuf de Adam Kadmon",
+            "Partzuf Adam Kadmon": "Partzuf de Adam Kadmon"
         },
-        "tags":{
+        "tags": {
             "<subtitle>": "\n<b>",
             "</subtitle>": "</b>",
             "<article>": "<br>",
@@ -170,7 +172,7 @@
             "<set>": "<span style=\"display: inline-block;\">",
             "</set>": "</span>"
         },
-        "characters":{
+        "characters": {
             "\u00A0": " "
         }
     },
@@ -786,7 +788,7 @@
         },
         {
             "translation": "Screen",
-            "explanation":"Filter",
+            "explanation": "Filter",
             "term": "Masach",
             "hebrew": "מסך"
         },
@@ -804,7 +806,6 @@
         {
             "translation": "Crowns",
             "explanation": "Postulates",
-            "defaultTerm": true,
             "style": {
                 "heading": "Vessel",
                 "phase": "root"
@@ -1020,7 +1021,10 @@
                 "Yechida"
             ],
             "term": "NRNHY",
-            "abridged":["Katnut","Gadlut"]
+            "abridged": [
+                "Katnut",
+                "Gadlut"
+            ]
         },
         {
             "expansion": [
@@ -1064,7 +1068,7 @@
                 "Ruach"
             ],
             "term": "NR",
-            "abridged":"Katnut"
+            "abridged": "Katnut"
         },
         {
             "expansion": [
@@ -1099,7 +1103,7 @@
                 "Hochma"
             ],
             "term": "KH",
-            "abridged":"Machshava"
+            "abridged": "Machshava"
         },
         {
             "expansion": [
@@ -1132,7 +1136,10 @@
                 "Assiya"
             ],
             "term": "ABYA",
-            "abridged":["Boreh","Nivrah"]
+            "abridged": [
+                "Boreh",
+                "Nivrah"
+            ]
         },
         {
             "expansion": [
@@ -1152,13 +1159,13 @@
             "term": "DHGT"
         },
         {
-            "expansion":[
+            "expansion": [
                 "Hesed",
                 "Gevura",
                 "Tifferet2",
                 "Malchut"
             ],
-            "term":"HG TM"
+            "term": "HG TM"
         },
         {
             "expansion": [
@@ -1194,12 +1201,12 @@
                 "Hod",
                 "Yesod"
             ],
-            "abridged":"Regesh",
+            "abridged": "Regesh",
             "term": "HGTNHY"
         },
         {
-            "term":"Bina and TM",
-            "abridged":"Regesh"
+            "term": "Bina and TM",
+            "abridged": "Regesh"
         },
         {
             "expansion": [
@@ -1368,7 +1375,6 @@
         },
         {
             "translation": "Primordial Man",
-            "defaultTerm": true,
             "style": "primordial man",
             "defaultTerm": true,
             "term": "Adam Kadmon",
@@ -1724,7 +1730,8 @@
                 "phase": "four"
             },
             "term": "Nukva",
-            "hebrew": "נוקבא"
+            "hebrew": "נוקבא",
+            "defaultTerm":true
         },
         {
             "translation": "Window",
@@ -1801,8 +1808,8 @@
                 "short": "Name of Internal Expression"
             },
             "term": "AB2",
-            "source":"AB",
-            "explanation":"72",
+            "source": "AB",
+            "explanation": "72",
             "hebrew": "ע״ב"
         },
         {
@@ -2249,7 +2256,7 @@
             },
             "term": "Daat",
             "hebrew": "דעת",
-            "explanation":"Connection"
+            "explanation": "Connection"
         },
         {
             "translation": "Book of the Bright",
@@ -2802,7 +2809,7 @@
         },
         {
             "translation": "Kindness",
-            "source":"Hesed",
+            "source": "Hesed",
             "term": "Hesed2",
             "style": {
                 "heading": "Aspect",
@@ -2964,7 +2971,9 @@
             "hebrew": "פנים באחור"
         },
         {
-            "expansion": ["Panim be Panim"],
+            "expansion": [
+                "Panim be Panim"
+            ],
             "term": "PBP"
         },
         {
@@ -4210,8 +4219,8 @@
             "hebrew": "נקבי עיינים"
         },
         {
-            "term":"NE",
-            "expansion":"Nikvey Eynaim"
+            "term": "NE",
+            "expansion": "Nikvey Eynaim"
         },
         {
             "translation": "Luck",
@@ -4420,15 +4429,15 @@
             "hebrew": "בראשית"
         },
         {
-            "term":"Hulin",
-            "hebrew":"חולין",
-            "style":{
-                "heading":"Tractate"
+            "term": "Hulin",
+            "hebrew": "חולין",
+            "style": {
+                "heading": "Tractate"
             }
         },
         {
-            "style":{
-                "heading":"Book"
+            "style": {
+                "heading": "Book"
             },
             "translation": "Genesis Rabba",
             "term": "Beresheet Rabba",
@@ -5817,7 +5826,11 @@
         },
         {
             "term": "GAS",
-            "expansion": ["Galgalta", "AB", "SAG"]
+            "expansion": [
+                "Galgalta",
+                "AB",
+                "SAG"
+            ]
         },
         {
             "term": "Mazal",
@@ -5826,7 +5839,9 @@
         },
         {
             "term": "Israel and ST",
-            "expansion": ["Yisrael Saba ve Tvuna"]
+            "expansion": [
+                "Yisrael Saba ve Tvuna"
+            ]
         },
         {
             "term": "Notzer",
@@ -6643,149 +6658,153 @@
             "hebrew": "דרך מעבר"
         },
         {
-            "term":"Olam Tzimtzum",
-            "prefix":"The",
-            "source":"Olam Ha Tzimtzum",
-            "translation":"World of Restriction",
-            "style":{
-                "heading":"World",
-                "phase":"root"
+            "term": "Olam Tzimtzum",
+            "prefix": "The",
+            "source": "Olam Ha Tzimtzum",
+            "translation": "World of Restriction",
+            "style": {
+                "heading": "World",
+                "phase": "root"
             },
-            "hebrew":"עולם הצמצום"
+            "hebrew": "עולם הצמצום"
         },
         {
-            "term":"Matsil",
-            "hebrew":"מציל",
-            "translation":"Saviour"
+            "term": "Matsil",
+            "hebrew": "מציל",
+            "translation": "Saviour"
         },
         {
-            "term":"Ohr Ruchani",
-            "hebrew":"אור רוחני",
-            "translation":"Spiritual Light"
+            "term": "Ohr Ruchani",
+            "hebrew": "אור רוחני",
+            "translation": "Spiritual Light"
         },
         {
-            "term":"Ohr Zachar",
-            "hebrew":"אור זכר",
-            "translation":"Male Light"
+            "term": "Ohr Zachar",
+            "hebrew": "אור זכר",
+            "translation": "Male Light"
         },
         {
-            "term":"Ohr Nekeva",
-            "hebrew":"אור נקבה",
-            "translation":"Female Light"
+            "term": "Ohr Nekeva",
+            "hebrew": "אור נקבה",
+            "translation": "Female Light"
         },
         {
-            "term":"WYS",
-            "expansion":["World2","Year2","Soul2"]
+            "term": "WYS",
+            "expansion": [
+                "World2",
+                "Year2",
+                "Soul2"
+            ]
         },
         {
-            "term":"World2",
-            "hebrew":"עולם",
-            "source":"Olam",
+            "term": "World2",
+            "hebrew": "עולם",
+            "source": "Olam",
             "translation": "World",
-            "explanation":"Space"
+            "explanation": "Space"
         },
         {
-            "term":"Year2",
-            "hebrew":"שנה",
+            "term": "Year2",
+            "hebrew": "שנה",
             "translation": "Year",
-            "source":"Shana",
-            "explanation":"Time"
+            "source": "Shana",
+            "explanation": "Time"
         },
         {
-            "term":"Soul2",
-            "hebrew":"נפש",
+            "term": "Soul2",
+            "hebrew": "נפש",
             "translation": "Soul",
-            "source":"Nefesh",
-            "explanation":"Motion"
+            "source": "Nefesh",
+            "explanation": "Motion"
         },
         {
-            "term":"Hakdamat Sefer HaZohar",
-            "translation":"Introduction of The Book of Zohar",
-            "hebrew":"הקדמת ספר הזוהר",
-            "style":{
-                "heading":"Book"
+            "term": "Hakdamat Sefer HaZohar",
+            "translation": "Introduction of The Book of Zohar",
+            "hebrew": "הקדמת ספר הזוהר",
+            "style": {
+                "heading": "Book"
             }
         },
         {
             "includePrefix": true,
-            "prefix":"a",
-            "term":"Ish",
-            "hebrew":"איש",
-            "translation":"Person"
+            "prefix": "a",
+            "term": "Ish",
+            "hebrew": "איש",
+            "translation": "Person"
         },
         {
-            "term":"Tam",
-            "hebrew":"תם",
-            "translation":"Naive"
+            "term": "Tam",
+            "hebrew": "תם",
+            "translation": "Naive"
         },
         {
             "includePrefix": true,
-            "prefix":"a",
-            "term":"Ish Tam",
-            "hebrew":"איש תם",
-            "translation":"Naive Person"
+            "prefix": "a",
+            "term": "Ish Tam",
+            "hebrew": "איש תם",
+            "translation": "Naive Person"
         },
         {
-            "term":"Metzah",
-            "translation":"Forehead",
-            "hebrew":"מצח"
+            "term": "Metzah",
+            "translation": "Forehead",
+            "hebrew": "מצח"
         },
         {
-            "term":"Malchut to Bina",
-            "abridged":"Katnut"
+            "term": "Malchut to Bina",
+            "abridged": "Katnut"
         },
         {
-            "term":"Bina and ZON",
-            "abridged":"Regesh"
+            "term": "Bina and ZON",
+            "abridged": "Regesh"
         },
         {
-            "term":"Bina Tifferet and Malchut",
-            "abridged":"Regesh"
+            "term": "Bina Tifferet and Malchut",
+            "abridged": "Regesh"
         },
         {
-            "term":"Neshama Haya Yechida",
-            "abridged":"Gadlut"
+            "term": "Neshama Haya Yechida",
+            "abridged": "Gadlut"
         },
         {
-            "term":"Malchut AK",
-            "prefix":"the",
-            "abridged":"Malchut AK2"
+            "term": "Malchut AK",
+            "prefix": "the",
+            "abridged": "Malchut AK2"
         },
         {
-            "term":"Malchut AK2",
-            "explanation":"Attitude towards the Individual",
-            "translation":"Kingdom of Primordal Man",
-            "hebrew":"מלכות דא״ק",
-            "source":"Malchut de AK"
+            "term": "Malchut AK2",
+            "explanation": "Attitude towards the Individual",
+            "translation": "Kingdom of Primordal Man",
+            "hebrew": "מלכות דא״ק",
+            "source": "Malchut de AK"
         },
         {
-            "term":"Ah Av",
-            "hebrew":"אח אב",
-            "style":{
-                "heading":"King of Israel"
+            "term": "Ah Av",
+            "hebrew": "אח אב",
+            "style": {
+                "heading": "King of Israel"
             }
         },
         {
-            "term":"Av2",
-            "hebrew":"אב",
-            "source":"Av",
-            "translation":"Father"
+            "term": "Av2",
+            "hebrew": "אב",
+            "source": "Av",
+            "translation": "Father"
         },
         {
-            "term":"MI",
-            "hebrew":"מי",
-            "explanation":"Thought"
+            "term": "MI",
+            "hebrew": "מי",
+            "explanation": "Thought"
         },
         {
-            "term":"ELEH",
-            "hebrew":"אלה",
-            "explanation":"Emotion"
+            "term": "ELEH",
+            "hebrew": "אלה",
+            "explanation": "Emotion"
         },
         {
-            "term":"Elokim",
-            "hebrew":"אלהים",
-            "style":{
-                "heading":"Name of God"
+            "term": "Elokim",
+            "hebrew": "אלהים",
+            "style": {
+                "heading": "Name of God"
             }
         }
     ],
@@ -6867,46 +6886,80 @@
     },
     "diagrams": [
         {
-            "depends": ["Ohr Yashar", "Ohr Hozer"],
+            "depends": [
+                "Ohr Yashar",
+                "Ohr Hozer"
+            ],
             "term": "Ohr Hozer",
             "diagram": "direct_vs_reflected"
         },
         {
-            "depends": ["Malchut", "ZA", "Hochma", "Hassadim", "brother", "sister"],
+            "depends": [
+                "Malchut",
+                "ZA",
+                "Hochma",
+                "Hassadim",
+                "brother",
+                "sister"
+            ],
             "term": "Malchut",
             "diagram": "brother_sister"
         },
         {
-            "depends": ["Chazeh", "left", "right"],
+            "depends": [
+                "Chazeh",
+                "left",
+                "right"
+            ],
             "term": "Hirik",
             "diagram": "chest"
         },
         {
-            "depends": ["Hassadim"],
+            "depends": [
+                "Hassadim"
+            ],
             "term": "Hirik",
             "diagram": "punctuation"
         },
         {
-            "depends": ["nakedness"],
+            "depends": [
+                "nakedness"
+            ],
             "term": "Dinim Nukva",
             "diagram": "nakedness"
         },
         {
-            "depends": ["HGT"],
+            "depends": [
+                "HGT"
+            ],
             "term": "Zeir Anpin",
             "diagram": "fathers"
         },
         {
-            "depends": ["Yechida", "Haya", "Neshama", "Ruach", "Nefesh"],
+            "depends": [
+                "Yechida",
+                "Haya",
+                "Neshama",
+                "Ruach",
+                "Nefesh"
+            ],
             "term": "Yechida",
             "diagram": "vessels_vs_lights"
         },
         {
-            "depends": ["seventy-two names"],
+            "depends": [
+                "seventy-two names"
+            ],
             "diagram": "72_names"
         },
         {
-            "depends": ["Igulim", "Behina Aleph", "Behina Bet", "Behina Gimel", "Behina Dalet"],
+            "depends": [
+                "Igulim",
+                "Behina Aleph",
+                "Behina Bet",
+                "Behina Gimel",
+                "Behina Dalet"
+            ],
             "term": "Igulim",
             "diagram": "circles"
         }
