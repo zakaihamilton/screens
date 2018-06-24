@@ -150,7 +150,8 @@
             "[quality of judgement]":" ",
             "[quality of mercy]":" ",
             "Av in heaven":"Av2 in heaven",
-            "without Hochma":"without Hochma2"
+            "without Hochma":"without Hochma2",
+            "the light of Hochma is without Hesed":"the light of Hochma2 is without Hesed2"
         },
         "insert":{
             "Partzuf Keter":"Partzuf de Keter",
@@ -1329,7 +1330,6 @@
         {
             "term": "Rigshi",
             "translation": "Emotional",
-            "defaultTerm": true,
             "style": {
                 "heading": "State",
                 "phase": "one"
@@ -2799,6 +2799,16 @@
                 "phase": "root"
             },
             "hebrew": "רחמים"
+        },
+        {
+            "translation": "Kindness",
+            "source":"Hesed",
+            "term": "Hesed2",
+            "style": {
+                "heading": "Aspect",
+                "phase": "root"
+            },
+            "hebrew": "חסד"
         },
         {
             "translation": "Wheel",

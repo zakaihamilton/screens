@@ -160,6 +160,9 @@ screens.ui.element = function UIElement(me) {
             component_name = "ui.element";
         }
         var component = screens(component_name);
+        if(!component) {
+            throw "Cannot find component: " + component_name;
+        }
         var defaultProperties = null;
         if(component.element) {
             defaultProperties = component.element.properties;

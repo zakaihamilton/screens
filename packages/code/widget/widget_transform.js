@@ -66,7 +66,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.ui.node.container(object, me.id);
         if (!widget) {
             var window = me.widget.window(object);
-            if(window) {
+            if (window) {
                 widget = window.var.transform;
             }
         }
@@ -114,12 +114,12 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.options.toggleCallback = "screens.widget.transform.cycleDescription";
         widget.options.reload = true;
         me.media.voice.stop();
-        var options = Object.assign({}, widget.options, {nightMode:me.ui.theme.options.nightMode});
+        var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
         var info = await me.kab.text.parse(language, text, options, (percent) => {
             me.core.property.set(widget.var.spinner, "percent", percent);
         });
-        if(!info) {
-            info = {text:"",terms:{},data:null};
+        if (!info) {
+            info = { text: "", terms: {}, data: null };
         }
         text = info.text;
         var terms = info.terms;
@@ -140,7 +140,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.language = language;
         me.core.property.set(widget.var.output, widget.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
         me.updateFilterList(widget, terms);
-        if(text) {
+        if (text) {
             widget.tableOfPhases = { terms, data };
         }
         else {
@@ -181,7 +181,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var descriptionBox = null;
         var descriptionTypes = ["source", "related"];
         var widget = me.findWidget(object);
-        if(!widget) {
+        if (!widget) {
             return;
         }
         if (widget.options.prioritizeExplanation) {
@@ -409,7 +409,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            if(widget.tableOfPhases) {
+            if (widget.tableOfPhases) {
                 diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
             var isFirst = true;
@@ -733,6 +733,14 @@ screens.widget.transform = function WidgetTransform(me) {
             }
             rowIndex++;
         }
+        for (var row of params.gridData) {
+            for (const [i, field] of row.entries()) {
+                if (Array.isArray(field)) {
+                    row[i] = Array.from(new Set(field));
+                }
+            }
+        }
+        console.log("params.gridData: " + JSON.stringify(params.gridData));
         return params;
     };
     me.term = {
@@ -792,7 +800,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.focusParagraph = function (object, paragraph) {
         var widget = me.findWidget(object);
-        if(!widget) {
+        if (!widget) {
             return;
         }
         var fontSize = (parseInt(widget.options.fontSize) + 4) + "px";
@@ -806,8 +814,8 @@ screens.widget.transform = function WidgetTransform(me) {
                         me.core.property.set(widget.playingPopupHandle, "show", true);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.fontSize", fontSize);
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo?"20%":"5%");
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo?"75%":"90%");
+                        me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo ? "20%" : "5%");
+                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "75%" : "90%");
                     }
                     else {
                         var title = me.core.property.get(widget, "widget.transform.contentTitle");
@@ -815,8 +823,8 @@ screens.widget.transform = function WidgetTransform(me) {
                             "title": title,
                             "layout": paragraph.innerHTML,
                             "fontSize": fontSize,
-                            "top":widget.options.pipVideo?"20%":"5%",
-                            "height":widget.options.pipVideo?"75%":"90%"
+                            "top": widget.options.pipVideo ? "20%" : "5%",
+                            "height": widget.options.pipVideo ? "75%" : "90%"
                         });
                     }
                 }
