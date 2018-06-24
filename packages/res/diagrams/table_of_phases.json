@@ -18,7 +18,7 @@
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
                             "app.diagram.term",
-                            "ui.class.class"
+                            "ui.class.add"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
