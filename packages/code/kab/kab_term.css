@@ -106,6 +106,12 @@
     min-width:0;
 }
 
+.kab-term-header {
+    background-color:black;
+    color:lightgray;
+    font-weight: bold;
+}
+
 .kab-term-phase-none:hover:after {
     background-color:white;
     border:2px solid gray;
@@ -113,6 +119,7 @@
 
 .kab-term-phase-none.night-mode:hover:after {
     background-color:var(--background);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-root-border {
@@ -123,6 +130,11 @@
     border-bottom:1px solid gray;
 }
 
+.kab-term-phase-root.night-mode {
+    background-color:var(--background);
+    color:var(--highlight-color);
+}
+
 .kab-term-phase-root:hover:after {
     background-color:white;
     border:2px solid gray;
@@ -130,6 +142,7 @@
 
 .kab-term-phase-root.night-mode:hover:after {
     background-color:var(--background);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-one {
@@ -139,6 +152,7 @@
 .kab-term-phase-one.night-mode {
     background-color:var(--phase-one-background);
     border:2px solid var(--phase-one-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-one-border {
@@ -157,6 +171,7 @@
 .kab-term-phase-one.night-mode:hover:after {
     background-color:var(--phase-one-background);
     border:2px solid var(--phase-one-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-two {
@@ -166,6 +181,7 @@
 .kab-term-phase-two.night-mode {
     background-color:var(--phase-two-background);
     border:2px solid var(--phase-two-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-two-border {
@@ -184,6 +200,7 @@
 .kab-term-phase-two.night-mode:hover:after {
     background-color:var(--phase-two-background);
     border:2px solid var(--phase-two-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-three {
@@ -193,6 +210,7 @@
 .kab-term-phase-three.night-mode {
     background-color:var(--phase-three-background);
     border:2px solid var(--phase-three-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-three-border {
@@ -220,6 +238,7 @@
 .kab-term-phase-four.night-mode {
     background-color:var(--phase-four-background);
     border:2px solid var(--phase-four-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-four-border {
@@ -247,6 +266,7 @@
 .kab-term-phase-collective.night-mode {
     background-color:var(--phase-collective-background);
     border:2px solid var(--phase-collective-border);
+    color:var(--highlight-color);
 }
 
 .kab-term-phase-collective-border {

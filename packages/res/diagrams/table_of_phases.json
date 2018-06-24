@@ -18,9 +18,7 @@
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
                             "app.diagram.term",
-                            "ui.style.backgroundColor",
-                            "ui.style.color",
-                            "ui.style.fontWeight"
+                            "ui.class.class"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",

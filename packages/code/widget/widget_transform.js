@@ -665,13 +665,13 @@ screens.widget.transform = function WidgetTransform(me) {
             me.core.property.notify(widget, "update");
         }
     };
-    me.color = {
-        root: "white",
-        one: "#FFF3CA",
-        two: "#C8D9F9",
-        three: "#F5CCCB",
-        four: "#D9EAD2",
-        collective: "Plum"
+    me.classes = {
+        root: "kab-term-phase-root",
+        one: "kab-term-phase-one",
+        two: "kab-term-phase-two",
+        three: "kab-term-phase-three",
+        four: "kab-term-phase-four",
+        collective: "kab-term-phase-collective"
     };
     me.phases = {
         root: 2,
@@ -717,19 +717,19 @@ screens.widget.transform = function WidgetTransform(me) {
         for (var phase in me.phases) {
             var columnIndex = me.phases[phase];
             var name = phase.charAt(0).toUpperCase() + phase.slice(1);
-            params.gridData.push([1, columnIndex, name, "black", "white", "bold"]);
+            params.gridData.push([1, columnIndex, name, "kab.term.header"]);
         }
         for (var heading in rows) {
             var row = rows[heading];
             var name = heading.charAt(0).toUpperCase() + heading.slice(1);
-            params.gridData.push([rowIndex, 1, name, "black", "white", "bold"]);
+            params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
             for (var phase in me.phases) {
                 var list = row[phase];
                 if (!list) {
                     list = [];
                 }
                 var columnIndex = me.phases[phase];
-                params.gridData.push([rowIndex, columnIndex, list, me.color[phase]]);
+                params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
             }
             rowIndex++;
         }
