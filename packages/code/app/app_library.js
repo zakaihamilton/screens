@@ -197,6 +197,9 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
+        if(records.length === 1) {
+            me.gotoArticle(object, records[0]);
+        }
     };
     me.updateText = function (object) {
         var window = me.widget.window(object);
