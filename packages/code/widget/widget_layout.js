@@ -206,7 +206,7 @@ screens.widget.layout = function WidgetLayout(me) {
                     if (widget) {
                         pageContent.appendChild(widget);
                     }
-                    for (var fontSize = parseInt(target.style.fontSize); fontSize >= 12; fontSize -= 2) {
+                    for (var fontSize = parseInt(target.style.fontSize); fontSize >= 8; fontSize -= 2) {
                         if (me.widgetFitInPage(null, target.page)) {
                             break;
                         }
