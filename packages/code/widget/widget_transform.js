@@ -634,7 +634,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.fontSizes = function (object) {
         var fontSizeList = [];
-        for (var fontSize = 12; fontSize <= 32; fontSize += 2) {
+        for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
             var item = [
                 fontSize + "px",
                 "widget.transform.fontSize",
