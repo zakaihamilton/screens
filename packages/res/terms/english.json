@@ -1282,6 +1282,24 @@
             "hebrew": "גדלות"
         },
         {
+            "term": "biceps",
+            "style": {
+                "phase": "root"
+            }
+        },
+        {
+            "term": "forearm",
+            "style": {
+                "phase": "one"
+            }
+        },
+        {
+            "term": "palm",
+            "style": {
+                "phase": "two"
+            }
+        },
+        {
             "translation": "Smallness",
             "term": "Katnut",
             "defaultTerm": true,
