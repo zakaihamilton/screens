@@ -49,30 +49,36 @@ screens.app.diagram = function AppDiagram(me) {
                 me.ui.options.load(me, window, {
                     viewType: "Layers",
                     doTranslation: true,
-                    doExplanation: false,
-                    prioritizeExplanation: false,
+                    doExplanation: true,
+                    prioritizeExplanation: true,
                     addStyles: true,
+                    abridged: false,
                     keepSource: false,
-                    phaseNumbers: true,
                     headings: true,
-                    fontSize: "22px"
+                    subHeadings: true,
+                    language: "Auto",
+                    fontSize: "18px",
+                    phaseNumbers: true
                 });
             }
-            me.ui.options.choiceSet(me, null, "viewType", function (object, value, key, options) {
-                me.core.property.notify(window, "app.diagram.reload");
-            });
+            me.ui.options.choiceSet(me, null, "viewType", me.reload.set);
             me.ui.options.toggleSet(me, null, "doTranslation", me.reload.set);
             me.ui.options.toggleSet(me, null, "doExplanation", me.reload.set);
             me.ui.options.toggleSet(me, null, "prioritizeExplanation", me.reload.set);
             me.ui.options.toggleSet(me, null, "addStyles", me.reload.set);
             me.ui.options.toggleSet(me, null, "phaseNumbers", me.reload.set);
             me.ui.options.toggleSet(me, null, "keepSource", me.reload.set);
-            me.ui.options.toggleSet(me, null, "headings", me.reload.set);
+            me.ui.options.toggleSet(me, null, "abridged", me.reload.set);
+            me.ui.options.choiceSet(me, null, "language", me.reload.set);
             me.ui.options.choiceSet(me, null, "fontSize", function (object, value, key, options) {
                 me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                 me.core.property.notify(window, "reload");
                 me.core.property.notify(window, "update");
             });
+            me.ui.options.toggleSet(me, null, "pages", me.reload.set);
+            me.ui.options.toggleSet(me, null, "columns", me.reload.set);
+            me.ui.options.toggleSet(me, null, "headings", me.reload.set);
+            me.ui.options.toggleSet(me, null, "subHeadings", me.reload.set);
             me.ui.class.useStylesheet("kab");
         }
     };
@@ -108,25 +114,12 @@ screens.app.diagram = function AppDiagram(me) {
                 "ui.basic.html": null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
             });
-            me.core.property.notify(window, "app.diagram.viewAs" + window.options.viewType);
-            me.core.property.notify(window, "update");
-        }
-    };
-    me.viewAsText = {
-        set: function (object) {
-            var window = me.widget.window(object);
-            var diagramData = me.core.property.get(window, "app.diagram.diagramData");
-            me.core.property.set(window.var.viewer, "ui.basic.text", JSON.stringify(diagramData, null, 4));
-        }
-    };
-    me.viewAsLayers = {
-        set: function (object) {
-            var window = me.widget.window(object);
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.ui.element(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
                 me.core.property.set(window, "title", diagramData.title);
             }
+            me.core.property.notify(window, "update");
         }
     };
 };

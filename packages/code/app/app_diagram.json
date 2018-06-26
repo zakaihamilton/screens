@@ -1,6 +1,6 @@
 {
     "title": "Diagram",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "50px",
         "top": "50px",
         "width": "1200px",
@@ -8,107 +8,132 @@
     },
     "icon": "/packages/res/icons/diagram.png",
     "widget.menu.items": [
-        ["View", [
-                ["Layers", "app.diagram.viewType", {
-                        "state": "select"
-                    }
-                ],
-                ["Text", "app.diagram.viewType", {
-                        "state": "select",
-                        "separator":true
-                    }
-                ]
-            ]],
-        ["Options", [
-                ["Translation", "app.diagram.doTranslation", {
-                        "state": "select"
-                    }
-                ],
-                ["Keep Source", "app.diagram.keepSource", {
-                        "state": "select"
-                    }
-                ],
-                ["Explanation", "app.diagram.doExplanation", {
+        [
+            "Transform",
+            [
+                [
+                    "Translation",
+                    "app.diagram.doTranslation",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Prioritize Explanation", "app.diagram.prioritizeExplanation", {
+                [
+                    "Keep Source",
+                    "app.diagram.keepSource",
+                    {
                         "state": "select"
                     }
                 ],
-                ["Styles", "app.diagram.addStyles", {
+                [
+                    "Abridged",
+                    "app.diagram.abridged",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Explanation",
+                    "app.diagram.doExplanation",
+                    {
                         "state": "select",
                         "separator": true
                     }
                 ],
-                ["Headings", "app.diagram.headings", {
+                [
+                    "Prioritize Explanation",
+                    "app.diagram.prioritizeExplanation",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Styles",
+                    "app.diagram.addStyles",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Headings",
+                    "app.diagram.headings",
+                    {
                         "state": "select",
                         "enabled": "app.diagram.addStyles"
                     }
                 ],
-                ["Phase Numbers", "app.diagram.phaseNumbers", {
+                [
+                    "Phase Numbers",
+                    "app.diagram.phaseNumbers",
+                    {
                         "state": "select",
                         "enabled": "app.diagram.addStyles"
+                    }
+                ],
+                [
+                    "Sub Headings",
+                    "app.diagram.subHeadings",
+                    {
+                        "state": "select",
+                        "enabled": "app.diagram.addStyles"
+                    }
+                ],
+                [
+                    "Language",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                [
+                    "Auto",
+                    "app.diagram.language",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "English",
+                    "app.diagram.language",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Hebrew",
+                    "app.diagram.language",
+                    {
+                        "state": "select"
                     }
                 ]
             ]
         ],
-        ["Font", [
-                ["12px", "app.diagram.fontSize", {
-                        "state": "select"
+        [
+            "Layout",
+            [
+                [
+                    "Font Size",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
                     }
                 ],
-                ["14px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["16px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["18px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["20px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["22px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["24px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["26px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["28px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["30px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ],
-                ["32px", "app.diagram.fontSize", {
-                        "state": "select"
-                    }
-                ]
+                "widget.transform.fontSizes(app.diagram.fontSize)"
             ]
         ]
     ],
     "ui.basic.elements": [
         {
-            "ui.basic.tag":"div",
-            "ui.basic.var":"viewer"
+            "ui.basic.tag": "div",
+            "ui.basic.var": "viewer"
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-diagram-window",
         "storage.local.restore": "widget.window.store",
         "app.diagram.initOptions": null,

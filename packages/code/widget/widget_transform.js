@@ -18,7 +18,6 @@ screens.widget.transform = function WidgetTransform(me) {
             addStyles: true,
             abridged: false,
             keepSource: false,
-            showHtml: false,
             headings: true,
             subHeadings: true,
             pages: true,
@@ -41,7 +40,6 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.toggleSet(me, me.findWidget, "phaseNumbers", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "keepSource", me.transform);
         me.ui.options.toggleSet(me, me.findWidget, "abridged", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "showHtml", me.transform);
         me.ui.options.choiceSet(me, me.findWidget, "language", me.transform);
         me.ui.options.choiceSet(me, me.findWidget, "fontSize", function (object, value, key, options) {
             var widget = me.findWidget(object);
@@ -138,7 +136,7 @@ screens.widget.transform = function WidgetTransform(me) {
             widget.var.layout
         ], "ui.class.add", language);
         widget.language = language;
-        me.core.property.set(widget.var.output, widget.options.showHtml ? "ui.basic.text" : "ui.basic.html", text);
+        me.core.property.set(widget.var.output, "ui.basic.html", text);
         me.updateFilterList(widget, terms);
         if (text) {
             widget.tableOfPhases = { terms, data };
@@ -632,12 +630,12 @@ screens.widget.transform = function WidgetTransform(me) {
         });
         return speedList;
     };
-    me.fontSizes = function (object) {
+    me.fontSizes = function (object, method="widget.transform.fontSize") {
         var fontSizeList = [];
         for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
             var item = [
                 fontSize + "px",
-                "widget.transform.fontSize",
+                method,
                 {
                     "state": "select"
                 },
