@@ -1284,18 +1284,21 @@
         {
             "term": "biceps",
             "style": {
+                "heading":"Joints",
                 "phase": "root"
             }
         },
         {
             "term": "forearm",
             "style": {
+                "heading":"Joints",
                 "phase": "one"
             }
         },
         {
             "term": "palm",
             "style": {
+                "heading":"Joints",
                 "phase": "two"
             }
         },
