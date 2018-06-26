@@ -1283,6 +1283,8 @@
         },
         {
             "term": "biceps",
+            "hebrew":"קבורת",
+            "transliterated":"Kiboret",
             "style": {
                 "heading":"Joints",
                 "phase": "root"
@@ -1290,6 +1292,8 @@
         },
         {
             "term": "forearm",
+            "hebrew":"זרוע",
+            "transliterated":"Zeroah",
             "style": {
                 "heading":"Joints",
                 "phase": "one"
@@ -1297,6 +1301,8 @@
         },
         {
             "term": "palm",
+            "hebrew":"כף היד",
+            "transliterated":"Kaf HaYad",
             "style": {
                 "heading":"Joints",
                 "phase": "two"
@@ -4502,11 +4508,11 @@
             "hebrew": "אבא אמא"
         },
         {
-            "defaultTerm": true,
             "style": {
                 "heading": "Face",
                 "phase": "one"
             },
+            "defaultTerm": true,
             "translation": "Father and Mother",
             "explanation": "Decree",
             "term": "Abba ve Ima",

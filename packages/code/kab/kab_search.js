@@ -36,13 +36,15 @@ screens.kab.search = function KabSearch(me) {
             } else if (translation) {
                 term = translation;
             }
-            var searchTerm = me.terms[term];
+            var searchTerm = me.terms[item.term];
             if (!searchTerm) {
-                searchTerm = me.terms[term] = {count: 0};
+                searchTerm = me.terms[item.term] = { count: 0 };
             }
             searchTerm.count++;
             searchTerm.term = item.term;
-            searchTerm.used = used;
+            if(used || !searchTerm.used) {
+                searchTerm.used = used;
+            }
             if (item.label) {
                 searchTerm.source = item.label;
             } else {
@@ -63,7 +65,7 @@ screens.kab.search = function KabSearch(me) {
                 searchTerm.phase = null;
                 searchTerm.tooltip = null;
             }
-    }
+        }
     };
 
 };
