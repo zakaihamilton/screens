@@ -36,11 +36,12 @@ screens.kab.search = function KabSearch(me) {
             } else if (translation) {
                 term = translation;
             }
-            var searchTerm = me.terms[source];
+            var searchTerm = me.terms[item.term];
             if (!searchTerm) {
-                searchTerm = me.terms[source] = { count: 0 };
+                searchTerm = me.terms[item.term] = { count: 0 };
             }
             searchTerm.count++;
+            searchTerm.text = term;
             searchTerm.term = item.term;
             if(used || !searchTerm.used) {
                 searchTerm.used = used;

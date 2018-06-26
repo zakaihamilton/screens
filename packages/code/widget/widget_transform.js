@@ -167,7 +167,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 return;
             }
             var option = document.createElement("option");
-            option.textContent = term;
+            option.textContent = info.text;
             if (info.source) {
                 option.setAttribute("label", info.source);
             }
