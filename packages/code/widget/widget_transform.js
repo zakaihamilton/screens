@@ -630,7 +630,7 @@ screens.widget.transform = function WidgetTransform(me) {
         });
         return speedList;
     };
-    me.fontSizes = function (object, method="widget.transform.fontSize") {
+    me.fontSizes = function (object, method) {
         var fontSizeList = [];
         for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
             var item = [

@@ -198,7 +198,7 @@
                         "header": true
                     }
                 ],
-                "widget.transform.fontSizes"
+                "widget.transform.fontSizes(widget.transform.fontSize)"
             ]
         ],
         [
