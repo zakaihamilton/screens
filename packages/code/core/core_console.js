@@ -6,6 +6,7 @@
 screens.core.console = function CoreConsole(me) {
     me.messages = [];
     me.enabled = true;
+    me.fixedSize = 500;
     me.clear = function() {
         me.messages = [];
     };
@@ -20,11 +21,17 @@ screens.core.console = function CoreConsole(me) {
             me.enabled = true;
         }
     };
+    me.push = function(message) {
+        if(me.messages.length > me.itemCount) {
+            me.messages.splice(0, me.messages.length - me.message.fixedSize);
+        }
+        me.messages.push(message);
+    };
     me.log = function(message) {
         if(me.enabled) {
             var date = new Date();
             var fullMessage = date.toUTCString() + " log [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
-            me.messages.push(fullMessage);
+            me.push(fullMessage);
             console.log(fullMessage);
         }
     };
@@ -32,7 +39,7 @@ screens.core.console = function CoreConsole(me) {
         if(me.enabled) {
             var date = new Date();
             var fullMessage = date.toUTCString() + " warn [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
-            me.messages.push(fullMessage);
+            me.push(fullMessage);
             console.warn(fullMessage);
         }
     };
@@ -44,7 +51,7 @@ screens.core.console = function CoreConsole(me) {
                 }
                 var date = new Date();
                 var fullMessage = date.toUTCString() + " error [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message + " stack: " + stack;
-                me.messages.push(fullMessage);
+                me.push(fullMessage);
                 console.error(fullMessage);
             }
         }
