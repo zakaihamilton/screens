@@ -55,7 +55,7 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.setup = async function (ref) {
         me.ref = ref;
-        return { platform: me.platform };
+        return { platform: me.platform, ref };
     };
     me.send = async function (socket, name, info) {
         return new Promise((resolve, reject) => {
