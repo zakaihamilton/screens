@@ -2,6 +2,7 @@
     "colors": {},
     "night-mode": {
         "--background": "#3c3f42",
+        "--alt-background": "#45484b",
         "--color": "#e5e5e5",
         "--title-color":"#062340",
         "--highlight-color": "white",

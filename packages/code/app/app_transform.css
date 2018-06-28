@@ -10,8 +10,8 @@
 }
 
 .app-transform-input.night-mode {
-    background:var(--background);
-    color:var(--color);
+    background:var(--chrome-background);
+    color:var(--chrome-color);
 }
 
 .app-transform-input.hebrew {

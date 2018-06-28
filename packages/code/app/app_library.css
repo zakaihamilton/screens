@@ -19,9 +19,9 @@
 }
 
 .app-library-search.night-mode {
-    color:white;
-    background-color:var(--background);
-    border:1px solid white;
+    color:var(--chrome-color);
+    background-color:var(--chrome-background);
+    border:1px solid var(--chrome-border);
 }
 
 .app-library-output {
@@ -102,4 +102,39 @@
 .app-library-showResults {
     position: relative;
     flex:0;
+}
+
+.jsgrid-grid-header.night-mode {
+    background: var(--background);
+    color: var(--color);
+}
+
+.jsgrid-row>.jsgrid-cell.night-mode {
+    background-color: var(--background);
+    color: var(--color);
+}
+
+.jsgrid-alt-row>.jsgrid-cell.night-mode {
+    background-color: var(--alt-background);
+    color: var(--color);
+}
+
+.jsgrid-header-row>.jsgrid-header-cell.night-mode {
+    background: var(--background);
+    color: var(--color);
+}
+
+.jsgrid-cell.night-mode {
+    background-color: var(--background);
+    color: var(--color);
+}
+
+.jsgrid-filter-row>.jsgrid-cell.night-mode {
+    background-color: var(--background);
+    color: var(--color);
+}
+
+.jsgrid-filter-row.night-mode input {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
 }

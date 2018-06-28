@@ -541,6 +541,9 @@ screens.app.library = function AppLibrary(me) {
             fields: fields,
             autoload: true,
             rowClick: gotoArticle,
+            onRefreshed: () => {
+                me.ui.theme.updateElements(window.var.resultsGrid);
+            },
             controller: {
                 data: results,
                 loadData: function (filter) {
