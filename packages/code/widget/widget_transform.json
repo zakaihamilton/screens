@@ -21,26 +21,6 @@
         {
             "ui.element.component": "widget.spinner",
             "ui.basic.var": "spinner"
-        },
-        {
-            "ui.class.class": "widget.transform.filter",
-            "ui.basic.text": "",
-            "ui.basic.type": "search",
-            "ui.basic.var": "filter",
-            "ui.style.display":"none",
-            "ui.property.after": {
-                "storage.local.restore": "ui.basic.text",
-                "ui.attribute.list": "@ui.basic.ref"
-            },
-            "ui.monitor.change": "widget.transform.filterChange",
-            "core.event.search": "widget.transform.filterChange"
-        },
-        {
-            "ui.basic.tag": "datalist",
-            "ui.basic.var": "filterList",
-            "ui.property.after": {
-                "ui.basic.elementId": "@ui.basic.ref"
-            }
         }
     ],
     "widget.menu.items": [

@@ -167,7 +167,6 @@ screens.widget.layout = function WidgetLayout(me) {
                     location.appendChild(widget);
                 }
                 visibleWidget = widget;
-                me.styleParagraph(widget, options);
                 if (!target.page) {
                     if (showInProgress) {
                         me.completeReflow(callback, target, options);
@@ -398,72 +397,10 @@ screens.widget.layout = function WidgetLayout(me) {
             widget = widget.nextSibling;
         }
     };
-    me.widgetMatch = function (widget, options) {
-        var match = false;
-        if (!options.filter) {
-            return false;
-        }
-        match = widget.textContent.toUpperCase().includes(options.filter.toUpperCase());
-        return match;
-    };
-    me.styleParagraph = function (widget, options) {
-        if (widget && widget.style) {
-            widget.style.display = "flex-inline";
-            if (!options.usePages) {
-                if (options.filter && !me.widgetMatch(widget, options)) {
-                    widget.style.display = "none";
-                }
-            }
-            var parentMatch = options.filter && me.widgetMatch(widget, options);
-            var child = widget.firstChild;
-            while (child) {
-                if (child.style) {
-                    child.style.fontWeight = "";
-                    child.style.backgroundColor = "";
-                }
-                child = child.nextSibling;
-            }
-            if (parentMatch) {
-                me.ui.mark.widget(widget, options.filter);
-            }
-            else {
-                me.ui.mark.widget(widget, null);
-            }
-            var child = widget.firstChild;
-            while (child) {
-                if (child.tagName && child.tagName.toLowerCase === "mark") {
-                    child = child.nextSibling;
-                    continue;
-                }
-                if (child.style) {
-                    me.ui.mark.widget(child, null);
-                    if (options.filter && me.widgetMatch(child, options)) {
-                        child.style.fontWeight = "bold";
-                        child.style.backgroundColor = "#FFFF00";
-                    }
-                }
-                child = child.nextSibling;
-            }
-        }
-    };
     me.completePage = function (page, options) {
         var showPage = true;
         if (!page) {
             return;
-        }
-        if (options.filter) {
-            var widget = page.var.content.firstChild;
-            var found = false;
-            while (widget) {
-                if (me.widgetMatch(widget, options)) {
-                    found = true;
-                    break;
-                }
-                widget = widget.nextSibling;
-            }
-            if (!found) {
-                showPage = false;
-            }
         }
         var pageNumber = me.core.property.get(page, "ui.attribute.pageNumber");
         if (pageNumber === "1" || showPage) {

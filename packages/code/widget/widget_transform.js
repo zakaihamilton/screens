@@ -97,7 +97,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
         if (text) {
-            me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "");
+            me.core.property.set(widget.var.layout, "ui.style.display", "");
         }
         widget.inTransform = true;
         me.core.property.set(widget.var.spinner, "text", "Transform");
@@ -122,22 +122,12 @@ screens.widget.transform = function WidgetTransform(me) {
         text = info.text;
         var terms = info.terms;
         var data = info.data;
-        if (data) {
-            me.core.property.set(widget.var.filter, "ui.attribute.placeholder", data.filterPlaceholder);
-        }
         if (widget.language) {
-            me.core.property.set([
-                widget.var.filter,
-                widget.var.layout
-            ], "ui.class.remove", widget.language);
+            me.core.property.set(widget.var.layout, "ui.class.remove", widget.language);
         }
-        me.core.property.set([
-            widget.var.filter,
-            widget.var.layout
-        ], "ui.class.add", language);
+        me.core.property.set(widget.var.layout, "ui.class.add", language);
         widget.language = language;
         me.core.property.set(widget.var.output, "ui.basic.html", text);
-        me.updateFilterList(widget, terms);
         if (text) {
             widget.tableOfPhases = { terms, data };
         }
@@ -150,29 +140,6 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.inTransform = false;
         me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
-    };
-    me.updateFilterList = function (object, filterList) {
-        var widget = me.findWidget(object);
-        me.ui.node.removeChildren(widget.var.filterList);
-        var searchItems = Object.keys(filterList).map(function (key) {
-            return [key, filterList[key]];
-        });
-        searchItems.sort(function (first, second) {
-            return second[1].count - first[1].count;
-        });
-        searchItems.map(function (searchItem) {
-            var term = searchItem[0];
-            var info = searchItem[1];
-            if (!info.used) {
-                return;
-            }
-            var option = document.createElement("option");
-            option.textContent = info.text;
-            if (info.source) {
-                option.setAttribute("label", info.source);
-            }
-            widget.var.filterList.appendChild(option);
-        });
     };
     me.showDescriptionBox = function (object, next, visible) {
         var descriptionType = null;
@@ -238,12 +205,12 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         var text = me.core.property.get(widget, "text");
         if (value && text) {
-            me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.opacity", 0);
+            me.core.property.set(widget.var.layout, "ui.style.opacity", 0);
             me.core.property.set(widget.var.spinner, "ui.style.visibility", "visible");
         } else {
             widget.workTimeout = setTimeout(function () {
                 me.core.property.set(widget.var.spinner, "ui.style.visibility", "hidden");
-                me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.opacity", "");
+                me.core.property.set(widget.var.layout, "ui.style.opacity", "");
                 me.updateScrolling(widget);
             }, 250);
         }
@@ -290,7 +257,6 @@ screens.widget.transform = function WidgetTransform(me) {
         var window = me.widget.window(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         widget.fullscreen = fullscreen;
-        me.core.property.set(widget.var.filter, "ui.basic.hide", fullscreen);
         me.core.property.set(widget, "ui.work.state", true);
         widget.var.layout.style.opacity = 0;
         if (widget.options.pages) {
@@ -344,8 +310,7 @@ screens.widget.transform = function WidgetTransform(me) {
             columnWidth: "400px",
             scrollWidget: visibleWidget,
             scrollPos: widget.options.scrollPos,
-            playEnabled: widget.options.voice !== "None",
-            filter: me.core.property.get(widget.var.filter, "ui.basic.text")
+            playEnabled: widget.options.voice !== "None"
         };
         widget.diagrams = [];
         me.media.voice.stop();
@@ -375,17 +340,6 @@ screens.widget.transform = function WidgetTransform(me) {
                     me.core.property.set(widget, "widget.transform.scrollPos", value.vertical);
                 }
             }, 2000);
-        }
-    };
-    me.filterChange = {
-        set: function (object) {
-            var widget = me.findWidget(object);
-            var currentFilter = me.widget.layout.options(widget.var.layout);
-            var newFilter = me.core.property.get(widget.var.filter, "ui.basic.text");
-            me.core.property.set(widget.var.filter, "storage.local.store", newFilter);
-            if (currentFilter && currentFilter.filter !== newFilter) {
-                me.core.property.set(widget, "widget.transform.reflow");
-            }
         }
     };
     me.resetDescription = function (object) {
@@ -778,11 +732,10 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         widget.transformText = "";
         me.core.property.set(widget.var.output, "ui.basic.html", "");
-        me.ui.node.removeChildren(widget.var.filterList);
         me.widget.layout.clear(widget.var.layout);
         me.updateWidgets(widget, true);
         widget.options.scrollPos = 0;
-        me.core.property.set([widget.var.layout, widget.var.filter], "ui.style.display", "none");
+        me.core.property.set(widget.var.layout, "ui.style.display", "none");
         me.transform(object);
     };
     me.contentTitle = {
