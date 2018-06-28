@@ -159,7 +159,8 @@
             "Partzuf Keter": "Partzuf de Keter",
             "Partzuf Atik": "Partzuf de Atik",
             "Partzuf AK": "Partzuf de Adam Kadmon",
-            "Partzuf Adam Kadmon": "Partzuf de Adam Kadmon"
+            "Partzuf Adam Kadmon": "Partzuf de Adam Kadmon",
+            "Rosh AA":"Rosh de AA"
         },
         "tags": {
             "<subtitle>": "\n<b>",
@@ -3097,6 +3098,21 @@
                 "Yisrael Saba ve Tvuna"
             ],
             "term": "YESHSUT"
+        },
+        {
+            "term":"Tevuna",
+            "translation":"Comprehension",
+            "explanation":"Execution",
+            "style": {
+                "heading": "Face",
+                "phase": "two"
+            },
+            "hebrew":"תבונה"
+        },
+        {
+            "term":"Ain",
+            "translation":"Nothing",
+            "hebrew":"אין"
         },
         {
             "defaultTerm": true,
