@@ -3111,8 +3111,17 @@
         },
         {
             "term":"Ain",
-            "translation":"Nothing",
+            "translation":"Naught",
             "hebrew":"אין"
+        },
+        {
+            "term":"Yod - Hey Vav - Hey",
+            "style":{
+                "heading":"Holy Name",
+                "phase":"three"
+            },
+            "explanation":"Intention",
+            "hebrew":"י-ה-ו-ה"
         },
         {
             "defaultTerm": true,
