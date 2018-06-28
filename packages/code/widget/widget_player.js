@@ -116,6 +116,20 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             "ui.class.class": "container",
             "ui.basic.elements": [
                 {
+                    "ui.element.component": "widget.progress",
+                    "ui.class.classExtra": "progress",
+                    "ui.basic.var": "progress",
+                    "min": "0",
+                    "max": "100",
+                    "value": "0",
+                    "ui.touch.down": "seekStart",
+                    "ui.touch.move": "seekMove",
+                    "ui.touch.up": "seekEnd",
+                    "ui.touch.over": "seekOver",
+                    "ui.touch.leave": "seekLeave",
+                    "showPercentage":false
+                },
+                {
                     "ui.basic.tag": "div",
                     "ui.basic.var": "play",
                     "ui.class.class": [
@@ -168,20 +182,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "fullscreen"
                     ],
                     "ui.touch.click": "widget.window.fullscreen"
-                },
-                {
-                    "ui.element.component": "widget.progress",
-                    "ui.class.classExtra": "progress",
-                    "ui.basic.var": "progress",
-                    "min": "0",
-                    "max": "100",
-                    "value": "0",
-                    "ui.touch.down": "seekStart",
-                    "ui.touch.move": "seekMove",
-                    "ui.touch.up": "seekEnd",
-                    "ui.touch.over": "seekOver",
-                    "ui.touch.leave": "seekLeave",
-                    "showPercentage":false
                 }
             ]
         }
