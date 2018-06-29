@@ -41,6 +41,7 @@
     z-index: 1;
 }
 
+.widget-progress-percent.night-mode,
 .widget-progress-label.night-mode {
     color:var(--color);
 }

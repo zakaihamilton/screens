@@ -417,6 +417,7 @@
     border-radius: 15px 15px 0px 0px;
 }
 
+.glow-menu-vertical li,
 .glow-menu-vertical span {
     background-color: white;
     color: black;
@@ -431,64 +432,76 @@
     position: relative;
 }
 
+.glow-menu-vertical.night-mode li,
 .glow-menu-vertical.night-mode span {
     background-color: var(--chrome-background);
     color:var(--chrome-color);
 }
 
+.glow-menu-vertical.night-mode li.selected,
 .glow-menu-vertical.night-mode span.selected {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
 }
 
+.glow-menu-vertical li:hover,
 .glow-menu-vertical span:hover {
     background-color: #0f2777;
     color:white;
 }
 
+.glow-menu-vertical.night-mode li:hover,
 .glow-menu-vertical.night-mode span:hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
 }
 
+.glow-menu-vertical li[disabled="true"]
 .glow-menu-vertical span[disabled="true"] {
     background-color: white;
     color:lightgray;
 }
 
+.glow-menu-vertical.night-mode li[disabled="true"],
 .glow-menu-vertical.night-mode span[disabled="true"] {
     background-color: var(--chrome-background);
     color:var(--chrome-disabled-color);
 }
 
+.glow-menu-vertical li[disabled="true"]:hover,
 .glow-menu-vertical span[disabled="true"]:hover {
     background-color: #0f2777;
     color:lightgray;
 }
 
+.glow-menu-vertical li.checked:before,
 .glow-menu-vertical span.checked:before {
     content:'\2713';
     position:absolute;
     left:3px;
 }
 
+.glow-menu-vertical li.mark:after,
 .glow-menu-vertical span.mark:after {
     content:'\2022';
     position:absolute;
     right:3px;
 }
 
+.glow-menu-vertical li.separator,
 .glow-menu-vertical span.separator {
     margin-top: 3px;
     border-top: 3px solid white;
     box-shadow: 0px -1px 0px 0px black;
 }
 
+.glow-menu-vertical.night-mode li.separator,
 .glow-menu-vertical.night-mode span.separator {
     border-top: 3px solid var(--chrome-background);
     box-shadow: 0px -1px 0px 0px darkgray;
 }
 
+.glow-menu-vertical li.header,
 .glow-menu-vertical span.header {
     color:black;
     font-weight: bold;
@@ -497,15 +510,18 @@
     background: linear-gradient(to right, white, #5e6d9e);
 }
 
+.glow-menu-vertical.night-mode li.header,
 .glow-menu-vertical.night-mode span.header {
     color:var(--chrome-color);
     background: linear-gradient(to right, var(--chrome-background), #5e6d9e);
 }
 
+.glow-menu-vertical li.header:hover,
 .glow-menu-vertical span.header:hover {
     color:black;
 }
 
+.glow-menu-vertical.night-mode li.header:hover,
 .glow-menu-vertical.night-mode span.header:hover {
     color:var(--chrome-color);
 }

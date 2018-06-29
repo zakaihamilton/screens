@@ -214,7 +214,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                     "ui.basic.var": "progress"
                 },
                 {
-                    "ui.basic.tag": "div",
+                    "ui.basic.tag": "ul",
                     "ui.basic.var": "members"
                 }
             ]
@@ -288,7 +288,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
 screens.widget.menu.item = function WidgetMenuItem(me) {
     me.element = {
         properties: {
-            "ui.basic.tag": "span",
+            "ui.basic.tag":"span",
             "ui.touch.click": "click"
         },
         dependencies: {
@@ -308,6 +308,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 me.core.property.set(element, properties);
             }
             return element;
+        },
+        tag: function(properties) {
+            var groupName = properties["group"];
+            if(groupName) {
+                return "li";
+            }
         },
         container: function (object, parent, properties) {
             var groupName = properties["group"];
