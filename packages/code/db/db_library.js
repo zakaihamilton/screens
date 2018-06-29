@@ -62,7 +62,9 @@ screens.db.library = function DbLibrary(me) {
         var result = {};
         var doQuery = false;
         if (filter) {
-            params["$text"] = { "$search": filter };
+            if(filter !== "*") {
+                params["$text"] = { "$search": filter };
+            }
             doQuery = true;
         }
         me.log("query: " + query + " userId: " + userId + " tags: " + JSON.stringify(tags) + " filter: " + filter);
@@ -85,8 +87,13 @@ screens.db.library = function DbLibrary(me) {
         }
         var list = [];
         if (doQuery) {
-            list = await me.db.library.content.list(userId, params, {});
-            result = await me.db.library.tags.findByIds(list.map(item => item._id));
+            if(filter === "*") {
+                result = await me.db.library.tags.list(userId, params, {});
+            }
+            else {
+                list = await me.db.library.content.list(userId, params, {});
+                result = await me.db.library.tags.findByIds(list.map(item => item._id));
+            }
             me.log("number of results: " + result.length);
         }
         return result;
