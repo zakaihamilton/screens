@@ -118,7 +118,9 @@ screens.app.library = function AppLibrary(me) {
                         me.core.property.set(window.var.search, "ui.basic.text", search);
                         me.changedSearch(window.var.search);
                     },
-                    null,
+                    {
+                        "unique":false
+                    },
                     {
                         "group": group,
                         "prefix": nameKey
