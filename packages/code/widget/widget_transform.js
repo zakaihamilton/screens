@@ -33,31 +33,35 @@ screens.widget.transform = function WidgetTransform(me) {
             speed: "Normal"
         });
         widget.pageSize = { width: 0, height: 0 };
-        me.ui.options.toggleSet(me, me.findWidget, "doTranslation", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "doExplanation", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "prioritizeExplanation", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "addStyles", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "phaseNumbers", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "keepSource", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "abridged", me.transform);
-        me.ui.options.choiceSet(me, me.findWidget, "language", me.transform);
-        me.ui.options.choiceSet(me, me.findWidget, "fontSize", function (object, value, key, options) {
-            var widget = me.findWidget(object);
-            me.core.property.set([widget.var.layout], "ui.style.fontSize", value);
-            widget.forceReflow = true;
-            me.core.property.notify(widget, "update");
+        me.ui.options.toggleSet(me, me.findWidget, {
+            "doTranslation": me.transform,
+            "doExplanation": me.transform,
+            "prioritizeExplanation": me.transform,
+            "addStyles": me.transform,
+            "phaseNumbers": me.transform,
+            "keepSource": me.transform,
+            "abridged": me.transform,
+            "pages": me.reflow,
+            "columns": me.reflow,
+            "headings": me.transform,
+            "subHeadings": me.transform,
+            "diagrams": me.transform,
+            "pipVideo": me.reflow,
+            "autoPlay": null,
+            "playingPopup": me.reflow
         });
-        me.ui.options.toggleSet(me, me.findWidget, "pages", me.reflow);
-        me.ui.options.toggleSet(me, me.findWidget, "columns", me.reflow);
-        me.ui.options.toggleSet(me, me.findWidget, "headings", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "subHeadings", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "diagrams", me.transform);
-        me.ui.options.toggleSet(me, me.findWidget, "pipVideo", me.reflow);
-        me.ui.options.toggleSet(me, me.findWidget, "autoPlay");
-        me.ui.options.toggleSet(me, me.findWidget, "playingPopup", me.reflow);
-        me.ui.options.choiceSet(me, me.findWidget, "voice", me.player.changeVoice);
-        me.ui.options.choiceSet(me, me.findWidget, "speed", me.player.changeSpeed);
-        me.ui.options.choiceSet(me, me.findWidget, "scrollPos");
+        me.ui.options.choiceSet(me, me.findWidget, {
+            "language": me.transform,
+            "fontSize": (object, value) => {
+                var widget = me.findWidget(object);
+                me.core.property.set([widget.var.layout], "ui.style.fontSize", value);
+                widget.forceReflow = true;
+                me.core.property.notify(widget, "update");
+            },
+            "voice": me.player.changeVoice,
+            "speed": me.player.changeSpeed,
+            "scrollPos": null
+        });
         me.ui.class.useStylesheet("kab");
     };
     me.findWidget = function (object) {

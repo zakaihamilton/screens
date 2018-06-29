@@ -68,6 +68,13 @@ screens.ui.options = function UIOptions(me) {
         me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(allOptions));
     };
     me.toggleSet = function (component, toTargetCallback, key, callback) {
+        if(typeof key === "object") {
+            for(var property in key) {
+                callback = key[property];
+                me.toggleSet(component, toTargetCallback, property, callback);
+            }
+            return;
+        }
         if (!component.options) {
             component.options = {};
         }
@@ -112,6 +119,13 @@ screens.ui.options = function UIOptions(me) {
         };
     };
     me.choiceSet = function (component, toTargetCallback, key, callback) {
+        if(typeof key === "object") {
+            for(var property in key) {
+                callback = key[property];
+                me.choiceSet(component, toTargetCallback, property, callback);
+            }
+            return;
+        }
         if (!component.options) {
             component.options = {};
         }
@@ -156,6 +170,13 @@ screens.ui.options = function UIOptions(me) {
         };
     };
     me.listSet = function (component, toTargetCallback, key, callback) {
+        if(typeof key === "object") {
+            for(var property in key) {
+                callback = key[property];
+                me.listSet(component, toTargetCallback, property, callback);
+            }
+            return;
+        }
         if (!component.options) {
             component.options = {};
         }

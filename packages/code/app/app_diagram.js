@@ -61,24 +61,28 @@ screens.app.diagram = function AppDiagram(me) {
                     phaseNumbers: true
                 });
             }
-            me.ui.options.choiceSet(me, null, "viewType", me.reload.set);
-            me.ui.options.toggleSet(me, null, "doTranslation", me.reload.set);
-            me.ui.options.toggleSet(me, null, "doExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, null, "prioritizeExplanation", me.reload.set);
-            me.ui.options.toggleSet(me, null, "addStyles", me.reload.set);
-            me.ui.options.toggleSet(me, null, "phaseNumbers", me.reload.set);
-            me.ui.options.toggleSet(me, null, "keepSource", me.reload.set);
-            me.ui.options.toggleSet(me, null, "abridged", me.reload.set);
-            me.ui.options.choiceSet(me, null, "language", me.reload.set);
-            me.ui.options.choiceSet(me, null, "fontSize", function (object, value, key, options) {
-                me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
-                me.core.property.notify(window, "reload");
-                me.core.property.notify(window, "update");
+            me.ui.options.toggleSet(me, null, {
+                "doTranslation": me.reload.set,
+                "doExplanation": me.reload.set,
+                "prioritizeExplanation": me.reload.set,
+                "addStyles": me.reload.set,
+                "phaseNumbers": me.reload.set,
+                "keepSource": me.reload.set,
+                "abridged": me.reload.set,
+                "pages": me.reload.set,
+                "columns": me.reload.set,
+                "headings": me.reload.set,
+                "subHeadings": me.reload.set
             });
-            me.ui.options.toggleSet(me, null, "pages", me.reload.set);
-            me.ui.options.toggleSet(me, null, "columns", me.reload.set);
-            me.ui.options.toggleSet(me, null, "headings", me.reload.set);
-            me.ui.options.toggleSet(me, null, "subHeadings", me.reload.set);
+            me.ui.options.choiceSet(me, null, {
+                "viewType": me.reload.set,
+                "language": me.reload.set,
+                "fontSize": (object, value) => {
+                    me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
+                    me.core.property.notify(window, "reload");
+                    me.core.property.notify(window, "update");
+                }
+            });
             me.ui.class.useStylesheet("kab");
         }
     };
