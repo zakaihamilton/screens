@@ -16,8 +16,6 @@ screens.widget.filter = function WidgetFilter(me) {
             "ui.basic.html": "@html"
         },
         draw: function(object) {
-            var prefixes = object.querySelector("#prefixes");
-            prefixes.style.display = "none";
             setTimeout(() => {
                 me.updatePrefixes(object);
                 me(object);
@@ -34,9 +32,7 @@ screens.widget.filter = function WidgetFilter(me) {
             option.textContent = prefixItem;
             prefixesSelect.appendChild(option);
         }
-        if(prefixesList.length) {
-            prefixes.style.display = "";
-        }
+        prefixes.style.display = prefixesList.length ? "" : "none";
     };
     me.proxy.apply = async function (object) {
         var widget = me.ui.node.container(object, me.id);

@@ -201,7 +201,9 @@ screens.ui.element = function UIElement(me) {
                 parent = container(object, parent, properties) || parent;
             }
         }
-        me.core.property.set(object, "ui.node.parent", parent);
+        if(parent) {
+            me.core.property.set(object, "ui.node.parent", parent);
+        }
         if (component.element) {
             var create = component.element.create;
             if (create) {

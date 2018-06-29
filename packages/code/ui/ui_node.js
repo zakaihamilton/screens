@@ -211,7 +211,7 @@ screens.ui.node = function UINode(me) {
             if (object.parentNode) {
                 me.removeChild(object.parentNode, object);
             }
-            if (value) {
+            if (value && value !== "none") {
                 me.appendChild(value, object);
             }
         }

@@ -224,7 +224,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         me.log("menu state: " + state);
         me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
     };
-    me.use = function (object, name) {
+    me.use = function (object, name, member) {
         if (!object.lists) {
             object.lists = [];
         }
@@ -235,23 +235,32 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             }, object);
             object.lists[name] = list;
         }
-        if (!list.var.filter) {
-            if (list.var.members.childNodes.length >= me.filterMinCount) {
-                me.ui.element({
-                    "ui.element.component": "widget.filter",
-                    "filter": "widget.menu.list.filter",
-                    "prefixes": "widget.menu.list.prefixes",
-                    "ui.basic.var": "filter"
-                }, list.var.headers, list);
+        if (list.var.filter) {
+            list.members.push(member);
+            return "none";
+        }
+        else if (list.var.members.childNodes.length >= me.filterMinCount) {
+            list.members = [];
+            me.ui.element({
+                "ui.element.component": "widget.filter",
+                "filter": "widget.menu.list.filter",
+                "prefixes": "widget.menu.list.prefixes",
+                "ui.basic.var": "filter"
+            }, list.var.headers, list);
+            var members = list.var.members;
+            while (members.firstChild) {
+                list.members.push(members.firstChild);
+                members.removeChild(members.firstChild);
             }
+            list.members.push(member);
+            return "none";
         }
         return list.var.members;
     };
     me.prefixes = function (object) {
         var prefixes = [];
         var list = me.ui.node.container(object, "widget.menu.list");
-        var members = list.var.members;
-        for (var child = members.firstChild; child; child = child.nextSibling) {
+        for (var child of list.members) {
             var prefix = me.core.property.get(child, "prefix");
             if (!prefix) {
                 continue;
@@ -265,7 +274,10 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     me.filter = function (object, info) {
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
-        for (var child = members.firstChild; child; child = child.nextSibling) {
+        while (members.firstChild) {
+            members.removeChild(members.firstChild);
+        }
+        for (var child of list.members) {
             var prefix = me.core.property.get(child, "prefix");
             var childText = me.core.property.get(child, "ui.basic.text");
             if (!childText) {
@@ -275,11 +287,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
             if (mark) {
                 me.ui.mark.widget(child, info.text);
-                child.style.display = "";
-            }
-            else {
-                me.ui.mark.widget(child, "");
-                child.style.display = "none";
+                members.appendChild(child);
             }
         }
     };
@@ -288,7 +296,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
 screens.widget.menu.item = function WidgetMenuItem(me) {
     me.element = {
         properties: {
-            "ui.basic.tag":"span",
+            "ui.basic.tag": "span",
             "ui.touch.click": "click"
         },
         dependencies: {
@@ -309,21 +317,21 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
             return element;
         },
-        tag: function(properties) {
+        tag: function (properties) {
             var groupName = properties["group"];
-            if(groupName) {
+            if (groupName) {
                 return "li";
             }
         },
         container: function (object, parent, properties) {
             var groupName = properties["group"];
             if (groupName) {
-                return me.widget.menu.list.use(parent, groupName);
+                return me.widget.menu.list.use(parent, groupName, object);
             }
         }
     };
-    me.init = function() {
-        me.sleepThreshold = {length:50, sleep:500};
+    me.init = function () {
+        me.sleepThreshold = { length: 50, sleep: 500 };
     };
     me.promise = async function (object, info) {
         if (!info) {
