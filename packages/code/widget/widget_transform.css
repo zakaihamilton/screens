@@ -459,14 +459,6 @@ h4.widget-transform-widget {
     font-size: 75%;
 }
 
-.widget-transform-widget.notes:after {
-    opacity:1;
-}
-
-.widget-transform-widget.notes:hover:after {
-    content:"\2605\00a0";
-}
-
 .widget-transform-widget.mark:before {
     opacity:1;
 }

@@ -55,8 +55,8 @@ screens.widget.transform = function WidgetTransform(me) {
         me.ui.options.toggleSet(me, me.findWidget, "pipVideo", me.reflow);
         me.ui.options.toggleSet(me, me.findWidget, "autoPlay");
         me.ui.options.toggleSet(me, me.findWidget, "playingPopup", me.reflow);
-        me.ui.options.choiceSet(me, me.findWidget, "voice", me.changeVoice);
-        me.ui.options.choiceSet(me, me.findWidget, "speed", me.changeSpeed);
+        me.ui.options.choiceSet(me, me.findWidget, "voice", me.player.changeVoice);
+        me.ui.options.choiceSet(me, me.findWidget, "speed", me.player.changeSpeed);
         me.ui.options.choiceSet(me, me.findWidget, "scrollPos");
         me.ui.class.useStylesheet("kab");
     };
@@ -234,6 +234,20 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         return reflow;
     };
+    me.modifiers = function (object) {
+        var widget = me.findWidget(object);
+        var modifiers = [widget.language];
+        if (widget.options.pipVideo) {
+            modifiers.push("pipVideo");
+        }
+        if (me.core.property.get(widget, "fullscreen")) {
+            modifiers.push("fullscreen");
+        }
+        modifiers = modifiers.map((modifier) => {
+            return "." + modifier;
+        });
+        return modifiers;
+    };
     me.update = function (object) {
         var widget = me.findWidget(object);
         if (widget.inTransform) {
@@ -265,46 +279,7 @@ screens.widget.transform = function WidgetTransform(me) {
             widget.var.layout.style.margin = "20px 40px";
         }
         var columnCount = widget.options.columns ? 2 : 1;
-        var modifiers = [widget.language];
-        if (widget.options.pipVideo) {
-            modifiers.push("pipVideo");
-        }
-        if (me.core.property.get(widget, "fullscreen")) {
-            modifiers.push("fullscreen");
-        }
-        modifiers = modifiers.map((modifier) => {
-            return "." + modifier;
-        });
         var reflowOptions = {
-            widgetProperties: {
-                "ui.class.add": ["widget.transform.widget", modifiers],
-                "!ui.touch.contextmenu": "widget.transform.notes"
-            },
-            pageClass: ["widget.transform.page", modifiers],
-            containerClass: ["widget.transform.page.container", modifiers],
-            contentClass: ["widget.transform.page.content", modifiers],
-            videoSlotClass: ["widget.transform.page.video.slot", modifiers],
-            marginRightClass: ["widget.transform.page.margin.right", modifiers],
-            headerClass: ["widget.transform.page.header", modifiers],
-            pageNumberClass: ["widget.transform.page.number", modifiers],
-            pageReloadClass: ["widget.transform.page.button", "widget.transform.page.reload", modifiers],
-            pageFullscreenClass: ["widget.transform.page.button", "widget.transform.page.fullscreen", modifiers],
-            previousPageClass: ["widget.transform.page.button", "widget.transform.page.previous", modifiers],
-            nextPageClass: ["widget.transform.page.button", "widget.transform.page.next", modifiers],
-            scrollToTopClass: ["widget.transform.page.scrolltotop", modifiers],
-            separatorClass: ["widget.transform.separator", modifiers],
-            rewindClass: ["widget.transform.rewind", modifiers],
-            playClass: ["widget.transform.play", modifiers],
-            fastforwardClass: ["widget.transform.fastforward", modifiers],
-            stopClass: ["widget.transform.stop", modifiers],
-            reloadMethod: "widget.transform.transform",
-            fullscreenMethod: "widget.window.fullscreen",
-            previousPageMethod: "ui.scroll.previousPage",
-            nextPageMethod: "ui.scroll.nextPage",
-            playMethod: "widget.transform.play",
-            rewindMethod: "widget.transform.rewind",
-            fastforwardMethod: "widget.transform.fastforward",
-            stopMethod: "widget.transform.stop",
             usePages: widget.options.pages,
             columnCount: columnCount,
             columnWidth: "400px",
@@ -395,6 +370,186 @@ screens.widget.transform = function WidgetTransform(me) {
             }
         }
     };
+    me.fontSizes = function (object, method) {
+        var fontSizeList = [];
+        for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
+            var item = [
+                fontSize + "px",
+                method,
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "fontSize"
+                }
+            ];
+            fontSizeList.push(item);
+        }
+        return fontSizeList;
+    };
+    me.fullPath = function (name) {
+        return "/packages/res/diagrams/" + name + ".json";
+    };
+    me.updateWidgets = function (object, hasText, update = true) {
+        var widget = me.findWidget(object);
+        me.core.property.set(widget.var.layout, {
+            "ui.style.fontSize": widget.options.fontSize
+        });
+        if (update) {
+            me.core.property.notify(widget, "update");
+        }
+    };
+    me.classes = {
+        root: "kab-term-phase-root",
+        one: "kab-term-phase-one",
+        two: "kab-term-phase-two",
+        three: "kab-term-phase-three",
+        four: "kab-term-phase-four",
+        collective: "kab-term-phase-collective"
+    };
+    me.phases = {
+        root: 2,
+        one: 3,
+        two: 4,
+        three: 5,
+        four: 6,
+        collective: 7
+    };
+    me.addTerms = function (terms, rows, used) {
+        for (var name in terms) {
+            var term = terms[name];
+            if (term.heading && term.phase) {
+                var phase = term.phase;
+                if (typeof phase !== "string") {
+                    if (phase.minor) {
+                        phase = phase.minor;
+                    } else {
+                        phase = phase.major;
+                    }
+                }
+                term.heading.split("/").map(function (heading) {
+                    var row = rows[heading];
+                    if (!row) {
+                        row = rows[heading] = {};
+                    }
+                    if (used !== term.used) {
+                        return;
+                    }
+                    if (!term.used && !Object.keys(row).length) {
+                        return;
+                    }
+                    var list = row[phase];
+                    if (!list) {
+                        list = row[phase] = [];
+                    }
+                    list.push(term.term);
+                });
+            }
+        }
+    };
+    me.tableOfPhasesParams = function (object) {
+        var params = { gridData: [] };
+        var widget = me.findWidget(object);
+        var rows = {};
+        if (!widget.tableOfPhases) {
+            return params;
+        }
+        var terms = widget.tableOfPhases.terms;
+        console.log("terms: " + JSON.stringify(terms));
+        me.addTerms(terms, rows, true);
+        me.addTerms(terms, rows, false);
+        var rowIndex = 2;
+        for (var phase in me.phases) {
+            var columnIndex = me.phases[phase];
+            var name = phase.charAt(0).toUpperCase() + phase.slice(1);
+            params.gridData.push([1, columnIndex, name, "kab.term.header"]);
+        }
+        for (var heading in rows) {
+            var row = rows[heading];
+            var name = heading.charAt(0).toUpperCase() + heading.slice(1);
+            var found = false;
+            for (var phase in me.phases) {
+                var list = row[phase];
+                if (!list || !list.length) {
+                    continue;
+                }
+                var columnIndex = me.phases[phase];
+                params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
+                found = true;
+            }
+            if (!found) {
+                continue;
+            }
+            params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
+            rowIndex++;
+        }
+        for (var row of params.gridData) {
+            for (const [i, field] of row.entries()) {
+                if (Array.isArray(field)) {
+                    row[i] = Array.from(new Set(field));
+                }
+            }
+        }
+        console.log("params.gridData: " + JSON.stringify(params.gridData));
+        return params;
+    };
+    me.term = {
+        set: async function (object, text) {
+            var widget = me.findWidget(object);
+            var options = Object.assign({}, widget.options, { headings: false });
+            var info = await me.kab.text.parse(widget.language, text, options);
+            me.core.property.set(object, "ui.basic.html", info.text);
+        }
+    };
+    me.updateScrolling = function (object) {
+        var widget = me.findWidget(object);
+        var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
+        me.core.property.set(widget.var.layout, {
+            "ui.scroll.pageSize": pageSize.height,
+            "ui.scroll.scrollTo": widget.options.scrollPos,
+            "ui.scroll.snap": null
+        });
+    };
+    me.clear = function (object) {
+        var widget = me.findWidget(object);
+        widget.transformText = "";
+        me.core.property.set(widget.var.output, "ui.basic.html", "");
+        me.widget.transform.layout.clear(widget.var.layout);
+        me.updateWidgets(widget, true);
+        widget.options.scrollPos = 0;
+        me.core.property.set(widget.var.layout, "ui.style.display", "none");
+        me.transform(object);
+    };
+    me.contentTitle = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            var title = me.widget.transform.layout.firstWidget(widget.var.layout);
+            if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
+                title = title.innerText;
+                widget.contentTitle = title;
+                return title;
+            }
+            else {
+                title = widget.contentTitle;
+            }
+            return title;
+        }
+    };
+    me.title = {
+        get: function (object) {
+            var widget = me.findWidget(object);
+            var window = me.widget.window(widget);
+            var title = me.core.property.get(widget, "widget.transform.contentTitle");
+            var key = me.core.property.get(window, "widget.window.key");
+            if (title) {
+                return key + " - " + title;
+            }
+            return key;
+        }
+    };
+};
+
+screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.changeVoice = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
@@ -470,7 +625,7 @@ screens.widget.transform = function WidgetTransform(me) {
                             setTimeout(() => {
                                 me.core.property.set(object, "ui.scroll.nextPage");
                                 setTimeout(() => {
-                                    me.core.property.set(object, "widget.transform.play");
+                                    me.core.property.set(object, "widget.transform.player.play");
                                 }, 1000);
                             }, 1000);
                         }
@@ -482,7 +637,7 @@ screens.widget.transform = function WidgetTransform(me) {
                         me.widget.transform.layout.clearPage(currentPage);
                         me.focusParagraph(object, null);
                         me.core.property.set(object, "ui.scroll.previousPage");
-                        me.core.property.set(object, "widget.transform.play", -1);
+                        me.core.property.set(object, "widget.transform.player.play", -1);
                     }
                     else {
                         me.media.voice.replay();
@@ -497,7 +652,7 @@ screens.widget.transform = function WidgetTransform(me) {
                     }
                     else {
                         me.core.property.set(object, "ui.scroll.nextPage");
-                        me.core.property.set(object, "widget.transform.play");
+                        me.core.property.set(object, "widget.transform.player.play");
                     }
                 },
                 onchange: (index, text) => {
@@ -583,187 +738,6 @@ screens.widget.transform = function WidgetTransform(me) {
             return item;
         });
         return speedList;
-    };
-    me.fontSizes = function (object, method) {
-        var fontSizeList = [];
-        for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
-            var item = [
-                fontSize + "px",
-                method,
-                {
-                    "state": "select"
-                },
-                {
-                    "group": "fontSize"
-                }
-            ];
-            fontSizeList.push(item);
-        }
-        return fontSizeList;
-    };
-    me.fullPath = function (name) {
-        return "/packages/res/diagrams/" + name + ".json";
-    };
-    me.notes = function (object, event) {
-        event.preventDefault();
-        return false;
-    };
-    me.updateWidgets = function (object, hasText, update = true) {
-        var widget = me.findWidget(object);
-        me.core.property.set(widget.var.layout, {
-            "ui.style.fontSize": widget.options.fontSize
-        });
-        if (update) {
-            me.core.property.notify(widget, "update");
-        }
-    };
-    me.classes = {
-        root: "kab-term-phase-root",
-        one: "kab-term-phase-one",
-        two: "kab-term-phase-two",
-        three: "kab-term-phase-three",
-        four: "kab-term-phase-four",
-        collective: "kab-term-phase-collective"
-    };
-    me.phases = {
-        root: 2,
-        one: 3,
-        two: 4,
-        three: 5,
-        four: 6,
-        collective: 7
-    };
-    me.addTerms = function(terms, rows, used) {
-        for (var name in terms) {
-            var term = terms[name];
-            if (term.heading && term.phase) {
-                var phase = term.phase;
-                if (typeof phase !== "string") {
-                    if (phase.minor) {
-                        phase = phase.minor;
-                    } else {
-                        phase = phase.major;
-                    }
-                }
-                term.heading.split("/").map(function (heading) {
-                    var row = rows[heading];
-                    if (!row) {
-                        row = rows[heading] = {};
-                    }
-                    if(used !== term.used) {
-                        return;
-                    }
-                    if(!term.used && !Object.keys(row).length) {
-                        return;
-                    }
-                    var list = row[phase];
-                    if (!list) {
-                        list = row[phase] = [];
-                    }
-                    list.push(term.term);
-                });
-            }
-        }
-    };
-    me.tableOfPhasesParams = function (object) {
-        var params = { gridData: [] };
-        var widget = me.findWidget(object);
-        var rows = {};
-        if (!widget.tableOfPhases) {
-            return params;
-        }
-        var terms = widget.tableOfPhases.terms;
-        console.log("terms: " + JSON.stringify(terms));
-        me.addTerms(terms, rows, true);
-        me.addTerms(terms, rows, false);
-        var rowIndex = 2;
-        for (var phase in me.phases) {
-            var columnIndex = me.phases[phase];
-            var name = phase.charAt(0).toUpperCase() + phase.slice(1);
-            params.gridData.push([1, columnIndex, name, "kab.term.header"]);
-        }
-        for (var heading in rows) {
-            var row = rows[heading];
-            var name = heading.charAt(0).toUpperCase() + heading.slice(1);
-            var found = false;
-            for (var phase in me.phases) {
-                var list = row[phase];
-                if (!list || !list.length) {
-                    continue;
-                }
-                var columnIndex = me.phases[phase];
-                params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
-                found = true;
-            }
-            if(!found) {
-                continue;
-            }
-            params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
-            rowIndex++;
-        }
-        for (var row of params.gridData) {
-            for (const [i, field] of row.entries()) {
-                if (Array.isArray(field)) {
-                    row[i] = Array.from(new Set(field));
-                }
-            }
-        }
-        console.log("params.gridData: " + JSON.stringify(params.gridData));
-        return params;
-    };
-    me.term = {
-        set: async function (object, text) {
-            var widget = me.findWidget(object);
-            var options = Object.assign({}, widget.options, { headings: false });
-            var info = await me.kab.text.parse(widget.language, text, options);
-            me.core.property.set(object, "ui.basic.html", info.text);
-        }
-    };
-    me.updateScrolling = function (object) {
-        var widget = me.findWidget(object);
-        var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
-        me.core.property.set(widget.var.layout, {
-            "ui.scroll.pageSize": pageSize.height,
-            "ui.scroll.scrollTo": widget.options.scrollPos,
-            "ui.scroll.snap": null
-        });
-    };
-    me.clear = function (object) {
-        var widget = me.findWidget(object);
-        widget.transformText = "";
-        me.core.property.set(widget.var.output, "ui.basic.html", "");
-        me.widget.transform.layout.clear(widget.var.layout);
-        me.updateWidgets(widget, true);
-        widget.options.scrollPos = 0;
-        me.core.property.set(widget.var.layout, "ui.style.display", "none");
-        me.transform(object);
-    };
-    me.contentTitle = {
-        get: function (object) {
-            var widget = me.findWidget(object);
-            var title = me.widget.transform.layout.firstWidget(widget.var.layout);
-            if (title && title.tagName && title.tagName.toLowerCase() === "h4") {
-                title = title.innerText;
-                widget.contentTitle = title;
-                return title;
-            }
-            else {
-                title = widget.contentTitle;
-            }
-            return title;
-        }
-    };
-    me.title = {
-        get: function (object) {
-            var widget = me.findWidget(object);
-            var window = me.widget.window(widget);
-            var title = me.core.property.get(widget, "widget.transform.contentTitle");
-            var key = me.core.property.get(window, "widget.window.key");
-            if (title) {
-                return key + " - " + title;
-            }
-            return key;
-        }
     };
     me.focusParagraph = function (object, paragraph) {
         var widget = me.findWidget(object);
@@ -1071,9 +1045,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return match;
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
+        var modifiers = me.modifiers(target);
         var page = me.ui.element({
             "ui.basic.tag": "div",
-            "ui.class.class": options.pageClass,
+            "ui.class.class": ["widget.transform.page", modifiers],
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
             "ui.style.visibility": "hidden",
@@ -1081,95 +1056,117 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.headerClass,
+                    "ui.class.class": ["widget.transform.page.header", modifiers],
                     "ui.basic.var": "header",
                     "ui.style.width": pageWidth + "px",
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.pageReloadClass,
+                            "ui.class.class": [
+                                "widget.transform.page.button",
+                                "widget.transform.page.reload",
+                                modifiers
+                            ],
                             "ui.basic.var": "pageReload",
-                            "ui.touch.click": options.reloadMethod
+                            "ui.touch.click": "widget.transform.transform"
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.pageFullscreenClass,
+                            "ui.class.class": [
+                                "widget.transform.page.button",
+                                "widget.transform.page.fullscreen",
+                                modifiers
+                            ],
                             "ui.basic.var": "pageFullscreen",
-                            "ui.touch.click": options.fullscreenMethod
+                            "ui.touch.click": "widget.window.fullscreen"
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.pageNumberClass,
+                            "ui.class.class": ["widget.transform.page.number", modifiers],
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
                             "ui.attribute.longPageNumberText": pageIndex
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.scrollToTopClass,
+                            "ui.class.class": [
+                                "widget.transform.page.scrolltotop",
+                                modifiers
+                            ],
                             "ui.basic.var": "scrollToTop",
                             "ui.touch.click": "widget.transform.layout.scrollToTop",
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.previousPageClass,
+                            "ui.class.class": [
+                                "widget.transform.page.button",
+                                "widget.transform.page.previous",
+                                modifiers
+                            ],
                             "ui.basic.var": "pagePrevious",
-                            "ui.touch.click": options.previousPageMethod,
+                            "ui.touch.click": "ui.scroll.previousPage",
                             "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
                         },
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": options.nextPageClass,
+                            "ui.class.class": [
+                                "widget.transform.page.button",
+                                "widget.transform.page.next",
+                                modifiers
+                            ],
                             "ui.basic.var": "pageNext",
-                            "ui.touch.click": options.nextPageMethod
+                            "ui.touch.click": "ui.scroll.nextPage"
                         }
                     ]
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.containerClass,
+                    "ui.class.class": ["widget.transform.page.container", modifiers],
                     "ui.basic.var": "container",
                     "ui.style.overflow": "hidden",
                     "ui.basic.elements": {
                         "ui.basic.tag": "div",
-                        "ui.class.class": options.contentClass,
+                        "ui.class.class": ["widget.transform.page.content", modifiers],
                         "ui.style.columns": options.columnCount + " " + options.columnWidth,
                         "ui.basic.var": "content"
                     }
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.separatorClass,
+                    "ui.class.class": [
+                        "widget.transform.separator",
+                        modifiers
+                    ],
                     "ui.basic.var": "separator",
                     "ui.style.display": "none"
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.rewindClass,
+                    "ui.class.class": ["widget.transform.rewind", modifiers],
                     "ui.basic.var": "rewind",
-                    "ui.touch.click": options.rewindMethod,
+                    "ui.touch.click": "widget.transform.player.rewind",
                     "ui.basic.show": options.playEnabled
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.playClass,
+                    "ui.class.class": ["widget.transform.play", modifiers],
                     "ui.basic.var": "play",
-                    "ui.touch.click": options.playMethod,
+                    "ui.touch.click": "widget.transform.player.play",
                     "ui.basic.show": options.playEnabled
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.fastforwardClass,
+                    "ui.class.class": ["widget.transform.fastforward", modifiers],
                     "ui.basic.var": "fastforward",
-                    "ui.touch.click": options.fastforwardMethod,
+                    "ui.touch.click": "widget.transform.player.fastforward",
                     "ui.basic.show": options.playEnabled
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.class": options.stopClass,
+                    "ui.class.class": ["widget.transform.stop", modifiers],
                     "ui.basic.var": "stop",
-                    "ui.touch.click": options.stopMethod,
+                    "ui.touch.click": "widget.transform.player.stop",
                     "ui.basic.show": options.playEnabled
                 }
             ]
@@ -1338,21 +1335,22 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.markElement = function (element, mark) {
         if (mark) {
-            element.style.color = "";
+            element.style.opacity = "";
         }
         else {
-            element.style.color = "rgba(0,0,0,0.5)";
+            element.style.opacity = "0.5";
         }
     };
     me.clearPage = function (page) {
         var content = page.var.content;
+        var modifiers = me.modifiers(page);
         Array.from(content.children).map(element => {
             if (element.getAttribute('hidden')) {
                 return;
             }
             me.markElement(element, true);
             if (element.innerText) {
-                me.core.property.set(element, page.options.widgetProperties);
+                me.core.property.set(element, "ui.class.add", ["widget.transform.widget", modifiers]);
             }
             element.classList.remove("mark");
         });

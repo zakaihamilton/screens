@@ -30,7 +30,9 @@ screens.ui.class = function UIClass(me) {
                 return me.to_class(object, className);
             }).join(" ");
             classList.split(" ").map(function(className) {
-                callback(className);
+                if(className) {
+                    callback(className);
+                }
             });
         }
     };

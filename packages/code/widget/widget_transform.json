@@ -216,7 +216,7 @@
                         "group": "voices"
                     }
                 ],
-                "widget.transform.voices",
+                "widget.transform.player.voices",
                 [
                     "Speed",
                     null,
@@ -225,7 +225,7 @@
                         "header": true
                     }
                 ],
-                "widget.transform.speeds"
+                "widget.transform.player.speeds"
             ]
         ],
         [

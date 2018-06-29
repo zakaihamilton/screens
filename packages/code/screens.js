@@ -18,6 +18,8 @@ function screens_create_proxy(id) {
                     return Reflect.get(object, property);
                 } else if (property in screens) {
                     return screens[property];
+                } else if (object.upper && Reflect.has(object.upper, property)) {
+                    return Reflect.get(object.upper, property);
                 } else {
                     var proxy = Reflect.get(object, "proxy");
                     if (proxy && proxy.get && proxy.get.enabled) {
@@ -51,7 +53,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             children.push(key);
         }
     }
-    if(node && node.id) {
+    if (node && node.id) {
         return [];
     }
     /* Create component proxy */
@@ -137,7 +139,7 @@ async function screens_init(items) {
 }
 
 function screens_import(path, optional) {
-    if(screens.imports[path]) {
+    if (screens.imports[path]) {
         return true;
     }
     screens.imports.push(path);
@@ -148,7 +150,7 @@ function screens_import(path, optional) {
         try {
             importScripts(path);
         }
-        catch(e) {
+        catch (e) {
             console.error("Failure in importing: " + path);
             throw e;
         }
@@ -157,10 +159,10 @@ function screens_import(path, optional) {
         var isScript = path.includes(".js");
         var isStylesheet = path.includes(".css");
         var tagName = "";
-        if(isScript) {
+        if (isScript) {
             tagName = "script";
         }
-        else if(isStylesheet) {
+        else if (isStylesheet) {
             tagName = "link";
         }
         var items = document.getElementsByTagName(tagName);
@@ -173,18 +175,18 @@ function screens_import(path, optional) {
         return new Promise((resolve, reject) => {
             var ref = items[0];
             var parentNode = null;
-            if(ref) {
+            if (ref) {
                 parentNode = ref.parentNode;
             }
             else {
                 parentNode = document.getElementsByTagName("head")[0];
             }
             var item = document.createElement(tagName);
-            if(isScript) {
+            if (isScript) {
                 item.src = path;
                 item.async = true;
             }
-            if(isStylesheet) {
+            if (isStylesheet) {
                 item.href = path;
                 item.type = "text/css";
                 item.rel = "stylesheet";
@@ -293,13 +295,13 @@ async function screens_include(packages) {
     }
     var promises = [];
     for (package_name in packages) {
-        for(var item of collection[package_name]) {
-            if(item.promises) {
+        for (var item of collection[package_name]) {
+            if (item.promises) {
                 promises.push(...item.promises);
             }
         }
     }
-    if(promises) {
+    if (promises) {
         await Promise.all(promises);
     }
     for (package_name in packages) {
@@ -337,6 +339,6 @@ if (platform === "server" || platform === "service") {
     global.__html__ = {};
 }
 
-if(platform === "browser" || platform === "client") {
+if (platform === "browser" || platform === "client") {
     var module = screens;
 }
