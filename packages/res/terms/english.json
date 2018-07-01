@@ -6858,6 +6858,35 @@
             "style": {
                 "heading": "Name of God"
             }
+        },
+        {
+            "term":"Shadai",
+            "hebrew":"ש-ד-י",
+            "style":{
+                "phase":"collective",
+                "heading":"Name of God"
+            }
+        },
+        {
+            "term":"Shed",
+            "hebrew":"שד",
+            "translation":"Demon"
+        },
+        {
+            "term":"Hamor",
+            "hebrew":"חמור",
+            "translation":"Donkey"
+        },
+        {
+            "term":"Tefillin",
+            "hebrew":"תפילין",
+            "translation":"Phylacteries"
+        },
+        {
+            "term":"Elijah",
+            "style":{
+                "heading":"Prophet"
+            }
         }
     ],
     "style": {

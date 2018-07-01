@@ -768,8 +768,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         me.core.property.set(widget.playingPopupHandle, "show", true);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.fontSize", fontSize);
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo ? "20%" : "5%");
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "75%" : "90%");
+                        me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo ? "15%" : "5%");
+                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "80%" : "90%");
                     }
                     else {
                         var title = me.core.property.get(widget, "widget.transform.contentTitle");
