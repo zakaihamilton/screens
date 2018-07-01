@@ -35,6 +35,9 @@ screens.core.stream = function CoreStream(me) {
             }
             response.writeHead(responseCode, headers);
             var stream = null;
+            if(start > end) {
+                start = end;
+            }
             stream = me.fs.createReadStream(path, {start: start, end: end});
             if(stream) {
                 me.log("streaming:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);

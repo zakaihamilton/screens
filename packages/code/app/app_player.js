@@ -14,6 +14,7 @@ screens.app.player = function AppPlayer(me) {
             "storage.file.getChildren",
             me.rootPath,
             false);
+        me.playerCounter = 0;
     };
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -193,6 +194,7 @@ screens.app.player = function AppPlayer(me) {
     };
     me.updatePlayer = {
         set: async function (object) {
+            var counter = ++me.playerCounter;
             var window = me.singleton;
             var groupName = window.options.groupName;
             var sessionName = window.options.sessionName;
@@ -217,7 +219,16 @@ screens.app.player = function AppPlayer(me) {
                     if (target) {
                         break;
                     }
+                    if(counter !== me.playerCounter) {
+                        me.core.property.set(window, "ui.work.state", false);
+                        return;
+                    }
                     await me.core.util.sleep(5000);
+                }
+                if(counter !== me.playerCounter) {
+                    me.core.property.set(window, "ui.work.state", false);
+                    me.log("counter: " + counter + " does not match: " + me.playerCounter);
+                    return;
                 }
                 me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
