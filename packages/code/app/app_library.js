@@ -57,7 +57,7 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
         me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
-        me.core.property.set(window.var.resultsContainer, "ui.basic.show", showResults && window.searchText);
+        me.core.property.set(window.var.resultsContainer, "ui.style.display", showResults && window.searchText ? "" : "none");
     };
     me.cleanSearchText = function (search) {
         search = search.replace(/\s+/g, " ");
@@ -190,7 +190,7 @@ screens.app.library = function AppLibrary(me) {
         clearTimeout(me.searchTimer);
         var records = null;
         if (search) {
-            me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
+            me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
             me.core.property.set(window.var.resultsSpinner, "text", "Loading");
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             records = await me.db.library.find(0, search);
@@ -474,7 +474,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.gotoArticle = async function (object, tags) {
         var window = me.widget.window(object);
-        me.core.property.set(window.var.resultsContainer, "ui.basic.show", false);
+        me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         var content = await me.db.library.content.get(tags._id);
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
