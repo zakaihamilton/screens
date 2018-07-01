@@ -10,7 +10,33 @@
 }
 
 .widget-transform-output {
-    display:none;
+    position:relative;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    line-height:2em;
+    padding:20px;
+    font-size:22px;
+    direction: ltr;
+    display:block;
+    flex:1;
+    flex-direction:column;
+    user-select: all;
+    color:black;
+    background:white;
+    overflow:auto;
+    transform: translateZ(0);
+}
+
+.widget-transform-output.night-mode {
+    color:white;
+    background:var(--background);
+}
+
+.widget-transform-output.hebrew {
+    direction: rtl;
 }
 
 .widget-transform-layout {

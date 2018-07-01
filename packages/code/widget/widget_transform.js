@@ -30,37 +30,39 @@ screens.widget.transform = function WidgetTransform(me) {
             playingPopup: false,
             autoPlay: true,
             voice: "Google UK English Male",
-            speed: "Normal"
+            speed: "Normal",
+            output:false
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
-            "doTranslation": me.transform,
-            "doExplanation": me.transform,
-            "prioritizeExplanation": me.transform,
-            "addStyles": me.transform,
-            "phaseNumbers": me.transform,
-            "keepSource": me.transform,
-            "abridged": me.transform,
-            "pages": me.reflow,
-            "columns": me.reflow,
-            "headings": me.transform,
-            "subHeadings": me.transform,
-            "diagrams": me.transform,
-            "pipVideo": me.reflow,
-            "autoPlay": null,
-            "playingPopup": me.reflow
+            doTranslation: me.transform,
+            doExplanation: me.transform,
+            prioritizeExplanation: me.transform,
+            addStyles: me.transform,
+            phaseNumbers: me.transform,
+            keepSource: me.transform,
+            abridged: me.transform,
+            pages: me.reflow,
+            columns: me.reflow,
+            headings: me.transform,
+            subHeadings: me.transform,
+            diagrams: me.transform,
+            pipVideo: me.reflow,
+            autoPlay: null,
+            playingPopup: me.reflow,
+            output: me.transform
         });
         me.ui.options.choiceSet(me, me.findWidget, {
-            "language": me.transform,
-            "fontSize": (object, value) => {
+            language: me.transform,
+            fontSize: (object, value) => {
                 var widget = me.findWidget(object);
                 me.core.property.set([widget.var.layout], "ui.style.fontSize", value);
                 widget.forceReflow = true;
                 me.core.property.notify(widget, "update");
             },
-            "voice": me.player.changeVoice,
-            "speed": me.player.changeSpeed,
-            "scrollPos": null
+            voice: me.player.changeVoice,
+            speed: me.player.changeSpeed,
+            scrollPos: null
         });
         me.ui.class.useStylesheet("kab");
     };
@@ -100,9 +102,6 @@ screens.widget.transform = function WidgetTransform(me) {
         var text = widget.transformText;
         widget.contentTitle = "";
         me.updateWidgets(widget, text, false);
-        if (text) {
-            me.core.property.set(widget.var.layout, "ui.style.display", "");
-        }
         widget.inTransform = true;
         me.core.property.set(widget.var.spinner, "text", "Transform");
         me.core.property.set(widget, "ui.work.state", true);
@@ -138,7 +137,15 @@ screens.widget.transform = function WidgetTransform(me) {
         else {
             widget.tableOfPhases = null;
         }
-        me.widget.transform.layout.move(widget.var.output, widget.var.layout);
+        if(widget.options.output) {
+            me.core.property.set(widget.var.output, "ui.style.display", text ? "" : "none");
+            me.core.property.set(widget.var.layout, "ui.style.display", "none");
+        }
+        else {
+            me.core.property.set(widget.var.output, "ui.style.display", "none");
+            me.core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
+            me.widget.transform.layout.move(widget.var.output, widget.var.layout);
+        }
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
@@ -263,7 +270,9 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!widget.options) {
             return;
         }
-        var text = widget.transformText;
+        if(widget.options.output) {
+            return;
+        }
         var visibleWidget = null;
         if (!widget.contentChanged) {
             visibleWidget = me.widget.transform.layout.firstVisibleWidget(widget.var.layout);
@@ -396,7 +405,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.updateWidgets = function (object, hasText, update = true) {
         var widget = me.findWidget(object);
-        me.core.property.set(widget.var.layout, {
+        me.core.property.set([widget.var.output,widget.var.layout], {
             "ui.style.fontSize": widget.options.fontSize
         });
         if (update) {

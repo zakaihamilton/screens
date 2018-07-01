@@ -1,8 +1,8 @@
 {
-    "ui.basic.tag":"div",
+    "ui.basic.tag": "div",
     "ui.class.class": "widget.transform.container",
-    "ui.property.after":{
-        "initOptions":null                          
+    "ui.property.after": {
+        "initOptions": null
     },
     "ui.resize.event": "widget.transform.reflow",
     "ui.basic.elements": [
@@ -136,6 +136,14 @@
                     {
                         "state": "select"
                     }
+                ],
+                [
+                    "Output",
+                    "widget.transform.output",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
                 ]
             ]
         ],
@@ -195,7 +203,7 @@
                     "Popup Playing Paragraph",
                     "widget.transform.playingPopup",
                     {
-                        "state":"select"
+                        "state": "select"
                     }
                 ],
                 [
@@ -232,7 +240,7 @@
             "Diagrams",
             [
                 "widget.transform.diagramList"
-            ]          
+            ]
         ]
     ]
 }

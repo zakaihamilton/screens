@@ -236,6 +236,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             object.lists[name] = list;
         }
         if (list.var.filter) {
+            member.parentList = list;
             list.members.push(member);
             return "none";
         }
@@ -250,8 +251,10 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             var members = list.var.members;
             while (members.firstChild) {
                 list.members.push(members.firstChild);
+                members.firstChild.parentList = list;
                 members.removeChild(members.firstChild);
             }
+            member.parentList = list;
             list.members.push(member);
             return "none";
         }
@@ -443,6 +446,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     };
     me.parentMenu = function (object) {
         var parent = object.parentNode;
+        if(!parent) {
+            parent = object.parentList;
+        }
         var popup = me.ui.node.container(object, "widget.menu.popup");
         if (popup) {
             parent = popup;
