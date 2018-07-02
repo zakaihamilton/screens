@@ -191,6 +191,24 @@ screens.core.module = function CoreModule(me) {
             var mimeType = "audio/mpeg";
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
+        } else if(filePath.endsWith(".og")) {
+            info["content-type"] = "text/html";
+            var metaTags = "";
+            for(var key in info.query) {
+                if(key === "redirect") {
+                    metaTags += "<meta http-equiv=\"refresh\" content=\"0; URL=" + info.query[key] + "\"></meta>";
+                }
+                else {
+                    metaTags += "<meta property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
+                }
+            }
+            var html = "<!DOCTYPE html>\
+            <html>\
+            <head>" + metaTags + "\
+            </head>\
+            <body></body>\
+            </html>";   
+            info.body = html;      
         }
         else {
             var extension = me.core.path.extension(filePath);
