@@ -73,7 +73,7 @@
 }
 
 .widget-player-controls-progress {
-    flex:1;
+    flex-basis: fill;
     background-color:white;
     border:1px solid black;
     min-height:32px;
@@ -82,4 +82,5 @@
     margin-left:4px;
     margin-right:4px;
     border-radius: 5px 5px 5px 5px;
+    width:100%;
 }
