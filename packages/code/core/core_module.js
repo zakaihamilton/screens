@@ -73,7 +73,7 @@ screens.core.module = function CoreModule(me) {
         var data = await me.loadTextFile(filePath);
         var jsonData = "{}";
         var vars = { "platform": target_platform };
-        var extensions = {json:false, html:true};
+        var extensions = { json: false, html: true };
         var extFilePath = filePath;
         for (var extension in extensions) {
             var isString = extensions[extension];
@@ -82,7 +82,7 @@ screens.core.module = function CoreModule(me) {
                 var extFilePath = filePath.replace(".js", "." + extension);
                 extData = await me.loadTextFile(extFilePath);
                 me.log(extension + " data path: " + extFilePath + " length: " + extData.length);
-                if(isString) {
+                if (isString) {
                     extData = JSON.stringify(extData)
                 }
                 vars[extension] = extData;
@@ -191,37 +191,41 @@ screens.core.module = function CoreModule(me) {
             var mimeType = "audio/mpeg";
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
-        } else if(filePath.endsWith(".og")) {
-            info["content-type"] = "text/html";
-            var metaTags = "";
-            for(var key in info.query) {
-                if(key === "redirect") {
-                    metaTags += "<meta http-equiv=\"refresh\" content=\"0; URL=" + info.query[key] + "\"></meta>";
-                }
-                else {
-                    metaTags += "<meta property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
-                }
-            }
-            var html = "<!DOCTYPE html>\
-            <html>\
-            <head>" + metaTags + "\
-            </head>\
-            <body></body>\
-            </html>";   
-            info.body = html;      
-        }
-        else {
+        } else {
             var extension = me.core.path.extension(filePath);
             var mimeType = me.mime.getType(extension);
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         }
     };
+    me.handleMeta = function (info) {
+        info["content-type"] = "text/html";
+        var metaTags = "";
+        for (var key in info.query) {
+            if (key === "redirect") {
+                metaTags += "<meta http-equiv=\"refresh\" content=\"0; URL=" + info.query[key] + "\"></meta>";
+            }
+            else {
+                metaTags += "<meta name=\"" + key + "\" property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
+            }
+        }
+        var html = "<!DOCTYPE html>\
+        <html>\
+        <head>" + metaTags + "\
+        </head>\
+        <body></body>\
+        </html>";
+        info.body = html;
+    };
     me.receive = {
         set: async function (info) {
             if (me.platform === "server") {
                 if (info.method === "GET") {
                     var params = {};
+                    if (info.url == "/meta") {
+                        me.handleMeta(info);
+                        return;
+                    }
                     if (info.url.startsWith("/") && !info.url.includes(".")) {
                         params.startupApp = info.url.substring(1);
                         info.url = "/main.html";
