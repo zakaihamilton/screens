@@ -1837,7 +1837,7 @@
             },
             "term": "AB2",
             "source": "AB",
-            "explanation": "72",
+            "translation": "72",
             "hebrew": "ע״ב"
         },
         {
@@ -3709,7 +3709,10 @@
         {
             "translation": "Divinity",
             "term": "Shechina",
-            "hebrew": "שכינה"
+            "hebrew": "שכינה",
+            "style":{
+                "phase":"four"
+            }
         },
         {
             "translation": "Mistress",
@@ -6854,13 +6857,26 @@
         },
         {
             "term": "Elokim",
+            "translation":"God",
             "hebrew": "אלהים",
             "style": {
-                "heading": "Name of God"
+                "heading": "Name of God",
+                "phase":"one"
+            }
+        },
+        {
+            "term":"EKYEH",
+            "translation":"I will be",
+            "hebrew":"אהיה",
+            "style":{
+                "heading":"Name of God",
+                "phase":"root"
             }
         },
         {
             "term":"Shadai",
+            "prefix":"The",
+            "translation":"Almighty",
             "hebrew":"ש-ד-י",
             "style":{
                 "phase":"collective",
@@ -6887,6 +6903,80 @@
             "style":{
                 "heading":"Prophet"
             }
+        },
+        {
+            "term":"Yam Suf",
+            "prefix":"The",
+            "hebrew":"ים סוף",
+            "translation":"Read Sea"
+        },
+        {
+            "term":"Shlamim",
+            "hebrew":"שלמים",
+            "translation":"Peace Offering"
+        },
+        {
+            "term":"Israel",
+            "hebrew":"ישראל",
+            "style":{
+                "phase":"three"
+            }
+        },
+        {
+            "term":"Aaron",
+            "hebrew":"אהרון",
+            "style":{
+                "heading":"Six Sides",
+                "phase":"four"
+            }
+        },
+        {
+            "term":"Mem - Bet",
+            "hebrew":"מ״ב",
+            "translation":"42",
+            "style":{
+                "heading":"Holy Name",
+                "phase":"one"
+            }
+        },
+        {
+            "term":"Tzitzit",
+            "hebrew":"ציצית",
+            "translation":"Fringes"
+        },
+        {
+            "term":"Shema",
+            "style":{
+                "heading":"Prayer"
+            }
+        },
+        {
+            "term":"Rosh Hashanah",
+            "style":{
+                "heading":"Festival"
+            },
+            "hebrew":"ראש השנה"
+        },
+        {
+            "term":"Passover",
+            "style":{
+                "heading":"Festival"
+            },
+            "hebrew":"פסח"
+        },
+        {
+            "term":"Shavuot",
+            "style":{
+                "heading":"Festival"
+            },
+            "hebrew":"שבועות"
+        },
+        {
+            "term":"Sukkot",
+            "style":{
+                "heading":"Festival"
+            },
+            "hebrew":"סוכות"
         }
     ],
     "style": {
