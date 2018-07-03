@@ -206,7 +206,12 @@ screens.core.module = function CoreModule(me) {
                 metaTags += "<meta http-equiv=\"refresh\" content=\"0; URL=" + info.query[key] + "\"></meta>";
             }
             else {
-                metaTags += "<meta name=\"" + key + "\" property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
+                if(key.startsWith("og:")) {
+                    metaTags += "<meta property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
+                }
+                else {
+                    metaTags += "<meta name=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
+                }
             }
         }
         var html = "<!DOCTYPE html>\
