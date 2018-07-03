@@ -193,7 +193,12 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
             me.core.property.set(window.var.resultsSpinner, "text", "Loading");
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
-            records = await me.db.library.find(0, search);
+            try {
+                records = await me.db.library.find(0, search);
+            }
+            catch(err) {
+                me.error("Failed to search for: " + search + " err: " + JSON.stringify(err));
+            }
             if(counter !== me.searchCounter) {
                 me.log("counter: " + counter + " does not match: " + me.searchCounter);
                 return;
@@ -201,7 +206,7 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
-        if(records.length === 1) {
+        if(records && records.length === 1) {
             me.gotoArticle(object, records[0]);
         }
     };

@@ -16,6 +16,10 @@
                     "app.library.reSearch"
                 ],
                 [
+                    "Clear",
+                    "app.library.clear"
+                ],
+                [
                     "Refresh",
                     "app.library.refresh",
                     {

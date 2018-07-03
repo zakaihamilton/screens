@@ -112,6 +112,7 @@ screens.db.library.content = function DbLibraryContent(me) {
 
 screens.db.library.query = function DbLibraryQuery(me) {
     me.tags = function (query) {
+        me.log("Retrieving tags for query: " + query);
         var tags = {};
         var tokens = me.core.string.split(query).sort();
         for (var token of tokens) {
@@ -124,8 +125,16 @@ screens.db.library.query = function DbLibraryQuery(me) {
         return tags;
     };
     me.filter = function (query) {
+        me.log("Retrieving filter for query: " + query);
         var filter = "";
-        var tokens = me.storage.db.split(query, {keepQuotes: true, separator:' '});
+        try {
+            query = query.replace(/'/g, "\\'");
+            var tokens = me.storage.db.split(query, {keepQuotes: true, separator:' '});
+        }
+        catch(err) {
+            me.error(err);
+        }
+        me.log("tokens: " + JSON.stringify(tokens));
         for (var token of tokens) {
             if (!token.includes(":")) {
                 if (filter) {
