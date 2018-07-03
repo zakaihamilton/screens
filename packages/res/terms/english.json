@@ -162,6 +162,12 @@
             "Partzuf Adam Kadmon": "Partzuf de Adam Kadmon",
             "Rosh AA":"Rosh de AA"
         },
+        "alternate":{
+            "Avraham":"Abraham",
+            "Yitzhak":"Isaac",
+            "Yaakov":"Jacob",
+            "Yosef":"Joseph"
+        },
         "tags": {
             "<subtitle>": "\n<b>",
             "</subtitle>": "</b>",
@@ -4223,7 +4229,8 @@
                 "heading": "Punctuation",
                 "phase": "root"
             },
-            "hebrew": "חולם"
+            "hebrew": "חולם",
+            "defaultTerm":true
         },
         {
             "translation": "In the Letters",
@@ -4243,7 +4250,8 @@
                 "heading": "Punctuation",
                 "phase": "one"
             },
-            "hebrew": "שורוק"
+            "hebrew": "שורוק",
+            "defaultTerm":true
         },
         {
             "translation": "Below the Letters",
@@ -4253,7 +4261,8 @@
                 "heading": "Punctuation",
                 "phase": "two"
             },
-            "hebrew": "חיריק"
+            "hebrew": "חיריק",
+            "defaultTerm":true
         },
         {
             "fixed": true,
@@ -5967,42 +5976,6 @@
             "hebrew": "יחיד סגולה"
         },
         {
-            "term": "Avraham",
-            "translation": "Abraham",
-            "style": {
-                "heading": "Class/Patriarch",
-                "phase": "root"
-            },
-            "hebrew": "אברהם"
-        },
-        {
-            "term": "Yitzhak",
-            "translation": "Isaac",
-            "style": {
-                "heading": "Class/Patriarch",
-                "phase": "one"
-            },
-            "hebrew": "יצחק"
-        },
-        {
-            "term": "Yaakov",
-            "translation": "Jacob",
-            "style": {
-                "heading": "Class/Patriarch",
-                "phase": "two"
-            },
-            "hebrew": "יעקב"
-        },
-        {
-            "term": "Yosef",
-            "translation": "Joseph",
-            "style": {
-                "heading": "Class",
-                "phase": "collective"
-            },
-            "hebrew": "יוסף"
-        },
-        {
             "term": "GAR Bina",
             "source": "GAR de Bina",
             "translation": "First Three of Understanding",
@@ -6454,7 +6427,8 @@
                 "phase": "root"
             },
             "transliterated": "Avraham",
-            "hebrew": "אברהם"
+            "hebrew": "אברהם",
+            "defaultTerm":true
         },
         {
             "term": "Isaac",
@@ -6463,7 +6437,8 @@
                 "phase": "one"
             },
             "transliterated": "Yitzhak",
-            "hebrew": "יצחק"
+            "hebrew": "יצחק",
+            "defaultTerm":true
         },
         {
             "term": "Jacob",
@@ -6472,7 +6447,8 @@
                 "phase": "two"
             },
             "transliterated": "Yaakov",
-            "hebrew": "יעקב"
+            "hebrew": "יעקב",
+            "defaultTerm":true
         },
         {
             "term": "Joseph",
@@ -6481,7 +6457,8 @@
                 "phase": "collective"
             },
             "transliterated": "Yosef",
-            "hebrew": "יוסף"
+            "hebrew": "יוסף",
+            "defaultTerm":true
         },
         {
             "term": "judgement",
