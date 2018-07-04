@@ -18,7 +18,7 @@ screens.manager.download = function ManagerDownload(me) {
             var downloadCount = 0;
             for (var itemIndex = me.queue.length - 1; itemIndex >= 0; itemIndex--) {
                 var item = me.queue[itemIndex];
-                if (item.isDownloading || item.isDownloaded || item.isFailed) {
+                if (item.isDownloading) {
                     continue;
                 }
                 if (downloadCount >= me.downloadLimit) {
@@ -42,17 +42,16 @@ screens.manager.download = function ManagerDownload(me) {
             }
             else {
                 item.isDownloading = true;
-                item.isDownloaded = false;
-                item.isFailed = false;
                 me.log("downloading: " + item.from + " to: " + item.to);
                 me.storage.file.downloadFile(item.from, item.to).then(() => {
                     me.log("downloaded: " + item.from + " to: " + item.to);
-                    item.isDownloading = false;
-                    item.isDownloaded = true;
+                    var index = me.queue.indexOf(item);
+                    me.queue.splice(index, 1);
                     me.private.update();
                 }).catch(err => {
-                    item.isDownloading = false;
-                    item.isFailed = true;
+                    me.log("failed to download: " + item.from + " to: " + item.to + " err: " + err);
+                    var index = me.queue.indexOf(item);
+                    me.queue.splice(index, 1);
                     me.private.update();
                 });
             }
@@ -60,7 +59,7 @@ screens.manager.download = function ManagerDownload(me) {
     };
     me.get = function (from, to) {
         var item = me.private.findItem(from, to);
-        if (!item || !item.isDownloading) {
+        if (!item) {
             var exists = me.core.file.exists(to);
             if (exists) {
                 me.log(to + " already downloaded");
@@ -94,8 +93,7 @@ screens.manager.download = function ManagerDownload(me) {
                 from: item.from,
                 to: item.to,
                 isDownloading: item.isDownloading,
-                isDownloaded: item.isDownloaded,
-                isFailed: item.isFailed
+                isDownloaded: item.isDownloaded
             });
         }
         return items;
