@@ -227,4 +227,12 @@ screens.ui.basic = function UIBasic(me) {
             object.style.visibility = value ? "hidden" : "visible";
         }
     };
+    me.display = {
+        get: function(object) {
+            return object.style.display !== "none";
+        },
+        set: function(object, value) {
+            object.style.display = value ? "" : "none";
+        }
+    };
 };

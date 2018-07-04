@@ -219,13 +219,13 @@ screens.app.player = function AppPlayer(me) {
                     if (target) {
                         break;
                     }
-                    if(counter !== me.playerCounter) {
+                    if (counter !== me.playerCounter) {
                         me.core.property.set(window, "ui.work.state", false);
                         return;
                     }
                     await me.core.util.sleep(5000);
                 }
-                if(counter !== me.playerCounter) {
+                if (counter !== me.playerCounter) {
                     me.core.property.set(window, "ui.work.state", false);
                     me.log("counter: " + counter + " does not match: " + me.playerCounter);
                     return;
@@ -289,6 +289,13 @@ screens.app.player = function AppPlayer(me) {
             finally {
                 me.core.property.set(progress, "close");
             }
+        }
+    };
+    me.clean = {
+        set: async function (object) {
+            var window = me.singleton;
+            await me.manager.download.clean("cache");
+            await me.refresh.set(window);
         }
     };
 };

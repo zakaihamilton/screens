@@ -42,6 +42,16 @@
                     {
                         "upload":"app.player.upload"
                     }
+                ],
+                [
+                    "Clean",
+                    "app.player.clean",
+                    {
+                        "separator":true
+                    },
+                    {
+                        "ui.basic.display":"@user.verify.match(none,Zakai Hamilton)"
+                    }
                 ]
             ]
         ],

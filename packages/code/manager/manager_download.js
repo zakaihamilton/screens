@@ -100,5 +100,27 @@ screens.manager.download = function ManagerDownload(me) {
         }
         return items;
     };
+    me.clean = async function(path) {
+        var items = null;
+        me.log("deleting files in: " + path);
+        try {
+            items = await me.core.file.readDir(path);
+        }
+        catch(err) {
+            me.log("Cannot read dir, err: " + err.message || err);
+        }
+        if (items) {
+            for (let item of items) {
+                try {
+                    await me.core.file.delete(path + "/" + item);
+                    me.log("deleted file: " + item);
+                }
+                catch(err) {
+                    me.log("cannot delete file: " + item);
+                }
+            }
+        }
+        await me.manager.download.removeall();
+    }
     return "server";
 };

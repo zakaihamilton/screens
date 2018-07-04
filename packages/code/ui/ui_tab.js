@@ -44,7 +44,7 @@ screens.ui.tab = function UITab(me) {
         me.ui.node.iterate(window, (element) => {
             var owner = me.core.property.get(element, "ui.tab.owner");
             if (owner) {
-                me.core.property.set(element, "ui.style.display", owner === tab ? "" : "none");
+                me.core.property.set(element, "ui.basic.display", owner === tab);
             }
         });
     };
