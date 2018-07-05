@@ -225,6 +225,7 @@ h4.widget-transform-widget {
     width: 90%;
     background-color: #555;
     overflow-x: auto;
+    overflow-y: hidden;
     height: 10%;
     padding:10px;
     z-index: 1000;
