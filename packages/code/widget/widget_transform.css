@@ -548,10 +548,48 @@ h4.widget-transform-widget {
     background-color: #000;
 }
 
+.widget-transform-iconbar a.active:hover {
+    background-color: #196a19;
+}
+
 .widget-transform-iconbar a[disabled="true"] {
     background-color: #000;
+    color:lightgray;
 }
 
 .widget-transform-iconbar a.active {
-    background-color: #4CAF50 !important;
+    background-color: #4CAF50;
+}
+
+.widget-transform-iconbar-fullscreen.fullscreen {
+    background-color: #4CAF50;
+}
+
+.widget-transform-iconbar-fullscreen.fullscreen:hover {
+    background-color: #196a19;
+}
+
+.widget-transform-iconbar-play {
+    color:lightgray !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-play:hover {
+    color:lightgray !important;
+    background-color: darkgray !important;
+}
+
+.widget-transform-iconbar-play.play {
+    color:white !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-notplay.play {
+    color:lightgray !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-notplay.play:hover {
+    color:lightgray !important;
+    background-color: darkgray !important;
 }

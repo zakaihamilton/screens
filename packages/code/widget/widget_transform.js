@@ -1345,7 +1345,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return isPaused;
     };
     me.setPlayState = function (page, play, pause) {
-        var widgets = [page.var.play, page.var.stop, page.var.rewind, page.var.fastforward];
+        var widget = me.findWidget(page);
+        var iconbar = widget.var.iconbar;
+        var widgets = [iconbar, page.var.play, page.var.stop, page.var.rewind, page.var.fastforward];
         if (play) {
             me.core.property.set(widgets, "ui.class.add", "play");
         } else {
