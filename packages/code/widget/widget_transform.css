@@ -524,7 +524,7 @@ h4.widget-transform-widget {
     background-color: #555;
     overflow-x: auto;
     height: 10%;
-    z-index: 100;
+    z-index: 1000;
     opacity: 0;
     border-radius: 10px 10px 0px 0px;
 }
@@ -552,11 +552,6 @@ h4.widget-transform-widget {
     background-color: #196a19;
 }
 
-.widget-transform-iconbar a[disabled="true"] {
-    background-color: #000;
-    color:lightgray;
-}
-
 .widget-transform-iconbar a.active {
     background-color: #4CAF50;
 }
@@ -569,27 +564,72 @@ h4.widget-transform-widget {
     background-color: #196a19;
 }
 
-.widget-transform-iconbar-play {
+.widget-transform-iconbar-stop {
     color:lightgray !important;
     background-color: #555 !important;
 }
 
-.widget-transform-iconbar-play:hover {
+.widget-transform-iconbar-stop:hover {
+    color:lightgray !important;
+    background-color: darkgray !important;
+}
+
+.widget-transform-iconbar-stop.play {
+    color:white !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-stop.play:hover {
+    color:white !important;
+    background-color: black !important;
+}
+
+.widget-transform-iconbar-pause {
+    color:lightgray !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-pause:hover {
+    color:lightgray !important;
+    background-color: darkgray !important;
+}
+
+.widget-transform-iconbar-pause.play {
+    color:white !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-pause.play:hover {
+    color:white !important;
+    background-color: black !important;
+}
+
+.widget-transform-iconbar-pause.play.pause {
+    color:lightgray !important;
+    background-color: #555 !important;
+}
+
+.widget-transform-iconbar-pause.play.pause:hover {
     color:lightgray !important;
     background-color: darkgray !important;
 }
 
 .widget-transform-iconbar-play.play {
+    color:lightgray !important;
+    background-color: #4CAF50 !important;
+}
+
+.widget-transform-iconbar-play.play:hover {
+    color:lightgray !important;
+    background-color: darkgray !important;
+}
+
+.widget-transform-iconbar-play.play.pause {
     color:white !important;
     background-color: #555 !important;
 }
 
-.widget-transform-iconbar-notplay.play {
-    color:lightgray !important;
-    background-color: #555 !important;
-}
-
-.widget-transform-iconbar-notplay.play:hover {
-    color:lightgray !important;
-    background-color: darkgray !important;
+.widget-transform-iconbar-play.play.pause:hover {
+    color:white !important;
+    background-color: black !important;
 }
