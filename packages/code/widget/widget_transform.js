@@ -31,7 +31,7 @@ screens.widget.transform = function WidgetTransform(me) {
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal",
-            output:false
+            output: false
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -137,7 +137,7 @@ screens.widget.transform = function WidgetTransform(me) {
         else {
             widget.tableOfPhases = null;
         }
-        if(widget.options.output) {
+        if (widget.options.output) {
             me.core.property.set(widget.var.output, "ui.style.display", text ? "" : "none");
             me.core.property.set(widget.var.layout, "ui.style.display", "none");
         }
@@ -270,7 +270,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!widget.options) {
             return;
         }
-        if(widget.options.output) {
+        if (widget.options.output) {
             return;
         }
         var visibleWidget = null;
@@ -405,7 +405,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.updateWidgets = function (object, hasText, update = true) {
         var widget = me.findWidget(object);
-        me.core.property.set([widget.var.output,widget.var.layout], {
+        me.core.property.set([widget.var.output, widget.var.layout], {
             "ui.style.fontSize": widget.options.fontSize
         });
         if (update) {
@@ -592,6 +592,13 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         if (isPlaying && !isPaused) {
             me.play(object, me.media.voice.currentIndex, false);
         }
+    };
+    me.pause = function (object) {
+        var widget = me.findWidget(object);
+        var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
+        me.focusParagraph(object, null);
+        me.media.voice.pause();
+        me.widget.transform.layout.setPlayState(currentPage, true, true);
     };
     me.play = function (object, value, toggle = true) {
         var widget = me.findWidget(object);
@@ -1193,9 +1200,22 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }, target);
         return page;
     };
+    me.previousPage = {
+        set: function (object) {
+            var widget = me.findWidget(object);
+            me.core.property.set(widget.var.layout, "ui.scroll.previousPage");
+        }
+    };
+    me.nextPage = {
+        set: function (object) {
+            var widget = me.findWidget(object);
+            me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
+        }
+    };
     me.scrollToTop = {
         set: function (object) {
-            me.core.property.set(object, "ui.scroll.to", 0);
+            var widget = me.findWidget(object);
+            me.core.property.set(widget.var.layout, "ui.scroll.to", 0);
         }
     };
     me.applyNumPages = function (target, numPages) {

@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component WidgetBar
+ @component WidgetTaskBar
  */
 
-screens.widget.bar = function WidgetBar(me) {
+screens.widget.taskbar = function WidgetTaskBar(me) {
     me.element = {
         properties : {
             "ui.class.class": "container",

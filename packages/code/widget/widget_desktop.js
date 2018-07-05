@@ -14,7 +14,7 @@ screens.widget.desktop = function WidgetDesktop(me) {
                     "ui.class.class": "background"
                 },
                 {
-                    "ui.element.component": "widget.bar",
+                    "ui.element.component": "widget.taskbar",
                     "ui.basic.var": "bar"
                 },
                 {

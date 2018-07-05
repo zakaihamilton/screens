@@ -21,6 +21,28 @@
         {
             "ui.element.component": "widget.spinner",
             "ui.basic.var": "spinner"
+        },
+        {
+            "ui.class.class": "iconbar",
+            "ui.group.data": {
+                "ui.data.keyList": ["ui.basic.html", "ui.attribute.title", "ui.touch.click"],
+                "ui.data.default": {
+                    "ui.basic.tag": "a",
+                    "href": "#"
+                },
+                "ui.data.values": [
+                    ["@ui.html.icon(fa fa-sync)", "Refresh", "widget.transform.transform"],
+                    ["@ui.html.icon(fa fa-expand)", "Fullscreen", "widget.window.fullscreen"],
+                    ["@ui.html.icon(fa fa-arrow-alt-circle-left)", "Previous Page", "widget.transform.layout.previousPage"],
+                    ["@ui.html.icon(fa fa-arrow-alt-circle-right)", "Next Page", "widget.transform.layout.nextPage"],
+                    ["@ui.html.icon(fa fa-chevron-up)", "First Page", "widget.transform.layout.scrollToTop"],
+                    ["@ui.html.icon(fa fa-step-backward)", "Previous Paragraph", "widget.transform.player.rewind"],
+                    ["@ui.html.icon(fa fa-play)", "Play", "widget.transform.player.play"],
+                    ["@ui.html.icon(fa fa-pause)", "Pause", "widget.transform.player.pause"],
+                    ["@ui.html.icon(fa fa-step-forward)", "Next Paragraph", "widget.transform.player.fastforward"],
+                    ["@ui.html.icon(fa fa-stop)", "Stop", "widget.transform.player.stop"]
+                ]
+            }
         }
     ],
     "widget.menu.items": [

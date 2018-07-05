@@ -7,6 +7,9 @@ screens.ui.html = function UIHtml(me) {
     me.init = function() {
         me.files = {};
     };
+    me.icon = function(object, className) {
+        return "<i class=\"" + className + "\"></i>";
+    };
     me.loadComponent = async function(path, useCache=true) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);

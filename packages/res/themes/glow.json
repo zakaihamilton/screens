@@ -219,8 +219,8 @@
             "replace": true
         },
         {
-            "source": "widget-bar-container",
-            "target": "glow-bar-container",
+            "source": "widget-taskbar-container",
+            "target": "glow-taskbar-container",
             "replace": true
         }
     ]

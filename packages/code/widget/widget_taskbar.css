@@ -1,4 +1,4 @@
-.widget-bar-container {
+.widget-taskbar-container {
     position:absolute;
     bottom:0px;
     height:32px;
@@ -9,7 +9,7 @@
     box-sizing: border-box;
 }
 
-.widget-bar-launcher {
+.widget-taskbar-launcher {
     border:1px solid transparent;
     top:3px;
     right:0px;
@@ -23,6 +23,6 @@
     filter: invert(100%);
 }
 
-.widget-bar-launcher:hover:active {
+.widget-taskbar-launcher:hover:active {
     border:1px solid black;
 }
