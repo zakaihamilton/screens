@@ -571,8 +571,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         if (!currentPage) {
             return;
         }
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
-        var isPaused = me.widget.transform.layout.isPaused(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
+        var isPaused = me.media.voice.isPaused(currentPage);
         var playWillEnable = widget.options.voice !== "None";
         var playEnabled = me.widget.transform.layout.options(widget.var.layout).playEnabled;
         if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
@@ -589,8 +589,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         if (!currentPage) {
             return;
         }
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
-        var isPaused = me.widget.transform.layout.isPaused(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
+        var isPaused = me.media.voice.isPaused(currentPage);
         if (isPlaying && !isPaused) {
             me.play(object, me.media.voice.currentIndex, false);
         }
@@ -605,8 +605,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.play = function (object, value, toggle=true) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
-        var isPaused = me.widget.transform.layout.isPaused(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
+        var isPaused = me.media.voice.isPaused(currentPage);
         if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
             me.widget.transform.layout.setPlayState(me.currentPlayingPage, true, false);
@@ -692,7 +692,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.stop = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.stop();
             me.widget.transform.layout.clearPage(currentPage);
@@ -704,7 +704,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.rewind = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.rewind();
         }
@@ -712,7 +712,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.fastforward = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
+        var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
             me.media.voice.fastforward();
         }
@@ -1079,61 +1079,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": [
-                                "widget.transform.page.button",
-                                "widget.transform.page.reload",
-                                modifiers
-                            ],
-                            "ui.basic.var": "pageReload",
-                            "ui.touch.click": "widget.transform.transform"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": [
-                                "widget.transform.page.button",
-                                "widget.transform.page.fullscreen",
-                                modifiers
-                            ],
-                            "ui.basic.var": "pageFullscreen",
-                            "ui.touch.click": "widget.window.fullscreen"
-                        },
-                        {
-                            "ui.basic.tag": "div",
                             "ui.class.class": ["widget.transform.page.number", modifiers],
                             "ui.basic.var": "pageNumber",
                             "ui.attribute.shortPageNumberText": pageIndex,
                             "ui.attribute.longPageNumberText": pageIndex
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": [
-                                "widget.transform.page.scrolltotop",
-                                modifiers
-                            ],
-                            "ui.basic.var": "scrollToTop",
-                            "ui.touch.click": "widget.transform.layout.scrollToTop",
-                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": [
-                                "widget.transform.page.button",
-                                "widget.transform.page.previous",
-                                modifiers
-                            ],
-                            "ui.basic.var": "pagePrevious",
-                            "ui.touch.click": "ui.scroll.previousPage",
-                            "ui.style.opacity": pageIndex - 1 ? "1.0" : "0.0"
-                        },
-                        {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": [
-                                "widget.transform.page.button",
-                                "widget.transform.page.next",
-                                modifiers
-                            ],
-                            "ui.basic.var": "pageNext",
-                            "ui.touch.click": "ui.scroll.nextPage"
                         }
                     ]
                 },
@@ -1157,34 +1106,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     ],
                     "ui.basic.var": "separator",
                     "ui.style.display": "none"
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": ["widget.transform.rewind", modifiers],
-                    "ui.basic.var": "rewind",
-                    "ui.touch.click": "widget.transform.player.rewind",
-                    "ui.basic.show": options.playEnabled
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": ["widget.transform.play", modifiers],
-                    "ui.basic.var": "play",
-                    "ui.touch.click": "widget.transform.player.play",
-                    "ui.basic.show": options.playEnabled
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": ["widget.transform.fastforward", modifiers],
-                    "ui.basic.var": "fastforward",
-                    "ui.touch.click": "widget.transform.player.fastforward",
-                    "ui.basic.show": options.playEnabled
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": ["widget.transform.stop", modifiers],
-                    "ui.basic.var": "stop",
-                    "ui.touch.click": "widget.transform.player.stop",
-                    "ui.basic.show": options.playEnabled
                 }
             ]
         }, target, "self");
@@ -1343,18 +1264,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.setPlayState = function (page, play, pause) {
         var widget = me.findWidget(page);
-        var widgets = [page.var.play, page.var.stop, page.var.rewind, page.var.fastforward];
-        widgets.push(...me.ui.node.childList(widget.var.iconbar));
-        if (play) {
-            me.core.property.set(widgets, "ui.class.add", "play");
-        } else {
-            me.core.property.set(widgets, "ui.class.remove", "play");
-        }
-        if (pause) {
-            me.core.property.set(widgets, "ui.class.add", "pause");
-        } else {
-            me.core.property.set(widgets, "ui.class.remove", "pause");
-        }
+        var widgets = me.ui.node.childList(widget.var.iconbar);
+        me.core.property.set(widgets, "ui.class.play", play);
+        me.core.property.set(widgets, "ui.class.pause", pause);
     };
     me.hasSeparator = function (page) {
         var hasSeparator = false;

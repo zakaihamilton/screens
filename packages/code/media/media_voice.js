@@ -25,6 +25,12 @@ screens.media.voice = function MediaVoice(me) {
         "Faster":1.25,
         "Fast":1.5
     };
+    me.isPlaying = function() {
+        return !me.synth.paused || me.synth.speaking || me.synth.pending;
+    };
+    me.isPaused = function() {
+        return me.synth.paused;
+    };
     me.play = function (text, voiceName, params) {
         if(voiceName === "None") {
             me.stop();
