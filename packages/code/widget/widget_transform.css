@@ -226,13 +226,13 @@ h4.widget-transform-widget {
     background-color: #555;
     overflow-x: auto;
     height: 10%;
+    padding:10px;
     z-index: 1000;
     opacity: 0.25;
-    border:1px solid #555;
     border-radius: 10px 10px 0px 0px;
     display:flex;
     align-items: center;
-    justify-content: stretch;
+    justify-content: center;
 }
 
 .widget-transform-iconbar:hover {
@@ -249,11 +249,12 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar a {
     flex:1;
+    padding:4px;
     text-align: center;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     color: white;
-    font-size: 6vmin;
+    font-size: 5vmin;
 }
 
 .widget-transform-iconbar a:hover {
