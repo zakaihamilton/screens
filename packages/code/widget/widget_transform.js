@@ -596,6 +596,9 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.pause = function (object) {
+        if(!me.media.voice.isPlaying()) {
+            return;
+        }
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         me.focusParagraph(object, null);
@@ -938,7 +941,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     if (target.page) {
                         target.page.last = true;
                         target.page.var.separator.style.display = "block";
-                        target.page.var.pageNext.style.opacity = "0.0";
                         me.core.property.set(target.page.var.separator, "ui.class.add", "last");
                     }
                     me.completeReflow(callback, target, options, false);
