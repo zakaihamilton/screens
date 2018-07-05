@@ -324,10 +324,12 @@ screens.widget.transform = function WidgetTransform(me) {
                 if (me.core.property.get(widget, "ui.work.state") || me.core.property.get(widget, "conceal")) {
                     return;
                 }
-                if ("vertical" in value) {
+                if (value && "vertical" in value) {
                     me.core.property.set(widget, "widget.transform.scrollPos", value.vertical);
                 }
             }, 2000);
+            me.core.property.set([widget.var.scrollToTop, widget.var.previousPage], "ui.class.disabled", !widget.var.layout.scrollTop);
+            me.core.property.set([widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
         }
     };
     me.resetDescription = function (object) {
@@ -520,7 +522,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget.var.layout, {
             "ui.scroll.pageSize": pageSize.height,
             "ui.scroll.scrollTo": widget.options.scrollPos,
-            "ui.scroll.snap": null
+            "ui.scroll.scrolled": null
         });
     };
     me.clear = function (object) {
@@ -600,17 +602,12 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         me.media.voice.pause();
         me.widget.transform.layout.setPlayState(currentPage, true, true);
     };
-    me.play = function (object, value, toggle = true) {
+    me.play = function (object, value, toggle=true) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.widget.transform.layout.isPlaying(currentPage);
         var isPaused = me.widget.transform.layout.isPaused(currentPage);
-        if (toggle ? (isPlaying && !isPaused) : (isPlaying && isPaused)) {
-            me.focusParagraph(object, null);
-            me.media.voice.pause();
-            me.widget.transform.layout.setPlayState(currentPage, true, true);
-        }
-        else if (toggle && isPlaying && isPaused) {
+        if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
             me.widget.transform.layout.setPlayState(me.currentPlayingPage, true, false);
             var focusElement = me.widget.transform.layout.focusElement(me.currentPlayingPage);

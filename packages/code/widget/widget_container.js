@@ -31,7 +31,7 @@ screens.widget.container = function WidgetContainer(me) {
         var container = me.ui.node.container(object, me.widget.container.id);
         if (container) {
             if (!me.widget.container.isChild(container)) {
-                me.core.property.set(container, "ui.scroll.snap");
+                me.core.property.set(container, "ui.scroll.scrolled");
             }
         }
     };

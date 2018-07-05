@@ -556,6 +556,16 @@ h4.widget-transform-widget {
     background-color: #4CAF50;
 }
 
+.widget-transform-iconbar a.disabled {
+    color:darkgray;
+    background-color: #555;
+}
+
+.widget-transform-iconbar a.disabled:hover {
+    color:lightgray;
+    background-color: darkgray;
+}
+
 .widget-transform-iconbar-fullscreen.fullscreen {
     background-color: #4CAF50;
 }
@@ -565,7 +575,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-stop {
-    color:lightgray !important;
+    color:darkgray !important;
     background-color: #555 !important;
 }
 
@@ -585,7 +595,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause {
-    color:lightgray !important;
+    color:darkgray !important;
     background-color: #555 !important;
 }
 
@@ -605,7 +615,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause.play.pause {
-    color:lightgray !important;
+    color:darkgray !important;
     background-color: #555 !important;
 }
 

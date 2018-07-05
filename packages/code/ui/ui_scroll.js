@@ -12,6 +12,7 @@ screens.ui.scroll = function UIScroll(me) {
         } else {
             object.scrollTop += distance;
         }
+        me.core.property.set(object, "scrolled");
     };
     me.container = function (object) {
         var container = null;
@@ -22,20 +23,27 @@ screens.ui.scroll = function UIScroll(me) {
         }
         return container;
     };
-    me.previousPage = function (object, value) {
+    me.previousPage = function (object) {
         var container = me.container(object);
         me.by(container, -container.ui_scroll_pageSize);
-        me.core.property.set(container, "snap");
+        me.core.property.set(container, "scrolled");
     };
-    me.nextPage = function (object, value) {
+    me.nextPage = function (object) {
         var container = me.container(object);
         me.by(container, container.ui_scroll_pageSize);
-        me.core.property.set(container, "snap");
+        me.core.property.set(container, "scrolled");
+    };
+    me.isLastPage = function(object) {
+        var container = me.container(object);
+        if(container.scrollTop + container.ui_scroll_pageSize >= container.scrollHeight) {
+            return true;
+        }
+        return false;
     };
     me.to = function (object, value) {
         var container = me.container(object);
         container.scrollTop = value;
-        me.core.property.set(container, "snap");
+        me.core.property.set(container, "scrolled");
     };
     me.pageSize = {
         get: function (object) {
@@ -47,7 +55,7 @@ screens.ui.scroll = function UIScroll(me) {
             container.ui_scroll_pageSize = value;
         }
     };
-    me.snap = {
+    me.scrolled = {
         set: function (object, value) {
             var container = me.container(object);
             var pageSize = container.ui_scroll_pageSize;
@@ -68,15 +76,12 @@ screens.ui.scroll = function UIScroll(me) {
                 } else if (currentPos > targetPos) {
                     direction = -1;
                 }
-                var scroll_key = {
-                    horizontal: "left",
-                    vertical: "top"
-                };
                 var params = {
                     top: targetPos,
                     behavior: 'smooth'
                 };
                 container.scroll(params);
+                me.core.property.notify(container, "scrolled");
             }, 1000);
         }
     };

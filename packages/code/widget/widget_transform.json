@@ -30,7 +30,8 @@
                     "ui.basic.html",
                     "ui.attribute.title",
                     "ui.touch.click",
-                    "ui.class.class"
+                    "ui.class.class",
+                    "ui.basic.var"
                 ],
                 "ui.data.default": {
                     "ui.basic.tag": "a",
@@ -51,17 +52,23 @@
                     [
                         "@ui.html.icon(fa fa-arrow-alt-circle-left)",
                         "Previous Page",
-                        "widget.transform.layout.previousPage"
+                        "widget.transform.layout.previousPage",
+                        null,
+                        "previousPage"
                     ],
                     [
                         "@ui.html.icon(fa fa-arrow-alt-circle-right)",
                         "Next Page",
-                        "widget.transform.layout.nextPage"
+                        "widget.transform.layout.nextPage",
+                        null,
+                        "nextPage"
                     ],
                     [
                         "@ui.html.icon(fa fa-chevron-up)",
                         "First Page",
-                        "widget.transform.layout.scrollToTop"
+                        "widget.transform.layout.scrollToTop",
+                        null,
+                        "scrollToTop"
                     ],
                     [
                         "@ui.html.icon(fa fa-step-backward)",
