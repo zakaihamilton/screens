@@ -221,29 +221,39 @@ h4.widget-transform-widget {
 .widget-transform-iconbar {
     position: absolute;
     bottom: 0%;
-    left: 10%;
-    width: 80%;
+    left: 5%;
+    width: 90%;
     background-color: #555;
     overflow-x: auto;
     height: 10%;
     z-index: 1000;
-    opacity: 0;
+    opacity: 0.25;
+    border:1px solid #555;
     border-radius: 10px 10px 0px 0px;
+    display:flex;
+    align-items: center;
+    justify-content: stretch;
 }
 
 .widget-transform-iconbar:hover {
-    opacity: 1.0;
+    opacity: 1;
+}
+
+.widget-transform-iconbar.fullscreen {
+    opacity:0;
+}
+
+.widget-transform-iconbar.fullscreen:hover {
+    opacity: 1;
 }
 
 .widget-transform-iconbar a {
-    float: left;
-    width: 10%;
+    flex:1;
     text-align: center;
-    padding: 12px 0;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     color: white;
-    font-size: 36px;
+    font-size: 6vmin;
 }
 
 .widget-transform-iconbar a:hover {
