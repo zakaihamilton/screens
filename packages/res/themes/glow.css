@@ -943,3 +943,32 @@
     background-color:var(--field-background);
     color:var(--field-color);
 }
+
+.modal-background.night-mode {
+    background-color:rgb(10,10,10,0.5);
+}
+
+.modal-card-head.night-mode {
+    background-color:var(--chrome-background);
+}
+
+.modal-card-title.night-mode {
+    color:var(--chrome-color);
+}
+
+.modal-card-body.night-mode {
+    color:var(--color);
+    background-color:var(--background);
+}
+
+.modal-card-foot.night-mode {
+    background-color:var(--chrome-background);
+}
+
+.title.night-mode {
+    color:var(--color);
+}
+
+.delete.night-mode {
+    background-color:var(--background);
+}
