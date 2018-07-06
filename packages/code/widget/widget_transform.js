@@ -167,10 +167,10 @@ screens.widget.transform = function WidgetTransform(me) {
             translation:".item.translation",
             explanation:".item.explanation",
             heading:".heading"
-        }, "");
+        }, "None");
         for(var name in widgets) {
             var child = widgets[name];
-            child.parentNode.style.display = child.innerText ? "" : "none";
+            child.parentNode.style.display = child.innerText === "None" ? "none" : "";
         }
         var phase = widgets.phase.innerText.toLowerCase();
         var classes = "title widget-transform-level "
