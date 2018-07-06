@@ -156,6 +156,9 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.openPopup = function(object, termName) {
         var widget = me.findWidget(object);
+        termName = Object.keys(widget.termData.terms).find((term) => {
+            return term.replace(/ /g, "") === termName;
+        });
         var term = widget.termData.terms[termName];
         if(!term) {
             return;
@@ -166,7 +169,8 @@ screens.widget.transform = function WidgetTransform(me) {
             hebrew:".item.hebrew",
             translation:".item.translation",
             explanation:".item.explanation",
-            heading:".heading"
+            heading:".heading",
+            source:".source"
         }, "None");
         for(var name in widgets) {
             var child = widgets[name];

@@ -20,7 +20,7 @@ screens.kab.term = function KabTerm(me) {
         if (!explanation && options.doExplanation) {
             explanation = item.explanation;
         }
-        if (item.includePrefix) {
+        if (item.includePrefix && translation) {
             translation = item.prefix + " " + translation;
         }
         var term = source;
