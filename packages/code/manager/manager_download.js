@@ -92,8 +92,7 @@ screens.manager.download = function ManagerDownload(me) {
             items.push({
                 from: item.from,
                 to: item.to,
-                isDownloading: item.isDownloading,
-                isDownloaded: item.isDownloaded
+                isDownloading: item.isDownloading
             });
         }
         return items;
