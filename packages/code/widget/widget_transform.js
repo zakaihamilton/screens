@@ -7,6 +7,9 @@ screens.widget.transform = function WidgetTransform(me) {
     me.element = {
         properties: __json__
     };
+    me.html = function() {
+        return __html__;
+    }
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
         var window = me.widget.window(widget);
@@ -110,9 +113,8 @@ screens.widget.transform = function WidgetTransform(me) {
             language = me.core.string.language(text);
             me.log("detected language: " + language);
         }
-        widget.options.hoverCallback = "screens.widget.transform.hoverDescription";
+        widget.options.clickCallback = "screens.widget.transform.openPopup";
         widget.options.diagramCallback = "screens.widget.transform.loadDiagram";
-        widget.options.toggleCallback = "screens.widget.transform.cycleDescription";
         widget.options.reload = true;
         me.media.voice.stop();
         var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
@@ -132,10 +134,10 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.language = language;
         me.core.property.set(widget.var.output, "ui.basic.html", text);
         if (text) {
-            widget.tableOfPhases = { terms, data };
+            widget.termData = { terms, data };
         }
         else {
-            widget.tableOfPhases = null;
+            widget.termData = null;
         }
         if (widget.options.output) {
             me.core.property.set(widget.var.output, "ui.style.display", text ? "" : "none");
@@ -152,56 +154,35 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
     };
-    me.showDescriptionBox = function (object, next, visible) {
-        var descriptionType = null;
-        var descriptionBox = null;
-        var descriptionTypes = ["source", "related"];
+    me.openPopup = function(object, termName) {
         var widget = me.findWidget(object);
-        if (!widget) {
+        var term = widget.termData.terms[termName];
+        if(!term) {
             return;
         }
-        if (widget.options.prioritizeExplanation) {
-            descriptionTypes.unshift("technical");
-            descriptionTypes.unshift("explanation");
+        var widgets = me.ui.node.bind(widget, term, {
+            term:".text",
+            phase:".phase|.phase.minor",
+            hebrew:".item.hebrew",
+            translation:".item.translation",
+            explanation:".item.explanation",
+            heading:".heading"
+        }, "");
+        for(var name in widgets) {
+            var child = widgets[name];
+            child.parentNode.style.display = child.innerText ? "" : "none";
         }
-        else {
-            descriptionTypes.unshift("explanation");
-            descriptionTypes.unshift("technical");
+        var phase = widgets.phase.innerText.toLowerCase();
+        var classes = "title widget-transform-level "
+        if(phase !== "root") {
+            classes += "kab-term-phase-" + phase;
         }
-        var descriptionIndex = 0;
-        if (next && widget.descriptionType) {
-            descriptionIndex = descriptionTypes.indexOf(widget.descriptionType) + 1;
-        }
-        for (var cycleIndex = 0; cycleIndex < descriptionTypes.length; cycleIndex++) {
-            descriptionType = descriptionTypes[(descriptionIndex + cycleIndex) % descriptionTypes.length];
-            descriptionBox = me.ui.node.findById(object, descriptionType);
-            if (descriptionBox) {
-                break;
-            }
-        }
-        object.descriptionType = descriptionType;
-        if (object.hoverTimer) {
-            clearTimeout(object.hoverTimer);
-        }
-        object.hoverTimer = setTimeout(function () {
-            me.resetDescription(object);
-            if (visible) {
-                if (descriptionBox && descriptionBox.resetTimer) {
-                    clearTimeout(descriptionBox.resetTimer);
-                    descriptionBox.resetTimer = null;
-                }
-                me.core.property.set(descriptionBox, "ui.style.display", "block");
-                setTimeout(function () {
-                    me.core.property.set(descriptionBox, "ui.class.add", "show");
-                }, 250);
-            }
-        }, next ? 0 : 1000);
+        me.core.property.set(widgets.phase, "ui.class.class", classes);
+        me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
     };
-    me.hoverDescription = function (object, state) {
-        me.showDescriptionBox(object, false, state);
-    };
-    me.cycleDescription = function (object) {
-        me.showDescriptionBox(object, true, true);
+    me.closePopup = function(object) {
+        var widget = me.findWidget(object);
+        me.core.property.set(widget.var.popup, "ui.class.remove", "is-active");
     };
     me.reflow = function (object) {
         var widget = me.findWidget(object);
@@ -332,18 +313,6 @@ screens.widget.transform = function WidgetTransform(me) {
             me.core.property.set([widget.var.nextPage], "ui.class.disabled", me.ui.scroll.isLastPage(widget.var.layout));
         }
     };
-    me.resetDescription = function (object) {
-        var descriptionTypes = ["explanation", "technical", "source", "related"];
-        descriptionTypes.map(function (descriptionType) {
-            var descriptionBox = me.ui.node.findById(object, descriptionType);
-            if (descriptionBox) {
-                me.core.property.set(descriptionBox, "ui.class.remove", "show");
-                descriptionBox.resetTimer = setTimeout(function () {
-                    me.core.property.set(descriptionBox, "ui.style.display", "none");
-                }, 1000);
-            }
-        });
-    };
     me.diagramList = {
         get: function (object) {
             var widget = me.findWidget(object);
@@ -351,7 +320,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            if (widget.tableOfPhases) {
+            if (widget.termData) {
                 diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
             var isFirst = true;
@@ -466,10 +435,10 @@ screens.widget.transform = function WidgetTransform(me) {
         var params = { gridData: [] };
         var widget = me.findWidget(object);
         var rows = {};
-        if (!widget.tableOfPhases) {
+        if (!widget.termData) {
             return params;
         }
-        var terms = widget.tableOfPhases.terms;
+        var terms = widget.termData.terms;
         console.log("terms: " + JSON.stringify(terms));
         me.addTerms(terms, rows, true);
         me.addTerms(terms, rows, false);

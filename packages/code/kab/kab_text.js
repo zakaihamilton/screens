@@ -189,7 +189,7 @@ screens.kab.text = function KabText(me) {
             wordsString = "";
         }
         var json = await me.kab.data.load(language, options.reload);
-        me.core.message.send("kab.search.clear");
+        me.core.message.send("kab.term.clear");
         wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
         if (options.abridged) {
             wordsString = me.core.message.send("kab.format.replace", wordsString, json.abridged);
@@ -213,7 +213,7 @@ screens.kab.text = function KabText(me) {
             wordsString = me.parseSingle(session, null, wordsString);
         }
         wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
-        var info = { text: wordsString, terms: me.kab.search.terms, data: json.data };
+        var info = { text: wordsString, terms: me.kab.term.terms, data: json.data };
         return info;
     };
     me.handleInstance = function (session, instance) {
@@ -290,7 +290,7 @@ screens.kab.text = function KabText(me) {
                     translation = parseSingle(session, instance, translation, true);
                 }
             }
-            me.kab.search.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
+            me.kab.term.setTerm(session.options, session.json.style, instance.item, null, translation, explanation);
             if (translation && instance.upperCase) {
                 translation = translation.toUpperCase();
             }
@@ -300,7 +300,7 @@ screens.kab.text = function KabText(me) {
             modify(session, instance, " [", translation, explanation, "]", false, session.options.keepSource || session.json.options.keepExpandedSource);
             match = true;
         } else if (session.options.addStyles && instance.item.style) {
-            me.kab.search.setTerm(session.options, session.json.style, instance.item);
+            me.kab.term.setTerm(session.options, session.json.style, instance.item);
             modify(session, instance, "", source ? source : instance.source, null, "", false, false);
             match = true;
         } else if (source) {
@@ -383,7 +383,7 @@ screens.kab.text = function KabText(me) {
             var key = words[0].toUpperCase();
             var lookup = result[key];
             if (item.defaultTerm) {
-                me.kab.search.setTerm(options, json.style, item, null, null, null, false);
+                me.kab.term.setTerm(options, json.style, item, null, null, null, false);
             }
             if (!lookup) {
                 lookup = new Map();

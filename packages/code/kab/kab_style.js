@@ -9,7 +9,7 @@ screens.kab.style = function KabStyle(me) {
         var styles = instance.item.style;
         var html = "";
         var subHeading = "";
-        var phase = null, parentPhase = null, heading = null, tooltip = null, descriptions = {};
+        var phase = null, parentPhase = null, heading = null, tooltip = null;
         var term = instance.target;
         if (typeof styles === "string") {
             if (session.json.style) {
@@ -18,19 +18,16 @@ screens.kab.style = function KabStyle(me) {
                 styles = null;
             }
         }
-        if(styles && styles.descriptions) {
-            descriptions = styles.descriptions;
-        }
         if (styles && styles.bold) {
             html += "<b>";
         }
         if (styles && styles.phase) {
             phase = styles.phase;
-            if(typeof phase !== "string") {
-                if(phase.major) {
+            if (typeof phase !== "string") {
+                if (phase.major) {
                     parentPhase = phase.major;
                 }
-                if(phase.minor) {
+                if (phase.minor) {
                     phase = phase.minor;
                 }
                 else {
@@ -53,39 +50,29 @@ screens.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
         }
-        if(instance.item && instance.item.hebrew) {
-            if(instance.item.transliterated) {
+        if (instance.item && instance.item.hebrew) {
+            if (instance.item.transliterated) {
                 tooltip = instance.item.transliterated;
             }
             tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
-            if(session.options.subHeadings) {
+            if (session.options.subHeadings) {
                 subHeading = tooltip;
             }
         }
-        if(!("related" in descriptions)) {
-            descriptions["related"] = {};
-        }
-        var numDescriptions = Object.keys(descriptions).length;
         if (styles && styles.tooltip) {
             tooltip = styles.tooltip;
         }
         if (phase) {
             html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border " + nightModeClass + "\"";
-            if (numDescriptions) {
-                html += " kab-term-toast";
-            }
             if (tooltip) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
             var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
-            if(diagram && session.options.diagramCallback) {
+            if (diagram && session.options.diagramCallback) {
                 html += " onload=\"" + session.options.diagramCallback + "(this," + diagram + ")\"";
             }
-            if(session.options.hoverCallback) {
-                html += " onmouseover=\"" + session.options.hoverCallback + "(this,true)\" onmouseout=\"" + session.options.hoverCallback + "(this,false)\"";
-            }
-            if(session.options.toggleCallback) {
-                html += " onclick=\"" + session.options.toggleCallback + "(this)\"";
+            if (session.options.clickCallback) {
+                html += " onclick=\"" + session.options.clickCallback + "(this,'" + instance.item.term + "')\"";
             }
             html += ">";
             if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
@@ -100,33 +87,9 @@ screens.kab.style = function KabStyle(me) {
             if (subHeading) {
                 html += "<span kab-term-sub-heading=\"" + subHeading + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
             }
-            if (numDescriptions) {
-                if (phase === "none") {
-                    phase = "root";
-                }
-                for(var descriptionType in descriptions) {
-                    var description = descriptions[descriptionType];
-                    html += "<span id=\"" + descriptionType + "\" style=\"display:none;\" class=\"kab-term-description-box kab-term-" + descriptionType + " kab-term-phase-" + phase + "-border " + nightModeClass + "\">";
-                    var short = description.short;
-                    if (!short) {
-                        short = "";
-                    }
-                    html += "<span class=\"kab-term-short kab-term-" + session.language + " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-underline " + nightModeClass + "\"><b>" + replacement;
-                    if(tooltip && !session.json.options.keepExpandedSource) {
-                        html +=" [" + tooltip + "]";
-                    }
-                    html += ":</b> " + short + "</span>";
-                    html += "<span class=\"kab-term-description-type kab-term-" + session.language + " " + nightModeClass + "\">" + descriptionType + "</span>";
-                    var long = description.long;
-                    if (long) {
-                        html += "<span class=\"kab-term-long " + nightModeClass + "\">" + long + "</span>";
-                    }
-                    html += "</span>";
-                }
-            }
         }
-        if(instance.prefixLetters) {
-           html += instance.prefixLetters; 
+        if (instance.prefixLetters) {
+            html += instance.prefixLetters;
         }
         html += replacement;
         if (phase) {

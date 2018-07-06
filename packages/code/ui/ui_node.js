@@ -25,6 +25,21 @@ screens.ui.node = function UINode(me) {
         childList = childList.filter(Boolean);
         return childList;
     };
+    me.findByName = function(object, name) {
+        var element = object.firstChild;
+        while (element) {
+            if (element.getAttribute && element.getAttribute("name") === name) {
+                break;
+            }
+            var child = me.findByName(element, name);
+            if(child) {
+                element = child;
+                break;
+            }
+            element = element.nextSibling;
+        }
+        return element;
+    };
     me.findById = function (object, id) {
         var element = object.firstChild;
         while (element) {
@@ -275,5 +290,33 @@ screens.ui.node = function UINode(me) {
             callback(parent);
             parent = parent.parentNode;
         }
+    };
+    me.bind = function (object, data, bindings, baseDefault) {
+        var widgets = [];
+        for (var binding in bindings) {
+            var widget = widgets[binding] = me.ui.node.findByName(object, binding);
+            var values = bindings[binding].split("|");
+            if(baseDefault) {
+                values.push(baseDefault);
+            }
+            for(var value of values) {
+                if(value.startsWith(".")) {
+                    path = value.substring(1);
+                    var info = me.core.json.traverse(data, path);
+                    var value = info.value;
+                    if(!info.found || typeof value !== "string") {
+                        continue;
+                    }
+                }
+                if(widget.value) {
+                    widget.value = value;
+                }
+                else {
+                    me.core.property.set(widget, "ui.basic.text", value);
+                }
+                break;
+            }
+        }
+        return widgets;
     };
 };

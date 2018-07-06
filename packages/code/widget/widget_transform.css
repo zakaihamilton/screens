@@ -228,12 +228,17 @@ h4.widget-transform-widget {
     overflow-y: hidden;
     height: 10%;
     padding:10px;
-    z-index: 1000;
     opacity: 0.25;
     border-radius: 10px 10px 0px 0px;
     display:flex;
     align-items: center;
     justify-content: center;
+}
+
+.widget-transform-level {
+    padding:10px;
+    border:1px solid lightgray;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .widget-transform-iconbar:hover {
