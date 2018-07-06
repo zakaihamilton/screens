@@ -67,7 +67,7 @@
                         "@ui.html.icon(fa fa-chevron-up)",
                         "First Page",
                         "widget.transform.layout.scrollToTop",
-                        null,
+                        "iconbar.scrollToTop",
                         "scrollToTop"
                     ],
                     [

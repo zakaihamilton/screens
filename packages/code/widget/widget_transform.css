@@ -357,3 +357,7 @@ h4.widget-transform-widget {
     color:white !important;
     background-color: black !important;
 }
+
+.widget-transform-iconbar-scrollToTop {
+    border-right: 2px solid darkgray;
+}
