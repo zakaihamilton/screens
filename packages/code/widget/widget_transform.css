@@ -264,7 +264,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar a:hover {
-    background-color: #000;
+    background-color: #020d17;
 }
 
 .widget-transform-iconbar a.active:hover {
@@ -310,7 +310,7 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar-stop.play:hover {
     color:white !important;
-    background-color: black !important;
+    background-color: #020d17 !important;
 }
 
 .widget-transform-iconbar-pause {
@@ -330,7 +330,7 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar-pause.play:hover {
     color:white !important;
-    background-color: black !important;
+    background-color: #020d17 !important;
 }
 
 .widget-transform-iconbar-pause.play.pause {
@@ -360,7 +360,7 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar-play.play.pause:hover {
     color:white !important;
-    background-color: black !important;
+    background-color: #020d17 !important;
 }
 
 .widget-transform-iconbar-scrollToTop {

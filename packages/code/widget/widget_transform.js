@@ -619,7 +619,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
                             setTimeout(() => {
-                                me.core.property.set(object, "ui.scroll.nextPage");
+                                me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
                                 setTimeout(() => {
                                     me.core.property.set(object, "widget.transform.player.play");
                                 }, 1000);
@@ -632,7 +632,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                     if (pageNumber > 1) {
                         me.widget.transform.layout.clearPage(currentPage);
                         me.focusParagraph(object, null);
-                        me.core.property.set(object, "ui.scroll.previousPage");
+                        me.core.property.set(widget.var.layout, "ui.scroll.previousPage");
                         me.core.property.set(object, "widget.transform.player.play", -1);
                     }
                     else {
@@ -647,7 +647,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         me.currentPlayingPage = null;
                     }
                     else {
-                        me.core.property.set(object, "ui.scroll.nextPage");
+                        me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
                         me.core.property.set(object, "widget.transform.player.play");
                     }
                 },
