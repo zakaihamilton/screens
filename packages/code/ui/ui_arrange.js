@@ -18,7 +18,7 @@ screens.ui.arrange = function UIArrange(me) {
             var left = 0, top = 0, numWindows = windows.length;
             for(window of windows) {
                 me.reposition(window, function(region) {
-                    var label_region = me.ui.rect.relative_region(window.var.label, window);
+                    var label_region = me.ui.rect.relativeRegion(window.var.label, window);
                     region.left = left;
                     region.top = top;
                     region.width -= label_region.bottom * numWindows;
@@ -39,10 +39,10 @@ screens.ui.arrange = function UIArrange(me) {
         } else {
             container = me.ui.element.workspace();
         }
-        var parent_region = me.ui.rect.relative_region(container);
+        var parent_region = me.ui.rect.relativeRegion(container);
         var isFixed = me.core.property.get(window, "fixed");
         callback(parent_region);
-        me.ui.rect.set_relative_region(window, parent_region, container, isFixed);
+        me.ui.rect.setRelativeRegion(window, parent_region, container, isFixed);
         me.core.property.notify(window, "update");
         me.core.property.notify(parent, "update");
     };

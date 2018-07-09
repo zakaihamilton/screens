@@ -33,8 +33,8 @@ screens.ui.focus = function UIFocus(me) {
             if (!node.component) {
                 continue;
             }
-            var rect = me.ui.rect.absolute_region(node);
-            var in_rect = me.ui.rect.in_region(rect, x, y);
+            var rect = me.ui.rect.absoluteRegion(node);
+            var in_rect = me.ui.rect.inRegion(rect, x, y);
             if (in_rect) {
                 var branch = me.find_branch(node, x, y);
                 if (branch) {

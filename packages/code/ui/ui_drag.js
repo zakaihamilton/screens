@@ -75,8 +75,8 @@ screens.ui.drag.icon = function UIDragIcon(me) {
                 return;
             }
             if (target.drag_element) {
-                var rect = me.ui.rect.absolute_region(target.drag_element);
-                var in_rect = me.ui.rect.in_region(rect, event.clientX, event.clientY);
+                var rect = me.ui.rect.absoluteRegion(target.drag_element);
+                var in_rect = me.ui.rect.inRegion(rect, event.clientX, event.clientY);
                 if (!in_rect) {
                     if (event.preventDefault) {
                         event.preventDefault();
@@ -85,7 +85,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
                 }
             }
             me.source = target;
-            var source_rect = me.ui.rect.absolute_region(target);
+            var source_rect = me.ui.rect.absoluteRegion(target);
             me.drag_offset = {x: event.clientX - source_rect.left, y: event.clientY - source_rect.top};
             event.dataTransfer.effectAllowed = 'move';
             event.dataTransfer.dropEffect = 'move';
@@ -155,10 +155,10 @@ screens.ui.drag.icon = function UIDragIcon(me) {
                 if (event.clientX && event.clientY) {
                     me.drag_pos = {x: event.clientX, y: event.clientY};
                 }
-                var region = me.ui.rect.relative_region(me.source);
+                var region = me.ui.rect.relativeRegion(me.source);
                 region.left = me.drag_pos.x - me.drag_offset.x;
                 region.top = me.drag_pos.y - me.drag_offset.y;
-                me.ui.rect.set_relative_region(me.source, region);
+                me.ui.rect.setRelativeRegion(me.source, region);
             }
         }
     };

@@ -4,6 +4,16 @@
  */
 
 screens.ui.scroll = function UIScroll(me) {
+    me.isScrollable = function(object) {
+        var result = true;
+        if (object.scrollWidth > object.offsetWidth) {
+            result = false;
+        }
+        if (object.scrollHeight > object.offsetHeight) {
+            result = false;
+        }
+        return result;
+    };
     me.by = function (object, distance) {
         if (object.scrollTop + distance < 0) {
             object.scrollTop = 0;

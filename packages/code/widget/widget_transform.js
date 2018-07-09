@@ -7,7 +7,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.element = {
         properties: __json__
     };
-    me.html = function() {
+    me.html = function () {
         return __html__;
     }
     me.initOptions = function (object) {
@@ -154,40 +154,40 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
     };
-    me.openPopup = function(object, termName) {
+    me.openPopup = function (object, termName) {
         var widget = me.findWidget(object);
         var foundTermName = Object.keys(widget.termData.terms).find((term) => {
             return term.replace(/ /g, "") === termName;
         });
-        if(foundTermName && termName !== foundTermName) {
+        if (foundTermName && termName !== foundTermName) {
             termName = foundTermName;
         }
         var term = widget.termData.terms[termName];
-        if(!term) {
+        if (!term) {
             return;
         }
         var widgets = me.ui.node.bind(widget, term, {
-            term:".text",
-            phase:".phase|.phase.minor",
-            hebrew:".item.hebrew",
-            translation:".item.translation",
-            explanation:".item.explanation",
-            heading:".heading",
-            source:".source"
+            term: ".text",
+            phase: ".phase|.phase.minor",
+            hebrew: ".item.hebrew",
+            translation: ".item.translation",
+            explanation: ".item.explanation",
+            heading: ".heading",
+            source: ".source"
         }, "None");
-        for(var name in widgets) {
+        for (var name in widgets) {
             var child = widgets[name];
             child.parentNode.style.display = child.innerText === "None" ? "none" : "";
         }
         var phase = widgets.phase.innerText.toLowerCase();
         var classes = "title widget-transform-level "
-        if(phase !== "root") {
+        if (phase !== "root") {
             classes += "kab-term-phase-" + phase;
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
         me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
     };
-    me.closePopup = function(object) {
+    me.closePopup = function (object) {
         var widget = me.findWidget(object);
         me.core.property.set(widget.var.popup, "ui.class.remove", "is-active");
     };
@@ -571,24 +571,29 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.play(object, me.media.voice.currentIndex, false);
         }
     };
+    me.setPlayState = function (object, play, pause) {
+        var widget = me.findWidget(object);
+        var widgets = me.ui.node.childList(widget.var.iconbar);
+        me.core.property.set(widgets, "ui.class.play", play);
+        me.core.property.set(widgets, "ui.class.pause", pause);
+    };
     me.pause = function (object) {
-        if(!me.media.voice.isPlaying()) {
+        if (!me.media.voice.isPlaying()) {
             return;
         }
         var widget = me.findWidget(object);
-        var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         me.focusParagraph(object, null);
         me.media.voice.pause();
-        me.widget.transform.layout.setPlayState(currentPage, true, true);
+        me.setPlayState(widget, true, true);
     };
-    me.play = function (object, value, toggle=true) {
+    me.play = function (object, value, toggle = true) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.media.voice.isPlaying(currentPage);
         var isPaused = me.media.voice.isPaused(currentPage);
         if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
-            me.widget.transform.layout.setPlayState(me.currentPlayingPage, true, false);
+            me.setPlayState(widget, true, false);
             var focusElement = me.widget.transform.layout.focusElement(me.currentPlayingPage);
             me.focusParagraph(object, focusElement);
         }
@@ -602,19 +607,19 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                 index: index,
                 onstart: () => {
                     me.log("onstart");
-                    me.widget.transform.layout.setPlayState(currentPage, true, false);
+                    me.setPlayState(widget, true, false);
                     me.focusParagraph(object, null);
                 },
                 oncancel: () => {
                     me.log("oncancel");
                     me.widget.transform.layout.clearPage(currentPage);
-                    me.widget.transform.layout.setPlayState(currentPage, false, false);
+                    me.setPlayState(widget, false, false);
                     me.focusParagraph(object, null);
                 },
                 onend: () => {
                     me.log("onend");
                     me.widget.transform.layout.clearPage(currentPage);
-                    me.widget.transform.layout.setPlayState(currentPage, false, false);
+                    me.setPlayState(widget, false, false);
                     me.focusParagraph(object, null);
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
@@ -642,7 +647,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                 onnext: () => {
                     me.widget.transform.layout.clearPage(currentPage);
                     if (currentPage.last) {
-                        me.widget.transform.layout.setPlayState(currentPage, false, false);
+                        me.setPlayState(widget, false, false);
                         me.focusParagraph(object, null);
                         me.currentPlayingPage = null;
                     }
@@ -662,7 +667,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             };
             me.media.voice.play(text, widget.options.voice, params);
             if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
-                me.widget.transform.layout.setPlayState(me.currentPlayingPage, false, false);
+                me.setPlayState(widget, false, false);
                 me.currentPlayingPage = null;
             }
             me.currentPlayingPage = currentPage;
@@ -676,7 +681,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.media.voice.stop();
             me.widget.transform.layout.clearPage(currentPage);
             me.focusParagraph(object, null);
-            me.widget.transform.layout.setPlayState(currentPage, false, false);
+            me.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
@@ -913,7 +918,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     if (options.usePages) {
                         me.applyNumPages(layoutContent, pageIndex);
                     }
-                    me.completePage(target.page, options);
+                    me.completePage(target.page);
                     if (target.page) {
                         target.page.last = true;
                         target.page.var.separator.style.display = "block";
@@ -945,6 +950,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                 }
                 var newPage = false;
                 me.cleanupWidget(widget);
+                me.clearWidget(widget);
                 newPage = !me.widgetFitInPage(widget, target.page);
                 if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
                     previousWidget = null;
@@ -966,7 +972,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         pageContent.removeChild(widget);
                     }
                     pageIndex++;
-                    me.completePage(target.page, options);
+                    me.completePage(target.page);
                     target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
                     pageContent = target.page.var.content;
                     if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
@@ -996,23 +1002,14 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             }
         }, 0);
     };
-    me.widgetFitInContainer = function (widget, container) {
-        var result = true;
-        if (container.scrollWidth > container.offsetWidth) {
-            result = false;
-        }
-        if (container.scrollHeight > container.offsetHeight) {
-            result = false;
-        }
-        return result;
-    };
     me.widgetFitInPage = function (widget, page) {
         var pageContent = page.var.content;
         var pageContainer = page.var.container;
         var result = true;
-        result = me.widgetFitInContainer(widget, page);
-        result = result && me.widgetFitInContainer(widget, pageContainer);
-        result = result && me.widgetFitInContainer(widget, pageContent);
+        var fitInPage = me.ui.scroll.isScrollable(page);
+        var fitInContainer = me.ui.scroll.isScrollable(pageContainer);
+        var fitInContent = me.ui.scroll.isScrollable(pageContent);
+        result = fitInPage && fitInContainer && fitInContent;
         return result;
     };
     me.completeReflow = function (callback, target, options, scrollToWidget = true) {
@@ -1046,7 +1043,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             "ui.class.class": ["widget.transform.page", modifiers],
             "ui.style.width": pageWidth + "px",
             "ui.style.height": pageHeight + "px",
-            "ui.style.visibility": "hidden",
             "ui.attribute.pageNumber": pageIndex,
             "ui.basic.elements": [
                 {
@@ -1124,15 +1120,14 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             widget = widget.nextSibling;
         }
     };
-    me.completePage = function (page, options) {
+    me.completePage = function (page) {
         var showPage = true;
         if (!page) {
             return;
         }
         var pageNumber = me.core.property.get(page, "ui.attribute.pageNumber");
         if (pageNumber === "1" || showPage) {
-            page.style.display = "flex-inline";
-            page.style.visibility = "visible";
+            page.style.display = "";
             page.pageOffset = page.offsetTop;
             page.pageSize = page.clientHeight;
         } else {
@@ -1232,20 +1227,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         });
         return array;
     };
-    me.isPlaying = function (page) {
-        var isPlaying = me.core.property.get(page.var.play, "ui.class.contains", "play");
-        return isPlaying;
-    };
-    me.isPaused = function (page) {
-        var isPaused = me.core.property.get(page.var.play, "ui.class.contains", "pause");
-        return isPaused;
-    };
-    me.setPlayState = function (page, play, pause) {
-        var widget = me.findWidget(page);
-        var widgets = me.ui.node.childList(widget.var.iconbar);
-        me.core.property.set(widgets, "ui.class.play", play);
-        me.core.property.set(widgets, "ui.class.pause", pause);
-    };
     me.hasSeparator = function (page) {
         var hasSeparator = false;
         if (page) {
@@ -1263,18 +1244,24 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             element.style.opacity = "0.5";
         }
     };
+    me.clearWidget = function (widget, modifiers) {
+        if (!modifiers) {
+            modifiers = me.modifiers(widget);
+        }
+        if (widget.getAttribute('hidden')) {
+            return;
+        }
+        me.markElement(widget, true);
+        if (widget.innerText) {
+            me.core.property.set(widget, "ui.class.add", ["widget.transform.widget", modifiers]);
+        }
+        widget.classList.remove("mark");
+    };
     me.clearPage = function (page) {
         var content = page.var.content;
         var modifiers = me.modifiers(page);
         Array.from(content.children).map(element => {
-            if (element.getAttribute('hidden')) {
-                return;
-            }
-            me.markElement(element, true);
-            if (element.innerText) {
-                me.core.property.set(element, "ui.class.add", ["widget.transform.widget", modifiers]);
-            }
-            element.classList.remove("mark");
+            me.clearWidget(element, modifiers);
         });
         page.focusElement = null;
     };

@@ -4,9 +4,9 @@
  */
 
 screens.ui.rect = function UIRect(me) {
-    me.relative_region = function (object, parent = object.parentNode) {
-        var parent_region = me.absolute_region(parent);
-        var region = me.absolute_region(object);
+    me.relativeRegion = function (object, parent = object.parentNode) {
+        var parent_region = me.absoluteRegion(parent);
+        var region = me.absoluteRegion(object);
         var xPos = region.left - parent_region.left;
         var yPos = region.top - parent_region.top;
         var width = region.width;
@@ -20,7 +20,10 @@ screens.ui.rect = function UIRect(me) {
             bottom: yPos + height
         };
     };
-    me.absolute_region = function (object) {
+    me.absoluteRegion = function (object) {
+        if(!object) {
+            return null;
+        }
         if (object === document.body) {
             return me.viewport();
         }
@@ -63,19 +66,19 @@ screens.ui.rect = function UIRect(me) {
         };
         return absoluteRect;
     };
-    me.empty_region = function (region) {
+    me.emptyRegion = function (region) {
         region.left = 0;
         region.top = 0;
         region.width = 0;
         region.height = 0;
     };
-    me.set_relative_region = function (object, region, relative_to = null, move_only=false) {
+    me.setRelativeRegion = function (object, region, relative_to = null, move_only=false) {
         if (!object || !region) {
             return;
         }
-        var parent_region = me.absolute_region(object.parentNode);
+        var parent_region = me.absoluteRegion(object.parentNode);
         if (relative_to) {
-            var relative_to_region = me.absolute_region(relative_to);
+            var relative_to_region = me.absoluteRegion(relative_to);
             parent_region.left -= relative_to_region.left;
             parent_region.top -= relative_to_region.top;
         }
@@ -86,24 +89,20 @@ screens.ui.rect = function UIRect(me) {
             object.style.height = region.height + "px";
         }
     };
-    me.set_absolute_region = function (object, region) {
+    me.setAbsoluteRegion = function (object, region) {
         if (object.parentNode === document.body) {
             object.style.left = region.left + "px";
             object.style.top = region.top + "px";
         } else {
-            var parent_region = me.absolute_region(object.parentNode);
+            var parent_region = me.absoluteRegion(object.parentNode);
             object.style.left = region.left - parent_region.left + "px";
             object.style.top = region.top - parent_region.top + "px";
         }
         object.style.width = region.width + "px";
         object.style.height = region.height + "px";
     };
-    me.in_region = function (region, x, y) {
+    me.inRegion = function (region, x, y) {
         return !(x < region.left || y < region.top || x > region.right || y > region.bottom);
-    };
-    me.in_view_bounds = function (region) {
-        var view = me.viewport();
-        return !(region.left < view.left || region.top < view.top || region.right > view.right || region.bottom > view.bottom);
     };
     me.viewport = function () {
         var e = window, a = 'inner';
@@ -116,13 +115,25 @@ screens.ui.rect = function UIRect(me) {
         var height = e[ a + 'Height' ];
         return {left: 0, top: 0, width: width, height: height, right: width, bottom: height};
     };
-    me.inView = function (object) {
-        let parentTop = object.parentNode.scrollTop;
-        let parentBottom = parentTop + object.parentNode.clientHeight;
-        let childTop = object.offsetTop;
-        let childBottom = childTop + object.clientHeight;
-        let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
-        let isPartial = ((childTop < parentTop && childBottom > parentTop) || (childBottom > parentBottom && childTop < parentBottom));
-        return  (isTotal || isPartial);
-    };
+    me.inView = function(object) {
+        var inView = true;
+        var parentRect = me.absoluteRegion(object.parentNode);
+        var objectRect = me.absoluteRegion(object);
+        if(!parentRect) {
+            inView = false;
+        }
+        else if(objectRect.left < parentRect.left) {
+            inView = false;
+        }
+        else if(objectRect.right > parentRect.right) {
+            inView = false;
+        }
+        else if(objectRect.top < parentRect.top) {
+            inView = false;
+        }
+        else if(objectRect.bottom > parentRect.bottom) {
+            inView = false;
+        }
+        return inView;
+    }
 };

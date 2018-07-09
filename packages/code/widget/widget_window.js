@@ -62,7 +62,7 @@ screens.widget.window = function WidgetWindow(me) {
         } else {
             content = me.ui.element.workspace();
         }
-        window.restore_region = me.ui.rect.relative_region(window, content);
+        window.restore_region = me.ui.rect.relativeRegion(window, content);
     };
     me.mainClass = {
         get: function (object) {
@@ -485,8 +485,8 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.fixRegion = function (object) {
         var window = me.window(object);
-        var region = me.ui.rect.absolute_region(window);
-        var workspace_region = me.ui.rect.absolute_region(me.ui.element.workspace());
+        var region = me.ui.rect.absoluteRegion(window);
+        var workspace_region = me.ui.rect.absoluteRegion(me.ui.element.workspace());
         var update = false;
         var fixed = me.core.property.get(window, "fixed");
         if (region.left <= workspace_region.left || region.left >= workspace_region.right) {
@@ -599,7 +599,7 @@ screens.widget.window = function WidgetWindow(me) {
                     } else {
                         content = me.ui.element.workspace();
                     }
-                    me.ui.rect.set_relative_region(window, window.restore_region, content);
+                    me.ui.rect.setRelativeRegion(window, window.restore_region, content);
                     me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
                         "update": null
                     });
@@ -641,7 +641,7 @@ screens.widget.window = function WidgetWindow(me) {
                 } else {
                     content = me.ui.element.workspace();
                 }
-                me.ui.rect.set_relative_region(window, window.restore_region, content);
+                me.ui.rect.setRelativeRegion(window, window.restore_region, content);
                 me.core.property.set(window, {
                     "ui.property.broadcast": {
                         "ui.class.remove": "maximize",
@@ -749,7 +749,7 @@ screens.widget.window = function WidgetWindow(me) {
                 } else {
                     content = me.ui.element.workspace();
                 }
-                return me.ui.rect.relative_region(window, content);
+                return me.ui.rect.relativeRegion(window, content);
             }
         },
         set: function (object, value) {
@@ -764,7 +764,7 @@ screens.widget.window = function WidgetWindow(me) {
                 content = me.ui.element.workspace();
             }
             if (!maximized && !minimized) {
-                me.ui.rect.set_relative_region(window, value, content);
+                me.ui.rect.setRelativeRegion(window, value, content);
             }
             window.restore_region = value;
         }
@@ -923,7 +923,7 @@ screens.widget.window = function WidgetWindow(me) {
         get: function (object) {
             var window = me.window(object);
             var content = me.core.property.get(window, "widget.window.content");
-            var region = me.ui.rect.relative_region(content);
+            var region = me.ui.rect.relativeRegion(content);
             return region;
         }
     };

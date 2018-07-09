@@ -133,7 +133,7 @@ screens.widget.menu = function WidgetMenu(me) {
                 me.core.property.set(object, info, item);
             } else if (Array.isArray(info)) {
                 var window = me.core.property.get(object, "widget.window.active");
-                object.var.menu = me.create_menu(window, object, me.ui.rect.absolute_region(item), info);
+                object.var.menu = me.create_menu(window, object, me.ui.rect.absoluteRegion(item), info);
             }
         }
     };

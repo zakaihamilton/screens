@@ -34,7 +34,7 @@ screens.ui.resize = function UIResize(me) {
             if (!target.resize_enabled) {
                 return;
             }
-            var target_region = me.ui.rect.absolute_region(target);
+            var target_region = me.ui.rect.absoluteRegion(target);
             me.info = {
                 target: target,
                 left: event.clientX - target_region.left,
@@ -54,10 +54,10 @@ screens.ui.resize = function UIResize(me) {
     };
     me.move = {
         set: function (object, event) {
-            var target_region = me.ui.rect.absolute_region(me.info.target);
-            var object_region = me.ui.rect.absolute_region(object);
+            var target_region = me.ui.rect.absoluteRegion(me.info.target);
+            var object_region = me.ui.rect.absoluteRegion(object);
             var shift_region = {};
-            me.ui.rect.empty_region(shift_region);
+            me.ui.rect.emptyRegion(shift_region);
             var min_width = parseInt(me.core.property.get(me.info.target, "ui.style.minWidth"), 10);
             var min_height = parseInt(me.core.property.get(me.info.target, "ui.style.minHeight"), 10);
             if (object_region.left < target_region.left + (target_region.width / 2)) {
@@ -80,7 +80,7 @@ screens.ui.resize = function UIResize(me) {
             } else {
                 target_region.height = event.clientY - target_region.top;
             }
-            me.ui.rect.set_absolute_region(me.info.target, target_region);
+            me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
         }
     };
     me.up = {

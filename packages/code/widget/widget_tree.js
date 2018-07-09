@@ -110,7 +110,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     };
     me.dropdown = {
         set: function (object, value) {
-            var region = me.ui.rect.absolute_region(object.parentNode);
+            var region = me.ui.rect.absoluteRegion(object.parentNode);
             object.var.tree = me.ui.element({
                 "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",

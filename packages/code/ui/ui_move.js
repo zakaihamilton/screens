@@ -35,7 +35,7 @@ screens.ui.move = function UIMove(me) {
                 me.core.property.set(target, "ui.focus.active", true);
                 return;
             }
-            var target_region = me.ui.rect.absolute_region(target);
+            var target_region = me.ui.rect.absoluteRegion(target);
             me.info = {
                 target: target,
                 left: event.clientX - target_region.left,
@@ -56,12 +56,12 @@ screens.ui.move = function UIMove(me) {
     };
     me.move = {
         set: function(object, event) {
-            var target_region = me.ui.rect.absolute_region(me.info.target);
+            var target_region = me.ui.rect.absoluteRegion(me.info.target);
             var shift_region = {};
-            me.ui.rect.empty_region(shift_region);
+            me.ui.rect.emptyRegion(shift_region);
             target_region.left = event.clientX - me.info.left;
             target_region.top = event.clientY - me.info.top;
-            me.ui.rect.set_absolute_region(me.info.target, target_region);
+            me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
             var parent = me.widget.window.parent(me.info.target);
             me.core.property.notify(parent, "update");
         }
