@@ -110,13 +110,13 @@
                 {
                     "ui.basic.tag": "div",
                     "ui.basic.var": "resultsGrid"
-                },
-                {
-                    "ui.element.component": "widget.spinner",
-                    "ui.basic.var": "resultsSpinner",
-                    "ui.style.visibility":"hidden"
                 }
             ]
+        },
+        {
+            "ui.element.component": "widget.spinner",
+            "ui.basic.var": "resultsSpinner",
+            "ui.style.visibility":"hidden"
         },
         {
             "ui.basic.tag": "br"
