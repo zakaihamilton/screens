@@ -55,7 +55,16 @@
                                 "state": "select",
                                 "separator":true
                             }
-                        ]
+                        ],
+                        [
+                            "Export",
+                            null,
+                            {
+                                "enabled": false,
+                                "header": true
+                            }
+                        ],
+                        "widget.window.exportMenuList(app.transform.exportText)"
                     ]
                 ],
                 [

@@ -43,7 +43,7 @@
                         "header": true
                     }
                 ],
-                "app.library.exportMenuList",
+                "widget.window.exportMenuList(app.library.exportText)",
                 [
                     "Edit Mode",
                     "app.library.editMode",

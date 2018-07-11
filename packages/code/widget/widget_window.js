@@ -104,13 +104,9 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.mainWindow = function (object) {
         var window = me.window(object);
-        for (; ;) {
-            var isPopup = me.core.property.get(window, "popup");
-            var isEmbed = me.core.property.get(window, "embed");
-            if (!isPopup && !isEmbed) {
-                break;
-            }
-            window = me.parent(window);
+        var parent = me.parent(window);
+        if(parent) {
+            return parent;
         }
         return window;
     };
@@ -979,6 +975,34 @@ screens.widget.window = function WidgetWindow(me) {
             }
             return { label, window };
         });
+        return items;
+    };
+    me.exportMenuList = function (object, method) {
+        var window = me.widget.window.mainWindow(object);
+        var tasks = me.widget.window.tasks();
+        var items = tasks.filter(task => {
+            return me.core.property.get(task.window, "importData");
+        }).map(task => {
+            if(task.window === window) {
+                return null;
+            }
+            return [
+                task.label,
+                () => {
+                    me.core.property.set(window, method, task.window);
+                }
+            ];
+        });
+        items = items.filter(Boolean);
+        if (!items.length) {
+            items = [[
+                "No Open Compatible Applications",
+                null,
+                {
+                    enabled: false
+                }
+            ]]
+        }
         return items;
     };
     return "browser";

@@ -493,30 +493,10 @@ screens.app.library = function AppLibrary(me) {
         window.showResults = true;
         me.updateMode(window);
     };
-    me.exportMenuList = function (object) {
+    me.exportText = function(object, target) {
         var window = me.widget.window(object);
-        var tasks = me.widget.window.tasks();
-        var items = tasks.filter(task => {
-            return me.core.property.get(task.window, "importData");
-        }).map(task => {
-            return [
-                task.label,
-                () => {
-                    var text = me.core.property.get(window.var.transform, "text");
-                    me.core.property.set(task.window, "importData", text);
-                }
-            ];
-        });
-        if (!items.length) {
-            items = [[
-                "No Open Compatible Applications",
-                null,
-                {
-                    enabled: false
-                }
-            ]]
-        }
-        return items;
+        var text = me.core.property.get(window.var.transform, "text");
+        me.core.property.set(target, "importData", text);
     };
     me.updateResults = function (object, results) {
         var window = me.widget.window(object);
