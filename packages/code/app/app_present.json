@@ -1,0 +1,73 @@
+{
+    "title": "Present",
+    "icon": "/packages/res/icons/present.png",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "widget.menu.items": [
+        [
+            "Present",
+            [
+                [
+                    "Clear",
+                    "app.present.clear"
+                ],
+                [
+                    "Refresh",
+                    "app.present.refresh",
+                    {
+                        "separator":true
+                    }
+                ],
+                [
+                    "Export",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "widget.window.exportMenuList(app.present.exportText)",
+                [
+                    "Edit Mode",
+                    "app.present.editMode",
+                    {
+                        "state": "select",
+                        "separator":true
+                    }
+                ]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.transform",
+            "ui.basic.var": "transform"
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.present.editor.container",
+            "ui.basic.var":"editorContainer",
+            "ui.basic.elements": {
+                "ui.element.component": "widget.editor",
+                "ui.class.class": "app.present.editor",
+                "ui.basic.var": "editor",
+                "ui.property.after": {
+                    "storage.local.key": "@ui.windowkey.app-present-input",
+                    "storage.local.restore": "ui.basic.text",
+                    "ui.monitor.change": "ui.basic.save"
+                }
+        },
+            "ui.monitor.change": "app.present.updateText"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "@ui.windowkey.app-present-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "widget.transform.reflow",
+        "app.present.initOptions": null
+    }
+}

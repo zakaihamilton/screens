@@ -58,7 +58,10 @@ screens.core.string = function CoreString(me) {
         return nextWord;
     };
     me.language = function(string) {
-        var position = string.search(/[A-Z]/);
+        if(!string) {
+            return "english";
+        }
+        var position = string.search(/[A-Z,a-z]/);
         if(position >= 0){
             return "english";
         }

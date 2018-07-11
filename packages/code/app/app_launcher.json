@@ -37,6 +37,12 @@
             "ui.touch.click": "core.app.library"
         },
         {
+            "text": "Present",
+            "ui.tab.owner":"kab",
+            "ui.basic.src": "/packages/res/icons/present.png",
+            "ui.touch.click": "core.app.present"
+        },
+        {
             "text": "Profile",
             "ui.tab.owner":"kab",
             "ui.basic.src": "/packages/res/icons/profile.png",

@@ -37,6 +37,9 @@ screens.app.transform = function AppTransform(me) {
     };
     me.exportText = function(object, target) {
         var window = me.widget.window(object);
+        if(window.child_window) {
+            window = window.child_window;
+        }
         var text = me.core.property.get(window.var.transform, "text");
         me.core.property.set(target, "importData", text);
     };
