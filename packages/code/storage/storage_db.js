@@ -114,3 +114,52 @@ screens.storage.db = function StorageDB(me) {
     };
     return "server";
 };
+
+screens.storage.db.helper = function StorageDBHelper(me) {
+    me.extend = function (component) {
+        component.remove = async function (objectId) {
+            return await me.remove(objectId, component.id);
+        };
+        component.get = async function (objectId) {
+            return await me.get(objectId, component.id);
+        };
+        component.set = async function (data) {
+            return await me.set(component.id, data);
+        };
+        component.list = async function (userId, params, count) {
+            return await me.list(userId, component.id, params, count);
+        };
+        component.findByIds = async function(ids) {
+            return await me.findByIds(component.id, ids);
+        };
+    };
+    me.location = function (name) {
+        var location = {};
+        tokens = name.split(".");
+        location.collection = tokens.pop();
+        location.db = tokens.pop();
+        return location;
+    };
+    me.remove = async function (objectId, name) {
+        var object = await me.upper.remove(me.location(name), objectId);
+        return object;
+    };
+    me.get = async function (objectId, name) {
+        var object = await me.upper.findOne(me.location(name), objectId);
+        return object;
+    };
+    me.set = async function (name, data) {
+        var result = await me.upper.set(me.location(name), data);
+        return result;
+    };
+    me.findByIds = async function(name, ids) {
+        var result = await me.upper.findByIds(me.location(name), ids);
+        return result;
+    };
+    me.list = async function (userId, name, params, projection) {
+        params = Object.assign({}, params);
+        params.user = userId || 0;
+        var list = await me.upper.list(me.location(name), params, projection);
+        return list;
+    };    
+};

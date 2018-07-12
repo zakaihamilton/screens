@@ -4,57 +4,6 @@
  */
 
 screens.db.library = function DbLibrary(me) {
-    me.defaultLocation = {
-        db: "library",
-        collection: "object"
-    };
-    me.extend = function (child) {
-        child.remove = async function (objectId) {
-            return await me.remove(objectId, child.id);
-        };
-        child.get = async function (objectId) {
-            return await me.get(objectId, child.id);
-        };
-        child.set = async function (data) {
-            return await me.set(child.id, data);
-        };
-        child.list = async function (userId, params, count) {
-            return await me.list(userId, child.id, params, count);
-        };
-        child.findByIds = async function(ids) {
-            return await me.findByIds(child.id, ids);
-        };
-    };
-    me.location = function (name) {
-        var location = me.defaultLocation;
-        if (name) {
-            name = name.split(".").pop();
-            location = Object.assign({}, location, { collection: name });
-        }
-        return location;
-    };
-    me.remove = async function (objectId, name) {
-        var object = await me.storage.db.remove(me.location(name || this.id), objectId);
-        return object;
-    };
-    me.get = async function (objectId, name) {
-        var object = await me.storage.db.findOne(me.location(name || this.id), objectId);
-        return object;
-    };
-    me.set = async function (name, data) {
-        var result = await me.storage.db.set(me.location(name || this.id), data);
-        return result;
-    };
-    me.findByIds = async function(name, ids) {
-        var result = await me.storage.db.findByIds(me.location(name || this.id), ids);
-        return result;
-    };
-    me.list = async function (userId, name, params, projection) {
-        params = Object.assign({}, params);
-        params.user = userId || 0;
-        var list = await me.storage.db.list(me.location(name || this.id), params, projection);
-        return list;
-    };
     me.find = async function (userId, query) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
@@ -102,12 +51,11 @@ screens.db.library = function DbLibrary(me) {
 };
 
 screens.db.library.tags = function DbLibraryTag(me) {
-    me.init = me.upper.extend;
+    me.init = me.storage.db.helper.extend;
 };
 
 screens.db.library.content = function DbLibraryContent(me) {
-    me.init = me.upper.extend;
-    me.index = { text: "text" };
+    me.init = me.storage.db.helper.extend;
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {
