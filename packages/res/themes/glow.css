@@ -972,3 +972,7 @@
 .delete.night-mode {
     background-color:var(--background);
 }
+
+.table td.is-dark, .table th.is-dark {
+    border-color:var(--border-color);
+}

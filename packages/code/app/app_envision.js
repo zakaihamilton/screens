@@ -111,6 +111,13 @@ screens.app.envision = function AppEnvision(me) {
         }
         return formatted;
     };
+    me.beautifyName = function(object, name) {
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        name = name.replace(/_([a-z])/g, function (m, w) {
+            return " " + w.toUpperCase();
+        });
+        return name;
+    };
     me.processArrays = function(object, text, root) {
         text = text.replace(/\[[^\[\]]*\]/g, function (match) {
             console.log("match: " + match);
@@ -135,6 +142,14 @@ screens.app.envision = function AppEnvision(me) {
                 path = path.substring(1);
                 if (path === "date") {
                     return new Date().toString();
+                }
+                else {
+                    var info = me.core.property.split(object, path);
+                    var item = me.core.json.traverse(root, info.value);
+                    if (item.found) {
+                        return me.core.property.get(object, info.name, item.value);
+                    }
+                    return "";
                 }
             }
             var item = me.core.json.traverse(root, path);
