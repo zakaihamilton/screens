@@ -12,8 +12,10 @@ screens.core.require = function CoreRequire(me) {
             importScripts("/external/require.js");
         }
         return new Promise((resolve, reject) => {
-            require([path], function () {
-                var module = null;
+            require([path], function (module) {
+                if(module) {
+                    resolve(module);
+                }
                 try {
                     module = require(path);
                     resolve(module);

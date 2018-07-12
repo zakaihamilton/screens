@@ -39,6 +39,14 @@
                 ],
                 "widget.window.exportMenuList(app.envision.exportText)",
                 [
+                    "Output",
+                    "app.envision.outputMode",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
                     "Edit Mode",
                     "app.envision.editMode",
                     {

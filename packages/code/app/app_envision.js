@@ -15,15 +15,17 @@ screens.app.envision = function AppEnvision(me) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
             editMode: false,
-            autoRefresh: true
+            autoRefresh: true,
+            outputMode: false
         });
         me.ui.options.toggleSet(me, null, {
-            "editMode": me.updateEditMode,
-            "formatMode": me.updateEditMode,
-            "autoRefresh": me.updateEditMode
+            "editMode": me.updateMode,
+            "formatMode": me.updateMode,
+            "autoRefresh": me.updateMode,
+            "outputMode": me.updateMode
         });
         me.core.property.set(window, "app", me);
-        me.updateEditMode(window);
+        me.updateMode(window);
         me.refresh(window);
     };
     me.importData = function (object, text) {
@@ -32,7 +34,7 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.content, "ui.basic.html", me.convert(object, text));
         me.core.property.set(window.var.source, "ui.basic.save");
     };
-    me.updateEditMode = function (object) {
+    me.updateMode = function (object) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.content, "ui.style.opacity", window.options.editMode ? "0" : "");
         me.core.property.set([window.var.editorContainer], "ui.basic.show", window.options.editMode);
@@ -51,7 +53,11 @@ screens.app.envision = function AppEnvision(me) {
     me.refresh = function (object) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.source, "text");
-        me.core.property.set(window.var.content, "ui.basic.html", me.convert(object, text));
+        text = me.convert(object, text);
+        if(window.options.outputMode) {
+            text = me.formatXml(text);
+        }
+        me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
     };
     me.clear = function (object) {
         var window = me.widget.window(object);
@@ -74,6 +80,37 @@ screens.app.envision = function AppEnvision(me) {
         var serializer = new XMLSerializer();
         return serializer.serializeToString(node);
     };
+    me.formatXml = function(xml) {
+        var formatted = '';
+        var reg = /(>)(<)(\/*)/g;
+        xml = xml.replace(reg, '$1\r\n$2$3');
+        var pad = 0;
+        var tokens = xml.split('\r\n');
+        for(var index = 0; index < tokens.length; index++) {
+            node = tokens[index];
+            var indent = 0;
+            if (node.match( /.+<\/\w[^>]*>$/ )) {
+                indent = 0;
+            } else if (node.match( /^<\/\w/ )) {
+                if (pad != 0) {
+                    pad -= 1;
+                }
+            } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
+                indent = 1;
+            } else {
+                indent = 0;
+            }
+    
+            var padding = '';
+            for (var i = 0; i < pad; i++) {
+                padding += '  ';
+            }
+    
+            formatted += padding + node + '\r\n';
+            pad += indent;
+        }
+        return formatted;
+    };
     me.processArrays = function(object, text, root) {
         text = text.replace(/\[[^\[\]]*\]/g, function (match) {
             console.log("match: " + match);
@@ -94,8 +131,11 @@ screens.app.envision = function AppEnvision(me) {
         text = text.replace(/{[^{}]*}/g, function (match) {
             console.log("match: " + match);
             var path = match.substring(1, match.length - 1);
-            if (path === "date") {
-                return new Date().toString();
+            if(path.startsWith("@")) {
+                path = path.substring(1);
+                if (path === "date") {
+                    return new Date().toString();
+                }
             }
             var item = me.core.json.traverse(root, path);
             if (item.found) {

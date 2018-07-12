@@ -38,6 +38,7 @@
     bottom:0px;
     overflow:scroll;
     top:50px;
+    white-space: pre-wrap;
 }
 
 .app-envision-content.night-mode pre {
