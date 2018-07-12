@@ -14,11 +14,13 @@ screens.app.envision = function AppEnvision(me) {
     me.initOptions = async function (object) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
-            editMode: false
+            editMode: false,
+            autoRefresh: true
         });
         me.ui.options.toggleSet(me, null, {
             "editMode": me.updateEditMode,
-            "formatMode": me.updateEditMode
+            "formatMode": me.updateEditMode,
+            "autoRefresh": me.updateEditMode
         });
         me.core.property.set(window, "app", me);
         me.updateEditMode(window);
@@ -38,6 +40,12 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.format, "ui.basic.show", window.options.editMode && window.options.formatMode);
         if (!window.options.editMode) {
             me.refresh(object);
+        }
+        clearInterval(window.intervalHandle);
+        if (!window.options.editMode && window.options.autoRefresh) {
+            window.intervalHandle = setInterval(() => {
+                me.refresh(object);
+            }, 1000);
         }
     };
     me.refresh = function (object) {
@@ -62,15 +70,33 @@ screens.app.envision = function AppEnvision(me) {
         var url = me.core.property.get(window.var.url, "text");
         alert(url);
     };
+    me.serialize = function (node) {
+        var serializer = new XMLSerializer();
+        return serializer.serializeToString(node);
+    };
     me.convert = function (object, text) {
         var window = me.widget.window(object);
         var format = me.core.property.get(window.var.format, "text");
         if (!format) {
-            format = "{}"
+            format = ""
         }
         me.core.property.set(window.var.format, "ui.basic.save");
         try {
-            format = JSON.parse(format);
+            var source = JSON.parse(text);
+            parser = new DOMParser();
+            format = format.replace(/\{(.*?)\}/g, function (match) {
+                var path = match.substring(1, match.length - 1);
+                if (path === "date") {
+                    return new Date().toString();
+                }
+                var item = me.core.json.traverse(source, path);
+                if (item.found) {
+                    return item.value;
+                }
+                return "";
+            });
+            format = parser.parseFromString(format, "text/xml");
+            format = me.serialize(format);
         }
         catch (err) {
             return `<article class="message is-danger">
@@ -78,11 +104,11 @@ screens.app.envision = function AppEnvision(me) {
                         <p>Error</p>
                         </div>
                         <div class="message-body">
-                            Format is not JSON compliant
+                            Error parsing content: ${err}
                         </div>
                     </article>`
         }
-        return `<pre><code>${text}</code></pre>`;
+        return `<pre><code>${format}</code></pre><pre><code>${text}</code></pre>`;
         return text;
     };
 };

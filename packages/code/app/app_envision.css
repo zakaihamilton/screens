@@ -40,8 +40,14 @@
     top:50px;
 }
 
+.app-envision-content.night-mode pre {
+    color:var(--color);
+    background-color:var(--background);
+}
+
 .app-envision-content.night-mode {
     color:var(--color);
+    background-color:var(--background);
 }
 
 .app-envision-content.fullscreen {
