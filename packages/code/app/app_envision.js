@@ -74,6 +74,37 @@ screens.app.envision = function AppEnvision(me) {
         var serializer = new XMLSerializer();
         return serializer.serializeToString(node);
     };
+    me.processArrays = function(object, text, root) {
+        text = text.replace(/\[[^\[\]]*\]/g, function (match) {
+            console.log("match: " + match);
+            match = match.substring(1, match.length - 1);
+            var [path, content] = match.split("=");
+            var item = me.core.json.traverse(root, path);
+            var result = "";
+            if (item.found && content && item.value) {
+                for(var element of item.value) {
+                    result += me.processVars(object, content, element);
+                }
+            }
+            return result;
+        });
+        return text;
+    };
+    me.processVars = function(object, text, root) {
+        text = text.replace(/{[^{}]*}/g, function (match) {
+            console.log("match: " + match);
+            var path = match.substring(1, match.length - 1);
+            if (path === "date") {
+                return new Date().toString();
+            }
+            var item = me.core.json.traverse(root, path);
+            if (item.found) {
+                return item.value;
+            }
+            return "";
+        });
+        return text;
+    };
     me.convert = function (object, text) {
         var window = me.widget.window(object);
         var format = me.core.property.get(window.var.format, "text");
@@ -83,18 +114,9 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.format, "ui.basic.save");
         try {
             var source = JSON.parse(text);
+            format = me.processArrays(object, format, source);
+            format = me.processVars(object, format, source);
             parser = new DOMParser();
-            format = format.replace(/\{(.*?)\}/g, function (match) {
-                var path = match.substring(1, match.length - 1);
-                if (path === "date") {
-                    return new Date().toString();
-                }
-                var item = me.core.json.traverse(source, path);
-                if (item.found) {
-                    return item.value;
-                }
-                return "";
-            });
             format = parser.parseFromString(format, "text/xml");
             format = me.serialize(format);
         }
