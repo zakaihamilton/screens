@@ -1,0 +1,115 @@
+{
+    "title": "Envision",
+    "icon": "/packages/res/icons/envision.png",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "widget.menu.items": [
+        [
+            "Envision",
+            [
+                [
+                    "Clear",
+                    "app.envision.clear"
+                ],
+                [
+                    "Refresh",
+                    "app.envision.refresh",
+                    {
+                        "separator": true
+                    }
+                ],
+                [
+                    "Export",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "widget.window.exportMenuList(app.envision.exportText)",
+                [
+                    "Edit Mode",
+                    "app.envision.editMode",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Format",
+                    "app.envision.formatMode",
+                    {
+                        "state": "select",
+                        "separator": true,
+                        "visible":"app.envision.editMode"
+                    }
+                ]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.envision.url.container",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.var": "url",
+                    "ui.basic.type": "text",
+                    "ui.attribute.placeholder": "Url",
+                    "ui.basic.text": "",
+                    "ui.class.classExtra": "app.envision.url",
+                    "ui.key.enter": "app.envision.execute"
+                },
+                {
+                    "ui.basic.text": "Go",
+                    "ui.touch.click": "app.envision.execute",
+                    "ui.class.classExtra": "app.envision.execute",
+                    "ui.basic.var": "execute"
+                }
+            ]
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "content",
+            "ui.class.class": "app.envision.content"
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.envision.editor.container",
+            "ui.basic.var": "editorContainer",
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.editor",
+                    "ui.class.class": "app.envision.editor",
+                    "ui.basic.var": "source",
+                    "ui.property.after": {
+                        "storage.local.key": "@ui.windowkey.app-envision-source",
+                        "storage.local.restore": "ui.basic.text",
+                        "ui.monitor.change": "ui.basic.save"
+                    }
+                },
+                {
+                    "ui.element.component": "widget.editor",
+                    "ui.class.class": "app.envision.editor",
+                    "ui.basic.var": "format",
+                    "ui.property.after": {
+                        "storage.local.key": "@ui.windowkey.app-envision-format",
+                        "storage.local.restore": "ui.basic.text",
+                        "ui.monitor.change": "ui.basic.save"
+                    }
+                }
+            ],
+            "ui.monitor.change": "app.envision.updateText"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "@ui.windowkey.app-envision-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "widget.transform.reflow",
+        "app.envision.initOptions": null
+    }
+}

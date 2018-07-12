@@ -141,6 +141,7 @@
 }
 
 .widget-transform-page-number:hover:after {
+    font-size: 150%;
     font-weight: bold;
     filter: invert(100%);
     content:attr(longPageNumberText);

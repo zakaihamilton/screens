@@ -23,6 +23,19 @@
                     }
                 ],
                 [
+                    "Users",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                [
+                    "@lib.google.currentName",
+                    "app.present.gotoUser"
+                ],
+                "app.present.userMenuList",
+                [
                     "Export",
                     null,
                     {

@@ -110,7 +110,12 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget, "ui.work.state", true);
         var language = widget.options.language.toLowerCase();
         if (language === "auto") {
-            language = me.core.string.language(text);
+            if(text.startsWith("<")) {
+                language = "none";
+            }
+            else {
+                language = me.core.string.language(text);
+            }
             me.log("detected language: " + language);
         }
         widget.options.clickCallback = "screens.widget.transform.openPopup";
@@ -118,9 +123,12 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.options.reload = true;
         me.media.voice.stop();
         var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
-        var info = await me.kab.text.parse(language, text, options, (percent) => {
-            me.core.property.set(widget.var.spinner, "percent", percent);
-        });
+        var info = {text, terms:{}, data:null};
+        if (language !== "none") {
+            info = await me.kab.text.parse(language, text, options, (percent) => {
+                me.core.property.set(widget.var.spinner, "percent", percent);
+            });
+        }
         if (!info) {
             info = { text: "", terms: {}, data: null };
         }
@@ -857,7 +865,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     me.firstVisibleWidget = function (target) {
         var page = me.firstVisiblePage(target);
         if (page && page.tagName) {
-            if (page.tagName.toLowerCase() === "div") {
+            if (page.tagName.toLowerCase() === "div" && page.var && page.var.content) {
                 return page.var.content.firstChild;
             }
         }
@@ -1201,7 +1209,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                 child = child.nextSibling;
             }
         }
-        widget.style.border = "1px solid transparent";
+        if (widget.style) {
+            widget.style.border = "1px solid transparent";
+        }
     };
     me.currentPage = function (target) {
         var child = target.firstChild;
@@ -1247,6 +1257,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     me.clearWidget = function (widget, modifiers) {
         if (!modifiers) {
             modifiers = me.modifiers(widget);
+        }
+        if (!widget.getAttribute) {
+            return;
         }
         if (widget.getAttribute('hidden')) {
             return;

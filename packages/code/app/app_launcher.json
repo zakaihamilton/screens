@@ -62,6 +62,13 @@
             "ui.basic.show":"@user.verify.match(none,Zakai Hamilton)"
         },
         {
+            "text": "Envision",
+            "ui.tab.owner":"work",
+            "ui.basic.src": "/packages/res/icons/envision.png",
+            "ui.touch.click": "core.app.envision",
+            "ui.basic.show":"@user.verify.match(none,Zakai Hamilton,Tal Melamed)"
+        },
+        {
             "text": "Logger",
             "ui.tab.owner":"utilities",
             "ui.basic.src": "/packages/res/icons/logger.png",

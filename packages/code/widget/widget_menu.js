@@ -26,7 +26,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
-    me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
+    me.collect = function (object, list, property, properties, group, listMethod, itemMethod, separator) {
         var parseItems = (items) => {
             if (!items) {
                 items = [];
@@ -37,12 +37,17 @@ screens.widget.menu = function WidgetMenu(me) {
                     items = [];
                 }
             }
+            var isFirst = true;
             items = items.map(function (item) {
                 var title = item[property];
                 if (!title) {
                     return null;
                 }
                 title = [title.charAt(0).toUpperCase() + title.slice(1)];
+                if(isFirst) {
+                    isFirst = false;
+                }
+                properties = Object.assign({}, properties, {separator});
                 var result = [
                     title,
                     itemMethod,
@@ -346,6 +351,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
         me.core.property.set(parent, "ui.work.state", true);
         var items = await info.promise;
+        if(!items) {
+            items = [];
+        }
         if (items.length > me.sleepThreshold.length) {
             await me.core.util.sleep(me.sleepThreshold.sleep);
         }

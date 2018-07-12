@@ -21,13 +21,18 @@ screens.app.present = function AppPresent(me) {
         });
         me.core.property.set(window, "app", me);
         me.updateEditMode(window);
+        me.refresh(window);
     };
-    me.importData = function(object, text) {
+    me.importData = function (object, text) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
         me.core.property.set(window.var.editor, "ui.basic.save");
+        me.updateDb();
+    };
+    me.updateDb = function(object) {
+
     };
     me.updateEditMode = function (object) {
         var window = me.widget.window(object);
@@ -36,10 +41,23 @@ screens.app.present = function AppPresent(me) {
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
+        me.updateDb();
     };
-    me.refresh = function(object) {
+    me.refresh = function (object) {
         var window = me.widget.window(object);
+        me.core.message.send_server("core.cache.reset", me.id);
+        me.userList = me.core.message.send_server("core.cache.use",
+            me.id,
+            "db.shared.present.list");
         me.core.property.set(window.var.transform, "transform");
+    };
+    me.gotoUser = function (object, name) {
+        alert(name);
+    };
+    me.userMenuList = {
+        get: function (object) {
+            return me.widget.menu.collect(object, me.userList, "name", null, "users", null, me.gotoUser, true);
+        }
     };
     me.clear = function (object) {
         var window = me.widget.window(object);
@@ -49,7 +67,7 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "transform");
         window.searchText = "";
     };
-    me.exportText = function(object, target) {
+    me.exportText = function (object, target) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(target, "importData", text);
