@@ -26,7 +26,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
-    me.collect = function (object, list, property, properties, group, listMethod, itemMethod, separator) {
+    me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
         var parseItems = (items) => {
             if (!items) {
                 items = [];
@@ -44,10 +44,6 @@ screens.widget.menu = function WidgetMenu(me) {
                     return null;
                 }
                 title = [title.charAt(0).toUpperCase() + title.slice(1)];
-                if(isFirst) {
-                    isFirst = false;
-                }
-                properties = Object.assign({}, properties, {separator});
                 var result = [
                     title,
                     itemMethod,

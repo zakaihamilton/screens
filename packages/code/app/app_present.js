@@ -14,7 +14,11 @@ screens.app.present = function AppPresent(me) {
     me.initOptions = async function (object) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
-            editMode: false
+            editMode: false,
+            userName: ""
+        });
+        me.ui.options.choiceSet(me, null, {
+            "userName": me.updateUser
         });
         me.ui.options.toggleSet(me, null, {
             "editMode": me.updateEditMode
@@ -49,14 +53,16 @@ screens.app.present = function AppPresent(me) {
         me.userList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.shared.present.list");
+        me.userList = [{name:"Hello"},{name:"Yellow"}];
         me.core.property.set(window.var.transform, "transform");
     };
-    me.gotoUser = function (object, name) {
-        alert(name);
+    me.updateUser = function (object, name) {
+        var window = me.widget.window(object);
+        var userName = window.options.userName;
     };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", null, "users", null, me.gotoUser, true);
+            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.present.userName");
         }
     };
     me.clear = function (object) {
