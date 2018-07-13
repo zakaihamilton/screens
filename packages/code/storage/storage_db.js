@@ -47,11 +47,11 @@ screens.storage.db = function StorageDB(me) {
         var object = me.mongodb.ObjectID(id);
         return object;
     }
-    me.findByIds = async function(location, ids) {
+    me.findByIds = async function (location, ids) {
         var collection = await me.collection(location);
         var results = [];
         ids = ids.map(id => id.toString());
-        var results = await collection.find({"_id":{"$in":ids}}).toArray();
+        var results = await collection.find({ "_id": { "$in": ids } }).toArray();
         return results;
     };
     me.findOne = async function (location, id) {
@@ -108,6 +108,11 @@ screens.storage.db = function StorageDB(me) {
             " location: " + JSON.stringify(location));
         return array;
     };
+    me.use = async function (location, query, data) {
+        var collection = await me.collection(location);
+        var result = await collection.replaceOne(query, data, { upsert: true });
+        return result;
+    };
     me.createIndex = async function (location, index) {
         var collection = await me.collection(location);
         collection.createIndex(index);
@@ -129,8 +134,11 @@ screens.storage.db.helper = function StorageDBHelper(me) {
         component.list = async function (userId, params, count) {
             return await me.list(userId, component.id, params, count);
         };
-        component.findByIds = async function(ids) {
+        component.findByIds = async function (ids) {
             return await me.findByIds(component.id, ids);
+        };
+        component.use = async function (query, data) {
+            return await me.use(component.id, query, data);
         };
     };
     me.location = function (name) {
@@ -152,7 +160,11 @@ screens.storage.db.helper = function StorageDBHelper(me) {
         var result = await me.upper.set(me.location(name), data);
         return result;
     };
-    me.findByIds = async function(name, ids) {
+    me.use = async function (name, query, data) {
+        var result = await me.upper.use(me.location(name), query, data);
+        return result;
+    };
+    me.findByIds = async function (name, ids) {
         var result = await me.upper.findByIds(me.location(name), ids);
         return result;
     };
@@ -161,5 +173,5 @@ screens.storage.db.helper = function StorageDBHelper(me) {
         params.user = userId || 0;
         var list = await me.upper.list(me.location(name), params, projection);
         return list;
-    };    
+    };
 };
