@@ -188,7 +188,13 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             var method = value[1];
             me.core.property.set(object, "back", item);
             var prefix = me.core.property.get(item, "prefix");
-            var text = me.core.property.get(item, "ui.basic.text");
+            var text = undefined;
+            if(item.menu_options) {
+                text = item.menu_options.value;
+            }
+            if(typeof text === "undefined") {
+                text = me.core.property.get(item, "ui.basic.text");
+            }
             if (prefix) {
                 text = prefix + text;
             }
@@ -360,24 +366,29 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     me.handleValue = function (object, values, key, callback) {
         var parentMenu = me.parentMenu(object);
         if (key in values) {
-            var value = values[key];
-            if (typeof value === "string" || typeof value === "function") {
-                if (value === "select") {
-                    value = object.menu_select;
+            var param = values[key];
+            if (typeof param === "string" || typeof param === "function") {
+                if (param === "select") {
+                    param = object.menu_select;
                 }
-                value = me.core.property.get(parentMenu.window, value, me.core.property.get(object, "ui.basic.text"));
+                var value = values.value;
+                if(typeof value === "undefined") {
+                    value = me.core.property.get(object, "ui.basic.text");
+                }
+                param = me.core.property.get(parentMenu.window, param, value);
             }
-            if (value && value.then) {
+            if (param && param.then) {
                 callback(false);
-                value.then(callback);
+                param.then(callback);
             }
             else {
-                callback(value);
+                callback(param);
             }
         }
     };
     me.options = {
         set: function (object, options) {
+            object.menu_options = options;
             if (options) {
                 me.handleValue(object, options, "debugger", (value) => {
                     if (value) {

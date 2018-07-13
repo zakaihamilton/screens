@@ -42,8 +42,10 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.transform, "ui.style.opacity", window.options.editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer], "ui.basic.show", window.options.editMode);
-        var text = me.core.property.get(window.var.editor, "text");
-        me.core.property.set(window.var.transform, "text", text);
+        if(!window.options.userName) {
+            var text = me.core.property.get(window.var.editor, "text");
+            me.core.property.set(window.var.transform, "text", text);
+        }
         me.core.property.set(window.var.transform, "transform");
         me.updateDb();
     };
@@ -53,12 +55,17 @@ screens.app.present = function AppPresent(me) {
         me.userList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.shared.present.list");
-        me.userList = [{name:"Hello"},{name:"Yellow"}];
         me.core.property.set(window.var.transform, "transform");
     };
     me.updateUser = function (object, name) {
         var window = me.widget.window(object);
         var userName = window.options.userName;
+        if(userName) {
+
+        }
+        else {
+
+        }
     };
     me.userMenuList = {
         get: function (object) {

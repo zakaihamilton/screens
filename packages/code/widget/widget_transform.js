@@ -110,7 +110,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget, "ui.work.state", true);
         var language = widget.options.language.toLowerCase();
         if (language === "auto") {
-            if(text.startsWith("<")) {
+            if(text && text.startsWith("<")) {
                 language = "none";
             }
             else {
