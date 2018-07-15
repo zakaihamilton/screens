@@ -57,14 +57,14 @@ screens.lib.google = function LibGoogle(me) {
         }
         return null;
     };
-    me.currentName = function () {
+    me.userName = function () {
         var profile = me.currentProfile();
         if (!profile) {
             return "";
         }
         return profile.getName();
     };
-    me.currentAddress = function () {
+    me.userEmail = function () {
         var profile = me.currentProfile();
         if (!profile) {
             return "";

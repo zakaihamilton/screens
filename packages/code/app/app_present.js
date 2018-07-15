@@ -4,6 +4,9 @@
  */
 
 screens.app.present = function AppPresent(me) {
+    me.init = function() {
+        me.userList = null;        
+    };
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -24,18 +27,17 @@ screens.app.present = function AppPresent(me) {
             "editMode": me.updateEditMode
         });
         me.core.property.set(window, "app", me);
+        me.refreshList(window);
         me.updateEditMode(window);
-        me.refresh(window);
     };
     me.importData = function (object, text) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.editor, "text", text);
-        me.core.property.set(window.var.transform, "text", text);
-        me.core.property.set(window.var.transform, "transform");
         me.core.property.set(window.var.editor, "ui.basic.save");
-        me.updateDb(window);
+        window.options.userName = "";
+        me.updateEditMode(window);
     };
-    me.updateDb = function(object) {
+    me.updateDb = async function(object) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         me.db.shared.present.use({
@@ -45,36 +47,55 @@ screens.app.present = function AppPresent(me) {
             "name":"$userName",
             "content":text
         });
+        var userList = await me.userList;
+        var userName = me.lib.google.userName();
+        if(userList) {
+            var item = userList.find((item) => item.name === userName);
+            if(item) {
+                item.content = text;
+            }
+            else {
+                me.refreshList(object);
+            }
+        }
     };
     me.updateEditMode = function (object) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.transform, "ui.style.opacity", window.options.editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer], "ui.basic.show", window.options.editMode);
         if(!window.options.userName) {
-            var text = me.core.property.get(window.var.editor, "text");
-            me.core.property.set(window.var.transform, "text", text);
             me.updateDb(window);
         }
-        me.core.property.set(window.var.transform, "transform");
+        me.updateUser(object);
     };
-    me.refresh = function (object) {
+    me.isThisDevice = function(object) {
         var window = me.widget.window(object);
+        return window.options.userName === "";
+    };
+    me.refreshList = function() {
         me.core.message.send_server("core.cache.reset", me.id);
         me.userList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.shared.present.list");
-        me.core.property.set(window.var.transform, "transform");
     };
-    me.updateUser = function (object, name) {
+    me.refresh = function (object) {
+        var window = me.widget.window(object);
+        me.refreshList(object);
+        me.updateUser(window, window.options.userName);
+    };
+    me.updateUser = async function (object) {
         var window = me.widget.window(object);
         var userName = window.options.userName;
         var text = "";
+        var userList = await me.userList;
         if(userName) {
-            result = me.db.shared.present.list({})
+            text = userList.find((item) => item.name === userName).content;
         }
         else {
-
+            text = me.core.property.get(window.var.editor, "text");
         }
+        me.core.property.set(window.var.transform, "text", text);
+        me.core.property.set(window.var.transform, "transform");
     };
     me.userMenuList = {
         get: function (object) {
@@ -85,9 +106,7 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.editor, "ui.basic.save");
-        me.core.property.set(window.var.transform, "text", "");
-        me.core.property.set(window.var.transform, "transform");
-        window.searchText = "";
+        me.updateEditMode(window);
     };
     me.exportText = function (object, target) {
         var window = me.widget.window(object);

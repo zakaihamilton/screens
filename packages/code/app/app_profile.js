@@ -52,10 +52,10 @@ screens.app.profile = function AppProfile(me) {
             profile = {};
         }
         if (!profile.name) {
-            profile.name = me.lib.google.currentName();
+            profile.name = me.lib.google.userName();
         }
         if (!profile.email) {
-            profile.email = me.lib.google.currentAddress();
+            profile.email = me.lib.google.userEmail();
         }
         for (var id in bindings) {
             if (profile[id]) {

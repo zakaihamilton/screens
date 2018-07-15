@@ -25,7 +25,7 @@ screens.app.login = function AppLogin(me) {
         var window = me.singleton;
         me.core.property.set(window.var.status, "ui.basic.text", status);
         me.core.property.set(window.var.signin, "ui.basic.hide", "@lib.google.isSignedIn");
-        me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.currentName");
+        me.core.property.set(window.var.userName, "ui.basic.text", "@lib.google.userName");
         me.core.property.set([
             window.var.signout,
             window.var.disconnect,

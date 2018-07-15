@@ -31,7 +31,7 @@
                 },
                 {
                     "ui.basic.show":"@lib.google.isSignedIn",
-                    "ui.basic.text": "@lib.google.currentName",
+                    "ui.basic.text": "@lib.google.userName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
                         "width": "300px",

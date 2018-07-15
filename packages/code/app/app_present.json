@@ -13,7 +13,10 @@
             [
                 [
                     "Clear",
-                    "app.present.clear"
+                    "app.present.clear",
+                    {
+                        "enabled":"app.present.isThisDevice"
+                    }
                 ],
                 [
                     "Refresh",

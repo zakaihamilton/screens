@@ -294,7 +294,8 @@ screens.widget.transform = function WidgetTransform(me) {
             columnWidth: "400px",
             scrollWidget: visibleWidget,
             scrollPos: widget.options.scrollPos,
-            playEnabled: widget.options.voice !== "None"
+            playEnabled: widget.options.voice !== "None",
+            language: widget.options.language
         };
         widget.diagrams = [];
         me.media.voice.stop();
@@ -887,6 +888,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return target.options;
     };
     me.reflow = function (callback, source, target, options) {
+        var modifiers = me.modifiers(target);
         var layoutContent = target;
         layoutContent.options = options;
         if (target.reflowInterval) {
@@ -957,8 +959,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     break;
                 }
                 var newPage = false;
-                me.cleanupWidget(widget);
-                me.clearWidget(widget);
+                if(widget) {
+                    me.cleanupWidget(widget);
+                    me.clearWidget(widget, modifiers);
+                }
                 newPage = !me.widgetFitInPage(widget, target.page);
                 if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
                     previousWidget = null;
@@ -1255,9 +1259,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
     };
     me.clearWidget = function (widget, modifiers) {
-        if (!modifiers) {
-            modifiers = me.modifiers(widget);
-        }
         if (!widget.getAttribute) {
             return;
         }
