@@ -42,6 +42,7 @@ screens.app.present = function AppPresent(me) {
             "user":"$userId"
         }, {
             "user":"$userId",
+            "name":"$userName",
             "content":text
         });
     };
