@@ -4,24 +4,24 @@
  */
 
 screens.db.library = function DbLibrary(me) {
-    me.find = async function (userId, query) {
+    me.find = async function (query) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
         var result = {};
         var doQuery = false;
         if (filter) {
-            if(filter !== "*") {
+            if (filter !== "*") {
                 params["$text"] = { "$search": filter };
             }
             doQuery = true;
         }
-        me.log("query: " + query + " userId: " + userId + " tags: " + JSON.stringify(tags) + " filter: " + filter);
+        me.log("query: " + query + " tags: " + JSON.stringify(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
-            var tagList = await me.db.library.tags.list(userId, tags);
+            var tagList = await me.db.library.tags.list(tags);
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
-                if(tagList.length > 1) {
+                if (tagList.length > 1) {
                     params["_id"] = { $in: tagList.map(item => item._id) };
                 }
                 else {
@@ -36,11 +36,11 @@ screens.db.library = function DbLibrary(me) {
         }
         var list = [];
         if (doQuery) {
-            if(filter === "*") {
-                result = await me.db.library.tags.list(userId, params, {});
+            if (filter === "*") {
+                result = await me.db.library.tags.list(params, {});
             }
             else {
-                list = await me.db.library.content.list(userId, params, {});
+                list = await me.db.library.content.list(params, {});
                 result = await me.db.library.tags.findByIds(list.map(item => item._id));
             }
             me.log("number of results: " + result.length);
@@ -77,9 +77,9 @@ screens.db.library.query = function DbLibraryQuery(me) {
         var filter = "";
         try {
             query = query.replace(/'/g, "\\'");
-            var tokens = me.storage.db.split(query, {keepQuotes: true, separator:' '});
+            var tokens = me.storage.db.split(query, { keepQuotes: true, separator: ' ' });
         }
-        catch(err) {
+        catch (err) {
             me.error(err);
         }
         me.log("tokens: " + JSON.stringify(tokens));

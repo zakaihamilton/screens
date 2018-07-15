@@ -10,13 +10,16 @@ screens.storage.db = function StorageDB(me) {
         me.databases = {};
     };
     me.database = async function (name) {
+        var unlock = await me.core.mutex.lock();
         var database = me.databases[name];
         if (database) {
+            unlock();
             return database;
         }
         var keys = await me.core.private.keys("mongodb");
         var info = keys[name];
         if (!info) {
+            unlock();
             err = name + " mongodb key not defined in private";
             me.error(err);
             throw err;
@@ -24,6 +27,7 @@ screens.storage.db = function StorageDB(me) {
         var url = info.url;
         return new Promise((resolve, reject) => {
             me.mongodb.MongoClient.connect(url, function (err, client) {
+                unlock();
                 if (err) {
                     reject(err);
                 }
@@ -131,8 +135,8 @@ screens.storage.db.helper = function StorageDBHelper(me) {
         component.set = async function (data) {
             return await me.set(component.id, data);
         };
-        component.list = async function (userId, params, count) {
-            return await me.list(userId, component.id, params, count);
+        component.list = async function (params, count) {
+            return await me.list(component.id, params, count);
         };
         component.findByIds = async function (ids) {
             return await me.findByIds(component.id, ids);
@@ -168,9 +172,8 @@ screens.storage.db.helper = function StorageDBHelper(me) {
         var result = await me.upper.findByIds(me.location(name), ids);
         return result;
     };
-    me.list = async function (userId, name, params, projection) {
+    me.list = async function (name, params, projection) {
         params = Object.assign({}, params);
-        params.user = userId || 0;
         var list = await me.upper.list(me.location(name), params, projection);
         return list;
     };

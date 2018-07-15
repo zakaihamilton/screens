@@ -71,7 +71,6 @@ screens.core.module = function CoreModule(me) {
             components = components.filter(Boolean);
         }
         var data = await me.loadTextFile(filePath);
-        var jsonData = "{}";
         var vars = { "platform": target_platform };
         var extensions = { json: false, html: true };
         var extFilePath = filePath;
@@ -97,7 +96,7 @@ screens.core.module = function CoreModule(me) {
                     data = data.split("__" + key + "__").join(vars[key]);
                 }
             }
-            if (componentIndex < components.length - 2) {
+            if (componentIndex < components.length - 1) {
                 data += originalData;
             }
         }

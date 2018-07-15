@@ -72,6 +72,58 @@ screens.core.message = function CoreMessage(me) {
         }
         return me["send_" + platform].apply(null, args);
     };
+    me.processArg = function(info, arg) {
+        if(Array.isArray(arg)) {
+            arg = arg.map((subArg) => {
+                return me.processArg(info, subArg);
+            });
+            return arg;
+        }
+        if(typeof arg === "object") {
+            for(var key in arg) {
+                arg[key] = me.processArg(info, arg[key]);
+            }
+            return arg;
+        }
+        if (me.platform === "server") {
+            if (typeof arg === "string") {
+                var varNames = ["userId", "userName"];
+                for (var varName of varNames) {
+                    if (arg.includes("$" + varName)) {
+                        me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
+                        arg = arg.replace("$" + varName, info[varName]);
+                    }
+                }
+                if (me.core.handle.isHandle(arg, "function")) {
+                    var handle = arg;
+                    arg = function () {
+                        var sendArgs = Array.prototype.slice.call(arguments, 0);
+                        var sendInfo = { args: sendArgs, callback: handle };
+                        info.socket.emit("notify", sendInfo);
+                    };
+                }
+            }
+        }
+        else if (me.platform === "client") {
+            if (me.core.handle.isHandle(arg, "function")) {
+                var handle = arg;
+                arg = function () {
+                    var sendArgs = Array.prototype.slice.call(arguments, 0);
+                    var sendInfo = { args: sendArgs, callback: handle };
+                    return me.worker.postMessage(sendInfo);
+                };
+            }
+        }
+        else if (me.platform === "browser") {
+            if (typeof arg === "function") {
+                arg = me.core.handle.push(arg, typeof arg);
+            }
+            else if(arg instanceof Element) {
+                arg = me.core.handle.push(arg, "element");
+            }
+        }
+        return arg;
+    };
     me.prepareArgs = function (info) {
         var args = info.args;
         if (args) {
@@ -79,43 +131,7 @@ screens.core.message = function CoreMessage(me) {
                 if (!arg) {
                     return null;
                 }
-                if (me.platform === "server") {
-                    if (typeof arg === "string") {
-                        var varNames = ["userId", "userName"];
-                        for (var varName of varNames) {
-                            if (arg.includes("$" + varName)) {
-                                me.log("replacing: $" + varName + " with: " + info[varName] + " arg: " + arg);
-                                arg = arg.replace("$" + varName, info[varName]);
-                            }
-                        }
-                        if (me.core.handle.isHandle(arg, "function")) {
-                            var handle = arg;
-                            arg = function () {
-                                var sendArgs = Array.prototype.slice.call(arguments, 0);
-                                var sendInfo = { args: sendArgs, callback: handle };
-                                info.socket.emit("notify", sendInfo);
-                            };
-                        }
-                    }
-                }
-                else if (me.platform === "client") {
-                    if (me.core.handle.isHandle(arg, "function")) {
-                        var handle = arg;
-                        arg = function () {
-                            var sendArgs = Array.prototype.slice.call(arguments, 0);
-                            var sendInfo = { args: sendArgs, callback: handle };
-                            return me.worker.postMessage(sendInfo);
-                        };
-                    }
-                }
-                else if (me.platform === "browser") {
-                    if (typeof arg === "function") {
-                        arg = me.core.handle.push(arg, typeof arg);
-                    }
-                    else if(arg instanceof Element) {
-                        arg = me.core.handle.push(arg, "element");
-                    }
-                }
+                arg = me.processArg(info, arg);
                 return arg;
             });
         }

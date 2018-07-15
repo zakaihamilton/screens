@@ -194,7 +194,7 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "text", "Loading");
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             try {
-                records = await me.db.library.find(0, search);
+                records = await me.db.library.find(search);
             }
             catch(err) {
                 me.error("Failed to search for: " + search + " err: " + JSON.stringify(err));
@@ -219,14 +219,12 @@ screens.app.library = function AppLibrary(me) {
         json = Object.assign({}, json);
         delete json._id
         delete json.id
-        delete json.user
         return json;
     };
     me.addExtra = function (json, record) {
         json = Object.assign({}, json);
         delete json.id
         json._id = record.id || record._id;
-        json.user = record.user || 0;
         return json;
     };
     me.updateTextFromRecords = function (object, records) {

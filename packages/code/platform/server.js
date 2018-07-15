@@ -4,6 +4,7 @@ screens.include({
     "core": [
         "property",
         "console",
+        "mutex",
         "file",
         "private",
         "json",
@@ -36,7 +37,8 @@ screens.include({
         "verify"
     ],
     "db": [
-        "library"
+        "library",
+        "shared"
     ],
     "manager": [
         "download",

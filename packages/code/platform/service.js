@@ -5,6 +5,7 @@ require("../screens.js");
 screens.include({
     "core": [
         "console",
+        "mutex",
         "message",
         "type",
         "file",

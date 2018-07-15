@@ -33,15 +33,17 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
         me.core.property.set(window.var.editor, "ui.basic.save");
-        me.updateDb();
+        me.updateDb(window);
     };
     me.updateDb = function(object) {
+        var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
-        /*me.db.shared.present.use({
-            
+        me.db.shared.present.use({
+            "user":"$userId"
         }, {
-
-        });*/
+            "user":"$userId",
+            "content":text
+        });
     };
     me.updateEditMode = function (object) {
         var window = me.widget.window(object);
@@ -50,7 +52,7 @@ screens.app.present = function AppPresent(me) {
         if(!window.options.userName) {
             var text = me.core.property.get(window.var.editor, "text");
             me.core.property.set(window.var.transform, "text", text);
-            me.updateDb();
+            me.updateDb(window);
         }
         me.core.property.set(window.var.transform, "transform");
     };
@@ -65,8 +67,9 @@ screens.app.present = function AppPresent(me) {
     me.updateUser = function (object, name) {
         var window = me.widget.window(object);
         var userName = window.options.userName;
+        var text = "";
         if(userName) {
-
+            result = me.db.shared.present.list({})
         }
         else {
 
