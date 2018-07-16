@@ -213,28 +213,22 @@ screens.app.player = function AppPlayer(me) {
                     path = videoPath;
                 }
                 me.core.property.set(window, "ui.work.state", true);
-                var target = null;
-                while (true) {
-                    target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path, me.cachePath + "/" + path);
-                    if (target) {
-                        break;
-                    }
-                    if (counter !== me.playerCounter) {
-                        me.core.property.set(window, "ui.work.state", false);
-                        return;
-                    }
-                    await me.core.util.sleep(5000);
+                try {
+                    var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
+                        me.cachePath + "/" + path);
                 }
-                if (counter !== me.playerCounter) {
-                    me.core.property.set(window, "ui.work.state", false);
-                    me.log("counter: " + counter + " does not match: " + me.playerCounter);
-                    return;
+                catch(err) {
+                    alert("Failed to download file. Error: " + JSON.stringify(err));
                 }
-                me.core.property.set(player, "source", target);
                 me.core.property.set(window, "ui.work.state", false);
-                me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
-                me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
             }
+            if (counter !== me.playerCounter) {
+                me.log("counter: " + counter + " does not match: " + me.playerCounter);
+                return;
+            }
+            me.core.property.set(player, "source", target);
+            me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
+            me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         }
     };
     me.work = {
