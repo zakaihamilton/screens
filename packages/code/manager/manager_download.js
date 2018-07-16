@@ -12,8 +12,15 @@ screens.manager.download = function ManagerDownload(me) {
         }
         else {
             me.log("downloading file: " + from + " to: " + to);
-            var unlock = me.core.mutex.lock();
-            await me.storage.file.downloadFile(from, to);
+            var unlock = await me.core.mutex.lock();
+            try {
+                await me.storage.file.downloadFile(from, to);
+            }
+            catch(err) {
+                me.log("Failed to download file: " + from + " err: " + JSON.stringify(err));
+                unlock();
+                throw err;
+            }
             unlock();
             return to;
         }

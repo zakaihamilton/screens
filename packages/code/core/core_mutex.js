@@ -4,17 +4,17 @@
  */
 
 screens.core.mutex = function CoreMutex(me) {
-    me.init = function() {
+    me.init = function () {
         me._locking = Promise.resolve();
         me._locks = 0;
     }
 
-    me.isLocked = function() {
+    me.isLocked = function () {
 
         return me._locks > 0;
     }
 
-    me.lock = function() {
+    me.lock = function () {
 
         me._locks += 1;
 
@@ -22,7 +22,7 @@ screens.core.mutex = function CoreMutex(me) {
 
         let willLock = new Promise(resolve => unlockNext = () => {
             me._locks -= 1;
-      
+
             resolve();
         });
 
