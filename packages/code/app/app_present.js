@@ -98,7 +98,7 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "transform");
     };
     me.filterUsers = function (object, items) {
-        items = items.filter((item) => item.content);
+        items = items.filter((item) => item.content && item.name && item.name !== "undefined");
         return items;
     };
     me.userMenuList = {
