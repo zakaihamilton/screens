@@ -132,7 +132,7 @@ screens.storage.db.extention = function StorageDBExtention(me) {
             return await me.upper.remove(location, query);
         };
         component.get = async function (objectId) {
-            return await me.upper.get(location, objectId);
+            return await me.upper.findOne(location, objectId);
         };
         component.set = async function (data) {
             return await me.upper.set(location, data);
