@@ -51,11 +51,11 @@ screens.db.library = function DbLibrary(me) {
 };
 
 screens.db.library.tags = function DbLibraryTag(me) {
-    me.init = me.storage.db.helper.extend;
+    me.init = me.storage.db.extention;
 };
 
 screens.db.library.content = function DbLibraryContent(me) {
-    me.init = me.storage.db.helper.extend;
+    me.init = me.storage.db.extention;
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {

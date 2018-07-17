@@ -474,6 +474,12 @@
     color:lightgray;
 }
 
+.glow-menu-vertical.night-mode li[disabled="true"]:hover,
+.glow-menu-vertical.night-mode span[disabled="true"]:hover {
+    background-color: var(--chrome-background);
+    color:var(--chrome-disabled-color);
+}
+
 .glow-menu-vertical li.checked:before,
 .glow-menu-vertical span.checked:before {
     content:'\2713';

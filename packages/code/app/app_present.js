@@ -85,11 +85,11 @@ screens.app.present = function AppPresent(me) {
     };
     me.updateUser = async function (object) {
         var window = me.widget.window(object);
-        var userName = window.options.userName;
+        var userName = window.options.userName.toLowerCase();
         var text = "";
         var userList = await me.userList;
         if(userName) {
-            text = userList.find((item) => item.name === userName).content;
+            text = userList.find((item) => item.name.toLowerCase() === userName).content;
         }
         else {
             text = me.core.property.get(window.var.editor, "text");
@@ -97,9 +97,13 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
     };
+    me.filterUsers = function (object, items) {
+        items = items.filter((item) => item.content);
+        return items;
+    };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.present.userName");
+            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", me.filterUsers, "app.present.userName");
         }
     };
     me.clear = function (object) {

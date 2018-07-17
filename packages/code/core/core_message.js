@@ -192,6 +192,7 @@ screens.core.message = function CoreMessage(me) {
             return [null, result];
         }
         catch (err) {
+            me.log("args: " + JSON.stringify(args) + " error: " + err.toString());
             return [err];
         }
     };
