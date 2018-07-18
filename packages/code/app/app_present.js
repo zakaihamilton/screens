@@ -40,13 +40,20 @@ screens.app.present = function AppPresent(me) {
     me.updateDb = async function(object) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
-        me.db.shared.present.use({
-            "user":"$userId"
-        }, {
-            "user":"$userId",
-            "name":"$userName",
-            "content":text
-        });
+        if(text) {
+            me.db.shared.present.use({
+                "user":"$userId"
+            }, {
+                "user":"$userId",
+                "name":"$userName",
+                "content":text
+            });
+        }
+        else {
+            me.db.shared.present.remove({
+                "user":"$userId"
+            });
+        }
         var userList = await me.userList;
         var userName = me.lib.google.userName();
         if(userList) {
@@ -97,13 +104,9 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "text", text);
         me.core.property.set(window.var.transform, "transform");
     };
-    me.filterUsers = function (object, items) {
-        items = items.filter((item) => item.content && item.name && item.name !== "undefined");
-        return items;
-    };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", me.filterUsers, "app.present.userName");
+            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.present.userName");
         }
     };
     me.clear = function (object) {

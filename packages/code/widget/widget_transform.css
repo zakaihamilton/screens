@@ -26,7 +26,8 @@
     user-select: all;
     color:black;
     background:white;
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
     transform: translateZ(0);
 }
 
