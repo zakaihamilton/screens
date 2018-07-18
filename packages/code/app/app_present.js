@@ -54,17 +54,7 @@ screens.app.present = function AppPresent(me) {
                 "user":"$userId"
             });
         }
-        var userList = await me.userList;
-        var userName = me.lib.google.userName();
-        if(userList) {
-            var item = userList.find((item) => item.name === userName);
-            if(item) {
-                item.content = text;
-            }
-            else {
-                me.refreshList(object);
-            }
-        }
+        me.refreshList(object);
     };
     me.updateEditMode = function (object) {
         var window = me.widget.window(object);
