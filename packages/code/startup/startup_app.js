@@ -21,7 +21,7 @@ screens.startup.app = function StartupApp(me) {
             me.start();
         }
         else {
-            var window = await me.core.app("login");
+            var window = await me.core.app("login", true);
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);
                 me.core.property.set(window, "widget.window.maximize");

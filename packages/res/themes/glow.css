@@ -932,6 +932,10 @@
     box-sizing: border-box;
 }
 
+.glow-text-normal.night-mode {
+    color:var(--color);
+}
+
 .label.night-mode {
     color:var(--chrome-color);
 }
