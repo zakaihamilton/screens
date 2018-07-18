@@ -70,10 +70,7 @@ screens.app.present = function AppPresent(me) {
         return window.options.userName === "";
     };
     me.refreshList = function() {
-        me.core.message.send_server("core.cache.reset", me.id);
-        me.userList = me.core.message.send_server("core.cache.use",
-            me.id,
-            "db.shared.present.list");
+        me.userList = me.db.shared.present.list();
     };
     me.refresh = function (object) {
         var window = me.widget.window(object);
