@@ -75,7 +75,11 @@ screens.app.library = function AppLibrary(me) {
                     if (key === "_id" || key === "user") {
                         continue;
                     }
-                    names.add(key + ":" + item[key]);
+                    value = item[key];
+                    if(value.match(/^\d/)) {
+                        value = me.core.string.padNumber(value, 3);
+                    }
+                    names.add(key + ":" + value);
                 }
             }
             names = Array.from(names).sort().map((name) => {
