@@ -56,7 +56,8 @@
     user-select: text;
     color:black;
     background:white;
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
 }
 
 .widget-transform-layout.night-mode {
