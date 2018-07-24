@@ -156,7 +156,8 @@
             "the light of Hochma is without Hesed": "the light of Hochma2 is without Hesed2",
             "good order":"__good order",
             "own good":"own __good",
-            "individual good":"individual __good"
+            "individual good":"individual __good",
+            "Rosh Hashanah":"Rosh HaShanah"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -6930,10 +6931,12 @@
             }
         },
         {
-            "term":"Rosh Hashanah",
+            "term":"Rosh HaShanah",
             "style":{
                 "heading":"Festival"
             },
+            "translation":"New Year",
+            "explanation":"Jewish New Year",
             "hebrew":"ראש השנה"
         },
         {
