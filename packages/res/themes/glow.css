@@ -1,19 +1,19 @@
 .glow-window-label {
     text-align: center;
-    background-color: white;
-    font-size: 16px;
-    line-height:18px;
+    background-color: black;
+    font-size: 1em;
+    line-height:1.5em;
     flex:1;
     margin-left: auto;
     margin-right: auto;
     cursor: auto;
     user-select: none;
-    color:#0f2777;
-    border:Solid 1px #0f2777;
+    color:lightgray;
+    border:Solid 1px black;
     border-radius: 0px 0px 5px 5px;
     box-sizing: border-box;
     margin-top:-2px;
-    height:20px;
+    height:1.5em;
 }
 
 .glow-window-label.maximize {
@@ -211,7 +211,7 @@
 .glow-window-title {
     flex:none;
     display:flex;
-    height:18px;
+    height:1.5em;
     border-bottom: none;
 }
 
@@ -225,7 +225,7 @@
 
 .glow-window-close {
     flex:none;
-    width:28px;
+    width:1.5em;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
@@ -241,12 +241,12 @@
     border-width: 2px 2px 0 0;
     content: '';
     display: inline-block;
-    height: 6px;
-    left: 10px;
+    height: 0.4em;
+    left: 0.5em;
     position: relative;
     vertical-align: top;
-    width: 6px;
-    top: 5px;
+    width: 0.4em;
+    top: 0.5em;
     transform: rotate(135deg);
 }
 
@@ -273,8 +273,8 @@
 
 .glow-window-action {
     flex: none;
-    width:28px;
-    height:18px;
+    width:1.5em;
+    height:1.5em;
     margin-left: auto;
     margin-right: auto;
 }
@@ -299,10 +299,10 @@
 .glow-window-minimize-arrow {
     background:#0f2777;
     position: relative;
-    top:7px;
-    left:12px;
-    width:4px;
-    height:4px;
+    top:0.6em;
+    left:0.6em;
+    width:0.25em;
+    height:0.25em;
     box-sizing: border-box;
     border-radius: 2px;
 }
@@ -314,10 +314,10 @@
 .glow-window-maximize-arrow {
     border-radius: 2px;
     position: relative;
-    left:9px;
-    top:5px;
-    width:8px;
-    height:8px;
+    left:0.5em;
+    top:0.5em;
+    width:0.5em;
+    height:0.5em;
     border:2px dotted #0f2777;
     box-sizing: border-box;
 }

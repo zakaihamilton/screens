@@ -105,6 +105,7 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.results.container",
+            "ui.basic.show":false,
             "ui.basic.var":"resultsContainer",
             "ui.basic.elements": [
                 {
