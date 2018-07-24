@@ -34,7 +34,8 @@ screens.include({
         "db"
     ],
     "user": [
-        "verify"
+        "verify",
+        "profile"
     ],
     "db": [
         "library",

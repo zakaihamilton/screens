@@ -15,7 +15,7 @@ screens.app.profile = function AppProfile(me) {
         return __html__;
     };
     me.init = async function () {
-        me.data = await me.storage.data.load(me.id, "$userId");
+        me.data = await me.user.profile.get();
     };
     me.phases = {
         Unformed: 1,
@@ -75,7 +75,7 @@ screens.app.profile = function AppProfile(me) {
         }
         var button = document.getElementById("app.profile.save");
         me.core.property.set(button, "ui.class.is_loading", true);
-        await me.storage.data.save(profile, me.id, "$userId");
+        await me.user.profile.set(profile);
         me.core.property.set(button, "ui.class.is_loading", false);
     };
     me.update = function (object) {
