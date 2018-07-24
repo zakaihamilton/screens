@@ -1,7 +1,7 @@
 .widget-taskbar-container {
     position:absolute;
     bottom:0px;
-    height:32px;
+    height:2.3em;
     right:0px;
     left:0px;
     background:lightgray;
@@ -11,10 +11,12 @@
 
 .widget-taskbar-launcher {
     border:1px solid transparent;
-    top:3px;
+    top:0px;
+    height:1.5em;
     right:0px;
     position:absolute;
     padding:3px;
+    margin:3px;
     padding-right:10px;
     padding-left:10px;
     user-select: none;

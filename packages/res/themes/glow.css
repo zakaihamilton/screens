@@ -353,7 +353,7 @@
     padding-right:4px;
     padding-bottom: 0px;
     padding-top: 1px;
-    font-size: 14px;
+    font-size: 1em;
     text-align: left;
     border-right: 1px solid transparent;
     flex:0;
@@ -402,7 +402,7 @@
     position:relative;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 200px;
+    max-height: 10em;
     border:none;
     z-index:0;
     border-radius: 0;
@@ -421,10 +421,10 @@
 .glow-menu-vertical span {
     background-color: white;
     color: black;
-    min-height:18px;
+    min-height:1.5em;
     padding-left: 16px;
     padding-right: 16px;
-    font-size: 14px;
+    font-size:1em;
     text-align: left;
     display: block;
     cursor:default;
@@ -924,7 +924,7 @@
 .glow-taskbar-container {
     position:absolute;
     bottom:0px;
-    height:32px;
+    height:2.3em;
     right:0px;
     left:0px;
     background:black;
