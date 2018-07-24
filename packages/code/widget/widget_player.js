@@ -4,7 +4,25 @@
  */
 
 screens.widget.player = function WidgetPlayer(me) {
-
+    me.error = function (e) {
+        switch (e.target.error.code) {
+            case e.target.error.MEDIA_ERR_ABORTED:
+                alert('You aborted the playback.');
+                break;
+            case e.target.error.MEDIA_ERR_NETWORK:
+                alert('A network error caused the download to fail.');
+                break;
+            case e.target.error.MEDIA_ERR_DECODE:
+                alert('The playback was aborted due to a corruption problem or because the used features your browser did not support.');
+                break;
+            case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                alert('The media could not be loaded, either because the server or network failed or because the format is not supported.');
+                break;
+            default:
+                alert('An unknown error occurred.');
+                break;
+        }
+    };
 }
 
 screens.widget.player.audio = function WidgetPlayerAudio(me) {
@@ -23,11 +41,12 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "ui.basic.tag": "audio",
                     "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
+                    "core.event.error": "widget.player.error",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "ui.basic.var": "player",
-                    "ui.class.class":"player"
+                    "ui.class.class": "player"
                 },
                 {
                     "ui.element.component": "widget.player.controls",
@@ -49,7 +68,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
 };
 
 screens.widget.player.video = function WidgetPlayerVideo(me) {
-    me.init = function() {
+    me.init = function () {
         me.core.property.link("ui.style.display", "update", false);
     };
     me.element = {
@@ -67,12 +86,13 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "ui.basic.tag": "video",
                     "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
+                    "core.event.error": "widget.player.error",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "ui.resize.event": "update",
                     "ui.basic.var": "player",
-                    "ui.class.class":"player"
+                    "ui.class.class": "player"
                 },
                 {
                     "ui.element.component": "widget.player.controls",
@@ -81,7 +101,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
             ]
         }
     };
-    me.update = function(object) {
+    me.update = function (object) {
         var window = me.widget.window(object);
         var left = object.parentNode.offsetLeft;
         var top = object.parentNode.offsetTop;
@@ -127,7 +147,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     "ui.touch.up": "seekEnd",
                     "ui.touch.over": "seekOver",
                     "ui.touch.leave": "seekLeave",
-                    "showPercentage":false
+                    "showPercentage": false
                 },
                 {
                     "ui.basic.tag": "div",
@@ -172,7 +192,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "download"
                     ],
-                    "ui.attribute.download":""
+                    "ui.attribute.download": ""
                 },
                 {
                     "ui.basic.tag": "div",
