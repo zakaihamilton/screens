@@ -57,6 +57,7 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
         me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
+        me.core.property.set(window.var.resultsContainer, "ui.basic.show", true);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", showResults && window.searchText ? "" : "none");
     };
     me.cleanSearchText = function (search) {
