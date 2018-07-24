@@ -83,7 +83,10 @@ screens.app.present = function AppPresent(me) {
         var text = "";
         var userList = await me.userList;
         if(userName) {
-            text = userList.find((item) => item.name.toLowerCase() === userName).content;
+            user = userList.find((item) => item.name.toLowerCase() === userName);
+            if(user) {
+                text = user.content;
+            }
         }
         else {
             text = me.core.property.get(window.var.editor, "text");
