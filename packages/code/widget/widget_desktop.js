@@ -10,10 +10,6 @@ screens.widget.desktop = function WidgetDesktop(me) {
             "ui.class.class": "container",
             "ui.basic.elements": [
                 {
-                    "ui.basic.tag": "div",
-                    "ui.class.class": "background"
-                },
-                {
                     "ui.element.component": "widget.taskbar",
                     "ui.basic.var": "bar"
                 },
@@ -24,7 +20,8 @@ screens.widget.desktop = function WidgetDesktop(me) {
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "background"
+                            "ui.class.class": "background",
+                            "ui.touch.dblclick":"core.app.launcher"
                         }
                     ]
                 }

@@ -12,10 +12,17 @@ screens.startup.app = function StartupApp(me) {
             }
         ]);
         try {
+            var progress = me.ui.modal("progress", {
+                "title": "Login",
+                "delay": "500"
+            });
             await me.lib.google.load();
         }
         catch(err) {
             document.body.innerHTML = __html__.replace("__error__", err.message || err);
+        }
+        finally {
+            me.core.property.set(progress, "close");
         }
         if (me.lib.google.isSignedIn()) {
             me.start();

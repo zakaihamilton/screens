@@ -16,7 +16,13 @@ screens.startup.version = function StartupVersion(me) {
             platform: me.platform
         };
         me.log("startup: " + JSON.stringify(data) + " id: " + id);
-        await me.storage.data.saveAndVerify(data, "startup", id);
-        me.log("startup verification complete");
+        try {
+            me.log("Saving verification data");
+            await me.storage.data.saveAndVerify(data, "startup", id);
+            me.log("startup verification complete");
+        }
+        catch(err) {
+            me.log("startup verification failed");
+        }
     };
 };
