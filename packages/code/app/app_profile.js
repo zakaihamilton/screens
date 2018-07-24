@@ -77,6 +77,7 @@ screens.app.profile = function AppProfile(me) {
         me.core.property.set(button, "ui.class.is_loading", true);
         await me.user.profile.set(profile);
         me.core.property.set(button, "ui.class.is_loading", false);
+        me.data = await me.user.profile.get();
     };
     me.update = function (object) {
         var window = me.widget.window(object);
