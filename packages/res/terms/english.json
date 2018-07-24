@@ -6956,6 +6956,16 @@
                 "heading":"Festival"
             },
             "hebrew":"סוכות"
+        },
+        {
+            "term":"Rimon",
+            "hebrew":"רימון",
+            "translation":"Pomegranate"
+        },
+        {
+            "term":"Romemut",
+            "hebrew":"רוממות",
+            "translation":"Elevation"
         }
     ],
     "style": {
