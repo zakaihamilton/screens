@@ -1969,7 +1969,7 @@
             "hebrew": "בשר"
         },
         {
-            "case": "sensitive",
+            "case": true,
             "translation": "Skin",
             "style": {
                 "heading": "Body",
@@ -2064,7 +2064,7 @@
             "hebrew": "מים"
         },
         {
-            "case": "sensitive",
+            "case": true,
             "translation": "Dust",
             "style": {
                 "heading": "Element",
@@ -3065,7 +3065,7 @@
             "hebrew": "זיקין"
         },
         {
-            "case": "sensitive",
+            "case": true,
             "expansion": [
                 "Mayin Nukvin"
             ],
@@ -3078,7 +3078,7 @@
             "hebrew": "מיין נוקבין"
         },
         {
-            "case": "sensitive",
+            "case": true,
             "expansion": "Mayin Duchrin",
             "term": "MAD"
         },
@@ -3907,13 +3907,11 @@
             "hebrew": "אפשר"
         },
         {
-            "case": "insensitive",
             "translation": "Without Intention",
             "term": "Lo ka Mekavein",
             "hebrew": "לא כמכוון"
         },
         {
-            "case": "insensitive",
             "translation": "With Intention",
             "term": "ka Mekavein",
             "hebrew": "כמכוון"

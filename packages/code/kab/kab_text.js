@@ -136,7 +136,7 @@ screens.kab.text = function KabText(me) {
                     }
                     var match = term;
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
-                        if (!item.case || item.case !== "sensitive") {
+                        if (!item.case) {
                             match = term.toUpperCase();
                             if (item.case === "ignore") {
                                 if (me.core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
