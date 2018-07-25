@@ -754,7 +754,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         if (!widget) {
             return;
         }
-        var fontSize = (parseInt(widget.options.fontSize) + 4) + "px";
+        var fontSize = (parseInt(widget.options.fontSize) + 2) + "px";
         if (widget.options.playingPopup) {
             if (widget.playingPopupParagraph != paragraph) {
                 if (widget.playingPopupHandle) {
@@ -766,7 +766,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
                         me.core.property.set(widget.playingPopupHandle, "modal.playing.fontSize", fontSize);
                         me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo ? "15%" : "5%");
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "80%" : "90%");
+                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "70%" : "80%");
                     }
                     else {
                         var title = me.core.property.get(widget, "widget.transform.contentTitle");
@@ -774,8 +774,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                             "title": title,
                             "layout": paragraph.innerHTML,
                             "fontSize": fontSize,
-                            "top": widget.options.pipVideo ? "20%" : "5%",
-                            "height": widget.options.pipVideo ? "75%" : "90%"
+                            "top": widget.options.pipVideo ? "15%" : "5%",
+                            "height": widget.options.pipVideo ? "70%" : "80%"
                         });
                     }
                 }
