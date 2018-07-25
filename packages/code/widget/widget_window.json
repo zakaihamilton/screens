@@ -51,7 +51,8 @@
                             "ui.class.class": "close",
                             "ui.touch.click": "menu.context.show",
                             "ui.touch.dblclick": "close",
-                            "ui.class.add": "@widget.window.mainClass"
+                            "ui.class.add": "@widget.window.mainClass",
+                            "ui.attribute.title":"Menu (Double Click to Close)"
                         },
                         {
                             "ui.basic.var": "label",
