@@ -67,7 +67,8 @@
                             "ui.touch.click": "minimize",
                             "ui.basic.elements": {
                                 "ui.class.class": "minimize.arrow"
-                            }
+                            },
+                            "ui.attribute.title":"Minimize"
                         },
                         {
                             "ui.basic.window":"@ui.node.parent",
@@ -76,7 +77,8 @@
                             "ui.touch.click": "toggleSize",
                             "ui.basic.elements": {
                                 "ui.class.class": "maximize.arrow"
-                            }
+                            },
+                            "ui.attribute.title":"Maximize/Restore"
                         }
                     ]
                 },
