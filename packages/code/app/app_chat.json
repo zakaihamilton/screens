@@ -13,7 +13,7 @@
         "width": "30em",
         "height": "40em",
         "border":"1px solid black",
-        "boxShadow": "0 3px 6px rgba(0,0,0,.5)"
+        "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },
     "ui.basic.elements": []
 }
