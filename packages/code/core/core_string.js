@@ -183,5 +183,11 @@ screens.core.string = function CoreString(me) {
         while (number.length < size) { number = " " + number; }
         string = number + string.slice(index);
         return string;
-    }
+    };
+    me.cammelCase = function(string) {
+        string = string.split("_").map(token => {
+            return token.charAt(0).toUpperCase() + token.slice(1);
+        }).join("_");
+        return string;
+    };
 };

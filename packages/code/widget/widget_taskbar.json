@@ -1,0 +1,25 @@
+{
+    "ui.class.class": "container",
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "shortcuts",
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.attribute.title",
+                    "ui.basic.src",
+                    "ui.basic.var",
+                    "ui.touch.click"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "img",
+                    "ui.class.class": "shortcut"
+                },
+                "ui.data.values": [
+                    "widget.taskbar.shortcut(chat)",
+                    "widget.taskbar.shortcut(launcher)"
+                ]
+            }
+        }
+    ]
+}
