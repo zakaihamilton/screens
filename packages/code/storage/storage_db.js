@@ -97,9 +97,12 @@ screens.storage.db = function StorageDB(me) {
         var result = await collection.remove(query, removeOne);
         return result.nRemoved;
     };
-    me.list = async function (location, query={}, projection) {
+    me.list = async function (location, query={}, projection, sort) {
         var collection = await me.collection(location);
         var cursor = await collection.find(query, projection);
+        if(sort) {
+            cursor = cursor.sort(sort);
+        }
         var array = await cursor.toArray();
         me.log("found " + array.length +
             " items for query: " + JSON.stringify(query) +
@@ -126,25 +129,19 @@ screens.storage.db.extention = function StorageDBExtention(me) {
         location.db = tokens.pop();
         return location;
     };
+    me.mapping = {
+        remove : "remove",
+        get: "findOne",
+        set: "set",
+        use: "use",
+        findByIds: "findByIds",
+        list: "list"
+    };
     me.proxy.apply = function (component) {
         var location = me.location(component.id);
-        component.remove = async function (query) {
-            return await me.upper.remove(location, query);
-        };
-        component.get = async function (objectId) {
-            return await me.upper.findOne(location, objectId);
-        };
-        component.set = async function (data) {
-            return await me.upper.set(location, data);
-        };
-        component.use = async function (query, data) {
-            return await me.upper.use(location, query, data);
-        };
-        component.findByIds = async function (ids) {
-            return await me.upper.findByIds(location, ids);
-        };
-        component.list = async function (params, projection) {
-            return await me.upper.list(location, params, projection);
-        };
+        for(var source in me.mapping) {
+            var target = me.mapping[source];
+            component[source] = me.upper[target].bind(null, location);
+        }
     };
 };
