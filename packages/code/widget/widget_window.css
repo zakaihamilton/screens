@@ -30,7 +30,7 @@
 }
 
 .widget-window-border.embed {
-    float:right;
+    border: none;
 }
 
 .widget-window-border.fullscreen {

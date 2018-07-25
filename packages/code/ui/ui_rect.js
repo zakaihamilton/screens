@@ -82,6 +82,8 @@ screens.ui.rect = function UIRect(me) {
             parent_region.left -= relative_to_region.left;
             parent_region.top -= relative_to_region.top;
         }
+        object.style.right = "";
+        object.style.bottom = "";
         object.style.left = region.left - parent_region.left + "px";
         object.style.top = region.top - parent_region.top + "px";
         if(!move_only) {

@@ -16,10 +16,7 @@ screens.widget.window = function WidgetWindow(me) {
             "ui.basic.html": "html"
         },
         draw: function (object) {
-            var isEmbed = me.core.property.get(object, "embed");
-            if (!isEmbed) {
-                me.core.property.set(object, "ui.focus.active", true);
-            }
+            me.core.property.set(object, "ui.focus.active", true);
             me.core.property.set(object, "update");
         },
         properties: __json__
@@ -31,8 +28,12 @@ screens.widget.window = function WidgetWindow(me) {
                 var maximized = me.core.property.get(object, "ui.class.contains", "maximize");
                 me.core.property.set(object, "ui.move.enabled", !value && !maximized);
                 me.core.property.set(object, "ui.style.position", value ? "relative" : "absolute");
-                if (!value) {
+                if (value) {
+                    me.core.property.set(object.var.icon, "ui.node.parent");
+                }
+                else {
                     me.core.property.set(object, "ui.arrange.center");
+                    me.core.property.set(object.var.icon, "@widget.tray.tray");
                 }
             },
             "temp": null,

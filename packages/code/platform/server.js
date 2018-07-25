@@ -35,7 +35,8 @@ screens.include({
     ],
     "user": [
         "verify",
-        "profile"
+        "profile",
+        "chat"
     ],
     "db": [
         "library",

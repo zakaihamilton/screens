@@ -10,3 +10,7 @@ screens.db.shared = function DbShared(me) {
 screens.db.shared.present = function DbSharedPresent(me) {
     me.init = me.storage.db.extention;
 };
+
+screens.db.shared.chat = function DbSharedChat(me) {
+    me.init = me.storage.db.extention;
+};

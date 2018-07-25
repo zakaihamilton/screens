@@ -97,15 +97,19 @@ screens.storage.db = function StorageDB(me) {
         var result = await collection.remove(query, removeOne);
         return result.nRemoved;
     };
-    me.list = async function (location, query={}, projection, sort) {
+    me.list = async function (location, query={}, projection, params) {
         var collection = await me.collection(location);
         var cursor = await collection.find(query, projection);
-        if(sort) {
-            cursor = cursor.sort(sort);
+        if(params) {
+            for(var param in params) {
+                cursor = cursor[param](params[param]);
+            }
         }
         var array = await cursor.toArray();
         me.log("found " + array.length +
             " items for query: " + JSON.stringify(query) +
+            " projection: " + projection,
+            " params: " + JSON.stringify(params),
             " location: " + JSON.stringify(location));
         return array;
     };
