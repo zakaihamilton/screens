@@ -8,6 +8,7 @@
     cursor:default;
     user-select: none;
     user-drag: none;
+    touch-action: none;
 }
 
 .widget-desktop-background {
@@ -20,6 +21,7 @@
     cursor:default;
     user-select: none;
     user-drag: none;
+    touch-action: none;    
     background:lightblue;
 }
 
