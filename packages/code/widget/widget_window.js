@@ -16,8 +16,10 @@ screens.widget.window = function WidgetWindow(me) {
             "ui.basic.html": "html"
         },
         draw: function (object) {
-            me.core.property.set(object, "ui.focus.active", true);
-            me.core.property.set(object, "update");
+            if (!object.delayTimer) {
+                me.core.property.set(object, "ui.focus.active", true);
+                me.core.property.set(object, "update");
+            }
         },
         properties: __json__
     }
@@ -33,7 +35,7 @@ screens.widget.window = function WidgetWindow(me) {
                 }
                 else {
                     me.core.property.set(object, "ui.arrange.center");
-                    me.core.property.set(object.var.icon, "@widget.tray.tray");
+                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.tray.tray");
                 }
             },
             "temp": null,
@@ -44,7 +46,7 @@ screens.widget.window = function WidgetWindow(me) {
                     me.core.property.set(object.var.icon, "ui.node.parent");
                 }
                 else {
-                    me.core.property.set(object.var.icon, "@widget.tray.tray");
+                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.tray.tray");
                 }
             },
             "fixed": function (object, value) {
@@ -106,7 +108,7 @@ screens.widget.window = function WidgetWindow(me) {
     me.mainWindow = function (object) {
         var window = me.window(object);
         var parent = me.parent(window);
-        if(parent) {
+        if (parent) {
             return parent;
         }
         return window;
@@ -984,7 +986,7 @@ screens.widget.window = function WidgetWindow(me) {
         var items = tasks.filter(task => {
             return me.core.property.get(task.window, "importData");
         }).map(task => {
-            if(task.window === window) {
+            if (task.window === window) {
                 return null;
             }
             return [
