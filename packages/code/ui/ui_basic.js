@@ -213,7 +213,7 @@ screens.ui.basic = function UIBasic(me) {
     };
     me.show = {
         get: function(object) {
-            return object.style.visibility === "visible";
+            return object.style.visibility !== "hidden";
         },
         set: function(object, value) {
             object.style.visibility = value ? "visible": "hidden";

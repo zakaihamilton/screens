@@ -18,8 +18,8 @@ screens.widget.window = function WidgetWindow(me) {
         draw: function (object) {
             if (!object.delayTimer) {
                 me.core.property.set(object, "ui.focus.active", true);
-                me.core.property.set(object, "update");
             }
+            me.core.property.set(object, "update");
         },
         properties: __json__
     }
@@ -256,6 +256,7 @@ screens.widget.window = function WidgetWindow(me) {
             }
             if (window.delayTimer) {
                 clearTimeout(window.delayTimer);
+                window.delayTimer = null;
             }
         }
     };
@@ -509,15 +510,19 @@ screens.widget.window = function WidgetWindow(me) {
         set: function (object, value) {
             var window = me.window(object);
             window.delay = value;
+            clearTimeout(window.delayTimer);
             if (value) {
                 me.core.property.set(window, "ui.basic.show", false);
-                clearTimeout(window.delayTimer);
+                me.core.property.set(window.var.icon, "ui.node.parent");
                 window.delayTimer = setTimeout(() => {
+                    window.delayTimer = null;
                     me.core.property.set(window, "ui.basic.show", true);
+                    me.core.property.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
+                    me.core.property.set(window, "update");
+                    me.core.property.set(window, "ui.focus.active", true);
                 }, value);
             }
             else {
-                clearTimeout(window.delayTimer);
                 window.delayTimer = null;
             }
         }
