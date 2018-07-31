@@ -157,7 +157,9 @@
             "good order":"__good order",
             "own good":"own __good",
             "individual good":"individual __good",
-            "Rosh Hashanah":"Rosh HaShanah"
+            "Rosh Hashanah":"Rosh HaShanah",
+            "evil-mindedness":"evil__-mindedness",
+            "greatest evil":"greatest __evil"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",

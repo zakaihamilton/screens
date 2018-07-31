@@ -189,10 +189,10 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             me.core.property.set(object, "back", item);
             var prefix = me.core.property.get(item, "prefix");
             var text = undefined;
-            if(item.menu_options) {
+            if (item.menu_options) {
                 text = item.menu_options.value;
             }
-            if(typeof text === "undefined") {
+            if (typeof text === "undefined") {
                 text = me.core.property.get(item, "ui.basic.text");
             }
             if (prefix) {
@@ -283,10 +283,11 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     };
     me.filter = function (object, info) {
         var list = me.ui.node.container(object, "widget.menu.list");
-        if(list.filterTimer) {
+        if (list.filterTimer) {
             clearTimeout(list.filterTimer);
+            list.filterTimer = null;
         }
-        list.filterTimer = setTimeout(() => {
+        var updateFunc = () => {
             var members = list.var.members;
             while (members.firstChild) {
                 members.removeChild(members.firstChild);
@@ -304,7 +305,13 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                     members.appendChild(child);
                 }
             }
-        }, 1000);
+        };
+        if(info.text) {
+            list.filterTimer = setTimeout(updateFunc, 1000);
+        }
+        else {
+            updateFunc();
+        }
     };
 };
 
@@ -358,7 +365,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
         me.core.property.set(parent, "ui.work.state", true);
         var items = await info.promise;
-        if(!items) {
+        if (!items) {
             items = [];
         }
         if (items.length > me.sleepThreshold.length) {
@@ -377,7 +384,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     param = object.menu_select;
                 }
                 var value = values.value;
-                if(typeof value === "undefined") {
+                if (typeof value === "undefined") {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
                 param = me.core.property.get(parentMenu.window, param, value);
@@ -466,7 +473,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     };
     me.parentMenu = function (object) {
         var parent = object.parentNode;
-        if(!parent) {
+        if (!parent) {
             parent = object.parentList;
         }
         var popup = me.ui.node.container(object, "widget.menu.popup");

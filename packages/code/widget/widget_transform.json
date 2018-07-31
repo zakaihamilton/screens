@@ -302,6 +302,15 @@
                     }
                 ],
                 [
+                    "Speed",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "widget.transform.player.speeds",
+                [
                     "Voice",
                     null,
                     {
@@ -319,16 +328,7 @@
                         "group": "voices"
                     }
                 ],
-                "widget.transform.player.voices",
-                [
-                    "Speed",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
-                "widget.transform.player.speeds"
+                "widget.transform.player.voices"
             ]
         ],
         [
