@@ -283,23 +283,28 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     };
     me.filter = function (object, info) {
         var list = me.ui.node.container(object, "widget.menu.list");
-        var members = list.var.members;
-        while (members.firstChild) {
-            members.removeChild(members.firstChild);
+        if(list.filterTimer) {
+            clearTimeout(list.filterTimer);
         }
-        for (var child of list.members) {
-            var prefix = me.core.property.get(child, "prefix");
-            var childText = me.core.property.get(child, "ui.basic.text");
-            if (!childText) {
-                continue;
+        list.filterTimer = setTimeout(() => {
+            var members = list.var.members;
+            while (members.firstChild) {
+                members.removeChild(members.firstChild);
             }
-            var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
-            mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
-            if (mark) {
-                me.ui.mark.widget(child, info.text);
-                members.appendChild(child);
+            for (var child of list.members) {
+                var prefix = me.core.property.get(child, "prefix");
+                var childText = me.core.property.get(child, "ui.basic.text");
+                if (!childText) {
+                    continue;
+                }
+                var mark = !info.prefix || prefix.toUpperCase() === info.prefix.toUpperCase();
+                mark = mark && (!info.text || childText.toUpperCase().includes(info.text.toUpperCase()));
+                if (mark) {
+                    me.ui.mark.widget(child, info.text);
+                    members.appendChild(child);
+                }
             }
-        }
+        }, 1000);
     };
 };
 
