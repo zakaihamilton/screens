@@ -1,8 +1,8 @@
 .modal-progress-specific {
   position:relative;
   top:60px;
-  left:10%;
-  width: 80%;
+  left:5%;
+  width: 90%;
   min-height:32px;
   display:none;
 }
@@ -10,8 +10,8 @@
 .modal-progress-general {
     position:relative;
     top:60px;
-    left:10%;
-    width: 80%;
+    left:5%;
+    width: 90%;
     min-height:26px;
     border: 1px solid #2980b9;
     text-align: center;

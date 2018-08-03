@@ -34,7 +34,8 @@ screens.widget.transform = function WidgetTransform(me) {
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal",
-            output: false
+            output: false,
+            volume: "Normal"
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -64,7 +65,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 me.core.property.notify(widget, "update");
             },
             voice: me.player.changeVoice,
-            speed: me.player.changeSpeed,
+            speed: me.player.updatePlayback,
+            volume: me.player.updatePlayback,
             scrollPos: null
         });
         me.ui.class.useStylesheet("kab");
@@ -568,7 +570,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.play(object, me.media.voice.currentIndex, false);
         }
     };
-    me.changeSpeed = function (object) {
+    me.updatePlayback = function (object) {
         var widget = me.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         if (!currentPage) {
@@ -671,7 +673,8 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                     var focusElement = me.widget.transform.layout.focusElement(currentPage);
                     me.focusParagraph(object, focusElement);
                 },
-                rate: widget.options.speed,
+                speed: widget.options.speed,
+                volume: widget.options.volume,
                 language: widget.language
             };
             me.media.voice.play(text, widget.options.voice, params);
@@ -748,6 +751,23 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             return item;
         });
         return speedList;
+    };
+    me.volumes = function (object) {
+        var volumeList = Object.keys(me.media.voice.volumes);
+        volumeList = volumeList.map(name => {
+            var item = [
+                name,
+                "widget.transform.volume",
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "volumes"
+                }
+            ];
+            return item;
+        });
+        return volumeList;
     };
     me.focusParagraph = function (object, paragraph) {
         var widget = me.findWidget(object);

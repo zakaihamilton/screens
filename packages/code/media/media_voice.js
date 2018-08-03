@@ -25,6 +25,13 @@ screens.media.voice = function MediaVoice(me) {
         "Faster":1.25,
         "Fast":1.5
     };
+    me.volumes = {
+        "None":0.0,
+        "Low":0.25,
+        "Medium":0.5,
+        "Normal":0.75,
+        "High":1.0
+    };
     me.isPlaying = function() {
         return me.synth.speaking || me.synth.pending;
     };
@@ -44,20 +51,29 @@ screens.media.voice = function MediaVoice(me) {
             return voice.name.includes(voiceName);
         });
         var volume = 1;
-        var rate = 1;
+        var speed = 1;
         var pitch = 1;
         if(typeof params.volume !== "undefined") {
             volume = params.volume;
-        }
-        if(typeof params.rate !== "undefined") {
-            rate = params.rate;
-            if(typeof rate === "string") {
-                if(me.speeds[rate]) {
-                    me.log("using speed: " + rate);
-                    rate = me.speeds[rate];
+            if(typeof volume === "string") {
+                if(volume in me.volumes) {
+                    me.log("using volume: " + volume);
+                    volume = me.volumes[volume];
                 }
                 else {
-                    rate = 1.0
+                    volume = 1.0
+                }
+            }
+        }
+        if(typeof params.speed !== "undefined") {
+            speed = params.speed;
+            if(typeof speed === "string") {
+                if(speed in me.speeds) {
+                    me.log("using speed: " + speed);
+                    speed = me.speeds[speed];
+                }
+                else {
+                    speed = 1.0
                 }
             }
         }
@@ -100,7 +116,7 @@ screens.media.voice = function MediaVoice(me) {
                 var utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
                 utterance.volume = volume; // 0 to 1
-                utterance.rate = rate; // 0.1 to 10
+                utterance.rate = speed; // 0.1 to 10
                 utterance.pitch = pitch; //0 to 2
                 utterance.text = processedText;
                 utterance.lang = voice.lang;

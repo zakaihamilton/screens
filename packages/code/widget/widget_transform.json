@@ -328,7 +328,16 @@
                         "group": "voices"
                     }
                 ],
-                "widget.transform.player.voices"
+                "widget.transform.player.voices",
+                [
+                    "Volume",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "widget.transform.player.volumes"
             ]
         ],
         [
