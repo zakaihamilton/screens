@@ -6974,6 +6974,21 @@
             "term":"Edut",
             "translation":"Testimony",
             "hebrew":"עדות"
+        },
+        {
+            "term":"Madda",
+            "translation":"Science",
+            "hebrew":"מדע"
+        },
+        {
+            "term":"Sefer Madda",
+            "translation":"Book of Science",
+            "hebrew":"ספר מדע"
+        },
+        {
+            "term":"Teshuvah",
+            "translation":"Repentance",
+            "hebrew":"תשובה"
         }
     ],
     "style": {
