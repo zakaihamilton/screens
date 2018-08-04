@@ -105,9 +105,25 @@ screens.app.transform = function AppTransform(me) {
             name = item.key.name;
         }
         var fullItem = await me.storage.data.load("app.transform.content", name);
-        var content = me.core.string.decode(fullItem.content);
+        var content = "";
+        if(fullItem) {
+            content = me.core.string.decode(fullItem.content);
+        }
         me.importData(window, content);
-    },
+    };
+    me.importItemPrivate = async function (object, item) {
+        var window = me.widget.window(object);
+        var name = item;
+        if(typeof item !== "string") {
+            name = item.key.name;
+        }
+        var fullItem = await me.storage.data.load("app.transform.content.$userId", name);
+        var content = "";
+        if(fullItem) {
+            content = me.core.string.decode(fullItem.content);
+        }
+        me.importData(window, content);
+    };
     me.publicContentMenuList = {
         get: function (object) {
             return me.widget.menu.collect(object, me.publicContentList, "title", null, "public", null, me.importItem);
@@ -115,7 +131,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.privateContentMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.privateContentList, "title", null, "private", null, me.importItem);
+            return me.widget.menu.collect(object, me.privateContentList, "title", null, "private", null, me.importItemPrivate);
         }
     };
     me.documentIndex = {
