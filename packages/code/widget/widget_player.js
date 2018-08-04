@@ -201,7 +201,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "fullscreen"
                     ],
-                    "ui.touch.click": "widget.window.fullscreen"
+                    "ui.touch.click": "fullscreen"
                 }
             ]
         }
@@ -329,4 +329,13 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         widget.var.player.currentTime += 10;
         me.update(object);
     };
+    me.fullscreen = function (object) {
+        var widget = me.mainWidget(object);
+        var player = widget.var.player;
+        if (player.mozRequestFullScreen) {
+            player.mozRequestFullScreen();
+        } else if (player.webkitRequestFullScreen) {
+            player.webkitRequestFullScreen();
+        }
+    }
 };
