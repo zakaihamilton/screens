@@ -332,7 +332,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.fullscreen = function (object) {
         var widget = me.mainWidget(object);
         var player = widget.var.player;
-        if (player.mozRequestFullScreen) {
+        if (player.requestFullscreen) {
+            player.requestFullscreen();
+        }
+        else if (player.mozRequestFullScreen) {
             player.mozRequestFullScreen();
         } else if (player.webkitRequestFullScreen) {
             player.webkitRequestFullScreen();
