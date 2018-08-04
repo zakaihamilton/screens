@@ -50,13 +50,18 @@ screens.kab.style = function KabStyle(me) {
                 heading = styles.heading;
             }
         }
-        if (instance.item && instance.item.hebrew) {
-            if (instance.item.transliterated) {
-                tooltip = instance.item.transliterated;
+        if (instance.item) {
+            if (instance.item.hebrew) {
+                if (instance.item.transliterated) {
+                    tooltip = instance.item.transliterated;
+                }
+                tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
+                if (session.options.subHeadings) {
+                    subHeading = tooltip;
+                }
             }
-            tooltip = instance.item.hebrew + me.core.string.optional(" &#xa; " + tooltip, tooltip);
-            if (session.options.subHeadings) {
-                subHeading = tooltip;
+            else if(instance.item.explanation && instance.item.translation && session.options.doExplanation) {
+                subHeading = instance.item.translation;
             }
         }
         if (styles && styles.tooltip) {

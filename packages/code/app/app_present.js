@@ -38,20 +38,22 @@ screens.app.present = function AppPresent(me) {
         me.updateEditMode(window);
     };
     me.updateDb = async function(object) {
+        var date = new Date();
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.editor, "text");
         if(text) {
             me.db.shared.present.use({
                 "user":"$userId"
             }, {
-                "user":"$userId",
-                "name":"$userName",
-                "content":text
+                user:"$userId",
+                name:"$userName",
+                content:text,
+                date:date.toString()
             });
         }
         else {
             me.db.shared.present.remove({
-                "user":"$userId"
+                user:"$userId"
             });
         }
         me.refreshList(object);
