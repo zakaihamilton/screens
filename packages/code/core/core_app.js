@@ -19,9 +19,9 @@ screens.core.app = function CoreApp(me) {
                 if (Array.isArray(value)) {
                     value = value.slice(0);
                     value.unshift("app." + property + ".launch");
-                    me.core.message.send.apply(null, value);
+                    await me.core.message.send.apply(null, value);
                 } else {
-                    me.core.message.send("app." + property + ".launch", value);
+                    await me.core.message.send("app." + property + ".launch", value);
                 }
             }
         };
@@ -38,7 +38,7 @@ screens.core.app = function CoreApp(me) {
         await screens.include("app." + appName);
         me.core.property.set(progress, "close");
         var appArgs = Array.prototype.slice.call(arguments, 1);
-        result = me.core.message.send("app." + appName + ".launch", appArgs);
+        result = await me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };
     return "browser";
