@@ -20,5 +20,8 @@ screens.core.server = function CoreServer(me) {
             });
         });
     };
+    me.memoryUsage = function() {
+        return process.memoryUsage();
+    };
     return "server";
 };
