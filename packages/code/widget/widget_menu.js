@@ -387,7 +387,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 if (typeof value === "undefined") {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
-                param = me.core.property.get(parentMenu.window, param, value);
+                param = me.core.property.get(parentMenu.window || object, param, value);
             }
             if (param && param.then) {
                 callback(false);

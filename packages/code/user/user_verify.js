@@ -5,7 +5,7 @@
 
 screens.user.verify = function UserVerify(me) {
     me.init = async function () {
-        me.core.property.link("core.socket.check", "user.verify.check", true);
+        me.core.property.link("core.socket.verify", "user.verify.verify", true);
         var google = await me.core.util.config("settings.lib.google");
         me.client_id = google.client_id;
         me.tokens = {};
@@ -18,7 +18,7 @@ screens.user.verify = function UserVerify(me) {
         me.log("name: " + name + " isMatch:" + isMatch);
         return isMatch;
     };
-    me.check = async function (info) {
+    me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
             var name = decodeURIComponent(info.headers["user_name"]);
             var token = info.headers["token"];

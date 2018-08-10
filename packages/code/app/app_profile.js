@@ -9,8 +9,17 @@ screens.app.profile = function AppProfile(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.data = await me.user.profile.get();
         me.singleton = me.ui.element(__json__, "workspace", "self", null);
+    };
+    me.initOptions = async function (object) {
+        var window = me.widget.window(object);
+        me.ui.options.load(me, window, {
+            userName: ""
+        });
+        me.ui.options.choiceSet(me, null, {
+            "userName": me.updateUser
+        });
+        me.userList = await me.user.profile.list();
     };
     me.html = function () {
         return __html__;
@@ -43,17 +52,38 @@ screens.app.profile = function AppProfile(me) {
         }
         return bindings;
     };
-    me.load = async function (object) {
+    me.userMenuList = {
+        get: function (object) {
+            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.profile.userName");
+        }
+    };
+    me.userId = async function(object, name) {
+        var userId = null;
+        if(me.userList) {
+            var userList = await me.userList;
+            var user = userList.find((user) => name == user.name);
+            if(user && user.key) {
+                userId = user.key.name;
+            }
+        }
+        return userId;
+    };
+    me.updateUser = async function (object) {
+        var window = me.widget.window(object);
         var bindings = me.bindings(object);
-        var profile = me.data;
+        var profile_id = null;
+        var userId = await me.userId(object, window.options.userName);
+        var profile = await me.user.profile.get(userId);
         if (!profile) {
             profile = {};
         }
-        if (!profile.name) {
-            profile.name = me.lib.google.userName();
-        }
-        if (!profile.email) {
-            profile.email = me.lib.google.userEmail();
+        if(window.options.userName) {
+            if (!profile.name) {
+                profile.name = me.lib.google.userName();
+            }
+            if (!profile.email) {
+                profile.email = me.lib.google.userEmail();
+            }
         }
         for (var id in bindings) {
             if (profile[id]) {
@@ -63,6 +93,7 @@ screens.app.profile = function AppProfile(me) {
         me.update(object);
     };
     me.save = async function (object) {
+        var window = me.widget.window(object);
         var bindings = me.bindings(object);
         var profile = me.data;
         if (!profile) {
@@ -73,9 +104,10 @@ screens.app.profile = function AppProfile(me) {
         }
         var button = document.getElementById("app.profile.save");
         me.core.property.set(button, "ui.class.is_loading", true);
-        await me.user.profile.set(profile);
+        var userId = await me.userId(object, window.options.userName);
+        await me.user.profile.set(profile, userId);
         me.core.property.set(button, "ui.class.is_loading", false);
-        me.data = await me.user.profile.get();
+        me.data = await me.user.profile.get(userId);
     };
     me.update = function (object) {
         var window = me.widget.window(object);

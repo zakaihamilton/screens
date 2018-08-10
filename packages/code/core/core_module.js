@@ -51,7 +51,9 @@ screens.core.module = function CoreModule(me) {
         if (component_path) {
             try {
                 var component = screens(component_path);
-                target_platform = component.require;
+                if(component) {
+                    target_platform = component.require;
+                }
             }
             catch (err) {
 

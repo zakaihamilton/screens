@@ -76,21 +76,37 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.register = function (socket) {
         socket.on("send", async (info) => {
-            if (socket.request && socket.request.connection) {
-                info.clientIp = socket.request.connection.remoteAddress;
-            }
-            me.core.object(me, info);
-            await me.core.property.set(info, "check");
-            info.socket = socket;
-            me.core.message.prepareArgs(info);
-            var args = await me.core.message.handleLocal(info, info.args);
-            me.core.message.releaseArgs(info);
-            if (args) {
-                info.socket = null;
-                info.args = args;
-                info.platform = me.platform;
-                socket.emit("receive", info);
-            }
+                if (socket.request && socket.request.connection) {
+                    info.clientIp = socket.request.connection.remoteAddress;
+                }
+                me.core.object(me, info);
+                info.socket = socket;
+                var args = null;
+                try {
+                    await me.core.property.set(info, "verify");
+                    await me.core.property.set(info, "access");
+                }
+                catch(err) {
+                    me.log("failed check args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                    args = [err];
+                }
+                if(!args) {
+                    try {
+                        me.core.message.prepareArgs(info);
+                        args = await me.core.message.handleLocal(info, info.args);
+                        me.core.message.releaseArgs(info);
+                    }
+                    catch (err) {
+                        me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                        args = [err];
+                    }
+                }
+                if (args) {
+                    info.socket = null;
+                    info.args = args;
+                    info.platform = me.platform;
+                    socket.emit("receive", info);
+                }
         });
         socket.on("notify", async (info) => {
             var callback = me.core.handle.find(info.callback);

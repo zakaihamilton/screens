@@ -1,5 +1,18 @@
 require("../screens.js");
 
+screens.accessList = [
+    "user.profile.get",
+    "user.profile.set",
+    "user.verify.match",
+    "core.cache",
+    "storage.data",
+    "storage.file",
+    "manager",
+    "core.file",
+    "db.library",
+    "db.shared"
+];
+
 screens.include({
     "core": [
         "property",
@@ -36,7 +49,8 @@ screens.include({
     "user": [
         "verify",
         "profile",
-        "chat"
+        "access",
+        "chat",
     ],
     "db": [
         "library",

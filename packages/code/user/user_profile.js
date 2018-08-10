@@ -18,5 +18,8 @@ screens.user.profile = function UserProfile(me) {
         await me.storage.data.save(profile, me.id, user);
         me.core.cache.reset(me.id + "." + user);
     };
+    me.list = async function() {
+        return await me.storage.data.query("app.profile");
+    }
     return "server";
 };

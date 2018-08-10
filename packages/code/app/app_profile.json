@@ -11,9 +11,37 @@
     "ui.basic.html": "@app.profile.html",
     "ui.property.after": {
         "storage.local.key": "app-profile-window",
-        "storage.local.restore": "widget.window.store",
-        "app.profile.initOptions": null
+        "storage.local.restore": "widget.window.store"
     },
-    "app.profile.load":null,
+    "widget.menu.items": [
+        [
+            "Profile",
+            [
+                [
+                    "This Device",
+                    "app.profile.userName",
+                    {
+                        "separator":true,
+                        "state": "select",
+                        "value":""
+                    }
+                ],
+                [
+                    "Users",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.profile.userMenuList"
+            ],
+            {
+                "visible":"@user.verify.match(none,Zakai Hamilton)"
+            }
+        ]
+    ],
+    "app.profile.initOptions": null,
+    "app.profile.updateUser":null,
     "widget.window.maximize":null
 }

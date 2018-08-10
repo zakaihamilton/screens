@@ -318,7 +318,9 @@ var screens = new Proxy(() => {
 }, {
         apply: function (object, thisArg, argumentsList) {
             return argumentsList[0].split('.').reduce((parent, name) => {
-                return parent[name];
+                if(parent) {
+                    return parent[name];
+                }
             }, screens);
         }
     });
