@@ -1,9 +1,10 @@
 require("../screens.js");
 
-screens.accessList = [
+screens.api = [
     "user.profile.get",
     "user.profile.set",
     "user.verify.match",
+    "user.access.isAppAvailable",
     "core.cache",
     "storage.data",
     "storage.file",
@@ -11,6 +12,14 @@ screens.accessList = [
     "core.file",
     "db.library",
     "db.shared"
+];
+
+screens.apps = [
+    "transform",
+    "present",
+    "profile",
+    "theme",
+    "login"
 ];
 
 screens.include({

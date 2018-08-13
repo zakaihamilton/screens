@@ -44,7 +44,7 @@ screens.ui.tab = function UITab(me) {
         me.ui.node.iterate(window, (element) => {
             var owner = me.core.property.get(element, "ui.tab.owner");
             if (owner) {
-                me.core.property.set(element, "ui.basic.display", owner === tab);
+                me.core.property.set(element, "ui.class.ui-tab-hidden", owner !== tab);
             }
         });
     };
@@ -54,7 +54,7 @@ screens.ui.tab = function UITab(me) {
         },
         set: function (object, value) {
             object.ui_tab_owner = value;
-            me.core.property.set(object, "ui.style.display", "none");
+            me.core.property.set(object, "ui.class.ui-tab-hidden", true);
         }
     };
 };

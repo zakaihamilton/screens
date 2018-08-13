@@ -12,22 +12,16 @@ screens.user.access = function UserAccess(me) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {
             var method = info.args[0];
             me.log("Checking: " + method + " userId: " + info.userId);
-            var result = await me.isAllowed(method, info.userId);
+            var result = await me.isAPIAllowed(method, info.userId);
             if(!result) {
                 throw " User " + info.userName + " is not authorised to use method: " + method;
             }
         }
     };
     me.get = async function(user) {
-        if(!user) {
-            user = this.userId;
-        }
         return await me.storage.data.load(me.id, user);
     };
     me.set = async function(access, user) {
-        if(!user) {
-            user = this.userId;
-        }
         await me.storage.data.save(access, me.id, user);
     };
     me.checkAccessList = function(list, path) {
@@ -53,16 +47,36 @@ screens.user.access = function UserAccess(me) {
         }
         return result;
     };
-    me.isAllowed = async function(path, user) {
+    me.isAPIAllowed = async function(path, user) {
+        if(!user) {
+            user = this.userId;
+        }
         var access = await me.get(user);
         var result = false;
-        me.log("Checking if " + path + " allowed on user: " + user);
+        me.log("Checking if api " + path + " allowed on user: " + user);
         if(access) {
-            result = me.checkAccessList(access.paths, path);
+            result = me.checkAccessList(access.api, path);
         }
-        if(!result && me.accessList) {
-            result = me.checkAccessList(me.accessList, path);
+        if(!result && me.api) {
+            result = me.checkAccessList(me.api, path);
         }
+        me.log("api " + path + " " + (result ? " allowed" : "denied") + " on user: " + user);
+        return result;
+    };
+    me.isAppAvailable = async function(name, user) {
+        if(!user) {
+            user = this.userId;
+        }
+        var access = await me.get(user);
+        var result = false;
+        me.log("Checking if app " + name + " available for user: " + user);
+        if(access) {
+            result = me.checkAccessList(access.apps, name);
+        }
+        if(!result && me.api) {
+            result = me.checkAccessList(me.apps, name);
+        }
+        me.log("app " + name + " " + (result ? " available" : "not available") + " on user: " + user);
         return result;
     };
     return "server";

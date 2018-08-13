@@ -9,7 +9,7 @@ screens.core.cache = function CoreCache(me) {
     };
     me.use = async function(id, method, params) {
         if(this.userId) {
-            var result = await me.user.access.isAllowed(method, this.userId);
+            var result = await me.user.access.isAPIAllowed(method, this.userId);
             if(!result) {
                 throw " User " + this.userName + " is not authorised to use method: " + method;
             }
