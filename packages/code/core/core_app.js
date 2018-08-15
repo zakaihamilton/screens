@@ -35,6 +35,7 @@ screens.core.app = function CoreApp(me) {
             "title":appName.charAt(0).toUpperCase() + appName.slice(1),
             "delay":"250"
         });
+        me.log("launching app: " + appName);
         await screens.include("app." + appName);
         me.core.property.set(progress, "close");
         var appArgs = Array.prototype.slice.call(arguments, 1);

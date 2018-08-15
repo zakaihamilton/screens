@@ -45,7 +45,7 @@ screens.ui.property = function UIProperty(me) {
                     queue.map(list => {
                         me.handle(list.object, null, list.properties);
                     });
-                }, 0);
+                }, properties.timeout || 0);
             }
         }
     };

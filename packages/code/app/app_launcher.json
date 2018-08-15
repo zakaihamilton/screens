@@ -27,8 +27,7 @@
         "ui.data.default": {
             "text": "",
             "ui.tab.owner": "kab",
-            "ui.basic.src": "",
-            "ui.touch.click": "core.app.transform"
+            "ui.basic.src": ""
         },
         "ui.data.values": [
             [
@@ -61,6 +60,10 @@
             ],
             [
                 "Theme",
+                "utilities"
+            ],
+            [
+                "Users",
                 "utilities"
             ],
             [
