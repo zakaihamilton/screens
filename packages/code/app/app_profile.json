@@ -37,7 +37,7 @@
                 "app.profile.userMenuList"
             ],
             {
-                "visible":"@user.verify.match(none,Zakai Hamilton)"
+                "visible":"@user.access.isAPIAllowed(none,user.profile.list)"
             }
         ]
     ],

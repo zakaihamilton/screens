@@ -5,6 +5,7 @@ screens.api = [
     "user.profile.set",
     "user.verify.match",
     "user.access.isAppAvailable",
+    "user.access.isAPIAllowed",
     "core.cache",
     "storage.data",
     "storage.file",

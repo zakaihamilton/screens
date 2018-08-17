@@ -27,10 +27,12 @@ screens.widget.filter = function WidgetFilter(me) {
         var prefixes = widget.querySelector("#prefixes");
         var prefixesSelect = widget.querySelector("#prefixes-select");
         var prefixesList = me.core.property.get(widget, widget.prefixes);
-        for(var prefixItem of prefixesList) {
-            var option = document.createElement("option");
-            option.textContent = prefixItem;
-            prefixesSelect.appendChild(option);
+        if(prefixesList) {
+            for(var prefixItem of prefixesList) {
+                var option = document.createElement("option");
+                option.textContent = prefixItem;
+                prefixesSelect.appendChild(option);
+            }
         }
         prefixes.style.display = prefixesList.length ? "" : "none";
     };
