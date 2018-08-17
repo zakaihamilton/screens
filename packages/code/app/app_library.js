@@ -34,11 +34,13 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         me.ui.options.load(me, window, {
             editMode: false,
-            structuredMode: false
+            structuredMode: false,
+            tagMode: false
         });
         me.ui.options.toggleSet(me, null, {
             "editMode": me.updateEditMode,
-            "structuredMode": me.updateEditMode
+            "structuredMode": me.updateEditMode,
+            "tagMode": me.reSearch
         });
         window.showResults = true;
         me.updateMode(window);
@@ -53,9 +55,10 @@ screens.app.library = function AppLibrary(me) {
         var showResults = window.showResults;
         var editMode = window.options.editMode && (!showResults || !window.searchText);
         var structuredMode = window.options.structuredMode;
+        var tagMode = window.options.tagMode;
         me.core.property.set(window.var.transform, "ui.style.opacity", showResults || editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
-        me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && editMode);
+        me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && !tagMode && editMode);
         me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
         me.core.property.set(window.var.resultsContainer, "ui.basic.show", true);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", showResults && window.searchText ? "" : "none");
@@ -183,6 +186,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.search = async function (object) {
         var window = me.widget.window(object);
+        var tagMode = window.options.tagMode;
         var search = me.core.property.get(window.var.search, "ui.basic.text");
         search = me.cleanSearchText(search);
         me.core.property.set(window.var.search, "ui.basic.text", search);
@@ -211,8 +215,13 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
-        if(records && records.length === 1) {
-            me.gotoArticle(object, records[0]);
+        if(records) {
+            if(records.length === 1) {
+                me.gotoArticle(object, records[0]);
+            }
+            else if(tagMode) {
+                me.gotoArticle(object, records);
+            }
         }
     };
     me.updateText = function (object) {
@@ -238,7 +247,15 @@ screens.app.library = function AppLibrary(me) {
             records = me.toRecordArray(records);
         }
         var structuredMode = window.options.structuredMode;
+        var tagMode = window.options.tagMode;
         var text = "";
+        if(tagMode) {
+            records = records.map(item => {
+                item = Object.assign({}, item);
+                delete item.content;
+                return item;
+            });
+        }
         if (structuredMode) {
             text = JSON.stringify(records, null, 4);
         }
@@ -297,6 +314,9 @@ screens.app.library = function AppLibrary(me) {
         }
         var transformText = "";
         for (var record of records) {
+            if(!record.content) {
+                continue;
+            }
             if (transformText) {
                 transformText += "<article>";
             }
@@ -314,9 +334,6 @@ screens.app.library = function AppLibrary(me) {
             }
             transformText += record.content.text;
         };
-        if (records.content) {
-            transformText = records.content.map(record => record.text).join("<article>");
-        }
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.transform, "text", transformText);
         if (!window.options.editMode) {
@@ -420,8 +437,10 @@ screens.app.library = function AppLibrary(me) {
         return dict;
     };
     me.updateRecord = async function (object) {
-        var records = me.parseRecordsFromText(object);
-        if (records.content) {
+        var window = me.widget.window(object);
+        var tagMode = window.options.tagMode;
+        var records = me.parseRecordsFromText(window);
+        if (records.content && !tagMode) {
             records.content = await me.db.library.content.set(records.content);
             records.ids = records.content.map(item => item._id);
         }
@@ -432,7 +451,7 @@ screens.app.library = function AppLibrary(me) {
             records.tags = await me.db.library.tags.set(records.tags);
             records.ids = records.tags.map(item => item._id);
         }
-        me.updateTextFromRecords(object, records);
+        me.updateTextFromRecords(window, records);
         me.refresh();
     };
     me.deleteRecord = async function (object) {
@@ -484,9 +503,19 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
-        var content = await me.db.library.content.get(tags._id);
+        if(!Array.isArray(tags)) {
+            var content = await me.db.library.content.get(tags._id);
+        }
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
-        var records = [{ content: content, tags: tags }];
+        var records = [];
+        if(Array.isArray(tags)) {
+            records = tags.map(record => {
+                return {tags: record};
+            });
+        }
+        else {
+            records = [{ content: content, tags: tags }];
+        }
         me.updateTextFromRecords(window, records);
         window.showResults = false;
         me.updateMode(window);

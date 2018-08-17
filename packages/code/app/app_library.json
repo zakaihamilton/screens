@@ -59,6 +59,14 @@
                         "state":"select",
                         "visible":"app.library.editMode"
                     }
+                ],
+                [
+                    "Tag Mode",
+                    "app.library.tagMode",
+                    {
+                        "state":"select",
+                        "visible":"app.library.editMode"
+                    }
                 ]
             ]
         ]
