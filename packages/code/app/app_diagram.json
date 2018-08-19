@@ -12,6 +12,14 @@
             "Transform",
             [
                 [
+                    "Refresh",
+                    "app.diagram.reload",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
                     "Translation",
                     "app.diagram.doTranslation",
                     {

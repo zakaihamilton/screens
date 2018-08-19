@@ -1,0 +1,53 @@
+{
+    "title": "Pairs",
+    "layers": [
+        {
+            "ui.style.display": "grid",
+            "ui.style.position": "absolute",
+            "ui.style.padding": "2px",
+            "ui.style.left": "5px",
+            "ui.style.top": "5px",
+            "ui.style.right": "5px",
+            "ui.style.bottom": "5px",
+            "ui.style.gridAutoColumns": "2.5%",
+            "ui.style.gridAutoRows": "2.5%",
+            "ui.style.gridGap": "1px 1px",
+            "ui.style.alignItems": "stretch",
+            "ui.style.lineHeight": "2em",
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.style.gridRow",
+                    "ui.style.gridColumn",
+                    "app.diagram.term"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "div",
+                    "ui.property.style": {
+                        "margin": "0px",
+                        "textAlign": "left",
+                        "verticalAlign": "middle"
+                    }
+                },
+                "ui.data.values": [
+                    ["2", "2", "Keter"],
+                    ["2", "12/18", "GAR"],
+                    ["2", "22/40", "Atik ve Nukva"],
+                    ["6", "12/18", "VAK"],
+                    ["6", "22/40", "AA ve Nukva"],
+                    ["9", "2/38", "<hr>"],
+                    ["12", "2", "Bina"],
+                    ["12", "12/18", "GAR"],
+                    ["12", "22/40", "AVI"],
+                    ["16", "12/18", "VAK"],
+                    ["16", "22/40", "YESHSUT"],
+                    ["22", "2/38", "<hr>"],
+                    ["25", "2", "Tifferet"],
+                    ["25", "12/18", "GAR"],
+                    ["25", "22/40", "Big ZON"],
+                    ["29", "12/18", "VAK"],
+                    ["29", "22/40", "Little ZON"]
+                ]
+            }
+        }
+    ]
+}

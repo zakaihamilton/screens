@@ -116,6 +116,8 @@
             "Hochma would clothe": "Hochma2 would clothe",
             "Hochma cannot shine": "Hochma2 cannot shine",
             "VAK de Hochma": "VAK de Hochma2",
+            "GAR de Hochma": "GAR de Hochma2",
+            "GAR of the Hochma":"GAR of the Hochma2",
             "bottom half of Hochma": "bottom half of Hochma2",
             "VAK in Hochma": "VAK in Hochma2",
             "water of Hochma": "water of Hochma2",
@@ -127,6 +129,7 @@
             "Vav Ktzavot": "Vav Kzavot",
             "face-to-face": "Face to Face",
             "judgment": "judgement",
+            "do not receive Hochma":"do not receive Hochma2",
             "receives the Hochma": "receives the Hochma2",
             "guarding the Hochma": "guarding the Hochma2",
             "Hassadim and Hochma": "Hassadim and Hochma2",
@@ -6989,6 +6992,11 @@
             "term":"Teshuvah",
             "translation":"Repentance",
             "hebrew":"תשובה"
+        },
+        {
+            "term":"Barah Sheet",
+            "translation":"Created Six",
+            "hebrew":"ברא שית"
         }
     ],
     "style": {
@@ -7096,6 +7104,16 @@
             ],
             "term": "Hirik",
             "diagram": "chest"
+        },
+        {
+            "depends": [
+                "Atik",
+                "AA",
+                "AVI",
+                "ZON"
+            ],
+            "term": "Nikvey Eynaim",
+            "diagram": "pairs"
         },
         {
             "depends": [

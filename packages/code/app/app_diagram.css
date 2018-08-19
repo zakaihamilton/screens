@@ -16,6 +16,11 @@
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 }
 
+.app-diagram-layers.night-mode {
+    color:white;
+    background:var(--background);
+}
+
 .app-diagram-box {
   background-color: #444;
   color: #fff;
