@@ -3227,7 +3227,11 @@
         {
             "translation": "Lower Hey",
             "term": "Hey Tata'a",
-            "hebrew": "ה׳ תתאה"
+            "hebrew": "ה׳ תתאה",
+            "style": {
+                "heading": "Tetragrammaton",
+                "phase":"four"
+            }
         },
         {
             "translation": "Judgements",
@@ -5418,6 +5422,10 @@
         {
             "translation": "Encirclement of Foundation",
             "term": "Ateret Yesod",
+            "style":{
+                "heading":"Vessel",
+                "phase":"four"
+            },
             "hebrew": "עטרת יסוד"
         },
         {
@@ -6997,6 +7005,27 @@
             "term":"Barah Sheet",
             "translation":"Created Six",
             "hebrew":"ברא שית"
+        },
+        {
+            "translation": "Bottom Hey",
+            "term":"bottom Hey",
+            "source": "Hey Tata'a",
+            "hebrew": "ה׳ תתאה",
+            "style": {
+                "heading": "Tetragrammaton",
+                "phase":"four"
+            }
+        },
+        {
+            "translation": "Upper Hey",
+            "term":"upper Hey",
+            "source": "Hey Ela'a",
+            "hebrew": "ה׳ עילאה",
+            "style": {
+                "heading": "Tetragrammaton",
+                "phase":"two"
+            },
+            "defaultTerm":true
         }
     ],
     "style": {
@@ -7163,6 +7192,13 @@
             ],
             "term": "Igulim",
             "diagram": "circles"
+        },
+        {
+            "depends": [
+                "GE",
+                "AHP"
+            ],
+            "diagram": "chest"
         }
     ]
 }
