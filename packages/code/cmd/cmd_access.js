@@ -13,8 +13,9 @@ screens.cmd.access = function CmdAccess(me) {
         var toggle = args[2];
         me.core.property.set(terminal, "print", "Application: " + appName);
         var userList = await me.user.verify.list();
+        var userIndex = 1;
         for(var userItem of userList) {
-            me.core.property.set(terminal, "print", userItem.name);
+            me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name);
             var access = await me.user.access.get(userItem.userid);
             if(!access) {
                 access = {};
@@ -35,6 +36,7 @@ screens.cmd.access = function CmdAccess(me) {
             }
             access.name = userItem.name;
             await me.user.access.set(access, userItem.userid);
+            userIndex++;
         }
         me.core.cmd.exit(terminal);
     };

@@ -20,9 +20,7 @@ screens.apps = [
     "present",
     "profile",
     "theme",
-    "login",
-    "player",
-    "library"
+    "login"
 ];
 
 screens.include({
