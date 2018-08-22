@@ -20,6 +20,6 @@ screens.user.profile = function UserProfile(me) {
     };
     me.list = async function() {
         return await me.storage.data.query("app.profile");
-    }
+    };
     return "server";
 };
