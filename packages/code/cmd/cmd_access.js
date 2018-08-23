@@ -17,6 +17,7 @@ screens.cmd.access = function CmdAccess(me) {
         for(var userItem of userList) {
             me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name);
             var access = await me.user.access.get(userItem.userid);
+            var modified = false;
             if(!access) {
                 access = {};
             }
@@ -26,16 +27,21 @@ screens.cmd.access = function CmdAccess(me) {
             if(toggle === "add") {
                 if(!access.apps.includes(appName)) {
                     access.apps.push(appName);
+                    modified = true;
                 }
             }
             else if(toggle === "remove") {
                 var appIndex = access.apps.indexOf(appName);
                 if(appIndex != -1) {
                     access.apps.splice(appIndex, 1);
+                    modified = true;
                 }
             }
-            access.name = userItem.name;
-            await me.user.access.set(access, userItem.userid);
+            if(modified) {
+                access.name = userItem.name;
+                await me.user.access.set(access, userItem.userid);
+                me.core.property.set(terminal, "insert", " - Changed");
+            }
             userIndex++;
         }
         me.core.cmd.exit(terminal);

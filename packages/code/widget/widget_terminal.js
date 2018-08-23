@@ -90,6 +90,23 @@ screens.widget.terminal = function WidgetTerminal(me) {
             terminal.response = response;
         }
     };
+    me.insert = {
+        set: function (terminal, message) {
+            var print = me.ui.node.lastChild(terminal.var.output);
+            if(print) {
+                var text = me.core.property.get(print, "ui.basic.text");
+                text += message;
+                me.core.property.set(print, "ui.basic.text", text);
+            }
+            else {
+                var print = me.ui.element({
+                    "ui.basic.tag": "div",
+                    "ui.basic.text": message
+                }, terminal.var.output);
+            }
+            me.core.property.set(terminal, "scroll");
+        }
+    };
     me.print = {
         set: function (terminal, message) {
             var print = me.ui.element({

@@ -195,7 +195,7 @@ screens.ui.node = function UINode(me) {
         if ("_firstChild" in parent) {
             return parent._firstChild;
         } else {
-            parent.firstChild;
+            return parent.firstChild;
         }
     };
     me.lastChild = function (parent) {
@@ -205,7 +205,7 @@ screens.ui.node = function UINode(me) {
         if ("_lastChild" in parent) {
             return parent._lastChild;
         } else {
-            parent.firstChild;
+            return parent.lastChild;
         }
     };
     me.childNodes = function (parent) {
