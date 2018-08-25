@@ -19,9 +19,15 @@ screens.user.access = function UserAccess(me) {
         }
     };
     me.get = async function(user) {
+        if(!user) {
+            user = this.userId;
+        }
         return await me.storage.data.load(me.id, user);
     };
     me.set = async function(access, user) {
+        if(!user) {
+            user = this.userId;
+        }
         await me.storage.data.save(access, me.id, user);
     };
     me.checkAccessList = function(list, path) {

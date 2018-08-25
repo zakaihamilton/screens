@@ -242,3 +242,26 @@ screens.core.message.worker = function CoreMessageWorker(me) {
         }
     };
 };
+
+screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
+    me.load = async function (path) {
+        if ('serviceWorker' in navigator) {
+            me.log("Service worker registeration for path: " + path);
+            try {
+                await navigator.serviceWorker.register(path);
+                me.log("Service worker registeration complete for path: " + path);
+            }
+            catch(err) {
+                me.log("Service worker registeration failed for path: " + path);
+            }
+        }
+        else {
+            me.log("Service worker not supported");
+        }
+    };
+    me.postMessage = function(info) {
+        if(me.handle) {
+            return me.handle.postMessage(info);
+        }
+    };
+};

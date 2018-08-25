@@ -4,6 +4,9 @@
  */
 
 screens.core.file = function CoreFile(me) {
+    /* 
+        TODO: Add ability to add aliases for a file
+    */
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");

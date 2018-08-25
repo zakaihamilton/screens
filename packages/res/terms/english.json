@@ -162,7 +162,8 @@
             "individual good":"individual __good",
             "Rosh Hashanah":"Rosh HaShanah",
             "evil-mindedness":"evil__-mindedness",
-            "greatest evil":"greatest __evil"
+            "greatest evil":"greatest __evil",
+            "Hochma in Beresheet":"Hochma2 in Beresheet"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -1097,6 +1098,15 @@
         },
         {
             "expansion": [
+                "Keter",
+                "Hochma",
+                "Bina",
+                "Tifferet"
+            ],
+            "term": "KHBT"
+        },
+        {
+            "expansion": [
                 "Hochma",
                 "Bina",
                 "Tifferet",
@@ -1276,6 +1286,7 @@
                 "Galgalta",
                 "Enayim"
             ],
+            "abridged": "Machshava",
             "term": "GE"
         },
         {
@@ -1284,6 +1295,7 @@
                 "Hotem",
                 "Peh"
             ],
+            "abridged": "Regesh",
             "term": "AHP"
         },
         {
@@ -2756,6 +2768,7 @@
         },
         {
             "translation": "Air",
+            "explanation":"Alignment",
             "term": "Avir",
             "hebrew": "אויר"
         },
@@ -4290,7 +4303,12 @@
             },
             "translation": "Eye Sockets",
             "term": "Nikvey Eynaim",
+            "explanation":"Gate of Power",
             "hebrew": "נקבי עיינים"
+        },
+        {
+            "term":"Yod - Hey - Vav",
+            "abridged":"First Nine Emanations"
         },
         {
             "term": "NE",
@@ -5421,6 +5439,7 @@
         },
         {
             "translation": "Encirclement of Foundation",
+            "explanation":"Key",
             "term": "Ateret Yesod",
             "style":{
                 "heading":"Vessel",
@@ -7008,6 +7027,7 @@
         },
         {
             "translation": "Bottom Hey",
+            "explanation":"Lock",
             "term":"bottom Hey",
             "source": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
