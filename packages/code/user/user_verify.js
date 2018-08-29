@@ -26,7 +26,7 @@ screens.user.verify = function UserVerify(me) {
             var name = decodeURIComponent(info.headers["user_name"]);
             var token = info.headers["token"];
             if (!token) {
-                me.error("no token passed in header, url: " + info.url + " name: " + name);
+                me.log_error("no token passed in header, url: " + info.url + " name: " + name);
                 info.stop = true;
                 return;
             }
@@ -65,7 +65,7 @@ screens.user.verify = function UserVerify(me) {
             }
             catch (err) {
                 err = "failed to verify token, err: " + err;
-                me.error(err);
+                me.log_error(err);
                 info.stop = true;
             }
         }

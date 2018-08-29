@@ -4,21 +4,20 @@
  */
 
 screens.core.file = function CoreFile(me) {
-    /* 
-        TODO: Add ability to add aliases for a file
-    */
     me.init = function () {
         me.fs = require("fs");
         me.http = require("http");
         me.https = require("https");
+        me.core.file.path = me.core.file.alias.path;
     };
     me.readFile = function (path, options) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.log("reading file: " + path + " options: " + JSON.stringify(options));
             try {
                 me.fs.readFile(path, options, function (err, data) {
                     if (err) {
-                        me.error(err);
+                        me.log_error(err);
                         reject(err);
                     }
                     else {
@@ -28,12 +27,13 @@ screens.core.file = function CoreFile(me) {
                 });
             }
             catch (err) {
-                me.error(err);
+                me.log_error(err);
                 reject(err);
             }
         });
     };
     me.makeDir = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.mkdir(path, function (err) {
                 if (err) {
@@ -46,6 +46,7 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.makeDirEx = async function (path) {
+        path = me.path(path);
         var tokens = path.split("/");
         var mkdirPath = "";
         var error = null;
@@ -60,6 +61,7 @@ screens.core.file = function CoreFile(me) {
         }
     };
     me.readDir = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.readdir(path, function (err, items) {
                 me.log("path:" + path + " items:" + JSON.stringify(items));
@@ -73,6 +75,7 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.delete = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.stat(path, function (err, stats) {
                 if (err) {
@@ -102,6 +105,7 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.isFile = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.stat(path, function (err, stats) {
                 if (err) {
@@ -115,6 +119,7 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.isDirectory = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.stat(path, function (err, stats) {
                 if (err) {
@@ -128,6 +133,7 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.size = function (path) {
+        path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.stat(path, function (err, stats) {
                 if (err) {
@@ -140,9 +146,11 @@ screens.core.file = function CoreFile(me) {
         });
     };
     me.exists = function (path) {
+        path = me.path(path);
         return me.fs.existsSync(path);
     };
     me.download = async function (source, target) {
+        target = me.path(target);
         var folder = me.core.path.goto(target, "..");
         me.log("downloading: " + source + " to: " + target);
         await me.makeDirEx(folder);
@@ -234,4 +242,39 @@ screens.core.file = function CoreFile(me) {
         me.core.session.close(handle);
     };
     return "server";
+};
+
+screens.core.file.alias = function CoreFileAlias(me) {
+    me.aliases = {};
+    me.set = function(source, target) {
+        if(target) {
+            me.aliases[source] = target;
+        }
+        else {
+            delete me.aliases[source];
+        }
+    };
+    me.get = function(source) {
+        return me.aliases[source];
+    };
+    me.path = function(path) {
+        if(!path) {
+            return null;
+        }
+        var parts = path.split("/");
+        var partialPath = "";
+        var result = path;
+        for(var part of parts) {
+            if(partialPath) {
+                partialPath += "/";
+            }
+            partialPath += part;
+            var target = me.aliases[partialPath];
+            if(target) {
+                result = target;
+                break;
+            }
+        }
+        return result;
+    };
 };

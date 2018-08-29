@@ -21,7 +21,7 @@ screens.core.require = function CoreRequire(me) {
                     resolve(module);
                 }
                 catch(err) {
-                    me.error(err);
+                    me.log_error(err);
                     reject(err);
                 }
             });

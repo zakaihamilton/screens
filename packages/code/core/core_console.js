@@ -12,8 +12,8 @@ screens.core.console = function CoreConsole(me) {
     };
     me.init = function() {
         screens.log = me.log;
-        screens.error = me.error;
-        screens.warn = me.warn;
+        screens.log_error = me.log_error;
+        screens.warn = me.log_warn;
         if(me.platform === "browser") {
             me.enabled = !me.core.util.isSecure();
         }
@@ -35,7 +35,7 @@ screens.core.console = function CoreConsole(me) {
             console.log(fullMessage);
         }
     };
-    me.warn = function(message) {
+    me.log_warn = function(message) {
         if(me.enabled) {
             var date = new Date();
             var fullMessage = date.toUTCString() + " warn [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
@@ -43,7 +43,7 @@ screens.core.console = function CoreConsole(me) {
             console.warn(fullMessage);
         }
     };
-    me.error = function(message, stack) {
+    me.log_error = function(message, stack) {
         if(me.enabled) {
             if(message) {
                 if(!stack) {

@@ -25,7 +25,7 @@ screens.core.http = function CoreHttp(me) {
                     me.io = require("socket.io")(server);
                 }
                 catch (err) {
-                    me.error("cannot create secure server, error: " + err);
+                    me.log_error("cannot create secure server, error: " + err);
                 }
             }
             me.log("creating normal server");

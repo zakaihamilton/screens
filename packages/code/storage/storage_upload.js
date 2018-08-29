@@ -46,7 +46,7 @@ screens.storage.upload = function StorageUpload(me) {
             }
             me.reader.onerror = function (event) {
                 var err = event.target.error;
-                me.error("Error reading chunk: " + err.message + " name: " + err.name);
+                me.log_error("Error reading chunk: " + err.message + " name: " + err.name);
                 reject(event.target.error.code);
             };
             me.reader.onload = function (event) {

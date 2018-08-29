@@ -206,7 +206,7 @@ screens.app.library = function AppLibrary(me) {
                 records = await me.db.library.find(search);
             }
             catch(err) {
-                me.error("Failed to search for: " + search + " err: " + JSON.stringify(err));
+                me.log_error("Failed to search for: " + search + " err: " + JSON.stringify(err));
             }
             if(counter !== me.searchCounter) {
                 me.log("counter: " + counter + " does not match: " + me.searchCounter);

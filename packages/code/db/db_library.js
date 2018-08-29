@@ -80,7 +80,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
             var tokens = me.storage.db.split(query, { keepQuotes: true, separator: ' ' });
         }
         catch (err) {
-            me.error(err);
+            me.log_error(err);
         }
         me.log("tokens: " + JSON.stringify(tokens));
         for (var token of tokens) {

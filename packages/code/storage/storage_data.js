@@ -25,7 +25,7 @@ screens.storage.data = function StorageData(me) {
             return me.service;
         }
         if (!me.datastore) {
-            me.error("Datastore not initialized");
+            me.log_error("Datastore not initialized");
             return null;
         }
         me.service = me.datastore({
@@ -64,7 +64,7 @@ screens.storage.data = function StorageData(me) {
                 }, function (err) {
                     if (err) {
                         err = "error saving data for type: " + type + " id: " + id + " err:" + err;
-                        me.error(err);
+                        me.log_error(err);
                         reject(err);
                     }
                     else {
@@ -137,7 +137,7 @@ screens.storage.data = function StorageData(me) {
                     " select: " + JSON.stringify(select) +
                     " filters: " + JSON.stringify(filters) +
                     " error: " + err.message || err;
-                me.error(err);
+                me.log_error(err);
                 return err;
             }
         }

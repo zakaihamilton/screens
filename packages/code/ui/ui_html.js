@@ -36,7 +36,7 @@ screens.ui.html = function UIHtml(me) {
             }
             catch(err) {
                 err = "Cannot load html file: " + path + " err: " + err.message || err;
-                me.error(err);
+                me.log_error(err);
             }
             if(useCache) {
                 me.files[path] = html;

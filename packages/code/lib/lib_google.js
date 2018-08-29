@@ -83,7 +83,7 @@ screens.lib.google = function LibGoogle(me) {
             me.auth2.signIn().then(() => {
                 me.core.listener.signal(me.id);
             }).catch((err) => {
-                me.setStatus(me.errors[err.error]);
+                me.setStatus(me.log_errors[err.error]);
                 me.core.listener.signal(me.id);
             });
         }

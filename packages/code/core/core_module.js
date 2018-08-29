@@ -24,7 +24,7 @@ screens.core.module = function CoreModule(me) {
         }
         catch (err) {
             err = "Cannot load text file: " + filePath + " err: " + err;
-            me.error(err);
+            me.log_error(err);
             throw err;
         }
         return data;
@@ -38,7 +38,7 @@ screens.core.module = function CoreModule(me) {
         var data = await me.loadTextFile(filePath);
         var result = await me.postcss([me.autoprefixer]).process(data);
         result.warnings().forEach(function (warn) {
-            me.warn(warn.toString());
+            me.log_warn(warn.toString());
         });
         return result.css;
     };
@@ -73,7 +73,10 @@ screens.core.module = function CoreModule(me) {
             components = components.filter(Boolean);
         }
         var data = await me.loadTextFile(filePath);
-        var vars = { "platform": target_platform };
+        var vars = {
+            "target_platform": target_platform,
+            "source_platform": source_platform
+        };
         var extensions = { json: false, html: true };
         var extFilePath = filePath;
         for (var extension in extensions) {

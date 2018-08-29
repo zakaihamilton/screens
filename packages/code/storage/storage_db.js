@@ -21,7 +21,7 @@ screens.storage.db = function StorageDB(me) {
         if (!info) {
             unlock();
             err = name + " mongodb key not defined in private";
-            me.error(err);
+            me.log_error(err);
             throw err;
         }
         var url = info.url;

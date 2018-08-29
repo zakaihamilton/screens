@@ -33,7 +33,7 @@ screens.core.json = function CoreJson(me) {
             }
             catch(err) {
                 err = "Cannot load json file: " + path + " err: " + err.message || err;
-                me.error(err);
+                me.log_error(err);
             }
             if(json) {
                 json = JSON.parse(json);

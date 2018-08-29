@@ -83,6 +83,7 @@ screens.include({
         "zlib"
     ]
 }).then(() => {
+    screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
     screens.core.startup.run();
 });
 

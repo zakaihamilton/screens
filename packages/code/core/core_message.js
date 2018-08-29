@@ -252,7 +252,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                 me.log("Service worker registeration complete for path: " + path);
             }
             catch(err) {
-                me.log("Service worker registeration failed for path: " + path);
+                me.log("Service worker registeration failed for path: " + path + " err: " + err);
             }
         }
         else {

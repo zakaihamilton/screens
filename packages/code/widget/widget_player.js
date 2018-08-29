@@ -4,7 +4,7 @@
  */
 
 screens.widget.player = function WidgetPlayer(me) {
-    me.error = function (e) {
+    me.log_errorEvent = function (e) {
         switch (e.target.error.code) {
             case e.target.error.MEDIA_ERR_ABORTED:
                 alert('You aborted the playback.');
@@ -41,7 +41,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "ui.basic.tag": "audio",
                     "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
-                    "core.event.error": "widget.player.error",
+                    "core.event.error": "widget.player.errorEvent",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
@@ -86,7 +86,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "ui.basic.tag": "video",
                     "ui.attribute.controls": null,
                     "ui.attribute.preload": "auto",
-                    "core.event.error": "widget.player.error",
+                    "core.event.error": "widget.player.errorEvent",
                     "core.event.timeupdate": "widget.player.controls.update",
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
