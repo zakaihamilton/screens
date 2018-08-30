@@ -340,5 +340,22 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         } else if (player.webkitRequestFullScreen) {
             player.webkitRequestFullScreen();
         }
-    }
+    };
+    me.speeds = {
+        "Slow":0.5,
+        "Slower":0.75,
+        "Normal":1.0,
+        "Faster":1.25,
+        "Fast":1.5
+    };
+    me.speed = function(object) {
+        var widget = me.mainWidget(object);
+        var player = widget.var.player;
+        return player.playbackRate;
+    };
+    me.setSpeed = function(object, speed) {
+        var widget = me.mainWidget(object);
+        var player = widget.var.player;
+        player.playbackRate = speed;
+    };
 };

@@ -43,6 +43,10 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.load(me, window, {
             groupName: "American",
             sessionName: "",
+            speed: "Normal"
+        });
+        me.ui.options.choiceSet(me, null, {
+            speed: me.updatePlayback,
         });
     };
     me.sortSessions = function (object, items) {
@@ -291,5 +295,28 @@ screens.app.player = function AppPlayer(me) {
             await me.manager.download.clean("cache");
             await me.refresh.set(window);
         }
+    };
+    me.speeds = function (object) {
+        var speedList = Object.keys(me.widget.player.controls.speeds);
+        speedList = speedList.map(name => {
+            var item = [
+                name,
+                "app.player.speed",
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "speed"
+                }
+            ];
+            return item;
+        });
+        return speedList;
+    };
+    me.updatePlayback = function(object) {
+        var window = me.singleton;
+        var speed = me.widget.player.controls.speeds[window.options.speed];
+        me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
+        me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
     };
 };

@@ -73,7 +73,16 @@
                         "state":"select",
                         "enabled":"app.player.hasVideo"
                     }
-                ]
+                ],
+                [
+                    "Speed",
+                    null,
+                    {
+                        "enabled": false,
+                        "header": true
+                    }
+                ],
+                "app.player.speeds"
             ]
         ]
     ],
