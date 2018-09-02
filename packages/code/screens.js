@@ -3,7 +3,7 @@ function screens_platform() {
     if (typeof module !== 'undefined' && this && this.module !== module) {
         platform = global.platform || "server";
     } else if (typeof importScripts !== 'undefined') {
-        platform = "client";
+        platform = "__source_platform__";
     }
     return platform;
 }
@@ -146,7 +146,7 @@ function screens_import(path, optional) {
     if (screens.platform === "server" || screens.platform === "service") {
         require(path);
     }
-    else if (screens.platform === "client") {
+    else if (screens.platform === "client" || screens.platform === "service_worker") {
         try {
             importScripts(path);
         }
@@ -341,6 +341,6 @@ if (platform === "server" || platform === "service") {
     global.__html__ = {};
 }
 
-if (platform === "browser" || platform === "client") {
+if (platform === "browser" || platform === "client" || platform === "service_worker") {
     var module = screens;
 }
