@@ -74,8 +74,8 @@ screens.core.module = function CoreModule(me) {
         }
         var data = await me.loadTextFile(filePath);
         var vars = {
-            "target_platform": target_platform,
-            "source_platform": source_platform
+            "target_platform": target_platform || "",
+            "source_platform": source_platform || ""
         };
         var extensions = { json: false, html: true };
         var extFilePath = filePath;

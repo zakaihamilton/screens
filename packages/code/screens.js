@@ -1,8 +1,9 @@
 function screens_platform() {
     var platform = "browser";
-    if (typeof module !== 'undefined' && this && this.module !== module) {
-        platform = global.platform || "server";
-    } else if (typeof importScripts !== 'undefined') {
+    if(typeof global !== "undefined" && global.platform) {
+        platform = global.platform;
+    }
+    else if("__source_platform__") {
         platform = "__source_platform__";
     }
     return platform;
@@ -334,13 +335,15 @@ Object.assign(screens, {
     import: screens_import
 });
 
-var platform = screens_platform();
-if (platform === "server" || platform === "service") {
+if (screens.platform === "server" ||
+    screens.platform === "service") {
     global.screens = screens;
     global.__json__ = {};
     global.__html__ = {};
 }
 
-if (platform === "browser" || platform === "client" || platform === "service_worker") {
+if (screens.platform === "browser" ||
+    screens.platform === "client" ||
+    screens.platform === "service_worker") {
     var module = screens;
 }

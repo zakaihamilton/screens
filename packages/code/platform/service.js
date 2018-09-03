@@ -1,5 +1,4 @@
 global.platform = "service";
-
 require("../screens.js");
 
 screens.include({

@@ -1,3 +1,4 @@
+global.platform = "server";
 require("../screens.js");
 
 screens.api = [
