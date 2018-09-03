@@ -22,17 +22,9 @@ screens.app.logger = function AppLogger(me) {
         });
     };
     me.send = async function (method) {
-        var source = me.options["source"];
-        var send = null;
-        if (source === "Server") {
-            send = me.core.message.send_server;
-        } else if (source === "Client") {
-            send = me.core.message.send_client;
-        } else if (source === "Browser") {
-            send = me.core.message.send_browser;
-        } else if (source === "Service") {
-            send = me.core.message.send_service;
-        }
+        var source = me.options["source"].toLowerCase().replace(/ /g, '_');
+        var send_method = "send_" + source;
+        var send = me.core.message[send_method];
         var args = Array.prototype.slice.call(arguments, 0);
         return await send.apply(null, args);
     };

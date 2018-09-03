@@ -55,6 +55,13 @@
                     {
                         "state": "select"
                     }
+                ],
+                [
+                    "Service Worker",
+                    "app.logger.source",
+                    {
+                        "state": "select"
+                    }
                 ]
             ]
         ]

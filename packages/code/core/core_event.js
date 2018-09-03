@@ -12,11 +12,14 @@ screens.core.event = function CoreEvent(me) {
         };
     };
     me.send_event = function(object, method, event) {
-        if(!object.getAttribute || !object.getAttribute('disabled')) {
+        if(!object || !object.getAttribute || !object.getAttribute('disabled')) {
             return me.core.property.set(object, method, event);
         }
     };
     me.register = function (handlers, object, type, method, name=type, target=object, options=null) {
+        if(!object) {
+            return;
+        }
         if (!object.event_types) {
             object.event_types = {};
         }
