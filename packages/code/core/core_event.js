@@ -11,19 +11,19 @@ screens.core.event = function CoreEvent(me) {
             }
         };
     };
-    me.send_event = function(object, method, event) {
-        if(!object || !object.getAttribute || !object.getAttribute('disabled')) {
+    me.send_event = function (object, method, event) {
+        if (!object || !object.getAttribute || !object.getAttribute('disabled')) {
             return me.core.property.set(object, method, event);
         }
     };
-    me.register = function (handlers, object, type, method, name=type, target=object, options=null) {
-        if(!object) {
+    me.register = function (handlers, object, type, method, name = type, target = object, options = null) {
+        if (!object) {
             return;
         }
         if (!object.event_types) {
             object.event_types = {};
         }
-        if(method) {
+        if (method) {
             method = me.core.property.to_full_name(object, method);
         }
         var listener_callback = function (event) {
@@ -32,7 +32,17 @@ screens.core.event = function CoreEvent(me) {
                 enabled = handlers[name](object, method, event);
             }
             if (enabled) {
-                me.send_event(object, method, event);
+                var result = me.send_event(object, method, event);
+                if (result && result.then) {
+                    if (options) {
+                        if (options.respondWith) {
+                            event.respondWith(result);
+                        }
+                        if (options.waitUntil) {
+                            event.waitUntil(result);
+                        }
+                    }
+                }
             }
         };
         var listener = object.event_types[name];

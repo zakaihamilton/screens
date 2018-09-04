@@ -267,9 +267,9 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
     me.install = function(object, event) {
         me.log("install");
     };
-    me.activate = function(object, event) {
-        event.waitUntil(self.clients.claim());
+    me.activate = async function(object, event) {
         me.log("activate");
+        await self.clients.claim();
     };
     me.load = async function (path) {
         if ('serviceWorker' in navigator) {

@@ -264,7 +264,12 @@ screens.core.property = function CoreProperty(me) {
             }
         }
         promises.push(result);
-        result = Promise.all(promises);
+        if(promises.length > 1) {
+            result = Promise.all(promises);
+        }
+        else if(promises.length === 1) {
+            result = promises[0];
+        }
         return result;
     };
     me.setTo = function (list, object, name, value, beforeProperty) {
