@@ -260,15 +260,10 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
         if(me.platform === "service_worker") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
             me.register();
-            me.core.event.register(null, self, "install", me.install);
             me.core.event.register(null, self, "activate", me.activate);
         }
     };
-    me.install = function(object, event) {
-        me.log("install");
-    };
     me.activate = async function(object, event) {
-        me.log("activate");
         await self.clients.claim();
     };
     me.load = async function (path) {

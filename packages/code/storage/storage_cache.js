@@ -11,12 +11,17 @@ screens.storage.cache = function StorageCache(me) {
     me.init = function () {
         me.core.event.register(null, me, "fetch", me.fetch, "fetch", self, { respondWith: true });
         me.core.event.register(null, me, "activate", me.activate, "activate", self, { waitUntil: true });
+        me.core.event.register(null, me, "install", me.install, "install", self, { waitUntil: true });
+    };
+    me.install = async function(object, event) {
+        me.log("installed");
     };
     me.activate = async function (object, event) {
         var cacheNames = await caches.keys();
         for (cacheName of cacheNames) {
             await caches.delete(cacheName);
         }
+        me.log("activated");
     };
     me.fetch = async function (object, event) {
         me.log("fetch: " + event.request.url);
