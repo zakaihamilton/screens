@@ -101,6 +101,10 @@ screens.widget.transform = function WidgetTransform(me) {
             widget.transformText = value;
         }
     };
+    me.sync = async function(object) {
+        await me.storage.cache.empty();
+        me.transform(object);
+    };
     me.transform = async function (object) {
         var widget = me.findWidget(object);
         me.widget.transform.layout.clear(widget.var.layout);

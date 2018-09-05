@@ -87,4 +87,7 @@ screens.core.util = function CoreUtil(me) {
             callback.timer = null;
         }, 250);
     };
+    me.sync = async function() {
+        await me.storage.cache.empty();
+    };
 };

@@ -42,7 +42,7 @@
                     [
                         "@ui.html.icon(fa fa-sync)",
                         "Refresh",
-                        "widget.transform.transform"
+                        "widget.transform.sync"
                     ],
                     [
                         "@ui.html.icon(fa fa-expand)",

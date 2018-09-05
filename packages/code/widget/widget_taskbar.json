@@ -16,6 +16,7 @@
                     "ui.class.class": "shortcut"
                 },
                 "ui.data.values": [
+                    "widget.taskbar.shortcut(core.util.sync)",
                     "widget.taskbar.shortcut(chat)",
                     "widget.taskbar.shortcut(launcher)"
                 ]

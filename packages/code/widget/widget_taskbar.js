@@ -8,11 +8,17 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
         properties : __json__
     };
     me.shortcut = function(object, name) {
+        var method = method = "core.app." + name;
+        var label = name;
+        if(name.includes(".")) {
+            method = name;
+            label = name.split(".").pop();
+        }
         return [[
-            me.core.string.cammelCase(name),
-            "/packages/res/icons/" + name + ".png",
-            name,
-            "core.app." + name
+            me.core.string.cammelCase(label),
+            "/packages/res/icons/" + label + ".png",
+            label,
+            method
         ]];
     };
 };
