@@ -17,5 +17,5 @@ screens.core.network = function CoreNetwork(me) {
             me.core.event.register(null, object, "offline", value, "offline", window);
         }
     };
-    return "server";
+    return "browser";
 };

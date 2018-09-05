@@ -27,7 +27,13 @@ screens.storage.cache = function StorageCache(me) {
             await caches.delete(cacheName);
         }
     };
-    me.fetch = async function (object, event) {
+    me.fetch = function(object, event) {
+        if (/http:/.test(event.request.url)) {
+             return;
+        }
+        return me.secureFetch(object, event);
+    };
+    me.secureFetch = async function (object, event) {
         me.log("fetch: " + event.request.url);
         var isCached = false;
         for (var cacheName in me.policy) {
@@ -61,9 +67,10 @@ screens.storage.cache = function StorageCache(me) {
             }
             catch (err) {
                 me.log_error("fetch error: url: " + event.request.url + " err: " + err);
+                throw err;
             }
         }
-        me.log("retrieved " + (isCached?"cached":"standard") + " response for url: " + event.request.url);
+        me.log("retrieved " + (isCached? "cached":"standard") + " response for url: " + event.request.url);
         return response;
     };
     return "service_worker";
