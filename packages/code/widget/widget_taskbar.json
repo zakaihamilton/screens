@@ -15,10 +15,11 @@
                     "ui.basic.tag": "img",
                     "ui.class.class": "shortcut"
                 },
+                "ui.data.prefix": "widget.taskbar.shortcut(",
+                "ui.data.suffix" : ")",
                 "ui.data.values": [
-                    "widget.taskbar.shortcut(core.util.sync)",
-                    "widget.taskbar.shortcut(chat)",
-                    "widget.taskbar.shortcut(launcher)"
+                    "core.util.sync",
+                    "launcher"
                 ]
             }
         }

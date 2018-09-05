@@ -36,6 +36,22 @@ screens.ui.data = function UIData(me) {
             object.data_values = value;
         }
     };
+    me.prefix = {
+        get: function(object) {
+            return object.data_prefix;
+        },
+        set : function(object, value) {
+            object.data_prefix = value;
+        }
+    };
+    me.suffix = {
+        get: function(object) {
+            return object.data_suffix;
+        },
+        set : function(object, value) {
+            object.data_suffix = value;
+        }
+    };
     me.group = function (object, value) {
         if (object.data_values) {
             var elements = [];
@@ -53,7 +69,9 @@ screens.ui.data = function UIData(me) {
             var values = items[item_index];
             var data_value = null;
             if(typeof values === "string") {
-                values = me.core.property.get(object, values);
+                var prefix = object.data_prefix || "";
+                var suffix = object.data_suffix || "";
+                values = me.core.property.get(object, prefix + values + suffix);
                 if(Array.isArray(values)) {
                     me.collect(object, elements, values);
                 }
