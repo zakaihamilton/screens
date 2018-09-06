@@ -9,29 +9,31 @@ screens.storage.cache = function StorageCache(me) {
         res: 'packages/res'
     };
     me.init = function () {
-        me.core.event.register(null, me, "fetch", me.fetch, "fetch", self, { respondWith: true });
-        me.core.event.register(null, me, "activate", me.activate, "activate", self, { waitUntil: true });
-        me.core.event.register(null, me, "install", me.install, "install", self, { waitUntil: true });
+        me.core.event.register(null, me, "fetch", me.events.fetch, "fetch", self, { respondWith: true });
+        me.core.event.register(null, me, "activate", me.events.activate, "activate", self, { waitUntil: true });
+        me.core.event.register(null, me, "install", me.events.install, "install", self, { waitUntil: true });
     };
-    me.install = async function(object, event) {
-        me.log("installed");
+    me.events = {
+        install: async function (object, event) {
+            me.log("installed");
+        },
+        activate: async function (object, event) {
+            me.log("activated");
+            me.empty();
+        },
+        fetch: function (object, event) {
+            if (/http:/.test(event.request.url)) {
+                return;
+            }
+            return me.secureFetch(object, event);
+        }
     };
-    me.activate = async function (object, event) {
-        me.log("activated");
-        me.empty();
-    };
-    me.empty = async function() {
+    me.empty = async function () {
         var cacheNames = await caches.keys();
         for (cacheName of cacheNames) {
             me.log("deleted cache: " + cacheName);
             await caches.delete(cacheName);
         }
-    };
-    me.fetch = function(object, event) {
-        if (/http:/.test(event.request.url)) {
-             return;
-        }
-        return me.secureFetch(object, event);
     };
     me.secureFetch = async function (object, event) {
         me.log("fetch: " + event.request.url);
@@ -70,7 +72,7 @@ screens.storage.cache = function StorageCache(me) {
                 throw err;
             }
         }
-        me.log("retrieved " + (isCached? "cached":"standard") + " response for url: " + event.request.url);
+        me.log("retrieved " + (isCached ? "cached" : "standard") + " response for url: " + event.request.url);
         return response;
     };
     return "service_worker";
