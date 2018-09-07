@@ -13,7 +13,7 @@
                 "left":"10px",
                 "top":"30px"
             },
-            "ui.basic.text":"Screens Environment Version: "
+            "ui.basic.text":"Version: "
         },
         {
             "ui.property.style":{
@@ -21,7 +21,23 @@
                 "right":"50px",
                 "top":"30px"
             },
-            "ui.basic.text":"app.version.version"
+            "ui.basic.text":"@app.version.version"
+        },
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"10px",
+                "top":"60px"
+            },
+            "ui.basic.text":"Date: "
+        },
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "right":"50px",
+                "top":"60px"
+            },
+            "ui.basic.text":"@app.version.date"
         }
     ],
     "ui.property.after":{

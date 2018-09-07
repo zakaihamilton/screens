@@ -6,6 +6,7 @@
 screens.core.server = function CoreServer(me) {
     me.init = function() {
         me.cmd=require('node-cmd');
+        me.startDate = new Date();
     };
     me.run = async function(cmd) {
         me.log("running: " + cmd);
@@ -22,6 +23,9 @@ screens.core.server = function CoreServer(me) {
     };
     me.memoryUsage = function() {
         return process.memoryUsage();
+    };
+    me.date = function() {
+        return me.startDate.toString();
     };
     return "server";
 };

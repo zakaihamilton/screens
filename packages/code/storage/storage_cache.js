@@ -19,6 +19,10 @@ screens.storage.cache = function StorageCache(me) {
         },
         activate: async function (object, event) {
             me.log("activated");
+            var cacheList = await me.list();
+            cacheList.map(item => {
+                me.log("cache: " + item.cache + "index: " + item.index + "url: " + item.url);
+            });
             me.empty();
         },
         fetch: function (object, event) {
@@ -74,6 +78,22 @@ screens.storage.cache = function StorageCache(me) {
         }
         me.log("retrieved " + (isCached ? "cached" : "standard") + " response for url: " + event.request.url);
         return response;
+    };
+    me.list = async function () {
+        var list = [];
+        var cacheNames = await caches.keys();
+        for (cacheName of cacheNames) {
+            var cache = await caches.open(cacheName);
+            var keys = await cache.keys();
+            keys.forEach(function (request, index, array) {
+                list.push({
+                    url:request.url,
+                    cache:cacheName,
+                    index:index
+                });
+            });
+        }
+        return list;
     };
     return "service_worker";
 };

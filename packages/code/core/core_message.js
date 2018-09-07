@@ -270,7 +270,8 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
         if ('serviceWorker' in navigator) {
             me.log("Service worker registeration for path: " + path);
             try {
-                await navigator.serviceWorker.register(path);
+                var reg = await navigator.serviceWorker.register(path);
+                reg.update();
                 me.log("Service worker registeration complete for path: " + path);
                 if (!navigator.serviceWorker.controller) {
                     await new Promise(function (resolve) {

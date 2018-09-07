@@ -12,10 +12,11 @@ screens.app.version = function AppVersion(me) {
         me.singleton = me.ui.element(__json__, "workspace", "self");
         return me.singleton;
     };
-    me.version = {
-        get: async function(object) {
-            var json = await me.core.json.loadFile("/package.json");
-            return json.version;
-        }
+    me.version = async function (object) {
+        var json = await me.core.json.loadFile("/package.json");
+        return json.version;
+    };
+    me.date = function (object) {
+        return me.core.server.date();
     };
 };
