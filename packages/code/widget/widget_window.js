@@ -90,8 +90,17 @@ screens.widget.window = function WidgetWindow(me) {
         if (!object) {
             return null;
         }
-        var parent = object.parentNode;
+        var parent = object;
         while (parent) {
+            if(parent.parentWidget) {
+                parent = parent.parentWidget;
+            }
+            else {
+                parent = parent.parentNode;
+            }
+            if(!parent) {
+                break;
+            }
             if (parent === me.ui.element.workspace()) {
                 return null;
             }
@@ -101,7 +110,6 @@ screens.widget.window = function WidgetWindow(me) {
             if (parent.component === me.id) {
                 return parent;
             }
-            parent = parent.parentNode;
         }
         return null;
     };
