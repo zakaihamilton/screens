@@ -214,7 +214,7 @@ screens.core.message = function CoreMessage(me) {
 screens.core.message.worker = function CoreMessageWorker(me) {
     me.init = async function () {
         if (me.platform === "browser") {
-            await me.import('/node_modules/promise-worker/index.js');
+            me.PromiseWorker = await me.core.require("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if(me.platform === "client") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
@@ -242,7 +242,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
         });
     };
     me.load = async function (path) {
-        me.handle = new PromiseWorker(new Worker(path));
+        me.handle = new me.PromiseWorker(new Worker(path));
         me.handle.postMessage(null);
     };
     me.postMessage = function (info) {
@@ -255,7 +255,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
 screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
     me.init = async function() {
         if (me.platform === "browser") {
-            await me.import('/node_modules/promise-worker/index.js');
+            me.PromiseWorker = await me.core.require("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if(me.platform === "service_worker") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');

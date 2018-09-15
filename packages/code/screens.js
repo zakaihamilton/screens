@@ -129,6 +129,9 @@ async function screens_init(items) {
                         }
                     }
                     catch (err) {
+                        if(typeof err == "undefined") {
+                            err = {message:"Unknown error"};
+                        }
                         var message = err.message || err;
                         console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
                     }
@@ -197,7 +200,7 @@ function screens_import(path, optional) {
                 resolve(item);
             };
             item.onerror = () => {
-                screens.error("Failure in stylesheet: " + path);
+                screens.log_error("Failure in stylesheet: " + path);
                 reject();
             };
             parentNode.appendChild(item);

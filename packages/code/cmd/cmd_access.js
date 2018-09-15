@@ -37,6 +37,10 @@ screens.cmd.access = function CmdAccess(me) {
                     modified = true;
                 }
             }
+            else {
+                me.core.property.set(terminal, "print", "Only add or remove toggle supported");
+                break;
+            }
             if(modified) {
                 access.name = userItem.name;
                 await me.user.access.set(access, userItem.userid);
