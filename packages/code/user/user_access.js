@@ -59,31 +59,35 @@ screens.user.access = function UserAccess(me) {
         }
         var access = await me.get(user);
         var result = false;
+        var userName = user;
         me.log("Checking if api " + path + " allowed on user: " + user);
         if(access) {
             result = me.checkAccessList(access.api, path);
+            userName = access.name;
         }
         if(!result && me.api) {
             result = me.checkAccessList(me.api, path);
         }
-        me.log("api " + path + " " + (result ? " allowed" : "denied") + " on user: " + user);
+        me.log("api " + path + " " + (result ? " allowed" : "denied") + " on user: " + userName);
         return result;
     };
-    me.isAppAvailable = async function(name, user) {
+    me.appList = async function(user) {
+        var list = [];
         if(!user) {
             user = this.userId;
         }
         var access = await me.get(user);
         var result = false;
-        me.log("Checking if app " + name + " available for user: " + user);
+        var userName = user;
         if(access) {
-            result = me.checkAccessList(access.apps, name);
+            list.push(...access.apps);
+            userName = access.name;
         }
         if(!result && me.api) {
-            result = me.checkAccessList(me.apps, name);
+            list.push(...me.apps);
         }
-        me.log("app " + name + " " + (result ? " available" : "not available") + " on user: " + user);
-        return result;
+        me.log("apps allowed for user: " + userName + " = " + list.join(", "));
+        return list;
     };
     return "server";
 };
