@@ -22,8 +22,8 @@ screens.core.console = function CoreConsole(me) {
         }
     };
     me.push = function(message) {
-        if(me.messages.length > me.itemCount) {
-            me.messages.splice(0, me.messages.length - me.message.fixedSize);
+        if(me.messages.length > me.fixedSize) {
+            me.messages.shift();
         }
         me.messages.push(message);
     };
