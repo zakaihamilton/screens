@@ -28,7 +28,7 @@ screens.storage.cache = function StorageCache(me) {
         },
         fetch: function (object, event) {
             me.log("fetch: " + event.request.url);
-            if (/http:/.test(event.request.url)) {
+            if (/http:/.test(event.request.url) && !event.request.url.startsWith("http://localhost:")) {
                 return;
             }
             return me.secureFetch(object, event);
