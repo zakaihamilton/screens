@@ -282,7 +282,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                         navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
                     });
                 }
-                me.handle = new PromiseWorker(navigator.serviceWorker);
+                me.handle = new me.PromiseWorker(navigator.serviceWorker);
             }
             catch (err) {
                 me.log("Service worker registeration failed for path: " + path + " err: " + err);

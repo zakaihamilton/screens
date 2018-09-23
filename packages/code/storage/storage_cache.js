@@ -16,6 +16,7 @@ screens.storage.cache = function StorageCache(me) {
     me.events = {
         install: async function (object, event) {
             me.log("installed");
+            self.skipWaiting();
         },
         activate: async function (object, event) {
             me.log("activated");
@@ -26,6 +27,7 @@ screens.storage.cache = function StorageCache(me) {
             me.empty();
         },
         fetch: function (object, event) {
+            me.log("fetch: " + event.request.url);
             if (/http:/.test(event.request.url)) {
                 return;
             }
@@ -39,9 +41,20 @@ screens.storage.cache = function StorageCache(me) {
             await caches.delete(cacheName);
         }
     };
+    me.asyncFetchAndCache = function (object, event, cache) {
+        fetch(event.request).then(response => {
+            me.log_error("fetched response for: " + event.request.url);
+            if (response) {
+                cache.put(event.request, response.clone());
+            }
+        }).catch(err => {
+            me.log_error("fetch error: url: " + event.request.url + " err: " + err);
+        });
+    };
     me.secureFetch = async function (object, event) {
-        me.log("fetch: " + event.request.url);
+        me.log("secure fetch: " + event.request.url);
         var isCached = false;
+        var response = null;
         for (var cacheName in me.policy) {
             var matchUrl = me.policy[cacheName];
             var isMatch = event.request.url.match(matchUrl);
@@ -49,27 +62,22 @@ screens.storage.cache = function StorageCache(me) {
                 continue;
             }
             var cache = await caches.open(cacheName);
-            var response = await cache.match(event.request);
+            response = await cache.match(event.request);
             if (response) {
+                me.asyncFetchAndCache(object, event, cache);
                 isCached = true;
                 break;
             }
             else {
-                try {
-                    response = await fetch(event.request);
-                    if (response) {
-                        cache.put(event.request, response.clone());
-                    }
-                }
-                catch (err) {
-                    me.log_error("fetch error: url: " + event.request.url + " err: " + err);
-                }
-                break;
+                cache = null;
             }
         }
         if (!response) {
             try {
                 response = await fetch(event.request);
+                if (cache && response) {
+                    cache.put(event.request, response.clone());
+                }
             }
             catch (err) {
                 me.log_error("fetch error: url: " + event.request.url + " err: " + err);
@@ -87,9 +95,9 @@ screens.storage.cache = function StorageCache(me) {
             var keys = await cache.keys();
             keys.forEach(function (request, index, array) {
                 list.push({
-                    url:request.url,
-                    cache:cacheName,
-                    index:index
+                    url: request.url,
+                    cache: cacheName,
+                    index: index
                 });
             });
         }
