@@ -6,7 +6,7 @@
 screens.core.console = function CoreConsole(me) {
     me.messages = [];
     me.enabled = true;
-    me.fixedSize = 500;
+    me.fixedSize = 5000;
     me.clear = function() {
         me.messages = [];
     };
@@ -21,6 +21,11 @@ screens.core.console = function CoreConsole(me) {
             me.enabled = true;
         }
     };
+    me.formatMessage = function(id, message) {
+        var date = new Date();
+        var formattedMessage = date.toUTCString() + " log [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
+        return formattedMessage;
+    };
     me.push = function(message) {
         if(me.messages.length > me.fixedSize) {
             me.messages.shift();
@@ -29,16 +34,14 @@ screens.core.console = function CoreConsole(me) {
     };
     me.log = function(message) {
         if(me.enabled) {
-            var date = new Date();
-            var fullMessage = date.toUTCString() + " log [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
+            var fullMessage = me.formatMessage(this.id, message);
             me.push(fullMessage);
             console.log(fullMessage);
         }
     };
     me.log_warn = function(message) {
         if(me.enabled) {
-            var date = new Date();
-            var fullMessage = date.toUTCString() + " warn [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message;
+            var fullMessage = me.formatMessage(this.id, message);
             me.push(fullMessage);
             console.warn(fullMessage);
         }
@@ -49,8 +52,7 @@ screens.core.console = function CoreConsole(me) {
                 if(!stack) {
                     stack = new Error().stack;
                 }
-                var date = new Date();
-                var fullMessage = date.toUTCString() + " error [" + me.platform + (this.id ? " - " + this.id : "") + "] " + message + " stack: " + stack;
+                var fullMessage = me.formatMessage(this.id, message + " stack: " + stack);
                 me.push(fullMessage);
                 console.error(fullMessage);
             }
