@@ -67,6 +67,10 @@
                 "utilities"
             ],
             [
+                "Terminal",
+                "utilities"
+            ],
+            [
                 "Packets",
                 "work"
             ],
