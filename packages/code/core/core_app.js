@@ -12,7 +12,7 @@ screens.core.app = function CoreApp(me) {
                 }
                 var progress = me.ui.modal("progress", {
                     "title":property.charAt(0).toUpperCase() + property.slice(1),
-                    "delay":"250"
+                    "delay":"1000"
                 });
                 await screens.include("app." + property);
                 me.core.property.set(progress, "close");
@@ -33,7 +33,7 @@ screens.core.app = function CoreApp(me) {
         var result = null;
         var progress = me.ui.modal("progress", {
             "title":appName.charAt(0).toUpperCase() + appName.slice(1),
-            "delay":"250"
+            "delay":"1000"
         });
         me.log("launching app: " + appName);
         await screens.include("app." + appName);

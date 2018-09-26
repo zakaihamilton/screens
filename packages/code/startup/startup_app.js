@@ -14,7 +14,7 @@ screens.startup.app = function StartupApp(me) {
         try {
             var progress = me.ui.modal("progress", {
                 "title": "Login",
-                "delay": "500"
+                "delay": "1000"
             });
             await me.lib.google.load();
         }

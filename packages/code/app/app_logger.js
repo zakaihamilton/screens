@@ -13,6 +13,9 @@ screens.app.logger = function AppLogger(me) {
         me.singleton.isEnabled = false;
         return me.singleton;
     };
+    me.html = function () {
+        return __html__;
+    };
     me.init = function () {
         me.ui.options.load(me, null, {
             "source": "Browser"
@@ -37,13 +40,14 @@ screens.app.logger = function AppLogger(me) {
     };
     me.refresh = {
         set: async function (object) {
-            var log = me.singleton.var.logger;
-            me.core.property.set(log, "ui.basic.text", "");
+            var bindings = me.bindings(object);
+            var logger = bindings.logger;
+            me.core.property.set(logger, "ui.basic.text", "");
             var messages = await me.send("core.console.retrieveMessages");
             if (!messages) {
                 messages = [];
             }
-            me.core.property.set(log, "ui.basic.text", messages.join("\r\n"));
+            me.core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
             var isEnabled = await me.send("core.console.isEnabled");
             me.singleton.isEnabled = isEnabled;
         }
@@ -56,5 +60,15 @@ screens.app.logger = function AppLogger(me) {
             me.singleton.isEnabled = !me.singleton.isEnabled;
             me.send("core.console.enable", me.singleton.isEnabled);
         }
+    };
+    me.bindings = function (object) {
+        var ids = [
+            "logger"
+        ];
+        var bindings = {};
+        for (var id of ids) {
+            bindings[id] = document.getElementById("app.logger." + id);
+        }
+        return bindings;
     };
 };

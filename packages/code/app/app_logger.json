@@ -66,22 +66,8 @@
             ]
         ]
     ],
-    "ui.basic.elements": [
-        {
-            "ui.basic.var": "logger",
-            "ui.element.component": "widget.editor",
-            "ui.property.style": {
-                "left": "5px",
-                "top": "5px",
-                "width": "95%",
-                "bottom": "5px",
-                "position": "absolute",
-                "resize": "none",
-                "overflow": "auto",
-                "fontSize": "16px"
-            }
-        }
-    ],
+    "ui.class.load":"app.logger",
+    "ui.basic.html": "@app.logger.html",
     "ui.property.after": {
         "storage.local.key": "app-logger-window",
         "storage.local.restore": "widget.window.store",
