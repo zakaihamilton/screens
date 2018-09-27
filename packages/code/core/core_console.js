@@ -5,10 +5,12 @@
 
 screens.core.console = function CoreConsole(me) {
     me.messages = [];
+    me.errors = [];
     me.enabled = true;
     me.fixedSize = 5000;
     me.clear = function() {
         me.messages = [];
+        me.errors = [];
     };
     me.init = function() {
         screens.log = me.log;
@@ -54,6 +56,7 @@ screens.core.console = function CoreConsole(me) {
                 }
                 var fullMessage = me.formatMessage(this.id, message + " stack: " + stack);
                 me.push(fullMessage);
+                me.errors.push(fullMessage);
                 console.error(fullMessage);
             }
         }
@@ -66,6 +69,9 @@ screens.core.console = function CoreConsole(me) {
     };
     me.retrieveMessages = function() {
         return me.messages;
+    };
+    me.retrieveErrors = function() {
+        return me.errors;
     };
     me.clearMessages = function() {
         me.clear();

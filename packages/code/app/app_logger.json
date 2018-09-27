@@ -9,7 +9,7 @@
     "icon": "/packages/res/icons/logger.png",
     "widget.menu.items": [
         [
-            "File",
+            "Logger",
             [
                 [
                     "Refresh",
@@ -61,6 +61,25 @@
                     "app.logger.source",
                     {
                         "state": "select"
+                    }
+                ]
+            ]
+        ],
+        [
+            "Type",
+            [
+                [
+                    "All",
+                    "app.logger.type",
+                    {
+                        "value":"core.console.retrieveMessages"
+                    }
+                ],
+                [
+                    "Errors",
+                    "app.logger.type",
+                    {
+                        "value":"core.console.retrieveErrors"
                     }
                 ]
             ]

@@ -18,14 +18,20 @@ screens.app.logger = function AppLogger(me) {
     };
     me.init = function () {
         me.ui.options.load(me, null, {
-            "source": "Browser"
+            "source": "Browser",
+            "type": "core.console.retrieveMessages"
         });
-        me.ui.options.choiceSet(me, null, "source", function (object, value, key, options) {
-            me.core.property.notify(me.singleton, "app.logger.refresh");
+        me.ui.options.choiceSet(me, null, {
+            "source": () => {
+                me.core.property.notify(me.singleton, "app.logger.refresh");
+            },
+            "type": () => {
+                me.core.property.notify(me.singleton, "app.logger.refresh");
+            }
         });
     };
     me.send = async function (method) {
-        var source = me.options["source"].toLowerCase().replace(/ /g, '_');
+        var source = me.options.source.toLowerCase().replace(/ /g, '_');
         var send_method = "send_" + source;
         var send = me.core.message[send_method];
         var args = Array.prototype.slice.call(arguments, 0);
@@ -43,7 +49,7 @@ screens.app.logger = function AppLogger(me) {
             var bindings = me.bindings(object);
             var logger = bindings.logger;
             me.core.property.set(logger, "ui.basic.text", "");
-            var messages = await me.send("core.console.retrieveMessages");
+            var messages = await me.send(me.options.type);
             if (!messages) {
                 messages = [];
             }
