@@ -41,16 +41,28 @@ screens.core.console = function CoreConsole(me) {
         }
         me.messages.push(message);
     };
-    me.log = function (message) {
+    me.log = function (message, componentId, userName) {
         if (me.enabled) {
-            var fullMessage = me.formatMessage(this.id, message);
+            if (!componentId) {
+                componentId = this.id;
+            }
+            if (!userName) {
+                userName = this.userName;
+            }
+            var fullMessage = me.formatMessage(componentId, userName, message);
             me.push(fullMessage);
             console.log(fullMessage);
         }
     };
-    me.log_warn = function (message) {
+    me.log_warn = function (message, componentId, userName) {
         if (me.enabled) {
-            var fullMessage = me.formatMessage(this.id, message);
+            if (!componentId) {
+                componentId = this.id;
+            }
+            if (!userName) {
+                userName = this.userName;
+            }
+            var fullMessage = me.formatMessage(componentId, userName, message);
             me.push(fullMessage);
             console.warn(fullMessage);
         }

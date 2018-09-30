@@ -72,14 +72,16 @@
                     "All",
                     "app.logger.type",
                     {
-                        "value":"core.console.retrieveMessages"
+                        "value":"core.console.retrieveMessages",
+                        "state": "select"
                     }
                 ],
                 [
                     "Errors",
                     "app.logger.type",
                     {
-                        "value":"core.console.retrieveErrors"
+                        "value":"core.console.retrieveErrors",
+                        "state": "select"
                     }
                 ]
             ]
