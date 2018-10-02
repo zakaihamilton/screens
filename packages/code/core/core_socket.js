@@ -71,7 +71,12 @@ screens.core.socket = function CoreSocket(me) {
             info = Object.assign({}, info);
             info.platform = me.platform;
             info.callback = me.core.handle.push(responseCallback);
-            socket.emit(name, info);
+            try {
+                socket.emit(name, info);
+            }
+            catch(err) {
+                throw "socket emit failed: " + JSON.stringify(info) +  " error: " + err;
+            }
         });
     };
     me.register = function (socket) {
