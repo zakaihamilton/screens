@@ -37,7 +37,12 @@ screens.core.file = function CoreFile(me) {
         return new Promise((resolve, reject) => {
             me.fs.mkdir(path, function (err) {
                 if (err) {
-                    reject(err);
+                    if (err.code == 'EEXIST') {
+                        resolve();
+                    }
+                    else {
+                        reject(err);
+                    }
                 }
                 else {
                     resolve();
@@ -180,13 +185,13 @@ screens.core.file = function CoreFile(me) {
         session.path = path;
         return session.handle;
     };
-    me.pause = function(handle) {
+    me.pause = function (handle) {
         var session = me.core.session.get(handle);
         if (session.stream) {
             session.stream.pause();
         }
     };
-    me.resume = function(handle) {
+    me.resume = function (handle) {
         var session = me.core.session.get(handle);
         if (session.stream) {
             session.stream.resume();
@@ -197,7 +202,7 @@ screens.core.file = function CoreFile(me) {
         var session = me.core.session.get(handle);
         if (!session.stream) {
             var params = {};
-            if(chunkSize) {
+            if (chunkSize) {
                 params.highWaterMark = chunkSize;
             }
             session.stream = me.fs.createReadStream(session.path, params);
@@ -246,31 +251,31 @@ screens.core.file = function CoreFile(me) {
 
 screens.core.file.alias = function CoreFileAlias(me) {
     me.aliases = {};
-    me.set = function(source, target) {
-        if(target) {
+    me.set = function (source, target) {
+        if (target) {
             me.aliases[source] = target;
         }
         else {
             delete me.aliases[source];
         }
     };
-    me.get = function(source) {
+    me.get = function (source) {
         return me.aliases[source];
     };
-    me.path = function(path) {
-        if(!path) {
+    me.path = function (path) {
+        if (!path) {
             return null;
         }
         var parts = path.split("/");
         var partialPath = "";
         var result = path;
-        for(var part of parts) {
-            if(partialPath) {
+        for (var part of parts) {
+            if (partialPath) {
                 partialPath += "/";
             }
             partialPath += part;
             var target = me.aliases[partialPath];
-            if(target) {
+            if (target) {
                 result = target;
                 break;
             }
