@@ -142,6 +142,7 @@ screens.core.socket = function CoreSocket(me) {
         var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
         if (me.sockets) {
+            me.log("number of sockets: " + me.sockets.size);
             me.sockets.forEach((info, socket) => {
                 if(count) {
                     return;
