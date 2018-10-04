@@ -54,7 +54,14 @@
                     "app.envision.formatMode",
                     {
                         "state": "select",
-                        "separator": true,
+                        "visible":"app.envision.editMode"
+                    }
+                ],
+                [
+                    "Live Edit",
+                    "app.envision.liveEdit",
+                    {
+                        "state":"select",
                         "visible":"app.envision.editMode"
                     }
                 ]

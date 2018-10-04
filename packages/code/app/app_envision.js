@@ -16,13 +16,15 @@ screens.app.envision = function AppEnvision(me) {
         me.ui.options.load(me, window, {
             editMode: false,
             autoRefresh: true,
-            outputMode: false
+            outputMode: false,
+            liveEdit: false
         });
         me.ui.options.toggleSet(me, null, {
             "editMode": me.updateMode,
             "formatMode": me.updateMode,
             "autoRefresh": me.updateMode,
-            "outputMode": me.updateMode
+            "outputMode": me.updateMode,
+            "liveEdit": me.updateMode
         });
         me.core.property.set(window, "app", me);
         me.updateMode(window);
@@ -36,15 +38,20 @@ screens.app.envision = function AppEnvision(me) {
     };
     me.updateMode = function (object) {
         var window = me.widget.window(object);
-        me.core.property.set(window.var.content, "ui.style.opacity", window.options.editMode ? "0" : "");
-        me.core.property.set([window.var.editorContainer], "ui.basic.show", window.options.editMode);
-        me.core.property.set(window.var.source, "ui.basic.show", window.options.editMode && !window.options.formatMode);
-        me.core.property.set(window.var.format, "ui.basic.show", window.options.editMode && window.options.formatMode);
-        if (!window.options.editMode) {
+        var editMode = window.options.editMode;
+        var formatMode = window.options.formatMode;
+        var liveEdit = window.options.liveEdit;
+        me.core.property.set(window.var.content, "ui.style.opacity", editMode && !liveEdit ? "0" : "");
+        me.core.property.set(window.var.editorContainer, "ui.basic.show", editMode);
+        me.core.property.set(window.var.source, "ui.basic.show", editMode && !formatMode);
+        me.core.property.set(window.var.format, "ui.basic.show", editMode && formatMode);
+        me.core.property.set(window.var.editorContainer, "ui.style.top", liveEdit ?  "70%" : "");
+        me.core.property.set(window.var.editorContainer, "ui.style.height", liveEdit ?  "29%" : "");
+        if (!editMode) {
             me.refresh(object);
         }
         clearInterval(window.intervalHandle);
-        if (!window.options.editMode && window.options.autoRefresh) {
+        if ((liveEdit || !editMode) && window.options.autoRefresh) {
             window.intervalHandle = setInterval(() => {
                 me.refresh(object);
             }, 1000);
