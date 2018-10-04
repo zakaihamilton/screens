@@ -39,8 +39,9 @@ screens.app.logger = function AppLogger(me) {
     };
     me.clear = {
         set: function (object) {
-            var log = me.singleton.var.logger;
-            me.core.property.set(log, "ui.basic.text", "");
+            var bindings = me.bindings(object);
+            var logger = bindings.logger;
+            me.core.property.set(logger, "ui.basic.text", "");
             me.send("core.console.clearMessages");
         }
     };

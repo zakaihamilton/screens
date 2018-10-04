@@ -65,7 +65,12 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         me.effects = effects;
         me.log("using device: " + device + " to set effects: " + JSON.stringify(effects));
         var currentDir = await me.run("pwd");
-        var data = await me.run("sudo tc qdisc del root dev " + device);
+        try {
+            var data = await me.run("sudo tc qdisc del root dev " + device);
+        }
+        catch(err) {
+            var data = JSON.stringify(err);
+        }
         me.log("reset device output: " + data);
         if (effects.packetLoss || effects.packetDelay) {
             me.log("setting packet loss to: " + effects.packetLoss);
