@@ -306,7 +306,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 }
             }
         };
-        if(info.text) {
+        if (info.text) {
             list.filterTimer = setTimeout(updateFunc, 1000);
         }
         else {
@@ -400,7 +400,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     };
     me.options = {
         set: function (object, options) {
-            object.menu_options = options;
+            object.menu_options = Object.assign({}, object.menu_options, options);
             if (options) {
                 me.handleValue(object, options, "debugger", (value) => {
                     if (value) {
@@ -468,6 +468,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
             else {
                 object.menu_select = value;
+            }
+            if (object.menu_select === "header") {
+                me.core.property.set(object, "options", {
+                    "enabled": false,
+                    "header": true
+                });
             }
         }
     };

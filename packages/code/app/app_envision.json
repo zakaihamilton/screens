@@ -29,21 +29,16 @@
                         "state":"select"
                     }
                 ],
-                [
-                    "Export",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
                 "widget.window.exportMenuList(app.envision.exportText)",
+                [
+                    "Develop",
+                    "header"
+                ],
                 [
                     "Output",
                     "app.envision.outputMode",
                     {
-                        "state": "select",
-                        "separator": true
+                        "state": "select"
                     }
                 ],
                 [

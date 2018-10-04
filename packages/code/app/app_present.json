@@ -36,21 +36,9 @@
                 ],
                 [
                     "Users",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.present.userMenuList",
-                [
-                    "Export",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
                 "widget.window.exportMenuList(app.present.exportText)",
                 [
                     "Edit Mode",

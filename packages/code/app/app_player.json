@@ -17,20 +17,12 @@
                 ],
                 [
                     "Group",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.player.groupMenuList",
                 [
                     "Session",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.player.sessionMenuList",
                 [
@@ -76,11 +68,7 @@
                 ],
                 [
                     "Speed",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.player.speeds"
             ]

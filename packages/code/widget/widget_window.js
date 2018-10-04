@@ -92,13 +92,13 @@ screens.widget.window = function WidgetWindow(me) {
         }
         var parent = object;
         while (parent) {
-            if(parent.parentWidget) {
+            if (parent.parentWidget) {
                 parent = parent.parentWidget;
             }
             else {
                 parent = parent.parentNode;
             }
-            if(!parent) {
+            if (!parent) {
                 break;
             }
             if (parent === me.ui.element.workspace()) {
@@ -1019,6 +1019,10 @@ screens.widget.window = function WidgetWindow(me) {
                 }
             ]]
         }
+        items.unshift([
+            "Export",
+            "header"
+        ]);
         return items;
     };
     return "browser";

@@ -90,11 +90,7 @@
                 ],
                 [
                     "Language",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 [
                     "Auto",
@@ -125,11 +121,7 @@
             [
                 [
                     "Font Size",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "widget.transform.fontSizes(app.diagram.fontSize)"
             ]

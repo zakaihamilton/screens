@@ -28,11 +28,7 @@
                 ],
                 [
                     "Users",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.profile.userMenuList"
             ],

@@ -28,21 +28,9 @@
                 ],
                 [
                     "Tags",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "app.library.tagMenuList",
-                [
-                    "Export",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
-                ],
                 "widget.window.exportMenuList(app.library.exportText)",
                 [
                     "Edit Mode",

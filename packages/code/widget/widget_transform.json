@@ -197,11 +197,7 @@
                 ],
                 [
                     "Language",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 [
                     "Auto",
@@ -275,11 +271,7 @@
                 ],
                 [
                     "Font Size",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "widget.transform.fontSizes(widget.transform.fontSize)"
             ]
@@ -303,20 +295,12 @@
                 ],
                 [
                     "Speed",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "widget.transform.player.speeds",
                 [
                     "Voice",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 [
                     "None",
@@ -331,11 +315,7 @@
                 "widget.transform.player.voices",
                 [
                     "Volume",
-                    null,
-                    {
-                        "enabled": false,
-                        "header": true
-                    }
+                    "header"
                 ],
                 "widget.transform.player.volumes"
             ]
