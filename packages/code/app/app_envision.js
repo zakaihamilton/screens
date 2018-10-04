@@ -114,7 +114,7 @@ screens.app.envision = function AppEnvision(me) {
         return name;
     };
     me.processArrays = function (object, text, root) {
-        text = text.replace(/\[[^\[\]]*\]/g, function (match) {
+        text = text.replace(/\$\[[^\[\]]*\]/g, function (match) {
             console.log("match: " + match);
             match = match.substring(1, match.length - 1);
             var [path, content] = match.split("=");
