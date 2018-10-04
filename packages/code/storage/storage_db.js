@@ -125,7 +125,7 @@ screens.storage.db = function StorageDB(me) {
     return "server";
 };
 
-screens.storage.db.extention = function StorageDBExtention(me) {
+screens.storage.db.extension = function StorageDBExtention(me) {
     me.location = function (name) {
         var location = {};
         tokens = name.split(".");

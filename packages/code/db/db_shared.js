@@ -8,9 +8,13 @@ screens.db.shared = function DbShared(me) {
 };
 
 screens.db.shared.present = function DbSharedPresent(me) {
-    me.init = me.storage.db.extention;
+    me.init = me.storage.db.extension;
 };
 
 screens.db.shared.chat = function DbSharedChat(me) {
-    me.init = me.storage.db.extention;
+    me.init = me.storage.db.extension;
+};
+
+screens.db.shared.envision = function DbSharedEnvision(me) {
+    me.init = me.storage.db.extension;
 };
