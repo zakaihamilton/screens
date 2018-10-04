@@ -8,6 +8,7 @@
     height:100%;
     overflow:scroll;
     white-space: pre-wrap;
+    user-select: text;
 }
 
 .app-envision-content.night-mode pre {
