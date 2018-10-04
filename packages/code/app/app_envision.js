@@ -54,7 +54,7 @@ screens.app.envision = function AppEnvision(me) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.source, "text");
         text = me.convert(object, text);
-        if(window.options.outputMode) {
+        if (window.options.outputMode) {
             text = me.formatXml(text);
         }
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
@@ -71,54 +71,49 @@ screens.app.envision = function AppEnvision(me) {
         var text = me.core.property.get(window.var.source, "text");
         me.core.property.set(target, "importData", text);
     };
-    me.execute = function (object) {
-        var window = me.widget.window(object);
-        var url = me.core.property.get(window.var.url, "text");
-        alert(url);
-    };
     me.serialize = function (node) {
         var serializer = new XMLSerializer();
         return serializer.serializeToString(node);
     };
-    me.formatXml = function(xml) {
+    me.formatXml = function (xml) {
         var formatted = '';
         var reg = /(>)(<)(\/*)/g;
         xml = xml.replace(reg, '$1\r\n$2$3');
         var pad = 0;
         var tokens = xml.split('\r\n');
-        for(var index = 0; index < tokens.length; index++) {
+        for (var index = 0; index < tokens.length; index++) {
             node = tokens[index];
             var indent = 0;
-            if (node.match( /.+<\/\w[^>]*>$/ )) {
+            if (node.match(/.+<\/\w[^>]*>$/)) {
                 indent = 0;
-            } else if (node.match( /^<\/\w/ )) {
+            } else if (node.match(/^<\/\w/)) {
                 if (pad != 0) {
                     pad -= 1;
                 }
-            } else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) {
+            } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
                 indent = 1;
             } else {
                 indent = 0;
             }
-    
+
             var padding = '';
             for (var i = 0; i < pad; i++) {
                 padding += '  ';
             }
-    
+
             formatted += padding + node + '\r\n';
             pad += indent;
         }
         return formatted;
     };
-    me.beautifyName = function(object, name) {
+    me.beautifyName = function (object, name) {
         name = name.charAt(0).toUpperCase() + name.slice(1);
         name = name.replace(/_([a-z])/g, function (m, w) {
             return " " + w.toUpperCase();
         });
         return name;
     };
-    me.processArrays = function(object, text, root) {
+    me.processArrays = function (object, text, root) {
         text = text.replace(/\[[^\[\]]*\]/g, function (match) {
             console.log("match: " + match);
             match = match.substring(1, match.length - 1);
@@ -126,7 +121,7 @@ screens.app.envision = function AppEnvision(me) {
             var item = me.core.json.traverse(root, path);
             var result = "";
             if (item.found && content && item.value) {
-                for(var element of item.value) {
+                for (var element of item.value) {
                     result += me.processVars(object, content, element);
                 }
             }
@@ -134,11 +129,11 @@ screens.app.envision = function AppEnvision(me) {
         });
         return text;
     };
-    me.processVars = function(object, text, root) {
+    me.processVars = function (object, text, root) {
         text = text.replace(/{[^{}]*}/g, function (match) {
             console.log("match: " + match);
             var path = match.substring(1, match.length - 1);
-            if(path.startsWith("@")) {
+            if (path.startsWith("@")) {
                 path = path.substring(1);
                 if (path === "date") {
                     return new Date().toString();
@@ -164,16 +159,44 @@ screens.app.envision = function AppEnvision(me) {
         var window = me.widget.window(object);
         var format = me.core.property.get(window.var.format, "text");
         if (!format) {
-            format = ""
+            format = "<div></div>";
+        }
+        if (!text) {
+            text = "{}";
         }
         me.core.property.set(window.var.format, "ui.basic.save");
         try {
-            var source = JSON.parse(text);
-            format = me.processArrays(object, format, source);
-            format = me.processVars(object, format, source);
+            try {
+                var source = JSON.parse(text);
+            }
+            catch (err) {
+                throw "Cannot parse text: " + err;
+            }
+            try {
+                format = me.processArrays(object, format, source);
+            }
+            catch(err) {
+                throw "Cannot process arrays: " + err;
+            }
+            try {
+                format = me.processVars(object, format, source);
+            }
+            catch(err) {
+                throw "Cannot process vars: " + err;
+            }
             parser = new DOMParser();
-            format = parser.parseFromString(format, "text/xml");
-            format = me.serialize(format);
+            try {
+                format = parser.parseFromString(format, "text/xml");
+            }
+            catch(err) {
+                throw "Cannot parse format: " + err;
+            }
+            try {
+                format = me.serialize(format);
+            }
+            catch(err) {
+                throw "Cannot serialise format: " + err;
+            }
         }
         catch (err) {
             return `<article class="message is-danger">
@@ -182,10 +205,11 @@ screens.app.envision = function AppEnvision(me) {
                         </div>
                         <div class="message-body">
                             Error parsing content: ${err}
+                            Stack: ${new Error().stack}
                         </div>
                     </article>`
         }
-        return `<pre><code>${format}</code></pre><pre><code>${text}</code></pre>`;
+        return `${format}`;
         return text;
     };
 };

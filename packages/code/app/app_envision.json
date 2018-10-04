@@ -69,31 +69,6 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
-            "ui.class.class": "app.envision.url.container",
-            "ui.basic.elements": [
-                {
-                    "ui.basic.var": "url",
-                    "ui.basic.type": "text",
-                    "ui.attribute.placeholder": "Url",
-                    "ui.basic.text": "",
-                    "ui.class.classExtra": "app.envision.url",
-                    "ui.key.enter": "app.envision.execute",
-                    "ui.property.after": {
-                        "storage.local.key": "@ui.windowkey.app-envision-url",
-                        "storage.local.restore": "ui.basic.text",
-                        "ui.monitor.change": "ui.basic.save"
-                    }
-                },
-                {
-                    "ui.basic.text": "Go",
-                    "ui.touch.click": "app.envision.execute",
-                    "ui.class.classExtra": "app.envision.execute",
-                    "ui.basic.var": "execute"
-                }
-            ]
-        },
-        {
-            "ui.basic.tag": "div",
             "ui.basic.var": "content",
             "ui.class.class": "app.envision.content"
         },
