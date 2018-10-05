@@ -12,10 +12,6 @@
             "Envision",
             [
                 [
-                    "Clear",
-                    "app.envision.clear"
-                ],
-                [
                     "Refresh",
                     "app.envision.refresh",
                     {

@@ -66,13 +66,6 @@ screens.app.envision = function AppEnvision(me) {
         }
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
     };
-    me.clear = function (object) {
-        var window = me.widget.window(object);
-        me.core.property.set(window.var.source, "text", "");
-        me.core.property.set(window.var.source, "ui.basic.save");
-        me.core.property.set(window.var.content, "ui.basic.html", "");
-        window.searchText = "";
-    };
     me.exportText = function (object, target) {
         var window = me.widget.window(object);
         var text = me.core.property.get(window.var.source, "text");
@@ -217,6 +210,5 @@ screens.app.envision = function AppEnvision(me) {
                     </article>`
         }
         return `${format}`;
-        return text;
     };
 };
