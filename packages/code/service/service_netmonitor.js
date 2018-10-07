@@ -12,6 +12,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.runIndex = 0;
         me.streamIndex = 0;
         me.options = { pushPackets: true, collectPackets: false, filterNode: "" };
+        me.statistics = {};
         var config = await me.core.service.config(me.id);
         if (config) {
             me.pcap = require('pcap2');
@@ -41,7 +42,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             }
             if (me.session) {
                 me.session.on('packet', function (rawPacket) {
-                    if(!me.options.collectPackets) {
+                    if (!me.options.collectPackets) {
                         return;
                     }
                     var fullPacket = me.pcap.decode.packet(rawPacket);
@@ -73,11 +74,29 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         pushPacket = false;
                         if ((packet.source && packet.source.search(regex)) ||
                             (packet.target && packet.target.search(regex))) {
-                                pushPacket = true;
+                            pushPacket = true;
                         }
                     }
                     if (pushPacket) {
                         me.packets.push(packet);
+                    }
+                    else {
+                        if (me.statistics.packetsIgnored) {
+                            me.statistics.packetsIgnored++;
+                        }
+                        else {
+                            me.statistics.packetsIgnored = 0;
+                        }
+                    }
+                    if (!me.statistics.sources) {
+                        me.statistics.sources = {};
+                    }
+                    var sourceList = me.statistics.sources[packet.source];
+                    if (!sourceList) {
+                        sourceList = me.statistics.sources[packet.source] = [];
+                    }
+                    if (!sourceList.includes(packet.target)) {
+                        sourceList.push(packet.target);
                     }
                 });
                 if (filter && filter.includes("tcp")) {
@@ -91,6 +110,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 setInterval(() => {
                     me.log("there are " + me.packets.length + " packets in queue");
                     me.log("monitor options: " + JSON.stringify(me.options));
+                    me.log("monitor statistics: " + JSON.stringify(me.statistics));
                     if (me.options.pushPackets) {
                         var packets = me.packets;
                         me.packets = [];
@@ -116,6 +136,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.packets = [];
         me.runIndex = 0;
         me.streamIndex = 0;
+        me.statistics = {};
     };
     me.newStream = function () {
         me.streamIndex++;
