@@ -147,6 +147,7 @@ screens.core.socket = function CoreSocket(me) {
                 if(count) {
                     return;
                 }
+                me.log("socket platform: " + info.platform + " ref: " + info.ref);
                 if (!platform || info.platform === platform) {
                     me.log("sending to ref: " + info.ref + " platform: " + info.platform + " match: " + platform);
                     promise = me.core.message.send_socket.apply(socket, args);
