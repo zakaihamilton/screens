@@ -70,10 +70,10 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     };
                     var pushPacket = true;
                     if (me.options.filterNode) {
-                        var regex = me.options.filterNode;
+                        var regex = me.core.string.regex(me.options.filterNode);
                         pushPacket = false;
-                        if ((packet.source && packet.source.search(regex)) ||
-                            (packet.target && packet.target.search(regex))) {
+                        if ((packet.source && String(packet.source).search(regex)) ||
+                            (packet.target && String(packet.target).search(regex))) {
                             pushPacket = true;
                         }
                     }
