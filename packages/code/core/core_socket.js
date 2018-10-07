@@ -18,6 +18,12 @@ screens.core.socket = function CoreSocket(me) {
                         me.log(`Socket disconnected [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
                     }
                 });
+                socket.on('heartbeat_response', (data) => {
+                    var info = me.sockets.get(socket);
+                    if (info) {
+                        me.log(`heartbeat received [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
+                    }
+                });
                 me.register(socket);
                 var info = await me.core.message.send_service.call(socket, "core.socket.setup", ref);
                 me.sockets.set(socket, info);
@@ -27,6 +33,7 @@ screens.core.socket = function CoreSocket(me) {
                     " platform: " + info.platform +
                     ", sockets size: " + me.sockets.size);
             });
+            me.sendHeartbeat();
         } else if (me.platform === "service") {
             me.client = require("socket.io-client");
             if (process.argv.length < 3) {
@@ -53,6 +60,10 @@ screens.core.socket = function CoreSocket(me) {
             me.register(me.io);
         }
     };
+    me.sendHeartbeat = function () {
+        setTimeout(me.sendHeartbeat, 8000);
+        me.io.emit('heartbeat_send', { beat: 1 });
+    };
     me.setup = async function (ref) {
         me.ref = ref;
         return { platform: me.platform, ref };
@@ -74,44 +85,44 @@ screens.core.socket = function CoreSocket(me) {
             try {
                 socket.emit(name, info);
             }
-            catch(err) {
-                throw "socket emit failed: " + JSON.stringify(info) +  " error: " + err;
+            catch (err) {
+                throw "socket emit failed: " + JSON.stringify(info) + " error: " + err;
             }
         });
     };
     me.register = function (socket) {
         socket.on("send", async (info) => {
-                if (socket.request && socket.request.connection) {
-                    info.clientIp = socket.request.connection.remoteAddress;
-                }
-                me.core.object(me, info);
-                info.socket = socket;
-                var args = null;
+            if (socket.request && socket.request.connection) {
+                info.clientIp = socket.request.connection.remoteAddress;
+            }
+            me.core.object(me, info);
+            info.socket = socket;
+            var args = null;
+            try {
+                await me.core.property.set(info, "verify");
+                await me.core.property.set(info, "access");
+            }
+            catch (err) {
+                me.log("failed check args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                args = [err];
+            }
+            if (!args) {
                 try {
-                    await me.core.property.set(info, "verify");
-                    await me.core.property.set(info, "access");
+                    me.core.message.prepareArgs(info);
+                    args = await me.core.message.handleLocal(info, info.args);
+                    me.core.message.releaseArgs(info);
                 }
-                catch(err) {
-                    me.log("failed check args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                catch (err) {
+                    me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
                     args = [err];
                 }
-                if(!args) {
-                    try {
-                        me.core.message.prepareArgs(info);
-                        args = await me.core.message.handleLocal(info, info.args);
-                        me.core.message.releaseArgs(info);
-                    }
-                    catch (err) {
-                        me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
-                        args = [err];
-                    }
-                }
-                if (args) {
-                    info.socket = null;
-                    info.args = args;
-                    info.platform = me.platform;
-                    socket.emit("receive", info);
-                }
+            }
+            if (args) {
+                info.socket = null;
+                info.args = args;
+                info.platform = me.platform;
+                socket.emit("receive", info);
+            }
         });
         socket.on("notify", async (info) => {
             var callback = me.core.handle.find(info.callback);
@@ -125,6 +136,9 @@ screens.core.socket = function CoreSocket(me) {
                 callback.apply(null, info.args);
             }
         });
+        socket.on("heartbeat_send", (data) => {
+            socket.emit('heartbeat_response', { beat: 1 });
+        });        
     };
     me.list = function (platform) {
         var items = [];
@@ -144,7 +158,7 @@ screens.core.socket = function CoreSocket(me) {
         if (me.sockets) {
             me.log("number of sockets: " + me.sockets.size);
             me.sockets.forEach((info, socket) => {
-                if(count) {
+                if (count) {
                     return;
                 }
                 me.log("socket platform: " + info.platform + " ref: " + info.ref);
