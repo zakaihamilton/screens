@@ -72,9 +72,12 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     if (me.options.filterNode) {
                         var regex = me.core.string.regex(me.options.filterNode);
                         pushPacket = false;
-                        if ((packet.source && String(packet.source).search(regex)) ||
-                            (packet.target && String(packet.target).search(regex))) {
-                            pushPacket = true;
+                        if(packet.source && packet.target) {
+                            var source = String(packet.source).replace(/,/g, '.');
+                            var target = String(packet.target).replace(/,/g, '.');
+                            if(source.search(regex) || target.search(regex)) {
+                                pushPacket = true;
+                            }
                         }
                     }
                     if (pushPacket) {
@@ -91,12 +94,14 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     if (!me.statistics.sources) {
                         me.statistics.sources = {};
                     }
-                    var sourceList = me.statistics.sources[packet.source];
-                    if (!sourceList) {
-                        sourceList = me.statistics.sources[packet.source] = [];
-                    }
-                    if (!sourceList.includes(packet.target)) {
-                        sourceList.push(packet.target);
+                    if(packet.source) {
+                        var sourceList = me.statistics.sources[packet.source];
+                        if (!sourceList) {
+                            sourceList = me.statistics.sources[packet.source] = [];
+                        }
+                        if (!sourceList.includes(packet.target)) {
+                            sourceList.push(packet.target);
+                        }
                     }
                 });
                 if (filter && filter.includes("tcp")) {
