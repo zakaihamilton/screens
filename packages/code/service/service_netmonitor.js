@@ -80,7 +80,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         me.packets = [];
                         if(packets && packets.length) {
                             me.manager.packet.push(() => {
-
+                                me.log("sent packets to server");
                             }, packets, me.core.socket.ref);
                         }
                     }
