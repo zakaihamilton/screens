@@ -75,6 +75,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     });
                 }
                 setInterval(() => {
+                    me.log("there are " + me.packets.length + " packets in queue");
                     if(me.options.enablePush) {
                         var packets = me.packets;
                         me.packets = [];

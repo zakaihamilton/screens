@@ -51,7 +51,7 @@
           "eth0",
           "en0"
         ],
-        "filter": "",
+        "filter": "port 49745",
         "delay": 5000
       },
       "httpserver": {
