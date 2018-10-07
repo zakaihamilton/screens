@@ -138,6 +138,7 @@ screens.core.socket = function CoreSocket(me) {
         });
         socket.on("heartbeat_send", (data) => {
             socket.emit('heartbeat_response', { beat: 1 });
+            me.log("heartbeat response sent");
         });        
     };
     me.list = function (platform) {
