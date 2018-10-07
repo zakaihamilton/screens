@@ -11,7 +11,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.timer = null;
         me.runIndex = 0;
         me.streamIndex = 0;
-        me.options = {enablePush:true};
+        me.options = { pushPackets: true, collectPackets: false, filterNode: "" };
         var config = await me.core.service.config(me.id);
         if (config) {
             me.pcap = require('pcap2');
@@ -22,14 +22,14 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 devices = [devices];
             }
             var filter = config.filter;
-            if(filter) {
+            if (filter) {
                 filter = filter.replace("@port", me.core.http.port);
                 me.log("using filter: " + filter);
             }
             for (var device of devices) {
                 me.session = null;
                 try {
-                    me.session = new me.pcap.Session(device, {filter});
+                    me.session = new me.pcap.Session(device, { filter });
                 } catch (e) {
 
                 }
@@ -41,6 +41,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             }
             if (me.session) {
                 me.session.on('packet', function (rawPacket) {
+                    if(!me.options.collectPackets) {
+                        return;
+                    }
                     var fullPacket = me.pcap.decode.packet(rawPacket);
                     if (filter && filter.includes("tcp")) {
                         me.tracker.track_packet(fullPacket);
@@ -52,7 +55,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
                     var effects = {};
                     var netcontrol = me.service.netcontrol;
-                    if(netcontrol) {
+                    if (netcontrol) {
                         var effects = netcontrol.effects;
                     }
                     var packet = {
@@ -64,7 +67,18 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         streamIndex: me.streamIndex,
                         effects: effects
                     };
-                    me.packets.push(packet);
+                    var pushPacket = true;
+                    if (me.options.filterNode) {
+                        var regex = me.me.options.filterNode;
+                        pushPacket = false;
+                        if ((packet.source && packet.source.search(regex)) ||
+                            (packet.target && packet.target.search(regex))) {
+                                pushPacket = true;
+                        }
+                    }
+                    if (pushPacket) {
+                        me.packets.push(packet);
+                    }
                 });
                 if (filter && filter.includes("tcp")) {
                     me.tracker.on('start', function (session) {
@@ -76,10 +90,11 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 }
                 setInterval(() => {
                     me.log("there are " + me.packets.length + " packets in queue");
-                    if(me.options.enablePush) {
+                    me.log("monitor options: " + JSON.stringify(me.options));
+                    if (me.options.pushPackets) {
                         var packets = me.packets;
                         me.packets = [];
-                        if(packets && packets.length) {
+                        if (packets && packets.length) {
                             me.manager.packet.push(() => {
                                 me.log("sent packets to server");
                             }, packets, me.core.socket.ref);
@@ -91,21 +106,21 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             }
         }
     };
-    me.enablePush = function(flag) {
-        me.options.enablePush = flag;
+    me.getOptions = function () {
+        return me.options;
     };
-    me.isPushEnabled = function() {
-        return me.options.enablePush;
+    me.setOptions = function (options) {
+        me.options = Object.assign({}, me.options, options);
     };
-    me.reset = function() {
+    me.reset = function () {
         me.packets = [];
         me.runIndex = 0;
         me.streamIndex = 0;
     };
-    me.newStream = function() {
+    me.newStream = function () {
         me.streamIndex++;
     };
-    me.newRun = function() {
+    me.newRun = function () {
         me.runIndex++;
     }
 };

@@ -17,7 +17,7 @@ screens.app.packets = function AppPackets(me) {
     };
     me.init = async function () {
         me.colors = [];
-        me.isPushEnabled = false;
+        me.monitorOptions = {};
         me.ui.options.load(me, null, {
             "autoRefresh": true,
             "dataProfile": "Live",
@@ -42,7 +42,10 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window.var.title, "ui.basic.text", "");
         });
         me.dataList = await me.storage.data.query("app.packets.data");
-        me.isPushEnabled = await me.manager.packet.isPushEnabled();
+        me.monitorOptions = await me.manager.packet.getMonitorOptions();
+        if(!me.monitorOptions) {
+            me.monitorOptions = {};
+        }
         await screens.include("lib.moment");
     };
     me.refreshDataList = {
@@ -571,6 +574,17 @@ screens.app.packets = function AppPackets(me) {
             }
         }
     };
+    me.loadMonitorOptions = function () {
+        var window = me.widget.window(object);
+        me.core.property.set(window.var.monitorFilter, "ui.basic.text", me.monitorOptions.filterNode);
+    };
+    me.updateMonitorOptions = {
+        set: async function (object) {
+            var window = me.widget.window(object);
+            me.monitorOptions.filterNode = me.core.property.get(window.var.monitorFilter, "ui.basic.text");
+            await me.manager.packet.setMonitorOptions(me.monitorOptions);
+        }
+    };
     me.splitPacketInfo = async function (callback, window) {
         var runCount = window.packetInfo.runIndex + 1;
         for (var runIndex = 0; runIndex < runCount; runIndex++) {
@@ -624,7 +638,7 @@ screens.app.packets = function AppPackets(me) {
             }
             window.streamIndex = streamIndex;
             me.core.property.set(window.var.chart, {
-                "reset":null,
+                "reset": null,
                 "type": "@app.packets.chartType",
                 "options": "@app.packets.chartOptions"
             });
@@ -633,11 +647,20 @@ screens.app.packets = function AppPackets(me) {
     };
     me.pushPackets = {
         get: function (object) {
-            return me.isPushEnabled;
+            return me.monitorOptions.pushPackets;
         },
         set: async function (object, value) {
-            me.isPushEnabled = !me.isPushEnabled;
-            await me.manager.packet.enablePush(me.isPushEnabled);
+            me.monitorOptions.pushPackets = !me.monitorOptions.pushPackets;
+            await me.manager.packet.setMonitorOptions(me.monitorOptions);
+        }
+    };
+    me.collectPackets = {
+        get: function (object) {
+            return me.monitorOptions.collectPackets;
+        },
+        set: async function (object, value) {
+            me.monitorOptions.collectPackets = !me.monitorOptions.collectPackets;
+            await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
     me.videoDuration = function (window) {

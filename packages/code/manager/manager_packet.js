@@ -109,20 +109,20 @@ screens.manager.packet = function ManagerPacket(me) {
             return effects;
         }
     };
-    me.applyEffects = async function ( params) {
+    me.applyEffects = async function (params) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
         me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
         await me.core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
     };
-    me.enablePush = async function (callback, flag) {
-        await me.core.service.sendAll("service.netmonitor.enablePush", flag);
-    };
-    me.isPushEnabled = async function () {
-        var response = await me.core.service.sendAll("service.netmonitor.isPushEnabled");
+    me.getMonitorOptions = async function() {
+        var response = await me.core.service.sendAll("service.netmonitor.getOptions");
         if (response) {
-            var isPushEnabled = response[0];
-            return isPushEnabled;
+            var options = response[0];
+            return options;
         }
+    };
+    me.setMonitorOptions = async function (options) {
+        await me.core.service.sendAll("service.netmonitor.setOptions", options);
     };
     return "server";
 };
