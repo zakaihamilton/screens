@@ -18,7 +18,7 @@ screens.core.http = function CoreHttp(me) {
             me.http = require("http");
             me.https = require("https");
             me.fs = require("fs");
-            if (me.platform === "server") {
+            if (me.platform === "server" && me.port !== 4040) {
                 try {
                     var server = await me.createServer(true);
                     me.log("secure server is listening");
@@ -82,6 +82,7 @@ screens.core.http = function CoreHttp(me) {
                             me.forwardUrl = keys.redirect;
                             resolve(server);
                         });
+                        me.log("Secure server working on port: " + port);
                     } catch (e) {
                         me.log("Failed to create secure server, error: " + e.message);
                         reject(e);
@@ -101,6 +102,7 @@ screens.core.http = function CoreHttp(me) {
                     }
                     else {
                         resolve(server);
+                        me.log("Normal server working on port: " + port);
                     }
                 });
             });
