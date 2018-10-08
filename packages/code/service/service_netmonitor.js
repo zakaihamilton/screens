@@ -67,7 +67,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 }
                 me.session = new me.pcap.Session(device, { filter });
             } catch (e) {
-                me.error("Cannot create pcap session for device: " + device + " filter: " + filter);
+                me.log_error("Cannot create pcap session for device: " + device + " filter: " + filter + " err: " + e);
             }
             if (me.session) {
                 me.log("connected through device: " + device + " filter: " + filter);
