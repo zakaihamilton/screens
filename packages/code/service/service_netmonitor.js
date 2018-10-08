@@ -18,6 +18,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             filterNode: ""
         };
         me.statistics = {};
+        me.pcap = require('pcap2');
+        me.util = require('util');
         me.config = await me.core.service.config(me.id);
         if (me.config) {
             me.reload();
@@ -45,9 +47,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.reload = async function () {
         var config = me.config;
-        me.pcap = require('pcap2');
-        me.tracker = new me.pcap.TCPTracker();
-        me.util = require('util');
         var devices = config.device;
         if (devices && !Array.isArray(devices)) {
             devices = [devices];
@@ -63,6 +62,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         for (var device of devices) {
             me.session = null;
             try {
+                if(me.session) {
+                    me.session.close();
+                }
                 me.session = new me.pcap.Session(device, { filter });
             } catch (e) {
                 me.error("Cannot create pcap session for device: " + device + " filter: " + filter);
@@ -83,9 +85,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     return;
                 }
                 var fullPacket = me.pcap.decode.packet(rawPacket);
-                if (filter && filter.includes("tcp")) {
-                    me.tracker.track_packet(fullPacket);
-                }
                 var fullPacket = JSON.parse(JSON.stringify(fullPacket));
                 var packet_sec = me.core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
                 var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
@@ -107,14 +106,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 };
                 me.packets.push(packet);
             });
-            if (filter && filter.includes("tcp")) {
-                me.tracker.on('start', function (session) {
-                    me.log("Start of TCP session between " + session.src_name + " and " + session.dst_name);
-                });
-                me.tracker.on('end', function (session) {
-                    me.log("End of TCP session between " + session.src_name + " and " + session.dst_name);
-                });
-            }
         } else {
             me.log("cannot connect through any of the following devices: " + devices);
         }
