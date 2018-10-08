@@ -111,7 +111,7 @@ screens.app.packets = function AppPackets(me) {
             if (autoRefresh) {
                 me.timer = setTimeout(() => {
                     me.core.property.set(window, "app.packets.refreshData");
-                }, 10000);
+                }, 5000);
             }
         }
     };
