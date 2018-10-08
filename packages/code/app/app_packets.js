@@ -240,11 +240,11 @@ screens.app.packets = function AppPackets(me) {
                         effects = streamRequest.effects;
                     }
                 }
-                if (window.var.packetLoss !== document.activeElement) {
-                    me.core.property.set(window.var.packetLoss, "ui.basic.text", effects.packetLoss);
-                }
-                if (window.var.packetDelay !== document.activeElement) {
-                    me.core.property.set(window.var.packetDelay, "ui.basic.text", effects.packetDelay);
+                var widgets = ["packetLoss", "packetDelay", "bandwidthRate"];
+                for(var widget of widgets) {
+                    if (window.var[widget] !== document.activeElement) {
+                        me.core.property.set(window.var[widget], "ui.basic.text", effects[widget]);
+                    }
                 }
                 me.core.property.set(window.var.packetCount, "ui.basic.text", me.formatNumber(packetCount));
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
@@ -559,15 +559,9 @@ screens.app.packets = function AppPackets(me) {
             if (window.packetInfo && window.streamIndex <= 0) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
-                    effects.packetLoss = me.core.property.get(window.var.packetLoss, "ui.basic.text");
-                    effects.packetDelay = me.core.property.get(window.var.packetDelay, "ui.basic.text");
-                    if (effects.packetLoss < 0) {
-                        effects.packetLoss = 0;
-                        me.core.property.set(window.var.packetLoss, "ui.basic.text", "0");
-                    }
-                    if (effects.packetDelay < 0) {
-                        effects.packetDelay = 0;
-                        me.core.property.set(window.var.packetDelay, "ui.basic.text", "0");
+                    var widgets = ["packetLoss", "packetDelay", "bandwidthRate"];
+                    for(var widget of widgets) {
+                        effects[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
                     }
                     await me.manager.packet.applyEffects(effects);
                 }

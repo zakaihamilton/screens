@@ -14,7 +14,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         packetDelayMax: 300
     };
     me.effects = Object.assign({}, me.defaultEffects);
-    me.init = function() {
+    me.init = function () {
         me.cmd = require('node-cmd');
     };
     me.newStream = function () {
@@ -68,18 +68,27 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         try {
             var data = await me.run("sudo tc qdisc del root dev " + device);
         }
-        catch(err) {
+        catch (err) {
             var data = JSON.stringify(err);
         }
         me.log("reset device output: " + data);
-        if (effects.packetLoss || effects.packetDelay) {
-            me.log("setting packet loss to: " + effects.packetLoss);
-            me.log("setting packet delay to: " + effects.packetDelay);
+        if (effects.packetLoss || effects.packetDelay || effects.bandwidthRate) {
             if (effects.packetDelay) {
+                me.log("setting packet delay to: " + effects.packetDelay);
                 await me.run("sudo tc qdisc add dev " + device + " root netem delay " + effects.packetDelay + "ms");
             }
             if (effects.packetLoss) {
+                me.log("setting packet loss to: " + effects.packetLoss);
                 await me.run("sudo tc qdisc add dev " + device + " root netem loss " + effects.packetLoss + "%");
+            }
+            if (effects.bandwidthRate && effects.bandwidthBurst && effects.bandwidthLatency) {
+                me.log("setting bandwidth rate to: " + effects.bandwidthRate +
+                    " burst: " + effects.bandwidthBurst +
+                    " latency: " + effects.bandwidthLatency);
+                await me.run("sudo tc qdisc add dev " + device +
+                    " root tbf rate " + effects.bandwidthRate + "mbit" +
+                    " burst " + effects.bandwidthBurst + "kbit" +
+                    " latency " + effects.bandwidthLatency + "ms");
             }
         }
     };

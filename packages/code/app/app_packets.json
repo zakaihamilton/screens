@@ -152,7 +152,7 @@
                     "Export",
                     "app.packets.export",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ]
             ]
@@ -289,6 +289,66 @@
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "abr"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Bandwidth Rate (MBit)",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "0",
+                            "ui.property.style": {
+                                "width": "200px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "bandwidthRate",
+                            "ui.monitor.change": "app.packets.effects"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Bandwidth Burst (KBit)",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "0",
+                            "ui.property.style": {
+                                "width": "200px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "bandwidthBurst",
+                            "ui.monitor.change": "app.packets.effects"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.text": "Bandwidth Latency (ms)",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "0",
+                            "ui.property.style": {
+                                "width": "200px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "bandwidthLatency",
+                            "ui.monitor.change": "app.packets.effects"
                         }
                     ]
                 },
