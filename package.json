@@ -7,7 +7,8 @@
     "url": "git://github.com/zakaihamilton/screens.git"
   },
   "scripts": {
-    "test": "echo \"Error: I don't have any test yet :-[\" && exit 1"
+    "test": "echo \"Error: I don't have any test yet :-[\" && exit 1",
+      "start":"node ./packages/code/platform/server.js"
   },
   "license": "Unlicense",
   "dependencies": {
