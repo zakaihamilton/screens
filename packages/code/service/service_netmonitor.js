@@ -75,7 +75,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         if(packet.source && packet.target) {
                             var source = String(packet.source).replace(/,/g, '.');
                             var target = String(packet.target).replace(/,/g, '.');
-                            if(source.search(regex) || target.search(regex)) {
+                            var match = source.search(regex) || target.search(regex);
+                            me.log("source: " + source + " target: " + target + " match: " + match);
+                            if(match) {
                                 addPacket = true;
                             }
                         }
