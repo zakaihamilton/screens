@@ -11,7 +11,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.timer = null;
         me.runIndex = 0;
         me.streamIndex = 0;
-        me.maxPacketsToSend = 100;
         me.options = {
             pushPackets: true,
             collectPackets: false,
@@ -108,34 +107,39 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     });
                 }
                 setInterval(async () => {
-                    me.log("there are " + me.packets.length + " packets in queue");
                     me.log("monitor options: " + JSON.stringify(me.options));
                     me.log("monitor statistics: " + JSON.stringify(me.statistics));
-                    if (me.options.pushPackets) {
-                        var packets = me.packets.splice(0, me.maxPacketsToSend);
-                        if (packets && packets.length) {
-                            if(me.options.combinePackets) {
-                                packets = me.combinePackets(packets);
-                            }
-                            await me.manager.packet.push(packets);
-                            me.log("sent " + packets.length + " packets to server");
-                        }
+                    if (!me.options.pushPackets) {
+                        return;
                     }
+                    var packets = me.packets;
+                    if(!packets || !packets.length) {
+                        return;
+                    }
+                    me.packets = [];
+                    me.log("there are " + packets.length + " packets in queue");
+                    if (me.options.combinePackets) {
+                        packets = me.combinePackets(packets);
+                        me.log("combined into " + packets.length + " packets");
+                    }
+                    await me.manager.packet.push(packets);
+                    me.log("sent " + packets.length + " packets to server");
+                    me.packets = [];
                 }, parseInt(config.delay));
             } else {
                 me.log("cannot connect through any of the following devices: " + devices);
             }
         }
     };
-    me.combinePackets = function(packets) {
+    me.combinePackets = function (packets) {
         var sources = {};
-        for(var packet of packets) {
+        for (var packet of packets) {
             var source = sources[packet.source];
-            if(!source) {
+            if (!source) {
                 source = sources[packet.source] = {};
             }
             var target = source[packet.target];
-            if(!target) {
+            if (!target) {
                 target = source[packet.target] = [];
             }
             target.push(packet);
@@ -145,8 +149,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             for (const target of Object.values(source)) {
                 var first = true;
                 var combinedPacket = {};
-                for(var packet of target) {
-                    if(first) {
+                for (var packet of target) {
+                    if (first) {
                         combinedPacket = packet;
                         first = false;
                         continue;
