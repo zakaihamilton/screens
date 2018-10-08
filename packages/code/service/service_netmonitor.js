@@ -13,8 +13,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.streamIndex = 0;
         me.options = {
             pushPackets: true,
+            combinePackets: true,
             collectPackets: false,
-            combinePackets: false,
             filterNode: ""
         };
         me.statistics = {};
