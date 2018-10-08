@@ -86,7 +86,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
                     " burst: " + effects.bandwidthBurst +
                     " latency: " + effects.bandwidthLatency);
                 await me.run("sudo tc qdisc add dev " + device +
-                    " root tbf rate " + effects.bandwidthRate + "mbit" +
+                    " root tbf rate " + effects.bandwidthRate + "kbit" +
                     " burst " + effects.bandwidthBurst + "kbit" +
                     " latency " + effects.bandwidthLatency + "ms");
             }

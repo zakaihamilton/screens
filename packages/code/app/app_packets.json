@@ -336,7 +336,7 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.text": "Bandwidth Rate (MBit)",
+                            "ui.basic.text": "Bandwidth Rate (KBit)",
                             "ui.property.style": {
                                 "paddingTop": "10px"
                             }
