@@ -201,6 +201,7 @@ screens.app.packets = function AppPackets(me) {
                 var packetCount = 0;
                 var dataSize = 0;
                 var abr = 0;
+                var searchMatch = "";
                 var duration = 0;
                 var effects = {};
                 var streamRequests = [];
