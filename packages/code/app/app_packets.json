@@ -235,6 +235,26 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
+                            "ui.basic.text": "Search Filter",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.property.style": {
+                                "width": "200px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "searchFilter",
+                            "ui.monitor.change": "app.packets.updateMonitorOptions"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
                             "ui.basic.text": "Packet Count",
                             "ui.property.style": {
                                 "paddingTop": "10px"

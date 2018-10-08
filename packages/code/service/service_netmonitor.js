@@ -15,7 +15,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             pushPackets: true,
             combinePackets: true,
             collectPackets: false,
-            filterNode: ""
+            monitorFilter: "",
+            searchFilter: ""
         };
         me.statistics = {};
         me.pcap = require('pcap2');
@@ -52,8 +53,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             devices = [devices];
         }
         var filter = config.filter;
-        if(me.options.filterNode) {
-            filter = me.options.filterNode;
+        if(me.options.monitorFilter) {
+            filter = me.options.monitorFilter;
         }
         if (filter) {
             filter = filter.replace("@port", me.core.http.port);
@@ -86,11 +87,25 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 var fullPacket = me.pcap.decode.packet(rawPacket);
                 var fullPacketString = JSON.stringify(fullPacket);
                 var fullPacket = JSON.parse(fullPacketString);
-                me.log("fullPacket: " + fullPacketString);
                 var packet_sec = me.core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
                 var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
                 var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;
                 var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
+                var packet_data = me.core.json.traverse(fullPacket, "payload.payload.payload.data.data").value;
+                var match = null;
+                if(packet_data) {
+                    var packet_string = String.fromCharCode.apply(null, packet_data);
+                    var packet_lines = packet_string.split("\n");
+                    if(me.options.searchFilter) {
+                        var searchFilter = me.core.string.regex(me.options.searchFilter);
+                        for(line of packet_lines) {
+                            if(line.search(searchFilter) != -1) {
+                                match = line;
+                                break;
+                            }
+                        }
+                    }
+                }
                 var effects = {};
                 var netcontrol = me.service.netcontrol;
                 if (netcontrol) {
@@ -103,7 +118,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     time: packet_sec,
                     runIndex: me.runIndex,
                     streamIndex: me.streamIndex,
-                    effects: effects
+                    effects: effects,
+                    match: match
                 };
                 me.packets.push(packet);
             });
@@ -147,7 +163,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.setOptions = function (options) {
         var reload = false;
-        if(options.filterNode !== me.options.filterNode) {
+        if(options.monitorFilter !== me.options.monitorFilter) {
             reload = true;
         }
         me.options = Object.assign({}, me.options, options);

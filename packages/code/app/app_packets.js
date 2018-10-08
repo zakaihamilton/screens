@@ -570,12 +570,18 @@ screens.app.packets = function AppPackets(me) {
     };
     me.loadMonitorOptions = function (object) {
         var window = me.widget.window(object);
-        me.core.property.set(window.var.monitorFilter, "ui.basic.text", me.monitorOptions.filterNode);
+        var widgets = ["monitorFilter", "searchFilter"];
+        for(var widget of widgets) {
+            me.core.property.set(window.var[widget], "ui.basic.text", me.monitorOptions[widget]);
+        }
     };
     me.updateMonitorOptions = {
         set: async function (object) {
             var window = me.widget.window(object);
-            me.monitorOptions.filterNode = me.core.property.get(window.var.monitorFilter, "ui.basic.text");
+            var widgets = ["monitorFilter", "searchFilter"];
+            for(var widget of widgets) {
+                me.monitorOptions[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
+            }
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
