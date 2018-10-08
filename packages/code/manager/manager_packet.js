@@ -42,7 +42,9 @@ screens.manager.packet = function ManagerPacket(me) {
             var packet_source = packet.source;
             var packet_target = packet.target;
             streamRequest.dataSize += packet.size;
-            streamRequest.searchMatch = packet.match;
+            if(packet.match) {
+                streamRequest.searchMatch = packet.match;
+            }
             if (!streamRequest.startTime) {
                 streamRequest.startTime = packet.time;
             }

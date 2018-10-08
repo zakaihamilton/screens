@@ -101,6 +101,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         for(line of packet_lines) {
                             if(line.search(searchFilter) != -1) {
                                 match = line;
+                                me.log("found match: " + line);
                                 break;
                             }
                         }
