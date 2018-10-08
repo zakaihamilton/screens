@@ -11,6 +11,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.timer = null;
         me.runIndex = 0;
         me.streamIndex = 0;
+        me.maxPacketsToSend = 100;
         me.options = { pushPackets: true, collectPackets: false, filterNode: "" };
         me.statistics = {};
         var config = await me.core.service.config(me.id);
@@ -106,8 +107,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     me.log("monitor options: " + JSON.stringify(me.options));
                     me.log("monitor statistics: " + JSON.stringify(me.statistics));
                     if (me.options.pushPackets) {
-                        var packets = me.packets;
-                        me.packets = [];
+                        var packets = me.packets.splice(0, me.maxPacketsToSend);
                         if (packets && packets.length) {
                             await me.manager.packet.push(packets);
                             me.log("sent packets to server");
