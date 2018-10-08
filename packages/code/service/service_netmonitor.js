@@ -75,6 +75,10 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         }
         if (me.session) {
             me.session.on('packet', function (rawPacket) {
+                if(!me.statistics.packetCount) {
+                    me.statistics.packetCount = 0;
+                }
+                me.statistics.packetCount++;
                 if (!me.options.collectPackets) {
                     return;
                 }
