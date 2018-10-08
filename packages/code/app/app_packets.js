@@ -26,11 +26,7 @@ screens.app.packets = function AppPackets(me) {
         me.ui.options.toggleSet(me, null, "autoRefresh", me.refreshData.set);
         me.ui.options.choiceSet(me, null, "viewType", (object, value, key, options) => {
             var window = me.widget.window(object);
-            me.core.property.set(window.var.chart, {
-                "reset": null,
-                "type": "@app.packets.chartType",
-                "options": "@app.packets.chartOptions"
-            });
+            me.core.property.set(window, "app.packets.refreshChart");
             me.core.property.set(window, "app.packets.refreshData");
         });
         me.ui.options.choiceSet(me, null, "dataProfile", (object, value, key, options) => {
@@ -78,6 +74,14 @@ screens.app.packets = function AppPackets(me) {
             });
             return items;
         }
+    };
+    me.refreshChart = function(object) {
+        var window = me.widget.window(object);
+        me.core.property.set(window.var.chart, {
+            "reset": null,
+            "type": "@app.packets.chartType",
+            "options": "@app.packets.chartOptions"
+        });
     };
     me.refreshData = {
         set: async function (object) {
@@ -271,6 +275,7 @@ screens.app.packets = function AppPackets(me) {
             }
             me.core.property.set(window, {
                 "app.packets.dataProfile": "Live",
+                "app.packets.refreshChart": null,                
                 "app.packets.refreshData": null
             });
         }

@@ -552,6 +552,7 @@
     "ui.property.after": {
         "storage.local.key": "app-packets-window",
         "storage.local.restore": "widget.window.store",
+        "app.packets.refreshChart": null,
         "app.packets.refreshData": null,
         "app.packets.onChangeStream": null
     },
