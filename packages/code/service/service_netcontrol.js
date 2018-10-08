@@ -73,11 +73,11 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.log("reset device output: " + data);
         if (effects.packetLoss || effects.packetDelay || effects.bandwidthRate) {
-            if (effects.packetDelay) {
+            if (effects.packetDelay && effects.packetDelay !== "0") {
                 me.log("setting packet delay to: " + effects.packetDelay);
                 await me.run("sudo tc qdisc add dev " + device + " root netem delay " + effects.packetDelay + "ms");
             }
-            if (effects.packetLoss) {
+            if (effects.packetLoss && effects.packetLoss !== "0") {
                 me.log("setting packet loss to: " + effects.packetLoss);
                 await me.run("sudo tc qdisc add dev " + device + " root netem loss " + effects.packetLoss + "%");
             }
