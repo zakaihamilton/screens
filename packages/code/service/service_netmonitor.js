@@ -113,7 +113,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         return;
                     }
                     var packets = me.packets;
-                    if(!packets || !packets.length) {
+                    if (!packets || !packets.length) {
                         return;
                     }
                     me.packets = [];
@@ -167,6 +167,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.setOptions = function (options) {
         me.options = Object.assign({}, me.options, options);
+        me.log("monitor options set to: " + JSON.stringify(me.options));
     };
     me.reset = function () {
         me.packets = [];
