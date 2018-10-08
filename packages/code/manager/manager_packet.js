@@ -13,7 +13,7 @@ screens.manager.packet = function ManagerPacket(me) {
     me.init = function () {
         me.core.property.link("core.service.ready", "manager.packet.ready", true);
     };
-    me.push = function (packets, service) {
+    me.push = function (packets) {
         var info = me.packetInfo;
         if (!Array.isArray(packets)) {
             packets = [packets];

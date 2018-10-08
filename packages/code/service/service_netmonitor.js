@@ -68,19 +68,19 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         streamIndex: me.streamIndex,
                         effects: effects
                     };
-                    var pushPacket = true;
+                    var addPacket = true;
                     if (me.options.filterNode) {
                         var regex = me.core.string.regex(me.options.filterNode);
-                        pushPacket = false;
+                        addPacket = false;
                         if(packet.source && packet.target) {
                             var source = String(packet.source).replace(/,/g, '.');
                             var target = String(packet.target).replace(/,/g, '.');
                             if(source.search(regex) || target.search(regex)) {
-                                pushPacket = true;
+                                addPacket = true;
                             }
                         }
                     }
-                    if (pushPacket) {
+                    if (addPacket) {
                         me.packets.push(packet);
                     }
                     else {
@@ -89,18 +89,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         }
                         else {
                             me.statistics.packetsIgnored = 0;
-                        }
-                    }
-                    if (!me.statistics.sources) {
-                        me.statistics.sources = {};
-                    }
-                    if(packet.source) {
-                        var sourceList = me.statistics.sources[packet.source];
-                        if (!sourceList) {
-                            sourceList = me.statistics.sources[packet.source] = [];
-                        }
-                        if (!sourceList.includes(packet.target)) {
-                            sourceList.push(packet.target);
                         }
                     }
                 });
@@ -120,9 +108,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         var packets = me.packets;
                         me.packets = [];
                         if (packets && packets.length) {
-                            me.manager.packet.push(() => {
-                                me.log("sent packets to server");
-                            }, packets, me.core.socket.ref);
+                            await me.manager.packet.push(packets);
+                            me.log("sent packets to server");
                         }
                     }
                 }, parseInt(config.delay));
