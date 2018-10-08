@@ -316,6 +316,26 @@
                     "ui.basic.tag": "div",
                     "ui.basic.elements": [
                         {
+                            "ui.basic.text": "Search Match",
+                            "ui.property.style": {
+                                "paddingTop": "10px"
+                            }
+                        },
+                        {
+                            "ui.basic.text": "",
+                            "ui.basic.readOnly": true,
+                            "ui.property.style": {
+                                "width": "200px"
+                            },
+                            "ui.basic.type": "text",
+                            "ui.basic.var": "searchMatch"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.elements": [
+                        {
                             "ui.basic.text": "Bandwidth Rate (MBit)",
                             "ui.property.style": {
                                 "paddingTop": "10px"

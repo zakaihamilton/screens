@@ -224,6 +224,7 @@ screens.app.packets = function AppPackets(me) {
                             packetCount += streamRequest.packetCount;
                             dataSize += streamRequest.dataSize;
                             duration += streamRequest.duration;
+                            searchMatch = streamRequest.searchMatch;
                         });
                         if (duration) {
                             abr = dataSize / duration;
@@ -234,6 +235,7 @@ screens.app.packets = function AppPackets(me) {
                         packetCount = streamRequest.packetCount;
                         dataSize = streamRequest.dataSize;
                         duration = streamRequest.duration;
+                        searchMatch = streamRequest.searchMatch;
                         if (duration) {
                             abr = dataSize / duration;
                         }
@@ -249,6 +251,7 @@ screens.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.packetCount, "ui.basic.text", me.formatNumber(packetCount));
                 me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
                 me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
+                me.core.property.set(window.var.searchMatch, "ui.basic.text", searchMatch);
                 me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
                 me.core.property.set(window.var.duration, "ui.basic.text", me.formatDuration(duration));
                 me.core.property.set(window.var.chart, "data", "@app.packets.chartData");

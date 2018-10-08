@@ -29,17 +29,20 @@ screens.manager.packet = function ManagerPacket(me) {
                     runIndex: packet.runIndex,
                     streamIndex: packet.streamIndex,
                     packets: {},
-                    effects: packet.effects
+                    effects: packet.effects,
+                    searchMatch: packet.match
                 });
                 me.packetInfo.effects = packet.effects;
                 me.packetInfo.runIndex = packet.runIndex;
                 me.packetInfo.streamIndex = packet.streamIndex;
+                me.packetInfo.searchMatch = packet.match;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length - 1];
             streamRequest.packetCount++;
             var packet_source = packet.source;
             var packet_target = packet.target;
             streamRequest.dataSize += packet.size;
+            streamRequest.searchMatch = packet.match;
             if (!streamRequest.startTime) {
                 streamRequest.startTime = packet.time;
             }
