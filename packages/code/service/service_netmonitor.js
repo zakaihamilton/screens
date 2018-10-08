@@ -101,30 +101,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     streamIndex: me.streamIndex,
                     effects: effects
                 };
-                var addPacket = true;
-                if (me.options.filterNode) {
-                    var regex = me.core.string.regex(me.options.filterNode);
-                    addPacket = false;
-                    if (packet.source && packet.target) {
-                        var source = String(packet.source).replace(/,/g, '.');
-                        var target = String(packet.target).replace(/,/g, '.');
-                        var match = source.search(regex) != -1 || target.search(regex) != -1;
-                        if (match) {
-                            addPacket = true;
-                        }
-                    }
-                }
-                if (addPacket) {
-                    me.packets.push(packet);
-                }
-                else {
-                    if (me.statistics.packetsIgnored) {
-                        me.statistics.packetsIgnored++;
-                    }
-                    else {
-                        me.statistics.packetsIgnored = 0;
-                    }
-                }
+                me.packets.push(packet);
             });
             if (filter && filter.includes("tcp")) {
                 me.tracker.on('start', function (session) {
