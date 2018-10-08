@@ -240,7 +240,7 @@ screens.app.packets = function AppPackets(me) {
                         effects = streamRequest.effects;
                     }
                 }
-                var widgets = ["packetLoss", "packetDelay", "bandwidthRate"];
+                var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
                 for(var widget of widgets) {
                     if (window.var[widget] !== document.activeElement) {
                         me.core.property.set(window.var[widget], "ui.basic.text", effects[widget]);
@@ -559,7 +559,7 @@ screens.app.packets = function AppPackets(me) {
             if (window.packetInfo && window.streamIndex <= 0) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
-                    var widgets = ["packetLoss", "packetDelay", "bandwidthRate"];
+                    var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
                     for(var widget of widgets) {
                         effects[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
                     }
