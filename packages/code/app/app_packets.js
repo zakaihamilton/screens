@@ -282,16 +282,20 @@ screens.app.packets = function AppPackets(me) {
     };
     me.calcViewType = function (window) {
         var viewType = me.options.viewType;
+        var defaultViewType = "Data by Time";
         if (viewType === "Auto") {
-            if (window.streamIndex === -1) {
+            if(window.packetInfo && window.packetInfo.streamRequests && window.packetInfo.streamRequests.length == 1) {
+                viewType = defaultViewType;
+            }
+            else if (window.streamIndex === -1) {
                 viewType = "Average Duration % by Packet Delay";
             }
             else {
-                viewType = "Data by Time";
+                viewType = defaultViewType;
             }
         }
         else if (window.streamIndex !== -1) {
-            viewType = "Data by Time";
+            viewType = defaultViewType;
         }
         return viewType;
     };
@@ -718,7 +722,6 @@ screens.app.packets = function AppPackets(me) {
     };
     me.streamList = {
         get: function (object) {
-            var count = 0;
             var window = me.widget.window(object);
             if (window && window.packetInfo && me.options.dataProfile !== "Combined") {
                 var streamRequests = window.packetInfo.streamRequests;
