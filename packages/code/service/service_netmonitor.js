@@ -100,7 +100,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         me.log("End of TCP session between " + session.src_name + " and " + session.dst_name);
                     });
                 }
-                setInterval(() => {
+                setInterval(async () => {
                     me.log("there are " + me.packets.length + " packets in queue");
                     me.log("monitor options: " + JSON.stringify(me.options));
                     me.log("monitor statistics: " + JSON.stringify(me.statistics));
