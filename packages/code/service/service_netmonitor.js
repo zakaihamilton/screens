@@ -84,7 +84,9 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     return;
                 }
                 var fullPacket = me.pcap.decode.packet(rawPacket);
-                var fullPacket = JSON.parse(JSON.stringify(fullPacket));
+                var fullPacketString = JSON.stringify(fullPacket);
+                var fullPacket = JSON.parse(fullPacketString);
+                me.log("fullPacket: " + fullPacketString);
                 var packet_sec = me.core.json.traverse(fullPacket, "pcap_header.tv_sec").value;
                 var packet_len = me.core.json.traverse(fullPacket, "pcap_header.len").value;
                 var packet_source = me.core.json.traverse(fullPacket, "payload.payload.saddr.addr").value;

@@ -324,7 +324,7 @@ screens.app.packets = function AppPackets(me) {
                             "display": true,
                             "scaleLabel": {
                                 "display": true,
-                                "labelString": "Data"
+                                "labelString": "Data (KB)"
                             }
                         }]
                     }
