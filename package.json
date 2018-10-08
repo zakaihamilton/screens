@@ -29,7 +29,7 @@
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.6.2",
     "npm": "^6.1.0",
-    "openode": "^1.6.4",
+    "openode": "^1.6.5",
     "openssl": "^1.1.0",
     "postcss": "^6.0.22",
     "promise-worker": "^1.1.1",

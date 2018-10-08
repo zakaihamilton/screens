@@ -574,7 +574,7 @@ screens.app.packets = function AppPackets(me) {
             }
         }
     };
-    me.loadMonitorOptions = function () {
+    me.loadMonitorOptions = function (object) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.monitorFilter, "ui.basic.text", me.monitorOptions.filterNode);
     };
@@ -660,6 +660,15 @@ screens.app.packets = function AppPackets(me) {
         },
         set: async function (object, value) {
             me.monitorOptions.collectPackets = !me.monitorOptions.collectPackets;
+            await me.manager.packet.setMonitorOptions(me.monitorOptions);
+        }
+    };
+    me.combinePackets = {
+        get: function (object) {
+            return me.monitorOptions.combinePackets;
+        },
+        set: async function (object, value) {
+            me.monitorOptions.combinePackets = !me.monitorOptions.combinePackets;
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
