@@ -60,7 +60,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             me.log("using filter: " + filter);
         }
         for (var device of devices) {
-            me.session = null;
             try {
                 if(me.session) {
                     me.session.close();
