@@ -289,7 +289,7 @@ screens.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         var defaultViewType = "Data by Time";
         if (viewType === "Auto") {
-            if(window.packetInfo && window.packetInfo.streamRequests && window.packetInfo.streamRequests.length == 1) {
+            if(!window.packetInfo || !window.packetInfo.streamRequests || window.packetInfo.streamRequests.length <= 1) {
                 viewType = defaultViewType;
             }
             else if (window.streamIndex === -1) {
