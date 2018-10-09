@@ -43,13 +43,13 @@ screens.core.socket = function CoreSocket(me) {
             me.serverAddress = process.argv[2];
             me.log("Connecting to server: " + me.serverAddress);
             me.io = me.client.connect(me.serverAddress);
+            me.register(me.io);
             return new Promise((resolve, reject) => {
                 me.io.on("connect", () => {
                     me.log("Connected to server: " + me.serverAddress);
                     me.io.on("disconnect", (info) => {
                         me.log("Disconnected from server: " + me.serverAddress);
                     });
-                    me.register(me.io);
                     resolve();
                 });
             });
