@@ -24,7 +24,10 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.config = await me.core.service.config(me.id);
         if (me.config) {
             me.reload();
-            setInterval(async () => {
+            if(me.interval) {
+                clearInterval(me.interval);
+            }
+            me.interval = setInterval(async () => {
                 me.log("monitor options: " + JSON.stringify(me.options));
                 me.log("monitor statistics: " + JSON.stringify(me.statistics));
                 if (!me.options.pushPackets) {

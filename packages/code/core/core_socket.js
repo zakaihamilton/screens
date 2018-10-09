@@ -61,7 +61,7 @@ screens.core.socket = function CoreSocket(me) {
         }
     };
     me.sendHeartbeat = function () {
-        setTimeout(me.sendHeartbeat, 8000);
+        setTimeout(me.sendHeartbeat, 16000);
         me.io.emit('heartbeat_send', { beat: 1 });
     };
     me.setup = async function (ref) {
