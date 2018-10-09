@@ -37,7 +37,7 @@ screens.manager.packet = function ManagerPacket(me) {
                 me.packetInfo.streamIndex = packet.streamIndex;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length - 1];
-            streamRequest.packetCount++;
+            streamRequest.packetCount+=packet.count;
             var packet_source = packet.source;
             var packet_target = packet.target;
             streamRequest.dataSize += packet.size;

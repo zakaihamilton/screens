@@ -122,7 +122,8 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     runIndex: me.runIndex,
                     streamIndex: me.streamIndex,
                     effects: effects,
-                    match: match
+                    match: match,
+                    count: 1
                 };
                 me.packets.push(packet);
             });
@@ -155,6 +156,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                         continue;
                     }
                     combinedPacket.size += packet.size;
+                    combinedPacket.count++;
                     if(packet.match) {
                         combinedPacket.match = packet.match;
                     }
