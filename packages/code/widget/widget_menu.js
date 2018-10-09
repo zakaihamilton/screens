@@ -344,6 +344,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             if (groupName) {
                 return "li";
             }
+            if(properties.options && properties.options.edit) {
+                return "input";
+            }
         },
         container: function (object, parent, properties) {
             var groupName = properties["group"];
@@ -441,6 +444,25 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                         me.core.property.set(object, "ui.class.remove", "header");
                     }
                 });
+                me.handleValue(object, options, "edit", (value) => {
+                    if(options.edit) {
+                        me.core.property.set(object, {
+                            "ui.class.add": "edit",
+                            "ui.attribute.contenteditable":true,
+                            "core.event.focusout":options.edit,
+                            "ui.basic.text":value,
+                            "ui.attribute.placeholder":me.core.property.get(object, "ui.basic.text")
+                        });
+                    }
+                    else {
+                        me.core.property.set(object, {
+                            "ui.class.remove": "edit",
+                            "ui.attribute.contenteditable":false,
+                            "core.event.onfocusout":null,
+                            "ui.attribute.placeholder":null
+                        });
+                    }
+                });
             }
         }
     };
@@ -501,7 +523,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object) {
             var parentMenu = me.parentMenu(object);
             me.ui.mark.widget(object, null);
-            me.core.property.set(parentMenu, "select", [object, object.menu_select]);
+            if(object.menu_select) {
+                me.core.property.set(parentMenu, "select", [object, object.menu_select]);
+            }
         }
     };
     me.upload = {

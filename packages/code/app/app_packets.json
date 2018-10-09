@@ -58,6 +58,24 @@
                     {
                         "state": "select"
                     }
+                ],
+                [
+                    "Filters",
+                    "header"
+                ],
+                [
+                    "Monitor Filter",
+                    null,
+                    {
+                        "edit": "app.packets.monitorFilter"
+                    }
+                ],
+                [
+                    "Search Filter",
+                    null,
+                    {
+                        "edit": "app.packets.searchFilter"
+                    }
                 ]
             ]
         ],
@@ -65,8 +83,18 @@
             "Data",
             [
                 [
+                    "Title",
+                    null,
+                    {
+                        "edit": "app.packets.dataTitle"
+                    }
+                ],
+                [
                     "Refresh",
-                    "app.packets.refreshDataList"
+                    "app.packets.refreshDataList",
+                    {
+                        "separator": true
+                    }
                 ],
                 [
                     "Live",
@@ -162,6 +190,46 @@
             [
                 "app.packets.streamMenuList"
             ]
+        ],
+        [
+            "Effects",
+            [
+                [
+                    "Bandwidth Rate (KBit)",
+                    null,
+                    {
+                        "edit": "app.packets.bandwidthRate"
+                    }
+                ],
+                [
+                    "Bandwidth Burst (KBit)",
+                    null,
+                    {
+                        "edit": "app.packets.bandwidthBurst"
+                    }
+                ],
+                [
+                    "Bandwidth Latency (ms)",
+                    null,
+                    {
+                        "edit": "app.packets.bandwidthLatency"
+                    }
+                ],
+                [
+                    "Packet Loss (%)",
+                    null,
+                    {
+                        "edit": "app.packets.packetLoss"
+                    }
+                ],
+                [
+                    "Packet Delay (msec)",
+                    null,
+                    {
+                        "edit": "app.packets.packetDelay"
+                    }
+                ]
+            ]
         ]
     ],
     "ui.basic.elements": [
@@ -172,225 +240,13 @@
                 "margin": "10px",
                 "flexWrap": "wrap",
                 "alignItems": "flex-start"
-            },
-            "ui.basic.elements": [
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Title",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "title"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Monitor Filter",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "monitorFilter",
-                            "ui.monitor.change": "app.packets.updateMonitorOptions"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Search Filter",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "searchFilter",
-                            "ui.monitor.change": "app.packets.updateMonitorOptions"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Search Match",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "searchMatch"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Bandwidth Rate (KBit)",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "0",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "bandwidthRate",
-                            "ui.monitor.change": "app.packets.effects"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Bandwidth Burst (KBit)",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "0",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "bandwidthBurst",
-                            "ui.monitor.change": "app.packets.effects"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Bandwidth Latency (ms)",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "0",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "bandwidthLatency",
-                            "ui.monitor.change": "app.packets.effects"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Packet Loss (%)",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "number",
-                            "ui.basic.var": "packetLoss",
-                            "ui.attribute.step": "0.0001",
-                            "ui.monitor.change": "app.packets.effects",
-                            "ui.attribute.list": "packetLoss"
-                        },
-                        {
-                            "ui.basic.tag": "datalist",
-                            "ui.basic.elementId": "packetLoss",
-                            "ui.group.data": {
-                                "ui.data.keyList": [
-                                    "ui.attribute.value"
-                                ],
-                                "ui.data.default": {
-                                    "ui.basic.tag": "option"
-                                },
-                                "ui.data.values": [
-                                    [
-                                        "0.0001"
-                                    ],
-                                    [
-                                        "0.001"
-                                    ],
-                                    [
-                                        "0.1"
-                                    ],
-                                    [
-                                        "1"
-                                    ]
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Packet Delay (msec)",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "0",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.attribute.min": "0",
-                            "ui.attribute.step": "5",
-                            "ui.attribute.max": "1000",
-                            "ui.basic.type": "number",
-                            "ui.basic.var": "packetDelay",
-                            "ui.monitor.change": "app.packets.effects"
-                        }
-                    ]
-                }
-            ]
+            }
         },
         {
             "ui.element.component": "widget.chart",
             "ui.basic.var": "chart",
-            "ui.style.paddingLeft": "10%",
-            "ui.style.width": "75%",
+            "ui.style.paddingLeft": "5%",
+            "ui.style.width": "95%",
             "data": "@app.packets.chartData",
             "options": "@app.packets.chartOptions",
             "type": "@app.packets.chartType",
@@ -403,6 +259,5 @@
         "app.packets.refreshChart": null,
         "app.packets.refreshData": null,
         "app.packets.onChangeStream": null
-    },
-    "app.packets.loadMonitorOptions": null
+    }
 }

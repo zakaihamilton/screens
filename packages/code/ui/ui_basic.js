@@ -120,10 +120,18 @@ screens.ui.basic = function UIBasic(me) {
     };
     me.text = {
         get : function(object) {
+            if(object.tagName && object.tagName.toLowerCase() === "input") {
+                return object.value;
+            }
             return object.textContent;
         },
         set : function(object, value) {
-            object.textContent = value;
+            if(object.tagName && object.tagName.toLowerCase() === "input") {
+                object.value = value;
+            }
+            else {
+                object.textContent = value;
+            }
         }
     };
     me.html = {

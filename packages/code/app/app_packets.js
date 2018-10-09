@@ -35,7 +35,7 @@ screens.app.packets = function AppPackets(me) {
                 me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
             }
             me.core.property.set(window, "app.packets.refreshData");
-            me.core.property.set(window.var.title, "ui.basic.text", "");
+            window.dataTitle = "";
         });
         me.dataList = await me.storage.data.query("app.packets.data");
         me.monitorOptions = await me.manager.packet.getMonitorOptions();
@@ -49,6 +49,61 @@ screens.app.packets = function AppPackets(me) {
             me.dataList = await me.storage.data.query("app.packets.data");
         }
     };
+    me.dataTitle = {
+        get: function(object) {
+            var window = me.widget.window(object);
+            return window.dataTitle;
+        },
+        set: function(object, value) {
+            var window = me.widget.window(object);
+            if(value && value.currentTarget) {
+                value = me.core.property.get(value.currentTarget, "ui.basic.text");
+            }
+            window.dataTitle = value.trim();
+        }
+    };
+    me.monitorMenuOption = function(name) {
+        return {
+            get: function(object) {
+                var window = me.widget.window(object);
+                return me.monitorOptions[name];
+            },
+            set: async function(object, value) {
+                var window = me.widget.window(object);
+                if(value && value.currentTarget) {
+                    value = me.core.property.get(value.currentTarget, "ui.basic.text");
+                }
+                me.monitorOptions[name] = value.trim();
+                await me.manager.packet.setMonitorOptions(me.monitorOptions);
+            }
+        };
+    };
+    me.effectMenuOption = function(name) {
+        return {
+            get: function(object) {
+                var window = me.widget.window(object);
+                return window.packetInfo.effects[name];
+            },
+            set: async function(object, value) {
+                var window = me.widget.window(object);
+                if(value && value.currentTarget) {
+                    value = me.core.property.get(value.currentTarget, "ui.basic.text");
+                }
+                value = value.trim();
+                if(window.packetInfo.effects[name] !== value) {
+                    window.packetInfo.effects[name] = value;
+                    await me.manager.packet.applyEffects(window.packetInfo.effects);
+                }
+            }
+        };
+    };
+    me.monitorFilter = me.monitorMenuOption("monitorFilter");
+    me.searchFilter = me.monitorMenuOption("searchFilter");
+    me.packetLoss = me.effectMenuOption("packetLoss");
+    me.packetDelay = me.effectMenuOption("packetDelay");
+    me.bandwidthRate = me.effectMenuOption("bandwidthRate");
+    me.bandwidthBurst = me.effectMenuOption("bandwidthBurst");
+    me.bandwidthLatency = me.effectMenuOption("bandwidthLatency");
     me.dataMenuList = {
         get: function (object) {
             var window = me.widget.window(object);
@@ -62,7 +117,7 @@ screens.app.packets = function AppPackets(me) {
                     function () {
                         window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
                         me.core.property.set(window, "app.packets.dataProfile", item.title);
-                        me.core.property.set(window.var.title, "ui.basic.text", item.title);
+                        window.dataTitle = item.title;
                     },
                     {
                         "state": function () {
@@ -247,13 +302,6 @@ screens.app.packets = function AppPackets(me) {
                         effects = streamRequest.effects;
                     }
                 }
-                var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
-                for (var widget of widgets) {
-                    if (window.var[widget] !== document.activeElement) {
-                        me.core.property.set(window.var[widget], "ui.basic.text", effects[widget]);
-                    }
-                }
-                me.core.property.set(window.var.searchMatch, "ui.basic.text", searchMatch);
                 me.core.property.set(window.var.chart, "data", "@app.packets.chartData");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
@@ -263,6 +311,7 @@ screens.app.packets = function AppPackets(me) {
                 window.streamCount = streamRequests.length;
                 window.streamDuration = me.formatDuration(duration);
                 window.averageByteRate = me.formatBytes(abr) + "/s";
+                window.searchMatch = searchMatch;
             }
         }
     };
@@ -561,38 +610,6 @@ screens.app.packets = function AppPackets(me) {
             return chartData;
         }
     };
-    me.effects = {
-        set: async function (object) {
-            var window = me.widget.window(object);
-            if (window.packetInfo && window.streamIndex <= 0) {
-                var effects = window.packetInfo.effects;
-                if (effects) {
-                    var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
-                    for (var widget of widgets) {
-                        effects[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
-                    }
-                    await me.manager.packet.applyEffects(effects);
-                }
-            }
-        }
-    };
-    me.loadMonitorOptions = function (object) {
-        var window = me.widget.window(object);
-        var widgets = ["monitorFilter", "searchFilter"];
-        for (var widget of widgets) {
-            me.core.property.set(window.var[widget], "ui.basic.text", me.monitorOptions[widget]);
-        }
-    };
-    me.updateMonitorOptions = {
-        set: async function (object) {
-            var window = me.widget.window(object);
-            var widgets = ["monitorFilter", "searchFilter"];
-            for (var widget of widgets) {
-                me.monitorOptions[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
-            }
-            await me.manager.packet.setMonitorOptions(me.monitorOptions);
-        }
-    };
     me.splitPacketInfo = async function (callback, window) {
         var runCount = window.packetInfo.runIndex + 1;
         for (var runIndex = 0; runIndex < runCount; runIndex++) {
@@ -617,7 +634,7 @@ screens.app.packets = function AppPackets(me) {
             await me.splitPacketInfo(async (packetInfo, runIndex) => {
                 var text = JSON.stringify(packetInfo);
                 var date = new Date();
-                var title = me.core.property.get(window.var.title, "ui.basic.text");
+                var title = window.dataTitle;
                 if (!title) {
                     title = date.toLocaleDateString();
                 }
@@ -743,7 +760,8 @@ screens.app.packets = function AppPackets(me) {
                         "Duration": window.streamDuration,
                         "Size": window.streamSize,
                         "Packet Count": window.packetCount,
-                        "Average Byte Rate" : window.averageByteRate
+                        "Average Byte Rate" : window.averageByteRate,
+                        "Current Search Match":window.searchMatch ? window.searchMatch : "None"
                     };
                     for (var title of Object.keys(info).reverse()) {
                         items.unshift([title + ": " + info[title], null, {
