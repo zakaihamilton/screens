@@ -9,7 +9,7 @@
     },
     "widget.menu.items": [
         [
-            "Options",
+            "Packets",
             [
                 [
                     "Refresh",
@@ -156,6 +156,12 @@
                     }
                 ]
             ]
+        ],
+        [
+            "Stream",
+            [
+                "app.packets.streamMenuList"
+            ]
         ]
     ],
     "ui.basic.elements": [
@@ -184,30 +190,6 @@
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "title"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Video Duration",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "videoDuration",
-                            "ui.property.after": {
-                                "storage.local.key": "@ui.windowkey.app-packets-video-duration-",
-                                "storage.local.restore": "ui.basic.text",
-                                "ui.monitor.change": "ui.basic.save"
-                            }
                         }
                     ]
                 },
@@ -268,67 +250,6 @@
                             },
                             "ui.basic.type": "text",
                             "ui.basic.var": "searchMatch"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Packet Count",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px",
-                                "display": "inline-block"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "packetCount"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Data Size",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "dataSize"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Average Byte Rate",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "abr"
                         }
                     ]
                 },
@@ -460,79 +381,6 @@
                             "ui.basic.type": "number",
                             "ui.basic.var": "packetDelay",
                             "ui.monitor.change": "app.packets.effects"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Stream Duration",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "duration"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Stream Count",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "",
-                            "ui.basic.readOnly": true,
-                            "ui.property.style": {
-                                "width": "200px"
-                            },
-                            "ui.basic.type": "text",
-                            "ui.basic.var": "streamCount"
-                        }
-                    ]
-                },
-                {
-                    "ui.basic.tag": "div",
-                    "ui.basic.elements": [
-                        {
-                            "ui.basic.text": "Stream",
-                            "ui.property.style": {
-                                "paddingTop": "10px"
-                            }
-                        },
-                        {
-                            "ui.basic.text": "Combined",
-                            "ui.style.width": "200px",
-                            "ui.basic.var": "streamIndex",
-                            "core.link.onChange": "app.packets.onChangeStream",
-                            "ui.element.count": 0,
-                            "ui.group.data": {
-                                "ui.data.keyList": [
-                                    "ui.basic.text"
-                                ],
-                                "ui.data.default": {
-                                    "group": "one",
-                                    "state": false
-                                },
-                                "ui.data.values": [
-                                    [
-                                        "Combined"
-                                    ],
-                                    "app.packets.streamList"
-                                ]
-                            }
                         }
                     ]
                 }

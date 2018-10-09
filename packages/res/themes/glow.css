@@ -448,6 +448,12 @@
     color:lightgray;
 }
 
+.glow-menu-vertical li[disabled="true"],
+.glow-menu-vertical span[disabled="true"] {
+    background-color: #ececec;
+    color:black;
+}
+
 .glow-menu-vertical.night-mode li[disabled="true"],
 .glow-menu-vertical.night-mode span[disabled="true"] {
     background-color: var(--chrome-background);

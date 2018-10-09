@@ -39,7 +39,7 @@ screens.app.packets = function AppPackets(me) {
         });
         me.dataList = await me.storage.data.query("app.packets.data");
         me.monitorOptions = await me.manager.packet.getMonitorOptions();
-        if(!me.monitorOptions) {
+        if (!me.monitorOptions) {
             me.monitorOptions = {};
         }
         await screens.include("lib.moment");
@@ -75,7 +75,7 @@ screens.app.packets = function AppPackets(me) {
             return items;
         }
     };
-    me.refreshChart = function(object) {
+    me.refreshChart = function (object) {
         var window = me.widget.window(object);
         me.core.property.set(window.var.chart, {
             "reset": null,
@@ -248,21 +248,21 @@ screens.app.packets = function AppPackets(me) {
                     }
                 }
                 var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
-                for(var widget of widgets) {
+                for (var widget of widgets) {
                     if (window.var[widget] !== document.activeElement) {
                         me.core.property.set(window.var[widget], "ui.basic.text", effects[widget]);
                     }
                 }
-                me.core.property.set(window.var.packetCount, "ui.basic.text", me.formatNumber(packetCount));
-                me.core.property.set(window.var.dataSize, "ui.basic.text", me.formatBytes(dataSize));
-                me.core.property.set(window.var.abr, "ui.basic.text", me.formatBytes(abr) + "/s");
                 me.core.property.set(window.var.searchMatch, "ui.basic.text", searchMatch);
-                me.core.property.set(window.var.streamCount, "ui.basic.text", streamRequests.length);
-                me.core.property.set(window.var.duration, "ui.basic.text", me.formatDuration(duration));
                 me.core.property.set(window.var.chart, "data", "@app.packets.chartData");
                 me.core.property.notify(window.var.chart, "update", {
                     "duration": 0
                 });
+                window.packetCount = me.formatNumber(packetCount);
+                window.streamSize = me.formatBytes(dataSize);
+                window.streamCount = streamRequests.length;
+                window.streamDuration = me.formatDuration(duration);
+                window.averageByteRate = me.formatBytes(abr) + "/s";
             }
         }
     };
@@ -275,7 +275,7 @@ screens.app.packets = function AppPackets(me) {
             }
             me.core.property.set(window, {
                 "app.packets.dataProfile": "Live",
-                "app.packets.refreshChart": null,                
+                "app.packets.refreshChart": null,
                 "app.packets.refreshData": null
             });
         }
@@ -289,7 +289,7 @@ screens.app.packets = function AppPackets(me) {
         var viewType = me.options.viewType;
         var defaultViewType = "Data by Time";
         if (viewType === "Auto") {
-            if(!window.packetInfo || !window.packetInfo.streamRequests || window.packetInfo.streamRequests.length <= 1) {
+            if (!window.packetInfo || !window.packetInfo.streamRequests || window.packetInfo.streamRequests.length <= 1) {
                 viewType = defaultViewType;
             }
             else if (window.streamIndex === -1) {
@@ -514,12 +514,7 @@ screens.app.packets = function AppPackets(me) {
                                 dataset.data = [];
                             }
                         }
-                        var videoDuration = me.videoDuration(window);
                         var durationPercentage = duration;
-                        if (videoDuration && duration) {
-                            durationPercentage = parseInt(duration * 100 / videoDuration);
-                            durationPercentage = 100 - parseInt(durationPercentage / 10);
-                        }
                         var values = {
                             Duration: duration,
                             ABR: parseInt(abr / 1000),
@@ -573,7 +568,7 @@ screens.app.packets = function AppPackets(me) {
                 var effects = window.packetInfo.effects;
                 if (effects) {
                     var widgets = ["packetLoss", "packetDelay", "bandwidthRate", "bandwidthBurst", "bandwidthLatency"];
-                    for(var widget of widgets) {
+                    for (var widget of widgets) {
                         effects[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
                     }
                     await me.manager.packet.applyEffects(effects);
@@ -584,7 +579,7 @@ screens.app.packets = function AppPackets(me) {
     me.loadMonitorOptions = function (object) {
         var window = me.widget.window(object);
         var widgets = ["monitorFilter", "searchFilter"];
-        for(var widget of widgets) {
+        for (var widget of widgets) {
             me.core.property.set(window.var[widget], "ui.basic.text", me.monitorOptions[widget]);
         }
     };
@@ -592,7 +587,7 @@ screens.app.packets = function AppPackets(me) {
         set: async function (object) {
             var window = me.widget.window(object);
             var widgets = ["monitorFilter", "searchFilter"];
-            for(var widget of widgets) {
+            for (var widget of widgets) {
                 me.monitorOptions[widget] = me.core.property.get(window.var[widget], "ui.basic.text");
             }
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
@@ -640,9 +635,12 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.onChangeStream = {
-        set: function (object) {
+        set: function (object, stream) {
             var window = me.widget.window(object);
-            var streamIndex = me.core.property.get(window.var.streamIndex, "ui.basic.text").split(":")[0];
+            if (!stream) {
+                stream = "Combined";
+            }
+            var streamIndex = stream.split(":")[0];
             if (streamIndex === "Last") {
                 streamIndex = 0;
             }
@@ -685,11 +683,6 @@ screens.app.packets = function AppPackets(me) {
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
-    me.videoDuration = function (window) {
-        var videoDuration = me.core.property.get(window.var.videoDuration, "ui.basic.text");
-        var secs = videoDuration.split(':').reverse().reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
-        return secs;
-    };
     me.export = {
         set: function (object) {
             var window = me.widget.window(object);
@@ -725,7 +718,7 @@ screens.app.packets = function AppPackets(me) {
             me.content.csv.export(me.options.dataProfile + ".csv", csvData);
         }
     };
-    me.streamList = {
+    me.streamMenuList = {
         get: function (object) {
             var window = me.widget.window(object);
             if (window && window.packetInfo && me.options.dataProfile !== "Combined") {
@@ -739,9 +732,24 @@ screens.app.packets = function AppPackets(me) {
                         else {
                             title = (streamRequest.streamIndex + 1) + ":" + (streamRequest.runIndex + 1);
                         }
-                        return [title];
+                        return [title, "app.packets.onChangeStream"];
                     });
-                    items.unshift(["Last"]);
+                    items.unshift(["Last", "app.packets.onChangeStream"]);
+                    items.unshift(["Combined", "app.packets.onChangeStream", {
+                        separator: true
+                    }]);
+                    var info = {
+                        "Count": window.streamCount,
+                        "Duration": window.streamDuration,
+                        "Size": window.streamSize,
+                        "Packet Count": window.packetCount,
+                        "Average Byte Rate" : window.averageByteRate
+                    };
+                    for (var title of Object.keys(info).reverse()) {
+                        items.unshift([title + ": " + info[title], null, {
+                            enabled: false
+                        }]);
+                    }
                     return items;
                 }
             }
