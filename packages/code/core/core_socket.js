@@ -47,7 +47,9 @@ screens.core.socket = function CoreSocket(me) {
             return new Promise((resolve, reject) => {
                 me.io.on("connect", () => {
                     me.log("Connected to server: " + me.serverAddress);
+                    me.isConnected = true;
                     me.io.on("disconnect", (info) => {
+                        me.isConnected = false;
                         me.log("Disconnected from server: " + me.serverAddress);
                     });
                     resolve();

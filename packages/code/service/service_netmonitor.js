@@ -33,6 +33,10 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 if (!me.options.pushPackets) {
                     return;
                 }
+                if(!me.core.socket.isConnected) {
+                    me.log("Server not connected, packets in queue: " + me.packets.length);
+                    return;
+                }
                 var packets = me.packets;
                 if (!packets || !packets.length) {
                     return;
