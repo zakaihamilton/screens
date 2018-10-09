@@ -84,13 +84,6 @@ screens.core.console = function CoreConsole(me) {
                     message + " stack: " + stack);
                 me.push(fullMessage);
                 me.errors.push(fullMessage);
-                if (me.platform !== "server") {
-                    me.core.message.send_server("core.console.log_error",
-                        message,
-                        stack,
-                        componentId,
-                        userName);
-                }
                 console.error(fullMessage);
             }
         }
