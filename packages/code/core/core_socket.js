@@ -44,15 +44,19 @@ screens.core.socket = function CoreSocket(me) {
             me.log("Connecting to server: " + me.serverAddress);
             me.io = me.client.connect(me.serverAddress);
             me.register(me.io);
+            var firstTime = true;
             return new Promise((resolve, reject) => {
                 me.io.on("connect", () => {
                     me.log("Connected to server: " + me.serverAddress);
                     me.isConnected = true;
-                    me.io.on("disconnect", (info) => {
-                        me.isConnected = false;
-                        me.log("Disconnected from server: " + me.serverAddress);
-                    });
-                    resolve();
+                    if (firstTime) {
+                        firstTime = false;
+                        resolve();
+                    }
+                });
+                me.io.on("disconnect", (info) => {
+                    me.isConnected = false;
+                    me.log("Disconnected from server: " + me.serverAddress);
                 });
             });
         }
@@ -141,7 +145,7 @@ screens.core.socket = function CoreSocket(me) {
         socket.on("heartbeat_send", (data) => {
             socket.emit('heartbeat_response', { beat: 1 });
             me.log("heartbeat response sent");
-        });        
+        });
     };
     me.list = function (platform) {
         var items = [];
