@@ -112,7 +112,7 @@ screens.core.http = function CoreHttp(me) {
         var ip = null;
         if (request) {
             ip = me.core.json.value(request, {
-                "headers.x-forwarded-for": value => value.split(',').pop(),
+                "headers.x-forwarded-for": value => value ? value.split(',').pop() : null,
                 "connection.remoteAddress": null,
                 "connection.socket.remoteAddress": null,
                 "socket.remoteAddress": null
