@@ -24,7 +24,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         me.config = await me.core.service.config(me.id);
         if (me.config) {
             me.reload();
-            if(me.interval) {
+            if (me.interval) {
                 clearInterval(me.interval);
             }
             me.interval = setInterval(async () => {
@@ -33,7 +33,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 if (!me.options.pushPackets) {
                     return;
                 }
-                if(!me.core.socket.isConnected) {
+                if (!me.core.socket.isConnected) {
                     me.log("Server not connected, packets in queue: " + me.packets.length);
                     return;
                 }
@@ -44,7 +44,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 me.packets = [];
                 me.log("there are " + packets.length + " packets in queue");
                 if (me.options.combinePackets) {
-                    packets = me.combinePackets(packets);
+                    packets = await me.combinePackets(packets);
                     me.log("combined into " + packets.length + " packets");
                 }
                 await me.manager.packet.push(packets);
@@ -60,7 +60,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             devices = [devices];
         }
         var filter = config.filter;
-        if(me.options.monitorFilter) {
+        if (me.options.monitorFilter) {
             filter = me.options.monitorFilter;
         }
         if (filter) {
@@ -69,7 +69,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         }
         for (var device of devices) {
             try {
-                if(me.session) {
+                if (me.session) {
                     me.session.close();
                 }
                 me.session = new me.pcap.Session(device, { filter });
@@ -84,7 +84,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
         }
         if (me.session) {
             me.session.on('packet', function (rawPacket) {
-                if(!me.statistics.packetCount) {
+                if (!me.statistics.packetCount) {
                     me.statistics.packetCount = 0;
                 }
                 me.statistics.packetCount++;
@@ -100,13 +100,13 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                 var packet_target = me.core.json.traverse(fullPacket, "payload.payload.daddr.addr").value;
                 var packet_data = me.core.json.traverse(fullPacket, "payload.payload.payload.data.data").value;
                 var match = null;
-                if(packet_data) {
+                if (packet_data) {
                     var packet_string = String.fromCharCode.apply(null, packet_data);
                     var packet_lines = packet_string.split("\n");
-                    if(me.options.searchFilter) {
+                    if (me.options.searchFilter) {
                         var searchFilter = me.core.string.regex(me.options.searchFilter);
-                        for(line of packet_lines) {
-                            if(line.search(searchFilter) != -1) {
+                        for (line of packet_lines) {
+                            if (line.search(searchFilter) != -1) {
                                 match = line;
                                 break;
                             }
@@ -149,8 +149,10 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
             target.push(packet);
         }
         var combinedPackets = [];
-        for (const source of Object.values(sources)) {
-            for (const target of Object.values(source)) {
+        for (var sourceKey in sources) {
+            var source = sources[sourceKey];
+            for (var targetKey in source) {
+                var target = source[targetKey];
                 var first = true;
                 var combinedPacket = {};
                 for (var packet of target) {
@@ -161,7 +163,7 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
                     }
                     combinedPacket.size += packet.size;
                     combinedPacket.count++;
-                    if(packet.match) {
+                    if (packet.match) {
                         combinedPacket.match = packet.match;
                     }
                 }
@@ -175,12 +177,12 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.setOptions = function (options) {
         var reload = false;
-        if(options.monitorFilter !== me.options.monitorFilter) {
+        if (options.monitorFilter !== me.options.monitorFilter) {
             reload = true;
         }
         me.options = Object.assign({}, me.options, options);
         me.log("monitor options set to: " + JSON.stringify(me.options));
-        if(reload) {
+        if (reload) {
             me.reload();
         }
     };
