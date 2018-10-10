@@ -237,7 +237,10 @@
                 ],
                 [
                     "Packet Loss (%)",
-                    "label"
+                    "label",
+                    {
+                        "separator":true
+                    }
                 ],
                 [
                     "",
