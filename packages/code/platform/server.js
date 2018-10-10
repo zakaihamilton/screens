@@ -9,7 +9,7 @@ screens.api = [
     "user.access.get",
     "user.access.isAPIAllowed",
     "core.cache",
-    "core.console.log_error",
+    "core.console",
     "storage.data",
     "storage.file",
     "manager",

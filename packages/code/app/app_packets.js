@@ -109,7 +109,6 @@ screens.app.packets = function AppPackets(me) {
                     effects[name] = value;
                     try {
                         await me.manager.packet.applyEffects(effects);
-                        alert("Applied effects: " + JSON.stringify(effects));
                     }
                     catch (err) {
                         alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
