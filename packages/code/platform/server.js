@@ -23,7 +23,8 @@ screens.apps = [
     "present",
     "profile",
     "theme",
-    "login"
+    "login",
+    "logger"
 ];
 
 screens.include({

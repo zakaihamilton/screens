@@ -181,7 +181,6 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     }
     me.back = {
         set: function (object, value) {
-            me.ui.property.broadcast(object, "close");
             me.core.property.set(object.target, "back", value);
             me.core.property.set(object, "ui.node.parent");
         }
