@@ -64,7 +64,6 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         if (!effects) {
             effects = {};
         }
-        me.effects = effects;
         me.log("using device: " + device + " to set effects: " + JSON.stringify(effects));
         var currentDir = await me.run("pwd");
         try {
@@ -79,18 +78,20 @@ screens.service.netcontrol = function ServiceNetControl(me) {
                 clearInterval(me.toggleInterval);
                 me.toggleInterval = null;
             }
+            var interval = parseInt(effects.toggleInterval);
             me.toggleInterval = setInterval(() => {
                 me.effects.useEffects = !me.effects.useEffects;
                 me.applyEffects(me.effects);
-            }, parseInt(effects.toggleInterval));
+            }, interval);
         }
         else {
             if(me.toggleInterval) {
                 clearInterval(me.toggleInterval);
                 me.toggleInterval = null;
             }
-            me.effects.useEffects = true;
+            effects.useEffects = true;
         }
+        me.effects = effects;
         if(!effects.useEffects) {
             return;
         }
