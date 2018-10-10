@@ -34,7 +34,13 @@ screens.storage.cache = function StorageCache(me) {
             if(event.request.url.endsWith("/")) {
                 return;
             }
-            return me.secureFetch(object, event);
+            for (var cacheName in me.policy) {
+                var matchUrl = me.policy[cacheName];
+                var isMatch = event.request.url.match(matchUrl);
+                if (isMatch) {
+                    return me.secureFetch(object, event);
+                }
+            }
         }
     };
     me.empty = async function () {
