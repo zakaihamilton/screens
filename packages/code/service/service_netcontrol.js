@@ -12,7 +12,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         packetDelay: 0,
         packetDelayIncrease: 5,
         packetDelayMax: 300,
-        toggleInterval: 0,
+        toggleTimer: 0,
         useEffects: true
     };
     me.effects = Object.assign({}, me.defaultEffects);
@@ -73,21 +73,22 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             var data = JSON.stringify(err);
         }
         me.log("reset device output: " + data);
-        if(effects.toggleInterval) {
-            if(me.toggleInterval) {
-                clearInterval(me.toggleInterval);
-                me.toggleInterval = null;
+        var interval = parseInt(effects.toggleTimer);
+        me.log("toggle interval: " + interval);
+        if(interval) {
+            if(me.toggleTimer) {
+                clearTimeout(me.toggleTimer);
+                me.toggleTimer = null;
             }
-            var interval = parseInt(effects.toggleInterval);
-            me.toggleInterval = setInterval(() => {
+            me.toggleTimer = setTimeout(() => {
                 me.effects.useEffects = !me.effects.useEffects;
                 me.applyEffects(me.effects);
             }, interval);
         }
         else {
-            if(me.toggleInterval) {
-                clearInterval(me.toggleInterval);
-                me.toggleInterval = null;
+            if(me.toggleTimer) {
+                clearTimeout(me.toggleTimer);
+                me.toggleTimer = null;
             }
             effects.useEffects = true;
         }
