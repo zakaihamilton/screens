@@ -59,7 +59,12 @@ screens.app.packets = function AppPackets(me) {
             if (value && value.currentTarget) {
                 value = me.core.property.get(value.currentTarget, "ui.basic.text");
             }
-            window.dataTitle = value.trim();
+            else {
+                value = me.core.property.get(object, "ui.basic.text");
+            }
+            if(value) {
+                window.dataTitle = value.trim();
+            }
         }
     };
     me.monitorMenuOption = function (name) {
