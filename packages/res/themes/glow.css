@@ -443,15 +443,15 @@
     color: var(--chrome-highlight-color);
 }
 
-.glow-menu-vertical li[disabled="true"]
-.glow-menu-vertical span[disabled="true"] {
-    background-color: white;
-    color:lightgray;
-}
-
 .glow-menu-vertical li[disabled="true"],
 .glow-menu-vertical span[disabled="true"] {
     background-color: #ececec;
+    color:black;
+}
+
+.glow-menu-vertical li[disabled="true"].label,
+.glow-menu-vertical span[disabled="true"].label {
+    background-color:transparent;
     color:black;
 }
 
@@ -459,6 +459,12 @@
 .glow-menu-vertical.night-mode span[disabled="true"] {
     background-color: var(--chrome-background);
     color:var(--chrome-disabled-color);
+}
+
+.glow-menu-vertical li[disabled="true"].label.night-mode,
+.glow-menu-vertical span[disabled="true"].label.night-mode {
+    background-color: var(--chrome-background);
+    color:var(--chrome-color);
 }
 
 .glow-menu-vertical li[disabled="true"]:hover,
@@ -471,6 +477,18 @@
 .glow-menu-vertical.night-mode span[disabled="true"]:hover {
     background-color: var(--chrome-background);
     color:var(--chrome-disabled-color);
+}
+
+.glow-menu-vertical li[disabled="true"].label:hover,
+.glow-menu-vertical span[disabled="true"].label:hover {
+    background-color:transparent;
+    color:black;
+}
+
+.glow-menu-vertical.night-mode li[disabled="true"].label:hover,
+.glow-menu-vertical.night-mode span[disabled="true"].label:hover {
+    background-color: var(--chrome-background);
+    color:var(--chrome-color);
 }
 
 .glow-menu-vertical li.checked:before,
@@ -528,15 +546,24 @@
     color:var(--chrome-color);
 }
 
+.glow-menu-vertical li.label,
+.glow-menu-vertical span.label {
+    font-weight: bold;
+    font-size:0.75em;
+    margin:0px;
+}
+
 .glow-menu-vertical li.edit,
 .glow-menu-vertical span.edit,
 .glow-menu-vertical input.edit {
     border-bottom: 1px dotted darkgray;
     overflow: hidden;
     white-space: nowrap;
-    margin:3px;
+    margin-bottom:6px;
+    margin-left:16px;
+    margin-right:16px;
     padding:3px;
-    width:98%;
+    width:90%;
 }
 
 .glow-window-footer {

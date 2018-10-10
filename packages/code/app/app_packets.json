@@ -65,6 +65,10 @@
                 ],
                 [
                     "Monitor Filter",
+                    "label"
+                ],
+                [
+                    "Enter filter here...",
                     null,
                     {
                         "edit": "app.packets.monitorFilter"
@@ -72,6 +76,10 @@
                 ],
                 [
                     "Search Filter",
+                    "label"
+                ],
+                [
+                    "Enter filter here...",
                     null,
                     {
                         "edit": "app.packets.searchFilter"
@@ -196,6 +204,10 @@
             [
                 [
                     "Bandwidth Rate (KBit)",
+                    "label"
+                ],
+                [
+                    "",
                     null,
                     {
                         "edit": "app.packets.bandwidthRate"
@@ -203,6 +215,10 @@
                 ],
                 [
                     "Bandwidth Burst (KBit)",
+                    "label"
+                ],
+                [
+                    "",
                     null,
                     {
                         "edit": "app.packets.bandwidthBurst"
@@ -210,6 +226,10 @@
                 ],
                 [
                     "Bandwidth Latency (ms)",
+                    "label"
+                ],
+                [
+                    "",
                     null,
                     {
                         "edit": "app.packets.bandwidthLatency"
@@ -217,6 +237,10 @@
                 ],
                 [
                     "Packet Loss (%)",
+                    "label"
+                ],
+                [
+                    "",
                     null,
                     {
                         "edit": "app.packets.packetLoss"
@@ -224,6 +248,10 @@
                 ],
                 [
                     "Packet Delay (msec)",
+                    "label"
+                ],
+                [
+                    "",
                     null,
                     {
                         "edit": "app.packets.packetDelay"

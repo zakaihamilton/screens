@@ -326,8 +326,16 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             properties: ["ui.basic.text"]
         },
         use: (properties, parent) => {
-            if (properties["options"] && properties["options"].unique === false) {
-                return null;
+            var unique = true;
+            var options = properties["options"];
+            if (options) {
+                unique = options.unique;
+                if(options.edit) {
+                    unique = false;
+                }
+                if(!unique) {
+                    return null;
+                }
             }
             var text = properties["ui.basic.text"];
             if (!text) {
@@ -444,6 +452,13 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                         me.core.property.set(object, "ui.class.remove", "header");
                     }
                 });
+                me.handleValue(object, options, "label", (value) => {
+                    if (value) {
+                        me.core.property.set(object, "ui.class.add", "label");
+                    } else {
+                        me.core.property.set(object, "ui.class.remove", "label");
+                    }
+                });
                 me.handleValue(object, options, "edit", (value) => {
                     if(options.edit) {
                         me.core.property.set(object, {
@@ -491,11 +506,14 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             else {
                 object.menu_select = value;
             }
-            if (object.menu_select === "header") {
-                me.core.property.set(object, "options", {
-                    "enabled": false,
-                    "header": true
-                });
+            var optionNames = ["header", "label"];
+            for(var optionName of optionNames) {
+                if(object.menu_select !== optionName) {
+                    continue;
+                }
+                var options = {"enabled" : false};
+                options[optionName] = true;
+                me.core.property.set(object, "options", options);
             }
         }
     };
