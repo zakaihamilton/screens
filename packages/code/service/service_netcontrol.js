@@ -74,7 +74,6 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.log("reset device output: " + data);
         var interval = parseInt(effects.toggleInterval);
-        me.log("toggle interval: " + interval);
         if(interval) {
             if(me.toggleInterval) {
                 clearTimeout(me.toggleInterval);
@@ -92,6 +91,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             }
             effects.useEffects = true;
         }
+        me.log("toggle interval: " + interval + " effects are: " + effects.useEffects);
         me.effects = effects;
         if(!effects.useEffects) {
             return;
