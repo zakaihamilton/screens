@@ -75,14 +75,18 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.log("reset device output: " + data);
         if(effects.toggleInterval) {
+            if(me.toggleInterval) {
+                clearInterval(me.toggleInterval);
+                me.toggleInterval = null;
+            }
             me.toggleInterval = setInterval(() => {
                 me.effects.useEffects = !me.effects.useEffects;
                 me.applyEffects(me.effects);
             }, parseInt(effects.toggleInterval));
         }
         else {
-            me.toggleInterval = null;
             clearInterval(me.toggleInterval);
+            me.toggleInterval = null;
             me.effects.useEffects = true;
         }
         if(!effects.useEffects) {
