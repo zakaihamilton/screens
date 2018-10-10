@@ -83,7 +83,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             me.toggleInterval = setTimeout(() => {
                 effects.useEffects = !effects.useEffects;
                 me.applyEffects(me.effects);
-            }, interval);
+            }, interval * 1000);
         }
         else {
             if(me.toggleInterval) {

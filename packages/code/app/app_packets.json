@@ -261,7 +261,7 @@
                     }
                 ],
                 [
-                    "Toggle Interval (msec)",
+                    "Toggle Interval (sec)",
                     "label",
                     {
                         "separator":true
