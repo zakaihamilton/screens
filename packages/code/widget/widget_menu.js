@@ -131,6 +131,9 @@ screens.widget.menu = function WidgetMenu(me) {
                 "ui.class.remove": "selected"
             });
             me.core.property.set(item, "ui.class.add", "selected");
+            me.core.property.set(object.var.menu, "ui.property.broadcast", {
+                "close": null
+            });
             me.core.property.set(object.var.menu, "ui.node.parent");
             me.core.property.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {

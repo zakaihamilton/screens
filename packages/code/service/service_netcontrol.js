@@ -11,7 +11,9 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         autoIncreasePacketDelay: true,
         packetDelay: 0,
         packetDelayIncrease: 5,
-        packetDelayMax: 300
+        packetDelayMax: 300,
+        toggleInterval: 0,
+        useEffects: true
     };
     me.effects = Object.assign({}, me.defaultEffects);
     me.init = function () {
@@ -72,6 +74,20 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             var data = JSON.stringify(err);
         }
         me.log("reset device output: " + data);
+        if(effects.toggleInterval) {
+            me.toggleInterval = setInterval(() => {
+                me.effects.useEffects = !me.effects.useEffects;
+                me.applyEffects(me.effects);
+            }, effects.toggleInterval);
+        }
+        else {
+            me.toggleInterval = null;
+            clearInterval(me.toggleInterval);
+            me.effects.useEffects = true;
+        }
+        if(!effects.useEffects) {
+            return;
+        }
         if (effects.packetLoss || effects.packetDelay || effects.bandwidthRate) {
             if (effects.packetDelay && effects.packetDelay !== "0") {
                 me.log("setting packet delay to: " + effects.packetDelay);

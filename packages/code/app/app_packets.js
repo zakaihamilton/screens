@@ -76,7 +76,7 @@ screens.app.packets = function AppPackets(me) {
                 else {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
-                if(value) {
+                if (value) {
                     value = value.trim();
                 }
                 me.monitorOptions[name] = value;
@@ -98,24 +98,36 @@ screens.app.packets = function AppPackets(me) {
                 else {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
-                if(value) {
+                if (value) {
                     value = value.trim();
                 }
                 else {
                     value = "";
                 }
                 var effects = window.packetInfo.effects;
+                var setEffects = false;
                 if (effects[name] !== value) {
                     effects[name] = value;
-                    try {
-                        await me.manager.packet.applyEffects(effects);
-                    }
-                    catch (err) {
-                        alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
-                    }
+                    setEffects = true;
+                }
+                if(setEffects) {
+                    clearTimeout(me.effectsTimer);
+                    me.effectsTimer = setTimeout(() => {
+                        me.applyEffects(window);
+                    }, 1000);
                 }
             }
         };
+    };
+    me.applyEffects = async function (object) {
+        var window = me.widget.window(object);
+        var effects = window.packetInfo.effects;
+        try {
+            await me.manager.packet.applyEffects(effects);
+        }
+        catch (err) {
+            alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
+        }
     };
     me.monitorFilter = me.monitorMenuOption("monitorFilter");
     me.searchFilter = me.monitorMenuOption("searchFilter");
@@ -124,6 +136,7 @@ screens.app.packets = function AppPackets(me) {
     me.bandwidthRate = me.effectMenuOption("bandwidthRate");
     me.bandwidthBurst = me.effectMenuOption("bandwidthBurst");
     me.bandwidthLatency = me.effectMenuOption("bandwidthLatency");
+    me.toggleInterval = me.effectMenuOption("toggleInterval");
     me.dataMenuList = {
         get: function (object) {
             var window = me.widget.window(object);
