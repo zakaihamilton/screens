@@ -98,7 +98,7 @@ screens.manager.packet = function ManagerPacket(me) {
     };
     me.ready = {
         set: async function () {
-            await me.retrieveEffects();
+            await me.applyEffects(me.packetInfo.effects);
         }
     };
     me.retrieveEffects = async function () {
@@ -117,6 +117,9 @@ screens.manager.packet = function ManagerPacket(me) {
         me.packetInfo.effects = Object.assign({}, me.packetInfo.effects, params);
         me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
         await me.core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
+    };
+    me.updateEffects = function(effects) {
+        me.packetInfo.effects = effects;
     };
     me.getMonitorOptions = async function() {
         var response = await me.core.service.sendAll("service.netmonitor.getOptions");
