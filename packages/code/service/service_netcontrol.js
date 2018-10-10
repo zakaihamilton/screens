@@ -91,7 +91,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             }
             effects.useEffects = true;
         }
-        me.log("toggle interval: " + interval + " effects are: " + effects.useEffects);
+        me.log("toggle interval: " + interval + " effects are: " + effects.useEffects ? "on" : "off");
         me.effects = effects;
         if(!effects.useEffects) {
             return;
