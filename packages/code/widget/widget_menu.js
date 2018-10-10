@@ -108,6 +108,9 @@ screens.widget.menu = function WidgetMenu(me) {
             me.core.property.set(object, "ui.property.broadcast", {
                 "ui.touch.over": null
             });
+            me.core.property.set(object.var.menu, "ui.property.broadcast", {
+                "close": null
+            });
             object.selected_item = null;
         }
     };
@@ -178,6 +181,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     }
     me.back = {
         set: function (object, value) {
+            me.ui.property.broadcast(object, "close");
             me.core.property.set(object.target, "back", value);
             me.core.property.set(object, "ui.node.parent");
         }
@@ -330,10 +334,10 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             var options = properties["options"];
             if (options) {
                 unique = options.unique;
-                if(options.edit) {
+                if (options.edit) {
                     unique = false;
                 }
-                if(!unique) {
+                if (!unique) {
                     return null;
                 }
             }
@@ -352,7 +356,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             if (groupName) {
                 return "li";
             }
-            if(properties.options && properties.options.edit) {
+            if (properties.options && properties.options.edit) {
                 return "input";
             }
         },
@@ -460,21 +464,21 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     }
                 });
                 me.handleValue(object, options, "edit", (value) => {
-                    if(options.edit) {
+                    if (options.edit) {
                         me.core.property.set(object, {
                             "ui.class.add": "edit",
-                            "ui.attribute.contenteditable":true,
-                            "core.event.focusout":options.edit,
-                            "ui.basic.text":value,
-                            "ui.attribute.placeholder":me.core.property.get(object, "ui.basic.text")
+                            "ui.attribute.contenteditable": true,
+                            "core.link.close": options.edit,
+                            "ui.basic.text": value,
+                            "ui.attribute.placeholder": me.core.property.get(object, "ui.basic.text")
                         });
                     }
                     else {
                         me.core.property.set(object, {
                             "ui.class.remove": "edit",
-                            "ui.attribute.contenteditable":false,
-                            "core.event.onfocusout":null,
-                            "ui.attribute.placeholder":null
+                            "ui.attribute.contenteditable": false,
+                            "core.link.close": null,
+                            "ui.attribute.placeholder": null
                         });
                     }
                 });
@@ -507,11 +511,11 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 object.menu_select = value;
             }
             var optionNames = ["header", "label"];
-            for(var optionName of optionNames) {
-                if(object.menu_select !== optionName) {
+            for (var optionName of optionNames) {
+                if (object.menu_select !== optionName) {
                     continue;
                 }
-                var options = {"enabled" : false};
+                var options = { "enabled": false };
                 options[optionName] = true;
                 me.core.property.set(object, "options", options);
             }
@@ -541,7 +545,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object) {
             var parentMenu = me.parentMenu(object);
             me.ui.mark.widget(object, null);
-            if(object.menu_select) {
+            if (object.menu_select) {
                 me.core.property.set(parentMenu, "select", [object, object.menu_select]);
             }
         }

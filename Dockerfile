@@ -14,10 +14,12 @@ RUN touch /usr/bin/start.sh # this is the script which will run on start
 # RUN echo 'redis-server &' >> /usr/bin/start.sh
 
 # daemon for cron jobs
-RUN echo 'echo will install crond...' >> /usr/bin/start.sh
-RUN echo 'crond' >> /usr/bin/start.sh
+#RUN echo 'echo will install crond...' >> /usr/bin/start.sh
+#RUN echo 'crond' >> /usr/bin/start.sh
 
 RUN echo 'npm install --production' >> /usr/bin/start.sh
+RUN echo 'npm install -g pm2' >> /usr/bin/start.sh
 
 # npm start, make sure to have a start attribute in "scripts" in package.json
-RUN echo 'npm start' >> /usr/bin/start.sh
+RUN echo 'pm2 start npm -- start' >> /usr/bin/start.sh
+RUN echo 'sh' >> /usr/bin/start.sh

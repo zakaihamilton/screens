@@ -50,49 +50,70 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.dataTitle = {
-        get: function(object) {
+        get: function (object) {
             var window = me.widget.window(object);
             return window.dataTitle;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var window = me.widget.window(object);
-            if(value && value.currentTarget) {
+            if (value && value.currentTarget) {
                 value = me.core.property.get(value.currentTarget, "ui.basic.text");
             }
             window.dataTitle = value.trim();
         }
     };
-    me.monitorMenuOption = function(name) {
+    me.monitorMenuOption = function (name) {
         return {
-            get: function(object) {
+            get: function (object) {
                 var window = me.widget.window(object);
                 return me.monitorOptions[name];
             },
-            set: async function(object, value) {
+            set: async function (object, value) {
                 var window = me.widget.window(object);
-                if(value && value.currentTarget) {
+                if (value && value.currentTarget) {
                     value = me.core.property.get(value.currentTarget, "ui.basic.text");
                 }
-                me.monitorOptions[name] = value.trim();
+                else {
+                    value = me.core.property.get(object, "ui.basic.text");
+                }
+                if(value) {
+                    value = value.trim();
+                }
+                me.monitorOptions[name] = value;
                 await me.manager.packet.setMonitorOptions(me.monitorOptions);
             }
         };
     };
-    me.effectMenuOption = function(name) {
+    me.effectMenuOption = function (name) {
         return {
-            get: function(object) {
+            get: function (object) {
                 var window = me.widget.window(object);
                 return window.packetInfo.effects[name];
             },
-            set: async function(object, value) {
+            set: async function (object, value) {
                 var window = me.widget.window(object);
-                if(value && value.currentTarget) {
+                if (value && value.currentTarget) {
                     value = me.core.property.get(value.currentTarget, "ui.basic.text");
                 }
-                value = value.trim();
-                if(window.packetInfo.effects[name] !== value) {
-                    window.packetInfo.effects[name] = value;
-                    await me.manager.packet.applyEffects(window.packetInfo.effects);
+                else {
+                    value = me.core.property.get(object, "ui.basic.text");
+                }
+                if(value) {
+                    value = value.trim();
+                }
+                else {
+                    value = "";
+                }
+                var effects = window.packetInfo.effects;
+                if (effects[name] !== value) {
+                    effects[name] = value;
+                    try {
+                        await me.manager.packet.applyEffects(effects);
+                        alert("Applied effects: " + JSON.stringify(effects));
+                    }
+                    catch (err) {
+                        alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
+                    }
                 }
             }
         };
@@ -760,8 +781,8 @@ screens.app.packets = function AppPackets(me) {
                         "Duration": window.streamDuration,
                         "Size": window.streamSize,
                         "Packet Count": window.packetCount,
-                        "Average Byte Rate" : window.averageByteRate,
-                        "Current Search Match":window.searchMatch ? window.searchMatch : "None"
+                        "Average Byte Rate": window.averageByteRate,
+                        "Current Search Match": window.searchMatch ? window.searchMatch : "None"
                     };
                     for (var title of Object.keys(info).reverse()) {
                         items.unshift([title + ": " + info[title], null, {
