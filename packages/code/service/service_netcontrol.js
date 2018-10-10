@@ -8,10 +8,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
 
     };
     me.defaultEffects = {
-        autoIncreasePacketDelay: true,
         packetDelay: 0,
-        packetDelayIncrease: 5,
-        packetDelayMax: 300,
         toggleInterval: 0,
         useEffects: true
     };
@@ -20,19 +17,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         me.cmd = require('node-cmd');
     };
     me.newStream = function () {
-        if (me.effects.autoIncreasePacketDelay) {
-            var packetDelay = parseInt(me.effects.packetDelay);
-            if (!packetDelay || packetDelay < 0) {
-                packetDelay = 0;
-            }
-            me.effects.packetDelay = packetDelay + me.effects.packetDelayIncrease;
-            if (me.effects.packetDelay > me.effects.packetDelayMax) {
-                me.effects.packetDelay = 0;
-                me.log("newRun");
-                me.core.service.sendAll("newRun");
-            }
-            me.applyEffects(me.effects);
-        }
+
     };
     me.reset = async function () {
         me.effects = Object.assign({}, me.defaultEffects);
@@ -91,7 +76,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             }
             effects.useEffects = true;
         }
-        me.log("toggle interval: " + interval + " effects are: " + effects.useEffects ? "on" : "off");
+        me.log("toggle interval: " + interval + " effects are: " + (effects.useEffects ? "on" : "off"));
         me.effects = effects;
         if(!effects.useEffects) {
             return;

@@ -129,6 +129,7 @@ screens.app.packets = function AppPackets(me) {
         var effects = window.packetInfo.effects;
         try {
             await me.manager.packet.applyEffects(effects);
+            window.packetInfo.effects = await me.manager.packet.retrieveEffects();
         }
         catch (err) {
             alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
@@ -267,29 +268,6 @@ screens.app.packets = function AppPackets(me) {
             }
         }
         return number;
-    };
-    me.autoIncreasePacketDelay = {
-        get: function (object) {
-            var state = false;
-            var window = me.widget.window(object);
-            if (window.packetInfo) {
-                var effects = window.packetInfo.effects;
-                if (effects) {
-                    state = effects.autoIncreasePacketDelay;
-                }
-            }
-            return state;
-        },
-        set: async function (object, value) {
-            var window = me.widget.window(object);
-            if (window.packetInfo) {
-                var effects = window.packetInfo.effects;
-                if (effects) {
-                    effects.autoIncreasePacketDelay = !effects.autoIncreasePacketDelay;
-                    await me.manager.packet.applyEffects(effects);
-                }
-            }
-        }
     };
     me.updateData = {
         set: function (object) {

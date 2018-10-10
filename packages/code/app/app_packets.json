@@ -30,14 +30,6 @@
                     }
                 ],
                 [
-                    "Auto Increase Packet Delay",
-                    "app.packets.autoIncreasePacketDelay",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
                     "Push Packets",
                     "app.packets.pushPackets",
                     {
@@ -203,8 +195,15 @@
             "Effects",
             [
                 [
+                    "Refresh",
+                    "app.packets.applyEffects"
+                ],
+                [
                     "Bandwidth Rate (KBit)",
-                    "label"
+                    "label",
+                    {
+                        "separator":true
+                    }
                 ],
                 [
                     "",
