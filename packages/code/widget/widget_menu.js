@@ -111,6 +111,7 @@ screens.widget.menu = function WidgetMenu(me) {
             me.core.property.set(object.var.menu, "ui.property.broadcast", {
                 "close": null
             });
+            object.var.menu = null;
             object.selected_item = null;
         }
     };
@@ -135,6 +136,7 @@ screens.widget.menu = function WidgetMenu(me) {
                 "close": null
             });
             me.core.property.set(object.var.menu, "ui.node.parent");
+            object.var.menu = null;
             me.core.property.set(object.var.modal, "ui.style.display", "initial");
             if (typeof info === "string") {
                 me.core.property.set(object, info, item);
@@ -419,6 +421,15 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, options) {
             object.menu_options = Object.assign({}, object.menu_options, options);
             if (options) {
+                if(options.var) {
+                    var window = me.widget.window(object);
+                    if(!window.var) {
+                        window.var = {};
+                    }
+                    options.var.split(",").map(value => {
+                        window.var[value] = object;
+                    });
+                }
                 me.handleValue(object, options, "debugger", (value) => {
                     if (value) {
                         debugger;
@@ -435,13 +446,6 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                         me.core.property.set(object, "ui.class.add", "checked");
                     } else {
                         me.core.property.set(object, "ui.class.remove", "checked");
-                    }
-                });
-                me.handleValue(object, options, "mark", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "mark");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "mark");
                     }
                 });
                 me.handleValue(object, options, "separator", (value) => {

@@ -62,7 +62,7 @@ screens.app.packets = function AppPackets(me) {
             else {
                 value = me.core.property.get(object, "ui.basic.text");
             }
-            if(value) {
+            if (value) {
                 window.dataTitle = value.trim();
             }
         }
@@ -89,7 +89,7 @@ screens.app.packets = function AppPackets(me) {
             }
         };
     };
-    me.effectMenuOption = function (name) {
+    me.effectMenuOption = function (name, isState) {
         return {
             get: function (object) {
                 var window = me.widget.window(object);
@@ -97,25 +97,29 @@ screens.app.packets = function AppPackets(me) {
             },
             set: async function (object, value) {
                 var window = me.widget.window(object);
+                var target = object;
                 if (value && value.currentTarget) {
-                    value = me.core.property.get(value.currentTarget, "ui.basic.text");
-                }
-                else {
-                    value = me.core.property.get(object, "ui.basic.text");
-                }
-                if (value) {
-                    value = value.trim();
-                }
-                else {
-                    value = "";
+                    target = value.currentTarget;
                 }
                 var effects = window.packetInfo.effects;
+                if (isState) {
+                    value = !effects[name];
+                }
+                else {
+                    value = me.core.property.get(target, "ui.basic.text");
+                    if (value) {
+                        value = value.trim();
+                    }
+                    else {
+                        value = "";
+                    }
+                }
                 var setEffects = false;
                 if (effects[name] !== value) {
                     effects[name] = value;
                     setEffects = true;
                 }
-                if(setEffects) {
+                if (setEffects) {
                     clearTimeout(me.effectsTimer);
                     me.effectsTimer = setTimeout(() => {
                         me.applyEffects(window);
@@ -130,6 +134,7 @@ screens.app.packets = function AppPackets(me) {
         try {
             await me.manager.packet.applyEffects(effects);
             window.packetInfo.effects = await me.manager.packet.retrieveEffects();
+            me.core.property.set(window, "app.packets.updateData");
         }
         catch (err) {
             alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
@@ -143,6 +148,7 @@ screens.app.packets = function AppPackets(me) {
     me.bandwidthBurst = me.effectMenuOption("bandwidthBurst");
     me.bandwidthLatency = me.effectMenuOption("bandwidthLatency");
     me.toggleInterval = me.effectMenuOption("toggleInterval");
+    me.useEffects = me.effectMenuOption("useEffects", true);
     me.dataMenuList = {
         get: function (object) {
             var window = me.widget.window(object);
@@ -288,6 +294,7 @@ screens.app.packets = function AppPackets(me) {
                 }
                 else {
                     streamRequests = window.packetInfo.streamRequests;
+                    effects = window.packetInfo.effects;
                 }
                 var streamRequests = streamRequests;
                 if (streamRequests.length) {
@@ -328,6 +335,9 @@ screens.app.packets = function AppPackets(me) {
                 window.streamDuration = me.formatDuration(duration);
                 window.averageByteRate = me.formatBytes(abr) + "/s";
                 window.searchMatch = searchMatch;
+                if(effects) {
+                    me.core.property.set(window.var.effectsMenu, "ui.class.mark", effects.useEffects);
+                }
             }
         }
     };

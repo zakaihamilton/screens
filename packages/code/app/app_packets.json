@@ -199,6 +199,13 @@
                     "app.packets.applyEffects"
                 ],
                 [
+                    "Enable",
+                    "app.packets.useEffects",
+                    {
+                        "state":"select"
+                    }
+                ],
+                [
                     "Bandwidth Rate (KBit)",
                     "label",
                     {
@@ -273,7 +280,10 @@
                         "edit": "app.packets.toggleInterval"
                     }
                 ]
-            ]
+            ],
+            {
+                "var":"effectsMenu"
+            }
         ]
     ],
     "ui.basic.elements": [
