@@ -563,7 +563,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     "ui.basic.tag": "input",
                     "ui.basic.type": "file",
                     "ui.basic.text": "",
-                    "ui.class.class": "widget.menu.item.upload",
+                    "ui.class.add": "upload",
                     "ui.basic.var": "upload",
                     "ui.style.userSelect": "none",
                     "ui.attribute.multiple": "multiple",
