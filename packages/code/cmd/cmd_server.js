@@ -11,7 +11,10 @@ screens.cmd.server = function CmdServer(me) {
             me.core.property.set(terminal, "print", data);
         }
         catch(err) {
-            me.core.property.set(terminal, "print", err.message || err);
+            if(typeof err !== "string") {
+                err = JSON.stringify(err);
+            }
+            me.core.property.set(terminal, "print", err);
         }
         me.core.cmd.exit(terminal);
     };
