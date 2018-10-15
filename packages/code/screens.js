@@ -162,18 +162,23 @@ function screens_import(path, optional) {
     else if (screens.platform === "browser") {
         var isScript = path.includes(".js");
         var isStylesheet = path.includes(".css");
-        var tagName = "";
+        var tagNames = [];
         if (isScript) {
-            tagName = "script";
+            tagNames = ["script"];
         }
         else if (isStylesheet) {
-            tagName = "link";
+            tagNames = ["style","link"];
         }
-        var items = document.getElementsByTagName(tagName);
-        for (var i = items.length; i--;) {
-            var target = items[i].src || items[i].href;
-            if (target.includes(path)) {
-                return items[i];
+        for(var tagName of tagNames) {
+            var items = document.getElementsByTagName(tagName);
+            for (var i = items.length; i--;) {
+                var target = items[i].src || items[i].href || items[i].id;
+                if(!target) {
+                    continue;
+                }
+                if (path.includes(target) || target.includes(path)) {
+                    return items[i];
+                }
             }
         }
         return new Promise((resolve, reject) => {

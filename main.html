@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -12,11 +13,46 @@ and open the template in the editor.
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script src="external/require.js"></script>
     <script src="https://apis.google.com/js/platform.js"></script>
-    <link rel="stylesheet" href="node_modules/bulma/css/bulma.min.css">
-    <link rel="stylesheet" href="external/fontawesome-all.min.css">
-    <link rel="apple-touch-icon" href="/packages/res/icons/screens.png">
+    <link rel="stylesheet" href="node_modules/bulma/css/bulma.min.css"></link>
+    <link rel="stylesheet" href="external/fontawesome-all.min.css"></link>
+    <link rel="apple-touch-icon" href="/packages/res/icons/screens.png"></link>
+    <link rel="stylesheet" href="packages/code/app/app_*.css"></link>
     <script src="packages/code/screens.js"></script>
     <script src="packages/code/platform/browser.js"></script>
+    <script>
+        screens.core = {};
+        screens.lib = {};
+        screens.storage = {};
+        screens.db = {};
+        screens.user = {};
+        screens.content = {};
+        screens.ui = {};
+        screens.menu = {};
+        screens.widget = {};
+        screens.modal = {};
+        screens.kab = {};
+        screens.manager = {};
+        screens.media = {};
+        screens.widget = {};
+        screens.startup = {};
+        screens.app = {};
+    </script>
+    <script src="packages/code/core/core_*.js"></script>
+    <script src="packages/code/lib/lib_google.js"></script>
+    <script src="packages/code/storage/storage_*.js"></script>
+    <script src="packages/code/db/db_*.js"></script>
+    <script src="packages/code/user/user_*.js"></script>
+    <script src="packages/code/content/content_*.js"></script>
+    <script src="packages/code/ui/ui_*.js"></script>
+    <script src="packages/code/menu/menu_*.js"></script>
+    <script src="packages/code/widget/widget_*.js"></script>
+    <script src="packages/code/modal/modal_*.js"></script>
+    <script src="packages/code/kab/kab_*.js"></script>
+    <script src="packages/code/manager/manager_*.js"></script>
+    <script src="packages/code/media/media_*.js"></script>
+    <script src="packages/code/widget/widget_*.js"></script>
+    <script src="packages/code/startup/startup_*.js"></script>
+    <script src="packages/code/app/app_launcher*.js"></script>
 </head>
 
 <body style="background:lightgray" onload="startBrowser(__startup_app__, __startup_args__)">

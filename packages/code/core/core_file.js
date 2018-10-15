@@ -10,18 +10,21 @@ screens.core.file = function CoreFile(me) {
         me.https = require("https");
         me.core.file.path = me.core.file.alias.path;
     };
-    me.readFile = function (path, options) {
+    me.readFile = function (path, options, optional) {
         path = me.path(path);
         return new Promise((resolve, reject) => {
-            me.log("reading file: " + path + " options: " + JSON.stringify(options));
             try {
                 me.fs.readFile(path, options, function (err, data) {
                     if (err) {
-                        me.log_error(err);
-                        reject(err);
+                        if (optional) {
+                            resolve(null);
+                        }
+                        else {
+                            me.log_error(err);
+                            reject(err);
+                        }
                     }
                     else {
-                        me.log("success in reading file: " + path + " length: " + (data ? data.length : 0));
                         resolve(data);
                     }
                 });
