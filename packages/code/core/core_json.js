@@ -4,10 +4,10 @@
 */
 
 screens.core.json = function CoreJson(me) {
-    me.init = function() {
+    me.init = function () {
         me.files = {};
     };
-    me.loadComponent = async function(path, useCache=true) {
+    me.loadComponent = async function (path, useCache = true) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
@@ -15,12 +15,12 @@ screens.core.json = function CoreJson(me) {
         var json = await me.loadFile(url, useCache);
         return json;
     };
-    me.loadFile = async function(path, useCache=true) {
-        if(useCache && path in me.files) {
+    me.loadFile = async function (path, useCache = true) {
+        if (useCache && path in me.files) {
             return me.files[path];
         }
         else {
-            if(path && path.startsWith("/")) {
+            if (path && path.startsWith("/")) {
                 path = path.substring(1);
             }
             var info = {
@@ -31,27 +31,27 @@ screens.core.json = function CoreJson(me) {
             try {
                 json = await me.core.http.send(info);
             }
-            catch(err) {
+            catch (err) {
                 err = "Cannot load json file: " + path + " err: " + err.message || err;
                 me.log_error(err);
             }
-            if(json) {
+            if (json) {
                 json = JSON.parse(json);
             }
-            if(useCache) {
+            if (useCache) {
                 me.files[path] = json;
             }
             return json;
         }
     };
-    me.compare = function(source, target) {
-        if(source === target) {
+    me.compare = function (source, target) {
+        if (source === target) {
             return true;
         }
-        if(!source && !target) {
+        if (!source && !target) {
             return true;
         }
-        if(!source || !target) {
+        if (!source || !target) {
             return false;
         }
         var sourceKeys = Object.getOwnPropertyNames(source);
@@ -67,36 +67,36 @@ screens.core.json = function CoreJson(me) {
         }
         return true;
     };
-    me.traverse = function(root, path, value) {
+    me.traverse = function (root, path, value) {
         var item = root, parent = root, found = false;
-        if(root) {
+        if (root) {
             var tokens = path.split(".");
-            for(var tokensIndex = 0; tokensIndex < tokens.length; tokensIndex++) {
+            for (var tokensIndex = 0; tokensIndex < tokens.length; tokensIndex++) {
                 parent = item;
                 var token = tokens[tokensIndex];
                 item = item[token];
-                if(!item) {
+                if (!item) {
                     break;
                 }
             }
-            if(item && tokens.length) {
+            if (item && tokens.length) {
                 value = item;
                 found = true;
             }
         }
-        return {parent, item, value, found};
+        return { parent, item, value, found };
     };
-    me.value = function(root, paths, value) {
+    me.value = function (root, paths, value) {
         var found = false;
         Object.entries(paths).forEach(([path, callback]) => {
-            if(found) {
+            if (found) {
                 return;
             }
             var info = me.traverse(root, path, value);
-            if(info.found) {
-                if(callback) {
+            if (info.found) {
+                if (callback) {
                     var result = callback(value, path);
-                    if(result) {
+                    if (result) {
                         info.value = result;
                         found = true;
                     }
@@ -109,4 +109,18 @@ screens.core.json = function CoreJson(me) {
         });
         return value;
     };
+    me.union = function (array, property) {
+        return array.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj[property]).indexOf(obj[property]) === pos;
+        });
+    };
+    me.intersection = function(arrays, property) {
+        var results = [];
+        results.push(...arrays[0]);
+        for(var array of arrays) {
+            var keys = array.map(mapObj => mapObj[property]);
+            results = results.filter(mapObj => -1 !== keys.indexOf(mapObj[property]));
+        }
+        return results;
+    }
 };

@@ -4,7 +4,31 @@
  */
 
 screens.db.library = function DbLibrary(me) {
-    me.find = async function (query) {
+    me.find = async function (query, tagList) {
+        if(!tagList) {
+            tagList = [];
+        }
+        var segments = query.split(" AND ");
+        if(segments && segments.length > 1) {
+            me.log("AND: " + JSON.stringify(segments));
+            for(var segment of segments) {
+                tagList = await me.find(segment, tagList);
+            }
+            me.log("returning " + tagList.length + " unique results");
+            return tagList;
+        }
+        segments = query.split(" OR ");
+        if(segments && segments.length > 1) {
+            me.log("OR: " + JSON.stringify(segments));
+            var results = [];
+            for(var segment of segments) {
+                results.push(... await me.find(segment, tagList));
+            }
+            var prevLength = results.length;
+            results = me.core.json.union(results, "_id");
+            me.log("returning " + results.length + " results (reduced from " + prevLength + " )");
+            return results;
+        }
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
@@ -18,7 +42,9 @@ screens.db.library = function DbLibrary(me) {
         }
         me.log("query: " + query + " tags: " + JSON.stringify(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
-            var tagList = await me.db.library.tags.list(tags);
+            tagList.push(...await me.db.library.tags.list(tags));
+        }
+        if(tagList.length) {
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
                 if (tagList.length > 1) {
