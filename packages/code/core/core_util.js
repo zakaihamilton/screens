@@ -61,7 +61,7 @@ screens.core.util = function CoreUtil(me) {
             return performance.now();
         }
     };
-    me.end = function(start) {
+    me.duration = function(start) {
         if (me.platform === "server" || me.platform === "service") {
             const NS_PER_SEC = 1e9;
             const diff = process.hrtime(start);
@@ -75,7 +75,7 @@ screens.core.util = function CoreUtil(me) {
     me.performance = async function(name, callback) {
         var start = me.start();
         await callback();
-        var duration = me.end(start);
+        var duration = me.duration(start);
         me.log("performance: " + this.id + " - " + name + " took " + duration + " ms");
     };
     me.condense = function(callback) {
