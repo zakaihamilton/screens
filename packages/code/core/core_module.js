@@ -53,7 +53,7 @@ screens.core.module = function CoreModule(me) {
         var target_platform = null;
         if (component_path) {
             try {
-                var component = screens(component_path);
+                var component = screens.lookup(component_path);
                 if (component) {
                     target_platform = component.require;
                 }

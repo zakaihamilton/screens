@@ -1,9 +1,9 @@
 function screens_platform() {
     var platform = "browser";
-    if(typeof global !== "undefined" && global.platform) {
+    if (typeof global !== "undefined" && global.platform) {
         platform = global.platform;
     }
-    else if("__source_platform__") {
+    else if ("__source_platform__") {
         platform = "__source_platform__";
     }
     return platform;
@@ -49,7 +49,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         node = node[child_name];
         id += "." + child_name;
     } else {
-        node = screens(id);
+        node = screens.lookup(id);
         for (var key in node) {
             children.push(key);
         }
@@ -127,8 +127,8 @@ async function screens_init(items) {
                         }
                     }
                     catch (err) {
-                        if(typeof err == "undefined") {
-                            err = {message:"Unknown error"};
+                        if (typeof err == "undefined") {
+                            err = { message: "Unknown error" };
                         }
                         var message = err.message || err;
                         console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
@@ -164,13 +164,13 @@ function screens_import(path, optional) {
             tagNames = ["script"];
         }
         else if (isStylesheet) {
-            tagNames = ["style","link"];
+            tagNames = ["style", "link"];
         }
-        for(var tagName of tagNames) {
+        for (var tagName of tagNames) {
             var items = document.getElementsByTagName(tagName);
             for (var i = items.length; i--;) {
                 var target = items[i].src || items[i].href || items[i].id;
-                if(!target) {
+                if (!target) {
                     continue;
                 }
                 if (path.includes(target) || target.includes(path)) {
@@ -318,26 +318,23 @@ async function screens_include(packages) {
     }
 }
 
-var screens = new Proxy(() => {
-    return {};
-}, {
-        apply: function (object, thisArg, argumentsList) {
-            return argumentsList[0].split('.').reduce((parent, name) => {
-                if(parent) {
-                    return parent[name];
-                }
-            }, screens);
+function screens_lookup(path) {
+    return path.split('.').reduce((parent, name) => {
+        if (parent) {
+            return parent[name];
         }
-    });
+    }, screens);
+}
 
-Object.assign(screens, {
+var screens = {
     components: [],
     imports: [],
     id: "package",
     platform: screens_platform(),
     include: screens_include,
-    import: screens_import
-});
+    import: screens_import,
+    lookup: screens_lookup
+};
 
 if (screens.platform === "server" ||
     screens.platform === "service") {

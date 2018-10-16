@@ -14,7 +14,7 @@ screens.core.startup = function CoreStartup(me) {
             var components = Object.keys(startup);
             if(components) {
                 for(component_name of components) {
-                    var component = screens("startup." + component_name);
+                    var component = screens.lookup("startup." + component_name);
                     if(component.run) {
                         me.log("startup: " + component_name);
                         await component.run();

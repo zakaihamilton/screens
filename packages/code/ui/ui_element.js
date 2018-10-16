@@ -14,7 +14,7 @@ screens.ui.element = function UIElement(me) {
             if (!(component_name.includes("widget."))) {
                 return null;
             }
-            var component = screens(component_name);
+            var component = screens.lookup(component_name);
             if (!component || !component.element) {
                 return null;
             }
@@ -50,7 +50,8 @@ screens.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return screens(target).element.dependencies.properties.length - screens(source).element.dependencies.properties.length;
+            return screens.lookup(target).element.dependencies.properties.length -
+                screens.lookup(source).element.dependencies.properties.length;
         });
         if (!matches.length) {
             return null;
@@ -58,7 +59,7 @@ screens.ui.element = function UIElement(me) {
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (screens(matches[match_index]).element.dependencies.parent) {
+                if (screens.lookup(matches[match_index]).element.dependencies.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -117,7 +118,7 @@ screens.ui.element = function UIElement(me) {
         var member = null;
         while (object) {
             if (object.component) {
-                var component = screens(object.component);
+                var component = screens.lookup(object.component);
                 if (name in component) {
                     member = component[name];
                 }
@@ -159,12 +160,12 @@ screens.ui.element = function UIElement(me) {
         if (!component_name) {
             component_name = "ui.element";
         }
-        var component = screens(component_name);
-        if(!component) {
+        var component = screens.lookup(component_name);
+        if (!component) {
             throw "Cannot find component: " + component_name;
         }
         var defaultProperties = null;
-        if(component.element) {
+        if (component.element) {
             defaultProperties = component.element.properties;
         }
         if (component.element && component.element.tag) {
@@ -199,7 +200,7 @@ screens.ui.element = function UIElement(me) {
                 parent = container(object, parent, properties) || parent;
             }
         }
-        if(parent) {
+        if (parent) {
             me.core.property.set(object, "ui.node.parent", parent);
         }
         if (component.element) {

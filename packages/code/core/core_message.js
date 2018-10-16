@@ -180,7 +180,7 @@ screens.core.message = function CoreMessage(me) {
             return result;
         }
         try {
-            callback = screens(path);
+            callback = screens.lookup(path);
         } catch (error) {
             //me.log(error);
             return undefined;

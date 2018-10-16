@@ -24,7 +24,7 @@ screens.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if (typeof object === "object" && "component" in object) {
-            var redirect = screens(object.component).redirect;
+            var redirect = screens.lookup(object.component).redirect;
             if (redirect && !redirect.disabled) {
                 if (name in redirect) {
                     name = me.fullname(object, redirect[name]);
@@ -108,7 +108,7 @@ screens.core.property = function CoreProperty(me) {
                     info.name = me.fullname(info.object, info.name);
                     if (info.name) {
                         try {
-                            var callback = screens(info.name);
+                            var callback = screens.lookup(info.name);
                         }
                         catch(err) {
                             me.log("no callback for: " + info.name);
