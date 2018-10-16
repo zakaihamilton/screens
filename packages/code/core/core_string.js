@@ -190,4 +190,11 @@ screens.core.string = function CoreString(me) {
         }).join("_");
         return string;
     };
+    me.trimEnd = function(string, character) {
+        var position = string.indexOf(character);
+        if(position != -1) {
+            string = string.substring(0, position);
+        }
+        return string;
+    };
 };

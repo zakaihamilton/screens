@@ -18,9 +18,9 @@ screens.core.module = function CoreModule(me) {
         var component_path = filePath.replace(/_/g, ".").replace(".js", "");
         return component_path;
     };
-    me.loadTextFile = async function (filePath) {
+    me.loadTextFile = async function (filePath, optional) {
         try {
-            var data = await me.core.file.readFile(filePath, 'utf8');
+            var data = await me.core.file.readFile(filePath, 'utf8', optional);
         }
         catch (err) {
             err = "Cannot load text file: " + filePath + " err: " + err;
@@ -34,8 +34,11 @@ screens.core.module = function CoreModule(me) {
         me.log("serving binary file: " + filePath);
         return data;
     };
-    me.handleStylesheet = async function (filePath) {
-        var data = await me.loadTextFile(filePath);
+    me.handleStylesheet = async function (filePath, params) {
+        var data = await me.loadTextFile(filePath, params.optional);
+        if(!data && params.optional) {
+            data = "";
+        }
         var result = await me.postcss([me.autoprefixer]).process(data);
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
@@ -51,7 +54,7 @@ screens.core.module = function CoreModule(me) {
         if (component_path) {
             try {
                 var component = screens(component_path);
-                if(component) {
+                if (component) {
                     target_platform = component.require;
                 }
             }
@@ -134,27 +137,58 @@ screens.core.module = function CoreModule(me) {
         }
         return data;
     };
+    me.buildHtml = async function (html, params, info) {
+        var lines = html.split("\n");
+        try {
+            lines = lines.map(async (line) => {
+                /* Check if to inject file */
+                var result = line.match(/\s\<script\ssrc=\"([^"]*)"\>\<\/script\>/);
+                if (result && result.length > 1) {
+                    var filePath = me.core.string.trimEnd(result[1], "?");
+                    if (filePath.startsWith("http")) {
+                        return line;
+                    }
+                    var codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
+                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional:true });
+                    codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
+                    line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</script>\n";
+                    var cssFilePath = filePath.replace(".js", ".css");
+                    styleContent = await me.core.module.handleMultiFiles(cssFilePath, styleParams, info);
+                    line += "<style id=\"" + cssFilePath + "\">\n" + styleContent + "\n</style>\n";
+                }
+                result = line.match(/\s\<link\srel\=\"stylesheet\"\shref=\"([^"]*)"\>\<\/link\>/);
+                if (result && result.length > 1) {
+                    var filePath = me.core.string.trimEnd(result[1], "?");
+                    if (filePath.startsWith("http")) {
+                        return line;
+                    }
+                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css" });
+                    styleContent = await me.core.module.handleMultiFiles(filePath, styleParams, info);
+                    line = "<style id=\"" + filePath + "\">\n" + styleContent + "\n</style>\n";
+                }
+                return line;
+            });
+            lines = await Promise.all(lines);
+            html = lines.join("\n");
+        }
+        catch (err) {
+            me.log_error("Cannot parse html: " + err);
+        }
+        return html;
+    };
     me.handleFile = async function (filePath, params, info) {
         if (filePath.endsWith(".js")) {
             params = Object.assign({}, params);
             params.method = me.handleCode;
             params.extension = ".js";
-            params.contentType = "application/javascript";
-            if (params.contentType) {
-                info["content-type"] = params.contentType;
-            }
-            me.core.cache.reset(me.id + "." + filePath);
-            info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
+            info["content-type"] = "application/javascript";
+            info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".css")) {
             params = Object.assign({}, params);
             params.method = me.handleStylesheet;
-            params.contentType = "text/css";
             params.extension = ".css";
-            if (params.contentType) {
-                info["content-type"] = params.contentType;
-            }
-            me.core.cache.reset(me.id + "." + filePath);
-            info.body = await me.core.cache.use(me.id + "." + filePath, "core.module.handleMultiFiles", filePath, params, info);
+            info["content-type"] = "text/css";
+            info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
             var data = await me.loadTextFile(filePath);
@@ -171,6 +205,7 @@ screens.core.module = function CoreModule(me) {
             startupArgs = startupArgs.replace(/[/"]/g, "'");
             data = data.replace("__startup_app__", "'" + params.startupApp + "'");
             data = data.replace("__startup_args__", startupArgs);
+            data = await me.buildHtml(data, params, info);
             info.body = data;
         } else if (filePath.endsWith(".png")) {
             info["content-type"] = "image/png";
@@ -211,7 +246,7 @@ screens.core.module = function CoreModule(me) {
                 metaTags += "<meta http-equiv=\"refresh\" content=\"0; URL=" + info.query[key] + "\"></meta>";
             }
             else {
-                if(key.startsWith("og:")) {
+                if (key.startsWith("og:")) {
                     metaTags += "<meta property=\"" + key + "\" content=\"" + info.query[key] + "\"></meta>";
                 }
                 else {

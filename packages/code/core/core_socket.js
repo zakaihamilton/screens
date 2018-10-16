@@ -8,6 +8,10 @@ screens.core.socket = function CoreSocket(me) {
         if (me.platform === "server") {
             me.sockets = new Map();
             me.io = me.core.http.io;
+            if(!me.io) {
+                me.log("Cannot connect to socket io because it is null");
+                return;
+            }
             me.io.on("connection", async (socket) => {
                 me.log(`Socket connected [id=${socket.id}]`);
                 var ref = me.core.ref.gen();
