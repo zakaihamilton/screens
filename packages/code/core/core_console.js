@@ -16,7 +16,7 @@ screens.core.console = function CoreConsole(me) {
         screens.log = me.log;
         screens.log_error = me.log_error;
         screens.warn = me.log_warn;
-        if (me.platform === "browser") {
+        if (me.platform === "browser" || me.platform === "service_worker") {
             me.enabled = !me.core.util.isSecure();
         }
         else {

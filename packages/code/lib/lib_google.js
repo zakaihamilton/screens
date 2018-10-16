@@ -9,7 +9,7 @@ screens.lib.google = function LibGoogle(me) {
         me.core.property.link("core.http.headers", "lib.google.headers", true);
         me.core.property.link("core.message.headers", "lib.google.headers", true);
     }
-    me.load = function() {
+    me.load = function () {
         var google = me.core.util.config("settings.lib.google");
         return new Promise((resolve, reject) => {
             gapi.load('auth2', async function () {
@@ -33,7 +33,7 @@ screens.lib.google = function LibGoogle(me) {
                     }
                     resolve();
                 }
-                catch(error) {
+                catch (error) {
                     error = "Cannot initialize google authenticiation: " + JSON.stringify(error);
                     me.setStatus(error);
                     reject(error);
@@ -43,7 +43,6 @@ screens.lib.google = function LibGoogle(me) {
     };
     me.setStatus = function (status) {
         me.status = status;
-        me.log("status: " + status);
     };
     me.currentStatus = function () {
         return me.status;
@@ -162,7 +161,7 @@ screens.lib.google = function LibGoogle(me) {
             token = user.getAuthResponse().id_token
             if (token) {
                 var profile = user.getBasicProfile();
-                if(!info.headers) {
+                if (!info.headers) {
                     info.headers = {};
                 }
                 info.headers["user_name"] = encodeURIComponent(profile.getName());

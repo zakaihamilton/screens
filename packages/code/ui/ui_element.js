@@ -167,7 +167,6 @@ screens.ui.element = function UIElement(me) {
         if(component.element) {
             defaultProperties = component.element.properties;
         }
-        me.log("creating element of " + component_name);
         if (component.element && component.element.tag) {
             tag = component.element.tag(properties, parent, context, params);
         }
@@ -186,7 +185,6 @@ screens.ui.element = function UIElement(me) {
         }
         object.var = {};
         if (context === "self") {
-            me.log("using self context");
             context = object;
         }
         object.context = context ? context : parent;

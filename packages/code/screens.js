@@ -71,7 +71,7 @@ function screens_setup(package_name, component_name, child_name, node) {
     var platform = node(component_obj, child_name);
     var init = null;
     if (platform && screens.platform !== platform) {
-        console.log(screens.platform + ": remote component: " + id + " = " + platform);
+        console.log(screens.platform + " => " + id + " => " + platform);
         component_obj = screens_create_proxy(id);
         component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
@@ -101,7 +101,6 @@ function screens_setup(package_name, component_name, child_name, node) {
     if (component_obj.proxy && component_obj.proxy.get) {
         component_obj.proxy.get.enabled = true;
     }
-    console.log(screens.platform + ": Loaded " + id);
     screens.components.push(id);
     /* Load child components */
     var initializers = children.map(function (child) {
@@ -118,7 +117,6 @@ async function screens_init(items) {
     for (item of items) {
         var initializers = item.initializers;
         if (initializers) {
-            console.log(screens.platform + ": initializing: " + item.package_name + "." + item.component_name);
             do {
                 var init = initializers.shift();
                 if (init && init.callback) {
@@ -137,7 +135,6 @@ async function screens_init(items) {
                     }
                 }
             } while (init);
-            console.log(screens.platform + ": initialized: " + item.package_name + "." + item.component_name);
         }
     }
 }
@@ -312,7 +309,6 @@ async function screens_include(packages) {
         collection[package_name] = screens_load(collection[package_name], "setup");
     }
     for (package_name in packages) {
-        console.log(screens.platform + ": initializing package: " + package_name);
         await screens_init(collection[package_name]);
     }
 }
