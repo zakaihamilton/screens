@@ -4,9 +4,9 @@
  */
 
 screens.core.app = function CoreApp(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: async function (object, value) {
+            set: async function (object, value, property) {
                 if(!property) {
                     return;
                 }

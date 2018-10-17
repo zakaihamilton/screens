@@ -4,9 +4,9 @@
  */
 
 screens.ui.var = function UIVar(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 var variable = null;
                 if (object.var && object.var[property]) {
                     variable = object.var[property];
@@ -17,7 +17,7 @@ screens.ui.var = function UIVar(me) {
                 }
                 return variable;
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (object && typeof value !== "undefined") {
                     var parent = object;
                     if (object.context) {

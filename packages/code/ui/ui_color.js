@@ -4,12 +4,12 @@
  */
 
 screens.ui.color = function UIColor(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 return me.get(property);
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (typeof value !== "undefined") {
                     me.set(property, value);
                 }

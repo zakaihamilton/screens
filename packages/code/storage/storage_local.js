@@ -83,14 +83,14 @@ screens.storage.local = function StorageLocal(me) {
             return keys;
         }
     };
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 if (object.storage) {
                     return object.storage.getItem(property);
                 }
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (object.storage && typeof value !== "undefined") {
                     if (value) {
                         object.storage.setItem(property, value);

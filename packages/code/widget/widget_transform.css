@@ -234,7 +234,6 @@ h4.widget-transform-widget {
     overflow-x: auto;
     overflow-y: hidden;
     height: 10%;
-    padding:10px;
     opacity: 0.25;
     border-radius: 10px 10px 0px 0px;
     display:flex;
@@ -268,6 +267,16 @@ h4.widget-transform-widget {
     transition: all 0.3s ease;
     color: white;
     font-size: 5vmin;
+    height:100%;
+}
+
+.widget-transform-iconbar a i {
+    margin-top:7.5%;
+    width:100%;
+}
+
+.widget-transform-iconbar.fullscreen a i {
+    margin-top:12.5%;
 }
 
 .widget-transform-iconbar a:hover {

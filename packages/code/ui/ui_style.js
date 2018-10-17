@@ -5,9 +5,9 @@
 
 screens.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 var styles = null;
                 var method = object._getComputedStyle;
                 if (method) {
@@ -17,7 +17,7 @@ screens.ui.style = function UIStyle(me) {
                 }
                 return styles[property];
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (object && typeof value !== "undefined" && object.style) {
                     object.style[property] = value;
                 }

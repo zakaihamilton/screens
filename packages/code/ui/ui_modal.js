@@ -4,9 +4,9 @@
  */
 
 screens.ui.modal = function UIModal(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (Array.isArray(value)) {
                     value = value.slice(0);
                     value.unshift("modal." + property + ".launch");

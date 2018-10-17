@@ -119,16 +119,17 @@ screens.core.property = function CoreProperty(me) {
                     callback = info.name;
                 }
                 if(callback) {
+                    var property = info.name.substring(info.name.lastIndexOf(".")+1);
                     try {
                         if(typeof callback === "function") {
                             if(check) {
                                 return true;
                             }
                             if(info.object === "none") {
-                                result = callback(info.value);
+                                result = callback(info.value, property);
                             }
                             else {
-                                result = callback(info.object, info.value);
+                                result = callback(info.object, info.value, property);
                             }
                         }
                         else if(typeof callback === "object") {
@@ -136,7 +137,7 @@ screens.core.property = function CoreProperty(me) {
                                 if(check) {
                                     return true;
                                 }
-                                result = callback[method](info.object, info.value);
+                                result = callback[method](info.object, info.value, property);
                             }
                         }
                         else {

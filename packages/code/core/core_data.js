@@ -4,9 +4,9 @@
  */
 
 screens.core.data = function CoreData(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 var data = null;
                 if (object.data && object.data[property]) {
                     data = object.data[property];
@@ -17,7 +17,7 @@ screens.core.data = function CoreData(me) {
                 }
                 return data;
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (object && typeof value !== "undefined") {
                     var parent = object;
                     if (object.context) {

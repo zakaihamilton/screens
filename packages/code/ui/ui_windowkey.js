@@ -4,9 +4,9 @@
  */
 
 screens.ui.windowkey = function UIWindowKey(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 if(property.endsWith("-")) {
                     var window = me.widget.window(object);
                     var key = me.core.property.get(window, "key");

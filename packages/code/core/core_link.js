@@ -4,9 +4,9 @@
  */
 
 screens.core.link = function CoreLink(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (typeof value !== "undefined") {
                     if (typeof property === "string") {
                         property = property.replace(/-/g, ".");

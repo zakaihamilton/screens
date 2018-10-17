@@ -4,9 +4,9 @@
  */
 
 screens.ui.param = function UIParam(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object, value) {
+            get: function (object, value, property) {
                 var param = value;
                 while(object) {
                     if (object.params && object.params[property]) {
@@ -23,7 +23,7 @@ screens.ui.param = function UIParam(me) {
                 }
                 return param;
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if (object && typeof value !== "undefined") {
                     var parent = object;
                     if (object.context) {

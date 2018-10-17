@@ -4,9 +4,9 @@
  */
 
 screens.core.event = function CoreEvent(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: function (object, value) {
+            set: function (object, value, property) {
                 me.register(null, object, property, value);
             }
         };

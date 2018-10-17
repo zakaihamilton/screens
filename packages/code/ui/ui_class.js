@@ -5,12 +5,12 @@
 
 screens.ui.class = function UIClass(me) {
     me.stylesheets = {};
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            get: function (object) {
+            get: function (object, value, property) {
                 return me.core.property.get(object, "ui.class.contains", property);
             },
-            set: function (object, value) {
+            set: function (object, value, property) {
                 if(value) {
                     me.core.property.set(object, "ui.class.add", property);
                 }

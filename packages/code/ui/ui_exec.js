@@ -4,9 +4,9 @@
  */
 
 screens.ui.exec = function UIExec(me) {
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: function (object, value) {
+            set: function (object, value, property) {
                 document.designMode = "on";
                 document.execCommand(property, false, null);
                 document.designMode = "off";

@@ -13,9 +13,9 @@ screens.core.object = function CoreObject(me) {
         object.component = component.id;
         return object;
     };
-    me.proxy.get = function (object, property) {
+    me.proxy.get = function () {
         return {
-            set: function (object, info) {
+            set: function (object, info, property) {
                 var componentId = object.id || object.component;
                 if (info && info.component) {
                     componentId = info.component;
