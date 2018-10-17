@@ -912,7 +912,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return target.options;
     };
     me.reflow = function (callback, source, target, options) {
-        var modifiers = me.modifiers(target);
+        var modifiers = me.upper.modifiers(target);
         var layoutContent = target;
         layoutContent.options = options;
         if (target.reflowInterval) {
@@ -1073,7 +1073,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return match;
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
-        var modifiers = me.modifiers(target);
+        var modifiers = me.upper.modifiers(target);
         var page = me.ui.element({
             "ui.basic.tag": "div",
             "ui.class.class": ["widget.transform.page", modifiers],
@@ -1297,7 +1297,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.clearPage = function (page) {
         var content = page.var.content;
-        var modifiers = me.modifiers(page);
+        var modifiers = me.upper.modifiers(page);
         Array.from(content.children).map(element => {
             me.clearWidget(element, modifiers);
         });
