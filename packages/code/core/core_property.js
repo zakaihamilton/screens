@@ -33,10 +33,10 @@ screens.core.property = function CoreProperty(me) {
         }
         return name;
     };
-    me.to_full_name = function(object, path) {
-        if(typeof path === "string") {
+    me.to_full_name = function (object, path) {
+        if (typeof path === "string") {
             path = path.replace("@component", object.component);
-            if(object.context) {
+            if (object.context) {
                 object = object.context;
             }
             path = me.core.property.fullname(object, path, path);
@@ -46,11 +46,11 @@ screens.core.property = function CoreProperty(me) {
     me.has = function (object, name) {
         return me.get(object, name, null, "set", true);
     };
-    me.get = function (object, name, value = null, method = "get", check=false) {
+    me.get = function (object, name, value = null, method = "get", check = false) {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = [];
-            for(item of object) {
+            for (item of object) {
                 var result = me.core.property.get(item, name, value, method);
                 results.push(result);
             }
@@ -58,7 +58,7 @@ screens.core.property = function CoreProperty(me) {
         }
         if (name !== null && typeof name === "object") {
             var results = {};
-            for(subName in name) {
+            for (subName in name) {
                 var subValue = name[subName];
                 var result = me.core.property.get(object, subName, subValue, method);
                 results[subName] = result;
@@ -67,13 +67,13 @@ screens.core.property = function CoreProperty(me) {
         }
         if (object && name && (typeof name !== "string" || !name.startsWith("!"))) {
             var info = me.split(object, name, value);
-            if(!info.object) {
+            if (!info.object) {
                 return;
             }
             if (typeof info.name === "string") {
-                if(info.name.startsWith("@")) {
+                if (info.name.startsWith("@")) {
                     info.value = me.core.property.get(info.object, info.name.substring(1), info.value);
-                    if(info.value && info.value.then) {
+                    if (info.value && info.value.then) {
                         info.value.then((newValue) => {
                             me.get(object, info.name, newValue, method, check);
                         });
@@ -82,13 +82,9 @@ screens.core.property = function CoreProperty(me) {
                 }
             }
             if (typeof info.value === "string") {
-                if (info.value.startsWith("~")) {
-                    info.value = info.value.substring(1);
-                    debugger;
-                }
                 if (info.value.startsWith("@")) {
                     info.value = me.core.property.get(info.object, info.value.substring(1));
-                    if(info.value && info.value.then) {
+                    if (info.value && info.value.then) {
                         info.value.then((newValue) => {
                             me.get(object, info.name, newValue, method, check);
                         });
@@ -99,57 +95,67 @@ screens.core.property = function CoreProperty(me) {
             if (typeof info.name === "function") {
                 result = info.name(info.object, info.value);
             } else {
-                var callback = null;
+                var target = null;
                 if (typeof info.name === "string") {
-                    if (info.name.startsWith("~")) {
-                        info.name = info.name.substring(1);
-                        debugger;
-                    }
                     info.name = me.fullname(info.object, info.name);
                     if (info.name) {
+                        var tokens = info.name.split(".");
+                        var property = tokens.pop();
+                        var path = tokens.join(".");
+                        var component = null;
                         try {
-                            var callback = screens.lookup(info.name);
+                            component = screens.lookup(path);
                         }
-                        catch(err) {
-                            me.log("no callback for: " + info.name);
+                        catch (err) {
+                            me.log("no component for: " + info.name);
+                        }
+                        if(component) {
+                            if(property in component) {
+                                target = component[property];
+                            }
+                            else if("lookup" in component) {
+                                target = component.lookup;
+                            }
+                            else {
+                                target = component[property];
+                            }
                         }
                     }
                 }
                 else {
-                    callback = info.name;
+                    target = info.name;
                 }
-                if(callback) {
-                    var property = info.name.substring(info.name.lastIndexOf(".")+1);
+                if (target) {
                     try {
-                        if(typeof callback === "function") {
-                            if(check) {
+                        if (typeof target === "function") {
+                            if (check) {
                                 return true;
                             }
-                            if(info.object === "none") {
-                                result = callback(info.value, property);
+                            if (info.object === "none") {
+                                result = target(info.value, property);
                             }
                             else {
-                                result = callback(info.object, info.value, property);
+                                result = target(info.object, info.value, property);
                             }
                         }
-                        else if(typeof callback === "object") {
-                            if(callback[method]) {
-                                if(check) {
+                        else if (typeof target === "object") {
+                            if (target[method]) {
+                                if (check) {
                                     return true;
                                 }
-                                result = callback[method](info.object, info.value, property);
+                                result = target[method](info.object, info.value, property);
                             }
                         }
                         else {
-                            result = callback;
+                            result = target;
                         }
                     }
-                    catch(err) {
+                    catch (err) {
                         err.message += " name: " + info.name + " method: " + method;
                         throw err;
                     }
                 }
-                if(check) {
+                if (check) {
                     return false;
                 }
             }
@@ -164,7 +170,7 @@ screens.core.property = function CoreProperty(me) {
                 var args = name.substr(openIdx + 1, closeIdx - openIdx - 1).split(",");
                 name = name.substr(0, openIdx);
                 if (args.length > 1) {
-                    if(args[0] === "none") {
+                    if (args[0] === "none") {
                         object = args[0];
                     }
                     else if (args[0] !== "this") {
@@ -176,7 +182,7 @@ screens.core.property = function CoreProperty(me) {
                 }
             }
         }
-        return {object: object, name: name, value: value};
+        return { object: object, name: name, value: value };
     };
     me.link = function (source, target, beforeProperty, object) {
         if (!object) {
@@ -213,15 +219,15 @@ screens.core.property = function CoreProperty(me) {
             me.core.property.set(object, name, value);
         }, 250);
     };
-    me.sendToLinks = function(object, name, value, beforeProperty) {
+    me.sendToLinks = function (object, name, value, beforeProperty) {
         var allPromises = [];
         var source_method = me.core.property.fullname(object, name);
         var promises = me.setTo(me._forwarding_list, object, source_method, value, beforeProperty);
-        if(promises) {
+        if (promises) {
             allPromises.push(...promises);
         }
         promises = me.setTo(object._forwarding_list, object, source_method, value, beforeProperty);
-        if(promises) {
+        if (promises) {
             allPromises.push(...promises);
         }
         return allPromises;
@@ -238,37 +244,37 @@ screens.core.property = function CoreProperty(me) {
         }
         if (Array.isArray(name)) {
             var results = [];
-            for(var item of name) {
+            for (var item of name) {
                 results.push(me.core.property.set(object, item, value));
             }
             return results;
         }
         var promises = [];
-        if(typeof name === "string") {
+        if (typeof name === "string") {
             var subPromises = me.sendToLinks(object, name, value, true);
-            if(subPromises.length) {
+            if (subPromises.length) {
                 promises.push(...subPromises);
             }
         }
-        else if(typeof name !== "function") {
+        else if (typeof name !== "function") {
             var results = {};
-            for(var key in name) {
+            for (var key in name) {
                 var value = name[key];
                 me.core.property.set(object, key, value);
             }
         }
         var result = me.core.property.get(object, name, value, "set");
-        if(typeof name === "string") {
+        if (typeof name === "string") {
             var subPromises = me.sendToLinks(object, name, value, false);
-            if(subPromises.length) {
+            if (subPromises.length) {
                 promises.push(...subPromises);
             }
         }
         promises.push(result);
-        if(promises.length > 1) {
+        if (promises.length > 1) {
             result = Promise.all(promises);
         }
-        else if(promises.length === 1) {
+        else if (promises.length === 1) {
             result = promises[0];
         }
         return result;
@@ -282,7 +288,7 @@ screens.core.property = function CoreProperty(me) {
                     var propertyState = forwarding_list[target];
                     if (propertyState === beforeProperty) {
                         var result = me.core.property.set(object, target, value);
-                        if(result && result.then) {
+                        if (result && result.then) {
                             promises.push(result);
                         }
                     }
@@ -292,7 +298,7 @@ screens.core.property = function CoreProperty(me) {
         return promises;
     };
     me.group = {
-        set: function(object, properties) {
+        set: function (object, properties) {
             if (Array.isArray(properties)) {
                 properties.map(function (item) {
                     for (var key in item) {

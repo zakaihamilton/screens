@@ -5,27 +5,25 @@
 
 screens.ui.style = function UIStyle(me) {
     me.stylesheets = {};
-    me.proxy.get = function () {
-        return {
-            get: function (object, value, property) {
-                var styles = null;
-                var method = object._getComputedStyle;
-                if (method) {
-                    styles = method(object);
-                } else {
-                    styles = getComputedStyle(object);
-                }
-                return styles[property];
-            },
-            set: function (object, value, property) {
-                if (object && typeof value !== "undefined" && object.style) {
-                    object.style[property] = value;
-                }
+    me.lookup = {
+        get: function (object, value, property) {
+            var styles = null;
+            var method = object._getComputedStyle;
+            if (method) {
+                styles = method(object);
+            } else {
+                styles = getComputedStyle(object);
             }
-        };
+            return styles[property];
+        },
+        set: function (object, value, property) {
+            if (object && typeof value !== "undefined" && object.style) {
+                object.style[property] = value;
+            }
+        }
     };
     me.values = function (values) {
-        var result = {left: 0, top: 0, right: 0, bottom: 0};
+        var result = { left: 0, top: 0, right: 0, bottom: 0 };
         if (!values || !(typeof values === 'string' || values instanceof String)) {
             return result;
         }
@@ -55,13 +53,13 @@ screens.ui.style = function UIStyle(me) {
         return result;
     };
     me.hover = {
-        set: function(object, value) {
-            if(value.over) {
+        set: function (object, value) {
+            if (value.over) {
                 me.core.property.set(object, "ui.touch.over", () => {
                     me.core.property.set(object, "ui.property.style", value.over);
                 });
             }
-            if(value.leave) {
+            if (value.leave) {
                 me.core.property.set(object, "ui.touch.leave", () => {
                     me.core.property.set(object, "ui.property.style", value.leave);
                 });

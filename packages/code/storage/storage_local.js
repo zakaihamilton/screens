@@ -31,8 +31,8 @@ screens.storage.local = function StorageLocal(me) {
             };
         }
         me.core.property.set(me, {
-            "core.object.key":null,
-            "core.object.location":null
+            "core.object.key": null,
+            "core.object.location": null
         });
     };
     me.isSupported = function () {
@@ -67,7 +67,7 @@ screens.storage.local = function StorageLocal(me) {
             }
             if (key) {
                 var store = me.core.property.get(me[location], key);
-                if(store !== null) {
+                if (store !== null) {
                     me.core.property.set(object, value, store);
                 }
             }
@@ -83,23 +83,21 @@ screens.storage.local = function StorageLocal(me) {
             return keys;
         }
     };
-    me.proxy.get = function () {
-        return {
-            get: function (object, value, property) {
-                if (object.storage) {
-                    return object.storage.getItem(property);
-                }
-            },
-            set: function (object, value, property) {
-                if (object.storage && typeof value !== "undefined") {
-                    if (value) {
-                        object.storage.setItem(property, value);
-                    } else {
-                        object.storage.removeItem(property);
-                    }
+    me.lookup = {
+        get: function (object, value, property) {
+            if (object.storage) {
+                return object.storage.getItem(property);
+            }
+        },
+        set: function (object, value, property) {
+            if (object.storage && typeof value !== "undefined") {
+                if (value) {
+                    object.storage.setItem(property, value);
+                } else {
+                    object.storage.removeItem(property);
                 }
             }
-        };
+        }
     };
     return "browser";
 };

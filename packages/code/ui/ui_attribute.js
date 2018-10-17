@@ -5,23 +5,21 @@
 
 screens.ui.attribute = function UIAttribute(me) {
     me.stylesheets = {};
-    me.proxy.get = function () {
-        return {
-            get: function (object, value, property) {
-                if(object.getAttribute) {
-                    return object.getAttribute(property);
+    me.lookup = {
+        get: function (object, value, property) {
+            if (object.getAttribute) {
+                return object.getAttribute(property);
+            }
+        },
+        set: function (object, value, property) {
+            if (typeof value !== "undefined") {
+                if (value === null) {
+                    object.removeAttribute(property);
                 }
-            },
-            set: function (object, value, property) {
-                if (typeof value !== "undefined") {
-                    if(value === null) {
-                        object.removeAttribute(property);
-                    }
-                    else {
-                        object.setAttribute(property, value);
-                    }
+                else {
+                    object.setAttribute(property, value);
                 }
             }
-        };
+        }
     };
 };

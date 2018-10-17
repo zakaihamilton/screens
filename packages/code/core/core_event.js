@@ -4,12 +4,10 @@
  */
 
 screens.core.event = function CoreEvent(me) {
-    me.proxy.get = function () {
-        return {
-            set: function (object, value, property) {
-                me.register(null, object, property, value);
-            }
-        };
+    me.lookup = {
+        set: function (object, value, property) {
+            me.register(null, object, property, value);
+        }
     };
     me.send_event = function (object, method, event) {
         if (!object || !object.getAttribute || !object.getAttribute('disabled')) {

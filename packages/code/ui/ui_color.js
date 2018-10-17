@@ -4,22 +4,20 @@
  */
 
 screens.ui.color = function UIColor(me) {
-    me.proxy.get = function () {
-        return {
-            get: function (object, value, property) {
-                return me.get(property);
-            },
-            set: function (object, value, property) {
-                if (typeof value !== "undefined") {
-                    me.set(property, value);
-                }
+    me.lookup = {
+        get: function (object, value, property) {
+            return me.get(property);
+        },
+        set: function (object, value, property) {
+            if (typeof value !== "undefined") {
+                me.set(property, value);
             }
-        };
+        }
     };
-    me.get = function(name) {
+    me.get = function (name) {
         document.body.style.getProperty(name);
     };
-    me.set = function(name, color) {
+    me.set = function (name, color) {
         document.body.style.setProperty(name, color);
     }
     me.colors = ["#a7309f",
