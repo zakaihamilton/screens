@@ -4,9 +4,6 @@
  */
 
 screens.core.util = function CoreUtil(me) {
-    me.init = function() {
-        screens.performance = me.performance;
-    };
     me.removeLast = function (string, separator) {
         var array = string.split(separator);
         array.pop();
