@@ -14,7 +14,7 @@ screens.widget.desktop = function WidgetDesktop(me) {
                     "ui.basic.var": "bar"
                 },
                 {
-                    "ui.element.tag": "div",
+                    "ui.basic.tag": "div",
                     "ui.basic.var": "workspace",
                     "ui.class.class": "workspace",
                     "ui.basic.elements": [

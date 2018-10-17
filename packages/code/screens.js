@@ -12,15 +12,11 @@ function screens_platform() {
 function screens_create_proxy(id) {
     /* Create component proxy */
     var component_obj = new Proxy(() => {
-        return {};
+
     }, {
             get: function (object, property) {
                 if (Reflect.has(object, property)) {
                     return Reflect.get(object, property);
-                } else if (property in screens) {
-                    return screens[property];
-                } else if (object.upper && Reflect.has(object.upper, property)) {
-                    return Reflect.get(object.upper, property);
                 } else {
                     var proxy = Reflect.get(object, "proxy");
                     if (proxy && proxy.get && proxy.get.enabled) {
@@ -36,6 +32,7 @@ function screens_create_proxy(id) {
                 }
             }
         });
+    Object.assign(component_obj, screens);
     component_obj.proxy = {};
     component_obj.id = id;
     return component_obj;
@@ -319,11 +316,13 @@ async function screens_include(packages) {
 }
 
 function screens_lookup(path) {
-    return path.split('.').reduce((parent, name) => {
-        if (parent) {
-            return parent[name];
-        }
-    }, screens);
+    if(typeof path === "string") {
+        return path.split('.').reduce((parent, name) => {
+            if (parent) {
+                return parent[name];
+            }
+        }, screens);
+    }
 }
 
 var screens = {
@@ -333,7 +332,13 @@ var screens = {
     platform: screens_platform(),
     include: screens_include,
     import: screens_import,
-    lookup: screens_lookup
+    lookup: screens_lookup,
+    log: (message, componentId, userName) => {
+        screens.core.console.log.call(this, message, componentId, userName);
+    },
+    log_error: (message, stack, componentId, userName) => {
+        screens.core.console.log_error.call(this, message, stack, componentId, userName);
+    }
 };
 
 if (screens.platform === "server" ||

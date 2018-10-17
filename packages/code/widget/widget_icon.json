@@ -4,7 +4,6 @@
     "ui.basic.elements": [{
             "ui.basic.src": "",
             "ui.class.class": "image-icon",
-            "ui.drag.element": null,
             "ui.basic.var": "icon",
             "ui.attribute.width": "64px",
             "ui.attribute.height": "64px",
