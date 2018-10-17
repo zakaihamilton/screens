@@ -98,9 +98,6 @@ screens.widget.chart = function WidgetChart(me) {
             }
         }
     };
-    me.dateNow = function (amount, type) {
-        return me.lib.moment().add(amount, type).toDate();
-    };
     me.dateRel = function (unixTimestamp) {
         return me.lib.moment.unix(unixTimestamp).toDate();
     };
