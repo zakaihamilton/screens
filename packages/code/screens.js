@@ -9,29 +9,35 @@ function screens_platform() {
     return platform;
 }
 
-function screens_create_proxy(id) {
-    /* Create component proxy */
-    var component_obj = new Proxy(() => {
-
-    }, {
-            get: function (object, property) {
-                if (Reflect.has(object, property)) {
-                    return Reflect.get(object, property);
-                } else {
-                    var proxy = Reflect.get(object, "proxy");
-                    if (proxy && proxy.get && proxy.get.enabled) {
-                        return proxy.get(object, property);
+function screens_create_proxy(id, options) {
+    var methods = [];
+    if (options) {
+        for (var option of options) {
+            if (option === "get") {
+                methods["get"] = function (object, property) {
+                    if (Reflect.has(object, property)) {
+                        return Reflect.get(object, property);
+                    } else {
+                        var proxy = Reflect.get(object, "proxy");
+                        if (proxy && proxy.get && proxy.get.enabled) {
+                            return proxy.get(object, property);
+                        }
                     }
-                }
-                return undefined;
-            },
-            apply: function (object, thisArg, argumentsList) {
-                var proxy = Reflect.get(object, "proxy");
-                if (proxy && proxy.apply) {
-                    return proxy.apply.apply(thisArg, argumentsList);
+                    return undefined;
                 }
             }
-        });
+            else if (option === "apply") {
+                methods["apply"] = function (object, thisArg, argumentsList) {
+                    var proxy = Reflect.get(object, "proxy");
+                    if (proxy && proxy.apply) {
+                        return proxy.apply.apply(thisArg, argumentsList);
+                    }
+                };
+            }
+        }
+    }
+    /* Create component proxy */
+    var component_obj = new Proxy(() => { }, methods);
     Object.assign(component_obj, screens);
     component_obj.proxy = {};
     component_obj.id = id;
@@ -55,7 +61,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         return [];
     }
     /* Create component proxy */
-    var component_obj = screens_create_proxy(id);
+    var component_obj = screens_create_proxy(id, ["apply"]);
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
         component_obj.upper = screens[package_name][component_name];
@@ -69,7 +75,7 @@ function screens_setup(package_name, component_name, child_name, node) {
     var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
-        component_obj = screens_create_proxy(id);
+        component_obj = screens_create_proxy(id, ["get", "apply"]);
         component_obj.proxy.apply = function (object, thisArg, argumentsList) {
             return function () {
                 var args = Array.prototype.slice.call(argumentsList);
@@ -316,7 +322,7 @@ async function screens_include(packages) {
 }
 
 function screens_lookup(path) {
-    if(typeof path === "string") {
+    if (typeof path === "string") {
         return path.split('.').reduce((parent, name) => {
             if (parent) {
                 return parent[name];
