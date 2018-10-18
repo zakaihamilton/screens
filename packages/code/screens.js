@@ -9,41 +9,6 @@ function screens_platform() {
     return platform;
 }
 
-function screens_create_proxy(id, options) {
-    var methods = [];
-    if (options) {
-        for (var option of options) {
-            if (option === "get") {
-                methods["get"] = function (object, property) {
-                    if (Reflect.has(object, property)) {
-                        return Reflect.get(object, property);
-                    } else {
-                        var proxy = Reflect.get(object, "proxy");
-                        if (proxy && proxy.get && proxy.get.enabled) {
-                            return proxy.get(object, property);
-                        }
-                    }
-                    return undefined;
-                }
-            }
-            else if (option === "apply") {
-                methods["apply"] = function (object, thisArg, argumentsList) {
-                    var proxy = Reflect.get(object, "proxy");
-                    if (proxy && proxy.apply) {
-                        return proxy.apply.apply(thisArg, argumentsList);
-                    }
-                };
-            }
-        }
-    }
-    /* Create component proxy */
-    var component_obj = new Proxy(() => { }, methods);
-    Object.assign(component_obj, screens);
-    component_obj.proxy = {};
-    component_obj.id = id;
-    return component_obj;
-}
-
 function screens_setup(package_name, component_name, child_name, node) {
     var children = [];
     var id = package_name + "." + component_name;
@@ -61,7 +26,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         return [];
     }
     /* Create component proxy */
-    var component_obj = screens_create_proxy(id, ["apply"]);
+    var component_obj = Object.assign({}, screens, { id });
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
         component_obj.upper = screens[package_name][component_name];
@@ -75,21 +40,22 @@ function screens_setup(package_name, component_name, child_name, node) {
     var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
-        component_obj = screens_create_proxy(id, ["get", "apply"]);
-        component_obj.proxy.apply = function (object, thisArg, argumentsList) {
-            return function () {
-                var args = Array.prototype.slice.call(argumentsList);
-                args.unshift(id);
-                return component_obj.core.message["send_" + platform].apply(null, args);
-            };
-        };
-        component_obj.proxy.get = function (object, property) {
-            return function () {
-                var args = Array.prototype.slice.call(arguments);
-                args.unshift(id + "." + property);
-                return component_obj.core.message["send_" + platform].apply(null, args);
-            };
-        };
+        component_obj = new Proxy(() => { }, {
+            get: function (object, property) {
+                if(property in screens || property === "require") {
+                    return Reflect.get(object, property);
+                }
+                else {
+                    return function() {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.unshift(id + "." + property);
+                        return screens.core.message["send_" + platform].apply(null, args);
+                    }
+                }
+            }
+        });
+        component_obj = Object.assign(component_obj, screens);
+        component_obj.id = id;
         if (child_name) {
             screens[package_name][component_name][child_name] = component_obj;
             component_obj.upper = screens[package_name][component_name];
@@ -101,9 +67,6 @@ function screens_setup(package_name, component_name, child_name, node) {
         init = { callback: component_obj.init, args: [component_obj] };
     }
     component_obj.require = platform;
-    if (component_obj.proxy && component_obj.proxy.get) {
-        component_obj.proxy.get.enabled = true;
-    }
     screens.components.push(id);
     /* Load child components */
     var initializers = children.map(function (child) {

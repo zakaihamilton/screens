@@ -24,10 +24,13 @@ screens.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if (typeof object === "object" && "component" in object) {
-            var redirect = screens.lookup(object.component).redirect;
-            if (redirect && !redirect.disabled) {
-                if (name in redirect) {
-                    name = me.fullname(object, redirect[name]);
+            var lookup = screens.lookup(object.component);
+            if(lookup) {
+                var redirect = lookup.redirect;
+                if (redirect && !redirect.disabled) {
+                    if (name in redirect) {
+                        name = me.fullname(object, redirect[name]);
+                    }
                 }
             }
         }
