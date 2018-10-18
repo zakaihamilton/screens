@@ -758,7 +758,7 @@ screens.app.packets = function AppPackets(me) {
                 });
             });
             csvData.unshift(csvColumns);
-            me.content.csv.export(me.options.dataProfile + ".csv", csvData);
+            me.file.csv.export(me.options.dataProfile + ".csv", csvData);
         }
     };
     me.streamMenuList = {

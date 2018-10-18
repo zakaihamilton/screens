@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component ContentCsv
+ @component FileCsv
  */
 
-screens.content.csv = function ContentCsv(me) {
+screens.file.csv = function FileCsv(me) {
     me.export = function(filename, rows) {
         var csvFile = '';
         csvFile = rows.map((row) => {
