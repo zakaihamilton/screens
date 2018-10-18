@@ -72,7 +72,6 @@ screens.core.file = function CoreFile(me) {
         path = me.path(path);
         return new Promise((resolve, reject) => {
             me.fs.readdir(path, function (err, items) {
-                me.log("path:" + path + " items:" + JSON.stringify(items));
                 if (err) {
                     reject(err);
                 }
