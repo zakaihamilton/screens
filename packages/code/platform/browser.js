@@ -15,7 +15,7 @@ function startBrowser(appName, appArgs) {
         "user": [
             "*"
         ],
-        "content": [
+        "file": [
             "*"
         ],
         "ui": [
