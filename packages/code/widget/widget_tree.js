@@ -111,7 +111,7 @@ screens.widget.tree.dropdown = function WidgetDropDownList(me) {
     me.dropdown = {
         set: function (object, value) {
             var region = me.ui.rect.absoluteRegion(object.parentNode);
-            object.var.tree = me.ui.element({
+            object.var.tree = me.ui.element.create({
                 "ui.element.component": "widget.tree.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",
@@ -291,13 +291,13 @@ screens.widget.tree.item = function WidgetTreeItem(me) {
         set: function (object, value) {
             if (value) {
                 if (!object.var.list) {
-                    object.var.list = me.ui.element({
+                    object.var.list = me.ui.element.create({
                         "ui.element.component": "widget.tree.list",
                         "ui.basic.var": "list"
                     }, object, object.context);
                 }
                 me.core.property.set(object.var.icon, "ui.class.add", "parent");
-                me.ui.element(value, object.var.list, object.context);
+                me.ui.element.create(value, object.var.list, object.context);
                 me.core.property.set(object, "update");
             }
         }

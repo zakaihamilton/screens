@@ -5,14 +5,14 @@
 
 screens.startup.app = function StartupApp(me) {
     me.run = async function () {
-        me.ui.element([
+        me.ui.element.create([
             {
                 "ui.element.component": "widget.desktop",
                 "ui.basic.var": "desktop"
             }
         ]);
         try {
-            var progress = me.ui.modal("progress", {
+            var progress = me.ui.modal.launch("progress", {
                 "title": "Login",
                 "delay": "1000"
             });
@@ -28,7 +28,7 @@ screens.startup.app = function StartupApp(me) {
             me.start();
         }
         else {
-            var window = await me.core.app("login", true);
+            var window = await me.core.app.launch("login", true);
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);
                 me.core.property.set(window, "widget.window.maximize");
@@ -51,7 +51,7 @@ screens.startup.app = function StartupApp(me) {
                 });
             }
             else {
-                me.core.app("launcher");
+                me.core.app.launch("launcher");
             }
         }
     }

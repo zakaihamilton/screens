@@ -12,7 +12,7 @@ screens.app.theme = function AppTheme(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
         var current_theme = me.core.property.get(me.singleton, "ui.theme.theme");
         current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
         me.core.property.set(me.singleton.var.themeList, "selection", current_theme);
@@ -20,7 +20,7 @@ screens.app.theme = function AppTheme(me) {
     };
     me.setTheme = {
         set: function(object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var theme = me.core.property.get(window.var.themeList, "selection")[0];
             theme = theme.toLowerCase();
             me.core.property.set(object, "ui.theme.theme", theme);

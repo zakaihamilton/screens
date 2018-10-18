@@ -6,44 +6,44 @@
 screens.menu.context = function MenuContext(me) {
     me.resizable = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             return !me.core.property.get(window, "fixed");
         }
     };
     me.minimizable = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             return !me.core.property.get(window, "temp") && !me.core.property.get(window, "popup");
         }
     };
     me.maximizable = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             return !me.core.property.get(window, "fixed") && !me.core.property.get(window, "popup");
         }
     };
     me.notPopup = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             return !me.core.property.get(window, "popup");
         }
     };
     me.notEmbed = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             return !me.core.property.get(window, "embed");
         }
     };
     me.switchable = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var parent = me.widget.window.parent(window);
             return !me.core.property.get(window, "temp") && !me.core.property.get(window, "popup") && !me.core.property.get(window, "embed") && !parent;
         }
     };
     me.isChild = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             if(me.core.property.get(window, "popup") || me.core.property.get(window, "embed")) {
                 return false;
             }
@@ -53,7 +53,7 @@ screens.menu.context = function MenuContext(me) {
     };
     me.next = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var next = me.ui.node.previous(window, me.widget.window.id);
             me.core.property.set(next, "widget.window.show", true);
             if(next !== window) {
@@ -63,7 +63,7 @@ screens.menu.context = function MenuContext(me) {
     };
     me.show = {
         set: function (object, value) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var visible = !me.core.property.get(window, "ui.class.contains", "minimize");
             var region = me.ui.rect.absoluteRegion(object);
             var bottomUp = !visible || value === "taskbar";

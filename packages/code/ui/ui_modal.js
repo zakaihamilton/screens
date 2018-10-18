@@ -15,7 +15,7 @@ screens.ui.modal = function UIModal(me) {
             }
         }
     };
-    me.proxy.apply = function (appName) {
+    me.launch = function (appName) {
         var result = null;
         var appArgs = Array.prototype.slice.call(arguments, 1);
         return me.core.message.send("modal." + appName + ".launch", appArgs);

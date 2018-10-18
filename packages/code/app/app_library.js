@@ -9,7 +9,7 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.init = async function () {
         var promises = [];
@@ -17,7 +17,7 @@ screens.app.library = function AppLibrary(me) {
         promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.min.css"));
         promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
         await Promise.all(promises);
-        await me.core.require("/external/jsgrid-1.5.3/jsgrid.min.js");
+        await me.core.require.load("/external/jsgrid-1.5.3/jsgrid.min.js");
         me.tagList = me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
@@ -31,7 +31,7 @@ screens.app.library = function AppLibrary(me) {
             "db.library.tags.list");
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             editMode: false,
             structuredMode: false,
@@ -51,7 +51,7 @@ screens.app.library = function AppLibrary(me) {
         me.updateText(object);
     };
     me.updateMode = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var showResults = window.showResults;
         var editMode = window.options.editMode && (!showResults || !window.searchText);
         var structuredMode = window.options.structuredMode;
@@ -68,7 +68,7 @@ screens.app.library = function AppLibrary(me) {
         return search;
     };
     me.menuList = function (object, list, group) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var parseItems = (items) => {
             var names = new Set();
             if (!items) {
@@ -168,24 +168,24 @@ screens.app.library = function AppLibrary(me) {
         }, 2000);
     };
     me.clear = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.search, "ui.basic.text", "");
         me.reset(object);
     };
     me.reset = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.transform, "text", "");
         me.core.property.set(window.var.transform, "transform");
         window.searchText = "";
     };
     me.reSearch = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         window.searchText = "";
         me.search(object);
     };
     me.search = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var tagMode = window.options.tagMode;
         var search = me.core.property.get(window.var.search, "ui.basic.text");
         search = me.cleanSearchText(search);
@@ -225,7 +225,7 @@ screens.app.library = function AppLibrary(me) {
         }
     };
     me.updateText = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var records = me.parseRecordsFromText(window);
         me.updateTextFromRecords(object, records);
     };
@@ -242,7 +242,7 @@ screens.app.library = function AppLibrary(me) {
         return json;
     };
     me.updateTextFromRecords = function (object, records) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         if (!Array.isArray(records)) {
             records = me.toRecordArray(records);
         }
@@ -341,7 +341,7 @@ screens.app.library = function AppLibrary(me) {
         }
     };
     me.parseRecordsFromText = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         var records = {};
         var array = [];
@@ -437,7 +437,7 @@ screens.app.library = function AppLibrary(me) {
         return dict;
     };
     me.updateRecord = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var tagMode = window.options.tagMode;
         var records = me.parseRecordsFromText(window);
         if (records.content && !tagMode) {
@@ -462,7 +462,7 @@ screens.app.library = function AppLibrary(me) {
         }
     };
     me.process = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
         var isTag = false, isTagged = false;
@@ -500,7 +500,7 @@ screens.app.library = function AppLibrary(me) {
         me.updateText(object);
     };
     me.gotoArticle = async function (object, tags) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         if(!Array.isArray(tags)) {
@@ -521,17 +521,17 @@ screens.app.library = function AppLibrary(me) {
         me.updateMode(window);
     };
     me.showResults = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         window.showResults = true;
         me.updateMode(window);
     };
     me.exportText = function(object, target) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.transform, "text");
         me.core.property.set(target, "importData", text);
     };
     me.updateResults = function (object, results) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         window.showResults = true;
         me.updateMode(window);
         var noSearch = false;

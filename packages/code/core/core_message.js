@@ -58,7 +58,7 @@ screens.core.message = function CoreMessage(me) {
             platform: me.platform
         };
         me.prepareArgs(info);
-        me.core.object(me, info);
+        me.core.object.create(me, info);
         await me.core.property.set(info, "headers", null);
         var result = send_callback(info);
         return result;
@@ -214,7 +214,7 @@ screens.core.message = function CoreMessage(me) {
 screens.core.message.worker = function CoreMessageWorker(me) {
     me.init = async function () {
         if (me.platform === "browser") {
-            me.PromiseWorker = await me.core.require("/node_modules/promise-worker/dist/promise-worker.js");
+            me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if(me.platform === "client") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
@@ -233,7 +233,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
                 }
             }
             else {
-                me.core.object(me, info);
+                me.core.object.create(me, info);
                 me.core.message.prepareArgs(info);
                 var args = await me.core.message.send.apply(null, info.args);
                 me.core.message.releaseArgs(info);
@@ -255,7 +255,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
 screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
     me.init = async function() {
         if (me.platform === "browser") {
-            me.PromiseWorker = await me.core.require("/node_modules/promise-worker/dist/promise-worker.js");
+            me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if(me.platform === "service_worker") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
@@ -309,7 +309,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                 }
             }
             else {
-                me.core.object(me, info);
+                me.core.object.create(me, info);
                 me.core.message.prepareArgs(info);
                 var args = await me.core.message.send.apply(null, info.args);
                 me.core.message.releaseArgs(info);

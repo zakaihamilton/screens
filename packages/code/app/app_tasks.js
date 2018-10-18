@@ -9,7 +9,7 @@ screens.app.tasks = function AppTasks(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.tasks = {
         get: function(object) {
@@ -32,7 +32,7 @@ screens.app.tasks = function AppTasks(me) {
     };
     me.findSelectedTask = function(object) {
         var selectedTask = null;
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
         var tasks = me.core.property.get(window.var.tasks, "selection");
         if(tasks.length) {
@@ -62,7 +62,7 @@ screens.app.tasks = function AppTasks(me) {
             var task = me.findSelectedTask(me.singleton);
             me.core.property.set(task, "widget.window.close");
             me.core.property.set(me.singleton, "widget.window.close");
-            me.singleton = me.ui.element(__json__, "workspace", "self");
+            me.singleton = me.ui.element.create(__json__, "workspace", "self");
         }
     };
     me.tile = {

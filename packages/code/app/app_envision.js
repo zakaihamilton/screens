@@ -9,10 +9,10 @@ screens.app.envision = function AppEnvision(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             editMode: false,
             autoRefresh: true,
@@ -31,13 +31,13 @@ screens.app.envision = function AppEnvision(me) {
         me.refresh(window);
     };
     me.importData = function (object, text) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.source, "text", text);
         me.core.property.set(window.var.content, "ui.basic.html", me.convert(object, text));
         me.core.property.set(window.var.source, "ui.basic.save");
     };
     me.updateMode = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var editMode = window.options.editMode;
         var formatMode = window.options.formatMode;
         var liveEdit = window.options.liveEdit;
@@ -58,7 +58,7 @@ screens.app.envision = function AppEnvision(me) {
         }
     };
     me.refresh = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.source, "text");
         text = me.convert(object, text);
         if (window.options.outputMode) {
@@ -67,7 +67,7 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
     };
     me.exportText = function (object, target) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.source, "text");
         me.core.property.set(target, "importData", text);
     };
@@ -156,7 +156,7 @@ screens.app.envision = function AppEnvision(me) {
         return text;
     };
     me.convert = function (object, text) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var format = me.core.property.get(window.var.format, "text");
         if (!format) {
             format = "<div></div>";

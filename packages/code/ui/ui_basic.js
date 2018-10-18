@@ -101,7 +101,7 @@ screens.ui.basic = function UIBasic(me) {
     me.elements = {
         set: function(object, value) {
             if (value) {
-                me.ui.element(value, object, object.context);
+                me.ui.element.create(value, object, object.context);
             }
         }
     };
@@ -178,7 +178,7 @@ screens.ui.basic = function UIBasic(me) {
             if(!value) {
                 value = object;
             }
-            object.window = me.widget.window(value);
+            object.window = me.widget.window.get(value);
         }
     };
     me.target = {

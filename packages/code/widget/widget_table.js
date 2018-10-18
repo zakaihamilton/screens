@@ -39,7 +39,7 @@ screens.widget.table = function WidgetTable(me) {
             if (data) {
                 var firstRowHeader = me.core.property.get(object, "firstRowHeader");
                 data.map(function (row, index) {
-                    me.ui.element({
+                    me.ui.element.create({
                         "ui.element.component": "widget.table.row",
                         "ui.basic.elements": row.map(function (item) {
                             var properties = Object.assign({}, item);

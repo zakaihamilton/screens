@@ -12,7 +12,7 @@ screens.widget.transform = function WidgetTransform(me) {
     }
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
-        var window = me.widget.window(widget);
+        var window = me.widget.window.get(widget);
         widget.language = null;
         me.ui.options.load(me, widget, {
             doTranslation: true,
@@ -74,7 +74,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.findWidget = function (object) {
         var widget = me.ui.node.container(object, me.id);
         if (!widget) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             if (window) {
                 widget = window.var.transform;
             }
@@ -232,7 +232,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         var reflow = false;
         var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         if (me.core.property.get(window, "visible") && !me.core.property.get(window, "conceal")) {
             if (widget.pageSize && (pageSize.height !== widget.pageSize.height || pageSize.width !== widget.pageSize.width)) {
@@ -283,7 +283,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.contentChanged = false;
         widget.pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
         me.core.property.set(widget.var.spinner, "text", "Layout");
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var fullscreen = me.core.property.get(window, "fullscreen");
         widget.fullscreen = fullscreen;
         me.core.property.set(widget, "ui.work.state", true);
@@ -350,8 +350,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 var result = [
                     item.title,
                     function () {
-                        var window = me.widget.window(widget);
-                        me.core.app("diagram", item.path, widget.options, null, item.params);
+                        var window = me.widget.window.get(widget);
+                        me.core.app.launch("diagram", item.path, widget.options, null, item.params);
                     },
                     {
                         separator: isFirst,
@@ -544,7 +544,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.title = {
         get: function (object) {
             var widget = me.findWidget(object);
-            var window = me.widget.window(widget);
+            var window = me.widget.window.get(widget);
             var title = me.core.property.get(widget, "widget.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
             if (title) {
@@ -794,7 +794,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                     }
                     else {
                         var title = me.core.property.get(widget, "widget.transform.contentTitle");
-                        widget.playingPopupHandle = me.ui.modal("playing", {
+                        widget.playingPopupHandle = me.ui.modal.launch("playing", {
                             "title": title,
                             "layout": paragraph.innerHTML,
                             "fontSize": fontSize,
@@ -942,7 +942,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         var previousWidget = null, visibleWidget = null;
         var showInProgress = false;
         target.reflowInterval = setInterval(function () {
-            var window = me.widget.window(target);
+            var window = me.widget.window.get(target);
             for (; ;) {
                 var concealed = me.core.property.get(window, "conceal");
                 var widget = source.firstChild;
@@ -1074,7 +1074,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.createPage = function (target, pageWidth, pageHeight, pageIndex, options) {
         var modifiers = me.upper.modifiers(target);
-        var page = me.ui.element({
+        var page = me.ui.element.create({
             "ui.basic.tag": "div",
             "ui.class.class": ["widget.transform.page", modifiers],
             "ui.style.width": pageWidth + "px",
@@ -1123,7 +1123,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return page;
     };
     me.createBreak = function (target) {
-        var page = me.ui.element({
+        var page = me.ui.element.create({
             "ui.basic.tag": "br"
         }, target);
         return page;

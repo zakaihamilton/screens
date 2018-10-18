@@ -73,7 +73,7 @@ screens.widget.menu = function WidgetMenu(me) {
     };
     me.items = {
         set: function (object, value) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var parent = me.widget.window.parent(window);
             if (parent) {
                 window = parent;
@@ -84,7 +84,7 @@ screens.widget.menu = function WidgetMenu(me) {
                     parent = window.var.header;
                 }
                 if (!window.var.menu) {
-                    window.var.menu = me.ui.element({
+                    window.var.menu = me.ui.element.create({
                         "ui.element.component": "widget.menu",
                         "ui.style.position": "relative"
                     }, parent);
@@ -147,7 +147,7 @@ screens.widget.menu = function WidgetMenu(me) {
         }
     };
     me.create_menu = function (window, object, region, values, bottomUp) {
-        var menu = me.ui.element({
+        var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
             "ui.style.left": region.left + "px",
@@ -245,7 +245,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         }
         var list = object.lists[name];
         if (!list) {
-            list = me.ui.element({
+            list = me.ui.element.create({
                 "ui.element.component": "widget.menu.list"
             }, object);
             object.lists[name] = list;
@@ -257,7 +257,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         }
         else if (list.var.members.childNodes.length >= me.filterMinCount) {
             list.members = [];
-            me.ui.element({
+            me.ui.element.create({
                 "ui.element.component": "widget.filter",
                 "filter": "widget.menu.list.filter",
                 "prefixes": "widget.menu.list.prefixes",
@@ -421,9 +421,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         set: function (object, options) {
             object.menu_options = Object.assign({}, object.menu_options, options);
             if (options) {
-                if(options.var) {
-                    var window = me.widget.window(object);
-                    if(!window.var) {
+                if (options.var) {
+                    var window = me.widget.window.get(object);
+                    if (!window.var) {
                         window.var = {};
                     }
                     options.var.split(",").map(value => {
@@ -559,7 +559,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
     me.upload = {
         set: function (object, value) {
             if (!object.var.upload) {
-                me.ui.element({
+                me.ui.element.create({
                     "ui.basic.tag": "input",
                     "ui.basic.type": "file",
                     "ui.basic.text": "",

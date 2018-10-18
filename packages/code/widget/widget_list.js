@@ -122,7 +122,7 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
     me.dropdown = {
         set: function (object, value) {
             var region = me.ui.rect.absoluteRegion(object.parentNode);
-            object.var.list = me.ui.element({
+            object.var.list = me.ui.element.create({
                 "ui.element.component": "widget.list.popup",
                 "ui.style.left": region.left + "px",
                 "ui.style.top": region.bottom + "px",

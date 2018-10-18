@@ -31,7 +31,7 @@ screens.core.socket = function CoreSocket(me) {
                 me.register(socket);
                 var info = await me.core.message.send_service.call(socket, "core.socket.setup", ref);
                 me.sockets.set(socket, info);
-                me.core.object(me, socket);
+                me.core.object.create(me, socket);
                 me.core.property.set(socket, "ready");
                 me.log("Socket ready for ref: " + ref +
                     " platform: " + info.platform +
@@ -65,7 +65,7 @@ screens.core.socket = function CoreSocket(me) {
             });
         }
         else if (me.platform === "browser") {
-            var io = await me.core.require("/node_modules/socket.io-client/dist/socket.io.js");
+            var io = await me.core.require.load("/node_modules/socket.io-client/dist/socket.io.js");
             me.io = io();
             me.register(me.io);
         }
@@ -105,7 +105,7 @@ screens.core.socket = function CoreSocket(me) {
             if (socket.request && socket.request.connection) {
                 info.clientIp = socket.request.connection.remoteAddress;
             }
-            me.core.object(me, info);
+            me.core.object.create(me, info);
             info.socket = socket;
             var args = null;
             try {

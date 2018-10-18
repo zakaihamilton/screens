@@ -1,9 +1,9 @@
 <div class="field has-addons" style="margin:6px">
     <p class="select" id="prefixes">
-        <select id="prefixes-select" onchange="screens.widget.filter(this)">
+        <select id="prefixes-select" onchange="screens.widget.filter.execute(this)">
         </select>
     </p>
     <p class="control is-expanded">
-        <input id="filter" class="input is-fullwidth" type="search" placeholder="Filter" onkeyup="screens.widget.filter(this)">
+        <input id="filter" class="input is-fullwidth" type="search" placeholder="Filter" onkeyup="screens.widget.filter.execute(this)">
     </p>
 </div>

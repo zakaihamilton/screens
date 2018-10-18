@@ -14,7 +14,7 @@ screens.app.chat = function AppChat(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
         return me.singleton;
     };
 };

@@ -8,8 +8,8 @@ screens.widget.terminal = function WidgetTerminal(me) {
         properties : __json__
     };
     me.sendInput = function (terminal, message, type) {
-        var window = me.widget.window(terminal);
-        var field = me.ui.element({
+        var window = me.widget.window.get(terminal);
+        var field = me.ui.element.create({
             "ui.basic.tag": "input",
             "ui.class.class": "widget.terminal.field"
         }, window);
@@ -99,7 +99,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
                 me.core.property.set(print, "ui.basic.text", text);
             }
             else {
-                var print = me.ui.element({
+                var print = me.ui.element.create({
                     "ui.basic.tag": "div",
                     "ui.basic.text": message
                 }, terminal.var.output);
@@ -109,7 +109,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
     };
     me.print = {
         set: function (terminal, message) {
-            var print = me.ui.element({
+            var print = me.ui.element.create({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);

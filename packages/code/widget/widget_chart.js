@@ -83,7 +83,7 @@ screens.widget.chart = function WidgetChart(me) {
                 }
                 var context = me.core.property.get(object, "context");
                 if (!me.chart) {
-                    me.core.require("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
+                    me.core.require.load("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
                         me.chart = chart;
                         clearTimeout(object.chartTimer);
                         object.chartTimer = setTimeout(() => {

@@ -12,7 +12,7 @@ screens.widget.container = function WidgetContainer(me) {
     };
     me.isChild = function (container) {
         var isChild = false;
-        var window = me.widget.window(container);
+        var window = me.widget.window.get(container);
         if (window && window.var.container === container) {
             var parent = me.widget.window.parent(window);
             if (!parent && window.child_window) {

@@ -4,7 +4,7 @@
 */
 
 screens.core.object = function CoreObject(me) {
-    me.proxy.apply = function (component, object = null) {
+    me.create = function (component, object = null) {
         if (!object) {
             object = {};
         }

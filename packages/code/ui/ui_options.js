@@ -25,7 +25,7 @@ screens.ui.options = function UIOptions(me) {
     me.storageKey = function(component, object) {
         var storageKey = component.id + ".options";
         if (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var key = me.core.property.get(window, "key");
             if(key) {
                 storageKey += "." + key;

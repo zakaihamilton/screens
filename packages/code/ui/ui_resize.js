@@ -29,7 +29,7 @@ screens.ui.resize = function UIResize(me) {
         set: function (object, event) {
             var target = object.resize_target;
             if (!target) {
-                target = me.widget.window(object);
+                target = me.widget.window.get(object);
             }
             if (!target.resize_enabled) {
                 return;
@@ -93,7 +93,7 @@ screens.ui.resize = function UIResize(me) {
                 "resize": null,
                 "transition": false
             });
-            var window = me.widget.window(me.info.target);
+            var window = me.widget.window.get(me.info.target);
             me.core.property.set(window, "ui.property.broadcast", {
                 "update":null
             });

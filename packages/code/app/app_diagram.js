@@ -28,7 +28,7 @@ screens.app.diagram = function AppDiagram(me) {
             json["ui.style.left"] = "0px";
             json["ui.style.top"] = "0px";
         }
-        var window = me.ui.element(json, parent, "self", params);
+        var window = me.ui.element.create(json, parent, "self", params);
         window.language = "english";
         return window;
     };
@@ -43,7 +43,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
@@ -88,7 +88,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.reload = {
         set: async function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var path = me.core.property.get(window, "app.diagram.path");
             var diagramJson = await me.core.json.loadFile(path, false);
             me.core.property.set(window, "app.diagram.diagramData", diagramJson);
@@ -98,7 +98,7 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.term = {
         set: async function (object, text) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var array = text;
             if (!Array.isArray(text)) {
                 array = [text];
@@ -113,13 +113,13 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.refresh = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             me.core.property.set(window.var.viewer, {
                 "ui.basic.html": null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
             });
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
-            me.ui.element(diagramData.layers, window.var.viewer);
+            me.ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
                 me.core.property.set(window, "title", diagramData.title);
             }

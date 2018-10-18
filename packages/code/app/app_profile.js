@@ -9,10 +9,10 @@ screens.app.profile = function AppProfile(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self", null);
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", null);
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             userName: ""
         });
@@ -69,7 +69,7 @@ screens.app.profile = function AppProfile(me) {
         return userId;
     };
     me.updateUser = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var bindings = me.bindings(object);
         var profile_id = null;
         var userId = await me.userId(object, window.options.userName);
@@ -93,7 +93,7 @@ screens.app.profile = function AppProfile(me) {
         me.update(object);
     };
     me.save = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var bindings = me.bindings(object);
         var profile = me.data;
         if (!profile) {
@@ -110,7 +110,7 @@ screens.app.profile = function AppProfile(me) {
         me.data = await me.user.profile.get(userId);
     };
     me.update = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var tier = document.getElementById("app.profile.tier");
         var phaseField = document.getElementById("app.profile.phaseLabel");
         var phaseLabel = document.getElementById("app.profile.phaseField");

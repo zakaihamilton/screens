@@ -9,7 +9,7 @@ screens.core.app = function CoreApp(me) {
             if (!property) {
                 return;
             }
-            var progress = me.ui.modal("progress", {
+            var progress = me.ui.modal.launch("progress", {
                 "title": property.charAt(0).toUpperCase() + property.slice(1),
                 "delay": "1000"
             });
@@ -24,12 +24,12 @@ screens.core.app = function CoreApp(me) {
             }
         }
     };
-    me.proxy.apply = async function (appName) {
+    me.launch = async function (appName) {
         if (!appName) {
             return null;
         }
         var result = null;
-        var progress = me.ui.modal("progress", {
+        var progress = me.ui.modal.launch("progress", {
             "title": appName.charAt(0).toUpperCase() + appName.slice(1),
             "delay": "1000"
         });

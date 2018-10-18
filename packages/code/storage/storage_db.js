@@ -122,30 +122,27 @@ screens.storage.db = function StorageDB(me) {
         var collection = await me.collection(location);
         collection.createIndex(index);
     };
-    return "server";
-};
-
-screens.storage.db.extension = function StorageDBExtention(me) {
-    me.location = function (name) {
-        var location = {};
-        tokens = name.split(".");
-        location.collection = tokens.pop();
-        location.db = tokens.pop();
-        return location;
-    };
-    me.mapping = {
-        remove : "remove",
-        get: "findOne",
-        set: "set",
-        use: "use",
-        findByIds: "findByIds",
-        list: "list"
-    };
-    me.proxy.apply = function (component) {
-        var location = me.location(component.id);
-        for(var source in me.mapping) {
-            var target = me.mapping[source];
-            component[source] = me.upper[target].bind(null, location);
+    me.extension = function(component) {
+        var getLocation = function (name) {
+            var location = {};
+            tokens = name.split(".");
+            location.collection = tokens.pop();
+            location.db = tokens.pop();
+            return location;
+        };
+        var mapping = {
+            remove : "remove",
+            get: "findOne",
+            set: "set",
+            use: "use",
+            findByIds: "findByIds",
+            list: "list"
+        };
+        var location = getLocation(component.id);
+        for(var source in mapping) {
+            var target = mapping[source];
+            component[source] = me[target].bind(null, location);
         }
     };
+    return "server";
 };

@@ -42,7 +42,7 @@ screens.kab.letters = function KabLetters(me) {
     };
     me.source = {
         set: function (object, value) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             window.kab_info = Object.assign({}, value);
             var sources = window.kab_info.sources;
             for (var source of sources) {
@@ -54,7 +54,7 @@ screens.kab.letters = function KabLetters(me) {
         return string.replace(/[^א-ת]/g, '');
     };
     me.letters = function (callback, object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var sources = window.kab_info.sources;
         var sourceCount = Object.keys(sources).length;
         var columnCount = parseInt(window.kab_info.columnCount);

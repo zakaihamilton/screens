@@ -5,11 +5,11 @@
 
 screens.app.browser = function AppBrowser(me) {
     me.launch = function () {
-        return me.ui.element(__json__, "workspace", "self");
+        return me.ui.element.create(__json__, "workspace", "self");
     };
     me.load = {
         set: function(object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var url = me.core.property.get(window.var.url, "text");
             if(!url.startsWith("www.")) {
                 url = "www." + url;

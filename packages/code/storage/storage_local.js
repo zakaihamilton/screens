@@ -5,9 +5,9 @@
 
 screens.storage.local = function StorageLocal(me) {
     me.init = function () {
-        me.none = me.core.object(me);
-        me.local = me.core.object(me);
-        me.session = me.core.object(me);
+        me.none = me.core.object.create(me);
+        me.local = me.core.object.create(me);
+        me.session = me.core.object.create(me);
         if (me.isSupported()) {
             me.none.storage = null;
             me.none.members = function () {

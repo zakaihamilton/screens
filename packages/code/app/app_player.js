@@ -29,7 +29,7 @@ screens.app.player = function AppPlayer(me) {
         if (args.length > 1) {
             params.sessionName = args[1];
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self", params);
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         try {
             me.core.file.makeDir(me.cachePath);
         }
@@ -39,7 +39,7 @@ screens.app.player = function AppPlayer(me) {
         return me.singleton;
     };
     me.initOptions = async function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             groupName: "American",
             sessionName: "",
@@ -264,7 +264,7 @@ screens.app.player = function AppPlayer(me) {
             if (!object.files.length) {
                 return;
             }
-            var progress = me.ui.modal("progress", {
+            var progress = me.ui.modal.launch("progress", {
                 "title": "Uploading",
                 "delay": "250"
             });

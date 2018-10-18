@@ -4,9 +4,6 @@
  */
 
 screens.ui.element = function UIElement(me) {
-    me.init = function () {
-        me.proxy.apply = me.createElements;
-    };
     me.matches = function (properties, parent) {
         /* Find matching components */
         var with_parent_dependency = false;
@@ -132,13 +129,13 @@ screens.ui.element = function UIElement(me) {
             return object.component;
         }
     };
-    me.createElements = function (properties, parent, context = null, params = null) {
+    me.create = function (properties, parent, context = null, params = null) {
         if (typeof properties === "string") {
             properties = me.core.property.get(parent, properties, context, params);
         }
         if (Array.isArray(properties)) {
             for (var item of properties) {
-                me.createElements(item, parent, context, params);
+                me.create(item, parent, context, params);
             }
             return;
         }
@@ -182,7 +179,7 @@ screens.ui.element = function UIElement(me) {
         }
         if (!object) {
             object = document.createElement(tag);
-            me.core.object(component, object);
+            me.core.object.create(component, object);
         }
         object.var = {};
         if (context === "self") {

@@ -9,7 +9,7 @@ screens.app.transform = function AppTransform(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
     me.init = function() {
         me.core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
@@ -17,13 +17,13 @@ screens.app.transform = function AppTransform(me) {
     };
     me.initOptions = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             window.language = null;
             me.ui.options.load(me, window, {
                 showInput: false
             });
             me.ui.options.toggleSet(me, null, "showInput", function (object, value, key, options) {
-                var window = me.widget.window(object);
+                var window = me.widget.window.get(object);
                 var text = me.core.property.get(window.var.transform, "text");
                 if (!text) {
                     value = true;
@@ -36,7 +36,7 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.exportText = function(object, target) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         if(window.child_window) {
             window = window.child_window;
         }
@@ -44,7 +44,7 @@ screens.app.transform = function AppTransform(me) {
         me.core.property.set(target, "importData", text);
     };
     me.updateWidgets = function (object, showInput, update = true) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set([window.var.input,window.var.doTransform], "ui.style.display", showInput ? "inline-block" : "none");
         me.core.property.set(window.var.transform, "ui.style.top", showInput ? "250px" : "0px");
         if (update) {
@@ -53,7 +53,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.clearEvent = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             me.core.property.set(window.var.input, {
                 "ui.basic.text": "",
                 "storage.local.store": ""
@@ -63,7 +63,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.transform = {
         set: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             me.core.property.set(window.var.input, "ui.basic.save");
             var text = me.core.property.get(window.var.input, "ui.basic.text");
             me.updateWidgets(window, window.options.showInput || !text, false);
@@ -94,12 +94,12 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.importData = function(object, text) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
     };
     me.importItem = async function (object, item) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var name = item;
         if(typeof item !== "string") {
             name = item.key.name;
@@ -112,7 +112,7 @@ screens.app.transform = function AppTransform(me) {
         me.importData(window, content);
     };
     me.importItemPrivate = async function (object, item) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var name = item;
         if(typeof item !== "string") {
             name = item.key.name;
@@ -146,7 +146,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.title = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
             if (title) {
@@ -157,7 +157,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.savePublic = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var text = me.core.property.get(window.var.transform, "text");
             return text;
         },
@@ -167,7 +167,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.savePrivate = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var text = me.core.property.get(window.var.transform, "text");
             return text;
         },
@@ -176,7 +176,7 @@ screens.app.transform = function AppTransform(me) {
         }
     };
     me.save = async function (object, private) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.transform, "text");
         var date = new Date();
         var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");

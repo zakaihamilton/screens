@@ -11,7 +11,7 @@ screens.widget.tray = function WidgetTray(me) {
     };
     me.tray = {
         get: function (object) {
-            var window = me.widget.window(object);
+            var window = me.widget.window.get(object);
             var parent = me.widget.window.parent(window);
             var isPopup = me.core.property.get(window, "popup");
             var type = "icon";
@@ -30,7 +30,7 @@ screens.widget.tray = function WidgetTray(me) {
                 parent.var = {};
             }
             if (!parent.var.tray) {
-                me.ui.element({
+                me.ui.element.create({
                     "ui.element.component": "widget.tray",
                     "ui.basic.var": "tray",
                     "type": type

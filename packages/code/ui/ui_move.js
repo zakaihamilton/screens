@@ -29,7 +29,7 @@ screens.ui.move = function UIMove(me) {
         set: function(object, event) {
             var target = object.move_target;
             if(!target) {
-                target = me.widget.window(object);
+                target = me.widget.window.get(object);
             }
             if (!target.move_enabled) {
                 me.core.property.set(target, "ui.focus.active", true);
@@ -75,7 +75,7 @@ screens.ui.move = function UIMove(me) {
             me.core.property.set(me.info.target, "ui.property.broadcast", {
                 "transition": false
             });
-            var window = me.widget.window(me.info.target);
+            var window = me.widget.window.get(me.info.target);
             me.core.property.notify(window, "update");
         }
     };

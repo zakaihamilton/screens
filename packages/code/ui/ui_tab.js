@@ -14,7 +14,7 @@ screens.ui.tab = function UITab(me) {
         });
     };
     me.activate = function (object) {
-        var window = me.widget.window(object);
+        var window = me.widget.window.get(object);
         var tab = me.core.property.get(object, "ui.attribute.tab");
         var widget = null;
         if (tab) {
