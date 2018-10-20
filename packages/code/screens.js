@@ -42,7 +42,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         console.log(screens.platform + " => " + id + " => " + platform);
         component_obj = new Proxy(() => { }, {
             get: function (object, property) {
-                if(property in screens || property === "require") {
+                if(property in object) {
                     return Reflect.get(object, property);
                 }
                 else {
