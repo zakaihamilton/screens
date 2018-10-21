@@ -306,7 +306,7 @@ screens.core.property = function CoreProperty(me) {
                 properties = [properties];
             }
             for (var property of properties) {
-                for (var key in itpropertyem) {
+                for (var key in property) {
                     me.core.property.set(object, key, property[key]);
                 }
             }

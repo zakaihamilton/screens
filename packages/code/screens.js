@@ -25,7 +25,6 @@ function screens_setup(package_name, component_name, child_name, node) {
     if (node && node.id) {
         return [];
     }
-    /* Create component proxy */
     var component_obj = Object.assign({}, screens, { id });
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;

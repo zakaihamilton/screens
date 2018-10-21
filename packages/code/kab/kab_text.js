@@ -38,8 +38,8 @@ screens.kab.text = function KabText(me) {
             wordStyle = "whole";
         }
         if(session.options.abridged) {
-            wordsString = wordsString.replace(/ *\([^)]*\) */g, " ");
-            wordsString = wordsString.replace(/ *\[[^\]]*\] */g, " ");
+            wordsString = wordsString.replace(/ *\([^\d)]*\) */g, " ");
+            wordsString = wordsString.replace(/ *\[[^\d\]]*\] */g, " ");
         }
         wordsString = me.core.string.parseWords(function (words) {
             var wasPrefix = false;
@@ -313,9 +313,6 @@ screens.kab.text = function KabText(me) {
                 instance.wordIndex--;
             }
         }
-        /*else {
-            modify(session, instance, "", instance.source, null, "", false, false);
-        }*/
         return match;
     };
     me.modify = function (session, instance, prefix, translation, explanation, suffix, expansion, keepSource) {

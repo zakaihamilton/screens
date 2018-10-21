@@ -332,6 +332,10 @@
         {
             "find": "/<hr>",
             "replace": "<hr style=\"column-span:all\"></hr>"
+        },
+        {
+            "find":"/\\((\\d*)\\)",
+            "replace":"<b>($1)</b>"
         }
     ],
     "post": [
@@ -1826,12 +1830,12 @@
             "hebrew": "התפשטות"
         },
         {
-            "translation": "the First Expansion",
+            "translation": "First Expansion",
             "term": "Hitpashtut Aleph",
             "hebrew": "התפשטות א׳"
         },
         {
-            "translation": "the Second Expansion",
+            "translation": "Second Expansion",
             "term": "Hitpashtut Bet",
             "hebrew": "התפשטות ב׳"
         },
@@ -3758,6 +3762,13 @@
             },
             "term": "Yehuda Leib HaLevi Ashlag",
             "hebrew": "יהודה ליב הלוי אשלג"
+        },
+        {
+            "style": {
+                "heading": "Author"
+            },
+            "term": "Baal HaSulam",
+            "hebrew":"בעל הסולם"
         },
         {
             "translation": "End of Legs",
