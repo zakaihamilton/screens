@@ -559,7 +559,7 @@ screens.widget.transform = function WidgetTransform(me) {
 
 screens.widget.transform.player = function WidgetTransformPlayer(me) {
     me.changeVoice = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         if (!currentPage) {
             return;
@@ -577,7 +577,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.updatePlayback = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         if (!currentPage) {
             return;
@@ -589,7 +589,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.setPlayState = function (object, play, pause) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var widgets = me.ui.node.childList(widget.var.iconbar);
         me.core.property.set(widgets, "ui.class.play", play);
         me.core.property.set(widgets, "ui.class.pause", pause);
@@ -598,13 +598,13 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         if (!me.media.voice.isPlaying()) {
             return;
         }
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         me.focusParagraph(object, null);
         me.media.voice.pause();
         me.setPlayState(widget, true, true);
     };
     me.play = function (object, value, toggle = true) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.media.voice.isPlaying(currentPage);
         var isPaused = me.media.voice.isPaused(currentPage);
@@ -692,7 +692,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.stop = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
@@ -704,7 +704,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.rewind = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
@@ -712,7 +712,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.fastforward = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
         var isPlaying = me.media.voice.isPlaying(currentPage);
         if (isPlaying) {
@@ -720,7 +720,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
     };
     me.voices = function (object) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         var language = widget.language;
         var voicelist = me.media.voice.voices(language);
         voicelist = voicelist.sort((a, b) => {
@@ -776,7 +776,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         return volumeList;
     };
     me.focusParagraph = function (object, paragraph) {
-        var widget = me.findWidget(object);
+        var widget = me.upper.findWidget(object);
         if (!widget) {
             return;
         }
@@ -1132,19 +1132,19 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.previousPage = {
         set: function (object) {
-            var widget = me.findWidget(object);
+            var widget = me.upper.findWidget(object);
             me.core.property.set(widget.var.layout, "ui.scroll.previousPage");
         }
     };
     me.nextPage = {
         set: function (object) {
-            var widget = me.findWidget(object);
+            var widget = me.upper.findWidget(object);
             me.core.property.set(widget.var.layout, "ui.scroll.nextPage");
         }
     };
     me.scrollToTop = {
         set: function (object) {
-            var widget = me.findWidget(object);
+            var widget = me.upper.findWidget(object);
             me.core.property.set(widget.var.layout, "ui.scroll.to", 0);
         }
     };

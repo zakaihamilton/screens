@@ -510,8 +510,8 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     if (!object.menu_select.find((source) => source[0] === target[0])) {
                         menu_select.push(target);
                     }
-                    object.menu_select = object.menu_select.concat(menu_select);
                 }
+                object.menu_select = object.menu_select.concat(menu_select);
             }
             else {
                 object.menu_select = value;

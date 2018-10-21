@@ -25,7 +25,7 @@ screens.core.property = function CoreProperty(me) {
         }
         if (typeof object === "object" && "component" in object) {
             var lookup = screens.lookup(object.component);
-            if(lookup) {
+            if (lookup) {
                 var redirect = lookup.redirect;
                 if (redirect && !redirect.disabled) {
                     if (name in redirect) {
@@ -112,11 +112,11 @@ screens.core.property = function CoreProperty(me) {
                         catch (err) {
                             me.log("no component for: " + info.name);
                         }
-                        if(component) {
-                            if(property in component) {
+                        if (component) {
+                            if (property in component) {
                                 target = component[property];
                             }
-                            else if("lookup" in component) {
+                            else if ("lookup" in component) {
                                 target = component.lookup;
                             }
                             else {
@@ -302,16 +302,13 @@ screens.core.property = function CoreProperty(me) {
     };
     me.group = {
         set: function (object, properties) {
-            if (Array.isArray(properties)) {
-                properties.map(function (item) {
-                    for (var key in item) {
-                        me.core.property.set(object, key, item[key]);
-                    }
-                });
-                return;
+            if (!Array.isArray(properties)) {
+                properties = [properties];
             }
-            for (var key in properties) {
-                me.core.property.set(object, key, properties[key]);
+            for (var property of properties) {
+                for (var key in itpropertyem) {
+                    me.core.property.set(object, key, property[key]);
+                }
             }
         }
     };
