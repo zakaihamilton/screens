@@ -131,6 +131,12 @@
         {
             "ui.basic.tag": "div",
             "ui.basic.var": "viewer"
+        },
+        {
+            "ui.basic.var":"popup",
+            "ui.basic.tag":"div",
+            "ui.basic.html":"@widget.transform.html",
+            "ui.class.add":"modal"
         }
     ],
     "ui.property.after": {

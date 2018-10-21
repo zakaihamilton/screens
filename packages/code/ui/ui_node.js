@@ -61,6 +61,27 @@ screens.ui.node = function UINode(me) {
         }
         return element;
     };
+    me.class = function (object, class_name) {
+        var class_names = [];
+        if(Array.isArray(class_name)) {
+            class_names = class_name;
+        }
+        else {
+            class_names = [class_name];
+        }
+        while (object) {
+            if (object === me.ui.element.workspace()) {
+                return null;
+            }
+            for(var class_name of class_names) {
+                if(object.classList.contains(class_name)) {
+                    return object;
+                }
+            }
+            object = object.parentNode;
+        }
+        return null;
+    };
     me.container = function (object, component_name) {
         var component_names = [];
         if(Array.isArray(component_name)) {

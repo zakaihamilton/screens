@@ -202,8 +202,10 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
     };
     me.closePopup = function (object) {
-        var widget = me.findWidget(object);
-        me.core.property.set(widget.var.popup, "ui.class.remove", "is-active");
+        var modal = me.ui.node.class(object, "modal");
+        if(modal) {
+            me.core.property.set(modal, "ui.class.remove", "is-active");
+        }
     };
     me.reflow = function (object) {
         var widget = me.findWidget(object);
@@ -342,7 +344,7 @@ screens.widget.transform = function WidgetTransform(me) {
             if (!diagrams) {
                 diagrams = [];
             }
-            if (widget.termData) {
+            if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
             var isFirst = true;
