@@ -1,28 +1,34 @@
 .kab-term-category.kab-term-english {
-    padding-left:1.5em;
+    padding-left:3em;
 }
 
 .kab-term-category.kab-term-hebrew {
-    padding-right:1.5em;
+    padding-right:3em;
 }
 
 [kab-term-category]:after {
     position:absolute;
     font-weight:bold;
     font-size:40%;
+    height:50%;
+    top:1.5em;
+    text-align: center;
     text-transform:uppercase;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-category);
-    transform: rotate(-90deg);    
+    transform: rotate(-90deg);
+    border:1px solid transparent;
 }
 
 [kab-term-category].kab-term-english:after {
-    left:-0.8em;
+    left:0em;
+    margin-left:-1.8em;
 }
 
 [kab-term-category].kab-term-hebrew:after {
-    right:-0.8em;
+    right:0em;
+    padding-right:-1.8em;
 }
 
 .kab-term-category.kab-term-english {

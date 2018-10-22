@@ -658,7 +658,8 @@
         {
             "translation": "Head",
             "style": {
-                "category": "Location"
+                "category": "Location",
+                "phase":"root"
             },
             "term": "Rosh",
             "hebrew": "ראש"
@@ -2220,7 +2221,8 @@
             "translation": "End",
             "term": "Sium",
             "style": {
-                "category": "Location"
+                "category": "Location",
+                "phase":"four"
             },
             "hebrew": "סיום"
         },
@@ -3833,7 +3835,8 @@
         },
         {
             "style": {
-                "category": "Location"
+                "category": "Location",
+                "phase":"four"
             },
             "translation": "End",
             "term": "Sof",
