@@ -21,6 +21,7 @@ screens.widget.transform = function WidgetTransform(me) {
             addStyles: true,
             abridged: false,
             keepSource: false,
+            category: true,
             headings: true,
             subHeadings: true,
             pages: true,
@@ -48,6 +49,7 @@ screens.widget.transform = function WidgetTransform(me) {
             abridged: me.transform,
             pages: me.reflow,
             columns: me.reflow,
+            category: me.transform,
             headings: me.transform,
             subHeadings: me.transform,
             diagrams: me.transform,
@@ -186,7 +188,7 @@ screens.widget.transform = function WidgetTransform(me) {
             hebrew: ".item.hebrew",
             translation: ".item.translation",
             explanation: ".item.explanation",
-            heading: ".heading",
+            category: ".category",
             source: ".source"
         }, "None");
         for (var name in widgets) {
@@ -426,7 +428,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.addTerms = function (terms, rows, used) {
         for (var name in terms) {
             var term = terms[name];
-            if (term.heading && term.phase) {
+            if (term.category && term.phase) {
                 var phase = term.phase;
                 if (typeof phase !== "string") {
                     if (phase.minor) {
@@ -435,10 +437,10 @@ screens.widget.transform = function WidgetTransform(me) {
                         phase = phase.major;
                     }
                 }
-                term.heading.split("/").map(function (heading) {
-                    var row = rows[heading];
+                term.category.split("/").map(function (category) {
+                    var row = rows[category];
                     if (!row) {
-                        row = rows[heading] = {};
+                        row = rows[category] = {};
                     }
                     if (used !== term.used) {
                         return;
@@ -472,9 +474,9 @@ screens.widget.transform = function WidgetTransform(me) {
             var name = phase.charAt(0).toUpperCase() + phase.slice(1);
             params.gridData.push([1, columnIndex, name, "kab.term.header"]);
         }
-        for (var heading in rows) {
-            var row = rows[heading];
-            var name = heading.charAt(0).toUpperCase() + heading.slice(1);
+        for (var category in rows) {
+            var row = rows[category];
+            var name = category.charAt(0).toUpperCase() + category.slice(1);
             var found = false;
             for (var phase in me.phases) {
                 var list = row[phase];
@@ -504,7 +506,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.term = {
         set: async function (object, text) {
             var widget = me.findWidget(object);
-            var options = Object.assign({}, widget.options, { headings: false });
+            var options = Object.assign({}, widget.options, { category: false });
             var info = await me.kab.text.parse(widget.language, text, options);
             me.core.property.set(object, "ui.basic.html", info.text);
         }

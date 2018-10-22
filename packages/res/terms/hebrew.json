@@ -1766,7 +1766,7 @@
             "term": "יא \" ל"
         },
         {
-            "heading":"יש גורסים; מספר",
+            "expansion":"יש גורסים; מספר",
             "term": "י \" ג"
         },
         {
@@ -2262,7 +2262,7 @@
             "term": "לא \" א"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "ל \" ב"
         },
         {
@@ -3754,7 +3754,7 @@
             "term": "קכ \" ד"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "קכ \" ה"
         },
         {
@@ -3866,7 +3866,7 @@
             "term": "ר \" י"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "רי \" ו"
         },
         {
@@ -3894,7 +3894,7 @@
             "term": "ר \" מ"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "רמ \" ח"
         },
         {
@@ -3910,7 +3910,7 @@
             "term": "רע \" מ"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "רפ \" ח"
         },
         {
@@ -4034,7 +4034,7 @@
             "term": "שי \" ל"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "ש \" כ"
         },
         {
@@ -4074,7 +4074,7 @@
             "term": "שנא \" ן"
         },
         {
-            "heading":"מספר",
+            "category":"מספר",
             "term": "שס \" ה"
         },
         {
@@ -4308,7 +4308,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "כלי",
+                "category": "כלי",
                 "phase": "root"
             },
             "term": "כתר"
@@ -4316,7 +4316,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "כלי/אור",
+                "category": "כלי/אור",
                 "phase": "one"
             },
             "term": "חכמה"
@@ -4324,7 +4324,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "אור",
+                "category": "אור",
                 "phase": "root"
             },
             "term": "חסדים"
@@ -4332,7 +4332,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "אור",
+                "category": "אור",
                 "phase": "one"
             },
             "term": "אור החכמה"
@@ -4340,7 +4340,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "אור",
+                "category": "אור",
                 "phase": "root"
             },
             "term": "אור החסדים"
@@ -4348,7 +4348,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "כלי",
+                "category": "כלי",
                 "phase": "two"
             },
             "term": "בינה"
@@ -4356,7 +4356,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "כלי",
+                "category": "כלי",
                 "phase": "three"
             },
             "term": "תפארת"
@@ -4364,7 +4364,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "כלי",
+                "category": "כלי",
                 "phase": "four"
             },
             "term": "מלכות"
@@ -4372,7 +4372,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "פרצוף",
+                "category": "פרצוף",
                 "phase": "root"
             },
             "explanation":"הנחת יסוד",
@@ -4381,7 +4381,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "פרצוף",
+                "category": "פרצוף",
                 "phase": "one"
             },
             "term": "אבא ואמא",
@@ -4390,7 +4390,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "פרצוף",
+                "category": "פרצוף",
                 "phase": "two"
             },
             "term": "ישראל סבא ותבונה",
@@ -4399,7 +4399,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "פרצוף",
+                "category": "פרצוף",
                 "phase": "three"
             },
             "term": "זעיר אנפין",
@@ -4408,7 +4408,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "פרצוף",
+                "category": "פרצוף",
                 "phase": "four"
             },
             "term": "נוקבא",
@@ -4426,13 +4426,13 @@
             "term":"זו \" ן הגדולים",
             "source":"זעיר אנפין ונוקבא הגדולים",
             "explanation":"כוונה",
-            "style":{"heading":"פרצוף","phase":"three"}
+            "style":{"category":"פרצוף","phase":"three"}
         },
         {
             "term":"זו \" ן הקטנים",
             "source":"זעיר אנפין ונוקבא הקטנים",
             "explanation":"רצון",
-            "style":{"heading":"פרצוף","phase":"four"}
+            "style":{"category":"פרצוף","phase":"four"}
         },
         {
             "style": {

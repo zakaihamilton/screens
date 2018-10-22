@@ -9,6 +9,7 @@ screens.kab.style = function KabStyle(me) {
         var styles = instance.item.style;
         var html = "";
         var subHeading = "";
+        var category = "";
         var phase = null, parentPhase = null, heading = null, tooltip = null;
         var term = instance.target;
         if (typeof styles === "string") {
@@ -35,8 +36,13 @@ screens.kab.style = function KabStyle(me) {
                     parentPhase = null;
                 }
             }
-            if (styles && styles.heading && session.options.headings) {
-                heading = styles.heading;
+            if (styles) {
+                if (styles.heading && session.options.headings) {
+                    heading = styles.heading;
+                }
+                if (styles.category && session.options.category) {
+                    category = styles.category;
+                }
             }
             if (!session.options.keepSource && !expansion && (!session.options.doTranslation || term !== replacement)) {
                 tooltip = term;
@@ -46,8 +52,13 @@ screens.kab.style = function KabStyle(me) {
             if (term !== replacement) {
                 tooltip = term;
             }
-            if (styles && styles.heading && session.options.headings) {
-                heading = styles.heading;
+            if (styles) {
+                if (styles.heading && session.options.headings) {
+                    heading = styles.heading;
+                }
+                if (styles.category && session.options.category) {
+                    category = styles.category;
+                }
             }
         }
         if (instance.item) {
@@ -59,8 +70,14 @@ screens.kab.style = function KabStyle(me) {
                 if (session.options.subHeadings) {
                     subHeading = tooltip;
                 }
+                if (session.options.headings &&
+                    instance.item.translation &&
+                    !session.options.doTranslation &&
+                    replacement !== instance.item.translation) {
+                    heading = instance.item.translation;
+                }
             }
-            else if(instance.item.explanation && instance.item.translation && session.options.doExplanation) {
+            else if (instance.item.explanation && instance.item.translation && session.options.doExplanation) {
                 subHeading = instance.item.translation;
             }
         }
@@ -68,7 +85,14 @@ screens.kab.style = function KabStyle(me) {
             tooltip = styles.tooltip;
         }
         if (phase) {
-            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border " + nightModeClass + "\"";
+            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border " + nightModeClass;
+            if (category) {
+                html += " kab-term-category";
+            }
+            if (heading) {
+                html += " kab-term-heading";
+            }
+            html += " kab-term-" + session.language + "\"";
             if (tooltip) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
@@ -85,6 +109,9 @@ screens.kab.style = function KabStyle(me) {
                 if (phaseNumber) {
                     html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-" + session.language + " " + nightModeClass + "\"></span>";
                 }
+            }
+            if (category) {
+                html += "<span kab-term-category=\"" + category + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
             }
             if (heading) {
                 html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";

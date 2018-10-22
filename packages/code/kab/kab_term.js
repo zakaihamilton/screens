@@ -57,13 +57,13 @@ screens.kab.term = function KabTerm(me) {
             if (typeof style === "string" && styles) {
                 style = styles[style];
             }
-            theTerm.heading = style.heading;
+            theTerm.category = style.category;
             theTerm.phase = style.phase;
             theTerm.tooltip = style.tooltip;
             theTerm.style = style;
         }
         else {
-            theTerm.heading = null;
+            theTerm.category = null;
             theTerm.phase = null;
             theTerm.tooltip = null;
             theTerm.style = null;

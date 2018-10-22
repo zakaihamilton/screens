@@ -65,6 +65,14 @@
                     }
                 ],
                 [
+                    "Category",
+                    "app.diagram.category",
+                    {
+                        "state": "select",
+                        "enabled": "app.diagram.category"
+                    }
+                ],
+                [
                     "Headings",
                     "app.diagram.headings",
                     {

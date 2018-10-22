@@ -172,6 +172,14 @@
                     }
                 ],
                 [
+                    "Category",
+                    "widget.transform.category",
+                    {
+                        "state": "select",
+                        "enabled": "widget.transform.addStyles"
+                    }
+                ],
+                [
                     "Headings",
                     "widget.transform.headings",
                     {

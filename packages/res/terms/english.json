@@ -366,7 +366,7 @@
             "source": "Me'ah",
             "translation": "One Hundred",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "two"
             },
             "term": "100",
@@ -394,7 +394,7 @@
             "prefix": "the",
             "translation": "Light of Infinity",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "term": "Ohr Ein Sof",
@@ -485,7 +485,7 @@
         {
             "translation": "Vessel of Crown",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "root"
             },
             "term": "Kli Keter",
@@ -494,7 +494,7 @@
         {
             "translation": "Vessel of Wisdom",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "one"
             },
             "term": "Kli Hochma",
@@ -503,7 +503,7 @@
         {
             "translation": "Vessel of Understanding",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "two"
             },
             "term": "Kli Bina",
@@ -512,7 +512,7 @@
         {
             "translation": "Vessel of Beauty",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "three"
             },
             "term": "Kli Tifferet",
@@ -521,7 +521,7 @@
         {
             "translation": "Vessel of Kingdom",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "four"
             },
             "term": "Kli Malchut",
@@ -530,7 +530,7 @@
         {
             "translation": "Vessel of Small Face",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "three"
             },
             "term": "Kli Zier Anpin",
@@ -539,7 +539,7 @@
         {
             "translation": "Light of Small Face",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "three"
             },
             "term": "Ohr Zeir Anpin",
@@ -549,7 +549,7 @@
             "translation": "Root Phase",
             "style": {
                 "phase": "root",
-                "heading": "Phase"
+                "category": "Phase"
             },
             "defaultTerm": true,
             "term": "Behinat Shoresh",
@@ -560,7 +560,7 @@
             "translation": "Phase One",
             "style": {
                 "phase": "one",
-                "heading": "Phase"
+                "category": "Phase"
             },
             "defaultTerm": true,
             "term": "Behina Aleph",
@@ -571,7 +571,7 @@
             "translation": "Phase Two",
             "style": {
                 "phase": "two",
-                "heading": "Phase"
+                "category": "Phase"
             },
             "defaultTerm": true,
             "term": "Behina Bet",
@@ -582,7 +582,7 @@
             "translation": "Phase Three",
             "style": {
                 "phase": "three",
-                "heading": "Phase"
+                "category": "Phase"
             },
             "defaultTerm": true,
             "term": "Behina Gimel",
@@ -593,7 +593,7 @@
             "translation": "Phase Four",
             "style": {
                 "phase": "four",
-                "heading": "Phase"
+                "category": "Phase"
             },
             "defaultTerm": true,
             "term": "Behina Dalet",
@@ -604,7 +604,7 @@
             "translation": "Root Phase Coarseness",
             "style": {
                 "phase": "root",
-                "heading": "coarseness"
+                "category": "coarseness"
             },
             "term": "Aviut Shoresh",
             "hebrew": "עביות שורש"
@@ -613,7 +613,7 @@
             "translation": "Phase One Coarseness",
             "style": {
                 "phase": "one",
-                "heading": "coarseness"
+                "category": "coarseness"
             },
             "term": "Aviut Aleph",
             "hebrew": "עביות א׳"
@@ -622,7 +622,7 @@
             "translation": "Phase Two Coarseness",
             "style": {
                 "phase": "two",
-                "heading": "coarseness"
+                "category": "coarseness"
             },
             "term": "Aviut Bet",
             "hebrew": "עביות ב׳"
@@ -631,7 +631,7 @@
             "translation": "Phase Three Coarseness",
             "style": {
                 "phase": "three",
-                "heading": "coarseness"
+                "category": "coarseness"
             },
             "term": "Aviut Gimel",
             "hebrew": "עביות ג׳"
@@ -640,7 +640,7 @@
             "translation": "Phase Four Coarseness",
             "style": {
                 "phase": "four",
-                "heading": "coarseness"
+                "category": "coarseness"
             },
             "term": "Aviut Dalet",
             "hebrew": "עביות ד׳"
@@ -658,14 +658,14 @@
         {
             "translation": "Head",
             "style": {
-                "heading": "Location"
+                "category": "Location"
             },
             "term": "Rosh",
             "hebrew": "ראש"
         },
         {
             "style": {
-                "heading": "location"
+                "category": "location"
             },
             "translation": "Interior",
             "term": "Toch",
@@ -678,7 +678,7 @@
         },
         {
             "style": {
-                "heading": "Layers",
+                "category": "Layers",
                 "phase": "two"
             },
             "translation": "Body",
@@ -705,7 +705,7 @@
             "translation": "Navel",
             "style": {
                 "phase": "three",
-                "heading": "Location"
+                "category": "Location"
             },
             "term": "Tabur",
             "hebrew": "טבור"
@@ -818,7 +818,7 @@
             "explanation": "Postulate",
             "defaultTerm": true,
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "root"
             },
             "term": "Keter",
@@ -828,7 +828,7 @@
             "translation": "Crowns",
             "explanation": "Postulates",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "root"
             },
             "term": "Keters",
@@ -839,7 +839,7 @@
             "explanation": "Decree",
             "defaultTerm": true,
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "one"
             },
             "term": "Hochma",
@@ -850,7 +850,7 @@
             "explanation": "Execution",
             "defaultTerm": true,
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "two"
             },
             "term": "Bina",
@@ -861,7 +861,7 @@
             "explanation": "Intention",
             "defaultTerm": true,
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "three"
             },
             "term": "Tifferet",
@@ -873,7 +873,7 @@
             "explanation": "Knowledge",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "two"
@@ -887,7 +887,7 @@
             "explanation": "Desire",
             "defaultTerm": true,
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "four"
             },
             "term": "Malchut",
@@ -898,7 +898,7 @@
             "explanation": "Responsibility",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "root"
@@ -912,7 +912,7 @@
             "explanation": "Control",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "one"
@@ -926,7 +926,7 @@
             "explanation": "Affinity",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "three"
@@ -940,7 +940,7 @@
             "explanation": "Communication",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "four"
@@ -954,7 +954,7 @@
             "explanation": "Agreement",
             "defaultTerm": true,
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": {
                     "major": "three",
                     "minor": "collective"
@@ -972,7 +972,7 @@
         {
             "translation": "Relaxation",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "four"
             },
             "term": "Nefesh",
@@ -981,7 +981,7 @@
         {
             "translation": "Modulation",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "three"
             },
             "term": "Ruach",
@@ -990,7 +990,7 @@
         {
             "translation": "Protection",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "two"
             },
             "term": "Neshama",
@@ -1000,7 +1000,7 @@
             "source": "Neshama",
             "translation": "Soul",
             "style": {
-                "heading": "Layers",
+                "category": "Layers",
                 "phase": "one"
             },
             "term": "Neshama2",
@@ -1009,7 +1009,7 @@
         {
             "translation": "Expression",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "one"
             },
             "term": "Haya",
@@ -1018,7 +1018,7 @@
         {
             "translation": "Singularity",
             "style": {
-                "heading": "Light",
+                "category": "Light",
                 "phase": "root"
             },
             "term": "Yechida",
@@ -1308,7 +1308,7 @@
             "term": "Gadlut",
             "defaultTerm": true,
             "style": {
-                "heading": "State",
+                "category": "State",
                 "phase": "one"
             },
             "hebrew": "גדלות"
@@ -1318,7 +1318,7 @@
             "hebrew":"קבורת",
             "transliterated":"Kiboret",
             "style": {
-                "heading":"Joints",
+                "category":"Joints",
                 "phase": "root"
             }
         },
@@ -1327,7 +1327,7 @@
             "hebrew":"זרוע",
             "transliterated":"Zeroah",
             "style": {
-                "heading":"Joints",
+                "category":"Joints",
                 "phase": "one"
             }
         },
@@ -1336,7 +1336,7 @@
             "hebrew":"כף היד",
             "transliterated":"Kaf HaYad",
             "style": {
-                "heading":"Joints",
+                "category":"Joints",
                 "phase": "two"
             }
         },
@@ -1345,7 +1345,7 @@
             "term": "Katnut",
             "defaultTerm": true,
             "style": {
-                "heading": "State",
+                "category": "State",
                 "phase": "root"
             },
             "hebrew": "קטנות"
@@ -1355,7 +1355,7 @@
             "term": "Bituy",
             "defaultTerm": true,
             "style": {
-                "heading": "State",
+                "category": "State",
                 "phase": "two"
             },
             "hebrew": "ביטוי"
@@ -1366,7 +1366,7 @@
             "source": "Kav Small",
             "defaultTerm": true,
             "style": {
-                "heading": "Line",
+                "category": "Line",
                 "phase": "one"
             },
             "hebrew": "קו שמאל"
@@ -1377,7 +1377,7 @@
             "source": "Kav Yamin",
             "defaultTerm": true,
             "style": {
-                "heading": "Line",
+                "category": "Line",
                 "phase": "root"
             },
             "hebrew": "קו ימין"
@@ -1388,7 +1388,7 @@
             "term": "middle line",
             "defaultTerm": true,
             "style": {
-                "heading": "Line",
+                "category": "Line",
                 "phase": "two"
             },
             "hebrew": "קו אמצעי"
@@ -1397,7 +1397,7 @@
             "term": "Rigshi",
             "translation": "Emotional",
             "style": {
-                "heading": "State",
+                "category": "State",
                 "phase": "one"
             },
             "hebrew": "רגשי"
@@ -1406,7 +1406,7 @@
             "translation": "Long Face",
             "defaultTerm": true,
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "root"
             },
             "term": "Arich Anpin",
@@ -1416,7 +1416,7 @@
         {
             "translation": "Long",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "root"
             },
             "term": "Arich",
@@ -1426,7 +1426,7 @@
             "translation": "Small Face",
             "explanation": "Intention",
             "style": {
-                "heading": "Face/Vessel",
+                "category": "Face/Vessel",
                 "phase": "three"
             },
             "term": "Zeir Anpin",
@@ -1444,7 +1444,7 @@
             "translation": "Emanation",
             "explanation": "Control",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "one"
             },
             "defaultTerm": true,
@@ -1455,7 +1455,7 @@
             "translation": "Creation",
             "explanation": "Affinity",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "two"
             },
             "defaultTerm": true,
@@ -1466,7 +1466,7 @@
             "translation": "Formation",
             "explanation": "Communication",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "three"
             },
             "defaultTerm": true,
@@ -1477,7 +1477,7 @@
             "translation": "Action",
             "explanation": "Agreement",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "four"
             },
             "defaultTerm": true,
@@ -1488,7 +1488,7 @@
             "translation": "This World",
             "explanation": "Reality",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "four"
             },
             "term": "Olam ha Zeh",
@@ -1499,7 +1499,7 @@
             "translation": "Next World",
             "explanation": "Inner Reality",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "one"
             },
             "term": "Olam ha Ba",
@@ -1509,7 +1509,7 @@
             "prefix": "the",
             "translation": "World of Deficiencies",
             "style": {
-                "heading": "World"
+                "category": "World"
             },
             "term": "Olam ha Nekudim",
             "hebrew": "עולם הנקודים"
@@ -1518,7 +1518,7 @@
             "prefix": "the",
             "translation": "World of Primordial Man",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "term": "Olam Adam Kadmon",
@@ -1529,7 +1529,7 @@
             "prefix": "the",
             "translation": "World of Binding",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "term": "Olam Akudim",
@@ -1540,7 +1540,7 @@
             "prefix": "the",
             "translation": "World of Emanation",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "one"
             },
             "term": "Olam Atzilut",
@@ -1551,7 +1551,7 @@
             "prefix": "the",
             "translation": "World of Creation",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "two"
             },
             "term": "Olam Beria",
@@ -1562,7 +1562,7 @@
             "prefix": "the",
             "translation": "World of Formation",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "three"
             },
             "term": "Olam Yetzira",
@@ -1573,7 +1573,7 @@
             "prefix": "the",
             "translation": "World of Action",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "four"
             },
             "term": "Olam Assiya",
@@ -1662,7 +1662,7 @@
             "translation": "Navel",
             "style": {
                 "phase": "three",
-                "heading": "Location"
+                "category": "Location"
             },
             "term": "Taburit",
             "hebrew": "טבורית"
@@ -1742,7 +1742,7 @@
         {
             "translation": "Infinity",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "defaultTerm": true,
@@ -1765,7 +1765,7 @@
             "translation": "Root",
             "style": {
                 "phase": "root",
-                "heading": "Layers"
+                "category": "Layers"
             },
             "term": "Shoresh2",
             "source": "Shoresh",
@@ -1785,7 +1785,7 @@
             "translation": "Female",
             "explanation": "Desire",
             "style": {
-                "heading": "Face/Vessel",
+                "category": "Face/Vessel",
                 "phase": "four"
             },
             "term": "Nukva",
@@ -1818,7 +1818,7 @@
             "translation": "Clothing",
             "style": {
                 "phase": "three",
-                "heading": "Layers"
+                "category": "Layers"
             },
             "term": "Levush2",
             "source": "Levush",
@@ -1862,7 +1862,7 @@
         },
         {
             "style": {
-                "heading": "Holy Name",
+                "category": "Holy Name",
                 "phase": "one",
                 "short": "Name of Internal Expression"
             },
@@ -1873,7 +1873,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one",
                 "tooltip": "72\nע״ב",
                 "short": "Second Face in the World of Primordial Man"
@@ -1883,7 +1883,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two",
                 "tooltip": "63ֿ\nס״ג",
                 "short": "Third Face in the World of Primordial Man"
@@ -1893,7 +1893,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "three",
                 "tooltip": "45\nמ״ה",
                 "short": "Fourth Face in the World of Primordial Man"
@@ -1903,7 +1903,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "four",
                 "tooltip": "52\nב״ן",
                 "short": "Fifth Face in the World of Primordial Man"
@@ -1921,7 +1921,7 @@
             "translation": "Father",
             "explanation": "Decree",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "term": "Abba",
@@ -1931,7 +1931,7 @@
             "translation": "Mother",
             "explanation": "Execution",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "term": "Ima",
@@ -1957,7 +1957,7 @@
         {
             "translation": "Mind",
             "style": {
-                "heading": "Body",
+                "category": "Body",
                 "phase": "root"
             },
             "term": "Moach",
@@ -1966,7 +1966,7 @@
         {
             "translation": "Bones",
             "style": {
-                "heading": "Body",
+                "category": "Body",
                 "phase": "one"
             },
             "term": "Atzamot",
@@ -1975,7 +1975,7 @@
         {
             "translation": "Tendons",
             "style": {
-                "heading": "Body",
+                "category": "Body",
                 "phase": "two"
             },
             "term": "Gidin",
@@ -1984,7 +1984,7 @@
         {
             "translation": "Flesh",
             "style": {
-                "heading": "Body",
+                "category": "Body",
                 "phase": "three"
             },
             "term": "Basar",
@@ -1994,7 +1994,7 @@
             "case": true,
             "translation": "Skin",
             "style": {
-                "heading": "Body",
+                "category": "Body",
                 "phase": "four"
             },
             "term": "Or",
@@ -2007,7 +2007,7 @@
         {
             "translation": "Shirt",
             "style": {
-                "heading": "Clothing",
+                "category": "Clothing",
                 "phase": "one"
             },
             "term": "Ktonet",
@@ -2016,7 +2016,7 @@
         {
             "translation": "Trousers",
             "style": {
-                "heading": "Clothing",
+                "category": "Clothing",
                 "phase": "two"
             },
             "term": "Michnasayim",
@@ -2025,7 +2025,7 @@
         {
             "translation": "Miter",
             "style": {
-                "heading": "Clothing",
+                "category": "Clothing",
                 "phase": "three"
             },
             "term": "Mitznefet",
@@ -2034,7 +2034,7 @@
         {
             "translation": "Belt",
             "style": {
-                "heading": "Clothing",
+                "category": "Clothing",
                 "phase": "four"
             },
             "term": "Avnet",
@@ -2043,7 +2043,7 @@
         {
             "translation": "House",
             "style": {
-                "heading": "House",
+                "category": "House",
                 "phase": "one"
             },
             "term": "Bayit",
@@ -2052,7 +2052,7 @@
         {
             "translation": "Yard",
             "style": {
-                "heading": "House",
+                "category": "House",
                 "phase": "two"
             },
             "term": "Hatzer",
@@ -2061,7 +2061,7 @@
         {
             "translation": "Field",
             "style": {
-                "heading": "House",
+                "category": "House",
                 "phase": "three"
             },
             "term": "Sadeh",
@@ -2070,7 +2070,7 @@
         {
             "translation": "Desert",
             "style": {
-                "heading": "House",
+                "category": "House",
                 "phase": "four"
             },
             "term": "Midbar",
@@ -2079,7 +2079,7 @@
         {
             "translation": "Water",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "one"
             },
             "term": "Mayim",
@@ -2089,7 +2089,7 @@
             "case": true,
             "translation": "Dust",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "four"
             },
             "term": "Afar",
@@ -2098,7 +2098,7 @@
         {
             "translation": "Fire",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "two"
             },
             "term": "Esh",
@@ -2108,7 +2108,7 @@
             "source": "Ruach",
             "translation": "Wind",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "three"
             },
             "term": "Ruach2",
@@ -2118,7 +2118,7 @@
             "source": "Ruchot",
             "translation": "Winds",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "three"
             },
             "term": "Ruchot2",
@@ -2127,7 +2127,7 @@
         {
             "translation": "Dust",
             "style": {
-                "heading": "Element",
+                "category": "Element",
                 "phase": "four"
             },
             "term": "Affar",
@@ -2148,7 +2148,7 @@
             "defaultTerm": true,
             "style": {
                 "phase": "one",
-                "heading": "Flow"
+                "category": "Flow"
             },
             "term": "Taamim",
             "hebrew": "טעמים"
@@ -2158,7 +2158,7 @@
             "defaultTerm": true,
             "style": {
                 "phase": "two",
-                "heading": "Flow"
+                "category": "Flow"
             },
             "term": "Nekudot",
             "hebrew": "נקודות"
@@ -2168,7 +2168,7 @@
             "defaultTerm": true,
             "style": {
                 "phase": "three",
-                "heading": "Flow"
+                "category": "Flow"
             },
             "term": "Tagin",
             "hebrew": "טגין"
@@ -2183,7 +2183,7 @@
             "defaultTerm": true,
             "style": {
                 "phase": "four",
-                "heading": "Flow"
+                "category": "Flow"
             },
             "term": "Otiot",
             "hebrew": "אותיות"
@@ -2192,7 +2192,7 @@
             "translation": "Diaphragm",
             "style": {
                 "phase": "two",
-                "heading": "Location"
+                "category": "Location"
             },
             "term": "Parsa",
             "hebrew": "פרסא"
@@ -2206,7 +2206,7 @@
             "translation": "End of Legs",
             "style": {
                 "phase": "four",
-                "heading": "Location"
+                "category": "Location"
             },
             "term": "Sium Raglin",
             "hebrew": "סיום רגלין"
@@ -2264,7 +2264,7 @@
         {
             "translation": "Ancient",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "root"
             },
             "term": "Atik",
@@ -2274,7 +2274,7 @@
         {
             "translation": "Ancient of Days",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "root"
             },
             "term": "Atik Yomin",
@@ -2283,7 +2283,7 @@
         {
             "translation": "Unformed",
             "style": {
-                "heading": "Phase",
+                "category": "Phase",
                 "phase": "one"
             },
             "term": "Tohu",
@@ -2292,7 +2292,7 @@
         {
             "translation": "Chaos",
             "style": {
-                "heading": "Phase",
+                "category": "Phase",
                 "phase": "two"
             },
             "term": "Bohu",
@@ -2301,7 +2301,7 @@
         {
             "translation": "Darkness",
             "style": {
-                "heading": "Phase",
+                "category": "Phase",
                 "phase": "three"
             },
             "term": "Choshech",
@@ -2310,7 +2310,7 @@
         {
             "translation": "Knowledge",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "three"
             },
             "term": "Daat",
@@ -2320,7 +2320,7 @@
         {
             "translation": "Book of the Bright",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "term": "Sefer HaBahir",
             "hebrew": "ספר הבהיר"
@@ -2328,7 +2328,7 @@
         {
             "translation": "The Bright Light",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "term": "Ohr HaBahir",
             "hebrew": "אור הבהיר"
@@ -2372,7 +2372,7 @@
         {
             "translation": "Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "HaVaYaH",
             "hebrew": "הויה"
@@ -2380,7 +2380,7 @@
         {
             "translation": "Tetragrammatons",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "HaVaYot",
             "hebrew": "הוויות"
@@ -2409,7 +2409,7 @@
             "translation": "Solomon",
             "term": "Shlomo",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             },
             "hebrew": "שלמה"
         },
@@ -2500,7 +2500,7 @@
         },
         {
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "translation": "Wisdom",
@@ -2511,7 +2511,7 @@
         },
         {
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             },
             "translation": "Mercies",
@@ -2523,7 +2523,7 @@
             "translation": "Judgements",
             "term": "Dinim",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "hebrew": "דינים"
@@ -2557,7 +2557,7 @@
             "translation": "Judgement",
             "term": "Din",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "hebrew": "דין"
@@ -2727,7 +2727,7 @@
             "term": "Gimel Rishonot",
             "explanation": "Attitude",
             "style": {
-                "heading": "Intensity"
+                "category": "Intensity"
             },
             "hebrew": "ג׳ ראשונות"
         },
@@ -2813,7 +2813,7 @@
             "translation": "Measure of Judgement",
             "term": "Midat ha Din",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "hebrew": "מדת הדין"
@@ -2823,7 +2823,7 @@
             "translation": "Measure of Mercy",
             "term": "Midat ha Rachamim",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             },
             "hebrew": "מדת הרחמים"
@@ -2833,7 +2833,7 @@
             "translation": "Measures of Judgement",
             "term": "Midot ha Din",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "hebrew": "מידות הדין"
@@ -2843,7 +2843,7 @@
             "translation": "Measures of Mercy",
             "term": "Midot ha Rachamim",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             },
             "hebrew": "מידות הרחמים"
@@ -2862,7 +2862,7 @@
             "translation": "Mercy",
             "term": "Rachamim",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             },
             "hebrew": "רחמים"
@@ -2872,7 +2872,7 @@
             "source": "Hesed",
             "term": "Hesed2",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             },
             "hebrew": "חסד"
@@ -2907,7 +2907,7 @@
         {
             "translation": "Book of Formation",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "term": "Sefer Yetzira",
             "hebrew": "ספר יצירה"
@@ -2915,7 +2915,7 @@
         {
             "translation": "A Welcoming Face",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "term": "Panim Masbirot",
             "hebrew": "פנים מסבירות"
@@ -3004,7 +3004,7 @@
             "translation": "Palace",
             "style": {
                 "phase": "four",
-                "heading": "Layers"
+                "category": "Layers"
             },
             "term": "Heichal2",
             "source": "Heichal",
@@ -3136,7 +3136,7 @@
             "translation":"Comprehension",
             "explanation":"Execution",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "hebrew":"תבונה"
@@ -3149,7 +3149,7 @@
         {
             "term":"Yod - Hey Vav - Hey",
             "style":{
-                "heading":"Holy Name",
+                "category":"Holy Name",
                 "phase":"three"
             },
             "explanation":"Intention",
@@ -3158,7 +3158,7 @@
         {
             "defaultTerm": true,
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "translation": "Grandfather of Israel and Comprehension",
@@ -3168,7 +3168,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "translation": "Grandfather of Israel and Comprehension",
@@ -3183,7 +3183,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "translation": "Grandfather of Israel",
@@ -3193,7 +3193,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "translation": "Grandfather of Israel",
@@ -3202,7 +3202,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "translation": "Comprehension",
@@ -3247,7 +3247,7 @@
             "term": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
-                "heading": "Tetragrammaton",
+                "category": "Tetragrammaton",
                 "phase":"four"
             }
         },
@@ -3255,7 +3255,7 @@
             "translation": "Judgements",
             "term": "Gevurot",
             "style": {
-                "heading": "Six Sides",
+                "category": "Six Sides",
                 "phase": "one"
             },
             "hebrew": "גבורות"
@@ -3265,7 +3265,7 @@
             "source": "Gevura",
             "translation": "Judgement",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             },
             "hebrew": "גבורה"
@@ -3331,7 +3331,7 @@
             "prefix": "The",
             "translation": "Study of the Ten Emanations",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "term": "Talmud Eser Sefirot",
             "hebrew": "תלמוד עשר ספירות"
@@ -3519,7 +3519,7 @@
             "prefix": "the",
             "translation": "Yud of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "Yud HaVaYaH",
             "hebrew": "י׳ הויה"
@@ -3528,7 +3528,7 @@
             "prefix": "the",
             "translation": "Yod of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "Yod HaVaYaH",
             "hebrew": "י׳ הויה"
@@ -3537,7 +3537,7 @@
             "prefix": "the",
             "translation": "Hey of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "Hey HaVaYaH",
             "hebrew": "ה׳ הויה"
@@ -3546,7 +3546,7 @@
             "prefix": "the",
             "translation": "Vav of Tetragrammaton",
             "style": {
-                "heading": "HaVaYaH י-ה-ו-ה"
+                "category": "HaVaYaH י-ה-ו-ה"
             },
             "term": "Vav HaVaYaH",
             "hebrew": "ו׳ הויה"
@@ -3554,7 +3554,7 @@
         {
             "translation": "Spirits",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "two"
             },
             "term": "Ruchin",
@@ -3563,7 +3563,7 @@
         {
             "translation": "Spirits",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "two"
             },
             "term": "Ruchot",
@@ -3572,7 +3572,7 @@
         {
             "translation": "Wheels",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "four"
             },
             "term": "Ofanim",
@@ -3581,7 +3581,7 @@
         {
             "translation": "Wheel",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "four"
             },
             "term": "Ofan",
@@ -3590,7 +3590,7 @@
         {
             "translation": "Angels",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "three"
             },
             "term": "Mala'achim",
@@ -3691,7 +3691,7 @@
             "prefix": "the",
             "translation": "Circle of Mother",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "term": "Igul Ima",
@@ -3701,7 +3701,7 @@
             "prefix": "the",
             "translation": "Circle of Father",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "term": "Igul Abba",
@@ -3758,14 +3758,14 @@
         {
             "translation": "Baal HaSulam",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             },
             "term": "Yehuda Leib HaLevi Ashlag",
             "hebrew": "יהודה ליב הלוי אשלג"
         },
         {
             "style": {
-                "heading": "Author"
+                "category": "Author"
             },
             "term": "Baal HaSulam",
             "hebrew":"בעל הסולם"
@@ -3823,14 +3823,14 @@
         {
             "translation": "Combined Tetragrammaton",
             "style": {
-                "heading": "Y-A-H-D-O-N-H-Y י-א-ה-ד-ו-נ-ה-י"
+                "category": "Y-A-H-D-O-N-H-Y י-א-ה-ד-ו-נ-ה-י"
             },
             "term": "YAHDONHY",
             "hebrew": "יאהדונהי"
         },
         {
             "style": {
-                "heading": "Location"
+                "category": "Location"
             },
             "translation": "End",
             "term": "Sof",
@@ -3848,7 +3848,7 @@
         {
             "translation": "Blocked Wisdom",
             "style": {
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "Hochma Stima ' a",
             "hebrew": "חכמה סתימאה"
@@ -3856,7 +3856,7 @@
         {
             "translation": "Blocked Wisdom",
             "style": {
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "Hochma Stimaa",
             "hebrew": "חכמה סתימאה"
@@ -3864,7 +3864,7 @@
         {
             "translation": "Formations",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "three"
             },
             "term": "Yetzirot",
@@ -4261,7 +4261,7 @@
             "term": "Holam",
             "explanation": "Smallness",
             "style": {
-                "heading": "Punctuation",
+                "category": "Punctuation",
                 "phase": "root"
             },
             "hebrew": "חולם",
@@ -4272,7 +4272,7 @@
             "term": "Melafom",
             "explanation": "Greatness",
             "style": {
-                "heading": "Punctuation",
+                "category": "Punctuation",
                 "phase": "one"
             },
             "hebrew": "מלאפום"
@@ -4282,7 +4282,7 @@
             "term": "Shuruk",
             "explanation": "Greatness",
             "style": {
-                "heading": "Punctuation",
+                "category": "Punctuation",
                 "phase": "one"
             },
             "hebrew": "שורוק",
@@ -4293,7 +4293,7 @@
             "term": "Hirik",
             "explanation": "Expression",
             "style": {
-                "heading": "Punctuation",
+                "category": "Punctuation",
                 "phase": "two"
             },
             "hebrew": "חיריק",
@@ -4302,7 +4302,7 @@
         {
             "fixed": true,
             "style": {
-                "heading": "אָ",
+                "category": "אָ",
                 "phase": "root"
             },
             "translation": "Punctuation of Crown",
@@ -4452,7 +4452,7 @@
         {
             "translation": "Understandings",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "two"
             },
             "term": "Binot",
@@ -4512,7 +4512,7 @@
         {
             "translation": "Lord",
             "style": {
-                "heading": "Name of God"
+                "category": "Name of God"
             },
             "term": "ADNI",
             "hebrew": "אדני"
@@ -4536,12 +4536,12 @@
             "term": "Hulin",
             "hebrew": "חולין",
             "style": {
-                "heading": "Tractate"
+                "category": "Tractate"
             }
         },
         {
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "translation": "Genesis Rabba",
             "term": "Beresheet Rabba",
@@ -4576,7 +4576,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "translation": "Father and Mother",
@@ -4586,7 +4586,7 @@
         },
         {
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "defaultTerm": true,
@@ -4600,7 +4600,7 @@
             "term": "Vav Kzavot",
             "explanation": "Implementation",
             "style": {
-                "heading": "Intensity"
+                "category": "Intensity"
             },
             "hebrew": "ו׳ קצוות"
         },
@@ -4671,7 +4671,7 @@
         },
         {
             "style": {
-                "heading": "Angel"
+                "category": "Angel"
             },
             "term": "Zahariel",
             "hebrew": "זכריאל"
@@ -4699,7 +4699,7 @@
         {
             "translation": "Crown",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "root"
             },
             "term": "Kitra",
@@ -4779,14 +4779,14 @@
         },
         {
             "style": {
-                "heading": "Zohar Portion"
+                "category": "Zohar Portion"
             },
             "term": "Idra Zuta",
             "hebrew": "אדרא זוטא"
         },
         {
             "style": {
-                "heading": "Zohar Portion"
+                "category": "Zohar Portion"
             },
             "term": "Idra Raba",
             "hebrew": "אדרא רבא"
@@ -4803,7 +4803,7 @@
         },
         {
             "style": {
-                "heading": "Book"
+                "category": "Book"
             },
             "translation": "Genesis Rabba",
             "term": "Bershit Raba",
@@ -4821,7 +4821,7 @@
         },
         {
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "one"
             },
             "prefix": "The",
@@ -4831,7 +4831,7 @@
         },
         {
             "style": {
-                "heading": "World"
+                "category": "World"
             },
             "prefix": "The",
             "translation": "World of Correction",
@@ -4869,7 +4869,7 @@
         },
         {
             "style": {
-                "heading": "A-Ha-Va-H א-ה-ב-ה"
+                "category": "A-Ha-Va-H א-ה-ב-ה"
             },
             "translation": "Love",
             "term": "AHaVaH",
@@ -4877,7 +4877,7 @@
         },
         {
             "style": {
-                "heading": "A-Ha-Va-H א-ה-ב-ה"
+                "category": "A-Ha-Va-H א-ה-ב-ה"
             },
             "translation": "Love",
             "term": "AhaVaH",
@@ -4956,7 +4956,7 @@
         {
             "translation": "Kingdoms",
             "style": {
-                "heading": "Vessel",
+                "category": "Vessel",
                 "phase": "four"
             },
             "term": "Malchuts",
@@ -4974,7 +4974,7 @@
             ],
             "style": {
                 "phase": "root",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "sides",
             "hebrew": "צדדים"
@@ -4991,7 +4991,7 @@
             ],
             "style": {
                 "phase": "one",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "streams",
             "hebrew": "נחלים"
@@ -5008,7 +5008,7 @@
             ],
             "style": {
                 "phase": "two",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "rivers",
             "hebrew": "נהרות"
@@ -5025,7 +5025,7 @@
             ],
             "style": {
                 "phase": "three",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "paths",
             "hebrew": "אורחות"
@@ -5042,7 +5042,7 @@
             ],
             "style": {
                 "phase": "four",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "trails",
             "hebrew": "שבילים"
@@ -5059,7 +5059,7 @@
             ],
             "style": {
                 "phase": "root",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "side",
             "hebrew": "צד"
@@ -5076,7 +5076,7 @@
             ],
             "style": {
                 "phase": "one",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "stream",
             "hebrew": "נחל"
@@ -5093,7 +5093,7 @@
             ],
             "style": {
                 "phase": "two",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "river",
             "hebrew": "נהר"
@@ -5110,7 +5110,7 @@
             ],
             "style": {
                 "phase": "three",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "path",
             "hebrew": "אורח"
@@ -5127,7 +5127,7 @@
             ],
             "style": {
                 "phase": "four",
-                "heading": "Sea"
+                "category": "Sea"
             },
             "term": "trail",
             "hebrew": "שביל"
@@ -5139,7 +5139,7 @@
             "source": "HaYam HaElyon",
             "style": {
                 "phase": "four",
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "upper sea",
             "hebrew": "הים העליון"
@@ -5151,7 +5151,7 @@
             "source": "HaYam HaTachton",
             "style": {
                 "phase": "four",
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "bottom sea",
             "hebrew": "הים התחתון"
@@ -5174,7 +5174,7 @@
             "source": "Yamim",
             "style": {
                 "phase": "four",
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "seas",
             "hebrew": "ימים"
@@ -5184,7 +5184,7 @@
             "source": "Yamim Elyonim",
             "style": {
                 "phase": "four",
-                "heading": "Vessel"
+                "category": "Vessel"
             },
             "term": "upper seas",
             "hebrew": "ימים עליונים"
@@ -5222,7 +5222,7 @@
         {
             "translation": "The World of Binding",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "term": "Olam ha Akudim",
@@ -5252,7 +5252,7 @@
             "source": "Yechidot",
             "translation": "Units",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "four"
             },
             "term": "units",
@@ -5267,7 +5267,7 @@
             "source": "Asarot",
             "translation": "Tens",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "three"
             },
             "term": "tens",
@@ -5282,7 +5282,7 @@
             "source": "Meot",
             "translation": "Hundreds",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "two"
             },
             "term": "hundreds",
@@ -5298,7 +5298,7 @@
             "translation": "Thousands",
             "defaultTerm": true,
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "one"
             },
             "term": "thousands",
@@ -5314,7 +5314,7 @@
             "translation": "Tens of Thousands",
             "defaultTerm": true,
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "root"
             },
             "term": "tens thousands",
@@ -5329,7 +5329,7 @@
             "source": "Eser",
             "translation": "Ten",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "three"
             },
             "term": "ten",
@@ -5344,7 +5344,7 @@
             "source": "Me'ah",
             "translation": "One Hundred",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "two"
             },
             "term": "one hundred",
@@ -5359,7 +5359,7 @@
             "source": "Eleph",
             "translation": "One Thousand",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "one"
             },
             "term": "one thousand",
@@ -5375,7 +5375,7 @@
             "source": "Eleph",
             "translation": "One Thousand",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "one"
             },
             "term": "1 , 000",
@@ -5390,7 +5390,7 @@
             "source": "Revava",
             "translation": "Ten Thousand",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "root"
             },
             "term": "10 , 000",
@@ -5405,7 +5405,7 @@
             "source": "Eser Revavot",
             "translation": "One Hundred Thousand",
             "style": {
-                "heading": "Amount",
+                "category": "Amount",
                 "phase": "root"
             },
             "term": "100 , 000",
@@ -5454,7 +5454,7 @@
             "explanation":"Key",
             "term": "Ateret Yesod",
             "style":{
-                "heading":"Vessel",
+                "category":"Vessel",
                 "phase":"four"
             },
             "hebrew": "עטרת יסוד"
@@ -5822,28 +5822,28 @@
         {
             "style": {
                 "phase": "one",
-                "heading": "Color"
+                "category": "Color"
             },
             "term": "white"
         },
         {
             "style": {
                 "phase": "two",
-                "heading": "Color"
+                "category": "Color"
             },
             "term": "red"
         },
         {
             "style": {
                 "phase": "three",
-                "heading": "Color"
+                "category": "Color"
             },
             "term": "green"
         },
         {
             "style": {
                 "phase": "four",
-                "heading": "Color"
+                "category": "Color"
             },
             "term": "black"
         },
@@ -6026,7 +6026,7 @@
             "translation": "First Three of Understanding",
             "explanation": "Decree",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "hebrew": "ג״ר דבינה"
@@ -6037,7 +6037,7 @@
             "translation": "Last Seven of Understanding",
             "explanation": "Execution",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "hebrew": "ז״ת דבינה"
@@ -6048,7 +6048,7 @@
             "translation": "First Three of the Face of Understanding",
             "explanation": "Decree",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "hebrew": "ג״ר דפרצוף בינה"
@@ -6059,7 +6059,7 @@
             "translation": "Last Seven of the Face of Understanding",
             "explanation": "Execution",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "hebrew": "ז״ת פרצוף בינה"
@@ -6070,7 +6070,7 @@
             "translation": "First Three of the Face of Understanding",
             "explanation": "Decree",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "one"
             },
             "hebrew": "פרצוף ג״ר דבינה"
@@ -6081,7 +6081,7 @@
             "translation": "Last Seven of the Face of Understanding",
             "explanation": "Execution",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "two"
             },
             "hebrew": "פרצוף ז״ת דבינה"
@@ -6164,7 +6164,7 @@
         {
             "term": "MALBIM",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             },
             "hebrew": "מלבים"
         },
@@ -6181,7 +6181,7 @@
         {
             "term": "Baal Shem Tov",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             },
             "hebrew": "בעל שם טוב"
         },
@@ -6201,7 +6201,7 @@
         {
             "term": "Eden",
             "style": {
-                "heading": "Location"
+                "category": "Location"
             },
             "hebrew": "עדן"
         },
@@ -6211,7 +6211,7 @@
             "translation": "Great Small Face and Female",
             "explanation": "Intention",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "three"
             },
             "hebrew": "זעיר אנפין ונוקבא גדולים"
@@ -6222,7 +6222,7 @@
             "translation": "Small Small Face and Female",
             "explanation": "Desire",
             "style": {
-                "heading": "Face",
+                "category": "Face",
                 "phase": "four"
             },
             "hebrew": "זעיר אנפין ונוקבא קטנים"
@@ -6361,7 +6361,7 @@
         {
             "term": "Michael",
             "style": {
-                "heading": "Angel",
+                "category": "Angel",
                 "phase": "one"
             },
             "hebrew": "מיכאל"
@@ -6369,7 +6369,7 @@
         {
             "term": "Gabriel",
             "style": {
-                "heading": "Angel",
+                "category": "Angel",
                 "phase": "two"
             },
             "hebrew": "גבריאל"
@@ -6377,7 +6377,7 @@
         {
             "term": "Uriel",
             "style": {
-                "heading": "Angel",
+                "category": "Angel",
                 "phase": "four"
             },
             "hebrew": "אוריאל"
@@ -6385,7 +6385,7 @@
         {
             "term": "Raphael",
             "style": {
-                "heading": "Angel",
+                "category": "Angel",
                 "phase": "three"
             },
             "hebrew": "רפאל"
@@ -6396,7 +6396,7 @@
             "translation": "North",
             "explanation": "Change",
             "style": {
-                "heading": "Angle",
+                "category": "Angle",
                 "phase": "one"
             },
             "hebrew": "צפון"
@@ -6407,7 +6407,7 @@
             "translation": "South",
             "explanation": "Start",
             "style": {
-                "heading": "Angle",
+                "category": "Angle",
                 "phase": "root"
             },
             "hebrew": "דרום"
@@ -6418,7 +6418,7 @@
             "translation": "East",
             "explanation": "Stop",
             "style": {
-                "heading": "Angle",
+                "category": "Angle",
                 "phase": "three"
             },
             "hebrew": "מזרח"
@@ -6430,7 +6430,7 @@
             "language": "english",
             "explanation": "Dominion",
             "style": {
-                "heading": "Angle",
+                "category": "Angle",
                 "phase": "four"
             },
             "hebrew": "מערב"
@@ -6448,27 +6448,27 @@
         {
             "term": "Egypt",
             "style": {
-                "heading": "Location",
+                "category": "Location",
                 "hebrew": "מצרים"
             }
         },
         {
             "term": "Edom",
             "style": {
-                "heading": "Location"
+                "category": "Location"
             },
             "hebrew": "אדום"
         },
         {
             "term": "Bozrah",
             "style": {
-                "heading": "Location"
+                "category": "Location"
             }
         },
         {
             "term": "Abraham",
             "style": {
-                "heading": "Class/Patriarch",
+                "category": "Class/Patriarch",
                 "phase": "root"
             },
             "transliterated": "Avraham",
@@ -6478,7 +6478,7 @@
         {
             "term": "Isaac",
             "style": {
-                "heading": "Class/Patriarch",
+                "category": "Class/Patriarch",
                 "phase": "one"
             },
             "transliterated": "Yitzhak",
@@ -6488,7 +6488,7 @@
         {
             "term": "Jacob",
             "style": {
-                "heading": "Class/Patriarch",
+                "category": "Class/Patriarch",
                 "phase": "two"
             },
             "transliterated": "Yaakov",
@@ -6498,7 +6498,7 @@
         {
             "term": "Joseph",
             "style": {
-                "heading": "Class",
+                "category": "Class",
                 "phase": "collective"
             },
             "transliterated": "Yosef",
@@ -6508,28 +6508,28 @@
         {
             "term": "judgement",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "one"
             }
         },
         {
             "term": "mercy",
             "style": {
-                "heading": "Aspect",
+                "category": "Aspect",
                 "phase": "root"
             }
         },
         {
             "term": "Aza",
             "style": {
-                "heading": "Angel"
+                "category": "Angel"
             },
             "hebrew": "עזא"
         },
         {
             "term": "Azael",
             "style": {
-                "heading": "Angel"
+                "category": "Angel"
             },
             "hebrew": "עזאל"
         },
@@ -6548,37 +6548,37 @@
         {
             "term": "Lishna Kama",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "RASHBAM",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Rabbi Ishmael",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Rabbi Hai Gaon",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Rabbi Hamai Gaon",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Rabbi Elazar of Garmiza",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
@@ -6586,37 +6586,37 @@
             "translation": "The First Sages",
             "hebrew": "ראשונים",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "RAMBAN",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Baal HaTurim",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Baal Shulchan Aruch",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Vilna Gaon",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
             "term": "Ladi Gaon",
             "style": {
-                "heading": "Author"
+                "category": "Author"
             }
         },
         {
@@ -6626,7 +6626,7 @@
             "hebrew": "סתרי תורה",
             "transliterated": "Sitrai Torah",
             "style": {
-                "heading": "Knowledge"
+                "category": "Knowledge"
             }
         },
         {
@@ -6636,7 +6636,7 @@
             "hebrew": "טעמי תורה",
             "transliterated": "Taamai Torah",
             "style": {
-                "heading": "Knowledge"
+                "category": "Knowledge"
             }
         },
         {
@@ -6646,7 +6646,7 @@
             "hebrew": "סתרי תורה",
             "transliterated": "Sitrai Torah",
             "style": {
-                "heading": "Knowledge"
+                "category": "Knowledge"
             }
         },
         {
@@ -6656,7 +6656,7 @@
             "hebrew": "טעמי תורה",
             "transliterated": "Taamai Torah",
             "style": {
-                "heading": "Knowledge"
+                "category": "Knowledge"
             }
         },
         {
@@ -6666,7 +6666,7 @@
             "hebrew": "טעמי תורה",
             "transliterated": "Taamai Torah",
             "style": {
-                "heading": "Knowledge"
+                "category": "Knowledge"
             }
         },
         {
@@ -6679,7 +6679,7 @@
             "hebrew": "אופנים",
             "translation": "Cycles",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "four"
             }
         },
@@ -6688,7 +6688,7 @@
             "hebrew": "חיות",
             "translation": "Animals",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "three"
             }
         },
@@ -6696,7 +6696,7 @@
             "term": "Seraphim",
             "hebrew": "שרפים",
             "style": {
-                "heading": "Angels",
+                "category": "Angels",
                 "phase": "two"
             }
         },
@@ -6708,7 +6708,7 @@
         {
             "term": "Melech ha Daat",
             "style": {
-                "heading": "King",
+                "category": "King",
                 "phase": "three"
             },
             "translation": "King of Knowledge",
@@ -6740,7 +6740,7 @@
             "source": "Olam Ha Tzimtzum",
             "translation": "World of Restriction",
             "style": {
-                "heading": "World",
+                "category": "World",
                 "phase": "root"
             },
             "hebrew": "עולם הצמצום"
@@ -6799,7 +6799,7 @@
             "translation": "Introduction of The Book of Zohar",
             "hebrew": "הקדמת ספר הזוהר",
             "style": {
-                "heading": "Book"
+                "category": "Book"
             }
         },
         {
@@ -6858,7 +6858,7 @@
             "term": "Ah Av",
             "hebrew": "אח אב",
             "style": {
-                "heading": "King of Israel"
+                "category": "King of Israel"
             }
         },
         {
@@ -6882,7 +6882,7 @@
             "translation":"God",
             "hebrew": "אלהים",
             "style": {
-                "heading": "Name of God",
+                "category": "Name of God",
                 "phase":"one"
             }
         },
@@ -6891,7 +6891,7 @@
             "translation":"I will be",
             "hebrew":"אהיה",
             "style":{
-                "heading":"Name of God",
+                "category":"Name of God",
                 "phase":"root"
             }
         },
@@ -6902,7 +6902,7 @@
             "hebrew":"ש-ד-י",
             "style":{
                 "phase":"collective",
-                "heading":"Name of God"
+                "category":"Name of God"
             }
         },
         {
@@ -6923,7 +6923,7 @@
         {
             "term":"Elijah",
             "style":{
-                "heading":"Prophet"
+                "category":"Prophet"
             }
         },
         {
@@ -6948,7 +6948,7 @@
             "term":"Aaron",
             "hebrew":"אהרון",
             "style":{
-                "heading":"Six Sides",
+                "category":"Six Sides",
                 "phase":"four"
             }
         },
@@ -6957,7 +6957,7 @@
             "hebrew":"מ״ב",
             "translation":"42",
             "style":{
-                "heading":"Holy Name",
+                "category":"Holy Name",
                 "phase":"one"
             }
         },
@@ -6969,13 +6969,13 @@
         {
             "term":"Shema",
             "style":{
-                "heading":"Prayer"
+                "category":"Prayer"
             }
         },
         {
             "term":"Rosh HaShanah",
             "style":{
-                "heading":"Festival"
+                "category":"Festival"
             },
             "translation":"New Year",
             "explanation":"Jewish New Year",
@@ -6984,21 +6984,21 @@
         {
             "term":"Passover",
             "style":{
-                "heading":"Festival"
+                "category":"Festival"
             },
             "hebrew":"פסח"
         },
         {
             "term":"Shavuot",
             "style":{
-                "heading":"Festival"
+                "category":"Festival"
             },
             "hebrew":"שבועות"
         },
         {
             "term":"Sukkot",
             "style":{
-                "heading":"Festival"
+                "category":"Festival"
             },
             "hebrew":"סוכות"
         },
@@ -7044,7 +7044,7 @@
             "source": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
-                "heading": "Tetragrammaton",
+                "category": "Tetragrammaton",
                 "phase":"four"
             }
         },
@@ -7054,7 +7054,7 @@
             "source": "Hey Ela'a",
             "hebrew": "ה׳ עילאה",
             "style": {
-                "heading": "Tetragrammaton",
+                "category": "Tetragrammaton",
                 "phase":"two"
             },
             "defaultTerm":true
@@ -7063,7 +7063,7 @@
     "style": {
         "chest": {
             "phase": "two",
-            "heading": "Location",
+            "category": "Location",
             "descriptions": {
                 "technical": {
                     "short": "The division between Vessels of Bestowal (GE) and Vessels of Reception (AHP)",
@@ -7076,7 +7076,7 @@
             }
         },
         "skull": {
-            "heading": "Face",
+            "category": "Face",
             "phase": "root",
             "descriptions": {
                 "technical": {
@@ -7086,7 +7086,7 @@
         },
         "sea": {
             "phase": "four",
-            "heading": "Vessel",
+            "category": "Vessel",
             "descriptions": {
                 "technical": {
                     "short": "When the Female (Desire) receives Wisdom"
@@ -7094,7 +7094,7 @@
             }
         },
         "primordial man": {
-            "heading": "World",
+            "category": "World",
             "phase": "root",
             "descriptions": {
                 "technical": {
@@ -7106,7 +7106,7 @@
             }
         },
         "72 names - right line verse": {
-            "heading": "Verse",
+            "category": "Verse",
             "phase": "root",
             "descriptions": {
                 "source": {
@@ -7116,7 +7116,7 @@
             }
         },
         "72 names - left line verse": {
-            "heading": "Verse",
+            "category": "Verse",
             "phase": "one",
             "descriptions": {
                 "source": {
@@ -7126,7 +7126,7 @@
             }
         },
         "72 names - middle line verse": {
-            "heading": "Verse",
+            "category": "Verse",
             "phase": "two",
             "descriptions": {
                 "source": {

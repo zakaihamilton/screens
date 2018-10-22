@@ -54,6 +54,7 @@ screens.app.diagram = function AppDiagram(me) {
                     addStyles: true,
                     abridged: false,
                     keepSource: false,
+                    category: true,
                     headings: true,
                     subHeadings: true,
                     language: "Auto",
@@ -71,6 +72,7 @@ screens.app.diagram = function AppDiagram(me) {
                 "abridged": me.reload.set,
                 "pages": me.reload.set,
                 "columns": me.reload.set,
+                "category": me.reload.set,
                 "headings": me.reload.set,
                 "subHeadings": me.reload.set
             });
@@ -134,7 +136,7 @@ screens.app.diagram = function AppDiagram(me) {
             hebrew: ".item.hebrew",
             translation: ".item.translation",
             explanation: ".item.explanation",
-            heading: ".heading",
+            category: ".category",
             source: ".source"
         }, "None");
         for (var name in widgets) {

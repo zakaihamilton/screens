@@ -1,24 +1,60 @@
+.kab-term-category.kab-term-english {
+    padding-left:1.5em;
+}
+
+.kab-term-category.kab-term-hebrew {
+    padding-right:1.5em;
+}
+
+[kab-term-category]:after {
+    position:absolute;
+    font-weight:bold;
+    font-size:40%;
+    text-transform:uppercase;
+    pointer-events: none;
+    user-select: none;
+    content: attr(kab-term-category);
+    transform: rotate(-90deg);    
+}
+
+[kab-term-category].kab-term-english:after {
+    left:-0.8em;
+}
+
+[kab-term-category].kab-term-hebrew:after {
+    right:-0.8em;
+}
+
+.kab-term-category.kab-term-english {
+    padding-left:1.5em;
+}
+
+.kab-term-category.kab-term-hebrew {
+    padding-right:1.5em;
+}
+
 [kab-term-heading]:after {
     position:absolute;
     padding-left:2px;
     padding-right:2px;
+    left:0em;
+    right:0em;
     top:-1em;
+    text-align: center;
     vertical-align:middle;
     height:1em;
-    font-weight:bold;
     font-size:50%;
-    text-transform:uppercase;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-heading);
 }
 
 [kab-term-heading].kab-term-english:after {
-    left:0em;
+    left:1em;
 }
 
 [kab-term-heading].kab-term-hebrew:after {
-    right:0em;
+    right:1em;
 }
 
 [kab-term-sub-heading]:after {
@@ -35,6 +71,14 @@
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-sub-heading);
+}
+
+[kab-term-sub-heading].kab-term-english:after {
+    left:1em;
+}
+
+[kab-term-sub-heading].kab-term-hebrew:after {
+    right:1em;
 }
 
 [kab-term-tooltip].kab-term-phase-none {
