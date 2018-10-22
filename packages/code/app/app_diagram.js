@@ -108,7 +108,7 @@ screens.app.diagram = function AppDiagram(me) {
             }
             var result = await me.core.util.map(array, async (text) => {
                 var info = await me.kab.text.parse(window.language, text, window.options);
-                if(!window.terms) {
+                if (!window.terms) {
                     window.terms = {};
                 }
                 window.terms = Object.assign(window.terms, info.terms);
@@ -141,7 +141,9 @@ screens.app.diagram = function AppDiagram(me) {
         }, "None");
         for (var name in widgets) {
             var child = widgets[name];
-            child.parentNode.style.display = child.innerText === "None" ? "none" : "";
+            if (child) {
+                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
+            }
         }
         var phase = widgets.phase.innerText.toLowerCase();
         var classes = "title widget-transform-level "

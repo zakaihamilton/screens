@@ -103,7 +103,7 @@ screens.widget.transform = function WidgetTransform(me) {
             widget.transformText = value;
         }
     };
-    me.sync = async function(object) {
+    me.sync = async function (object) {
         await me.storage.cache.empty();
         me.transform(object);
     };
@@ -118,7 +118,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget, "ui.work.state", true);
         var language = widget.options.language.toLowerCase();
         if (language === "auto") {
-            if(text && text.startsWith("<")) {
+            if (text && text.startsWith("<")) {
                 language = "none";
             }
             else {
@@ -131,7 +131,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.options.reload = true;
         me.media.voice.stop();
         var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
-        var info = {text, terms:{}, data:null};
+        var info = { text, terms: {}, data: null };
         if (language !== "none") {
             info = await me.kab.text.parse(language, text, options, (percent) => {
                 me.core.property.set(widget.var.spinner, "percent", percent);
@@ -189,11 +189,14 @@ screens.widget.transform = function WidgetTransform(me) {
             translation: ".item.translation",
             explanation: ".item.explanation",
             category: ".category",
-            source: ".source"
+            source: ".source",
+            description: ".item.style.descriptions.long|"
         }, "None");
         for (var name in widgets) {
             var child = widgets[name];
-            child.parentNode.style.display = child.innerText === "None" ? "none" : "";
+            if (child) {
+                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
+            }
         }
         var phase = widgets.phase.innerText.toLowerCase();
         var classes = "title widget-transform-level "
@@ -205,7 +208,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.closePopup = function (object) {
         var modal = me.ui.node.class(object, "modal");
-        if(modal) {
+        if (modal) {
             me.core.property.set(modal, "ui.class.remove", "is-active");
         }
     };
@@ -987,7 +990,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     break;
                 }
                 var newPage = false;
-                if(widget) {
+                if (widget) {
                     me.cleanupWidget(widget);
                     me.clearWidget(widget, modifiers);
                 }

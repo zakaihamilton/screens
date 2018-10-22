@@ -316,6 +316,9 @@ screens.ui.node = function UINode(me) {
         var widgets = [];
         for (var binding in bindings) {
             var widget = widgets[binding] = me.ui.node.findByName(object, binding);
+            if(!widget) {
+                continue;
+            }
             var values = bindings[binding].split("|");
             if(baseDefault) {
                 values.push(baseDefault);
