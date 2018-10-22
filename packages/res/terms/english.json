@@ -117,7 +117,7 @@
             "Hochma cannot shine": "Hochma2 cannot shine",
             "VAK de Hochma": "VAK de Hochma2",
             "GAR de Hochma": "GAR de Hochma2",
-            "GAR of the Hochma":"GAR of the Hochma2",
+            "GAR of the Hochma": "GAR of the Hochma2",
             "bottom half of Hochma": "bottom half of Hochma2",
             "VAK in Hochma": "VAK in Hochma2",
             "water of Hochma": "water of Hochma2",
@@ -129,7 +129,7 @@
             "Vav Ktzavot": "Vav Kzavot",
             "face-to-face": "Face to Face",
             "judgment": "judgement",
-            "do not receive Hochma":"do not receive Hochma2",
+            "do not receive Hochma": "do not receive Hochma2",
             "receives the Hochma": "receives the Hochma2",
             "guarding the Hochma": "guarding the Hochma2",
             "Hassadim and Hochma": "Hassadim and Hochma2",
@@ -157,27 +157,27 @@
             "Av in heaven": "Av2 in heaven",
             "without Hochma": "without Hochma2",
             "the light of Hochma is without Hesed": "the light of Hochma2 is without Hesed2",
-            "good order":"__good order",
-            "own good":"own __good",
-            "individual good":"individual __good",
-            "Rosh Hashanah":"Rosh HaShanah",
-            "evil-mindedness":"evil__-mindedness",
-            "greatest evil":"greatest __evil",
-            "Hochma in Beresheet":"Hochma2 in Beresheet",
-            "spirit of Hochma":"spirit of Hochma2"
+            "good order": "__good order",
+            "own good": "own __good",
+            "individual good": "individual __good",
+            "Rosh Hashanah": "Rosh HaShanah",
+            "evil-mindedness": "evil__-mindedness",
+            "greatest evil": "greatest __evil",
+            "Hochma in Beresheet": "Hochma2 in Beresheet",
+            "spirit of Hochma": "spirit of Hochma2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
             "Partzuf Atik": "Partzuf de Atik",
             "Partzuf AK": "Partzuf de Adam Kadmon",
             "Partzuf Adam Kadmon": "Partzuf de Adam Kadmon",
-            "Rosh AA":"Rosh de AA"
+            "Rosh AA": "Rosh de AA"
         },
-        "alternate":{
-            "Avraham":"Abraham",
-            "Yitzhak":"Isaac",
-            "Yaakov":"Jacob",
-            "Yosef":"Joseph"
+        "alternate": {
+            "Avraham": "Abraham",
+            "Yitzhak": "Isaac",
+            "Yaakov": "Jacob",
+            "Yosef": "Joseph"
         },
         "tags": {
             "<subtitle>": "\n<b>",
@@ -334,8 +334,8 @@
             "replace": "<hr style=\"column-span:all\"></hr>"
         },
         {
-            "find":"/\\((\\d*)\\)",
-            "replace":"<b>($1)</b>"
+            "find": "/\\((\\d*)\\)",
+            "replace": "<b>($1)</b>"
         }
     ],
     "post": [
@@ -1315,28 +1315,28 @@
         },
         {
             "term": "biceps",
-            "hebrew":"קבורת",
-            "transliterated":"Kiboret",
+            "hebrew": "קבורת",
+            "transliterated": "Kiboret",
             "style": {
-                "category":"Joints",
+                "category": "Joints",
                 "phase": "root"
             }
         },
         {
             "term": "forearm",
-            "hebrew":"זרוע",
-            "transliterated":"Zeroah",
+            "hebrew": "זרוע",
+            "transliterated": "Zeroah",
             "style": {
-                "category":"Joints",
+                "category": "Joints",
                 "phase": "one"
             }
         },
         {
             "term": "palm",
-            "hebrew":"כף היד",
-            "transliterated":"Kaf HaYad",
+            "hebrew": "כף היד",
+            "transliterated": "Kaf HaYad",
             "style": {
-                "category":"Joints",
+                "category": "Joints",
                 "phase": "two"
             }
         },
@@ -1790,7 +1790,7 @@
             },
             "term": "Nukva",
             "hebrew": "נוקבא",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "translation": "Window",
@@ -2219,6 +2219,9 @@
         {
             "translation": "End",
             "term": "Sium",
+            "style": {
+                "category": "Location"
+            },
             "hebrew": "סיום"
         },
         {
@@ -2773,7 +2776,7 @@
         },
         {
             "translation": "Air",
-            "explanation":"Alignment",
+            "explanation": "Alignment",
             "term": "Avir",
             "hebrew": "אויר"
         },
@@ -3132,28 +3135,28 @@
             "term": "YESHSUT"
         },
         {
-            "term":"Tevuna",
-            "translation":"Comprehension",
-            "explanation":"Execution",
+            "term": "Tevuna",
+            "translation": "Comprehension",
+            "explanation": "Execution",
             "style": {
                 "category": "Face",
                 "phase": "two"
             },
-            "hebrew":"תבונה"
+            "hebrew": "תבונה"
         },
         {
-            "term":"Ain",
-            "translation":"Naught",
-            "hebrew":"אין"
+            "term": "Ain",
+            "translation": "Naught",
+            "hebrew": "אין"
         },
         {
-            "term":"Yod - Hey Vav - Hey",
-            "style":{
-                "category":"Holy Name",
-                "phase":"three"
+            "term": "Yod - Hey Vav - Hey",
+            "style": {
+                "category": "Holy Name",
+                "phase": "three"
             },
-            "explanation":"Intention",
-            "hebrew":"י-ה-ו-ה"
+            "explanation": "Intention",
+            "hebrew": "י-ה-ו-ה"
         },
         {
             "defaultTerm": true,
@@ -3248,7 +3251,7 @@
             "hebrew": "ה׳ תתאה",
             "style": {
                 "category": "Tetragrammaton",
-                "phase":"four"
+                "phase": "four"
             }
         },
         {
@@ -3746,8 +3749,8 @@
             "translation": "Divinity",
             "term": "Shechina",
             "hebrew": "שכינה",
-            "style":{
-                "phase":"four"
+            "style": {
+                "phase": "four"
             }
         },
         {
@@ -3768,7 +3771,7 @@
                 "category": "Author"
             },
             "term": "Baal HaSulam",
-            "hebrew":"בעל הסולם"
+            "hebrew": "בעל הסולם"
         },
         {
             "translation": "End of Legs",
@@ -4265,7 +4268,7 @@
                 "phase": "root"
             },
             "hebrew": "חולם",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "translation": "In the Letters",
@@ -4286,7 +4289,7 @@
                 "phase": "one"
             },
             "hebrew": "שורוק",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "translation": "Below the Letters",
@@ -4297,7 +4300,7 @@
                 "phase": "two"
             },
             "hebrew": "חיריק",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "fixed": true,
@@ -4315,12 +4318,12 @@
             },
             "translation": "Eye Sockets",
             "term": "Nikvey Eynaim",
-            "explanation":"Gate of Power",
+            "explanation": "Gate of Power",
             "hebrew": "נקבי עיינים"
         },
         {
-            "term":"Yod - Hey - Vav",
-            "abridged":"First Nine Emanations"
+            "term": "Yod - Hey - Vav",
+            "abridged": "First Nine Emanations"
         },
         {
             "term": "NE",
@@ -5451,11 +5454,11 @@
         },
         {
             "translation": "Encirclement of Foundation",
-            "explanation":"Key",
+            "explanation": "Key",
             "term": "Ateret Yesod",
-            "style":{
-                "category":"Vessel",
-                "phase":"four"
+            "style": {
+                "category": "Vessel",
+                "phase": "four"
             },
             "hebrew": "עטרת יסוד"
         },
@@ -6473,7 +6476,7 @@
             },
             "transliterated": "Avraham",
             "hebrew": "אברהם",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "term": "Isaac",
@@ -6483,7 +6486,7 @@
             },
             "transliterated": "Yitzhak",
             "hebrew": "יצחק",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "term": "Jacob",
@@ -6493,7 +6496,7 @@
             },
             "transliterated": "Yaakov",
             "hebrew": "יעקב",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "term": "Joseph",
@@ -6503,7 +6506,7 @@
             },
             "transliterated": "Yosef",
             "hebrew": "יוסף",
-            "defaultTerm":true
+            "defaultTerm": true
         },
         {
             "term": "judgement",
@@ -6879,185 +6882,185 @@
         },
         {
             "term": "Elokim",
-            "translation":"God",
+            "translation": "God",
             "hebrew": "אלהים",
             "style": {
                 "category": "Name of God",
-                "phase":"one"
+                "phase": "one"
             }
         },
         {
-            "term":"EKYEH",
-            "translation":"I will be",
-            "hebrew":"אהיה",
-            "style":{
-                "category":"Name of God",
-                "phase":"root"
+            "term": "EKYEH",
+            "translation": "I will be",
+            "hebrew": "אהיה",
+            "style": {
+                "category": "Name of God",
+                "phase": "root"
             }
         },
         {
-            "term":"Shadai",
-            "prefix":"The",
-            "translation":"Almighty",
-            "hebrew":"ש-ד-י",
-            "style":{
-                "phase":"collective",
-                "category":"Name of God"
+            "term": "Shadai",
+            "prefix": "The",
+            "translation": "Almighty",
+            "hebrew": "ש-ד-י",
+            "style": {
+                "phase": "collective",
+                "category": "Name of God"
             }
         },
         {
-            "term":"Shed",
-            "hebrew":"שד",
-            "translation":"Demon"
+            "term": "Shed",
+            "hebrew": "שד",
+            "translation": "Demon"
         },
         {
-            "term":"Hamor",
-            "hebrew":"חמור",
-            "translation":"Donkey"
+            "term": "Hamor",
+            "hebrew": "חמור",
+            "translation": "Donkey"
         },
         {
-            "term":"Tefillin",
-            "hebrew":"תפילין",
-            "translation":"Phylacteries"
+            "term": "Tefillin",
+            "hebrew": "תפילין",
+            "translation": "Phylacteries"
         },
         {
-            "term":"Elijah",
-            "style":{
-                "category":"Prophet"
+            "term": "Elijah",
+            "style": {
+                "category": "Prophet"
             }
         },
         {
-            "term":"Yam Suf",
-            "prefix":"The",
-            "hebrew":"ים סוף",
-            "translation":"Read Sea"
+            "term": "Yam Suf",
+            "prefix": "The",
+            "hebrew": "ים סוף",
+            "translation": "Read Sea"
         },
         {
-            "term":"Shlamim",
-            "hebrew":"שלמים",
-            "translation":"Peace Offering"
+            "term": "Shlamim",
+            "hebrew": "שלמים",
+            "translation": "Peace Offering"
         },
         {
-            "term":"Israel",
-            "hebrew":"ישראל",
-            "style":{
-                "phase":"three"
+            "term": "Israel",
+            "hebrew": "ישראל",
+            "style": {
+                "phase": "three"
             }
         },
         {
-            "term":"Aaron",
-            "hebrew":"אהרון",
-            "style":{
-                "category":"Six Sides",
-                "phase":"four"
+            "term": "Aaron",
+            "hebrew": "אהרון",
+            "style": {
+                "category": "Six Sides",
+                "phase": "four"
             }
         },
         {
-            "term":"Mem - Bet",
-            "hebrew":"מ״ב",
-            "translation":"42",
-            "style":{
-                "category":"Holy Name",
-                "phase":"one"
+            "term": "Mem - Bet",
+            "hebrew": "מ״ב",
+            "translation": "42",
+            "style": {
+                "category": "Holy Name",
+                "phase": "one"
             }
         },
         {
-            "term":"Tzitzit",
-            "hebrew":"ציצית",
-            "translation":"Fringes"
+            "term": "Tzitzit",
+            "hebrew": "ציצית",
+            "translation": "Fringes"
         },
         {
-            "term":"Shema",
-            "style":{
-                "category":"Prayer"
+            "term": "Shema",
+            "style": {
+                "category": "Prayer"
             }
         },
         {
-            "term":"Rosh HaShanah",
-            "style":{
-                "category":"Festival"
+            "term": "Rosh HaShanah",
+            "style": {
+                "category": "Festival"
             },
-            "translation":"New Year",
-            "explanation":"Jewish New Year",
-            "hebrew":"ראש השנה"
+            "translation": "New Year",
+            "explanation": "Jewish New Year",
+            "hebrew": "ראש השנה"
         },
         {
-            "term":"Passover",
-            "style":{
-                "category":"Festival"
+            "term": "Passover",
+            "style": {
+                "category": "Festival"
             },
-            "hebrew":"פסח"
+            "hebrew": "פסח"
         },
         {
-            "term":"Shavuot",
-            "style":{
-                "category":"Festival"
+            "term": "Shavuot",
+            "style": {
+                "category": "Festival"
             },
-            "hebrew":"שבועות"
+            "hebrew": "שבועות"
         },
         {
-            "term":"Sukkot",
-            "style":{
-                "category":"Festival"
+            "term": "Sukkot",
+            "style": {
+                "category": "Festival"
             },
-            "hebrew":"סוכות"
+            "hebrew": "סוכות"
         },
         {
-            "term":"Rimon",
-            "hebrew":"רימון",
-            "translation":"Pomegranate"
+            "term": "Rimon",
+            "hebrew": "רימון",
+            "translation": "Pomegranate"
         },
         {
-            "term":"Romemut",
-            "hebrew":"רוממות",
-            "translation":"Loftiness"
+            "term": "Romemut",
+            "hebrew": "רוממות",
+            "translation": "Loftiness"
         },
         {
-            "term":"Edut",
-            "translation":"Testimony",
-            "hebrew":"עדות"
+            "term": "Edut",
+            "translation": "Testimony",
+            "hebrew": "עדות"
         },
         {
-            "term":"Madda",
-            "translation":"Science",
-            "hebrew":"מדע"
+            "term": "Madda",
+            "translation": "Science",
+            "hebrew": "מדע"
         },
         {
-            "term":"Sefer Madda",
-            "translation":"Book of Science",
-            "hebrew":"ספר מדע"
+            "term": "Sefer Madda",
+            "translation": "Book of Science",
+            "hebrew": "ספר מדע"
         },
         {
-            "term":"Teshuvah",
-            "translation":"Repentance",
-            "hebrew":"תשובה"
+            "term": "Teshuvah",
+            "translation": "Repentance",
+            "hebrew": "תשובה"
         },
         {
-            "term":"Barah Sheet",
-            "translation":"Created Six",
-            "hebrew":"ברא שית"
+            "term": "Barah Sheet",
+            "translation": "Created Six",
+            "hebrew": "ברא שית"
         },
         {
             "translation": "Bottom Hey",
-            "explanation":"Lock",
-            "term":"bottom Hey",
+            "explanation": "Lock",
+            "term": "bottom Hey",
             "source": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
                 "category": "Tetragrammaton",
-                "phase":"four"
+                "phase": "four"
             }
         },
         {
             "translation": "Upper Hey",
-            "term":"upper Hey",
+            "term": "upper Hey",
             "source": "Hey Ela'a",
             "hebrew": "ה׳ עילאה",
             "style": {
                 "category": "Tetragrammaton",
-                "phase":"two"
+                "phase": "two"
             },
-            "defaultTerm":true
+            "defaultTerm": true
         }
     ],
     "style": {
