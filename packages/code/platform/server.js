@@ -42,7 +42,6 @@ screens.include({
         "type",
         "ref",
         "module",
-        "object",
         "stream",
         "path",
         "util",

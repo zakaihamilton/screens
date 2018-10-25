@@ -179,7 +179,7 @@ screens.ui.element = function UIElement(me) {
         }
         if (!object) {
             object = document.createElement(tag);
-            me.core.object.create(component, object);
+            me.core.property.object.create(component, object);
         }
         object.var = {};
         if (context === "self") {

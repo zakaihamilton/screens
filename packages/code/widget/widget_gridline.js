@@ -21,8 +21,8 @@ screens.widget.gridline = function WidgetGridLine(me) {
     };
     me.init = function() {
         me.core.property.set(me, {
-            "core.object.color":null,
-            "core.object.borderStyle":null
+            "core.property.object.color":null,
+            "core.property.object.borderStyle":null
         });
     };
     me.line = {

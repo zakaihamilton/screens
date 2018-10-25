@@ -37,8 +37,8 @@ screens.app.diagram = function AppDiagram(me) {
     };
     me.init = function () {
         me.core.property.set(me, {
-            "core.object.path": null,
-            "core.object.diagramData": null
+            "core.property.object.path": null,
+            "core.property.object.diagramData": null
         });
     };
     me.initOptions = {

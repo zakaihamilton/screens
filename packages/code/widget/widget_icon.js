@@ -16,7 +16,7 @@ screens.widget.icon = function WidgetIcon(me) {
         properties : __json__
     };
     me.init = function () {
-        me.core.property.set(me, "core.object.type", {
+        me.core.property.set(me, "core.property.object.type", {
             set: function (object, value, name, oldValue) {
                 if (value === "hidden") {
                     me.core.property.set(object, "ui.basic.show", false);

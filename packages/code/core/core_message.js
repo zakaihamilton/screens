@@ -58,7 +58,7 @@ screens.core.message = function CoreMessage(me) {
             platform: me.platform
         };
         me.prepareArgs(info);
-        me.core.object.create(me, info);
+        me.core.property.object.create(me, info);
         await me.core.property.set(info, "headers", null);
         var result = send_callback(info);
         return result;
@@ -233,7 +233,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
                 }
             }
             else {
-                me.core.object.create(me, info);
+                me.core.property.object.create(me, info);
                 me.core.message.prepareArgs(info);
                 var args = await me.core.message.send.apply(null, info.args);
                 me.core.message.releaseArgs(info);
@@ -309,7 +309,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                 }
             }
             else {
-                me.core.object.create(me, info);
+                me.core.property.object.create(me, info);
                 me.core.message.prepareArgs(info);
                 var args = await me.core.message.send.apply(null, info.args);
                 me.core.message.releaseArgs(info);

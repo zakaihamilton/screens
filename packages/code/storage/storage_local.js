@@ -5,9 +5,9 @@
 
 screens.storage.local = function StorageLocal(me) {
     me.init = function () {
-        me.none = me.core.object.create(me);
-        me.local = me.core.object.create(me);
-        me.session = me.core.object.create(me);
+        me.none = me.core.property.object.create(me);
+        me.local = me.core.property.object.create(me);
+        me.session = me.core.property.object.create(me);
         if (me.isSupported()) {
             me.none.storage = null;
             me.none.members = function () {
@@ -31,8 +31,8 @@ screens.storage.local = function StorageLocal(me) {
             };
         }
         me.core.property.set(me, {
-            "core.object.key": null,
-            "core.object.location": null
+            "core.property.object.key": null,
+            "core.property.object.location": null
         });
     };
     me.isSupported = function () {

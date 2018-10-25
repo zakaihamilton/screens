@@ -146,7 +146,7 @@ screens.core.http = function CoreHttp(me) {
             clientIp: me.clientIp(request),
             responseHeaders: {}
         };
-        me.core.object.create(me, info);
+        me.core.property.object.create(me, info);
         me.log("method: " + info.method + " url: " + info.url + " query: " + JSON.stringify(info.query));
         var messages = ["receive", "compress", "end"];
         me.core.util.performance("http request url: " + info.url, async () => {
@@ -181,7 +181,7 @@ screens.core.http = function CoreHttp(me) {
 
     };
     me.send = async function (info) {
-        me.core.object.create(me, info);
+        me.core.property.object.create(me, info);
         if (!info.headers) {
             info.headers = {}
         }

@@ -84,7 +84,7 @@ screens.ui.property = function UIProperty(me) {
     };
     me.themedProperties = function (object, mapping) {
         for(var name in mapping) {
-            me.core.property.set(object, "core.object." + name, {
+            me.core.property.set(object, "core.property.object." + name, {
                 "set": function (object, value, name) {
                     if (value) {
                         me.core.property.set(object, "ui.property.broadcast", {

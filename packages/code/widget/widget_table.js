@@ -14,7 +14,7 @@ screens.widget.table = function WidgetTable(me) {
     };
     me.init = function () {
         me.core.property.set(me, {
-            "core.object.firstRowHeader": null
+            "core.property.object.firstRowHeader": null
         });
     };
     me.dataByColumns = {

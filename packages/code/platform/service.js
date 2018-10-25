@@ -13,7 +13,6 @@ screens.include({
         "handle",
         "json",
         "string",
-        "object",
         "property",
         "socket",
         "service",
