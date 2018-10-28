@@ -284,4 +284,30 @@ screens.core.file.alias = function CoreFileAlias(me) {
         }
         return result;
     };
+    return "server";
+};
+
+screens.core.file.protocol = function CoreFileProtocol(me) {
+    me.get = async function(path) {
+        var directPath = path.replace(/^(file\/)/, "");
+        if(!directPath) {
+            directPath = ".";
+        }
+        var isDirectory = await me.upper.isDirectory(directPath);
+        if(isDirectory) {
+            var listing = await me.upper.readDir(directPath);
+            var folder = {};
+            for(var item of listing) {
+                folder[item] = path + "/" + item;
+            }
+            return folder;
+        }
+        var isFile = await me.upper.isFile(path);
+        if(isFile) {
+            var data = await me.core.file.readFile(directPath);
+            return data;
+        }
+        return null;
+    };
+    return "server";
 };

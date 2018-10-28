@@ -172,22 +172,23 @@ screens.core.message = function CoreMessage(me) {
     me.send = function (path, params) {
         var args = Array.prototype.slice.call(arguments, 1);
         var callback = null;
+        var result = null;
         if (!path) {
             return undefined;
         }
         if (typeof path === "function") {
-            var result = path.apply(this, args);
+            result = path.apply(this, args);
             return result;
         }
         try {
-            callback = screens.lookup(path);
+            callback = screens.browse(path);
         } catch (error) {
             //me.log(error);
             return undefined;
         }
         me.log("sending: " + path + " with " + args.length + " arguments, ip: " + this.clientIp);
         if (typeof callback === "function") {
-            var result = callback.apply(this, args);
+            result = callback.apply(this, args);
             return result;
         } else {
             me.log("callback is not a function but rather " + JSON.stringify(callback));
@@ -203,7 +204,7 @@ screens.core.message = function CoreMessage(me) {
         }
         catch (err) {
             me.log("args: " + JSON.stringify(args) + " error: " + err.toString());
-            return [err];
+            return [err.toString()];
         }
     };
     me.headers = function (info) {
@@ -216,7 +217,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
         if (me.platform === "browser") {
             me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
-        if(me.platform === "client") {
+        if (me.platform === "client") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
             me.register();
         }
@@ -253,17 +254,17 @@ screens.core.message.worker = function CoreMessageWorker(me) {
 };
 
 screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
-    me.init = async function() {
+    me.init = async function () {
         if (me.platform === "browser") {
             me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
-        if(me.platform === "service_worker") {
+        if (me.platform === "service_worker") {
             await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
             me.register();
             me.core.event.register(null, self, "activate", me.activate);
         }
     };
-    me.activate = async function(object, event) {
+    me.activate = async function (object, event) {
         await self.clients.claim();
     };
     me.load = async function (path) {

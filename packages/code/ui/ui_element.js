@@ -11,7 +11,7 @@ screens.ui.element = function UIElement(me) {
             if (!(component_name.includes("widget."))) {
                 return null;
             }
-            var component = screens.lookup(component_name);
+            var component = screens.browse(component_name);
             if (!component || !component.element) {
                 return null;
             }
@@ -47,8 +47,8 @@ screens.ui.element = function UIElement(me) {
         matches = matches.filter(Boolean);
         /* sort by dependencies */
         matches.sort(function (source, target) {
-            return screens.lookup(target).element.dependencies.properties.length -
-                screens.lookup(source).element.dependencies.properties.length;
+            return screens.browse(target).element.dependencies.properties.length -
+                screens.browse(source).element.dependencies.properties.length;
         });
         if (!matches.length) {
             return null;
@@ -56,7 +56,7 @@ screens.ui.element = function UIElement(me) {
         var match = matches[0];
         if (with_parent_dependency) {
             for (var match_index = 0; match_index < matches.length; match_index++) {
-                if (screens.lookup(matches[match_index]).element.dependencies.parent) {
+                if (screens.browse(matches[match_index]).element.dependencies.parent) {
                     match = matches[match_index];
                     break;
                 }
@@ -115,7 +115,7 @@ screens.ui.element = function UIElement(me) {
         var member = null;
         while (object) {
             if (object.component) {
-                var component = screens.lookup(object.component);
+                var component = screens.browse(object.component);
                 if (name in component) {
                     member = component[name];
                 }
@@ -157,7 +157,7 @@ screens.ui.element = function UIElement(me) {
         if (!component_name) {
             component_name = "ui.element";
         }
-        var component = screens.lookup(component_name);
+        var component = screens.browse(component_name);
         if (!component) {
             throw "Cannot find component: " + component_name;
         }

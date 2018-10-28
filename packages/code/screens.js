@@ -12,12 +12,11 @@ function screens_platform() {
 function screens_setup(package_name, component_name, child_name, node) {
     var children = [];
     var id = package_name + "." + component_name;
-    var component_id = id;
     if (child_name) {
         node = node[child_name];
         id += "." + child_name;
     } else {
-        node = screens.lookup(id);
+        node = screens.browse(id);
         for (var key in node) {
             children.push(key);
         }
@@ -283,9 +282,9 @@ async function screens_include(packages) {
     }
 }
 
-function screens_lookup(path) {
+function screens_browse(path) {
     if (typeof path === "string") {
-        return path.split('.').reduce((parent, name) => {
+        return path.split(".").reduce((parent, name) => {
             if (parent) {
                 return parent[name];
             }
@@ -300,7 +299,7 @@ var screens = {
     platform: screens_platform(),
     include: screens_include,
     import: screens_import,
-    lookup: screens_lookup,
+    browse: screens_browse,
     log: (message, componentId, userName) => {
         screens.core.console.log.call(this, message, componentId, userName);
     },

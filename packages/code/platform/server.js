@@ -10,6 +10,7 @@ screens.api = [
     "user.access.isAPIAllowed",
     "core.cache",
     "core.socket",
+    "core.object",
     "core.console",
     "storage.data",
     "storage.file",
@@ -53,7 +54,8 @@ screens.include({
         "service",
         "cache",
         "string",
-        "session"
+        "session",
+        "object"
     ],
     "storage": [
         "file",

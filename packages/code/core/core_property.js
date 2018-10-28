@@ -24,7 +24,7 @@ screens.core.property = function CoreProperty(me) {
             name = object.component + "." + name;
         }
         if (typeof object === "object" && "component" in object) {
-            var lookup = screens.lookup(object.component);
+            var lookup = screens.browse(object.component);
             if (lookup) {
                 var redirect = lookup.redirect;
                 if (redirect && !redirect.disabled) {
@@ -107,7 +107,7 @@ screens.core.property = function CoreProperty(me) {
                         var path = tokens.join(".");
                         var component = null;
                         try {
-                            component = screens.lookup(path);
+                            component = screens.browse(path);
                         }
                         catch (err) {
                             me.log("no component for: " + info.name);

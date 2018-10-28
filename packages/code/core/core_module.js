@@ -36,7 +36,7 @@ screens.core.module = function CoreModule(me) {
     };
     me.handleStylesheet = async function (filePath, params) {
         var data = await me.loadTextFile(filePath, params.optional);
-        if(!data && params.optional) {
+        if (!data && params.optional) {
             data = "";
         }
         var result = await me.postcss([me.autoprefixer]).process(data);
@@ -53,13 +53,13 @@ screens.core.module = function CoreModule(me) {
         var target_platform = null;
         if (component_path) {
             try {
-                var component = screens.lookup(component_path);
+                var component = screens.browse(component_path);
                 if (component) {
                     target_platform = component.require;
                 }
             }
             catch (err) {
-
+                return;
             }
         }
         var components = [component_path];
@@ -149,7 +149,7 @@ screens.core.module = function CoreModule(me) {
                         return line;
                     }
                     var codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
-                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional:true });
+                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional: true });
                     codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
                     line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</script>\n";
                     var cssFilePath = filePath.replace(".js", ".css");
