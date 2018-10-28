@@ -10,8 +10,8 @@
     position:absolute;
     font-weight:bold;
     font-size:40%;
-    height:50%;
-    top:1.5em;
+    top:2em;
+    line-height:1em;
     text-align: center;
     text-transform:uppercase;
     pointer-events: none;
@@ -19,16 +19,17 @@
     content: attr(kab-term-category);
     transform: rotate(-90deg);
     border:1px solid transparent;
+    white-space: pre; 
 }
 
 [kab-term-category].kab-term-english:after {
     left:0em;
-    margin-left:-1.8em;
+    margin-left:-0.5em;
 }
 
 [kab-term-category].kab-term-hebrew:after {
     right:0em;
-    padding-right:-1.8em;
+    padding-right:-0.5em;
 }
 
 .kab-term-category.kab-term-english {

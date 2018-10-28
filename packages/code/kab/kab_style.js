@@ -111,7 +111,8 @@ screens.kab.style = function KabStyle(me) {
                 }
             }
             if (category) {
-                html += "<span kab-term-category=\"" + category + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
+                let text = category.split("/").join(" &#13;&#10; ");
+                html += "<span kab-term-category=\"" + text + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
             }
             if (heading) {
                 html += "<span kab-term-heading=\"" + heading + "\" class=\"kab-term-" + session.language + " " + nightModeClass + "\"></span>";
