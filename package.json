@@ -19,6 +19,7 @@
     "bulma": "^0.7.1",
     "chart.js": "^2.7.2",
     "dropbox": "^2.5.12",
+    "eslint": "^5.7.0",
     "fluent-ffmpeg": "^2.1.2",
     "google-auth-library": "^1.5.0",
     "graceful-fs": "^4.1.11",

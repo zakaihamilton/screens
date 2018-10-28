@@ -8,15 +8,15 @@ screens.storage.data = function StorageData(me) {
         me.log("initialising storage data");
         me.datastore = null;
         try {
-            me.datastore = require('@google-cloud/datastore');
+            me.datastore = require("@google-cloud/datastore");
         } catch (e) {
             await me.core.server.run("npm rebuild");
-            me.datastore = require('@google-cloud/datastore');
+            me.datastore = require("@google-cloud/datastore");
             me.log("me.datastore:" + me.datastore !== null);
         }
-        if(!me.datastore) {
+        if (!me.datastore) {
             await me.core.server.run("npm rebuild");
-            me.datastore = require('@google-cloud/datastore');
+            me.datastore = require("@google-cloud/datastore");
             me.log("me.datastore:" + me.datastore !== null);
         }
     };
@@ -93,7 +93,7 @@ screens.storage.data = function StorageData(me) {
     me.verify = async function (value, type, id) {
         var compare = await me.load(type, id);
         var result = me.core.json.compare(compare, value);
-        if(!result) {
+        if (!result) {
             var err = "verification mismatch between: " + JSON.stringify(value) + " and " + JSON.stringify(compare);
             throw err;
         }
@@ -133,12 +133,12 @@ screens.storage.data = function StorageData(me) {
                 return items;
             }
             catch (err) {
-                err = "failure to execute query, type: " + type +
+                var long_error = "failure to execute query, type: " + type +
                     " select: " + JSON.stringify(select) +
                     " filters: " + JSON.stringify(filters) +
                     " error: " + err.message || err;
-                me.log_error(err);
-                return err;
+                me.log_error(long_error);
+                return long_error;
             }
         }
     };
