@@ -36,8 +36,8 @@ screens.core.object = function CoreObject(me) {
                 }
                 var component = screens.browse(name);
                 if("protocol" in component) {
+                    me.log("found matching protocol in " + name);
                     protocol = component.protocol;
-                    break;
                 }
             }
         }

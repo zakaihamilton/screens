@@ -306,7 +306,7 @@ screens.core.file.protocol = function CoreFileProtocol(me) {
         }
         var isFile = await me.upper.isFile(directPath);
         if(isFile) {
-            var data = await me.core.file.readFile(directPath, format);
+            var data = await me.upper.readFile(directPath, format);
             return data;
         }
         return null;

@@ -177,3 +177,10 @@ screens.storage.file = function StorageFile(me) {
     };
     return "server";
 };
+
+screens.storage.file.protocol = function StorageFileProtocol(me) {
+    me.get = async function(path, format="utf8") {
+        return me.core.file.protocol.get(path, format);
+    };
+    return "server";
+};
