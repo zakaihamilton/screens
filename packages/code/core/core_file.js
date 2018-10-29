@@ -288,8 +288,10 @@ screens.core.file.alias = function CoreFileAlias(me) {
 };
 
 screens.core.file.protocol = function CoreFileProtocol(me) {
-    me.get = async function(path) {
-        var directPath = path.replace(/^(file\/)/, "");
+    me.get = async function(path, format="utf8") {
+        var virtualPath = path.split("/").join("/");
+        var directPath = path.replace(/^(file)/, "");
+        directPath = directPath.replace(/^(\/)/, "");
         if(!directPath) {
             directPath = ".";
         }
@@ -298,13 +300,13 @@ screens.core.file.protocol = function CoreFileProtocol(me) {
             var listing = await me.upper.readDir(directPath);
             var folder = {};
             for(var item of listing) {
-                folder[item] = path + "/" + item;
+                folder[item] = virtualPath + "/" + item;
             }
             return folder;
         }
-        var isFile = await me.upper.isFile(path);
+        var isFile = await me.upper.isFile(directPath);
         if(isFile) {
-            var data = await me.core.file.readFile(directPath);
+            var data = await me.core.file.readFile(directPath, format);
             return data;
         }
         return null;
