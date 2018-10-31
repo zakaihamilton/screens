@@ -6,9 +6,9 @@
 screens.core.object = function CoreObject(me) {
     me.protocols = {};
     me.register = function (path, protocol) {
-        for(let key in protocol) {
+        for (let key in protocol) {
             let value = protocol[key];
-            if(typeof value === "string") {
+            if (typeof value === "string") {
                 protocol[key] = screens.browse(value);
             }
         }
@@ -19,7 +19,7 @@ screens.core.object = function CoreObject(me) {
             return null;
         }
         path = path.trim().split("/").shift();
-        if(!path) {
+        if (!path) {
             return null;
         }
         var protocol = null;
@@ -29,13 +29,13 @@ screens.core.object = function CoreObject(me) {
             }
             protocol = me.protocols[prefix];
         }
-        if(!protocol) {
-            for(var name of screens.components) {
-                if(!name.includes(path)) {
+        if (!protocol) {
+            for (var name of screens.components) {
+                if (!name.includes(path)) {
                     continue;
                 }
                 var component = screens.browse(name);
-                if("protocol" in component) {
+                if ("protocol" in component) {
                     me.log("found matching protocol in " + name);
                     protocol = component.protocol;
                 }
@@ -50,5 +50,14 @@ screens.core.object = function CoreObject(me) {
         }
         var object = await protocol.get(path);
         return object;
+    };
+    me.pathInfo = function (path) {
+        var virtualPath = path.split("/").join("/");
+        var directPath = path.replace(/^(file)/, "");
+        directPath = directPath.replace(/^(\/)/, "");
+        if(!directPath) {
+            directPath = ".";
+        }
+        return { virtual: virtualPath, direct: directPath };
     };
 };

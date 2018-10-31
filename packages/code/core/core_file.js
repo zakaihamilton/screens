@@ -289,24 +289,23 @@ screens.core.file.alias = function CoreFileAlias(me) {
 
 screens.core.file.protocol = function CoreFileProtocol(me) {
     me.get = async function(path, format="utf8") {
-        var virtualPath = path.split("/").join("/");
-        var directPath = path.replace(/^(file)/, "");
-        directPath = directPath.replace(/^(\/)/, "");
-        if(!directPath) {
-            directPath = ".";
+        var pathInfo =  me.core.object.pathInfo(path);
+        var exists = me.upper.exists(pathInfo.direct);
+        if(!exists) {
+            return null;
         }
-        var isDirectory = await me.upper.isDirectory(directPath);
+        var isDirectory = await me.upper.isDirectory(pathInfo.direct);
         if(isDirectory) {
-            var listing = await me.upper.readDir(directPath);
+            var listing = await me.upper.readDir(pathInfo.direct);
             var folder = {};
             for(var item of listing) {
-                folder[item] = virtualPath + "/" + item;
+                folder[item] = pathInfo.virtual + "/" + item;
             }
             return folder;
         }
-        var isFile = await me.upper.isFile(directPath);
+        var isFile = await me.upper.isFile(pathInfo.direct);
         if(isFile) {
-            var data = await me.upper.readFile(directPath, format);
+            var data = await me.upper.readFile(pathInfo.direct, format);
             return data;
         }
         return null;

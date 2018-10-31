@@ -203,8 +203,12 @@ screens.core.message = function CoreMessage(me) {
             return [null, result];
         }
         catch (err) {
-            me.log("args: " + JSON.stringify(args) + " error: " + err.toString());
-            return [err.toString()];
+            var err_text = err.toString();
+            if(typeof err === "object") {
+                err_text = JSON.stringify(err);
+            }
+            me.log_error("args: " + JSON.stringify(args) + " error: " + err_text);
+            return [err_text];
         }
     };
     me.headers = function (info) {

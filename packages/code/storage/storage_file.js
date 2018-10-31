@@ -23,7 +23,7 @@ screens.storage.file = function StorageFile(me) {
         }
         return path;
     };
-    me.getChildren = async function (path, recursive) {
+    me.getChildren = async function (path, recursive = false) {
         me.log("requesting items for path: " + path + " recursive: " + recursive);
         var entries = [];
         var service = await me.getService();
@@ -57,14 +57,27 @@ screens.storage.file = function StorageFile(me) {
     me.downloadData = async function (path) {
         var service = await me.getService();
         path = me.fixPath(path);
-        var response = await service.filesDownload({ path: path });
-        return response;
+        var result = await service.filesGetTemporaryLink({ path: path });
+        var body = "";
+        return new Promise((resolve, reject) => {
+            me.https.get(result.link, res => {
+                res.on("data", function (chunk) {
+                    body += chunk;
+                });
+                res.on("close", function () {
+                    resolve(body);
+                });
+                res.on("error", function (e) {
+                    reject(e);
+                });
+            });
+        });
     };
     me.uploadData = async function (path, data) {
         var service = await me.getService();
         path = me.fixPath(path);
         var response = await service.filesUpload({ path: path, contents: data });
-        return reponse;
+        return response;
     };
     me.metadata = async function (path) {
         var service = await me.getService();
@@ -179,8 +192,25 @@ screens.storage.file = function StorageFile(me) {
 };
 
 screens.storage.file.protocol = function StorageFileProtocol(me) {
-    me.get = async function(path, format="utf8") {
-        return me.core.file.protocol.get(path, format);
+    me.get = async function (path, format = "utf8") {
+        var result = await me.core.file.protocol.get(path, format);
+        if (result) {
+            return result;
+        }
+        var pathInfo = me.core.object.pathInfo(path);
+        var metadata = await me.upper.metadata("/" + pathInfo.direct);
+        if (metadata[".tag"] === "folder") {
+            var listing = await me.upper.getChildren("/" + pathInfo.direct);
+            var folder = {};
+            for (var item of listing) {
+                folder[item.name] = pathInfo.virtual + "/" + item.name;
+            }
+            return folder;
+        }
+        else {
+            var data = await me.upper.downloadData("/" + pathInfo.direct);
+            return data;
+        }
     };
     return "server";
 };
