@@ -44,10 +44,10 @@ screens.kab.style = function KabStyle(me) {
                     category = styles.category;
                 }
             }
-            if (!session.options.keepSource && !expansion && (!session.options.doTranslation || term !== replacement)) {
+            if (!expansion && (!session.options.doTranslation || term !== replacement)) {
                 tooltip = term;
             }
-        } else if (!session.options.keepSource && !expansion) {
+        } else if (!expansion) {
             phase = "none";
             if (term !== replacement) {
                 tooltip = term;

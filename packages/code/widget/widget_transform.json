@@ -135,7 +135,7 @@
                     }
                 ],
                 [
-                    "Keep Source",
+                    "Source",
                     "widget.transform.keepSource",
                     {
                         "state": "select"
