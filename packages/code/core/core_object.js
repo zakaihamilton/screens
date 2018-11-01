@@ -51,13 +51,28 @@ screens.core.object = function CoreObject(me) {
         var object = await protocol.get(path);
         return object;
     };
+    me.set = async function (path, data) {
+        var protocol = me.protocol(path);
+        if (!protocol) {
+            return null;
+        }
+        var object = await protocol.set(path, data);
+        return object;
+    };
     me.pathInfo = function (path) {
         var virtualPath = path.split("/").join("/");
         var directPath = path.replace(/^(file)/, "");
         directPath = directPath.replace(/^(\/)/, "");
-        if(!directPath) {
+        if (!directPath) {
             directPath = ".";
         }
-        return { virtual: virtualPath, direct: directPath };
+        return {
+            folder: {
+                virtual: me.core.path.folderPath(virtualPath),
+                direct: me.core.path.folderPath(directPath)
+            },
+            virtual: virtualPath,
+            direct: directPath
+        };
     };
 };

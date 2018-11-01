@@ -35,6 +35,31 @@ screens.core.file = function CoreFile(me) {
             }
         });
     };
+    me.writeFile = function (path, data, options, optional) {
+        path = me.path(path);
+        return new Promise((resolve, reject) => {
+            try {
+                me.fs.writeFile(path, data, options, function (err, data) {
+                    if (err) {
+                        if (optional) {
+                            resolve(null);
+                        }
+                        else {
+                            me.log_error(err);
+                            reject(err);
+                        }
+                    }
+                    else {
+                        resolve(null);
+                    }
+                });
+            }
+            catch (err) {
+                me.log_error(err);
+                reject(err);
+            }
+        });
+    };
     me.makeDir = function (path) {
         path = me.path(path);
         return new Promise((resolve, reject) => {
@@ -288,27 +313,36 @@ screens.core.file.alias = function CoreFileAlias(me) {
 };
 
 screens.core.file.protocol = function CoreFileProtocol(me) {
-    me.get = async function(path, format="utf8") {
-        var pathInfo =  me.core.object.pathInfo(path);
+    me.get = async function (path, format = "utf8") {
+        var pathInfo = me.core.object.pathInfo(path);
         var exists = me.upper.exists(pathInfo.direct);
-        if(!exists) {
+        if (!exists) {
             return null;
         }
         var isDirectory = await me.upper.isDirectory(pathInfo.direct);
-        if(isDirectory) {
+        if (isDirectory) {
             var listing = await me.upper.readDir(pathInfo.direct);
             var folder = {};
-            for(var item of listing) {
+            for (var item of listing) {
                 folder[item] = pathInfo.virtual + "/" + item;
             }
             return folder;
         }
         var isFile = await me.upper.isFile(pathInfo.direct);
-        if(isFile) {
+        if (isFile) {
             var data = await me.upper.readFile(pathInfo.direct, format);
             return data;
         }
         return null;
+    };
+    me.set = async function (path, data, options) {
+        var pathInfo = me.core.object.pathInfo(path);
+        var exists = me.upper.exists(pathInfo.folder.direct);
+        if (!exists) {
+            return null;
+        }
+        var data = await me.upper.writeFile(pathInfo.direct, data, options);
+        return data;
     };
     return "server";
 };

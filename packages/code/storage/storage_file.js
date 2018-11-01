@@ -212,5 +212,17 @@ screens.storage.file.protocol = function StorageFileProtocol(me) {
             return data;
         }
     };
+    me.set = async function (path, data) {
+        var result = await me.core.file.protocol.set(path, data);
+        if (result) {
+            return result;
+        }
+        var pathInfo = me.core.object.pathInfo(path);
+        var metadata = await me.upper.metadata("/" + pathInfo.direct);
+        if (metadata[".tag"] !== "folder") {
+            var data = await me.upper.uploadData("/" + pathInfo.direct, data);
+            return data;
+        }
+    };
     return "server";
 };
