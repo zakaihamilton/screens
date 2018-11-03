@@ -220,8 +220,8 @@ screens.storage.file.protocol = function StorageFileProtocol(me) {
         var pathInfo = me.core.object.pathInfo(path);
         var metadata = await me.upper.metadata("/" + pathInfo.direct);
         if (metadata[".tag"] !== "folder") {
-            var data = await me.upper.uploadData("/" + pathInfo.direct, data);
-            return data;
+            result = await me.upper.uploadData("/" + pathInfo.direct, data);
+            return result;
         }
     };
     return "server";

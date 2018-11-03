@@ -647,11 +647,13 @@
         },
         {
             "translation": "Emanator",
+            "explanation":"Upper",
             "term": "Maatzil",
             "hebrew": "מאציל"
         },
         {
             "translation": "Emanated",
+            "explanation":"Lower",
             "term": "Ne ’ etzal",
             "hebrew": "נאצל"
         },
