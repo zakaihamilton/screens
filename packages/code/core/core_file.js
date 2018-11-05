@@ -324,7 +324,14 @@ screens.core.file.protocol = function CoreFileProtocol(me) {
             var listing = await me.upper.readDir(pathInfo.direct);
             var folder = {};
             for (var item of listing) {
-                folder[item] = pathInfo.virtual + "/" + item;
+                var itemPath = pathInfo.virtual + "/" + item;
+                var isFolder = await me.upper.isDirectory(pathInfo.direct + "/" + item);
+                var type = isFolder ? "folder" : "file";
+                folder[item] = {
+                    path: itemPath,
+                    type: type,
+                    name: item
+                };
             }
             return folder;
         }

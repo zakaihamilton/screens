@@ -31,6 +31,13 @@
         },
         "ui.data.values": [
             [
+                [
+                    "Folder",
+                    "svg"
+                ],
+                "main"
+            ],
+            [
                 "Transform",
                 "kab"
             ],

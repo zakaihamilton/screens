@@ -203,7 +203,14 @@ screens.storage.file.protocol = function StorageFileProtocol(me) {
             var listing = await me.upper.getChildren("/" + pathInfo.direct);
             var folder = {};
             for (var item of listing) {
-                folder[item.name] = pathInfo.virtual + "/" + item.name;
+                var itemPath = pathInfo.virtual + "/" + item.name;
+                var isFolder = item[".tag"] === "folder";
+                var type = isFolder ? "folder" : "file";
+                folder[item.name] = {
+                    path: itemPath,
+                    type: type,
+                    name: item.name
+                };
             }
             return folder;
         }

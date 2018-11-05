@@ -20,6 +20,7 @@ screens.core.app = function CoreApp(me) {
                 value.unshift("app." + property + ".launch");
                 await me.core.message.send.apply(null, value);
             } else {
+                value = [value];
                 await me.core.message.send("app." + property + ".launch", value);
             }
         }

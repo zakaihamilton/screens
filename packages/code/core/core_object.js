@@ -60,6 +60,7 @@ screens.core.object = function CoreObject(me) {
         return object;
     };
     me.pathInfo = function (path) {
+        path = path.replace(/\/\//g, "/");
         var virtualPath = path.split("/").join("/");
         var directPath = path.replace(/^(file)/, "");
         directPath = directPath.replace(/^(\/)/, "");
