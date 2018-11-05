@@ -1,9 +1,17 @@
 .widget-icon-icon {
-    min-width:70px;
+    width:128px;
+    height:128px;
+    padding-top:10px;
     margin-left:10px;
     margin-right:0px;
     float:left;
     text-align: center;
+    display:flex;
+    flex-direction: column;
+}
+
+.widget-icon-icon.ui-tab-hidden {
+    display:none;
 }
 
 .widget-icon-icon:hover:active {
@@ -12,7 +20,7 @@
 
 .widget-icon-icon+.widget-icon-icon
 {
-    margin-left:20px;
+    margin-left:10px;
 }
 
 .widget-icon-list+.widget-icon-list
@@ -31,8 +39,9 @@
 
 .widget-icon-image-icon {
     pointer-events:none;
-    object-fit: none;
-    display: block;
+    object-fit: contain;
+    margin-left: 25%;
+    margin-right:25%;
 }
 
 .widget-icon-image-icon.night-mode {
@@ -49,6 +58,7 @@
     position: relative;
     font-size: 1em;
     user-select: none;
+    margin:2px;
 }
 
 .widget-icon-label-icon.night-mode {

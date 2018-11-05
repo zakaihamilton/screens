@@ -6,8 +6,7 @@
             "ui.class.class": "image-icon",
             "ui.basic.var": "icon",
             "ui.attribute.width": "64px",
-            "ui.attribute.height": "64px",
-            "ui.style.objectFit": "contain"
+            "ui.attribute.height": "64px"
         },
         {
             "ui.basic.tag": "div",
