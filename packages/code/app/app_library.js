@@ -465,8 +465,9 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         var prevLine = "";
-        var isTag = false, isTagged = false;
+        var isTag = false;
         text = text.split("\n").map(line => {
+            var isTagged = false;
             line = line.trim();
             if (line.startsWith("#")) {
                 isTagged = true;
@@ -479,7 +480,7 @@ screens.app.library = function AppLibrary(me) {
             else {
                 isTag = false;
             }
-            if (!isTagged && line.match(/[^.?!:;,\\\"'”…\\)’]$/)) {
+            if (!isTagged && line.match(/[^.?!:;,"\\'”…\\)’]$/)) {
                 if (line.startsWith("Items")) {
                     return "";
                 }
