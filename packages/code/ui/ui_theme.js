@@ -48,7 +48,7 @@ screens.ui.theme = function UITheme(me) {
         me.load(me.options.theme);
     };
     me.updateList = async function () {
-        me.themes = [];
+        me.themes = ["None"];
         var path = "packages/res/themes";
         var items = await me.core.file.readDir(path);
         if (items) {
@@ -124,6 +124,10 @@ screens.ui.theme = function UITheme(me) {
         }, parent);
     };
     me.load = async function (name) {
+        if(name === "None") {
+            me.unload();
+            return;
+        }
         name = name.toLowerCase();
         var path = "/packages/res/themes/" + name;
         var data = await me.core.json.loadFile(path + ".json", "utf8");
