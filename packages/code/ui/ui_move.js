@@ -76,47 +76,54 @@ screens.ui.move = function UIMove(me) {
         var window = me.widget.window.get(object);
         var target_region = me.ui.rect.absoluteRegion(window);
         var parent = me.widget.window.parent(window);
+        var parent_region = me.ui.rect.absoluteRegion(parent);
         if (!parent) {
             parent = me.ui.element.desktop();
+            var workspace = me.ui.element.workspace();
+            parent_region = me.ui.rect.absoluteRegion(workspace);
         }
-        var parent_region = me.ui.rect.absoluteRegion(parent);
         me.core.property.notify(parent, "update");
-        var alignToLeft = false, alignToRight = false;
-        var alignToTop = false, alignToBottom = false;
-        if (target_region.left + me.snapSensitivity < parent_region.left) {
-            if (signalOnly) {
-                alignToLeft = true;
-            }
-            else {
-                me.ui.arrange.alignToLeft(object);
+        var alignToLeft = target_region.left + me.snapSensitivity < parent_region.left;
+        var alignToRight = target_region.right - me.snapSensitivity > parent_region.right;
+        var alignToTop = target_region.top + me.snapSensitivity < parent_region.top;
+        var alignToBottom = target_region.bottom - me.snapSensitivity > parent_region.bottom;
+        if (alignToLeft) {
+            if(!signalOnly) {
+                if(alignToTop) {
+                    me.ui.arrange.alignToLeftTop(object);
+                }
+                else if(alignToBottom) {
+                    me.ui.arrange.alignToLeftBottom(object);
+                }
+                else {
+                    me.ui.arrange.alignToLeft(object);
+                }
             }
         }
-        else if (target_region.right - me.snapSensitivity > parent_region.right) {
-            if (signalOnly) {
-                alignToRight = true;
-            }
-            else {
-                me.ui.arrange.alignToRight(object);
+        else if (alignToRight) {
+            if (!signalOnly) {
+                if(alignToTop) {
+                    me.ui.arrange.alignToRightTop(object);
+                }
+                else if(alignToBottom) {
+                    me.ui.arrange.alignToRightBottom(object);
+                }
+                else {
+                    me.ui.arrange.alignToRight(object);
+                }
             }
         }
-        else if(target_region.top + me.snapSensitivity < parent_region.top) {
-            if (signalOnly) {
-                alignToTop = true;
-            }
-            else {
+        else if(alignToTop) {
+            if (!signalOnly) {
                 me.ui.arrange.alignToTop(object);
             }
         }
-        else if(target_region.bottom - me.snapSensitivity > parent_region.bottom) {
-            if (signalOnly) {
-                alignToBottom = true;
-            }
-            else {
+        else if(alignToBottom) {
+            if (!signalOnly) {
                 me.ui.arrange.alignToBottom(object);
             }
         }
-        var align = alignToLeft || alignToRight || alignToTop || alignToBottom;
-        me.core.property.set(parent.var.align, "ui.class.show", align);
+        me.core.property.set(parent.var.align, "ui.class.show", signalOnly);
         me.core.property.set(parent.var.align, "ui.class.left", alignToLeft);
         me.core.property.set(parent.var.align, "ui.class.right", alignToRight);
         me.core.property.set(parent.var.align, "ui.class.top", alignToTop);

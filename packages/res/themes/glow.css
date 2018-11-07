@@ -111,16 +111,31 @@
 .glow-window-align {
     position: absolute;
     background:rgba(0,0,0,0.25);
+    border:1px solid rgba(255,255,255,0.5);
     display:none;
-    z-index: 10000;
+    z-index: 1000;
+}
+
+.glow-window-align.show {
+    display:block;
 }
 
 .glow-window-align.left.show {
-    display:block;
     left: 0px;
     top: 0px;
     width:50%;
     height:100%;
+}
+
+.glow-window-align.left.top.show {
+    height:50%;
+    width:50%;
+}
+
+.glow-window-align.left.bottom.show {
+    top:50%;
+    height:50%;
+    width:50%;
 }
 
 .glow-window-align.right.show {
@@ -128,11 +143,22 @@
     top: 0px;
     width:50%;
     height:100%;
-    display:block;
+}
+
+.glow-window-align.right.top.show {
+    left:50%;
+    height:50%;
+    width:50%;
+}
+
+.glow-window-align.right.bottom.show {
+    left:50%;
+    top:50%;
+    height:50%;
+    width:50%;
 }
 
 .glow-window-align.top.show {
-    display:block;
     left: 0px;
     top: 0px;
     width:100%;
@@ -140,7 +166,6 @@
 }
 
 .glow-window-align.bottom.show {
-    display:block;
     left: 0px;
     bottom: 0px;
     width:100%;

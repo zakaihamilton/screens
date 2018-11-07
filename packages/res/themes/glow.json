@@ -219,6 +219,11 @@
             "replace": true
         },
         {
+            "source":"widget-window-align",
+            "target":"glow-window-align",
+            "replace":true
+        },
+        {
             "source": "widget-taskbar-container",
             "target": "glow-taskbar-container",
             "replace": true

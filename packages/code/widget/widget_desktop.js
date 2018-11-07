@@ -5,7 +5,7 @@
 
 screens.widget.desktop = function WidgetDesktop(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "div",
             "ui.class.class": "container",
             "ui.basic.elements": [
@@ -21,14 +21,14 @@ screens.widget.desktop = function WidgetDesktop(me) {
                         {
                             "ui.basic.tag": "div",
                             "ui.class.class": "background",
-                            "ui.touch.dblclick":"core.app.launcher"
+                            "ui.touch.dblclick": "core.app.launcher"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": "widget.window.align",
+                            "ui.basic.var": "align"
                         }
                     ]
-                },
-                {
-                    "ui.basic.tag":"div",
-                    "ui.class.class":"align",
-                    "ui.basic.var":"align"
                 }
             ]
         }
