@@ -95,6 +95,7 @@
     ],
     "core.link.work": "app.player.work",
     "widget.window.maximize":null,
+    "key": "app-player-window",
     "ui.property.after": {
         "storage.local.key": "app-player-window",
         "storage.local.restore": "widget.window.store",

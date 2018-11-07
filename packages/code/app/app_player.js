@@ -23,10 +23,10 @@ screens.app.player = function AppPlayer(me) {
         }
         me.sessionListData = [];
         var params = {};
-        if (args.length > 0) {
+        if (args.length > 0 && typeof args[0] === "string") {
             params.groupName = args[0];
         }
-        if (args.length > 1) {
+        if (args.length > 1 && typeof args[1] === "string") {
             params.sessionName = args[1];
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);

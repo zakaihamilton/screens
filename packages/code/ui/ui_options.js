@@ -28,7 +28,7 @@ screens.ui.options = function UIOptions(me) {
             var window = me.widget.window.get(object);
             var key = me.core.property.get(window, "key");
             if(key) {
-                storageKey += "." + key;
+                storageKey = key + "." + storageKey;
             }
         }
         var validKey = me.storage.local.validKey(storageKey);
