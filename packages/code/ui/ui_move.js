@@ -4,6 +4,7 @@
  */
 
 screens.ui.move = function UIMove(me) {
+    me.snapSensitivity = 50;
     me.enabled = {
         get: function (object) {
             return object.move_enabled;
@@ -57,7 +58,7 @@ screens.ui.move = function UIMove(me) {
         target_region.left = event.clientX - me.info.left;
         target_region.top = event.clientY - me.info.top;
         me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
-        me.clip(object, true);
+        me.snap(object, true);
     };
     me.up = function (object, event) {
         me.core.property.set(object, {
@@ -69,9 +70,9 @@ screens.ui.move = function UIMove(me) {
         });
         var window = me.widget.window.get(me.info.target);
         me.core.property.notify(window, "update");
-        me.clip(object, false);
+        me.snap(object, false);
     };
-    me.clip = function (object, signalOnly) {
+    me.snap = function (object, signalOnly) {
         var window = me.widget.window.get(object);
         var target_region = me.ui.rect.absoluteRegion(window);
         var parent = me.widget.window.parent(window);
@@ -82,7 +83,7 @@ screens.ui.move = function UIMove(me) {
         me.core.property.notify(parent, "update");
         var alignToLeft = false, alignToRight = false;
         var alignToTop = false, alignToBottom = false;
-        if (target_region.left < parent_region.left) {
+        if (target_region.left + me.snapSensitivity < parent_region.left) {
             if (signalOnly) {
                 alignToLeft = true;
             }
@@ -90,7 +91,7 @@ screens.ui.move = function UIMove(me) {
                 me.ui.arrange.alignToLeft(object);
             }
         }
-        else if (target_region.right > parent_region.right) {
+        else if (target_region.right - me.snapSensitivity > parent_region.right) {
             if (signalOnly) {
                 alignToRight = true;
             }
@@ -98,7 +99,7 @@ screens.ui.move = function UIMove(me) {
                 me.ui.arrange.alignToRight(object);
             }
         }
-        else if(target_region.top < parent_region.top) {
+        else if(target_region.top + me.snapSensitivity < parent_region.top) {
             if (signalOnly) {
                 alignToTop = true;
             }
@@ -106,7 +107,7 @@ screens.ui.move = function UIMove(me) {
                 me.ui.arrange.alignToTop(object);
             }
         }
-        else if(target_region.bottom > parent_region.bottom) {
+        else if(target_region.bottom - me.snapSensitivity > parent_region.bottom) {
             if (signalOnly) {
                 alignToBottom = true;
             }
