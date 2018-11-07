@@ -149,7 +149,7 @@ screens.app.player = function AppPlayer(me) {
     me.updateSessions = async function (sessionName) {
         var window = me.singleton;
         var group = window.options.groupName;
-        if (group) {
+        if (group && typeof group === "string") {
             me.sessionListData = me.core.message.send_server(
                 "core.cache.use",
                 me.id + "-" + group,
