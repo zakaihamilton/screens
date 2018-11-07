@@ -80,7 +80,7 @@ screens.app.library = function AppLibrary(me) {
                         continue;
                     }
                     value = item[key];
-                    if(value.match(/^\d/)) {
+                    if (value.match(/^\d/)) {
                         value = me.core.string.padNumber(value, 3);
                     }
                     names.add(key + ":" + value);
@@ -127,7 +127,7 @@ screens.app.library = function AppLibrary(me) {
                         me.changedSearch(window.var.search);
                     },
                     {
-                        "unique":false
+                        "unique": false
                     },
                     {
                         "group": group,
@@ -205,21 +205,21 @@ screens.app.library = function AppLibrary(me) {
             try {
                 records = await me.db.library.find(search);
             }
-            catch(err) {
+            catch (err) {
                 me.log_error("Failed to search for: " + search + " err: " + JSON.stringify(err));
             }
-            if(counter !== me.searchCounter) {
+            if (counter !== me.searchCounter) {
                 me.log("counter: " + counter + " does not match: " + me.searchCounter);
                 return;
             }
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
-        if(records) {
-            if(records.length === 1) {
+        if (records) {
+            if (records.length === 1) {
                 me.gotoArticle(object, records[0]);
             }
-            else if(tagMode) {
+            else if (tagMode) {
                 me.gotoArticle(object, records);
             }
         }
@@ -249,7 +249,7 @@ screens.app.library = function AppLibrary(me) {
         var structuredMode = window.options.structuredMode;
         var tagMode = window.options.tagMode;
         var text = "";
-        if(tagMode) {
+        if (tagMode) {
             records = records.map(item => {
                 item = Object.assign({}, item);
                 delete item.content;
@@ -314,7 +314,7 @@ screens.app.library = function AppLibrary(me) {
         }
         var transformText = "";
         for (var record of records) {
-            if(!record.content) {
+            if (!record.content) {
                 continue;
             }
             if (transformText) {
@@ -355,7 +355,7 @@ screens.app.library = function AppLibrary(me) {
                 for (line of text.split("\n")) {
                     var last = array[array.length - 1];
                     if (line[0] === "#") {
-                        if(!isTag && !line.startsWith("#id:")) {
+                        if (!isTag && !line.startsWith("#id:")) {
                             if (last) {
                                 last.tags = Object.assign({}, tags);
                             }
@@ -383,7 +383,7 @@ screens.app.library = function AppLibrary(me) {
                             }
                         }
                     }
-                    else if(line.trim() !== "") {
+                    else if (line.trim() !== "") {
                         isTag = false;
                         if (!last) {
                             array.push({});
@@ -471,7 +471,7 @@ screens.app.library = function AppLibrary(me) {
             line = line.trim();
             if (line.startsWith("#")) {
                 isTagged = true;
-                if(!isTag && !line.startsWith("#id:")) {
+                if (!isTag && !line.startsWith("#id:")) {
                     line = "#id:\n" + line;
                 }
                 isTag = true;
@@ -484,7 +484,7 @@ screens.app.library = function AppLibrary(me) {
                 if (line.startsWith("Items")) {
                     return "";
                 }
-                if(line.startsWith("Chapter")) {
+                if (line.startsWith("Chapter")) {
                     line = line.replace("Chapter ", "#id:\n#chapter:");
                 }
                 else if (prevLine.includes("article")) {
@@ -504,14 +504,14 @@ screens.app.library = function AppLibrary(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
-        if(!Array.isArray(tags)) {
+        if (!Array.isArray(tags)) {
             var content = await me.db.library.content.get(tags._id);
         }
         me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         var records = [];
-        if(Array.isArray(tags)) {
+        if (Array.isArray(tags)) {
             records = tags.map(record => {
-                return {tags: record};
+                return { tags: record };
             });
         }
         else {
@@ -526,7 +526,7 @@ screens.app.library = function AppLibrary(me) {
         window.showResults = true;
         me.updateMode(window);
     };
-    me.exportText = function(object, target) {
+    me.exportText = function (object, target) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.transform, "text");
         me.core.property.set(target, "importData", text);
