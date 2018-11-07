@@ -35,12 +35,14 @@ screens.app.library = function AppLibrary(me) {
         me.ui.options.load(me, window, {
             editMode: false,
             structuredMode: false,
-            tagMode: false
+            tagMode: false,
+            combineResults: false
         });
         me.ui.options.toggleSet(me, null, {
             "editMode": me.updateEditMode,
             "structuredMode": me.updateEditMode,
-            "tagMode": me.reSearch
+            "tagMode": me.reSearch,
+            "combineResults": me.reSearch
         });
         window.showResults = true;
         me.updateMode(window);
@@ -212,16 +214,18 @@ screens.app.library = function AppLibrary(me) {
                 me.log("counter: " + counter + " does not match: " + me.searchCounter);
                 return;
             }
-            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
         me.updateResults(object, records);
         if (records) {
             if (records.length === 1) {
-                me.gotoArticle(object, records[0]);
+                await me.gotoArticle(object, records[0], false);
             }
-            else if (tagMode) {
-                me.gotoArticle(object, records);
+            else if (tagMode || window.options.combineResults) {
+                await me.gotoArticle(object, records, false);
             }
+        }
+        if(search) {
+            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
     };
     me.updateText = function (object) {
@@ -500,19 +504,30 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.editor, "text", text);
         me.updateText(object);
     };
-    me.gotoArticle = async function (object, tags) {
+    me.gotoArticle = async function (object, tags, spinner=true) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
-        me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+        if(spinner) {
+            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+        }
         if (!Array.isArray(tags)) {
             var content = await me.db.library.content.get(tags._id);
         }
-        me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         var records = [];
         if (Array.isArray(tags)) {
-            records = tags.map(record => {
-                return { tags: record };
+            records = tags.map(async (record, index) => {
+                if (window.options.combineResults) {
+                    var content = await me.db.library.content.get(record._id);
+                    if(index !== tags.length - 1) {
+                        content.text += "\n<br>\n";
+                    }
+                    return { content: content, tags: record };
+                }
+                else {
+                    return { tags: record };
+                }
             });
+            records = await Promise.all(records);
         }
         else {
             records = [{ content: content, tags: tags }];
@@ -520,6 +535,9 @@ screens.app.library = function AppLibrary(me) {
         me.updateTextFromRecords(window, records);
         window.showResults = false;
         me.updateMode(window);
+        if(spinner) {
+            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
+        }
     };
     me.showResults = function (object) {
         var window = me.widget.window.get(object);

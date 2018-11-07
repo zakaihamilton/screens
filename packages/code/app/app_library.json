@@ -20,6 +20,14 @@
                     "app.library.clear"
                 ],
                 [
+                    "Combine Results",
+                    "app.library.combineResults",
+                    {
+                        "state":"select",
+                        "separator":true
+                    }
+                ],
+                [
                     "Refresh",
                     "app.library.refresh",
                     {
