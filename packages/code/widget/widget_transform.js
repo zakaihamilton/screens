@@ -182,7 +182,7 @@ screens.widget.transform = function WidgetTransform(me) {
         if (!term) {
             return;
         }
-        var widgets = me.ui.node.bind(widget, term, {
+        var widgets = me.ui.node.bind(widget.var.popup, term, {
             term: ".text",
             phase: ".phase|.phase.minor",
             hebrew: ".item.hebrew",

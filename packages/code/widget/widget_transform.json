@@ -21,11 +21,11 @@
         {
             "ui.element.component": "widget.spinner",
             "ui.basic.var": "spinner",
-            "ui.style.visibility":"hidden"
+            "ui.style.visibility": "hidden"
         },
         {
             "ui.class.class": "iconbar",
-            "ui.basic.var":"iconbar",
+            "ui.basic.var": "iconbar",
             "ui.group.data": {
                 "ui.data.keyList": [
                     "ui.basic.html",
@@ -105,10 +105,13 @@
             }
         },
         {
-            "ui.basic.var":"popup",
-            "ui.basic.tag":"div",
-            "ui.basic.html":"@widget.transform.html",
-            "ui.class.add":"modal"
+            "ui.basic.var": "popup",
+            "ui.basic.tag": "div",
+            "ui.basic.html": "@widget.transform.html",
+            "ui.class.add": "modal",
+            "ui.property.after":{
+                "ui.node.parent":"@ui.element.workspace"
+            }
         }
     ],
     "widget.menu.items": [
