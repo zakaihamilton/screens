@@ -1,5 +1,5 @@
 {
-    "ui.property.style":{
+    "ui.property.style": {
         "width": "150px",
         "height": "150px",
         "position": "absolute",
@@ -11,32 +11,50 @@
     "ui.class.class": "border",
     "ui.class.add": "@widget.window.mainClass",
     "ui.group.data": {
-        "ui.data.keyList": ["ui.class.class"],
+        "ui.data.keyList": [
+            "ui.class.class"
+        ],
         "ui.data.default": {
             "ui.resize.extend": null
         },
         "ui.data.values": [
-            ["left"],
-            ["right"],
-            ["top"],
-            ["bottom"],
-            ["bottom-left"],
-            ["bottom-right"],
-            ["top-left"],
-            ["top-right"]
+            [
+                "left"
+            ],
+            [
+                "right"
+            ],
+            [
+                "top"
+            ],
+            [
+                "bottom"
+            ],
+            [
+                "bottom-left"
+            ],
+            [
+                "bottom-right"
+            ],
+            [
+                "top-left"
+            ],
+            [
+                "top-right"
+            ]
         ]
     },
     "ui.basic.elements": [
         {
             "ui.basic.var": "icon",
             "text": "",
-            "ui.class.class":"widget.window.icon",
+            "ui.class.class": "widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.touch.dblclick": "menu.context.show(taskbar)",
             "ui.touch.click": "widget.window.toggleVisibility",
             "ui.basic.window": null,
             "ui.node.parent": "@widget.tray.tray",
-            "widget.icon.type":"@widget.tray.type(widget.tray.tray,)"
+            "widget.icon.type": "@widget.tray.type(widget.tray.tray,)"
         },
         {
             "ui.class.class": "margin",
@@ -46,13 +64,13 @@
                     "ui.class.class": "title",
                     "ui.basic.elements": [
                         {
-                            "ui.basic.window":"@ui.node.parent",
+                            "ui.basic.window": "@ui.node.parent",
                             "ui.basic.var": "close",
                             "ui.class.class": "close",
                             "ui.touch.click": "menu.context.show",
                             "ui.touch.dblclick": "close",
                             "ui.class.add": "@widget.window.mainClass",
-                            "ui.attribute.title":"Menu (Double Click to Close)"
+                            "ui.attribute.title": "Menu (Double Click to Close)"
                         },
                         {
                             "ui.basic.var": "label",
@@ -62,24 +80,30 @@
                             "ui.touch.dblclick": "toggleSize"
                         },
                         {
-                            "ui.basic.window":"@ui.node.parent",
+                            "ui.basic.window": "@ui.node.parent",
                             "ui.basic.var": "minimize",
-                            "ui.class.class": ["action", "minimize"],
+                            "ui.class.class": [
+                                "action",
+                                "minimize"
+                            ],
                             "ui.touch.click": "minimize",
                             "ui.basic.elements": {
                                 "ui.class.class": "minimize.arrow"
                             },
-                            "ui.attribute.title":"Minimize"
+                            "ui.attribute.title": "Minimize"
                         },
                         {
-                            "ui.basic.window":"@ui.node.parent",
+                            "ui.basic.window": "@ui.node.parent",
                             "ui.basic.var": "maximize",
-                            "ui.class.class": ["action", "maximize"],
+                            "ui.class.class": [
+                                "action",
+                                "maximize"
+                            ],
                             "ui.touch.click": "toggleSize",
                             "ui.basic.elements": {
                                 "ui.class.class": "maximize.arrow"
                             },
-                            "ui.attribute.title":"Maximize/Restore"
+                            "ui.attribute.title": "Maximize/Restore"
                         }
                     ]
                 },
@@ -89,7 +113,12 @@
                 },
                 {
                     "ui.element.component": "widget.container",
-                    "ui.basic.var": "container"
+                    "ui.basic.var": "container",
+                    "ui.basic.elements": {
+                        "ui.basic.tag": "div",
+                        "ui.class.class": "align",
+                        "ui.basic.var": "align"
+                    }
                 },
                 {
                     "ui.class.class": "footer",

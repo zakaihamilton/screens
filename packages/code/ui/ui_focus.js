@@ -86,6 +86,9 @@ screens.ui.focus = function UIFocus(me) {
             childList.splice(order, 0, object);
         }
         for (var childOrder = 0; childOrder < childList.length; childOrder++) {
+            if(childList[childOrder].component !== "widget.window") {
+                continue;
+            }
             if(me.core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }

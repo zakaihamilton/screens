@@ -11,13 +11,13 @@ screens.ui.arrange = function UIArrange(me) {
             if (parent) {
                 window = parent;
             }
-            if(window) {
+            if (window) {
                 object = window;
             }
             var windows = me.core.property.get(object, "widget.window.visibleWindows");
             var left = 0, top = 0, numWindows = windows.length;
-            for(window of windows) {
-                me.reposition(window, function(region) {
+            for (window of windows) {
+                me.reposition(window, function (region) {
                     var label_region = me.ui.rect.relativeRegion(window.var.label, window);
                     region.left = left;
                     region.top = top;
@@ -46,115 +46,99 @@ screens.ui.arrange = function UIArrange(me) {
         me.core.property.notify(window, "update");
         me.core.property.notify(parent, "update");
     };
-    me.alignToLeft = {
-        set: function (object) {
-            me.reposition(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.top = 0;
-                parent_region.width /= 2;
-                parent_region.width -= 4;
-                parent_region.height -= 4;
-                return parent_region;
-            });
-        }
+    me.alignToLeft = function (object) {
+        me.reposition(object, function (parent_region) {
+            parent_region.left = 0;
+            parent_region.top = 0;
+            parent_region.width /= 2;
+            parent_region.width -= 4;
+            parent_region.height -= 4;
+            return parent_region;
+        });
     };
-    me.alignToRight = {
-        set: function (object) {
-            me.reposition(object, function(parent_region) {
-                parent_region.top = 0;
-                parent_region.width /= 2;
-                parent_region.left = parent_region.width;
-                parent_region.width -= 4;
-                parent_region.height -= 4;
-                return parent_region;
-            });
-        }
+    me.alignToRight = function (object) {
+        me.reposition(object, function (parent_region) {
+            parent_region.top = 0;
+            parent_region.width /= 2;
+            parent_region.left = parent_region.width;
+            parent_region.width -= 4;
+            parent_region.height -= 4;
+            return parent_region;
+        });
     };
-    me.alignToTop = {
-        set: function (object) {
-            me.reposition(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.top = 0;
-                parent_region.height /= 2;
-                parent_region.height -= 4;
-                parent_region.width -= 4;
-                return parent_region;
-            });
-        }
+    me.alignToTop = function (object) {
+        me.reposition(object, function (parent_region) {
+            parent_region.left = 0;
+            parent_region.top = 0;
+            parent_region.height /= 2;
+            parent_region.height -= 4;
+            parent_region.width -= 4;
+            return parent_region;
+        });
     };
-    me.alignToBottom = {
-        set: function (object) {
-            me.reposition(object, function(parent_region) {
-                parent_region.left = 0;
-                parent_region.height /= 2;
-                parent_region.top = parent_region.height;
-                parent_region.height -= 4;
-                parent_region.width -= 4;
-                return parent_region;
-            });
-        }
+    me.alignToBottom = function (object) {
+        me.reposition(object, function (parent_region) {
+            parent_region.left = 0;
+            parent_region.height /= 2;
+            parent_region.top = parent_region.height;
+            parent_region.height -= 4;
+            parent_region.width -= 4;
+            return parent_region;
+        });
     };
-    me.tileHorizontally = {
-        set: function (object) {
-            var window = me.widget.window.mainWindow(object);
-            var parent = me.widget.window.parent(window);
-            if (parent) {
-                window = parent;
+    me.tileHorizontally = function (object) {
+        var window = me.widget.window.mainWindow(object);
+        var parent = me.widget.window.parent(window);
+        if (parent) {
+            window = parent;
+        }
+        if (window) {
+            object = window;
+        }
+        var windows = me.core.property.get(object, "widget.window.visibleWindows");
+        if (windows) {
+            if (windows.length > 0) {
+                var left = windows[windows.length - 1];
+                me.core.property.set(left, "ui.arrange.alignToLeft");
             }
-            if(window) {
-                object = window;
-            }
-            var windows = me.core.property.get(object, "widget.window.visibleWindows");
-            if (windows) {
-                if(windows.length > 0) {
-                    var left = windows[windows.length - 1];
-                    me.core.property.set(left, "ui.arrange.alignToLeft");
-                }
-                if(windows.length > 1) {
-                    var right = windows[windows.length - 2];
-                    me.core.property.set(right, "ui.arrange.alignToRight");
-                }
+            if (windows.length > 1) {
+                var right = windows[windows.length - 2];
+                me.core.property.set(right, "ui.arrange.alignToRight");
             }
         }
     };
-    me.tileVertically = {
-        set: function (object) {
-            var window = me.widget.window.mainWindow(object);
-            var parent = me.widget.window.parent(window);
-            if (parent) {
-                window = parent;
+    me.tileVertically = function (object) {
+        var window = me.widget.window.mainWindow(object);
+        var parent = me.widget.window.parent(window);
+        if (parent) {
+            window = parent;
+        }
+        if (window) {
+            object = window;
+        }
+        var windows = me.core.property.get(object, "widget.window.visibleWindows");
+        if (windows) {
+            if (windows.length > 0) {
+                var top = windows[windows.length - 1];
+                me.core.property.set(top, "ui.arrange.alignToTop");
             }
-            if(window) {
-                object = window;
-            }
-            var windows = me.core.property.get(object, "widget.window.visibleWindows");
-            if (windows) {
-                if(windows.length > 0) {
-                    var top = windows[windows.length - 1];
-                    me.core.property.set(top, "ui.arrange.alignToTop");
-                }
-                if(windows.length > 1) {
-                    var bottom = windows[windows.length - 2];
-                    me.core.property.set(bottom, "ui.arrange.alignToBottom");
-                }
+            if (windows.length > 1) {
+                var bottom = windows[windows.length - 2];
+                me.core.property.set(bottom, "ui.arrange.alignToBottom");
             }
         }
     };
-    me.arrangeIcons = {
-        set: function (object) {
-            
-        }
+    me.arrangeIcons = function (object) {
+
     };
-    me.center = {
-        set: function(object) {
-            var window = me.widget.window.get(object);
-            me.reposition(window, function(parent_region) {
-                parent_region.width /= 1.5;
-                parent_region.height /= 1.5;
-                parent_region.left = parent_region.width / 4;
-                parent_region.top = parent_region.height / 4;
-                return parent_region;
-            });
-        }
+    me.center = function (object) {
+        var window = me.widget.window.get(object);
+        me.reposition(window, function (parent_region) {
+            parent_region.width /= 1.5;
+            parent_region.height /= 1.5;
+            parent_region.left = parent_region.width / 4;
+            parent_region.top = parent_region.height / 4;
+            return parent_region;
+        });
     };
 };

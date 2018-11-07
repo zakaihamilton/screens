@@ -24,6 +24,11 @@ screens.widget.desktop = function WidgetDesktop(me) {
                             "ui.touch.dblclick":"core.app.launcher"
                         }
                     ]
+                },
+                {
+                    "ui.basic.tag":"div",
+                    "ui.class.class":"align",
+                    "ui.basic.var":"align"
                 }
             ]
         }
