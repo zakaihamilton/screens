@@ -4,6 +4,10 @@
  */
 
 screens.app.profile = function AppProfile(me) {
+    me.init = async function() {
+        me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
+        me.userList = await me.user.profile.list();
+    };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -19,7 +23,6 @@ screens.app.profile = function AppProfile(me) {
         me.ui.options.choiceSet(me, null, {
             "userName": me.updateUser
         });
-        me.userList = await me.user.profile.list();
     };
     me.html = function () {
         return __html__;
@@ -52,16 +55,22 @@ screens.app.profile = function AppProfile(me) {
         }
         return bindings;
     };
+    me.sortSessions = function (object, items) {
+        if (!items || items.then) {
+            return [];
+        }
+        items = items.sort((a,b) => a.name.localeCompare(b.name));
+        return items;
+    };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.profile.userName");
+            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", me.sortSessions, "app.profile.userName");
         }
     };
     me.userId = async function(object, name) {
         var userId = null;
-        if(me.userList) {
-            var userList = await me.userList;
-            var user = userList.find((user) => name == user.name);
+        if(me.userList && name) {
+            var user = me.userList.find((user) => name == user.name);
             if(user && user.key) {
                 userId = user.key.name;
             }
@@ -77,13 +86,9 @@ screens.app.profile = function AppProfile(me) {
         if (!profile) {
             profile = {};
         }
-        if(window.options.userName) {
-            if (!profile.name) {
-                profile.name = me.lib.google.userName();
-            }
-            if (!profile.email) {
-                profile.email = me.lib.google.userEmail();
-            }
+        if(!window.options.userName) {
+            profile.name = me.lib.google.userName();
+            profile.email = me.lib.google.userEmail();
         }
         for (var id in bindings) {
             if (profile[id]) {

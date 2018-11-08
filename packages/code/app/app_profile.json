@@ -33,7 +33,7 @@
                 "app.profile.userMenuList"
             ],
             {
-                "visible":"@user.access.isAPIAllowed(none,user.profile.list)"
+                "visible":"app.profile.userListAvailable"
             }
         ]
     ],

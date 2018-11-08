@@ -399,14 +399,15 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         if (key in values) {
             var param = values[key];
             if (typeof param === "string" || typeof param === "function") {
-                if (param === "select") {
-                    param = object.menu_select;
+                var method = param;
+                if (method === "select") {
+                    method = object.menu_select;
                 }
                 var value = values.value;
                 if (typeof value === "undefined") {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
-                param = me.core.property.get(parentMenu.window || object, param, value);
+                param = me.core.property.get(parentMenu.window || object, method, value);
             }
             if (param && param.then) {
                 callback(false);
