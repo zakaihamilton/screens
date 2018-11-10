@@ -257,6 +257,14 @@
                     "widget.transform.reflow"
                 ],
                 [
+                    "Snap",
+                    "widget.transform.snap",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
                     "Pages",
                     "widget.transform.pages",
                     {

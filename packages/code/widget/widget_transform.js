@@ -25,6 +25,7 @@ screens.widget.transform = function WidgetTransform(me) {
             headings: true,
             subHeadings: true,
             pages: true,
+            snap: true,
             columns: true,
             language: "Auto",
             fontSize: "18px",
@@ -48,6 +49,13 @@ screens.widget.transform = function WidgetTransform(me) {
             keepSource: me.transform,
             abridged: me.transform,
             pages: me.reflow,
+            snap: (object) => {
+                var widget = me.findWidget(object);
+                me.core.property.set(widget.var.layout, {
+                    "ui.scroll.snap": widget.options.snap,
+                    "ui.scroll.scrolled":null
+                });
+            },
             columns: me.reflow,
             category: me.transform,
             headings: me.transform,
@@ -520,7 +528,8 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget.var.layout, {
             "ui.scroll.pageSize": pageSize.height,
             "ui.scroll.scrollTo": widget.options.scrollPos,
-            "ui.scroll.scrolled": null
+            "ui.scroll.scrolled": null,
+            "ui.scroll.snap": widget.options.snap
         });
     };
     me.clear = function (object) {

@@ -65,6 +65,16 @@ screens.ui.scroll = function UIScroll(me) {
             container.ui_scroll_pageSize = value;
         }
     };
+    me.snap = {
+        get: function (object) {
+            var container = me.container(object);
+            return container.ui_scroll_snap;
+        },
+        set: function (object, value) {
+            var container = me.container(object);
+            container.ui_scroll_snap = value;
+        }
+    };
     me.scrolled = {
         set: function (object, value) {
             var container = me.container(object);
@@ -73,26 +83,22 @@ screens.ui.scroll = function UIScroll(me) {
                 clearTimeout(container.ui_scroll_snapTimeout);
                 container.ui_scroll_snapTimeout = null;
             }
-            container.ui_scroll_snapTimeout = setTimeout(function () {
-                var currentPos = container.scrollTop;
-                var targetPos = currentPos;
-                var delta = currentPos % pageSize;
-                var direction = 0;
-                if (delta && currentPos) {
-                    targetPos = Math.round(currentPos / pageSize) * pageSize;
-                }
-                if (currentPos < targetPos) {
-                    direction = 1;
-                } else if (currentPos > targetPos) {
-                    direction = -1;
-                }
-                var params = {
-                    top: targetPos,
-                    behavior: 'smooth'
-                };
-                container.scroll(params);
-                me.core.property.notify(container, "scrolled");
-            }, 1000);
+            if(container.ui_scroll_pageSize && container.ui_scroll_snap) {
+                container.ui_scroll_snapTimeout = setTimeout(function () {
+                    var currentPos = container.scrollTop;
+                    var targetPos = currentPos;
+                    var delta = currentPos % pageSize;
+                    if (delta && currentPos) {
+                        targetPos = Math.round(currentPos / pageSize) * pageSize;
+                    }
+                    var params = {
+                        top: targetPos,
+                        behavior: 'smooth'
+                    };
+                    container.scroll(params);
+                    me.core.property.notify(container, "scrolled");
+                }, 1000);
+            }
         }
     };
 };
