@@ -4,9 +4,19 @@
  */
 
 screens.core.app = function CoreApp(me) {
+    me.available = async function (name) {
+        if(!me.apps) {
+            me.apps = await me.user.access.appList();
+        }
+        var available = me.apps && me.apps.includes(name);
+        return available;
+    };
     me.lookup = {
         set: async function (object, value, property) {
             if (!property) {
+                return;
+            }
+            if (!await me.available(property)) {
                 return;
             }
             var progress = me.ui.modal.launch("progress", {
@@ -27,6 +37,9 @@ screens.core.app = function CoreApp(me) {
     };
     me.launch = async function (appName) {
         if (!appName) {
+            return null;
+        }
+        if (!await me.available(appName)) {
             return null;
         }
         var result = null;

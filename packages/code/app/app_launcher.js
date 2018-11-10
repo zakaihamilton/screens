@@ -10,9 +10,6 @@ screens.app.launcher = function AppLauncher(me) {
     me.html = function () {
         return __html__;
     };
-    me.init = async function () {
-        me.apps = await me.user.access.appList();
-    };
     me.resIcon = async function (object, value) {
         var name = null, extension = null, label = null;
         if (typeof value === "string") {
@@ -27,7 +24,7 @@ screens.app.launcher = function AppLauncher(me) {
         if(!extension) {
             extension = "png";
         }
-        var available = me.apps && me.apps.includes(name);
+        var available = await me.core.app.available(name);
         me.core.property.set(object, "text", label);
         me.core.property.set(object, "ui.basic.src", `/packages/res/icons/${name}.${extension}`);
         me.core.property.set(object, "ui.basic.display", available);

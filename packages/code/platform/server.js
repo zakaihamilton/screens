@@ -26,7 +26,9 @@ screens.apps = [
     "profile",
     "theme",
     "login",
-    "logger"
+    "logger",
+    "cache",
+    "launcher"
 ];
 
 screens.include({

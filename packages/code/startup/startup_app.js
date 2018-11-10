@@ -18,7 +18,7 @@ screens.startup.app = function StartupApp(me) {
             });
             await me.lib.google.load();
         }
-        catch(err) {
+        catch (err) {
             document.body.innerHTML = __html__.replace("__error__", err.message || err);
         }
         finally {
@@ -35,10 +35,10 @@ screens.startup.app = function StartupApp(me) {
             }
         }
     };
-    me.start = function () {
+    me.start = async function () {
         var app = me.core.startup.app;
         if (!app.name || app.name !== "none") {
-            if (app.name) {
+            if (app.name && await me.core.app.available(app.name)) {
                 var args = [app.name];
                 if (app.params) {
                     args.push(...app.params);
@@ -54,5 +54,5 @@ screens.startup.app = function StartupApp(me) {
                 me.core.app.launch("launcher");
             }
         }
-    }
+    };
 };
