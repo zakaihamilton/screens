@@ -28,7 +28,8 @@ screens.apps = [
     "login",
     "logger",
     "cache",
-    "launcher"
+    "launcher",
+    "diagram"
 ];
 
 screens.include({
