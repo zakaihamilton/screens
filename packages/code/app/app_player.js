@@ -55,12 +55,10 @@ screens.app.player = function AppPlayer(me) {
         }
         items = items.map(function (item) {
             var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
-            return me.core.path.fileName(name);
+            item.label = me.core.path.fileName(name);
+            return item;
         }).reverse();
-        items = Array.from(new Set(items));
-        items = items.map(function (item) {
-            return { name: item };
-        });
+        items = me.core.json.union(items, "label");
         return items;
     };
     me.groupMenuList = {
@@ -70,7 +68,10 @@ screens.app.player = function AppPlayer(me) {
     };
     me.sessionMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.sessionListData, "name", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession");
+            return me.widget.menu.collect(object, me.sessionListData, "label", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession", {
+                "Label":"label",
+                "Size":"size"
+            });
         }
     };
     me.refresh = {

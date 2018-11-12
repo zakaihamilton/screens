@@ -6,7 +6,7 @@
 screens.ui.basic = function UIBasic(me) {
     me.tag = {
         get: function (object) {
-            return object.tagName;
+            return object.tagName.toLowerCase();
         }
     };
     me.elementId = {

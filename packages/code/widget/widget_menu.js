@@ -26,7 +26,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
-    me.collect = function (object, list, property, properties, group, listMethod, itemMethod) {
+    me.collect = function (object, list, property, attributes, group, listMethod, itemMethod, metadata) {
         var parseItems = (items) => {
             if (!items) {
                 items = [];
@@ -39,18 +39,28 @@ screens.widget.menu = function WidgetMenu(me) {
             }
             var isFirst = true;
             items = items.map(function (item) {
-                var title = item[property];
+                var title = String(item[property]);
                 if (!title) {
                     return null;
+                }
+                var properties = {};
+                var item_metadata = {};
+                if (metadata) {
+                    for (var key in metadata) {
+                        item_metadata[key] = item[metadata[key]];
+                    }
+                    properties.metadata = item_metadata;
+                    title = "";
+                }
+                if (group) {
+                    properties.group = group;
                 }
                 title = [title.charAt(0).toUpperCase() + title.slice(1)];
                 var result = [
                     title,
                     itemMethod,
-                    properties,
-                    {
-                        "group": group
-                    }
+                    attributes,
+                    properties
                 ];
                 return result;
             });
@@ -67,6 +77,7 @@ screens.widget.menu = function WidgetMenu(me) {
             },
             {
                 "group": group,
+                "metadata": metadata,
                 "promise": { promise: list, callback: parseItems }
             }
         ]];
@@ -201,7 +212,12 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
                 text = item.menu_options.value;
             }
             if (typeof text === "undefined") {
-                text = me.core.property.get(item, "ui.basic.text");
+                if(me.core.property.get(item, "ui.basic.tag") === "tr") {
+                    text = me.core.property.get(item.firstChild, "ui.basic.text");
+                }
+                else {
+                    text = me.core.property.get(item, "ui.basic.text");
+                }
             }
             if (prefix) {
                 text = prefix + text;
@@ -227,10 +243,6 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                     "ui.basic.tag": "div",
                     "ui.class.class": "widget.menu.progress.bar",
                     "ui.basic.var": "progress"
-                },
-                {
-                    "ui.basic.tag": "ul",
-                    "ui.basic.var": "members"
                 }
             ]
         }
@@ -239,7 +251,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         me.log("menu state: " + state);
         me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
     };
-    me.use = function (object, name, member) {
+    me.use = function (object, name, member, properties) {
         if (!object.lists) {
             object.lists = [];
         }
@@ -249,6 +261,16 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 "ui.element.component": "widget.menu.list"
             }, object);
             object.lists[name] = list;
+        }
+        if (!list.var.members) {
+            var membersTag = "div";
+            if (properties.metadata) {
+                membersTag = "table";
+            }
+            me.ui.element.create({
+                "ui.basic.var": "members",
+                "ui.basic.tag": membersTag
+            }, list, list);
         }
         if (list.var.filter) {
             member.parentList = list;
@@ -356,9 +378,13 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             return element;
         },
         tag: function (properties) {
+            var metadata = properties["metadata"];
+            if (metadata) {
+                return "tr";
+            }
             var groupName = properties["group"];
             if (groupName) {
-                return "li";
+                return "span";
             }
             if (properties.options && properties.options.edit) {
                 return "input";
@@ -367,7 +393,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         container: function (object, parent, properties) {
             var groupName = properties["group"];
             if (groupName) {
-                return me.widget.menu.list.use(parent, groupName, object);
+                return me.widget.menu.list.use(parent, groupName, object, properties);
             }
         }
     };
@@ -430,6 +456,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     options.var.split(",").map(value => {
                         window.var[value] = object;
                     });
+                }
+                if (options.column) {
+                    me.core.property.set(object, "ui.style.gridColumn", options.column);
                 }
                 me.handleValue(object, options, "debugger", (value) => {
                     if (value) {
@@ -572,5 +601,15 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 }, object, object);
             }
         }
+    };
+    me.metadata = function (object, value) {
+        var elements = [];
+        for (var key in value) {
+            elements.push({
+                "ui.basic.tag": "td",
+                "ui.basic.text": value[key]
+            });
+        }
+        me.ui.element.create(elements, object, object);
     };
 };

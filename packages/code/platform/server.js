@@ -82,7 +82,8 @@ screens.include({
     ],
     "media": [
         "ffmpeg",
-        "hls"
+        "hls",
+        "metadata"
     ],
     "startup": [
         "version"

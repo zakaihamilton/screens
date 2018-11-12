@@ -28,6 +28,7 @@
     "mime": "^2.3.1",
     "moment": "^2.22.2",
     "mongodb": "^3.0.10",
+    "music-metadata": "^3.1.6",
     "node-cmd": "^3.0.0",
     "node-gyp": "^3.6.2",
     "npm": "^6.1.0",
