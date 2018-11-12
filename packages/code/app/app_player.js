@@ -53,12 +53,17 @@ screens.app.player = function AppPlayer(me) {
         if (!items || items.then) {
             return [];
         }
-        items = items.map(function (item) {
+        items = items.map(item => {
             var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
             item.label = me.core.path.fileName(name);
+            if(item.duration) {
+                item.durationText = me.core.util.formatDuration(item.duration);
+            }
             return item;
+        });
+        items = items.filter(item => {
+            return item.name.includes(".m4a");
         }).reverse();
-        items = me.core.json.union(items, "label");
         return items;
     };
     me.groupMenuList = {
@@ -70,7 +75,7 @@ screens.app.player = function AppPlayer(me) {
         get: function (object) {
             return me.widget.menu.collect(object, me.sessionListData, "label", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession", {
                 "Label":"label",
-                "Size":"size"
+                "Duration":"durationText"
             });
         }
     };
@@ -154,7 +159,7 @@ screens.app.player = function AppPlayer(me) {
             me.sessionListData = me.core.message.send_server(
                 "core.cache.use",
                 me.id + "-" + group,
-                "storage.file.getChildren",
+                "media.file.listing",
                 me.rootPath + "/" + group.toLowerCase(),
                 false);
             me.sessionListData = await me.sessionListData;
@@ -319,5 +324,18 @@ screens.app.player = function AppPlayer(me) {
         var speed = me.widget.player.controls.speeds[window.options.speed];
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
         me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
+    };
+    me.playerUpdated = function(object) {
+        var duration = me.widget.player.duration(object);
+        var path = me.widget.player.path(object);
+        var fileName = me.core.path.fullName(path);
+        if(duration) {
+            var session = me.sessionListData.find(session => {
+                return fileName === session.name;
+            });
+            if(session) {
+                session.duration = duration;
+            }
+        }
     };
 };

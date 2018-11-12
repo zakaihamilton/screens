@@ -87,4 +87,25 @@ screens.core.util = function CoreUtil(me) {
     me.sync = async function() {
         await me.storage.cache.empty();
     };
+    me.formatDuration = function (duration) {
+        var sec = parseInt(duration % 60);
+        var min = parseInt(duration / 60) % 60;
+        var hour = parseInt(duration / (60 * 60)) % 24;
+        var days = parseInt(duration / (24 * 60 * 60));
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (min < 10) {
+            min = "0" + min;
+        }
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        if (days) {
+            return days + " days" + " + " + hour + ":" + min + ":" + sec;
+        }
+        else {
+            return hour + ":" + min + ":" + sec;
+        }
+    };
 };

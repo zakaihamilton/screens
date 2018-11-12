@@ -332,7 +332,7 @@ screens.app.packets = function AppPackets(me) {
                 window.packetCount = me.formatNumber(packetCount);
                 window.streamSize = me.formatBytes(dataSize);
                 window.streamCount = streamRequests.length;
-                window.streamDuration = me.formatDuration(duration);
+                window.streamDuration = me.core.util.formatDuration(duration);
                 window.averageByteRate = me.formatBytes(abr) + "/s";
                 window.searchMatch = searchMatch;
                 if(effects) {

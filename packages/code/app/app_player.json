@@ -80,13 +80,15 @@
             "ui.attribute.preload": "auto",
             "ui.basic.var": "audioPlayer",
             "ui.class.classExtra": "app.player.audioPlayer",
-            "ui.style.display": "none"
+            "ui.style.display": "none",
+            "core.link.update":"app.player.playerUpdated"
         },
         {
             "ui.element.component": "widget.player.video",
             "ui.basic.var": "videoPlayer",
             "ui.class.classExtra": "app.player.videoPlayer",
-            "ui.style.display": "none"
+            "ui.style.display": "none",
+            "core.link.update":"app.player.playerUpdated"
         },
         {
             "ui.element.component": "widget.spinner",
