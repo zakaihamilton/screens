@@ -484,7 +484,6 @@
 
 .glow-menu-vertical th:after {
     display:inline-block;
-    margin-left:6px;
     content:"\2191";
     visibility: hidden;
 }
@@ -501,9 +500,9 @@
 .glow-menu-vertical input,
 .glow-menu-vertical li,
 .glow-menu-vertical tr,
+.glow-menu-vertical th,
+.glow-menu-vertical td,
 .glow-menu-vertical span {
-    background-color: white;
-    color: black;
     min-height:1.5em;
     padding-left: 16px;
     padding-right: 16px;
@@ -512,6 +511,16 @@
     cursor:default;
     user-select:none;
     position: relative;
+
+}
+
+.glow-menu-vertical input,
+.glow-menu-vertical li,
+.glow-menu-vertical tr,
+.glow-menu-vertical th,
+.glow-menu-vertical span {
+    background-color: white;
+    color: black;
 }
 
 .glow-menu-vertical span {
@@ -521,6 +530,7 @@
 .glow-menu-vertical.night-mode li,
 .glow-menu-vertical.night-mode tr,
 .glow-menu-vertical.night-mode th,
+.glow-menu-vertical.night-mode td,
 .glow-menu-vertical.night-mode span {
     background-color: var(--chrome-background);
     color:var(--chrome-color);
