@@ -6,6 +6,7 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     z-index:-1;
+    transform:rotate(0);
     /*background:red;
     opacity:0.5;*/
 }

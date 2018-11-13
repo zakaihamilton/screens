@@ -292,7 +292,12 @@
                     "Font Size",
                     "header"
                 ],
-                "widget.transform.fontSizes(widget.transform.fontSize)"
+                "widget.transform.fontSizes(widget.transform.fontSize)",
+                [
+                    "Diagrams",
+                    "header"
+                ],
+                "widget.transform.diagramList"
             ]
         ],
         [
@@ -337,12 +342,6 @@
                     "header"
                 ],
                 "widget.transform.player.volumes"
-            ]
-        ],
-        [
-            "Diagrams",
-            [
-                "widget.transform.diagramList"
             ]
         ]
     ]

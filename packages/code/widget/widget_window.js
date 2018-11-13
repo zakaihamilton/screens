@@ -1016,7 +1016,7 @@ screens.widget.window = function WidgetWindow(me) {
                 {
                     enabled: false
                 }
-            ]]
+            ]];
         }
         items.unshift([
             "Export",

@@ -149,7 +149,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
             me.core.property.set(object.var.menu, "ui.node.parent");
             object.var.menu = null;
-            me.core.property.set(object.var.modal, "ui.style.display", "initial");
+            me.core.property.set(object.var.modal, "ui.style.display", "block");
             if (typeof info === "string") {
                 me.core.property.set(object, info, item);
             } else if (Array.isArray(info)) {

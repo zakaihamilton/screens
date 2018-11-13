@@ -107,14 +107,14 @@ screens.ui.basic = function UIBasic(me) {
     };
     me.enabled = {
         get : function(object) {
-            return !object.getAttribute('disabled');
+            return !object.getAttribute("disabled");
         },
         set : function(object, value) {
             if(value) {
-                object.removeAttribute('disabled');            
+                object.removeAttribute("disabled");            
             }
             else {
-                object.setAttribute('disabled', true);            
+                object.setAttribute("disabled", true);            
             }
         }
     };

@@ -360,24 +360,28 @@ screens.widget.transform = function WidgetTransform(me) {
             if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
-            var isFirst = true;
             var items = diagrams.map(function (item) {
                 var result = [
                     item.title,
                     function () {
-                        var window = me.widget.window.get(widget);
                         me.core.app.launch("diagram", item.path, widget.options, null, item.params);
                     },
                     {
-                        separator: isFirst,
                         enabled: widget.transformText !== null
                     }
                 ];
-                if (isFirst) {
-                    isFirst = false;
-                }
                 return result;
             });
+            items = items.filter(Boolean);
+            if (!items.length) {
+                items = [[
+                    "No Matching Diagrams",
+                    null,
+                    {
+                        enabled: false
+                    }
+                ]];
+            }
             return items;
         }
     };
