@@ -73,8 +73,8 @@ screens.widget.menu = function WidgetMenu(me) {
             "",
             null,
             {
-                "header":true,
-                "visible":metadata?true:false
+                "header": true,
+                "visible": metadata ? true : false
             },
             {
                 "group": group,
@@ -213,7 +213,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
                 text = item.menu_options.value;
             }
             if (typeof text === "undefined") {
-                if(me.core.property.get(item, "ui.basic.tag") === "tr") {
+                if (me.core.property.get(item, "ui.basic.tag") === "tr") {
                     text = me.core.property.get(item.firstChild, "ui.basic.text");
                 }
                 else {
@@ -343,6 +343,54 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         }
         else {
             updateFunc();
+        }
+    };
+    me.sort = function (object) {
+        var list = me.ui.node.container(object, "widget.menu.list");
+        var members = list.var.members;
+        var columnIndex = Array.from(object.parentNode.children).indexOf(object);
+        var direction = "asc";
+        if(list.direction) {
+            me.core.property.set(members.rows[0].cells[list.columnIndex], "ui.class." + list.direction, false);
+        }
+        if (list.columnIndex === columnIndex && list.direction !== "desc") {
+            direction = list.direction = "desc";
+        }
+        else {
+            direction = list.direction = "asc";
+        }
+        me.core.property.set(object, "ui.class." + direction, true);
+        list.columnIndex = columnIndex;
+        var rows = [];
+        for (var rowIndex = 0; rowIndex < members.rows.length; rowIndex++) {
+            rows.push(members.rows[rowIndex].cells[columnIndex]);
+        }
+        var firstRow = rows[0];
+        rows = rows.sort((source, target) => {
+            var result = 0;
+            if (direction == "asc") {
+                if (source.textContent > target.textContent) {
+                    result = 1;
+                }
+                else if(source.textContent < target.textContent) {
+                    result = -1;
+                }
+            } else if (direction == "desc") {
+                if (source.textContent < target.textContent) {
+                    result = 1;
+                }
+                else if (source.textContent > target.textContent) {
+                    result = -1;
+                }
+            }
+            return result;
+        });
+        members.appendChild(firstRow.parentNode);
+        for (rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            if(rows[rowIndex] === firstRow) {
+                continue;
+            }
+            members.appendChild(rows[rowIndex].parentNode);
         }
     };
 };
@@ -605,18 +653,19 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
     };
     me.metadata = function (object, value) {
-        if(!value) {
+        if (!value) {
             return;
         }
         var elements = [];
         var tag = "td";
-        if(object.menu_options && object.menu_options.header) {
+        if (object.menu_options && object.menu_options.header) {
             tag = "th";
         }
         for (var key in value) {
             elements.push({
                 "ui.basic.tag": tag,
-                "ui.basic.text": tag === "th" ? key : value[key]
+                "ui.basic.text": tag === "th" ? key : value[key],
+                "ui.touch.click": "widget.menu.list.sort"
             });
         }
         me.ui.element.create(elements, object, object);

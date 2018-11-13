@@ -482,8 +482,20 @@
     text-align:left;
 }
 
-.glow-menu-vertical th {
+.glow-menu-vertical th:after {
+    display:inline-block;
+    margin-left:6px;
+    content:"\2191";
+    visibility: hidden;
+}
 
+.glow-menu-vertical th.asc:after {
+    visibility: visible;
+}
+
+.glow-menu-vertical th.desc:after {
+    content:"\2193";
+    visibility: visible;
 }
 
 .glow-menu-vertical input,
