@@ -5,7 +5,8 @@
 
 screens.storage.file = function StorageFile(me) {
     me.init = function () {
-        me.dropbox = require("dropbox");
+        require("es6-promise").polyfill();
+        me.dropbox = require("dropbox").Dropbox;
         me.fs = require("fs");
         me.https = require('https');
     };
@@ -13,8 +14,9 @@ screens.storage.file = function StorageFile(me) {
         if (me.service) {
             return me.service;
         }
+        var fetch = require("isomorphic-fetch");
         var keys = await me.core.private.keys("dropbox");
-        me.service = new me.dropbox({ accessToken: keys['access-token'] });
+        me.service = new me.dropbox({ accessToken: keys['access-token'], fetch: fetch });
         return me.service;
     };
     me.fixPath = function (path) {

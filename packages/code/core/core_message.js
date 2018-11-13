@@ -203,11 +203,17 @@ screens.core.message = function CoreMessage(me) {
             return [null, result];
         }
         catch (err) {
-            var err_text = err.toString();
-            if(typeof err === "object") {
+            var err_text = err;
+            if(err && err.message) {
+                err_text = err.message;
+            }
+            else if(typeof err === "object") {
                 err_text = JSON.stringify(err);
             }
-            me.log_error("args: " + JSON.stringify(args) + " error: " + err_text);
+            else if(typeof err !== "string") {
+                err_text = err.toString();
+            }
+            me.log_error("failed local call, args: " + JSON.stringify(args) + " error: " + err_text);
             return [err_text];
         }
     };
