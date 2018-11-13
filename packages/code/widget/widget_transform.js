@@ -32,7 +32,7 @@ screens.widget.transform = function WidgetTransform(me) {
             scrollPos: 0,
             phaseNumbers: true,
             pipVideo: false,
-            playingPopup: false,
+            playingPopup: true,
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal",
