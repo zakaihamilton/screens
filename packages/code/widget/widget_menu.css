@@ -55,6 +55,7 @@
     border:none;
     z-index:0;
     box-shadow: none;
+    margin-bottom:0px;
 }
 
 .widget-menu-vertical li,

@@ -452,7 +452,7 @@
     border: 2px solid var(--chrome-border);
 }
 
-.glow-menu-vertical.list {
+.glow-menu-vertical.menu-list {
     position:relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -467,7 +467,7 @@
     width:100%;
 }
 
-.glow-menu-vertical.list.bottom-up {
+.glow-menu-vertical.menu-list.bottom-up {
     border-radius: 0;
 }
 

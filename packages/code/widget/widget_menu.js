@@ -171,9 +171,6 @@ screens.widget.menu = function WidgetMenu(me) {
         if (bottomUp) {
             me.core.property.set(menu, "ui.class.add", "bottom-up");
         }
-        if (object.component === me.id) {
-            me.core.property.set(menu.var.modal, "ui.style.display", "none");
-        }
         return menu;
     };
 };
@@ -234,7 +231,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         properties: {
             "ui.basic.tag": "div",
             "ui.class.class": "widget.menu.vertical",
-            "ui.class.add": "list",
+            "ui.class.add": "menu-list",
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
