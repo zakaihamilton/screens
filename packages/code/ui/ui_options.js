@@ -51,11 +51,12 @@ screens.ui.options = function UIOptions(me) {
         }
     };
     me.save = function(component, object, options) {
+        var allOptions = null;
         if (object) {
-            var allOptions = object.options;
+            allOptions = object.options;
         }
         else {
-            var allOptions = component.options;
+            allOptions = component.options;
         }
         allOptions = Object.assign({}, allOptions, options);
         if (object) {

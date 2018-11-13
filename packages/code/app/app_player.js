@@ -30,11 +30,8 @@ screens.app.player = function AppPlayer(me) {
             params.sessionName = args[1];
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
-        try {
+        if(!me.core.file.exists(me.cachePath)) {
             me.core.file.makeDir(me.cachePath);
-        }
-        catch (err) {
-            me.log(me.cachePath + " err: " + err.message || err);
         }
         return me.singleton;
     };
@@ -106,39 +103,44 @@ screens.app.player = function AppPlayer(me) {
             var window = me.singleton;
             return window.options.sessionName === name;
         },
-        set: function (object, name) {
-            var audioFound = false, videoFound = false;
+        set: async function (object, name) {
             var window = me.singleton;
-            var sessions = me.sortSessions(object, me.sessionListData);
+            if(name && window.options.sessionName === name) {
+                return;
+            }
+            var audioFound = false, videoFound = false;
+            var sessions = me.sortSessions(object, await me.sessionListData);
             if (sessions.length) {
                 if (!name) {
-                    name = sessions[0].name;
+                    name = me.core.path.fileName(sessions[0].name);
                 }
-                me.sessionListData.map(function (item) {
-                    if (item.name.indexOf(name) !== -1) {
-                        var extension = me.core.path.extension(item.name);
-                        if (extension === "m4a") {
-                            audioFound = true;
+                if(name) {
+                    me.sessionListData.map(function (item) {
+                        if (item.name.indexOf(name) !== -1) {
+                            var extension = me.core.path.extension(item.name);
+                            if (extension === "m4a") {
+                                audioFound = true;
+                            }
+                            if (extension === "mp4") {
+                                videoFound = true;
+                            }
                         }
-                        if (extension === "mp4") {
-                            videoFound = true;
-                        }
-                    }
-                });
+                    });
+                }
             }
-            if (name) {
-                me.core.property.set(window, "title", name);
-            }
-            else {
-                me.core.property.set(window, "title", "Player");
-            }
-            me.ui.options.save(me, window, { sessionName: name });
             me.hasAudio = audioFound;
             me.hasVideo = videoFound;
             if (audioFound && !videoFound) {
                 me.useFormat = "Audio";
             } else if (!audioFound && videoFound) {
                 me.useFormat = "Video";
+            }
+            if (name) {
+                me.core.property.set(window, "title", name);
+                me.ui.options.save(me, window, { sessionName: name });
+            }
+            else {
+                me.core.property.set(window, "title", "Player");
             }
             me.core.property.notify(window, "app.player.updatePlayer");
         }
@@ -171,9 +173,7 @@ screens.app.player = function AppPlayer(me) {
                 if (sessionName) {
                     name = sessionName;
                 }
-                if (name) {
-                    me.core.property.set(window, "app.player.onChangeSession", name);
-                }
+                me.core.property.set(window, "app.player.onChangeSession", name);
             }
             me.core.property.set(window.var.sessionCount, "ui.basic.text", sessionCount);
         }
@@ -256,7 +256,7 @@ screens.app.player = function AppPlayer(me) {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "visible");
-                }, 500);
+                }, 250);
             }
         }
     };

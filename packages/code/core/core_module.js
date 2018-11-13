@@ -65,7 +65,6 @@ screens.core.module = function CoreModule(me) {
         var components = [component_path];
         var source_platform = info.query["platform"];
         if (target_platform && target_platform !== source_platform) {
-            me.log("serving remote for:" + filePath + " source_platform: " + source_platform + " target_platform: " + target_platform);
             filePath = "packages/code/remote.js";
             components = me.components.map(function (component_name) {
                 if (!(component_name.includes(component_path))) {
@@ -86,10 +85,8 @@ screens.core.module = function CoreModule(me) {
         for (var extension in extensions) {
             var isString = extensions[extension];
             if (data && data.includes("__" + extension + "__") && !data.includes("global" + ".__" + extension + "__")) {
-                me.log("including " + extension + " data in javascript file");
                 var extFilePath = filePath.replace(".js", "." + extension);
                 extData = await me.loadTextFile(extFilePath);
-                me.log(extension + " data path: " + extFilePath + " length: " + extData.length);
                 if (isString) {
                     extData = JSON.stringify(extData)
                 }

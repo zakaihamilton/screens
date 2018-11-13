@@ -92,7 +92,8 @@
         },
         {
             "ui.element.component": "widget.spinner",
-            "ui.basic.var": "spinner"
+            "ui.basic.var": "spinner",
+            "ui.style.visibility": "hidden"
         }
     ],
     "core.link.work": "app.player.work",
