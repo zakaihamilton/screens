@@ -530,7 +530,6 @@
 .glow-menu-vertical.night-mode li,
 .glow-menu-vertical.night-mode tr,
 .glow-menu-vertical.night-mode th,
-.glow-menu-vertical.night-mode td,
 .glow-menu-vertical.night-mode span {
     background-color: var(--chrome-background);
     color:var(--chrome-color);

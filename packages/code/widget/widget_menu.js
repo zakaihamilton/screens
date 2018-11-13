@@ -355,15 +355,15 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         var list = me.ui.node.container(object, "widget.menu.list");
         var members = list.var.members;
         var columnIndex = Array.from(object.parentNode.children).indexOf(object);
-        var direction = "asc";
+        var direction = "desc";
         if(list.direction) {
             me.core.property.set(members.rows[0].cells[list.columnIndex], "ui.class." + list.direction, false);
         }
-        if (list.columnIndex === columnIndex && list.direction !== "desc") {
-            direction = list.direction = "desc";
+        if (list.columnIndex === columnIndex && list.direction !== "asc") {
+            direction = list.direction = "asc";
         }
         else {
-            direction = list.direction = "asc";
+            direction = list.direction = "desc";
         }
         me.core.property.set(object, "ui.class." + direction, true);
         list.columnIndex = columnIndex;
