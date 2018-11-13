@@ -19,6 +19,8 @@ screens.storage.data = function StorageData(me) {
             me.datastore = require("@google-cloud/datastore");
             me.log("me.datastore:" + me.datastore !== null);
         }
+        var keys = await me.core.private.keys("google");
+        me.projectId = keys.project_id;
     };
     me.getService = function () {
         if (me.service) {
@@ -29,6 +31,7 @@ screens.storage.data = function StorageData(me) {
             return null;
         }
         me.service = me.datastore({
+            projectId: me.projectId,
             keyFilename: me.core.private.path("google")
         });
         return me.service;

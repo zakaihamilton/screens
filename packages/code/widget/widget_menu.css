@@ -47,7 +47,7 @@
     z-index: 1000;
 }
 
-.widget-menu-vertical.list {
+.widget-menu-vertical.menu-list {
     position:relative;
     overflow-y: auto;
     overflow-x: hidden;
