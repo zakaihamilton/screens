@@ -74,7 +74,7 @@ screens.app.player = function AppPlayer(me) {
     me.sessionMenuList = {
         get: function (object) {
             return me.widget.menu.collect(object, me.sessionListData, "label", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession", {
-                "Label":"label",
+                "Name":"label",
                 "Duration":"durationText"
             });
         }

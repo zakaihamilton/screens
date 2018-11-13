@@ -73,7 +73,8 @@ screens.widget.menu = function WidgetMenu(me) {
             "",
             null,
             {
-                "visible": false
+                "header":true,
+                "visible":metadata?true:false
             },
             {
                 "group": group,
@@ -250,6 +251,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     me.work = function (object, state) {
         me.log("menu state: " + state);
         me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
+        me.core.property.set(object.var.members, "ui.style.display", state ? "none" : "");
     };
     me.use = function (object, name, member, properties) {
         if (!object.lists) {
@@ -469,7 +471,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     me.core.property.set(object, "ui.basic.enabled", value);
                 });
                 me.handleValue(object, options, "visible", (value) => {
-                    me.core.property.set(object, "ui.style.display", value ? "block" : "none");
+                    me.core.property.set(object, "ui.style.display", value ? "" : "none");
                 });
                 me.handleValue(object, options, "state", (value) => {
                     if (value) {
@@ -603,11 +605,18 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
     };
     me.metadata = function (object, value) {
+        if(!value) {
+            return;
+        }
         var elements = [];
+        var tag = "td";
+        if(object.menu_options && object.menu_options.header) {
+            tag = "th";
+        }
         for (var key in value) {
             elements.push({
-                "ui.basic.tag": "td",
-                "ui.basic.text": value[key]
+                "ui.basic.tag": tag,
+                "ui.basic.text": tag === "th" ? key : value[key]
             });
         }
         me.ui.element.create(elements, object, object);
