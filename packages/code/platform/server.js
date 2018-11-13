@@ -17,7 +17,8 @@ screens.api = [
     "manager",
     "core.file",
     "db.library",
-    "db.shared"
+    "db.shared",
+    "media.file"
 ];
 
 screens.apps = [
