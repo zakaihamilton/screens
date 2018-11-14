@@ -24,11 +24,17 @@ screens.lib.zoom = function LibZoom(me) {
         me.currentToken = jwt.sign(payload, keys.secret);
         return me.currentToken;
     };
-    me.send = async function(url, method="GET") {
+    me.send = async function(url, body=null, method="get") {
         var token = await me.token();
         var headers = {
             "Authorization":"Bearer " + token
         };
+        if(body && method === "get") {
+            method = "post";
+        }
+        if(body && typeof body === "string") {
+            body = JSON.parse(body);
+        }
         var params = {
             meetingId: me.meetingId
         };
