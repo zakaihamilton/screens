@@ -9,5 +9,5 @@ screens.lib.moment = function LibMoment(me) {
     };
     me.unix = function(timestamp) {
         return me.moment.unix(timestamp);
-    }
+    };
 };

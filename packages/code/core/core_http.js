@@ -183,7 +183,7 @@ screens.core.http = function CoreHttp(me) {
     me.send = async function (info) {
         me.core.property.object.create(me, info);
         if (!info.headers) {
-            info.headers = {}
+            info.headers = {};
         }
         await me.core.property.set(info, "headers", null);
         var headers = Object.assign({}, info.headers);

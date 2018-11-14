@@ -90,7 +90,8 @@ screens.include({
         "version"
     ],
     "lib": [
-        "zlib"
+        "zlib",
+        "zoom"
     ]
 }).then(() => {
     screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
