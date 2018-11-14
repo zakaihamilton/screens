@@ -4,6 +4,9 @@
  */
 
 screens.app.zoom = function AppZoom(me) {
+    me.init = async function() {
+        me.meetingInfo = await me.lib.zoom.meetingInfo();
+    };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -12,9 +15,11 @@ screens.app.zoom = function AppZoom(me) {
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         return me.singleton;
     };
-    me.version = async function (object) {
-        var json = await me.core.json.loadFile("/package.json");
-        return json.version;
+    me.joinUrl = function (object) {
+        return me.meetingInfo.join_url;
+    };
+    me.meetingId = function(object) {
+        return me.meetingInfo.id;
     };
     me.date = function (object) {
         return me.core.server.date();

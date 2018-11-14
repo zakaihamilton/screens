@@ -37,7 +37,7 @@ screens.lib.zoom = function LibZoom(me) {
             return params[key];
         });
         var info = {
-            url,
+            url: "https://api.zoom.us/v2/" + url,
             headers
         };
         return new Promise((resolve, reject) => {
@@ -50,6 +50,13 @@ screens.lib.zoom = function LibZoom(me) {
                 }
             });
         });
+    };
+    me.meetingInfo = async function() {
+        var meetingInfo = await me.send("meetings/{meetingId}");
+        if(meetingInfo) {
+            meetingInfo = JSON.parse(meetingInfo);
+        }
+        return meetingInfo;
     };
     return "server";
 };

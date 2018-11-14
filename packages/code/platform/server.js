@@ -18,7 +18,8 @@ screens.api = [
     "core.file",
     "db.library",
     "db.shared",
-    "media.file"
+    "media.file",
+    "lib.zoom.meetingInfo"
 ];
 
 screens.apps = [
@@ -30,7 +31,8 @@ screens.apps = [
     "logger",
     "cache",
     "launcher",
-    "diagram"
+    "diagram",
+    "zoom"
 ];
 
 screens.include({
