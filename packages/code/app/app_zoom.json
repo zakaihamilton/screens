@@ -1,10 +1,10 @@
 {
     "title": "Zoom",
     "ui.property.style": {
-        "left": "150px",
-        "top": "150px",
-        "width": "500px",
-        "height": "120px"
+        "left": "50px",
+        "top": "50px",
+        "width": "300px",
+    "height": "220px"
     },
     "icon": "/packages/res/icons/zoom.png",
     "ui.basic.elements": [
@@ -20,8 +20,8 @@
             "ui.basic.tag":"a",
             "ui.property.style":{
                 "position":"absolute",
-                "right":"20px",
-                "top":"30px"
+                "left":"30px",
+                "top":"60px"
             },
             "ui.basic.href":"@app.zoom.joinUrl",
             "ui.basic.text":"@app.zoom.joinUrl"
@@ -30,15 +30,15 @@
             "ui.property.style":{
                 "position":"absolute",
                 "left":"10px",
-                "top":"60px"
+                "top":"90px"
             },
             "ui.basic.text":"Meeting ID: "
         },
         {
             "ui.property.style":{
                 "position":"absolute",
-                "right":"20px",
-                "top":"55px"
+                "left":"10px",
+                "top":"115px"
             },
             "ui.basic.readOnly": true,
             "ui.element.component": "widget.input",
@@ -46,7 +46,7 @@
         }
     ],
     "ui.property.after":{
-        "storage.local.key": "app-version-window",
+        "storage.local.key": "app-zoom-window",
         "storage.local.restore": "widget.window.store"
     }
 }
