@@ -372,7 +372,13 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         rows = rows.sort((source, target) => {
             var result = 0;
             if (direction == "asc") {
-                if (source.textContent > target.textContent) {
+                if(!source.textContent) {
+                    result = 1;
+                }
+                else if (!target.textContent) {
+                    result = -1;
+                }
+                else if (source.textContent > target.textContent) {
                     result = 1;
                 }
                 else if(source.textContent < target.textContent) {
