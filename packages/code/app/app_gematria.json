@@ -1,0 +1,28 @@
+{
+    "title": "Gematria",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "300px",
+    "height": "220px"
+    },
+    "icon": "/packages/res/icons/gematria.png",
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.input",
+            "ui.basic.var":"input",
+            "ui.basic.text":"",
+            "ui.class.classExtra":"app.gematria.input",
+            "core.event.input":"app.gematria.calcNumerology"
+        },
+        {
+            "ui.basic.tag":"div",
+            "ui.basic.var":"numerology",
+            "ui.class.class":"app.gematria.numerology"
+        }
+    ],
+    "ui.property.after":{
+        "storage.local.key": "app-gematria-window",
+        "storage.local.restore": "widget.window.store"
+    }
+}

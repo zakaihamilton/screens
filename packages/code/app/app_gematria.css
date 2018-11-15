@@ -1,0 +1,14 @@
+.app-gematria-input {
+    margin-left: 0px !important;
+    position: relative;
+    left:5%;
+    width:90%;
+}
+
+.app-gematria-numerology {
+    position:relative;
+    top:30px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+}

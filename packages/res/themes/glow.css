@@ -799,6 +799,7 @@
     margin-bottom:5px;
     border:1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
+    box-sizing:border-box;
 }
 
 .glow-input-normal:read-only {
