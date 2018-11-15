@@ -31,8 +31,7 @@ screens.apps = [
     "logger",
     "cache",
     "launcher",
-    "diagram",
-    "zoom"
+    "diagram"
 ];
 
 screens.include({
