@@ -40,6 +40,35 @@ screens.kab.letters = function KabLetters(me) {
         "ף": "פ",
         "ץ": "צ"
     };
+    me.pronunciationTable = {
+        "א": "Alef",
+        "ב": "Bet",
+        "ג": "Gimel",
+        "ד": "Dalet",
+        "ה": "Hey",
+        "ו": "Vav",
+        "ז": "Zayin",
+        "ח": "Chet",
+        "ט": "Tet",
+        "י": "Yod",
+        "כ": "Kaf",
+        "ל": "Lamed",
+        "מ": "Mem",
+        "נ": "Nun",
+        "ס": "Samech",
+        "ע": "Ayin",
+        "פ": "Pay",
+        "צ": "Tsade",
+        "ק": "Kuf",
+        "ר": "Resh",
+        "ש": "Shin",
+        "ת": "Tav",
+        "ך": "Chaf Sofit",
+        "ם": "Mem Sofit",
+        "ן": "Nun Sofit",
+        "ף": "Pay Sofit",
+        "ץ": "Tsade Sofit"
+    };
     me.source = {
         set: function (object, value) {
             var window = me.widget.window.get(object);
@@ -69,6 +98,7 @@ screens.kab.letters = function KabLetters(me) {
         }
         var gridColumnCount = columnCount * (sourceCount + 1);
         var maxLength = 0, source = null, letters = null, info = null, number = 0;
+        var pronunciation = null;
         var row = 0, column = 0;
         for (source of sources) {
             letters = source.letters;
@@ -107,8 +137,9 @@ screens.kab.letters = function KabLetters(me) {
                     column = columnIndex + (gridColumnCount - (sourceCount + 1)) - (((letterIndex % columnCount) * (sourceCount + 1)) - source.offset) + 1;
                 }
                 number = me.numerologyTable[letter];
+                pronunciation = me.pronunciationTable[letter];
                 sum += number;
-                info = { row, column, source, text: letter, number };
+                info = { row, column, source, text: letter, number, pronunciation };
                 if (callback) {
                     callback(info);
                 }
@@ -143,6 +174,15 @@ screens.kab.letters = function KabLetters(me) {
             var values = [];
             me.letters(info => {
                 values.push([info.row, info.column, info.number]);
+            }, object);
+            return values;
+        }
+    };
+    me.pronunciation = {
+        get: function (object) {
+            var values = [];
+            me.letters(info => {
+                values.push([info.row, info.column, info.pronunciation]);
             }, object);
             return values;
         }

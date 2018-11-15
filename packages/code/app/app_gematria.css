@@ -54,3 +54,12 @@
     font-size: 75%;
     text-align: center;
 }
+
+.app-gematria-pronunciation {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0;
+    font-size: 75%;
+    text-align: center;
+}

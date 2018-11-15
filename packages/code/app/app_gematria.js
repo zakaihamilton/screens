@@ -88,6 +88,22 @@ screens.app.gematria = function AppGematria(me) {
                             "kab.letters.numerology"
                         ]
                     }
+                },
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "ui.basic.text"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": "app.gematria.pronunciation"
+                        },
+                        "ui.data.values": [
+                            "kab.letters.pronunciation"
+                        ]
+                    }
                 }
             ]
         });
