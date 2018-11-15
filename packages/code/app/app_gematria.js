@@ -36,9 +36,9 @@ screens.app.gematria = function AppGematria(me) {
     me.calcNumerology = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
-        var sources = text.split(" ").map((word, index) => {
+        var sources = text.split("|").map((token, index) => {
             return {
-                "verse": word,
+                "verse": token,
                 "offset": index
             };
         });

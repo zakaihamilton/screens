@@ -59,12 +59,12 @@ screens.kab.letters = function KabLetters(me) {
         var sourceCount = Object.keys(sources).length;
         var columnCount = parseInt(window.kab_info.columnCount);
         var columnIndex = parseInt(window.kab_info.columnIndex);
-        if(!columnIndex) {
+        if (!columnIndex) {
             columnIndex = 1;
         }
         var endingLetters = window.kab_info.endingLetters;
         var rowIndex = parseInt(window.kab_info.rowIndex);
-        if(!rowIndex) {
+        if (!rowIndex) {
             rowIndex = 0;
         }
         var gridColumnCount = columnCount * (sourceCount + 1);
@@ -98,7 +98,7 @@ screens.kab.letters = function KabLetters(me) {
                 if (window.kab_info.sequence) {
                     row = rowIndex + source.offset + 1;
                     column = maxLength - letterIndex;
-                    if(window.kab_info.sum) {
+                    if (window.kab_info.sum) {
                         column++;
                     }
                 }
@@ -113,9 +113,9 @@ screens.kab.letters = function KabLetters(me) {
                     callback(info);
                 }
             }
-            if(window.kab_info.sum && window.kab_info.sequence) {
+            if (window.kab_info.sum && window.kab_info.sequence) {
                 row = rowIndex + source.offset + 1;
-                info = { row, column : 1, source : window.kab_info.sum, text: letters, number: sum };
+                info = { row, column: 1, source: window.kab_info.sum, text: source.verse, number: sum };
                 if (callback) {
                     callback(info);
                 }
@@ -126,7 +126,14 @@ screens.kab.letters = function KabLetters(me) {
         get: function (object) {
             var values = [];
             me.letters(info => {
-                values.push([info.row, info.column, info.text, info.source.backgroundColor, info.source.borderColor, info.source.borderWidth]);
+                values.push([
+                    info.row,
+                    info.column,
+                    info.text,
+                    info.source.backgroundColor,
+                    info.source.borderColor,
+                    info.source.borderWidth
+                ]);
             }, object);
             return values;
         }
