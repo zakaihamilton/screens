@@ -59,7 +59,7 @@
                 "left":"30px",
                 "top":"190px"
             },
-            "ui.basic.href":"tel:+97239786688",
+            "ui.basic.href":"@app.zoom.callNumber(97239786688)",
             "ui.basic.text":"+972 (0) 3 978 6688"
         },
         {
@@ -69,7 +69,7 @@
                 "left":"30px",
                 "top":"220px"
             },
-            "ui.basic.href":"tel:+972553301762",
+            "ui.basic.href":"@app.zoom.callNumber(972553301762)",
             "ui.basic.text":"+972 (0) 55 330 1762"
         },
         {
@@ -87,7 +87,7 @@
                 "left":"30px",
                 "top":"280px"
             },
-            "ui.basic.href":"tel:+14086380986",
+            "ui.basic.href":"@app.zoom.callNumber(14086380986)",
             "ui.basic.text":"+1 408 638 0986"
         },
         {
@@ -97,7 +97,7 @@
                 "left":"30px",
                 "top":"310px"
             },
-            "ui.basic.href":"tel:+16465588665",
+            "ui.basic.href":"@app.zoom.callNumber(16465588665)",
             "ui.basic.text":"+1 646 558 8665"
         }
     ],

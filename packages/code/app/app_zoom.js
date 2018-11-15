@@ -24,4 +24,7 @@ screens.app.zoom = function AppZoom(me) {
     me.date = function (object) {
         return me.core.server.date();
     };
+    me.callNumber = function(object, value) {
+        return "tel:+" + value + "p" + me.meetingInfo.id + "#";
+    };
 };
