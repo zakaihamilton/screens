@@ -41,33 +41,64 @@ screens.kab.letters = function KabLetters(me) {
         "ץ": "צ"
     };
     me.pronunciationTable = {
-        "א": "Alef",
-        "ב": "Bet",
-        "ג": "Gimel",
-        "ד": "Dalet",
-        "ה": "Hey",
-        "ו": "Vav",
-        "ז": "Zayin",
-        "ח": "Chet",
-        "ט": "Tet",
-        "י": "Yod",
-        "כ": "Kaf",
-        "ל": "Lamed",
-        "מ": "Mem",
-        "נ": "Nun",
-        "ס": "Samech",
-        "ע": "Ayin",
-        "פ": "Pay",
-        "צ": "Tsade",
-        "ק": "Kuf",
-        "ר": "Resh",
-        "ש": "Shin",
-        "ת": "Tav",
-        "ך": "Chaf Sofit",
-        "ם": "Mem Sofit",
-        "ן": "Nun Sofit",
-        "ף": "Pay Sofit",
-        "ץ": "Tsade Sofit"
+        "hebrew": {
+            "א": "אלף",
+            "ב": "בית",
+            "ג": "גימל",
+            "ד": "דלת",
+            "ה": "הי",
+            "ו": "וו",
+            "ז": "זין",
+            "ח": "חית",
+            "ט": "טית",
+            "י": "יוד",
+            "כ": "כף",
+            "ל": "למד",
+            "מ": "מם",
+            "נ": "נון",
+            "ס": "סמך",
+            "ע": "עין",
+            "פ": "פי",
+            "צ": "צדי",
+            "ק": "קוף",
+            "ר": "ריש",
+            "ש": "שין",
+            "ת": "תו",
+            "ך": "כף סופית",
+            "ם": "מם סופית",
+            "ן": "נון סופית",
+            "ף": "פי סופית",
+            "ץ": "צדי סופית"
+        },
+        "english": {
+            "א": "Alef",
+            "ב": "Bet",
+            "ג": "Gimel",
+            "ד": "Dalet",
+            "ה": "Hey",
+            "ו": "Vav",
+            "ז": "Zayin",
+            "ח": "Chet",
+            "ט": "Tet",
+            "י": "Yod",
+            "כ": "Kaf",
+            "ל": "Lamed",
+            "מ": "Mem",
+            "נ": "Nun",
+            "ס": "Samech",
+            "ע": "Ayin",
+            "פ": "Pay",
+            "צ": "Tsade",
+            "ק": "Kuf",
+            "ר": "Resh",
+            "ש": "Shin",
+            "ת": "Tav",
+            "ך": "Chaf Sofit",
+            "ם": "Mem Sofit",
+            "ן": "Nun Sofit",
+            "ף": "Pay Sofit",
+            "ץ": "Tsade Sofit"
+        }
     };
     me.source = {
         set: function (object, value) {
@@ -90,6 +121,10 @@ screens.kab.letters = function KabLetters(me) {
         var columnIndex = parseInt(window.kab_info.columnIndex);
         if (!columnIndex) {
             columnIndex = 1;
+        }
+        var language = window.kab_info.language;
+        if(language) {
+            language = language.toLowerCase();
         }
         var endingLetters = window.kab_info.endingLetters;
         var rowIndex = parseInt(window.kab_info.rowIndex);
@@ -128,7 +163,7 @@ screens.kab.letters = function KabLetters(me) {
                 if (window.kab_info.sequence) {
                     row = rowIndex + source.offset + 1;
                     column = maxLength - letterIndex;
-                    if (window.kab_info.sum) {
+                    if (window.kab_info.sum && window.kab_info.sum.enabled) {
                         column++;
                     }
                 }
@@ -137,14 +172,19 @@ screens.kab.letters = function KabLetters(me) {
                     column = columnIndex + (gridColumnCount - (sourceCount + 1)) - (((letterIndex % columnCount) * (sourceCount + 1)) - source.offset) + 1;
                 }
                 number = me.numerologyTable[letter];
-                pronunciation = me.pronunciationTable[letter];
+                if(language) {
+                    var languageTable = me.pronunciationTable[language];
+                    if(languageTable) {
+                        pronunciation = languageTable[letter];
+                    }
+                }
                 sum += number;
                 info = { row, column, source, text: letter, number, pronunciation };
                 if (callback) {
                     callback(info);
                 }
             }
-            if (window.kab_info.sum && window.kab_info.sequence) {
+            if (window.kab_info.sum && window.kab_info.sequence && window.kab_info.sum.enabled) {
                 row = rowIndex + source.offset + 1;
                 info = { row, column: 1, source: window.kab_info.sum, text: source.verse, number: sum };
                 if (callback) {

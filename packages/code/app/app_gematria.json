@@ -12,11 +12,43 @@
             "Gematria",
             [
                 [
+                    "Summation of Letters",
+                    "app.gematria.sumEnabled",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Ending Letters",
                     "app.gematria.endingLetters",
                     {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Language",
+                    "header"
+                ],
+                [
+                    "None",
+                    "app.gematria.language",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "English",
+                    "app.gematria.language",
+                    {
                         "state": "select",
                         "separator": true
+                    }
+                ],
+                [
+                    "Hebrew",
+                    "app.gematria.language",
+                    {
+                        "state": "select"
                     }
                 ]
             ]

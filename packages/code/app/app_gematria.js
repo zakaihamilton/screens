@@ -20,15 +20,19 @@ screens.app.gematria = function AppGematria(me) {
         var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             fontSize: "4em",
-            endingLetters: false
+            endingLetters: false,
+            sumEnabled: true,
+            language:"English"
         });
         me.ui.options.toggleSet(me, null, {
+            "sumEnabled": me.calcNumerology,
             "endingLetters": me.calcNumerology
         });
         me.ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
                 me.core.property.set(window.var.diagram, "ui.style.fontSize", value);
-            }
+            },
+            "language":me.calcNumerology
         });
         me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
         me.ui.class.useStylesheet("kab");
@@ -45,7 +49,9 @@ screens.app.gematria = function AppGematria(me) {
         var info = {
             "sources": sources,
             "sequence": true,
+            "language": window.options.language,
             "sum": {
+                "enabled":window.options.sumEnabled,
                 "borderWidth":"3px"
             },
             "endingLetters": window.options.endingLetters
