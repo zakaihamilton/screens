@@ -4,7 +4,7 @@
         "left": "50px",
         "top": "50px",
         "width": "300px",
-    "height": "220px"
+    "height": "420px"
     },
     "icon": "/packages/res/icons/zoom.png",
     "ui.basic.elements": [
@@ -43,6 +43,62 @@
             "ui.basic.readOnly": true,
             "ui.element.component": "widget.input",
             "ui.basic.text":"@app.zoom.meetingId"
+        },
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"10px",
+                "top":"160px"
+            },
+            "ui.basic.text":"Israel Dial in #: "
+        },
+        {
+            "ui.basic.tag":"a",
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"30px",
+                "top":"190px"
+            },
+            "ui.basic.href":"tel:+97239786688",
+            "ui.basic.text":"+972 (0) 3 978 6688"
+        },
+        {
+            "ui.basic.tag":"a",
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"30px",
+                "top":"220px"
+            },
+            "ui.basic.href":"tel:+972553301762",
+            "ui.basic.text":"+972 (0) 55 330 1762"
+        },
+        {
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"10px",
+                "top":"250px"
+            },
+            "ui.basic.text":"United States Dial in #: "
+        },
+        {
+            "ui.basic.tag":"a",
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"30px",
+                "top":"280px"
+            },
+            "ui.basic.href":"tel:+14086380986",
+            "ui.basic.text":"+1 408 638 0986"
+        },
+        {
+            "ui.basic.tag":"a",
+            "ui.property.style":{
+                "position":"absolute",
+                "left":"30px",
+                "top":"310px"
+            },
+            "ui.basic.href":"tel:+16465588665",
+            "ui.basic.text":"+1 646 558 8665"
         }
     ],
     "ui.property.after":{
