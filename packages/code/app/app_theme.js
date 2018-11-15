@@ -14,7 +14,12 @@ screens.app.theme = function AppTheme(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         var current_theme = me.core.property.get(me.singleton, "ui.theme.theme");
-        current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
+        if(typeof current_theme === "string") {
+            current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);
+        }
+        else {
+            current_theme = "None";
+        }
         me.core.property.set(me.singleton.var.themeList, "selection", current_theme);
         return me.singleton;
     };

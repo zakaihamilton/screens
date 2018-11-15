@@ -18,6 +18,13 @@
     grid-gap: 0.5% 1px;
     align-items: stretch;
     line-height: 2em;
+    background-color:white;
+    color:black;
+}
+
+.app-gematria-diagram.night-mode {
+    background-color:var(--background);
+    color:var(--color);
 }
 
 .app-gematria-letter {
@@ -26,10 +33,17 @@
     justify-content: center;
     border: 1px solid black;
     margin: 3px;
+    padding:3px;
     text-align: center;
     vertical-align: middle;
     padding-bottom: 0.5em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.app-gematria-letter:hover {
+    text-shadow: 0 0 3px rgba(81, 203, 238, 1), 0 0 5px #0000FF;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
 }
 
 .app-gematria-number {
