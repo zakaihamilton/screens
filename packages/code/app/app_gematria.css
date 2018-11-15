@@ -1,14 +1,42 @@
 .app-gematria-input {
     margin-left: 0px !important;
     position: relative;
+    top:10px;
     left:5%;
     width:90%;
+    direction: rtl;
 }
 
-.app-gematria-numerology {
-    position:relative;
-    top:30px;
-    left:0px;
-    right:0px;
-    bottom:0px;
+.app-gematria-diagram {
+    position: absolute;
+    display: grid;
+    padding: 10px;
+    left: 5px;
+    top: 45px;
+    right: 5px;
+    bottom: 5px;
+    grid-gap: 0.5% 1px;
+    align-items: stretch;
+    line-height: 2em;
+}
+
+.app-gematria-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 3px;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 0.5em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.app-gematria-number {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 0;
+    font-size: 75%;
+    text-align: center;
 }

@@ -31,7 +31,8 @@ screens.apps = [
     "logger",
     "cache",
     "launcher",
-    "diagram"
+    "diagram",
+    "gematria"
 ];
 
 screens.include({

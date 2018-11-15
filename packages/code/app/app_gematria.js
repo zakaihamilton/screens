@@ -13,36 +13,46 @@ screens.app.gematria = function AppGematria(me) {
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.initOptions(me.singleton);
         return me.singleton;
     };
+    me.initOptions = function (object) {
+        var window = me.widget.window.get(object);
+        me.ui.options.load(me, window, {
+            fontSize: "4em",
+            endingLetters: false
+        });
+        me.ui.options.toggleSet(me, null, {
+            "endingLetters": me.calcNumerology
+        });
+        me.ui.options.choiceSet(me, null, {
+            "fontSize": (object, value) => {
+                me.core.property.set(window.var.diagram, "ui.style.fontSize", value);
+            }
+        });
+        me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
+        me.ui.class.useStylesheet("kab");
+    };
     me.calcNumerology = function (object) {
-        var window = me.singleton;
+        var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
-        var sources = text.split(" ").map(word => {
+        var sources = text.split(" ").map((word, index) => {
             return {
-                "verse": word
+                "verse": word,
+                "offset": index
             };
         });
-        var letters = {
-            "columnIndex": "4",
-            "columnCount": "4",
-            "rowIndex": "1",
-            "sources": sources
-        };
-        me.core.property.set(window.var.numerology, "kab.letters.source", letters);
-        me.core.property.set(window.var.numerology, {
-            "ui.property.style": {
-                "display": "grid",
-                "position": "absolute",
-                "padding": "10px",
-                "left": "5px",
-                "top": "15px",
-                "right": "5px",
-                "bottom": "5px",
-                "gridGap": "0.5% 1px",
-                "alignItems": "stretch",
-                "lineHeight": "2em"
+        var info = {
+            "sources": sources,
+            "sequence": true,
+            "sum": {
+                "borderWidth":"3px"
             },
+            "endingLetters": window.options.endingLetters
+        };
+        me.core.property.set(window.var.diagram, "kab.letters.source", info);
+        me.core.property.set(window.var.diagram, {
+            "ui.basic.html": null,
             "core.property.group": [
                 {
                     "ui.group.data": {
@@ -51,20 +61,12 @@ screens.app.gematria = function AppGematria(me) {
                             "ui.style.gridColumn",
                             "ui.basic.text",
                             "ui.style.backgroundColor",
-                            "ui.style.borderColor"
+                            "ui.style.borderColor",
+                            "ui.style.borderWidth"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.property.style": {
-                                "display": "flex",
-                                "alignItems": "center",
-                                "justifyContent": "center",
-                                "border": "1px solid black",
-                                "margin": "0",
-                                "textAlign": "center",
-                                "verticalAlign": "middle",
-                                "paddingBottom": "0.5em"
-                            }
+                            "ui.class.class": "app.gematria.letter"
                         },
                         "ui.data.values": [
                             "kab.letters.text"
@@ -80,14 +82,7 @@ screens.app.gematria = function AppGematria(me) {
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.property.style": {
-                                "display": "flex",
-                                "alignItems": "flex-end",
-                                "justifyContent": "center",
-                                "margin": "0",
-                                "fontSize": "75%",
-                                "textAlign": "center"
-                            }
+                            "ui.class.class": "app.gematria.number"
                         },
                         "ui.data.values": [
                             "kab.letters.numerology"

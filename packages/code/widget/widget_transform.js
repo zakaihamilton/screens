@@ -53,7 +53,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 var widget = me.findWidget(object);
                 me.core.property.set(widget.var.layout, {
                     "ui.scroll.snap": widget.options.snap,
-                    "ui.scroll.scrolled":null
+                    "ui.scroll.scrolled": null
                 });
             },
             columns: me.reflow,
@@ -395,11 +395,32 @@ screens.widget.transform = function WidgetTransform(me) {
             }
         }
     };
-    me.fontSizes = function (object, method) {
+    me.fontSizesPx = function (object, method) {
         var fontSizeList = [];
-        for (var fontSize = 8; fontSize <= 32; fontSize += 2) {
-            var item = [
+        var fontSize = 0;
+        var item = null;
+        for (fontSize = 8; fontSize <= 32; fontSize += 2) {
+            item = [
                 fontSize + "px",
+                method,
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "fontSize"
+                }
+            ];
+            fontSizeList.push(item);
+        }
+        return fontSizeList;
+    };
+    me.fontSizesEm = function (object, method) {
+        var fontSizeList = [];
+        var fontSize = 0;
+        var item = null;
+        for (fontSize = 1; fontSize <= 8; fontSize += 1) {
+            item = [
+                fontSize + "em",
                 method,
                 {
                     "state": "select"

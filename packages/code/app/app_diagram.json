@@ -131,7 +131,7 @@
                     "Font Size",
                     "header"
                 ],
-                "widget.transform.fontSizes(app.diagram.fontSize)"
+                "widget.transform.fontSizesPx(app.diagram.fontSize)"
             ]
         ]
     ],

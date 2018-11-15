@@ -292,7 +292,7 @@
                     "Font Size",
                     "header"
                 ],
-                "widget.transform.fontSizes(widget.transform.fontSize)",
+                "widget.transform.fontSizesPx(widget.transform.fontSize)",
                 [
                     "Diagrams",
                     "header"

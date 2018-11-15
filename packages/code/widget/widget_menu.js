@@ -192,7 +192,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
                 "ui.data.values": values
             });
         }
-    }
+    };
     me.back = {
         set: function (object, value) {
             me.core.property.set(object.target, "back", value);
@@ -257,7 +257,8 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         var list = object.lists[name];
         if (!list) {
             list = me.ui.element.create({
-                "ui.element.component": "widget.menu.list"
+                "ui.element.component": "widget.menu.list",
+                "ui.basic.window": object.window,
             }, object);
             object.lists[name] = list;
         }
