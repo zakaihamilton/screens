@@ -207,7 +207,7 @@ screens.widget.transform = function WidgetTransform(me) {
             }
         }
         var phase = widgets.phase.innerText.toLowerCase();
-        var classes = "title widget-transform-level "
+        var classes = "title widget-transform-level ";
         if (phase !== "root") {
             classes += "kab-term-phase-" + phase;
         }
