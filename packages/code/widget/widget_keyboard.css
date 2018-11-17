@@ -1,0 +1,47 @@
+.widget-keyboard-background {
+    position: absolute;
+    right:0px;
+    bottom:0px;
+    width:50%;
+    top:50%;
+    background-color:white;
+    border:1px solid black;
+    z-index: 1000;
+}
+
+.widget-keyboard-input {
+    margin-left: 0px !important;
+    position: relative;
+    top:10px;
+    left:5%;
+    width:90%;
+    direction: rtl;
+}
+
+.widget-keyboard-buttons {
+    position: absolute;
+    left:5px;
+    right:5px;
+    bottom:5px;
+    top:50px;
+    z-index: 1000;
+    display: grid;
+    grid-gap: 0.5% 1px;
+    align-items: start;
+    line-height: 2em;
+}
+
+.widget-keyboard-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 6px;
+    padding:3px;
+    height:80%;
+    width:80%;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 0.5em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

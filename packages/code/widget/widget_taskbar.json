@@ -18,7 +18,7 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix" : ")",
                 "ui.data.values": [
-                    "core.util.sync",
+                    "widget.keyboard.keyboard",
                     "launcher"
                 ]
             }

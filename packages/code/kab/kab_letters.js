@@ -113,28 +113,31 @@ screens.kab.letters = function KabLetters(me) {
     me.clean = function (string) {
         return string.replace(/[^א-ת]/g, "");
     };
-    me.letters = function (callback, object) {
-        var window = me.widget.window.get(object);
-        var sources = window.kab_info.sources;
+    me.letters = function (callback, info) {
+        var sources = info.sources;
         var sourceCount = Object.keys(sources).length;
-        var columnCount = parseInt(window.kab_info.columnCount);
-        var columnIndex = parseInt(window.kab_info.columnIndex);
+        var columnCount = parseInt(info.columnCount);
+        var columnIndex = parseInt(info.columnIndex);
         if (!columnIndex) {
             columnIndex = 1;
         }
-        var language = window.kab_info.language;
-        if(language) {
+        if(!columnCount) {
+            columnCount = 1;
+        }
+        var language = info.language;
+        if (language) {
             language = language.toLowerCase();
         }
-        var endingLetters = window.kab_info.endingLetters;
-        var rowIndex = parseInt(window.kab_info.rowIndex);
+        var endingLetters = info.endingLetters;
+        var rowIndex = parseInt(info.rowIndex);
         if (!rowIndex) {
             rowIndex = 0;
         }
-        var gridColumnCount = columnCount * (sourceCount + 1);
-        var maxLength = 0, source = null, letters = null, info = null, number = 0;
+        var gridColumnCount = columnCount * sourceCount;
+        var maxLength = 0, source = null, letters = null, number = 0;
         var pronunciation = null;
         var row = 0, column = 0;
+        var entry = null;
         for (source of sources) {
             letters = source.letters;
             if (maxLength < letters.length) {
@@ -160,35 +163,35 @@ screens.kab.letters = function KabLetters(me) {
                 }
                 row = 0;
                 column = 0;
-                if (window.kab_info.sequence) {
+                if (info.sequence) {
                     row = rowIndex + source.offset + 1;
                     column = maxLength - letterIndex;
-                    if (window.kab_info.sum && window.kab_info.sum.enabled) {
+                    if (info.sum && info.sum.enabled) {
                         column++;
                     }
                 }
                 else {
                     row = rowIndex + parseInt(letterIndex / columnCount) + 1;
-                    column = columnIndex + (gridColumnCount - (sourceCount + 1)) - (((letterIndex % columnCount) * (sourceCount + 1)) - source.offset) + 1;
+                    column = columnIndex + (gridColumnCount - sourceCount) - (((letterIndex % columnCount) * sourceCount) - source.offset);
                 }
                 number = me.numerologyTable[letter];
-                if(language) {
+                if (language) {
                     var languageTable = me.pronunciationTable[language];
-                    if(languageTable) {
+                    if (languageTable) {
                         pronunciation = languageTable[letter];
                     }
                 }
                 sum += number;
-                info = { row, column, source, text: letter, number, pronunciation };
+                entry = { row, column, source, text: letter, number, pronunciation };
                 if (callback) {
-                    callback(info);
+                    callback(entry);
                 }
             }
-            if (window.kab_info.sum && window.kab_info.sequence && window.kab_info.sum.enabled) {
+            if (info.sum && info.sequence && info.sum.enabled) {
                 row = rowIndex + source.offset + 1;
-                info = { row, column: 1, source: window.kab_info.sum, text: source.verse, number: sum };
+                ntry = { row, column: 1, source: info.sum, text: source.verse, number: sum };
                 if (callback) {
-                    callback(info);
+                    callback(entry);
                 }
             }
         }
@@ -196,6 +199,7 @@ screens.kab.letters = function KabLetters(me) {
     me.text = {
         get: function (object) {
             var values = [];
+            var window = me.widget.window.get(object);
             me.letters(info => {
                 values.push([
                     info.row,
@@ -205,26 +209,24 @@ screens.kab.letters = function KabLetters(me) {
                     info.source.borderColor,
                     info.source.borderWidth
                 ]);
-            }, object);
+            }, window.kab_info);
             return values;
         }
     };
-    me.numerology = {
-        get: function (object) {
-            var values = [];
-            me.letters(info => {
-                values.push([info.row, info.column, info.number]);
-            }, object);
-            return values;
-        }
+    me.numerology = function (object) {
+        var values = [];
+        var window = me.widget.window.get(object);
+        me.letters(info => {
+            values.push([info.row, info.column, info.number]);
+        }, window.kab_info);
+        return values;
     };
-    me.pronunciation = {
-        get: function (object) {
-            var values = [];
-            me.letters(info => {
-                values.push([info.row, info.column, info.pronunciation]);
-            }, object);
-            return values;
-        }
+    me.pronunciation = function (object) {
+        var values = [];
+        var window = me.widget.window.get(object);
+        me.letters(info => {
+            values.push([info.row, info.column, info.pronunciation]);
+        }, window.kab_info);
+        return values;
     };
 };

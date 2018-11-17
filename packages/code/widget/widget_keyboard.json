@@ -1,0 +1,35 @@
+{
+    "ui.class.class": "background",
+    "ui.basic.tag": "div",
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.input",
+            "ui.basic.var": "input",
+            "ui.basic.text": "",
+            "ui.class.classExtra": "input"
+        },
+        {
+            "ui.class.class": "buttons",
+            "core.property.group": [
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "ui.style.gridRow",
+                            "ui.style.gridColumn",
+                            "ui.basic.html",
+                            "ui.touch.click",
+                            "ui.class.classExtra"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": "widget.keyboard.button"
+                        },
+                        "ui.data.values": [
+                            "widget.keyboard.buttons"
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
