@@ -25,6 +25,9 @@ screens.widget.keyboard = function WidgetKeyboard(me) {
         if(letter === "⌫") {
             input.value = input.value.slice(0, input.value.length - 1);
         }
+        else if(letter === "Space") {
+            input.value += " ";
+        }
         else {
             input.value += letter;
         }
@@ -44,6 +47,9 @@ screens.widget.keyboard = function WidgetKeyboard(me) {
         };
         me.kab.letters.letters(info => {
             var method = "widget.keyboard.click";
+            if(info.text === " ") {
+                info.text = "Space";
+            }
             values.push([info.row, info.column, info.text, method]);
         }, info);
         return values;
