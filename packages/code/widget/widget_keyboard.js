@@ -34,7 +34,7 @@ screens.widget.keyboard = function WidgetKeyboard(me) {
     };
     me.buttons = function () {
         var values = [];
-        var letters ="⌫" + Object.keys(me.kab.letters.numerologyTable).join("") + " ";
+        var letters ="⌫" + Object.keys(me.kab.letters.numerologyTable).join("") + " " + "|";
         var info = {
             sources: [
                 {
