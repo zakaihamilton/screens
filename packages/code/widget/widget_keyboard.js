@@ -42,7 +42,7 @@ screens.widget.keyboard = function WidgetKeyboard(me) {
                 }
             ],
             columnCount:6,
-            endingLetters: true,
+            endingLetters: "both",
             language: "english"
         };
         me.kab.letters.letters(info => {
@@ -50,7 +50,7 @@ screens.widget.keyboard = function WidgetKeyboard(me) {
             if(info.text === " ") {
                 info.text = "Space";
             }
-            values.push([info.row, info.column, info.text, method]);
+            values.push([info.row, info.column, info.text, info.pronunciation, info.number, method]);
         }, info);
         return values;
     };

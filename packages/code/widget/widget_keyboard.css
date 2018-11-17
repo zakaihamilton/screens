@@ -33,6 +33,7 @@
 
 .widget-keyboard-button {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     border: 1px solid black;
@@ -50,4 +51,29 @@
     background-color:darkgreen;
     border:1px solid green;
     color:lightgreen;
+}
+
+.widget-keyboard-button:before {
+    position: absolute;
+    font-size:75%;
+    opacity:0.8;
+    top:0.2em;
+    line-height:1em;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+    content: attr(number);
+    white-space: pre;
+}
+.widget-keyboard-button:after {
+    position: absolute;
+    font-size:100%;
+    opacity:0.8;
+    bottom:0.2em;
+    line-height:1em;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+    content: attr(pronunciation);
+    white-space: pre;
 }

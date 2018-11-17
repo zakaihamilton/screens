@@ -17,6 +17,8 @@
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
                             "ui.basic.html",
+                            "ui.attribute.pronunciation",
+                            "ui.attribute.number",
                             "ui.touch.click",
                             "ui.class.classExtra"
                         ],

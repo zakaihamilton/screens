@@ -121,7 +121,7 @@ screens.kab.letters = function KabLetters(me) {
         if (!columnIndex) {
             columnIndex = 1;
         }
-        if(!columnCount) {
+        if (!columnCount) {
             columnCount = 1;
         }
         var language = info.language;
@@ -155,9 +155,9 @@ screens.kab.letters = function KabLetters(me) {
             var sum = 0;
             for (var letterIndex = 0; letterIndex < letters.length; letterIndex++) {
                 var letter = letters[letterIndex];
-                if (!endingLetters) {
-                    var matchingLetter = me.endingLetters[letter];
-                    if (matchingLetter) {
+                var matchingLetter = me.endingLetters[letter];
+                if (matchingLetter) {
+                    if (!endingLetters) {
                         letter = matchingLetter;
                     }
                 }
@@ -174,7 +174,12 @@ screens.kab.letters = function KabLetters(me) {
                     row = rowIndex + parseInt(letterIndex / columnCount) + 1;
                     column = columnIndex + (gridColumnCount - sourceCount) - (((letterIndex % columnCount) * sourceCount) - source.offset);
                 }
-                number = me.numerologyTable[letter];
+                if (info.endingLetters === "both" && matchingLetter) {
+                    number = me.numerologyTable[letter] + "/" + me.numerologyTable[matchingLetter];
+                }
+                else {
+                    number = me.numerologyTable[letter];
+                }
                 if (language) {
                     var languageTable = me.pronunciationTable[language];
                     if (languageTable) {
