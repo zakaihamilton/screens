@@ -1,15 +1,30 @@
 {
-    "ui.class.class": "background",
-    "ui.basic.tag": "div",
+    "title": "Keyboard",
+    "temp": true,
+    "fullscreen": true,
+    "nobar": true,
+    "icon": "/packages/res/icons/keyboard.png",
+    "ui.property.style": {
+        "position": "absolute",
+        "left": "",
+        "top": "",
+        "right": "0em",
+        "bottom": "0em",
+        "width": "50%",
+        "height": "50%",
+        "border":"1px solid black",
+        "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
+    },
     "ui.basic.elements": [
         {
             "ui.element.component": "widget.input",
             "ui.basic.var": "input",
             "ui.basic.text": "",
-            "ui.class.classExtra": "input"
+            "ui.class.classExtra": "app.keyboard.input"
         },
         {
-            "ui.class.class": "buttons",
+            "ui.class.class": "app.keyboard.buttons",
+            "ui.basic.var":"buttons",
             "core.property.group": [
                 {
                     "ui.group.data": {
@@ -24,10 +39,10 @@
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "widget.keyboard.button"
+                            "ui.class.class": "app.keyboard.button"
                         },
                         "ui.data.values": [
-                            "widget.keyboard.buttons"
+                            "app.keyboard.buttons"
                         ]
                     }
                 }

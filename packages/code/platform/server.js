@@ -32,7 +32,8 @@ screens.apps = [
     "cache",
     "launcher",
     "diagram",
-    "gematria"
+    "gematria",
+    "keyboard"
 ];
 
 screens.include({

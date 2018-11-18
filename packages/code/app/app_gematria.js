@@ -35,7 +35,6 @@ screens.app.gematria = function AppGematria(me) {
             "language":me.calcNumerology
         });
         me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
-        me.ui.class.useStylesheet("kab");
     };
     me.calcNumerology = function (object) {
         var window = me.widget.window.get(object);
