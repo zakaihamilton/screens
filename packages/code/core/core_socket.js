@@ -22,7 +22,7 @@ screens.core.socket = function CoreSocket(me) {
                         me.log(`Socket disconnected [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
                     }
                 });
-                socket.on('heartbeat_response', (data) => {
+                socket.on("heartbeat_response", (data) => {
                     var info = me.sockets.get(socket);
                     if (info) {
                         me.log(`heartbeat received [id=${socket.id} platform=${info.platform} ref=${info.ref} user=${data.user}]`);
@@ -72,7 +72,7 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.sendHeartbeat = function () {
         setTimeout(me.sendHeartbeat, 16000);
-        me.io.emit('heartbeat_send', { beat: 1 });
+        me.io.emit("heartbeat_send", { beat: 1 });
     };
     me.setup = async function (ref) {
         me.ref = ref;
@@ -88,7 +88,6 @@ screens.core.socket = function CoreSocket(me) {
                     resolve(result);
                 }
             };
-            var args = Array.prototype.slice.call(arguments, 1);
             info = Object.assign({}, info);
             info.platform = me.platform;
             info.callback = me.core.handle.push(responseCallback);
@@ -147,7 +146,7 @@ screens.core.socket = function CoreSocket(me) {
             }
         });
         socket.on("heartbeat_send", (data) => {
-            socket.emit('heartbeat_response', { beat: 1, user:me.lib.google.userName() });
+            socket.emit("heartbeat_response", { beat: 1, user:me.lib.google.userName() });
             me.log("heartbeat response sent");
         });
     };
