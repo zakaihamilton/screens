@@ -322,7 +322,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             while (members.firstChild) {
                 members.removeChild(members.firstChild);
             }
-            var isFirst = true;
+            var isFirst = me.core.property.get(list.var.members, "ui.basic.tag") === "table";
             for (var child of list.members) {
                 var prefix = me.core.property.get(child, "prefix");
                 var childText = me.core.property.get(child, "ui.basic.text");

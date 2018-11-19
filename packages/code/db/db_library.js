@@ -5,23 +5,23 @@
 
 screens.db.library = function DbLibrary(me) {
     me.find = async function (query, tagList) {
-        if(!tagList) {
+        if (!tagList) {
             tagList = [];
         }
         var segments = query.split(" AND ");
-        if(segments && segments.length > 1) {
+        if (segments && segments.length > 1) {
             me.log("AND: " + JSON.stringify(segments));
-            for(var segment of segments) {
+            for (var segment of segments) {
                 tagList = await me.find(segment, tagList);
             }
             me.log("returning " + tagList.length + " unique results");
             return tagList;
         }
         segments = query.split(" OR ");
-        if(segments && segments.length > 1) {
+        if (segments && segments.length > 1) {
             me.log("OR: " + JSON.stringify(segments));
             var results = [];
-            for(var segment of segments) {
+            for (var segment of segments) {
                 results.push(... await me.find(segment, tagList));
             }
             var prevLength = results.length;
@@ -44,7 +44,7 @@ screens.db.library = function DbLibrary(me) {
         if (tags && Object.keys(tags).length) {
             tagList.push(...await me.db.library.tags.list(tags));
         }
-        if(tagList.length) {
+        if (tagList.length) {
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
                 if (tagList.length > 1) {
@@ -85,12 +85,28 @@ screens.db.library.content = function DbLibraryContent(me) {
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {
+    me.tokens = function (query) {
+        const regex = /(?:[^\s,"]|"(?:\\.|[^"])*")+/gm;
+        let m;
+
+        var tokens = [];
+        while ((m = regex.exec(query)) !== null) {
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            m.forEach(match => {
+                tokens.push(match);
+            });
+        }
+        return tokens;
+    };
     me.tags = function (query) {
         me.log("Retrieving tags for query: " + query);
         var tags = {};
-        var tokens = me.core.string.split(query).sort();
+        var tokens = me.tokens(query);
         for (var token of tokens) {
             if (token.includes(":")) {
+                token = token.replace(/"/gi, "");
                 var [key, value] = token.split(":");
                 var regex = new RegExp(["^", me.core.string.escape(value.trim()), "$"].join(""), "i");
                 tags[key.trim().toLowerCase()] = regex;
@@ -101,13 +117,7 @@ screens.db.library.query = function DbLibraryQuery(me) {
     me.filter = function (query) {
         me.log("Retrieving filter for query: " + query);
         var filter = "";
-        try {
-            query = query.replace(/'/g, "\\'");
-            var tokens = me.storage.db.split(query, { keepQuotes: true, separator: ' ' });
-        }
-        catch (err) {
-            me.log_error(err);
-        }
+        var tokens = me.tokens(query);
         me.log("tokens: " + JSON.stringify(tokens));
         for (var token of tokens) {
             if (!token.includes(":")) {
