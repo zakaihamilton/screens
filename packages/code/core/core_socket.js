@@ -25,7 +25,7 @@ screens.core.socket = function CoreSocket(me) {
                 socket.on('heartbeat_response', (data) => {
                     var info = me.sockets.get(socket);
                     if (info) {
-                        me.log(`heartbeat received [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
+                        me.log(`heartbeat received [id=${socket.id} platform=${info.platform} ref=${info.ref} user=${data.user}]`);
                     }
                 });
                 me.register(socket);
@@ -147,7 +147,7 @@ screens.core.socket = function CoreSocket(me) {
             }
         });
         socket.on("heartbeat_send", (data) => {
-            socket.emit('heartbeat_response', { beat: 1 });
+            socket.emit('heartbeat_response', { beat: 1, user:me.lib.google.userName() });
             me.log("heartbeat response sent");
         });
     };
