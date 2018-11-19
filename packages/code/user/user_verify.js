@@ -40,7 +40,7 @@ screens.user.verify = function UserVerify(me) {
                     });
                     const payload = ticket.getPayload();
                     const userid = payload['sub'];
-                    var profile = await me.storage.data.load(me.id, userid);
+                    profile = await me.storage.data.load(me.id, userid);
                     if (!profile) {
                         profile = {};
                     }

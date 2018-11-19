@@ -7,7 +7,7 @@ screens.app.present = function AppPresent(me) {
     me.init = function() {
         me.userList = null;        
     };
-    me.launch = function (args) {
+    me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
@@ -85,7 +85,7 @@ screens.app.present = function AppPresent(me) {
         var text = "";
         var userList = await me.userList;
         if(userName) {
-            user = userList.find((item) => item.name.toLowerCase() === userName);
+            var user = userList.find((item) => item.name.toLowerCase() === userName);
             if(user) {
                 text = user.content;
             }
