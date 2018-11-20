@@ -6,19 +6,7 @@
 screens.storage.data = function StorageData(me) {
     me.init = async function () {
         me.log("initialising storage data");
-        me.datastore = null;
-        try {
-            me.datastore = require("@google-cloud/datastore");
-        } catch (e) {
-            await me.core.server.run("npm rebuild");
-            me.datastore = require("@google-cloud/datastore");
-            me.log("me.datastore:" + me.datastore !== null);
-        }
-        if (!me.datastore) {
-            await me.core.server.run("npm rebuild");
-            me.datastore = require("@google-cloud/datastore");
-            me.log("me.datastore:" + me.datastore !== null);
-        }
+        me.datastore = require("@google-cloud/datastore");
         var keys = await me.core.private.keys("google");
         me.projectId = keys.project_id;
     };
