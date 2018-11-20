@@ -40,12 +40,8 @@ screens.app.player = function AppPlayer(me) {
             speed: me.updatePlayback,
         });
         var args = me.singleton.args;
-        if (args.length > 0) {
-            await me.onChangeGroup.set(me.singleton, args[0]);
-        }
-        if (args.length > 1) {
-            me.onChangeSession.set(me.singleton, args[1]);
-        }
+        await me.onChangeGroup.set(me.singleton, args[0]);
+        me.onChangeSession.set(me.singleton, args[1]);
     };
     me.sortSessions = function (object, items) {
         if (!items || items.then) {

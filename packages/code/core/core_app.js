@@ -30,7 +30,12 @@ screens.core.app = function CoreApp(me) {
                 value.unshift("app." + property + ".launch");
                 await me.core.message.send.apply(null, value);
             } else {
-                value = [value];
+                if(value && value.target) {
+                    value = [];
+                }
+                else {
+                    value = [value];
+                }
                 await me.core.message.send("app." + property + ".launch", value);
             }
         }
@@ -51,6 +56,9 @@ screens.core.app = function CoreApp(me) {
         await screens.include("app." + appName);
         me.core.property.set(progress, "close");
         var appArgs = Array.prototype.slice.call(arguments, 1);
+        if(appArgs[0] && appArgs[0].target) {
+            appArgs.splice(0, 1);
+        }
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };
