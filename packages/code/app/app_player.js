@@ -16,23 +16,17 @@ screens.app.player = function AppPlayer(me) {
             false);
         me.playerCounter = 0;
     };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.sessionListData = [];
-        var params = {};
-        if (args.length > 0 && typeof args[0] === "string") {
-            params.groupName = args[0];
-        }
-        if (args.length > 1 && typeof args[1] === "string") {
-            params.sessionName = args[1];
-        }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
-        if(!me.core.file.exists(me.cachePath)) {
+        if (!me.core.file.exists(me.cachePath)) {
             me.core.file.makeDir(me.cachePath);
         }
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton.args = args;
         return me.singleton;
     };
     me.initOptions = async function (object) {
@@ -45,6 +39,13 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
         });
+        var args = me.singleton.args;
+        if (args.length > 0) {
+            await me.onChangeGroup.set(me.singleton, args[0]);
+        }
+        if (args.length > 1) {
+            me.onChangeSession.set(me.singleton, args[1]);
+        }
     };
     me.sortSessions = function (object, items) {
         if (!items || items.then) {
@@ -53,7 +54,7 @@ screens.app.player = function AppPlayer(me) {
         items = items.map(item => {
             var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
             item.label = me.core.path.fileName(name);
-            if(item.duration) {
+            if (item.duration) {
                 item.durationText = me.core.util.formatDuration(item.duration);
             }
             return item;
@@ -71,8 +72,8 @@ screens.app.player = function AppPlayer(me) {
     me.sessionMenuList = {
         get: function (object) {
             return me.widget.menu.collect(object, me.sessionListData, "label", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession", {
-                "Name":"label",
-                "Duration":"durationText"
+                "Name": "label",
+                "Duration": "durationText"
             });
         }
     };
@@ -89,13 +90,13 @@ screens.app.player = function AppPlayer(me) {
             var window = me.singleton;
             return window.options.groupName === value;
         },
-        set: function (object, name) {
+        set: async function (object, name) {
             var window = me.singleton;
             if (name) {
                 me.ui.options.save(me, window, { groupName: name });
             }
             me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-            me.updateSessions();
+            await me.updateSessions();
         }
     };
     me.onChangeSession = {
@@ -105,7 +106,7 @@ screens.app.player = function AppPlayer(me) {
         },
         set: async function (object, name) {
             var window = me.singleton;
-            if(name && window.options.sessionName === name) {
+            if (name && window.options.sessionName === name) {
                 return;
             }
             var audioFound = false, videoFound = false;
@@ -114,7 +115,7 @@ screens.app.player = function AppPlayer(me) {
                 if (!name) {
                     name = me.core.path.fileName(sessions[0].name);
                 }
-                if(name) {
+                if (name) {
                     me.sessionListData.map(function (item) {
                         if (item.name.indexOf(name) !== -1) {
                             var extension = me.core.path.extension(item.name);
@@ -227,7 +228,7 @@ screens.app.player = function AppPlayer(me) {
                     var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
                         me.cachePath + "/" + path);
                 }
-                catch(err) {
+                catch (err) {
                     alert("Failed to download file. Error: " + JSON.stringify(err));
                 }
                 me.core.property.set(window, "ui.work.state", false);
@@ -319,23 +320,33 @@ screens.app.player = function AppPlayer(me) {
         });
         return speedList;
     };
-    me.updatePlayback = function(object) {
+    me.updatePlayback = function (object) {
         var window = me.singleton;
         var speed = me.widget.player.controls.speeds[window.options.speed];
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
         me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
     };
-    me.playerUpdated = function(object) {
+    me.playerUpdated = function (object) {
         var duration = me.widget.player.duration(object);
         var path = me.widget.player.path(object);
         var fileName = me.core.path.fullName(path);
-        if(duration) {
+        if (duration) {
             var session = me.sessionListData.find(session => {
                 return fileName === session.name;
             });
-            if(session) {
+            if (session) {
                 session.duration = duration;
             }
         }
+    };
+    me.copyUrl = function () {
+        var window = me.singleton;
+        var url = "http://www.screensview.com";
+        if (!me.core.util.isSecure()) {
+            url = "localhost:4040";
+        }
+        url += "/player?args=";
+        url += me.core.string.encode(`['${window.options.groupName}','${window.options.sessionName}']`);
+        me.ui.clipboard.copy(url);
     };
 };

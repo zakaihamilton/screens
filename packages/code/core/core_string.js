@@ -130,10 +130,20 @@ screens.core.string = function CoreString(me) {
         return suffix;
     };
     me.encode = function (string) {
-        return window.btoa(unescape(encodeURIComponent(string)));
+        if(me.platform === "server" || me.platform === "service") {
+            return Buffer.from((unescape(encodeURIComponent(string))), "binary").toString("base64");
+        }
+        else {
+            return window.btoa(unescape(encodeURIComponent(string)));
+        }
     };
     me.decode = function (string) {
-        return decodeURIComponent(escape(window.atob(string)));
+        if(me.platform === "server" || me.platform === "service") {
+            return decodeURIComponent(Buffer.from(string, "base64").toString("binary"));
+        }
+        else {
+            return decodeURIComponent(escape(window.atob(string)));
+        }
     };
     me.blobToString = function (blob) {
         var url, request;

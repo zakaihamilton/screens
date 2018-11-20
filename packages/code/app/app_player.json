@@ -29,20 +29,20 @@
                     "Upload",
                     null,
                     {
-                        "separator":true
+                        "separator": true
                     },
                     {
-                        "upload":"app.player.upload"
+                        "upload": "app.player.upload"
                     }
                 ],
                 [
                     "Clean",
                     "app.player.clean",
                     {
-                        "separator":true
+                        "separator": true
                     },
                     {
-                        "ui.basic.display":"@user.verify.match(none,Zakai Hamilton)"
+                        "ui.basic.display": "@user.verify.match(none,Zakai Hamilton)"
                     }
                 ]
             ]
@@ -51,19 +51,24 @@
             "Player",
             [
                 [
+                    "Copy Url To Clipboaerd",
+                    "app.player.copyUrl"
+                ],
+                [
                     "Audio",
                     "app.player.setFormat",
                     {
-                        "state":"select",
-                        "enabled":"app.player.hasAudio"
+                        "state": "select",
+                        "enabled": "app.player.hasAudio",
+                        "separator": true
                     }
                 ],
                 [
                     "Video",
                     "app.player.setFormat",
                     {
-                        "state":"select",
-                        "enabled":"app.player.hasVideo"
+                        "state": "select",
+                        "enabled": "app.player.hasVideo"
                     }
                 ],
                 [
@@ -81,14 +86,14 @@
             "ui.basic.var": "audioPlayer",
             "ui.class.classExtra": "app.player.audioPlayer",
             "ui.style.display": "none",
-            "core.link.update":"app.player.playerUpdated"
+            "core.link.update": "app.player.playerUpdated"
         },
         {
             "ui.element.component": "widget.player.video",
             "ui.basic.var": "videoPlayer",
             "ui.class.classExtra": "app.player.videoPlayer",
             "ui.style.display": "none",
-            "core.link.update":"app.player.playerUpdated"
+            "core.link.update": "app.player.playerUpdated"
         },
         {
             "ui.element.component": "widget.spinner",
@@ -97,13 +102,11 @@
         }
     ],
     "core.link.work": "app.player.work",
-    "widget.window.maximize":null,
+    "widget.window.maximize": null,
     "key": "app-player-window",
     "ui.property.after": {
         "storage.local.key": "app-player-window",
         "storage.local.restore": "widget.window.store",
-        "app.player.initOptions": null,
-        "app.player.onChangeGroup": "@ui.param.groupName",
-        "app.player.onChangeSession": "@ui.param.sessionName"
+        "app.player.initOptions": null
     }
 }

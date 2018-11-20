@@ -190,6 +190,9 @@ screens.core.module = function CoreModule(me) {
             info["content-type"] = "text/html";
             var data = await me.loadTextFile(filePath);
             var startupArgs = info.query["args"];
+            if(startupArgs) {
+                startupArgs = me.core.string.decode(startupArgs);
+            }
             if (!startupArgs) {
                 startupArgs = "";
             }

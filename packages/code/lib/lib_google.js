@@ -51,6 +51,9 @@ screens.lib.google = function LibGoogle(me) {
         return me.auth2.currentUser.get();
     };
     me.currentProfile = function () {
+        if(!me.auth2) {
+            return null;
+        }
         var googleUser = me.auth2.currentUser.get();
         if (googleUser) {
             return googleUser.getBasicProfile();

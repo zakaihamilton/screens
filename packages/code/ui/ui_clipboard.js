@@ -9,14 +9,14 @@ screens.ui.clipboard = function UIClipboard(me) {
         try {
             if (navigator.permissions) {
                 var permissionStatus = await navigator.permissions.query({
-                    name: 'clipboard-read'
+                    name: "clipboard-read"
                 });
                 me.log("clipboard permission:" + permissionStatus.state);
                 me.permissionStatus = permissionStatus;
                 permissionStatus.onchange = () => {
                     me.log("clipboard permission:" + permissionStatus.state);
                     me.permissionStatus = permissionStatus;
-                }
+                };
             }
         }
         catch (err) {
@@ -33,11 +33,13 @@ screens.ui.clipboard = function UIClipboard(me) {
                 me.log("clipboard text copied:" + text);
             }
             catch (err) {
-                me.log_error("Could not copy text: " + text + " error: " + err.message || err);
+                var error = "Could not copy text: " + text + " error: " + err.message || err;
+                me.log_error(error);
+                throw error;
             }
         }
         else {
-            callback("Clipboard not supported");
+            throw "Clipboard not supported";
         }
     };
 };
