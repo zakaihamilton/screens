@@ -51,7 +51,7 @@
             "Player",
             [
                 [
-                    "Copy Url To Clipboaerd",
+                    "Copy Url To Clipboard",
                     "app.player.copyUrl"
                 ],
                 [
