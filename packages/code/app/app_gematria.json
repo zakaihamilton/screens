@@ -68,7 +68,7 @@
         {
             "ui.element.component": "widget.input",
             "ui.basic.var": "input",
-            "ui.basic.text": "",
+            "ui.basic.text": "@ui.param.input",
             "ui.class.classExtra": "app.gematria.input",
             "core.event.input": "app.gematria.calcNumerology"
         },

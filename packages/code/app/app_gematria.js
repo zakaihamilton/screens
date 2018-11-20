@@ -7,13 +7,15 @@ screens.app.gematria = function AppGematria(me) {
     me.init = async function () {
 
     };
-    me.launch = function () {
+    me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        var params = {input:args[0]};
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         me.initOptions(me.singleton);
+        me.calcNumerology(me.singleton);
         return me.singleton;
     };
     me.initOptions = function (object) {
