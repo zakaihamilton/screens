@@ -4,7 +4,7 @@
  */
 
 screens.app.library = function AppLibrary(me) {
-    me.launch = function (args) {
+    me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
@@ -81,7 +81,7 @@ screens.app.library = function AppLibrary(me) {
                     if (key === "_id" || key === "user") {
                         continue;
                     }
-                    value = item[key];
+                    var value = item[key];
                     if (value.match(/^\d/)) {
                         value = me.core.string.padNumber(value, 3);
                     }
@@ -139,7 +139,7 @@ screens.app.library = function AppLibrary(me) {
                 return result;
             });
             return names;
-        }
+        };
         if (list.then) {
             return [[
                 "",
@@ -153,7 +153,7 @@ screens.app.library = function AppLibrary(me) {
                 }
             ]];
         }
-        return parseItems(items);
+        return parseItems(list);
     };
     me.tagMenuList = {
         get: function (object) {
@@ -235,13 +235,13 @@ screens.app.library = function AppLibrary(me) {
     };
     me.removeExtra = function (json) {
         json = Object.assign({}, json);
-        delete json._id
-        delete json.id
+        delete json._id;
+        delete json.id;
         return json;
     };
     me.addExtra = function (json, record) {
         json = Object.assign({}, json);
-        delete json.id
+        delete json.id;
         json._id = record.id || record._id;
         return json;
     };
@@ -306,7 +306,7 @@ screens.app.library = function AppLibrary(me) {
                     if (text) {
                         text += "\n";
                     }
-                    text += "#" + tag + ":"
+                    text += "#" + tag + ":";
                 }
                 if (item.content && item.content.text) {
                     if (text) {
@@ -325,7 +325,7 @@ screens.app.library = function AppLibrary(me) {
                 transformText += "<article>";
             }
             if (record.tags) {
-                var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n" } else { return "" } };
+                var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n"; } else { return ""; } };
                 transformText += getTag("title");
                 transformText += getTag("article");
                 transformText += getTag("chapter", "Chapter: ");
@@ -337,7 +337,7 @@ screens.app.library = function AppLibrary(me) {
                 transformText += getTag("author");
             }
             transformText += record.content.text;
-        };
+        }
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.transform, "text", transformText);
         if (!window.options.editMode) {
@@ -350,6 +350,7 @@ screens.app.library = function AppLibrary(me) {
         var records = {};
         var array = [];
         var isTag = false;
+        var line = null;
         if (text) {
             if (text[0] === "[") {
                 array = JSON.parse(text);
@@ -383,7 +384,7 @@ screens.app.library = function AppLibrary(me) {
                                 tags[key] = value;
                             }
                             else {
-                                delete tags[key]
+                                delete tags[key];
                             }
                         }
                     }
@@ -433,7 +434,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.fromRecordArray = function (array) {
         var dict = { tags: [], content: [], ids: [] };
-        for (record of array) {
+        for (var record of array) {
             dict.tags.push(me.addExtra(record.tags, record));
             dict.content.push(me.addExtra(record.content, record));
             dict.ids.push(record.id);
