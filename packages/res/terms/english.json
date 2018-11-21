@@ -165,7 +165,8 @@
             "evil-mindedness": "evil__-mindedness",
             "greatest evil": "greatest __evil",
             "Hochma in Beresheet": "Hochma2 in Beresheet",
-            "spirit of Hochma": "spirit of Hochma2"
+            "spirit of Hochma": "spirit of Hochma2",
+            "Hesed and Din":"Hesed2 and Din"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -2876,7 +2877,7 @@
             "hebrew": "רחמים"
         },
         {
-            "translation": "Kindness",
+            "translation": "Mercy",
             "source": "Hesed",
             "term": "Hesed2",
             "style": {
