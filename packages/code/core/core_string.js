@@ -194,10 +194,11 @@ screens.core.string = function CoreString(me) {
         string = number + string.slice(index);
         return string;
     };
-    me.cammelCase = function(string) {
+    me.title = function(string) {
         string = string.split("_").map(token => {
             return token.charAt(0).toUpperCase() + token.slice(1);
-        }).join("_");
+        }).join(" ");
+        string = string.replace(/([A-Z])/g, " $1").trim();
         return string;
     };
     me.trimEnd = function(string, character) {

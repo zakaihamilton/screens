@@ -15,7 +15,7 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
             label = name.split(".").pop();
         }
         return [[
-            me.core.string.cammelCase(label),
+            me.core.string.title(label),
             "/packages/res/icons/" + label + ".png",
             label,
             method
