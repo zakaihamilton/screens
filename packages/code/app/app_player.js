@@ -337,12 +337,6 @@ screens.app.player = function AppPlayer(me) {
     };
     me.copyUrl = function () {
         var window = me.singleton;
-        var url = "http://www.screensview.com";
-        if (!me.core.util.isSecure()) {
-            url = "localhost:4040";
-        }
-        url += "/player?args=";
-        url += me.core.string.encode(`['${window.options.groupName}','${window.options.sessionName}']`);
-        me.ui.clipboard.copy(url);
+        me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName]);
     };
 };

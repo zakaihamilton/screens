@@ -108,4 +108,13 @@ screens.core.util = function CoreUtil(me) {
             return hour + ":" + min + ":" + sec;
         }
     };
+    me.copyUrl = function (appName, args) {
+        var url = "http://www.screensview.com";
+        if (!me.core.util.isSecure()) {
+            url = "localhost:4040";
+        }
+        url += `/${appName}?args=`;
+        url += me.core.string.encode(JSON.stringify(args));
+        me.ui.clipboard.copy(url);
+    };
 };

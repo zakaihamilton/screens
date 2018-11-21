@@ -139,7 +139,7 @@ screens.core.string = function CoreString(me) {
     };
     me.decode = function (string) {
         if(me.platform === "server" || me.platform === "service") {
-            return decodeURIComponent(Buffer.from(string, "base64").toString("binary"));
+            return decodeURIComponent(escape(Buffer.from(string, "base64").toString("binary")));
         }
         else {
             return decodeURIComponent(escape(window.atob(string)));

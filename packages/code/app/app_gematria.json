@@ -12,10 +12,15 @@
             "Gematria",
             [
                 [
+                    "Copy Url To Clipboard",
+                    "app.gematria.copyUrl"
+                ],
+                [
                     "Summation of Letters",
                     "app.gematria.sumEnabled",
                     {
-                        "state": "select"
+                        "state": "select",
+                        "separator":true
                     }
                 ],
                 [
