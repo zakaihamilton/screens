@@ -63,6 +63,13 @@
                         "state":"select",
                         "visible":"app.library.editMode"
                     }
+                ],
+                [
+                    "Copy Url To Clipboard",
+                    "app.library.copyUrl",
+                    {
+                        "separator":true
+                    }
                 ]
             ]
         ]
@@ -76,7 +83,7 @@
                     "ui.basic.var": "search",
                     "ui.basic.type": "search",
                     "ui.attribute.placeholder": "Search",
-                    "ui.basic.text": "",
+                    "ui.basic.text": "@ui.param.search",
                     "ui.class.classExtra": "app.library.search",
                     "core.event.input": "app.library.changedSearch",
                     "ui.monitor.change": "app.library.search"

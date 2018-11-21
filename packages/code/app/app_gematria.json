@@ -12,10 +12,6 @@
             "Gematria",
             [
                 [
-                    "Copy Url To Clipboard",
-                    "app.gematria.copyUrl"
-                ],
-                [
                     "Summation of Letters",
                     "app.gematria.sumEnabled",
                     {
@@ -54,6 +50,13 @@
                     "app.gematria.language",
                     {
                         "state": "select"
+                    }
+                ],
+                [
+                    "Copy Url To Clipboard",
+                    "app.gematria.copyUrl",
+                    {
+                        "separator":true
                     }
                 ]
             ]

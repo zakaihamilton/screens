@@ -44,9 +44,13 @@ function startBrowser(appName, appArgs) {
             "app"
         ]
     }).then(async () => {
+        var args = screens.core.string.decode(appArgs);
+        if(args) {
+            args = JSON.parse(args);
+        }
         screens.core.startup.app = {
             name: appName,
-            params: appArgs
+            params: args
         };
         await screens.core.message.worker.load("packages/code/platform/client.js");
         await screens.core.message.service_worker.load("/service_worker.js");

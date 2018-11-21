@@ -4,12 +4,13 @@
  */
 
 screens.app.library = function AppLibrary(me) {
-    me.launch = function () {
+    me.launch = function (args) {
+        var params = {search:args[0]};
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
     };
     me.init = async function () {
         var promises = [];
@@ -46,7 +47,8 @@ screens.app.library = function AppLibrary(me) {
         });
         window.showResults = true;
         me.updateMode(window);
-        me.reset(object);
+        me.reset(window);
+        me.search(window);
     };
     me.updateEditMode = function (object) {
         me.updateMode(object);
@@ -613,5 +615,10 @@ screens.app.library = function AppLibrary(me) {
                 },
             }
         });
+    };
+    me.copyUrl = function (object) {
+        var window = me.widget.window.get(object);
+        var search = me.core.property.get(window.var.search, "ui.basic.text");
+        me.core.util.copyUrl("library", [search]);
     };
 };

@@ -85,8 +85,8 @@ screens.core.module = function CoreModule(me) {
         for (var extension in extensions) {
             var isString = extensions[extension];
             if (data && data.includes("__" + extension + "__") && !data.includes("global" + ".__" + extension + "__")) {
-                var extFilePath = filePath.replace(".js", "." + extension);
-                extData = await me.loadTextFile(extFilePath);
+                extFilePath = filePath.replace(".js", "." + extension);
+                var extData = await me.loadTextFile(extFilePath);
                 if (isString) {
                     extData = JSON.stringify(extData)
                 }
@@ -190,21 +190,11 @@ screens.core.module = function CoreModule(me) {
             info["content-type"] = "text/html";
             var data = await me.loadTextFile(filePath);
             var startupArgs = info.query["args"];
-            if(startupArgs) {
-                startupArgs = me.core.string.decode(startupArgs);
-            }
             if (!startupArgs) {
                 startupArgs = "";
             }
-            if (!startupArgs.startsWith("[")) {
-                startupArgs = "[" + startupArgs;
-            }
-            if (!startupArgs.endsWith("]")) {
-                startupArgs = startupArgs + "]";
-            }
-            startupArgs = startupArgs.replace(/[/"]/g, "'");
             data = data.replace("__startup_app__", "'" + params.startupApp + "'");
-            data = data.replace("__startup_args__", startupArgs);
+            data = data.replace("__startup_args__", "'" + startupArgs + "'");
             data = await me.buildHtml(data, params, info);
             info.body = data;
         } else if (filePath.endsWith(".png")) {
