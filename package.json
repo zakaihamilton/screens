@@ -24,6 +24,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "google-auth-library": "^2.0.1",
     "graceful-fs": "^4.1.15",
+    "gspeech-api": "^1.0.0",
     "ip": "^1.1.5",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.3.1",

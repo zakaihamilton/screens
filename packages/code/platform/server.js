@@ -88,7 +88,8 @@ screens.include({
     "media": [
         "ffmpeg",
         "hls",
-        "file"
+        "file",
+        "speech"
     ],
     "startup": [
         "version"
