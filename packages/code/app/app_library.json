@@ -46,6 +46,9 @@
                     {
                         "state": "select",
                         "separator":true
+                    },
+                    {
+                        "ui.basic.display": "@user.verify.match(none,Zakai Hamilton)"
                     }
                 ],
                 [
