@@ -5,7 +5,7 @@
 
 screens.widget.terminal = function WidgetTerminal(me) {
     me.element = {
-        properties : __json__
+        properties: __json__
     };
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window.get(terminal);
@@ -40,9 +40,16 @@ screens.widget.terminal = function WidgetTerminal(me) {
             }
         };
         field.onkeydown = function (e) {
-            if (e.which === 37 || e.which === 39 || e.which === 38 || e.which === 40 || e.which === 9) {
+            if (e.which === 37 || e.which === 39 || e.which === 40 || e.which === 9) {
                 e.preventDefault();
-            } else if (type === "input" && e.which !== 13) {
+            } else if (e.which === 38) {
+                e.preventDefault();
+                if(terminal.lastCommand) {
+                    me.core.property.set(terminal.var.inputLine, "ui.basic.text", terminal.lastCommand);
+                    field.value = terminal.lastCommand;
+                }
+            }
+            else if (type === "input" && e.which !== 13) {
                 setTimeout(function () {
                     me.core.property.set(terminal.var.inputLine, "ui.basic.text", field.value);
                     me.core.property.set(terminal, "scroll");
@@ -56,6 +63,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
                     me.core.property.set(terminal, "print", message + field.value);
                 }
                 me.core.property.set(field, "ui.node.parent");
+                terminal.lastCommand = field.value;
                 me.core.property.set(terminal, terminal.response, field.value);
             }
         };
@@ -93,13 +101,13 @@ screens.widget.terminal = function WidgetTerminal(me) {
     me.insert = {
         set: function (terminal, message) {
             var print = me.ui.node.lastChild(terminal.var.output);
-            if(print) {
+            if (print) {
                 var text = me.core.property.get(print, "ui.basic.text");
                 text += message;
                 me.core.property.set(print, "ui.basic.text", text);
             }
             else {
-                var print = me.ui.element.create({
+                me.ui.element.create({
                     "ui.basic.tag": "div",
                     "ui.basic.text": message
                 }, terminal.var.output);
@@ -109,7 +117,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
     };
     me.print = {
         set: function (terminal, message) {
-            var print = me.ui.element.create({
+            me.ui.element.create({
                 "ui.basic.tag": "div",
                 "ui.basic.text": message
             }, terminal.var.output);
