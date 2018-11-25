@@ -45,6 +45,7 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "split-string": "^6.0.0",
+    "temp": "^0.8.3",
     "video.js": "^7.3.0",
     "videojs-contrib-hls": "^5.14.1",
     "xmlhttprequest": "^1.8.0"

@@ -18,7 +18,7 @@ screens.media.speech = function MediaSpeech(me) {
         var API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
         var MAX_CONCURRENT = 20;
-        var MAX_SEG_DUR = 30;
+        var MAX_SEG_DUR = 10;
         var POST_SAMPLE_RATE = 44100;
 
         var totalDuration = 0;
@@ -66,7 +66,7 @@ screens.media.speech = function MediaSpeech(me) {
             return [upstreamOpts, downstreamOpts];
         }
 
-        function fullText(timedTranscript) {
+        function getFullText(timedTranscript) {
             var full = "";
             for (var i = 0; i < timedTranscript.length; i++) {
                 full += timedTranscript[i].text + " ";
@@ -225,10 +225,12 @@ screens.media.speech = function MediaSpeech(me) {
                         return 0;
                     });
 
-                    resolve(null, {
-                        "timedTranscript": timedTranscript,
-                        "transcript": fullText(timedTranscript)
-                    });
+                    var fullText = getFullText(timedTranscript);
+                    var transcriptPath = me.core.path.replaceExtension(path, "txt");
+
+                    me.core.file.writeFile(transcriptPath, JSON.stringify({ text: fullText, timed: timedTranscript }));
+
+                    resolve(fullText);
                 });
             });
         });
