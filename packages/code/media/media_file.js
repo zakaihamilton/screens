@@ -8,6 +8,7 @@ screens.media.file = function MediaFile(me) {
     me.init = function () {
         me.metadata = require("music-metadata");
     };
+    me._listing = {};
     me.info = async function (path) {
         var metadata = null;
         try {
@@ -21,11 +22,18 @@ screens.media.file = function MediaFile(me) {
     me.listing = async function (path) {
         var files = await me.storage.file.getChildren(path);
         for (var file of files) {
-            var metadata = await me.info(me.cachePath + "/" + file.name);
-            if (metadata) {
-                if (metadata.format) {
-                    file.duration = metadata.format.duration;
+            var item = me._listing[file.name];
+            if(item) {
+                file.duration = item.duration;
+            }
+            else {
+                var metadata = await me.info(me.cachePath + "/" + file.name);
+                if (metadata) {
+                    if (metadata.format) {
+                        file.duration = metadata.format.duration;
+                    }
                 }
+                me._listing[file.name] = {duration:file.duration};
             }
         }
         return files;
