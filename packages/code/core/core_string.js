@@ -130,7 +130,7 @@ screens.core.string = function CoreString(me) {
         return suffix;
     };
     me.encode = function (string) {
-        if(me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server" || me.platform === "service") {
             return Buffer.from((unescape(encodeURIComponent(string))), "binary").toString("base64");
         }
         else {
@@ -138,7 +138,7 @@ screens.core.string = function CoreString(me) {
         }
     };
     me.decode = function (string) {
-        if(me.platform === "server" || me.platform === "service") {
+        if (me.platform === "server" || me.platform === "service") {
             return decodeURIComponent(escape(Buffer.from(string, "base64").toString("binary")));
         }
         else {
@@ -194,18 +194,76 @@ screens.core.string = function CoreString(me) {
         string = number + string.slice(index);
         return string;
     };
-    me.title = function(string) {
+    me.title = function (string) {
         string = string.split("_").map(token => {
             return token.charAt(0).toUpperCase() + token.slice(1);
         }).join(" ");
         string = string.replace(/([A-Z])/g, " $1").trim();
         return string;
     };
-    me.trimEnd = function(string, character) {
+    me.trimEnd = function (string, character) {
         var position = string.indexOf(character);
-        if(position != -1) {
+        if (position != -1) {
             string = string.substring(0, position);
         }
         return string;
+    };
+    me.formatDuration = function (duration) {
+        duration = parseInt(duration);
+        var sec = duration % 60;
+        var min = parseInt(duration / 60) % 60;
+        var hour = parseInt(duration / (60 * 60)) % 24;
+        var days = parseInt(duration / (24 * 60 * 60));
+        if (hour < 10) {
+            hour = "0" + hour;
+        }
+        if (min < 10) {
+            min = "0" + min;
+        }
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        if (days) {
+            return days + " days" + " + " + hour + ":" + min + ":" + sec;
+        }
+        else {
+            return hour + ":" + min + ":" + sec;
+        }
+    };
+    me.formatBytes = function (number) {
+        var set = false;
+        if (number < 1000) {
+            number = parseInt(number) + " B";
+            set = true;
+        }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + " KB";
+                set = true;
+            }
+        }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + " MB";
+                set = true;
+            }
+        }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + " GB";
+                set = true;
+            }
+        }
+        if (!set) {
+            number /= 1000;
+            if (number < 1000) {
+                number = parseInt(number) + " TB";
+                set = true;
+            }
+        }
+        return number;
     };
 };

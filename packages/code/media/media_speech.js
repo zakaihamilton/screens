@@ -9,7 +9,7 @@ screens.media.speech = function MediaSpeech(me) {
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
     };
-    me.recognize = async function (path) {
+    me.transcribe = async function (path) {
         var request = require("request");
         var fs = require("fs");
         var temp = require("temp").track();
@@ -153,7 +153,9 @@ screens.media.speech = function MediaSpeech(me) {
                         "start": start,
                         "duration": dur
                     }, (err, result) => {
-                        me.log("position: " + start + " total: " + totalDuration + " text: " + JSON.stringify(result));
+                        var posFormatted = me.core.string.formatDuration(start);
+                        var totalFormatted = me.core.string.formatDuration(totalDuration);
+                        me.log("transcribing: " + posFormatted + "/" + totalFormatted);
                         onfinish(err, result);
                     });
                 })
@@ -173,67 +175,68 @@ screens.media.speech = function MediaSpeech(me) {
         var maxRetries = options.maxRetries | 1;
         var limitConcurrent = options.limitConcurrent | MAX_CONCURRENT;
 
-        return new Promise((resolve, reject) => {
-            // Get file information and divide into segments
-            // Then process each of these segments individually, and combine results at the end
-            me.ffmpeg.ffprobe(file, function (err, info) {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                var audioSegments = [];
-                totalDuration = info.format.duration;
-                if (segments) {
-                    for (var i = 0; i < segments.length; i++) {
-                        var duration = (i == segments.length - 1) ? totalDuration - segments[i] : segments[i + 1] - segments[i];
-                        if (duration < 0) {
-                            reject(new Error("segments must be a sorted array of start times, \
-                                each less than the total length of your audio"));
-                        }
-                        var curStart = segments[i];
-                        while (duration > maxDuration + .001) {
-                            audioSegments.push({
-                                "start": curStart,
-                                "duration": maxDuration
-                            });
-                            duration -= maxDuration;
-                            curStart += maxDuration;
-                        }
+        var transcriptPath = me.core.path.replaceExtension(path, "txt");
+        // Get file information and divide into segments
+        // Then process each of these segments individually, and combine results at the end
+        me.ffmpeg.ffprobe(file, function (err, info) {
+            if (err) {
+                me.log_error("Cannot transcribe path: " + path + " context: ffprobe error: " + err);
+                return;
+            }
+            var audioSegments = [];
+            totalDuration = info.format.duration;
+            if (segments) {
+                for (var i = 0; i < segments.length; i++) {
+                    var duration = (i == segments.length - 1) ? totalDuration - segments[i] : segments[i + 1] - segments[i];
+                    if (duration < 0) {
+                        reject(new Error("segments must be a sorted array of start times, \
+                            each less than the total length of your audio"));
+                    }
+                    var curStart = segments[i];
+                    while (duration > maxDuration + .001) {
                         audioSegments.push({
                             "start": curStart,
-                            "duration": duration
-                        });
-                    }
-                }
-                else {
-                    var numSegments = Math.ceil(totalDuration / maxDuration);
-                    for (var segmentIndex = 0; segmentIndex < numSegments; segmentIndex++) {
-                        audioSegments.push({
-                            "start": maxDuration * segmentIndex,
                             "duration": maxDuration
                         });
+                        duration -= maxDuration;
+                        curStart += maxDuration;
                     }
-                }
-
-                async.mapLimit(audioSegments, limitConcurrent, processAudioSegment, function (err, results) {
-                    // After all transcripts have been returned, process them
-                    if (err)
-                        reject(err);
-                    var timedTranscript = results.sort(function (a, b) {
-                        if (a.start < b.start) return -1;
-                        if (a.start > b.start) return 1;
-                        return 0;
+                    audioSegments.push({
+                        "start": curStart,
+                        "duration": duration
                     });
+                }
+            }
+            else {
+                var numSegments = Math.ceil(totalDuration / maxDuration);
+                for (var segmentIndex = 0; segmentIndex < numSegments; segmentIndex++) {
+                    audioSegments.push({
+                        "start": maxDuration * segmentIndex,
+                        "duration": maxDuration
+                    });
+                }
+            }
 
-                    var fullText = getFullText(timedTranscript);
-                    var transcriptPath = me.core.path.replaceExtension(path, "txt");
-
-                    me.core.file.writeFile(transcriptPath, JSON.stringify({ text: fullText, timed: timedTranscript }));
-
-                    resolve(fullText);
+            async.mapLimit(audioSegments, limitConcurrent, processAudioSegment, function (err, results) {
+                // After all transcripts have been returned, process them
+                if (err) {
+                    me.log_error("Cannot transcribe path: " + path + "context: processAudioSegment error: " + err);
+                    return;
+                }
+                var timedTranscript = results.sort(function (a, b) {
+                    if (a.start < b.start) return -1;
+                    if (a.start > b.start) return 1;
+                    return 0;
                 });
+
+                var result = timedTranscript.map(entry => {
+                    return me.core.string.formatDuration(entry.start) + " - " + entry.text;
+                }).join("\n");
+                me.core.file.writeFile(transcriptPath, result);
+                me.log("Transcript written to " + transcriptPath);
             });
         });
+        return transcriptPath;
     };
     return "server";
 };

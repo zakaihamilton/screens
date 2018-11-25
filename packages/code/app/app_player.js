@@ -51,7 +51,7 @@ screens.app.player = function AppPlayer(me) {
             var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
             item.label = me.core.path.fileName(name);
             if (item.duration) {
-                item.durationText = me.core.util.formatDuration(item.duration);
+                item.durationText = me.core.string.formatDuration(item.duration);
             }
             return item;
         });

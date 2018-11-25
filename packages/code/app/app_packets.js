@@ -218,63 +218,6 @@ screens.app.packets = function AppPackets(me) {
     me.formatNumber = function (number) {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
-    me.formatDuration = function (duration) {
-        var sec = duration % 60;
-        var min = parseInt(duration / 60) % 60;
-        var hour = parseInt(duration / (60 * 60)) % 24;
-        var days = parseInt(duration / (24 * 60 * 60));
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (min < 10) {
-            min = "0" + min;
-        }
-        if (sec < 10) {
-            sec = "0" + sec;
-        }
-        if (days) {
-            return days + " days" + " + " + hour + ":" + min + ":" + sec;
-        }
-        else {
-            return hour + ":" + min + ":" + sec;
-        }
-    };
-    me.formatBytes = function (number) {
-        var set = false;
-        if (number < 1000) {
-            number = parseInt(number) + " B";
-            set = true;
-        }
-        if (!set) {
-            number /= 1000;
-            if (number < 1000) {
-                number = parseInt(number) + " KB";
-                set = true;
-            }
-        }
-        if (!set) {
-            number /= 1000;
-            if (number < 1000) {
-                number = parseInt(number) + " MB";
-                set = true;
-            }
-        }
-        if (!set) {
-            number /= 1000;
-            if (number < 1000) {
-                number = parseInt(number) + " GB";
-                set = true;
-            }
-        }
-        if (!set) {
-            number /= 1000;
-            if (number < 1000) {
-                number = parseInt(number) + " TB";
-                set = true;
-            }
-        }
-        return number;
-    };
     me.updateData = {
         set: function (object) {
             var window = me.widget.window.get(object);
@@ -330,10 +273,10 @@ screens.app.packets = function AppPackets(me) {
                     "duration": 0
                 });
                 window.packetCount = me.formatNumber(packetCount);
-                window.streamSize = me.formatBytes(dataSize);
+                window.streamSize = me.core.string.formatBytes(dataSize);
                 window.streamCount = streamRequests.length;
-                window.streamDuration = me.core.util.formatDuration(duration);
-                window.averageByteRate = me.formatBytes(abr) + "/s";
+                window.streamDuration = me.core.string.formatDuration(duration);
+                window.averageByteRate = me.core.string.formatBytes(abr) + "/s";
                 window.searchMatch = searchMatch;
                 if(effects) {
                     me.core.property.set(window.var.effectsMenu, "ui.class.mark", effects.useEffects);
