@@ -96,4 +96,7 @@ screens.core.util = function CoreUtil(me) {
         url += me.core.string.encode(JSON.stringify(args));
         me.ui.clipboard.copy(url);
     };
+    me.genPair = function() {
+        return parseInt(Math.random() * Math.pow(2, 32)).toString(16);
+    };
 };
