@@ -77,7 +77,6 @@ screens.app.player = function AppPlayer(me) {
         set: async function (object) {
             var window = me.singleton;
             await me.core.message.send_server("core.cache.reset", me.id);
-            await me.core.message.send_server("core.cache.reset", me.id + "-" + window.options.groupName);
             me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
         }
     };
@@ -155,12 +154,7 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var group = window.options.groupName;
         if (group && typeof group === "string") {
-            me.sessionListData = me.core.message.send_server(
-                "core.cache.use",
-                me.id + "-" + group,
-                "media.file.listing",
-                me.rootPath + "/" + group.toLowerCase(),
-                false);
+            me.sessionListData = me.media.file.listing(me.rootPath + "/" + group.toLowerCase());
             me.sessionListData = await me.sessionListData;
             var sessions = me.core.property.get(window, "app.player.sessionList");
             var sessionCount = 0;
@@ -290,13 +284,6 @@ screens.app.player = function AppPlayer(me) {
             finally {
                 me.core.property.set(progress, "close");
             }
-        }
-    };
-    me.clean = {
-        set: async function (object) {
-            var window = me.singleton;
-            await me.manager.download.clean("cache");
-            await me.refresh.set(window);
         }
     };
     me.speeds = function (object) {

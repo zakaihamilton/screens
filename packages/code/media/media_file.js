@@ -7,6 +7,7 @@ screens.media.file = function MediaFile(me) {
     me.cachePath = "cache";
     me.init = function () {
         me.metadata = require("music-metadata");
+        me.core.task.push("media.file.updateListing", 300000);
     };
     me._listing = {};
     me.info = async function (path) {
@@ -19,24 +20,65 @@ screens.media.file = function MediaFile(me) {
         }
         return metadata;
     };
-    me.listing = async function (path) {
-        var files = await me.storage.file.getChildren(path);
-        for (var file of files) {
-            var item = me._listing[file.name];
-            if(item) {
-                file.duration = item.duration;
-            }
-            else {
-                var metadata = await me.info(me.cachePath + "/" + file.name);
-                if (metadata) {
-                    if (metadata.format) {
-                        file.duration = metadata.format.duration;
+    me.listing = async function (path, update = false) {
+        var files = null;
+        if (update || !me._listing[path]) {
+            files = await me.storage.file.getChildren(path);
+            var oldListing = me._listing[path];
+            me._listing[path] = files;
+            for (var file of files) {
+                var item = null;
+                if (oldListing) {
+                    item = oldListing[file.name];
+                }
+                if (item) {
+                    file = Object.apply(file, item);
+                }
+                else {
+                    file.path = path + "/" + file.name;
+                    var metadata = await me.info(me.cachePath + "/" + file.name);
+                    if (metadata) {
+                        if (metadata.format) {
+                            file.duration = metadata.format.duration;
+                        }
                     }
                 }
-                me._listing[file.name] = {duration:file.duration};
             }
         }
+        else {
+            files = me._listing[path];
+        }
         return files;
+    };
+    me.updateListing = async function () {
+        var listing = await me.listing("/Kab/concepts/private/American", true);
+        for (var item of listing) {
+            var target = "cache/" + me.core.path.fullName(item.path);
+            var extension = me.core.path.extension(target);
+            if (extension === "mp4") {
+                continue;
+            }
+            if (!item.downloaded) {
+                try {
+                    await me.manager.download.get(item.path, target);
+                }
+                catch (err) {
+                    me.log_error("Failed to download: " + item.path);
+                }
+                item.downloaded = true;
+            }
+            if (extension === "m4a") {
+                try {
+                    if (!me.media.speech.transcribed(target)) {
+                        me.log("transcribing: " + target);
+                        await me.media.speech.transcribe(target);
+                    }
+                }
+                catch (err) {
+                    me.log_error("Failed to transcribe: " + target);
+                }
+            }
+        }
     };
     return "server";
 };

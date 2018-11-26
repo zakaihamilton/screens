@@ -17,7 +17,7 @@ screens.manager.download = function ManagerDownload(me) {
             try {
                 await me.storage.file.downloadFile(from, to);
             }
-            catch(err) {
+            catch (err) {
                 me.log("Failed to download file: " + from + " err: " + JSON.stringify(err));
                 unlock();
                 throw err;
@@ -48,6 +48,6 @@ screens.manager.download = function ManagerDownload(me) {
             }
         }
         me.queue = [];
-    }
+    };
     return "server";
 };

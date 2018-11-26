@@ -63,7 +63,8 @@ screens.include({
         "cache",
         "string",
         "session",
-        "object"
+        "object",
+        "task"
     ],
     "storage": [
         "file",

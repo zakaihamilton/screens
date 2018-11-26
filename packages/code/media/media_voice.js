@@ -19,29 +19,29 @@ screens.media.voice = function MediaVoice(me) {
         me.synth.resume();
     };
     me.speeds = {
-        "Slow":0.5,
-        "Slower":0.75,
-        "Normal":1.0,
-        "Faster":1.25,
-        "Fast":1.5
+        "Slow": 0.5,
+        "Slower": 0.75,
+        "Normal": 1.0,
+        "Faster": 1.25,
+        "Fast": 1.5
     };
     me.volumes = {
-        "None":0.0,
-        "Low":0.25,
-        "Medium":0.5,
-        "Normal":0.75,
-        "High":1.0
+        "None": 0.0,
+        "Low": 0.25,
+        "Medium": 0.5,
+        "Normal": 0.75,
+        "High": 1.0
     };
-    me.isPlaying = function() {
+    me.isPlaying = function () {
         return me.synth.speaking || me.synth.pending;
     };
-    me.isPaused = function() {
+    me.isPaused = function () {
         return me.synth.paused;
     };
     me.play = function (text, voiceName, params) {
-        if(voiceName === "None") {
+        if (voiceName === "None") {
             me.stop();
-            if(params.oncancel) {
+            if (params.oncancel) {
                 params.oncancel();
             }
             return;
@@ -53,10 +53,10 @@ screens.media.voice = function MediaVoice(me) {
         var volume = 1;
         var speed = 1;
         var pitch = 1;
-        if(typeof params.volume !== "undefined") {
+        if (typeof params.volume !== "undefined") {
             volume = params.volume;
-            if(typeof volume === "string") {
-                if(volume in me.volumes) {
+            if (typeof volume === "string") {
+                if (volume in me.volumes) {
                     me.log("using volume: " + volume);
                     volume = me.volumes[volume];
                 }
@@ -65,10 +65,10 @@ screens.media.voice = function MediaVoice(me) {
                 }
             }
         }
-        if(typeof params.speed !== "undefined") {
+        if (typeof params.speed !== "undefined") {
             speed = params.speed;
-            if(typeof speed === "string") {
-                if(speed in me.speeds) {
+            if (typeof speed === "string") {
+                if (speed in me.speeds) {
                     me.log("using speed: " + speed);
                     speed = me.speeds[speed];
                 }
@@ -77,12 +77,12 @@ screens.media.voice = function MediaVoice(me) {
                 }
             }
         }
-        if(typeof params.pitch !== "undefined") {
+        if (typeof params.pitch !== "undefined") {
             pitch = params.pitch;
         }
-        if(!voices.length) {
+        if (!voices.length) {
             voices = me.voices(params.language);
-            if(!voices.length) {
+            if (!voices.length) {
                 return;
             }
         }
@@ -95,7 +95,7 @@ screens.media.voice = function MediaVoice(me) {
             params.onstart();
         }
         var textArray = text;
-        if(!Array.isArray(textArray)) {
+        if (!Array.isArray(textArray)) {
             textArray = [text];
         }
         var processedTexts = textArray.map((text) => me.process(text));
@@ -109,7 +109,7 @@ screens.media.voice = function MediaVoice(me) {
                 return;
             }
             parts.map(processedText => {
-                if(!processedText.trim().length) {
+                if (!processedText.trim().length) {
                     me.totalParts--;
                     return;
                 }
@@ -123,7 +123,7 @@ screens.media.voice = function MediaVoice(me) {
                 utterance.index = index;
                 utterance.onstart = () => {
                     me.currentIndex = utterance.index;
-                    if(params.onchange && processedText) {
+                    if (params.onchange && processedText) {
                         params.onchange(utterance.index, processedText);
                     }
                 };
@@ -141,8 +141,8 @@ screens.media.voice = function MediaVoice(me) {
         });
         me.replay();
     };
-    me.replay = function() {
-        if(me.currentIndex < 0) {
+    me.replay = function () {
+        if (me.currentIndex < 0) {
             me.currentIndex = me.totalParts;
             me.rewind();
             return;
@@ -151,43 +151,43 @@ screens.media.voice = function MediaVoice(me) {
         var utterances = me.utterances.filter(utterances => utterances.index >= me.currentIndex);
         me.synth.cancel();
         me.playTime = new Date().getTime();
-        utterances.map( utterance => me.synth.speak(utterance) );
+        utterances.map(utterance => me.synth.speak(utterance));
     };
-    me.rewind = function() {
+    me.rewind = function () {
         var stop = false;
-        if(new Date().getTime() > me.playTime + 3000) {
+        if (new Date().getTime() > me.playTime + 3000) {
             me.replay();
             return;
         }
         do {
             me.currentIndex--;
-            if(me.currentIndex < 0) {
+            if (me.currentIndex < 0) {
                 me.synth.cancel();
                 me.currentIndex = 0;
-                if(me.params) {
+                if (me.params) {
                     me.params.onprevious();
                 }
                 return;
             }
             stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
             me.replay();
-        } while(!stop);
+        } while (!stop);
     };
-    me.fastforward = function() {
+    me.fastforward = function () {
         var stop = false;
         do {
             me.currentIndex++;
-            if(me.currentIndex >= me.totalParts) {
+            if (me.currentIndex >= me.totalParts) {
                 me.currentIndex = me.totalParts - 1;
                 me.synth.cancel();
-                if(me.params) {
+                if (me.params) {
                     me.params.onnext();
                 }
                 return;
             }
             stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
             me.replay();
-        } while(!stop);
+        } while (!stop);
     };
     me.stop = function () {
         me.synth.cancel();
@@ -195,9 +195,9 @@ screens.media.voice = function MediaVoice(me) {
     };
     me.voices = function (language) {
         var voices = me.synth.getVoices();
-        if(language) {
+        if (language) {
             language = language.toLowerCase();
-            if(!voices) {
+            if (!voices) {
                 voices = [];
             }
             language = language.slice(0, 2).toLowerCase();
@@ -211,7 +211,7 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/[,] too/g, " too");
         var items = text.match(/-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?/g);
         text = text.replace(/[,]/g, "\n");
-        if(items) {
+        if (items) {
             items.map(item => {
                 text = text.replace(item.replace(",", "\n"), item);
             });
@@ -236,8 +236,8 @@ screens.media.voice = function MediaVoice(me) {
             var index = 0;
             do {
                 original = item;
-                if(item.length > 50 && item.length - item.lastIndexOf("\n") > 50) {
-                    switch(index) {
+                if (item.length > 50 && item.length - item.lastIndexOf("\n") > 50) {
+                    switch (index) {
                         case 0:
                             item = item.replace(" that is that ", " that\nis that ");
                             break;
@@ -257,11 +257,11 @@ screens.media.voice = function MediaVoice(me) {
                     }
                     index++;
                 }
-            } while(original !== item);
+            } while (original !== item);
             return item;
         }).join("\n");
         text = text.split("\n").map(item => {
-            if(item.split(" ").length >= 20) {
+            if (item.split(" ").length >= 20) {
                 me.log("long text: " + item);
             }
             return item;
