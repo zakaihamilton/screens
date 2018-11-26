@@ -4,6 +4,7 @@
  */
 
 screens.media.file = function MediaFile(me) {
+    me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.init = function () {
         me.metadata = require("music-metadata");
@@ -19,6 +20,20 @@ screens.media.file = function MediaFile(me) {
             metadata = { path: path, error: err };
         }
         return metadata;
+    };
+    me.reset = async function () {
+        me._groups = [];
+        me._listing = {};
+    };
+    me.groups = async function (update = false) {
+        var list = [];
+        if (update || !me._groups) {
+            list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
+        }
+        else {
+            list = me._groups;
+        }
+        return list;
     };
     me.listing = async function (path, update = false) {
         var files = null;
