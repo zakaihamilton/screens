@@ -141,9 +141,6 @@ screens.media.speech = function MediaSpeech(me) {
                         "start": start,
                         "duration": dur
                     }, (err, result) => {
-                        var posFormatted = me.core.string.formatDuration(start);
-                        var totalFormatted = me.core.string.formatDuration(totalDuration);
-                        me.log("transcribing: " + transcriptPath + " [" + posFormatted + "/" + totalFormatted + "]");
                         result.error = err;
                         onfinish(null, result);
                     });

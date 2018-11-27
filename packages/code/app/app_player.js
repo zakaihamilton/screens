@@ -8,12 +8,7 @@ screens.app.player = function AppPlayer(me) {
     me.cachePath = "cache";
     me.useFormat = "Audio";
     me.init = async function () {
-        me.groupListData = me.core.message.send_server(
-            "core.cache.use",
-            me.id,
-            "storage.file.getChildren",
-            me.rootPath,
-            false);
+        me.groupListData = me.media.file.groups();
         me.playerCounter = 0;
     };
     me.launch = async function (args) {
@@ -76,7 +71,7 @@ screens.app.player = function AppPlayer(me) {
     me.refresh = {
         set: async function (object) {
             var window = me.singleton;
-            await me.core.message.send_server("core.cache.reset", me.id);
+            await me.media.file.reset();
             me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
         }
     };
