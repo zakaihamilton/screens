@@ -11,7 +11,7 @@ screens.db.library = function DbLibrary(me) {
         var segments = query.split(" AND ");
         if (segments && segments.length > 1) {
             me.log("AND: " + JSON.stringify(segments));
-            for (var segment of segments) {
+            for (let segment of segments) {
                 tagList = await me.find(segment, tagList);
             }
             me.log("returning " + tagList.length + " unique results");
@@ -21,7 +21,7 @@ screens.db.library = function DbLibrary(me) {
         if (segments && segments.length > 1) {
             me.log("OR: " + JSON.stringify(segments));
             var results = [];
-            for (var segment of segments) {
+            for (let segment of segments) {
                 results.push(... await me.find(segment, tagList));
             }
             var prevLength = results.length;
@@ -32,7 +32,7 @@ screens.db.library = function DbLibrary(me) {
         var tags = me.db.library.query.tags(query);
         var filter = me.db.library.query.filter(query);
         var params = {};
-        var result = {};
+        var result = [];
         var doQuery = false;
         if (filter) {
             if (filter !== "*") {
