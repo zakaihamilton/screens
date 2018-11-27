@@ -108,8 +108,14 @@ screens.db.library.query = function DbLibraryQuery(me) {
             if (token.includes(":")) {
                 token = token.replace(/"/gi, "");
                 var [key, value] = token.split(":");
-                var regex = new RegExp(["^", me.core.string.escape(value.trim()), "$"].join(""), "i");
-                tags[key.trim().toLowerCase()] = regex;
+                key = key.trim().toLowerCase();
+                if (value) {
+                    var regex = new RegExp(["^", me.core.string.escape(value.trim()), "$"].join(""), "i");
+                    tags[key] = regex;
+                }
+                else {
+                    tags[key] = { "$exists": false };
+                }
             }
         }
         return tags;

@@ -20,33 +20,29 @@ screens.storage.db = function StorageDB(me) {
         var info = keys[name];
         if (!info) {
             unlock();
-            err = name + " mongodb key not defined in private";
+            var err = name + " mongodb key not defined in private";
             me.log_error(err);
             throw err;
         }
         var url = info.url;
-        return new Promise((resolve, reject) => {
-            me.mongodb.MongoClient.connect(url, function (err, client) {
-                unlock();
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    var db = client.db(info.db);
-                    me.log("connected to db: " + db.databaseName);
-                    me.databases[name] = db;
-                    resolve(db);
-                }
-            });
-        });
+        try {
+            var client = await me.mongodb.MongoClient.connect(url);
+        }
+        finally {
+            unlock();
+        }
+        var db = client.db(info.db);
+        me.log("connected to db: " + db.databaseName);
+        me.databases[name] = db;
+        return db;
     };
     me.collection = async function (location) {
         var db = await me.database(location.db);
-        if(!db) {
+        if (!db) {
             throw "Cannot find database for location: " + location.toString();
         }
         var collection = db.collection(location.collection);
-        if(!collection) {
+        if (!collection) {
             throw "Cannot find collection for location: " + location.toString();
         }
         return collection;
@@ -55,10 +51,9 @@ screens.storage.db = function StorageDB(me) {
         id = id.toString();
         var object = me.mongodb.ObjectID(id);
         return object;
-    }
+    };
     me.findByIds = async function (location, ids) {
         var collection = await me.collection(location);
-        var results = [];
         ids = ids.map(id => id.toString());
         var results = await collection.find({ "_id": { "$in": ids } }).toArray();
         return results;
@@ -69,7 +64,6 @@ screens.storage.db = function StorageDB(me) {
         return result;
     };
     me.set = async function (location, data) {
-        var count = 0;
         var collection = await me.collection(location);
         var isArray = true;
         if (!Array.isArray(data)) {
@@ -88,20 +82,20 @@ screens.storage.db = function StorageDB(me) {
             }
         });
         if (!isArray) {
-            data = data[0]
+            data = data[0];
         }
         return data;
     };
-    me.remove = async function (location, query, removeOne=true) {
+    me.remove = async function (location, query, removeOne = true) {
         var collection = await me.collection(location);
         var result = await collection.remove(query, removeOne);
         return result.nRemoved;
     };
-    me.list = async function (location, query={}, projection, params) {
+    me.list = async function (location, query = {}, projection, params) {
         var collection = await me.collection(location);
         var cursor = await collection.find(query, projection);
-        if(params) {
-            for(var param in params) {
+        if (params) {
+            for (var param in params) {
                 cursor = cursor[param](params[param]);
             }
         }
@@ -122,16 +116,16 @@ screens.storage.db = function StorageDB(me) {
         var collection = await me.collection(location);
         collection.createIndex(index);
     };
-    me.extension = function(component) {
+    me.extension = function (component) {
         var getLocation = function (name) {
             var location = {};
-            tokens = name.split(".");
+            var tokens = name.split(".");
             location.collection = tokens.pop();
             location.db = tokens.pop();
             return location;
         };
         var mapping = {
-            remove : "remove",
+            remove: "remove",
             get: "findOne",
             set: "set",
             use: "use",
@@ -139,7 +133,7 @@ screens.storage.db = function StorageDB(me) {
             list: "list"
         };
         var location = getLocation(component.id);
-        for(var source in mapping) {
+        for (var source in mapping) {
             var target = mapping[source];
             component[source] = me[target].bind(null, location);
         }
