@@ -95,6 +95,10 @@ screens.media.file = function MediaFile(me) {
                     me.log_error("Failed to transcribe: " + target);
                 }
             }
+            var info = await me.manager.download.clean("/tmp");
+            if(info.failed || info.deleted) {
+                me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed);
+            }
         }
     };
     return "server";
