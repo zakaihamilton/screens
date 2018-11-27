@@ -17,7 +17,6 @@ screens.media.speech = function MediaSpeech(me) {
         if(!path) {
             return null;
         }
-        var unlock = await me.core.mutex.lock();
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
 
         var request = require("request");
@@ -166,7 +165,6 @@ screens.media.speech = function MediaSpeech(me) {
                 if (err) {
                     var error = "Cannot transcribe path: " + path + " context: ffprobe error: " + err;
                     me.log_error(error);
-                    unlock();
                     reject(error);
                     return;
                 }
@@ -204,7 +202,6 @@ screens.media.speech = function MediaSpeech(me) {
                     if (err) {
                         var error = "Cannot transcribe path: " + path + "context: processAudioSegment error: " + err;
                         me.log_error(error);
-                        unlock();
                         reject(error);
                         return;
                     }
@@ -219,7 +216,6 @@ screens.media.speech = function MediaSpeech(me) {
                     }).join("\n");
                     me.core.file.writeFile(transcriptPath, result);
                     me.log("Transcript written to " + transcriptPath);
-                    unlock();
                     resolve(transcriptPath);
                 });
             });
