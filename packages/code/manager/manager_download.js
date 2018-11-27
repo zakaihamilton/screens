@@ -27,8 +27,8 @@ screens.manager.download = function ManagerDownload(me) {
             return to;
         }
     };
-    me.clean = async function (path) {
-        var deleted = 0, failed = 0;
+    me.clean = async function (path, extensions) {
+        var deleted = 0, failed = 0, skipped = 0;
         var items = null;
         me.log("deleting files in: " + path);
         try {
@@ -39,6 +39,13 @@ screens.manager.download = function ManagerDownload(me) {
         }
         if (items) {
             for (let item of items) {
+                if(extensions) {
+                    var extension = me.core.path.extension(item);
+                    if(!extension || !extensions.includes(extension)) {
+                        skipped++;
+                        continue;
+                    }
+                }
                 try {
                     await me.core.file.delete(path + "/" + item);
                     me.log("deleted file: " + item);
@@ -51,7 +58,7 @@ screens.manager.download = function ManagerDownload(me) {
             }
         }
         me.queue = [];
-        return {deleted, failed};
+        return {deleted, failed, skipped};
     };
     return "server";
 };

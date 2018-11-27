@@ -9,6 +9,7 @@ screens.media.file = function MediaFile(me) {
     me.init = function () {
         me.metadata = require("music-metadata");
         me.core.task.push("media.file.updateListing", 600000);
+        me.media.file.updateListing();
     };
     me._listing = {};
     me.info = async function (path) {
@@ -66,6 +67,7 @@ screens.media.file = function MediaFile(me) {
         return files;
     };
     me.updateListing = async function () {
+        me.log("updateListing");
         var listing = await me.listing("/Kab/concepts/private/American", true);
         listing = listing.filter(item => {
             return me.core.path.extension(item.path) !== "mp4";
@@ -89,17 +91,16 @@ screens.media.file = function MediaFile(me) {
                     if (!me.media.speech.transcribed(target)) {
                         me.log("transcribing: " + target);
                         await me.media.speech.transcribe(target);
+                        var info = await me.manager.download.clean("/tmp", "flac");
+                        me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                     }
                 }
                 catch (err) {
                     me.log_error("Failed to transcribe: " + target);
                 }
             }
-            var info = await me.manager.download.clean("/tmp");
-            if(info.failed || info.deleted) {
-                me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed);
-            }
         }
+        me.log("finished updateListing");
     };
     return "server";
 };
