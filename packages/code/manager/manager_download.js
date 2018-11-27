@@ -7,7 +7,6 @@ screens.manager.download = function ManagerDownload(me) {
     me.get = async function (from, to) {
         var exists = me.core.file.exists(to);
         if (exists) {
-            me.log(to + " already downloaded");
             return to;
         }
         else {
