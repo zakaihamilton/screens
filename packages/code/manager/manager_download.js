@@ -48,7 +48,6 @@ screens.manager.download = function ManagerDownload(me) {
                 }
                 try {
                     await me.core.file.delete(path + "/" + item);
-                    me.log("deleted file: " + item);
                     deleted++;
                 }
                 catch (err) {
