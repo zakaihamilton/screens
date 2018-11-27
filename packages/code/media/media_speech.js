@@ -25,6 +25,10 @@ screens.media.speech = function MediaSpeech(me) {
         var temp = require("temp").track();
         var async = require("async");
 
+        temp.cleanup((err, stats) => {
+            me.log("temp cleanup: " + JSON.stringify(stats) + " err: " + err);
+        });
+
         var API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
         var MAX_CONCURRENT = 20;
