@@ -52,12 +52,14 @@ screens.media.file = function MediaFile(me) {
     };
     me.updateListing = async function () {
         var listing = await me.listing("/Kab/concepts/private/American", true);
+        listing = listing.filter(item => {
+            return me.core.path.extension(item.path) !== "mp4";
+        });
+        var diskSize = listing.reduce((total, item) => total + item.size, 0);
+        me.log("Requires " + me.core.string.formatBytes(diskSize) + " Disk space for listing");
         for (var item of listing) {
             var target = "cache/" + me.core.path.fullName(item.path);
             var extension = me.core.path.extension(target);
-            if (extension === "mp4") {
-                continue;
-            }
             if (!item.downloaded) {
                 try {
                     await me.manager.download.get(item.path, target);
