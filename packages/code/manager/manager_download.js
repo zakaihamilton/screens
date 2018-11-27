@@ -28,6 +28,7 @@ screens.manager.download = function ManagerDownload(me) {
         }
     };
     me.clean = async function (path) {
+        var deleted = 0, failed = 0;
         var items = null;
         me.log("deleting files in: " + path);
         try {
@@ -41,13 +42,16 @@ screens.manager.download = function ManagerDownload(me) {
                 try {
                     await me.core.file.delete(path + "/" + item);
                     me.log("deleted file: " + item);
+                    deleted++;
                 }
                 catch (err) {
                     me.log("cannot delete file: " + item);
+                    failed++;
                 }
             }
         }
         me.queue = [];
+        return {deleted, failed};
     };
     return "server";
 };

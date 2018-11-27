@@ -6,8 +6,8 @@
 screens.cmd.clean = function CmdClean(me) {
     me.cmd = async function (terminal, args) {
         me.core.message.send_server("core.cache.resetAll");
-        me.manager.download.clean("cache");
-        me.core.property.set(terminal, "print", "cleaned cache");
+        var info = await me.manager.download.clean("/tmp");
+        me.core.property.set(terminal, "print", "cleaned cache, deleted: " + info.deleted + " failed: " + info.failed);
         me.core.cmd.exit(terminal);
     };
 };
