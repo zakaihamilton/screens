@@ -30,12 +30,12 @@ screens.manager.download = function ManagerDownload(me) {
     me.clean = async function (path, extensions) {
         var deleted = 0, failed = 0, skipped = 0;
         var items = null;
-        me.log("deleting files in: " + path);
         try {
             items = await me.core.file.readDir(path);
         }
         catch (err) {
             me.log("Cannot read dir, err: " + err.message || err);
+            throw err;
         }
         if (items) {
             for (let item of items) {
