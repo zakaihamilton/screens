@@ -400,6 +400,7 @@ h4.widget-transform-widget {
     10px 0 80px #0ff;         /* outer right cyan */
 }
 
-.widget-transform-left-justify {
+.widget-transform-level-item {
     justify-content: flex-start;
+    flex-grow:0 !important;
 }
