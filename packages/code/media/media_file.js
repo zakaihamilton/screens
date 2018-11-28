@@ -30,7 +30,7 @@ screens.media.file = function MediaFile(me) {
     };
     me.groups = async function (update = false) {
         var list = [];
-        if (update || !me._groups) {
+        if (update || !me._groups || !me._groups.length) {
             list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
         }
         else {
