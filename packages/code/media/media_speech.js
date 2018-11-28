@@ -9,12 +9,12 @@ screens.media.speech = function MediaSpeech(me) {
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
     };
-    me.transcribed = function(path) {
+    me.transcribed = function (path) {
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
         return me.core.file.exists(transcriptPath);
     };
     me.transcribe = async function (path) {
-        if(!path) {
+        if (!path) {
             return null;
         }
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
@@ -69,6 +69,7 @@ screens.media.speech = function MediaSpeech(me) {
                     start: params.start,
                     error: new Error("No file is specified. Please specify a file path through params.file")
                 });
+                return;
             }
             var file_name = params.file;
             var source = fs.createReadStream(file_name);
@@ -97,6 +98,7 @@ screens.media.speech = function MediaSpeech(me) {
             request.get(downstreamOpts, function (error, res, body) {
                 if (error) {
                     onfinish(null, { text: "", start: params.start, error: error });
+                    return;
                 }
                 try {
                     var results = body.split("\n");
@@ -113,15 +115,14 @@ screens.media.speech = function MediaSpeech(me) {
                     if (params.retries < maxRetries) {
                         params.retries++;
                         getTranscriptFromServer(params, onfinish);
+                        return;
                     }
-                    else {
-                        onfinish(null, {
-                            text: "",
-                            start: params.start,
-                            error: new Error("Could not get valid response from Google servers "
-                                + "for segment starting at second " + params.start)
-                        });
-                    }
+                    onfinish(null, {
+                        text: "",
+                        start: params.start,
+                        error: new Error("Could not get valid response from Google servers "
+                            + "for segment starting at second " + params.start)
+                    });
                 }
             });
         }
