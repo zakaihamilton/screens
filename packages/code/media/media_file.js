@@ -8,7 +8,10 @@ screens.media.file = function MediaFile(me) {
     me.cachePath = "cache";
     me.init = function () {
         me.metadata = require("music-metadata");
+        me.os = require('os');
+        me.tempDir = me.os.tmpdir();
         me.core.task.push("media.file.updateListing", 1800000);
+        me.updateListing();
     };
     me._listing = {};
     me.info = async function (path) {
@@ -90,7 +93,7 @@ screens.media.file = function MediaFile(me) {
                     if (!me.media.speech.transcribed(target)) {
                         me.log("transcribing: " + target);
                         await me.media.speech.transcribe(target);
-                        var info = await me.manager.download.clean("/tmp", "flac");
+                        var info = await me.manager.download.clean(me.tempDir, "flac");
                         me.log("cleaned cache, deleted: " + info.deleted + " failed: " + info.failed + " skipped: " + info.skipped);
                     }
                 }
