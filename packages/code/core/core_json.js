@@ -54,32 +54,48 @@ screens.core.json = function CoreJson(me) {
         if (!source || !target) {
             return false;
         }
-        var sourceKeys = Object.getOwnPropertyNames(source);
-        var targetKeys = Object.getOwnPropertyNames(target);
-        if (sourceKeys.length !== targetKeys.length) {
+        if (typeof source !== typeof target) {
             return false;
         }
-        for (var i = 0; i < sourceKeys.length; i++) {
-            var propName = sourceKeys[i];
-            if (source[propName] !== target[propName]) {
+        else if (Array.isArray(source)) {
+            var equal = true;
+            target.map((item, index) => {
+                var sourceItem = source[index];
+                if (!me.compare(sourceItem, item)) {
+                    equal = false;
+                }
+            });
+            return equal;
+        }
+        else if (typeof source === "object") {
+            var sourceKeys = Object.getOwnPropertyNames(source);
+            var targetKeys = Object.getOwnPropertyNames(target);
+            if (sourceKeys.length !== targetKeys.length) {
                 return false;
             }
+            for (var i = 0; i < sourceKeys.length; i++) {
+                var propName = sourceKeys[i];
+                if (source[propName] !== target[propName]) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        else {
+            return false;
+        }
     };
     me.traverse = function (root, path, value) {
         var item = root, parent = root, found = false;
         if (root) {
-            var tokens = path.split(".");
-            for (var tokensIndex = 0; tokensIndex < tokens.length; tokensIndex++) {
-                parent = item;
-                var token = tokens[tokensIndex];
-                item = item[token];
-                if (!item) {
-                    break;
+            item = path.split(".").reduce((node, name) => {
+                parent = node;
+                if (!node) {
+                    return;
                 }
-            }
-            if (item && tokens.length) {
+                return node[name];
+            }, root);
+            if (typeof item !== "undefined") {
                 value = item;
                 found = true;
             }
@@ -114,10 +130,10 @@ screens.core.json = function CoreJson(me) {
             return arr.map(mapObj => mapObj[property]).indexOf(obj[property]) === pos;
         });
     };
-    me.intersection = function(arrays, property) {
+    me.intersection = function (arrays, property) {
         var results = [];
         results.push(...arrays[0]);
-        for(var array of arrays) {
+        for (var array of arrays) {
             var keys = array.map(mapObj => mapObj[property]);
             results = results.filter(mapObj => -1 !== keys.indexOf(mapObj[property]));
         }
