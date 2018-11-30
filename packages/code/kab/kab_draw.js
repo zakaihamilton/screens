@@ -4,6 +4,9 @@
  */
 
 screens.kab.draw = function KabDraw(me) {
+    me.init = async function() {
+        await me.import("/node_modules/animate.css/animate.css");
+    };
     me.phase = {
         0: {
             name: "root",
@@ -36,7 +39,7 @@ screens.kab.draw = function KabDraw(me) {
             var term = me.phase[phase].term;
             css.push("kab-draw-phase-" + phaseName);
             if (!form.hardness) {
-                css.push("kab-draw-circle");
+                css.push("kab-draw-circle animated fadeIn delay-" + phase + "s");
             }
             var app = me.core.property.get(object, "app");
             var text = await me.core.property.get(object, app.id + ".term", term);
