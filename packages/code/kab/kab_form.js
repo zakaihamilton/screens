@@ -4,12 +4,21 @@
  */
 
 screens.kab.form = function KabForm(me) {
+    me.index = function (form) {
+        for (var index = -1; form; index++) {
+            form = form.cause;
+        }
+        return index;
+    };
     me.get = function (form, key) {
+        if (!form) {
+            return;
+        }
         if (key in form) {
             return form[key];
         }
-        else if (form.parent) {
-            return me.get(form.parent, key);
+        else if (form.cause) {
+            return me.get(form.cause, key);
         }
     };
     me.has = function (form, values) {
@@ -47,6 +56,7 @@ screens.kab.form = function KabForm(me) {
         if (!me._root) {
             me._root = {};
             me.kab.rule.run(me._root, "expand");
+            me.kab.rule.run(me._root, "restrict");
         }
         return me._root;
     };

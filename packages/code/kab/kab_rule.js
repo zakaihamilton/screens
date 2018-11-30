@@ -8,7 +8,7 @@ screens.kab.rule = function KabRule(me) {
         var rule = me[ruleName];
         if (rule) {
             me.log("running: " + rule.name + " - " + rule.description);
-            rule.run(form);
+            return rule.run(form);
         }
     };
 };
@@ -28,7 +28,10 @@ screens.kab.rule.restrict = function KabRuleRestrict(me) {
     me.name = "Restriction";
     me.description = "Restricts the light in the vessel";
     me.run = function (form) {
-
+        for (var phase = 0; phase <= 4; phase++) {
+            form = me.kab.form.set(form, { phase, restriction:true });
+        }
+        return form;
     };
 };
 

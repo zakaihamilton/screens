@@ -32,18 +32,27 @@ screens.kab.draw = function KabDraw(me) {
     me.formToHtml = async function (object, form) {
         var html = "";
         var css = [];
+        var styles = [];
         var hasPhase = typeof form.phase !== "undefined";
         if (hasPhase) {
+            var index = me.kab.form.index(form);
             var phase = me.kab.form.get(form, "phase");
+            var restriction = me.kab.form.get(form, "restriction");
+            var hardness = me.kab.form.get(form, "hardness");
             var phaseName = me.phase[phase].name;
             var term = me.phase[phase].term;
             css.push("kab-draw-phase-" + phaseName);
-            if (!form.hardness) {
-                css.push("kab-draw-circle animated fadeIn delay-" + phase + "s");
+            if(restriction) {
+                css.push("restriction");
+                index = 5 - index;
+            }
+            if (!hardness) {
+                css.push("kab-draw-circle animated fadeIn");
             }
             var app = me.core.property.get(object, "app");
             var text = await me.core.property.get(object, app.id + ".term", term);
-            html += "<div class=\"" + css.join(" ") + "\">";
+            styles.push("animation-delay: " + (index+1) + "s");
+            html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
             html += "<div class=\"kab-draw-title\">" + text + "</div>";
         }
         if (form.effects) {
@@ -56,4 +65,5 @@ screens.kab.draw = function KabDraw(me) {
         }
         return html;
     };
+    return "browser";
 };
