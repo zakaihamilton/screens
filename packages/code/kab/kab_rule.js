@@ -28,7 +28,7 @@ screens.kab.rule.restrict = function KabRuleRestrict(me) {
     me.name = "Restriction";
     me.description = "Restricts the light in the vessel";
     me.run = function (form) {
-        for (var phase = 0; phase <= 4; phase++) {
+        for (var phase = 4; phase >= 0; phase--) {
             form = me.kab.form.set(form, { phase, restriction:true });
         }
         return form;

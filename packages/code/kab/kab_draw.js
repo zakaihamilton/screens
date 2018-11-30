@@ -4,7 +4,7 @@
  */
 
 screens.kab.draw = function KabDraw(me) {
-    me.init = async function() {
+    me.init = async function () {
         await me.import("/node_modules/animate.css/animate.css");
     };
     me.phase = {
@@ -13,20 +13,20 @@ screens.kab.draw = function KabDraw(me) {
             term: "Behinat Shoresh"
         },
         1: {
-            name:"one",
-            term:"Behina Aleph"
+            name: "one",
+            term: "Behina Aleph"
         },
         2: {
-            name:"two",
-            term:"Behina Bet"
+            name: "two",
+            term: "Behina Bet"
         },
         3: {
-            name:"three",
-            term:"Behina Gimel"
+            name: "three",
+            term: "Behina Gimel"
         },
         4: {
-            name:"four",
-            term:"Behina Dalet"
+            name: "four",
+            term: "Behina Dalet"
         }
     };
     me.formToHtml = async function (object, form) {
@@ -42,7 +42,7 @@ screens.kab.draw = function KabDraw(me) {
             var phaseName = me.phase[phase].name;
             var term = me.phase[phase].term;
             css.push("kab-draw-phase-" + phaseName);
-            if(restriction) {
+            if (restriction) {
                 css.push("restriction");
                 index = 5 - index;
             }
@@ -51,7 +51,7 @@ screens.kab.draw = function KabDraw(me) {
             }
             var app = me.core.property.get(object, "app");
             var text = await me.core.property.get(object, app.id + ".term", term);
-            styles.push("animation-delay: " + (index+1) + "s");
+            styles.push("animation-delay: " + (index + 1) + "s");
             html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
             html += "<div class=\"kab-draw-title\">" + text + "</div>";
         }

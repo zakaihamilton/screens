@@ -55,8 +55,8 @@ screens.kab.form = function KabForm(me) {
     me.root = function () {
         if (!me._root) {
             me._root = {};
-            me.kab.rule.run(me._root, "expand");
-            me.kab.rule.run(me._root, "restrict");
+            var form = me.kab.rule.run(me._root, "expand");
+            me.kab.rule.run(form, "restrict");
         }
         return me._root;
     };
