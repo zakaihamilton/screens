@@ -1,0 +1,56 @@
+.kab-draw-circle {
+    border-radius: 50%;
+    height: 0;
+    padding-bottom: 100%;
+    width: 100%;
+}
+
+.kab-draw-phase-root {
+    background-color:white;
+    color:black;
+}
+
+.kab-draw-phase-root.night-mode {
+    background-color:var(--background);
+    color:var(--highlight-color);
+}
+
+.kab-draw-phase-one {
+    background-color:#FFF3CA;
+}
+
+.kab-draw-phase-one.night-mode {
+    background-color:var(--phase-one-background);
+    border:1px solid var(--phase-one-border);
+    color:var(--highlight-color);
+}
+
+.kab-draw-phase-two {
+    background-color:#C8D9F9;
+}
+
+.kab-draw-phase-two.night-mode {
+    background-color:var(--phase-two-background);
+    border:1px solid var(--phase-two-border);
+    color:var(--highlight-color);
+}
+
+.kab-draw-phase-three {
+    background-color:#F5CCCB;
+}
+
+.kab-draw-phase-three.night-mode {
+    background-color:var(--phase-three-background);
+    border:1px solid var(--phase-three-border);
+    color:var(--highlight-color);
+}
+
+.kab-draw-phase-four {
+    background-color:#D9EAD2;
+}
+
+.kab-draw-phase-four.night-mode {
+    background-color:var(--phase-four-background);
+    border:1px solid var(--phase-four-border);
+    color:var(--highlight-color);
+}

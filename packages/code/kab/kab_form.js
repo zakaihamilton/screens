@@ -58,4 +58,11 @@ screens.kab.form = function KabForm(me) {
         }
         return form;
     };
+    me.root = function () {
+        if (!me._root) {
+            me._root = {};
+            me.kab.rule.run(me._root, "expand");
+        }
+        return me._root;
+    };
 };

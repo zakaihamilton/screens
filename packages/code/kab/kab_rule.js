@@ -4,9 +4,9 @@
  */
 
 screens.kab.rule = function KabRule(me) {
-    me.run = function(form, ruleName) {
+    me.run = function (form, ruleName) {
         var rule = me[ruleName];
-        if(rule) {
+        if (rule) {
             me.log("running: " + rule.name + " - " + rule.description);
             rule.run(form);
         }
@@ -16,31 +16,34 @@ screens.kab.rule = function KabRule(me) {
 screens.kab.rule.expand = function KabRuleExpand(me) {
     me.name = "Expansion";
     me.description = "Expands the emanation into ten emanations";
-    me.run = function(form) {
-
+    me.run = function (form) {
+        for (var coarseness = 0; coarseness <= 4; coarseness++) {
+            form = me.kab.form.set(form, { coarseness });
+        }
+        return form;
     };
 };
 
 screens.kab.rule.restrict = function KabRuleRestrict(me) {
     me.name = "Restriction";
     me.description = "Restricts the light in the vessel";
-    me.run = function(form) {
-        
+    me.run = function (form) {
+
     };
 };
 
 screens.kab.rule.look = function KabRuleRestrict(me) {
     me.name = "Look";
     me.description = "Attract direct light";
-    me.run = function(form) {
-        
+    me.run = function (form) {
+
     };
 };
 
 screens.kab.rule.reflect = function KabRuleReflect(me) {
     me.name = "Reflect";
     me.description = "Raise reflected light";
-    me.run = function(form) {
+    me.run = function (form) {
 
     };
 };
