@@ -56,36 +56,34 @@ screens.app.prism = function AppPrism(me) {
             });
             me.ui.class.useStylesheet("kab");
             window.options.clickCallback = "screens.app.prism.openPopup";
+            me.core.property.set(window, "app", me);
         }
     };
     me.reload = {
         set: async function (object) {
             var window = me.widget.window.get(object);
             var root = me.kab.form.root();
-            var html = me.kab.draw.formToHtml(root);
+            var html = await me.kab.draw.formToHtml(window, root);
             me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
             me.core.property.notify(window, "update");
         }
     };
-    me.term = {
-        set: async function (object, text) {
-            var window = me.widget.window.get(object);
-            var array = text;
-            if (!Array.isArray(text)) {
-                array = [text];
-            }
-            var result = await me.core.util.map(array, async (text) => {
-                var info = await me.kab.text.parse(window.language, text, window.options);
-                if (!window.terms) {
-                    window.terms = {};
-                }
-                window.terms = Object.assign(window.terms, info.terms);
-                return info.text;
-            });
-            me.core.property.set(object, "ui.basic.html", result.join("<br>"));
-            me.core.property.notify(window, "update");
+    me.term = async function (object, text) {
+        var window = me.widget.window.get(object);
+        var array = text;
+        if (!Array.isArray(text)) {
+            array = [text];
         }
+        var result = await me.core.util.map(array, async (text) => {
+            var info = await me.kab.text.parse(window.language, text, window.options);
+            if (!window.terms) {
+                window.terms = {};
+            }
+            window.terms = Object.assign(window.terms, info.terms);
+            return info.text;
+        });
+        return result.join("<br>");
     };
     me.openPopup = function (object, termName) {
         var window = me.widget.window.get(object);

@@ -1,31 +1,27 @@
 .kab-draw-circle {
     position: absolute;
     border-radius: 50%;
-    top: 50px; left:50px; right:50px; bottom:50px;
-    padding-top:5px;
+    left:60px;
+    top: 60px;
+    right:60px;
+    bottom:60px;
+    padding-top:15px;
 }
 
 .kab-draw-title {
     text-align: center;
     color:black;
+    line-height: 2em;
 }
 
 .kab-draw-phase-root {
-    background-color:white;
-    color:black;
-}
-
-.kab-draw-phase-root.night-mode {
-    background-color:white;
+    background-color:var(--phase-root-background);
     border:1px solid var(--phase-root-border);
     color:var(--highlight-color);
+    background: radial-gradient(circle at 100px 100px, var(--phase-root-background), var(--phase-root-border));
 }
 
 .kab-draw-phase-one {
-    background-color:#FFF3CA;
-}
-
-.kab-draw-phase-one.night-mode {
     background-color:var(--phase-one-background);
     border:1px solid var(--phase-one-border);
     color:var(--highlight-color);
@@ -33,10 +29,6 @@
 }
 
 .kab-draw-phase-two {
-    background-color:#C8D9F9;
-}
-
-.kab-draw-phase-two.night-mode {
     background-color:var(--phase-two-background);
     border:1px solid var(--phase-two-border);
     color:var(--highlight-color);
@@ -44,10 +36,6 @@
 }
 
 .kab-draw-phase-three {
-    background-color:#F5CCCB;
-}
-
-.kab-draw-phase-three.night-mode {
     background-color:var(--phase-three-background);
     border:1px solid var(--phase-three-border);
     color:var(--highlight-color);
@@ -55,10 +43,6 @@
 }
 
 .kab-draw-phase-four {
-    background-color:#D9EAD2;
-}
-
-.kab-draw-phase-four.night-mode {
     background-color:var(--phase-four-background);
     border:1px solid var(--phase-four-border);
     color:var(--highlight-color);

@@ -4,30 +4,48 @@
  */
 
 screens.kab.draw = function KabDraw(me) {
-    me.coarseness = {
-        0: "root",
-        1: "one",
-        2: "two",
-        3: "three",
-        4: "four"
+    me.phase = {
+        0: {
+            name: "root",
+            term: "Behinat Shoresh"
+        },
+        1: {
+            name:"one",
+            term:"Behina Aleph"
+        },
+        2: {
+            name:"two",
+            term:"Behina Bet"
+        },
+        3: {
+            name:"three",
+            term:"Behina Gimel"
+        },
+        4: {
+            name:"four",
+            term:"Behina Dalet"
+        }
     };
-    me.formToHtml = function (form) {
+    me.formToHtml = async function (object, form) {
         var html = "";
         var css = [];
         var hasPhase = typeof form.phase !== "undefined";
         if (hasPhase) {
             var phase = me.kab.form.get(form, "phase");
-            css.push("kab-draw-phase-" + me.coarseness[phase]);
+            var phaseName = me.phase[phase].name;
+            var term = me.phase[phase].term;
+            css.push("kab-draw-phase-" + phaseName);
             if (!form.hardness) {
                 css.push("kab-draw-circle");
             }
-            var title = me.core.string.title(me.coarseness[phase]);
+            var app = me.core.property.get(object, "app");
+            var text = await me.core.property.get(object, app.id + ".term", term);
             html += "<div class=\"" + css.join(" ") + "\">";
-            html += "<div class=\"kab-draw-title\">" + title + "</div>";
+            html += "<div class=\"kab-draw-title\">" + text + "</div>";
         }
         if (form.effects) {
             for (var effect of form.effects) {
-                html += me.formToHtml(effect);
+                html += await me.formToHtml(object, effect);
             }
         }
         if (hasPhase) {
