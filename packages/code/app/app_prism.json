@@ -138,7 +138,8 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
-            "ui.basic.var": "viewer"
+            "ui.basic.var": "viewer",
+            "ui.class.class":"app.prism.viewer"
         },
         {
             "ui.basic.var":"popup",

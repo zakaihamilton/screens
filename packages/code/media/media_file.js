@@ -8,10 +8,12 @@ screens.media.file = function MediaFile(me) {
     me.cachePath = "cache";
     me.init = function () {
         me.metadata = require("music-metadata");
-        me.os = require('os');
+        me.os = require("os");
         me.tempDir = me.os.tmpdir();
-        me.core.task.push("media.file.updateListing", 1800000);
-        me.updateListing();
+        if (me.core.http.port === process.env.PORT) {
+            me.core.task.push("media.file.updateListing", 1800000);
+            me.updateListing();
+        }
     };
     me._listing = {};
     me.info = async function (path) {

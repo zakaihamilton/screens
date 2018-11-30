@@ -18,7 +18,6 @@ screens.app.prism = function AppPrism(me) {
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
-                    viewType: "Layers",
                     doTranslation: true,
                     doExplanation: true,
                     prioritizeExplanation: true,
@@ -48,7 +47,6 @@ screens.app.prism = function AppPrism(me) {
                 "subHeadings": me.reload.set
             });
             me.ui.options.choiceSet(me, null, {
-                "viewType": me.reload.set,
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
                     me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
@@ -64,9 +62,10 @@ screens.app.prism = function AppPrism(me) {
         set: async function (object) {
             var window = me.widget.window.get(object);
             var root = me.kab.form.root();
-            me.core.property.set(window.var.viewer, "ui.basic.html", me.kab.draw.form(root));
+            var html = me.kab.draw.formToHtml(root);
+            me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-            me.core.property.notify(window, "app.prism.refresh");
+            me.core.property.notify(window, "update");
         }
     };
     me.term = {
@@ -122,20 +121,5 @@ screens.app.prism = function AppPrism(me) {
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
         me.core.property.set(window.var.popup, "ui.class.add", "is-active");
-    };
-    me.refresh = {
-        set: function (object) {
-            var window = me.widget.window.get(object);
-            me.core.property.set(window.var.viewer, {
-                "ui.basic.html": null,
-                "ui.class.class": "app.prism." + window.options.viewType.toLowerCase()
-            });
-            var diagramData = me.core.property.get(window, "app.prism.diagramData");
-            me.ui.element.create(diagramData.layers, window.var.viewer);
-            if (diagramData.title) {
-                me.core.property.set(window, "title", diagramData.title);
-            }
-            me.core.property.notify(window, "update");
-        }
     };
 };

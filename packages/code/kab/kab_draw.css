@@ -1,8 +1,13 @@
 .kab-draw-circle {
+    position: absolute;
     border-radius: 50%;
-    height: 0;
-    padding-bottom: 100%;
-    width: 100%;
+    top: 50px; left:50px; right:50px; bottom:50px;
+    padding-top:5px;
+}
+
+.kab-draw-title {
+    text-align: center;
+    color:black;
 }
 
 .kab-draw-phase-root {
@@ -11,7 +16,8 @@
 }
 
 .kab-draw-phase-root.night-mode {
-    background-color:var(--background);
+    background-color:white;
+    border:1px solid var(--phase-root-border);
     color:var(--highlight-color);
 }
 
@@ -23,6 +29,7 @@
     background-color:var(--phase-one-background);
     border:1px solid var(--phase-one-border);
     color:var(--highlight-color);
+    background: radial-gradient(circle at 100px 100px, var(--phase-one-background), var(--phase-one-border));
 }
 
 .kab-draw-phase-two {
@@ -33,6 +40,7 @@
     background-color:var(--phase-two-background);
     border:1px solid var(--phase-two-border);
     color:var(--highlight-color);
+    background: radial-gradient(circle at 100px 100px, var(--phase-two-background), var(--phase-two-border));
 }
 
 .kab-draw-phase-three {
@@ -43,6 +51,7 @@
     background-color:var(--phase-three-background);
     border:1px solid var(--phase-three-border);
     color:var(--highlight-color);
+    background: radial-gradient(circle at 100px 100px, var(--phase-three-background), var(--phase-three-border));
 }
 
 .kab-draw-phase-four {
@@ -53,4 +62,5 @@
     background-color:var(--phase-four-background);
     border:1px solid var(--phase-four-border);
     color:var(--highlight-color);
+    background: radial-gradient(circle at 100px 100px, var(--phase-four-background), var(--phase-four-border));
 }

@@ -17,8 +17,9 @@ screens.kab.form = function KabForm(me) {
         for (var key in values) {
             var value = values[key];
             var formValue = me.get(form, key);
-            if (!me.compare(formValue, value)) {
+            if (!me.core.json.compare(formValue, value)) {
                 equal = false;
+                break;
             }
         }
         return equal;

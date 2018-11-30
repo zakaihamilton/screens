@@ -17,8 +17,8 @@ screens.kab.rule.expand = function KabRuleExpand(me) {
     me.name = "Expansion";
     me.description = "Expands the emanation into ten emanations";
     me.run = function (form) {
-        for (var coarseness = 0; coarseness <= 4; coarseness++) {
-            form = me.kab.form.set(form, { coarseness });
+        for (var phase = 0; phase <= 4; phase++) {
+            form = me.kab.form.set(form, { phase });
         }
         return form;
     };

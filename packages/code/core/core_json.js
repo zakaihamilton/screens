@@ -45,6 +45,9 @@ screens.core.json = function CoreJson(me) {
         }
     };
     me.compare = function (source, target) {
+        if (typeof source !== typeof target) {
+            return false;
+        }
         if (source === target) {
             return true;
         }
@@ -52,9 +55,6 @@ screens.core.json = function CoreJson(me) {
             return true;
         }
         if (!source || !target) {
-            return false;
-        }
-        if (typeof source !== typeof target) {
             return false;
         }
         else if (Array.isArray(source)) {
