@@ -63,7 +63,8 @@ screens.app.prism = function AppPrism(me) {
         set: async function (object) {
             var window = me.widget.window.get(object);
             var root = me.kab.form.root();
-            var html = await me.kab.draw.formToHtml(window, root);
+            var list = me.kab.draw.list(root, []);
+            var html = await me.kab.draw.html(window, list);
             me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
             me.core.property.notify(window, "update");

@@ -29,40 +29,45 @@ screens.kab.draw = function KabDraw(me) {
             term: "Behina Dalet"
         }
     };
-    me.formToHtml = async function (object, form) {
-        var html = "";
-        var css = [];
-        var styles = [];
-        var hasPhase = typeof form.phase !== "undefined";
-        if (hasPhase) {
-            var index = me.kab.form.index(form);
-            var phase = me.kab.form.get(form, "phase");
-            var restriction = me.kab.form.get(form, "restriction");
-            var hardness = me.kab.form.get(form, "hardness");
-            var phaseName = me.phase[phase].name;
-            var term = me.phase[phase].term;
-            css.push("kab-draw-phase-" + phaseName);
-            if (restriction) {
-                css.push("restriction");
-                index = 5 - index;
-            }
-            if (!hardness) {
-                css.push("kab-draw-circle animated fadeIn");
-            }
-            var app = me.core.property.get(object, "app");
-            var text = await me.core.property.get(object, app.id + ".term", term);
-            styles.push("animation-delay: " + (index + 1) + "s");
-            html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
-            html += "<div class=\"kab-draw-title\">" + text + "</div>";
-        }
+    me.list = function (form, list) {
+        list.push(form);
         if (form.effects) {
             for (var effect of form.effects) {
-                html += await me.formToHtml(object, effect);
+                me.list(effect, list);
             }
         }
-        if (hasPhase) {
-            html += "</div>";
+        return list;
+    };
+    me.html = async function (object, list) {
+        var html = "<div>";
+        for (var form of list) {
+            var css = [];
+            var styles = [];
+            var phase = me.kab.form.get(form, "phase");
+            var hasPhase = typeof phase !== "undefined";
+            if (hasPhase) {
+                var index = me.kab.form.index(form);
+                var restriction = me.kab.form.get(form, "restriction");
+                var hardness = me.kab.form.get(form, "hardness");
+                var phaseName = me.phase[phase].name;
+                var term = me.phase[phase].term;
+                css.push("kab-draw-phase-" + phaseName);
+                if (restriction) {
+                    css.push("restriction");
+                }
+                if (!hardness) {
+                    css.push("kab-draw-circle animated fadeIn");
+                }
+                var app = me.core.property.get(object, "app");
+                var text = await me.core.property.get(object, app.id + ".term", term);
+                styles.push("animation-delay: " + (index + 1) + "s");
+                styles.push("z-index:" + phase);
+                html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
+                html += "<div class=\"kab-draw-title\">" + text + "</div>";
+                html += "</div>";
+            }
         }
+        html += "</div>";
         return html;
     };
     return "browser";
