@@ -7,6 +7,9 @@ screens.kab.draw = function KabDraw(me) {
     me.init = async function () {
         await me.import("/node_modules/animate.css/animate.css");
     };
+    me.options = {
+
+    };
     me.phase = {
         0: {
             name: "root",
@@ -39,6 +42,7 @@ screens.kab.draw = function KabDraw(me) {
         return list;
     };
     me.html = async function (object, list) {
+        var options = me.options;
         var html = "<div>";
         for (var form of list) {
             var css = [];
@@ -57,6 +61,8 @@ screens.kab.draw = function KabDraw(me) {
                 }
                 if (!hardness) {
                     css.push("kab-draw-circle animated fadeIn");
+                    var size = (phase + 1) * 2.5;
+                    styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
