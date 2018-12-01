@@ -52,16 +52,24 @@ screens.kab.draw = function KabDraw(me) {
             if (hasPhase) {
                 var index = me.kab.form.index(form);
                 var restriction = me.kab.form.get(form, "restriction");
-                var hardness = me.kab.form.get(form, "hardness");
+                var direct = me.kab.form.get(form, "direct");
                 var phaseName = me.phase[phase].name;
                 var term = me.phase[phase].term;
                 css.push("kab-draw-phase-" + phaseName);
-                if (restriction) {
-                    css.push("restriction");
+                css.push("animated fadeIn");
+                css.push("kab-draw-shape");
+                if (typeof direct !== "undefined") {
+                    css.push("kab-draw-line");
+                    styles.push(...["left", "right"].map(name => name + ":49%"));
+                    styles.push("top:" + (phase + 1) * 2.5 + "em");
+                    styles.push("height:2.5em");
                 }
-                if (!hardness) {
-                    css.push("kab-draw-circle animated fadeIn");
-                    var size = (phase + 1) * 2.5;
+                else {
+                    if (restriction) {
+                        css.push("restriction");
+                    }
+                    css.push("kab-draw-circle");
+                    let size = (phase + 1) * 2.5;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
                 var app = me.core.property.get(object, "app");
