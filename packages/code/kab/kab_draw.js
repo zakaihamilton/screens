@@ -8,7 +8,8 @@ screens.kab.draw = function KabDraw(me) {
         await me.import("/node_modules/animate.css/animate.css");
     };
     me.options = {
-
+        circleMultiplier: 2.5,
+        animation: true
     };
     me.phase = {
         0: {
@@ -41,8 +42,8 @@ screens.kab.draw = function KabDraw(me) {
         }
         return list;
     };
-    me.html = async function (object, list) {
-        var options = me.options;
+    me.html = async function (object, list, options) {
+        options = Object.assign({}, me.options, options);
         var html = "<div>";
         for (var form of list) {
             var css = [];
@@ -55,27 +56,36 @@ screens.kab.draw = function KabDraw(me) {
                 var direct = me.kab.form.get(form, "direct");
                 var phaseName = me.phase[phase].name;
                 var term = me.phase[phase].term;
-                css.push("kab-draw-phase-" + phaseName);
-                css.push("animated fadeIn");
+                if (options.animation) {
+                    css.push("animated fadeIn");
+                }
                 css.push("kab-draw-shape");
                 if (typeof direct !== "undefined") {
                     css.push("kab-draw-line");
                     styles.push(...["left", "right"].map(name => name + ":49%"));
-                    styles.push("top:" + (phase + 1) * 2.5 + "em");
+                    styles.push("top:" + (phase + 1) * options.circleMultiplier + "em");
                     styles.push("height:2.5em");
+                    styles.push("background: var(--phase-" +
+                        phaseName + "-background);");
                 }
                 else {
                     if (restriction) {
-                        css.push("restriction");
+                        styles.push("background: var(--background);");
+                    }
+                    else {
+                        styles.push("background: radial-gradient(circle at 100px 100px, var(--phase-" +
+                            phaseName + "-background), var(--phase-" +
+                            phaseName + "-border));");
                     }
                     css.push("kab-draw-circle");
-                    let size = (phase + 1) * 2.5;
+                    let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
                 styles.push("animation-delay: " + (index + 1) + "s");
                 styles.push("z-index:" + phase);
+                styles.push("border:3px solid var(--phase-" + phaseName + "-border)");
                 html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
                 html += "<div class=\"kab-draw-title\">" + text + "</div>";
                 html += "</div>";

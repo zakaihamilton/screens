@@ -29,7 +29,8 @@ screens.app.prism = function AppPrism(me) {
                     subHeadings: true,
                     language: "Auto",
                     fontSize: "18px",
-                    phaseNumbers: true
+                    phaseNumbers: true,
+                    animation: true
                 });
             }
             me.ui.options.toggleSet(me, null, {
@@ -44,7 +45,8 @@ screens.app.prism = function AppPrism(me) {
                 "columns": me.reload.set,
                 "category": me.reload.set,
                 "headings": me.reload.set,
-                "subHeadings": me.reload.set
+                "subHeadings": me.reload.set,
+                "animation": me.reload.set
             });
             me.ui.options.choiceSet(me, null, {
                 "language": me.reload.set,
@@ -64,7 +66,7 @@ screens.app.prism = function AppPrism(me) {
             var window = me.widget.window.get(object);
             var root = me.kab.form.root();
             var list = me.kab.draw.list(root, []);
-            var html = await me.kab.draw.html(window, list);
+            var html = await me.kab.draw.html(window, list, window.options);
             me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
             me.core.property.notify(window, "update");

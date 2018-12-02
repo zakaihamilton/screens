@@ -128,6 +128,13 @@
             "Layout",
             [
                 [
+                    "Animation",
+                    "app.prism.animation",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Font Size",
                     "header"
                 ],
@@ -139,14 +146,14 @@
         {
             "ui.basic.tag": "div",
             "ui.basic.var": "viewer",
-            "ui.class.class":"app.prism.viewer"
+            "ui.class.class": "app.prism.viewer"
         },
         {
-            "ui.basic.var":"popup",
-            "ui.basic.tag":"div",
-            "ui.basic.html":"@widget.transform.html",
-            "ui.class.add":"modal",
-            "ui.style.zIndex":"1000"
+            "ui.basic.var": "popup",
+            "ui.basic.tag": "div",
+            "ui.basic.html": "@widget.transform.html",
+            "ui.class.add": "modal",
+            "ui.style.zIndex": "1000"
         }
     ],
     "ui.property.after": {

@@ -1,5 +1,5 @@
 .kab-draw-shape {
-    
+    color:var(--highlight-color);
 }
 
 .kab-draw-circle {
@@ -24,54 +24,4 @@
     bottom:0px;
     left:25%;
     right:25%;
-}
-
-.kab-draw-phase-root {
-    border:3px solid var(--phase-root-border);
-    color:var(--highlight-color);
-    background: radial-gradient(circle at 100px 100px, var(--phase-root-background), var(--phase-root-border));
-}
-
-.kab-draw-phase-root.restriction {
-    background: var(--background);
-}
-
-.kab-draw-phase-one {
-    border:3px solid var(--phase-one-border);
-    color:var(--highlight-color);
-    background: radial-gradient(circle at 100px 100px, var(--phase-one-background), var(--phase-one-border));
-}
-
-.kab-draw-phase-one.restriction {
-    background: var(--background);
-}
-
-.kab-draw-phase-two {
-    border:3px solid var(--phase-two-border);
-    color:var(--highlight-color);
-    background: radial-gradient(circle at 100px 100px, var(--phase-two-background), var(--phase-two-border));
-}
-
-.kab-draw-phase-two.restriction {
-    background: var(--background);
-}
-
-.kab-draw-phase-three {
-    border:3px solid var(--phase-three-border);
-    color:var(--highlight-color);
-    background: radial-gradient(circle at 100px 100px, var(--phase-three-background), var(--phase-three-border));
-}
-
-.kab-draw-phase-three.restriction {
-    background: var(--background);
-}
-
-.kab-draw-phase-four {
-    border:3px solid var(--phase-four-border);
-    color:var(--highlight-color);
-    background: radial-gradient(circle at 100px 100px, var(--phase-four-background), var(--phase-four-border));
-}
-
-.kab-draw-phase-four.restriction {
-    background: var(--background);
 }
