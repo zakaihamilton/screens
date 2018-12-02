@@ -86,21 +86,22 @@ screens.core.json = function CoreJson(me) {
         }
     };
     me.traverse = function (root, path, value) {
-        var item = root, parent = root, found = false;
+        var item = root, parent = root, found = false, name = null;
         if (root) {
-            item = path.split(".").reduce((node, name) => {
+            item = path.split(".").reduce((node, token) => {
                 parent = node;
+                name = token;
                 if (!node) {
                     return;
                 }
-                return node[name];
+                return node[token];
             }, root);
             if (typeof item !== "undefined") {
                 value = item;
                 found = true;
             }
         }
-        return { parent, item, value, found };
+        return { parent, item, value, name, found };
     };
     me.value = function (root, paths, value) {
         var found = false;
