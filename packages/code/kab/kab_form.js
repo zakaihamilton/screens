@@ -55,7 +55,7 @@ screens.kab.form = function KabForm(me) {
     me.root = function () {
         if (!me._root) {
             var form = me._root = {};
-            ["expand", "restrict", "look"].map(name => {
+            ["expand", "restrict", "look", "reflect"].map(name => {
                 form = me.kab.rule.run(form, name);
             });
         }

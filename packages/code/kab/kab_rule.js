@@ -42,6 +42,7 @@ screens.kab.rule.look = function KabRuleRestrict(me) {
         for (var phase = 0; phase <= 3; phase++) {
             form = me.kab.form.set(form, { phase, direct: phase });
         }
+        return form;
     };
 };
 
@@ -50,7 +51,8 @@ screens.kab.rule.reflect = function KabRuleReflect(me) {
     me.description = "Raise reflected light";
     me.run = function (form) {
         for (var phase = 4; phase >= 0; phase--) {
-            form = me.kab.form.set(form, { phase, direct: 4-phase });
+            form = me.kab.form.set(form, { phase, reflect: phase });
         }
+        return form;
     };
 };

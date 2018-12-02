@@ -1,14 +1,6 @@
 .kab-draw-shape {
+    position: absolute;
     color:var(--highlight-color);
-}
-
-.kab-draw-circle {
-    position: absolute;
-    border-radius: 50%;
-}
-
-.kab-draw-line {
-    position: absolute;
 }
 
 .kab-draw-shape:hover div.kab-draw-title {
