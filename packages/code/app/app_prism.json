@@ -1,0 +1,158 @@
+{
+    "title": "Prism",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
+    "icon": "/packages/res/icons/prism.png",
+    "widget.menu.items": [
+        [
+            "Transform",
+            [
+                [
+                    "Refresh",
+                    "app.prism.reload",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Translation",
+                    "app.prism.doTranslation",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Keep Source",
+                    "app.prism.keepSource",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Abridged",
+                    "app.prism.abridged",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Explanation",
+                    "app.prism.doExplanation",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Prioritize Explanation",
+                    "app.prism.prioritizeExplanation",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Styles",
+                    "app.prism.addStyles",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Category",
+                    "app.prism.category",
+                    {
+                        "state": "select",
+                        "enabled": "app.prism.category"
+                    }
+                ],
+                [
+                    "Headings",
+                    "app.prism.headings",
+                    {
+                        "state": "select",
+                        "enabled": "app.prism.addStyles"
+                    }
+                ],
+                [
+                    "Phase Numbers",
+                    "app.prism.phaseNumbers",
+                    {
+                        "state": "select",
+                        "enabled": "app.prism.addStyles"
+                    }
+                ],
+                [
+                    "Sub Headings",
+                    "app.prism.subHeadings",
+                    {
+                        "state": "select",
+                        "enabled": "app.prism.addStyles"
+                    }
+                ],
+                [
+                    "Language",
+                    "header"
+                ],
+                [
+                    "Auto",
+                    "app.prism.language",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "English",
+                    "app.prism.language",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Hebrew",
+                    "app.prism.language",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ],
+        [
+            "Layout",
+            [
+                [
+                    "Font Size",
+                    "header"
+                ],
+                "widget.transform.fontSizesPx(app.prism.fontSize)"
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "viewer",
+            "ui.class.class":"app.prism.viewer"
+        },
+        {
+            "ui.basic.var":"popup",
+            "ui.basic.tag":"div",
+            "ui.basic.html":"@widget.transform.html",
+            "ui.class.add":"modal",
+            "ui.style.zIndex":"1000"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-prism-window",
+        "storage.local.restore": "widget.window.store",
+        "app.prism.initOptions": null,
+        "app.prism.reload": null
+    }
+}
