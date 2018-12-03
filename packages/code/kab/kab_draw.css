@@ -9,14 +9,13 @@
     position: absolute;
     width:100%;
     height:100%;
-    border:1 px solid red;
     box-shadow: 3px 0 1px -1px var(--border-color),
         5px 0 5px var(--background-color),
         inset -10px 0 10px -5px var(--background-color),
         2px 0 1px -1px var(--border-color),
         10px 0 5px -5px var(--background-color),
         inset -3px 0 3px var(--background-color);
-    animation: kab-draw-shape-animation 10s linear infinite;
+    animation: kab-draw-shape-animation 60s linear infinite;
 }
 
 .kab-draw-shape:hover div.kab-draw-title {

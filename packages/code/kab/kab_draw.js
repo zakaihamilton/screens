@@ -97,6 +97,9 @@ screens.kab.draw = function KabDraw(me) {
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
                 var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
+                if(!phase) {
+                    borderColor = "darkgray";
+                }
                 var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
                 styles.push("animation-delay: " + (index + 1) + "s");
                 styles.push("border:0.1em solid " + borderColor);
