@@ -80,6 +80,7 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("z-index:" + ((phase + 1) * 2));
                 }
                 else {
+                    css.push("circle");
                     if (restriction) {
                         styles.push("background: var(--background)");
                     }
@@ -95,8 +96,12 @@ screens.kab.draw = function KabDraw(me) {
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
+                var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
+                var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
                 styles.push("animation-delay: " + (index + 1) + "s");
-                styles.push("border:0.1em solid var(--phase-" + phaseName + "-border)");
+                styles.push("border:0.1em solid " + borderColor);
+                styles.push("--border-color: " + borderColor);
+                styles.push("--background-color: " + backgroundColor);
                 html += "<div class=\"" + css.join(" ") + "\" " + "style=\"" + styles.join(";") + "\">";
                 html += "<div class=\"kab-draw-title\">" + text + "</div>";
                 html += "</div>";

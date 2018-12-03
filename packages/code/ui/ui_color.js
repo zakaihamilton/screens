@@ -15,11 +15,11 @@ screens.ui.color = function UIColor(me) {
         }
     };
     me.get = function (name) {
-        document.body.style.getProperty(name);
+        return document.body.style.getPropertyValue(name);
     };
     me.set = function (name, color) {
         document.body.style.setProperty(name, color);
-    }
+    };
     me.colors = ["#a7309f",
         "#c0d547",
         "#005dc4",
