@@ -39,9 +39,7 @@ screens.kab.rule.look = function KabRuleRestrict(me) {
     me.name = "Look";
     me.description = "Attract direct light";
     me.run = function (form) {
-        for (var phase = 0; phase <= 3; phase++) {
-            form = me.kab.form.set(form, { phase, direct: phase });
-        }
+        form = me.kab.form.set(form, { direct: true });
         return form;
     };
 };

@@ -14,23 +14,28 @@ screens.kab.draw = function KabDraw(me) {
     me.phase = {
         0: {
             name: "root",
-            term: "Behinat Shoresh"
+            phase: "Behinat Shoresh",
+            light: "Yechida"
         },
         1: {
             name: "one",
-            term: "Behina Aleph"
+            phase: "Behina Aleph",
+            light: "Haya"
         },
         2: {
             name: "two",
-            term: "Behina Bet"
+            phase: "Behina Bet",
+            light: "Neshama"
         },
         3: {
             name: "three",
-            term: "Behina Gimel"
+            phase: "Behina Gimel",
+            light: "Ruach"
         },
         4: {
             name: "four",
-            term: "Behina Dalet"
+            phase: "Behina Dalet",
+            light: "Nefesh"
         }
     };
     me.list = function (form, list) {
@@ -56,7 +61,7 @@ screens.kab.draw = function KabDraw(me) {
                 var direct = me.kab.form.get(form, "direct");
                 var reflect = me.kab.form.get(form, "reflect");
                 var phaseName = me.phase[phase].name;
-                var term = me.phase[phase].term;
+                var term = me.phase[phase].phase;
                 if (options.animation) {
                     css.push("animated fadeIn");
                 }
@@ -65,19 +70,19 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push(...["left", "right"].map(name => name + ":47%"));
                     styles.push("top:" + (phase + 1) * options.circleMultiplier + "em");
                     styles.push("height:2.5em");
-                    if (typeof direct !== "undefined") {
+                    if (direct) {
                         styles.push("background: var(--phase-" +
                             phaseName + "-background)");
                     }
-                    styles.push("z-index:" + (phase + 1));
+                    styles.push("z-index:" + (5 + phase + 1));
+                    term = me.phase[phase].light;
                 }
-                else if (typeof direct !== "undefined") {
-                    styles.push(...["left", "right"].map(name => name + ":49%"));
+                else if (direct) {
+                    styles.push(...["left", "right"].map(name => name + ":50%"));
                     styles.push("top:" + (phase + 1) * options.circleMultiplier + "em");
-                    styles.push("height:2.5em");
-                    styles.push("background: var(--phase-" +
-                        phaseName + "-background)");
-                    styles.push("z-index:" + ((phase + 1) * 2));
+                    styles.push("height:10em");
+                    styles.push("background: var(--phase-root-background)");
+                    styles.push("z-index:6");
                 }
                 else {
                     css.push("circle");
@@ -97,7 +102,7 @@ screens.kab.draw = function KabDraw(me) {
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
                 var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
-                if(!phase) {
+                if (!phase) {
                     borderColor = "darkgray";
                 }
                 var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
