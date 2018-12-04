@@ -106,7 +106,7 @@ screens.kab.draw = function KabDraw(me) {
                     borderColor = "darkgray";
                 }
                 var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
-                styles.push("animation-delay: " + ((index + 1) * 2) + "s");
+                styles.push("animation-delay: " + index + "s");
                 styles.push("border:0.1em solid " + borderColor);
                 styles.push("--border-color: " + borderColor);
                 styles.push("--background-color: " + backgroundColor);
