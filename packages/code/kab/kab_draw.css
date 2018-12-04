@@ -15,7 +15,7 @@
         2px 0 1px -1px var(--border-color),
         10px 0 5px -5px var(--background-color),
         inset -3px 0 3px var(--background-color);
-    animation: kab-draw-shape-animation 60s linear infinite;
+    animation: kab-draw-shape-animation 30s linear infinite;
 }
 
 .kab-draw-shape:hover div.kab-draw-title {
