@@ -57,6 +57,7 @@ screens.kab.draw = function KabDraw(me) {
             var hasPhase = typeof phase !== "undefined";
             if (hasPhase) {
                 var index = me.kab.form.index(form);
+                var depth = index;
                 var restriction = me.kab.form.get(form, "restriction");
                 var direct = me.kab.form.get(form, "direct");
                 var reflect = me.kab.form.get(form, "reflect");
@@ -74,20 +75,21 @@ screens.kab.draw = function KabDraw(me) {
                         styles.push("background: var(--phase-" +
                             phaseName + "-background)");
                     }
-                    styles.push("z-index:" + index);
                     term = me.phase[phase].light;
+                    depth -= (4 - phase);
                 }
                 else if (direct) {
                     styles.push(...["left", "right"].map(name => name + ":50%"));
                     styles.push("top:" + (phase + 1) * options.circleMultiplier + "em");
                     styles.push("height:10em");
                     styles.push("background: var(--phase-root-background)");
-                    styles.push("z-index:" + index);
+                    term = "Ohr Yashar";
                 }
                 else {
                     css.push("circle");
                     if (restriction) {
                         styles.push("background: var(--background)");
+                        depth = index + [-4,-2,0,2,4][phase];
                     }
                     else {
                         styles.push("background: radial-gradient(circle at 100px 100px, var(--phase-" +
@@ -97,7 +99,6 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("border-radius: 50%");
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
-                    styles.push("z-index:" + (phase + 1));
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
@@ -106,7 +107,9 @@ screens.kab.draw = function KabDraw(me) {
                     borderColor = "darkgray";
                 }
                 var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
+                styles.push("z-index:" + depth);
                 styles.push("animation-delay: " + index + "s");
+                styles.push("transform: translateZ(" + (depth * 30) + "px)");
                 styles.push("border:0.1em solid " + borderColor);
                 styles.push("--border-color: " + borderColor);
                 styles.push("--background-color: " + backgroundColor);

@@ -123,4 +123,33 @@ screens.app.prism = function AppPrism(me) {
         me.core.property.set(widgets.phase, "ui.class.class", classes);
         me.core.property.set(window.var.popup, "ui.class.add", "is-active");
     };
+    me.rotate = function(object, event) {
+        if(event.type === me.ui.touch.eventNames["down"]) {
+            me.core.property.set(object, {
+                "ui.touch.move": "app.prism.rotate",
+                "ui.touch.up": "app.prism.rotate"
+            });
+            object.rotate_left = event.clientX;
+            object.rotate_top = event.clientY;
+            object.rotate_mode = false;
+        }
+        else if(event.type === me.ui.touch.eventNames["move"]) {
+            if(!object.rotate_mode && event.clientX > object.rotate_left - 30 && event.clientX < object.rotate_left + 30) {
+                return;
+            }
+            object.rotate_mode = true;
+            var target_region = me.ui.rect.absoluteRegion(object);
+            var x = 0, y = 0, z = 0, a = 0;
+            a = event.clientX - target_region.left + "deg";
+            y = event.clientY - target_region.top;
+            me.core.property.set(object, "ui.style.transform", "rotate3d(" + [x,y,z,a].join(",") + ")");
+        }
+        else if(event.type === me.ui.touch.eventNames["up"]) {
+            object.rotate_mode = false;
+            me.core.property.set(object, {
+                "ui.touch.move": null,
+                "ui.touch.up": null
+            });
+        }
+    };
 };

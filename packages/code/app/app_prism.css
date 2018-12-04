@@ -1,8 +1,10 @@
 .app-prism-viewer {
     position: absolute;
+    border:1px solid lightgray;
     left:25%;
     width:50%;
+    top:1%;
     padding-bottom: 50%;
-    perspective: 1000px;
     transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(-40deg) perspective(1000px);
 }
