@@ -74,7 +74,7 @@ screens.kab.draw = function KabDraw(me) {
                         styles.push("background: var(--phase-" +
                             phaseName + "-background)");
                     }
-                    styles.push("z-index:" + (5 + phase + 1));
+                    styles.push("z-index:" + index);
                     term = me.phase[phase].light;
                 }
                 else if (direct) {
@@ -82,7 +82,7 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("top:" + (phase + 1) * options.circleMultiplier + "em");
                     styles.push("height:10em");
                     styles.push("background: var(--phase-root-background)");
-                    styles.push("z-index:6");
+                    styles.push("z-index:" + index);
                 }
                 else {
                     css.push("circle");
@@ -97,7 +97,7 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("border-radius: 50%");
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
-                    styles.push("z-index:" + (phase + 1));
+                    styles.push("z-index:" + (phase+1));
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
@@ -106,7 +106,7 @@ screens.kab.draw = function KabDraw(me) {
                     borderColor = "darkgray";
                 }
                 var backgroundColor = me.ui.color.get("--phase-" + phaseName + "-background");
-                styles.push("animation-delay: " + (index + 1) + "s");
+                styles.push("animation-delay: " + ((index + 1) * 2) + "s");
                 styles.push("border:0.1em solid " + borderColor);
                 styles.push("--border-color: " + borderColor);
                 styles.push("--background-color: " + backgroundColor);
