@@ -97,7 +97,7 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("border-radius: 50%");
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
-                    styles.push("z-index:" + (phase+1));
+                    styles.push("z-index:" + (phase + 1));
                 }
                 var app = me.core.property.get(object, "app");
                 var text = await me.core.property.get(object, app.id + ".term", term);
