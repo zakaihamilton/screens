@@ -135,6 +135,10 @@
                     }
                 ],
                 [
+                    "Reset Rotation",
+                    "app.prism.resetRotation"
+                ],
+                [
                     "Font Size",
                     "header"
                 ],
@@ -145,9 +149,13 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
-            "ui.basic.var": "viewer",
-            "ui.class.class": "app.prism.viewer",
-            "ui.touch.down":"app.prism.rotate"
+            "ui.class.class": "app.prism.viewer.container",
+            "ui.basic.elements": {
+                "ui.basic.tag": "div",
+                "ui.basic.var": "viewer",
+                "ui.class.class": "app.prism.viewer",
+                "ui.touch.down": "app.prism.rotate"
+            }
         },
         {
             "ui.basic.var": "popup",

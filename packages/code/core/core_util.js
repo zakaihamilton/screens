@@ -49,7 +49,7 @@ screens.core.util = function CoreUtil(me) {
             }, time);
         });
     };
-    me.start = function() {
+    me.start = function () {
         if (me.platform === "server" || me.platform === "service") {
             const time = process.hrtime();
             return time;
@@ -58,7 +58,7 @@ screens.core.util = function CoreUtil(me) {
             return performance.now();
         }
     };
-    me.duration = function(start) {
+    me.duration = function (start) {
         if (me.platform === "server" || me.platform === "service") {
             const NS_PER_SEC = 1e9;
             const diff = process.hrtime(start);
@@ -69,14 +69,14 @@ screens.core.util = function CoreUtil(me) {
             return end - start;
         }
     };
-    me.performance = async function(name, callback) {
+    me.performance = async function (name, callback) {
         var start = me.start();
         await callback();
         var duration = me.duration(start);
         me.log("performance: " + this.id + " - " + name + " took " + duration + " ms");
     };
-    me.condense = function(callback) {
-        if(callback.timer) {
+    me.condense = function (callback) {
+        if (callback.timer) {
             return;
         }
         callback();
@@ -84,7 +84,7 @@ screens.core.util = function CoreUtil(me) {
             callback.timer = null;
         }, 250);
     };
-    me.sync = async function() {
+    me.sync = async function () {
         await me.storage.cache.empty();
     };
     me.copyUrl = function (appName, args) {
@@ -96,7 +96,16 @@ screens.core.util = function CoreUtil(me) {
         url += me.core.string.encode(JSON.stringify(args));
         me.ui.clipboard.copy(url);
     };
-    me.genPair = function() {
+    me.genPair = function () {
         return parseInt(Math.random() * Math.pow(2, 32)).toString(16);
+    };
+    me.range = function (num, min, max) {
+        if (num < min) {
+            num = min;
+        }
+        if (num >= max) {
+            num = max;
+        }
+        return num;
     };
 };

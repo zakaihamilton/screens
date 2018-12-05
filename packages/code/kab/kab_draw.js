@@ -76,7 +76,7 @@ screens.kab.draw = function KabDraw(me) {
                             phaseName + "-background)");
                     }
                     term = me.phase[phase].light;
-                    depth -= (4 - phase);
+                    depth -= (0 - phase);
                 }
                 else if (direct) {
                     styles.push(...["left", "right"].map(name => name + ":50%"));
@@ -84,19 +84,19 @@ screens.kab.draw = function KabDraw(me) {
                     styles.push("height:10em");
                     styles.push("background: var(--phase-root-background)");
                     term = "Ohr Yashar";
+                    depth += 4;
                 }
                 else {
                     css.push("circle");
                     if (restriction) {
                         styles.push("background: var(--background)");
-                        depth = index + [-4,-2,0,2,4][phase];
+                        depth = index + [0,2,4,6,8][phase];
                     }
                     else {
                         styles.push("background: radial-gradient(circle at 100px 100px, var(--phase-" +
                             phaseName + "-background), var(--phase-" +
                             phaseName + "-border))");
                     }
-                    styles.push("border-radius: 50%");
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }

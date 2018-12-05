@@ -69,6 +69,7 @@ screens.app.prism = function AppPrism(me) {
             var html = await me.kab.draw.html(window, list, window.options);
             me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+            me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
             me.core.property.notify(window, "update");
         }
     };
@@ -123,28 +124,38 @@ screens.app.prism = function AppPrism(me) {
         me.core.property.set(widgets.phase, "ui.class.class", classes);
         me.core.property.set(window.var.popup, "ui.class.add", "is-active");
     };
-    me.rotate = function(object, event) {
-        if(event.type === me.ui.touch.eventNames["down"]) {
+    me.resetRotation = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
+    };
+    me.rotate = function (object, event) {
+        if (event.type === me.ui.touch.eventNames["down"]) {
             me.core.property.set(object, {
                 "ui.touch.move": "app.prism.rotate",
                 "ui.touch.up": "app.prism.rotate"
             });
             object.rotate_left = event.clientX;
-            object.rotate_top = event.clientY;
             object.rotate_mode = false;
+            object.rotate_start_angle = object.rotate_angle;
         }
-        else if(event.type === me.ui.touch.eventNames["move"]) {
-            if(!object.rotate_mode && event.clientX > object.rotate_left - 30 && event.clientX < object.rotate_left + 30) {
+        else if (event.type === me.ui.touch.eventNames["move"]) {
+            if (!object.rotate_mode && event.clientX > object.rotate_left - 10 && event.clientX < object.rotate_left + 10) {
                 return;
             }
             object.rotate_mode = true;
             var target_region = me.ui.rect.absoluteRegion(object);
-            var x = 0, y = 0, z = 0, a = 0;
-            a = event.clientX - target_region.left + "deg";
-            y = event.clientY - target_region.top;
-            me.core.property.set(object, "ui.style.transform", "rotate3d(" + [x,y,z,a].join(",") + ")");
+            var x = 0, y = 100, z = 0;
+            var angle = (event.clientX - target_region.left - (object.rotate_left / 2)) / 5;
+            if (object.rotate_start_angle) {
+                angle += object.rotate_start_angle;
+            }
+            angle = me.core.util.range(angle, -70, 70);
+            object.rotate_angle = angle;
+            me.core.property.set(object, {
+                "ui.style.transform": "rotate3d(" + [x, y, z, angle + "deg"].join(",") + ")"
+            });
         }
-        else if(event.type === me.ui.touch.eventNames["up"]) {
+        else if (event.type === me.ui.touch.eventNames["up"]) {
             object.rotate_mode = false;
             me.core.property.set(object, {
                 "ui.touch.move": null,

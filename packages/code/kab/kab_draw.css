@@ -6,6 +6,10 @@
     0 0 10px var(--border-color);            /* outer white */
 }
 
+.kab-draw-shape.circle {
+    border-radius: 50%;
+}
+
 .kab-draw-shape.circle:after {
     border-radius: 50%;
     content:"";
