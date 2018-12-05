@@ -129,12 +129,13 @@ screens.app.prism = function AppPrism(me) {
         me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
     };
     me.rotate = function (object, event) {
+        var target_region = me.ui.rect.absoluteRegion(object);
         if (event.type === me.ui.touch.eventNames["down"]) {
             me.core.property.set(object, {
                 "ui.touch.move": "app.prism.rotate",
                 "ui.touch.up": "app.prism.rotate"
             });
-            object.rotate_left = event.clientX;
+            object.rotate_left = event.clientX - target_region.left;
             object.rotate_mode = false;
             object.rotate_start_angle = object.rotate_angle;
         }
@@ -143,9 +144,8 @@ screens.app.prism = function AppPrism(me) {
                 return;
             }
             object.rotate_mode = true;
-            var target_region = me.ui.rect.absoluteRegion(object);
             var x = 0, y = 100, z = 0;
-            var angle = (event.clientX - target_region.left - (object.rotate_left / 2)) / 5;
+            var angle = ((event.clientX - target_region.left) - object.rotate_left) / 5;
             if (object.rotate_start_angle) {
                 angle += object.rotate_start_angle;
             }

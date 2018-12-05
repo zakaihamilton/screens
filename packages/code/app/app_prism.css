@@ -2,8 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     place-items: start;
-    overflow: hidden;
-    box-sizing: border-box;
+    margin:1em;
 }
 
 .app-prism-viewer:after {
