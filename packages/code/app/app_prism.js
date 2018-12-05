@@ -101,7 +101,7 @@ screens.app.prism = function AppPrism(me) {
         if (!term) {
             return;
         }
-        var widgets = me.ui.node.bind(window, term, {
+        var widgets = me.ui.node.bind(window.var.popup, term, {
             term: ".text",
             phase: ".phase|.phase.minor",
             hebrew: ".item.hebrew",
