@@ -7090,7 +7090,12 @@
         {
             "term": "Emunato",
             "hebrew": "אמונתו",
-            "translation": "His Faith"
+            "translation": "his faith"
+        },
+        {
+            "term": "Umanuto",
+            "hebrew": "אומנותו",
+            "translation": "his trade"
         }
     ],
     "style": {
