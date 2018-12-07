@@ -1,10 +1,40 @@
 {
-    "colors": {},
+    "colors": {
+        "--background": "white",
+        "--alt-background": "white",
+        "--color": "black",
+        "--title-color": "#062340",
+        "--highlight-color": "black",
+        "--disabled-color": "darkgray",
+        "--border-color": "#e5e5e5",
+        "--chrome-background": "white",
+        "--chrome-border": "black",
+        "--chrome-color": "black",
+        "--chrome-highlight-color": "black",
+        "--chrome-highlight-background": "white",
+        "--chrome-disabled-color": "darkgray",
+        "--filter-percentage": "0%",
+        "--field-background": "#020d17",
+        "--field-color": "#e5e5e5",
+        "--spinner-color": "white",
+        "--phase-root-border": "lightgray",
+        "--phase-one-border": "#ba8200",
+        "--phase-two-border": "#2f5397",
+        "--phase-three-border": "#b24846",
+        "--phase-four-border": "#196a19",
+        "--phase-collective-border": "#54325c",
+        "--phase-root-background": "white",
+        "--phase-one-background": "#e8a200",
+        "--phase-two-background": "#5274b6",
+        "--phase-three-background": "#cc6e6d",
+        "--phase-four-background": "#418842",
+        "--phase-collective-background": "#814d8e"
+    },
     "night-mode": {
         "--background": "#3c3f42",
         "--alt-background": "#45484b",
         "--color": "#e5e5e5",
-        "--title-color":"#062340",
+        "--title-color": "#062340",
         "--highlight-color": "white",
         "--disabled-color": "darkgray",
         "--border-color": "#e5e5e5",
@@ -18,18 +48,18 @@
         "--field-background": "#020d17",
         "--field-color": "#e5e5e5",
         "--spinner-color": "white",
-        "--phase-root-border":"#45494d",
-        "--phase-one-border":"#ba8200",
-        "--phase-two-border":"#2f5397",
-        "--phase-three-border":"#b24846",
-        "--phase-four-border":"#196a19",
-        "--phase-collective-border":"#54325c",
-        "--phase-root-background":"#45494d",
-        "--phase-one-background":"#e8a200",
-        "--phase-two-background":"#5274b6",
-        "--phase-three-background":"#cc6e6d",
-        "--phase-four-background":"#418842",
-        "--phase-collective-background":"#814d8e"
+        "--phase-root-border": "#45494d",
+        "--phase-one-border": "#ba8200",
+        "--phase-two-border": "#2f5397",
+        "--phase-three-border": "#b24846",
+        "--phase-four-border": "#196a19",
+        "--phase-collective-border": "#54325c",
+        "--phase-root-background": "#45494d",
+        "--phase-one-background": "#e8a200",
+        "--phase-two-background": "#5274b6",
+        "--phase-three-background": "#cc6e6d",
+        "--phase-four-background": "#418842",
+        "--phase-collective-background": "#814d8e"
     },
     "mapping": [
         {
@@ -219,9 +249,9 @@
             "replace": true
         },
         {
-            "source":"widget-window-align",
-            "target":"glow-window-align",
-            "replace":true
+            "source": "widget-window-align",
+            "target": "glow-window-align",
+            "replace": true
         },
         {
             "source": "widget-taskbar-container",
@@ -229,8 +259,8 @@
             "replace": true
         },
         {
-            "source":"widget-text-normal",
-            "target":"glow-text-normal"
+            "source": "widget-text-normal",
+            "target": "glow-text-normal"
         }
     ]
 }
