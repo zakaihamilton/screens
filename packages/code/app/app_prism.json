@@ -149,13 +149,9 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
-            "ui.class.class": "app.prism.viewer.container",
-            "ui.basic.elements": {
-                "ui.basic.tag": "div",
-                "ui.basic.var": "viewer",
-                "ui.class.class": "app.prism.viewer",
-                "ui.touch.down": "app.prism.rotate"
-            }
+            "ui.basic.var": "viewer",
+            "ui.class.class": "app.prism.viewer",
+            "ui.touch.down": "app.prism.rotate"
         },
         {
             "ui.basic.var": "popup",
@@ -163,8 +159,8 @@
             "ui.basic.html": "@widget.transform.html",
             "ui.class.add": "modal",
             "ui.style.zIndex": "1000",
-            "ui.property.after":{
-                "ui.node.parent":"@ui.element.workspace"
+            "ui.property.after": {
+                "ui.node.parent": "@ui.element.workspace"
             }
         }
     ],

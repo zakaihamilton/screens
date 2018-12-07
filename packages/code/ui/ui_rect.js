@@ -20,8 +20,8 @@ screens.ui.rect = function UIRect(me) {
             bottom: yPos + height
         };
     };
-    me.absoluteRegion = function (object) {
-        if(!object) {
+    me.absoluteRegion = function (object, ignoreScroll = true) {
+        if (!object) {
             return null;
         }
         if (object === document.body) {
@@ -40,18 +40,22 @@ screens.ui.rect = function UIRect(me) {
         }
         var parent = object;
         while (parent) {
+            var xScroll = 0, yScroll = 0;
             if (parent === document.body) {
                 // deal with browser quirks with body/window/document and page scroll
-                var xScroll = parent.scrollLeft || document.documentElement.scrollLeft;
-                var yScroll = parent.scrollTop || document.documentElement.scrollTop;
-
-                xPos += (parent.offsetLeft - xScroll + parent.clientLeft);
-                yPos += (parent.offsetTop - yScroll + parent.clientTop);
+                xScroll = parent.scrollLeft || document.documentElement.scrollLeft;
+                yScroll = parent.scrollTop || document.documentElement.scrollTop;
             } else {
                 // for all other non-BODY elements
-                xPos += (parent.offsetLeft - parent.scrollLeft + parent.clientLeft);
-                yPos += (parent.offsetTop - parent.scrollTop + parent.clientTop);
+                xScroll = parent.scrollLeft;
+                yScroll = parent.scrollTop;
             }
+            if (ignoreScroll) {
+                xScroll = 0;
+                yScroll = 0;
+            }
+            xPos += (parent.offsetLeft - xScroll + parent.clientLeft);
+            yPos += (parent.offsetTop - yScroll + parent.clientTop);
             parent = parent.offsetParent;
         }
         xPos -= object.clientLeft;
@@ -72,7 +76,7 @@ screens.ui.rect = function UIRect(me) {
         region.width = 0;
         region.height = 0;
     };
-    me.setRelativeRegion = function (object, region, relative_to = null, move_only=false) {
+    me.setRelativeRegion = function (object, region, relative_to = null, move_only = false) {
         if (!object || !region) {
             return;
         }
@@ -86,7 +90,7 @@ screens.ui.rect = function UIRect(me) {
         object.style.bottom = "";
         object.style.left = region.left - parent_region.left + "px";
         object.style.top = region.top - parent_region.top + "px";
-        if(!move_only) {
+        if (!move_only) {
             object.style.width = region.width + "px";
             object.style.height = region.height + "px";
         }
@@ -108,32 +112,31 @@ screens.ui.rect = function UIRect(me) {
     };
     me.viewport = function () {
         var e = window, a = 'inner';
-        if (!('innerWidth' in window))
-        {
+        if (!('innerWidth' in window)) {
             a = 'client';
             e = document.documentElement || document.body;
         }
-        var width = e[ a + 'Width' ];
-        var height = e[ a + 'Height' ];
-        return {left: 0, top: 0, width: width, height: height, right: width, bottom: height};
+        var width = e[a + 'Width'];
+        var height = e[a + 'Height'];
+        return { left: 0, top: 0, width: width, height: height, right: width, bottom: height };
     };
-    me.inView = function(object) {
+    me.inView = function (object) {
         var inView = true;
         var parentRect = me.absoluteRegion(object.parentNode);
         var objectRect = me.absoluteRegion(object);
-        if(!parentRect) {
+        if (!parentRect) {
             inView = false;
         }
-        else if(objectRect.left < parentRect.left) {
+        else if (objectRect.left < parentRect.left) {
             inView = false;
         }
-        else if(objectRect.right > parentRect.right) {
+        else if (objectRect.right > parentRect.right) {
             inView = false;
         }
-        else if(objectRect.top < parentRect.top) {
+        else if (objectRect.top < parentRect.top) {
             inView = false;
         }
-        else if(objectRect.bottom > parentRect.bottom) {
+        else if (objectRect.bottom > parentRect.bottom) {
             inView = false;
         }
         return inView;

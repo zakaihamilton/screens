@@ -823,10 +823,20 @@ screens.widget.window = function WidgetWindow(me) {
             }
         }
     };
+    me.resize = function (object) {
+        var window = me.get(object);
+        if (window.app_component) {
+            me.core.property.set(window, window.app_component.id + ".resize");
+        }
+    };
     me.update = {
         set: function (object) {
             var window = me.get(object);
+            me.resize(object);
             me.core.property.notify(window.var.container, "update");
+            if (window.app_component) {
+                me.core.property.set(window, window.app_component.id + ".update");
+            }
             me.core.property.set(window, "storage.local.store", me.core.property.get(window, "store"));
         }
     };

@@ -81,6 +81,8 @@ screens.ui.resize = function UIResize(me) {
                 target_region.height = event.clientY - target_region.top;
             }
             me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
+            var window = me.widget.window.get(me.info.target);
+            me.core.property.set(window, "resize");
         }
     };
     me.up = {
@@ -95,15 +97,15 @@ screens.ui.resize = function UIResize(me) {
             });
             var window = me.widget.window.get(me.info.target);
             me.core.property.set(window, "ui.property.broadcast", {
-                "update":null
+                "update": null
             });
             var parent = me.widget.window.parent(me.info.target);
             me.core.property.set(parent, "ui.property.broadcast", {
-                "update":null
+                "update": null
             });
-            if(window.child_window) {
+            if (window.child_window) {
                 me.core.property.set(window.child_window, "ui.property.broadcast", {
-                    "update":null
+                    "update": null
                 });
             }
         }

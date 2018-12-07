@@ -59,6 +59,7 @@ screens.app.prism = function AppPrism(me) {
             me.ui.class.useStylesheet("kab");
             window.options.clickCallback = "screens.app.prism.openPopup";
             me.core.property.set(window, "app", me);
+            me.resize(window);
         }
     };
     me.reload = {
@@ -162,5 +163,16 @@ screens.app.prism = function AppPrism(me) {
                 "ui.touch.up": null
             });
         }
+    };
+    me.resize = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
+        var target_region = me.ui.rect.absoluteRegion(window.var.container);
+        var size = target_region.width > target_region.height ? target_region.height : target_region.width;
+        me.core.property.set(window.var.viewer, {
+            "ui.style.left": ((target_region.width - size) / 2) + "px",
+            "ui.style.width": size + "px",
+            "ui.style.height": size + "px"
+        });
     };
 };
