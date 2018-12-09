@@ -32,7 +32,6 @@ screens.widget.transform = function WidgetTransform(me) {
             scrollPos: 0,
             phaseNumbers: true,
             pipVideo: false,
-            playingPopup: true,
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal",
@@ -63,7 +62,6 @@ screens.widget.transform = function WidgetTransform(me) {
             diagrams: me.transform,
             pipVideo: me.reflow,
             autoPlay: null,
-            playingPopup: me.reflow,
             output: me.transform
         });
         me.ui.options.choiceSet(me, me.findWidget, {
@@ -818,36 +816,6 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         var widget = me.upper.findWidget(object);
         if (!widget) {
             return;
-        }
-        var fontSize = (parseInt(widget.options.fontSize) + 2) + "px";
-        if (widget.options.playingPopup) {
-            if (widget.playingPopupParagraph != paragraph) {
-                if (widget.playingPopupHandle) {
-                    me.core.property.set(widget.playingPopupHandle, "show", false);
-                }
-                if (paragraph) {
-                    if (widget.playingPopupHandle) {
-                        me.core.property.set(widget.playingPopupHandle, "show", true);
-                        me.core.property.set(widget.playingPopupHandle, "modal.playing.layout", paragraph.innerHTML);
-                        me.core.property.set(widget.playingPopupHandle, "modal.playing.fontSize", fontSize);
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.top", widget.options.pipVideo ? "15%" : "5%");
-                        me.core.property.set(widget.playingPopupHandle, "ui.style.height", widget.options.pipVideo ? "70%" : "80%");
-                    }
-                    else {
-                        var title = me.core.property.get(widget, "widget.transform.contentTitle");
-                        widget.playingPopupHandle = me.ui.modal.launch("playing", {
-                            "title": title,
-                            "layout": paragraph.innerHTML,
-                            "fontSize": fontSize,
-                            "top": widget.options.pipVideo ? "15%" : "5%",
-                            "height": widget.options.pipVideo ? "70%" : "80%"
-                        });
-                    }
-                }
-            }
-        }
-        else if (widget.playingPopupHandle) {
-            me.core.property.set(widget.playingPopupHandle, "show", false);
         }
         widget.playingPopupParagraph = paragraph;
     };

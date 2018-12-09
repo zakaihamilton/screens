@@ -311,13 +311,6 @@
                     }
                 ],
                 [
-                    "Popup Playing Paragraph",
-                    "widget.transform.playingPopup",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
                     "Speed",
                     "header"
                 ],
