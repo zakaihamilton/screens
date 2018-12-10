@@ -78,11 +78,9 @@ screens.app.prism = function AppPrism(me) {
                 if (angle !== viewer.rotateAngle) {
                     viewer.rotateDirection = !viewer.rotateDirection;
                 }
-                if (window.options.autoRotate) {
-                    requestAnimationFrame(animate);
-                }
+                return !window.options.autoRotate;
             };
-            requestAnimationFrame(animate);
+            me.core.util.animate(animate, 10);
         }
     };
     me.reload = {

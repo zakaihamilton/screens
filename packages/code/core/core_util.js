@@ -108,4 +108,29 @@ screens.core.util = function CoreUtil(me) {
         }
         return num;
     };
+    me.animate = function (callback, fps = 60) {
+        if (me.platform !== "browser") {
+            return;
+        }
+        if (!callback) {
+            return;
+        }
+        let then = performance.now();
+        const interval = 1000 / fps;
+        const tolerance = 0.1;
+        var requestId = null;
+
+        const animateLoop = (now) => {
+            requestId = requestAnimationFrame(animateLoop);
+            const delta = now - then;
+
+            if (delta >= interval - tolerance) {
+                then = now - (delta % interval);
+                if (callback(delta)) {
+                    cancelAnimationFrame(requestId);
+                }
+            }
+        };
+        requestId = requestAnimationFrame(animateLoop);
+    };
 };
