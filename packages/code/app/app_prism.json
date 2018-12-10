@@ -135,6 +135,13 @@
                     }
                 ],
                 [
+                    "Auto Rotate",
+                    "app.prism.autoRotate",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Reset Rotation",
                     "app.prism.resetRotation"
                 ],
@@ -151,7 +158,7 @@
             "ui.basic.tag": "div",
             "ui.basic.var": "viewer",
             "ui.class.class": "app.prism.viewer",
-            "ui.touch.down": "app.prism.rotate"
+            "ui.touch.down": "app.prism.rotateEvent"
         },
         {
             "ui.basic.var": "popup",

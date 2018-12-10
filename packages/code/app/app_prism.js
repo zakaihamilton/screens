@@ -30,7 +30,8 @@ screens.app.prism = function AppPrism(me) {
                     language: "Auto",
                     fontSize: "18px",
                     phaseNumbers: true,
-                    animation: true
+                    animation: true,
+                    autoRotate: false
                 });
             }
             me.ui.options.toggleSet(me, null, {
@@ -46,7 +47,8 @@ screens.app.prism = function AppPrism(me) {
                 "category": me.reload.set,
                 "headings": me.reload.set,
                 "subHeadings": me.reload.set,
-                "animation": me.reload.set
+                "animation": me.reload.set,
+                "autoRotate": me.update
             });
             me.ui.options.choiceSet(me, null, {
                 "language": me.reload.set,
@@ -62,12 +64,34 @@ screens.app.prism = function AppPrism(me) {
             me.resize(window);
         }
     };
+    me.update = function (object) {
+        var window = me.widget.window.get(object);
+        var autoRotate = window.options.autoRotate;
+        var viewer = window.var.viewer;
+        if (autoRotate) {
+            var animate = () => {
+                if (!viewer.rotateAngle) {
+                    viewer.rotateAngle = 0;
+                }
+                var angle = viewer.rotateAngle + (viewer.rotateDirection ? 1 : -1);
+                me.rotate(window, angle);
+                if (angle !== viewer.rotateAngle) {
+                    viewer.rotateDirection = !viewer.rotateDirection;
+                }
+                if (window.options.autoRotate) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            requestAnimationFrame(animate);
+        }
+    };
     me.reload = {
         set: async function (object) {
             var window = me.widget.window.get(object);
             var root = me.kab.form.root();
             var list = me.kab.draw.list(root, []);
             var html = await me.kab.draw.html(window, list, window.options);
+            window.var.viewer.rotateDirection = false;
             me.core.property.set(window.var.viewer, "ui.basic.html", html);
             me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
             me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
@@ -127,42 +151,46 @@ screens.app.prism = function AppPrism(me) {
     };
     me.resetRotation = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
+        me.rotate(window, 0);
     };
-    me.rotate = function (object, event) {
+    me.rotateEvent = function (object, event) {
         var target_region = me.ui.rect.absoluteRegion(object);
         if (event.type === me.ui.touch.eventNames["down"]) {
             me.core.property.set(object, {
-                "ui.touch.move": "app.prism.rotate",
-                "ui.touch.up": "app.prism.rotate"
+                "ui.touch.move": "app.prism.rotateEvent",
+                "ui.touch.up": "app.prism.rotateEvent"
             });
-            object.rotate_left = event.clientX - target_region.left;
-            object.rotate_mode = false;
-            object.rotate_start_angle = object.rotate_angle;
+            object.rotateLeft = event.clientX - target_region.left;
+            object.rotateMode = false;
+            object.rotateStartAngle = object.rotateAngle;
         }
         else if (event.type === me.ui.touch.eventNames["move"]) {
-            if (!object.rotate_mode && event.clientX > object.rotate_left - 10 && event.clientX < object.rotate_left + 10) {
+            if (!object.rotateMode && event.clientX > object.rotateLeft - 10 && event.clientX < object.rotateLeft + 10) {
                 return;
             }
-            object.rotate_mode = true;
-            var x = 0, y = 100, z = 0;
-            var angle = ((event.clientX - target_region.left) - object.rotate_left) / 5;
-            if (object.rotate_start_angle) {
-                angle += object.rotate_start_angle;
+            object.rotateMode = true;
+            var angle = ((event.clientX - target_region.left) - object.rotateLeft) / 5;
+            if (object.rotateStartAngle) {
+                angle += object.rotateStartAngle;
             }
-            angle = me.core.util.range(angle, -70, 70);
-            object.rotate_angle = angle;
-            me.core.property.set(object, {
-                "ui.style.transform": "rotate3d(" + [x, y, z, angle + "deg"].join(",") + ")"
-            });
+            me.rotate(object, angle);
         }
         else if (event.type === me.ui.touch.eventNames["up"]) {
-            object.rotate_mode = false;
+            object.rotateMode = false;
             me.core.property.set(object, {
                 "ui.touch.move": null,
                 "ui.touch.up": null
             });
         }
+    };
+    me.rotate = function (object, angle) {
+        var window = me.widget.window.get(object);
+        var x = 0, y = 100, z = 0;
+        angle = me.core.util.range(angle, -70, 70);
+        window.var.viewer.rotateAngle = angle;
+        me.core.property.set(window.var.viewer, {
+            "ui.style.transform": "rotate3d(" + [x, y, z, angle + "deg"].join(",") + ")"
+        });
     };
     me.resize = function (object) {
         var window = me.widget.window.get(object);
