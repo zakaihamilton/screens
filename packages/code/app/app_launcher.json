@@ -92,6 +92,10 @@
             [
                 "Prism",
                 "kab"
+            ],
+            [
+                "Table",
+                "kab"
             ]
         ]
     }

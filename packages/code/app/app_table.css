@@ -1,0 +1,24 @@
+.app-table-widget {
+    position: absolute;
+    display:grid;
+    overflow: auto;
+    align-items:stretch;
+    justify-items: stretch;
+    grid-auto-columns: auto;
+    grid-auto-rows: 3em;
+    align-content:center;
+    width:100%;
+    height:100%;
+}
+
+.app-table-widget.editMode {
+    grid-auto-rows: 40px;
+    font-family: monospace;
+    align-content:start;
+}
+
+.app-table-row {
+    color:var(--color);
+    line-height: 2em;
+    text-align: center;
+}

@@ -1,0 +1,174 @@
+{
+    "title": "Table",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
+    "icon": "/packages/res/icons/table.png",
+    "widget.menu.items": [
+        [
+            "Table",
+            [
+                [
+                    "Edit Mode",
+                    "app.table.editMode",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ],
+        [
+            "Transform",
+            [
+                [
+                    "Refresh",
+                    "app.table.reload",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Translation",
+                    "app.table.doTranslation",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Keep Source",
+                    "app.table.keepSource",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Abridged",
+                    "app.table.abridged",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Explanation",
+                    "app.table.doExplanation",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Prioritize Explanation",
+                    "app.table.prioritizeExplanation",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Styles",
+                    "app.table.addStyles",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Category",
+                    "app.table.category",
+                    {
+                        "state": "select",
+                        "enabled": "app.table.category"
+                    }
+                ],
+                [
+                    "Headings",
+                    "app.table.headings",
+                    {
+                        "state": "select",
+                        "enabled": "app.table.addStyles"
+                    }
+                ],
+                [
+                    "Phase Numbers",
+                    "app.table.phaseNumbers",
+                    {
+                        "state": "select",
+                        "enabled": "app.table.addStyles"
+                    }
+                ],
+                [
+                    "Sub Headings",
+                    "app.table.subHeadings",
+                    {
+                        "state": "select",
+                        "enabled": "app.table.addStyles"
+                    }
+                ],
+                [
+                    "Language",
+                    "header"
+                ],
+                [
+                    "Auto",
+                    "app.table.language",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "English",
+                    "app.table.language",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
+                    "Hebrew",
+                    "app.table.language",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ],
+        [
+            "Layout",
+            [
+                [
+                    "Font Size",
+                    "header"
+                ],
+                "widget.transform.fontSizesPx(app.table.fontSize)"
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "table",
+            "ui.class.class": "app.table.widget",
+            "ui.touch.down": "!app.table.rotateEvent"
+        },
+        {
+            "ui.basic.var": "popup",
+            "ui.basic.tag": "div",
+            "ui.basic.html": "@widget.transform.html",
+            "ui.class.add": "modal",
+            "ui.style.zIndex": "1000",
+            "ui.property.after": {
+                "ui.node.parent": "@ui.element.workspace"
+            }
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-table-window",
+        "storage.local.restore": "widget.window.store",
+        "app.table.initOptions": null,
+        "app.table.reload": null
+    }
+}
