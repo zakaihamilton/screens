@@ -119,16 +119,23 @@ screens.core.util = function CoreUtil(me) {
         const interval = 1000 / fps;
         const tolerance = 0.1;
         var requestId = null;
+        var inAnimation = false;
 
-        const animateLoop = (now) => {
+        const animateLoop = async (now) => {
             requestId = requestAnimationFrame(animateLoop);
             const delta = now - then;
 
+            if (inAnimation) {
+                return;
+            }
+
             if (delta >= interval - tolerance) {
                 then = now - (delta % interval);
-                if (callback(delta)) {
+                inAnimation = true;
+                if (await callback(delta)) {
                     cancelAnimationFrame(requestId);
                 }
+                inAnimation = false;
             }
         };
         requestId = requestAnimationFrame(animateLoop);

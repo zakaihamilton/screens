@@ -196,6 +196,7 @@ screens.app.prism = function AppPrism(me) {
         var target_region = me.ui.rect.absoluteRegion(window.var.container);
         var size = target_region.width > target_region.height ? target_region.height : target_region.width;
         me.core.property.set(window.var.viewer, {
+            "ui.style.top": ((target_region.height - size) / 2) + "px",
             "ui.style.left": ((target_region.width - size) / 2) + "px",
             "ui.style.width": size + "px",
             "ui.style.height": size + "px"
