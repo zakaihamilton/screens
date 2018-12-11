@@ -55,6 +55,7 @@ screens.app.table = function AppPrism(me) {
             me.ui.options.choiceSet(me, null, {
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
+                    var window = me.widget.window.get(object);
                     me.core.property.set(window.var.table, "ui.style.fontSize", value);
                     me.core.property.notify(window, "reload");
                     me.core.property.notify(window, "update");
@@ -65,31 +66,20 @@ screens.app.table = function AppPrism(me) {
             me.core.property.set(window, "app", me);
         }
     };
-    me.update = function (object) {
-        var window = me.widget.window.get(object);
-        var autoRotate = window.options.autoRotate;
-        var viewer = window.var.table;
-        if (autoRotate) {
-            var animate = () => {
-                if (!viewer.rotateAngle) {
-                    viewer.rotateAngle = 0;
-                }
-                var angle = viewer.rotateAngle + (viewer.rotateDirection ? 1 : -1);
-                me.rotate(window, angle);
-                if (angle !== viewer.rotateAngle) {
-                    viewer.rotateDirection = !viewer.rotateDirection;
-                }
-                return !window.options.autoRotate;
-            };
-            me.core.util.animate(animate, 10);
-        }
-    };
     me.attributes = function (dict) {
         var attributes = "";
         for (const [key, value] of Object.entries(dict)) {
             attributes += " " + key + "=\"" + value + "\" ";
         }
         return attributes;
+    };
+    me.rename = function (object) {
+        var window = me.widget.window.get(object);
+        var title = object.value;
+        if (!title) {
+            title = "Table";
+        }
+        me.core.property.set(window, "title", title);
     };
     me.store = function (object) {
         var window = me.widget.window.get(object);
@@ -105,40 +95,71 @@ screens.app.table = function AppPrism(me) {
         var html = "";
         var window = me.widget.window.get(object);
         var editMode = window.options.editMode;
-        for (var rowIndex = 0; rowIndex < window.rowCount; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < window.columnCount; columnIndex++) {
-                var cell = window.cells[rowIndex][columnIndex];
+        var cellOffset = 1;
+        var countOffset = editMode ? 1 : 0;
+        for (var rowIndex = 0; rowIndex < window.rowCount + countOffset; rowIndex++) {
+            for (var columnIndex = 0; columnIndex < window.columnCount + countOffset; columnIndex++) {
+                var cell = {};
+                if (!editMode || (rowIndex && columnIndex)) {
+                    cell = window.cells[rowIndex - countOffset][columnIndex - countOffset];
+                }
                 if (!cell) {
                     cell = {};
                 }
                 if (!cell.value && !editMode) {
                     continue;
                 }
-                var styles = ["grid-column:" + (columnIndex + 1), "grid-row:" + (rowIndex + 1)];
+                var styles = ["grid-column:" + (columnIndex + cellOffset), "grid-row:" + (rowIndex + cellOffset)];
                 var classes = ["app-table-row"];
                 var attributes = {};
-                styles.push("width:auto");
+                var header = null;
                 if (editMode) {
-                    styles.push("height:40px");
+                    if (!rowIndex && !columnIndex) {
+                        header = "";
+                    }
+                    else if (!rowIndex) {
+                        header = columnIndex;
+                    }
+                    else if (!columnIndex) {
+                        header = rowIndex;
+                    }
+                    styles.push("height:2em");
                 }
                 else {
                     styles.push("height:3em");
                 }
-                styles.push("transform: translateZ(30px)");
-                styles.push("margin:3px");
-                if (editMode) {
-                    attributes.oninput = "screens.app.table.store(this)";
-                    classes.push("editMode");
+                if (header) {
+                    classes.push("header");
                 }
-                attributes.rowIndex = rowIndex;
-                attributes.columnIndex = columnIndex;
-                if (cell.value) {
+                else if (editMode) {
+                    if (!rowIndex && !columnIndex) {
+                        attributes.oninput = "screens.app.table.rename(this)";
+                    }
+                    else {
+                        attributes.oninput = "screens.app.table.store(this)";
+                    }
+                    classes.push("edit-mode");
+                    styles.push("font-size:1em");
+                }
+                if (rowIndex > 0) {
+                    attributes.rowIndex = rowIndex - countOffset;
+                }
+                if (columnIndex > 0) {
+                    attributes.columnIndex = columnIndex - countOffset;
+                }
+                if (!header && cell.value) {
                     attributes.value = cell.value;
                 }
-                attributes.class = classes.join(";");
+                attributes.class = classes.join(" ");
                 attributes.style = styles.join(";");
-                var tag = editMode ? "input" : "div";
-                var value = editMode ? "" : await me.core.property.get(window, "app.table.term", cell.value);
+                var tag = editMode && !header ? "input" : "div";
+                var value = "";
+                if (!editMode) {
+                    value = await me.core.property.get(window, "app.table.term", cell.value);
+                }
+                else if (header) {
+                    value = header;
+                }
                 html += "<" + tag + me.attributes(attributes) + ">" + value + "</" + tag + ">";
             }
         }
@@ -148,7 +169,7 @@ screens.app.table = function AppPrism(me) {
         set: async function (object) {
             var window = me.widget.window.get(object);
             me.core.property.set(window.var.table, "ui.style.fontSize", window.options.fontSize);
-            me.core.property.set(window.var.table, "ui.class.editMode", window.options.editMode);
+            me.core.property.set(window.var.table, "ui.class.edit-mode", window.options.editMode);
             window.rowCount = 20;
             window.columnCount = 10;
             if (!window.cells) {

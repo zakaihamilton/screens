@@ -789,7 +789,7 @@ screens.widget.window = function WidgetWindow(me) {
                     "title": me.core.property.get(window, "title")
                 };
                 if (!me.core.property.get(window, "fixed")) {
-                    options["region"] = me.core.property.get(window, "region")
+                    options["region"] = me.core.property.get(window, "region");
                 }
                 var keys = ["maximize", "restore", "minimize"];
                 keys.map(function (key) {

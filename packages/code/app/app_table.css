@@ -5,20 +5,31 @@
     align-items:stretch;
     justify-items: stretch;
     grid-auto-columns: auto;
-    grid-auto-rows: 3em;
     align-content:center;
-    width:100%;
-    height:100%;
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
 }
 
-.app-table-widget.editMode {
-    grid-auto-rows: 40px;
-    font-family: monospace;
+.app-table-widget.edit-mode {
+    grid-auto-rows: 2.5em;
     align-content:start;
 }
 
 .app-table-row {
+    margin:3px;
     color:var(--color);
     line-height: 2em;
+    width:auto;
     text-align: center;
+}
+
+.app-table-row.edit-mode {
+    color:black;
+}
+
+.app-table-row.header {
+    text-align: center;
+    border:1px solid gray;    
 }
