@@ -26,7 +26,7 @@
                     "ui.data.keyList": [
                         "ui.style.gridRow",
                         "ui.style.gridColumn",
-                        "app.diagram.term"
+                        "widget.transform.term"
                     ],
                     "ui.data.default": {
                         "ui.basic.tag": "div",

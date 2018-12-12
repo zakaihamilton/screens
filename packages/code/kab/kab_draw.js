@@ -90,7 +90,7 @@ screens.kab.draw = function KabDraw(me) {
                     css.push("circle");
                     if (restriction) {
                         styles.push("background: var(--background)");
-                        depth = index + [0,2,4,6,8][phase];
+                        depth = index + [0, 2, 4, 6, 8][phase];
                     }
                     else {
                         styles.push("background: radial-gradient(circle at 100px 100px, var(--phase-" +
@@ -100,8 +100,7 @@ screens.kab.draw = function KabDraw(me) {
                     let size = (phase + 1) * options.circleMultiplier;
                     styles.push(...["left", "top", "right", "bottom"].map(name => name + ":" + size + "em"));
                 }
-                var app = me.core.property.get(object, "app");
-                var text = await me.core.property.get(object, app.id + ".term", term);
+                var text = await me.core.property.get(object, "widget.transform.term", term);
                 var borderColor = me.ui.color.get("--phase-" + phaseName + "-border");
                 if (!phase) {
                     borderColor = "darkgray";

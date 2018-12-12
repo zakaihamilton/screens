@@ -85,6 +85,9 @@ screens.widget.transform = function WidgetTransform(me) {
             var window = me.widget.window.get(object);
             if (window) {
                 widget = window.var.transform;
+                if (!widget) {
+                    widget = window;
+                }
             }
         }
         return widget;
@@ -537,13 +540,22 @@ screens.widget.transform = function WidgetTransform(me) {
         console.log("params.gridData: " + JSON.stringify(params.gridData));
         return params;
     };
-    me.term = {
-        set: async function (object, text) {
-            var widget = me.findWidget(object);
-            var options = Object.assign({}, widget.options, { category: false });
-            var info = await me.kab.text.parse(widget.language, text, options);
-            me.core.property.set(object, "ui.basic.html", info.text);
+    me.term = async function (object, text) {
+        var widget = me.findWidget(object);
+        var array = text;
+        if (!Array.isArray(text)) {
+            array = [text];
         }
+        var options = Object.assign({}, widget.options, { category: false });
+        var result = await me.core.util.map(array, async (text) => {
+            var info = await me.kab.text.parse(widget.language, text, options);
+            if (!widget.termData) {
+                widget.termData = { terms: {} };
+            }
+            widget.termData.terms = Object.assign(widget.termData.terms, info.terms);
+            return info.text;
+        });
+        return result.join("<br>");
     };
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);

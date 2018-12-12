@@ -17,7 +17,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.class.add"
                         ],
                         "ui.data.default": {

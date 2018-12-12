@@ -62,7 +62,7 @@ screens.app.table = function AppPrism(me) {
                 }
             });
             me.ui.class.useStylesheet("kab");
-            window.options.clickCallback = "screens.app.table.openPopup";
+            window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
         }
     };
@@ -155,7 +155,7 @@ screens.app.table = function AppPrism(me) {
                 var tag = editMode && !header ? "input" : "div";
                 var value = "";
                 if (!editMode) {
-                    value = await me.core.property.get(window, "app.table.term", cell.value);
+                    value = await me.core.property.get(window, "widget.transform.term", cell.value);
                 }
                 else if (header) {
                     value = header;
@@ -181,56 +181,5 @@ screens.app.table = function AppPrism(me) {
             });
             me.core.property.notify(window, "update");
         }
-    };
-    me.term = async function (object, text) {
-        var window = me.widget.window.get(object);
-        var array = text;
-        if (!Array.isArray(text)) {
-            array = [text];
-        }
-        var result = await me.core.util.map(array, async (text) => {
-            var info = await me.kab.text.parse(window.language, text, window.options);
-            if (!window.terms) {
-                window.terms = {};
-            }
-            window.terms = Object.assign(window.terms, info.terms);
-            return info.text;
-        });
-        return result.join("<br>");
-    };
-    me.openPopup = function (object, termName) {
-        var window = me.widget.window.get(object);
-        var foundTermName = Object.keys(window.terms).find((term) => {
-            return term.replace(/ /g, "") === termName;
-        });
-        if (foundTermName && termName !== foundTermName) {
-            termName = foundTermName;
-        }
-        var term = window.terms[termName];
-        if (!term) {
-            return;
-        }
-        var widgets = me.ui.node.bind(window.var.popup, term, {
-            term: ".text",
-            phase: ".phase|.phase.minor",
-            hebrew: ".item.hebrew",
-            translation: ".item.translation",
-            explanation: ".item.explanation",
-            category: ".category",
-            source: ".source"
-        }, "None");
-        for (var name in widgets) {
-            var child = widgets[name];
-            if (child) {
-                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
-            }
-        }
-        var phase = widgets.phase.innerText.toLowerCase();
-        var classes = "title widget-transform-level ";
-        if (phase !== "root") {
-            classes += "kab-term-phase-" + phase;
-        }
-        me.core.property.set(widgets.phase, "ui.class.class", classes);
-        me.core.property.set(window.var.popup, "ui.class.add", "is-active");
     };
 };

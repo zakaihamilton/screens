@@ -19,7 +19,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -46,7 +46,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -73,7 +73,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -100,7 +100,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -127,7 +127,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -154,7 +154,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.term",
+                            "widget.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],

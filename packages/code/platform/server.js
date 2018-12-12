@@ -35,7 +35,8 @@ screens.apps = [
     "gematria",
     "keyboard",
     "tasks",
-    "prism"
+    "prism",
+    "table"
 ];
 
 screens.include({

@@ -59,7 +59,7 @@ screens.app.prism = function AppPrism(me) {
                 }
             });
             me.ui.class.useStylesheet("kab");
-            window.options.clickCallback = "screens.app.prism.openPopup";
+            window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
             me.resize(window);
         }
@@ -95,57 +95,6 @@ screens.app.prism = function AppPrism(me) {
             me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
             me.core.property.notify(window, "update");
         }
-    };
-    me.term = async function (object, text) {
-        var window = me.widget.window.get(object);
-        var array = text;
-        if (!Array.isArray(text)) {
-            array = [text];
-        }
-        var result = await me.core.util.map(array, async (text) => {
-            var info = await me.kab.text.parse(window.language, text, window.options);
-            if (!window.terms) {
-                window.terms = {};
-            }
-            window.terms = Object.assign(window.terms, info.terms);
-            return info.text;
-        });
-        return result.join("<br>");
-    };
-    me.openPopup = function (object, termName) {
-        var window = me.widget.window.get(object);
-        var foundTermName = Object.keys(window.terms).find((term) => {
-            return term.replace(/ /g, "") === termName;
-        });
-        if (foundTermName && termName !== foundTermName) {
-            termName = foundTermName;
-        }
-        var term = window.terms[termName];
-        if (!term) {
-            return;
-        }
-        var widgets = me.ui.node.bind(window.var.popup, term, {
-            term: ".text",
-            phase: ".phase|.phase.minor",
-            hebrew: ".item.hebrew",
-            translation: ".item.translation",
-            explanation: ".item.explanation",
-            category: ".category",
-            source: ".source"
-        }, "None");
-        for (var name in widgets) {
-            var child = widgets[name];
-            if (child) {
-                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
-            }
-        }
-        var phase = widgets.phase.innerText.toLowerCase();
-        var classes = "title widget-transform-level ";
-        if (phase !== "root") {
-            classes += "kab-term-phase-" + phase;
-        }
-        me.core.property.set(widgets.phase, "ui.class.class", classes);
-        me.core.property.set(window.var.popup, "ui.class.add", "is-active");
     };
     me.resetRotation = function (object) {
         var window = me.widget.window.get(object);
