@@ -70,6 +70,12 @@ screens.app.table = function AppTable(me) {
             me.core.property.set(window, "app", me);
         }
     };
+    me.clear = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window, "title", "Table");
+        window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
+        me.reload.set(window);
+    };
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "title", title);

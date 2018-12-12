@@ -12,10 +12,15 @@
             "Table",
             [
                 [
+                    "Clear",
+                    "app.table.clear"
+                ],
+                [
                     "Edit Mode",
                     "app.table.editMode",
                     {
-                        "state": "select"
+                        "state": "select",
+                        "separator": true
                     }
                 ]
             ]
