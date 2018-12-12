@@ -34,21 +34,22 @@ function screens_setup(package_name, component_name, child_name, node) {
     if (typeof node !== "function") {
         throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
-    var platform = node(component_obj, child_name);
+    var constructor = node;
+    var platform = constructor(component_obj, child_name);
     var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
         component_obj = new Proxy(() => { }, {
             get: function (object, property) {
-                if(property in object) {
+                if (property in object) {
                     return Reflect.get(object, property);
                 }
                 else {
-                    return function() {
+                    return function () {
                         var args = Array.prototype.slice.call(arguments);
                         args.unshift(id + "." + property);
                         return screens.core.message["send_" + platform].apply(null, args);
-                    }
+                    };
                 }
             }
         });
@@ -62,6 +63,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
     }
     else {
+        component_obj.attach = constructor;
         init = { callback: component_obj.init, args: [component_obj] };
     }
     component_obj.require = platform;
@@ -78,7 +80,7 @@ function screens_setup(package_name, component_name, child_name, node) {
 }
 
 async function screens_init(items) {
-    for (item of items) {
+    for (var item of items) {
         var initializers = item.initializers;
         if (initializers) {
             do {

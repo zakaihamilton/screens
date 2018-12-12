@@ -1,9 +1,13 @@
 /*
  @author Zakai Hamilton
- @component AppPrism
+ @component AppTable
  */
 
-screens.app.table = function AppPrism(me) {
+screens.app.table = function AppTable(me) {
+    me.init = function () {
+        me.ui.content.attach(me);
+        me.updateContentList();
+    };
     me.launch = function (args) {
         if (!args) {
             args = [""];
@@ -65,6 +69,30 @@ screens.app.table = function AppPrism(me) {
             window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
         }
+    };
+    me.importData = function (object, text, title) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window, "title", title);
+        var cells = JSON.parse(text);
+        for (var cell of cells) {
+            window.cells[cell.row][cell.column] = { value: cell.text };
+        }
+        me.reload.set(window);
+    };
+    me.exportData = function (object) {
+        var window = me.widget.window.get(object);
+        var title = me.core.property.get(window, "title");
+        var data = [];
+        window.cells.map((row, rowIndex) => {
+            row.map((column, columnIndex) => {
+                data.push({
+                    row: rowIndex,
+                    column: columnIndex,
+                    text: column.value
+                });
+            });
+        });
+        return [JSON.stringify(data), title];
     };
     me.attributes = function (dict) {
         var attributes = "";

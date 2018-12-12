@@ -11,7 +11,8 @@ screens.app.transform = function AppTransform(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
-    me.init = function() {
+    me.init = function () {
+        me.ui.content.attach(me);
         me.core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
         me.updateContentList();
     };
@@ -35,9 +36,9 @@ screens.app.transform = function AppTransform(me) {
             me.ui.class.useStylesheet("kab");
         }
     };
-    me.exportText = function(object, target) {
+    me.exportText = function (object, target) {
         var window = me.widget.window.get(object);
-        if(window.child_window) {
+        if (window.child_window) {
             window = window.child_window;
         }
         var text = me.core.property.get(window.var.transform, "text");
@@ -45,7 +46,7 @@ screens.app.transform = function AppTransform(me) {
     };
     me.updateWidgets = function (object, showInput, update = true) {
         var window = me.widget.window.get(object);
-        me.core.property.set([window.var.input,window.var.doTransform], "ui.style.display", showInput ? "inline-block" : "none");
+        me.core.property.set([window.var.input, window.var.doTransform], "ui.style.display", showInput ? "inline-block" : "none");
         me.core.property.set(window.var.transform, "ui.style.top", showInput ? "250px" : "0px");
         if (update) {
             me.core.property.notify(window, "update");
@@ -74,70 +75,21 @@ screens.app.transform = function AppTransform(me) {
             me.core.property.set(window.var.transform, "transform");
         }
     };
-    me.updateContentList = function() {
-        me.publicContentList = me.core.message.send_server("core.cache.use",
-            me.id + ".public",
-            "storage.data.query",
-            "app.transform.content",
-            "title");
-        me.privateContentList = me.core.message.send_server("core.cache.use",
-            me.id + ".private.$userId",
-            "storage.data.query",
-            "app.transform.content.$userId",
-            "title");
-    };
-    me.refreshContentList = {
-        set: async function (object) {
-            await me.core.message.send_server("core.cache.reset", me.id + ".public");
-            await me.core.message.send_server("core.cache.reset", me.id + ".private.$userId");
-            me.updateContentList();
-        }
-    };
-    me.importData = function(object, text) {
+    me.importData = function (object, text) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
     };
-    me.importItem = async function (object, item) {
+    me.exportData = function (object) {
         var window = me.widget.window.get(object);
-        var name = item;
-        if(typeof item !== "string") {
-            name = item.key.name;
-        }
-        var fullItem = await me.storage.data.load("app.transform.content", name);
-        var content = "";
-        if(fullItem) {
-            content = me.core.string.decode(fullItem.content);
-        }
-        me.importData(window, content);
-    };
-    me.importItemPrivate = async function (object, item) {
-        var window = me.widget.window.get(object);
-        var name = item;
-        if(typeof item !== "string") {
-            name = item.key.name;
-        }
-        var fullItem = await me.storage.data.load("app.transform.content.$userId", name);
-        var content = "";
-        if(fullItem) {
-            content = me.core.string.decode(fullItem.content);
-        }
-        me.importData(window, content);
-    };
-    me.publicContentMenuList = {
-        get: function (object) {
-            return me.widget.menu.collect(object, me.publicContentList, "title", null, "public", null, me.importItem);
-        }
-    };
-    me.privateContentMenuList = {
-        get: function (object) {
-            return me.widget.menu.collect(object, me.privateContentList, "title", null, "private", null, me.importItemPrivate);
-        }
+        var data = me.core.property.get(window.var.input, "ui.basic.text");
+        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
+        return [data, title];
     };
     me.documentIndex = {
         set: function (object, value) {
             var title = value;
-            if(!isNaN(value)) {
+            if (!isNaN(value)) {
                 title = "Document " + value;
             }
             me.core.property.set(object, "widget.window.key", title);
@@ -154,51 +106,5 @@ screens.app.transform = function AppTransform(me) {
             }
             return key;
         }
-    };
-    me.savePublic = {
-        get: function (object) {
-            var window = me.widget.window.get(object);
-            var text = me.core.property.get(window.var.transform, "text");
-            return text;
-        },
-        set: function (object) {
-            me.save(object);
-        }
-    };
-    me.savePrivate = {
-        get: function (object) {
-            var window = me.widget.window.get(object);
-            var text = me.core.property.get(window.var.transform, "text");
-            return text;
-        },
-        set: function (object) {
-            me.save(object, true);
-        }
-    };
-    me.save = async function (object, private) {
-        var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.transform, "text");
-        var date = new Date();
-        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
-        var key = me.core.property.get(window, "widget.window.key");
-        if (!title) {
-            title = key;
-        }
-        if (!title) {
-            title = date.toLocaleDateString();
-        }
-        var data = {
-            content: me.core.string.encode(text),
-            date: date.toString(),
-            title: title,
-            user: "$userId"
-        };
-        var kind = "app.transform.content";
-        if (private) {
-            data.owner = "$userId";
-            kind += ".$userId";
-        }
-        await me.storage.data.save(data, kind, title, ["content"]);
-        await me.refreshContentList.set(object);
     };
 };

@@ -249,7 +249,7 @@ screens.widget.window = function WidgetWindow(me) {
             }
             var parent_window = me.parent(window);
             if (parent_window) {
-                me.detach(parent_window);
+                me.detachFromParent(parent_window);
             }
             me.core.property.set(window.var.icon, "ui.node.parent");
             me.core.property.set(window, "ui.node.parent");
@@ -360,7 +360,7 @@ screens.widget.window = function WidgetWindow(me) {
             });
         }
     };
-    me.attach = function (window, parent_window) {
+    me.attachToParent = function (window, parent_window) {
         if (parent_window.child_window) {
             me.core.property.set(parent_window.child_window, "unmaximize");
         }
@@ -376,7 +376,7 @@ screens.widget.window = function WidgetWindow(me) {
             window.var.maximize
         ], "ui.node.parent", parent_window.var.header);
     };
-    me.detach = function (parent_window) {
+    me.detachFromParent = function (parent_window) {
         if (parent_window && parent_window.child_window) {
             var window = parent_window.child_window;
             parent_window.child_window = null;
@@ -423,7 +423,7 @@ screens.widget.window = function WidgetWindow(me) {
                     return;
                 }
                 if (maximized) {
-                    me.detach(parent_window);
+                    me.detachFromParent(parent_window);
                 }
                 me.core.property.set(parent_window, "widget.window.refocus");
             } else {
@@ -468,7 +468,7 @@ screens.widget.window = function WidgetWindow(me) {
             }
             var parent_window = me.parent(window);
             if (parent_window) {
-                me.attach(window, parent_window);
+                me.attachToParent(window, parent_window);
             }
             if (!wasMaximized) {
                 me.storeRegion(window);
@@ -647,7 +647,7 @@ screens.widget.window = function WidgetWindow(me) {
             if (maximized) {
                 var content = null;
                 if (parent_window) {
-                    me.detach(parent_window);
+                    me.detachFromParent(parent_window);
                     content = me.core.property.get(parent_window, "widget.window.content");
                 } else {
                     content = me.ui.element.workspace();
