@@ -74,6 +74,7 @@ screens.app.table = function AppTable(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "title", title);
         var cells = JSON.parse(text);
+        window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         for (var cell of cells) {
             window.cells[cell.row][cell.column] = { value: cell.text };
         }
