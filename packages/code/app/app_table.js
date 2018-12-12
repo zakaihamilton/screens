@@ -178,6 +178,9 @@ screens.app.table = function AppTable(me) {
                 if (!header && cell.value) {
                     attributes.value = cell.value;
                 }
+                else if (!rowIndex && !columnIndex) {
+                    attributes.value = me.core.property.get(window, "title");
+                }
                 attributes.class = classes.join(" ");
                 attributes.style = styles.join(";");
                 var tag = editMode && !header ? "input" : "div";

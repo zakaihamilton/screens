@@ -22,15 +22,8 @@ screens.ui.options = function UIOptions(me) {
             component.storageName = storage;
         }
     };
-    me.storageKey = function(component, object) {
+    me.storageKey = function (component, object) {
         var storageKey = component.id + ".options";
-        if (object) {
-            var window = me.widget.window.get(object);
-            var key = me.core.property.get(window, "key");
-            if(key) {
-                storageKey = key + "." + storageKey;
-            }
-        }
         var validKey = me.storage.local.validKey(storageKey);
         return validKey;
     };
@@ -50,7 +43,7 @@ screens.ui.options = function UIOptions(me) {
             component.options = options;
         }
     };
-    me.save = function(component, object, options) {
+    me.save = function (component, object, options) {
         var allOptions = null;
         if (object) {
             allOptions = object.options;
@@ -69,8 +62,8 @@ screens.ui.options = function UIOptions(me) {
         me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(allOptions));
     };
     me.toggleSet = function (component, toTargetCallback, key, callback) {
-        if(typeof key === "object") {
-            for(var property in key) {
+        if (typeof key === "object") {
+            for (var property in key) {
                 callback = key[property];
                 me.toggleSet(component, toTargetCallback, property, callback);
             }
@@ -82,7 +75,7 @@ screens.ui.options = function UIOptions(me) {
         component[key] = {
             get: function (object) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
@@ -97,7 +90,7 @@ screens.ui.options = function UIOptions(me) {
             },
             set: function (object, value) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
@@ -120,8 +113,8 @@ screens.ui.options = function UIOptions(me) {
         };
     };
     me.choiceSet = function (component, toTargetCallback, key, callback) {
-        if(typeof key === "object") {
-            for(var property in key) {
+        if (typeof key === "object") {
+            for (var property in key) {
                 callback = key[property];
                 me.choiceSet(component, toTargetCallback, property, callback);
             }
@@ -133,7 +126,7 @@ screens.ui.options = function UIOptions(me) {
         component[key] = {
             get: function (object, value) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
@@ -148,7 +141,7 @@ screens.ui.options = function UIOptions(me) {
             },
             set: function (object, value) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
@@ -171,8 +164,8 @@ screens.ui.options = function UIOptions(me) {
         };
     };
     me.listSet = function (component, toTargetCallback, key, callback) {
-        if(typeof key === "object") {
-            for(var property in key) {
+        if (typeof key === "object") {
+            for (var property in key) {
                 callback = key[property];
                 me.listSet(component, toTargetCallback, property, callback);
             }
@@ -184,7 +177,7 @@ screens.ui.options = function UIOptions(me) {
         component[key] = {
             get: function (object, value) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
@@ -199,7 +192,7 @@ screens.ui.options = function UIOptions(me) {
             },
             set: function (object, value) {
                 if (toTargetCallback) {
-                    if(component === toTargetCallback) {
+                    if (component === toTargetCallback) {
                         object = component;
                     }
                     else {
