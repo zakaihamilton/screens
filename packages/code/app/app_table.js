@@ -191,6 +191,7 @@ screens.app.table = function AppTable(me) {
                         attributes.oninput = "screens.app.table.store(this)";
                     }
                     classes.push("edit-mode");
+                    classes.push("input");
                     styles.push("font-size:1em");
                 }
                 if (rowIndex > 0) {
