@@ -7098,6 +7098,14 @@
             "term": "Umanuto",
             "hebrew": "אומנותו",
             "translation": "his trade"
+        },
+        {
+            "term": "Ish - boshet",
+            "hebrew": "איש בושת",
+            "fixed": true,
+            "style": {
+                "category": "Person"
+            }
         }
     ],
     "style": {
