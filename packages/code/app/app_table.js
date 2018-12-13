@@ -210,7 +210,7 @@ screens.app.table = function AppTable(me) {
                 else if (header) {
                     value = header;
                 }
-                else if (window.options.autoComplete) {
+                else if (window.options.autoComplete && rowIndex && columnIndex) {
                     attributes.list = "terms";
                 }
                 html += "<" + tag + me.attributes(attributes) + ">" + value + "</" + tag + ">";
@@ -218,7 +218,7 @@ screens.app.table = function AppTable(me) {
         }
         if (window.options.autoComplete && editMode && window.terms) {
             html += "<datalist id=\"terms\">";
-            html += window.terms.map(term => "<option value=\"" + term + "\"></option>").join("\n");
+            html += window.terms.filter(term => term.match(/^[A-Z,a-z]/)).sort().map(term => "<option value=\"" + term + "\"></option>").join("\n");
         }
         return html;
     };
