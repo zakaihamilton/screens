@@ -22,6 +22,14 @@
                         "state": "select",
                         "separator": true
                     }
+                ],
+                [
+                    "Copy Url To Clipboard",
+                    "app.table.copyUrl",
+                    {
+                        "enabled": "select",
+                        "separator": true
+                    }
                 ]
             ]
         ],

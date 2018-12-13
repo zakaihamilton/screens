@@ -13,7 +13,9 @@ screens.app.table = function AppTable(me) {
             args = [""];
         }
         var window = me.ui.element.create(__json__, "workspace", "self");
-        window.language = "english";
+        if (typeof args[0] === "string") {
+            me.importItem(window, args[0]);
+        }
         return window;
     };
     me.initOptions = {
@@ -66,6 +68,9 @@ screens.app.table = function AppTable(me) {
                 }
             });
             me.ui.class.useStylesheet("kab");
+            window.language = "english";
+            window.rowCount = 20;
+            window.columnCount = 10;
             window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
         }
@@ -92,13 +97,18 @@ screens.app.table = function AppTable(me) {
         var data = [];
         window.cells.map((row, rowIndex) => {
             row.map((column, columnIndex) => {
-                data.push({
-                    row: rowIndex,
-                    column: columnIndex,
-                    text: column.value
-                });
+                if (column.value) {
+                    data.push({
+                        row: rowIndex,
+                        column: columnIndex,
+                        text: column.value
+                    });
+                }
             });
         });
+        if (!data.length) {
+            return [];
+        }
         return [JSON.stringify(data), title];
     };
     me.attributes = function (dict) {
@@ -208,8 +218,6 @@ screens.app.table = function AppTable(me) {
             var window = me.widget.window.get(object);
             me.core.property.set(window.var.table, "ui.style.fontSize", window.options.fontSize);
             me.core.property.set(window.var.table, "ui.class.edit-mode", window.options.editMode);
-            window.rowCount = 20;
-            window.columnCount = 10;
             if (!window.cells) {
                 window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
             }
@@ -218,6 +226,18 @@ screens.app.table = function AppTable(me) {
                 "ui.basic.html": html
             });
             me.core.property.notify(window, "update");
+        }
+    };
+    me.copyUrl = {
+        get: function (object) {
+            var window = me.widget.window.get(object);
+            var title = me.core.property.get(window, "title");
+            return title !== "Table";
+        },
+        set: function (object) {
+            var window = me.widget.window.get(object);
+            var title = me.core.property.get(window, "title");
+            me.core.util.copyUrl("table", [title]);
         }
     };
 };
