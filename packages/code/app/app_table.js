@@ -232,8 +232,10 @@ screens.app.table = function AppTable(me) {
             if (language) {
                 window.terms = await me.kab.data.terms(language);
             }
-            me.core.property.set(window.var.table, "ui.style.fontSize", window.options.fontSize);
-            me.core.property.set(window.var.table, "ui.class.edit-mode", window.options.editMode);
+            me.core.property.set(window.var.table, {
+                "ui.style.fontSize": window.options.fontSize,
+                "ui.class.edit-mode": window.options.editMode
+            });
             if (!window.cells) {
                 window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
             }
