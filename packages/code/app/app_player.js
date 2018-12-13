@@ -71,7 +71,7 @@ screens.app.player = function AppPlayer(me) {
     me.refresh = {
         set: async function (object) {
             var window = me.singleton;
-            await me.media.file.reset();
+            await me.media.file.update();
             me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
         }
     };

@@ -40,6 +40,12 @@ screens.media.file = function MediaFile(me) {
         }
         return list;
     };
+    me.update = async function () {
+        var groups = await me.groups(true);
+        for (var group of groups) {
+            me.listing(me.rootPath + "/" + group.name, true);
+        }
+    };
     me.listing = async function (path, update = false) {
         var files = null;
         if (update || !me._listing[path]) {
