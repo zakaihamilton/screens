@@ -25,6 +25,7 @@ screens.app.table = function AppTable(me) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
                     editMode: false,
+                    autoComplete: true,
                     doTranslation: true,
                     doExplanation: true,
                     prioritizeExplanation: true,
@@ -43,6 +44,7 @@ screens.app.table = function AppTable(me) {
             }
             me.ui.options.toggleSet(me, null, {
                 "editMode": me.reload.set,
+                "autoComplete": me.reload.set,
                 "doTranslation": me.reload.set,
                 "doExplanation": me.reload.set,
                 "prioritizeExplanation": me.reload.set,
@@ -208,13 +210,13 @@ screens.app.table = function AppTable(me) {
                 else if (header) {
                     value = header;
                 }
-                else {
+                else if (window.options.autoComplete) {
                     attributes.list = "terms";
                 }
                 html += "<" + tag + me.attributes(attributes) + ">" + value + "</" + tag + ">";
             }
         }
-        if (editMode && window.terms) {
+        if (window.options.autoComplete && editMode && window.terms) {
             html += "<datalist id=\"terms\">";
             html += window.terms.map(term => "<option value=\"" + term + "\"></option>").join("\n");
         }

@@ -24,6 +24,14 @@
                     }
                 ],
                 [
+                    "Auto Complete",
+                    "app.table.autoComplete",
+                    {
+                        "state": "select",
+                        "visible": "app.table.editMode"
+                    }
+                ],
+                [
                     "Copy Url To Clipboard",
                     "app.table.copyUrl",
                     {

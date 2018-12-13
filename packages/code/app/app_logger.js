@@ -31,7 +31,7 @@ screens.app.logger = function AppLogger(me) {
         });
     };
     me.send = async function (method) {
-        var source = me.options.source.toLowerCase().replace(/ /g, '_');
+        var source = me.options.source.toLowerCase().replace(/\s/g, '_');
         var send_method = "send_" + source;
         var send = me.core.message[send_method];
         var args = Array.prototype.slice.call(arguments, 0);
