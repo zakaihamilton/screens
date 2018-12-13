@@ -182,7 +182,7 @@ screens.widget.transform = function WidgetTransform(me) {
     me.openPopup = function (object, termName) {
         var widget = me.findWidget(object);
         var foundTermName = Object.keys(widget.termData.terms).find((term) => {
-            return term.replace(/ /g, "") === termName;
+            return term.replace(/\s+/g, "") === termName.replace(/\s+/g, "");
         });
         if (foundTermName && termName !== foundTermName) {
             termName = foundTermName;
