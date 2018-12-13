@@ -24,6 +24,7 @@ screens.app.table = function AppTable(me) {
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
+                    border: true,
                     editMode: false,
                     autoComplete: true,
                     doTranslation: true,
@@ -43,6 +44,7 @@ screens.app.table = function AppTable(me) {
                 });
             }
             me.ui.options.toggleSet(me, null, {
+                "border": me.reload.set,
                 "editMode": me.reload.set,
                 "autoComplete": me.reload.set,
                 "doTranslation": me.reload.set,
@@ -144,8 +146,8 @@ screens.app.table = function AppTable(me) {
         var editMode = window.options.editMode;
         var cellOffset = 1;
         var countOffset = editMode ? 1 : 0;
-        for (var rowIndex = 0; rowIndex < window.rowCount + countOffset; rowIndex++) {
-            for (var columnIndex = 0; columnIndex < window.columnCount + countOffset; columnIndex++) {
+        for (var columnIndex = 0; columnIndex < window.columnCount + countOffset; columnIndex++) {
+            for (var rowIndex = 0; rowIndex < window.rowCount + countOffset; rowIndex++) {
                 var cell = {};
                 if (!editMode || (rowIndex && columnIndex)) {
                     cell = window.cells[rowIndex - countOffset][columnIndex - countOffset];
@@ -157,7 +159,7 @@ screens.app.table = function AppTable(me) {
                     continue;
                 }
                 var styles = ["grid-column:" + (columnIndex + cellOffset), "grid-row:" + (rowIndex + cellOffset)];
-                var classes = ["app-table-row"];
+                var classes = ["app-table-cell"];
                 var attributes = {};
                 var header = null;
                 if (editMode) {
@@ -174,6 +176,9 @@ screens.app.table = function AppTable(me) {
                 }
                 else {
                     styles.push("height:3em");
+                    if (window.options.border) {
+                        classes.push("border");
+                    }
                 }
                 if (header) {
                     classes.push("header");

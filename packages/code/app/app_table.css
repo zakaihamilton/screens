@@ -17,7 +17,7 @@
     align-content:start;
 }
 
-.app-table-row {
+.app-table-cell {
     margin:3px;
     color:var(--color);
     line-height: 2em;
@@ -25,11 +25,22 @@
     text-align: center;
 }
 
-.app-table-row.edit-mode {
+.app-table-cell.edit-mode {
     color:black;
 }
 
-.app-table-row.header {
+.app-table-cell.header {
     text-align: center;
     border:1px solid gray;    
+}
+
+.app-table-cell.border {
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.app-table-cell.border:hover {
+    text-shadow: 0 0 3px rgba(81, 203, 238, 1), 0 0 5px #0000FF;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
 }

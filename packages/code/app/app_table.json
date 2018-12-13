@@ -161,6 +161,13 @@
             "Layout",
             [
                 [
+                    "Border",
+                    "app.table.border",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Font Size",
                     "header"
                 ],
