@@ -37,7 +37,7 @@ screens.kab.text = function KabText(me) {
         if (!wordStyle) {
             wordStyle = "whole";
         }
-        if(session.options.abridged) {
+        if (session.options.abridged) {
             wordsString = wordsString.replace(/ *\([^\d)]*\) */g, " ");
             wordsString = wordsString.replace(/ *\[[^\d\]]*\] */g, " ");
         }
@@ -46,7 +46,7 @@ screens.kab.text = function KabText(me) {
             for (var wordIndex = 0; wordIndex < words.length; wordIndex++) {
                 if (!parentInstance && session.progressCallback) {
                     var percent = parseInt(wordIndex / words.length * 100);
-                    if(session.percent !== percent) {
+                    if (session.percent !== percent) {
                         session.percent = percent;
                         me.core.util.condense(() => {
                             session.progressCallback(percent);
@@ -172,7 +172,7 @@ screens.kab.text = function KabText(me) {
                         textOnly: textOnly
                     };
                     if (item.debug) {
-                        debugger
+                        debugger;
                     }
                     var match = me.handleInstance(session, instance);
                     wordIndex = instance.wordIndex;
@@ -205,7 +205,7 @@ screens.kab.text = function KabText(me) {
             terms,
             json,
             progressCallback,
-            percent:0
+            percent: 0
         };
         wordsString = me.splitWords(session, wordsString);
         session.text = wordsString;

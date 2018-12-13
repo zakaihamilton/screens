@@ -18,6 +18,14 @@ screens.kab.data = function KabData(me) {
             return json;
         }
     };
+    me.terms = async function (language, reload = false) {
+        var terms = [];
+        var json = await me.load(language, reload);
+        if (json.term) {
+            terms = json.term.map(item => item.term);
+        }
+        return terms;
+    };
     me.load = async function (language, reload = false) {
         language = language.toLowerCase();
         if (!reload && me.files[language]) {

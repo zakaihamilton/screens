@@ -68,9 +68,9 @@ screens.app.table = function AppTable(me) {
                 }
             });
             me.ui.class.useStylesheet("kab");
-            window.language = "english";
             window.rowCount = 20;
             window.columnCount = 10;
+            window.language = "english";
             window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
         }
@@ -208,14 +208,28 @@ screens.app.table = function AppTable(me) {
                 else if (header) {
                     value = header;
                 }
+                else {
+                    attributes.list = "terms";
+                }
                 html += "<" + tag + me.attributes(attributes) + ">" + value + "</" + tag + ">";
             }
+        }
+        if (editMode && window.terms) {
+            html += "<datalist id=\"terms\">";
+            html += window.terms.map(term => "<option value=\"" + term + "\"></option>").join("\n");
         }
         return html;
     };
     me.reload = {
         set: async function (object) {
             var window = me.widget.window.get(object);
+            var language = window.language.toLowerCase();
+            if (language === "auto") {
+                language = "english";
+            }
+            if (language) {
+                window.terms = await me.kab.data.terms(language);
+            }
             me.core.property.set(window.var.table, "ui.style.fontSize", window.options.fontSize);
             me.core.property.set(window.var.table, "ui.class.edit-mode", window.options.editMode);
             if (!window.cells) {
