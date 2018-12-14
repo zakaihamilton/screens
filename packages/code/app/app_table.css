@@ -46,3 +46,9 @@
     border: 1px solid rgba(81, 203, 238, 1);
     outline: 1px solid rgba(81, 203, 238, 1);
 }
+
+.app-table-cell.rowHeader {
+    background-color:var(--chrome-highlight-background);
+    color:var(--chrome-highlight-color);
+    font-weight: bold;
+}

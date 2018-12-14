@@ -41,6 +41,15 @@
                     }
                 ],
                 [
+                    "Row Header",
+                    "app.table.rowHeader",
+                    {
+                        "state": "select",
+                        "separator": true,
+                        "disabled": "app.table.lock"
+                    }
+                ],
+                [
                     "Copy Url To Clipboard",
                     "app.table.copyUrl",
                     {

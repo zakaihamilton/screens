@@ -93,7 +93,10 @@ screens.app.table = function AppTable(me) {
         for (var cell of cells) {
             window.cells[cell.row][cell.column] = { value: cell.text };
         }
-        window.lock = options && options.lock;
+        if (!options) {
+            options = {};
+        }
+        window.table_options = options;
         me.reload.set(window);
     };
     me.exportData = function (object) {
@@ -114,7 +117,7 @@ screens.app.table = function AppTable(me) {
         if (!data.length) {
             return [];
         }
-        return [JSON.stringify(data), title, { lock: window.lock }];
+        return [JSON.stringify(data), title, window.table_options];
     };
     me.attributes = function (dict) {
         var attributes = "";
@@ -194,14 +197,14 @@ screens.app.table = function AppTable(me) {
                     classes.push("edit-mode");
                     classes.push("input");
                     styles.push("font-size:1em");
-                    if (window.lock) {
+                    if (window.table_options.lock) {
                         attributes.readonly = true;
                     }
                 }
-                if (rowIndex > 0) {
+                if (rowIndex > 0 || !editMode) {
                     attributes.rowIndex = rowIndex - countOffset;
                 }
-                if (columnIndex > 0) {
+                if (columnIndex > 0 || !editMode) {
                     attributes.columnIndex = columnIndex - countOffset;
                 }
                 if (!header && cell.value) {
@@ -209,6 +212,9 @@ screens.app.table = function AppTable(me) {
                 }
                 else if (!rowIndex && !columnIndex) {
                     attributes.value = me.core.property.get(window, "title");
+                }
+                if (attributes.rowIndex === 0 && window.table_options.rowHeader) {
+                    classes.push("rowHeader");
                 }
                 attributes.class = classes.join(" ");
                 attributes.style = styles.join(";");
@@ -249,6 +255,9 @@ screens.app.table = function AppTable(me) {
             if (!window.cells) {
                 window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
             }
+            if (!window.table_options) {
+                window.table_options = {};
+            }
             var html = await me.rows(window);
             me.core.property.set([window.var.table, window.var.table], {
                 "ui.basic.html": html
@@ -271,11 +280,22 @@ screens.app.table = function AppTable(me) {
     me.lock = {
         get: function (object) {
             var window = me.widget.window.get(object);
-            return window.lock;
+            return window.table_options.lock;
         },
         set: function (object) {
             var window = me.widget.window.get(object);
-            window.lock = !window.lock;
+            window.table_options.lock = !window.table_options.lock;
+            me.reload.set(window);
+        }
+    };
+    me.rowHeader = {
+        get: function (object) {
+            var window = me.widget.window.get(object);
+            return window.table_options.rowHeader;
+        },
+        set: function (object) {
+            var window = me.widget.window.get(object);
+            window.table_options.rowHeader = !window.table_options.rowHeader;
             me.reload.set(window);
         }
     };
