@@ -1,10 +1,16 @@
 global.platform = "server";
 require("../screens.js");
 
+screens.users = [
+    "Zakai Hamilton",
+    "Yochanan Mariano Perez"
+];
+
 screens.api = [
     "user.profile.get",
     "user.profile.set",
     "user.verify.match",
+    "user.verify.admin",
     "user.access.appList",
     "user.access.get",
     "user.access.isAPIAllowed",

@@ -32,6 +32,15 @@
                     }
                 ],
                 [
+                    "Lock",
+                    "app.table.lock",
+                    {
+                        "state": "select",
+                        "separator": true,
+                        "enabled": "admin"
+                    }
+                ],
+                [
                     "Copy Url To Clipboard",
                     "app.table.copyUrl",
                     {

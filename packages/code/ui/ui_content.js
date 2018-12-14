@@ -34,7 +34,7 @@ screens.ui.content = function UIContent(me) {
         if (fullItem) {
             content = me.core.string.decode(fullItem.content);
         }
-        me.importData(window, content, fullItem.title);
+        me.importData(window, content, fullItem.title, fullItem.options);
     };
     me.importItemPrivate = async function (object, item) {
         var window = me.widget.window.get(object);
@@ -47,7 +47,7 @@ screens.ui.content = function UIContent(me) {
         if (fullItem) {
             content = me.core.string.decode(fullItem.content);
         }
-        me.importData(window, content, fullItem.title);
+        me.importData(window, content, fullItem.title, fullItem.options);
     };
     me.publicContentMenuList = {
         get: function (object) {
@@ -81,7 +81,7 @@ screens.ui.content = function UIContent(me) {
     };
     me.save = async function (object, private) {
         var window = me.widget.window.get(object);
-        var [content, title] = me.exportData(window);
+        var [content, title, options] = me.exportData(window);
         var date = new Date();
         var key = me.core.property.get(window, "widget.window.key");
         if (!title) {
@@ -94,8 +94,12 @@ screens.ui.content = function UIContent(me) {
             content: me.core.string.encode(content),
             date: date.toString(),
             title: title,
-            user: "$userId"
+            user: "$userId",
+            options: {}
         };
+        if (options) {
+            data.options = options;
+        }
         var kind = me.id + ".content";
         if (private) {
             data.owner = "$userId";

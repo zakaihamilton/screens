@@ -85,7 +85,7 @@ screens.app.table = function AppTable(me) {
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         me.reload.set(window);
     };
-    me.importData = function (object, text, title) {
+    me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "title", title);
         var cells = JSON.parse(text);
@@ -93,6 +93,7 @@ screens.app.table = function AppTable(me) {
         for (var cell of cells) {
             window.cells[cell.row][cell.column] = { value: cell.text };
         }
+        window.lock = options && options.lock;
         me.reload.set(window);
     };
     me.exportData = function (object) {
@@ -113,7 +114,7 @@ screens.app.table = function AppTable(me) {
         if (!data.length) {
             return [];
         }
-        return [JSON.stringify(data), title];
+        return [JSON.stringify(data), title, { lock: window.lock }];
     };
     me.attributes = function (dict) {
         var attributes = "";
@@ -193,6 +194,9 @@ screens.app.table = function AppTable(me) {
                     classes.push("edit-mode");
                     classes.push("input");
                     styles.push("font-size:1em");
+                    if (window.lock) {
+                        attributes.readonly = true;
+                    }
                 }
                 if (rowIndex > 0) {
                     attributes.rowIndex = rowIndex - countOffset;
@@ -262,6 +266,17 @@ screens.app.table = function AppTable(me) {
             var window = me.widget.window.get(object);
             var title = me.core.property.get(window, "title");
             me.core.util.copyUrl("table", [title]);
+        }
+    };
+    me.lock = {
+        get: function (object) {
+            var window = me.widget.window.get(object);
+            return window.lock;
+        },
+        set: function (object) {
+            var window = me.widget.window.get(object);
+            window.lock = !window.lock;
+            me.reload.set(window);
         }
     };
 };

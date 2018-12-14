@@ -329,7 +329,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 if (!childText) {
                     continue;
                 }
-                if(isFirst) {
+                if (isFirst) {
                     members.appendChild(child);
                     isFirst = false;
                     continue;
@@ -354,7 +354,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         var members = list.var.members;
         var columnIndex = Array.from(object.parentNode.children).indexOf(object);
         var direction = "desc";
-        if(list.direction) {
+        if (list.direction) {
             me.core.property.set(members.rows[0].cells[list.columnIndex], "ui.class." + list.direction, false);
         }
         if (list.columnIndex === columnIndex && list.direction !== "asc") {
@@ -373,7 +373,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         rows = rows.sort((source, target) => {
             var result = 0;
             if (direction == "asc") {
-                if(!source.textContent) {
+                if (!source.textContent) {
                     result = 1;
                 }
                 else if (!target.textContent) {
@@ -382,7 +382,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 else if (source.textContent > target.textContent) {
                     result = 1;
                 }
-                else if(source.textContent < target.textContent) {
+                else if (source.textContent < target.textContent) {
                     result = -1;
                 }
             } else if (direction == "desc") {
@@ -397,7 +397,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         });
         members.appendChild(firstRow.parentNode);
         for (rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-            if(rows[rowIndex] === firstRow) {
+            if (rows[rowIndex] === firstRow) {
                 continue;
             }
             members.appendChild(rows[rowIndex].parentNode);
@@ -493,7 +493,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 if (typeof value === "undefined") {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
-                param = me.core.property.get(parentMenu.window || object, method, value);
+                if (method === "admin") {
+                    param = me.core.util.isAdmin;
+                }
+                else {
+                    param = me.core.property.get(parentMenu.window || object, method, value);
+                }
             }
             if (param && param.then) {
                 callback(false);
@@ -527,6 +532,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 });
                 me.handleValue(object, options, "enabled", (value) => {
                     me.core.property.set(object, "ui.basic.enabled", value);
+                });
+                me.handleValue(object, options, "disabled", (value) => {
+                    me.core.property.set(object, "ui.basic.enabled", !value);
                 });
                 me.handleValue(object, options, "visible", (value) => {
                     me.core.property.set(object, "ui.style.display", value ? "" : "none");

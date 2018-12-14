@@ -72,6 +72,8 @@ screens.app.player = function AppPlayer(me) {
         set: async function (object) {
             var window = me.singleton;
             await me.media.file.update();
+            me.groupListData = me.media.file.groups();
+            me.updateSessions();
             me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
         }
     };

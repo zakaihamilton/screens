@@ -4,6 +4,13 @@
  */
 
 screens.core.util = function CoreUtil(me) {
+    me.init = function () {
+        if (me.platform === "browser") {
+            me.core.listener.register(async () => {
+                me.isAdmin = await me.user.verify.admin();
+            }, me.lib.google.id);
+        }
+    };
     me.removeLast = function (string, separator) {
         var array = string.split(separator);
         array.pop();

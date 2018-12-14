@@ -9,7 +9,7 @@ screens.user.verify = function UserVerify(me) {
         var google = await me.core.util.config("settings.lib.google");
         me.client_id = google.client_id;
         me.tokens = {};
-        const { OAuth2Client } = require('google-auth-library');
+        const { OAuth2Client } = require("google-auth-library");
         me.client = new OAuth2Client(me.client_id);
     };
     me.match = function (name) {
@@ -18,9 +18,14 @@ screens.user.verify = function UserVerify(me) {
         me.log("name: " + name + " isMatch:" + isMatch);
         return isMatch;
     };
-    me.list = async function() {
+    me.list = async function () {
         return await me.storage.data.query(me.id);
-    }
+    };
+    me.admin = async function () {
+        var isMatch = screens.users.includes(this.userName);
+        me.log("isAdmin: " + this.userName + " = " + isMatch);
+        return isMatch;
+    };
     me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
             var name = decodeURIComponent(info.headers["user_name"]);
