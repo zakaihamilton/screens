@@ -4,8 +4,9 @@
  */
 
 screens.app.present = function AppPresent(me) {
-    me.init = function() {
-        me.userList = null;        
+    me.init = function () {
+        me.ui.content.attach(me);
+        me.userList = null;
     };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -30,30 +31,30 @@ screens.app.present = function AppPresent(me) {
         me.refreshList(window);
         me.updateEditMode(window);
     };
-    me.importData = function (object, text) {
+    me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.editor, "ui.basic.save");
         window.options.userName = "";
         me.updateEditMode(window);
     };
-    me.updateDb = async function(object) {
+    me.updateDb = async function (object) {
         var date = new Date();
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
-        if(text) {
+        if (text) {
             me.db.shared.present.use({
-                "user":"$userId"
+                "user": "$userId"
             }, {
-                user:"$userId",
-                name:"$userName",
-                content:text,
-                date:date.toString()
-            });
+                    user: "$userId",
+                    name: "$userName",
+                    content: text,
+                    date: date.toString()
+                });
         }
         else {
             me.db.shared.present.remove({
-                user:"$userId"
+                user: "$userId"
             });
         }
         me.refreshList(object);
@@ -62,16 +63,16 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.transform, "ui.style.opacity", window.options.editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer], "ui.basic.show", window.options.editMode);
-        if(!window.options.userName) {
+        if (!window.options.userName) {
             me.updateDb(window);
         }
         me.updateUser(object);
     };
-    me.isThisDevice = function(object) {
+    me.isThisDevice = function (object) {
         var window = me.widget.window.get(object);
         return window.options.userName === "";
     };
-    me.refreshList = function() {
+    me.refreshList = function () {
         me.userList = me.db.shared.present.list();
     };
     me.refresh = function (object) {
@@ -84,9 +85,9 @@ screens.app.present = function AppPresent(me) {
         var userName = window.options.userName.toLowerCase();
         var text = "";
         var userList = await me.userList;
-        if(userName) {
+        if (userName) {
             var user = userList.find((item) => item.name.toLowerCase() === userName);
-            if(user) {
+            if (user) {
                 text = user.content;
             }
         }
@@ -98,7 +99,7 @@ screens.app.present = function AppPresent(me) {
     };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", null, "app.present.userName");
+            return me.widget.menu.collect(object, me.userList, "name", { "state": "select" }, "users", null, "app.present.userName");
         }
     };
     me.clear = function (object) {
@@ -111,5 +112,10 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(target, "importData", text);
+    };
+    me.exportData = function (object) {
+        var window = me.widget.window.get(object);
+        var text = me.core.property.get(window.var.editor, "text");
+        return [text];
     };
 };

@@ -15,23 +15,23 @@
                     "Clear",
                     "app.present.clear",
                     {
-                        "enabled":"app.present.isThisDevice"
+                        "enabled": "app.present.isThisDevice"
                     }
                 ],
                 [
                     "Refresh",
                     "app.present.refresh",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
                     "This Device",
                     "app.present.userName",
                     {
-                        "separator":true,
+                        "separator": true,
                         "state": "select",
-                        "value":""
+                        "value": ""
                     }
                 ],
                 [
@@ -45,7 +45,56 @@
                     "app.present.editMode",
                     {
                         "state": "select",
-                        "separator":true
+                        "separator": true
+                    }
+                ]
+            ]
+        ],
+        [
+            "Transform",
+            []
+        ],
+        [
+            "Layout",
+            []
+        ],
+        [
+            "Audio",
+            []
+        ],
+        [
+            "Content",
+            [
+                [
+                    "Refresh",
+                    "app.present.refreshContentList"
+                ],
+                [
+                    "Public",
+                    "header"
+                ],
+                "app.present.publicContentMenuList",
+                [
+                    "Save",
+                    "app.present.savePublic",
+                    {
+                        "enabled": "select",
+                        "separator": true,
+                        "unique": false
+                    }
+                ],
+                [
+                    "Private",
+                    "header"
+                ],
+                "app.present.privateContentMenuList",
+                [
+                    "Save",
+                    "app.present.savePrivate",
+                    {
+                        "enabled": "select",
+                        "separator": true,
+                        "unique": false
                     }
                 ]
             ]
@@ -59,7 +108,7 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.present.editor.container",
-            "ui.basic.var":"editorContainer",
+            "ui.basic.var": "editorContainer",
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.present.editor",
@@ -69,7 +118,7 @@
                     "storage.local.restore": "ui.basic.text",
                     "ui.monitor.change": "ui.basic.save"
                 }
-        },
+            },
             "ui.monitor.change": "app.present.updateText"
         }
     ],
