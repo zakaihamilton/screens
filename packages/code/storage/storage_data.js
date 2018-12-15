@@ -81,6 +81,22 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
+    me.exists = async function (type, id) {
+        var service = me.getService();
+        if (service) {
+            const key = service.key([type, id]);
+            return new Promise((resolve, reject) => {
+                service.get(key, function (err, value) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(value ? true : false);
+                    }
+                });
+            });
+        }
+    };
     me.verify = async function (value, type, id) {
         var compare = await me.load(type, id);
         var result = me.core.json.compare(compare, value);

@@ -131,9 +131,11 @@ screens.app.player = function AppPlayer(me) {
             if (name) {
                 me.core.property.set(window, "title", name);
                 me.ui.options.save(me, window, { sessionName: name });
+                await me.updateContent(window, name);
             }
             else {
                 me.core.property.set(window, "title", "Player");
+                me.contentList = [];
             }
             me.core.property.notify(window, "app.player.updatePlayer");
         }
@@ -306,11 +308,12 @@ screens.app.player = function AppPlayer(me) {
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
         me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
     };
-    me.playerUpdated = function (object) {
+    me.playerUpdated = async function (object) {
         var duration = me.widget.player.duration(object);
         var path = me.widget.player.path(object);
         var fileName = me.core.path.fullName(path);
         if (duration) {
+            me.sessionListData = await me.sessionListData;
             var session = me.sessionListData.find(session => {
                 return fileName === session.name;
             });
@@ -322,5 +325,40 @@ screens.app.player = function AppPlayer(me) {
     me.copyUrl = function () {
         var window = me.singleton;
         me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName]);
+    };
+    me.updateContent = async function (object, name) {
+        me.contentList = [];
+        var apps = ["Present", "Gematria", "Table"];
+        for (var app of apps) {
+            var exists = await me.storage.data.exists("app." + app.toLowerCase() + ".content", name);
+            if (exists) {
+                me.contentList.push([
+                    app,
+                    (object, appName) => {
+                        me.core.app.launch(appName.toLowerCase(), name);
+                    },
+                    {
+
+                    },
+                    {
+                        "group": "content"
+                    }
+                ]);
+            }
+        }
+    };
+    me.contentMenu = function () {
+        if (me.contentList && me.contentList.length) {
+            return me.contentList;
+        }
+        else {
+            return [[
+                "No Associated Content",
+                null,
+                {
+                    enabled: false
+                }
+            ]];
+        }
     };
 };

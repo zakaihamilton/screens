@@ -39,7 +39,7 @@
                     "Copy Url To Clipboard",
                     "app.player.copyUrl",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ]
             ]
@@ -69,6 +69,12 @@
                     "header"
                 ],
                 "app.player.speeds"
+            ]
+        ],
+        [
+            "Content",
+            [
+                "app.player.contentMenu"
             ]
         ]
     ],
