@@ -12,10 +12,12 @@ screens.app.gematria = function AppGematria(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        var params = { input: args[0] };
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
+        me.singleton = me.ui.element.create(__json__, "workspace", "self");
         me.initOptions(me.singleton);
         me.calcNumerology(me.singleton);
+        if (typeof args[0] === "string") {
+            me.content.import(me.singleton, args[0]);
+        }
         return me.singleton;
     };
     me.initOptions = function (object) {

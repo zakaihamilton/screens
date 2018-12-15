@@ -16,6 +16,13 @@ screens.ui.content = function UIContent(me) {
                     prefix + "refresh"
                 ],
                 [
+                    "Copy Url",
+                    prefix + "copyUrl",
+                    {
+                        "separator": true
+                    }
+                ],
+                [
                     "Public",
                     "header"
                 ],
@@ -144,6 +151,19 @@ screens.ui.content = function UIContent(me) {
             }
             await me.storage.data.save(data, kind, title, ["content"]);
             await me.content.refresh.set(object);
+        },
+        copyUrl: {
+            get: function (object) {
+                var window = me.widget.window.get(object);
+                var [content, title] = me.exportData(window);
+                return title !== "Table";
+            },
+            set: function (object) {
+                var appName = me.id.split(".").pop();
+                var window = me.widget.window.get(object);
+                var [content, title] = me.exportData(window);
+                me.core.util.copyUrl(appName, [title]);
+            }
         }
     };
     return me.content;

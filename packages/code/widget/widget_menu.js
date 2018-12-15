@@ -37,7 +37,6 @@ screens.widget.menu = function WidgetMenu(me) {
                     items = [];
                 }
             }
-            var isFirst = true;
             items = items.map(function (item) {
                 var title = String(item[property]);
                 if (!title) {
@@ -65,7 +64,7 @@ screens.widget.menu = function WidgetMenu(me) {
                 return result;
             });
             return items;
-        }
+        };
         if (!list) {
             return null;
         }

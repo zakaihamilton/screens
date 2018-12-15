@@ -8,12 +8,15 @@ screens.app.present = function AppPresent(me) {
         me.ui.content.attach(me);
         me.userList = null;
     };
-    me.launch = function () {
+    me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        if (typeof args[0] === "string") {
+            me.content.import(me.singleton, args[0]);
+        }
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
