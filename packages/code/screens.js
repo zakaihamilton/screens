@@ -36,6 +36,9 @@ function screens_setup(package_name, component_name, child_name, node) {
     }
     var constructor = node;
     var platform = constructor(component_obj, child_name);
+    if (typeof platform !== "string") {
+        platform = null;
+    }
     var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
@@ -63,7 +66,14 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
     }
     else {
-        component_obj.attach = constructor;
+        component_obj.attach = (me) => {
+            var context = constructor(me);
+            var result = null;
+            if (context.init) {
+                result = context.init();
+            }
+            return result;
+        };
         init = { callback: component_obj.init, args: [component_obj] };
     }
     component_obj.require = platform;

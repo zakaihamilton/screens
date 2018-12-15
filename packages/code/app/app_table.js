@@ -6,7 +6,6 @@
 screens.app.table = function AppTable(me) {
     me.init = function () {
         me.ui.content.attach(me);
-        me.updateContentList();
     };
     me.launch = function (args) {
         if (!args) {

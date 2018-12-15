@@ -195,38 +195,7 @@
         [
             "Content",
             [
-                [
-                    "Refresh",
-                    "app.table.refreshContentList"
-                ],
-                [
-                    "Public",
-                    "header"
-                ],
-                "app.table.publicContentMenuList",
-                [
-                    "Save",
-                    "app.table.savePublic",
-                    {
-                        "enabled": "select",
-                        "separator": true,
-                        "unique": false
-                    }
-                ],
-                [
-                    "Private",
-                    "header"
-                ],
-                "app.table.privateContentMenuList",
-                [
-                    "Save",
-                    "app.table.savePrivate",
-                    {
-                        "enabled": "select",
-                        "separator": true,
-                        "unique": false
-                    }
-                ]
+                "app.table.content.menu"
             ]
         ]
     ],

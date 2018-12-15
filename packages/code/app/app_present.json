@@ -65,38 +65,7 @@
         [
             "Content",
             [
-                [
-                    "Refresh",
-                    "app.present.refreshContentList"
-                ],
-                [
-                    "Public",
-                    "header"
-                ],
-                "app.present.publicContentMenuList",
-                [
-                    "Save",
-                    "app.present.savePublic",
-                    {
-                        "enabled": "select",
-                        "separator": true,
-                        "unique": false
-                    }
-                ],
-                [
-                    "Private",
-                    "header"
-                ],
-                "app.present.privateContentMenuList",
-                [
-                    "Save",
-                    "app.present.savePrivate",
-                    {
-                        "enabled": "select",
-                        "separator": true,
-                        "unique": false
-                    }
-                ]
+                "app.present.content.menu"
             ]
         ]
     ],

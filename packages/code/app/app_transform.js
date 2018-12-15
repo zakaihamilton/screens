@@ -14,7 +14,6 @@ screens.app.transform = function AppTransform(me) {
     me.init = function () {
         me.ui.content.attach(me);
         me.core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
-        me.updateContentList();
     };
     me.initOptions = {
         set: function (object) {

@@ -1,10 +1,38 @@
-.app-gematria-input {
-    margin-left: 0px !important;
-    position: relative;
-    top:10px;
+.app-gematria-bar {
+    position: absolute;
     left:5%;
     width:90%;
+    top:10px;
+    height: 40px;
+    display:flex;
+}
+
+.app-gematria-title-label {
+    flex:0;
+    color:var(--color);
+    margin:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:5px;
+}
+
+.app-gematria-title {
+    margin-left: 0px !important;
+    width:20%;
+}
+
+.app-gematria-input-label {
+    flex:0;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:5px;
+    color:var(--color);
+}
+
+.app-gematria-input {
+    margin-left: 0px !important;
     direction: rtl;
+    width:80%;
 }
 
 .app-gematria-diagram {
@@ -12,7 +40,7 @@
     display: grid;
     padding: 10px;
     left: 5px;
-    top: 45px;
+    top: 50px;
     right: 5px;
     bottom: 5px;
     grid-gap: 0.5% 1px;

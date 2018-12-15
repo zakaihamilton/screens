@@ -53,7 +53,7 @@
                             "app.transform.showInput",
                             {
                                 "state": "select",
-                                "separator":true
+                                "separator": true
                             }
                         ],
                         "widget.window.exportMenuList(app.transform.exportText)"
@@ -70,38 +70,7 @@
                 [
                     "Content",
                     [
-                        [
-                            "Refresh",
-                            "app.transform.refreshContentList"
-                        ],
-                        [
-                            "Public",
-                            "header"
-                        ],
-                        "app.transform.publicContentMenuList",
-                        [
-                            "Save",
-                            "app.transform.savePublic",
-                            {
-                                "enabled": "select",
-                                "separator": true,
-                                "unique": false
-                            }
-                        ],
-                        [
-                            "Private",
-                            "header"
-                        ],
-                        "app.transform.privateContentMenuList",
-                        [
-                            "Save",
-                            "app.transform.savePrivate",
-                            {
-                                "enabled": "select",
-                                "separator": true,
-                                "unique": false
-                            }
-                        ]
+                        "app.transform.content.menu"
                     ]
                 ],
                 [

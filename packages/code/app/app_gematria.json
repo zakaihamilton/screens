@@ -16,7 +16,7 @@
                     "app.gematria.sumEnabled",
                     {
                         "state": "select",
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
@@ -56,7 +56,7 @@
                     "Copy Url To Clipboard",
                     "app.gematria.copyUrl",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ]
             ]
@@ -70,15 +70,43 @@
                 ],
                 "widget.transform.fontSizesEm(app.gematria.fontSize)"
             ]
+        ],
+        [
+            "Content",
+            [
+                "app.gematria.content.menu"
+            ]
         ]
     ],
     "ui.basic.elements": [
         {
-            "ui.element.component": "widget.input",
-            "ui.basic.var": "input",
-            "ui.basic.text": "@ui.param.input",
-            "ui.class.classExtra": "app.gematria.input",
-            "core.event.input": "app.gematria.calcNumerology"
+            "ui.basic.div": "div",
+            "ui.class.class": "app.gematria.bar",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.div": "div",
+                    "ui.basic.text": "Name",
+                    "ui.class.class": "app.gematria.title.label"
+                },
+                {
+                    "ui.element.component": "widget.input",
+                    "ui.basic.var": "title",
+                    "ui.basic.text": "@ui.param.title",
+                    "ui.class.classExtra": "app.gematria.title"
+                },
+                {
+                    "ui.basic.div": "div",
+                    "ui.basic.text": "Numerology",
+                    "ui.class.class": "app.gematria.input.label"
+                },
+                {
+                    "ui.element.component": "widget.input",
+                    "ui.basic.var": "input",
+                    "ui.basic.text": "@ui.param.input",
+                    "ui.class.classExtra": "app.gematria.input",
+                    "core.event.input": "app.gematria.calcNumerology"
+                }
+            ]
         },
         {
             "ui.basic.tag": "div",
