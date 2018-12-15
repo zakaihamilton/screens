@@ -91,7 +91,7 @@ screens.widget.menu = function WidgetMenu(me) {
                 window = parent;
             }
             if (!window.var.menu) {
-                var parent = window;
+                parent = window;
                 if (window.var.header) {
                     parent = window.var.header;
                 }
