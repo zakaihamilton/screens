@@ -116,6 +116,7 @@ screens.app.present = function AppPresent(me) {
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
-        return [text];
+        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
+        return [text, title];
     };
 };
