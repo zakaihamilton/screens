@@ -50,6 +50,14 @@
                     }
                 ],
                 [
+                    "Column Header",
+                    "app.table.columnHeader",
+                    {
+                        "state": "select",
+                        "disabled": "app.table.lock"
+                    }
+                ],
+                [
                     "Copy Url To Clipboard",
                     "app.table.copyUrl",
                     {

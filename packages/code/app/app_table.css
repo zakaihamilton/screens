@@ -5,6 +5,7 @@
     align-items:stretch;
     justify-items: stretch;
     grid-auto-columns: auto;
+    grid-auto-rows: auto;
     align-content:center;
     left:0px;
     top:0px;
@@ -19,9 +20,9 @@
 
 .app-table-cell {
     margin:6px;
+    padding:6px;
     color:var(--color);
     line-height: 2em;
-    width:auto;
     text-align: center;
 }
 
@@ -44,6 +45,12 @@
 }
 
 .app-table-cell.rowHeader {
+    background-color:var(--chrome-highlight-background);
+    color:var(--chrome-highlight-color);
+    font-weight: bold;
+}
+
+.app-table-cell.columnHeader {
     background-color:var(--chrome-highlight-background);
     color:var(--chrome-highlight-color);
     font-weight: bold;

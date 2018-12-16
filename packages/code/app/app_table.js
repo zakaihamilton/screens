@@ -178,7 +178,7 @@ screens.app.table = function AppTable(me) {
                     styles.push("height:2em");
                 }
                 else {
-                    styles.push("height:3em");
+                    styles.push("height:auto");
                     if (window.options.border) {
                         classes.push("border");
                     }
@@ -214,6 +214,9 @@ screens.app.table = function AppTable(me) {
                 }
                 if (attributes.rowIndex === 0 && window.table_options.rowHeader) {
                     classes.push("rowHeader");
+                }
+                if (attributes.columnIndex === 0 && window.table_options.columnHeader) {
+                    classes.push("columnHeader");
                 }
                 attributes.class = classes.join(" ");
                 attributes.style = styles.join(";");
@@ -295,6 +298,17 @@ screens.app.table = function AppTable(me) {
         set: function (object) {
             var window = me.widget.window.get(object);
             window.table_options.rowHeader = !window.table_options.rowHeader;
+            me.reload.set(window);
+        }
+    };
+    me.columnHeader = {
+        get: function (object) {
+            var window = me.widget.window.get(object);
+            return window.table_options.columnHeader;
+        },
+        set: function (object) {
+            var window = me.widget.window.get(object);
+            window.table_options.columnHeader = !window.table_options.columnHeader;
             me.reload.set(window);
         }
     };
