@@ -85,10 +85,10 @@ screens.storage.data = function StorageData(me) {
         var service = me.getService();
         if (service) {
             const key = service.key([type, id]);
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 service.get(key, function (err, value) {
                     if (err) {
-                        reject(err);
+                        resolve(false);
                     }
                     else {
                         resolve(value ? true : false);
