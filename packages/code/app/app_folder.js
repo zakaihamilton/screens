@@ -9,25 +9,22 @@ screens.app.folder = function AppFolder(me) {
         if (!path || typeof path !== "string") {
             path = "file";
         }
-        title = "Folder: " + path;
+        var title = "Folder: " + path;
         var items = await me.core.object.get(path);
         var params = {
             path,
             title,
             items
-        }
+        };
         return me.ui.element.create(__json__, "workspace", "self", params);
-    };
-    me.init = async function () {
-        me.apps = await me.user.access.appList();
     };
     me.resIcon = async function (object, info) {
         me.core.property.set(object, "text", info.name);
         if (info.type === "folder") {
-            me.core.property.set(object, "ui.basic.src", `/packages/res/icons/folder.svg`);
+            me.core.property.set(object, "ui.basic.src", "/packages/res/icons/folder.svg");
         }
         else {
-            me.core.property.set(object, "ui.basic.src", `/packages/res/icons/file.png`);
+            me.core.property.set(object, "ui.basic.src", "/packages/res/icons/file.png");
         }
         me.core.property.set(object, "ui.touch.click", `core.app.folder(${info.path})`);
     };

@@ -5,10 +5,10 @@
 
 screens.core.app = function CoreApp(me) {
     me.available = async function (name) {
-        if(!me.apps) {
-            me.apps = await me.user.access.appList();
+        if (!me.list) {
+            me.list = await me.user.access.appList();
         }
-        var available = me.apps && me.apps.includes(name);
+        var available = me.list && me.list.includes(name);
         return available;
     };
     me.lookup = {
@@ -30,7 +30,7 @@ screens.core.app = function CoreApp(me) {
                 value.unshift("app." + property + ".launch");
                 await me.core.message.send.apply(null, value);
             } else {
-                if(value && value.target) {
+                if (value && value.target) {
                     value = [];
                 }
                 else {
@@ -56,7 +56,7 @@ screens.core.app = function CoreApp(me) {
         await screens.include("app." + appName);
         me.core.property.set(progress, "close");
         var appArgs = Array.prototype.slice.call(arguments, 1);
-        if(appArgs[0] && appArgs[0].target) {
+        if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
         result = await me.core.message.send("app." + appName + ".launch", appArgs);

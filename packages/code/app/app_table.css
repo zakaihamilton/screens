@@ -25,10 +25,6 @@
     text-align: center;
 }
 
-.app-table-cell.edit-mode {
-    color:black;
-}
-
 .app-table-cell.header {
     text-align: center;
     border:1px solid gray;    
