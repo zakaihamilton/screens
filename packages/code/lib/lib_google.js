@@ -25,6 +25,8 @@ screens.lib.google = function LibGoogle(me) {
                     var state = me.auth2.isSignedIn.get();
                     if (state) {
                         me.setStatus("Signed in");
+                        me.updateInfo();
+                        me.core.listener.signal(me.id);
                     }
                     else {
                         me.log("sign in state: " + state);
@@ -33,7 +35,6 @@ screens.lib.google = function LibGoogle(me) {
                         await me.core.listener.wait(me.id);
                         me.setStatus("Sign in occured");
                     }
-                    me.updateInfo();
                     resolve();
                 }
                 catch (error) {

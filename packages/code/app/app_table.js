@@ -267,18 +267,6 @@ screens.app.table = function AppTable(me) {
             me.core.property.notify(window, "update");
         }
     };
-    me.copyUrl = {
-        get: function (object) {
-            var window = me.widget.window.get(object);
-            var title = me.core.property.get(window, "title");
-            return title !== "Table";
-        },
-        set: function (object) {
-            var window = me.widget.window.get(object);
-            var title = me.core.property.get(window, "title");
-            me.core.util.copyUrl("table", [title]);
-        }
-    };
     me.lock = {
         get: function (object) {
             var window = me.widget.window.get(object);
