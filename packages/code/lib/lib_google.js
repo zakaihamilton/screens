@@ -6,13 +6,14 @@
 screens.lib.google = function LibGoogle(me) {
     me.init = async function () {
         me.state = false;
+        me.info = {};
         me.core.property.link("core.http.headers", "lib.google.headers", true);
         me.core.property.link("core.message.headers", "lib.google.headers", true);
     };
     me.load = function () {
         var google = me.core.util.config("settings.lib.google");
         return new Promise((resolve, reject) => {
-            gapi.load('auth2', async function () {
+            gapi.load("auth2", async function () {
                 google = await google;
                 try {
                     me.auth2 = await gapi.auth2.init({
@@ -32,12 +33,13 @@ screens.lib.google = function LibGoogle(me) {
                         await me.core.listener.wait(me.id);
                         me.setStatus("Sign in occured");
                     }
+                    me.updateInfo();
                     resolve();
                 }
                 catch (error) {
-                    error = "Cannot initialize google authenticiation: " + JSON.stringify(error);
-                    me.setStatus(error);
-                    reject(error);
+                    var err = "Cannot initialize google authenticiation: " + JSON.stringify(error);
+                    me.setStatus(err);
+                    reject(err);
                 }
             });
         });
@@ -52,28 +54,13 @@ screens.lib.google = function LibGoogle(me) {
         return me.auth2.currentUser.get();
     };
     me.currentProfile = function () {
-        if(!me.auth2) {
-            return null;
-        }
-        var googleUser = me.auth2.currentUser.get();
-        if (googleUser) {
-            return googleUser.getBasicProfile();
-        }
-        return null;
+        return me.info.profile;
     };
     me.userName = function () {
-        var profile = me.currentProfile();
-        if (!profile) {
-            return "";
-        }
-        return profile.getName();
+        return me.info.name;
     };
     me.userEmail = function () {
-        var profile = me.currentProfile();
-        if (!profile) {
-            return "";
-        }
-        return profile.getEmail();
+        return me.info.email;
     };
     me.errors = {
         popup_closed_by_user: "Popup Closed by User",
@@ -109,17 +96,7 @@ screens.lib.google = function LibGoogle(me) {
         }
     };
     me.isSignedIn = function () {
-        var isSignedIn = false;
-        if (me.auth2 && me.auth2.isSignedIn.get() === true) {
-            var user = me.auth2.currentUser.get();
-            if (user) {
-                var profile = user.getBasicProfile();
-                if (profile) {
-                    isSignedIn = true;
-                }
-            }
-        }
-        return isSignedIn;
+        return me.info.login;
     };
     me.signInState = function () {
         return me.state;
@@ -136,19 +113,31 @@ screens.lib.google = function LibGoogle(me) {
             me.core.listener.signal(me.id);
         }
     };
+    me.updateInfo = function () {
+        var googleUser = me.auth2.currentUser.get();
+        var login = me.auth2 && me.auth2.isSignedIn.get() === true;
+        var profile = null, name = null, email = null, token = null;
+        if (googleUser) {
+            profile = googleUser.getBasicProfile();
+            name = profile.getName();
+            email = profile.getEmail();
+            token = googleUser.getAuthResponse().id_token;
+        }
+        me.info = {
+            profile,
+            name,
+            email,
+            token,
+            login
+        };
+    };
     me.userChanged = function (user) {
         if (user) {
             if (user.isSignedIn()) {
-                var profile = user.getBasicProfile();
-                if (profile) {
-                    var name = profile.getName();
-                    me.setStatus("Sign in successful");
-                    me.log("User now: " + name);
-                    me.core.listener.signal(me.id);
-                }
-                else {
-                    me.setStatus("No profile for signed in user");
-                }
+                me.updateInfo();
+                me.setStatus("Sign in successful");
+                me.log("User now: " + name);
+                me.core.listener.signal(me.id);
             }
             else {
                 me.setStatus("User not signed in");
@@ -159,16 +148,13 @@ screens.lib.google = function LibGoogle(me) {
         }
     };
     me.headers = function (info) {
-        var token = null;
-        if (me.isSignedIn()) {
-            var user = me.currentUser();
-            token = user.getAuthResponse().id_token
+        var token = me.info.token;
+        if (me.info.login) {
             if (token) {
-                var profile = user.getBasicProfile();
                 if (!info.headers) {
                     info.headers = {};
                 }
-                info.headers["user_name"] = encodeURIComponent(profile.getName());
+                info.headers["user_name"] = encodeURIComponent(me.info.name);
                 info.headers["token"] = token;
             }
         }
