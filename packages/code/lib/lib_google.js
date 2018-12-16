@@ -17,7 +17,8 @@ screens.lib.google = function LibGoogle(me) {
                 google = await google;
                 try {
                     me.auth2 = await gapi.auth2.init({
-                        client_id: google.client_id
+                        client_id: google.client_id,
+                        ux_mode: "redirect"
                     });
                     me.auth2.isSignedIn.listen(me.signInChanged);
                     me.auth2.currentUser.listen(me.userChanged);
