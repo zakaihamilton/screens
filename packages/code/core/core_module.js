@@ -128,9 +128,9 @@ screens.core.module = function CoreModule(me) {
             });
             files.unshift(file);
         }
-        data = "";
-        for (var filePath of files) {
-            data += await params.method(filePath, params, info);
+        var data = "";
+        for (var fileItem of files) {
+            data += await params.method(fileItem, params, info);
         }
         return data;
     };

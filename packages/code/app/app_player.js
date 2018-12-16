@@ -68,14 +68,11 @@ screens.app.player = function AppPlayer(me) {
             });
         }
     };
-    me.refresh = {
-        set: async function (object) {
-            var window = me.singleton;
-            await me.media.file.update();
-            me.groupListData = me.media.file.groups();
-            me.updateSessions();
-            me.core.property.set(window, "app.player.onChangeGroup", window.options.groupName);
-        }
+    me.refresh = async function (object) {
+        var window = me.singleton;
+        await me.media.file.update();
+        me.groupListData = me.media.file.groups();
+        me.updateSessions();
     };
     me.onChangeGroup = {
         get: function (object, value) {
@@ -131,7 +128,7 @@ screens.app.player = function AppPlayer(me) {
             if (name) {
                 me.core.property.set(window, "title", name);
                 me.ui.options.save(me, window, { sessionName: name });
-                await me.updateContent(window, name);
+                me.updateContent(window, name);
             }
             else {
                 me.core.property.set(window, "title", "Player");
@@ -278,7 +275,7 @@ screens.app.player = function AppPlayer(me) {
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
                 }
-                await me.refresh.set(window);
+                await me.refresh(window);
             }
             finally {
                 me.core.property.set(progress, "close");
