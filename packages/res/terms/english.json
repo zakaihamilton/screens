@@ -7135,6 +7135,14 @@
             "style": {
                 "category": "Person"
             }
+        },
+        {
+            "translation": "Entrance of the Gates",
+            "hebrew": "מבוא שערים",
+            "term": "Mavo Shearim",
+            "style": {
+                "category": "Book"
+            }
         }
     ],
     "style": {
