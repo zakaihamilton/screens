@@ -158,6 +158,10 @@
     min-width: 0;
 }
 
+.kab-term-phase-none.kab-term-category {
+    min-width: 10em;
+}
+
 .kab-term-header {
     background-color: black;
     color: lightgray;

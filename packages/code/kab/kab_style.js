@@ -85,7 +85,10 @@ screens.kab.style = function KabStyle(me) {
             tooltip = styles.tooltip;
         }
         if (phase) {
-            html += "<span class=\"kab-term-phase-inline kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border " + nightModeClass;
+            html += "<span class=\"kab-term-phase-inline " + nightModeClass;
+            if (phase) {
+                html += " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border ";
+            }
             if (category) {
                 html += " kab-term-category";
             }
@@ -104,7 +107,7 @@ screens.kab.style = function KabStyle(me) {
                 html += " onclick=\"" + session.options.clickCallback + "(this,'" + instance.item.term + "')\"";
             }
             html += ">";
-            if (phase !== "none" && session.options.phaseNumbers && session.json.phaseNumber) {
+            if ((phase && phase !== "none") && session.options.phaseNumbers && session.json.phaseNumber) {
                 var phaseNumber = session.json.phaseNumber[phase];
                 if (phaseNumber) {
                     html += "<span kab-term-phase-number=\"" + phaseNumber + "\" class=\"kab-term-phase-number kab-term-" + session.language + " " + nightModeClass + "\"></span>";
