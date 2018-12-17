@@ -186,7 +186,14 @@
             "Din from Hesed": "Din from Hesed2",
             "Hesed and the Din": "Hesed2 and the Din",
             "Hochma from above downwards": "Hochma2 from above downwards",
-            "Hochma can shine": "Hochma2 can shine"
+            "Hochma can shine": "Hochma2 can shine",
+            "Din, or in Hesed": "Din, or in Hesed2",
+            "Din or in Hesed": "Din or in Hesed2",
+            "in Hesed and in Din": "in Hesed2 and in Din",
+            "during the Hesed": "during the Hesed2",
+            "the side of Hesed": "the side of Hesed2",
+            "darkness—burning": "Choshech—burning",
+            "spirit—killing": "Ruach3—killing"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -2337,6 +2344,17 @@
             "hebrew": "חשך"
         },
         {
+            "translation": "Spirit",
+            "style": {
+                "category": "Phase",
+                "phase": "four"
+            },
+            "term": "Ruach3",
+            "transliterated": "Ruach",
+            "hebrew": "רוח",
+            "source": "Ruach"
+        },
+        {
             "translation": "Knowledge",
             "style": {
                 "category": "Vessel",
@@ -2401,7 +2419,7 @@
         {
             "translation": "Tetragrammaton",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "HaVaYaH",
             "hebrew": "הויה"
@@ -2409,7 +2427,7 @@
         {
             "translation": "Tetragrammatons",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "HaVaYot",
             "hebrew": "הוויות"
@@ -3272,11 +3290,22 @@
             "hebrew": "ה׳ גבורות"
         },
         {
+            "translation": "First Hey",
+            "explanation": "Key",
+            "source": "Hey Rishonah",
+            "term": "first Hey",
+            "hebrew": "ה׳ ראשונה",
+            "style": {
+                "category": "Holy Name",
+                "phase": "two"
+            }
+        },
+        {
             "translation": "Lower Hey",
             "term": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
-                "category": "Tetragrammaton",
+                "category": "Holy Name",
                 "phase": "four"
             }
         },
@@ -3548,7 +3577,7 @@
             "prefix": "the",
             "translation": "Yud of Tetragrammaton",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "Yud HaVaYaH",
             "hebrew": "י׳ הויה"
@@ -3557,7 +3586,7 @@
             "prefix": "the",
             "translation": "Yod of Tetragrammaton",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "Yod HaVaYaH",
             "hebrew": "י׳ הויה"
@@ -3566,7 +3595,7 @@
             "prefix": "the",
             "translation": "Hey of Tetragrammaton",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "Hey HaVaYaH",
             "hebrew": "ה׳ הויה"
@@ -3575,7 +3604,7 @@
             "prefix": "the",
             "translation": "Vav of Tetragrammaton",
             "style": {
-                "category": "HaVaYaH י-ה-ו-ה"
+                "category": "Holy Name"
             },
             "term": "Vav HaVaYaH",
             "hebrew": "ו׳ הויה"
@@ -7074,7 +7103,7 @@
             "source": "Hey Tata'a",
             "hebrew": "ה׳ תתאה",
             "style": {
-                "category": "Tetragrammaton",
+                "category": "Holy Name",
                 "phase": "four"
             }
         },
@@ -7084,7 +7113,7 @@
             "source": "Hey Ela'a",
             "hebrew": "ה׳ עילאה",
             "style": {
-                "category": "Tetragrammaton",
+                "category": "Holy Name",
                 "phase": "two"
             },
             "defaultTerm": true

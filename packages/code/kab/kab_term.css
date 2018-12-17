@@ -10,6 +10,7 @@
     position:absolute;
     font-weight:bold;
     font-size:40%;
+    left:-0.1em;
     top:2.1em;
     line-height:1em;
     text-align: center;
@@ -125,7 +126,7 @@
     margin:0.1em;
     padding:0.2em;
     border-radius: 5px;
-    min-width:9em;
+    min-width:11em;
     text-align:center;
     break-after: avoid;
     break-inside: avoid-column;
