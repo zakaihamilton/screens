@@ -1,109 +1,109 @@
 .kab-term-category.kab-term-english {
-    padding-left:3em;
+    padding-left: 3em;
 }
 
 .kab-term-category.kab-term-hebrew {
-    padding-right:3em;
+    padding-right: 3em;
 }
 
 [kab-term-category]:after {
-    position:absolute;
-    font-weight:bold;
-    font-size:40%;
-    left:-0.1em;
-    top:2.1em;
-    line-height:1em;
+    position: absolute;
+    font-weight: bold;
+    font-size: 40%;
+    left: -0.1em;
+    top: 2.1em;
+    line-height: 1em;
     text-align: center;
-    text-transform:uppercase;
+    text-transform: uppercase;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-category);
     transform: rotate(-90deg);
-    border:1px solid transparent;
-    white-space: pre; 
+    border: 1px solid transparent;
+    white-space: pre;
 }
 
 [kab-term-category].kab-term-english:after {
-    left:0em;
-    margin-left:-0.5em;
+    left: 0em;
+    margin-left: -0.5em;
 }
 
 [kab-term-category].kab-term-hebrew:after {
-    right:0em;
-    padding-right:-0.5em;
+    right: 0em;
+    padding-right: -0.5em;
 }
 
 .kab-term-category.kab-term-english {
-    padding-left:1.5em;
+    padding-left: 1.5em;
 }
 
 .kab-term-category.kab-term-hebrew {
-    padding-right:1.5em;
+    padding-right: 1.5em;
 }
 
 [kab-term-heading]:after {
-    position:absolute;
-    padding-left:2px;
-    padding-right:2px;
-    left:0em;
-    right:0em;
-    top:-1em;
+    position: absolute;
+    padding-left: 2px;
+    padding-right: 2px;
+    left: 0em;
+    right: 0em;
+    top: -1em;
     text-align: center;
-    vertical-align:middle;
-    height:1em;
-    font-size:50%;
+    vertical-align: middle;
+    height: 1em;
+    font-size: 50%;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-heading);
 }
 
 [kab-term-heading].kab-term-english:after {
-    left:1em;
+    left: 1em;
 }
 
 [kab-term-heading].kab-term-hebrew:after {
-    right:1em;
+    right: 1em;
 }
 
 [kab-term-sub-heading]:after {
-    position:absolute;
-    padding-left:2px;
-    padding-right:2px;
-    left:0em;
-    right:0em;
-    bottom:1.6em;
+    position: absolute;
+    padding-left: 2px;
+    padding-right: 2px;
+    left: 0em;
+    right: 0em;
+    bottom: 1.6em;
     text-align: center;
-    vertical-align:middle;
-    height:1em;
-    font-size:50%;
+    vertical-align: middle;
+    height: 1em;
+    font-size: 50%;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-sub-heading);
 }
 
 [kab-term-sub-heading].kab-term-english:after {
-    left:1em;
+    left: 1em;
 }
 
 [kab-term-sub-heading].kab-term-hebrew:after {
-    right:1em;
+    right: 1em;
 }
 
 [kab-term-tooltip].kab-term-phase-none {
-    border-bottom:1px dashed darkgray;
+    border-bottom: 1px dashed darkgray;
 }
 
 [kab-term-tooltip]:after {
     visibility: hidden;
     pointer-events: none;
     transition: border 0.10s ease-in;
-    left:0px;
-    top:-1px;
+    left: 0px;
+    top: -1px;
     position: absolute;
     line-height: 1em;
-    padding:0.2em;
+    padding: 0.2em;
     content: attr(kab-term-tooltip);
-    text-align:center;
+    text-align: center;
     white-space: pre;
     min-width: 100%;
     min-height: 100%;
@@ -119,26 +119,26 @@
 }
 
 .kab-term-phase-inline {
-    position:relative;
+    position: relative;
     white-space: nowrap;
-    display:inline-block;
-    min-height:2em;
-    margin:0.1em;
-    padding:0.2em;
+    display: inline-block;
+    min-height: 2em;
+    margin: 0.1em;
+    padding: 0.2em;
     border-radius: 5px;
-    min-width:11em;
-    text-align:center;
+    min-width: 11em;
+    text-align: center;
     break-after: avoid;
     break-inside: avoid-column;
 }
 
 [kab-term-phase-number]:after {
-    position:absolute;
-    top:-1em;
-    vertical-align:middle;
-    font-size:60%;
-    text-transform:uppercase;
-    content:attr(kab-term-phase-number);
+    position: absolute;
+    top: -1em;
+    vertical-align: middle;
+    font-size: 60%;
+    text-transform: uppercase;
+    content: attr(kab-term-phase-number);
     width: 1em;
     height: 1em;
     padding: 0em;
@@ -147,190 +147,190 @@
 }
 
 [kab-term-phase-number].kab-term-english:after {
-    right:0.1em;
+    right: 0.1em;
 }
 
 [kab-term-phase-number].kab-term-hebrew:after {
-    left:0.1em;
+    left: 0.1em;
 }
 
 .kab-term-phase-none {
-    min-width:0;
+    min-width: 0;
 }
 
 .kab-term-header {
-    background-color:black;
-    color:lightgray;
+    background-color: black;
+    color: lightgray;
     font-weight: bold;
 }
 
 .kab-term-phase-none:hover:after {
-    background-color:white;
-    border:2px solid gray;
+    background-color: white;
+    border: 2px solid gray;
 }
 
 .kab-term-phase-none.night-mode:hover:after {
-    background-color:var(--background);
-    color:var(--highlight-color);
+    background-color: var(--background);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-root-border {
-    border:1px solid gray;
+    border: 1px solid gray;
 }
 
 .kab-term-phase-root-underline {
-    border-bottom:1px solid gray;
+    border-bottom: 1px solid gray;
 }
 
 .kab-term-phase-root.night-mode {
-    background-color:var(--background);
-    color:var(--highlight-color);
+    background-color: var(--background);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-root:hover:after {
-    background-color:white;
-    border:2px solid gray;
+    background-color: white;
+    border: 2px solid gray;
 }
 
 .kab-term-phase-root.night-mode:hover:after {
-    background-color:var(--background);
-    color:var(--highlight-color);
+    background-color: var(--background);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-one {
-    background-color:#FFF3CA;
+    background-color: #FFF3CA;
 }
 
 .kab-term-phase-one.night-mode {
-    background-color:var(--phase-one-background);
-    border:2px solid var(--phase-one-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-one-background);
+    border: 2px solid var(--phase-one-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-one-border {
-    border:1px solid orange;
+    border: 1px solid orange;
 }
 
 .kab-term-phase-one-underline {
-    border-bottom:1px solid orange;
+    border-bottom: 1px solid orange;
 }
 
 .kab-term-phase-one:hover:after {
-    background-color:#FFF3CA;
-    border:2px solid orange;
+    background-color: #FFF3CA;
+    border: 2px solid orange;
 }
 
 .kab-term-phase-one.night-mode:hover:after {
-    background-color:var(--phase-one-background);
-    border:2px solid var(--phase-one-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-one-background);
+    border: 2px solid var(--phase-one-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-two {
-    background-color:#C8D9F9;
+    background-color: #C8D9F9;
 }
 
 .kab-term-phase-two.night-mode {
-    background-color:var(--phase-two-background);
-    border:2px solid var(--phase-two-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-two-background);
+    border: 2px solid var(--phase-two-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-two-border {
-    border:1px solid darkblue;
+    border: 1px solid darkblue;
 }
 
 .kab-term-phase-two-underline {
-    border-bottom:1px solid darkblue;
+    border-bottom: 1px solid darkblue;
 }
 
 .kab-term-phase-two:hover:after {
-    background-color:#C8D9F9;
-    border:2px solid darkblue;
+    background-color: #C8D9F9;
+    border: 2px solid darkblue;
 }
 
 .kab-term-phase-two.night-mode:hover:after {
-    background-color:var(--phase-two-background);
-    border:2px solid var(--phase-two-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-two-background);
+    border: 2px solid var(--phase-two-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-three {
-    background-color:#F5CCCB;
+    background-color: #F5CCCB;
 }
 
 .kab-term-phase-three.night-mode {
-    background-color:var(--phase-three-background);
-    border:2px solid var(--phase-three-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-three-background);
+    border: 2px solid var(--phase-three-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-three-border {
-    border:1px solid coral;
+    border: 1px solid coral;
 }
 
 .kab-term-phase-three-underline {
-    border-bottom:1px solid coral;
+    border-bottom: 1px solid coral;
 }
 
 .kab-term-phase-three:hover:after {
-    background-color:#F5CCCB;
-    border:2px solid coral;
+    background-color: #F5CCCB;
+    border: 2px solid coral;
 }
 
 .kab-term-phase-three.night-mode:hover:after {
-    background-color:var(--phase-three-background);
-    border:2px solid var(--phase-three-border);
+    background-color: var(--phase-three-background);
+    border: 2px solid var(--phase-three-border);
 }
 
 .kab-term-phase-four {
-    background-color:#D9EAD2;
+    background-color: #D9EAD2;
 }
 
 .kab-term-phase-four.night-mode {
-    background-color:var(--phase-four-background);
-    border:2px solid var(--phase-four-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-four-background);
+    border: 2px solid var(--phase-four-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-four-border {
-    border:1px solid green;
+    border: 1px solid green;
 }
 
 .kab-term-phase-four-underline {
-    border-bottom:1px solid green;
+    border-bottom: 1px solid green;
 }
 
 .kab-term-phase-four:hover:after {
-    background-color:#D9EAD2;
-    border:2px solid green;
+    background-color: #D9EAD2;
+    border: 2px solid green;
 }
 
 .kab-term-phase-four.night-mode:hover:after {
-    background-color:var(--phase-four-background);
-    border:2px solid var(--phase-four-border);
+    background-color: var(--phase-four-background);
+    border: 2px solid var(--phase-four-border);
 }
 
 .kab-term-phase-collective {
-    background-color:Plum;
+    background-color: Plum;
 }
 
 .kab-term-phase-collective.night-mode {
-    background-color:var(--phase-collective-background);
-    border:2px solid var(--phase-collective-border);
-    color:var(--highlight-color);
+    background-color: var(--phase-collective-background);
+    border: 2px solid var(--phase-collective-border);
+    color: var(--highlight-color);
 }
 
 .kab-term-phase-collective-border {
-    border:1px solid MediumPurple;
+    border: 1px solid MediumPurple;
 }
 
 .kab-term-phase-collective:hover:after {
-    background-color:Plum;
-    border:2px solid MediumPurple;
+    background-color: Plum;
+    border: 2px solid MediumPurple;
 }
 
 .kab-term-phase-collective.night-mode:hover:after {
-    background-color:var(--phase-collective-background);
-    border:2px solid var(--phase-collective-border);
+    background-color: var(--phase-collective-background);
+    border: 2px solid var(--phase-collective-border);
 }
