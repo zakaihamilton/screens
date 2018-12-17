@@ -103,10 +103,11 @@ async function screens_init(items) {
                         }
                     }
                     catch (err) {
-                        if (typeof err == "undefined") {
-                            err = { message: "Unknown error" };
+                        var error = err;
+                        if (typeof error == "undefined") {
+                            error = { message: "Unknown error" };
                         }
-                        var message = err.message || err;
+                        var message = error.message || error;
                         console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
                     }
                 }
@@ -115,7 +116,7 @@ async function screens_init(items) {
     }
 }
 
-function screens_import(path, optional) {
+function screens_import(path) {
     if (screens.imports[path]) {
         return true;
     }
@@ -325,10 +326,4 @@ if (screens.platform === "server" ||
     global.screens = screens;
     global.__json__ = {};
     global.__html__ = {};
-}
-
-if (screens.platform === "browser" ||
-    screens.platform === "client" ||
-    screens.platform === "service_worker") {
-    var module = screens;
 }

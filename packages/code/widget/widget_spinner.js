@@ -11,7 +11,7 @@ screens.widget.spinner = function WidgetSpinner(me) {
                 {
                     "ui.basic.tag": "span",
                     "ui.basic.var":"text",
-                    "text": "Loading"
+                    "ui.basic.text": "Loading"
                 },
                 {
                     "ui.basic.tag":"div",

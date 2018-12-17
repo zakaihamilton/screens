@@ -150,8 +150,10 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var group = window.options.groupName;
         if (group && typeof group === "string") {
+            me.core.property.set(window, "ui.work.state", true);
             me.sessionListData = me.media.file.listing(me.rootPath + "/" + group.toLowerCase());
             me.sessionListData = await me.sessionListData;
+            me.core.property.set(window, "ui.work.state", false);
             var sessions = me.core.property.get(window, "app.player.sessionList");
             var sessionCount = 0;
             if (sessions && sessions.length) {

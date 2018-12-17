@@ -11,9 +11,10 @@
 
 .widget-spinner-loader span {
   line-height: 200px;
-  padding-left: 40px;
+  text-align: center;
   font-size: 20px;
-  color: black;
+  color:var(--color);
+  text-shadow: 0 0 3px rgba(81, 203, 238, 1), 0 0 5px #0000FF;
 }
 
 .widget-spinner-loader.night-mode span {
