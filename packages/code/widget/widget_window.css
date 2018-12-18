@@ -149,14 +149,9 @@
 .widget-window-header {
     flex:none;
     display:none;
-    background-color:white;
-    border-bottom: 1px solid black;
-    position: relative;
-}
-
-.widget-window-header.night-mode {
     background-color:var(--chrome-background);
-    border-bottom: 1px solid darkgray;
+    border-bottom: 1px solid var(--color);
+    position: relative;
 }
 
 .widget-window-header.menu {

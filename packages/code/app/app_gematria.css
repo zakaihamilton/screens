@@ -1,38 +1,38 @@
 .app-gematria-bar {
     position: absolute;
-    left:5%;
-    width:90%;
-    top:10px;
+    left: 5%;
+    width: 90%;
+    top: 10px;
     height: 40px;
-    display:flex;
+    display: flex;
 }
 
 .app-gematria-title-label {
-    flex:0;
-    color:var(--color);
-    margin:10px;
-    margin-left:10px;
-    margin-right:10px;
-    margin-top:5px;
+    flex: 0;
+    color: var(--color);
+    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 
 .app-gematria-title {
     margin-left: 0px !important;
-    width:20%;
+    width: 20%;
 }
 
 .app-gematria-input-label {
-    flex:0;
-    margin-left:10px;
-    margin-right:10px;
-    margin-top:5px;
-    color:var(--color);
+    flex: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: var(--color);
 }
 
 .app-gematria-input {
     margin-left: 0px !important;
     direction: rtl;
-    width:80%;
+    width: 80%;
 }
 
 .app-gematria-diagram {
@@ -46,13 +46,8 @@
     grid-gap: 0.5% 1px;
     align-items: stretch;
     line-height: 2em;
-    background-color:white;
-    color:black;
-}
-
-.app-gematria-diagram.night-mode {
-    background-color:var(--background);
-    color:var(--color);
+    background-color: var(--background);
+    color: var(--color);
 }
 
 .app-gematria-letter {
@@ -61,7 +56,7 @@
     justify-content: center;
     border: 1px solid black;
     margin: 3px;
-    padding:3px;
+    padding: 3px;
     text-align: center;
     vertical-align: middle;
     padding-bottom: 0.5em;

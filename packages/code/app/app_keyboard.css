@@ -1,18 +1,18 @@
 .app-keyboard-input {
     margin-left: 0px !important;
     position: relative;
-    top:10px;
-    left:5%;
-    width:90%;
+    top: 10px;
+    left: 5%;
+    width: 90%;
     direction: rtl;
 }
 
 .app-keyboard-buttons {
     position: absolute;
-    left:5px;
-    right:5px;
-    bottom:5px;
-    top:50px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    top: 50px;
     z-index: 1000;
     display: grid;
     grid-gap: 0.5% 1px;
@@ -27,32 +27,29 @@
     justify-content: center;
     border: 1px solid black;
     margin: 6px;
-    padding:3px;
-    height:80%;
-    width:80%;
-    font-size:1em;
+    padding: 3px;
+    height: 80%;
+    width: 80%;
+    font-size: 1em;
     text-align: center;
     vertical-align: middle;
     padding-bottom: 0.5em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.app-keyboard-button.night-mode {
-    color:white;
+    color: var(--color);
 }
 
 .app-keyboard-button:hover:active {
-    background-color:darkgreen;
-    border:1px solid green;
-    color:lightgreen;
+    background-color: darkgreen;
+    border: 1px solid green;
+    color: lightgreen;
 }
 
 .app-keyboard-button:before {
     position: absolute;
-    font-size:75%;
-    opacity:0.8;
-    top:0.2em;
-    line-height:1em;
+    font-size: 75%;
+    opacity: 0.8;
+    top: 0.2em;
+    line-height: 1em;
     text-align: center;
     pointer-events: none;
     user-select: none;
@@ -62,10 +59,10 @@
 
 .app-keyboard-button:after {
     position: absolute;
-    font-size:75%;
-    opacity:0.8;
-    bottom:0.2em;
-    line-height:1em;
+    font-size: 75%;
+    opacity: 0.8;
+    bottom: 0.2em;
+    line-height: 1em;
     text-align: center;
     pointer-events: none;
     user-select: none;

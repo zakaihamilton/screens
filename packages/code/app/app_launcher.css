@@ -1,9 +1,6 @@
 .app-launcher-html {
     margin-bottom:10px;
-    padding-top:10px
-}
-
-.app-launcher-html.night-mode {
+    padding-top:10px;
     background:var(--chrome-background);
 }
 

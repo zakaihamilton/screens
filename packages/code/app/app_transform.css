@@ -1,5 +1,4 @@
 .app-transform-input {
-    background:white;
     resize: none;
     overflow: auto;
     font-size:16px;
@@ -7,11 +6,11 @@
     width:95%;
     margin:10px 10px 10px 10px;
     direction: ltr;
+    background:var(--chrome-background);
+    color:var(--chrome-color);
 }
 
 .app-transform-input.night-mode {
-    background:var(--chrome-background);
-    color:var(--chrome-color);
 }
 
 .app-transform-input.hebrew {

@@ -1,19 +1,11 @@
 .widget-container-root {
     flex:1;
-    background: white;
+    background:var(--background);
     overflow: auto;
     position: relative;
     display:block;
 }
 
 .widget-container-root.transparent {
-    background:none;
-}
-
-.widget-container-root.night-mode {
-    background:var(--background);
-}
-
-.widget-container-root.transparent.night-mode {
     background:none;
 }

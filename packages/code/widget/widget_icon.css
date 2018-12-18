@@ -1,47 +1,45 @@
 .widget-icon-icon {
-    width:128px;
-    height:128px;
-    padding-top:10px;
-    margin-left:10px;
-    margin-right:0px;
-    float:left;
+    width: 128px;
+    height: 128px;
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-right: 0px;
+    float: left;
     text-align: center;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
 .widget-icon-icon.ui-tab-hidden {
-    display:none;
+    display: none;
 }
 
 .widget-icon-icon:hover:active {
-    opacity:0.5;
+    opacity: 0.5;
 }
 
-.widget-icon-icon+.widget-icon-icon
-{
-    margin-left:10px;
+.widget-icon-icon+.widget-icon-icon {
+    margin-left: 10px;
 }
 
-.widget-icon-list+.widget-icon-list
-{
-    margin-left:0px;
+.widget-icon-list+.widget-icon-list {
+    margin-left: 0px;
 }
 
 .widget-icon-list {
-    display:flex;
-    align-items:stretch;
+    display: flex;
+    align-items: stretch;
     flex-wrap: nowrap;
-    min-width:50px;
+    min-width: 50px;
     height: 2em;
-    position:relative;
+    position: relative;
 }
 
 .widget-icon-image-icon {
-    pointer-events:none;
+    pointer-events: none;
     object-fit: contain;
     margin-left: 25%;
-    margin-right:25%;
+    margin-right: 25%;
 }
 
 .widget-icon-image-icon.night-mode {
@@ -49,8 +47,8 @@
 }
 
 .widget-icon-image-list {
-    margin:3px;
-    flex:0;
+    margin: 3px;
+    flex: 0;
     filter: invert(100%);
 }
 
@@ -58,17 +56,14 @@
     position: relative;
     font-size: 1em;
     user-select: none;
-    margin:2px;
-}
-
-.widget-icon-label-icon.night-mode {
-    color:var(--color);
+    margin: 2px;
+    color: var(--color);
 }
 
 .widget-icon-label-list {
-    margin:2px;
+    margin: 2px;
     max-width: 200px;
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1em;
     user-select: none;

@@ -1,60 +1,47 @@
 .widget-progress-container {
-    border:1px solid black;
     overflow: hidden;
     height: 100%;
     position: relative;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-    background-color: #eee;
     border-radius: 5px 5px 5px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.widget-progress-container.night-mode {
-    background-color:var(--background);
-    border:1px solid var(--border-color);
+    background-color: var(--background);
+    border: 1px solid var(--border-color);
 }
 
 .widget-progress-bar {
     position: absolute;
-    top:3px;
-    bottom:3px;
-    margin-left:3px;
-    margin-right:3px;
+    top: 3px;
+    bottom: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
     user-select: none;
     pointer-events: none;
-    background-image:
-    linear-gradient(
-      to right, 
-      green, #3CB371
-    );
+    background-image: linear-gradient( to right, green, #3CB371);
 }
 
 .widget-progress-label {
     text-align: center;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size:16px;
-    color:black;
+    font-size: 16px;
+    color: black;
     user-select: none;
     pointer-events: none;
     z-index: 1;
-}
-
-.widget-progress-percent.night-mode,
-.widget-progress-label.night-mode {
-    color:var(--color);
+    color: var(--color);
 }
 
 .widget-progress-percent {
     position: absolute;
-    margin-left:3px;
-    margin-right:3px;
-    right:3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    right: 3px;
     text-align: right;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size:16px;
-    color:black;
+    font-size: 16px;
+    color: var(--color);
     user-select: none;
     pointer-events: none;
     z-index: 1;
