@@ -5,13 +5,13 @@
 
 screens.widget.input = function WidgetInput(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.basic.text", "ui.basic.type"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text"
         },
-        properties : {
+        properties: {
             "ui.basic.tag": "input",
             "ui.class.class": "normal",
             "ui.attribute.tabindex": "0"
@@ -22,7 +22,9 @@ screens.widget.input = function WidgetInput(me) {
             return object.value;
         },
         set: function (object, value) {
-            object.value = value;
+            if (typeof value !== "undefined") {
+                object.value = value;
+            }
         }
     };
     me.maxlength = {

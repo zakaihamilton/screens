@@ -85,6 +85,7 @@
                 "ui.property.after": {
                     "storage.local.key": "@ui.windowkey.app-present-input",
                     "storage.local.restore": "ui.basic.text",
+                    "ui.basic.text": "@ui.param.text",
                     "ui.monitor.change": "ui.basic.save"
                 }
             },

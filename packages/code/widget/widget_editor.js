@@ -5,11 +5,11 @@
 
 screens.widget.editor = function WidgetEditor(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "textarea",
             "ui.class.class": "border"
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text"
         }
     };
@@ -18,7 +18,9 @@ screens.widget.editor = function WidgetEditor(me) {
             return object.value;
         },
         set: function (object, value) {
-            object.value = value;
+            if (typeof value !== "undefined") {
+                object.value = value;
+            }
         }
     };
     me.maxlength = {

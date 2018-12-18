@@ -71,6 +71,18 @@ screens.ui.content = function UIContent(me) {
                 me.content.update();
             }
         },
+        get: async function (item) {
+            var name = item;
+            if (typeof item === "object") {
+                name = item.key.name;
+            }
+            var fullItem = await me.storage.data.load(me.id + ".content", name);
+            var content = "";
+            if (fullItem) {
+                content = me.core.string.decode(fullItem.content);
+            }
+            return [content, fullItem.title, fullItem.options];
+        },
         import: async function (object, item) {
             var window = me.widget.window.get(object);
             var name = item;

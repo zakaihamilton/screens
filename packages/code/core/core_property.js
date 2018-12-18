@@ -49,7 +49,7 @@ screens.core.property = function CoreProperty(me) {
     me.has = function (object, name) {
         return me.get(object, name, null, "set", true);
     };
-    me.get = function (object, name, value = null, method = "get", check = false) {
+    me.get = function (object, name, value = undefined, method = "get", check = false) {
         var result = undefined;
         if (Array.isArray(object)) {
             var results = [];

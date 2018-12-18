@@ -26,21 +26,21 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.ref = {
-        get: function(object) {
+        get: function (object) {
             var ref = null;
             var parent = object.parentNode;
-            if(parent) {
-                if(!parent.ref) {
+            if (parent) {
+                if (!parent.ref) {
                     parent.ref = me.core.ref.gen();
                 }
                 ref = parent.ref;
             }
             return ref;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var ref = null;
             var parent = object.parentNode;
-            if(parent) {
+            if (parent) {
                 parent.ref = ref;
             }
         }
@@ -73,10 +73,10 @@ screens.ui.basic = function UIBasic(me) {
         set: function (object, value) {
             if (value) {
                 var parent = object.parentNode;
-                if(object.context) {
+                if (object.context) {
                     parent = object.context;
                 }
-                if(!parent.var) {
+                if (!parent.var) {
                     parent.var = {};
                 }
                 value.split(",").map(value => {
@@ -86,11 +86,11 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.context = {
-        get: function(object) {
+        get: function (object) {
             return object.context;
         },
-        set: function(object, value) {
-            if(value === "self") {
+        set: function (object, value) {
+            if (value === "self") {
                 object.context = object;
             }
             else {
@@ -99,63 +99,65 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.elements = {
-        set: function(object, value) {
+        set: function (object, value) {
             if (value) {
                 me.ui.element.create(value, object, object.context);
             }
         }
     };
     me.enabled = {
-        get : function(object) {
+        get: function (object) {
             return !object.getAttribute("disabled");
         },
-        set : function(object, value) {
-            if(value) {
-                object.removeAttribute("disabled");            
+        set: function (object, value) {
+            if (value) {
+                object.removeAttribute("disabled");
             }
             else {
-                object.setAttribute("disabled", true);            
+                object.setAttribute("disabled", true);
             }
         }
     };
     me.text = {
-        get : function(object) {
-            if(object.tagName && object.tagName.toLowerCase() === "input") {
+        get: function (object) {
+            if (object.tagName && object.tagName.toLowerCase() === "input") {
                 return object.value;
             }
             return object.textContent;
         },
-        set : function(object, value) {
-            if(object.tagName && object.tagName.toLowerCase() === "input") {
-                object.value = value;
-            }
-            else {
-                object.textContent = value;
+        set: function (object, value) {
+            if (typeof value !== "undefined") {
+                if (object.tagName && object.tagName.toLowerCase() === "input") {
+                    object.value = value;
+                }
+                else {
+                    object.textContent = value;
+                }
             }
         }
     };
     me.html = {
-        get : function(object) {
+        get: function (object) {
             return object.innerHTML;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.innerHTML = value;
             me.ui.theme.updateElements(object.parentNode);
         }
     };
     me.readOnly = {
-        get: function(object) {
+        get: function (object) {
             return object.readOnly;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.readOnly = value;
         }
     };
     me.draggable = {
-        get : function(object) {
+        get: function (object) {
             return object.draggable;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.draggable = value;
         }
     };
@@ -164,7 +166,7 @@ screens.ui.basic = function UIBasic(me) {
             return object.parentWidget;
         },
         set: function (object, value) {
-            if(!value) {
+            if (!value) {
                 value = object;
             }
             object.parentWidget = value;
@@ -175,7 +177,7 @@ screens.ui.basic = function UIBasic(me) {
             return object.window;
         },
         set: function (object, value) {
-            if(!value) {
+            if (!value) {
                 value = object;
             }
             object.window = me.widget.window.get(value);
@@ -198,48 +200,48 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.save = {
-        set: function(object) {
+        set: function (object) {
             me.core.property.set(object, "storage.local.store", me.core.property.get(object, "ui.basic.text"));
             me.core.property.notify(me.ui.node.container(object, me.widget.container.id), "update");
         }
     };
     me.metadata = {
-        get : function(object) {
+        get: function (object) {
             return object.metadata;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.metadata = value;
         }
     };
     me.debugger = {
-        get : function(object) {
+        get: function (object) {
             debugger;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             debugger;
         }
     };
     me.show = {
-        get: function(object) {
+        get: function (object) {
             return object.style.visibility !== "hidden";
         },
-        set: function(object, value) {
-            object.style.visibility = value ? "visible": "hidden";
+        set: function (object, value) {
+            object.style.visibility = value ? "visible" : "hidden";
         }
     };
     me.hide = {
-        get: function(object) {
+        get: function (object) {
             return object.style.visibility === "hidden";
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.style.visibility = value ? "hidden" : "visible";
         }
     };
     me.display = {
-        get: function(object) {
+        get: function (object) {
             return object.style.display !== "none";
         },
-        set: function(object, value) {
+        set: function (object, value) {
             object.style.display = value ? "" : "none";
         }
     };
