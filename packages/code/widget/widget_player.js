@@ -122,10 +122,6 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
     };
     me.update = function (object) {
         var window = me.widget.window.get(object);
-        var left = object.parentNode.offsetLeft;
-        var top = object.parentNode.offsetTop;
-        var width = object.parentNode.clientWidth;
-        var height = object.parentNode.clientHeight;
         var windowRegion = me.ui.rect.absoluteRegion(window);
         var playerRegion = me.ui.rect.relativeRegion(object, window);
         var widthText = "";
@@ -344,6 +340,11 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.forward = function (object) {
         var widget = me.upper.mainWidget(object);
         widget.var.player.currentTime += 10;
+        me.update(object);
+    };
+    me.seek = function (object, time) {
+        var widget = me.upper.mainWidget(object);
+        widget.var.player.currentTime = time;
         me.update(object);
     };
     me.fullscreen = function (object) {

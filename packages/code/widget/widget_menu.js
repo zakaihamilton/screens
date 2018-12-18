@@ -246,8 +246,19 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     };
     me.work = function (object, state) {
         me.log("menu state: " + state);
-        me.core.property.set(object.var.progress, "ui.style.display", state ? "block" : "none");
-        me.core.property.set(object.var.members, "ui.style.display", state ? "none" : "");
+        if (me.workTimeout) {
+            clearTimeout(me.workTimeout);
+            me.workTimeout = null;
+        }
+        if (state) {
+            me.workTimeout = setTimeout(function () {
+                me.core.property.set(object.var.progress, "ui.style.display", "block");
+                me.core.property.set(object.var.members, "ui.style.display", "none");
+            }, 250);
+        } else {
+            me.core.property.set(object.var.progress, "ui.style.display", "none");
+            me.core.property.set(object.var.members, "ui.style.display", "");
+        }
     };
     me.use = function (object, name, member, properties) {
         if (!object.lists) {
@@ -456,9 +467,6 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
         }
     };
-    me.init = function () {
-        me.sleepThreshold = { length: 50, sleep: 500 };
-    };
     me.promise = async function (object, info) {
         if (!info) {
             return;
@@ -471,9 +479,6 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         var items = await info.promise;
         if (!items) {
             items = [];
-        }
-        if (items.length > me.sleepThreshold.length) {
-            await me.core.util.sleep(me.sleepThreshold.sleep);
         }
         me.core.property.set(parent, "ui.work.state", false);
         items = info.callback(items);
