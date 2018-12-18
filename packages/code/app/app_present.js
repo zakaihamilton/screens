@@ -101,8 +101,11 @@ screens.app.present = function AppPresent(me) {
         else {
             text = me.core.property.get(window.var.editor, "text");
         }
-        me.core.property.set(window.var.transform, "text", text);
-        me.core.property.set(window.var.transform, "transform");
+        var previousText = me.core.property.get(window.var.transform, "text");
+        if(text !== previousText) {
+            me.core.property.set(window.var.transform, "text", text);
+            me.core.property.set(window.var.transform, "transform");
+        }
     };
     me.userMenuList = {
         get: function (object) {

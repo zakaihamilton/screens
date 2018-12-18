@@ -481,7 +481,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             items = [];
         }
         me.core.property.set(parent, "ui.work.state", false);
-        items = info.callback(items);
+        if (info.callback) {
+            items = info.callback(items);
+        }
         me.core.property.set(me.parentMenu(object), "values", items);
     };
     me.handleValue = function (object, values, key, callback) {

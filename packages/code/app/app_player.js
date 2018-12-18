@@ -326,38 +326,53 @@ screens.app.player = function AppPlayer(me) {
         me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName]);
     };
     me.updateContent = async function (object, name) {
-        me.contentList = [];
-        var apps = ["Present", "Gematria", "Table"];
-        for (var app of apps) {
-            var exists = await me.storage.data.exists("app." + app.toLowerCase() + ".content", name);
-            if (exists) {
-                me.contentList.push([
-                    app,
-                    (object, appName) => {
-                        me.core.app.launch(appName.toLowerCase(), name);
-                    },
-                    {
+        me.contentApps = new Promise(async resolve => {
+            var list = [];
+            var apps = ["Present", "Gematria", "Table"];
+            for (var app of apps) {
+                var exists = await me.storage.data.exists("app." + app.toLowerCase() + ".content", name);
+                if (exists) {
+                    list.push([
+                        app,
+                        (object, appName) => {
+                            me.core.app.launch(appName.toLowerCase(), name);
+                        },
+                        {
 
-                    },
+                        },
+                        {
+                            "group": "content"
+                        }
+                    ]);
+                }
+            }
+            if (!list.length) {
+                list.push([
+                    "No Associated Content",
+                    null,
                     {
-                        "group": "content"
+                        enabled: false
                     }
                 ]);
             }
-        }
+            resolve(list);
+        });
     };
     me.contentMenu = function () {
-        if (me.contentList && me.contentList.length) {
-            return me.contentList;
-        }
-        else {
-            return [[
-                "No Associated Content",
-                null,
-                {
-                    enabled: false
-                }
-            ]];
-        }
+        return [[
+            "Apps",
+            "header"
+        ], [
+            "",
+            null,
+            {
+                "header": true,
+                "visible": false
+            },
+            {
+                "group": "content",
+                "promise": { promise: me.contentApps }
+            }
+        ]];
     };
 };
