@@ -33,6 +33,7 @@ screens.app.notes = function AppNotes(me) {
             window.autoSaveInterval = setInterval(() => {
                 me.core.property.set(window.var.editor, "ui.basic.save", { method: "contents", json: true });
             }, 1000);
+            me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
         }
     };
     me.close = function (object) {
