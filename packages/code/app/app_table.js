@@ -13,7 +13,7 @@ screens.app.table = function AppTable(me) {
         }
         var window = me.ui.element.create(__json__, "workspace", "self");
         if (typeof args[0] === "string") {
-            me.content.import(window, args[0]);
+            me.content.import(window, args[0], args[1]);
         }
         return window;
     };

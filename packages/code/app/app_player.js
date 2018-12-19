@@ -128,7 +128,7 @@ screens.app.player = function AppPlayer(me) {
             if (name) {
                 me.core.property.set(window, "title", name);
                 me.ui.options.save(me, window, { sessionName: name });
-                me.updateContent(window, name);
+                await me.updateContent(window, name);
             }
             else {
                 me.core.property.set(window, "title", "Player");
@@ -136,6 +136,28 @@ screens.app.player = function AppPlayer(me) {
             }
             me.core.property.notify(window, "app.player.updatePlayer");
         }
+    };
+    me.updateContent = async function (object, name) {
+        me.contentApps = new Promise(async resolve => {
+            var list = [];
+            var publicList = await me.retrieveContent(window, name);
+            var privateList = await me.retrieveContent(window, name, true);
+            if (publicList && publicList.length && privateList && privateList.length) {
+                privateList[0][2].separator = true;
+            }
+            list.push(...publicList);
+            list.push(...privateList);
+            if (!list.length) {
+                list.push([
+                    "No Associated Content",
+                    null,
+                    {
+                        enabled: false
+                    }
+                ]);
+            }
+            resolve(list);
+        });
     };
     me.setFormat = {
         get: function (object, value) {
@@ -325,38 +347,27 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName]);
     };
-    me.updateContent = async function (object, name) {
-        me.contentApps = new Promise(async resolve => {
-            var list = [];
-            var apps = ["Present", "Gematria", "Table", "Notes"];
-            for (var app of apps) {
-                var exists = await me.storage.data.exists("app." + app.toLowerCase() + ".content", name);
-                if (exists) {
-                    list.push([
-                        app,
-                        (object, appName) => {
-                            me.core.app.launch(appName.toLowerCase(), name);
-                        },
-                        {
-
-                        },
-                        {
-                            "group": "content"
-                        }
-                    ]);
-                }
-            }
-            if (!list.length) {
+    me.retrieveContent = async function (object, name, private = false) {
+        var list = [];
+        var apps = ["Present", "Gematria", "Table", "Notes"];
+        for (var app of apps) {
+            var exists = await me.storage.data.exists("app." + app.toLowerCase() + (private ? ".content.$userId" : ".content"), name);
+            if (exists) {
                 list.push([
-                    "No Associated Content",
-                    null,
+                    app,
+                    (object, appName) => {
+                        me.core.app.launch(appName.toLowerCase(), name, private);
+                    },
                     {
-                        enabled: false
+
+                    },
+                    {
+                        "group": "content"
                     }
                 ]);
             }
-            resolve(list);
-        });
+        }
+        return list;
     };
     me.contentMenu = function () {
         return [[

@@ -11,7 +11,7 @@ screens.app.present = function AppPresent(me) {
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             if (typeof args[0] === "string") {
-                await me.content.import(me.singleton, args[0]);
+                await me.content.import(me.singleton, args[0], args[1]);
             }
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;

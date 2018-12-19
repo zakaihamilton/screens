@@ -16,7 +16,7 @@ screens.app.gematria = function AppGematria(me) {
         me.initOptions(me.singleton);
         me.calcNumerology(me.singleton);
         if (typeof args[0] === "string") {
-            me.content.import(me.singleton, args[0]);
+            me.content.import(me.singleton, args[0], args[1]);
         }
         return me.singleton;
     };

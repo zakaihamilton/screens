@@ -83,13 +83,13 @@ screens.ui.content = function UIContent(me) {
             }
             return [content, fullItem.title, fullItem.options];
         },
-        import: async function (object, item) {
+        import: async function (object, item, private) {
             var window = me.widget.window.get(object);
             var name = item;
             if (typeof item !== "string") {
                 name = item.key.name;
             }
-            var fullItem = await me.storage.data.load(me.id + ".content", name);
+            var fullItem = await me.storage.data.load(me.id + (private ? ".content.$userId" : ".content"), name);
             var content = "";
             if (fullItem) {
                 content = me.core.string.decode(fullItem.content);
@@ -97,17 +97,7 @@ screens.ui.content = function UIContent(me) {
             me.importData(window, content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
-            var window = me.widget.window.get(object);
-            var name = item;
-            if (typeof item !== "string") {
-                name = item.key.name;
-            }
-            var fullItem = await me.storage.data.load(me.id + ".content.$userId", name);
-            var content = "";
-            if (fullItem) {
-                content = me.core.string.decode(fullItem.content);
-            }
-            me.importData(window, content, fullItem.title, fullItem.options);
+            me.content.import(object, item, true);
         },
         publicMenu: function (object) {
             return me.widget.menu.collect(object, me.content.publicList, "title", null, "public", null, me.content.import);

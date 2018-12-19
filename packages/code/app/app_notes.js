@@ -7,14 +7,22 @@ screens.app.notes = function AppNotes(me) {
     me.init = function () {
         me.ui.content.attach(me);
     };
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (!args) {
             args = [""];
         }
+        if (me.core.property.get(me.singleton, "ui.node.parent")) {
+            if (typeof args[0] === "string") {
+                await me.content.import(me.singleton, args[0], args[1]);
+            }
+            me.core.property.set(me.singleton, "widget.window.show", true);
+            return me.singleton;
+        }
         var window = me.ui.element.create(__json__, "workspace", "self");
         if (typeof args[0] === "string") {
-            me.content.import(window, args[0]);
+            me.content.import(window, args[0], args[1]);
         }
+        me.singleton = window;
         return window;
     };
     me.initOptions = {
