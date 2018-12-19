@@ -328,7 +328,7 @@ screens.app.player = function AppPlayer(me) {
     me.updateContent = async function (object, name) {
         me.contentApps = new Promise(async resolve => {
             var list = [];
-            var apps = ["Present", "Gematria", "Table"];
+            var apps = ["Present", "Gematria", "Table", "Notes"];
             for (var app of apps) {
                 var exists = await me.storage.data.exists("app." + app.toLowerCase() + ".content", name);
                 if (exists) {
