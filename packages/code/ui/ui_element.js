@@ -150,7 +150,7 @@ screens.ui.element = function UIElement(me) {
         }
         var object = null;
         var component_name = properties["ui.element.component"];
-        var tag = properties['ui.basic.tag'];
+        var tag = properties["ui.basic.tag"];
         if (!tag && !component_name) {
             component_name = me.matches(properties, parent);
         }
@@ -168,8 +168,8 @@ screens.ui.element = function UIElement(me) {
         if (component.element && component.element.tag) {
             tag = component.element.tag(properties, parent, context, params);
         }
-        if (!tag && defaultProperties && 'ui.basic.tag' in defaultProperties) {
-            tag = defaultProperties['ui.basic.tag'];
+        if (!tag && defaultProperties && "ui.basic.tag" in defaultProperties) {
+            tag = defaultProperties["ui.basic.tag"];
         }
         if (!tag) {
             tag = "div";

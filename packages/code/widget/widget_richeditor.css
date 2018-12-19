@@ -1,0 +1,39 @@
+.widget-richeditor-container {
+    position: absolute;
+    left:0px;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    background-color: var(--background);
+    color:var(--color);
+}
+
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+    border:1px solid transparent !important;
+}
+
+.ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active {
+    border:1px solid var(--border-color) !important;
+}
+
+.ql-snow .ql-picker {
+    color:var(--color) !important;
+}
+
+.ql-snow .ql-stroke {
+    stroke:var(--color) !important;
+}
+
+.ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+    fill:var(--color) !important;
+}
+
+.ql-snow .ql-picker-options {
+    background-color: var(--chrome-background) !important;
+    color: var(--chrome-color) !important;
+}
+
+.ql-snow .ql-picker .ql-expanded {
+    background-color: var(--chrome-background) !important;
+    color: var(--chrome-color) !important;
+}

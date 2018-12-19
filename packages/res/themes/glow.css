@@ -965,3 +965,7 @@
 .table td.is-dark, .table th.is-dark {
     border-color: var(--border-color);
 }
+
+strong {
+    color:var(--color);
+}

@@ -265,6 +265,9 @@ screens.widget.window = function WidgetWindow(me) {
                 clearTimeout(window.delayTimer);
                 window.delayTimer = null;
             }
+            if (window.app_component) {
+                me.core.property.set(window, window.app_component.id + ".close");
+            }
         }
     };
     me.icon = {

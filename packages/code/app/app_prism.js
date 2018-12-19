@@ -15,26 +15,23 @@ screens.app.prism = function AppPrism(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            if (!window.optionsLoaded) {
-                window.optionsLoaded = true;
-                me.ui.options.load(me, window, {
-                    doTranslation: true,
-                    doExplanation: true,
-                    prioritizeExplanation: true,
-                    addStyles: true,
-                    abridged: false,
-                    keepSource: false,
-                    category: true,
-                    headings: true,
-                    subHeadings: true,
-                    language: "Auto",
-                    fontSize: "18px",
-                    phaseNumbers: true,
-                    animation: true,
-                    autoRotate: false
-                });
-            }
-            me.ui.options.toggleSet(me, null, {
+            me.ui.options.load(me, window, {
+                doTranslation: true,
+                doExplanation: true,
+                prioritizeExplanation: true,
+                addStyles: true,
+                abridged: false,
+                keepSource: false,
+                category: true,
+                headings: true,
+                subHeadings: true,
+                language: "Auto",
+                fontSize: "18px",
+                phaseNumbers: true,
+                animation: true,
+                autoRotate: false
+            });
+            me.ui.options.toggleSet(me, window, {
                 "doTranslation": me.reload.set,
                 "doExplanation": me.reload.set,
                 "prioritizeExplanation": me.reload.set,
@@ -50,7 +47,7 @@ screens.app.prism = function AppPrism(me) {
                 "animation": me.reload.set,
                 "autoRotate": me.update
             });
-            me.ui.options.choiceSet(me, null, {
+            me.ui.options.choiceSet(me, window, {
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
                     me.core.property.set(window.var.viewer, "ui.style.fontSize", value);

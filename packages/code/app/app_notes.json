@@ -1,0 +1,54 @@
+{
+    "title": "Notes",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
+    "icon": "/packages/res/icons/notes.png",
+    "widget.menu.items": [
+        [
+            "Notes",
+            [
+                [
+                    "Clear",
+                    "app.notes.clear"
+                ]
+            ]
+        ],
+        [
+            "Content",
+            [
+                "app.notes.content.menu"
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.var": "editor",
+            "ui.element.component": "widget.richeditor",
+            "ui.property.after": {
+                "storage.local.key": "@ui.windowkey.app-notes-editor-",
+                "storage.local.restore": "contents"
+            }
+        },
+        {
+            "ui.basic.var": "popup",
+            "ui.basic.tag": "div",
+            "ui.basic.html": "@widget.transform.html",
+            "ui.class.add": "modal",
+            "ui.style.zIndex": "1000",
+            "ui.property.after": {
+                "ui.node.parent": "@ui.element.workspace"
+            }
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-notes-window",
+        "storage.local.restore": "widget.window.store",
+        "title": "Notes",
+        "app.notes.initOptions": null,
+        "app.notes.reload": null
+    }
+}

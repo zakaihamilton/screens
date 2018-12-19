@@ -42,7 +42,8 @@ screens.apps = [
     "keyboard",
     "tasks",
     "prism",
-    "table"
+    "table",
+    "notes"
 ];
 
 screens.include({

@@ -203,8 +203,7 @@
         {
             "ui.basic.tag": "div",
             "ui.basic.var": "table",
-            "ui.class.class": "app.table.widget",
-            "ui.touch.down": "!app.table.rotateEvent"
+            "ui.class.class": "app.table.widget"
         },
         {
             "ui.basic.var": "popup",

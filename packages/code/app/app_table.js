@@ -20,29 +20,24 @@ screens.app.table = function AppTable(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            if (!window.optionsLoaded) {
-                window.optionsLoaded = true;
-                me.ui.options.load(me, window, {
-                    border: true,
-                    editMode: false,
-                    autoComplete: true,
-                    doTranslation: true,
-                    doExplanation: true,
-                    prioritizeExplanation: true,
-                    addStyles: true,
-                    abridged: false,
-                    keepSource: false,
-                    category: true,
-                    headings: true,
-                    subHeadings: true,
-                    language: "Auto",
-                    fontSize: "18px",
-                    phaseNumbers: true,
-                    animation: true,
-                    autoRotate: false
-                });
-            }
-            me.ui.options.toggleSet(me, null, {
+            me.ui.options.load(me, window, {
+                border: true,
+                editMode: false,
+                autoComplete: true,
+                doTranslation: true,
+                doExplanation: true,
+                prioritizeExplanation: true,
+                addStyles: true,
+                abridged: false,
+                keepSource: false,
+                category: true,
+                headings: true,
+                subHeadings: true,
+                language: "Auto",
+                fontSize: "18px",
+                phaseNumbers: true
+            });
+            me.ui.options.toggleSet(me, window, {
                 "border": me.reload.set,
                 "editMode": me.reload.set,
                 "autoComplete": me.reload.set,
@@ -57,11 +52,9 @@ screens.app.table = function AppTable(me) {
                 "columns": me.reload.set,
                 "category": me.reload.set,
                 "headings": me.reload.set,
-                "subHeadings": me.reload.set,
-                "animation": me.reload.set,
-                "autoRotate": me.update
+                "subHeadings": me.reload.set
             });
-            me.ui.options.choiceSet(me, null, {
+            me.ui.options.choiceSet(me, window, {
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
