@@ -29,7 +29,7 @@
             "ui.basic.var": "editor",
             "ui.element.component": "widget.richeditor",
             "ui.property.after": {
-                "storage.local.key": "@ui.windowkey.app-notes-editor-",
+                "storage.local.key": "@ui.windowkey.app-notes-editor",
                 "storage.local.restore": "contents"
             }
         },
