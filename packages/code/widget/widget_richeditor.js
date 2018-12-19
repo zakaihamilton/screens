@@ -24,10 +24,10 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
                             [{ "font": ["Sans Serif", "serif", "monospace"] }],
                             [{ "size": ["small", false, "large", "huge"] }],
                             ["bold", "italic", "underline", "strike"],
-                            ["color", "background"],
                             [{ "script": "sub" }, { "script": "super" }],
                             [{ "header": 1 }, { "header": 2 }, "blockquote", "code-block"],
-                            [{ "list": "ordered" }, { "list": "bullet" }, { "indent": "-1" }, { "indent": "+1" }],
+                            [{ "list": "ordered" }, { "list": "bullet" }],
+                            [{ "indent": "-1" }, { "indent": "+1" }],
                             [{ "direction": "rtl" }, { "align": ["", "center", "right", "justify"] }],
                             ["link", "image", "video", "formula"],
                             ["clean"]
