@@ -30,11 +30,18 @@ screens.app.notes = function AppNotes(me) {
 
             });
             me.core.property.set(window, "app", me);
-            window.autoSaveInterval = setInterval(() => {
-                me.core.property.set(window.var.editor, "ui.basic.save", { method: "contents", json: true });
-            }, 1000);
+            window.autoSaveInterval = setInterval(() => me.update(window), 1000);
             me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
         }
+    };
+    me.update = function (object) {
+        var window = me.widget.window.get(object);
+        var title = me.core.property.get(window.var.editor, "text").split("\n")[0];
+        if (!title) {
+            title = "Notes";
+        }
+        me.core.property.set(window, "title", title);
+        me.core.property.set(window.var.editor, "ui.basic.save", { method: "contents", json: true });
     };
     me.close = function (object) {
         var window = me.widget.window.get(object);
