@@ -43,7 +43,7 @@ screens.ui.theme = function UITheme(me) {
             });
             return items;
         }
-    };    
+    };
     me.update = function () {
         me.load(me.options.theme);
     };
@@ -109,7 +109,7 @@ screens.ui.theme = function UITheme(me) {
             me.currentTheme = null;
         }
     };
-    me.updateElements = function(parent) {
+    me.updateElements = function (parent) {
         me.applyTheme(function (element, classItem) {
             var mapping = me.findMapping(classItem);
             if (!mapping) {
@@ -124,7 +124,7 @@ screens.ui.theme = function UITheme(me) {
         }, parent);
     };
     me.load = async function (name) {
-        if(name === "None") {
+        if (name === "None") {
             me.unload();
             return;
         }
@@ -176,7 +176,7 @@ screens.ui.theme = function UITheme(me) {
             var colors = {};
             if (me.currentTheme) {
                 colors = me.currentTheme.colors;
-                if(me.options.nightMode) {
+                if (me.options.nightMode) {
                     colors = Object.assign({}, colors, me.currentTheme["night-mode"]);
                 }
             }
@@ -189,7 +189,7 @@ screens.ui.theme = function UITheme(me) {
     };
     me.updateColors = function () {
         var colors = me.colorList.get(null);
-        for(var name in colors) {
+        for (var name in colors) {
             var color = colors[name];
             me.ui.color.set(name, color);
         }

@@ -3,10 +3,10 @@
     "fixed": true,
     "popup": true,
     "icon": "/packages/res/icons/login.png",
-    "ui.property.after":{
-        "ui.property.style":{
-            "left":"20%",
-            "top":"20%",
+    "ui.property.after": {
+        "ui.property.style": {
+            "left": "20%",
+            "top": "20%",
             "width": "400px",
             "height": "300px"
         }
@@ -22,7 +22,7 @@
                     }
                 },
                 {
-                    "ui.basic.show":"@lib.google.isSignedIn",
+                    "ui.basic.show": "@lib.google.isSignedIn",
                     "ui.basic.text": "User Name:",
                     "ui.basic.var": "userNameLabel",
                     "ui.property.style": {
@@ -30,7 +30,7 @@
                     }
                 },
                 {
-                    "ui.basic.show":"@lib.google.isSignedIn",
+                    "ui.basic.show": "@lib.google.isSignedIn",
                     "ui.basic.text": "@lib.google.userName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
@@ -50,7 +50,7 @@
                     "ui.basic.text": "@lib.google.currentStatus",
                     "ui.basic.type": "text",
                     "ui.basic.readOnly": true,
-                    "ui.basic.var":"status",
+                    "ui.basic.var": "status",
                     "ui.property.style": {
                         "width": "300px",
                         "display": "inline-block"
@@ -59,28 +59,28 @@
             ]
         },
         {
-            "ui.basic.text":"Sign in",
-            "ui.basic.var":"signin",
-            "ui.basic.hide":"@lib.google.isSignedIn",
-            "ui.touch.click":"lib.google.signin",
+            "ui.basic.text": "Sign in",
+            "ui.basic.var": "signin",
+            "ui.basic.hide": "@lib.google.isSignedIn",
+            "ui.touch.click": "lib.google.signin",
             "ui.property.style": {
                 "marginTop": "20px"
             }
         },
         {
-            "ui.basic.text":"Sign out",
-            "ui.basic.var":"signout",
-            "ui.basic.show":"@lib.google.isSignedIn",
-            "ui.touch.click":"lib.google.signout",
+            "ui.basic.text": "Sign out",
+            "ui.basic.var": "signout",
+            "ui.basic.show": "@lib.google.isSignedIn",
+            "ui.touch.click": "lib.google.signout",
             "ui.property.style": {
                 "marginTop": "20px"
             }
         },
         {
-            "ui.basic.text":"Disconnect",
-            "ui.basic.var":"disconnect",
-            "ui.basic.show":"@lib.google.isSignedIn",
-            "ui.touch.click":"lib.google.disconnect",
+            "ui.basic.text": "Disconnect",
+            "ui.basic.var": "disconnect",
+            "ui.basic.show": "@lib.google.isSignedIn",
+            "ui.touch.click": "lib.google.disconnect",
             "ui.property.style": {
                 "marginTop": "20px"
             }

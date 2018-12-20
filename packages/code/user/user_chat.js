@@ -4,11 +4,11 @@
  */
 
 screens.user.chat = function UserChat(me) {
-    me.messages = function(user) {
-        if(!user) {
+    me.messages = function (user) {
+        if (!user) {
             user = this.userId;
         }
-        me.db.shared.chat.list({user});
+        me.db.shared.chat.list({ user });
     };
     return "server";
 };

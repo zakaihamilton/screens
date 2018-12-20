@@ -5,50 +5,50 @@
 
 screens.ui.data = function UIData(me) {
     me.default = {
-        get: function(object) {
+        get: function (object) {
             return object.data_default;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_default = value;
         }
     };
     me.parent = {
-        get: function(object) {
+        get: function (object) {
             return object.data_parent;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_parent = value;
         }
     };
     me.keyList = {
-        get: function(object) {
+        get: function (object) {
             return object.data_keys;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_keys = value;
         }
     };
     me.values = {
-        get: function(object) {
+        get: function (object) {
             return object.data_values;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_values = value;
         }
     };
     me.prefix = {
-        get: function(object) {
+        get: function (object) {
             return object.data_prefix;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_prefix = value;
         }
     };
     me.suffix = {
-        get: function(object) {
+        get: function (object) {
             return object.data_suffix;
         },
-        set : function(object, value) {
+        set: function (object, value) {
             object.data_suffix = value;
         }
     };
@@ -57,37 +57,37 @@ screens.ui.data = function UIData(me) {
             var elements = [];
             me.collect(object, elements, object.data_values);
             var parent = object;
-            if(object.data_parent) {
+            if (object.data_parent) {
                 parent = object.data_parent;
             }
             me.core.property.set(parent, "ui.basic.elements", elements);
         }
     };
-    me.collect = function(object, elements, items) {
+    me.collect = function (object, elements, items) {
         for (var item_index = 0; item_index < items.length; item_index++) {
             var properties = {};
             var values = items[item_index];
             var data_value = null;
-            if(typeof values === "string") {
+            if (typeof values === "string") {
                 var prefix = object.data_prefix || "";
                 var suffix = object.data_suffix || "";
                 values = me.core.property.get(object, prefix + values + suffix);
-                if(Array.isArray(values)) {
+                if (Array.isArray(values)) {
                     me.collect(object, elements, values);
                 }
                 continue;
             }
-            if(!values) {
+            if (!values) {
                 continue;
             }
             for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
                 var data_key = object.data_keys[data_key_index];
                 var data_value = values[data_key_index];
                 if (typeof data_value !== "undefined") {
-                    if(data_key === "properties") {
+                    if (data_key === "properties") {
                         properties = me.ui.element.combine(properties, data_value);
                     }
-                    else if(data_key === "ui.data.items") {
+                    else if (data_key === "ui.data.items") {
                         var subElements = [];
                         me.collect(object, subElements, data_value);
                         properties["ui.basic.elements"] = subElements;

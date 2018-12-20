@@ -4,7 +4,7 @@
  */
 
 screens.app.profile = function AppProfile(me) {
-    me.init = async function() {
+    me.init = async function () {
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
         me.userList = await me.user.profile.list();
     };
@@ -59,19 +59,19 @@ screens.app.profile = function AppProfile(me) {
         if (!items || items.then) {
             return [];
         }
-        items = items.sort((a,b) => a.name.localeCompare(b.name));
+        items = items.sort((a, b) => a.name.localeCompare(b.name));
         return items;
     };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", {"state":"select"}, "users", me.sortSessions, "app.profile.userName");
+            return me.widget.menu.collect(object, me.userList, "name", { "state": "select" }, "users", me.sortSessions, "app.profile.userName");
         }
     };
-    me.userId = async function(object, name) {
+    me.userId = async function (object, name) {
         var userId = null;
-        if(me.userList && name) {
+        if (me.userList && name) {
             var user = me.userList.find((user) => name == user.name);
-            if(user && user.key) {
+            if (user && user.key) {
                 userId = user.key.name;
             }
         }
@@ -86,7 +86,7 @@ screens.app.profile = function AppProfile(me) {
         if (!profile) {
             profile = {};
         }
-        if(!window.options.userName) {
+        if (!window.options.userName) {
             profile.name = me.lib.google.userName();
             profile.email = me.lib.google.userEmail();
         }

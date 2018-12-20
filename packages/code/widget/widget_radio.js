@@ -5,14 +5,14 @@
 
 screens.widget.radio = function WidgetRadio(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.basic.text", "state", "group"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text",
             "ui.monitor.change": "change"
         },
-        properties : {
+        properties: {
             "ui.class.class": "container",
             "ui.basic.elements": [{
                 "ui.basic.var": "input",

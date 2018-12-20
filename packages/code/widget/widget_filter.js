@@ -8,27 +8,27 @@ screens.widget.filter = function WidgetFilter(me) {
         dependencies: {
             properties: ["line"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text"
         },
         properties: {
             "ui.basic.tag": "div",
             "ui.basic.html": "@html"
         },
-        draw: function(object) {
+        draw: function (object) {
             setTimeout(() => {
                 me.updatePrefixes(object);
                 me.execute(object);
             }, 0);
         }
     };
-    me.updatePrefixes = function(object) {
+    me.updatePrefixes = function (object) {
         var widget = me.ui.node.container(object, me.id);
         var prefixes = widget.querySelector("#prefixes");
         var prefixesSelect = widget.querySelector("#prefixes-select");
         var prefixesList = me.core.property.get(widget, widget.prefixes);
-        if(prefixesList) {
-            for(var prefixItem of prefixesList) {
+        if (prefixesList) {
+            for (var prefixItem of prefixesList) {
                 var option = document.createElement("option");
                 option.textContent = prefixItem;
                 prefixesSelect.appendChild(option);
@@ -44,8 +44,8 @@ screens.widget.filter = function WidgetFilter(me) {
             return;
         }
         me.core.property.set(widget, widget.filter, {
-            prefix:prefixesSelect.value,
-            text:filter.value
+            prefix: prefixesSelect.value,
+            text: filter.value
         });
     };
     me.prefixes = function (object, value) {

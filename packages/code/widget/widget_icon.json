@@ -1,7 +1,8 @@
 {
     "ui.basic.tag": "div",
     "ui.class.class": "icon",
-    "ui.basic.elements": [{
+    "ui.basic.elements": [
+        {
             "ui.basic.src": "",
             "ui.class.class": "image-icon",
             "ui.basic.var": "icon",
@@ -12,5 +13,6 @@
             "ui.basic.tag": "div",
             "ui.class.class": "label-icon",
             "ui.basic.var": "label"
-        }]
+        }
+    ]
 }

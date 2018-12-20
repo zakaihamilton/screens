@@ -4,7 +4,7 @@
  */
 
 screens.startup.version = function StartupVersion(me) {
-    me.run = async function() {
+    me.run = async function () {
         me.log("retrieving version information");
         var config = await me.core.util.config();
         var date = new Date();
@@ -21,7 +21,7 @@ screens.startup.version = function StartupVersion(me) {
             await me.storage.data.saveAndVerify(data, "startup", id);
             me.log("startup verification complete");
         }
-        catch(err) {
+        catch (err) {
             me.log("startup verification failed");
         }
     };

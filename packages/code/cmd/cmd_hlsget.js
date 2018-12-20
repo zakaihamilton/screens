@@ -4,8 +4,8 @@
 */
 
 screens.cmd.hlsget = function CmdHlsGet(me) {
-    me.cmd = async function(terminal, args) {
-        if(args.length <= 2) {
+    me.cmd = async function (terminal, args) {
+        if (args.length <= 2) {
             me.core.property.set(terminal, "print", "hlsget path.m3u8 files");
             me.core.cmd.exit(terminal);
             return;
@@ -17,9 +17,9 @@ screens.cmd.hlsget = function CmdHlsGet(me) {
             await me.media.hls.download(path, destination);
             me.core.property.set(terminal, "print", "successfully downloaded files");
         }
-        catch(err) {
+        catch (err) {
             me.core.property.set(terminal, "print", "failed to downloaded files: " + JSON.stringify(err));
         }
         me.core.cmd.exit(terminal);
-};
+    };
 };

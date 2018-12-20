@@ -37,11 +37,11 @@ screens.manager.packet = function ManagerPacket(me) {
                 me.packetInfo.streamIndex = packet.streamIndex;
             }
             var streamRequest = info.streamRequests[info.streamRequests.length - 1];
-            streamRequest.packetCount+=packet.count;
+            streamRequest.packetCount += packet.count;
             var packet_source = packet.source;
             var packet_target = packet.target;
             streamRequest.dataSize += packet.size;
-            if(packet.match) {
+            if (packet.match) {
                 streamRequest.searchMatch = packet.match;
             }
             if (!streamRequest.startTime) {
@@ -118,10 +118,10 @@ screens.manager.packet = function ManagerPacket(me) {
         me.log("applying packet effects: " + JSON.stringify(me.packetInfo.effects));
         await me.core.service.sendAll("service.netcontrol.applyEffects", me.packetInfo.effects);
     };
-    me.updateEffects = function(effects) {
+    me.updateEffects = function (effects) {
         me.packetInfo.effects = effects;
     };
-    me.getMonitorOptions = async function() {
+    me.getMonitorOptions = async function () {
         var response = await me.core.service.sendAll("service.netmonitor.getOptions");
         if (response) {
             var options = response[0];

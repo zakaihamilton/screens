@@ -88,11 +88,11 @@ screens.ui.move = function UIMove(me) {
         var alignToTop = target_region.top + me.snapSensitivity < parent_region.top;
         var alignToBottom = target_region.bottom - me.snapSensitivity > parent_region.bottom;
         if (alignToLeft) {
-            if(!signalOnly) {
-                if(alignToTop) {
+            if (!signalOnly) {
+                if (alignToTop) {
                     me.ui.arrange.alignToLeftTop(object);
                 }
-                else if(alignToBottom) {
+                else if (alignToBottom) {
                     me.ui.arrange.alignToLeftBottom(object);
                 }
                 else {
@@ -102,10 +102,10 @@ screens.ui.move = function UIMove(me) {
         }
         else if (alignToRight) {
             if (!signalOnly) {
-                if(alignToTop) {
+                if (alignToTop) {
                     me.ui.arrange.alignToRightTop(object);
                 }
-                else if(alignToBottom) {
+                else if (alignToBottom) {
                     me.ui.arrange.alignToRightBottom(object);
                 }
                 else {
@@ -113,12 +113,12 @@ screens.ui.move = function UIMove(me) {
                 }
             }
         }
-        else if(alignToTop) {
+        else if (alignToTop) {
             if (!signalOnly) {
                 me.ui.arrange.alignToTop(object);
             }
         }
-        else if(alignToBottom) {
+        else if (alignToBottom) {
             if (!signalOnly) {
                 me.ui.arrange.alignToBottom(object);
             }

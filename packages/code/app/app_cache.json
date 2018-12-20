@@ -1,6 +1,6 @@
 {
     "title": "Cache",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "150px",
         "top": "150px",
         "width": "450px",
@@ -8,8 +8,13 @@
     },
     "fixed": true,
     "widget.menu.items": [
-        ["Special", [
-                ["Clear All", "app.cache.clearAll"]
+        [
+            "Special",
+            [
+                [
+                    "Clear All",
+                    "app.cache.clearAll"
+                ]
             ]
         ]
     ],
@@ -25,14 +30,20 @@
             "ui.element.count": 0,
             "core.link.onChange": "app.cache.onChangeStorage",
             "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.keyList": [
+                    "ui.basic.text"
+                ],
                 "ui.data.default": {
                     "group": "one",
                     "state": false
                 },
                 "ui.data.values": [
-                    ["Local"],
-                    ["Session"]
+                    [
+                        "Local"
+                    ],
+                    [
+                        "Session"
+                    ]
                 ]
             }
         },
@@ -48,7 +59,9 @@
             "core.link.onChange": "app.cache.onChangeKey",
             "ui.monitor.change": "app.cache.onChangeKey",
             "ui.group.data": {
-                "ui.data.keyList": ["ui.basic.text"],
+                "ui.data.keyList": [
+                    "ui.basic.text"
+                ],
                 "ui.data.default": {
                     "group": "one",
                     "state": false
@@ -68,7 +81,7 @@
             "ui.basic.type": "text"
         },
         {
-            "ui.style.marginTop":"15px",
+            "ui.style.marginTop": "15px",
             "ui.basic.text": "Clear",
             "ui.touch.click": "app.cache.clear"
         },
@@ -77,7 +90,7 @@
             "ui.touch.click": "app.cache.store"
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-cache-window",
         "storage.local.restore": "widget.window.store"
     }

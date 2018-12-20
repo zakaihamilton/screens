@@ -1,8 +1,8 @@
 .widget-editor-border {
-    left:0px;
-    top:0px;
-    position:relative;
-    overflow:scroll;
+    left: 0px;
+    top: 0px;
+    position: relative;
+    overflow: scroll;
     display: block;
     resize: none;
 }

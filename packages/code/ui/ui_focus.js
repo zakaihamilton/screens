@@ -66,10 +66,10 @@ screens.ui.focus = function UIFocus(me) {
             });
             me.updateOrder(from.parentNode, from);
             var parent = me.widget.window.parent(from);
-            if(parent && me.core.property.get(parent, "embed")) {
+            if (parent && me.core.property.get(parent, "embed")) {
                 parent = me.widget.window.parent(parent);
             }
-            if(parent) {
+            if (parent) {
                 parent.focus_window = from;
             }
             from = parent;
@@ -86,21 +86,21 @@ screens.ui.focus = function UIFocus(me) {
             childList.splice(order, 0, object);
         }
         for (var childOrder = 0; childOrder < childList.length; childOrder++) {
-            if(childList[childOrder].component !== "widget.window") {
+            if (childList[childOrder].component !== "widget.window") {
                 continue;
             }
-            if(me.core.property.get(childList[childOrder], "alwaysOnTop")) {
+            if (me.core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
             me.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
         for (var childOrder = childList.length - 1; childOrder >= 0; childOrder--) {
-            if(!me.core.property.get(childList[childOrder], "alwaysOnTop")) {
+            if (!me.core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
-            me.core.property.set(childList[childOrder], "ui.style.zIndex", 999-childOrder);
+            me.core.property.set(childList[childOrder], "ui.style.zIndex", 999 - childOrder);
         }
-        if(object) {
+        if (object) {
             me.core.property.notify(object, "update");
         }
     };
@@ -137,7 +137,7 @@ screens.ui.focus = function UIFocus(me) {
                 me.focus(window);
             } else if (is_active && !value) {
                 var parent = me.widget.window.parent(object);
-                if(parent) {
+                if (parent) {
                     me.focus(parent);
                 }
                 else {
@@ -147,11 +147,11 @@ screens.ui.focus = function UIFocus(me) {
             }
         }
     };
-    me.findLeaf = function(window) {
+    me.findLeaf = function (window) {
         var leaf = window;
-        while(window) {
+        while (window) {
             window = window.focus_window;
-            if(window) {
+            if (window) {
                 leaf = window;
             }
         }
@@ -162,7 +162,7 @@ screens.ui.focus = function UIFocus(me) {
         if (!me.core.property.get(window, "visible")) {
             return;
         }
-        if(me.core.property.get(window, "embed")) {
+        if (me.core.property.get(window, "embed")) {
             window = me.widget.window.parent(window);
         }
         /* Find bottom window to focus on */

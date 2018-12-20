@@ -72,7 +72,7 @@
                     "All",
                     "app.logger.type",
                     {
-                        "value":"core.console.retrieveMessages",
+                        "value": "core.console.retrieveMessages",
                         "state": "select"
                     }
                 ],
@@ -80,14 +80,14 @@
                     "Errors",
                     "app.logger.type",
                     {
-                        "value":"core.console.retrieveErrors",
+                        "value": "core.console.retrieveErrors",
                         "state": "select"
                     }
                 ]
             ]
         ]
     ],
-    "ui.class.load":"app.logger",
+    "ui.class.load": "app.logger",
     "ui.basic.html": "@app.logger.html",
     "ui.property.after": {
         "storage.local.key": "app-logger-window",

@@ -1,44 +1,44 @@
 .widget-menu-horizontal {
-    display:flex;
-    flex:1;
+    display: flex;
+    flex: 1;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    flex-direction:row;
+    flex-direction: row;
 }
 
 .widget-menu-horizontal span {
     color: black;
     padding-top: 1px;
     padding-left: 4px;
-    padding-right:4px;
+    padding-right: 4px;
     padding-bottom: 0px;
     font-size: 14px;
     text-align: left;
     border-right: 1px solid transparent;
-    flex:0;
-    cursor:default;
-    user-select:none;
+    flex: 0;
+    cursor: default;
+    user-select: none;
 }
 
 .widget-menu-horizontal span.selected {
     background-color: #000080;
-    color:white;
+    color: white;
     border-right: 1px solid black;
 }
 
 .widget-menu-horizontal span[disabled="true"] {
     background-color: white;
-    color:lightgray;
+    color: lightgray;
 }
 
 .widget-menu-border span[disabled="true"]:hover {
     background-color: white;
-    color:lightgray;
+    color: lightgray;
 }
 
 .widget-menu-vertical {
-    position:absolute;
+    position: absolute;
     min-width: 167px;
     max-width: 100%;
     border: 1px solid black;
@@ -48,111 +48,96 @@
 }
 
 .widget-menu-vertical.menu-list {
-    position:relative;
+    position: relative;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 200px;
-    border:none;
-    z-index:0;
+    border: none;
+    z-index: 0;
     box-shadow: none;
-    margin-bottom:0px;
+    margin-bottom: 0px;
 }
 
-.widget-menu-vertical li,
-.widget-menu-vertical span {
+.widget-menu-vertical li, .widget-menu-vertical span {
     background-color: white;
     color: black;
-    min-height:18px;
+    min-height: 18px;
     padding-left: 16px;
     padding-right: 16px;
     font-size: 14px;
     text-align: left;
     display: block;
-    cursor:default;
-    user-select:none;
+    cursor: default;
+    user-select: none;
     position: relative;
 }
 
-.widget-menu-vertical li:hover,
-.widget-menu-vertical span:hover {
+.widget-menu-vertical li:hover, .widget-menu-vertical span:hover {
     background-color: #000080;
-    color:white;
+    color: white;
 }
 
-.widget-menu-vertical li[disabled="true"],
-.widget-menu-vertical span[disabled="true"] {
+.widget-menu-vertical li[disabled="true"], .widget-menu-vertical span[disabled="true"] {
     background-color: white;
-    color:lightgray;
+    color: lightgray;
 }
 
-.widget-menu-vertical li[disabled="true"]:hover,
-.widget-menu-vertical span[disabled="true"]:hover {
+.widget-menu-vertical li[disabled="true"]:hover, .widget-menu-vertical span[disabled="true"]:hover {
     background-color: #000080;
-    color:lightgray;
+    color: lightgray;
 }
 
-.widget-menu-vertical li.checked:after
-.widget-menu-vertical span.checked:after {
-    content:'\2713';
-    position:absolute;
-    left:3px;
+.widget-menu-vertical li.checked:after .widget-menu-vertical span.checked:after {
+    content: '\2713';
+    position: absolute;
+    left: 3px;
 }
 
-.widget-menu-vertical li.mark:after
-.widget-menu-vertical span.mark:after {
-    content:'\2022';
-    position:absolute;
-    right:3px;
+.widget-menu-vertical li.mark:after .widget-menu-vertical span.mark:after {
+    content: '\2022';
+    position: absolute;
+    right: 3px;
 }
 
-.widget-menu-vertical li.separator
-.widget-menu-vertical span.separator {
+.widget-menu-vertical li.separator .widget-menu-vertical span.separator {
     margin-top: 3px;
     border-top: 3px solid white;
     box-shadow: 0px -1px 0px 0px black;
 }
 
-.widget-menu-vertical li.header
-.widget-menu-vertical span.header {
-    color:black;
+.widget-menu-vertical li.header .widget-menu-vertical span.header {
+    color: black;
     font-weight: bold;
     margin-top: 3px;
     box-shadow: 0px -1px 0px 0px black;
     background: linear-gradient(to right, white, lightgray);
 }
 
-.widget-menu-vertical li.header:hover
-.widget-menu-vertical span.header:hover {
-    color:black;
+.widget-menu-vertical li.header:hover .widget-menu-vertical span.header:hover {
+    color: black;
 }
 
 .widget-menu-progress-bar {
-    display:none;
-    position:relative;
-    left:10%;
+    display: none;
+    position: relative;
+    left: 10%;
     width: 80%;
     height: 20px;
     border: 1px solid #2980b9;
-    margin:3px;
+    margin: 3px;
     border-radius: 3px;
-    background-image: 
-      repeating-linear-gradient(
-        -45deg,
-        #2980b9,
-        #2980b9 11px,
-        #eee 10px,
-        #eee 20px /* determines size */
-      );
+    background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px/* determines size */
+    );
     background-size: 28px 28px;
     animation: widget-menu-progress-move .5s linear infinite;
 }
-  
+
 @keyframes widget-menu-progress-move {
     0% {
-      background-position: 0 0;
+        background-position: 0 0;
     }
     100% {
-      background-position: 28px 0;
+        background-position: 28px 0;
     }
 }
 
@@ -166,5 +151,5 @@
     top: 0;
     opacity: 0;
     z-index: 100;
-    appearance:none;
+    appearance: none;
 }

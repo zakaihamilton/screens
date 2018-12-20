@@ -11,8 +11,8 @@ screens.modal.progress = function ModalProgress(me) {
     };
     me.specific = function (object, data) {
         var window = me.widget.window.get(object);
-        if(data) {
-            for(var key in data) {
+        if (data) {
+            for (var key in data) {
                 me.core.property.set(window.var.progress, key, data[key]);
             }
         }

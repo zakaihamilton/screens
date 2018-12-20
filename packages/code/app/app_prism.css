@@ -1,5 +1,5 @@
 .app-prism-viewer {
-    border:1px solid lightgray;
+    border: 1px solid lightgray;
     transform-style: preserve-3d;
     position: absolute;
 }

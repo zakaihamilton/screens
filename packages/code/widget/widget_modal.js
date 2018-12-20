@@ -5,7 +5,7 @@
 
 screens.widget.modal = function WidgetModal(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.touch.click": "click",
             "ui.class.class": "overlay"
         }

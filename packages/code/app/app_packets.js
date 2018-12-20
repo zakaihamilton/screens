@@ -278,7 +278,7 @@ screens.app.packets = function AppPackets(me) {
                 window.streamDuration = me.core.string.formatDuration(duration);
                 window.averageByteRate = me.core.string.formatBytes(abr) + "/s";
                 window.searchMatch = searchMatch;
-                if(effects) {
+                if (effects) {
                     me.core.property.set(window.var.effectsMenu, "ui.class.mark", effects.useEffects);
                 }
             }

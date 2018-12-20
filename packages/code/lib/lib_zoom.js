@@ -4,14 +4,14 @@
  */
 
 screens.lib.zoom = function LibZoom(me) {
-    me.init = async function() {
+    me.init = async function () {
         me.request = require("request");
         var keys = await me.core.private.keys("zoom");
         me.meetingId = keys.meetingId;
     };
-    me.token = async function() {
+    me.token = async function () {
         var time = (new Date()).getTime();
-        if(time < me.expire - 1000) {
+        if (time < me.expire - 1000) {
             return me.currentToken;
         }
         me.expire = ((new Date()).getTime() + 5000);
@@ -24,15 +24,15 @@ screens.lib.zoom = function LibZoom(me) {
         me.currentToken = jwt.sign(payload, keys.secret);
         return me.currentToken;
     };
-    me.send = async function(url, body=null, method="get") {
+    me.send = async function (url, body = null, method = "get") {
         var token = await me.token();
         var headers = {
-            "Authorization":"Bearer " + token
+            "Authorization": "Bearer " + token
         };
-        if(body && method === "get") {
+        if (body && method === "get") {
             method = "post";
         }
-        if(body && typeof body === "string") {
+        if (body && typeof body === "string") {
             body = JSON.parse(body);
         }
         var params = {
@@ -48,7 +48,7 @@ screens.lib.zoom = function LibZoom(me) {
         };
         return new Promise((resolve, reject) => {
             me.request[method.toLowerCase()](info, (error, response, body) => {
-                if(error) {
+                if (error) {
                     reject(error);
                 }
                 else {
@@ -57,9 +57,9 @@ screens.lib.zoom = function LibZoom(me) {
             });
         });
     };
-    me.meetingInfo = async function() {
+    me.meetingInfo = async function () {
         var meetingInfo = await me.send("meetings/{meetingId}");
-        if(meetingInfo) {
+        if (meetingInfo) {
             meetingInfo = JSON.parse(meetingInfo);
         }
         return meetingInfo;

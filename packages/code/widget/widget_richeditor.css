@@ -1,26 +1,26 @@
 .widget-richeditor-container {
     background-color: var(--background);
-    color:var(--color);
+    color: var(--color);
 }
 
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
-    border:1px solid transparent !important;
+    border: 1px solid transparent !important;
 }
 
 .ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active {
-    border:1px solid var(--border-color) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 .ql-snow .ql-picker {
-    color:var(--color) !important;
+    color: var(--color) !important;
 }
 
 .ql-snow .ql-stroke {
-    stroke:var(--color) !important;
+    stroke: var(--color) !important;
 }
 
 .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
-    fill:var(--color) !important;
+    fill: var(--color) !important;
 }
 
 .ql-snow .ql-picker-options {
@@ -42,5 +42,5 @@
 }
 
 .ql-snow .ql-speech.speechActive {
-    border:1px solid var(--border-color) !important;
+    border: 1px solid var(--border-color) !important;
 }

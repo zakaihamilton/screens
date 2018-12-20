@@ -4,19 +4,19 @@
  */
 
 screens.kab.step = function KabStep(me) {
-    me.step = function(object) {
-        
-    };
-    me.previous = function(object) {
+    me.step = function (object) {
 
     };
-    me.next = function(object) {
+    me.previous = function (object) {
 
     };
-    me.goto = function(object, index) {
+    me.next = function (object) {
 
     };
-    me.index = function(object) {
-        
+    me.goto = function (object, index) {
+
+    };
+    me.index = function (object) {
+
     }
 };

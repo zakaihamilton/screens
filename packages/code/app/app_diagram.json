@@ -141,11 +141,11 @@
             "ui.basic.var": "viewer"
         },
         {
-            "ui.basic.var":"popup",
-            "ui.basic.tag":"div",
-            "ui.basic.html":"@widget.transform.html",
-            "ui.class.add":"modal",
-            "ui.style.zIndex":"1000"
+            "ui.basic.var": "popup",
+            "ui.basic.tag": "div",
+            "ui.basic.html": "@widget.transform.html",
+            "ui.class.add": "modal",
+            "ui.style.zIndex": "1000"
         }
     ],
     "ui.property.after": {

@@ -5,10 +5,10 @@
 
 screens.widget.table = function WidgetTable(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "table"
         },
-        create : function (object) {
+        create: function (object) {
             me.core.property.set(object, "firstRowHeader", true);
         }
     };
@@ -57,7 +57,7 @@ screens.widget.table = function WidgetTable(me) {
 
 screens.widget.table.header = function WidgetTableHeader(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "th"
         }
     };
@@ -65,7 +65,7 @@ screens.widget.table.header = function WidgetTableHeader(me) {
 
 screens.widget.table.row = function WidgetTableRow(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "tr"
         }
     };
@@ -73,7 +73,7 @@ screens.widget.table.row = function WidgetTableRow(me) {
 
 screens.widget.table.data = function WidgetTableData(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "td"
         }
     };

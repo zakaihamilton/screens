@@ -5,13 +5,13 @@
 
 screens.widget.list = function WidgetList(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.element.count"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.elements": "elements"
         },
-        properties : {
+        properties: {
             "ui.class.class": "border",
             "ui.basic.elements": [
                 {
@@ -73,17 +73,17 @@ screens.widget.list = function WidgetList(me) {
 
 screens.widget.list.dropdown = function WidgetDropDownList(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.element.count", "ui.basic.text"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text",
             "ui.basic.readOnly": "readOnly",
             "ui.basic.elements": "elements",
             "ui.group.data": "data",
             "ui.monitor.change": "monitorChange"
         },
-        properties : {
+        properties: {
             "ui.class.class": "group",
             "ui.basic.elements": [
                 {
@@ -177,10 +177,10 @@ screens.widget.list.dropdown = function WidgetDropDownList(me) {
 
 screens.widget.list.popup = function WidgetListPopup(me) {
     me.element = {
-        redirect : {
+        redirect: {
             "ui.basic.elements": "elements"
         },
-        properties : {
+        properties: {
             "ui.class.class": "border",
             "ui.basic.elements": [
                 {
@@ -232,13 +232,13 @@ screens.widget.list.popup = function WidgetListPopup(me) {
 
 screens.widget.list.item = function WidgetListItem(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "span",
             "ui.touch.click": "click",
             "ui.touch.default": "dblclick",
             "ui.class.class": "widget.list.item"
         },
-        dependencies : {
+        dependencies: {
             parent: ["widget.list", "widget.list.popup"],
             properties: ["ui.basic.text"]
         }

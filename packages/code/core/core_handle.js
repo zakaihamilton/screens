@@ -4,32 +4,32 @@
 */
 
 screens.core.handle = function CoreHandle(me) {
-    me.init = function() {
+    me.init = function () {
         me.handles = {};
     };
-    me.isHandle = function(ref, type="handle") {
+    me.isHandle = function (ref, type = "handle") {
         return me.core.ref.isRef(ref, type);
     };
-    me.find = function(ref) {
+    me.find = function (ref) {
         var result = null;
-        if(ref) {
+        if (ref) {
             result = me.handles[ref];
         }
         return result;
     };
-    me.pop = function(ref) {
+    me.pop = function (ref) {
         var result = null;
-        if(ref) {
+        if (ref) {
             result = me.handles[ref];
-            if(result) {
+            if (result) {
                 delete me.handles[ref];
             }
         }
         return result;
     };
-    me.push = function(object, type="handle") {
+    me.push = function (object, type = "handle") {
         var ref = null;
-        if(object) {
+        if (object) {
             var ref = me.core.ref.gen(type);
             me.handles[ref] = object;
         }

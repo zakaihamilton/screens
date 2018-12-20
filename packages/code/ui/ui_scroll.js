@@ -4,7 +4,7 @@
  */
 
 screens.ui.scroll = function UIScroll(me) {
-    me.isScrollable = function(object) {
+    me.isScrollable = function (object) {
         var result = true;
         if (object.scrollWidth > object.offsetWidth) {
             result = false;
@@ -43,9 +43,9 @@ screens.ui.scroll = function UIScroll(me) {
         me.by(container, container.ui_scroll_pageSize);
         me.core.property.set(container, "scrolled");
     };
-    me.isLastPage = function(object) {
+    me.isLastPage = function (object) {
         var container = me.container(object);
-        if(container.scrollTop + container.ui_scroll_pageSize >= container.scrollHeight) {
+        if (container.scrollTop + container.ui_scroll_pageSize >= container.scrollHeight) {
             return true;
         }
         return false;
@@ -83,7 +83,7 @@ screens.ui.scroll = function UIScroll(me) {
                 clearTimeout(container.ui_scroll_snapTimeout);
                 container.ui_scroll_snapTimeout = null;
             }
-            if(container.ui_scroll_pageSize && container.ui_scroll_snap) {
+            if (container.ui_scroll_pageSize && container.ui_scroll_snap) {
                 container.ui_scroll_snapTimeout = setTimeout(function () {
                     var currentPos = container.scrollTop;
                     var targetPos = currentPos;

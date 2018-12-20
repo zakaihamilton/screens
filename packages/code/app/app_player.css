@@ -1,16 +1,15 @@
-
 .app-player-audioPlayer {
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    position:absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
 }
 
 .app-player-videoPlayer {
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    position:absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
 }

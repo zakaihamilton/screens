@@ -4,7 +4,7 @@
  */
 
 screens.file.csv = function FileCsv(me) {
-    me.export = function(filename, rows) {
+    me.export = function (filename, rows) {
         var csvFile = '';
         csvFile = rows.map((row) => {
             var finalVal = '';
@@ -33,5 +33,5 @@ screens.file.csv = function FileCsv(me) {
             link.click();
             document.body.removeChild(link);
         }
-    };    
+    };
 };

@@ -4,104 +4,104 @@
         "left": "50px",
         "top": "50px",
         "width": "300px",
-    "height": "420px"
+        "height": "420px"
     },
     "icon": "/packages/res/icons/zoom.png",
     "ui.basic.elements": [
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"30px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "30px"
             },
-            "ui.basic.text":"Join Url: "
+            "ui.basic.text": "Join Url: "
         },
         {
-            "ui.basic.tag":"a",
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"30px",
-                "top":"60px"
+            "ui.basic.tag": "a",
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "30px",
+                "top": "60px"
             },
-            "ui.basic.href":"@app.zoom.joinUrl",
-            "ui.basic.text":"@app.zoom.joinUrl"
+            "ui.basic.href": "@app.zoom.joinUrl",
+            "ui.basic.text": "@app.zoom.joinUrl"
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"90px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "90px"
             },
-            "ui.basic.text":"Meeting ID: "
+            "ui.basic.text": "Meeting ID: "
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"115px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "115px"
             },
             "ui.basic.readOnly": true,
             "ui.element.component": "widget.input",
-            "ui.basic.text":"@app.zoom.meetingId"
+            "ui.basic.text": "@app.zoom.meetingId"
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"160px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "160px"
             },
-            "ui.basic.text":"Israel Dial in #: "
+            "ui.basic.text": "Israel Dial in #: "
         },
         {
-            "ui.basic.tag":"a",
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"30px",
-                "top":"190px"
+            "ui.basic.tag": "a",
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "30px",
+                "top": "190px"
             },
-            "ui.basic.href":"@app.zoom.callNumber(97239786688)",
-            "ui.basic.text":"+972 (0) 3 978 6688"
+            "ui.basic.href": "@app.zoom.callNumber(97239786688)",
+            "ui.basic.text": "+972 (0) 3 978 6688"
         },
         {
-            "ui.basic.tag":"a",
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"30px",
-                "top":"220px"
+            "ui.basic.tag": "a",
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "30px",
+                "top": "220px"
             },
-            "ui.basic.href":"@app.zoom.callNumber(972553301762)",
-            "ui.basic.text":"+972 (0) 55 330 1762"
+            "ui.basic.href": "@app.zoom.callNumber(972553301762)",
+            "ui.basic.text": "+972 (0) 55 330 1762"
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"250px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "250px"
             },
-            "ui.basic.text":"United States Dial in #: "
+            "ui.basic.text": "United States Dial in #: "
         },
         {
-            "ui.basic.tag":"a",
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"30px",
-                "top":"280px"
+            "ui.basic.tag": "a",
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "30px",
+                "top": "280px"
             },
-            "ui.basic.href":"@app.zoom.callNumber(14086380986)",
-            "ui.basic.text":"+1 408 638 0986"
+            "ui.basic.href": "@app.zoom.callNumber(14086380986)",
+            "ui.basic.text": "+1 408 638 0986"
         },
         {
-            "ui.basic.tag":"a",
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"30px",
-                "top":"310px"
+            "ui.basic.tag": "a",
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "30px",
+                "top": "310px"
             },
-            "ui.basic.href":"@app.zoom.callNumber(16465588665)",
-            "ui.basic.text":"+1 646 558 8665"
+            "ui.basic.href": "@app.zoom.callNumber(16465588665)",
+            "ui.basic.text": "+1 646 558 8665"
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-zoom-window",
         "storage.local.restore": "widget.window.store"
     }

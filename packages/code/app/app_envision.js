@@ -45,8 +45,8 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.editorContainer, "ui.basic.show", editMode);
         me.core.property.set(window.var.source, "ui.basic.show", editMode && !formatMode);
         me.core.property.set(window.var.format, "ui.basic.show", editMode && formatMode);
-        me.core.property.set(window.var.editorContainer, "ui.style.top", liveEdit ?  "70%" : "");
-        me.core.property.set(window.var.editorContainer, "ui.style.height", liveEdit ?  "29%" : "");
+        me.core.property.set(window.var.editorContainer, "ui.style.top", liveEdit ? "70%" : "");
+        me.core.property.set(window.var.editorContainer, "ui.style.height", liveEdit ? "29%" : "");
         if (!editMode) {
             me.refresh(object);
         }
@@ -175,26 +175,26 @@ screens.app.envision = function AppEnvision(me) {
             try {
                 format = me.processArrays(object, format, source);
             }
-            catch(err) {
+            catch (err) {
                 throw "Cannot process arrays: " + err;
             }
             try {
                 format = me.processVars(object, format, source);
             }
-            catch(err) {
+            catch (err) {
                 throw "Cannot process vars: " + err;
             }
             parser = new DOMParser();
             try {
                 format = parser.parseFromString(format, "text/xml");
             }
-            catch(err) {
+            catch (err) {
                 throw "Cannot parse format: " + err;
             }
             try {
                 format = me.serialize(format);
             }
-            catch(err) {
+            catch (err) {
                 throw "Cannot serialise format: " + err;
             }
         }

@@ -3,7 +3,7 @@
     "fixed": true,
     "popup": true,
     "temp": true,
-    "ui.property.style":{
+    "ui.property.style": {
         "width": "290px",
         "height": "230px"
     },
@@ -15,13 +15,16 @@
             "ui.style.marginTop": "4px",
             "ui.style.marginRight": "3px",
             "ui.style.marginBottom": "9px",
-            "ui.style.height":"91px",
+            "ui.style.height": "91px",
             "ui.group.data": {
                 "ui.data.default": {
-                    "group":"tasks",
-                    "ui.touch.default":"app.tasks.switchTo"
+                    "group": "tasks",
+                    "ui.touch.default": "app.tasks.switchTo"
                 },
-                "ui.data.keyList": ["ui.basic.text", "state"],
+                "ui.data.keyList": [
+                    "ui.basic.text",
+                    "state"
+                ],
                 "ui.data.values": [
                     "app.tasks.tasks"
                 ]
@@ -36,14 +39,38 @@
             "ui.style.float": "left",
             "ui.style.width": "73px"
         },
-        "ui.data.keyList": ["ui.basic.text", "ui.touch.click", "ui.style.marginRight"],
+        "ui.data.keyList": [
+            "ui.basic.text",
+            "ui.touch.click",
+            "ui.style.marginRight"
+        ],
         "ui.data.values": [
-            ["Switch to", "app.tasks.switchTo"],
-            ["Close", "app.tasks.closeTask"],
-            ["Restart", "core.util.restart", "0px"],
-            ["Cascade", "app.tasks.cascade"],
-            ["Tile", "app.tasks.tile"],
-            ["Launcher", "core.app.launcher", "0px"]
+            [
+                "Switch to",
+                "app.tasks.switchTo"
+            ],
+            [
+                "Close",
+                "app.tasks.closeTask"
+            ],
+            [
+                "Restart",
+                "core.util.restart",
+                "0px"
+            ],
+            [
+                "Cascade",
+                "app.tasks.cascade"
+            ],
+            [
+                "Tile",
+                "app.tasks.tile"
+            ],
+            [
+                "Launcher",
+                "core.app.launcher",
+                "0px"
+            ]
         ]
     }
 }

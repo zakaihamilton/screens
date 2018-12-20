@@ -204,13 +204,13 @@ screens.core.message = function CoreMessage(me) {
         }
         catch (err) {
             var err_text = err;
-            if(err && err.message) {
+            if (err && err.message) {
                 err_text = err.message;
             }
-            else if(typeof err === "object") {
+            else if (typeof err === "object") {
                 err_text = JSON.stringify(err);
             }
-            else if(typeof err !== "string") {
+            else if (typeof err !== "string") {
                 err_text = err.toString();
             }
             me.log_error("failed local call, args: " + JSON.stringify(args) + " error: " + err_text);

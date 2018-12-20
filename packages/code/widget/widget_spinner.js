@@ -10,20 +10,20 @@ screens.widget.spinner = function WidgetSpinner(me) {
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "span",
-                    "ui.basic.var":"text",
+                    "ui.basic.var": "text",
                     "ui.basic.text": "Loading"
                 },
                 {
-                    "ui.basic.tag":"div",
-                    "ui.class.class":"spinner"
+                    "ui.basic.tag": "div",
+                    "ui.class.class": "spinner"
                 }
             ]
         }
     };
-    me.percent = function(object, value) {
+    me.percent = function (object, value) {
         me.core.property.set(object.var.text, "ui.basic.text", object.spinner_text + " " + value + "%");
     };
-    me.text = function(object, value) {
+    me.text = function (object, value) {
         object.spinner_text = value;
         me.core.property.set(object.var.text, "ui.basic.text", value);
     };

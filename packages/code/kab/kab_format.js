@@ -100,7 +100,7 @@ screens.kab.format = function KabFormat(me) {
         if (replacements) {
             for (var groupName in replacements) {
                 var groupItems = replacements[groupName];
-                for(var from in groupItems) {
+                for (var from in groupItems) {
                     var to = groupItems[from];
                     wordsString = wordsString.split(from).join(to);
                 }
@@ -120,7 +120,7 @@ screens.kab.format = function KabFormat(me) {
         }
         if (next === "(" || next === "[") {
             var duplicate = "";
-            for (; ; ) {
+            for (; ;) {
                 if (collectIndex > words.length) {
                     break;
                 }

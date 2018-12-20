@@ -5,10 +5,10 @@
 
 screens.widget.clock = function WidgetClock(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.class.class": "container"
         },
-        create : function (object) {
+        create: function (object) {
             setInterval(function () {
                 var today = new Date();
                 var h = today.getHours();

@@ -202,14 +202,14 @@
                     "Enable",
                     "app.packets.useEffects",
                     {
-                        "state":"select"
+                        "state": "select"
                     }
                 ],
                 [
                     "Bandwidth Rate (KBit)",
                     "label",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
@@ -245,7 +245,7 @@
                     "Packet Loss (%)",
                     "label",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
@@ -270,7 +270,7 @@
                     "Toggle Interval (sec)",
                     "label",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
@@ -282,7 +282,7 @@
                 ]
             ],
             {
-                "var":"effectsMenu"
+                "var": "effectsMenu"
             }
         ]
     ],

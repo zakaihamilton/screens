@@ -5,10 +5,10 @@
 
 screens.widget.image = function WidgetImage(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.basic.src"]
         },
-        properties : {
+        properties: {
             "ui.basic.tag": "img"
         }
     };

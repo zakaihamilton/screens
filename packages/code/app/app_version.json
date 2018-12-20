@@ -8,39 +8,39 @@
     },
     "ui.basic.elements": [
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"30px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "30px"
             },
-            "ui.basic.text":"Version: "
+            "ui.basic.text": "Version: "
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "right":"50px",
-                "top":"30px"
+            "ui.property.style": {
+                "position": "absolute",
+                "right": "50px",
+                "top": "30px"
             },
-            "ui.basic.text":"@app.version.version"
+            "ui.basic.text": "@app.version.version"
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "left":"10px",
-                "top":"60px"
+            "ui.property.style": {
+                "position": "absolute",
+                "left": "10px",
+                "top": "60px"
             },
-            "ui.basic.text":"Date: "
+            "ui.basic.text": "Date: "
         },
         {
-            "ui.property.style":{
-                "position":"absolute",
-                "right":"50px",
-                "top":"60px"
+            "ui.property.style": {
+                "position": "absolute",
+                "right": "50px",
+                "top": "60px"
             },
-            "ui.basic.text":"@app.version.date"
+            "ui.basic.text": "@app.version.date"
         }
     ],
-    "ui.property.after":{
+    "ui.property.after": {
         "storage.local.key": "app-version-window",
         "storage.local.restore": "widget.window.store"
     }

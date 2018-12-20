@@ -1,35 +1,35 @@
 .app-launcher-html {
-    margin-bottom:10px;
-    padding-top:10px;
-    background:var(--chrome-background);
+    margin-bottom: 10px;
+    padding-top: 10px;
+    background: var(--chrome-background);
 }
 
 .app-launcher-tabs a.night-mode {
-    background-color:var(--chrome-background);
-    color:var(--chrome-color);
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }
 
 .app-launcher-tabs.is-boxed.night-mode li a {
-    background-color:var(--chrome-background);
-    color:var(--chrome-color);
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }
 
 .app-launcher-tabs.is-boxed.night-mode li a:hover {
-    background-color:var(--background);
-    color:var(--chrome-highlight-color);
+    background-color: var(--background);
+    color: var(--chrome-highlight-color);
     border-bottom-color: var(--background);
 }
 
 .app-launcher-tabs.is-boxed.night-mode li.is-active a {
-    background-color:var(--background);
-    color:var(--chrome-color);
+    background-color: var(--background);
+    color: var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }
 
 .app-launcher-tabs.is-boxed.night-mode li.is-active a:hover {
-    background-color:var(--background);
-    color:var(--chrome-color);
+    background-color: var(--background);
+    color: var(--chrome-color);
     border-bottom-color: var(--chrome-color);
 }

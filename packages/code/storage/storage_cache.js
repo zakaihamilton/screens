@@ -31,7 +31,7 @@ screens.storage.cache = function StorageCache(me) {
             if (/http:/.test(event.request.url)) {
                 return;
             }
-            if(event.request.url.endsWith("/")) {
+            if (event.request.url.endsWith("/")) {
                 return;
             }
             for (var cacheName in me.policy) {

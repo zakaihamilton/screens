@@ -4,12 +4,12 @@
 */
 
 screens.cmd.cd = function CmdCd(me) {
-    me.cmd = function(terminal, args) {
+    me.cmd = function (terminal, args) {
         var current_dir = terminal.current_dir;
-        if(!current_dir) {
+        if (!current_dir) {
             current_dir = ".";
         }
-        if(args.length <= 1) {
+        if (args.length <= 1) {
             me.core.cmd.exit(terminal);
             return;
         }
@@ -18,7 +18,7 @@ screens.cmd.cd = function CmdCd(me) {
             var items = me.core.file.readDir(current_dir);
             terminal.current_dir = current_dir;
         }
-        catch(err) {
+        catch (err) {
             me.core.property.set(terminal, "print", "cd: " + args[1] + ": No such file or directory");
         }
         me.core.cmd.exit(terminal);

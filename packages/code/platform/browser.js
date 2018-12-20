@@ -3,7 +3,7 @@ function startBrowser(appName, appArgs) {
         "core": [
             "*"
         ],
-        "lib":[
+        "lib": [
             "google",
             "zoom"
         ],
@@ -45,7 +45,7 @@ function startBrowser(appName, appArgs) {
         ]
     }).then(async () => {
         var args = screens.core.string.decode(appArgs);
-        if(args) {
+        if (args) {
             args = JSON.parse(args);
         }
         screens.core.startup.app = {

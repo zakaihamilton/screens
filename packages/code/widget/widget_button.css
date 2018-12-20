@@ -7,16 +7,16 @@
     border-bottom: 2px solid #808080;
     box-shadow: 0 0 0 1px black;
     font-size: 14px;
-    text-align:center;
-    min-width:64px;
-    min-height:17px;
-    display:inline-block;
-    margin-left:18px;
-    margin-right:18px;
-    margin-top:2px;
-    margin-bottom:2px;
+    text-align: center;
+    min-width: 64px;
+    min-height: 17px;
+    display: inline-block;
+    margin-left: 18px;
+    margin-right: 18px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     user-select: none;
-    cursor:default;
+    cursor: default;
 }
 
 .widget-button-standard:hover:active {

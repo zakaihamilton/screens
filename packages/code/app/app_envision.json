@@ -22,7 +22,7 @@
                     "Auto Refresh",
                     "app.envision.autoRefresh",
                     {
-                        "state":"select"
+                        "state": "select"
                     }
                 ],
                 "widget.window.exportMenuList(app.envision.exportText)",
@@ -50,15 +50,15 @@
                     "app.envision.formatMode",
                     {
                         "state": "select",
-                        "visible":"app.envision.editMode"
+                        "visible": "app.envision.editMode"
                     }
                 ],
                 [
                     "Live Edit",
                     "app.envision.liveEdit",
                     {
-                        "state":"select",
-                        "visible":"app.envision.editMode"
+                        "state": "select",
+                        "visible": "app.envision.editMode"
                     }
                 ]
             ]

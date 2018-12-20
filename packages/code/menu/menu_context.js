@@ -44,7 +44,7 @@ screens.menu.context = function MenuContext(me) {
     me.isChild = {
         get: function (object) {
             var window = me.widget.window.get(object);
-            if(me.core.property.get(window, "popup") || me.core.property.get(window, "embed")) {
+            if (me.core.property.get(window, "popup") || me.core.property.get(window, "embed")) {
                 return false;
             }
             var parent = me.widget.window.parent(window);
@@ -56,7 +56,7 @@ screens.menu.context = function MenuContext(me) {
             var window = me.widget.window.get(object);
             var next = me.ui.node.previous(window, me.widget.window.id);
             me.core.property.set(next, "widget.window.show", true);
-            if(next !== window) {
+            if (next !== window) {
                 me.ui.focus.updateOrder(window.parentNode, window, 0);
             }
         }
@@ -71,7 +71,7 @@ screens.menu.context = function MenuContext(me) {
             var padding = 0;
             if (bottomUp) {
                 var parent = me.widget.window.parent(window);
-                if(!parent) {
+                if (!parent) {
                     parent = me.ui.element.workspace();
                 }
                 padding = 0;
@@ -84,5 +84,5 @@ screens.menu.context = function MenuContext(me) {
                 });
             }
         }
-    };    
+    };
 };

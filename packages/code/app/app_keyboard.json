@@ -12,7 +12,7 @@
         "bottom": "0em",
         "width": "50%",
         "height": "50%",
-        "border":"1px solid black",
+        "border": "1px solid black",
         "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },
     "ui.basic.elements": [
@@ -24,7 +24,7 @@
         },
         {
             "ui.class.class": "app.keyboard.buttons",
-            "ui.basic.var":"buttons",
+            "ui.basic.var": "buttons",
             "core.property.group": [
                 {
                     "ui.group.data": {

@@ -11,27 +11,27 @@ screens.ui.touch = function UITouch(me) {
         if (window.PointerEvent) {
             me.log("using pointer events");
             me.eventNames = {
-                down:"pointerdown",
-                enter:"pointerenter",
-                leave:"pointerleave",
-                move:"pointermove",
-                out:"pointerout",
-                over:"pointerover",
-                up:"pointerup",
-                cancel:"pointercancel"
+                down: "pointerdown",
+                enter: "pointerenter",
+                leave: "pointerleave",
+                move: "pointermove",
+                out: "pointerout",
+                over: "pointerover",
+                up: "pointerup",
+                cancel: "pointercancel"
             };
         }
         else {
             me.log("no pointer events support");
             me.eventNames = {
-                down:"mousedown",
-                enter:"mouseenter",
-                leave:"mouseleave",
-                move:"mousemove",
-                out:"mouseout",
-                over:"mouseover",
-                up:"mouseup",
-                cancel:"mousecancel"
+                down: "mousedown",
+                enter: "mouseenter",
+                leave: "mouseleave",
+                move: "mousemove",
+                out: "mouseout",
+                over: "mouseover",
+                up: "mouseup",
+                cancel: "mousecancel"
             };
         }
     };
@@ -156,7 +156,7 @@ screens.ui.touch = function UITouch(me) {
     };
     me.wheel = {
         set: function (object, value) {
-            me.core.event.register(me.handle, object, "wheel", value, "wheel", object, {passive:true});
+            me.core.event.register(me.handle, object, "wheel", value, "wheel", object, { passive: true });
         }
     };
     me.contextmenu = {

@@ -86,7 +86,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
             }
             me.source = target;
             var source_rect = me.ui.rect.absoluteRegion(target);
-            me.drag_offset = {x: event.clientX - source_rect.left, y: event.clientY - source_rect.top};
+            me.drag_offset = { x: event.clientX - source_rect.left, y: event.clientY - source_rect.top };
             event.dataTransfer.effectAllowed = 'move';
             event.dataTransfer.dropEffect = 'move';
             event.dataTransfer.setData('text/html', target.innerHTML);
@@ -153,7 +153,7 @@ screens.ui.drag.icon = function UIDragIcon(me) {
         set: function (object, event) {
             if (me.source && me.source.style.position === "absolute") {
                 if (event.clientX && event.clientY) {
-                    me.drag_pos = {x: event.clientX, y: event.clientY};
+                    me.drag_pos = { x: event.clientX, y: event.clientY };
                 }
                 var region = me.ui.rect.relativeRegion(me.source);
                 region.left = me.drag_pos.x - me.drag_offset.x;

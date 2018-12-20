@@ -1,8 +1,8 @@
 {
     "title": "Chat",
     "temp": true,
-    "fullscreen":true,
-    "nobar":true,
+    "fullscreen": true,
+    "nobar": true,
     "icon": "/packages/res/icons/chat.png",
     "ui.property.style": {
         "position": "absolute",
@@ -12,7 +12,7 @@
         "bottom": "0em",
         "width": "50%",
         "height": "80%",
-        "border":"1px solid black",
+        "border": "1px solid black",
         "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },
     "ui.basic.elements": []

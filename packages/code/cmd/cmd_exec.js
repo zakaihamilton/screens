@@ -22,7 +22,7 @@ screens.cmd.exec = function CmdExec(me) {
         }
         catch (err) {
             var string = err;
-            if(typeof string === "object") {
+            if (typeof string === "object") {
                 string = JSON.stringify(string);
             }
             me.core.property.set(terminal, "print", "exec: " + args[1] + ", error:" + string);

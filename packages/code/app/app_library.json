@@ -23,15 +23,15 @@
                     "Combine Results",
                     "app.library.combineResults",
                     {
-                        "state":"select",
-                        "separator":true
+                        "state": "select",
+                        "separator": true
                     }
                 ],
                 [
                     "Refresh",
                     "app.library.refresh",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 [
@@ -45,7 +45,7 @@
                     "app.library.editMode",
                     {
                         "state": "select",
-                        "separator":true
+                        "separator": true
                     },
                     {
                         "ui.basic.display": "@user.verify.admin"
@@ -55,23 +55,23 @@
                     "Structured",
                     "app.library.structuredMode",
                     {
-                        "state":"select",
-                        "visible":"app.library.editMode"
+                        "state": "select",
+                        "visible": "app.library.editMode"
                     }
                 ],
                 [
                     "Tag Mode",
                     "app.library.tagMode",
                     {
-                        "state":"select",
-                        "visible":"app.library.editMode"
+                        "state": "select",
+                        "visible": "app.library.editMode"
                     }
                 ],
                 [
                     "Copy Url To Clipboard",
                     "app.library.copyUrl",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ]
             ]
@@ -94,21 +94,21 @@
                 {
                     "ui.basic.text": "Results",
                     "ui.touch.click": "app.library.showResults",
-                    "ui.class.classExtra":"app.library.showResults",
+                    "ui.class.classExtra": "app.library.showResults",
                     "ui.basic.var": "showResults",
-                    "ui.basic.show":false
+                    "ui.basic.show": false
                 }
             ]
         },
         {
             "ui.element.component": "widget.transform",
             "ui.basic.var": "transform",
-            "ui.class.classExtra":"app.library.transform"
+            "ui.class.classExtra": "app.library.transform"
         },
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.editor.container",
-            "ui.basic.var":"editorContainer",
+            "ui.basic.var": "editorContainer",
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.library.editor",
@@ -119,8 +119,8 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "app.library.results.container",
-            "ui.basic.show":false,
-            "ui.basic.var":"resultsContainer",
+            "ui.basic.show": false,
+            "ui.basic.var": "resultsContainer",
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
@@ -131,7 +131,7 @@
         {
             "ui.element.component": "widget.spinner",
             "ui.basic.var": "resultsSpinner",
-            "ui.style.visibility":"hidden"
+            "ui.style.visibility": "hidden"
         },
         {
             "ui.basic.tag": "br"
@@ -139,23 +139,23 @@
         {
             "ui.basic.text": "Delete",
             "ui.touch.click": "app.library.deleteRecord",
-            "ui.class.classExtra":"app.library.delete",
+            "ui.class.classExtra": "app.library.delete",
             "ui.basic.var": "delete",
-            "ui.basic.show":false
+            "ui.basic.show": false
         },
         {
             "ui.basic.text": "Process",
             "ui.touch.click": "app.library.process",
-            "ui.class.classExtra":"app.library.process",
+            "ui.class.classExtra": "app.library.process",
             "ui.basic.var": "process",
-            "ui.basic.show":false
+            "ui.basic.show": false
         },
         {
             "ui.basic.text": "Update",
             "ui.touch.click": "app.library.updateRecord",
-            "ui.class.classExtra":"app.library.update",
+            "ui.class.classExtra": "app.library.update",
             "ui.basic.var": "update",
-            "ui.basic.show":false
+            "ui.basic.show": false
         }
     ],
     "ui.property.after": {

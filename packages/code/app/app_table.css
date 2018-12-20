@@ -1,40 +1,40 @@
 .app-table-widget {
     position: absolute;
-    display:grid;
+    display: grid;
     overflow: auto;
-    align-items:stretch;
+    align-items: stretch;
     justify-items: stretch;
     grid-auto-columns: auto;
     grid-auto-rows: auto;
-    align-content:center;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
+    align-content: center;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .app-table-widget.edit-mode {
     grid-auto-rows: 2.5em;
-    align-content:start;
+    align-content: start;
 }
 
 .app-table-cell {
-    margin:6px;
-    padding:6px;
-    color:var(--color);
+    margin: 6px;
+    padding: 6px;
+    color: var(--color);
     line-height: 2em;
     text-align: center;
 }
 
 .app-table-cell.header {
     text-align: center;
-    border:1px solid gray;    
+    border: 1px solid gray;
 }
 
 .app-table-cell.border {
     border: 1px solid black;
     box-shadow: 0 0 1px 1px #888;
-    outline:transparent;
+    outline: transparent;
 }
 
 .app-table-cell.border:hover {
@@ -45,13 +45,13 @@
 }
 
 .app-table-cell.rowHeader {
-    background-color:var(--chrome-highlight-background);
-    color:var(--chrome-highlight-color);
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
     font-weight: bold;
 }
 
 .app-table-cell.columnHeader {
-    background-color:var(--chrome-highlight-background);
-    color:var(--chrome-highlight-color);
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
     font-weight: bold;
 }

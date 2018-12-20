@@ -5,37 +5,37 @@
 
 screens.widget.gridline = function WidgetGridLine(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["line"]
         },
-        properties : {
+        properties: {
             "ui.basic.tag": "div",
             "ui.property.style": {
                 "position": "absolute",
-                "width":"100%",
-                "height":"100%"
+                "width": "100%",
+                "height": "100%"
             },
-            "color":"black",
-            "borderStyle":"solid"
+            "color": "black",
+            "borderStyle": "solid"
         }
     };
-    me.init = function() {
+    me.init = function () {
         me.core.property.set(me, {
-            "core.property.object.color":null,
-            "core.property.object.borderStyle":null
+            "core.property.object.color": null,
+            "core.property.object.borderStyle": null
         });
     };
     me.line = {
-        get: function(object) {
+        get: function (object) {
             var row = me.core.property.get(object, "ui.style.gridRow");
             var column = me.core.property.get(object, "ui.style.gridColumn");
             return row + " " + column;
         },
-        set: function(object, value) {
+        set: function (object, value) {
             var coords = value.split(" ");
             var borderLeft = false, borderTop = false, borderRight, borderBottom = false;
             var firstPoint, secondPoint, thirdPoint;
-            if(coords.length > 4) {
+            if (coords.length > 4) {
                 firstPoint = [coords[0], coords[1]];
                 secondPoint = [coords[2], coords[3]];
                 thirdPoint = [coords[4], coords[5]];
@@ -52,16 +52,16 @@ screens.widget.gridline = function WidgetGridLine(me) {
             borderTop = firstPoint[1] === secondPoint[1];
             borderRight = secondPoint[0] === thirdPoint[1];
             borderBottom = secondPoint[1] === thirdPoint[1] && firstPoint[1] !== thirdPoint[1];
-            if(borderLeft) {
+            if (borderLeft) {
                 me.core.property.set(object, "ui.style.borderLeft", "1px " + borderStyle + " " + color);
             }
-            if(borderRight) {
+            if (borderRight) {
                 me.core.property.set(object, "ui.style.borderRight", "1px " + borderStyle + " " + color);
             }
-            if(borderTop) {
+            if (borderTop) {
                 me.core.property.set(object, "ui.style.borderTop", "1px " + borderStyle + " " + color);
             }
-            if(borderBottom) {
+            if (borderBottom) {
                 me.core.property.set(object, "ui.style.borderBottom", "1px " + borderStyle + " " + color);
             }
         }

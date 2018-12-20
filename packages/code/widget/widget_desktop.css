@@ -9,7 +9,7 @@ body {
     right: 0px;
     bottom: 0px;
     overflow: hidden;
-    cursor:default;
+    cursor: default;
     user-select: none;
     user-drag: none;
     touch-action: none;
@@ -22,18 +22,18 @@ body {
     right: 0px;
     bottom: 0px;
     overflow: hidden;
-    cursor:default;
+    cursor: default;
     user-select: none;
     user-drag: none;
-    touch-action: none;    
-    background:lightblue;
+    touch-action: none;
+    background: lightblue;
 }
 
 .widget-desktop-workspace {
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:2.3em;
-    position:absolute;
-    overflow:hidden;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 2.3em;
+    position: absolute;
+    overflow: hidden;
 }

@@ -59,8 +59,8 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         }
         me.log("reset device output: " + data);
         var interval = parseInt(effects.toggleInterval);
-        if(interval) {
-            if(me.toggleInterval) {
+        if (interval) {
+            if (me.toggleInterval) {
                 clearTimeout(me.toggleInterval);
                 me.toggleInterval = null;
             }
@@ -70,7 +70,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             }, interval * 1000);
         }
         else {
-            if(me.toggleInterval) {
+            if (me.toggleInterval) {
                 clearTimeout(me.toggleInterval);
                 me.toggleInterval = null;
             }
@@ -81,7 +81,7 @@ screens.service.netcontrol = function ServiceNetControl(me) {
         if (me.core.socket.isConnected) {
             await me.manager.packet.updateEffects(effects);
         }
-        if(!effects.useEffects) {
+        if (!effects.useEffects) {
             return;
         }
         if (effects.packetLoss || effects.packetDelay || effects.bandwidthRate) {

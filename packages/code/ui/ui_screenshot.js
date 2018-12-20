@@ -4,14 +4,14 @@
  */
 
 screens.ui.screenshot = function UIScreenshot(me) {
-    me.capture = function() {
+    me.capture = function () {
         function urlsToAbsolute(nodeList) {
             if (!nodeList.length) {
                 return [];
             }
             var attrName = 'href';
-            if (nodeList[0].__proto__ === HTMLImageElement.prototype 
-            || nodeList[0].__proto__ === HTMLScriptElement.prototype) {
+            if (nodeList[0].__proto__ === HTMLImageElement.prototype
+                || nodeList[0].__proto__ === HTMLScriptElement.prototype) {
                 attrName = 'src';
             }
             nodeList = [].map.call(nodeList, function (el, i) {

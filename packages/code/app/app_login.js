@@ -4,7 +4,7 @@
  */
 
 screens.app.login = function AppLogin(me) {
-    me.init = function() {
+    me.init = function () {
         me.core.listener.register(me.signin, me.lib.google.id);
     };
     me.launch = function (args) {
@@ -17,7 +17,7 @@ screens.app.login = function AppLogin(me) {
         me.signin();
         return me.singleton;
     };
-    me.signin = function() {
+    me.signin = function () {
         if (!me.core.property.get(me.singleton, "ui.node.parent")) {
             return;
         }
@@ -33,8 +33,8 @@ screens.app.login = function AppLogin(me) {
             window.var.userNameLabel,
             window.var.userName
         ], "ui.basic.show", "@lib.google.isSignedIn");
-        if(state && me.autoLogin) {
-            if(me.core.startup.app.name !== "login") {
+        if (state && me.autoLogin) {
+            if (me.core.startup.app.name !== "login") {
                 me.core.property.set(me.singleton, "close");
                 me.startup.app.start();
             }

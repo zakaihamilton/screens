@@ -8,7 +8,7 @@ screens.core.socket = function CoreSocket(me) {
         if (me.platform === "server") {
             me.sockets = new Map();
             me.io = me.core.http.io;
-            if(!me.io) {
+            if (!me.io) {
                 me.log("Cannot connect to socket io because it is null");
                 return;
             }
@@ -146,7 +146,7 @@ screens.core.socket = function CoreSocket(me) {
             }
         });
         socket.on("heartbeat_send", (data) => {
-            socket.emit("heartbeat_response", { beat: 1, user:me.lib.google.userName() });
+            socket.emit("heartbeat_response", { beat: 1, user: me.lib.google.userName() });
             me.log("heartbeat response sent");
         });
     };

@@ -5,7 +5,7 @@
 
 screens.widget.embed = function WidgetEmbed(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "iframe",
             "ui.class.class": "iframe"
         }

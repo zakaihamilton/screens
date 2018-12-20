@@ -4,7 +4,7 @@
  */
 
 screens.core.network = function CoreNetwork(me) {
-    me.isOnline = function() {
+    me.isOnline = function () {
         return navigator.onLine;
     };
     me.online = {

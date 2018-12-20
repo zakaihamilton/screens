@@ -5,12 +5,12 @@
 
 screens.widget.dropdown = function WidgetDropDown(me) {
     me.element = {
-        redirect : {
+        redirect: {
             "ui.basic.text": "text",
             "ui.basic.readOnly": "readOnly",
             "ui.monitor.change": "monitorChange"
         },
-        properties : {
+        properties: {
             "ui.class.class": "group",
             "ui.basic.elements": [
                 {

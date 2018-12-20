@@ -16,12 +16,12 @@ screens.app.launcher = function AppLauncher(me) {
             label = value;
             name = value.toLowerCase();
         }
-        else if(Array.isArray(value)) {
+        else if (Array.isArray(value)) {
             label = value[0];
             name = value[0].toLowerCase();
             extension = value[1];
         }
-        if(!extension) {
+        if (!extension) {
             extension = "png";
         }
         var available = await me.core.app.available(name);

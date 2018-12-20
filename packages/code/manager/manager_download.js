@@ -38,9 +38,9 @@ screens.manager.download = function ManagerDownload(me) {
         }
         if (items) {
             for (let item of items) {
-                if(extensions) {
+                if (extensions) {
                     var extension = me.core.path.extension(item);
-                    if(!extension || !extensions.includes(extension)) {
+                    if (!extension || !extensions.includes(extension)) {
                         skipped++;
                         continue;
                     }
@@ -56,7 +56,7 @@ screens.manager.download = function ManagerDownload(me) {
             }
         }
         me.queue = [];
-        return {deleted, failed, skipped};
+        return { deleted, failed, skipped };
     };
     return "server";
 };

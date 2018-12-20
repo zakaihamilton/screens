@@ -35,7 +35,7 @@ screens.core.performance = function CorePerformance(me) {
         userProfile.start = me.core.util.start();
         return userProfile.start;
     };
-    me.duration = function(name, userId, userName) {
+    me.duration = function (name, userId, userName) {
         if (!userId) {
             userId = this.userId;
         }
@@ -48,7 +48,7 @@ screens.core.performance = function CorePerformance(me) {
             " userId: " + userId +
             " userName: " + userName;
         }
-        if(!userProfile.start) {
+        if (!userProfile.start) {
             throw "Performance was never started name: " + name +
             " userId: " + userId +
             " userName: " + userName;

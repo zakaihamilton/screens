@@ -16,7 +16,7 @@
                     "ui.class.class": "shortcut"
                 },
                 "ui.data.prefix": "widget.taskbar.shortcut(",
-                "ui.data.suffix" : ")",
+                "ui.data.suffix": ")",
                 "ui.data.values": [
                     "ui.theme.nightMode",
                     "keyboard",

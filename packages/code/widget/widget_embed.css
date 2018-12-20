@@ -1,9 +1,9 @@
 .widget-embed-iframe {
-    position:relative;
-    border:none;
-    overflow:hidden;
-    margin:0;
-    padding:0;
+    position: relative;
+    border: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     display: block;
     pointer-events: none;

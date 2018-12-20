@@ -1,27 +1,27 @@
 {
-    "title":"@ui.param.title(Progress)",
-    "delay":"@ui.param.delay(0)",
-    "popup":true,
-    "fixed":true,
-    "ui.property.style":{
+    "title": "@ui.param.title(Progress)",
+    "delay": "@ui.param.delay(0)",
+    "popup": true,
+    "fixed": true,
+    "ui.property.style": {
         "left": "10%",
         "top": "30%",
         "width": "80%"
     },
     "ui.basic.elements": [
         {
-            "ui.basic.tag":"div",
-            "ui.class.class":"modal.progress.general",
-            "ui.basic.var":"general"
+            "ui.basic.tag": "div",
+            "ui.class.class": "modal.progress.general",
+            "ui.basic.var": "general"
         },
         {
-            "ui.basic.tag":"div",
-            "ui.class.classExtra":"modal.progress.specific",
-            "ui.basic.elements":{
-                "ui.element.component":"widget.progress",
-                "ui.basic.var":"progress"
+            "ui.basic.tag": "div",
+            "ui.class.classExtra": "modal.progress.specific",
+            "ui.basic.elements": {
+                "ui.element.component": "widget.progress",
+                "ui.basic.var": "progress"
             },
-            "ui.basic.var":"specific"
+            "ui.basic.var": "specific"
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
     "title": "Terminal",
-    "ui.property.style":{
+    "ui.property.style": {
         "left": "350px",
         "top": "100px",
         "width": "640px",

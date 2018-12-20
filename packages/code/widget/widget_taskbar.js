@@ -5,12 +5,12 @@
 
 screens.widget.taskbar = function WidgetTaskBar(me) {
     me.element = {
-        properties : __json__
+        properties: __json__
     };
-    me.shortcut = function(object, name) {
+    me.shortcut = function (object, name) {
         var method = method = "core.app." + name;
         var label = name;
-        if(name.includes(".")) {
+        if (name.includes(".")) {
             method = name;
             label = name.split(".").pop();
         }

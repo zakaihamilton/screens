@@ -4,15 +4,15 @@
 */
 
 screens.core.server = function CoreServer(me) {
-    me.init = function() {
-        me.cmd=require('node-cmd');
+    me.init = function () {
+        me.cmd = require('node-cmd');
         me.startDate = new Date();
     };
-    me.run = async function(cmd) {
+    me.run = async function (cmd) {
         me.log("running: " + cmd);
         return new Promise((resolve, reject) => {
             me.cmd.get(cmd, (err, data, stderr) => {
-                if(err) {
+                if (err) {
                     reject(err);
                 }
                 else {
@@ -21,10 +21,10 @@ screens.core.server = function CoreServer(me) {
             });
         });
     };
-    me.memoryUsage = function() {
+    me.memoryUsage = function () {
         return process.memoryUsage();
     };
-    me.date = function() {
+    me.date = function () {
         return me.startDate.toString();
     };
     return "server";

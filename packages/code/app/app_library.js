@@ -5,7 +5,7 @@
 
 screens.app.library = function AppLibrary(me) {
     me.launch = function (args) {
-        var params = {search:args[0]};
+        var params = { search: args[0] };
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
@@ -226,7 +226,7 @@ screens.app.library = function AppLibrary(me) {
                 await me.gotoArticle(object, records, false);
             }
         }
-        if(search) {
+        if (search) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
     };
@@ -507,10 +507,10 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.editor, "text", text);
         me.updateText(object);
     };
-    me.gotoArticle = async function (object, tags, spinner=true) {
+    me.gotoArticle = async function (object, tags, spinner = true) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
-        if(spinner) {
+        if (spinner) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         }
         if (!Array.isArray(tags)) {
@@ -521,7 +521,7 @@ screens.app.library = function AppLibrary(me) {
             records = tags.map(async (record, index) => {
                 if (window.options.combineResults) {
                     var content = await me.db.library.content.get(record._id);
-                    if(index !== tags.length - 1) {
+                    if (index !== tags.length - 1) {
                         content.text += "\n<br>\n";
                     }
                     return { content: content, tags: record };
@@ -538,7 +538,7 @@ screens.app.library = function AppLibrary(me) {
         me.updateTextFromRecords(window, records);
         window.showResults = false;
         me.updateMode(window);
-        if(spinner) {
+        if (spinner) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
     };

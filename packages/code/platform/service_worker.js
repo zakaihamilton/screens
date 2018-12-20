@@ -4,7 +4,7 @@ screens.include({
     "core": [
         "*"
     ],
-    "storage":[
+    "storage": [
         "cache"
     ]
 }).then(async () => {

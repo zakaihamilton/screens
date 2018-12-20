@@ -5,7 +5,7 @@
 
 screens.widget.container = function WidgetContainer(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.class.class": "root",
             "core.event.scroll": "scroll"
         }

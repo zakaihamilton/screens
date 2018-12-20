@@ -1,38 +1,32 @@
 .modal-progress-specific {
-  position:relative;
-  top:60px;
-  left:5%;
+  position: relative;
+  top: 60px;
+  left: 5%;
   width: 90%;
-  min-height:32px;
-  display:none;
+  min-height: 32px;
+  display: none;
 }
 
 .modal-progress-general {
-    position:relative;
-    top:60px;
-    left:5%;
-    width: 90%;
-    min-height:26px;
-    border: 1px solid #2980b9;
-    text-align: center;
-    border-radius: 3px;
-    background-image: 
-      repeating-linear-gradient(
-        -45deg,
-        #2980b9,
-        #2980b9 11px,
-        #eee 10px,
-        #eee 20px /* determines size */
-      );
-    background-size: 28px 28px;
-    animation: modal-progress-move .5s linear infinite;
+  position: relative;
+  top: 60px;
+  left: 5%;
+  width: 90%;
+  min-height: 26px;
+  border: 1px solid #2980b9;
+  text-align: center;
+  border-radius: 3px;
+  background-image: repeating-linear-gradient( -45deg, #2980b9, #2980b9 11px, #eee 10px, #eee 20px/* determines size */
+  );
+  background-size: 28px 28px;
+  animation: modal-progress-move .5s linear infinite;
+}
+
+@keyframes modal-progress-move {
+  0% {
+    background-position: 0 0;
   }
-  
-  @keyframes modal-progress-move {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 28px 0;
-    }
+  100% {
+    background-position: 28px 0;
   }
+}

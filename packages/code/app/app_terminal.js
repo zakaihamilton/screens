@@ -9,7 +9,7 @@ screens.app.terminal = function AppTerminal(me) {
         return me.singleton;
     };
     me.response = {
-        set: function(object, value) {
+        set: function (object, value) {
             me.core.cmd.handle(object, value);
         }
     };

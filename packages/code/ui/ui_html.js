@@ -4,13 +4,13 @@
  */
 
 screens.ui.html = function UIHtml(me) {
-    me.init = function() {
+    me.init = function () {
         me.files = {};
     };
-    me.icon = function(object, className) {
+    me.icon = function (object, className) {
         return "<i class=\"" + className + "\"></i>";
     };
-    me.loadComponent = async function(path, useCache=true) {
+    me.loadComponent = async function (path, useCache = true) {
         var period = path.lastIndexOf(".");
         var component_name = path.substring(period + 1);
         var package_name = path.substring(0, period);
@@ -18,12 +18,12 @@ screens.ui.html = function UIHtml(me) {
         var html = await me.loadFile(url, useCache);
         return html;
     };
-    me.loadFile = async function(path, useCache=true) {
-        if(useCache && path in me.files) {
+    me.loadFile = async function (path, useCache = true) {
+        if (useCache && path in me.files) {
             return me.files[path];
         }
         else {
-            if(path && path.startsWith("/")) {
+            if (path && path.startsWith("/")) {
                 path = path.substring(1);
             }
             var info = {
@@ -34,11 +34,11 @@ screens.ui.html = function UIHtml(me) {
             try {
                 html = await me.core.http.send(info);
             }
-            catch(err) {
+            catch (err) {
                 err = "Cannot load html file: " + path + " err: " + err.message || err;
                 me.log_error(err);
             }
-            if(useCache) {
+            if (useCache) {
                 me.files[path] = html;
             }
             return html;

@@ -44,7 +44,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
                 e.preventDefault();
             } else if (e.which === 38) {
                 e.preventDefault();
-                if(terminal.lastCommand) {
+                if (terminal.lastCommand) {
                     me.core.property.set(terminal.var.inputLine, "ui.basic.text", terminal.lastCommand);
                     field.value = terminal.lastCommand;
                 }

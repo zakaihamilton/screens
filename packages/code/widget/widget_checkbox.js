@@ -5,13 +5,13 @@
 
 screens.widget.checkbox = function WidgetCheckBox(me) {
     me.element = {
-        dependencies : {
+        dependencies: {
             properties: ["ui.basic.text", "state"]
         },
-        redirect : {
+        redirect: {
             "ui.basic.text": "text"
         },
-        properties : {
+        properties: {
             "ui.class.class": "container",
             "ui.basic.elements": [{
                 "ui.basic.var": "input",

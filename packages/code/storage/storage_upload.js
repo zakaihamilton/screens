@@ -25,7 +25,7 @@ screens.storage.upload = function StorageUpload(me) {
             me.log(
                 "start: " + start +
                 " end: " + end +
-                " size: " + (end - start) + 
+                " size: " + (end - start) +
                 " chunkIndex: " + chunkIndex +
                 " chunkCount: " + chunkCount
             );

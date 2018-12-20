@@ -208,7 +208,7 @@ screens.core.string = function CoreString(me) {
         }
         return string;
     };
-    me.formatDuration = function (duration, long=false) {
+    me.formatDuration = function (duration, long = false) {
         duration = parseInt(duration);
         var sec = duration % 60;
         var min = parseInt(duration / 60) % 60;
@@ -227,21 +227,21 @@ screens.core.string = function CoreString(me) {
         if (days) {
             formattedString = days + " days" + " + ";
         }
-        if(!long) {
+        if (!long) {
             formattedString = hour + ":" + min + ":" + sec;
         }
         else {
-            if(hour) {
+            if (hour) {
                 formattedString += hour + " hours ";
             }
-            if(min) {
+            if (min) {
                 formattedString += min + " minutes ";
             }
-            if(sec) {
+            if (sec) {
                 formattedString += sec + " seconds";
             }
-            if(!formattedString) {
-                formattedString = "now";                
+            if (!formattedString) {
+                formattedString = "now";
             }
         }
         formattedString = formattedString.trim();

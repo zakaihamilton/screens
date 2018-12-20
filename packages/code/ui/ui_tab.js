@@ -27,12 +27,12 @@ screens.ui.tab = function UITab(me) {
                     return;
                 }
                 var isActive = me.core.property.get(element, "ui.class.is-active");
-                if(isActive) {
+                if (isActive) {
                     widget = element;
                     return;
                 }
             });
-            if(!widget) {
+            if (!widget) {
                 return;
             }
             tab = me.core.property.get(widget, "ui.attribute.tab");

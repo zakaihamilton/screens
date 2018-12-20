@@ -30,7 +30,7 @@ screens.core.http = function CoreHttp(me) {
             }
             me.log("creating normal server");
             var server = await me.createServer(false);
-            if(!me.io) {
+            if (!me.io) {
                 me.io = require("socket.io")(server);
             }
             me.log("normal server is listening");
@@ -272,7 +272,7 @@ screens.core.http = function CoreHttp(me) {
             }
         }
     };
-    me.urlEncode = function(obj) {
+    me.urlEncode = function (obj) {
         var str = [];
         for (var p in obj)
             if (obj.hasOwnProperty(p)) {

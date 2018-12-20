@@ -5,7 +5,7 @@
 
 screens.widget.chart = function WidgetChart(me) {
     me.element = {
-        properties : {
+        properties: {
             "ui.basic.tag": "div",
             "ui.basic.elements": {
                 "ui.basic.tag": "canvas",

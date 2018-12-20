@@ -1,56 +1,89 @@
 [
-    ["Restore", "widget.window.restore", {
+    [
+        "Restore",
+        "widget.window.restore",
+        {
             "enabled": "select",
             "visible": "menu.context.notPopup"
         }
     ],
-    ["Move", "", {
+    [
+        "Move",
+        "",
+        {
             "enabled": false
         }
     ],
-    ["Size", "", {
+    [
+        "Size",
+        "",
+        {
             "enabled": false,
             "visible": "menu.context.resizable"
         }
     ],
-    ["Minimize", "widget.window.minimize", {
+    [
+        "Minimize",
+        "widget.window.minimize",
+        {
             "enabled": "select",
             "visible": "menu.context.minimizable"
         }
     ],
-    ["Maximize", "widget.window.maximize", {
+    [
+        "Maximize",
+        "widget.window.maximize",
+        {
             "enabled": "select",
             "visible": "menu.context.maximizable"
         }
     ],
-    ["Close", "widget.window.close", {
+    [
+        "Close",
+        "widget.window.close",
+        {
             "separator": "menu.context.resizable",
             "visible": "menu.context.notEmbed",
             "enabled": "select"
         }
     ],
-    ["Always On Top", "widget.window.alwaysOnTop", {
+    [
+        "Always On Top",
+        "widget.window.alwaysOnTop",
+        {
             "separator": true,
             "visible": "menu.context.notEmbed",
             "state": "select"
         }
     ],
-    ["See Through", "widget.window.seeThrough", {
+    [
+        "See Through",
+        "widget.window.seeThrough",
+        {
             "visible": "menu.context.notEmbed",
             "state": "select"
         }
     ],
-    ["Fullscreen", "widget.window.fullscreen", {
+    [
+        "Fullscreen",
+        "widget.window.fullscreen",
+        {
             "visible": "menu.context.notEmbed",
             "state": "select"
         }
     ],
-    ["Next", "menu.context.next", {
+    [
+        "Next",
+        "menu.context.next",
+        {
             "separator": true,
             "visible": "menu.context.isChild"
         }
     ],
-    ["Switch To...", "core.app.tasks", {
+    [
+        "Switch To...",
+        "core.app.tasks",
+        {
             "separator": true,
             "visible": "menu.context.switchable"
         }

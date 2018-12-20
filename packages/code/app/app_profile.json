@@ -7,7 +7,7 @@
         "width": "80%",
         "height": "80%"
     },
-    "ui.class.load":"app.profile",
+    "ui.class.load": "app.profile",
     "ui.basic.html": "@app.profile.html",
     "ui.property.after": {
         "storage.local.key": "app-profile-window",
@@ -21,9 +21,9 @@
                     "This Device",
                     "app.profile.userName",
                     {
-                        "separator":true,
+                        "separator": true,
                         "state": "select",
-                        "value":""
+                        "value": ""
                     }
                 ],
                 [
@@ -33,11 +33,11 @@
                 "app.profile.userMenuList"
             ],
             {
-                "visible":"app.profile.userListAvailable"
+                "visible": "app.profile.userListAvailable"
             }
         ]
     ],
     "app.profile.initOptions": null,
-    "app.profile.updateUser":null,
-    "widget.window.maximize":null
+    "app.profile.updateUser": null,
+    "widget.window.maximize": null
 }

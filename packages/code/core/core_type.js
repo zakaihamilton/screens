@@ -97,11 +97,11 @@ screens.core.type = function CoreType(me) {
         }
         return buffer;
     };
-    if(me.platform === "server" || me.platform === "service") {
-        global.atob = function(a) {
+    if (me.platform === "server" || me.platform === "service") {
+        global.atob = function (a) {
             return new Buffer(a, 'base64').toString('binary');
         };
-        global.btoa = function(b) {
+        global.btoa = function (b) {
             return new Buffer(b).toString('base64');
         };
     }
