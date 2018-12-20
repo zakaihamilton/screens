@@ -216,7 +216,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
     };
     me.closePopup = function (object) {
-        var modal = me.ui.node.class(object, "modal");
+        var modal = me.ui.node.classParent(object, "modal");
         if (modal) {
             me.core.property.set(modal, "ui.class.remove", "is-active");
         }

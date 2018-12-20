@@ -25,14 +25,14 @@ screens.ui.node = function UINode(me) {
         childList = childList.filter(Boolean);
         return childList;
     };
-    me.findByName = function(object, name) {
+    me.findByName = function (object, name) {
         var element = object.firstChild;
         while (element) {
             if (element.getAttribute && element.getAttribute("name") === name) {
                 break;
             }
             var child = me.findByName(element, name);
-            if(child) {
+            if (child) {
                 element = child;
                 break;
             }
@@ -61,9 +61,34 @@ screens.ui.node = function UINode(me) {
         }
         return element;
     };
-    me.class = function (object, class_name) {
+    me.classMember = function (object, class_name) {
         var class_names = [];
-        if(Array.isArray(class_name)) {
+        if (Array.isArray(class_name)) {
+            class_names = class_name;
+        }
+        else {
+            class_names = [class_name];
+        }
+        var element = object.firstChild;
+        while (element) {
+            if (element.classList) {
+                for (var class_name of class_names) {
+                    if (element.classList.contains(class_name)) {
+                        return element;
+                    }
+                }
+            }
+            var child = me.classMember(element, class_names);
+            if (child) {
+                return child;
+            }
+            element = element.nextSibling;
+        }
+        return null;
+    };
+    me.classParent = function (object, class_name) {
+        var class_names = [];
+        if (Array.isArray(class_name)) {
             class_names = class_name;
         }
         else {
@@ -73,8 +98,8 @@ screens.ui.node = function UINode(me) {
             if (object === me.ui.element.workspace()) {
                 return null;
             }
-            for(var class_name of class_names) {
-                if(object.classList.contains(class_name)) {
+            for (var class_name of class_names) {
+                if (object.classList.contains(class_name)) {
                     return object;
                 }
             }
@@ -84,7 +109,7 @@ screens.ui.node = function UINode(me) {
     };
     me.container = function (object, component_name) {
         var component_names = [];
-        if(Array.isArray(component_name)) {
+        if (Array.isArray(component_name)) {
             component_names = component_name;
         }
         else {
@@ -94,7 +119,7 @@ screens.ui.node = function UINode(me) {
             if (object === me.ui.element.workspace()) {
                 return null;
             }
-            if(component_names.includes(object.component)) {
+            if (component_names.includes(object.component)) {
                 return object;
             }
             object = object.parentNode;
@@ -296,18 +321,18 @@ screens.ui.node = function UINode(me) {
             }
         }
     };
-    me.iterate = function(object, callback, recursive=true) {
+    me.iterate = function (object, callback, recursive = true) {
         var elements = me.childList(object);
-        for(var element of elements) {
+        for (var element of elements) {
             callback(element);
-            if(recursive) {
+            if (recursive) {
                 me.iterate(element, callback);
             }
         }
     };
-    me.bubble = function(object, callback) {
+    me.bubble = function (object, callback) {
         var parent = object.parentNode;
-        while(parent) {
+        while (parent) {
             callback(parent);
             parent = parent.parentNode;
         }
@@ -316,23 +341,23 @@ screens.ui.node = function UINode(me) {
         var widgets = [];
         for (var binding in bindings) {
             var widget = widgets[binding] = me.ui.node.findByName(object, binding);
-            if(!widget) {
+            if (!widget) {
                 continue;
             }
             var values = bindings[binding].split("|");
-            if(baseDefault) {
+            if (baseDefault) {
                 values.push(baseDefault);
             }
-            for(var value of values) {
-                if(value.startsWith(".")) {
+            for (var value of values) {
+                if (value.startsWith(".")) {
                     path = value.substring(1);
                     var info = me.core.json.traverse(data, path);
                     var value = info.value;
-                    if(!info.found || typeof value !== "string") {
+                    if (!info.found || typeof value !== "string") {
                         continue;
                     }
                 }
-                if(widget.value) {
+                if (widget.value) {
                     widget.value = value;
                 }
                 else {

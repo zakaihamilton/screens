@@ -20,18 +20,29 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
             if (!object.editor) {
                 object.editor = new me.quill(object, {
                     modules: {
-                        toolbar: [
-                            [{ "font": ["Sans Serif", "serif", "monospace"] }],
-                            [{ "size": ["small", false, "large", "huge"] }],
-                            ["bold", "italic", "underline", "strike"],
-                            [{ "script": "sub" }, { "script": "super" }],
-                            [{ "header": 1 }, { "header": 2 }, "blockquote", "code-block"],
-                            [{ "list": "ordered" }, { "list": "bullet" }],
-                            [{ "indent": "-1" }, { "indent": "+1" }],
-                            [{ "direction": "rtl" }, { "align": ["", "center", "right", "justify"] }],
-                            ["link", "image", "video", "formula"],
-                            ["clean"]
-                        ]
+                        toolbar: {
+                            container: [
+                                [{ "font": ["Sans Serif", "serif", "monospace"] }],
+                                [{ "size": ["small", false, "large", "huge"] }],
+                                ["bold", "italic", "underline", "strike"],
+                                [{ "script": "sub" }, { "script": "super" }],
+                                [{ "header": 1 }, { "header": 2 }, "blockquote", "code-block"],
+                                [{ "list": "ordered" }, { "list": "bullet" }],
+                                [{ "indent": "-1" }, { "indent": "+1" }],
+                                [{ "direction": "rtl" }, { "align": ["", "center", "right", "justify"] }],
+                                ["link", "image", "video", "formula"],
+                                ["speech"],
+                                ["clean"]
+                            ],
+                            handlers: {
+                                "speech": function () {
+                                    var result = me.ui.speech.toggle(object);
+                                    var button = me.ui.node.classMember(me.widget.window.get(object), "ql-speech");
+                                    me.core.property.set(button, "ui.class.speechActive", result);
+                                    return result;
+                                }
+                            }
+                        }
                     },
                     theme: "snow"
                 });
@@ -60,5 +71,8 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
                 object.editor.setText(value);
             }
         }
+    };
+    me.insertText = function (object, text) {
+        object.editor.insertText(object.editor.getLength() - 1, text);
     };
 };
