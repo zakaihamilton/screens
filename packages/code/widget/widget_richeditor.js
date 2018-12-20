@@ -102,6 +102,11 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
         }
     };
     me.insertText = function (object, text) {
-        object.editor.insertText(object.editor.getLength() - 1, text);
+        var range = object.editor.getSelection();
+        var offset = object.editor.getLength() - 1;
+        if (range && !range.length) {
+            offset = range.index;
+        }
+        object.editor.insertText(offset, text);
     };
 };
