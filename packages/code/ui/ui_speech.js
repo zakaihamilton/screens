@@ -4,7 +4,7 @@
  */
 
 screens.ui.speech = function UISpeech(me) {
-    me.start = function (object) {
+    me.start = function (object, options = null) {
         var recognition = null;
         if ("webkitSpeechRecognition" in window) {
             recognition = new window.webkitSpeechRecognition();
@@ -15,13 +15,23 @@ screens.ui.speech = function UISpeech(me) {
         else {
             return false;
         }
-        recognition.continuous = true;
-        recognition.onresult = function (event) {
-            var text = event.results[event.results.length - 1][0].transcript;
-            me.core.property.set(object, "insertText", text);
-        };
-        recognition.start();
         object.speechRecognition = recognition;
+        recognition.continuous = true;
+        recognition.lang = "en-US";
+        recognition.onresult = function (event) {
+            var last = event.results.length - 1;
+            if (last) {
+                var text = event.results[last][0].transcript;
+                me.core.property.set(object, "insertText", text);
+            }
+        };
+        recognition.onend = function (event) {
+            me.start(object, options);
+        };
+        if (options) {
+            options = Object.assign(recognition, options);
+        }
+        recognition.start();
         return true;
     };
     me.working = function (object) {
