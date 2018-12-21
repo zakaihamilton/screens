@@ -71,8 +71,8 @@ screens.app.player = function AppPlayer(me) {
     me.refresh = async function (object) {
         var window = me.singleton;
         await me.media.file.update();
-        me.groupListData = me.media.file.groups();
-        me.updateSessions();
+        me.groupListData = await me.media.file.groups();
+        await me.updateSessions();
     };
     me.onChangeGroup = {
         get: function (object, value) {
