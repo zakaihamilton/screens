@@ -1,11 +1,11 @@
 {
     "options": {
         "wordStyle": "suffix",
-        "keepExpandedSource":true
+        "keepExpandedSource": true
     },
-    "replace":{
-        "characters":{
-            "'\"":"\""
+    "replace": {
+        "characters": {
+            "'\"": "\""
         }
     },
     "pre": [
@@ -57,7 +57,7 @@
         "four": "ד"
     },
     "data": {
-        "lastFieldSeparator":" ו",
+        "lastFieldSeparator": " ו",
         "filterPlaceholder": "חיפוש...",
         "glossaryTitle": "מילון מונחים",
         "termTableTitle": "טבלת בחינות",
@@ -275,6 +275,12 @@
                 "אחר כך"
             ],
             "term": "אח \" כ"
+        },
+        {
+            "expansion": [
+                "ואחר כך"
+            ],
+            "term": "ואח \" כ"
         },
         {
             "expansion": [
@@ -883,10 +889,10 @@
             "term": "דכ \" ז"
         },
         {
-            "expansion" : [
+            "expansion": [
                 "לפי זה"
             ],
-            "term":"לפי \" ז"
+            "term": "לפי \" ז"
         },
         {
             "expansion": [
@@ -1772,7 +1778,7 @@
             "term": "יא \" ל"
         },
         {
-            "expansion":"יש גורסים; מספר",
+            "expansion": "יש גורסים; מספר",
             "term": "י \" ג"
         },
         {
@@ -2059,7 +2065,11 @@
         },
         {
             "expansion": [
-                ["בינה","חכמה","כתר"]
+                [
+                    "בינה",
+                    "חכמה",
+                    "כתר"
+                ]
             ],
             "term": "כח \" ב"
         },
@@ -2268,7 +2278,7 @@
             "term": "לא \" א"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "ל \" ב"
         },
         {
@@ -3760,7 +3770,7 @@
             "term": "קכ \" ד"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "קכ \" ה"
         },
         {
@@ -3872,7 +3882,7 @@
             "term": "ר \" י"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "רי \" ו"
         },
         {
@@ -3900,7 +3910,7 @@
             "term": "ר \" מ"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "רמ \" ח"
         },
         {
@@ -3916,7 +3926,7 @@
             "term": "רע \" מ"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "רפ \" ח"
         },
         {
@@ -4040,7 +4050,7 @@
             "term": "שי \" ל"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "ש \" כ"
         },
         {
@@ -4080,7 +4090,7 @@
             "term": "שנא \" ן"
         },
         {
-            "category":"מספר",
+            "category": "מספר",
             "term": "שס \" ה"
         },
         {
@@ -4381,7 +4391,7 @@
                 "category": "פרצוף",
                 "phase": "root"
             },
-            "explanation":"הנחת יסוד",
+            "explanation": "הנחת יסוד",
             "term": "אריך אנפין"
         },
         {
@@ -4391,7 +4401,7 @@
                 "phase": "one"
             },
             "term": "אבא ואמא",
-            "explanation":"גוזר"
+            "explanation": "גוזר"
         },
         {
             "defaultTerm": true,
@@ -4400,7 +4410,7 @@
                 "phase": "two"
             },
             "term": "ישראל סבא ותבונה",
-            "explanation":"מקיים"
+            "explanation": "מקיים"
         },
         {
             "defaultTerm": true,
@@ -4409,7 +4419,7 @@
                 "phase": "three"
             },
             "term": "זעיר אנפין",
-            "explanation":"כוונה"
+            "explanation": "כוונה"
         },
         {
             "defaultTerm": true,
@@ -4418,41 +4428,53 @@
                 "phase": "four"
             },
             "term": "נוקבא",
-            "explanation":"רצון"
+            "explanation": "רצון"
         },
         {
-            "term":"עש \" נ",
-            "expansion":["עולם","שנה","נפש"]
+            "term": "עש \" נ",
+            "expansion": [
+                "עולם",
+                "שנה",
+                "נפש"
+            ]
         },
         {
-            "term":"כמ \" ש",
-            "expansion":["כמו שכתוב"]
+            "term": "כמ \" ש",
+            "expansion": [
+                "כמו שכתוב"
+            ]
         },
         {
-            "term":"זו \" ן הגדולים",
-            "source":"זעיר אנפין ונוקבא הגדולים",
-            "explanation":"כוונה",
-            "style":{"category":"פרצוף","phase":"three"}
+            "term": "זו \" ן הגדולים",
+            "source": "זעיר אנפין ונוקבא הגדולים",
+            "explanation": "כוונה",
+            "style": {
+                "category": "פרצוף",
+                "phase": "three"
+            }
         },
         {
-            "term":"זו \" ן הקטנים",
-            "source":"זעיר אנפין ונוקבא הקטנים",
-            "explanation":"רצון",
-            "style":{"category":"פרצוף","phase":"four"}
+            "term": "זו \" ן הקטנים",
+            "source": "זעיר אנפין ונוקבא הקטנים",
+            "explanation": "רצון",
+            "style": {
+                "category": "פרצוף",
+                "phase": "four"
+            }
         },
         {
             "style": {
                 "phase": "three"
             },
             "term": "שמיים",
-            "explanation":"כוונה"
+            "explanation": "כוונה"
         },
         {
             "style": {
                 "phase": "four"
             },
             "term": "ארץ",
-            "explanation":"רצון"
+            "explanation": "רצון"
         }
     ]
 }
