@@ -195,7 +195,10 @@
             "darkness—burning": "Choshech—burning",
             "spirit—killing": "Ruach3—killing",
             "great ZON": "big ZON",
-            "small ZON": "little ZON"
+            "small ZON": "little ZON",
+            "Shana ": "Shanah ",
+            "Olam, Shanah, Nefesh": "Olam, Shanah, Nefesh2",
+            "Nefesh [soul]—with respect to Nefesh": "Nefesh2 [soul]—with respect to Nefesh2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -6858,7 +6861,13 @@
             "term": "Year2",
             "hebrew": "שנה",
             "translation": "Year",
-            "source": "Shana",
+            "source": "Shanah",
+            "explanation": "Time"
+        },
+        {
+            "term": "Shanah",
+            "hebrew": "שנה",
+            "translation": "Year",
             "explanation": "Time"
         },
         {
@@ -7174,6 +7183,26 @@
             "style": {
                 "category": "Author"
             }
+        },
+        {
+            "term": "Eretz",
+            "hebrew": "ארץ",
+            "translation": "Land"
+        },
+        {
+            "term": "Kaddish",
+            "hebrew": "קדיש",
+            "style": {
+                "category": "Prayer"
+            }
+        },
+        {
+            "term": "ASHAN",
+            "expansion": [
+                "Olam",
+                "Shanah",
+                "Nefesh2"
+            ]
         }
     ],
     "style": {
