@@ -47,7 +47,7 @@ screens.app.prism = function AppPrism(me) {
                 "animation": me.reload.set,
                 "autoRotate": me.update
             });
-            me.ui.options.choiceSet(me, window, {
+            me.ui.options.choiceSet(me, null, {
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
                     me.core.property.set(window.var.viewer, "ui.style.fontSize", value);

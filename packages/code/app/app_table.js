@@ -54,7 +54,7 @@ screens.app.table = function AppTable(me) {
                 "headings": me.reload.set,
                 "subHeadings": me.reload.set
             });
-            me.ui.options.choiceSet(me, window, {
+            me.ui.options.choiceSet(me, null, {
                 "language": me.reload.set,
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);

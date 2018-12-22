@@ -193,7 +193,9 @@
             "during the Hesed": "during the Hesed2",
             "the side of Hesed": "the side of Hesed2",
             "darkness—burning": "Choshech—burning",
-            "spirit—killing": "Ruach3—killing"
+            "spirit—killing": "Ruach3—killing",
+            "great ZON": "big ZON",
+            "small ZON": "little ZON"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -6278,9 +6280,9 @@
             "hebrew": "עדן"
         },
         {
-            "term": "great ZON",
-            "source": "Great Zeir Anpin ve Nukva",
-            "translation": "Great Small Face and Female",
+            "term": "big ZON",
+            "source": "Big Zeir Anpin ve Nukva",
+            "translation": "Big Small Face and Female",
             "explanation": "Intention",
             "style": {
                 "category": "Face",
@@ -6289,9 +6291,9 @@
             "hebrew": "זעיר אנפין ונוקבא גדולים"
         },
         {
-            "term": "small ZON",
-            "source": "Small Zeir Anpin ve Nukva",
-            "translation": "Small Small Face and Female",
+            "term": "little ZON",
+            "source": "Little Zeir Anpin ve Nukva",
+            "translation": "Little Small Face and Female",
             "explanation": "Desire",
             "style": {
                 "category": "Face",
