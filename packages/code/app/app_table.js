@@ -37,7 +37,7 @@ screens.app.table = function AppTable(me) {
                 fontSize: "18px",
                 phaseNumbers: true
             });
-            me.ui.options.toggleSet(me, window, {
+            me.ui.options.toggleSet(me, null, {
                 "border": me.reload.set,
                 "editMode": me.reload.set,
                 "autoComplete": me.reload.set,

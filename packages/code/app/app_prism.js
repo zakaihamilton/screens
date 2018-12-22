@@ -31,7 +31,7 @@ screens.app.prism = function AppPrism(me) {
                 animation: true,
                 autoRotate: false
             });
-            me.ui.options.toggleSet(me, window, {
+            me.ui.options.toggleSet(me, null, {
                 "doTranslation": me.reload.set,
                 "doExplanation": me.reload.set,
                 "prioritizeExplanation": me.reload.set,

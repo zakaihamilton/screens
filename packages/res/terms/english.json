@@ -7164,6 +7164,14 @@
             "style": {
                 "category": "Book"
             }
+        },
+        {
+            "term": "Baruch Shalom HaLevi Ashlag",
+            "hebrew": "ברוך שלום הלוי אשלג",
+            "explanation": "Rabash",
+            "style": {
+                "category": "Author"
+            }
         }
     ],
     "style": {
