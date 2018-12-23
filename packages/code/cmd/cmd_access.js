@@ -7,10 +7,14 @@ screens.cmd.access = function CmdAccess(me) {
     me.cmd = async function (terminal, args) {
         var appName = args[1] || "";
         var toggle = args[2] || "";
+        var userName = args[3] || "";
         me.core.property.set(terminal, "print", "Application: " + appName);
         var userList = await me.user.verify.list();
         var userIndex = 1;
         for (var userItem of userList) {
+            if (userName && userItem.name !== userName) {
+                continue;
+            }
             me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email);
             var access = await me.user.access.get(userItem.userid);
             var modified = false;
