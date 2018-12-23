@@ -53,30 +53,21 @@ screens.ui.content = function UIContent(me) {
             ];
         },
         update: function () {
-            me.content.publicList = me.core.message.send_server("core.cache.use",
-                me.id + ".public",
-                "storage.data.query",
-                me.id + ".content",
-                "title");
-            me.content.privateList = me.core.message.send_server("core.cache.use",
-                me.id + ".private.$userId",
-                "storage.data.query",
-                me.id + ".content.$userId",
-                "title");
+            me.content.publicList = me.manager.content.list(me.id);
+            me.content.privateList = me.manager.content.list(me.id, true);
         },
         refresh: {
             set: async function (object) {
-                await me.core.message.send_server("core.cache.reset", me.id + ".public");
-                await me.core.message.send_server("core.cache.reset", me.id + ".private.$userId");
+                me.manager.content.refresh();
                 me.content.update();
             }
         },
-        get: async function (item) {
+        get: async function (item, private) {
             var name = item;
             if (typeof item === "object") {
                 name = item.key.name;
             }
-            var fullItem = await me.storage.data.load(me.id + ".content", name);
+            var fullItem = await me.manager.content.load(me.id, name, private);
             var content = "";
             if (fullItem) {
                 content = me.core.string.decode(fullItem.content);
@@ -89,7 +80,7 @@ screens.ui.content = function UIContent(me) {
             if (typeof item !== "string") {
                 name = item.key.name;
             }
-            var fullItem = await me.storage.data.load(me.id + (private ? ".content.$userId" : ".content"), name);
+            var fullItem = await me.manager.content.load(me.id, name, private);
             var content = "";
             if (fullItem) {
                 content = me.core.string.decode(fullItem.content);
@@ -141,17 +132,13 @@ screens.ui.content = function UIContent(me) {
                 date: date.toString(),
                 title: title,
                 user: "$userId",
-                options: {}
+                options: {},
+                owner: "$userId"
             };
             if (options) {
                 data.options = options;
             }
-            var kind = me.id + ".content";
-            if (private) {
-                data.owner = "$userId";
-                kind += ".$userId";
-            }
-            await me.storage.data.save(data, kind, title, ["content"]);
+            await me.manager.content.save(data, me.id, title, private);
             await me.content.refresh.set(object);
         },
         copyUrl: {

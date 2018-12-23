@@ -93,7 +93,8 @@ screens.include({
     "manager": [
         "download",
         "packet",
-        "service"
+        "service",
+        "content"
     ],
     "media": [
         "ffmpeg",

@@ -351,7 +351,7 @@ screens.app.player = function AppPlayer(me) {
         var list = [];
         var apps = ["Present", "Gematria", "Table", "Notes"];
         for (var app of apps) {
-            var exists = await me.storage.data.exists("app." + app.toLowerCase() + (private ? ".content.$userId" : ".content"), name);
+            var exists = await me.manager.content.exists("app." + app.toLowerCase(), name, private);
             if (exists) {
                 list.push([
                     app,
