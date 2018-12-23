@@ -46,7 +46,18 @@ screens.manager.content = function ManagerContent(me) {
             kind += "." + this.userId;
         }
         data.content = me.core.string.encode(data.content);
-        await me.storage.data.save(data, kind, title, ["content"]);
+        var isLocked = !private && await me.isLocked(componentId, title);
+        if (!isLocked || data.owner !== this.userId) {
+            await me.storage.data.save(data, kind, title, ["content"]);
+        }
+    };
+    me.isLocked = async function (componentId, title) {
+        var info = me.load(componentId, title);
+        var result = false;
+        if (info.locked) {
+            result = true;
+        }
+        return result;
     };
     return "server";
 };
