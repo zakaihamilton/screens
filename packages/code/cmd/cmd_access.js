@@ -42,6 +42,7 @@ screens.cmd.access = function CmdAccess(me) {
             }
             if (modified) {
                 access.name = userItem.name;
+                access.email = userItem.email;
                 await me.user.access.set(access, userItem.userid);
                 me.core.property.set(terminal, "insert", " - Changed");
             }

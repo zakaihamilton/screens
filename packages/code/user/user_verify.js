@@ -29,6 +29,7 @@ screens.user.verify = function UserVerify(me) {
     me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
             var name = decodeURIComponent(info.headers["user_name"]);
+            var email = decodeURIComponent(info.headers["user_email"]);
             var token = info.headers["token"];
             if (!token) {
                 me.log_error("no token passed in header, url: " + info.url + " name: " + name);
@@ -52,6 +53,7 @@ screens.user.verify = function UserVerify(me) {
                     me.log("Found profile: " + JSON.stringify(profile));
                     profile.userid = userid;
                     profile.name = name;
+                    profile.email = email;
                     if (!profile.request) {
                         profile.request = 0;
                     }
@@ -67,6 +69,7 @@ screens.user.verify = function UserVerify(me) {
                 }
                 info.userId = profile.userid;
                 info.userName = profile.name;
+                info.userEmail = profile.email;
             }
             catch (err) {
                 err = "failed to verify token, err: " + err;

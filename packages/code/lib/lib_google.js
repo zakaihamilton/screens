@@ -157,6 +157,7 @@ screens.lib.google = function LibGoogle(me) {
                 }
                 info.headers["user_name"] = encodeURIComponent(me.info.name);
                 info.headers["token"] = token;
+                info.headers["user_email"] = encodeURIComponent(me.info.email);
             }
         }
     };
