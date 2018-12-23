@@ -1,7 +1,7 @@
 global.platform = "server";
 require("../screens.js");
 
-screens.users = [
+screens.admins = [
     "Zakai Hamilton",
     "Yochanan Mariano Perez"
 ];

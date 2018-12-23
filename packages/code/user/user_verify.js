@@ -22,7 +22,7 @@ screens.user.verify = function UserVerify(me) {
         return await me.storage.data.query(me.id);
     };
     me.admin = async function () {
-        var isMatch = screens.users.includes(this.userName);
+        var isMatch = me.admins.includes(this.userName);
         me.log("isAdmin: " + this.userName + " = " + isMatch);
         return isMatch;
     };
