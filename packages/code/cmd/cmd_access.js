@@ -11,7 +11,7 @@ screens.cmd.access = function CmdAccess(me) {
         var userList = await me.user.verify.list();
         var userIndex = 1;
         for (var userItem of userList) {
-            me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name);
+            me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email);
             var access = await me.user.access.get(userItem.userid);
             var modified = false;
             if (!access) {
