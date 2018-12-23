@@ -68,11 +68,7 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
-            var content = "";
-            if (fullItem) {
-                content = me.core.string.decode(fullItem.content);
-            }
-            return [content, fullItem.title, fullItem.options];
+            return [fullItem.content, fullItem.title, fullItem.options];
         },
         import: async function (object, item, private) {
             var window = me.widget.window.get(object);
@@ -81,11 +77,7 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
-            var content = "";
-            if (fullItem) {
-                content = me.core.string.decode(fullItem.content);
-            }
-            me.importData(window, content, fullItem.title, fullItem.options);
+            me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
             me.content.import(object, item, true);
@@ -128,7 +120,7 @@ screens.ui.content = function UIContent(me) {
                 title = date.toLocaleDateString();
             }
             var data = {
-                content: me.core.string.encode(content),
+                content: content,
                 date: date.toString(),
                 title: title,
                 user: "$userId",

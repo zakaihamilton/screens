@@ -34,14 +34,18 @@ screens.manager.content = function ManagerContent(me) {
         if (private) {
             kind += "." + this.userId;
         }
-        var result = await me.storage.data.load(kind, title);
-        return result;
+        var info = await me.storage.data.load(kind, title);
+        if (info) {
+            info.content = me.core.string.decode(info.content);
+        }
+        return info;
     };
     me.save = async function (componentId, title, data, private) {
         var kind = componentId + ".content";
         if (private) {
             kind += "." + this.userId;
         }
+        data.content = me.core.string.encode(data.content);
         await me.storage.data.save(data, kind, title, ["content"]);
     };
     return "server";
