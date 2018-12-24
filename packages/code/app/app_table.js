@@ -189,9 +189,6 @@ screens.app.table = function AppTable(me) {
                     classes.push("edit-mode");
                     classes.push("input");
                     styles.push("font-size:1em");
-                    if (window.table_options.lock) {
-                        attributes.readonly = true;
-                    }
                 }
                 if (rowIndex > 0 || !editMode) {
                     attributes.rowIndex = rowIndex - countOffset;
@@ -258,17 +255,6 @@ screens.app.table = function AppTable(me) {
                 "ui.basic.html": html
             });
             me.core.property.notify(window, "update");
-        }
-    };
-    me.lock = {
-        get: function (object) {
-            var window = me.widget.window.get(object);
-            return window.table_options.lock;
-        },
-        set: function (object) {
-            var window = me.widget.window.get(object);
-            window.table_options.lock = !window.table_options.lock;
-            me.reload.set(window);
         }
     };
     me.rowHeader = {

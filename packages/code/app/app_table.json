@@ -32,15 +32,6 @@
                     }
                 ],
                 [
-                    "Lock",
-                    "app.table.lock",
-                    {
-                        "state": "select",
-                        "separator": true,
-                        "enabled": "admin"
-                    }
-                ],
-                [
                     "Row Header",
                     "app.table.rowHeader",
                     {
