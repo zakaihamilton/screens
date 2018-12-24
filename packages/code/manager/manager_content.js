@@ -41,21 +41,25 @@ screens.manager.content = function ManagerContent(me) {
         return info;
     };
     me.save = async function (componentId, title, data, private) {
+        var result = false;
         var kind = componentId + ".content";
         if (private) {
             kind += "." + this.userId;
         }
         data.content = me.core.string.encode(data.content);
-        var isLocked = !private && await me.isLocked(componentId, title);
-        if (!isLocked || data.owner !== this.userId) {
+        var owner = await me.lockedOwner(componentId, title);
+        var isLocked = !private && owner;
+        if (!isLocked || owner !== this.userId) {
             await me.storage.data.save(data, kind, title, ["content"]);
+            return result;
         }
+        return result;
     };
-    me.isLocked = async function (componentId, title) {
+    me.lockedOwner = async function (componentId, title) {
         var info = me.load(componentId, title);
-        var result = false;
+        var result = null;
         if (info.locked) {
-            result = true;
+            result = info.owner;
         }
         return result;
     };
