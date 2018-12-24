@@ -7219,6 +7219,13 @@
             "style": {
                 "category": "Author"
             }
+        },
+        {
+            "term": "holy Zohar",
+            "source": "Holy Zohar",
+            "style": {
+                "category": "Book"
+            }
         }
     ],
     "style": {
