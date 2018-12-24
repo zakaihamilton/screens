@@ -7213,6 +7213,12 @@
             "term": "Otzar",
             "hebrew": "אוצר",
             "translation": "Treasure"
+        },
+        {
+            "term": "RASHI",
+            "style": {
+                "category": "Author"
+            }
         }
     ],
     "style": {
