@@ -12,10 +12,6 @@ screens.ui.content = function UIContent(me) {
             var prefix = me.id + ".content.";
             return [
                 [
-                    "Refresh",
-                    prefix + "refresh"
-                ],
-                [
                     "Copy Url",
                     prefix + "copyUrl",
                     {
@@ -23,31 +19,59 @@ screens.ui.content = function UIContent(me) {
                     }
                 ],
                 [
+                    "Refresh",
+                    prefix + "refresh"
+                ],
+                [
                     "Public",
-                    "header"
+                    "label",
+                    {
+                        "separator":true
+                    }
                 ],
                 prefix + "publicMenu",
                 [
-                    "Save",
-                    prefix + "savePublic",
+                    "Private",
+                    "label",
                     {
-                        "enabled": "select",
-                        "separator": true,
-                        "unique": false
+                        "separator":true
+                    }
+                ],
+                prefix + "privateMenu",
+                [
+                    "Title",
+                    "label",
+                    {
+                        "separator": true
+                    }
+                ],
+                [
+                    "",
+                    null,
+                    {
+                        "edit": prefix + "title"
+                    }
+                ],
+                [
+                    "Locked",
+                    prefix + "locked",
+                    {
+                        "state": "select"
                     }
                 ],
                 [
                     "Private",
-                    "header"
+                    prefix + "private",
+                    {
+                        "state": "select"
+                    }
                 ],
-                prefix + "privateMenu",
                 [
                     "Save",
-                    prefix + "savePrivate",
+                    prefix + "save",
                     {
                         "enabled": "select",
-                        "separator": true,
-                        "unique": false
+                        "separator": true
                     }
                 ]
             ];
@@ -77,6 +101,9 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
+            me.content._title = fullItem.title;
+            me.content._private = private;
+            me.content._locked = fullItem.locked;
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
@@ -88,50 +115,46 @@ screens.ui.content = function UIContent(me) {
         privateMenu: function (object) {
             return me.widget.menu.collect(object, me.content.privateList, "title", null, "private", null, me.content.importPrivate);
         },
-        savePublic: {
+        save: {
             get: function (object) {
                 var window = me.widget.window.get(object);
                 var [content] = me.exportData(window);
                 return content;
             },
-            set: function (object) {
-                me.content.save(object);
-            }
-        },
-        savePrivate: {
-            get: function (object) {
+            set: async function (object) {
+                var private = me.content._private;
                 var window = me.widget.window.get(object);
-                var [content] = me.exportData(window);
-                return content;
-            },
-            set: function (object) {
-                me.content.save(object, true);
+                var [content, title, options] = me.exportData(window);
+                var date = new Date();
+                var key = me.core.property.get(window, "widget.window.key");
+                if (me.content._title) {
+                    title = me.content._title;
+                }
+                if (!title) {
+                    title = key;
+                }
+                if (!title) {
+                    title = date.toLocaleDateString();
+                }
+                var locked = me.content._locked;
+                if (!locked) {
+                    locked = false;
+                }
+                var data = {
+                    content: content,
+                    date: date.toString(),
+                    title: title,
+                    user: "$userId",
+                    options: {},
+                    owner: "$userId",
+                    locked: locked
+                };
+                if (options) {
+                    data.options = options;
+                }
+                await me.manager.content.save(me.id, title, data, private);
+                await me.content.refresh.set(object);
             }
-        },
-        save: async function (object, private) {
-            var window = me.widget.window.get(object);
-            var [content, title, options] = me.exportData(window);
-            var date = new Date();
-            var key = me.core.property.get(window, "widget.window.key");
-            if (!title) {
-                title = key;
-            }
-            if (!title) {
-                title = date.toLocaleDateString();
-            }
-            var data = {
-                content: content,
-                date: date.toString(),
-                title: title,
-                user: "$userId",
-                options: {},
-                owner: "$userId"
-            };
-            if (options) {
-                data.options = options;
-            }
-            await me.manager.content.save(data, me.id, title, private);
-            await me.content.refresh.set(object);
         },
         copyUrl: {
             get: function (object) {
@@ -144,6 +167,31 @@ screens.ui.content = function UIContent(me) {
                 var window = me.widget.window.get(object);
                 var [content, title] = me.exportData(window);
                 me.core.util.copyUrl(appName, [title]);
+            }
+        },
+        title: {
+            get: function (object) {
+                return me.content._title;
+            },
+            set: function (object) {
+                var text = me.core.property.get(object, "ui.basic.text");
+                me.content._title = text;
+            }
+        },
+        locked: {
+            get: function (object) {
+                return me.content._locked;
+            },
+            set: function (object) {
+                me.content._locked = !me.content._locked;
+            }
+        },
+        private: {
+            get: function (object) {
+                return me.content._private;
+            },
+            set: function (object) {
+                me.content._private = !me.content._private;
             }
         }
     };
