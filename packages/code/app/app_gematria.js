@@ -125,13 +125,11 @@ screens.app.gematria = function AppGematria(me) {
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
-        var title = me.core.property.get(window.var.title, "ui.basic.text");
-        return [text, title];
+        return [text];
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
-        me.core.property.set(window.var.title, "ui.basic.text", title);
         me.calcNumerology(window);
     };
 };

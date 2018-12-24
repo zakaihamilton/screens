@@ -78,16 +78,6 @@
             "ui.basic.elements": [
                 {
                     "ui.basic.div": "div",
-                    "ui.basic.text": "Name",
-                    "ui.class.class": "app.gematria.title.label"
-                },
-                {
-                    "ui.element.component": "widget.input",
-                    "ui.basic.var": "title",
-                    "ui.class.classExtra": "app.gematria.title"
-                },
-                {
-                    "ui.basic.div": "div",
                     "ui.basic.text": "Numerology",
                     "ui.class.class": "app.gematria.input.label"
                 },
