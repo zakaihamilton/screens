@@ -26,7 +26,7 @@ screens.ui.content = function UIContent(me) {
                     "Public",
                     "label",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 prefix + "publicMenu",
@@ -34,7 +34,7 @@ screens.ui.content = function UIContent(me) {
                     "Private",
                     "label",
                     {
-                        "separator":true
+                        "separator": true
                     }
                 ],
                 prefix + "privateMenu",
@@ -101,9 +101,9 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
-            me.content._title = fullItem.title;
-            me.content._private = private;
-            me.content._locked = fullItem.locked;
+            window.content._title = fullItem.title;
+            window.content._private = private;
+            window.content._locked = fullItem.locked;
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
@@ -122,13 +122,13 @@ screens.ui.content = function UIContent(me) {
                 return content;
             },
             set: async function (object) {
-                var private = me.content._private;
                 var window = me.widget.window.get(object);
+                var private = window.content._private;
                 var [content, title, options] = me.exportData(window);
                 var date = new Date();
                 var key = me.core.property.get(window, "widget.window.key");
-                if (me.content._title) {
-                    title = me.content._title;
+                if (window.content._title) {
+                    title = window.content._title;
                 }
                 if (!title) {
                     title = key;
@@ -136,7 +136,7 @@ screens.ui.content = function UIContent(me) {
                 if (!title) {
                     title = date.toLocaleDateString();
                 }
-                var locked = me.content._locked;
+                var locked = window.content._locked;
                 if (!locked) {
                     locked = false;
                 }
@@ -171,27 +171,51 @@ screens.ui.content = function UIContent(me) {
         },
         title: {
             get: function (object) {
-                return me.content._title;
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                return window.content._title;
             },
             set: function (object) {
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
                 var text = me.core.property.get(object, "ui.basic.text");
-                me.content._title = text;
+                window.content._title = text;
             }
         },
         locked: {
             get: function (object) {
-                return me.content._locked;
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                return window.content._locked;
             },
             set: function (object) {
-                me.content._locked = !me.content._locked;
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                window.content._locked = !window.content._locked;
             }
         },
         private: {
             get: function (object) {
-                return me.content._private;
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                return window.content._private;
             },
             set: function (object) {
-                me.content._private = !me.content._private;
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                window.content._private = !window.content._private;
             }
         }
     };
