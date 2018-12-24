@@ -18,6 +18,14 @@ screens.user.access = function UserAccess(me) {
             }
         }
     };
+    me.admin = async function (user) {
+        if (!user || typeof user !== "string") {
+            user = this.userName;
+        }
+        var isMatch = me.admins.includes(user);
+        me.log("isAdmin: " + user + " = " + isMatch);
+        return isMatch;
+    };
     me.get = async function (user) {
         if (!user) {
             user = this.userId;

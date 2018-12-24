@@ -7,7 +7,7 @@ screens.core.util = function CoreUtil(me) {
     me.init = function () {
         if (me.platform === "browser") {
             me.core.listener.register(async () => {
-                me.isAdmin = await me.user.verify.admin();
+                me.isAdmin = await me.user.access.admin();
             }, me.lib.google.id);
         }
     };

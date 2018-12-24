@@ -21,11 +21,6 @@ screens.user.verify = function UserVerify(me) {
     me.list = async function () {
         return await me.storage.data.query(me.id);
     };
-    me.admin = async function () {
-        var isMatch = me.admins.includes(this.userName);
-        me.log("isAdmin: " + this.userName + " = " + isMatch);
-        return isMatch;
-    };
     me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
             var name = decodeURIComponent(info.headers["user_name"]);
