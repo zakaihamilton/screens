@@ -23,9 +23,9 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix": ")",
                 "ui.data.values": [
-                    "launcher",
+                    "ui.theme.nightMode",
                     "keyboard",
-                    "ui.theme.nightMode"
+                    "launcher"
                 ]
             }
         }
