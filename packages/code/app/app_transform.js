@@ -92,6 +92,7 @@ screens.app.transform = function AppTransform(me) {
                 title = "Document " + value;
             }
             me.core.property.set(object, "widget.window.key", title);
+            me.core.property.set(object, "widget.window.name", title);
         }
     };
 };
