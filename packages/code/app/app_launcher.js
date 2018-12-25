@@ -24,7 +24,7 @@ screens.app.launcher = function AppLauncher(me) {
         if (!extension) {
             extension = "png";
         }
-        var available = await me.core.app.available(name);
+        var available = me.core.app.available(name);
         me.core.property.set(object, "text", label);
         me.core.property.set(object, "ui.basic.src", `/packages/res/icons/${name}.${extension}`);
         me.core.property.set(object, "ui.basic.display", available);

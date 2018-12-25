@@ -4,10 +4,15 @@
  */
 
 screens.core.app = function CoreApp(me) {
-    me.available = async function (name) {
+    me.init = function () {
+        me.core.listener.register(me.ready, me.lib.google.id);
+    };
+    me.ready = async function () {
         if (!me.list) {
             me.list = await me.user.access.appList();
         }
+    };
+    me.available = function (name) {
         var available = me.list && me.list.includes(name);
         return available;
     };
@@ -20,7 +25,7 @@ screens.core.app = function CoreApp(me) {
         if (!appName) {
             return null;
         }
-        if (!await me.available(appName)) {
+        if (!me.available(appName)) {
             return null;
         }
         var result = null;

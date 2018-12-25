@@ -68,6 +68,8 @@ screens.core.socket = function CoreSocket(me) {
             var io = await me.core.require.load("/node_modules/socket.io-client/dist/socket.io.js");
             me.io = io();
             me.register(me.io);
+            me.core.property.object.create(me, me.io);
+            me.core.property.set(me.io, "ready");
         }
     };
     me.sendHeartbeat = function () {

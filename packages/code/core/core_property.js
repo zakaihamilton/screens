@@ -4,9 +4,6 @@
  */
 
 screens.core.property = function CoreProperty(me) {
-    me.init = function () {
-        me._forwarding_list = {};
-    };
     me.fullname = function (object, name, default_name = null) {
         if (typeof name !== "string") {
             throw JSON.stringify(name) + " is not a string" + " stack: " + new Error().stack;

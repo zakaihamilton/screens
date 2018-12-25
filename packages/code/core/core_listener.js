@@ -14,20 +14,19 @@ screens.core.listener = function CoreListener(me) {
     };
     me.reset = function (id) {
         var listener = me.listener[id];
-        var listener = me.listener[id];
         if (!listener) {
             listener = me.listener[id] = { callbacks: [], signal: false };
         }
         listener.signal = false;
     };
-    me.signal = function (id) {
+    me.signal = async function (id) {
         var listener = me.listener[id];
         if (!listener) {
             listener = me.listener[id] = { callbacks: [], signal: false };
         }
         listener.signal = true;
         for (var callbackItem of listener.callbacks) {
-            callbackItem(id);
+            await callbackItem(id);
         }
     };
     me.wait = async function (id) {
