@@ -45,10 +45,7 @@ screens.app.notes = function AppNotes(me) {
     me.update = function (object) {
         var window = me.widget.window.get(object);
         var title = me.core.property.get(window.var.editor, "text").split("\n")[0];
-        if (!title) {
-            title = "Notes";
-        }
-        me.core.property.set(window, "title", title);
+        me.core.property.set(window, "name", title);
         me.core.property.set(window.var.editor, "ui.basic.save", { method: "contents", json: true });
     };
     me.close = function (object) {
@@ -57,19 +54,18 @@ screens.app.notes = function AppNotes(me) {
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "title", "Notes");
+        me.core.property.set(window, "name", "");
         me.core.property.set(window.var.editor, "text", "");
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "title", title);
+        me.core.property.set(window, "widget.window.name", title);
         me.core.property.set(window.var.editor, "contents", JSON.parse(text));
         me.core.property.set(window.var.editor, "ui.basic.save");
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
-        var title = me.core.property.get(window, "title");
         var content = me.core.property.get(window.var.editor, "contents");
-        return [JSON.stringify(content), title];
+        return [JSON.stringify(content)];
     };
 };

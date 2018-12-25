@@ -126,12 +126,12 @@ screens.app.player = function AppPlayer(me) {
                 me.useFormat = "Video";
             }
             if (name) {
-                me.core.property.set(window, "title", name);
+                me.core.property.set(window, "name", name);
                 me.ui.options.save(me, window, { sessionName: name });
                 await me.updateContent(window, name);
             }
             else {
-                me.core.property.set(window, "title", "Player");
+                me.core.property.set(window, "name", "");
                 me.contentList = [];
             }
             me.core.property.notify(window, "app.player.updatePlayer");

@@ -18,7 +18,7 @@ screens.app.browser = function AppBrowser(me) {
                 url = "http://" + url;
             }
             me.core.property.set(window.var.embed, "ui.basic.src", url);
-            me.core.property.set(window, "title", "Browser - " + url.replace("http://www.", ""));
+            me.core.property.set(window, "name", url.replace("http://www.", ""));
         }
     };
 };

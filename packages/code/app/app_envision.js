@@ -30,10 +30,11 @@ screens.app.envision = function AppEnvision(me) {
         me.updateMode(window);
         me.refresh(window);
     };
-    me.importData = function (object, text) {
+    me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.source, "text", text);
         me.core.property.set(window.var.content, "ui.basic.html", me.convert(object, text));
+        me.core.property.set(window, "widget.window.name", title);
         me.core.property.set(window.var.source, "ui.basic.save");
     };
     me.updateMode = function (object) {

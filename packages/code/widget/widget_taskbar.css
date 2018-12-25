@@ -11,28 +11,27 @@
 
 .widget-taskbar-tasks {
     display: flex;
-    height: 2.0em;
-    overflow-x:scroll;
-    overflow-y:hidden;
+    overflow-x: scroll;
+    overflow-y: hidden;
     position: absolute;
-    left:0em;
-    right:10em;
-    top:0em;
+    left: 0em;
+    right: 10em;
+    top: 0em;
 }
 
 .widget-taskbar-task {
     display: flex;
-    flex:0;
+    flex: 0;
     flex-wrap: nowrap;
 }
 
 .widget-taskbar-shortcuts {
     position: absolute;
-    right:0em;
+    right: 0em;
     display: flex;
     height: 2em;
     width: 10em;
-    flex:0;
+    flex: 0;
 }
 
 .widget-taskbar-shortcut {

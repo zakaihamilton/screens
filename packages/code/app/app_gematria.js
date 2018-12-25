@@ -130,6 +130,7 @@ screens.app.gematria = function AppGematria(me) {
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
+        me.core.property.set(window, "widget.window.name", title);
         me.calcNumerology(window);
     };
 };

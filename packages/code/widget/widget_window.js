@@ -281,28 +281,53 @@ screens.widget.window = function WidgetWindow(me) {
     me.update_title = function (object) {
         var window = me.get(object);
         var title = me.core.property.get(window, "widget.window.title");
-        if (window.child_window) {
-            title += " - [" + me.core.property.get(window.child_window, "widget.window.title") + "]";
+        var name = me.core.property.get(window, "widget.window.name");
+        var label = title;
+        if (title) {
+            if (name) {
+                label += " - " + name;
+            }
         }
-        me.core.property.set(window.var.label, "ui.basic.text", title);
+        else {
+            label = name;
+        }
+        if (window.child_window) {
+            label += " - " + me.core.property.get(window.child_window, "widget.window.name");
+        }
+        me.core.property.set(window.var.label, "ui.basic.text", label);
+        me.core.property.set(window.var.icon, "ui.basic.text", label);
     };
     me.label = {
         get: function (object) {
             var window = me.get(object);
+            me.update_title(window);
             return me.core.property.get(window.var.label, "ui.basic.text");
         }
     };
     me.key = {
         get: function (object) {
             var window = me.get(object);
-            if (!window.window_key) {
-                return me.core.property.get(window, "title");
-            }
             return window.window_key;
         },
         set: function (object, value) {
             var window = me.get(object);
             window.window_key = value;
+        }
+    };
+    me.name = {
+        get: function (object) {
+            var window = me.get(object);
+            return window.window_name;
+        },
+        set: function (object, name) {
+            var window = me.get(object);
+            window.window_name = name;
+            me.update_title(window);
+            var parent_window = me.parent(window);
+            if (parent_window) {
+                me.update_title(parent_window);
+            }
+            me.updateStorage(window);
         }
     };
     me.title = {
@@ -318,7 +343,6 @@ screens.widget.window = function WidgetWindow(me) {
             if (parent_window) {
                 me.update_title(parent_window);
             }
-            me.core.property.set(window.var.icon, "ui.basic.text", value);
             me.updateStorage(window);
         }
     };
@@ -788,8 +812,8 @@ screens.widget.window = function WidgetWindow(me) {
             var window = me.get(object);
             if (!me.core.property.get(window, "embed")) {
                 var options = {
-                    "titleOrder": me.core.property.get(window, "titleOrder"),
-                    "title": me.core.property.get(window, "title")
+                    "order": me.core.property.get(window, "order"),
+                    "name": me.core.property.get(window, "name")
                 };
                 if (!me.core.property.get(window, "fixed")) {
                     options["region"] = me.core.property.get(window, "region");
@@ -810,6 +834,9 @@ screens.widget.window = function WidgetWindow(me) {
                 var options = JSON.parse(value);
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];
+                    if (optionKey === "title") {
+                        continue;
+                    }
                     if (optionKey === "maximize" || optionKey === "restore") {
                         var parent = me.parent(window);
                         if (parent) {
@@ -820,7 +847,6 @@ screens.widget.window = function WidgetWindow(me) {
                         }
                     }
                     me.core.property.set(window, optionKey, optionValue);
-                    me.core.console.log("store_set: " + me.core.property.get(window, "title") + ":" + optionKey + "=" + optionValue);
                 }
                 me.fixRegion(window);
             }
@@ -858,7 +884,7 @@ screens.widget.window = function WidgetWindow(me) {
         });
         return result;
     };
-    me.titleOrder = {
+    me.order = {
         get: function (object) {
             return me.core.property.get(object, "widget.window.visibleWindows").map(function (window) {
                 return me.core.property.get(window, "key");
@@ -919,13 +945,13 @@ screens.widget.window = function WidgetWindow(me) {
             }
             var windows = me.core.property.get(window, "widget.window.windows");
             windows.sort(function (a, b) {
-                var a_title = me.core.property.get(a, "title");
-                var b_title = me.core.property.get(b, "title");
-                return a_title === b_title ? 0 : +(a_title > b_title) || -1;
+                var a_label = me.core.property.get(a, "label");
+                var b_title = me.core.property.get(b, "label");
+                return a_label === b_title ? 0 : +(a_label > b_title) || -1;
             });
             var items = windows.map(function (child) {
                 var result = [
-                    me.core.property.get(child, "title"),
+                    me.core.property.get(child, "label"),
                     function () {
                         me.core.property.set(child, "widget.window.show", true);
                     },

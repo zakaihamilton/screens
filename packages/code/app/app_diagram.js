@@ -109,7 +109,7 @@ screens.app.diagram = function AppDiagram(me) {
             var diagramData = me.core.property.get(window, "app.diagram.diagramData");
             me.ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
-                me.core.property.set(window, "title", diagramData.title);
+                me.core.property.set(window, "name", diagramData.title);
             }
             me.core.property.notify(window, "update");
         }

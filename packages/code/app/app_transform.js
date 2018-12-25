@@ -74,16 +74,16 @@ screens.app.transform = function AppTransform(me) {
             me.core.property.set(window.var.transform, "transform");
         }
     };
-    me.importData = function (object, text) {
+    me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
+        me.core.property.set(window, "widget.window.name", title);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "app.transform.transform");
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
         var data = me.core.property.get(window.var.input, "ui.basic.text");
-        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
-        return [data, title];
+        return [data];
     };
     me.documentIndex = {
         set: function (object, value) {
@@ -92,18 +92,6 @@ screens.app.transform = function AppTransform(me) {
                 title = "Document " + value;
             }
             me.core.property.set(object, "widget.window.key", title);
-            me.core.property.set(object, "widget.window.title", title);
-        }
-    };
-    me.title = {
-        get: function (object) {
-            var window = me.widget.window.get(object);
-            var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
-            var key = me.core.property.get(window, "widget.window.key");
-            if (title) {
-                return key + " - " + title;
-            }
-            return key;
         }
     };
 };

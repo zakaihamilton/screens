@@ -73,13 +73,13 @@ screens.app.table = function AppTable(me) {
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "title", "Table");
+        me.core.property.set(window, "name", "");
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         me.reload.set(window);
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "title", title);
+        me.core.property.set(window, "widget.window.name", title);
         var cells = JSON.parse(text);
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         for (var cell of cells) {
@@ -93,7 +93,6 @@ screens.app.table = function AppTable(me) {
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
-        var title = me.core.property.get(window, "title");
         var data = [];
         window.cells.map((row, rowIndex) => {
             row.map((column, columnIndex) => {
@@ -109,7 +108,7 @@ screens.app.table = function AppTable(me) {
         if (!data.length) {
             return [];
         }
-        return [JSON.stringify(data), title, window.table_options];
+        return [JSON.stringify(data), window.table_options];
     };
     me.attributes = function (dict) {
         var attributes = "";
@@ -121,10 +120,7 @@ screens.app.table = function AppTable(me) {
     me.rename = function (object) {
         var window = me.widget.window.get(object);
         var title = object.value;
-        if (!title) {
-            title = "Table";
-        }
-        me.core.property.set(window, "title", title);
+        me.core.property.set(window, "name", title);
     };
     me.store = function (object) {
         var window = me.widget.window.get(object);
@@ -200,7 +196,7 @@ screens.app.table = function AppTable(me) {
                     attributes.value = cell.value;
                 }
                 else if (!rowIndex && !columnIndex) {
-                    attributes.value = me.core.property.get(window, "title");
+                    continue;
                 }
                 if (attributes.rowIndex === 0 && window.table_options.rowHeader) {
                     classes.push("rowHeader");

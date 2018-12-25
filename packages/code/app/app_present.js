@@ -42,6 +42,7 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.editor, "ui.basic.save");
+        me.core.property.set(window, "widget.window.name", title);
         window.options.userName = "";
         me.updateEditMode(window);
     };
@@ -126,7 +127,6 @@ screens.app.present = function AppPresent(me) {
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
-        var title = me.core.property.get(window.var.transform, "widget.transform.contentTitle");
-        return [text, title];
+        return [text];
     };
 };

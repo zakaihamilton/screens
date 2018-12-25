@@ -124,14 +124,14 @@ screens.ui.content = function UIContent(me) {
             set: async function (object) {
                 var window = me.widget.window.get(object);
                 var private = window.content._private;
-                var [content, title, options] = me.exportData(window);
+                var [content, options] = me.exportData(window);
                 var date = new Date();
-                var key = me.core.property.get(window, "widget.window.key");
+                var title = "";
                 if (window.content._title) {
                     title = window.content._title;
                 }
                 if (!title) {
-                    title = key;
+                    title = me.core.property.get(window, "widget.window.key");
                 }
                 if (!title) {
                     title = date.toLocaleDateString();
@@ -159,14 +159,12 @@ screens.ui.content = function UIContent(me) {
         copyUrl: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                var [content, title] = me.exportData(window);
-                return title !== "Table";
+                return window.content._title;
             },
             set: function (object) {
                 var appName = me.id.split(".").pop();
                 var window = me.widget.window.get(object);
-                var [content, title] = me.exportData(window);
-                me.core.util.copyUrl(appName, [title]);
+                me.core.util.copyUrl(appName, [window.content._title]);
             }
         },
         title: {

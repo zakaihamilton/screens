@@ -17,7 +17,7 @@
         "ui.data.default": {
             "ui.basic.context": "self",
             "static": true,
-            "title": "Document",
+            "title": "",
             "ui.property.style": {
                 "ui.style.width": "500px",
                 "ui.style.height": "500px"
@@ -40,8 +40,7 @@
                 },
                 {
                     "ui.element.component": "widget.transform",
-                    "ui.basic.var": "transform",
-                    "useTitle": true
+                    "ui.basic.var": "transform"
                 }
             ],
             "widget.menu.items": [

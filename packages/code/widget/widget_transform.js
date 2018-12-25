@@ -92,16 +92,6 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         return widget;
     };
-    me.useTitle = {
-        get: function (object) {
-            var widget = me.findWidget(object);
-            return widget.useTitle;
-        },
-        set: function (object, value) {
-            var widget = me.findWidget(object);
-            widget.useTitle = value;
-        }
-    };
     me.text = {
         get: function (object) {
             var widget = me.findWidget(object);
@@ -323,10 +313,8 @@ screens.widget.transform = function WidgetTransform(me) {
         me.media.voice.stop();
         me.widget.transform.layout.reflow(function () {
             me.core.property.set(widget, "ui.work.state", false);
-            if (widget.useTitle) {
-                var title = me.core.property.get(widget, "widget.transform.title");
-                me.core.property.set(widget, "widget.window.title", title);
-            }
+            var name = me.core.property.get(widget, "widget.transform.name");
+            me.core.property.set(widget, "widget.window.name", name);
         }, widget.var.output, widget.var.layout, reflowOptions);
     };
     me.scrolled = {
@@ -592,14 +580,17 @@ screens.widget.transform = function WidgetTransform(me) {
             return title;
         }
     };
-    me.title = {
+    me.name = {
         get: function (object) {
             var widget = me.findWidget(object);
             var window = me.widget.window.get(widget);
             var title = me.core.property.get(widget, "widget.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
-            if (title) {
+            if (key && title) {
                 return key + " - " + title;
+            }
+            else if (title) {
+                return title;
             }
             return key;
         }

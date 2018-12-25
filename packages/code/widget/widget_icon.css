@@ -62,7 +62,6 @@
 
 .widget-icon-label-list {
     margin: 2px;
-    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1em;
