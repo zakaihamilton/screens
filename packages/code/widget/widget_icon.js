@@ -15,27 +15,6 @@ screens.widget.icon = function WidgetIcon(me) {
         extend: ["ui.drag.icon"],
         properties: __json__
     };
-    me.init = function () {
-        me.core.property.set(me, "core.property.object.type", {
-            set: function (object, value, name, oldValue) {
-                if (value === "hidden") {
-                    me.core.property.set(object, "ui.basic.show", false);
-                }
-                else if (value === "icon") {
-                    me.core.property.set(object.var.icon, "ui.attribute.width", "64px");
-                    me.core.property.set(object.var.icon, "ui.attribute.height", "64px");
-                }
-                else if (value === "list") {
-                    me.core.property.set(object.var.icon, "ui.attribute.width", "16px");
-                    me.core.property.set(object.var.icon, "ui.attribute.height", "16px");
-                }
-                me.core.property.set(object, "ui.class.remove", "widget.icon." + oldValue);
-                me.core.property.set(object, "ui.class.add", "widget.icon." + value);
-                me.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
-                me.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
-            }
-        });
-    };
     me.text = {
         get: function (object) {
             return object.var.label.innerHTML;
@@ -50,6 +29,39 @@ screens.widget.icon = function WidgetIcon(me) {
         },
         set: function (object, value) {
             object.var.icon.src = value;
+        }
+    };
+    me.type = {
+        get: function (object) {
+            var isHidden = me.core.property.get(object, "ui.basic.show");
+            if (isHidden) {
+                return "hidden";
+            }
+            var isIcon = me.core.property.get(object, "ui.class.contains", "widget.icon.icon");
+            if (isIcon) {
+                return "icon";
+            }
+            else {
+                return "list";
+            }
+        },
+        set: function (object, value) {
+            if (value === "hidden") {
+                me.core.property.set(object, "ui.basic.show", false);
+            }
+            else if (value === "icon") {
+                me.core.property.set(object, "ui.class.remove", "widget.icon.list");
+                me.core.property.set(object.var.icon, "ui.attribute.width", "64px");
+                me.core.property.set(object.var.icon, "ui.attribute.height", "64px");
+            }
+            else if (value === "list") {
+                me.core.property.set(object, "ui.class.remove", "widget.icon.icon");
+                me.core.property.set(object.var.icon, "ui.attribute.width", "16px");
+                me.core.property.set(object.var.icon, "ui.attribute.height", "16px");
+            }
+            me.core.property.set(object, "ui.class.add", "widget.icon." + value);
+            me.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);
+            me.core.property.set(object.var.label, "ui.class.class", "widget.icon.label." + value);
         }
     };
 };
