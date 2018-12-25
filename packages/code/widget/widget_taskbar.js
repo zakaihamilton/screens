@@ -7,6 +7,16 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
     me.element = {
         properties: __json__
     };
+    me.tasks = function (object) {
+        var window = me.widget.window.get(object);
+        var parent = me.widget.window.parent(window);
+        var isPopup = me.core.property.get(window, "popup");
+        if (parent || isPopup) {
+            return;
+        }
+        parent = me.ui.element.bar();
+        return parent.var.tasks;
+    };
     me.shortcut = function (object, name) {
         var method = method = "core.app." + name;
         var label = name;

@@ -35,7 +35,7 @@ screens.widget.window = function WidgetWindow(me) {
                 }
                 else {
                     me.core.property.set(object, "ui.arrange.center");
-                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.tray.tray");
+                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.taskbar.tasks");
                 }
             },
             "temp": null,
@@ -46,7 +46,7 @@ screens.widget.window = function WidgetWindow(me) {
                     me.core.property.set(object.var.icon, "ui.node.parent");
                 }
                 else {
-                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.tray.tray");
+                    me.core.property.set(object.var.icon, "ui.node.parent", "@widget.taskbar.tasks");
                 }
             },
             "fixed": function (object, value) {
@@ -527,7 +527,7 @@ screens.widget.window = function WidgetWindow(me) {
                 window.delayTimer = setTimeout(() => {
                     window.delayTimer = null;
                     me.core.property.set(window, "ui.basic.show", true);
-                    me.core.property.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
+                    me.core.property.set(window.var.icon, "ui.node.parent", "@widget.taskbar.tasks");
                     me.core.property.set(window, "update");
                     me.core.property.set(window, "ui.focus.active", true);
                 }, value);
@@ -590,8 +590,8 @@ screens.widget.window = function WidgetWindow(me) {
                     "widget.window.embed": false,
                     "ui.focus.active": true
                 });
-                me.core.property.set(window.var.icon, "ui.node.parent", "@widget.tray.tray");
-                me.core.property.set(window.var.icon, "widget.icon.type", "@widget.tray.type(widget.tray.tray,)");
+                me.core.property.set(window.var.icon, "ui.node.parent", "@widget.taskbar.tasks");
+                me.core.property.set(window.var.icon, "widget.icon.type", "list");
                 me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
                     "update": null
                 });

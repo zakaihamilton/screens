@@ -3,6 +3,11 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
+            "ui.class.class": "tasks",
+            "ui.basic.var": "tasks"
+        },
+        {
+            "ui.basic.tag": "div",
             "ui.class.class": "shortcuts",
             "ui.group.data": {
                 "ui.data.keyList": [
@@ -18,9 +23,9 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix": ")",
                 "ui.data.values": [
-                    "ui.theme.nightMode",
+                    "launcher",
                     "keyboard",
-                    "launcher"
+                    "ui.theme.nightMode"
                 ]
             }
         }

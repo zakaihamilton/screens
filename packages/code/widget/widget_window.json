@@ -53,8 +53,8 @@
             "ui.touch.dblclick": "menu.context.show(taskbar)",
             "ui.touch.click": "widget.window.toggleVisibility",
             "ui.basic.window": null,
-            "ui.node.parent": "@widget.tray.tray",
-            "widget.icon.type": "@widget.tray.type(widget.tray.tray,)"
+            "ui.node.parent": "@widget.taskbar.tasks",
+            "widget.icon.type": "list"
         },
         {
             "ui.class.class": "margin",
