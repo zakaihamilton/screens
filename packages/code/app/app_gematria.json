@@ -6,6 +6,7 @@
         "width": "300px",
         "height": "220px"
     },
+    "maximize": null,
     "icon": "/packages/res/icons/gematria.png",
     "widget.menu.items": [
         [
