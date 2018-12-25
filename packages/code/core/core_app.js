@@ -13,31 +13,7 @@ screens.core.app = function CoreApp(me) {
     };
     me.lookup = {
         set: async function (object, value, property) {
-            if (!property) {
-                return;
-            }
-            if (!await me.available(property)) {
-                return;
-            }
-            var progress = me.ui.modal.launch("progress", {
-                "title": property.charAt(0).toUpperCase() + property.slice(1),
-                "delay": "1000"
-            });
-            await screens.include("app." + property);
-            me.core.property.set(progress, "close");
-            if (Array.isArray(value)) {
-                value = value.slice(0);
-                value.unshift("app." + property + ".launch");
-                await me.core.message.send.apply(null, value);
-            } else {
-                if (value && value.target) {
-                    value = [];
-                }
-                else {
-                    value = [value];
-                }
-                await me.core.message.send("app." + property + ".launch", value);
-            }
+            me.launch(property, value);
         }
     };
     me.launch = async function (appName) {
