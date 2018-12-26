@@ -16,7 +16,7 @@ screens.startup.app = function StartupApp(me) {
                 "title": "Login",
                 "delay": "1000"
             });
-            await me.lib.google.load();
+            await me.core.login.load();
         }
         catch (err) {
             document.body.innerHTML = __html__.replace("__error__", err.message || err);
@@ -24,7 +24,7 @@ screens.startup.app = function StartupApp(me) {
         finally {
             me.core.property.set(progress, "close");
         }
-        if (me.lib.google.isSignedIn()) {
+        if (me.core.login.isSignedIn()) {
             me.start();
         }
         else {

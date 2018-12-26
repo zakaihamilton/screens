@@ -6,8 +6,8 @@
 screens.user.verify = function UserVerify(me) {
     me.init = async function () {
         me.core.property.link("core.socket.verify", "user.verify.verify", true);
-        var google = await me.core.util.config("settings.lib.google");
-        me.client_id = google.client_id;
+        var login = await me.core.util.config("settings.core.login");
+        me.client_id = login.client_id;
         me.tokens = {};
         const { OAuth2Client } = require("google-auth-library");
         me.client = new OAuth2Client(me.client_id);

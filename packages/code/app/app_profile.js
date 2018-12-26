@@ -95,8 +95,8 @@ screens.app.profile = function AppProfile(me) {
             profile = {};
         }
         if (!window.options.userName) {
-            profile.name = me.lib.google.userName();
-            profile.email = me.lib.google.userEmail();
+            profile.name = me.core.login.userName();
+            profile.email = me.core.login.userEmail();
         }
         for (var id in bindings) {
             if (profile[id]) {

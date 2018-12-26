@@ -5,7 +5,7 @@
 
 screens.core.app = function CoreApp(me) {
     me.init = function () {
-        me.core.listener.register(me.ready, me.lib.google.id);
+        me.core.listener.register(me.ready, me.core.login.id);
     };
     me.ready = async function () {
         if (!me.list) {

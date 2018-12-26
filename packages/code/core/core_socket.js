@@ -148,7 +148,7 @@ screens.core.socket = function CoreSocket(me) {
             }
         });
         socket.on("heartbeat_send", (data) => {
-            socket.emit("heartbeat_response", { beat: 1, user: me.lib.google.userName() });
+            socket.emit("heartbeat_response", { beat: 1, user: me.core.login.userName() });
             me.log("heartbeat response sent");
         });
     };

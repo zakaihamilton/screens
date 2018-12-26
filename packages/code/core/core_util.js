@@ -8,7 +8,7 @@ screens.core.util = function CoreUtil(me) {
         if (me.platform === "browser") {
             me.core.listener.register(async () => {
                 me.isAdmin = await me.user.access.admin();
-            }, me.lib.google.id);
+            }, me.core.login.id);
         }
     };
     me.removeLast = function (string, separator) {

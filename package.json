@@ -52,8 +52,8 @@
     "xmlhttprequest": "^1.8.0"
   },
   "settings": {
-    "lib": {
-      "google": {
+    "core": {
+      "login": {
         "client_id": "635502370539-auglpog2b0bc2i6diq128ionuhvd6u3g.apps.googleusercontent.com"
       }
     },

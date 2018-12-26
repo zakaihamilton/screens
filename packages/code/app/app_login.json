@@ -22,7 +22,7 @@
                     }
                 },
                 {
-                    "ui.basic.show": "@lib.google.isSignedIn",
+                    "ui.basic.show": "@core.login.isSignedIn",
                     "ui.basic.text": "User Name:",
                     "ui.basic.var": "userNameLabel",
                     "ui.property.style": {
@@ -30,8 +30,8 @@
                     }
                 },
                 {
-                    "ui.basic.show": "@lib.google.isSignedIn",
-                    "ui.basic.text": "@lib.google.userName",
+                    "ui.basic.show": "@core.login.isSignedIn",
+                    "ui.basic.text": "@core.login.userName",
                     "ui.basic.readOnly": true,
                     "ui.property.style": {
                         "width": "300px",
@@ -47,7 +47,7 @@
                     }
                 },
                 {
-                    "ui.basic.text": "@lib.google.currentStatus",
+                    "ui.basic.text": "@core.login.currentStatus",
                     "ui.basic.type": "text",
                     "ui.basic.readOnly": true,
                     "ui.basic.var": "status",
@@ -61,8 +61,8 @@
         {
             "ui.basic.text": "Sign in",
             "ui.basic.var": "signin",
-            "ui.basic.hide": "@lib.google.isSignedIn",
-            "ui.touch.click": "lib.google.signin",
+            "ui.basic.hide": "@core.login.isSignedIn",
+            "ui.touch.click": "core.login.signin",
             "ui.property.style": {
                 "marginTop": "20px"
             }
@@ -70,8 +70,8 @@
         {
             "ui.basic.text": "Sign out",
             "ui.basic.var": "signout",
-            "ui.basic.show": "@lib.google.isSignedIn",
-            "ui.touch.click": "lib.google.signout",
+            "ui.basic.show": "@core.login.isSignedIn",
+            "ui.touch.click": "core.login.signout",
             "ui.property.style": {
                 "marginTop": "20px"
             }
@@ -79,8 +79,8 @@
         {
             "ui.basic.text": "Disconnect",
             "ui.basic.var": "disconnect",
-            "ui.basic.show": "@lib.google.isSignedIn",
-            "ui.touch.click": "lib.google.disconnect",
+            "ui.basic.show": "@core.login.isSignedIn",
+            "ui.touch.click": "core.login.disconnect",
             "ui.property.style": {
                 "marginTop": "20px"
             }
