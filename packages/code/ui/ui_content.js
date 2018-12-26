@@ -101,6 +101,9 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
+            if (!window.content) {
+                window.content = {};
+            }
             window.content._title = fullItem.title;
             window.content._private = private;
             window.content._locked = fullItem.locked;
