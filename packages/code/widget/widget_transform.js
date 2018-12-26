@@ -490,7 +490,6 @@ screens.widget.transform = function WidgetTransform(me) {
             return params;
         }
         var terms = widget.termData.terms;
-        console.log("terms: " + JSON.stringify(terms));
         me.addTerms(terms, rows, true);
         me.addTerms(terms, rows, false);
         var rowIndex = 2;

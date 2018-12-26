@@ -114,4 +114,8 @@ screens.app.diagram = function AppDiagram(me) {
             me.core.property.notify(window, "update");
         }
     };
+    me.term = async function (object, text) {
+        var html = await me.widget.transform.term(object, text);
+        me.core.property.set(object, "ui.basic.html", html);
+    };
 };
