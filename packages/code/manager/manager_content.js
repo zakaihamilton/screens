@@ -47,9 +47,8 @@ screens.manager.content = function ManagerContent(me) {
             kind += "." + this.userId;
         }
         data.content = me.core.string.encode(data.content);
-        var owner = await me.lockedOwner(componentId, title);
-        var isLocked = !private && owner;
-        if (!isLocked || owner === this.userId || me.user.access.admin(this.userName)) {
+        var info = me.load(componentId, title, private);
+        if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.save(data, kind, title, ["content"]);
             result = true;
         }
@@ -61,19 +60,10 @@ screens.manager.content = function ManagerContent(me) {
         if (private) {
             kind += "." + this.userId;
         }
-        var owner = await me.lockedOwner(componentId, title);
-        var isLocked = !private && owner;
-        if (!isLocked || owner === this.userId || me.user.access.admin(this.userName)) {
+        var info = me.load(componentId, title, private);
+        if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.delete(kind, title);
             result = true;
-        }
-        return result;
-    };
-    me.lockedOwner = async function (componentId, title) {
-        var info = me.load(componentId, title);
-        var result = null;
-        if (info.locked) {
-            result = info.owner;
         }
         return result;
     };
