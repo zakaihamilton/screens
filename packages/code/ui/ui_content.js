@@ -67,6 +67,14 @@ screens.ui.content = function UIContent(me) {
                         "enabled": "select",
                         "separator": true
                     }
+                ],
+                [
+                    "Delete",
+                    prefix + "delete",
+                    {
+                        "enabled": "select",
+                        "separator": true
+                    }
                 ]
             ];
         },
@@ -164,6 +172,34 @@ screens.ui.content = function UIContent(me) {
                     data.options = options;
                 }
                 await me.manager.content.save(me.id, title, data, private);
+                await me.content.refresh.set(object);
+            }
+        },
+        delete: {
+            get: function (object) {
+                var window = me.widget.window.get(object);
+                if (window.content) {
+                    var locked = window.content._locked;
+                    var title = window.content._title;
+                    return !locked && title;
+                }
+                return false;
+            },
+            set: async function (object) {
+                var window = me.widget.window.get(object);
+                var private = window.content._private;
+                var title = "";
+                if (window.content._title) {
+                    title = window.content._title;
+                }
+                if (!title) {
+                    title = me.core.property.get(window, "widget.window.key");
+                }
+                if (!title) {
+                    var date = new Date();
+                    title = date.toLocaleDateString();
+                }
+                await me.manager.content.delete(me.id, title, private);
                 await me.content.refresh.set(object);
             }
         },

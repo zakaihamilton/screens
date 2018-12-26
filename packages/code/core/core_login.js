@@ -1,23 +1,23 @@
 /*
  @author Zakai Hamilton
- @component LibGoogle
+ @component CoreLogin
  */
 
-screens.lib.google = function LibGoogle(me) {
+screens.core.login = function CoreLogin(me) {
     me.init = async function () {
         me.state = false;
         me.info = {};
-        me.core.property.link("core.http.headers", "lib.google.headers", true);
-        me.core.property.link("core.message.headers", "lib.google.headers", true);
+        me.core.property.link("core.http.headers", "core.login.headers", true);
+        me.core.property.link("core.message.headers", "core.login.headers", true);
     };
     me.load = function () {
-        var google = me.core.util.config("settings.lib.google");
+        var login = me.core.util.config("settings.core.login");
         return new Promise((resolve, reject) => {
             gapi.load("auth2", async function () {
-                google = await google;
+                login = await login;
                 try {
                     me.auth2 = await gapi.auth2.init({
-                        client_id: google.client_id,
+                        client_id: login.client_id,
                         ux_mode: "redirect"
                     });
                     me.auth2.isSignedIn.listen(me.signInChanged);

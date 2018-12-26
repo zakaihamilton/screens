@@ -51,7 +51,21 @@ screens.manager.content = function ManagerContent(me) {
         var isLocked = !private && owner;
         if (!isLocked || owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.save(data, kind, title, ["content"]);
-            return result;
+            result = true;
+        }
+        return result;
+    };
+    me.delete = async function (componentId, title, private) {
+        var result = false;
+        var kind = componentId + ".content";
+        if (private) {
+            kind += "." + this.userId;
+        }
+        var owner = await me.lockedOwner(componentId, title);
+        var isLocked = !private && owner;
+        if (!isLocked || owner === this.userId || me.user.access.admin(this.userName)) {
+            await me.storage.data.delete(kind, title);
+            result = true;
         }
         return result;
     };

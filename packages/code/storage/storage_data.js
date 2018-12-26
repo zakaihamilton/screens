@@ -65,6 +65,24 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
+    me.delete = async function (type, id) {
+        var service = me.getService();
+        if (service) {
+            const key = service.key([type, id]);
+            return new Promise((resolve, reject) => {
+                service.delete(key, function (err) {
+                    if (err) {
+                        err = "error deleting data for type: " + type + " id: " + id + " err:" + err;
+                        me.log_error(err);
+                        reject(err);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            });
+        }
+    };
     me.load = async function (type, id) {
         var service = me.getService();
         if (service) {
