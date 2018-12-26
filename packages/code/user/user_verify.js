@@ -12,9 +12,8 @@ screens.user.verify = function UserVerify(me) {
         const { OAuth2Client } = require("google-auth-library");
         me.client = new OAuth2Client(me.client_id);
     };
-    me.match = function (name) {
-        var names = name.split("/");
-        var isMatch = names.includes(this.userName);
+    me.match = function (id) {
+        var isMatch = (id === this.userId);
         me.log("name: " + name + " isMatch:" + isMatch);
         return isMatch;
     };
