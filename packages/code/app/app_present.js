@@ -110,7 +110,14 @@ screens.app.present = function AppPresent(me) {
     };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", { "state": "select" }, "users", null, "app.present.userName");
+            var info = {
+                list: me.userList,
+                property: "name",
+                attributes: { "state": "select" },
+                group: "users",
+                itemMethod: "app.present.userName"
+            };
+            return me.widget.menu.collect(object, info);
         }
     };
     me.clear = function (object) {

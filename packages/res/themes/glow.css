@@ -465,7 +465,7 @@
 
 .glow-menu-vertical li[disabled="true"].label, .glow-menu-vertical tr[disabled="true"].label, .glow-menu-vertical span[disabled="true"].label {
     background-color: var(--chrome-background);
-    color: var(--chrome-disabled-color);
+    color: var(--chrome-color);
 }
 
 .glow-menu-vertical li[disabled="true"]:hover, .glow-menu-vertical tr[disabled="true"]:hover, .glow-menu-vertical span[disabled="true"]:hover {
@@ -967,5 +967,5 @@
 }
 
 strong {
-    color:var(--color);
+    color: var(--color);
 }

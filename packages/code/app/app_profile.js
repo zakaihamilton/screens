@@ -64,7 +64,15 @@ screens.app.profile = function AppProfile(me) {
     };
     me.userMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.userList, "name", { "state": "select" }, "users", me.sortSessions, "app.profile.userName");
+            var info = {
+                list: me.userList,
+                property: "name",
+                attributes: { "state": "select" },
+                group: "users",
+                listMethod: me.sortSessions,
+                itemMethod: "app.profile.userName"
+            };
+            return me.widget.menu.collect(object, info);
         }
     };
     me.userId = async function (object, name) {

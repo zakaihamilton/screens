@@ -24,18 +24,12 @@ screens.ui.content = function UIContent(me) {
                 ],
                 [
                     "Public",
-                    "label",
-                    {
-                        "separator": true
-                    }
+                    "header"
                 ],
                 prefix + "publicMenu",
                 [
                     "Private",
-                    "label",
-                    {
-                        "separator": true
-                    }
+                    "header"
                 ],
                 prefix + "privateMenu",
                 [
@@ -113,10 +107,22 @@ screens.ui.content = function UIContent(me) {
             me.content.import(object, item, true);
         },
         publicMenu: function (object) {
-            return me.widget.menu.collect(object, me.content.publicList, "title", null, "public", null, me.content.import);
+            var info = {
+                list: me.content.publicList,
+                property: "title",
+                group: "public",
+                itemMethod: me.content.import
+            };
+            return me.widget.menu.collect(object, info);
         },
         privateMenu: function (object) {
-            return me.widget.menu.collect(object, me.content.privateList, "title", null, "private", null, me.content.importPrivate);
+            var info = {
+                list: me.content.privateList,
+                property: "title",
+                group: "private",
+                itemMethod: me.content.importPrivate,
+            };
+            return me.widget.menu.collect(object, info);
         },
         save: {
             get: function (object) {

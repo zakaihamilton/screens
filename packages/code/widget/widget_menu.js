@@ -26,46 +26,46 @@ screens.widget.menu = function WidgetMenu(me) {
             });
         }
     };
-    me.collect = function (object, list, property, attributes, group, listMethod, itemMethod, metadata) {
+    me.collect = function (object, info) {
         var parseItems = (items) => {
             if (!items) {
                 items = [];
             }
-            if (listMethod) {
-                items = me.core.property.get(object, listMethod, items);
+            if (info.listMethod) {
+                items = me.core.property.get(object, info.listMethod, items);
                 if (!items) {
                     items = [];
                 }
             }
             items = items.map(function (item) {
-                var title = String(item[property]);
+                var title = String(item[info.property]);
                 if (!title) {
                     return null;
                 }
                 var properties = {};
                 var item_metadata = {};
-                if (metadata) {
-                    for (var key in metadata) {
-                        item_metadata[key] = item[metadata[key]];
+                if (info.metadata) {
+                    for (var key in info.metadata) {
+                        item_metadata[key] = item[info.metadata[key]];
                     }
                     properties.metadata = item_metadata;
                     title = "";
                 }
-                if (group) {
-                    properties.group = group;
+                if (info.group) {
+                    properties.group = info.group;
                 }
                 title = [title.charAt(0).toUpperCase() + title.slice(1)];
                 var result = [
                     title,
-                    itemMethod,
-                    attributes,
+                    info.itemMethod,
+                    info.attributes,
                     properties
                 ];
                 return result;
             });
             return items;
         };
-        if (!list) {
+        if (!info.list) {
             return null;
         }
         return [[
@@ -73,12 +73,12 @@ screens.widget.menu = function WidgetMenu(me) {
             null,
             {
                 "header": true,
-                "visible": metadata ? true : false
+                "visible": info.metadata ? true : false
             },
             {
-                "group": group,
-                "metadata": metadata,
-                "promise": { promise: list, callback: parseItems }
+                "group": info.group,
+                "metadata": info.metadata,
+                "promise": { promise: info.list, callback: parseItems }
             }
         ]];
     };

@@ -57,15 +57,31 @@ screens.app.player = function AppPlayer(me) {
     };
     me.groupMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.groupListData, "name", { "state": "select" }, "group", null, "app.player.onChangeGroup");
+            var info = {
+                list: me.groupListData,
+                property: "name",
+                attributes: { "state": "select" },
+                group: "group",
+                itemMethod: "app.player.onChangeGroup"
+            };
+            return me.widget.menu.collect(object, info);
         }
     };
     me.sessionMenuList = {
         get: function (object) {
-            return me.widget.menu.collect(object, me.sessionListData, "label", { "state": "select" }, "session", me.sortSessions, "app.player.onChangeSession", {
-                "Name": "label",
-                "Duration": "durationText"
-            });
+            var info = {
+                list: me.sessionListData,
+                property: "label",
+                attributes: { "state": "select" },
+                group: "session",
+                listMethod: me.sortSessions,
+                itemMethod: "app.player.onChangeSession",
+                metadata: {
+                    "Name": "label",
+                    "Duration": "durationText"
+                }
+            };
+            return me.widget.menu.collect(object, info);
         }
     };
     me.refresh = async function (object) {

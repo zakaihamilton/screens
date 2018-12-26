@@ -212,6 +212,7 @@
         "storage.local.key": "app-table-window",
         "storage.local.restore": "widget.window.store",
         "title": "Table",
+        "name": "",
         "app.table.initOptions": null,
         "app.table.reload": null
     }
