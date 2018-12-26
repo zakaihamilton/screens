@@ -16,11 +16,11 @@ screens.app.prism = function AppPrism(me) {
         set: function (object) {
             var window = me.widget.window.get(object);
             me.ui.options.load(me, window, {
-                doTranslation: true,
+                doTranslation: false,
                 doExplanation: true,
                 prioritizeExplanation: true,
                 addStyles: true,
-                abridged: false,
+                abridged: true,
                 keepSource: false,
                 category: true,
                 headings: true,

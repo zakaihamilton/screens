@@ -66,6 +66,6 @@ screens.manager.content = function ManagerContent(me) {
             result = true;
         }
         return result;
-    };
+    }; abri
     return "server";
 };

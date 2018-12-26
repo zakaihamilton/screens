@@ -48,11 +48,11 @@ screens.app.diagram = function AppDiagram(me) {
                 window.optionsLoaded = true;
                 me.ui.options.load(me, window, {
                     viewType: "Layers",
-                    doTranslation: true,
+                    doTranslation: false,
                     doExplanation: true,
                     prioritizeExplanation: true,
                     addStyles: true,
-                    abridged: false,
+                    abridged: true,
                     keepSource: false,
                     category: true,
                     headings: true,

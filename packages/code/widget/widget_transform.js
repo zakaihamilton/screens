@@ -15,11 +15,11 @@ screens.widget.transform = function WidgetTransform(me) {
         var window = me.widget.window.get(widget);
         widget.language = null;
         me.ui.options.load(me, widget, {
-            doTranslation: true,
+            doTranslation: false,
             doExplanation: true,
             prioritizeExplanation: true,
             addStyles: true,
-            abridged: false,
+            abridged: true,
             keepSource: false,
             category: true,
             headings: true,
