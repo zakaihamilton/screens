@@ -111,7 +111,8 @@ screens.ui.content = function UIContent(me) {
                 list: me.content.publicList,
                 property: "title",
                 group: "public",
-                itemMethod: me.content.import
+                itemMethod: me.content.import,
+                emptyMsg: "No Content"
             };
             return me.widget.menu.collect(object, info);
         },
@@ -121,6 +122,7 @@ screens.ui.content = function UIContent(me) {
                 property: "title",
                 group: "private",
                 itemMethod: me.content.importPrivate,
+                emptyMsg: "No Content"
             };
             return me.widget.menu.collect(object, info);
         },

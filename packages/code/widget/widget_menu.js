@@ -37,6 +37,20 @@ screens.widget.menu = function WidgetMenu(me) {
                     items = [];
                 }
             }
+            if (info.emptyMsg && !items.length) {
+                var properties = {};
+                if (info.group) {
+                    properties.group = info.group;
+                }
+                return [[
+                    info.emptyMsg,
+                    null,
+                    {
+                        enabled: false
+                    },
+                    properties
+                ]];
+            }
             items = items.map(function (item) {
                 var title = String(item[info.property]);
                 if (!title) {
