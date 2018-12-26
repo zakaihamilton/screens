@@ -10,6 +10,7 @@ screens.api = [
     "user.profile.get",
     "user.profile.set",
     "user.verify.match",
+    "user.access.userId",
     "user.access.admin",
     "user.access.appList",
     "user.access.get",

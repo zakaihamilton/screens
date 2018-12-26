@@ -109,6 +109,7 @@ screens.ui.content = function UIContent(me) {
             window.content._title = fullItem.title;
             window.content._private = private;
             window.content._locked = fullItem.locked;
+            window.content._owner = fullItem.owner;
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
@@ -181,7 +182,8 @@ screens.ui.content = function UIContent(me) {
                 if (window.content) {
                     var locked = window.content._locked;
                     var title = window.content._title;
-                    return !locked && title;
+                    var access = !window.content._owner || window.content._owner === me.core.util.userId || me.core.util.isAdmin;
+                    return !locked && title && access;
                 }
                 return false;
             },

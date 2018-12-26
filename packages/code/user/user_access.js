@@ -18,6 +18,9 @@ screens.user.access = function UserAccess(me) {
             }
         }
     };
+    me.userId = function () {
+        return this.userId;
+    };
     me.admin = async function (user) {
         if (!user || typeof user !== "string") {
             user = this.userName;

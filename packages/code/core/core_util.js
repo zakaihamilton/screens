@@ -8,6 +8,7 @@ screens.core.util = function CoreUtil(me) {
         if (me.platform === "browser") {
             me.core.listener.register(async () => {
                 me.isAdmin = await me.user.access.admin();
+                me.userId = await me.user.access.userId();
             }, me.core.login.id);
         }
     };
