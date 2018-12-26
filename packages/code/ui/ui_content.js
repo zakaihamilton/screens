@@ -84,7 +84,7 @@ screens.ui.content = function UIContent(me) {
         },
         refresh: {
             set: async function (object) {
-                me.manager.content.refresh();
+                await me.manager.content.refresh();
                 me.content.update();
             }
         },
