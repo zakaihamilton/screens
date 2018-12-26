@@ -43,7 +43,7 @@ screens.media.file = function MediaFile(me) {
     me.update = async function () {
         var groups = await me.groups(true);
         for (var group of groups) {
-            me.listing(me.rootPath + "/" + group.name, true);
+            await me.listing(me.rootPath + "/" + group.name, true);
         }
     };
     me.listing = async function (path, update = false) {
@@ -58,7 +58,7 @@ screens.media.file = function MediaFile(me) {
                     item = oldListing[file.name];
                 }
                 if (item) {
-                    file = Object.apply(file, item);
+                    file = Object.assign(file, item);
                 }
                 else {
                     file.path = path + "/" + file.name;
