@@ -204,12 +204,19 @@ screens.core.property = function CoreProperty(me) {
         }
         source_list[target] = beforeProperty;
     };
-    me.notify = function (object, name, value) {
+    me.notify = function (object, name, value, now = false) {
         if (!object) {
             return;
         }
         if (!object.notifications) {
             object.notifications = {};
+        }
+        if (now) {
+            if (object.notifications[name]) {
+                clearTimeout(object.notifications[name]);
+                object.notifications[name] = null;
+            }
+            return me.core.property.set(object, name, value);
         }
         if (object.notifications[name]) {
             return;

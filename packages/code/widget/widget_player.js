@@ -347,6 +347,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         widget.var.player.currentTime = time;
         me.update(object);
     };
+    me.time = function (object) {
+        var widget = me.upper.mainWidget(object);
+        return widget.var.player.currentTime;
+    };
     me.fullscreen = function (object) {
         var widget = me.upper.mainWidget(object);
         var player = widget.var.player;

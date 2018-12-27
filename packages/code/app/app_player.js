@@ -35,8 +35,12 @@ screens.app.player = function AppPlayer(me) {
             speed: me.updatePlayback,
         });
         var args = me.singleton.args;
-        await me.onChangeGroup.set(me.singleton, args[0]);
-        me.onChangeSession.set(me.singleton, args[1]);
+        await me.core.property.set(window, "app.player.onChangeGroup", args[0]);
+        await me.core.property.set(window, "app.player.onChangeSession", args[1]);
+        await me.core.property.notify(window, "app.player.updatePlayer", null, true);
+        if (args[2] && window.var.player) {
+            me.widget.player.controls.seek(window.var.player, args[2]);
+        }
     };
     me.sortSessions = function (object, items) {
         if (!items || items.then) {
@@ -100,7 +104,7 @@ screens.app.player = function AppPlayer(me) {
                 me.ui.options.save(me, window, { groupName: name });
             }
             me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-            await me.updateSessions();
+            await me.updateSessions(name);
         }
     };
     me.onChangeSession = {
@@ -265,6 +269,7 @@ screens.app.player = function AppPlayer(me) {
             me.core.property.set(player, "source", target);
             me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
             me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
+            window.var.player = player;
         }
     };
     me.work = {
@@ -360,7 +365,8 @@ screens.app.player = function AppPlayer(me) {
     };
     me.copyUrl = function () {
         var window = me.singleton;
-        me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName]);
+        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time]);
     };
     me.retrieveContent = async function (object, name, private = false) {
         var list = [];
