@@ -358,6 +358,7 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.updateParentChild = function (parent, child) {
         me.update_title(parent);
+        me.update_title(child);
         me.widget.menu.updateTheme(child);
         me.widget.menu.updateTheme(parent);
         var isChild = parent && parent.child_window === child;

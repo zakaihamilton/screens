@@ -17,7 +17,7 @@
 }
 
 .glow-window-label.maximize {
-    user-select: all;
+    user-select: text;
 }
 
 .glow-window-label.focus {
