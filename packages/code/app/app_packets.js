@@ -24,12 +24,12 @@ screens.app.packets = function AppPackets(me) {
             "viewType": "Auto"
         });
         me.ui.options.toggleSet(me, null, "autoRefresh", me.refreshData.set);
-        me.ui.options.choiceSet(me, null, "viewType", (object, value, key, options) => {
+        me.ui.options.choiceSet(me, null, "viewType", (object) => {
             var window = me.widget.window.get(object);
             me.core.property.set(window, "app.packets.refreshChart");
             me.core.property.set(window, "app.packets.refreshData");
         });
-        me.ui.options.choiceSet(me, null, "dataProfile", (object, value, key, options) => {
+        me.ui.options.choiceSet(me, null, "dataProfile", (object) => {
             var window = me.widget.window.get(object);
             if (window.streamIndex > 0) {
                 me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
@@ -69,12 +69,10 @@ screens.app.packets = function AppPackets(me) {
     };
     me.monitorMenuOption = function (name) {
         return {
-            get: function (object) {
-                var window = me.widget.window.get(object);
+            get: function () {
                 return me.monitorOptions[name];
             },
             set: async function (object, value) {
-                var window = me.widget.window.get(object);
                 if (value && value.currentTarget) {
                     value = me.core.property.get(value.currentTarget, "ui.basic.text");
                 }
@@ -239,7 +237,6 @@ screens.app.packets = function AppPackets(me) {
                     streamRequests = window.packetInfo.streamRequests;
                     effects = window.packetInfo.effects;
                 }
-                var streamRequests = streamRequests;
                 if (streamRequests.length) {
                     var streamIndex = window.streamIndex;
                     if (!streamIndex || streamIndex > streamRequests.length) {
@@ -299,7 +296,7 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.chartType = {
-        get: function (object) {
+        get: function () {
             return "line";
         }
     };
@@ -451,7 +448,7 @@ screens.app.packets = function AppPackets(me) {
                             var targets = packets[sourceIp];
                             for (var targetIp in targets) {
                                 var target = targets[targetIp];
-                                var label = dataProfileName + ": ";
+                                let label = dataProfileName + ": ";
                                 if (target.sourceIsService) {
                                     label += "service";
                                 } else {
@@ -469,7 +466,7 @@ screens.app.packets = function AppPackets(me) {
                                     if (!color) {
                                         color = me.colors[label] = me.ui.color.colors[colorIndex++];
                                     }
-                                    var dataset = {
+                                    let dataset = {
                                         label: label,
                                         backgroundColor: color,
                                         borderColor: color,
@@ -478,7 +475,7 @@ screens.app.packets = function AppPackets(me) {
                                     };
                                     info[label] = dataset;
                                 }
-                                var dataset = info[label];
+                                let dataset = info[label];
                                 for (var time in target.items) {
                                     var item = target.items[time];
                                     var data = {
@@ -508,14 +505,14 @@ screens.app.packets = function AppPackets(me) {
                         if (streamRequest.runIndex && !dataProfileName.includes("#")) {
                             streamName += " #" + (streamRequest.runIndex + 1);
                         }
-                        var label = streamName + " (" + dataProfilePacketLoss + "%)";
+                        let label = streamName + " (" + dataProfilePacketLoss + "%)";
                         if (yAxis.includes("Average")) {
                             label = dataProfilePacketLoss + "% Packet Loss";
                             combinedCallback = arr => parseInt(arr.reduce((a, b) => a + b, 0) / arr.length);
                         }
                         var dataset = info[label];
                         if (!dataset) {
-                            var color = me.colors[label];
+                            let color = me.colors[label];
                             if (!color) {
                                 color = me.colors[label] = me.ui.color.colors[colorIndex++];
                             }
@@ -541,9 +538,8 @@ screens.app.packets = function AppPackets(me) {
                         };
                         var xValue = values[xAxis];
                         var yValue = values[yAxis.replace(/Average\s/g, "")];
-                        var dataArray = dataset.data;
                         if (combinedCallback) {
-                            var data = dataset.data[xValue];
+                            let data = dataset.data[xValue];
                             if (!data) {
                                 data = [];
                                 dataset.data[xValue] = data;
@@ -551,7 +547,7 @@ screens.app.packets = function AppPackets(me) {
                             data.push(yValue);
                         }
                         else {
-                            var data = {
+                            let data = {
                                 x: xValue,
                                 y: yValue
                             };
@@ -643,28 +639,28 @@ screens.app.packets = function AppPackets(me) {
         }
     };
     me.pushPackets = {
-        get: function (object) {
+        get: function () {
             return me.monitorOptions.pushPackets;
         },
-        set: async function (object, value) {
+        set: async function () {
             me.monitorOptions.pushPackets = !me.monitorOptions.pushPackets;
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
     me.collectPackets = {
-        get: function (object) {
+        get: function () {
             return me.monitorOptions.collectPackets;
         },
-        set: async function (object, value) {
+        set: async function () {
             me.monitorOptions.collectPackets = !me.monitorOptions.collectPackets;
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }
     };
     me.combinePackets = {
-        get: function (object) {
+        get: function () {
             return me.monitorOptions.combinePackets;
         },
-        set: async function (object, value) {
+        set: async function () {
             me.monitorOptions.combinePackets = !me.monitorOptions.combinePackets;
             await me.manager.packet.setMonitorOptions(me.monitorOptions);
         }

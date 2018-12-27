@@ -4,7 +4,7 @@
  */
 
 screens.app.zoom = function AppZoom(me) {
-    me.init = async function() {
+    me.init = async function () {
         me.meetingInfo = await me.lib.zoom.meetingInfo();
     };
     me.launch = function () {
@@ -15,16 +15,16 @@ screens.app.zoom = function AppZoom(me) {
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         return me.singleton;
     };
-    me.joinUrl = function (object) {
+    me.joinUrl = function () {
         return me.meetingInfo.join_url;
     };
-    me.meetingId = function(object) {
+    me.meetingId = function () {
         return me.meetingInfo.id;
     };
-    me.date = function (object) {
+    me.date = function () {
         return me.core.server.date();
     };
-    me.callNumber = function(object, value) {
+    me.callNumber = function (object, value) {
         return "tel:+" + value + "," + me.meetingInfo.id + ",#,#";
     };
 };

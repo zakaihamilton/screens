@@ -8,7 +8,7 @@ screens.app.profile = function AppProfile(me) {
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
         me.userList = await me.user.profile.list();
     };
-    me.launch = async function (args) {
+    me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
@@ -33,7 +33,7 @@ screens.app.profile = function AppProfile(me) {
         Darkness: 3,
         Spirit: 4
     };
-    me.bindings = function (object) {
+    me.bindings = function () {
         var ids = [
             "phaseMajor",
             "phaseMinor",
@@ -88,7 +88,6 @@ screens.app.profile = function AppProfile(me) {
     me.updateUser = async function (object) {
         var window = me.widget.window.get(object);
         var bindings = me.bindings(object);
-        var profile_id = null;
         var userId = await me.userId(object, window.options.userName);
         var profile = await me.user.profile.get(userId);
         if (!profile) {
@@ -122,8 +121,7 @@ screens.app.profile = function AppProfile(me) {
         me.core.property.set(button, "ui.class.is_loading", false);
         me.data = await me.user.profile.get(userId);
     };
-    me.update = function (object) {
-        var window = me.widget.window.get(object);
+    me.update = function () {
         var tier = document.getElementById("app.profile.tier");
         var phaseField = document.getElementById("app.profile.phaseLabel");
         var phaseLabel = document.getElementById("app.profile.phaseField");

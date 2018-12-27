@@ -47,7 +47,7 @@ screens.app.tasks = function AppTasks(me) {
         return selectedTask;
     };
     me.switchTo = {
-        set: function (object, value) {
+        set: function () {
             me.core.property.set(me.singleton, "widget.window.close");
             var task = me.findSelectedTask(me.singleton);
             me.core.property.set(task, "widget.window.show", true);
@@ -58,7 +58,7 @@ screens.app.tasks = function AppTasks(me) {
             var task = me.findSelectedTask(object);
             return task != null;
         },
-        set: function (object, value) {
+        set: function () {
             var task = me.findSelectedTask(me.singleton);
             me.core.property.set(task, "widget.window.close");
             me.core.property.set(me.singleton, "widget.window.close");
@@ -66,14 +66,14 @@ screens.app.tasks = function AppTasks(me) {
         }
     };
     me.tile = {
-        set: function (object, value) {
+        set: function () {
             me.core.property.set(me.singleton, "widget.window.close");
             var workspace = me.ui.element.workspace();
             me.core.property.set(workspace, "ui.arrange.tileHorizontally");
         }
     };
     me.cascade = {
-        set: function (object, value) {
+        set: function () {
             me.core.property.set(me.singleton, "widget.window.close");
             var workspace = me.ui.element.workspace();
             me.core.property.set(workspace, "ui.arrange.cascade");

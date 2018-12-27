@@ -295,8 +295,8 @@ screens.app.library = function AppLibrary(me) {
                         if (text) {
                             text += "\n";
                         }
-                        text += "#" + tag + ":" + item.tags[tag]
-                        tags[tag] = item.tags[tag]
+                        text += "#" + tag + ":" + item.tags[tag];
+                        tags[tag] = item.tags[tag];
                     }
                     diff = Object.keys(tags).filter((i) => Object.keys(item.tags).indexOf(i) < 0);
                 }
@@ -304,7 +304,7 @@ screens.app.library = function AppLibrary(me) {
                     diff = Object.keys(tags);
                     tags = {};
                 }
-                for (var tag of diff) {
+                for (let tag of diff) {
                     if (text) {
                         text += "\n";
                     }

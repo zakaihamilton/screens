@@ -25,7 +25,7 @@ screens.app.cache = function AppCache(me) {
         }
     };
     me.keyList = {
-        get: function (object) {
+        get: function () {
             var cache = me.cache();
             if (cache) {
                 var keys = cache.members();
@@ -36,7 +36,7 @@ screens.app.cache = function AppCache(me) {
         }
     };
     me.store = {
-        set: function (object) {
+        set: function () {
             var cache = me.cache();
             if (cache) {
                 var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
@@ -48,7 +48,7 @@ screens.app.cache = function AppCache(me) {
         }
     };
     me.clear = {
-        set: function (object) {
+        set: function () {
             var cache = me.cache();
             if (cache) {
                 var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
@@ -60,7 +60,7 @@ screens.app.cache = function AppCache(me) {
         }
     };
     me.clearAll = {
-        set: function (object) {
+        set: function () {
             var cache = me.cache();
             if (cache) {
                 cache.clear();
@@ -68,12 +68,12 @@ screens.app.cache = function AppCache(me) {
         }
     };
     me.onChangeStorage = {
-        set: function (object, string) {
+        set: function () {
             me.core.property.set([me.singleton.var.key, me.singleton.var.value], "ui.basic.text", "");
         }
     };
     me.onChangeKey = {
-        set: function (object) {
+        set: function () {
             var cache = me.cache();
             var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
             var value = me.core.property.get(cache, key);

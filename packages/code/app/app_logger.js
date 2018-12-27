@@ -60,15 +60,15 @@ screens.app.logger = function AppLogger(me) {
         }
     };
     me.enable = {
-        get: function (object) {
+        get: function () {
             return me.singleton.isEnabled;
         },
-        set: function (object) {
+        set: function () {
             me.singleton.isEnabled = !me.singleton.isEnabled;
             me.send("core.console.enable", me.singleton.isEnabled);
         }
     };
-    me.bindings = function (object) {
+    me.bindings = function () {
         var ids = [
             "logger"
         ];

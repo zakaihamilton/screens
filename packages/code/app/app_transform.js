@@ -4,7 +4,7 @@
  */
 
 screens.app.transform = function AppTransform(me) {
-    me.launch = function (args) {
+    me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
@@ -21,7 +21,7 @@ screens.app.transform = function AppTransform(me) {
             me.ui.options.load(me, window, {
                 showInput: false
             });
-            me.ui.options.toggleSet(me, null, "showInput", function (object, value, key, options) {
+            me.ui.options.toggleSet(me, null, "showInput", function (object, value) {
                 var window = me.widget.window.get(object);
                 var text = me.core.property.get(window.var.transform, "text");
                 if (!text) {

@@ -77,13 +77,13 @@ screens.app.envision = function AppEnvision(me) {
         return serializer.serializeToString(node);
     };
     me.formatXml = function (xml) {
-        var formatted = '';
+        var formatted = "";
         var reg = /(>)(<)(\/*)/g;
-        xml = xml.replace(reg, '$1\r\n$2$3');
+        xml = xml.replace(reg, "$1\r\n$2$3");
         var pad = 0;
-        var tokens = xml.split('\r\n');
+        var tokens = xml.split("\r\n");
         for (var index = 0; index < tokens.length; index++) {
-            node = tokens[index];
+            let node = tokens[index];
             var indent = 0;
             if (node.match(/.+<\/\w[^>]*>$/)) {
                 indent = 0;
@@ -91,18 +91,18 @@ screens.app.envision = function AppEnvision(me) {
                 if (pad != 0) {
                     pad -= 1;
                 }
-            } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
+            } else if (node.match(/^<\w[^>]*[^/]>.*$/)) {
                 indent = 1;
             } else {
                 indent = 0;
             }
 
-            var padding = '';
+            var padding = "";
             for (var i = 0; i < pad; i++) {
-                padding += '  ';
+                padding += "  ";
             }
 
-            formatted += padding + node + '\r\n';
+            formatted += padding + node + "\r\n";
             pad += indent;
         }
         return formatted;
@@ -115,8 +115,7 @@ screens.app.envision = function AppEnvision(me) {
         return name;
     };
     me.processArrays = function (object, text, root) {
-        text = text.replace(/\$\[[^\[\]]*\]/g, function (match) {
-            console.log("match: " + match);
+        text = text.replace(/\$\[[^[\]]*\]/g, function (match) {
             match = match.substring(1, match.length - 1);
             var [path, content] = match.split("=");
             var item = me.core.json.traverse(root, path);
@@ -132,7 +131,6 @@ screens.app.envision = function AppEnvision(me) {
     };
     me.processVars = function (object, text, root) {
         text = text.replace(/\${[^{}]*}/g, function (match) {
-            console.log("match: " + match);
             var path = match.substring(2, match.length - 1);
             if (path.startsWith("@")) {
                 path = path.substring(1);
@@ -141,14 +139,14 @@ screens.app.envision = function AppEnvision(me) {
                 }
                 else {
                     var info = me.core.property.split(object, path);
-                    var item = me.core.json.traverse(root, info.value);
+                    let item = me.core.json.traverse(root, info.value);
                     if (item.found) {
                         return me.core.property.get(object, info.name, item.value);
                     }
                     return "";
                 }
             }
-            var item = me.core.json.traverse(root, path);
+            let item = me.core.json.traverse(root, path);
             if (item.found) {
                 return item.value;
             }
@@ -185,7 +183,7 @@ screens.app.envision = function AppEnvision(me) {
             catch (err) {
                 throw "Cannot process vars: " + err;
             }
-            parser = new DOMParser();
+            var parser = new DOMParser();
             try {
                 format = parser.parseFromString(format, "text/xml");
             }
@@ -208,7 +206,7 @@ screens.app.envision = function AppEnvision(me) {
                             Error parsing content: ${err}
                             Stack: ${new Error().stack}
                         </div>
-                    </article>`
+                    </article>`;
         }
         return `${format}`;
     };

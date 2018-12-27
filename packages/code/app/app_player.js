@@ -84,8 +84,7 @@ screens.app.player = function AppPlayer(me) {
             return me.widget.menu.collect(object, info);
         }
     };
-    me.refresh = async function (object) {
-        var window = me.singleton;
+    me.refresh = async function () {
         await me.media.file.update();
         me.groupListData = await me.media.file.groups();
         await me.updateSessions();
@@ -206,7 +205,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.groupList = {
-        get: function (object) {
+        get: function () {
             if (!me.groupListData) {
                 return [];
             }
@@ -217,7 +216,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.sessionList = {
-        get: function (object) {
+        get: function () {
             var items = me.sessionListData.map(function (item) {
                 var name = item.name.charAt(0).toUpperCase() + item.name.slice(1);
                 return me.core.path.fileName(name);
@@ -230,7 +229,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.updatePlayer = {
-        set: async function (object) {
+        set: async function () {
             var counter = ++me.playerCounter;
             var window = me.singleton;
             var groupName = window.options.groupName;
@@ -288,7 +287,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.upload = {
-        get: function (object) {
+        get: function () {
             return true;
         },
         set: async function (object) {
@@ -322,7 +321,7 @@ screens.app.player = function AppPlayer(me) {
             }
         }
     };
-    me.speeds = function (object) {
+    me.speeds = function () {
         var speedList = Object.keys(me.widget.player.controls.speeds);
         speedList = speedList.map(name => {
             var item = [
@@ -339,7 +338,7 @@ screens.app.player = function AppPlayer(me) {
         });
         return speedList;
     };
-    me.updatePlayback = function (object) {
+    me.updatePlayback = function () {
         var window = me.singleton;
         var speed = me.widget.player.controls.speeds[window.options.speed];
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);

@@ -51,14 +51,15 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         if (text) {
+            var data = {
+                user: "$userId",
+                name: "$userName",
+                content: text,
+                date: date.toString()
+            };
             me.db.shared.present.use({
                 "user": "$userId"
-            }, {
-                    user: "$userId",
-                    name: "$userName",
-                    content: text,
-                    date: date.toString()
-                });
+            }, data);
         }
         else {
             me.db.shared.present.remove({

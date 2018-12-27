@@ -32,7 +32,7 @@ screens.app.theme = function AppTheme(me) {
         }
     };
     me.themeList = {
-        get: function (object) {
+        get: function () {
             var themeList = me.ui.theme.themes;
             if (themeList) {
                 return themeList.map(function (item) {

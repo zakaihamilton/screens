@@ -9,10 +9,9 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.html = function () {
         return __html__;
-    }
+    };
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
-        var window = me.widget.window.get(widget);
         widget.language = null;
         me.ui.options.load(me, widget, {
             doTranslation: false,
@@ -451,21 +450,21 @@ screens.widget.transform = function WidgetTransform(me) {
         me.addTerms(terms, rows, true);
         me.addTerms(terms, rows, false);
         var rowIndex = 2;
-        for (var phase in me.phases) {
+        for (let phase in me.phases) {
             var columnIndex = me.phases[phase];
             var name = phase.charAt(0).toUpperCase() + phase.slice(1);
             params.gridData.push([1, columnIndex, name, "kab.term.header"]);
         }
         for (var category in rows) {
-            var row = rows[category];
-            var name = category.charAt(0).toUpperCase() + category.slice(1);
+            let row = rows[category];
+            let name = category.charAt(0).toUpperCase() + category.slice(1);
             var found = false;
-            for (var phase in me.phases) {
+            for (let phase in me.phases) {
                 var list = row[phase];
                 if (!list || !list.length) {
                     continue;
                 }
-                var columnIndex = me.phases[phase];
+                let columnIndex = me.phases[phase];
                 params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
                 found = true;
             }
@@ -475,14 +474,13 @@ screens.widget.transform = function WidgetTransform(me) {
             params.gridData.push([rowIndex, 1, name, "kab.term.header"]);
             rowIndex++;
         }
-        for (var row of params.gridData) {
+        for (let row of params.gridData) {
             for (const [i, field] of row.entries()) {
                 if (Array.isArray(field)) {
                     row[i] = Array.from(new Set(field));
                 }
             }
         }
-        console.log("params.gridData: " + JSON.stringify(params.gridData));
         return params;
     };
     me.updateScrolling = function (object) {
@@ -754,7 +752,6 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             return 0;
         });
         voicelist = voicelist.map((voice) => {
-            var name = voice.name;
             return [voice.name, "widget.transform.voice", {
                 "state": "select",
                 "mark": !voice.localService
@@ -766,7 +763,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         });
         return voicelist;
     };
-    me.speeds = function (object) {
+    me.speeds = function () {
         var speedList = Object.keys(me.media.voice.speeds);
         speedList = speedList.map(name => {
             var item = [
@@ -783,7 +780,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         });
         return speedList;
     };
-    me.volumes = function (object) {
+    me.volumes = function () {
         var volumeList = Object.keys(me.media.voice.volumes);
         volumeList = volumeList.map(name => {
             var item = [
@@ -1283,7 +1280,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         if (!widget.getAttribute) {
             return;
         }
-        if (widget.getAttribute('hidden')) {
+        if (widget.getAttribute("hidden")) {
             return;
         }
         me.markElement(widget, true);
@@ -1300,12 +1297,12 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         });
         page.focusElement = null;
     };
-    me.markPage = function (page, index, text) {
+    me.markPage = function (page, index) {
         var content = page.var.content;
         var focusElement = null;
         focusElement = content.children[index];
         Array.from(content.children).map(element => {
-            if (element.getAttribute('hidden')) {
+            if (element.getAttribute("hidden")) {
                 return;
             }
             if (element === focusElement) {

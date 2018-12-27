@@ -127,7 +127,7 @@ screens.app.gematria = function AppGematria(me) {
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         return [text];
     };
-    me.importData = function (object, text, title, options) {
+    me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "widget.window.name", title);

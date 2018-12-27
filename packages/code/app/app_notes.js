@@ -57,7 +57,7 @@ screens.app.notes = function AppNotes(me) {
         me.core.property.set(window, "name", "");
         me.core.property.set(window.var.editor, "text", "");
     };
-    me.importData = function (object, text, title, options) {
+    me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "widget.window.name", title);
         me.core.property.set(window.var.editor, "contents", JSON.parse(text));
