@@ -35,9 +35,7 @@ screens.core.listener = function CoreListener(me) {
             listener = me.listener[id] = { callbacks: [], signal: false };
         }
         if (!listener.signal) {
-            return new Promise((resolve, reject) => {
-                me.register(resolve, id);
-            });
+            return new Promise(resolve => me.register(resolve, id));
         }
     };
 };

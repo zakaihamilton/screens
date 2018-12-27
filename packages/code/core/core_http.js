@@ -20,7 +20,7 @@ screens.core.http = function CoreHttp(me) {
             me.fs = require("fs");
             if (me.platform === "server" && me.port !== 4040) {
                 try {
-                    var server = await me.createServer(true);
+                    let server = await me.createServer(true);
                     me.log("secure server is listening");
                     me.io = require("socket.io")(server);
                 }
@@ -29,7 +29,7 @@ screens.core.http = function CoreHttp(me) {
                 }
             }
             me.log("creating normal server");
-            var server = await me.createServer(false);
+            let server = await me.createServer(false);
             if (!me.io) {
                 me.io = require("socket.io")(server);
             }
@@ -49,11 +49,11 @@ screens.core.http = function CoreHttp(me) {
                 return;
             }
             var body = [];
-            request.on('error', function (err) {
-                console.error("found http error: " + err);
-            }).on('data', function (chunk) {
+            request.on("error", function (err) {
+                me.log_error("found http error: " + err);
+            }).on("data", function (chunk) {
                 body.push(chunk);
-            }).on('end', function () {
+            }).on("end", function () {
                 if (request.url.includes("private")) {
                     response.writeHead(200);
                     response.end("cannot load private files remotely");
@@ -75,10 +75,10 @@ screens.core.http = function CoreHttp(me) {
                         var https = require("https");
                         server = https.createServer(options, requestHandler);
                         port = 443;
-                        server.on('error', function (e) {
+                        server.on("error", function (e) {
                             reject(e);
                         });
-                        server.listen(port, function (err) {
+                        server.listen(port, function () {
                             me.forwardUrl = keys.redirect;
                             resolve(server);
                         });
@@ -93,7 +93,7 @@ screens.core.http = function CoreHttp(me) {
             me.log("using http");
             return new Promise((resolve, reject) => {
                 server = me.http.createServer(requestHandler);
-                server.on('error', function (e) {
+                server.on("error", function (e) {
                     reject(e);
                 });
                 server.listen(port, function (err) {
@@ -112,7 +112,7 @@ screens.core.http = function CoreHttp(me) {
         var ip = null;
         if (request) {
             ip = me.core.json.value(request, {
-                "headers.x-forwarded-for": value => value ? value.split(',').pop() : null,
+                "headers.x-forwarded-for": value => value ? value.split(",").pop() : null,
                 "connection.remoteAddress": null,
                 "connection.socket.remoteAddress": null,
                 "socket.remoteAddress": null
@@ -169,15 +169,15 @@ screens.core.http = function CoreHttp(me) {
     me.parse_query = function (query) {
         var array = {};
         if (query !== "") {
-            var a = (query[0] === '?' ? query.substr(1) : query).split('&');
+            var a = (query[0] === "?" ? query.substr(1) : query).split("&");
             for (var i = 0; i < a.length; i++) {
-                var b = a[i].split('=');
-                array[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+                var b = a[i].split("=");
+                array[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || "");
             }
         }
         return array;
     };
-    me.headers = function (info) {
+    me.headers = function () {
 
     };
     me.send = async function (info) {
@@ -244,22 +244,22 @@ screens.core.http = function CoreHttp(me) {
         }
     };
     me.compress = {
-        set: function (info) {
+        set: function () {
 
         }
     };
     me.check = {
-        set: function (info) {
+        set: function () {
 
         }
     };
     me.parse = {
-        set: function (info) {
+        set: function () {
 
         }
     };
     me.receive = {
-        set: function (info) {
+        set: function () {
 
         }
     };

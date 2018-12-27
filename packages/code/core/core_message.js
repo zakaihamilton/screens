@@ -4,7 +4,7 @@
  */
 
 screens.core.message = function CoreMessage(me) {
-    me.send_server = function (path, params) {
+    me.send_server = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "server") {
             return me.send.apply(null, args);
@@ -13,7 +13,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send_socket.apply(me.core.socket.io, args);
         }
     };
-    me.send_browser = function (path, params) {
+    me.send_browser = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "client") {
             return me.send_info((info) => {
@@ -24,8 +24,8 @@ screens.core.message = function CoreMessage(me) {
         } else if (me.platform === "server") {
             return me.send_socket.apply(this, args);
         }
-    }
-    me.send_client = function (path, params) {
+    };
+    me.send_client = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "browser") {
             return me.send_info((info) => {
@@ -35,7 +35,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send.apply(this, args);
         }
     };
-    me.send_service_worker = function (path, params) {
+    me.send_service_worker = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "browser" || me.platform === "client") {
             return me.send_info((info) => {
@@ -45,7 +45,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send.apply(this, args);
         }
     };
-    me.send_socket = function (path, params) {
+    me.send_socket = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         return me.send_info((info) => {
             return me.core.socket.send(this, "send", info);
@@ -63,7 +63,7 @@ screens.core.message = function CoreMessage(me) {
         var result = send_callback(info);
         return result;
     };
-    me.send_service = function (path, params) {
+    me.send_service = function () {
         var args = Array.prototype.slice.call(arguments, 0);
         if (me.platform === "server") {
             return me.send_socket.apply(this, args);
@@ -75,7 +75,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send_server.apply(this, args);
         }
     };
-    me.send_platform = function (platform, path, params) {
+    me.send_platform = function (platform) {
         var args = Array.prototype.slice.call(arguments, 1);
         if (!platform) {
             platform = me.platform;
@@ -105,7 +105,7 @@ screens.core.message = function CoreMessage(me) {
                     }
                 }
                 if (me.core.handle.isHandle(arg, "function")) {
-                    var handle = arg;
+                    let handle = arg;
                     arg = function () {
                         var sendArgs = Array.prototype.slice.call(arguments, 0);
                         var sendInfo = { args: sendArgs, callback: handle };
@@ -116,7 +116,7 @@ screens.core.message = function CoreMessage(me) {
         }
         else if (me.platform === "client") {
             if (me.core.handle.isHandle(arg, "function")) {
-                var handle = arg;
+                let handle = arg;
                 arg = function () {
                     var sendArgs = Array.prototype.slice.call(arguments, 0);
                     var sendInfo = { args: sendArgs, callback: handle };
@@ -169,7 +169,7 @@ screens.core.message = function CoreMessage(me) {
         }
         info.args = args;
     };
-    me.send = function (path, params) {
+    me.send = function (path) {
         var args = Array.prototype.slice.call(arguments, 1);
         var callback = null;
         var result = null;
@@ -217,7 +217,7 @@ screens.core.message = function CoreMessage(me) {
             return [err_text];
         }
     };
-    me.headers = function (info) {
+    me.headers = function () {
 
     };
 };
@@ -228,7 +228,7 @@ screens.core.message.worker = function CoreMessageWorker(me) {
             me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if (me.platform === "client") {
-            await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
+            await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
             me.register();
         }
     };
@@ -269,16 +269,16 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
             me.PromiseWorker = await me.core.require.load("/node_modules/promise-worker/dist/promise-worker.js");
         }
         if (me.platform === "service_worker") {
-            await me.import('/node_modules/promise-worker/dist/promise-worker.register.js');
+            await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
             me.register();
             me.core.event.register(null, self, "activate", me.activate);
         }
     };
-    me.activate = async function (object, event) {
+    me.activate = async function () {
         await self.clients.claim();
     };
     me.load = async function (path) {
-        if ('serviceWorker' in navigator) {
+        if ("serviceWorker" in navigator) {
             me.log("Service worker registeration for path: " + path);
             try {
                 var reg = await navigator.serviceWorker.register(path);
@@ -287,10 +287,10 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                 if (!navigator.serviceWorker.controller) {
                     await new Promise(function (resolve) {
                         function onControllerChange() {
-                            navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
+                            navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
                             resolve(navigator.serviceWorker);
                         }
-                        navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
+                        navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
                     });
                 }
                 me.handle = new me.PromiseWorker(navigator.serviceWorker);

@@ -12,7 +12,7 @@ screens.core.service = function CoreService(me) {
                 process.exit(-1);
             }
             me.serviceNames = process.argv.splice(3);
-            for (serviceName of me.serviceNames) {
+            for (let serviceName of me.serviceNames) {
                 me.log("loading service: " + serviceName + "...");
                 await me.include("service." + serviceName);
                 me.log("setup service: " + serviceName + "...");
@@ -24,7 +24,7 @@ screens.core.service = function CoreService(me) {
     me.config = async function (name) {
         return await me.core.util.config("settings." + name);
     };
-    me.sendAll = async function (method, param) {
+    me.sendAll = async function (method) {
         var responses = [];
         var args = Array.prototype.slice.call(arguments);
         if (me.platform === "service") {

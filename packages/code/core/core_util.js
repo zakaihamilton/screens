@@ -22,9 +22,9 @@ screens.core.util = function CoreUtil(me) {
         var args = func.toString().match(/function\s.*?\(([^)]*)\)/)[1];
 
         // Split the arguments string into an array comma delimited.
-        return args.split(',').map(function (arg) {
+        return args.split(",").map(function (arg) {
             // Ensure no inline comments are parsed and trim the whitespace.
-            return arg.replace(/\/\*.*\*\//, '').trim();
+            return arg.replace(/\/\*.*\*\//, "").trim();
         }).filter(function (arg) {
             // Ensure no undefined values are added.
             return arg;
@@ -38,7 +38,7 @@ screens.core.util = function CoreUtil(me) {
         return item;
     };
     me.isSecure = function () {
-        return location.protocol === 'https:';
+        return location.protocol === "https:";
     };
     me.restart = function () {
         location.reload(true);

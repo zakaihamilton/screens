@@ -22,7 +22,7 @@ screens.core.stream = function CoreStream(me) {
             var start = parseInt(partialstart, 10);
             var end = partialend ? parseInt(partialend, 10) : total - 1;
             var chunkSize = (end - start) + 1;
-            var headers = {
+            let headers = {
                 "Content-Range": "bytes " + start + "-" + end + "/" + total,
                 "Accept-Ranges": "bytes",
                 "Content-Length": chunkSize,
@@ -34,7 +34,7 @@ screens.core.stream = function CoreStream(me) {
                 responseCode = 206;
             }
             response.writeHead(responseCode, headers);
-            var stream = null;
+            let stream = null;
             if (start > end) {
                 start = end;
             }
@@ -49,8 +49,8 @@ screens.core.stream = function CoreStream(me) {
             }
         }
         else {
-            var stream = me.fs.createReadStream(path);
-            var headers = {
+            let stream = me.fs.createReadStream(path);
+            let headers = {
                 "Accept-Ranges": "bytes",
                 "Access-Control-Allow-Credentials": "false",
                 "Access-Control-Allow-Headers": "*",

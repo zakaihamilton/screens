@@ -27,23 +27,23 @@ screens.core.string = function CoreString(me) {
     };
     me.unparseWords = function (string) {
         var delimiters = me.delimiters();
-        for (var index = 0; index < delimiters.length; index++) {
-            var delimiter = delimiters[index];
+        for (let index = 0; index < delimiters.length; index++) {
+            let delimiter = delimiters[index];
             string = string.split(" " + delimiter + " ").join(delimiter);
         }
         return string;
     };
     me.parseWords = function (callback, string) {
         var delimiters = me.delimiters();
-        for (var index = 0; index < delimiters.length; index++) {
-            var delimiter = delimiters[index];
+        for (let index = 0; index < delimiters.length; index++) {
+            let delimiter = delimiters[index];
             string = string.split(delimiter).join(" " + delimiter + " ");
         }
         var words = string.split(" ");
         callback(words);
         string = words.join(" ");
-        for (index = 0; index < delimiters.length; index++) {
-            var delimiter = delimiters[index];
+        for (let index = 0; index < delimiters.length; index++) {
+            let delimiter = delimiters[index];
             string = string.split(" " + delimiter + " ").join(delimiter);
         }
         return string;
@@ -67,7 +67,7 @@ screens.core.string = function CoreString(me) {
         }
         return "hebrew";
     };
-    me.regex = function (string, options = 'g') {
+    me.regex = function (string, options = "g") {
         if (string.startsWith("/")) {
             string = string.slice(1);
             string = new RegExp(string, options);
@@ -75,7 +75,7 @@ screens.core.string = function CoreString(me) {
         return string;
     };
     me.escape = function (string) {
-        return string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
+        return string.replace(/[-[\]{}()*+!<=:?./\\^$|#\s,]/g, "\\$&");
     };
     me.match = function (source, target, wordStyle) {
         if (wordStyle === "whole") {
@@ -149,7 +149,7 @@ screens.core.string = function CoreString(me) {
         var url, request;
         url = URL.createObjectURL(blob);
         request = new XMLHttpRequest();
-        request.open('GET', url, false);
+        request.open("GET", url, false);
         request.send();
         URL.revokeObjectURL(url);
         return request.responseText;
@@ -188,7 +188,7 @@ screens.core.string = function CoreString(me) {
     };
     me.padNumber = function (string, size) {
         var index = 0;
-        for (; string[index] >= '0' && string[index] <= '9'; index++);
+        for (; string[index] >= "0" && string[index] <= "9"; index++);
         var number = string.slice(0, index);
         while (number.length < size) { number = " " + number; }
         string = number + string.slice(index);

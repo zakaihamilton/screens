@@ -32,8 +32,8 @@ screens.core.json = function CoreJson(me) {
                 json = await me.core.http.send(info);
             }
             catch (err) {
-                err = "Cannot load json file: " + path + " err: " + err.message || err;
-                me.log_error(err);
+                var error = "Cannot load json file: " + path + " err: " + err.message || err;
+                me.log_error(error);
             }
             if (json) {
                 json = JSON.parse(json);
@@ -139,5 +139,5 @@ screens.core.json = function CoreJson(me) {
             results = results.filter(mapObj => -1 !== keys.indexOf(mapObj[property]));
         }
         return results;
-    }
+    };
 };

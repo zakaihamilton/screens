@@ -49,7 +49,7 @@ screens.core.socket = function CoreSocket(me) {
             me.io = me.client.connect(me.serverAddress);
             me.register(me.io);
             var firstTime = true;
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 me.io.on("connect", () => {
                     me.log("Connected to server: " + me.serverAddress);
                     me.isConnected = true;
@@ -58,7 +58,7 @@ screens.core.socket = function CoreSocket(me) {
                         resolve();
                     }
                 });
-                me.io.on("disconnect", (info) => {
+                me.io.on("disconnect", () => {
                     me.isConnected = false;
                     me.log("Disconnected from server: " + me.serverAddress);
                 });
@@ -147,7 +147,7 @@ screens.core.socket = function CoreSocket(me) {
                 callback.apply(null, info.args);
             }
         });
-        socket.on("heartbeat_send", (data) => {
+        socket.on("heartbeat_send", () => {
             socket.emit("heartbeat_response", { beat: 1, user: me.core.login.userName() });
             me.log("heartbeat response sent");
         });
@@ -155,7 +155,7 @@ screens.core.socket = function CoreSocket(me) {
     me.list = function (platform) {
         var items = [];
         if (me.sockets) {
-            me.sockets.forEach((info, socket) => {
+            me.sockets.forEach((info) => {
                 if (!platform || info.platform === platform) {
                     items.push(info);
                 }
@@ -163,7 +163,7 @@ screens.core.socket = function CoreSocket(me) {
         }
         return items;
     };
-    me.sendFirst = async function (platform, method, param) {
+    me.sendFirst = async function (platform, method) {
         var promise = null;
         var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
@@ -185,7 +185,7 @@ screens.core.socket = function CoreSocket(me) {
         var response = await promise;
         return response;
     };
-    me.sendAll = async function (platform, method, param) {
+    me.sendAll = async function (platform, method) {
         var promises = [];
         var args = Array.prototype.slice.call(arguments, 1);
         var count = 0;
@@ -204,7 +204,7 @@ screens.core.socket = function CoreSocket(me) {
         return responses;
     };
     me.ready = {
-        set: function (socket) {
+        set: function () {
 
         }
     };

@@ -5,7 +5,7 @@
 
 screens.core.hash = function CoreHash(me) {
     me.init = function () {
-        me.bcrypt = require('bcryptjs');
+        me.bcrypt = require("bcryptjs");
     };
     me.gen = function (password) {
         return new Promise((resolve, reject) => {

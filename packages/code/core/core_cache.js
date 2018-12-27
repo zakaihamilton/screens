@@ -7,7 +7,7 @@ screens.core.cache = function CoreCache(me) {
     me.init = function () {
         me.cache = {};
     };
-    me.use = async function (id, method, params) {
+    me.use = async function (id, method) {
         if (this.userId) {
             var result = await me.user.access.isAPIAllowed(method, this.userId);
             if (!result) {
@@ -30,6 +30,6 @@ screens.core.cache = function CoreCache(me) {
         delete me.cache[id];
     };
     me.resetAll = function () {
-        me.cache = {}
-    }
+        me.cache = {};
+    };
 };

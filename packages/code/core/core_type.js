@@ -39,46 +39,6 @@ screens.core.type = function CoreType(me) {
             }
         }
     };
-    me.wrap_args = function (unwrapped_args) {
-        var query = null;
-        if (unwrapped_args) {
-            var first = true;
-            var value = null;
-            for (var i = 0; i < unwrapped_args.length; i++) {
-                try {
-                    value = encodeURIComponent(me.core.type.wrap(unwrapped_args[i]));
-                    if (first) {
-                        query = "?" + i + "=" + value;
-                        first = false;
-                    }
-                    else {
-                        query += "&" + i + "=" + value;
-                    }
-                }
-                catch (e) {
-
-                }
-            }
-        }
-        return query;
-    };
-    me.unwrap_args = function (wrapped_args) {
-        if (!wrapped_args) {
-            return wrapped_args;
-        }
-        if (typeof wrapped_args === "string") {
-            wrapped_args = me.core.http.parse_query(wrapped_args);
-        }
-        var unwrapped_args = [];
-        if (wrapped_args) {
-            for (var key in wrapped_args) {
-                if (wrapped_args.hasOwnProperty(key)) {
-                    unwrapped_args.push(me.core.type.unwrap(wrapped_args[key]));
-                }
-            }
-        }
-        return unwrapped_args;
-    };
     me.arrayBufferToString = function (buffer) {
         var bytes = new Uint8Array(buffer);
         var len = buffer.byteLength;
@@ -99,10 +59,10 @@ screens.core.type = function CoreType(me) {
     };
     if (me.platform === "server" || me.platform === "service") {
         global.atob = function (a) {
-            return new Buffer(a, 'base64').toString('binary');
+            return new Buffer(a, "base64").toString("binary");
         };
         global.btoa = function (b) {
-            return new Buffer(b).toString('base64');
+            return new Buffer(b).toString("base64");
         };
     }
 };

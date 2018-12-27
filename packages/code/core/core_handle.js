@@ -30,7 +30,7 @@ screens.core.handle = function CoreHandle(me) {
     me.push = function (object, type = "handle") {
         var ref = null;
         if (object) {
-            var ref = me.core.ref.gen(type);
+            ref = me.core.ref.gen(type);
             me.handles[ref] = object;
         }
         return ref;

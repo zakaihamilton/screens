@@ -6,9 +6,9 @@
 screens.core.module = function CoreModule(me) {
     me.init = function () {
         me.core.property.link("core.http.receive", "core.module.receive", true);
-        me.autoprefixer = require('autoprefixer');
-        me.postcss = require('postcss');
-        me.mime = require('mime');
+        me.autoprefixer = require("autoprefixer");
+        me.postcss = require("postcss");
+        me.mime = require("mime");
     };
     me.path_file_to_component = function (filePath) {
         filePath = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -20,12 +20,12 @@ screens.core.module = function CoreModule(me) {
     };
     me.loadTextFile = async function (filePath, optional) {
         try {
-            var data = await me.core.file.readFile(filePath, 'utf8', optional);
+            var data = await me.core.file.readFile(filePath, "utf8", optional);
         }
         catch (err) {
-            err = "Cannot load text file: " + filePath + " err: " + err;
-            me.log_error(err);
-            throw err;
+            var error = "Cannot load text file: " + filePath + " err: " + err;
+            me.log_error(error);
+            throw error;
         }
         return data;
     };
@@ -88,7 +88,7 @@ screens.core.module = function CoreModule(me) {
                 extFilePath = filePath.replace(".js", "." + extension);
                 var extData = await me.loadTextFile(extFilePath);
                 if (isString) {
-                    extData = JSON.stringify(extData)
+                    extData = JSON.stringify(extData);
                 }
                 vars[extension] = extData;
             }
@@ -139,28 +139,28 @@ screens.core.module = function CoreModule(me) {
         try {
             lines = lines.map(async (line) => {
                 /* Check if to inject file */
-                var result = line.match(/\s\<script\ssrc=\"([^"]*)"\>\<\/script\>/);
+                var result = line.match(/\s<script\ssrc="([^"]*)"><\/script>/);
                 if (result && result.length > 1) {
                     var filePath = me.core.string.trimEnd(result[1], "?");
                     if (filePath.startsWith("http")) {
                         return line;
                     }
-                    var codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
-                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional: true });
-                    codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
+                    let codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
+                    let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional: true });
+                    let codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
                     line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</script>\n";
-                    var cssFilePath = filePath.replace(".js", ".css");
-                    styleContent = await me.core.module.handleMultiFiles(cssFilePath, styleParams, info);
+                    let cssFilePath = filePath.replace(".js", ".css");
+                    let styleContent = await me.core.module.handleMultiFiles(cssFilePath, styleParams, info);
                     line += "<style id=\"" + cssFilePath + "\">\n" + styleContent + "\n</style>\n";
                 }
-                result = line.match(/\s\<link\srel\=\"stylesheet\"\shref=\"([^"]*)"\>\<\/link\>/);
+                result = line.match(/\s<link\srel="stylesheet"\shref="([^"]*)"><\/link>/);
                 if (result && result.length > 1) {
-                    var filePath = me.core.string.trimEnd(result[1], "?");
+                    let filePath = me.core.string.trimEnd(result[1], "?");
                     if (filePath.startsWith("http")) {
                         return line;
                     }
-                    var styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css" });
-                    styleContent = await me.core.module.handleMultiFiles(filePath, styleParams, info);
+                    let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css" });
+                    let styleContent = await me.core.module.handleMultiFiles(filePath, styleParams, info);
                     line = "<style id=\"" + filePath + "\">\n" + styleContent + "\n</style>\n";
                 }
                 return line;
@@ -210,20 +210,20 @@ screens.core.module = function CoreModule(me) {
             info["content-type"] = "text/plain";
             info.body = await me.loadTextFile(filePath);
         } else if (filePath.endsWith(".m4a")) {
-            var mimeType = "audio/mp4";
+            let mimeType = "audio/mp4";
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else if (filePath.endsWith(".mp4")) {
-            var mimeType = "video/mp4";
+            let mimeType = "video/mp4";
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else if (filePath.endsWith(".mp3")) {
-            var mimeType = "audio/mpeg";
+            let mimeType = "audio/mpeg";
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         } else {
             var extension = me.core.path.extension(filePath);
-            var mimeType = me.mime.getType(extension);
+            let mimeType = me.mime.getType(extension);
             info.custom = true;
             me.core.stream.serve(info.headers, info.response, filePath, mimeType);
         }

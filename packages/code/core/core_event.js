@@ -10,7 +10,7 @@ screens.core.event = function CoreEvent(me) {
         }
     };
     me.send_event = function (object, method, event) {
-        if (!object || !object.getAttribute || !object.getAttribute('disabled')) {
+        if (!object || !object.getAttribute || !object.getAttribute("disabled")) {
             return me.core.property.set(object, method, event);
         }
     };

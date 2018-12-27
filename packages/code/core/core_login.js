@@ -69,7 +69,7 @@ screens.core.login = function CoreLogin(me) {
         immediate_failed: "Immediate Failed"
     };
     me.signin = {
-        set: function (object) {
+        set: function () {
             me.core.listener.reset(me.id);
             me.auth2.signIn().then(() => {
                 me.core.listener.signal(me.id);
@@ -80,7 +80,7 @@ screens.core.login = function CoreLogin(me) {
         }
     };
     me.signout = {
-        set: function (object) {
+        set: function () {
             me.core.listener.reset(me.id);
             me.auth2.signOut().then(() => {
                 me.setStatus("Signed out");
@@ -89,7 +89,7 @@ screens.core.login = function CoreLogin(me) {
         }
     };
     me.disconnect = {
-        set: function (object) {
+        set: function () {
             me.auth2.disconnect().then(() => {
                 me.setStatus("Disconnected");
                 me.core.listener.signal(me.id);

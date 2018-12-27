@@ -5,13 +5,13 @@
 
 screens.core.server = function CoreServer(me) {
     me.init = function () {
-        me.cmd = require('node-cmd');
+        me.cmd = require("node-cmd");
         me.startDate = new Date();
     };
     me.run = async function (cmd) {
         me.log("running: " + cmd);
         return new Promise((resolve, reject) => {
-            me.cmd.get(cmd, (err, data, stderr) => {
+            me.cmd.get(cmd, (err, data) => {
                 if (err) {
                     reject(err);
                 }

@@ -13,7 +13,7 @@ screens.core.startup = function CoreStartup(me) {
         if (startup) {
             var components = Object.keys(startup);
             if (components) {
-                for (component_name of components) {
+                for (let component_name of components) {
                     var component = screens.browse("startup." + component_name);
                     if (component.run) {
                         me.log("startup: " + component_name);

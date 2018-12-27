@@ -49,18 +49,18 @@ screens.core.property = function CoreProperty(me) {
     me.get = function (object, name, value = undefined, method = "get", check = false) {
         var result = undefined;
         if (Array.isArray(object)) {
-            var results = [];
-            for (item of object) {
-                var result = me.core.property.get(item, name, value, method);
+            let results = [];
+            for (let item of object) {
+                let result = me.core.property.get(item, name, value, method);
                 results.push(result);
             }
             return results;
         }
         if (name !== null && typeof name === "object") {
-            var results = {};
-            for (subName in name) {
+            let results = {};
+            for (let subName in name) {
                 var subValue = name[subName];
-                var result = me.core.property.get(object, subName, subValue, method);
+                let result = me.core.property.get(object, subName, subValue, method);
                 results[subName] = result;
             }
             return results;
@@ -243,7 +243,7 @@ screens.core.property = function CoreProperty(me) {
             return results;
         }
         if (Array.isArray(name)) {
-            var results = [];
+            let results = [];
             for (var item of name) {
                 results.push(me.core.property.set(object, item, value));
             }
@@ -251,21 +251,20 @@ screens.core.property = function CoreProperty(me) {
         }
         var promises = [];
         if (typeof name === "string") {
-            var subPromises = me.sendToLinks(object, name, value, true);
+            let subPromises = me.sendToLinks(object, name, value, true);
             if (subPromises.length) {
                 promises.push(...subPromises);
             }
         }
         else if (typeof name !== "function") {
-            var results = {};
             for (var key in name) {
-                var value = name[key];
+                let value = name[key];
                 me.core.property.set(object, key, value);
             }
         }
         var result = me.core.property.get(object, name, value, "set");
         if (typeof name === "string") {
-            var subPromises = me.sendToLinks(object, name, value, false);
+            let subPromises = me.sendToLinks(object, name, value, false);
             if (subPromises.length) {
                 promises.push(...subPromises);
             }
@@ -353,7 +352,7 @@ screens.core.property.object = function CorePropertyObject(me) {
                             }
                         }
                         if (!dynamic && info && "get" in info) {
-                            var callback = info["get"];
+                            let callback = info["get"];
                             if (callback) {
                                 value = callback(object, property);
                                 if (typeof value !== "undefined") {

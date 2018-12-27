@@ -39,7 +39,7 @@ screens.core.file = function CoreFile(me) {
         path = me.path(path);
         return new Promise((resolve, reject) => {
             try {
-                me.fs.writeFile(path, data, options, function (err, data) {
+                me.fs.writeFile(path, data, options, function (err) {
                     if (err) {
                         if (optional) {
                             resolve(null);
@@ -65,7 +65,7 @@ screens.core.file = function CoreFile(me) {
         return new Promise((resolve, reject) => {
             me.fs.mkdir(path, function (err) {
                 if (err) {
-                    if (err.code == 'EEXIST') {
+                    if (err.code == "EEXIST") {
                         resolve();
                     }
                     else {
@@ -82,7 +82,6 @@ screens.core.file = function CoreFile(me) {
         path = me.path(path);
         var tokens = path.split("/");
         var mkdirPath = "";
-        var error = null;
         for (var token of tokens) {
             if (mkdirPath) {
                 mkdirPath += "/" + token;
@@ -197,11 +196,11 @@ screens.core.file = function CoreFile(me) {
         return new Promise((resolve, reject) => {
             protocol.get(source, function (response) {
                 response.pipe(file);
-                file.on('finish', function () {
+                file.on("finish", function () {
                     me.log("downloaded: " + source + " to: " + target);
                     file.close(resolve);
                 });
-            }).on('error', function (err) {
+            }).on("error", function (err) {
                 me.fs.unlink(target);
                 reject(err);
             });
@@ -234,10 +233,10 @@ screens.core.file = function CoreFile(me) {
             }
             session.stream = me.fs.createReadStream(session.path, params);
             if (session.stream) {
-                session.stream.on('data', data => {
+                session.stream.on("data", data => {
                     callback(data);
                 });
-                session.stream.on('close', () => {
+                session.stream.on("close", () => {
                     callback(null);
                 });
                 session.close = () => {
@@ -348,8 +347,8 @@ screens.core.file.protocol = function CoreFileProtocol(me) {
         if (!exists) {
             return null;
         }
-        var data = await me.upper.writeFile(pathInfo.direct, data, options);
-        return data;
+        var result = await me.upper.writeFile(pathInfo.direct, data, options);
+        return result;
     };
     return "server";
 };

@@ -46,7 +46,7 @@ screens.core.path = function CorePath(me) {
         var name = "";
         var last = path.split("/").pop();
         if (last) {
-            var name = last;
+            name = last;
             var hidden = false;
             if (last.startsWith(".")) {
                 name = name.substring(1);
@@ -62,7 +62,7 @@ screens.core.path = function CorePath(me) {
         var name = "";
         var last = path.split("/").pop();
         if (last) {
-            var name = last;
+            name = last;
             var hidden = false;
             if (last.startsWith(".")) {
                 name = name.substring(1);
