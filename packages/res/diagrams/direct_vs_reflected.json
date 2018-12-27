@@ -19,7 +19,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -33,12 +33,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Ohr Yashar", "white", "bold"],
-                            ["2", "Keter", "white"],
-                            ["3", "Hochma", "#FFF3CA"],
-                            ["4", "Bina", "#C8D9F9"],
-                            ["5", "Tifferet", "#F5CCCB"],
-                            ["6", "Malchut", "#D9EAD2"]
+                            [
+                                "1",
+                                "Ohr Yashar",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "Keter",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Hochma",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Bina",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Tifferet",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Malchut",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -46,7 +71,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -60,12 +85,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Ohr Hozer", "white", "bold"],
-                            ["2", "Malchut", "#D9EAD2"],
-                            ["3", "Tifferet", "#F5CCCB"],
-                            ["4", "Bina", "#C8D9F9"],
-                            ["5", "Hochma", "#FFF3CA"],
-                            ["6", "Keter", "white"]
+                            [
+                                "1",
+                                "Ohr Hozer",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "Malchut",
+                                "#D9EAD2"
+                            ],
+                            [
+                                "3",
+                                "Tifferet",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "4",
+                                "Bina",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Hochma",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "6",
+                                "Keter",
+                                "white"
+                            ]
                         ]
                     }
                 }

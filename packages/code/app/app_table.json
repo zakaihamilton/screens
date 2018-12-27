@@ -94,16 +94,7 @@
             "ui.basic.var": "table",
             "ui.class.class": "app.table.widget"
         },
-        {
-            "ui.basic.var": "popup",
-            "ui.basic.tag": "div",
-            "ui.basic.html": "@widget.transform.html",
-            "ui.class.add": "modal",
-            "ui.style.zIndex": "1000",
-            "ui.property.after": {
-                "ui.node.parent": "@ui.element.workspace"
-            }
-        }
+        "app.table.transform.popup"
     ],
     "ui.property.after": {
         "storage.local.key": "app-table-window",

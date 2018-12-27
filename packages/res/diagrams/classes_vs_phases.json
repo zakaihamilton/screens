@@ -19,7 +19,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -33,12 +33,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Kelim", "white", "bold"],
-                            ["2", "Keter", "white"],
-                            ["3", "Hochma", "#FFF3CA"],
-                            ["4", "Bina", "#C8D9F9"],
-                            ["5", "Tifferet", "#F5CCCB"],
-                            ["6", "Malchut", "#D9EAD2"]
+                            [
+                                "1",
+                                "Kelim",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "Keter",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Hochma",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Bina",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Tifferet",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Malchut",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -46,7 +71,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -60,12 +85,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Behinot", "white", "bold"],
-                            ["2", "Teva", "white"],
-                            ["3", "Enoshut", "#FFF3CA"],
-                            ["4", "Hevra", "#C8D9F9"],
-                            ["5", "Kevutsa", "#F5CCCB"],
-                            ["6", "Yahid Segula", "#D9EAD2"]
+                            [
+                                "1",
+                                "Behinot",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "Teva",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Enoshut",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Hevra",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Kevutsa",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Yahid Segula",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -73,7 +123,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -87,12 +137,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Classes", "white", "bold"],
-                            ["2", "", "white"],
-                            ["3", "Avraham", "#FFF3CA"],
-                            ["4", "Yitzhak", "#C8D9F9"],
-                            ["5", "Yaakov", "#F5CCCB"],
-                            ["6", "Yosef", "#D9EAD2"]
+                            [
+                                "1",
+                                "Classes",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Avraham",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Yitzhak",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Yaakov",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Yosef",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -100,7 +175,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -114,12 +189,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Elements", "white", "bold"],
-                            ["2", "", "white"],
-                            ["3", "Mayim", "#FFF3CA"],
-                            ["4", "Esh", "#C8D9F9"],
-                            ["5", "Ruach2", "#F5CCCB"],
-                            ["6", "Affar", "#D9EAD2"]
+                            [
+                                "1",
+                                "Elements",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Mayim",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Esh",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Ruach2",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Affar",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -127,7 +227,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -141,12 +241,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Growth", "white", "bold"],
-                            ["2", "Fetus", "white"],
-                            ["3", "Toddler", "#FFF3CA"],
-                            ["4", "Preteen", "#C8D9F9"],
-                            ["5", "Teenager", "#F5CCCB"],
-                            ["6", "Adult", "#D9EAD2"]
+                            [
+                                "1",
+                                "Growth",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "Fetus",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "Toddler",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "Preteen",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "Teenager",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "Adult",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 },
@@ -154,7 +279,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight"
                         ],
@@ -168,12 +293,37 @@
                             "ui.style.verticalAlign": "middle"
                         },
                         "ui.data.values": [
-                            ["1", "Binary", "white", "bold"],
-                            ["2", "", "white"],
-                            ["3", "0 0", "#FFF3CA"],
-                            ["4", "0 1", "#C8D9F9"],
-                            ["5", "1 0", "#F5CCCB"],
-                            ["6", "1 1", "#D9EAD2"]
+                            [
+                                "1",
+                                "Binary",
+                                "white",
+                                "bold"
+                            ],
+                            [
+                                "2",
+                                "",
+                                "white"
+                            ],
+                            [
+                                "3",
+                                "0 0",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4",
+                                "0 1",
+                                "#C8D9F9"
+                            ],
+                            [
+                                "5",
+                                "1 0",
+                                "#F5CCCB"
+                            ],
+                            [
+                                "6",
+                                "1 1",
+                                "#D9EAD2"
+                            ]
                         ]
                     }
                 }

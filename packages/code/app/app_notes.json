@@ -34,16 +34,7 @@
                 "storage.local.restore": "contents"
             }
         },
-        {
-            "ui.basic.var": "popup",
-            "ui.basic.tag": "div",
-            "ui.basic.html": "@widget.transform.html",
-            "ui.class.add": "modal",
-            "ui.style.zIndex": "1000",
-            "ui.property.after": {
-                "ui.node.parent": "@ui.element.workspace"
-            }
-        }
+        "app.notes.transform.popup"
     ],
     "ui.property.after": {
         "storage.local.key": "app-notes-window",

@@ -12,7 +12,6 @@ screens.app.prism = function AppPrism(me) {
             args = [""];
         }
         var window = me.ui.element.create(__json__, "workspace", "self");
-        window.language = "english";
         return window;
     };
     me.initOptions = {
@@ -47,7 +46,6 @@ screens.app.prism = function AppPrism(me) {
                 }
             }, options.choice));
             me.ui.class.useStylesheet("kab");
-            window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
             me.resize(window);
         }

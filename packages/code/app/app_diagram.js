@@ -36,7 +36,6 @@ screens.app.diagram = function AppDiagram(me) {
             json["ui.style.top"] = "0px";
         }
         var window = me.ui.element.create(json, parent, "self", params);
-        window.language = "english";
         return window;
     };
     me.fullPath = function (name) {
@@ -62,7 +61,6 @@ screens.app.diagram = function AppDiagram(me) {
                 }
             }, options.choice));
             me.ui.class.useStylesheet("kab");
-            window.options.clickCallback = "screens.widget.transform.openPopup";
         }
     };
     me.reload = async function (object) {
@@ -89,7 +87,7 @@ screens.app.diagram = function AppDiagram(me) {
         }
     };
     me.term = async function (object, text) {
-        var html = await me.widget.transform.term(object, text);
+        var html = await me.transform.term(object, text);
         me.core.property.set(object, "ui.basic.html", html);
     };
 };

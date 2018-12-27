@@ -18,7 +18,6 @@ screens.app.transform = function AppTransform(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            window.language = null;
             me.ui.options.load(me, window, {
                 showInput: false
             });

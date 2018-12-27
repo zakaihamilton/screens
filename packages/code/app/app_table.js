@@ -43,8 +43,6 @@ screens.app.table = function AppTable(me) {
             me.ui.class.useStylesheet("kab");
             window.rowCount = 20;
             window.columnCount = 10;
-            window.language = "english";
-            window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
         }
     };
@@ -186,7 +184,7 @@ screens.app.table = function AppTable(me) {
                 var tag = editMode && !header ? "input" : "div";
                 var value = "";
                 if (!editMode) {
-                    value = await me.core.property.get(window, "widget.transform.term", cell.value);
+                    value = await me.core.property.get(window, "app.table.transform.term", cell.value);
                 }
                 else if (header) {
                     value = header;
@@ -205,7 +203,7 @@ screens.app.table = function AppTable(me) {
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
-        var language = window.language.toLowerCase();
+        var language = window.options.language.toLowerCase();
         if (language === "auto") {
             language = "english";
         }

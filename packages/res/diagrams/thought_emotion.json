@@ -20,7 +20,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "widget.transform.term",
+                            "app.diagram.transform.term",
                             "ui.style.backgroundColor",
                             "ui.style.fontWeight",
                             "ui.style.borderWidth"
@@ -39,37 +39,169 @@
                             }
                         },
                         "ui.data.values": [
-                            ["1", "17/20", "Bituy", "#D9EAD2", "", "2px"],
-                            ["1", "13/16", "Gadlut", "#F5CCCB", "", "2px"],
-                            ["1", "9/12", "Katnut", "#C8D9F9", "", "2px"],
-                            ["1", "5/8", "Rigshi", "#FFF3CA", "", "2px"],
-                            ["1", "1/4", "Klipa", "white", "", "2px"],
-                            ["2/4", "21/24", "Hochma", "#FFF3CA", "", "2px"],
-                            ["4/6", "21/24", "Bina", "#C8D9F9", "", "2px"],
-                            ["8/10", "21/24", "Tifferet", "#F5CCCB", "", "2px"],
-                            ["10/12", "21/24", "Malchut", "#D9EAD2", "", "2px"],
-                            ["2/6", "25/28", "Boreh", "", "", "2px"],
-                            ["8/12", "25/28", "Nivrah", "", "", "2px"],
-                            ["8/10", "1/4", "Sechel Enoshi", "#F5CCCB", "bold"],
-                            ["10/12", "1/4", "Regesh Enoshi", "#D9EAD2"],
-                            ["4/6", "5/8", "Sechel Ruchani", "#FFF3CA"],
-                            ["8/10", "5/8", "Regesh Enoshi", "#D9EAD2", "bold"],
-                            ["4/6", "9/12", "Sechel Ruchani", "#FFF3CA", "bold"],
-                            ["8/10", "9/12", "Regesh Enoshi", "#D9EAD2", ""],
-                            ["2/4", "13/16", "Sechel Ruchani", "#FFF3CA"],
-                            ["4/6", "13/16", "Regesh Ruchani", "#C8D9F9", "bold"],
-                            ["2/4", "17/20", "Sechel Ruchani", "#FFF3CA", "bold"],
-                            ["4/6", "17/20", "Regesh Ruchani", "#C8D9F9"]
+                            [
+                                "1",
+                                "17/20",
+                                "Bituy",
+                                "#D9EAD2",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "1",
+                                "13/16",
+                                "Gadlut",
+                                "#F5CCCB",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "1",
+                                "9/12",
+                                "Katnut",
+                                "#C8D9F9",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "1",
+                                "5/8",
+                                "Rigshi",
+                                "#FFF3CA",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "1",
+                                "1/4",
+                                "Klipa",
+                                "white",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "2/4",
+                                "21/24",
+                                "Hochma",
+                                "#FFF3CA",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "4/6",
+                                "21/24",
+                                "Bina",
+                                "#C8D9F9",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "8/10",
+                                "21/24",
+                                "Tifferet",
+                                "#F5CCCB",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "10/12",
+                                "21/24",
+                                "Malchut",
+                                "#D9EAD2",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "2/6",
+                                "25/28",
+                                "Boreh",
+                                "",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "8/12",
+                                "25/28",
+                                "Nivrah",
+                                "",
+                                "",
+                                "2px"
+                            ],
+                            [
+                                "8/10",
+                                "1/4",
+                                "Sechel Enoshi",
+                                "#F5CCCB",
+                                "bold"
+                            ],
+                            [
+                                "10/12",
+                                "1/4",
+                                "Regesh Enoshi",
+                                "#D9EAD2"
+                            ],
+                            [
+                                "4/6",
+                                "5/8",
+                                "Sechel Ruchani",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "8/10",
+                                "5/8",
+                                "Regesh Enoshi",
+                                "#D9EAD2",
+                                "bold"
+                            ],
+                            [
+                                "4/6",
+                                "9/12",
+                                "Sechel Ruchani",
+                                "#FFF3CA",
+                                "bold"
+                            ],
+                            [
+                                "8/10",
+                                "9/12",
+                                "Regesh Enoshi",
+                                "#D9EAD2",
+                                ""
+                            ],
+                            [
+                                "2/4",
+                                "13/16",
+                                "Sechel Ruchani",
+                                "#FFF3CA"
+                            ],
+                            [
+                                "4/6",
+                                "13/16",
+                                "Regesh Ruchani",
+                                "#C8D9F9",
+                                "bold"
+                            ],
+                            [
+                                "2/4",
+                                "17/20",
+                                "Sechel Ruchani",
+                                "#FFF3CA",
+                                "bold"
+                            ],
+                            [
+                                "4/6",
+                                "17/20",
+                                "Regesh Ruchani",
+                                "#C8D9F9"
+                            ]
                         ]
                     }
                 },
                 {
-                    "ui.basic.elements":
-                            {
-                                "comment": "Diaphragm Separator",
-                                "borderStyle": "dashed",
-                                "line": "1 7 28 7"
-                            }
+                    "ui.basic.elements": {
+                        "comment": "Diaphragm Separator",
+                        "borderStyle": "dashed",
+                        "line": "1 7 28 7"
+                    }
                 }
             ]
         }

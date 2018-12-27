@@ -125,7 +125,7 @@ screens.widget.transform = function WidgetTransform(me) {
             }
             me.log("detected language: " + language);
         }
-        widget.options.clickCallback = "screens.widget.transform.openPopup";
+        widget.options.clickCallback = "screens.widget.transform.popup.open";
         widget.options.diagramCallback = "screens.widget.transform.loadDiagram";
         widget.options.reload = true;
         me.media.voice.stop();
@@ -168,48 +168,6 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.inTransform = false;
         me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
-    };
-    me.openPopup = function (object, termName) {
-        var widget = me.findWidget(object);
-        var foundTermName = Object.keys(widget.termData.terms).find((term) => {
-            return term.replace(/\s+/g, "") === termName.replace(/\s+/g, "");
-        });
-        if (foundTermName && termName !== foundTermName) {
-            termName = foundTermName;
-        }
-        var term = widget.termData.terms[termName];
-        if (!term) {
-            return;
-        }
-        var widgets = me.ui.node.bind(widget.var.popup, term, {
-            term: ".text",
-            phase: ".phase|.phase.minor",
-            hebrew: ".item.hebrew",
-            translation: ".item.translation",
-            explanation: ".item.explanation",
-            category: ".category",
-            source: ".source",
-            description: ".item.style.descriptions.long|"
-        }, "None");
-        for (var name in widgets) {
-            var child = widgets[name];
-            if (child) {
-                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
-            }
-        }
-        var phase = widgets.phase.innerText.toLowerCase();
-        var classes = "title widget-transform-level ";
-        if (phase !== "root") {
-            classes += "kab-term-phase-" + phase;
-        }
-        me.core.property.set(widgets.phase, "ui.class.class", classes);
-        me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
-    };
-    me.closePopup = function (object) {
-        var modal = me.ui.node.classParent(object, "modal");
-        if (modal) {
-            me.core.property.set(modal, "ui.class.remove", "is-active");
-        }
     };
     me.reflow = function (object) {
         var widget = me.findWidget(object);
@@ -527,23 +485,6 @@ screens.widget.transform = function WidgetTransform(me) {
         console.log("params.gridData: " + JSON.stringify(params.gridData));
         return params;
     };
-    me.term = async function (object, text) {
-        var widget = me.findWidget(object);
-        var array = text;
-        if (!Array.isArray(text)) {
-            array = [text];
-        }
-        var options = Object.assign({}, widget.options, { category: false });
-        var result = await me.core.util.map(array, async (text) => {
-            var info = await me.kab.text.parse(widget.language, text, options);
-            if (!widget.termData) {
-                widget.termData = { terms: {} };
-            }
-            widget.termData.terms = Object.assign(widget.termData.terms, info.terms);
-            return info.text;
-        });
-        return result.join("<br>");
-    };
     me.updateScrolling = function (object) {
         var widget = me.findWidget(object);
         var pageSize = me.widget.transform.layout.pageSize(widget.var.layout);
@@ -592,6 +533,51 @@ screens.widget.transform = function WidgetTransform(me) {
                 return title;
             }
             return key;
+        }
+    };
+};
+
+screens.widget.transform.popup = function WidgetTransformPopup(me) {
+    me.open = function (object, termName) {
+        var widget = me.upper.findWidget(object);
+        var foundTermName = Object.keys(widget.termData.terms).find((term) => {
+            return term.replace(/\s+/g, "") === termName.replace(/\s+/g, "");
+        });
+        if (foundTermName && termName !== foundTermName) {
+            termName = foundTermName;
+        }
+        var term = widget.termData.terms[termName];
+        if (!term) {
+            return;
+        }
+        var widgets = me.ui.node.bind(widget.var.popup, term, {
+            term: ".text",
+            phase: ".phase|.phase.minor",
+            hebrew: ".item.hebrew",
+            translation: ".item.translation",
+            explanation: ".item.explanation",
+            category: ".category",
+            source: ".source",
+            description: ".item.style.descriptions.long|"
+        }, "None");
+        for (var name in widgets) {
+            var child = widgets[name];
+            if (child) {
+                child.parentNode.style.display = child.innerText === "None" ? "none" : "";
+            }
+        }
+        var phase = widgets.phase.innerText.toLowerCase();
+        var classes = "title widget-transform-level ";
+        if (phase !== "root") {
+            classes += "kab-term-phase-" + phase;
+        }
+        me.core.property.set(widgets.phase, "ui.class.class", classes);
+        me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
+    };
+    me.close = function (object) {
+        var modal = me.ui.node.classParent(object, "modal");
+        if (modal) {
+            me.core.property.set(modal, "ui.class.remove", "is-active");
         }
     };
 };

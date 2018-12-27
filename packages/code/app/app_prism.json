@@ -59,16 +59,7 @@
             "ui.class.class": "app.prism.viewer",
             "ui.touch.down": "app.prism.rotateEvent"
         },
-        {
-            "ui.basic.var": "popup",
-            "ui.basic.tag": "div",
-            "ui.basic.html": "@widget.transform.html",
-            "ui.class.add": "modal",
-            "ui.style.zIndex": "1000",
-            "ui.property.after": {
-                "ui.node.parent": "@ui.element.workspace"
-            }
-        }
+        "app.prism.transform.popup"
     ],
     "ui.property.after": {
         "storage.local.key": "app-prism-window",
