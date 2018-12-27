@@ -358,6 +358,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-level-item {
+    padding: 10px;
     justify-content: flex-start;
     flex-grow: 0 !important;
 }
