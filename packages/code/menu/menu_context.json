@@ -8,21 +8,6 @@
         }
     ],
     [
-        "Move",
-        "",
-        {
-            "enabled": false
-        }
-    ],
-    [
-        "Size",
-        "",
-        {
-            "enabled": false,
-            "visible": "menu.context.resizable"
-        }
-    ],
-    [
         "Minimize",
         "widget.window.minimize",
         {
