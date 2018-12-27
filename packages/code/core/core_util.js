@@ -51,11 +51,7 @@ screens.core.util = function CoreUtil(me) {
         return result;
     };
     me.sleep = async function (time) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve();
-            }, time);
-        });
+        return new Promise(resolve => setTimeout(resolve, time));
     };
     me.start = function () {
         if (me.platform === "server" || me.platform === "service") {
