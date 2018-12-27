@@ -16,9 +16,9 @@ screens.ui.arrange = function UIArrange(me) {
             }
             var windows = me.core.property.get(object, "widget.window.visibleWindows");
             var left = 0, top = 0, numWindows = windows.length;
-            for (window of windows) {
-                me.reposition(window, function (region) {
-                    var label_region = me.ui.rect.relativeRegion(window.var.label, window);
+            for (let child of windows) {
+                me.reposition(child, function (region) {
+                    var label_region = me.ui.rect.relativeRegion(child.var.label, child);
                     region.left = left;
                     region.top = top;
                     region.width -= label_region.bottom * numWindows;
@@ -43,8 +43,17 @@ screens.ui.arrange = function UIArrange(me) {
         var isFixed = me.core.property.get(window, "fixed");
         callback(parent_region);
         me.ui.rect.setRelativeRegion(window, parent_region, container, isFixed);
-        me.core.property.notify(window, "update");
-        me.core.property.notify(parent, "update");
+        me.core.property.set(window, "ui.property.broadcast", {
+            "update": null
+        });
+        me.core.property.set(parent, "ui.property.broadcast", {
+            "update": null
+        });
+        if (window.child_window) {
+            me.core.property.set(window.child_window, "ui.property.broadcast", {
+                "update": null
+            });
+        }
     };
     me.alignToLeftTop = function (object) {
         me.reposition(object, function (parent_region) {
