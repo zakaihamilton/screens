@@ -4,6 +4,9 @@
  */
 
 screens.app.prism = function AppPrism(me) {
+    me.init = function () {
+        me.ui.transform.attach(me);
+    };
     me.launch = function (args) {
         if (!args) {
             args = [""];
@@ -15,7 +18,8 @@ screens.app.prism = function AppPrism(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            me.ui.options.load(me, window, {
+            var options = me.transform.options();
+            me.ui.options.load(me, window, Object.assign({
                 doTranslation: false,
                 doExplanation: true,
                 prioritizeExplanation: true,
@@ -30,31 +34,18 @@ screens.app.prism = function AppPrism(me) {
                 phaseNumbers: true,
                 animation: true,
                 autoRotate: false
-            });
-            me.ui.options.toggleSet(me, null, {
-                "doTranslation": me.reload.set,
-                "doExplanation": me.reload.set,
-                "prioritizeExplanation": me.reload.set,
-                "addStyles": me.reload.set,
-                "phaseNumbers": me.reload.set,
-                "keepSource": me.reload.set,
-                "abridged": me.reload.set,
-                "pages": me.reload.set,
-                "columns": me.reload.set,
-                "category": me.reload.set,
-                "headings": me.reload.set,
-                "subHeadings": me.reload.set,
-                "animation": me.reload.set,
+            }, options.load));
+            me.ui.options.toggleSet(me, null, Object.assign({
+                "animation": me.reload,
                 "autoRotate": me.update
-            });
-            me.ui.options.choiceSet(me, null, {
-                "language": me.reload.set,
+            }, options.toggle));
+            me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
                     me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                     me.core.property.notify(window, "reload");
                     me.core.property.notify(window, "update");
                 }
-            });
+            }, options.choice));
             me.ui.class.useStylesheet("kab");
             window.options.clickCallback = "screens.widget.transform.openPopup";
             me.core.property.set(window, "app", me);
@@ -80,18 +71,16 @@ screens.app.prism = function AppPrism(me) {
             me.core.util.animate(animate, 10);
         }
     };
-    me.reload = {
-        set: async function (object) {
-            var window = me.widget.window.get(object);
-            var root = me.kab.form.root();
-            var list = me.kab.draw.list(root, []);
-            var html = await me.kab.draw.html(window, list, window.options);
-            window.var.viewer.rotateDirection = false;
-            me.core.property.set(window.var.viewer, "ui.basic.html", html);
-            me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-            me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
-            me.core.property.notify(window, "update");
-        }
+    me.reload = async function (object) {
+        var window = me.widget.window.get(object);
+        var root = me.kab.form.root();
+        var list = me.kab.draw.list(root, []);
+        var html = await me.kab.draw.html(window, list, window.options);
+        window.var.viewer.rotateDirection = false;
+        me.core.property.set(window.var.viewer, "ui.basic.html", html);
+        me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+        me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
+        me.core.property.notify(window, "update");
     };
     me.resetRotation = function (object) {
         var window = me.widget.window.get(object);

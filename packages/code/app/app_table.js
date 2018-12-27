@@ -6,6 +6,7 @@
 screens.app.table = function AppTable(me) {
     me.init = function () {
         me.ui.content.attach(me);
+        me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (!args) {
@@ -20,49 +21,25 @@ screens.app.table = function AppTable(me) {
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            me.ui.options.load(me, window, {
+            var options = me.transform.options();
+            me.ui.options.load(me, window, Object.assign({
                 border: true,
                 editMode: false,
-                autoComplete: true,
-                doTranslation: false,
-                doExplanation: true,
-                prioritizeExplanation: true,
-                addStyles: true,
-                abridged: true,
-                keepSource: false,
-                category: true,
-                headings: true,
-                subHeadings: true,
-                language: "Auto",
-                fontSize: "18px",
-                phaseNumbers: true
-            });
-            me.ui.options.toggleSet(me, null, {
-                "border": me.reload.set,
-                "editMode": me.reload.set,
-                "autoComplete": me.reload.set,
-                "doTranslation": me.reload.set,
-                "doExplanation": me.reload.set,
-                "prioritizeExplanation": me.reload.set,
-                "addStyles": me.reload.set,
-                "phaseNumbers": me.reload.set,
-                "keepSource": me.reload.set,
-                "abridged": me.reload.set,
-                "pages": me.reload.set,
-                "columns": me.reload.set,
-                "category": me.reload.set,
-                "headings": me.reload.set,
-                "subHeadings": me.reload.set
-            });
-            me.ui.options.choiceSet(me, null, {
-                "language": me.reload.set,
+                autoComplete: true
+            }, options.load));
+            me.ui.options.toggleSet(me, null, Object.assign({
+                "border": me.reload,
+                "editMode": me.reload,
+                "autoComplete": me.reload
+            }, options.toggle));
+            me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
                     me.core.property.set(window.var.table, "ui.style.fontSize", value);
                     me.core.property.notify(window, "reload");
                     me.core.property.notify(window, "update");
                 }
-            });
+            }, options.choice));
             me.ui.class.useStylesheet("kab");
             window.rowCount = 20;
             window.columnCount = 10;
@@ -75,7 +52,7 @@ screens.app.table = function AppTable(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "name", "");
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
-        me.reload.set(window);
+        me.reload(window);
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
@@ -89,7 +66,7 @@ screens.app.table = function AppTable(me) {
             options = {};
         }
         window.table_options = options;
-        me.reload.set(window);
+        me.reload(window);
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
@@ -226,32 +203,30 @@ screens.app.table = function AppTable(me) {
         }
         return html;
     };
-    me.reload = {
-        set: async function (object) {
-            var window = me.widget.window.get(object);
-            var language = window.language.toLowerCase();
-            if (language === "auto") {
-                language = "english";
-            }
-            if (language) {
-                window.terms = await me.kab.data.terms(language);
-            }
-            me.core.property.set(window.var.table, {
-                "ui.style.fontSize": window.options.fontSize,
-                "ui.class.edit-mode": window.options.editMode
-            });
-            if (!window.cells) {
-                window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
-            }
-            if (!window.table_options) {
-                window.table_options = {};
-            }
-            var html = await me.rows(window);
-            me.core.property.set([window.var.table, window.var.table], {
-                "ui.basic.html": html
-            });
-            me.core.property.notify(window, "update");
+    me.reload = async function (object) {
+        var window = me.widget.window.get(object);
+        var language = window.language.toLowerCase();
+        if (language === "auto") {
+            language = "english";
         }
+        if (language) {
+            window.terms = await me.kab.data.terms(language);
+        }
+        me.core.property.set(window.var.table, {
+            "ui.style.fontSize": window.options.fontSize,
+            "ui.class.edit-mode": window.options.editMode
+        });
+        if (!window.cells) {
+            window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
+        }
+        if (!window.table_options) {
+            window.table_options = {};
+        }
+        var html = await me.rows(window);
+        me.core.property.set([window.var.table, window.var.table], {
+            "ui.basic.html": html
+        });
+        me.core.property.notify(window, "update");
     };
     me.rowHeader = {
         get: function (object) {
@@ -261,7 +236,7 @@ screens.app.table = function AppTable(me) {
         set: function (object) {
             var window = me.widget.window.get(object);
             window.table_options.rowHeader = !window.table_options.rowHeader;
-            me.reload.set(window);
+            me.reload(window);
         }
     };
     me.columnHeader = {
@@ -272,7 +247,7 @@ screens.app.table = function AppTable(me) {
         set: function (object) {
             var window = me.widget.window.get(object);
             window.table_options.columnHeader = !window.table_options.columnHeader;
-            me.reload.set(window);
+            me.reload(window);
         }
     };
 };

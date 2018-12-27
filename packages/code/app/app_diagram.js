@@ -4,6 +4,13 @@
  */
 
 screens.app.diagram = function AppDiagram(me) {
+    me.init = function () {
+        me.core.property.set(me, {
+            "core.property.object.path": null,
+            "core.property.object.diagramData": null
+        });
+        me.ui.transform.attach(me);
+    };
     me.launch = function (args) {
         if (!args) {
             args = [""];
@@ -35,69 +42,36 @@ screens.app.diagram = function AppDiagram(me) {
     me.fullPath = function (name) {
         return "/packages/res/diagrams/" + name + ".json";
     };
-    me.init = function () {
-        me.core.property.set(me, {
-            "core.property.object.path": null,
-            "core.property.object.diagramData": null
-        });
-    };
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
+            var options = me.transform.options();
             if (!window.optionsLoaded) {
                 window.optionsLoaded = true;
-                me.ui.options.load(me, window, {
-                    viewType: "Layers",
-                    doTranslation: false,
-                    doExplanation: true,
-                    prioritizeExplanation: true,
-                    addStyles: true,
-                    abridged: true,
-                    keepSource: false,
-                    category: true,
-                    headings: true,
-                    subHeadings: true,
-                    language: "Auto",
-                    fontSize: "18px",
-                    phaseNumbers: true
-                });
+                me.ui.options.load(me, window, Object.assign({
+                    viewType: "Layers"
+                }, options.load));
             }
-            me.ui.options.toggleSet(me, null, {
-                "doTranslation": me.reload.set,
-                "doExplanation": me.reload.set,
-                "prioritizeExplanation": me.reload.set,
-                "addStyles": me.reload.set,
-                "phaseNumbers": me.reload.set,
-                "keepSource": me.reload.set,
-                "abridged": me.reload.set,
-                "pages": me.reload.set,
-                "columns": me.reload.set,
-                "category": me.reload.set,
-                "headings": me.reload.set,
-                "subHeadings": me.reload.set
-            });
-            me.ui.options.choiceSet(me, null, {
-                "viewType": me.reload.set,
-                "language": me.reload.set,
+            me.ui.options.toggleSet(me, null, Object.assign({}, options.toggle));
+            me.ui.options.choiceSet(me, null, Object.assign({
+                "viewType": me.reload,
                 "fontSize": (object, value) => {
                     me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
                     me.core.property.notify(window, "reload");
                     me.core.property.notify(window, "update");
                 }
-            });
+            }, options.choice));
             me.ui.class.useStylesheet("kab");
             window.options.clickCallback = "screens.widget.transform.openPopup";
         }
     };
-    me.reload = {
-        set: async function (object) {
-            var window = me.widget.window.get(object);
-            var path = me.core.property.get(window, "app.diagram.path");
-            var diagramJson = await me.core.json.loadFile(path, false);
-            me.core.property.set(window, "app.diagram.diagramData", diagramJson);
-            me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-            me.core.property.notify(window, "app.diagram.refresh");
-        }
+    me.reload = async function (object) {
+        var window = me.widget.window.get(object);
+        var path = me.core.property.get(window, "app.diagram.path");
+        var diagramJson = await me.core.json.loadFile(path, false);
+        me.core.property.set(window, "app.diagram.diagramData", diagramJson);
+        me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+        me.core.property.notify(window, "app.diagram.refresh");
     };
     me.refresh = {
         set: function (object) {
