@@ -89,6 +89,9 @@ screens.kab.style = function KabStyle(me) {
             if (phase) {
                 html += " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border ";
             }
+            if (phase !== "none") {
+                html += " kab-term-phase-standard-width ";
+            }
             if (category) {
                 html += " kab-term-category";
             }

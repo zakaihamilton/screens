@@ -126,10 +126,13 @@
     margin: 0.1em;
     padding: 0.2em;
     border-radius: 5px;
-    min-width: 12em;
     text-align: center;
     break-after: avoid;
     break-inside: avoid-column;
+}
+
+.kab-term-phase-standard-width {
+    min-width: 12em;
 }
 
 [kab-term-phase-number]:after {
@@ -156,10 +159,6 @@
 
 .kab-term-phase-none {
     min-width: 0;
-}
-
-.kab-term-phase-none.kab-term-category {
-    min-width: 10em;
 }
 
 .kab-term-header {
