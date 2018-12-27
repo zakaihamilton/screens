@@ -9,11 +9,10 @@
 [kab-term-category]:after {
     position: absolute;
     font-weight: bold;
-    font-size: 40%;
+    font-size: 30%;
     left: -0.1em;
-    top: 2.1em;
+    top: 2.4em;
     line-height: 1em;
-    text-align: center;
     text-transform: uppercase;
     pointer-events: none;
     user-select: none;
@@ -71,22 +70,13 @@
     padding-right: 2px;
     left: 0em;
     right: 0em;
-    bottom: 1.6em;
-    text-align: center;
-    vertical-align: middle;
+    top: 2.2em;
     height: 1em;
+    text-align: center;
     font-size: 50%;
     pointer-events: none;
     user-select: none;
     content: attr(kab-term-sub-heading);
-}
-
-[kab-term-sub-heading].kab-term-english:after {
-    left: 1em;
-}
-
-[kab-term-sub-heading].kab-term-hebrew:after {
-    right: 1em;
 }
 
 [kab-term-tooltip].kab-term-phase-none {
@@ -159,6 +149,14 @@
 
 .kab-term-phase-none {
     min-width: 0;
+}
+
+.kab-term-phase-none.kab-term-category {
+    padding-left: 1em;
+}
+
+.kab-term-phase-none.kab-term-phase-standard-width {
+    min-width: 12em;
 }
 
 .kab-term-header {
