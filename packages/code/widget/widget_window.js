@@ -946,9 +946,9 @@ screens.widget.window = function WidgetWindow(me) {
             }
             var windows = me.core.property.get(window, "widget.window.windows");
             windows.sort(function (a, b) {
-                var a_label = me.core.property.get(a, "label");
-                var b_title = me.core.property.get(b, "label");
-                return a_label === b_title ? 0 : +(a_label > b_title) || -1;
+                var a_key = me.core.property.get(a, "key");
+                var b_key = me.core.property.get(b, "key");
+                return a_key === b_key ? 0 : +(a_key > b_key) || -1;
             });
             var items = windows.map(function (child) {
                 var result = [

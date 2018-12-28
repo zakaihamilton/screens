@@ -524,10 +524,7 @@ screens.widget.transform = function WidgetTransform(me) {
             var window = me.widget.window.get(widget);
             var title = me.core.property.get(widget, "widget.transform.contentTitle");
             var key = me.core.property.get(window, "widget.window.key");
-            if (key && title) {
-                return key + " - " + title;
-            }
-            else if (title) {
+            if (title) {
                 return title;
             }
             return key;
