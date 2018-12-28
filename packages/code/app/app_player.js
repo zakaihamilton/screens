@@ -104,7 +104,7 @@ screens.app.player = function AppPlayer(me) {
                 me.ui.options.save(me, window, { groupName: name });
             }
             me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-            await me.updateSessions(name);
+            await me.updateSessions();
         }
     };
     me.onChangeSession = {
