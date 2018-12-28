@@ -75,9 +75,11 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
     };
     me.source = {
         set: function (object, path) {
-            var extension = me.core.path.extension(path);
+            if (path) {
+                var extension = me.core.path.extension(path);
+                me.core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
+            }
             me.core.property.set(object.var.source, "ui.attribute.src", path);
-            me.core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
             object.var.player.src = path;
             object.var.player.load();
             me.core.property.set(object, "widget.player.controls.update");
