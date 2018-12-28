@@ -7,7 +7,6 @@
         "height": "500px"
     },
     "icon": "/packages/res/icons/transform.png",
-    "ui.style.background": "white",
     "maximize": null,
     "ui.property.after": {
         "storage.local.key": "app-transform-window",
