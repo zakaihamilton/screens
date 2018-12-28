@@ -288,16 +288,11 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause {
-    color: darkgray !important;
-    background-color: #555 !important;
-}
-
-.widget-transform-iconbar-pause:hover {
-    color: lightgray !important;
-    background-color: darkgray !important;
+    display: none;
 }
 
 .widget-transform-iconbar-pause.play {
+    display: block;
     color: white !important;
     background-color: #555 !important;
 }
@@ -308,26 +303,15 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause.play.pause {
-    color: darkgray !important;
-    background-color: #555 !important;
-}
-
-.widget-transform-iconbar-pause.play.pause:hover {
-    color: lightgray !important;
-    background-color: darkgray !important;
+    display: none;
 }
 
 .widget-transform-iconbar-play.play {
-    color: lightgray !important;
-    background-color: #4CAF50 !important;
-}
-
-.widget-transform-iconbar-play.play:hover {
-    color: lightgray !important;
-    background-color: darkgray !important;
+    display: none;
 }
 
 .widget-transform-iconbar-play.play.pause {
+    display: block;
     color: white !important;
     background-color: #555 !important;
 }

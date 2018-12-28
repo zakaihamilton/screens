@@ -13,9 +13,11 @@ screens.media.voice = function MediaVoice(me) {
         me.playTime = null;
     };
     me.pause = function () {
+        me._isPaused = true;
         me.synth.pause();
     };
     me.resume = function () {
+        me._isPaused = false;
         me.synth.resume();
     };
     me.speeds = {
@@ -36,7 +38,7 @@ screens.media.voice = function MediaVoice(me) {
         return me.synth.speaking || me.synth.pending;
     };
     me.isPaused = function () {
-        return me.synth.paused;
+        return me._isPaused;
     };
     me.play = function (text, voiceName, params) {
         if (voiceName === "None") {
@@ -47,7 +49,7 @@ screens.media.voice = function MediaVoice(me) {
             return;
         }
         var voices = me.voices(params.language);
-        var voices = voices.filter((voice) => {
+        voices = voices.filter((voice) => {
             return voice.name.includes(voiceName);
         });
         var volume = 1;
@@ -61,7 +63,7 @@ screens.media.voice = function MediaVoice(me) {
                     volume = me.volumes[volume];
                 }
                 else {
-                    volume = 1.0
+                    volume = 1.0;
                 }
             }
         }
@@ -73,7 +75,7 @@ screens.media.voice = function MediaVoice(me) {
                     speed = me.speeds[speed];
                 }
                 else {
-                    speed = 1.0
+                    speed = 1.0;
                 }
             }
         }
@@ -122,12 +124,18 @@ screens.media.voice = function MediaVoice(me) {
                 utterance.lang = voice.lang;
                 utterance.index = index;
                 utterance.onstart = () => {
+                    if (params.onstate) {
+                        params.onstate();
+                    }
                     me.currentIndex = utterance.index;
                     if (params.onchange && processedText) {
                         params.onchange(utterance.index, processedText);
                     }
                 };
                 utterance.onend = () => {
+                    if (params.onstate) {
+                        params.onstate();
+                    }
                     me.queueIndex++;
                     index = me.utterances.indexOf(utterance);
                     if (index == me.utterances.length - 1 && params.onend) {
@@ -219,14 +227,14 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/No\./g, "No");
         text = text.replace(/^(\d+\))/g, "\n$1\n");
         text = text.replace(/\s-\s/g, "\n");
-        text = text.replace(/[”\".:;—]/g, "\n");
-        text = text.replace(/[\)\]]/g, ", ");
-        text = text.replace(/[“\(\[]/g, ", ");
+        text = text.replace(/[”".:;—]/g, "\n");
+        text = text.replace(/[)\]]/g, ", ");
+        text = text.replace(/[“([]/g, ", ");
         text = text.replace(/\s[,]/g, ",");
         text = text.replace(/[,][,]/g, ",");
         text = text.replace(/\n\s\n/g, "\n");
         text = text.replace(/\n\n/g, "\n");
-        text = text.replace(/  /g, " ");
+        text = text.replace(/ {2}/g, " ");
         text = text.replace(/\s\n/g, "\n");
         text = text.replace(/\n\s/g, "\n");
         text = text.replace(/…/g, ", ");

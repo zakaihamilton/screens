@@ -608,31 +608,30 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.play(object, me.media.voice.currentIndex, false);
         }
     };
-    me.setPlayState = function (object, play, pause) {
+    me.setPlayState = function (object, isPaused) {
         var widget = me.upper.findWidget(object);
         var widgets = me.ui.node.childList(widget.var.iconbar);
-        me.core.property.set(widgets, "ui.class.play", play);
-        me.core.property.set(widgets, "ui.class.pause", pause);
+        me.core.property.set(widgets, "ui.class.play", me.media.voice.isPlaying());
+        me.core.property.set(widgets, "ui.class.pause", isPaused);
     };
     me.pause = function (object) {
         if (!me.media.voice.isPlaying()) {
             return;
         }
-        var widget = me.upper.findWidget(object);
         me.focusParagraph(object, null);
+        me.setPlayState(object, true);
         me.media.voice.pause();
-        me.setPlayState(widget, true, true);
     };
     me.play = function (object, value, toggle = true) {
         var widget = me.upper.findWidget(object);
         var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
-        var isPlaying = me.media.voice.isPlaying(currentPage);
-        var isPaused = me.media.voice.isPaused(currentPage);
+        var isPlaying = me.media.voice.isPlaying();
+        var isPaused = me.media.voice.isPaused();
         if (toggle && isPlaying && isPaused) {
             me.media.voice.resume();
-            me.setPlayState(widget, true, false);
             var focusElement = me.widget.transform.layout.focusElement(me.currentPlayingPage);
             me.focusParagraph(object, focusElement);
+            me.setPlayState(object, false);
         }
         else {
             var index = 0;
@@ -642,21 +641,21 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             var text = me.widget.transform.layout.pageText(currentPage);
             var params = {
                 index: index,
+                onstate: () => {
+                    me.setPlayState(widget);
+                },
                 onstart: () => {
                     me.log("onstart");
-                    me.setPlayState(widget, true, false);
                     me.focusParagraph(object, null);
                 },
                 oncancel: () => {
                     me.log("oncancel");
                     me.widget.transform.layout.clearPage(currentPage);
-                    me.setPlayState(widget, false, false);
                     me.focusParagraph(object, null);
                 },
                 onend: () => {
                     me.log("onend");
                     me.widget.transform.layout.clearPage(currentPage);
-                    me.setPlayState(widget, false, false);
                     me.focusParagraph(object, null);
                     if (widget.options.autoPlay) {
                         if (!currentPage.last) {
@@ -684,7 +683,6 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                 onnext: () => {
                     me.widget.transform.layout.clearPage(currentPage);
                     if (currentPage.last) {
-                        me.setPlayState(widget, false, false);
                         me.focusParagraph(object, null);
                         me.currentPlayingPage = null;
                     }
@@ -705,7 +703,6 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             };
             me.media.voice.play(text, widget.options.voice, params);
             if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
-                me.setPlayState(widget, false, false);
                 me.currentPlayingPage = null;
             }
             me.currentPlayingPage = currentPage;
@@ -719,7 +716,6 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.media.voice.stop();
             me.widget.transform.layout.clearPage(currentPage);
             me.focusParagraph(object, null);
-            me.setPlayState(currentPage, false, false);
             me.currentPlayingPage = null;
         }
     };
