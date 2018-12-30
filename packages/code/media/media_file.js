@@ -46,6 +46,20 @@ screens.media.file = function MediaFile(me) {
             await me.listing(me.rootPath + "/" + group.name, true);
         }
     };
+    me.exists = async function (name) {
+        var groups = await me.groups();
+        for (var group of groups) {
+            var files = await me.listing(me.rootPath + "/" + group.name);
+            if (files) {
+                for (var file of files) {
+                    if (file.name.includes(name)) {
+                        return group.name;
+                    }
+                }
+            }
+        }
+        return null;
+    };
     me.listing = async function (path, update = false) {
         var files = null;
         if (update || !me._listing[path]) {

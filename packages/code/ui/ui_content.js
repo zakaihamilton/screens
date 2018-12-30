@@ -279,11 +279,13 @@ screens.ui.content = function UIContent(me) {
                     var list = [];
                     if (name) {
                         var [publicApps, privateApps] = await me.manager.content.associated(name);
+                        var playerItems = await me.content.associated.playerItems(name);
                         var publicList = me.content.associated.items(window, name, publicApps);
                         var privateList = me.content.associated.items(window, name, privateApps, true);
                         if (publicList && publicList.length && privateList && privateList.length) {
                             privateList[0][2].separator = true;
                         }
+                        list.push(...playerItems);
                         list.push(...publicList);
                         list.push(...privateList);
                     }
@@ -301,6 +303,28 @@ screens.ui.content = function UIContent(me) {
                     }
                     resolve(list);
                 });
+            },
+            playerItems: async function (name) {
+                var list = [];
+                if ("app.player" === me.id) {
+                    return [];
+                }
+                var group = await me.media.file.exists(name);
+                if (group) {
+                    list.push([
+                        "Player",
+                        (object, appName) => {
+                            me.core.app.launch(appName.toLowerCase(), group, name);
+                        },
+                        {
+
+                        },
+                        {
+                            "group": "associated"
+                        }
+                    ]);
+                }
+                return list;
             },
             items: function (object, name, apps, private) {
                 if (!apps) {
