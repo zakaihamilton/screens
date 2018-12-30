@@ -6548,6 +6548,12 @@
             "hebrew": "מקנה"
         },
         {
+            "term": "Vaetchanan",
+            "style": {
+                "category": "Portion"
+            }
+        },
+        {
             "term": "Kinyan",
             "translation": "Property",
             "hebrew": "קניין"
