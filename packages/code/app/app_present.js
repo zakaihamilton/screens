@@ -41,7 +41,7 @@ screens.app.present = function AppPresent(me) {
         me.refreshList(window);
         me.updateEditMode(window);
     };
-    me.importData = function (object, text, title, options) {
+    me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "text", text);
         me.core.property.set(window.var.editor, "ui.basic.save");
