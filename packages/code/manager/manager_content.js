@@ -4,6 +4,7 @@
  */
 
 screens.manager.content = function ManagerContent(me) {
+    me.apps = ["present", "gematria", "table", "notes"];
     me._list = {};
     me.list = async function (componentId, private) {
         var kind = componentId + ".content";
@@ -21,10 +22,27 @@ screens.manager.content = function ManagerContent(me) {
     me.refresh = function () {
         me._list = {};
     };
-    me.exists = async function (componentId, title, private) {
+    me.associated = async function (title) {
+        var apps = await me.user.access.appList(this.userId);
+        apps = apps.filter((item) => {
+            return me.apps.includes(item);
+        });
+        var results = await Promise.all([false, true].map(async private => {
+            var result = [];
+            for (var app of apps) {
+                var exists = await me.exists("app." + app, title, private, this.userId);
+                if (exists) {
+                    result.push(app);
+                }
+            }
+            return result;
+        }));
+        return results;
+    };
+    me.exists = async function (componentId, title, private, userId) {
         var kind = componentId + ".content";
         if (private) {
-            kind += "." + this.userId;
+            kind += "." + userId ? userId : this.userId;
         }
         var result = await me.storage.data.exists(kind, title);
         return result;

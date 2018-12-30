@@ -21,6 +21,9 @@ screens.app.present = function AppPresent(me) {
             [params.text, params.title] = await me.content.get(args[0]);
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
+        if (typeof args[0] === "string") {
+            me.content.associated.update(me.singleton, params.title);
+        }
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);

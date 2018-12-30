@@ -22,6 +22,7 @@ screens.ui.content = function UIContent(me) {
                     "Refresh",
                     prefix + "refresh"
                 ],
+                prefix + "associated.menu",
                 [
                     "Public",
                     "header"
@@ -110,6 +111,7 @@ screens.ui.content = function UIContent(me) {
             window.content._private = private;
             window.content._locked = fullItem.locked;
             window.content._owner = fullItem.owner;
+            me.content.associated.update(window, fullItem.title);
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
@@ -230,7 +232,9 @@ screens.ui.content = function UIContent(me) {
                     window.content = {};
                 }
                 var text = me.core.property.get(object, "ui.basic.text");
-                window.content._title = text;
+                if (window.content._title !== text) {
+                    window.content._title = text;
+                }
             }
         },
         locked: {
@@ -263,6 +267,78 @@ screens.ui.content = function UIContent(me) {
                     window.content = {};
                 }
                 window.content._private = !window.content._private;
+            }
+        },
+        associated: {
+            update: async function (object, name) {
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                window.content.associated = new Promise(async resolve => {
+                    var list = [];
+                    var [publicApps, privateApps] = await me.manager.content.associated(name);
+                    var publicList = me.content.associated.items(window, name, publicApps);
+                    var privateList = me.content.associated.items(window, name, privateApps, true);
+                    if (publicList && publicList.length && privateList && privateList.length) {
+                        privateList[0][2].separator = true;
+                    }
+                    list.push(...publicList);
+                    list.push(...privateList);
+                    if (!list.length) {
+                        list.push([
+                            "No Associated Content",
+                            null,
+                            {
+                                enabled: false
+                            }
+                        ]);
+                    }
+                    resolve(list);
+                });
+            },
+            items: function (object, name, apps, private) {
+                if (!apps) {
+                    return [];
+                }
+                var list = [];
+                for (var app of apps) {
+                    var title = me.core.string.title(app);
+                    list.push([
+                        title,
+                        (object, appName) => {
+                            me.core.app.launch(appName.toLowerCase(), name, private);
+                        },
+                        {
+
+                        },
+                        {
+                            "group": "associated"
+                        }
+                    ]);
+                }
+                return list;
+            },
+            menu: function (object) {
+                var window = me.widget.window.get(object);
+                if (!window.content) {
+                    window.content = {};
+                }
+                return [[
+                    "Associated",
+                    "header"
+                ], [
+                    "",
+                    null,
+                    {
+                        "header": true,
+                        "visible": false
+                    },
+                    {
+                        "group": "associated",
+                        "promise": { promise: window.content.associated }
+                    }
+                ]];
             }
         }
     };

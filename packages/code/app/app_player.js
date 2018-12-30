@@ -10,6 +10,7 @@ screens.app.player = function AppPlayer(me) {
     me.init = async function () {
         me.groupListData = me.media.file.groups();
         me.playerCounter = 0;
+        me.ui.content.attach(me);
     };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -147,7 +148,7 @@ screens.app.player = function AppPlayer(me) {
             if (name) {
                 me.core.property.set(window, "name", name);
                 me.ui.options.save(me, window, { sessionName: name });
-                await me.updateContent(window, name);
+                await me.content.associated.update(window, name);
             }
             else {
                 me.core.property.set(window, "name", "");
@@ -155,28 +156,6 @@ screens.app.player = function AppPlayer(me) {
             }
             me.core.property.notify(window, "app.player.updatePlayer");
         }
-    };
-    me.updateContent = async function (object, name) {
-        me.contentApps = new Promise(async resolve => {
-            var list = [];
-            var publicList = await me.retrieveContent(window, name);
-            var privateList = await me.retrieveContent(window, name, true);
-            if (publicList && publicList.length && privateList && privateList.length) {
-                privateList[0][2].separator = true;
-            }
-            list.push(...publicList);
-            list.push(...privateList);
-            if (!list.length) {
-                list.push([
-                    "No Associated Content",
-                    null,
-                    {
-                        enabled: false
-                    }
-                ]);
-            }
-            resolve(list);
-        });
     };
     me.setFormat = {
         get: function (object, value) {
@@ -366,44 +345,5 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
         me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time]);
-    };
-    me.retrieveContent = async function (object, name, private = false) {
-        var list = [];
-        var apps = ["Present", "Gematria", "Table", "Notes"];
-        for (var app of apps) {
-            var exists = await me.manager.content.exists("app." + app.toLowerCase(), name, private);
-            if (exists) {
-                list.push([
-                    app,
-                    (object, appName) => {
-                        me.core.app.launch(appName.toLowerCase(), name, private);
-                    },
-                    {
-
-                    },
-                    {
-                        "group": "content"
-                    }
-                ]);
-            }
-        }
-        return list;
-    };
-    me.contentMenu = function () {
-        return [[
-            "Apps",
-            "header"
-        ], [
-            "",
-            null,
-            {
-                "header": true,
-                "visible": false
-            },
-            {
-                "group": "content",
-                "promise": { promise: me.contentApps }
-            }
-        ]];
     };
 };
