@@ -73,6 +73,7 @@ screens.app.prism = function AppPrism(me) {
         var window = me.widget.window.get(object);
         var root = me.kab.form.root();
         var list = me.kab.draw.list(root, []);
+        window.options.termMethod = "app.prism.transform.term";
         var html = await me.kab.draw.html(window, list, window.options);
         window.var.viewer.rotateDirection = false;
         me.core.property.set(window.var.viewer, "ui.basic.html", html);
