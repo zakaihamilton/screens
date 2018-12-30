@@ -6543,6 +6543,25 @@
             }
         },
         {
+            "term": "Mikneh",
+            "translation": "Cattle",
+            "hebrew": "מקנה"
+        },
+        {
+            "term": "Kinyan",
+            "translation": "Property",
+            "hebrew": "קניין"
+        },
+        {
+            "term": "Abram",
+            "style": {
+                "category": "Class/Patriarch",
+                "phase": "root"
+            },
+            "transliterated": "Avram",
+            "hebrew": "אברם"
+        },
+        {
             "term": "Abraham",
             "style": {
                 "category": "Class/Patriarch",
