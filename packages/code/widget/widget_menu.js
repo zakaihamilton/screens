@@ -260,12 +260,12 @@ screens.widget.menu.list = function WidgetMenuList(me) {
     };
     me.work = function (object, state) {
         me.log("menu state: " + state);
-        if (me.workTimeout) {
-            clearTimeout(me.workTimeout);
-            me.workTimeout = null;
+        if (object.workTimeout) {
+            clearTimeout(object.workTimeout);
+            object.workTimeout = null;
         }
         if (state) {
-            me.workTimeout = setTimeout(function () {
+            object.workTimeout = setTimeout(function () {
                 me.core.property.set(object.var.progress, "ui.style.display", "block");
                 me.core.property.set(object.var.members, "ui.style.display", "none");
             }, 250);

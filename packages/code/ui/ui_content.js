@@ -84,7 +84,7 @@ screens.ui.content = function UIContent(me) {
             me.content.privateList = me.manager.content.list(me.id, true);
         },
         refresh: {
-            set: async function (object) {
+            set: async function () {
                 await me.manager.content.refresh();
                 me.content.update();
             }
@@ -277,20 +277,25 @@ screens.ui.content = function UIContent(me) {
                 }
                 window.content.associated = new Promise(async resolve => {
                     var list = [];
-                    var [publicApps, privateApps] = await me.manager.content.associated(name);
-                    var publicList = me.content.associated.items(window, name, publicApps);
-                    var privateList = me.content.associated.items(window, name, privateApps, true);
-                    if (publicList && publicList.length && privateList && privateList.length) {
-                        privateList[0][2].separator = true;
+                    if (name) {
+                        var [publicApps, privateApps] = await me.manager.content.associated(name);
+                        var publicList = me.content.associated.items(window, name, publicApps);
+                        var privateList = me.content.associated.items(window, name, privateApps, true);
+                        if (publicList && publicList.length && privateList && privateList.length) {
+                            privateList[0][2].separator = true;
+                        }
+                        list.push(...publicList);
+                        list.push(...privateList);
                     }
-                    list.push(...publicList);
-                    list.push(...privateList);
                     if (!list.length) {
                         list.push([
                             "No Associated Content",
                             null,
                             {
                                 enabled: false
+                            },
+                            {
+                                "group": "associated"
                             }
                         ]);
                     }
@@ -303,6 +308,9 @@ screens.ui.content = function UIContent(me) {
                 }
                 var list = [];
                 for (var app of apps) {
+                    if ("app." + app === me.id) {
+                        continue;
+                    }
                     var title = me.core.string.title(app);
                     list.push([
                         title,
@@ -323,6 +331,9 @@ screens.ui.content = function UIContent(me) {
                 var window = me.widget.window.get(object);
                 if (!window.content) {
                     window.content = {};
+                }
+                if (!window.content.associated) {
+                    me.content.associated.update(window, window.content._title);
                 }
                 return [[
                     "Associated",
