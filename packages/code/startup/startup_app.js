@@ -20,6 +20,7 @@ screens.startup.app = function StartupApp(me) {
         }
         catch (err) {
             document.body.innerHTML = __html__.replace("__error__", err.message || err);
+            throw err;
         }
         finally {
             me.core.property.set(progress, "close");

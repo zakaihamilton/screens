@@ -28,10 +28,9 @@ screens.startup.version = function StartupVersion(me) {
         }
         else if (me.platform === "browser") {
             let config = await me.core.util.config();
-            var validKey = me.storage.local.validKey("startup.version");
-            let version = me.core.property.get(me.storage.local.local, validKey);
+            let version = me.storage.local.get(me.id);
             if (version !== config.version) {
-                me.core.property.set(me.storage.local.local, validKey, config.version);
+                me.storage.local.set(me.id, config.version);
                 location.reload(true);
             }
         }

@@ -12,59 +12,35 @@ screens.app.cache = function AppCache(me) {
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         return me.singleton;
     };
-    me.cache = function () {
-        if (!me.singleton) {
-            return me.storage.local.local;
-        }
-        var storage = me.core.property.get(me.singleton.var.storage, "ui.basic.text");
-        if (storage === "Local") {
-            return me.storage.local.local;
-        }
-        else if (storage === "Session") {
-            return me.storage.local.session;
-        }
-    };
     me.keyList = {
         get: function () {
-            var cache = me.cache();
-            if (cache) {
-                var keys = cache.members();
-                return keys.map(function (item) {
-                    return [item];
-                });
-            }
+            var keys = me.storage.local.keyList();
+            return keys.map(function (item) {
+                return [item];
+            });
         }
     };
     me.store = {
         set: function () {
-            var cache = me.cache();
-            if (cache) {
-                var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
-                var value = me.core.property.get(me.singleton.var.value, "ui.basic.text");
-                if (key) {
-                    me.core.property.set(cache, key, value);
-                }
+            var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
+            var value = me.core.property.get(me.singleton.var.value, "ui.basic.text");
+            if (key) {
+                me.storage.local.set(key, value);
             }
         }
     };
     me.clear = {
         set: function () {
-            var cache = me.cache();
-            if (cache) {
-                var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
-                if (key) {
-                    me.core.property.set(cache, key, "");
-                    me.core.property.set([me.singleton.var.key, me.singleton.var.value], "ui.basic.text", "");
-                }
+            var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
+            if (key) {
+                me.storage.local.set(key, "");
+                me.core.property.set([me.singleton.var.key, me.singleton.var.value], "ui.basic.text", "");
             }
         }
     };
     me.clearAll = {
         set: function () {
-            var cache = me.cache();
-            if (cache) {
-                cache.clear();
-            }
+            me.storage.local.empty();
         }
     };
     me.onChangeStorage = {
@@ -74,9 +50,8 @@ screens.app.cache = function AppCache(me) {
     };
     me.onChangeKey = {
         set: function () {
-            var cache = me.cache();
             var key = me.core.property.get(me.singleton.var.key, "ui.basic.text");
-            var value = me.core.property.get(cache, key);
+            var value = me.storage.local.get(key);
             me.core.property.set(me.singleton.var.value, "ui.basic.text", value);
         }
     };

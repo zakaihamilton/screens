@@ -28,9 +28,7 @@ screens.ui.options = function UIOptions(me) {
         return validKey;
     };
     me.load = function (component, object, defaults) {
-        var storage = me.getStorage(component, object);
-        var window = null;
-        var value = me.core.property.get(me.storage.local[storage], me.storageKey(component, object));
+        var value = me.storage.local.get(me.storageKey(component, object));
         var options = component.options;
         if (object) {
             options = object.options;
@@ -58,8 +56,7 @@ screens.ui.options = function UIOptions(me) {
         else {
             component.options = allOptions;
         }
-        var storage = me.getStorage(component, object);
-        me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(allOptions));
+        me.storage.local.set(me.storageKey(component, object), JSON.stringify(allOptions));
     };
     me.toggleSet = function (component, toTargetCallback, key, callback) {
         if (typeof key === "object") {
@@ -107,7 +104,7 @@ screens.ui.options = function UIOptions(me) {
                     me.core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
-                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
+                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
@@ -158,7 +155,7 @@ screens.ui.options = function UIOptions(me) {
                     callback(object, options[key], key, options);
                 }
                 if (storage) {
-                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
+                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
@@ -209,7 +206,7 @@ screens.ui.options = function UIOptions(me) {
                     callback(object, options[key], key, options);
                 }
                 if (storage) {
-                    me.core.property.set(me.storage.local[storage], me.storageKey(component, object), JSON.stringify(options));
+                    me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));
                 }
             }
         };
