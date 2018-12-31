@@ -40,6 +40,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "startup": [
+            "version",
             "app"
         ]
     }).then(async () => {

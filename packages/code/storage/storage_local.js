@@ -67,7 +67,7 @@ screens.storage.local = function StorageLocal(me) {
             }
             if (key) {
                 var store = me.core.property.get(me[location], key);
-                if (store !== null) {
+                if (store) {
                     me.core.property.set(object, value, store);
                 }
             }

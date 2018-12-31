@@ -4,8 +4,12 @@
  */
 
 screens.app.launcher = function AppLauncher(me) {
-    me.launch = function () {
-        return me.ui.element.create(__json__, "workspace", "self");
+    me.launch = async function () {
+        let config = await me.core.util.config();
+        var params = {
+            version: config.version
+        };
+        return me.ui.element.create(__json__, "workspace", "self", params);
     };
     me.html = function () {
         return __html__;
