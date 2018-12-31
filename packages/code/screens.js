@@ -95,7 +95,10 @@ async function screens_init(items) {
         if (initializers) {
             do {
                 var init = initializers.shift();
-                if (init && init.callback) {
+                if (!init) {
+                    continue;
+                }
+                if (init.callback) {
                     try {
                         var promise = init.callback.apply(null, init.args);
                         if (promise && promise.then) {

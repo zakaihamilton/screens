@@ -22,12 +22,6 @@ screens.core.socket = function CoreSocket(me) {
                         me.log(`Socket disconnected [id=${socket.id} platform=${info.platform} ref=${info.ref}]`);
                     }
                 });
-                socket.on("heartbeat_response", (data) => {
-                    var info = me.sockets.get(socket);
-                    if (info) {
-                        me.log(`heartbeat received [id=${socket.id} platform=${info.platform} ref=${info.ref} user=${data.user}]`);
-                    }
-                });
                 me.register(socket);
                 var info = await me.core.message.send_service.call(socket, "core.socket.setup", ref);
                 me.sockets.set(socket, info);
@@ -37,7 +31,6 @@ screens.core.socket = function CoreSocket(me) {
                     " platform: " + info.platform +
                     ", sockets size: " + me.sockets.size);
             });
-            me.sendHeartbeat();
         } else if (me.platform === "service") {
             me.client = require("socket.io-client");
             if (process.argv.length < 3) {
@@ -70,11 +63,10 @@ screens.core.socket = function CoreSocket(me) {
             me.register(me.io);
             me.core.property.object.create(me, me.io);
             me.core.property.set(me.io, "ready");
+            setInterval(() => {
+                me.user.verify.heartbeat();
+            }, 20000);
         }
-    };
-    me.sendHeartbeat = function () {
-        setTimeout(me.sendHeartbeat, 16000);
-        me.io.emit("heartbeat_send", { beat: 1 });
     };
     me.setup = async function (ref) {
         me.ref = ref;
@@ -146,10 +138,6 @@ screens.core.socket = function CoreSocket(me) {
             if (callback) {
                 callback.apply(null, info.args);
             }
-        });
-        socket.on("heartbeat_send", () => {
-            socket.emit("heartbeat_response", { beat: 1, user: me.core.login.userName() });
-            me.log("heartbeat response sent");
         });
     };
     me.list = function (platform) {

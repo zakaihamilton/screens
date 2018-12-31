@@ -186,12 +186,11 @@ screens.core.message = function CoreMessage(me) {
             //me.log(error);
             return undefined;
         }
-        me.log("sending: " + path + " with " + args.length + " arguments, ip: " + this.clientIp);
         if (typeof callback === "function") {
             result = callback.apply(this, args);
             return result;
         } else {
-            me.log("callback is not a function but rather " + JSON.stringify(callback));
+            me.log("callback for " + path + " is not a function but rather " + JSON.stringify(callback));
         }
     };
     me.handleLocal = async function (_this, args) {

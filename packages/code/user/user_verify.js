@@ -30,7 +30,6 @@ screens.user.verify = function UserVerify(me) {
                 info.stop = true;
                 return;
             }
-            me.log("verifying user: " + name);
             try {
                 var profile = me.tokens[token];
                 if (!profile) {
@@ -57,7 +56,7 @@ screens.user.verify = function UserVerify(me) {
                 profile.previous = profile.utc;
                 profile.utc = Date.now();
                 profile.request++;
-                if (profile.previous + 10000 < profile.utc) {
+                if (profile.previous + 60000 < profile.utc) {
                     me.log("Storing profile: " + JSON.stringify(profile));
                     me.storage.data.save(profile, me.id, profile.userid);
                 }
@@ -66,11 +65,19 @@ screens.user.verify = function UserVerify(me) {
                 info.userEmail = profile.email;
             }
             catch (err) {
-                err = "failed to verify token, err: " + err;
-                me.log_error(err);
+                let error = "failed to verify token, err: " + err;
+                me.log_error(error);
                 info.stop = true;
             }
         }
+    };
+    me.heartbeat = function () {
+        me.manager.event.push(me.id, {
+            user: this.userId,
+            name: this.userName,
+            date: new Date().toString(),
+            utc: Date.now()
+        });
     };
     return "server";
 };

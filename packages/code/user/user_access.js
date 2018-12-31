@@ -8,10 +8,8 @@ screens.user.access = function UserAccess(me) {
         me.core.property.link("core.socket.access", "user.access.access", true);
     };
     me.access = async function (info) {
-        me.log("info: " + info.userId + " - " + info.userName);
         if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {
             var method = info.args[0];
-            me.log("Checking: " + method + " userId: " + info.userId);
             var result = await me.isAPIAllowed(method, info.userId);
             if (!result) {
                 throw " User " + info.userName + " is not authorised to use method: " + method;
@@ -71,7 +69,6 @@ screens.user.access = function UserAccess(me) {
         var access = await me.get(user);
         var result = false;
         var userName = user;
-        me.log("Checking if api " + path + " allowed on user: " + user);
         if (access) {
             result = me.checkAccessList(access.api, path);
             userName = access.name;
@@ -79,7 +76,9 @@ screens.user.access = function UserAccess(me) {
         if (!result && me.api) {
             result = me.checkAccessList(me.api, path);
         }
-        me.log("api " + path + " " + (result ? " allowed" : "denied") + " on user: " + userName);
+        if (!result) {
+            me.log("api " + path + " denied on user: " + userName);
+        }
         return result;
     };
     me.appList = async function (user) {
