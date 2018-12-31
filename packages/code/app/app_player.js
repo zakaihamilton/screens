@@ -90,9 +90,12 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.refresh = async function () {
+        var window = me.singleton;
+        me.core.property.set(window, "ui.work.state", true);
         await me.media.file.update();
         me.groupListData = await me.media.file.groups();
         await me.updateSessions();
+        me.core.property.set(window, "ui.work.state", false);
     };
     me.onChangeGroup = {
         get: function (object, value) {
