@@ -252,22 +252,20 @@ screens.core.module = function CoreModule(me) {
         </html>";
         info.body = html;
     };
-    me.receive = {
-        set: async function (info) {
-            if (me.platform === "server") {
-                if (info.method === "GET") {
-                    var params = {};
-                    if (info.url == "/meta") {
-                        me.handleMeta(info);
-                        return;
-                    }
-                    if (info.url.startsWith("/") && !info.url.includes(".")) {
-                        params.startupApp = info.url.substring(1);
-                        info.url = "/main.html";
-                    }
-                    var filePath = info.url.substring(1);
-                    await me.handleFile(filePath, params, info);
+    me.receive = async function (info) {
+        if (me.platform === "server") {
+            if (info.method === "GET") {
+                var params = {};
+                if (info.url == "/meta") {
+                    me.handleMeta(info);
+                    return;
                 }
+                if (info.url.startsWith("/") && !info.url.includes(".")) {
+                    params.startupApp = info.url.substring(1);
+                    info.url = "/main.html";
+                }
+                var filePath = info.url.substring(1);
+                await me.handleFile(filePath, params, info);
             }
         }
     };

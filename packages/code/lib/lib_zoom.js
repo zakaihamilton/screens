@@ -8,6 +8,7 @@ screens.lib.zoom = function LibZoom(me) {
         me.request = require("request");
         var keys = await me.core.private.keys("zoom");
         me.meetingId = keys.meetingId;
+        me.core.property.link("core.http.receive", "lib.zoom.receive", true);
     };
     me.token = async function () {
         var time = (new Date()).getTime();
@@ -63,6 +64,11 @@ screens.lib.zoom = function LibZoom(me) {
             meetingInfo = JSON.parse(meetingInfo);
         }
         return meetingInfo;
+    };
+    me.receive = async function (info) {
+        if (info.method === "POST" && info.url == "/zoom") {
+            me.log("zoom webhook: query: " + JSON.stringify(info.query) + " body:" + info.body + " headers: " + JSON.stringify(info.headers));
+        }
     };
     return "server";
 };
