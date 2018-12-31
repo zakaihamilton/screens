@@ -68,6 +68,7 @@ screens.lib.zoom = function LibZoom(me) {
     me.receive = async function (info) {
         if (info.method === "POST" && info.url == "/zoom") {
             me.log("zoom webhook: query: " + JSON.stringify(info.query) + " body:" + info.body + " headers: " + JSON.stringify(info.headers));
+            me.manager.event.push(me.id, JSON.parse(info.body));
         }
     };
     return "server";

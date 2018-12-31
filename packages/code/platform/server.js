@@ -95,7 +95,8 @@ screens.include({
         "download",
         "packet",
         "service",
-        "content"
+        "content",
+        "event"
     ],
     "media": [
         "ffmpeg",
