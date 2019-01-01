@@ -7,15 +7,19 @@ screens.app.workshop = function AppWorkshop(me) {
     me.init = async function () {
 
     };
-    me.launch = function () {
+    me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
-        me.core.property.set(me.singleton, "app", me);
-        me.core.property.set(me.singleton.var.users, {
-            "items": ["Mary", "Moshe", "Zakai", "Mark", "Andie", "Aria", "Yossi", "Robben"],
+        await me.prepare(me.singleton);
+        return me.singleton;
+    };
+    me.prepare = async function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window, "app", me);
+        me.core.property.set(window.var.users, {
             "navigate": "app.workshop.navigate",
             "options": {
                 spreaderInTitle: "Workshop",
@@ -23,10 +27,32 @@ screens.app.workshop = function AppWorkshop(me) {
                 spreaderRadius: 100
             }
         });
-        return me.singleton;
+        me.ui.options.load(me, window, {
+            autoRefresh: true,
+            shuffle: false
+        });
+        me.ui.options.toggleSet(me, null, {
+            "autoRefresh": me.refresh,
+            "shuffle": me.refresh
+        });
+        await me.refresh(window);
     };
-    me.navigate = function (object, index) {
-
+    me.refresh = async function (object) {
+        var window = me.widget.window.get(object);
+        var names = await me.lib.zoom.participants(window.options.shuffle);
+        var currentNames = me.core.property.get(window.var.users, "items");
+        if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
+            me.core.property.set(window.var.users, {
+                "items": names,
+                "redraw": null
+            });
+        }
+        if (window.options.autoRefresh) {
+            clearInterval(window.intervalHandle);
+            window.intervalHandle = setInterval(() => {
+                me.refresh(object);
+            }, 1000);
+        }
     };
     me.resize = function (object) {
         var window = me.widget.window.get(object);

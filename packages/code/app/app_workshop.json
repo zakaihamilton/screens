@@ -8,6 +8,31 @@
     },
     "maximize": true,
     "icon": "/packages/res/icons/workshop.png",
+    "widget.menu.items": [
+        [
+            "Workshop",
+            [
+                [
+                    "Refresh",
+                    "app.workshop.refresh"
+                ],
+                [
+                    "Auto Refresh",
+                    "app.workshop.autoRefresh",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Shuffle",
+                    "app.workshop.shuffle",
+                    {
+                        "state": "select"
+                    }
+                ]
+            ]
+        ]
+    ],
     "ui.basic.elements": [
         {
             "ui.element.component": "widget.wheel",

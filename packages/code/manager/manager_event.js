@@ -21,7 +21,11 @@ screens.manager.event = function ManagerEvent(me) {
         me.events[id] = [];
     };
     me.list = function (id) {
-        return me.events[id];
+        var list = me.events[id];
+        if (!list) {
+            return [];
+        }
+        return list;
     };
     return "server";
 };

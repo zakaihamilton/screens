@@ -58,7 +58,11 @@ screens.widget.wheel = function WidgetWheel(me) {
                 wheel[key] = object.wheel_options[key];
             }
         }
-        wheel.createWheel(object.nav_items);
+        var items = object.nav_items;
+        if (!items || !items.length) {
+            items = [""];
+        }
+        wheel.createWheel(items);
         for (let navIndex = 0; navIndex < wheel.navItems.length; navIndex++) {
             wheel.navItems[navIndex].navigateFunction = function () {
                 object.navigate_index = navIndex;
