@@ -15,6 +15,9 @@ screens.widget.wheel = function WidgetWheel(me) {
             "ui.style.position": "absolute"
         }
     };
+    me.select = function (object, index) {
+        object.wheel.navigateWheel(index);
+    };
     me.items = {
         get: function (object) {
             return object.nav_items;
@@ -26,16 +29,15 @@ screens.widget.wheel = function WidgetWheel(me) {
     me.redraw = function (object) {
         var id = me.core.property.get(object, "ui.attribute.#id");
         var wheel = object.wheel = new wheelnav(id);
-        wheel.animatetime = 1000;
-        wheel.animateeffect = "linear";
-        wheel.slicePathFunction = slicePath().CogBasePieSlice;
-        wheel.sliceHoverPathFunction = slicePath().CogSlice;
-        wheel.sliceSelectedPathFunction = slicePath().CogSlice;
-        wheel.sliceSelectedTransformFunction = sliceTransform().MoveMiddleTransform;
-        wheel.hoverPercent = 0.9;
-        wheel.selectedPercent = 1.1;
-        wheel.wheelRadius = wheel.wheelRadius * 0.8;
-        wheel.colors = colorpalette.greensilver;
+        wheel.slicePathFunction = slicePath().PieSlice;
+        wheel.markerPathFunction = markerPath().DropMarker;
+        wheel.markerAttr = { fill: "#333", stroke: "#333" };
+        wheel.spreaderEnable = true;
+        wheel.spreaderRadius = 50;
+        wheel.spreaderInTitle = "menu";
+        wheel.spreaderOutTitle = "close";
+        wheel.clickModeRotate = false;
+        wheel.markerEnable = true;
         wheel.createWheel(object.nav_items);
     };
     me.update = {
