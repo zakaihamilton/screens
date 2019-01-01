@@ -95,7 +95,7 @@ screens.lib.zoom = function LibZoom(me) {
             if (event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
                 let info = users[participant.user_id];
-                if (info) {
+                if (info && info.count > 0) {
                     info.count--;
                 }
             }
