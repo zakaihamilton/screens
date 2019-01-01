@@ -74,10 +74,10 @@ screens.lib.zoom = function LibZoom(me) {
     me.participants = async function (shuffle = false) {
         var users = {};
         var events = await me.manager.event.list(me.id);
-        var start_time = "";
+        var uuid = "";
         for (var event of events) {
             if (event.event === "meeting_started") {
-                start_time = event.payload.meeting.start_time;
+                uuid = event.payload.meeting.uuid;
                 users = {};
             }
             if (event.event === "meeting_ended") {
@@ -85,16 +85,18 @@ screens.lib.zoom = function LibZoom(me) {
             }
             if (event.event === "participant_joined") {
                 let participant = event.payload.meeting.participant;
-                let info = users[participant.user_id];
+                let id = participant.user_name;
+                let info = users[id];
                 if (!info) {
-                    info = users[participant.user_id] = { count: 0 };
+                    info = users[id] = { count: 0 };
                 }
                 info.name = participant.user_name;
                 info.count++;
             }
             if (event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
-                let info = users[participant.user_id];
+                let id = participant.user_name;
+                let info = users[id];
                 if (info && info.count > 0) {
                     info.count--;
                 }
@@ -102,7 +104,7 @@ screens.lib.zoom = function LibZoom(me) {
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name).filter(Boolean).sort();
         if (shuffle) {
-            names = me.shuffleSeed.shuffle(names, start_time);
+            names = me.shuffleSeed.shuffle(names, uuid);
         }
         return names;
     };
