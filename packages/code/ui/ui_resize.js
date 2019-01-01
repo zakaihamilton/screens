@@ -116,4 +116,17 @@ screens.ui.resize = function UIResize(me) {
             me.core.event.register(null, object, "orientationchange", value, "orientationchange", window);
         }
     };
+    me.centerWidget = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
+        var target_region = me.ui.rect.absoluteRegion(window.var.container);
+        var size = target_region.width > target_region.height ? target_region.height : target_region.width;
+        me.core.property.set(object, {
+            "ui.style.top": ((target_region.height - size) / 2) + "px",
+            "ui.style.left": ((target_region.width - size) / 2) + "px",
+            "ui.style.width": size + "px",
+            "ui.style.height": size + "px",
+            "redraw": null
+        });
+    };
 };
