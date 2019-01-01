@@ -16,7 +16,12 @@ screens.app.workshop = function AppWorkshop(me) {
         me.core.property.set(me.singleton, "app", me);
         me.core.property.set(me.singleton.var.users, {
             "items": ["Mary", "Moshe", "Zakai", "Mark", "Andie", "Aria", "Yossi", "Robben"],
-            "navigate": "app.workshop.navigate"
+            "navigate": "app.workshop.navigate",
+            "options": {
+                spreaderInTitle: "Workshop",
+                spreaderOutTitle: "Workshop",
+                spreaderRadius: 100
+            }
         });
         return me.singleton;
     };

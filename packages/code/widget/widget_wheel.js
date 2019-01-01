@@ -31,6 +31,14 @@ screens.widget.wheel = function WidgetWheel(me) {
             object.nav_items = items;
         }
     };
+    me.options = {
+        get: function (object) {
+            return object.wheel_options;
+        },
+        set: function (object, options) {
+            object.wheel_options = options;
+        }
+    };
     me.redraw = function (object) {
         var id = me.core.property.get(object, "ui.attribute.#id");
         var wheel = object.wheel = new wheelnav(id);
@@ -39,14 +47,17 @@ screens.widget.wheel = function WidgetWheel(me) {
         wheel.markerAttr = { fill: "#333", stroke: "#333" };
         wheel.spreaderEnable = true;
         wheel.spreaderRadius = 50;
-        wheel.spreaderInTitle = "Users";
-        wheel.spreaderOutTitle = "close";
         wheel.clickModeRotate = false;
         wheel.markerEnable = true;
         wheel.animatetime = 1000;
         wheel.animateeffect = "linear";
         wheel.markerAttr = { stroke: me.ui.color.get("--color"), "stroke-width": 10 };
         wheel.currentClick = object.navigate_index;
+        if (object.wheel_options) {
+            for (var key in object.wheel_options) {
+                wheel[key] = object.wheel_options[key];
+            }
+        }
         wheel.createWheel(object.nav_items);
         for (let navIndex = 0; navIndex < wheel.navItems.length; navIndex++) {
             wheel.navItems[navIndex].navigateFunction = function () {
