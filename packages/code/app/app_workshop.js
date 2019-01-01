@@ -25,7 +25,8 @@ screens.app.workshop = function AppWorkshop(me) {
                 spreaderInTitle: "Workshop",
                 spreaderOutTitle: "Workshop",
                 spreaderRadius: 100,
-                titleFont: "100 1em Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif"
+                titleFont: "100 1em Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif",
+                spreaderTitleFont: "100 2em Impact, Charcoal, sans-serif"
             }
         });
         me.ui.options.load(me, window, {
