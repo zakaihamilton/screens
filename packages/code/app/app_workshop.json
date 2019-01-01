@@ -30,6 +30,13 @@
                         "state": "select",
                         "separator": true
                     }
+                ],
+                [
+                    "Filter",
+                    "app.workshop.filter",
+                    {
+                        "state": "select"
+                    }
                 ]
             ]
         ]

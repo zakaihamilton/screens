@@ -29,17 +29,22 @@ screens.app.workshop = function AppWorkshop(me) {
         });
         me.ui.options.load(me, window, {
             autoRefresh: true,
-            shuffle: false
+            shuffle: false,
+            filter: false
         });
         me.ui.options.toggleSet(me, null, {
             "autoRefresh": me.refresh,
-            "shuffle": me.refresh
+            "shuffle": me.refresh,
+            "filter": me.refresh
         });
         await me.refresh(window);
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         var names = await me.lib.zoom.participants(window.options.shuffle);
+        if (window.options.filter) {
+            names = names.filter(name => name.includes("Listening"));
+        }
         var currentNames = me.core.property.get(window.var.users, "items");
         if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
             me.core.property.set(window.var.users, {
