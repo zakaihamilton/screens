@@ -5,7 +5,7 @@
 
 screens.widget.wheel = function WidgetWheel(me) {
     me.init = async function () {
-        await me.core.require.load("/external/wheelnav.min.js");
+        await me.core.require.load("/external/wheelnav.js");
         await me.core.require.load("/external/raphael.min.js");
     };
     me.element = {
@@ -15,8 +15,13 @@ screens.widget.wheel = function WidgetWheel(me) {
             "ui.style.position": "absolute"
         }
     };
+    me.navigate = function (object, method) {
+        object.navigate_method = method;
+    };
     me.select = function (object, index) {
-        object.wheel.navigateWheel(index);
+        var wheel = object.wheel;
+        object.navigate_index = index;
+        wheel.navigateWheel(index);
     };
     me.items = {
         get: function (object) {
@@ -30,49 +35,31 @@ screens.widget.wheel = function WidgetWheel(me) {
         var id = me.core.property.get(object, "ui.attribute.#id");
         var wheel = object.wheel = new wheelnav(id);
         wheel.slicePathFunction = slicePath().PieSlice;
-        wheel.markerPathFunction = markerPath().DropMarker;
+        wheel.markerPathFunction = markerPath().PieLineMarker;
         wheel.markerAttr = { fill: "#333", stroke: "#333" };
         wheel.spreaderEnable = true;
         wheel.spreaderRadius = 50;
-        wheel.spreaderInTitle = "menu";
+        wheel.spreaderInTitle = "Users";
         wheel.spreaderOutTitle = "close";
         wheel.clickModeRotate = false;
         wheel.markerEnable = true;
+        wheel.animatetime = 1000;
+        wheel.animateeffect = "linear";
+        wheel.markerAttr = { stroke: me.ui.color.get("--color"), "stroke-width": 10 };
+        wheel.currentClick = object.navigate_index;
         wheel.createWheel(object.nav_items);
-    };
-    me.update = {
-        set: async function (object, value) {
-            if (object.chartData) {
-                object.chartInfo.data = object.chartData;
-            }
-            if (object.chart) {
-                object.chart.data = object.chartInfo.data;
-                object.chart.update(value);
-            } else {
-                if (object.chartOptions) {
-                    object.chartInfo.options = object.chartOptions;
+        for (let navIndex = 0; navIndex < wheel.navItems.length; navIndex++) {
+            wheel.navItems[navIndex].navigateFunction = function () {
+                object.navigate_index = navIndex;
+                if (!object.ignore_handler && object.navigate_method) {
+                    me.core.property.set(object, object.navigate_method, navIndex);
                 }
-                if (object.chartType) {
-                    object.chartInfo.type = object.chartType;
-                }
-                var context = me.core.property.get(object, "context");
-                if (!me.chart) {
-                    me.core.require.load("/node_modules/chart.js/dist/Chart.bundle.js").then((chart) => {
-                        me.chart = chart;
-                        clearTimeout(object.chartTimer);
-                        object.chartTimer = setTimeout(() => {
-                            object.chart = new me.chart.Chart(context, object.chartInfo);
-                        }, 0);
-                    });
-                }
-                else {
-                    clearTimeout(object.chartTimer);
-                    object.chart = new me.chart.Chart(context, object.chartInfo);
-                }
-            }
+            };
         }
-    };
-    me.dateRel = function (unixTimestamp) {
-        return me.lib.moment.unix(unixTimestamp).toDate();
+        object.ignore_handler = true;
+        if (object.navigate_index) {
+            wheel.navigateWheel(object.navigate_index);
+        }
+        object.ignore_handler = false;
     };
 };

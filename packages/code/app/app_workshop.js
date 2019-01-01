@@ -14,8 +14,14 @@ screens.app.workshop = function AppWorkshop(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         me.core.property.set(me.singleton, "app", me);
-        me.core.property.set(me.singleton.var.users, "items", ["Mary", "Moshe", "Zakai"]);
+        me.core.property.set(me.singleton.var.users, {
+            "items": ["Mary", "Moshe", "Zakai", "Mark", "Andie", "Aria", "Yossi", "Robben"],
+            "navigate": "app.workshop.navigate"
+        });
         return me.singleton;
+    };
+    me.navigate = function (object, index) {
+
     };
     me.resize = function (object) {
         var window = me.widget.window.get(object);
