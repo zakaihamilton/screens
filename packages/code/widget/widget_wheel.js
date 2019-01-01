@@ -18,11 +18,6 @@ screens.widget.wheel = function WidgetWheel(me) {
     me.navigate = function (object, method) {
         object.navigate_method = method;
     };
-    me.select = function (object, index) {
-        var wheel = object.wheel;
-        object.navigate_index = index;
-        wheel.navigateWheel(index);
-    };
     me.items = {
         get: function (object) {
             return object.nav_items;
@@ -52,7 +47,6 @@ screens.widget.wheel = function WidgetWheel(me) {
         wheel.animatetime = 1000;
         wheel.animateeffect = "linear";
         wheel.markerAttr = { stroke: me.ui.color.get("--color"), "stroke-width": 10 };
-        wheel.currentClick = object.navigate_index;
         if (object.wheel_options) {
             for (var key in object.wheel_options) {
                 wheel[key] = object.wheel_options[key];
@@ -66,14 +60,17 @@ screens.widget.wheel = function WidgetWheel(me) {
         for (let navIndex = 0; navIndex < wheel.navItems.length; navIndex++) {
             wheel.navItems[navIndex].navigateFunction = function () {
                 object.navigate_index = navIndex;
+                object.navigate_name = object.nav_items[navIndex];
                 if (!object.ignore_handler && object.navigate_method) {
                     me.core.property.set(object, object.navigate_method, navIndex);
                 }
             };
         }
         object.ignore_handler = true;
-        if (object.navigate_index) {
-            wheel.navigateWheel(object.navigate_index);
+        if (object.navigate_name) {
+            let navIndex = object.nav_items.indexOf(object.navigate_name);
+            object.navigate_index = navIndex;
+            wheel.navigateWheel(navIndex);
         }
         object.ignore_handler = false;
     };
