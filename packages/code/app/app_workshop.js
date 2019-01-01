@@ -43,7 +43,7 @@ screens.app.workshop = function AppWorkshop(me) {
         var window = me.widget.window.get(object);
         var names = await me.lib.zoom.participants(window.options.shuffle);
         if (window.options.filter) {
-            names = names.filter(name => !name.includes("Listening"));
+            names = names.filter(name => !name.toLowerCase().includes("listen"));
         }
         var currentNames = me.core.property.get(window.var.users, "items");
         if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
