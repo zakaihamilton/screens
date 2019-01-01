@@ -27,7 +27,8 @@
                     "Shuffle",
                     "app.workshop.shuffle",
                     {
-                        "state": "select"
+                        "state": "select",
+                        "separator": true
                     }
                 ]
             ]
