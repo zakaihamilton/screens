@@ -35,26 +35,27 @@ screens.widget.wheel = function WidgetWheel(me) {
         }
     };
     me.redraw = function (object) {
+        var items = object.nav_items;
+        if (!items || !items.length) {
+            items = [];
+        }
+        items = [...items, null];
         var id = me.core.property.get(object, "ui.attribute.#id");
         var wheel = object.wheel = new wheelnav(id);
-        wheel.slicePathFunction = slicePath().PieSlice;
+        wheel.slicePathFunction = slicePath().DonutSlice;
         wheel.markerPathFunction = markerPath().PieLineMarker;
-        wheel.markerAttr = { fill: "#333", stroke: "#333" };
         wheel.spreaderEnable = true;
         wheel.spreaderRadius = 50;
         wheel.clickModeRotate = false;
         wheel.markerEnable = true;
-        wheel.animatetime = 1000;
+        wheel.animatetime = 250;
         wheel.animateeffect = "linear";
-        wheel.markerAttr = { stroke: me.ui.color.get("--color"), "stroke-width": 10 };
+        var color = me.ui.color.get("--color");
+        wheel.markerAttr = { stroke: color, fill: color, "stroke-width": 10 };
         if (object.wheel_options) {
             for (var key in object.wheel_options) {
                 wheel[key] = object.wheel_options[key];
             }
-        }
-        var items = object.nav_items;
-        if (!items || !items.length) {
-            items = [""];
         }
         wheel.createWheel(items);
         for (let navIndex = 0; navIndex < wheel.navItems.length; navIndex++) {

@@ -83,22 +83,21 @@ screens.lib.zoom = function LibZoom(me) {
             if (event.event === "meeting_ended") {
                 users = {};
             }
-            if (event.event === "participant_joined") {
+            if (event.event === "participant_joined" || event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
                 let id = participant.user_name;
                 let info = users[id];
-                if (!info) {
-                    info = users[id] = { count: 0 };
+                if (event.event === "participant_joined") {
+                    if (!info) {
+                        info = users[id] = { count: 0 };
+                    }
+                    info.name = participant.user_name;
+                    info.count++;
                 }
-                info.name = participant.user_name;
-                info.count++;
-            }
-            if (event.event === "participant_left") {
-                let participant = event.payload.meeting.participant;
-                let id = participant.user_name;
-                let info = users[id];
-                if (info && info.count > 0) {
-                    info.count--;
+                if (event.event === "participant_left") {
+                    if (info && info.count > 0) {
+                        info.count--;
+                    }
                 }
             }
         }
