@@ -13,7 +13,7 @@ screens.core.app = function CoreApp(me) {
         }
     };
     me.available = function (name) {
-        var available = me.list && me.list.includes(name);
+        var available = me.core.util.isAdmin || (me.list && me.list.includes(name));
         return available;
     };
     me.lookup = {

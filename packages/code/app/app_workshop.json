@@ -1,0 +1,21 @@
+{
+    "title": "Workshop",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "600px",
+        "height": "600px"
+    },
+    "maximize": true,
+    "icon": "/packages/res/icons/workshop.png",
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.wheel",
+            "ui.basic.var": "users"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-workshop-window",
+        "storage.local.restore": "widget.window.store"
+    }
+}
