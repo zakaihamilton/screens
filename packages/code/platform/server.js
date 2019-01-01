@@ -27,7 +27,8 @@ screens.api = [
     "db.library",
     "db.shared",
     "media.file",
-    "lib.zoom.meetingInfo"
+    "lib.zoom.meetingInfo",
+    "lib.zoom.participants"
 ];
 
 screens.apps = [
