@@ -7,6 +7,7 @@ screens.lib.zoom = function LibZoom(me) {
     me.init = async function () {
         me.request = require("request");
         me.shuffleSeed = require("shuffle-seed");
+        me.chance = require("chance").Chance();
         var keys = await me.core.private.keys("zoom");
         me.meetingId = keys.meetingId;
         me.core.property.link("core.http.receive", "lib.zoom.receive", true);
@@ -102,8 +103,18 @@ screens.lib.zoom = function LibZoom(me) {
             }
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name);
+        if (!names.length && !me.core.util.isSecure()) {
+            if (!me.randomNames) {
+                me.randomNames = [];
+                let randomMax = me.chance.integer({ min: 0, max: 20 });
+                for (let randomIndex = 0; randomIndex < randomMax; randomIndex++) {
+                    me.randomNames.push(me.chance.name());
+                }
+            }
+            names = me.randomNames;
+        }
         names = names.filter(Boolean).sort();
-        if (shuffle) {
+        if (shuffle && me.shuffleSeed) {
             names = me.shuffle(names, uuid);
         }
         return names;

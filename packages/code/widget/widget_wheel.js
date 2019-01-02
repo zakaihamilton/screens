@@ -55,7 +55,7 @@ screens.widget.wheel = function WidgetWheel(me) {
             var wheel = object.wheel;
             if (object.wheel && wheel.navItemsEnabled === object.wheel_readonly) {
                 wheel.navItemsEnabled = !object.wheel_readonly;
-                wheel.refreshWheel();
+                me.redraw(object);
             }
         }
     };

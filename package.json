@@ -19,6 +19,7 @@
     "autoprefixer": "^9.3.1",
     "bcryptjs": "^2.4.3",
     "bulma": "^0.7.2",
+    "chance": "^1.0.18",
     "chart.js": "^2.7.3",
     "dropbox": "^4.0.13",
     "es6-promise": "^4.2.5",

@@ -38,7 +38,12 @@ screens.core.util = function CoreUtil(me) {
         return item;
     };
     me.isSecure = function () {
-        return location.protocol === "https:";
+        if (me.platform === "server") {
+            return !me.core.http.localhost;
+        }
+        else if (me.platform === "browser") {
+            return location.protocol === "https:";
+        }
     };
     me.map = async function (object, callback, thisArg) {
         var result = [];

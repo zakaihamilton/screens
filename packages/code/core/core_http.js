@@ -11,6 +11,9 @@ screens.core.http = function CoreHttp(me) {
     } else {
         me.port = 80;
     }
+    if (me.port === 4040) {
+        me.localhost = true;
+    }
     me.listeners = [];
     me.forwardUrl = null;
     me.init = async function () {
