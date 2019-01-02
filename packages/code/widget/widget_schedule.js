@@ -33,16 +33,35 @@ screens.widget.schedule = function WidgetSchedule(me) {
             let date = events[0].date;
             currentDate = new Date(date.year, date.month, date.day);
         }
+        var rows = {};
         for (let weekday = 0; weekday < 7; weekday++) {
-            let rowIndex = 5;
             let dayDate = new Date(currentDate);
             dayDate.setDate(currentDate.getDate() + weekday);
             Object.entries({ year: "numeric", month: "long", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
                 var options = {};
                 options[key] = type;
                 var value = dayDate.toLocaleString("en-us", options);
-                html += me.item(["widget-schedule-" + key], ["grid-column-start:" + (weekday + 1)], value);
+                var row = rows[key];
+                if (!row) {
+                    row = rows[key] = [];
+                }
+                if (row.length && row[row.length - 1].value === value) {
+                    row[row.length - 1].end++;
+                }
+                else {
+                    row.push({ start: weekday + 1, end: weekday + 2, value });
+                }
             });
+        }
+        Object.entries(rows).forEach(([key, list]) => {
+            for (var item of list) {
+                html += me.item(["widget-schedule-" + key], ["grid-column-start:" + item.start, "grid-column-end:" + item.end], item.value);
+            }
+        });
+        for (let weekday = 0; weekday < 7; weekday++) {
+            let rowIndex = 5;
+            let dayDate = new Date(currentDate);
+            dayDate.setDate(currentDate.getDate() + weekday);
             for (let event of events) {
                 if (event.date.year !== dayDate.getFullYear()) {
                     continue;
