@@ -16,7 +16,7 @@
                     "Clear",
                     "app.present.clear",
                     {
-                        "enabled": "app.present.isThisDevice"
+                        "enabled": "app.present.shared.isThisDevice"
                     }
                 ],
                 [
@@ -39,7 +39,7 @@
                     "Users",
                     "header"
                 ],
-                "app.present.userMenuList",
+                "app.present.shared.userMenuList",
                 "widget.window.exportMenuList(app.present.exportText)",
                 [
                     "Edit Mode",

@@ -18,3 +18,7 @@ screens.db.shared.chat = function DbSharedChat(me) {
 screens.db.shared.envision = function DbSharedEnvision(me) {
     me.init = me.storage.db.extension;
 };
+
+screens.db.shared.workshop = function DbSharedWorkshop(me) {
+    me.init = me.storage.db.extension;
+};
