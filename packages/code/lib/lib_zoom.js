@@ -72,7 +72,7 @@ screens.lib.zoom = function LibZoom(me) {
             me.manager.event.push(me.id, JSON.parse(info.body));
         }
     };
-    me.participants = async function (shuffle = false) {
+    me.participants = async function (shuffle = false, test = false) {
         var users = {};
         var events = await me.manager.event.list(me.id);
         var uuid = "";
@@ -103,7 +103,7 @@ screens.lib.zoom = function LibZoom(me) {
             }
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name);
-        if (!names.length && !me.core.util.isSecure()) {
+        if (test) {
             if (!me.randomNames) {
                 me.randomNames = [];
                 let randomMax = me.chance.integer({ min: 0, max: 20 });

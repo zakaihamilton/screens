@@ -39,6 +39,13 @@
                     }
                 ],
                 [
+                    "Test",
+                    "app.workshop.test",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "This Device",
                     "app.workshop.userName",
                     {

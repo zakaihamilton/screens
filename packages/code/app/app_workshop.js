@@ -31,8 +31,9 @@ screens.app.workshop = function AppWorkshop(me) {
         });
         me.ui.options.load(me, window, {
             autoRefresh: true,
-            shuffle: false,
+            shuffle: true,
             filter: false,
+            test: false,
             userName: ""
         });
         me.ui.options.choiceSet(me, null, {
@@ -41,14 +42,15 @@ screens.app.workshop = function AppWorkshop(me) {
         me.ui.options.toggleSet(me, null, {
             "autoRefresh": me.refresh,
             "shuffle": me.refresh,
-            "filter": me.refresh
+            "filter": me.refresh,
+            "test": me.refresh
         });
         me.updateUser(window);
         await me.refresh(window);
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        var names = await me.lib.zoom.participants(window.options.shuffle);
+        var names = await me.lib.zoom.participants(window.options.shuffle, window.options.test);
         if (window.options.filter) {
             names = names.filter(name => !name.toLowerCase().includes("listen"));
         }
