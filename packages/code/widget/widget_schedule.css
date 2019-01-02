@@ -1,0 +1,45 @@
+.widget-schedule-container {
+    display: grid;
+    background: var(--background);
+    color: var(--color);
+    width: 100%;
+    height: 100%;
+}
+
+.widget-schedule-year {
+    grid-column: auto;
+    grid-row: 1;
+    background: green;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.widget-schedule-month {
+    grid-column: auto;
+    grid-row: 2;
+    background: green;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.widget-schedule-weekday {
+    grid-row: 3;
+    background: green;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.widget-schedule-day {
+    grid-row: 4;
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    border: 1px solid black;
+}
+
+.widget-schedule-event {
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    border: 1px solid black;
+}

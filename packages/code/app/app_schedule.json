@@ -1,0 +1,33 @@
+{
+    "title": "Schedule",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "600px",
+        "height": "600px"
+    },
+    "maximize": true,
+    "icon": "/packages/res/icons/schedule.png",
+    "widget.menu.items": [
+        [
+            "Schedule",
+            [
+                [
+                    "Refresh",
+                    "app.workshop.refresh"
+                ]
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.element.component": "widget.schedule",
+            "link": "app.schedule.link",
+            "ui.basic.var": "schedule"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-schedule-window",
+        "storage.local.restore": "widget.window.store"
+    }
+}

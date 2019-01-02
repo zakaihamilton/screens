@@ -34,6 +34,9 @@ screens.media.file = function MediaFile(me) {
         var list = [];
         if (update || !me._groups || !me._groups.length) {
             list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
+            for (var group of me._groups) {
+                group.path = me.rootPath + "/" + group.name;
+            }
         }
         else {
             list = me._groups;
@@ -43,13 +46,13 @@ screens.media.file = function MediaFile(me) {
     me.update = async function () {
         var groups = await me.groups(true);
         for (var group of groups) {
-            await me.listing(me.rootPath + "/" + group.name, true);
+            await me.listing(group.path, true);
         }
     };
     me.exists = async function (name) {
         var groups = await me.groups();
         for (var group of groups) {
-            var files = await me.listing(me.rootPath + "/" + group.name);
+            var files = await me.listing(group.path);
             if (files) {
                 for (var file of files) {
                     if (file.name.includes(name)) {
@@ -94,7 +97,7 @@ screens.media.file = function MediaFile(me) {
         me.log("updateListing");
         var listing = await me.listing("/Kab/concepts/private/American", true);
         listing = listing.filter(item => {
-            return me.core.path.extension(item.path) !== "mp4";
+            return me.core.path.extension(item.name) === "m4a";
         });
         var diskSize = listing.reduce((total, item) => total + item.size, 0);
         me.log("Requires " + me.core.string.formatBytes(diskSize) + " Disk space for listing");
