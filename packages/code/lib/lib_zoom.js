@@ -103,33 +103,37 @@ screens.lib.zoom = function LibZoom(me) {
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name).filter(Boolean).sort();
         if (shuffle) {
-            let letters = me.core.string.charArray("a", "z");
-            letters.push(...me.core.string.charArray("א", "ת"));
-            letters = me.shuffleSeed.shuffle(letters, uuid);
-            let mapping = {};
-            for (let name of names) {
-                let firstLetter = name[0].toLowerCase();
-                if (!letters.includes(firstLetter)) {
-                    firstLetter = "other";
-                }
-                let list = mapping[firstLetter];
-                if (!list) {
-                    list = mapping[firstLetter] = [];
-                }
-                list.push(name);
-            }
-            names = [];
-            for (let letter of letters) {
-                let list = mapping[letter];
-                if (list) {
-                    names.push(...list);
-                }
-            }
-            if (mapping.other) {
-                names.push(...mapping.other);
-            }
+            names = me.shuffle(names, uuid);
         }
         return names;
+    };
+    me.shuffle = function (names, seed) {
+        var result = [];
+        let letters = me.core.string.charArray("a", "z");
+        letters.push(...me.core.string.charArray("א", "ת"));
+        letters = me.shuffleSeed.shuffle(letters, seed);
+        let mapping = {};
+        for (let name of names) {
+            let firstLetter = name[0].toLowerCase();
+            if (!letters.includes(firstLetter)) {
+                firstLetter = "other";
+            }
+            let list = mapping[firstLetter];
+            if (!list) {
+                list = mapping[firstLetter] = [];
+            }
+            list.push(name);
+        }
+        for (let letter of letters) {
+            let list = mapping[letter];
+            if (list) {
+                result.push(...list);
+            }
+        }
+        if (mapping.other) {
+            result.push(...mapping.other);
+        }
+        return result;
     };
     return "server";
 };
