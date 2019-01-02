@@ -79,9 +79,6 @@ screens.widget.menu = function WidgetMenu(me) {
             });
             return items;
         };
-        if (!info.list) {
-            return null;
-        }
         return [[
             "",
             null,
@@ -482,9 +479,6 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
         }
     };
     me.promise = async function (object, info) {
-        if (!info) {
-            return;
-        }
         var parent = me.ui.node.container(object, me.widget.menu.list.id);
         if (!parent) {
             return;

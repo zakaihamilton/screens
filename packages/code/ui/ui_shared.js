@@ -14,7 +14,8 @@ screens.ui.shared = function UIShared(me) {
                 property: "name",
                 attributes: { "state": "select" },
                 group: "users",
-                itemMethod: me.id + ".userName"
+                itemMethod: me.id + ".userName",
+                emptyMsg: "No Users"
             };
             return me.widget.menu.collect(object, info);
         },
