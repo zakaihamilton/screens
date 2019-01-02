@@ -106,7 +106,7 @@ screens.lib.zoom = function LibZoom(me) {
         if (test) {
             if (!me.randomNames) {
                 me.randomNames = [];
-                let randomMax = me.chance.integer({ min: 0, max: 20 });
+                let randomMax = me.chance.integer({ min: 8, max: 16 });
                 for (let randomIndex = 0; randomIndex < randomMax; randomIndex++) {
                     me.randomNames.push(me.chance.name());
                 }
