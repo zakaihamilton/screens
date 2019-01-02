@@ -47,6 +47,7 @@ screens.app.workshop = function AppWorkshop(me) {
         if (window.options.filter) {
             names = names.filter(name => !name.toLowerCase().includes("listen"));
         }
+        me.core.property.set(window, "name", names.length + " Participants");
         var currentNames = me.core.property.get(window.var.users, "items");
         if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
             me.core.property.set(window.var.users, {

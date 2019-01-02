@@ -102,7 +102,6 @@ screens.lib.zoom = function LibZoom(me) {
             }
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name).filter(Boolean).sort();
-        names = ["Zakai", "Moshe", "משה", "Mary", "קובי", "Yochanan", "Aria", "Katia", "אריה", "Yossi", "Robben", "Alon", "Yael"].sort();
         if (shuffle) {
             let letters = me.core.string.charArray("a", "z");
             letters.push(...me.core.string.charArray("א", "ת"));
