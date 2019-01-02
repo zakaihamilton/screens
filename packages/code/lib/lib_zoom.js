@@ -101,7 +101,8 @@ screens.lib.zoom = function LibZoom(me) {
                 }
             }
         }
-        var names = Object.values(users).filter(user => user.count).map(user => user.name).filter(Boolean).sort();
+        var names = Object.values(users).filter(user => user.count).map(user => user.name);
+        names = names.filter(Boolean).sort();
         if (shuffle) {
             names = me.shuffle(names, uuid);
         }

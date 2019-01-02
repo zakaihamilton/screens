@@ -43,6 +43,7 @@ screens.app.workshop = function AppWorkshop(me) {
             "shuffle": me.refresh,
             "filter": me.refresh
         });
+        me.updateUser(window);
         await me.refresh(window);
     };
     me.refresh = async function (object) {

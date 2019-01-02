@@ -52,6 +52,11 @@ screens.widget.wheel = function WidgetWheel(me) {
         },
         set: function (object, flag) {
             object.wheel_readonly = flag;
+            var wheel = object.wheel;
+            if (object.wheel) {
+                wheel.navItemsEnabled = !object.wheel_readonly;
+                wheel.refreshWheel();
+            }
         }
     };
     me.redraw = function (object) {
@@ -69,6 +74,7 @@ screens.widget.wheel = function WidgetWheel(me) {
         wheel.clickModeRotate = false;
         wheel.markerEnable = true;
         wheel.animatetime = 250;
+        wheel.navItemsEnabled = !object.wheel_readonly;
         wheel.animateeffect = "linear";
         var color = me.ui.color.get("--color");
         wheel.markerAttr = { stroke: color, fill: color, "stroke-width": 10 };
