@@ -5,7 +5,7 @@
 
 screens.app.workshop = function AppWorkshop(me) {
     me.init = async function () {
-
+        me.ui.shared.attach(me);
     };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -32,7 +32,11 @@ screens.app.workshop = function AppWorkshop(me) {
         me.ui.options.load(me, window, {
             autoRefresh: true,
             shuffle: false,
-            filter: false
+            filter: false,
+            userName: ""
+        });
+        me.ui.options.choiceSet(me, null, {
+            "userName": me.updateUser
         });
         me.ui.options.toggleSet(me, null, {
             "autoRefresh": me.refresh,
@@ -65,5 +69,19 @@ screens.app.workshop = function AppWorkshop(me) {
     me.resize = function (object) {
         var window = me.widget.window.get(object);
         me.ui.resize.centerWidget(window.var.users);
+    };
+    me.updateUser = async function (object) {
+        var window = me.widget.window.get(object);
+        var content = await me.shared.content(object);
+        var readonly = true;
+        if (content === undefined) {
+            content = { name: window.navigate_name };
+            readonly = false;
+        }
+        me.core.property.set(window.var.users, "user", content.name);
+        me.core.property.set(window.var.users, "readonly", readonly);
+    };
+    me.navigate = function (object, name) {
+        window.navigate_name = name;
     };
 };

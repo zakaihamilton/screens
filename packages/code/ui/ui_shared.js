@@ -22,10 +22,9 @@ screens.ui.shared = function UIShared(me) {
             var window = me.widget.window.get(object);
             return window.options.userName === "";
         },
-        update: function (object) {
+        update: function (content) {
             var sharedApp = me.id.split(".").pop();
             var date = new Date();
-            var content = me.exportData(object);
             if (content) {
                 var data = {
                     user: "$userId",

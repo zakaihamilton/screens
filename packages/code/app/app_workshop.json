@@ -37,7 +37,21 @@
                     {
                         "state": "select"
                     }
-                ]
+                ],
+                [
+                    "This Device",
+                    "app.workshop.userName",
+                    {
+                        "separator": true,
+                        "state": "select",
+                        "value": ""
+                    }
+                ],
+                [
+                    "Users",
+                    "header"
+                ],
+                "app.workshop.shared.userMenuList"
             ]
         ]
     ],

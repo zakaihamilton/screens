@@ -18,6 +18,18 @@ screens.widget.wheel = function WidgetWheel(me) {
     me.navigate = function (object, method) {
         object.navigate_method = method;
     };
+    me.user = {
+        get: function (object) {
+            return object.navigate_name;
+        },
+        set: function (object, name) {
+            if (object.navigate_name !== name) {
+                let navIndex = object.nav_items.indexOf(name);
+                object.navigate_index = navIndex;
+                object.wheel.navigateWheel(navIndex);
+            }
+        }
+    };
     me.items = {
         get: function (object) {
             return object.nav_items;
@@ -32,6 +44,14 @@ screens.widget.wheel = function WidgetWheel(me) {
         },
         set: function (object, options) {
             object.wheel_options = options;
+        }
+    };
+    me.readonly = {
+        get: function (object) {
+            return object.wheel_readonly;
+        },
+        set: function (object, flag) {
+            object.wheel_readonly = flag;
         }
     };
     me.redraw = function (object) {
@@ -63,7 +83,7 @@ screens.widget.wheel = function WidgetWheel(me) {
                 object.navigate_index = navIndex;
                 object.navigate_name = object.nav_items[navIndex];
                 if (!object.ignore_handler && object.navigate_method) {
-                    me.core.property.set(object, object.navigate_method, navIndex);
+                    me.core.property.set(object, object.navigate_method, object.navigate_name);
                 }
             };
         }

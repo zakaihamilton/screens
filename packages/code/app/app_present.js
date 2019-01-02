@@ -54,7 +54,8 @@ screens.app.present = function AppPresent(me) {
         me.core.property.set(window.var.transform, "ui.style.opacity", window.options.editMode ? "0" : "");
         me.core.property.set([window.var.editor, window.var.editorContainer], "ui.basic.show", window.options.editMode);
         if (!window.options.userName) {
-            me.shared.update(object);
+            var [content] = me.exportData(object);
+            me.shared.update(content);
         }
         me.updateUser(object);
     };
@@ -70,6 +71,9 @@ screens.app.present = function AppPresent(me) {
             content = me.core.property.get(window.var.editor, "text");
         }
         var previousText = me.core.property.get(window.var.transform, "text");
+        if (!content) {
+            content = "";
+        }
         if (content !== previousText) {
             me.core.property.set(window.var.transform, "text", content);
             me.core.property.set(window.var.transform, "transform");
