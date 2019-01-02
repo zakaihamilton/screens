@@ -60,11 +60,13 @@ screens.app.workshop = function AppWorkshop(me) {
                 "redraw": null
             });
         }
+        me.shared.refresh();
+        me.updateUser(window);
         if (window.options.autoRefresh) {
             clearInterval(window.intervalHandle);
             window.intervalHandle = setInterval(() => {
                 me.refresh(object);
-            }, 1000);
+            }, 2000);
         }
     };
     me.resize = function (object) {
@@ -84,5 +86,6 @@ screens.app.workshop = function AppWorkshop(me) {
     };
     me.navigate = function (object, name) {
         window.navigate_name = name;
+        me.shared.update({ name: window.navigate_name });
     };
 };
