@@ -81,8 +81,10 @@ screens.app.workshop = function AppWorkshop(me) {
             content = { name: window.navigate_name };
             readonly = false;
         }
-        me.core.property.set(window.var.users, "user", content.name);
         me.core.property.set(window.var.users, "readonly", readonly);
+        if (content.name) {
+            me.core.property.set(window.var.users, "user", content.name);
+        }
     };
     me.navigate = function (object, name) {
         window.navigate_name = name;

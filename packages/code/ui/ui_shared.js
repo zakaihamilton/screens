@@ -27,10 +27,16 @@ screens.ui.shared = function UIShared(me) {
             var sharedApp = me.id.split(".").pop();
             var date = new Date();
             if (content) {
+                let json = false;
+                if (typeof content !== "string") {
+                    content = JSON.stringify(content);
+                    json = true;
+                }
                 var data = {
                     user: "$userId",
                     name: "$userName",
                     content: content,
+                    json: json,
                     date: date.toString()
                 };
                 me.db.shared[sharedApp].use({
@@ -53,10 +59,13 @@ screens.ui.shared = function UIShared(me) {
             var userName = window.options.userName.toLowerCase();
             var content = undefined;
             var userList = await me.shared.userList;
-            if (userName) {
+            if (userName && userList) {
                 var user = userList.find((item) => item.name.toLowerCase() === userName);
                 if (user) {
                     content = user.content;
+                    if (user.json) {
+                        content = JSON.parse(content);
+                    }
                 }
             }
             return content;

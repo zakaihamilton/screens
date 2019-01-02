@@ -53,7 +53,7 @@ screens.widget.wheel = function WidgetWheel(me) {
         set: function (object, flag) {
             object.wheel_readonly = flag;
             var wheel = object.wheel;
-            if (object.wheel) {
+            if (object.wheel && wheel.navItemsEnabled === object.wheel_readonly) {
                 wheel.navItemsEnabled = !object.wheel_readonly;
                 wheel.refreshWheel();
             }
