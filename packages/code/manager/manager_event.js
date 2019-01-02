@@ -15,7 +15,6 @@ screens.manager.event = function ManagerEvent(me) {
             eventList.shift();
         }
         eventList.push(event);
-        me.log("recieved event: " + id + "=" + JSON.stringify(event));
     };
     me.empty = function (id) {
         me.events[id] = [];

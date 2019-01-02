@@ -96,7 +96,6 @@ screens.user.access = function UserAccess(me) {
         if (!result && me.api) {
             list.push(...me.apps);
         }
-        me.log("apps allowed for user: " + userName + " = " + list.join(", "));
         return list;
     };
     return "server";
