@@ -85,13 +85,13 @@ screens.lib.zoom = function LibZoom(me) {
             }
             if (event.event === "participant_joined" || event.event === "participant_left") {
                 let participant = event.payload.meeting.participant;
-                let id = participant.user_name;
+                let id = participant.user_name.trim().toLowerCase();
                 let info = users[id];
                 if (event.event === "participant_joined") {
                     if (!info) {
                         info = users[id] = { count: 0 };
                     }
-                    info.name = participant.user_name;
+                    info.name = participant.user_name.trim();
                     info.count++;
                 }
                 if (event.event === "participant_left") {
@@ -102,8 +102,33 @@ screens.lib.zoom = function LibZoom(me) {
             }
         }
         var names = Object.values(users).filter(user => user.count).map(user => user.name).filter(Boolean).sort();
+        names = ["Zakai", "Moshe", "משה", "Mary", "קובי", "Yochanan", "Aria", "Katia", "אריה", "Yossi", "Robben", "Alon", "Yael"].sort();
         if (shuffle) {
-            names = me.shuffleSeed.shuffle(names, uuid);
+            let letters = me.core.string.charArray("a", "z");
+            letters.push(...me.core.string.charArray("א", "ת"));
+            letters = me.shuffleSeed.shuffle(letters, uuid);
+            let mapping = {};
+            for (let name of names) {
+                let firstLetter = name[0].toLowerCase();
+                if (!letters.includes(firstLetter)) {
+                    firstLetter = "other";
+                }
+                let list = mapping[firstLetter];
+                if (!list) {
+                    list = mapping[firstLetter] = [];
+                }
+                list.push(name);
+            }
+            names = [];
+            for (let letter of letters) {
+                let list = mapping[letter];
+                if (list) {
+                    names.push(...list);
+                }
+            }
+            if (mapping.other) {
+                names.push(...mapping.other);
+            }
         }
         return names;
     };

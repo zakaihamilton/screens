@@ -283,4 +283,11 @@ screens.core.string = function CoreString(me) {
         }
         return number;
     };
+    me.charArray = function (first, last) {
+        var a = [], i = first.charCodeAt(0), j = last.charCodeAt(0);
+        for (; i <= j; ++i) {
+            a.push(String.fromCharCode(i));
+        }
+        return a;
+    };
 };
