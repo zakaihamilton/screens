@@ -25,8 +25,10 @@ screens.widget.wheel = function WidgetWheel(me) {
         set: function (object, name) {
             if (object.navigate_name !== name) {
                 let navIndex = object.nav_items.indexOf(name);
-                object.navigate_index = navIndex;
-                object.wheel.navigateWheel(navIndex);
+                if (navIndex !== -1) {
+                    object.navigate_index = navIndex;
+                    object.wheel.navigateWheel(navIndex);
+                }
             }
         }
     };
@@ -96,8 +98,10 @@ screens.widget.wheel = function WidgetWheel(me) {
         object.ignore_handler = true;
         if (object.navigate_name) {
             let navIndex = object.nav_items.indexOf(object.navigate_name);
-            object.navigate_index = navIndex;
-            wheel.navigateWheel(navIndex);
+            if (navIndex !== -1) {
+                object.navigate_index = navIndex;
+                wheel.navigateWheel(navIndex);
+            }
         }
         object.ignore_handler = false;
     };
