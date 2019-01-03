@@ -25,7 +25,8 @@
             "methods": {
                 "event": "app.schedule.event",
                 "previous": "app.schedule.previous",
-                "next": "app.schedule.next"
+                "next": "app.schedule.next",
+                "today": "app.schedule.today"
             },
             "ui.basic.var": "schedule"
         }

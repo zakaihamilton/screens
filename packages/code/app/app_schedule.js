@@ -57,4 +57,9 @@ screens.app.schedule = function AppSchedule(me) {
         window.firstDate.setDate(window.firstDate.getDate() + 7);
         me.refresh(object);
     };
+    me.today = function (object) {
+        var window = me.widget.window.get(object);
+        window.firstDate = new Date();
+        me.refresh(object);
+    };
 };

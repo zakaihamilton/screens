@@ -22,6 +22,12 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 },
                 {
                     "ui.basic.tag": "a",
+                    "ui.class.class": ["nav", "today"],
+                    "ui.basic.html": "Today",
+                    "ui.touch.click": "today"
+                },
+                {
+                    "ui.basic.tag": "a",
                     "ui.class.class": ["nav", "next"],
                     "ui.basic.html": "&#8250;",
                     "ui.touch.click": "next"
@@ -175,6 +181,12 @@ screens.widget.schedule = function WidgetSchedule(me) {
         var widget = me.ui.node.container(object, me.id);
         if (widget.schedule_methods.next) {
             me.core.property.set(widget, widget.schedule_methods.next);
+        }
+    };
+    me.today = function (object) {
+        var widget = me.ui.node.container(object, me.id);
+        if (widget.schedule_methods.next) {
+            me.core.property.set(widget, widget.schedule_methods.today);
         }
     };
 };
