@@ -46,36 +46,90 @@ screens.widget.schedule = function WidgetSchedule(me) {
             object.schedule_methods = methods;
         }
     };
-    me.events = {
+    me.type = {
         get: function (object) {
-            return object.schedule_events;
+            return object.schedule_type;
         },
-        set: function (object, events) {
-            object.schedule_events = events;
-            me.redraw(object);
+        set: function (object, type) {
+            object.schedule_type = type;
         }
     };
-    me.start = {
+    me.current = {
         get: function (object) {
-            return object.schedule_start;
+            return object.schedule_date;
         },
-        set: function (object, start) {
-            object.schedule_start = start;
-            me.redraw(object);
+        set: function (object, date) {
+            object.schedule_date = date;
         }
     };
-    me.redraw = function (object) {
-        var events = object.schedule_events;
+    me.size = function (object) {
+        var size = 1;
+        var type = object.schedule_type.toLowerCase();
+        if (type === "year") {
+            size = 5 * 7 * 12;
+        } else if (type === "month") {
+            size = 5 * 7;
+        } else if (type === "week") {
+            size = 7;
+        }
+        return size;
+    };
+    me.nextDate = function (object) {
+        var size = me.size(object);
+        var date = new Date(object.schedule_date.getTime());
+        date.setDate(object.schedule_date.getDate() + size);
+        return date;
+    };
+    me.previousDate = function (object) {
+        var size = me.size(object);
+        var date = new Date(object.schedule_date.getTime());
+        date.setDate(object.schedule_date.getDate() - size);
+        return date;
+    };
+    me.first = function (object) {
+        var date = new Date(object.schedule_date.getTime());
+        var type = object.schedule_type.toLowerCase();
+        if (type === "year") {
+            date.setMonth(0);
+            date.setDate(1);
+        }
+        else if (type === "month") {
+            date.setDate(1);
+        }
+        if (type !== "day") {
+            var day = date.getDay(),
+                diff = date.getDate() - day;
+            date.setDate(diff);
+        }
+        return date;
+    };
+    me.events = async function (object) {
+        var size = me.size(object);
+        var date = me.first(object);
+        var start = {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate()
+        };
+        date.setDate(date.getDate() + size);
+        var end = {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate()
+        };
+        var events = await me.manager.schedule.events(start, end);
+        object.schedule_events = events;
+        return events;
+    };
+    me.redraw = async function (object) {
+        var size = me.size(object);
+        var events = await me.events(object);
         if (!events) {
             events = [];
         }
         var html = "";
         var today = new Date();
-        var currentDate = new Date();
-        if (object.schedule_start) {
-            let date = object.schedule_start;
-            currentDate = new Date(date.year, date.month, date.day);
-        }
+        var currentDate = me.first(object);
         var rows = {};
         for (let weekday = 0; weekday < 7; weekday++) {
             let dayDate = new Date(currentDate);

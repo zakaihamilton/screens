@@ -20,49 +20,39 @@ screens.app.schedule = function AppSchedule(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "app", me);
         me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
-        window.firstDate = new Date();
+        window.currentDate = new Date();
+        me.ui.options.load(me, window, {
+            "viewType": "Week"
+        });
+        me.ui.options.choiceSet(me, null, {
+            "viewType": me.refresh
+        });
         await me.refresh(window);
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        var date = me.core.util.getSunday(window.firstDate);
-        var start = {
-            year: date.getFullYear(),
-            month: date.getMonth(),
-            day: date.getDate()
-        };
-        date.setDate(date.getDate() + 6);
-        var end = {
-            year: date.getFullYear(),
-            month: date.getMonth(),
-            day: date.getDate()
-        };
         me.core.property.set(window, "ui.work.state", true);
-        var events = await me.manager.schedule.events(start, end);
+        me.core.property.set(window.var.schedule, "type", window.options.viewType);
+        me.core.property.set(window.var.schedule, "current", window.currentDate);
+        await me.core.property.set(window.var.schedule, "redraw");
         me.core.property.set(window, "ui.work.state", false);
-        me.core.property.set(window.var.schedule, "start", start);
-        me.core.property.set(window.var.schedule, "events", events);
-    };
-    me.resize = function (object) {
-        var window = me.widget.window.get(object);
-        //me.ui.resize.centerWidget(window.var.users);
     };
     me.event = function (object, event) {
         me.core.app.launch("player", event.group, event.session);
     };
     me.previous = function (object) {
         var window = me.widget.window.get(object);
-        window.firstDate.setDate(window.firstDate.getDate() - 7);
+        window.currentDate = me.core.property.get(window.var.schedule, "previousDate");
         me.refresh(object);
     };
     me.next = function (object) {
         var window = me.widget.window.get(object);
-        window.firstDate.setDate(window.firstDate.getDate() + 7);
+        window.currentDate = me.core.property.get(window.var.schedule, "nextDate");
         me.refresh(object);
     };
     me.today = function (object) {
         var window = me.widget.window.get(object);
-        window.firstDate = new Date();
+        window.currentDate = new Date();
         me.refresh(object);
     };
     me.work = {

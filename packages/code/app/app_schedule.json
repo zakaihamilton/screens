@@ -14,7 +14,39 @@
             [
                 [
                     "Refresh",
-                    "app.workshop.refresh"
+                    "app.schedule.refresh"
+                ],
+                [
+                    "View",
+                    "header"
+                ],
+                [
+                    "Year",
+                    "app.schedule.viewType",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Month",
+                    "app.schedule.viewType",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Week",
+                    "app.schedule.viewType",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Day",
+                    "app.schedule.viewType",
+                    {
+                        "state": "select"
+                    }
                 ]
             ]
         ]
