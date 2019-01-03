@@ -67,33 +67,37 @@ screens.media.file = function MediaFile(me) {
     };
     me.listing = async function (path, update = false) {
         var files = null;
-        if (update || !me._listing[path]) {
+        try {
             var unlock = await me.core.mutex.lock();
-            files = await me.storage.file.getChildren(path);
-            var oldListing = me._listing[path];
-            me._listing[path] = files;
-            for (var file of files) {
-                var item = null;
-                if (oldListing) {
-                    item = oldListing[file.name];
-                }
-                if (item) {
-                    file = Object.assign(file, item);
-                }
-                else {
-                    file.path = path + "/" + file.name;
-                    var metadata = await me.info(me.cachePath + "/" + file.name);
-                    if (metadata) {
-                        if (metadata.format) {
-                            file.duration = metadata.format.duration;
+            if (update || !me._listing[path]) {
+                files = await me.storage.file.getChildren(path);
+                var oldListing = me._listing[path];
+                me._listing[path] = files;
+                for (var file of files) {
+                    var item = null;
+                    if (oldListing) {
+                        item = oldListing[file.name];
+                    }
+                    if (item) {
+                        file = Object.assign(file, item);
+                    }
+                    else {
+                        file.path = path + "/" + file.name;
+                        var metadata = await me.info(me.cachePath + "/" + file.name);
+                        if (metadata) {
+                            if (metadata.format) {
+                                file.duration = metadata.format.duration;
+                            }
                         }
                     }
                 }
             }
-            unlock();
+            else {
+                files = me._listing[path];
+            }
         }
-        else {
-            files = me._listing[path];
+        finally {
+            unlock();
         }
         return files;
     };
