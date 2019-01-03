@@ -62,6 +62,14 @@ screens.widget.schedule = function WidgetSchedule(me) {
             object.schedule_date = date;
         }
     };
+    me.group = {
+        get: function (object) {
+            return object.schedule_group;
+        },
+        set: function (object, group) {
+            object.schedule_group = group;
+        }
+    };
     me.size = function (object) {
         var size = { days: 1, weeks: 1, months: 1 };
         var type = object.schedule_type.toLowerCase();
@@ -205,6 +213,9 @@ screens.widget.schedule = function WidgetSchedule(me) {
                             continue;
                         }
                         if (event.date.day !== dayDate.getDate()) {
+                            continue;
+                        }
+                        if (object.schedule_group === event.group) {
                             continue;
                         }
                         let classes = ["widget-schedule-event"];

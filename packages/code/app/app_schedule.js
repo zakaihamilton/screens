@@ -22,16 +22,31 @@ screens.app.schedule = function AppSchedule(me) {
         me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
         window.currentDate = new Date();
         me.ui.options.load(me, window, {
-            "viewType": "Week"
+            "viewType": "Week",
+            groupName: "American"
         });
         me.ui.options.choiceSet(me, null, {
             "viewType": me.refresh
         });
         await me.refresh(window);
     };
+    me.group = {
+        get: function (object, value) {
+            var window = me.widget.window.get(object);
+            return window.options.groupName === value;
+        },
+        set: function (object, name) {
+            if (name) {
+                me.ui.options.save(me, window, { groupName: name });
+            }
+            me.refresh(object);
+        }
+    };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "ui.work.state", true);
+        me.groupListData = await me.media.file.groups();
+        me.core.property.set(window.var.schedule, "group", window.options.groupName);
         me.core.property.set(window.var.schedule, "type", window.options.viewType);
         me.core.property.set(window.var.schedule, "current", window.currentDate);
         await me.core.property.set(window.var.schedule, "redraw");
@@ -72,6 +87,18 @@ screens.app.schedule = function AppSchedule(me) {
                     me.core.property.set([object.var.schedule], "ui.style.visibility", "visible");
                 }, 250);
             }
+        }
+    };
+    me.groupMenuList = {
+        get: function (object) {
+            var info = {
+                list: me.groupListData,
+                property: "name",
+                attributes: { "state": "select" },
+                group: "group",
+                itemMethod: "app.schedule.group"
+            };
+            return me.widget.menu.collect(object, info);
         }
     };
 };
