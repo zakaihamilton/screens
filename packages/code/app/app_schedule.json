@@ -52,6 +52,14 @@
                     "Group",
                     "header"
                 ],
+                [
+                    "All",
+                    "app.schedule.group",
+                    {
+                        "state": "select",
+                        "value": ""
+                    }
+                ],
                 "app.schedule.groupMenuList"
             ]
         ]
