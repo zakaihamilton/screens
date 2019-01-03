@@ -16,6 +16,14 @@ screens.widget.schedule = function WidgetSchedule(me) {
     me.init = function () {
 
     };
+    me.link = {
+        get: function (object) {
+            return object.schedule_method;
+        },
+        set: function (object, method) {
+            object.schedule_method = method;
+        }
+    };
     me.events = {
         get: function (object) {
             return object.schedule_events;
@@ -55,14 +63,18 @@ screens.widget.schedule = function WidgetSchedule(me) {
         }
         Object.entries(rows).forEach(([key, list]) => {
             for (var item of list) {
-                html += me.item(["widget-schedule-" + key], ["grid-column-start:" + item.start, "grid-column-end:" + item.end], item.value);
+                let classes = ["widget-schedule-" + key];
+                let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
+                let attributes = {};
+                html += me.item(classes, styles, attributes, item.value);
             }
         });
         for (let weekday = 0; weekday < 7; weekday++) {
             let rowIndex = 5;
             let dayDate = new Date(currentDate);
             dayDate.setDate(currentDate.getDate() + weekday);
-            for (let event of events) {
+            for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
+                let event = events[eventIndex];
                 if (event.date.year !== dayDate.getFullYear()) {
                     continue;
                 }
@@ -72,19 +84,38 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 if (event.date.day !== dayDate.getDate()) {
                     continue;
                 }
-                html += me.item(["widget-schedule-event"], ["grid-column:" + (weekday + 1), "grid-row:" + rowIndex], event.name);
+                let classes = ["widget-schedule-event"];
+                let styles = { "grid-column": (weekday + 1), "grid-row": rowIndex };
+                let attributes = {
+                    "onclick": "screens.widget.schedule.click(this," + eventIndex + ")"
+                };
+                html += me.item(classes, styles, attributes, event.name);
                 rowIndex++;
             }
         }
         me.core.property.set(object, "ui.basic.html", html);
     };
-    me.item = function (classes, styles, value) {
+    me.click = function (object, index) {
+        var widget = me.ui.node.container(object, me.id);
+        var event = widget.schedule_events[index];
+        me.core.property.set(widget, widget.schedule_method, event);
+    };
+    me.item = function (classes, styles, attributes, value) {
         var html = "<div";
         if (classes && classes.length) {
             html += " class=\"" + classes.join(" ") + "\"";
         }
-        if (styles && styles.length) {
-            html += " style=\"" + styles.join(";") + "\"";
+        if (styles && Object.keys(styles).length) {
+            html += " style=\"";
+            for (let name in styles) {
+                html += name + ":" + styles[name] + ";";
+            }
+            html += "\"";
+        }
+        if (attributes && Object.keys(attributes).length) {
+            for (let name in attributes) {
+                html += " " + name + "=\"" + attributes[name] + "\"";
+            }
         }
         html += ">";
         if (value) {

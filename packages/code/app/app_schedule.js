@@ -31,6 +31,6 @@ screens.app.schedule = function AppSchedule(me) {
         //me.ui.resize.centerWidget(window.var.users);
     };
     me.link = function (object, event) {
-        me.core.app.launch("app.player", event.group, event.name);
+        me.core.app.launch("player", event.group, event.session);
     };
 };

@@ -29,7 +29,8 @@ screens.manager.schedule = function ManagerSchedule(me) {
                         },
                         name,
                         group: group.name,
-                        path: item.path
+                        path: item.path,
+                        session: me.core.path.fileName(item.name)
                     });
                 }
             }
