@@ -78,7 +78,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             if (dayDate.toDateString() === today.toDateString()) {
                 isToday = true;
             }
-            Object.entries({ year: "numeric", month: "long", weekday: "long", day: "numeric" }).forEach(([key, type]) => {
+            Object.entries({ year: "numeric", month: "long", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
                 var options = {};
                 options[key] = type;
                 var value = dayDate.toLocaleString("en-us", options);

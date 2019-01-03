@@ -26,17 +26,18 @@
 .widget-schedule-nav:hover:active {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
-    border: 3px solid var(--border-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-previous {
     left:30px;
-    bottom:15px;
+    bottom:20px;
 }
 
 .widget-schedule-next {
     right:30px;
-    bottom:15px;
+    bottom:20px;
 }
 
 .widget-schedule-grid {
@@ -85,6 +86,7 @@
     justify-content: center;
     align-items: center;
     margin:0px 3px 3px 3px;
+    padding:7px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
@@ -98,7 +100,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.widget-schedule-weekday {
+.widget-schedule-day {
     grid-row: 3;
     background: var(--phase-three-background);
     text-align: center;
@@ -106,13 +108,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:3px;
+    padding:7px;
     margin:3px 3px 0px 3px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
 
-.widget-schedule-weekday.background {
+.widget-schedule-day.background {
     grid-row-start:3;
     grid-row-end: last-line;
     background: var(--background);
@@ -122,20 +124,28 @@
     margin:3px;
 }
 
-.widget-schedule-day {
+.widget-schedule-day.today {
+    background: var(--phase-three-border);
+}
+
+.widget-schedule-day.background.today {
+    background: var(--alt-background);
+}
+
+.widget-schedule-weekday {
     grid-row: 4;
     background: var(--phase-four-background);
     color: var(--color);
     text-align: center;
     border-bottom: 1px solid black;
-    padding:3px;
+    padding:7px;
     margin:0px 4px 0px 4px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.widget-schedule-day.today {
+.widget-schedule-weekday.today {
     background: var(--phase-four-border);
 }
 
@@ -146,8 +156,7 @@
     border-bottom: 1px solid black;
     margin-left:4px;
     margin-right:4px;
-    padding:3px;
-    padding-top: 7px;
+    padding:7px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     justify-content: center;
