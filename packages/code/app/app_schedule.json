@@ -29,8 +29,14 @@
                 "today": "app.schedule.today"
             },
             "ui.basic.var": "schedule"
+        },
+        {
+            "ui.element.component": "widget.spinner",
+            "ui.basic.var": "spinner",
+            "ui.style.visibility": "hidden"
         }
     ],
+    "core.link.work": "app.schedule.work",
     "ui.property.after": {
         "storage.local.key": "app-schedule-window",
         "storage.local.restore": "widget.window.store"

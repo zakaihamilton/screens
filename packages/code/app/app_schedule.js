@@ -36,7 +36,9 @@ screens.app.schedule = function AppSchedule(me) {
             month: date.getMonth(),
             day: date.getDate()
         };
+        me.core.property.set(window, "ui.work.state", true);
         var events = await me.manager.schedule.events(start, end);
+        me.core.property.set(window, "ui.work.state", false);
         me.core.property.set(window.var.schedule, "start", start);
         me.core.property.set(window.var.schedule, "events", events);
     };
@@ -61,5 +63,24 @@ screens.app.schedule = function AppSchedule(me) {
         var window = me.widget.window.get(object);
         window.firstDate = new Date();
         me.refresh(object);
+    };
+    me.work = {
+        set: function (object, value) {
+            if (me.workTimeout) {
+                clearTimeout(me.workTimeout);
+                me.workTimeout = null;
+            }
+            if (value) {
+                me.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    me.core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
+                }, 250);
+            } else {
+                me.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    me.core.property.set([object.var.schedule], "ui.style.visibility", "visible");
+                }, 250);
+            }
+        }
     };
 };

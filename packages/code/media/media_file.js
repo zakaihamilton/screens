@@ -68,6 +68,7 @@ screens.media.file = function MediaFile(me) {
     me.listing = async function (path, update = false) {
         var files = null;
         if (update || !me._listing[path]) {
+            var unlock = await me.core.mutex.lock();
             files = await me.storage.file.getChildren(path);
             var oldListing = me._listing[path];
             me._listing[path] = files;
@@ -89,6 +90,7 @@ screens.media.file = function MediaFile(me) {
                     }
                 }
             }
+            unlock();
         }
         else {
             files = me._listing[path];
