@@ -78,7 +78,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             if (dayDate.toDateString() === today.toDateString()) {
                 isToday = true;
             }
-            Object.entries({ year: "numeric", month: "long", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
+            Object.entries({ year: "numeric", month: "long", weekday: "long", day: "numeric" }).forEach(([key, type]) => {
                 var options = {};
                 options[key] = type;
                 var value = dayDate.toLocaleString("en-us", options);
@@ -103,7 +103,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
                 let attributes = {};
                 let bg_classes = [];
-                bg_classes.push(classes, "background");
+                bg_classes.push(...classes, "background");
                 html += me.item(bg_classes, styles, attributes);
                 html += me.item(classes, styles, attributes, item.value);
             }
