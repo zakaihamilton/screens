@@ -102,6 +102,9 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 }
                 let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
                 let attributes = {};
+                let bg_classes = [];
+                bg_classes.push(classes, "background");
+                html += me.item(bg_classes, styles, attributes);
                 html += me.item(classes, styles, attributes, item.value);
             }
         });
