@@ -74,9 +74,9 @@ screens.widget.schedule = function WidgetSchedule(me) {
         var size = { days: 1, weeks: 1, months: 1 };
         var type = object.schedule_type.toLowerCase();
         if (type === "year") {
-            size.days = 7 * 5 * 12;
-            size.weeks = 5 * 12;
-            size.months = 12;
+            size.days = 7 * 5 * 11;
+            size.weeks = 5 * 11;
+            size.months = 11;
         } else if (type === "month") {
             size.days = 7 * 5;
             size.weeks = 5;
@@ -136,6 +136,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
         return events;
     };
     me.redraw = async function (object) {
+        var type = object.schedule_type.toLowerCase();
         var size = me.size(object);
         var events = await me.events(object);
         if (!events) {
@@ -156,10 +157,18 @@ screens.widget.schedule = function WidgetSchedule(me) {
         if (monthCount > 11) {
             monthCount = 11;
         }
+        object.var.grid.scrollTop = 0;
+        var region = me.ui.rect.absoluteRegion(object);
         for (let month = 0; month < monthCount; month++) {
-            html += "<div class=\"widget-schedule-month-grid\">";
+            html += "<div class=\"widget-schedule-month-grid " + type + "\">";
             for (let week = 0; week < weekCount; week++) {
-                html += "<div class=\"widget-schedule-week-grid\">";
+                let styles = { width: region.width + "px", height: region.height + "px" };
+                html += "<div class=\"widget-schedule-week-grid " + type + "\"";
+                html += " style=\"";
+                for (let name in styles) {
+                    html += name + ":" + styles[name] + ";";
+                }
+                html += "\">";
                 var rows = {};
                 for (let weekday = 0; weekday < weekdayCount; weekday++) {
                     let dayDate = new Date(currentDate);
@@ -169,7 +178,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                     if (dayDate.toDateString() === today.toDateString()) {
                         isToday = true;
                     }
-                    Object.entries({ year: "numeric", month: "long", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
+                    Object.entries({ month: "long", year: "numeric", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
                         var options = {};
                         options[key] = type;
                         var value = dayDate.toLocaleString("en-us", options);
@@ -187,7 +196,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 }
                 Object.entries(rows).forEach(([key, list]) => {
                     for (var item of list) {
-                        let classes = ["widget-schedule-" + key];
+                        let classes = ["widget-schedule-" + key, type];
                         if (item.isToday) {
                             classes.push(["today"]);
                         }
@@ -218,7 +227,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                         if (object.schedule_group && object.schedule_group.toLowerCase() !== event.group.toLowerCase()) {
                             continue;
                         }
-                        let classes = ["widget-schedule-event"];
+                        let classes = ["widget-schedule-event", type];
                         let styles = { "grid-column": (weekday + 1), "grid-row": rowIndex };
                         let attributes = {
                             "onclick": "screens.widget.schedule.click(this," + eventIndex + ")"

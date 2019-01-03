@@ -4,6 +4,7 @@
     top: 0px;
     right: 0px;
     bottom: 0px;
+    margin: 10px;
 }
 
 .widget-schedule-nav {
@@ -54,7 +55,6 @@
 }
 
 .widget-schedule-grid {
-    display: grid;
     background: var(--background);
     color: var(--color);
     position: absolute;
@@ -62,20 +62,18 @@
     top: 0px;
     right: 0px;
     bottom: 0px;
-    margin: 10px;
     overflow: auto;
 }
 
 .widget-schedule-month-grid {
     display: grid;
-    margin: 10px;
-    overflow: auto;
+    width: 100%;
+    height: 100%;
 }
 
 .widget-schedule-week-grid {
     display: grid;
-    grid-template-rows: repeat(auto-fill, 50px) [last-line];
-    margin: 10px;
+    grid-template-rows: repeat(auto-fill, 40px) [last-line];
     overflow: auto;
 }
 
@@ -83,8 +81,9 @@
     grid-row: 1/1;
     background: var(--phase-one-background);
     text-align: center;
-    border: 1px solid black;
-    font-size: 1em;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,9 +91,9 @@
     margin-right: 60px;
     padding-left: 60px;
     padding-right: 60px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
 }
 
 .widget-schedule-year.background {
@@ -112,8 +111,9 @@
     align-items: center;
     margin: 0px 3px 3px 3px;
     padding: 7px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
 }
 
 .widget-schedule-month.background {
@@ -135,8 +135,9 @@
     align-items: center;
     padding: 7px;
     margin: 3px 3px 0px 3px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
 }
 
 .widget-schedule-day.background {
@@ -168,6 +169,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
 }
 
 .widget-schedule-weekday.today {
@@ -181,7 +183,7 @@
     border-bottom: 1px solid black;
     margin-left: 4px;
     margin-right: 4px;
-    padding: 7px;
+    padding: 18px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     justify-content: center;
