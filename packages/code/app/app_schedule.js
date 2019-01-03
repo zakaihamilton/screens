@@ -69,7 +69,7 @@ screens.app.schedule = function AppSchedule(me) {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
                     me.core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
-                }, 250);
+                }, 500);
             } else {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
