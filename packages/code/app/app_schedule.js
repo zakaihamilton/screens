@@ -5,7 +5,7 @@
 
 screens.app.schedule = function AppSchedule(me) {
     me.init = async function () {
-
+        me.groupListData = await me.media.file.groups();
     };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -33,13 +33,10 @@ screens.app.schedule = function AppSchedule(me) {
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "ui.work.state", true);
-        me.groupListData = await me.media.file.groups();
         me.core.property.set(window.var.schedule, "group", window.options.group);
         me.core.property.set(window.var.schedule, "type", window.options.viewType);
         me.core.property.set(window.var.schedule, "current", window.currentDate);
-        await me.core.property.set(window.var.schedule, "redraw");
-        me.core.property.set(window, "ui.work.state", false);
+        me.core.property.set(window.var.schedule, "redraw");
     };
     me.event = function (object, event) {
         me.core.app.launch("player", event.group, event.session);
@@ -58,25 +55,6 @@ screens.app.schedule = function AppSchedule(me) {
         var window = me.widget.window.get(object);
         window.currentDate = new Date();
         me.refresh(object);
-    };
-    me.work = {
-        set: function (object, value) {
-            if (me.workTimeout) {
-                clearTimeout(me.workTimeout);
-                me.workTimeout = null;
-            }
-            if (value) {
-                me.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
-                    me.core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
-                }, 500);
-            } else {
-                me.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    me.core.property.set([object.var.schedule], "ui.style.visibility", "visible");
-                }, 250);
-            }
-        }
     };
     me.groupMenuList = {
         get: function (object) {

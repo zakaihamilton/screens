@@ -19,6 +19,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 35px;
+    padding-bottom: 5px;
 }
 
 .widget-schedule-nav:hover {
@@ -47,7 +49,8 @@
 .widget-schedule-today {
     right: 100px;
     bottom: 20px;
-    font-size: 70%;
+    font-size: 80%;
+    padding-top: 5px;
 }
 
 .widget-schedule-grid {

@@ -14,13 +14,12 @@ screens.app.player = function AppPlayer(me) {
     };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
+            me.singleton.args = args;
+            me.reload(me.singleton);
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.sessionListData = [];
-        if (!me.core.file.exists(me.cachePath)) {
-            me.core.file.makeDir(me.cachePath);
-        }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         me.singleton.args = args;
         return me.singleton;
@@ -35,7 +34,11 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
         });
-        var args = me.singleton.args;
+        await me.reload(window);
+    };
+    me.reload = async function (object) {
+        var window = me.widget.window.get(object);
+        var args = window.args;
         await me.core.property.set(window, "app.player.onChangeGroup", args[0]);
         await me.core.property.set(window, "app.player.onChangeSession", args[1]);
         await me.core.property.notify(window, "app.player.updatePlayer", null, true);

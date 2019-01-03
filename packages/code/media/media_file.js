@@ -10,6 +10,9 @@ screens.media.file = function MediaFile(me) {
         me.metadata = require("music-metadata");
         me.os = require("os");
         me.tempDir = me.os.tmpdir();
+        if (!me.core.file.exists(me.cachePath)) {
+            me.core.file.makeDir(me.cachePath);
+        }
         if (me.core.http.port === process.env.PORT) {
             me.core.task.push("media.file.updateListing", 1800000);
             me.updateListing();
