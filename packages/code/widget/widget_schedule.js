@@ -9,19 +9,35 @@ screens.widget.schedule = function WidgetSchedule(me) {
             "ui.basic.tag": "div",
             "ui.class.class": "container",
             "ui.basic.elements": [
-
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": "grid",
+                    "ui.basic.var": "grid"
+                },
+                {
+                    "ui.basic.tag": "a",
+                    "ui.class.class": ["nav", "previous"],
+                    "ui.basic.html": "&#8249;",
+                    "ui.touch.click": "previous"
+                },
+                {
+                    "ui.basic.tag": "a",
+                    "ui.class.class": ["nav", "next"],
+                    "ui.basic.html": "&#8250;",
+                    "ui.touch.click": "next"
+                }
             ]
         }
     };
     me.init = function () {
 
     };
-    me.link = {
+    me.methods = {
         get: function (object) {
-            return object.schedule_method;
+            return object.schedule_methods;
         },
-        set: function (object, method) {
-            object.schedule_method = method;
+        set: function (object, methods) {
+            object.schedule_methods = methods;
         }
     };
     me.events = {
@@ -113,12 +129,14 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 rowIndex++;
             }
         }
-        me.core.property.set(object, "ui.basic.html", html);
+        me.core.property.set(object.var.grid, "ui.basic.html", html);
     };
     me.click = function (object, index) {
         var widget = me.ui.node.container(object, me.id);
-        var event = widget.schedule_events[index];
-        me.core.property.set(widget, widget.schedule_method, event);
+        if (widget.schedule_methods.event) {
+            var event = widget.schedule_events[index];
+            me.core.property.set(widget, widget.schedule_methods.event, event);
+        }
     };
     me.item = function (classes, styles, attributes, value) {
         var html = "<div";
@@ -143,5 +161,17 @@ screens.widget.schedule = function WidgetSchedule(me) {
         }
         html += "</div>";
         return html;
+    };
+    me.previous = function (object) {
+        var widget = me.ui.node.container(object, me.id);
+        if (widget.schedule_methods.previous) {
+            me.core.property.set(widget, widget.schedule_methods.previous);
+        }
+    };
+    me.next = function (object) {
+        var widget = me.ui.node.container(object, me.id);
+        if (widget.schedule_methods.next) {
+            me.core.property.set(widget, widget.schedule_methods.next);
+        }
     };
 };

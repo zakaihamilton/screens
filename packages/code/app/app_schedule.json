@@ -22,7 +22,11 @@
     "ui.basic.elements": [
         {
             "ui.element.component": "widget.schedule",
-            "link": "app.schedule.link",
+            "methods": {
+                "event": "app.schedule.event",
+                "previous": "app.schedule.previous",
+                "next": "app.schedule.next"
+            },
             "ui.basic.var": "schedule"
         }
     ],

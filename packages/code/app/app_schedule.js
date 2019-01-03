@@ -19,11 +19,12 @@ screens.app.schedule = function AppSchedule(me) {
     me.prepare = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "app", me);
+        window.firstDate = new Date();
         await me.refresh(window);
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        var date = me.core.util.getSunday(new Date());
+        var date = me.core.util.getSunday(window.firstDate);
         var start = {
             year: date.getFullYear(),
             month: date.getMonth(),
@@ -43,7 +44,17 @@ screens.app.schedule = function AppSchedule(me) {
         var window = me.widget.window.get(object);
         //me.ui.resize.centerWidget(window.var.users);
     };
-    me.link = function (object, event) {
+    me.event = function (object, event) {
         me.core.app.launch("player", event.group, event.session);
+    };
+    me.previous = function (object) {
+        var window = me.widget.window.get(object);
+        window.firstDate.setDate(window.firstDate.getDate() - 7);
+        me.refresh(object);
+    };
+    me.next = function (object) {
+        var window = me.widget.window.get(object);
+        window.firstDate.setDate(window.firstDate.getDate() + 7);
+        me.refresh(object);
     };
 };
