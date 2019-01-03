@@ -23,7 +23,20 @@ screens.app.schedule = function AppSchedule(me) {
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        var events = await me.manager.schedule.events({ year: 2018, month: 11, day: 27 }, { year: 2019, month: 0, day: 6 });
+        var date = me.core.util.getSunday(new Date());
+        var start = {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate()
+        };
+        date.setDate(date.getDate() + 6);
+        var end = {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate()
+        };
+        var events = await me.manager.schedule.events(start, end);
+        me.core.property.set(window.var.schedule, "start", start);
         me.core.property.set(window.var.schedule, "events", events);
     };
     me.resize = function (object) {

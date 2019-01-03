@@ -33,18 +33,35 @@ screens.widget.schedule = function WidgetSchedule(me) {
             me.redraw(object);
         }
     };
+    me.start = {
+        get: function (object) {
+            return object.schedule_start;
+        },
+        set: function (object, start) {
+            object.schedule_start = start;
+            me.redraw(object);
+        }
+    };
     me.redraw = function (object) {
         var events = object.schedule_events;
+        if (!events) {
+            events = [];
+        }
         var html = "";
+        var today = new Date();
         var currentDate = new Date();
-        if (events && events.length) {
-            let date = events[0].date;
+        if (object.schedule_start) {
+            let date = object.schedule_start;
             currentDate = new Date(date.year, date.month, date.day);
         }
         var rows = {};
         for (let weekday = 0; weekday < 7; weekday++) {
             let dayDate = new Date(currentDate);
+            let isToday = false;
             dayDate.setDate(currentDate.getDate() + weekday);
+            if (dayDate.toDateString() === today.toDateString()) {
+                isToday = true;
+            }
             Object.entries({ year: "numeric", month: "long", day: "numeric", weekday: "long" }).forEach(([key, type]) => {
                 var options = {};
                 options[key] = type;
@@ -57,13 +74,16 @@ screens.widget.schedule = function WidgetSchedule(me) {
                     row[row.length - 1].end++;
                 }
                 else {
-                    row.push({ start: weekday + 1, end: weekday + 2, value });
+                    row.push({ start: weekday + 1, end: weekday + 2, value, isToday });
                 }
             });
         }
         Object.entries(rows).forEach(([key, list]) => {
             for (var item of list) {
                 let classes = ["widget-schedule-" + key];
+                if (item.isToday) {
+                    classes.push(["today"]);
+                }
                 let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
                 let attributes = {};
                 html += me.item(classes, styles, attributes, item.value);

@@ -48,6 +48,10 @@
     border: 1px solid black;
 }
 
+.widget-schedule-day.today {
+    background:yellow;
+}
+
 .widget-schedule-event {
     background: var(--background);
     color: var(--color);

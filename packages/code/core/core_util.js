@@ -146,4 +146,11 @@ screens.core.util = function CoreUtil(me) {
         };
         requestId = requestAnimationFrame(animateLoop);
     };
+    me.getSunday = function (date) {
+        date = new Date(date);
+        var day = date.getDay(),
+            diff = date.getDate() - day;
+        date.setDate(diff);
+        return date;
+    };
 };
