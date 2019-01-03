@@ -9,7 +9,6 @@ screens.core.mutex = function CoreMutex(me) {
         me._locks = 0;
     };
     me.isLocked = function () {
-
         return me._locks > 0;
     };
     me.lock = function () {
