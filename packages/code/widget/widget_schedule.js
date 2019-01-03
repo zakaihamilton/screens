@@ -131,7 +131,11 @@ screens.widget.schedule = function WidgetSchedule(me) {
         var today = new Date();
         var currentDate = me.first(object);
         var rows = {};
-        for (let weekday = 0; weekday < 7; weekday++) {
+        var spanSize = size;
+        if (spanSize > 7) {
+            spanSize = 7;
+        }
+        for (let weekday = 0; weekday < spanSize; weekday++) {
             let dayDate = new Date(currentDate);
             let isToday = false;
             dayDate.setDate(currentDate.getDate() + weekday);
@@ -168,7 +172,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                 html += me.item(classes, styles, attributes, item.value);
             }
         });
-        for (let weekday = 0; weekday < 7; weekday++) {
+        for (let weekday = 0; weekday < spanSize; weekday++) {
             let rowIndex = 5;
             let dayDate = new Date(currentDate);
             dayDate.setDate(currentDate.getDate() + weekday);
