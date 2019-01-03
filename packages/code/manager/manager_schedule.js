@@ -19,6 +19,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
             });
             for (var item of listing) {
                 var [year, month, day, name] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+).m4a/g).slice(1);
+                month = parseInt(month) - 1;
                 var eventDate = me.toDate({ year, month, day });
                 if (startDate <= eventDate && eventDate <= endDate) {
                     events.push({
