@@ -24,6 +24,11 @@
     background-color: var(--color);
     color: var(--background);
     border: 2px solid var(--border-color);
+    box-shadow:
+    1px 1px #53a7ea,
+    2px 2px #53a7ea,
+    3px 3px #53a7ea;
+    transform: translateX(-3px);
 }
 
 .widget-schedule-previous {
@@ -55,6 +60,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin:3px;
 }
 
 .widget-schedule-month {
@@ -66,6 +72,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin:3px;
 }
 
 .widget-schedule-weekday {
@@ -76,6 +83,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin:3px;
 }
 
 .widget-schedule-day {
@@ -84,6 +92,7 @@
     color: var(--color);
     text-align: center;
     border: 1px solid black;
+    margin:3px;
 }
 
 .widget-schedule-day.today {
@@ -95,4 +104,5 @@
     color: var(--color);
     text-align: center;
     border: 1px solid black;
+    margin:3px;
 }
