@@ -19,6 +19,7 @@ screens.app.schedule = function AppSchedule(me) {
     me.prepare = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "app", me);
+        me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
         window.firstDate = new Date();
         await me.refresh(window);
     };

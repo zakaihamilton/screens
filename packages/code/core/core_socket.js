@@ -63,10 +63,14 @@ screens.core.socket = function CoreSocket(me) {
             me.register(me.io);
             me.core.property.object.create(me, me.io);
             me.core.property.set(me.io, "ready");
-            setInterval(() => {
-                me.user.verify.heartbeat();
-            }, 20000);
+            me.sendHeartbeat();
         }
+    };
+    me.sendHeartbeat = function () {
+        setTimeout(async () => {
+            await me.user.verify.heartbeat();
+            me.sendHeartbeat();
+        }, 20000);
     };
     me.setup = async function (ref) {
         me.ref = ref;

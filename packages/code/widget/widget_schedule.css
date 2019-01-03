@@ -1,9 +1,9 @@
 .widget-schedule-container {
     position: absolute;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .widget-schedule-nav {
@@ -11,8 +11,8 @@
     text-decoration: none;
     display: inline-block;
     border-radius: 50%;
-    height:50px;
-    width:50px;
+    height: 50px;
+    width: 50px;
     background-color: var(--background);
     color: var(--color);
     border: 2px solid var(--border-color);
@@ -35,19 +35,19 @@
 }
 
 .widget-schedule-previous {
-    left:30px;
-    bottom:20px;
+    left: 30px;
+    bottom: 20px;
 }
 
 .widget-schedule-next {
-    right:30px;
-    bottom:20px;
+    right: 30px;
+    bottom: 20px;
 }
 
 .widget-schedule-today {
-    right:100px;
-    bottom:20px;
-    font-size:70%;
+    right: 100px;
+    bottom: 20px;
+    font-size: 70%;
 }
 
 .widget-schedule-grid {
@@ -57,11 +57,12 @@
     grid-template-rows: repeat(auto-fill, 50px) [last-line];
     grid-gap: 0px;
     position: absolute;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    margin:10px;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: 10px;
+    overflow: auto;
 }
 
 .widget-schedule-year {
@@ -73,17 +74,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left:60px;
-    margin-right:60px;
-    padding-left:60px;
-    padding-right:60px;
+    margin-left: 60px;
+    margin-right: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-year.background {
-    display:none;
+    display: none;
 }
 
 .widget-schedule-month {
@@ -95,14 +96,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin:0px 3px 3px 3px;
-    padding:7px;
+    margin: 0px 3px 3px 3px;
+    padding: 7px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
 
 .widget-schedule-month.background {
-    grid-row-start:2;
+    grid-row-start: 2;
     grid-row-end: last-line;
     background: var(--background);
     border: 1px solid black;
@@ -118,20 +119,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:7px;
-    margin:3px 3px 0px 3px;
+    padding: 7px;
+    margin: 3px 3px 0px 3px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
 }
 
 .widget-schedule-day.background {
-    grid-row-start:3;
+    grid-row-start: 3;
     grid-row-end: last-line;
     background: var(--background);
     border: 1px solid black;
     border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin:3px;
+    margin: 3px;
 }
 
 .widget-schedule-day.today {
@@ -148,8 +149,8 @@
     color: var(--color);
     text-align: center;
     border-bottom: 1px solid black;
-    padding:7px;
-    margin:0px 4px 0px 4px;
+    padding: 7px;
+    margin: 0px 4px 0px 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -164,9 +165,9 @@
     color: var(--color);
     text-align: center;
     border-bottom: 1px solid black;
-    margin-left:4px;
-    margin-right:4px;
-    padding:7px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding: 7px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     justify-content: center;
