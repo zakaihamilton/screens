@@ -54,13 +54,24 @@
     display: grid;
     background: var(--background);
     color: var(--color);
-    grid-template-rows: repeat(auto-fill, 50px) [last-line];
-    grid-gap: 0px;
     position: absolute;
     left: 0px;
     top: 0px;
     right: 0px;
     bottom: 0px;
+    margin: 10px;
+    overflow: auto;
+}
+
+.widget-schedule-month-grid {
+    display: grid;
+    margin: 10px;
+    overflow: auto;
+}
+
+.widget-schedule-week-grid {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 50px) [last-line];
     margin: 10px;
     overflow: auto;
 }
