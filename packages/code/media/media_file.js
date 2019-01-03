@@ -45,9 +45,11 @@ screens.media.file = function MediaFile(me) {
     };
     me.update = async function () {
         var groups = await me.groups(true);
+        var promises = [];
         for (var group of groups) {
-            await me.listing(group.path, true);
+            promises.push(me.listing(group.path, true));
         }
+        await Promise.all(promises);
     };
     me.exists = async function (name) {
         var groups = await me.groups();
