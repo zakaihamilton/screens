@@ -7296,6 +7296,51 @@
             "term": "Har",
             "translation": "Mount",
             "hebrew": "הר"
+        },
+        {
+            "term": "Techum Shabat",
+            "translation": "Sabath area",
+            "hebrew": "תחום שבת"
+        },
+        {
+            "term": "Ir",
+            "translation": "City",
+            "hebrew": "עיר"
+        },
+        {
+            "term": "Ibura Shel Ir",
+            "translation": "City outskirts",
+            "hebrew": "עיבורה של עיר"
+        },
+        {
+            "term": "Ra",
+            "translation": "Bad",
+            "hebrew": "רע"
+        },
+        {
+            "term": "Rasha",
+            "translation": "Wicked",
+            "hebrew": "רשע"
+        },
+        {
+            "term": "Galut",
+            "translation": "Exile",
+            "hebrew": "גלות"
+        },
+        {
+            "term": "Geula",
+            "translation": "Redemption",
+            "hebrew": "גאולה"
+        },
+        {
+            "term": "Reshut Ha Rabim",
+            "translation": "Public Domain",
+            "hebrew": "רשות הרבים"
+        },
+        {
+            "term": "Reshut Ha Yachid",
+            "translation": "Single Domain",
+            "hebrew": "רשות היחיד"
         }
     ],
     "style": {
