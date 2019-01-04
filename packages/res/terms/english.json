@@ -7251,6 +7251,51 @@
             "style": {
                 "category": "Book"
             }
+        },
+        {
+            "term": "Musaf",
+            "translation": "Supplemental",
+            "hebrew": "מוסף"
+        },
+        {
+            "term": "Yashar - El",
+            "translation": "Straight to the Creator",
+            "hebrew": "ישר-אל"
+        },
+        {
+            "term": "Tze",
+            "translation": "Exit",
+            "hebrew": "צא"
+        },
+        {
+            "term": "Ba",
+            "translation": "Come",
+            "hebrew": "בא"
+        },
+        {
+            "term": "Tzevaot",
+            "translation": "Armies",
+            "hebrew": "צבאות"
+        },
+        {
+            "term": "Tzava",
+            "translation": "Army",
+            "hebrew": "צבא"
+        },
+        {
+            "term": "Hirhurim",
+            "translation": "Contemplations",
+            "hebrew": "הרהורים"
+        },
+        {
+            "term": "Yetziot",
+            "translation": "Exits",
+            "hebrew": "יציאות"
+        },
+        {
+            "term": "Har",
+            "translation": "Mount",
+            "hebrew": "הר"
         }
     ],
     "style": {
