@@ -67,13 +67,13 @@
 
 .widget-schedule-month-grid {
     display: grid;
-    width: 100%;
     height: 100%;
 }
 
 .widget-schedule-week-grid {
     display: grid;
-    grid-template-rows: repeat(auto-fill, 40px) [last-line];
+    grid-template-rows: 40px 40px 40px 40px auto;
+    grid-template-columns: repeat( auto-fit, minmax(150px, 1fr));
     overflow: auto;
 }
 
@@ -87,17 +87,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
     padding-left: 60px;
     padding-right: 60px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     font-weight: bold;
-}
-
-.widget-schedule-year.background {
-    display: none;
 }
 
 .widget-schedule-month {
@@ -114,15 +110,6 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     font-weight: bold;
-}
-
-.widget-schedule-month.background {
-    grid-row-start: 2;
-    grid-row-end: last-line;
-    background: var(--background);
-    border: 1px solid black;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .widget-schedule-day {
@@ -163,9 +150,11 @@
     background: var(--phase-four-background);
     color: var(--color);
     text-align: center;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     border-bottom: 1px solid black;
     padding: 7px;
-    margin: 0px 4px 0px 4px;
+    margin: 0px 3px 0px 3px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -176,18 +165,31 @@
     background: var(--phase-four-border);
 }
 
+.widget-schedule-events-grid {
+    grid-row: 5;
+    background: var(--background);
+    margin: 0px 3px 0px 3px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+}
+
 .widget-schedule-event {
     background: var(--background);
     color: var(--color);
     text-align: center;
     border-bottom: 1px solid black;
-    margin-left: 4px;
-    margin-right: 4px;
     padding: 18px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-self: stretch;
 }
 
 .widget-schedule-event:hover {

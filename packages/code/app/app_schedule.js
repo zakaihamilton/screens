@@ -68,4 +68,7 @@ screens.app.schedule = function AppSchedule(me) {
             return me.widget.menu.collect(object, info);
         }
     };
+    me.resize = function (object) {
+        me.refresh(object);
+    };
 };
