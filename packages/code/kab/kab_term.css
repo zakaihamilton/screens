@@ -10,7 +10,6 @@
     position: absolute;
     font-weight: bold;
     font-size: 30%;
-    left: -0.1em;
     top: 2.4em;
     line-height: 1em;
     text-transform: uppercase;
@@ -23,13 +22,15 @@
 }
 
 [kab-term-category].kab-term-english:after {
-    left: 0em;
+    left: -0.1em;
     margin-left: -0.5em;
 }
 
 [kab-term-category].kab-term-hebrew:after {
-    right: 0em;
-    padding-right: -0.5em;
+    top: 2em;
+    right: 1em;
+    font-size: 50%;
+    margin-right: -0.5em;
 }
 
 .kab-term-category.kab-term-english {
