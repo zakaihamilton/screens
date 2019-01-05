@@ -36,11 +36,16 @@
                     }
                 ],
                 [
-                    "Copy Url To Clipboard",
-                    "app.player.copyUrl",
-                    {
-                        "separator": true
-                    }
+                    "Clipboard",
+                    "header"
+                ],
+                [
+                    "Url",
+                    "app.player.copyUrl"
+                ],
+                [
+                    "Name",
+                    "app.player.copyName"
                 ]
             ]
         ],
