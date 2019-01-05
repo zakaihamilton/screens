@@ -165,7 +165,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
-        me.core.property.set(widget, "update");
+        await me.core.property.set(widget, "update");
         me.core.property.set(widget, "ui.work.state", false);
     };
     me.reflow = function (object) {
@@ -224,7 +224,7 @@ screens.widget.transform = function WidgetTransform(me) {
         });
         return modifiers;
     };
-    me.update = function (object) {
+    me.update = async function (object) {
         var widget = me.findWidget(object);
         if (widget.inTransform) {
             return;
@@ -268,11 +268,10 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         widget.diagrams = [];
         me.media.voice.stop();
-        me.widget.transform.layout.reflow(function () {
-            me.core.property.set(widget, "ui.work.state", false);
-            var name = me.core.property.get(widget, "widget.transform.name");
-            me.core.property.set(widget, "widget.window.name", name);
-        }, widget.var.output, widget.var.layout, reflowOptions);
+        await me.widget.transform.layout.reflow(widget.var.output, widget.var.layout, reflowOptions);
+        me.core.property.set(widget, "ui.work.state", false);
+        var name = me.core.property.get(widget, "widget.transform.name");
+        me.core.property.set(widget, "widget.window.name", name);
     };
     me.scrolled = {
         set: function (object, value) {
@@ -898,132 +897,132 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     me.options = function (target) {
         return target.options;
     };
-    me.reflow = function (callback, source, target, options) {
-        var modifiers = me.upper.modifiers(target);
-        var layoutContent = target;
-        layoutContent.options = options;
-        if (target.reflowInterval) {
-            clearInterval(target.reflowInterval);
-            target.reflowInterval = null;
-            me.move(source, me.page ? me.page.var.content : layoutContent);
-            if (!target.notified && callback) {
-                callback(false);
-            }
-        }
-        target.page = null;
-        me.prepare(source, layoutContent);
-        var pageSize = me.pageSize(layoutContent);
-        if (!source.firstChild) {
-            if (callback) {
-                callback(true);
-            }
-            return;
-        }
-        target.notified = false;
-        var pageIndex = 1;
-        var pageContent = null;
-        if (options.usePages) {
-            target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-            pageContent = target.page.var.content;
-        }
-        var previousWidget = null, visibleWidget = null;
-        var showInProgress = false;
-        target.reflowInterval = setInterval(function () {
-            var window = me.widget.window.get(target);
-            for (; ;) {
-                var concealed = me.core.property.get(window, "conceal");
-                var widget = source.firstChild;
-                if (!widget || concealed) {
-                    clearInterval(target.reflowInterval);
-                    target.reflowInterval = null;
-                    if (options.usePages) {
-                        me.applyNumPages(layoutContent, pageIndex);
-                    }
-                    me.completePage(target.page);
-                    if (target.page) {
-                        target.page.last = true;
-                        target.page.var.separator.style.display = "block";
-                        me.core.property.set(target.page.var.separator, "ui.class.add", "last");
-                    }
-                    me.completeReflow(callback, target, options, false);
-                    me.updatePages(target);
-                    break;
+    me.reflow = function (source, target, options) {
+        return new Promise(resolve => {
+            var modifiers = me.upper.modifiers(target);
+            var layoutContent = target;
+            layoutContent.options = options;
+            if (target.reflowInterval) {
+                clearInterval(target.reflowInterval);
+                target.reflowInterval = null;
+                me.move(source, me.page ? me.page.var.content : layoutContent);
+                if (!target.notified) {
+                    resolve();
                 }
-                if (options.scrollWidget) {
-                    if (visibleWidget === options.scrollWidget) {
+            }
+            target.page = null;
+            me.prepare(source, layoutContent);
+            var pageSize = me.pageSize(layoutContent);
+            if (!source.firstChild) {
+                resolve(true);
+                return;
+            }
+            target.notified = false;
+            var pageIndex = 1;
+            var pageContent = null;
+            if (options.usePages) {
+                target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                pageContent = target.page.var.content;
+            }
+            var previousWidget = null, visibleWidget = null;
+            var showInProgress = false;
+            target.reflowInterval = setInterval(function () {
+                var window = me.widget.window.get(target);
+                for (; ;) {
+                    var concealed = me.core.property.get(window, "conceal");
+                    var widget = source.firstChild;
+                    if (!widget || concealed) {
+                        clearInterval(target.reflowInterval);
+                        target.reflowInterval = null;
+                        if (options.usePages) {
+                            me.applyNumPages(layoutContent, pageIndex);
+                        }
+                        me.completePage(target.page);
+                        if (target.page) {
+                            target.page.last = true;
+                            target.page.var.separator.style.display = "block";
+                            me.core.property.set(target.page.var.separator, "ui.class.add", "last");
+                        }
+                        me.completeReflow(resolve, target, options, false);
+                        me.updatePages(target);
+                        break;
+                    }
+                    if (options.scrollWidget) {
+                        if (visibleWidget === options.scrollWidget) {
+                            showInProgress = true;
+                        }
+                    } else if (options.scrollPos < layoutContent.scrollHeight) {
                         showInProgress = true;
                     }
-                } else if (options.scrollPos < layoutContent.scrollHeight) {
-                    showInProgress = true;
-                }
-                var location = pageContent ? pageContent : layoutContent;
-                if (widget.style && widget.style.order) {
-                    location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
-                } else {
-                    location.appendChild(widget);
-                }
-                visibleWidget = widget;
-                if (!target.page) {
-                    if (showInProgress) {
-                        me.completeReflow(callback, target, options);
+                    var location = pageContent ? pageContent : layoutContent;
+                    if (widget.style && widget.style.order) {
+                        location.insertBefore(widget, me.widgetByOrder(location, widget.style.order));
+                    } else {
+                        location.appendChild(widget);
                     }
-                    break;
-                }
-                var newPage = false;
-                if (widget) {
-                    me.cleanupWidget(widget);
-                    me.clearWidget(widget, modifiers);
-                }
-                newPage = !me.widgetFitInPage(widget, target.page);
-                if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
-                    previousWidget = null;
-                }
-                else if (widget.tagName && widget.tagName.toLowerCase() === "br") {
-                    newPage = true;
-                    widget = null;
-                    previousWidget = null;
-                    if (target.page) {
-                        target.page.var.separator.style.display = "block";
-                    }
-                } else if (!(widget.textContent || widget.firstChild)) {
-                    pageContent.removeChild(widget);
-                    widget = null;
-                    newPage = false;
-                }
-                if (newPage) {
-                    if (widget) {
-                        pageContent.removeChild(widget);
-                    }
-                    pageIndex++;
-                    me.completePage(target.page);
-                    target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
-                    pageContent = target.page.var.content;
-                    if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
-                        pageContent.appendChild(previousWidget);
-                    }
-                    if (widget) {
-                        pageContent.appendChild(widget);
-                    }
-                    for (var fontSize = parseInt(target.style.fontSize); fontSize >= 8; fontSize -= 2) {
-                        if (me.widgetFitInPage(null, target.page)) {
-                            break;
+                    visibleWidget = widget;
+                    if (!target.page) {
+                        if (showInProgress) {
+                            me.completeReflow(resolve, target, options);
                         }
-                        target.page.style.fontSize = fontSize + "px";
-                        target.page.style.lineHeight = "2em";
+                        break;
                     }
-                    previousWidget = null;
-                    me.activateOnLoad(target.page ? target.page : widget, widget);
-                    if (showInProgress) {
-                        me.completeReflow(callback, target, options);
+                    var newPage = false;
+                    if (widget) {
+                        me.cleanupWidget(widget);
+                        me.clearWidget(widget, modifiers);
                     }
-                    me.core.property.set(target, "update");
-                    break;
-                } else if (widget) {
-                    previousWidget = widget;
-                    me.activateOnLoad(target.page ? target.page : widget, widget);
+                    newPage = !me.widgetFitInPage(widget, target.page);
+                    if (widget.tagName && widget.tagName.toLowerCase() === "hr") {
+                        previousWidget = null;
+                    }
+                    else if (widget.tagName && widget.tagName.toLowerCase() === "br") {
+                        newPage = true;
+                        widget = null;
+                        previousWidget = null;
+                        if (target.page) {
+                            target.page.var.separator.style.display = "block";
+                        }
+                    } else if (!(widget.textContent || widget.firstChild)) {
+                        pageContent.removeChild(widget);
+                        widget = null;
+                        newPage = false;
+                    }
+                    if (newPage) {
+                        if (widget) {
+                            pageContent.removeChild(widget);
+                        }
+                        pageIndex++;
+                        me.completePage(target.page);
+                        target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
+                        pageContent = target.page.var.content;
+                        if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
+                            pageContent.appendChild(previousWidget);
+                        }
+                        if (widget) {
+                            pageContent.appendChild(widget);
+                        }
+                        for (var fontSize = parseInt(target.style.fontSize); fontSize >= 8; fontSize -= 2) {
+                            if (me.widgetFitInPage(null, target.page)) {
+                                break;
+                            }
+                            target.page.style.fontSize = fontSize + "px";
+                            target.page.style.lineHeight = "2em";
+                        }
+                        previousWidget = null;
+                        me.activateOnLoad(target.page ? target.page : widget, widget);
+                        if (showInProgress) {
+                            me.completeReflow(resolve, target, options);
+                        }
+                        me.core.property.set(target, "update");
+                        break;
+                    } else if (widget) {
+                        previousWidget = widget;
+                        me.activateOnLoad(target.page ? target.page : widget, widget);
+                    }
                 }
-            }
-        }, 0);
+            }, 0);
+        });
     };
     me.widgetFitInPage = function (widget, page) {
         var pageContent = page.var.content;

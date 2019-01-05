@@ -76,7 +76,11 @@ screens.app.present = function AppPresent(me) {
         }
         if (content !== previousText) {
             me.core.property.set(window.var.transform, "text", content);
-            me.core.property.set(window.var.transform, "transform");
+            await me.core.property.set(window.var.transform, "transform");
+        }
+        var title = me.core.property.get(window.var.transform, "contentTitle");
+        if (title) {
+            me.core.property.set(window, "app.present.content.title", title);
         }
     };
     me.clear = function (object) {

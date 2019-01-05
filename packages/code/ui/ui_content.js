@@ -226,12 +226,15 @@ screens.ui.content = function UIContent(me) {
                 }
                 return window.content._title;
             },
-            set: function (object) {
+            set: function (object, title) {
                 var window = me.widget.window.get(object);
                 if (!window.content) {
                     window.content = {};
                 }
-                var text = me.core.property.get(object, "ui.basic.text");
+                var text = title;
+                if (typeof text !== "string") {
+                    text = me.core.property.get(object, "ui.basic.text");
+                }
                 if (window.content._title !== text) {
                     window.content._title = text;
                 }
