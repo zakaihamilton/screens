@@ -23,18 +23,19 @@ screens.app.schedule = function AppSchedule(me) {
         window.currentDate = new Date();
         me.ui.options.load(me, window, {
             "viewType": "Week",
+            "firstDay": "Saturday",
             group: ""
         });
         me.ui.options.choiceSet(me, null, {
             "viewType": me.refresh,
+            "firstDay": me.refresh,
             "group": me.refresh
         });
         await me.refresh(window);
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.schedule, "group", window.options.group);
-        me.core.property.set(window.var.schedule, "type", window.options.viewType);
+        me.core.property.set(window.var.schedule, "options", window.options);
         me.core.property.set(window.var.schedule, "current", window.currentDate);
         me.core.property.set(window.var.schedule, "redraw");
     };

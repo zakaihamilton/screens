@@ -46,14 +46,6 @@ screens.widget.schedule = function WidgetSchedule(me) {
             object.schedule_methods = methods;
         }
     };
-    me.type = {
-        get: function (object) {
-            return object.schedule_type;
-        },
-        set: function (object, type) {
-            object.schedule_type = type;
-        }
-    };
     me.current = {
         get: function (object) {
             return object.schedule_date;
@@ -62,17 +54,17 @@ screens.widget.schedule = function WidgetSchedule(me) {
             object.schedule_date = date;
         }
     };
-    me.group = {
+    me.options = {
         get: function (object) {
-            return object.schedule_group;
+            return object.schedule_options;
         },
-        set: function (object, group) {
-            object.schedule_group = group;
+        set: function (object, options) {
+            object.schedule_options = options;
         }
     };
     me.size = function (object) {
         var size = { days: 1, weeks: 1, months: 1 };
-        var type = object.schedule_type.toLowerCase();
+        var type = object.schedule_options.viewType.toLowerCase();
         if (type === "year") {
             size.days = 7 * 5 * 11;
             size.weeks = 5 * 11;
@@ -102,7 +94,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
     };
     me.first = function (object) {
         var date = new Date(object.schedule_date.getTime());
-        var type = object.schedule_type.toLowerCase();
+        var type = object.schedule_options.viewType.toLowerCase();
         if (type === "year") {
             date.setMonth(0);
             date.setDate(1);
@@ -111,8 +103,15 @@ screens.widget.schedule = function WidgetSchedule(me) {
             date.setDate(1);
         }
         if (type !== "day") {
+            var firstDay = object.schedule_options.firstDay.toLowerCase();
+            var dayOffset = 0;
+            if (firstDay === "saturday") {
+                dayOffset = 6;
+            } else if (firstDay === "monday") {
+                dayOffset = 1;
+            }
             var day = date.getDay(),
-                diff = date.getDate() - day;
+                diff = date.getDate() - (day - dayOffset);
             date.setDate(diff);
         }
         return date;
@@ -136,7 +135,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
         return events;
     };
     me.redraw = async function (object) {
-        var type = object.schedule_type.toLowerCase();
+        var type = object.schedule_options.viewType.toLowerCase();
         var size = me.size(object);
         var events = await me.events(object);
         if (!events) {
@@ -228,7 +227,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         if (event.date.day !== dayDate.getDate()) {
                                             continue;
                                         }
-                                        if (object.schedule_group && object.schedule_group.toLowerCase() !== event.group.toLowerCase()) {
+                                        if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.schedule_options.group.toLowerCase()) {
                                             continue;
                                         }
                                         let classes = ["widget-schedule-event", type];

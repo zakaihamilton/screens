@@ -49,6 +49,31 @@
                     }
                 ],
                 [
+                    "First Day of Week",
+                    "header"
+                ],
+                [
+                    "Saturday",
+                    "app.schedule.firstDay",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Sunday",
+                    "app.schedule.firstDay",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Monday",
+                    "app.schedule.firstDay",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Group",
                     "header"
                 ],
