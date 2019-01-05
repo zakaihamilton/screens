@@ -58,6 +58,13 @@
         }
     ],
     [
+        "Screenshot",
+        "ui.screenshot.capture",
+        {
+            "separator": true
+        }
+    ],
+    [
         "Next",
         "menu.context.next",
         {

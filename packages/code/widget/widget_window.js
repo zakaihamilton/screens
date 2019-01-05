@@ -134,11 +134,9 @@ screens.widget.window = function WidgetWindow(me) {
         }
         return window;
     };
-    me.content = {
-        get: function (object) {
-            var window = me.get(object);
-            return window.var.container;
-        }
+    me.content = function (object) {
+        var window = me.get(object);
+        return window.var.container;
     };
     me.windows = {
         get: function (object) {
