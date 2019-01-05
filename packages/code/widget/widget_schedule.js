@@ -104,14 +104,18 @@ screens.widget.schedule = function WidgetSchedule(me) {
         }
         if (type !== "day") {
             var firstDay = object.schedule_options.firstDay.toLowerCase();
-            var dayOffset = 0;
+            var day = date.getDay();
+            var diff = date.getDate() - day;
             if (firstDay === "saturday") {
-                dayOffset = 6;
+                if (day >= 6) {
+                    diff = date.getDate() - day + 5;
+                }
+                else {
+                    diff = date.getDate() - day - 1;
+                }
             } else if (firstDay === "monday") {
-                dayOffset = 1;
+                diff = date.getDate() - day + 1;
             }
-            var day = date.getDay(),
-                diff = date.getDate() - (day - dayOffset);
             date.setDate(diff);
         }
         return date;
