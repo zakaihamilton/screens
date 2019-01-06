@@ -6,10 +6,13 @@
 screens.manager.content = function ManagerContent(me) {
     me.apps = ["present", "gematria", "table", "notes"];
     me._list = {};
-    me.list = async function (componentId, private) {
+    me.list = async function (componentId, private, userId) {
         var kind = componentId + ".content";
         if (private) {
-            kind += "." + this.userId;
+            if (!userId) {
+                userId = this.userId;
+            }
+            kind += "." + userId;
         }
         var cache = me._list[kind];
         if (cache) {
@@ -22,17 +25,31 @@ screens.manager.content = function ManagerContent(me) {
     me.refresh = function () {
         me._list = {};
     };
-    me.associated = async function (title) {
-        var apps = await me.user.access.appList(this.userId);
+    me.associated = async function (title, partial) {
+        let apps = await me.user.access.appList(this.userId);
         apps = apps.filter((item) => {
             return me.apps.includes(item);
         });
-        var results = await Promise.all([false, true].map(async private => {
-            var result = [];
-            for (var app of apps) {
-                var exists = await me.exists("app." + app, title, private, this.userId);
-                if (exists) {
-                    result.push(app);
+        let results = await Promise.all([false, true].map(async private => {
+            let result = {};
+            for (let app of apps) {
+                var list = await me.list("app." + app, private, this.userId);
+                for (let item of list) {
+                    if (partial) {
+                        if (!item.title.includes(title)) {
+                            continue;
+                        }
+                    }
+                    else {
+                        if (item.title !== title) {
+                            continue;
+                        }
+                    }
+                    var titles = result[app];
+                    if (!titles) {
+                        titles = result[app] = [];
+                    }
+                    titles.push(item.title);
                 }
             }
             return result;

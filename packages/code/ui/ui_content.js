@@ -334,7 +334,7 @@ screens.ui.content = function UIContent(me) {
                     return [];
                 }
                 var list = [];
-                for (var app of apps) {
+                for (var app in apps) {
                     if ("app." + app === me.id) {
                         continue;
                     }
