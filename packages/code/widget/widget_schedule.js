@@ -221,6 +221,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                     styles: { "grid-column": (weekday + 1) }
                                 }, () => {
                                     var html = "";
+                                    var matches = {};
                                     for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
                                         let event = events[eventIndex];
                                         if (event.date.year !== dayDate.getFullYear()) {
@@ -235,12 +236,35 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.group.toLowerCase()) {
                                             continue;
                                         }
-                                        let classes = ["widget-schedule-event", type];
-                                        let attributes = {
-                                            "onclick": "screens.widget.schedule.click(this," + eventIndex + ")"
-                                        };
-                                        var title = "<p><b>" + event.app + "</b><br>" + event.name + "</p>";
-                                        html += me.item({ classes, attributes, value: title });
+                                        let list = matches[event.name];
+                                        if (!list) {
+                                            list = matches[event.name] = [];
+                                        }
+                                        event.eventIndex = eventIndex;
+                                        list.push(event);
+                                    }
+                                    if (matches) {
+                                        for (let name in matches) {
+                                            let classes = ["widget-schedule-event", type];
+                                            html += me.item({ classes }, () => {
+                                                let html = "";
+                                                let classes = ["widget-schedule-event-name", type];
+                                                html += me.item({ classes, value: name });
+                                                classes = ["widget-schedule-apps", type];
+                                                html += me.item({ classes }, () => {
+                                                    var html = "";
+                                                    for (let event of matches[name]) {
+                                                        let classes = ["widget-schedule-app", type];
+                                                        let attributes = {
+                                                            "onclick": "screens.widget.schedule.click(this," + event.eventIndex + ")"
+                                                        };
+                                                        html += me.item({ classes, attributes, value: event.app });
+                                                    }
+                                                    return html;
+                                                });
+                                                return html;
+                                            });
+                                        }
                                     }
                                     return html;
                                 });

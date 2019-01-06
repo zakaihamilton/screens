@@ -8,7 +8,7 @@ screens.ui.theme = function UITheme(me) {
     me.currentTheme = null;
     me.init = async function () {
         me.ui.options.load(me, null, {
-            nightMode: false,
+            nightMode: true,
             theme: "glow",
             colors: {}
         });
