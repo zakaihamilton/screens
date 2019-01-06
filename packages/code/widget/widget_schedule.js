@@ -135,6 +135,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             day: date.getDate()
         };
         var events = await me.manager.schedule.events(start, end);
+        events = events.sort((a, b) => a.name.localeCompare(b.name));
         object.schedule_events = events;
         return events;
     };
