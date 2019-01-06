@@ -70,8 +70,11 @@ screens.app.present = function AppPresent(me) {
     };
     me.updateUser = async function (object) {
         var window = me.widget.window.get(object);
-        var content = await me.shared.content(object);
-        if (content === undefined) {
+        var content = undefined;
+        if (window.options.userName) {
+            content = await me.shared.content(object);
+        }
+        else {
             content = me.core.property.get(window.var.editor, "text");
         }
         var previousText = me.core.property.get(window.var.transform, "text");
