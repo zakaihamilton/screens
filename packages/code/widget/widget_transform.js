@@ -35,7 +35,8 @@ screens.widget.transform = function WidgetTransform(me) {
             voice: "Google UK English Male",
             speed: "Normal",
             output: false,
-            volume: "Normal"
+            volume: "Normal",
+            singleArticle: false
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -61,6 +62,7 @@ screens.widget.transform = function WidgetTransform(me) {
             diagrams: me.transform,
             pipVideo: me.reflow,
             autoPlay: null,
+            singleArticle: null,
             output: me.transform
         });
         me.ui.options.choiceSet(me, me.findWidget, {
@@ -657,6 +659,9 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                     me.widget.transform.layout.clearPage(currentPage);
                     me.focusParagraph(object, null);
                     if (widget.options.autoPlay) {
+                        if (widget.options.singleArticle && currentPage.var.separator.style.display === "block") {
+                            return;
+                        }
                         if (!currentPage.last) {
                             setTimeout(() => {
                                 me.core.property.set(widget.var.layout, "ui.scroll.nextPage");

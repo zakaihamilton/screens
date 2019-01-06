@@ -311,6 +311,14 @@
                     }
                 ],
                 [
+                    "Single Article",
+                    "widget.transform.singleArticle",
+                    {
+                        "state": "select",
+                        "enabled": "widget.transform.autoPlay"
+                    }
+                ],
+                [
                     "Speed",
                     "header"
                 ],
