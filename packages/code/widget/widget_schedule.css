@@ -96,6 +96,10 @@
     font-weight: bold;
 }
 
+.widget-schedule-year.night-mode {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .widget-schedule-month {
     grid-column: auto;
     grid-row: 2;
@@ -112,6 +116,10 @@
     font-weight: bold;
 }
 
+.widget-schedule-month.night-mode {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .widget-schedule-day {
     grid-row: 3;
     background: var(--phase-three-background);
@@ -125,6 +133,10 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     font-weight: bold;
+}
+
+.widget-schedule-day.night-mode {
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .widget-schedule-day.background {
@@ -159,6 +171,10 @@
     justify-content: center;
     align-items: center;
     font-weight: bold;
+}
+
+.widget-schedule-weekday.night-mode {
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .widget-schedule-weekday.today {
