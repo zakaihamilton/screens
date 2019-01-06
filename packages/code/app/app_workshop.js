@@ -34,6 +34,7 @@ screens.app.workshop = function AppWorkshop(me) {
             shuffle: true,
             filter: false,
             test: false,
+            broadcast: false,
             userName: ""
         });
         me.ui.options.choiceSet(me, null, {
@@ -43,9 +44,9 @@ screens.app.workshop = function AppWorkshop(me) {
             "autoRefresh": me.refresh,
             "shuffle": me.refresh,
             "filter": me.refresh,
-            "test": me.refresh
+            "test": me.refresh,
+            "broadcast": me.refresh
         });
-        me.updateUser(window);
         await me.refresh(window);
     };
     me.refresh = async function (object) {
@@ -87,9 +88,14 @@ screens.app.workshop = function AppWorkshop(me) {
         if (content.name) {
             me.core.property.set(window.var.users, "user", content.name);
         }
+        if (!window.options.broadcast) {
+            me.shared.update();
+        }
     };
     me.navigate = function (object, name) {
         window.navigate_name = name;
-        me.shared.update({ name: window.navigate_name });
+        if (window.options.broadcast) {
+            me.shared.update({ name: window.navigate_name });
+        }
     };
 };

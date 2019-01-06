@@ -46,6 +46,14 @@
                     }
                 ],
                 [
+                    "Broadcast",
+                    "app.workshop.broadcast",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ],
+                [
                     "This Device",
                     "app.workshop.userName",
                     {
