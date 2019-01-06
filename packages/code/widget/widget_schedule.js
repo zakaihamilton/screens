@@ -231,7 +231,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         if (event.date.day !== dayDate.getDate()) {
                                             continue;
                                         }
-                                        if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.schedule_options.group.toLowerCase()) {
+                                        if (object.schedule_options.group && object.schedule_options.group.toLowerCase() !== event.group.toLowerCase()) {
                                             continue;
                                         }
                                         let classes = ["widget-schedule-event", type];
