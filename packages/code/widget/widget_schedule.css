@@ -222,11 +222,10 @@
     background: var(--background);
     color: var(--color);
     text-align: center;
-    margin: 6px;
     padding-top: 6px;
     padding-bottom: 6px;
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: 6px;
+    padding-right: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
