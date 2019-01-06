@@ -88,7 +88,7 @@ screens.app.workshop = function AppWorkshop(me) {
         if (content.name) {
             me.core.property.set(window.var.users, "user", content.name);
         }
-        if (window.options.broadcast) {
+        if (!window.options.broadcast) {
             me.shared.update();
         }
     };
