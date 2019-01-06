@@ -238,7 +238,8 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         let attributes = {
                                             "onclick": "screens.widget.schedule.click(this," + eventIndex + ")"
                                         };
-                                        html += me.item({ classes, attributes, value: event.name });
+                                        var title = "<p><b>" + event.app + "</b><br>" + event.name + "</p>";
+                                        html += me.item({ classes, attributes, value: title });
                                     }
                                     return html;
                                 });

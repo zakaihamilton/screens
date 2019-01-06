@@ -87,15 +87,13 @@ screens.user.access = function UserAccess(me) {
             user = this.userId;
         }
         var access = await me.get(user);
-        var result = false;
-        var userName = user;
         if (access) {
             list.push(...access.apps);
-            userName = access.name;
         }
-        if (!result && me.api) {
+        if (me.api) {
             list.push(...me.apps);
         }
+        list = Array.from(new Set(list));
         return list;
     };
     return "server";

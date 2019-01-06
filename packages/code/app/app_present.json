@@ -97,6 +97,6 @@
         "storage.local.key": "@ui.windowkey.app-present-window",
         "storage.local.restore": "widget.window.store",
         "ui.resize.event": "widget.transform.reflow",
-        "app.present.initOptions": null
+        "app.present.initOptions": "ui.param.resetUser"
     }
 }

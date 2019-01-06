@@ -25,25 +25,21 @@ screens.manager.content = function ManagerContent(me) {
     me.refresh = function () {
         me._list = {};
     };
-    me.associated = async function (title, partial) {
-        let apps = await me.user.access.appList(this.userId);
+    me.associated = async function (title, userId) {
+        if (!userId) {
+            userId = this.userId;
+        }
+        let apps = await me.user.access.appList(userId);
         apps = apps.filter((item) => {
             return me.apps.includes(item);
         });
         let results = await Promise.all([false, true].map(async private => {
             let result = {};
             for (let app of apps) {
-                var list = await me.list("app." + app, private, this.userId);
+                var list = await me.list("app." + app, private, userId);
                 for (let item of list) {
-                    if (partial) {
-                        if (!item.title.includes(title)) {
-                            continue;
-                        }
-                    }
-                    else {
-                        if (item.title !== title) {
-                            continue;
-                        }
+                    if (title && item.title !== title) {
+                        continue;
                     }
                     var titles = result[app];
                     if (!titles) {

@@ -40,7 +40,7 @@ screens.app.schedule = function AppSchedule(me) {
         me.core.property.set(window.var.schedule, "redraw");
     };
     me.event = function (object, event) {
-        me.core.app.launch("player", event.group, event.session);
+        me.core.app.launch.apply(null, event.launch);
     };
     me.previous = function (object) {
         var window = me.widget.window.get(object);

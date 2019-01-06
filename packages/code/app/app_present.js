@@ -19,13 +19,14 @@ screens.app.present = function AppPresent(me) {
         var params = {};
         if (typeof args[0] === "string") {
             [params.text, params.title] = await me.content.get(args[0]);
+            params.resetUser = true;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         if (typeof args[0] === "string") {
             me.content.associated.update(me.singleton, params.title);
         }
     };
-    me.initOptions = async function (object) {
+    me.initOptions = async function (object, resetUser) {
         var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
             editMode: false,
@@ -38,6 +39,9 @@ screens.app.present = function AppPresent(me) {
             "editMode": me.updateEditMode
         });
         me.core.property.set(window, "app", me);
+        if (resetUser) {
+            window.options.userName = "";
+        }
         me.shared.refresh(window);
         me.updateEditMode(window);
     };
@@ -87,6 +91,7 @@ screens.app.present = function AppPresent(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.editor, "ui.basic.save");
+        window.options.userName = "";
         me.updateEditMode(window);
     };
     me.exportText = function (object, target) {
