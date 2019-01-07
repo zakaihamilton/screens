@@ -44,6 +44,10 @@ screens.user.access = function UserAccess(me) {
         if (!user) {
             user = this.userId;
         }
+        if (!me.users) {
+            me.users = {};
+        }
+        me.users[user] = user;
         await me.storage.data.save(access, me.id, user);
     };
     me.checkAccessList = function (list, path) {
