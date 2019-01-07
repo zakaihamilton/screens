@@ -93,6 +93,7 @@ screens.app.workshop = function AppWorkshop(me) {
         }
     };
     me.navigate = function (object, name) {
+        var window = me.widget.window.get(object);
         window.navigate_name = name;
         if (window.options.broadcast) {
             me.shared.update({ name: window.navigate_name });

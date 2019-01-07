@@ -63,7 +63,6 @@ screens.core.string = function CoreString(me) {
         }
         var position = string.search(/[A-Za-z]/);
         if (position >= 0) {
-            me.log("found letter: " + string[position]);
             return "english";
         }
         return "hebrew";

@@ -96,6 +96,10 @@
     font-weight: bold;
 }
 
+.widget-schedule-year.night-mode {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .widget-schedule-month {
     grid-column: auto;
     grid-row: 2;
@@ -112,6 +116,10 @@
     font-weight: bold;
 }
 
+.widget-schedule-month.night-mode {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .widget-schedule-day {
     grid-row: 3;
     background: var(--phase-three-background);
@@ -125,6 +133,10 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     font-weight: bold;
+}
+
+.widget-schedule-day.night-mode {
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .widget-schedule-day.background {
@@ -161,6 +173,10 @@
     font-weight: bold;
 }
 
+.widget-schedule-weekday.night-mode {
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .widget-schedule-weekday.today {
     background: var(--phase-four-border);
 }
@@ -183,21 +199,65 @@
     background: var(--background);
     color: var(--color);
     text-align: center;
+    border: 1px solid transparent;
     border-bottom: 1px solid black;
-    padding: 18px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    justify-self: stretch;
+}
+
+.widget-schedule-event-name {
+    color: var(--color);
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.widget-schedule-apps {
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.widget-schedule-app {
+    flex: 1;
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
     justify-self: stretch;
+    font-weight: bold;
+    border: 1px solid transparent;
 }
 
-.widget-schedule-event:hover {
+.widget-schedule-app:hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
+    border: 1px solid var(--border-color);
 }
 
-.widget-schedule-event:hover:active {
-    background-color: var(--chrome-background);
-    color: var(--chrome-color);
+.widget-schedule-app:hover:active {
+    background-color: var(--color);
+    color: var(--background);
+    border: 1px solid var(--border-color);
 }
