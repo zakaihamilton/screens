@@ -221,9 +221,7 @@ screens.app.table = function AppTable(me) {
             window.table_options = {};
         }
         var html = await me.rows(window);
-        me.core.property.set([window.var.table, window.var.table], {
-            "ui.basic.html": html
-        });
+        me.core.property.set(window.var.table, "ui.basic.html", html);
         me.core.property.notify(window, "update");
     };
     me.rowHeader = {

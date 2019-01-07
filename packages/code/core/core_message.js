@@ -128,7 +128,7 @@ screens.core.message = function CoreMessage(me) {
             if (typeof arg === "function") {
                 arg = me.core.handle.push(arg, typeof arg);
             }
-            else if (arg instanceof Element) {
+            else if (arg instanceof HTMLElement) {
                 arg = me.core.handle.push(arg, "element");
             }
         }
