@@ -47,6 +47,7 @@ screens.app.workshop = function AppWorkshop(me) {
             "test": me.refresh,
             "broadcast": me.refresh
         });
+        window.isBroadcast = true;
         await me.refresh(window);
     };
     me.refresh = async function (object) {
@@ -66,10 +67,12 @@ screens.app.workshop = function AppWorkshop(me) {
         me.shared.refresh();
         me.updateUser(window);
         if (window.options.autoRefresh) {
-            clearInterval(window.intervalHandle);
-            window.intervalHandle = setInterval(() => {
-                me.refresh(object);
-            }, 2000);
+            clearTimeout(window.intervalHandle);
+            window.intervalHandle = setTimeout(() => {
+                requestAnimationFrame(() => {
+                    me.refresh(object);
+                });
+            }, 5000);
         }
     };
     me.resize = function (object) {
@@ -89,13 +92,17 @@ screens.app.workshop = function AppWorkshop(me) {
             me.core.property.set(window.var.users, "user", content.name);
         }
         if (!window.options.broadcast) {
-            me.shared.update();
+            if (window.isBroadcast) {
+                me.shared.update();
+            }
+            window.isBroadcast = false;
         }
     };
     me.navigate = function (object, name) {
         var window = me.widget.window.get(object);
         window.navigate_name = name;
         if (window.options.broadcast) {
+            window.isBroadcast = true;
             me.shared.update({ name: window.navigate_name });
         }
     };

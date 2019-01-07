@@ -26,7 +26,7 @@ screens.storage.db = function StorageDB(me) {
         }
         var url = info.url;
         try {
-            var client = await me.mongodb.MongoClient.connect(url);
+            var client = await me.mongodb.MongoClient.connect(url, { useNewUrlParser: true });
         }
         finally {
             unlock();
@@ -88,7 +88,13 @@ screens.storage.db = function StorageDB(me) {
     };
     me.remove = async function (location, query, removeOne = true) {
         var collection = await me.collection(location);
-        var result = await collection.remove(query, removeOne);
+        var result = null;
+        if (removeOne) {
+            result = await collection.deleteOne(query);
+        }
+        else {
+            result = await collection.deleteMany(query);
+        }
         return result.nRemoved;
     };
     me.list = async function (location, query = {}, projection, params) {

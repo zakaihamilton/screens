@@ -68,8 +68,10 @@ screens.core.socket = function CoreSocket(me) {
     };
     me.sendHeartbeat = function () {
         setTimeout(async () => {
-            await me.user.verify.heartbeat();
-            me.sendHeartbeat();
+            requestAnimationFrame(async () => {
+                await me.user.verify.heartbeat();
+                me.sendHeartbeat();
+            });
         }, 20000);
     };
     me.setup = async function (ref) {
