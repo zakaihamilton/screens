@@ -1,0 +1,68 @@
+{
+    "title": "Links",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "1200px",
+        "height": "600px"
+    },
+    "maximize": null,
+    "icon": "/packages/res/icons/links.png",
+    "widget.menu.items": [
+        [
+            "Links",
+            [
+                [
+                    "Clear",
+                    "app.links.clear"
+                ],
+                [
+                    "Edit Mode",
+                    "app.links.editMode",
+                    {
+                        "state": "select",
+                        "separator": true
+                    }
+                ]
+            ]
+        ],
+        [
+            "Layout",
+            [
+                [
+                    "Border",
+                    "app.links.border",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
+                    "Font Size",
+                    "header"
+                ],
+                "widget.transform.fontSizesPx(app.links.fontSize)"
+            ]
+        ],
+        [
+            "Content",
+            [
+                "app.links.content.menu"
+            ]
+        ]
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "links",
+            "ui.class.class": "app.links.widget"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-links-window",
+        "storage.local.restore": "widget.window.store",
+        "title": "Links",
+        "name": "",
+        "app.links.initOptions": null,
+        "app.links.reload": null
+    }
+}

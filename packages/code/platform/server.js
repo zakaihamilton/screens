@@ -46,7 +46,8 @@ screens.apps = [
     "tasks",
     "prism",
     "table",
-    "notes"
+    "notes",
+    "links"
 ];
 
 screens.include({
