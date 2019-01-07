@@ -79,7 +79,7 @@ screens.media.file = function MediaFile(me) {
                 for (var file of files) {
                     var item = null;
                     if (oldListing) {
-                        item = oldListing[file.name];
+                        item = oldListing.find(item => item.name === file.name);
                     }
                     if (item) {
                         file = Object.assign(file, item);
