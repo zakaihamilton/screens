@@ -19,8 +19,8 @@
 }
 
 .app-table-cell {
-    margin: 6px;
-    padding: 6px;
+    margin: 0.1em;
+    padding: 0.1em;
     color: var(--color);
     line-height: 2em;
     text-align: center;
