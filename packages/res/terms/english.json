@@ -7346,6 +7346,16 @@
             "term": "Beit Shaar HaKavanot",
             "translation": "The House of the Gate of Intentions",
             "hebrew": "בית שער הכוונות"
+        },
+        {
+            "term": "Tzedakah",
+            "translation": "Charity",
+            "hebrew": "צדקה"
+        },
+        {
+            "term": "Hilchot Teshuva",
+            "translation": "Laws of Repentance",
+            "hebrew": "הלכות תשובה"
         }
     ],
     "style": {
