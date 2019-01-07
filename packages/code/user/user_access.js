@@ -10,6 +10,9 @@ screens.user.access = function UserAccess(me) {
     me.access = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service") && info.args) {
             var method = info.args[0];
+            if (!info.userId) {
+                throw " User " + info.userName + " has no user id to use method: " + method;
+            }
             var result = await me.isAPIAllowed(method, info.userId);
             if (!result) {
                 throw " User " + info.userName + " is not authorised to use method: " + method;
