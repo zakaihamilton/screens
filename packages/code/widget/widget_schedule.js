@@ -134,7 +134,11 @@ screens.widget.schedule = function WidgetSchedule(me) {
             month: date.getMonth(),
             day: date.getDate()
         };
-        var events = await me.manager.schedule.events(start, end);
+        var query = {
+            start,
+            end
+        };
+        var events = await me.manager.schedule.events(query);
         events = events.sort((a, b) => a.name.localeCompare(b.name));
         object.schedule_events = events;
         return events;

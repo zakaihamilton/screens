@@ -7,8 +7,9 @@ screens.manager.schedule = function ManagerSchedule(me) {
     me.init = function () {
 
     };
-    me.events = async function (start, end) {
+    me.events = async function (query) {
         var events = [];
+        var { start, end } = query;
         var startDate = me.toDate(start);
         var endDate = me.toDate(end);
         var groups = await me.media.file.groups();
