@@ -6,6 +6,7 @@
 screens.manager.content = function ManagerContent(me) {
     me.apps = ["present", "gematria", "table", "notes"];
     me._list = {};
+    me._associated = {};
     me.list = async function (componentId, private, userId) {
         var kind = componentId + ".content";
         if (private) {
@@ -24,6 +25,7 @@ screens.manager.content = function ManagerContent(me) {
     };
     me.refresh = function () {
         me._list = {};
+        me._associated = {};
     };
     me.associated = async function (title, userId) {
         if (!userId) {

@@ -31,7 +31,14 @@ screens.user.access = function UserAccess(me) {
         if (!user) {
             user = this.userId;
         }
-        return await me.storage.data.load(me.id, user);
+        if (!me.users) {
+            me.users = {};
+        }
+        var result = me.users[user];
+        if (!me.users[user]) {
+            result = me.users[user] = await me.storage.data.load(me.id, user);
+        }
+        return result;
     };
     me.set = async function (access, user) {
         if (!user) {

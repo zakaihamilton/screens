@@ -133,10 +133,8 @@ screens.storage.data = function StorageData(me) {
         var user = this.userId;
         var service = me.getService();
         if (service) {
-            me.log("query type: " + type);
             var query = service.createQuery(type);
             if (select) {
-                me.log("query select: " + JSON.stringify(select));
                 query = query.select(select);
             }
             if (filters) {
@@ -154,7 +152,6 @@ screens.storage.data = function StorageData(me) {
                 items.forEach(item => {
                     item.key = item[service.KEY];
                 });
-                me.log("query returning " + items.length + " results");
                 return items;
             }
             catch (err) {

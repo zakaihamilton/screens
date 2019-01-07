@@ -114,15 +114,17 @@ screens.core.socket = function CoreSocket(me) {
                 args = [err];
             }
             if (!args) {
-                try {
-                    me.core.message.prepareArgs(info);
-                    args = await me.core.message.handleLocal(info, info.args);
-                    me.core.message.releaseArgs(info);
-                }
-                catch (err) {
-                    me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
-                    args = [err];
-                }
+                await me.core.util.performance(info.args[0], async () => {
+                    try {
+                        me.core.message.prepareArgs(info);
+                        args = await me.core.message.handleLocal(info, info.args);
+                        me.core.message.releaseArgs(info);
+                    }
+                    catch (err) {
+                        me.log("args: " + JSON.stringify(info.args) + " error: " + err.toString() + " stack: " + err.stack);
+                        args = [err];
+                    }
+                });
             }
             if (args) {
                 info.socket = null;

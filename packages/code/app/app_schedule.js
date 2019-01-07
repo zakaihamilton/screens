@@ -35,9 +35,11 @@ screens.app.schedule = function AppSchedule(me) {
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
+        me.core.property.set(window, "ui.work.state", true);
         me.core.property.set(window.var.schedule, "options", window.options);
         me.core.property.set(window.var.schedule, "current", window.currentDate);
-        me.core.property.set(window.var.schedule, "redraw");
+        await me.core.property.set(window.var.schedule, "redraw");
+        me.core.property.set(window, "ui.work.state", false);
     };
     me.event = function (object, event) {
         me.core.app.launch.apply(null, event.launch);
@@ -71,5 +73,24 @@ screens.app.schedule = function AppSchedule(me) {
     };
     me.resize = function (object) {
         me.refresh(object);
+    };
+    me.work = {
+        set: function (object, value) {
+            if (me.workTimeout) {
+                clearTimeout(me.workTimeout);
+                me.workTimeout = null;
+            }
+            if (value) {
+                me.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    me.core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
+                }, 250);
+            } else {
+                me.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    me.core.property.set([object.var.schedule], "ui.style.visibility", "visible");
+                }, 250);
+            }
+        }
     };
 };
