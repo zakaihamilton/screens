@@ -43,5 +43,16 @@ screens.core.app = function CoreApp(me) {
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };
+    me.singleton = function (appName) {
+        var singleton = null;
+        var app = me.app[appName];
+        if (app) {
+            singleton = app.singleton;
+            if (me.core.property.get(app.singleton, "ui.node.parent")) {
+                return app.singleton;
+            }
+        }
+        return singleton;
+    };
     return "browser";
 };

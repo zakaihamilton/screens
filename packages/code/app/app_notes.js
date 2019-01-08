@@ -78,4 +78,8 @@ screens.app.notes = function AppNotes(me) {
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(target, "importData", text);
     };
+    me.insertLink = function (object, info) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.editor, "insertLink", info);
+    };
 };

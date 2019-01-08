@@ -47,7 +47,6 @@ screens.ui.link = function UILink(me) {
         me.core.app.launch.apply(null, args).then((window) => {
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);
-                me.core.property.set(window, "widget.window.maximize");
             }
         });
 

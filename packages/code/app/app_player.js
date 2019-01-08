@@ -34,6 +34,7 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
         });
+        me.core.property.set(window, "app", me);
         await me.reload(window);
     };
     me.reload = async function (object) {
@@ -346,6 +347,11 @@ screens.app.player = function AppPlayer(me) {
                 session.duration = duration;
             }
         }
+    };
+    me.url = function () {
+        var window = me.singleton;
+        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        return me.core.util.url("player", [window.options.groupName, window.options.sessionName, time], true);
     };
     me.copyLocalUrl = function () {
         var window = me.singleton;

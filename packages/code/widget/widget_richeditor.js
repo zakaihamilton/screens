@@ -110,4 +110,13 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
         }
         object.editor.insertText(offset, text);
     };
+    me.insertLink = function (object, info) {
+        var range = object.editor.getSelection();
+        var offset = object.editor.getLength() - 1;
+        if (range && !range.length) {
+            offset = range.index;
+        }
+        object.editor.insertText(offset, info.label, "link", info.url);
+        object.editor.insertText(offset, "\n");
+    };
 };

@@ -167,6 +167,12 @@ screens.widget.window = function WidgetWindow(me) {
         }
         return window;
     };
+    me.method = function (object, method) {
+        var window = me.child(object);
+        if (window.app_component) {
+            return window.app_component.id + "." + method;
+        }
+    };
     me.exportData = {
         get: function (object) {
             var window = me.child(object);

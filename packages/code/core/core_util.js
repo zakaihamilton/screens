@@ -93,7 +93,7 @@ screens.core.util = function CoreUtil(me) {
     me.sync = async function () {
         await me.storage.cache.empty();
     };
-    me.copyUrl = function (appName, args, local) {
+    me.url = function (appName, args, local) {
         var url = "";
         if (!local) {
             "http://www.screensview.com";
@@ -103,6 +103,10 @@ screens.core.util = function CoreUtil(me) {
         }
         url += `/${appName}?args=`;
         url += me.core.string.encode(JSON.stringify(args));
+        return url;
+    };
+    me.copyUrl = function (appName, args, local) {
+        var url = me.url(appName, args, local);
         me.ui.clipboard.copy(url);
     };
     me.genPair = function () {

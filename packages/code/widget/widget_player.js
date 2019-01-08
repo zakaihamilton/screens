@@ -219,6 +219,15 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "fullscreen"
                     ],
                     "ui.touch.click": "fullscreen"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "timestamp",
+                    "ui.class.class": [
+                        "button",
+                        "timestamp"
+                    ],
+                    "ui.touch.click": "timestamp"
                 }
             ]
         }
@@ -363,6 +372,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             player.mozRequestFullScreen();
         } else if (player.webkitRequestFullScreen) {
             player.webkitRequestFullScreen();
+        }
+    };
+    me.timestamp = function (object) {
+        var widget = me.upper.mainWidget(object);
+        var method = me.core.property.get(object, "widget.window.method", "url");
+        var url = me.core.property.get(object, method);
+        var notes = me.app.notes ? me.app.notes.singleton : null;
+        if (notes) {
+            var label = me.formatTime(widget.var.player.currentTime);
+            me.core.property.set(notes, "app.notes.insertLink", {
+                label,
+                url
+            });
         }
     };
     me.speeds = {
