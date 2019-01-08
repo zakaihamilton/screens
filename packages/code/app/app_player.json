@@ -40,8 +40,12 @@
                     "header"
                 ],
                 [
-                    "Url",
-                    "app.player.copyUrl"
+                    "Remote Url",
+                    "app.player.copyRemoteUrl"
+                ],
+                [
+                    "Local Url",
+                    "app.player.copyLocalUrl"
                 ],
                 [
                     "Name",

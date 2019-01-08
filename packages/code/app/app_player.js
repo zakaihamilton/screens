@@ -347,7 +347,12 @@ screens.app.player = function AppPlayer(me) {
             }
         }
     };
-    me.copyUrl = function () {
+    me.copyLocalUrl = function () {
+        var window = me.singleton;
+        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time], true);
+    };
+    me.copyRemoteUrl = function () {
         var window = me.singleton;
         var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
         me.core.util.copyUrl("player", [window.options.groupName, window.options.sessionName, time]);
