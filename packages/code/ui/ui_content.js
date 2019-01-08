@@ -84,9 +84,11 @@ screens.ui.content = function UIContent(me) {
             me.content.privateList = me.manager.content.list(me.id, true);
         },
         refresh: {
-            set: async function () {
+            set: async function (object) {
+                var window = me.widget.window.get(object);
                 await me.manager.content.refresh();
                 me.content.update();
+                me.content.associated.update(window, window.content._title);
             }
         },
         get: async function (item, private) {
@@ -104,6 +106,9 @@ screens.ui.content = function UIContent(me) {
                 name = item.key.name;
             }
             var fullItem = await me.manager.content.load(me.id, name, private);
+            if (!fullItem) {
+                return;
+            }
             if (!window.content) {
                 window.content = {};
             }
@@ -150,7 +155,7 @@ screens.ui.content = function UIContent(me) {
                 var date = new Date();
                 var title = "";
                 if (window.content._title) {
-                    title = window.content._title;
+                    title = me.core.string.title(window.content._title);
                 }
                 if (!title) {
                     title = me.core.property.get(window, "widget.window.key");

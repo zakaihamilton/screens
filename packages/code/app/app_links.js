@@ -45,7 +45,7 @@ screens.app.links = function AppLinks(me) {
     me.clear = function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "name", "");
-        window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
+        window.links = [];
         me.reload(window);
     };
     me.importData = function (object, text, title, options) {

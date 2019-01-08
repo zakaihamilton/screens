@@ -1,6 +1,7 @@
 .app-links-container {
     display: grid;
     margin: 6px;
+    grid-row-gap: 6px;
 }
 
 .app-links-link {
