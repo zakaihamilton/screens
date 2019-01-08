@@ -4,6 +4,7 @@
  */
 
 screens.app.links = function AppLinks(me) {
+    me.maxLinkCount = 20;
     me.init = function () {
         me.ui.content.attach(me);
     };
@@ -61,35 +62,68 @@ screens.app.links = function AppLinks(me) {
         var window = me.widget.window.get(object);
         return [JSON.stringify(window.links), window.links_options];
     };
-    me.attributes = function (dict) {
-        var attributes = "";
-        for (const [key, value] of Object.entries(dict)) {
-            attributes += " " + key + "=\"" + value + "\" ";
-        }
-        return attributes;
-    };
     me.rename = function (object) {
         var window = me.widget.window.get(object);
         var title = object.value;
         me.core.property.set(window, "name", title);
     };
-    me.store = function (object) {
+    me.store = function (object, index, key) {
         var window = me.widget.window.get(object);
-        var rowIndex = parseInt(me.core.property.get(object, "ui.attribute.rowIndex"));
-        var columnIndex = parseInt(me.core.property.get(object, "ui.attribute.columnIndex"));
-        var cell = window.cells[rowIndex][columnIndex];
-        if (!cell) {
-            cell = window.cells[rowIndex][columnIndex] = {};
+        var link = window.links[index];
+        if (!link) {
+            link = window.links[index] = { href: "", label: "" };
         }
-        cell.value = object.value;
+        link[key] = object.value;
     };
     me.links = function (object) {
-        var html = "";
-        var window = me.widget.window.get(object);
-        var editMode = window.options.editMode;
-        for (var link of window.links) {
-            var attributes = me.attributes(Object.assign({ target: "_blank" }, link.attributes));
-            html += "<a " + attributes + ">" + link.label + "</a><br>";
+        let html = "";
+        let window = me.widget.window.get(object);
+        let editMode = window.options.editMode;
+        if (editMode) {
+            for (let linkIndex = 0; linkIndex < me.maxLinkCount; linkIndex++) {
+                html += me.ui.html.item({
+                    classes: ["app-links-item"]
+                }, () => {
+                    let html = "";
+                    let link = window.links[linkIndex];
+                    if (!link) {
+                        link = { href: "", label: "" };
+                    }
+                    html += me.ui.html.item({
+                        classes: ["app-links-key-label"],
+                        value: "Label"
+                    });
+                    html += me.ui.html.item({
+                        tag: "input",
+                        classes: ["app-links-key-input", "input"],
+                        attributes: { value: link.label, oninput: "screens.app.links.store(this," + linkIndex + ",'label')" }
+                    });
+                    html += me.ui.html.item({
+                        classes: ["app-links-value-label"],
+                        value: "Link"
+                    });
+                    html += me.ui.html.item({
+                        tag: "input",
+                        classes: ["app-links-value-input", "input"],
+                        attributes: { value: link.href, oninput: "screens.app.links.store(this," + linkIndex + ",'href')" }
+                    });
+                    return html;
+                });
+            }
+        }
+        else {
+            html += me.ui.html.item({ classes: ["app-links-container"] }, () => {
+                var html = "";
+                for (let link of window.links) {
+                    let attributes = Object.assign({ target: "_blank", href: link.href });
+                    let classes = ["app-links-link"];
+                    if (window.options.border) {
+                        classes.push("border");
+                    }
+                    html += me.ui.html.item({ tag: "a", attributes, classes, value: link.label });
+                }
+                return html;
+            });
         }
         return html;
     };

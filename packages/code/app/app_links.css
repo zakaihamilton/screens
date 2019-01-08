@@ -1,0 +1,72 @@
+.app-links-container {
+    display: grid;
+    margin: 6px;
+}
+
+.app-links-link {
+    flex: 1;
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: stretch;
+    font-weight: bold;
+    border: 1px solid transparent;
+}
+
+.app-links-link.border {
+    border: 1px solid var(--border-color);
+}
+
+.app-links-link:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+    border: 1px solid var(--border-color);
+}
+
+.app-links-link:hover:active {
+    background-color: var(--color);
+    color: var(--background);
+    border: 1px solid var(--border-color);
+}
+
+.app-links-item {
+    display: grid;
+    grid-template-columns: 60px 30% 60px auto;
+    grid-auto-rows: 40px;
+    margin: 6px;
+}
+
+.app-links-key-label {
+    grid-column: 1;
+    font-weight: bold;
+    color: var(--color);
+    margin: 6px;
+    text-align: center;
+}
+
+.app-links-key-input {
+    grid-column: 2;
+    left: 0px;
+    right: 0px;
+}
+
+.app-links-value-label {
+    grid-column: 3;
+    font-weight: bold;
+    color: var(--color);
+    margin: 6px;
+    text-align: center;
+}
+
+.app-links-value-input {
+    grid-column: 4;
+    left: 0px;
+    right: 0px;
+}

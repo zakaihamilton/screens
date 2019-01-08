@@ -168,15 +168,15 @@ screens.widget.schedule = function WidgetSchedule(me) {
         object.var.grid.scrollTop = 0;
         var region = me.ui.rect.absoluteRegion(object);
         for (let month = 0; month < monthCount; month++) {
-            html += me.item({
+            html += me.ui.html.item({
                 classes: ["widget-schedule-month-grid", type]
             }, () => {
-                return me.item({
+                return me.ui.html.item({
                     classes: ["widget-schedule-month-grid", type]
                 }, () => {
                     var html = "";
                     for (let week = 0; week < weekCount; week++) {
-                        html += me.item({
+                        html += me.ui.html.item({
                             classes: ["widget-schedule-week-grid", type],
                             styles: { width: region.width + "px", height: region.height + "px" }
                         }, () => {
@@ -213,14 +213,14 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         classes.push(["today"]);
                                     }
                                     let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
-                                    html += me.item({ classes, styles, value: item.value });
+                                    html += me.ui.html.item({ classes, styles, value: item.value });
                                 }
                             });
                             for (let weekday = 0; weekday < weekdayCount; weekday++) {
                                 let dayDate = new Date(currentDate);
                                 dayDate.setMonth(currentDate.getMonth() + month);
                                 dayDate.setDate(currentDate.getDate() + (week * 7) + weekday);
-                                html += me.item({
+                                html += me.ui.html.item({
                                     classes: ["widget-schedule-events-grid", type],
                                     styles: { "grid-column": (weekday + 1) }
                                 }, () => {
@@ -250,19 +250,19 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                     if (matches) {
                                         for (let name in matches) {
                                             let classes = ["widget-schedule-event", type];
-                                            html += me.item({ classes }, () => {
+                                            html += me.ui.html.item({ classes }, () => {
                                                 let html = "";
                                                 let classes = ["widget-schedule-event-name", type];
-                                                html += me.item({ classes, value: name });
+                                                html += me.ui.html.item({ classes, value: name });
                                                 classes = ["widget-schedule-apps", type];
-                                                html += me.item({ classes }, () => {
+                                                html += me.ui.html.item({ classes }, () => {
                                                     var html = "";
                                                     for (let event of matches[name]) {
                                                         let classes = ["widget-schedule-app", type];
                                                         let attributes = {
                                                             "onclick": "screens.widget.schedule.click(this," + event.eventIndex + ")"
                                                         };
-                                                        html += me.item({ classes, attributes, value: event.app });
+                                                        html += me.ui.html.item({ classes, attributes, value: event.app });
                                                     }
                                                     return html;
                                                 });
@@ -288,36 +288,6 @@ screens.widget.schedule = function WidgetSchedule(me) {
             var event = widget.schedule_events[index];
             me.core.property.set(widget, widget.schedule_methods.event, event);
         }
-    };
-    me.item = function (info, members) {
-        var html = "<div";
-        if (info.classes && info.classes.length) {
-            html += " class=\"" + info.classes.join(" ") + "\"";
-        }
-        if (info.styles && Object.keys(info.styles).length) {
-            html += " style=\"";
-            for (let name in info.styles) {
-                html += name + ":" + info.styles[name] + ";";
-            }
-            html += "\"";
-        }
-        if (info.attributes && Object.keys(info.attributes).length) {
-            for (let name in info.attributes) {
-                html += " " + name + "=\"" + info.attributes[name] + "\"";
-            }
-        }
-        html += ">";
-        if (info.value) {
-            html += info.value;
-        }
-        if (members) {
-            var result = members();
-            if (result) {
-                html += result;
-            }
-        }
-        html += "</div>";
-        return html;
     };
     me.previous = function (object) {
         var widget = me.ui.node.container(object, me.id);
