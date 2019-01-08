@@ -57,6 +57,13 @@
             "Player",
             [
                 [
+                    "Auto Play",
+                    "app.player.autoPlay",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Audio",
                     "app.player.setFormat",
                     {

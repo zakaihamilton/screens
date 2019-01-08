@@ -29,7 +29,11 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.load(me, window, {
             groupName: "American",
             sessionName: "",
-            speed: "Normal"
+            speed: "Normal",
+            autoPlay: false
+        });
+        me.ui.options.toggleSet(me, null, {
+            autoPlay: null
         });
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
@@ -252,6 +256,9 @@ screens.app.player = function AppPlayer(me) {
                 return;
             }
             me.core.property.set(player, "source", target);
+            if (window.options.autoPlay) {
+                me.core.property.set(player, "widget.player.controls.play");
+            }
             me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
             me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
             window.var.player = player;
