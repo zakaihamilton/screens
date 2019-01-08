@@ -33,6 +33,10 @@ screens.app.schedule = function AppSchedule(me) {
         });
         await me.refresh(window);
     };
+    me.reset = async function (object) {
+        await me.manager.content.refresh();
+        me.refresh(object);
+    };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "ui.work.state", true);

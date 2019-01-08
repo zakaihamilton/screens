@@ -199,6 +199,7 @@ screens.core.string = function CoreString(me) {
             return token.charAt(0).toUpperCase() + token.slice(1);
         }).join(" ");
         string = string.replace(/([A-Z])/g, " $1").trim();
+        string = string.replace(/\s\s/g, " ");
         return string;
     };
     me.trimEnd = function (string, character) {

@@ -14,7 +14,7 @@
             [
                 [
                     "Refresh",
-                    "app.schedule.refresh"
+                    "app.schedule.reset"
                 ],
                 [
                     "View",
