@@ -60,12 +60,22 @@ screens.app.notes = function AppNotes(me) {
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "widget.window.name", title);
-        me.core.property.set(window.var.editor, "contents", JSON.parse(text));
+        if (text.trim().startsWith("{")) {
+            me.core.property.set(window.var.editor, "contents", JSON.parse(text));
+        }
+        else {
+            me.core.property.set(window.var.editor, "text", text);
+        }
         me.core.property.set(window.var.editor, "ui.basic.save");
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
         var content = me.core.property.get(window.var.editor, "contents");
         return [JSON.stringify(content)];
+    };
+    me.exportText = function (object, target) {
+        var window = me.widget.window.get(object);
+        var text = me.core.property.get(window.var.editor, "text");
+        me.core.property.set(target, "importData", text);
     };
 };

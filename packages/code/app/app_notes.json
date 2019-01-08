@@ -15,7 +15,8 @@
                 [
                     "Clear",
                     "app.notes.clear"
-                ]
+                ],
+                "widget.window.exportMenuList(app.notes.exportText)"
             ]
         ],
         [

@@ -154,6 +154,11 @@ screens.ui.content = function UIContent(me) {
                 var [content, options] = me.exportData(window);
                 var date = new Date();
                 var title = "";
+                var json = false;
+                if (typeof content !== "string") {
+                    content = JSON.stringify(content);
+                    json = true;
+                }
                 if (window.content._title) {
                     title = me.core.string.title(window.content._title);
                 }
@@ -174,7 +179,8 @@ screens.ui.content = function UIContent(me) {
                     user: "$userId",
                     options: {},
                     owner: "$userId",
-                    locked: locked
+                    locked: locked,
+                    json
                 };
                 if (options) {
                     data.options = options;
