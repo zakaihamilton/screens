@@ -14,7 +14,7 @@ screens.app.launcher = function AppLauncher(me) {
     me.html = function () {
         return __html__;
     };
-    me.resIcon = async function (object, value) {
+    me.resIcon = function (object, value) {
         var name = null, extension = null, label = null;
         if (typeof value === "string") {
             label = value;
