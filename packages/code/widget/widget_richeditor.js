@@ -68,6 +68,7 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
                         showTooltip(el);
                     }
                 }
+                me.ui.theme.updateElements(toolbar);
             }
         }
     };
