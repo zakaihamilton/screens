@@ -38,8 +38,8 @@ screens.kab.text = function KabText(me) {
             wordStyle = "whole";
         }
         if (session.options.abridged) {
-            wordsString = wordsString.replace(/ *\([^\d)]*\) */g, " ");
-            wordsString = wordsString.replace(/ *\[[^\d\]]*\] */g, " ");
+            wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
+            wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
         }
         wordsString = me.core.string.parseWords(function (words) {
             var wasPrefix = false;
@@ -53,7 +53,7 @@ screens.kab.text = function KabText(me) {
                         });
                     }
                 }
-                var word = words[wordIndex];
+                let word = words[wordIndex];
                 var isPrefix = prefix ? word.toLowerCase() in prefix : null;
                 if (isPrefix) {
                     wasPrefix = true;
@@ -66,7 +66,7 @@ screens.kab.text = function KabText(me) {
                 var termLookup = session.terms[word];
                 if (!termLookup) {
                     if (word.length > 2) {
-                        var match = me.core.string.match;
+                        let match = me.core.string.match;
                         term = session.terms["*"].find(function (term) {
                             return match(word, term, wordStyle);
                         });
@@ -100,7 +100,7 @@ screens.kab.text = function KabText(me) {
                         if (wordIndex + termWordIndex >= words.length) {
                             break;
                         }
-                        var word = words[wordIndex + termWordIndex];
+                        let word = words[wordIndex + termWordIndex];
                         if (!word) {
                             numTermWords++;
                             continue;
@@ -134,7 +134,7 @@ screens.kab.text = function KabText(me) {
                     if (item && item.word) {
                         wordStyle = item.word;
                     }
-                    var match = term;
+                    let match = term;
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
                         if (!item.case) {
                             match = term.toUpperCase();
@@ -174,7 +174,7 @@ screens.kab.text = function KabText(me) {
                     if (item.debug) {
                         debugger;
                     }
-                    var match = me.handleInstance(session, instance);
+                    match = me.handleInstance(session, instance);
                     wordIndex = instance.wordIndex;
                     if (match) {
                         break;
