@@ -260,6 +260,9 @@ screens.core.module = function CoreModule(me) {
                     me.handleMeta(info);
                     return;
                 }
+                if (info.url.startsWith("/custom/")) {
+                    return;
+                }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {
                     params.startupApp = info.url.substring(1);
                     info.url = "/main.html";

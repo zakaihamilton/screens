@@ -31,6 +31,11 @@ screens.startup.version = function StartupVersion(me) {
             let version = me.storage.local.get(me.id);
             if (version !== config.version) {
                 me.storage.local.set(me.id, config.version);
+                var cacheList = await me.storage.cache.list();
+                cacheList.map(item => {
+                    me.log("deleting from cache: " + item.cache + " index: " + item.index + " url: " + item.url);
+                });
+                me.storage.cache.empty();
                 location.reload(true);
             }
         }

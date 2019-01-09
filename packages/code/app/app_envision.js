@@ -33,9 +33,10 @@ screens.app.envision = function AppEnvision(me) {
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.source, "text", text);
-        me.core.property.set(window.var.content, "ui.basic.html", me.convert(object, text));
+        me.core.property.set(window.var.source, "ui.basic.text", text);
         me.core.property.set(window, "widget.window.name", title);
         me.core.property.set(window.var.source, "ui.basic.save");
+        me.refresh();
     };
     me.updateMode = function (object) {
         var window = me.widget.window.get(object);
@@ -64,6 +65,10 @@ screens.app.envision = function AppEnvision(me) {
         text = me.convert(object, text);
         if (window.options.outputMode) {
             text = me.formatXml(text);
+        }
+        else {
+            me.storage.cache.setCustom("/custom/envision", me.core.property.get(window.var.format, "text"));
+            text = "<iframe width='100%' height='100%' src='/custom/envision'></iframe>";
         }
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
     };
