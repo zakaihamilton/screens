@@ -4589,7 +4589,7 @@
         {
             "translation": "Lord",
             "style": {
-                "category": "Name of God"
+                "category": "Holy Name"
             },
             "term": "ADNI",
             "hebrew": "אדני"
@@ -6990,7 +6990,7 @@
             "translation": "God",
             "hebrew": "אלהים",
             "style": {
-                "category": "Name of God",
+                "category": "Holy Name",
                 "phase": "one"
             }
         },
@@ -6999,7 +6999,7 @@
             "translation": "I will be",
             "hebrew": "אהיה",
             "style": {
-                "category": "Name of God",
+                "category": "Holy Name",
                 "phase": "root"
             }
         },
@@ -7010,7 +7010,7 @@
             "hebrew": "ש-ד-י",
             "style": {
                 "phase": "collective",
-                "category": "Name of God"
+                "category": "Holy Name"
             }
         },
         {
