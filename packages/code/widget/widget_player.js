@@ -173,7 +173,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "play"
                     ],
-                    "ui.touch.click": "play"
+                    "ui.touch.click": "play",
+                    "ui.attribute.title": "Play"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -182,7 +183,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "stop"
                     ],
-                    "ui.touch.click": "stop"
+                    "ui.touch.click": "stop",
+                    "ui.attribute.title": "Stop"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -191,7 +193,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "rewind"
                     ],
-                    "ui.touch.click": "rewind"
+                    "ui.touch.click": "rewind",
+                    "ui.attribute.title": "Rewind"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -200,7 +203,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "forward"
                     ],
-                    "ui.touch.click": "forward"
+                    "ui.touch.click": "forward",
+                    "ui.attribute.title": "Fast Forward"
                 },
                 {
                     "ui.basic.tag": "a",
@@ -209,7 +213,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "download"
                     ],
-                    "ui.attribute.download": ""
+                    "ui.attribute.download": "",
+                    "ui.attribute.title": "Download"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -218,7 +223,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "fullscreen"
                     ],
-                    "ui.touch.click": "fullscreen"
+                    "ui.touch.click": "fullscreen",
+                    "ui.attribute.title": "Fullscreen"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -227,7 +233,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         "button",
                         "timestamp"
                     ],
-                    "ui.touch.click": "timestamp"
+                    "ui.touch.click": "timestamp",
+                    "ui.attribute.title": "Timestamp"
                 }
             ]
         }
@@ -374,16 +381,21 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             player.webkitRequestFullScreen();
         }
     };
-    me.timestamp = function (object) {
+    me.timestamp = async function (object) {
         var widget = me.upper.mainWidget(object);
         var method = me.core.property.get(object, "widget.window.method", "url");
         var url = me.core.property.get(object, method);
-        var notes = me.app.notes ? me.app.notes.singleton : null;
+        var notes = me.core.app.singleton("notes");
+        if (!notes) {
+            notes = await me.core.app.launch("notes");
+        }
         if (notes) {
             var label = me.formatTime(widget.var.player.currentTime);
-            me.core.property.set(notes, "app.notes.insertLink", {
-                label,
-                url
+            me.core.property.set(notes, "ui.property.after", {
+                "app.notes.insertLink": {
+                    label,
+                    url
+                }
             });
         }
     };

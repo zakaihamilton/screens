@@ -44,9 +44,13 @@ screens.app.player = function AppPlayer(me) {
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
         var args = window.args;
-        await me.core.property.set(window, "app.player.onChangeGroup", args[0]);
-        await me.core.property.set(window, "app.player.onChangeSession", args[1]);
-        await me.core.property.notify(window, "app.player.updatePlayer", null, true);
+        var groupName = window.options.groupName;
+        var sessionName = window.options.sessionName;
+        if (args[0] !== groupName || args[1] !== sessionName) {
+            await me.core.property.set(window, "app.player.onChangeGroup", args[0]);
+            await me.core.property.set(window, "app.player.onChangeSession", args[1]);
+            await me.core.property.notify(window, "app.player.updatePlayer", null, true);
+        }
         if (args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
         }
