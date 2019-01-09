@@ -49,7 +49,7 @@ screens.app.envision = function AppEnvision(me) {
         me.core.property.set(window.var.format, "ui.basic.show", editMode && formatMode);
         me.core.property.set(window.var.editorContainer, "ui.style.top", liveEdit ? "70%" : "");
         me.core.property.set(window.var.editorContainer, "ui.style.height", liveEdit ? "29%" : "");
-        if (!editMode) {
+        if (liveEdit || !editMode) {
             me.refresh(object);
         }
         clearInterval(window.intervalHandle);
@@ -67,7 +67,7 @@ screens.app.envision = function AppEnvision(me) {
             text = me.formatXml(text);
         }
         else {
-            me.storage.cache.setCustom("/custom/envision", me.core.property.get(window.var.format, "text"));
+            me.storage.cache.setCustom("/custom/envision", text);
             text = "<iframe width='100%' height='100%' src='/custom/envision'></iframe>";
         }
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
@@ -187,19 +187,6 @@ screens.app.envision = function AppEnvision(me) {
             }
             catch (err) {
                 throw "Cannot process vars: " + err;
-            }
-            var parser = new DOMParser();
-            try {
-                format = parser.parseFromString(format, "text/xml");
-            }
-            catch (err) {
-                throw "Cannot parse format: " + err;
-            }
-            try {
-                format = me.serialize(format);
-            }
-            catch (err) {
-                throw "Cannot serialise format: " + err;
             }
         }
         catch (err) {
