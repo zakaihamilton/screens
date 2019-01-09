@@ -253,7 +253,8 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                             html += me.ui.html.item({ classes }, () => {
                                                 let html = "";
                                                 let classes = ["widget-schedule-event-name", type];
-                                                html += me.ui.html.item({ classes, value: name });
+                                                var label = name.split(" - ").join("<br>");
+                                                html += me.ui.html.item({ classes, value: label });
                                                 classes = ["widget-schedule-apps", type];
                                                 html += me.ui.html.item({ classes }, () => {
                                                     var html = "";
