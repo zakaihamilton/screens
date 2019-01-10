@@ -49,7 +49,7 @@
                         "separator": true
                     },
                     {
-                        "ui.basic.display": "@user.access.admin"
+                        "ui.basic.display": "admin"
                     }
                 ],
                 [
