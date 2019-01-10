@@ -4,7 +4,7 @@
  */
 
 screens.startup.version = function StartupVersion(me) {
-    me.run = async function () {
+    me.prepare = async function () {
         if (me.platform === "server") {
             me.log("retrieving version information");
             let config = await me.core.util.config();
