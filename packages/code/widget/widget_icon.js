@@ -51,13 +51,9 @@ screens.widget.icon = function WidgetIcon(me) {
             }
             else if (value === "icon") {
                 me.core.property.set(object, "ui.class.remove", "widget.icon.list");
-                me.core.property.set(object.var.icon, "ui.attribute.width", "64px");
-                me.core.property.set(object.var.icon, "ui.attribute.height", "64px");
             }
             else if (value === "list") {
                 me.core.property.set(object, "ui.class.remove", "widget.icon.icon");
-                me.core.property.set(object.var.icon, "ui.attribute.width", "16px");
-                me.core.property.set(object.var.icon, "ui.attribute.height", "16px");
             }
             me.core.property.set(object, "ui.class.add", "widget.icon." + value);
             me.core.property.set(object.var.icon, "ui.class.class", "widget.icon.image." + value);

@@ -5,9 +5,7 @@
         {
             "ui.basic.src": "",
             "ui.class.class": "image-icon",
-            "ui.basic.var": "icon",
-            "ui.attribute.width": "64px",
-            "ui.attribute.height": "64px"
+            "ui.basic.var": "icon"
         },
         {
             "ui.basic.tag": "div",

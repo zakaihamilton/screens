@@ -1,10 +1,6 @@
 .widget-icon-icon {
-    width: 128px;
-    height: 128px;
-    padding-top: 10px;
-    margin-left: 10px;
-    margin-right: 0px;
-    float: left;
+    width: 96px;
+    margin: 5px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -16,10 +12,6 @@
 
 .widget-icon-icon:hover:active {
     opacity: 0.5;
-}
-
-.widget-icon-icon+.widget-icon-icon {
-    margin-left: 10px;
 }
 
 .widget-icon-list+.widget-icon-list {
@@ -38,8 +30,9 @@
 .widget-icon-image-icon {
     pointer-events: none;
     object-fit: contain;
-    margin-left: 25%;
-    margin-right: 25%;
+    width: 64px;
+    height: 64px;
+    margin: auto auto;
 }
 
 .widget-icon-image-icon.night-mode {
@@ -47,9 +40,11 @@
 }
 
 .widget-icon-image-list {
-    margin: 3px;
+    margin: 5px;
     flex: 0;
     filter: invert(100%);
+    width: 16px;
+    height: 16px;
 }
 
 .widget-icon-label-icon {
