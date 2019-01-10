@@ -12,6 +12,10 @@
     display: flex;
 }
 
+.app-gematria-bar.fullscreen {
+    display: none;
+}
+
 .app-gematria-input-label {
     flex: 0;
     margin-left: 10px;
@@ -39,6 +43,10 @@
     line-height: 2em;
     background-color: var(--background);
     color: var(--color);
+}
+
+.app-gematria-diagram.fullscreen {
+    top: 5px;
 }
 
 .app-gematria-letter {
