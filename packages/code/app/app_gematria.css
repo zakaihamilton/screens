@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "ShlomoStam";
+    src: url("/packages/res/fonts/ShlomoStam.ttf");
+}
+
 .app-gematria-bar {
     position: absolute;
     left: 5%;
@@ -37,6 +42,7 @@
 }
 
 .app-gematria-letter {
+    font-family: ShlomoStam;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,25 +56,27 @@
 }
 
 .app-gematria-letter:hover {
-    text-shadow: 0 0 3px rgba(81, 203, 238, 1), 0 0 5px #0000FF;
+    text-shadow: 0 0 50px rgba(81, 203, 238, 1), 0 0 20px #0000FF;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
 }
 
 .app-gematria-number {
+    pointer-events: none;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     margin: 0;
-    font-size: 75%;
+    font-size: 30%;
     text-align: center;
 }
 
 .app-gematria-pronunciation {
+    pointer-events: none;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     margin: 0;
-    font-size: 50%;
+    font-size: 30%;
     text-align: center;
 }
