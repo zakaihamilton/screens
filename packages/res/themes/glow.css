@@ -975,3 +975,8 @@
 strong {
     color: var(--color);
 }
+
+.jsgrid-nodata-row>.jsgrid-cell {
+    background: var(--background) !important;
+    color: var(--color);
+}
