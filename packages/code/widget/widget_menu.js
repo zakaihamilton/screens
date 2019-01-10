@@ -342,6 +342,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             list.filterTimer = null;
         }
         var updateFunc = () => {
+            let found = false;
             var members = list.var.members;
             while (members.firstChild) {
                 members.removeChild(members.firstChild);
@@ -363,11 +364,19 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 if (mark) {
                     me.ui.mark.widget(child, info.text);
                     members.appendChild(child);
+                    found = true;
                 }
+            }
+            if (!found) {
+                members.appendChild(me.ui.element.create({
+                    "ui.basic.tag": "div",
+                    "ui.basic.text": "No Match Found",
+                    "ui.class.add": "no-match"
+                }));
             }
         };
         if (info.text) {
-            list.filterTimer = setTimeout(updateFunc, 1000);
+            list.filterTimer = setTimeout(updateFunc, 250);
         }
         else {
             updateFunc();

@@ -39,7 +39,8 @@ screens.widget.filter = function WidgetFilter(me) {
                             "ui.basic.var": "filter",
                             "ui.attribute.type": "search",
                             "ui.attribute.placeholder": "Filter",
-                            "ui.key.up": "execute"
+                            "ui.key.up": "execute",
+                            "ui.monitor.search": "execute"
                         }
                     ]
                 }

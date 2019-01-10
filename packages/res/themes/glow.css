@@ -453,6 +453,12 @@
     display: block;
 }
 
+.glow-menu-vertical div.no-match {
+    padding-left: 16px;
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
 .glow-menu-vertical li:hover, .glow-menu-vertical tr:hover, .glow-menu-vertical span:hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);
