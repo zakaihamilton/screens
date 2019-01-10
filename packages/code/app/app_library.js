@@ -84,9 +84,7 @@ screens.app.library = function AppLibrary(me) {
                         continue;
                     }
                     var value = item[key];
-                    if (value.match(/^\d/)) {
-                        value = me.core.string.padNumber(value, 3);
-                    }
+                    value = value.replace(/\d+/g, (x) => me.core.string.padNumber(x, 3));
                     names.add(key + ":" + value);
                 }
             }

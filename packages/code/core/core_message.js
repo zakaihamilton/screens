@@ -89,6 +89,12 @@ screens.core.message = function CoreMessage(me) {
             });
             return arg;
         }
+        if (me.platform === "browser") {
+            if (Element && arg instanceof Element) {
+                arg = me.core.handle.push(arg, "element");
+                return arg;
+            }
+        }
         if (typeof arg === "object") {
             for (var key in arg) {
                 arg[key] = me.processArg(info, arg[key]);
@@ -128,7 +134,7 @@ screens.core.message = function CoreMessage(me) {
             if (typeof arg === "function") {
                 arg = me.core.handle.push(arg, typeof arg);
             }
-            else if (arg instanceof HTMLElement) {
+            else if (arg instanceof Element) {
                 arg = me.core.handle.push(arg, "element");
             }
         }

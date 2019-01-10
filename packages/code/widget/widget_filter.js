@@ -13,7 +13,37 @@ screens.widget.filter = function WidgetFilter(me) {
         },
         properties: {
             "ui.basic.tag": "div",
-            "ui.basic.html": "@html"
+            "ui.class.add": ["field", "has-addons"],
+            "ui.style.margin": "6px",
+            "ui.basic.elements": [
+                {
+                    "ui.basic.tag": "p",
+                    "ui.class.add": ["select"],
+                    "ui.basic.var": "prefixes",
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.tag": "select",
+                            "ui.class.class": "select",
+                            "ui.basic.var": "select",
+                            "ui.monitor.change": "execute"
+                        }
+                    ]
+                },
+                {
+                    "ui.basic.tag": "p",
+                    "ui.class.add": ["control", "is-expanded"],
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.tag": "input",
+                            "ui.class.add": ["input", "is-fullwidth"],
+                            "ui.basic.var": "filter",
+                            "ui.attribute.type": "search",
+                            "ui.attribute.placeholder": "Filter",
+                            "ui.key.up": "execute"
+                        }
+                    ]
+                }
+            ]
         },
         draw: function (object) {
             setTimeout(() => {
@@ -24,28 +54,24 @@ screens.widget.filter = function WidgetFilter(me) {
     };
     me.updatePrefixes = function (object) {
         var widget = me.ui.node.container(object, me.id);
-        var prefixes = widget.querySelector("#prefixes");
-        var prefixesSelect = widget.querySelector("#prefixes-select");
         var prefixesList = me.core.property.get(widget, widget.prefixes);
         if (prefixesList) {
             for (var prefixItem of prefixesList) {
                 var option = document.createElement("option");
                 option.textContent = prefixItem;
-                prefixesSelect.appendChild(option);
+                widget.var.select.appendChild(option);
             }
         }
-        prefixes.style.display = prefixesList.length ? "" : "none";
+        widget.var.prefixes.style.display = prefixesList.length ? "" : "none";
     };
     me.execute = async function (object) {
         var widget = me.ui.node.container(object, me.id);
-        var prefixesSelect = widget.querySelector("#prefixes-select");
-        var filter = widget.querySelector("#filter");
         if (!widget) {
             return;
         }
         me.core.property.set(widget, widget.filter, {
-            prefix: prefixesSelect.value,
-            text: filter.value
+            prefix: widget.var.select.value,
+            text: widget.var.filter.value
         });
     };
     me.prefixes = function (object, value) {
@@ -53,8 +79,5 @@ screens.widget.filter = function WidgetFilter(me) {
     };
     me.filter = function (object, value) {
         object.filter = value;
-    };
-    me.html = function () {
-        return __html__;
     };
 };
