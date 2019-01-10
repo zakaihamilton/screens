@@ -46,22 +46,13 @@ screens.app.player = function AppPlayer(me) {
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
         if (args[0] !== groupName || args[1] !== sessionName) {
-            await me.core.property.set(window, "app.player.onChangeGroup", args[0]);
-            await me.core.property.set(window, "app.player.onChangeSession", args[1]);
+            await me.core.property.set(window, "app.player.group", args[0]);
+            await me.core.property.set(window, "app.player.session", args[1]);
             await me.core.property.notify(window, "app.player.updatePlayer", null, true);
         }
         if (args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
         }
-    };
-    me.filterSessions = function (object, items) {
-        if (!items || items.then) {
-            return [];
-        }
-        items = items.filter(item => {
-            return item.name.includes(".m4a");
-        });
-        return items;
     };
     me.groupMenuList = {
         get: function (object) {
@@ -70,7 +61,7 @@ screens.app.player = function AppPlayer(me) {
                 property: "name",
                 attributes: { "state": "select" },
                 group: "group",
-                itemMethod: "app.player.onChangeGroup"
+                itemMethod: "app.player.group"
             };
             return me.widget.menu.collect(object, info);
         }
@@ -78,13 +69,14 @@ screens.app.player = function AppPlayer(me) {
     me.sessionMenuList = {
         get: function (object) {
             var window = me.widget.window.get(object);
+            var list = me.groups.find(group => window.options.groupName === group.name).sessions;
+            list = list.filter(session => session.extension === "m4a");
             var info = {
-                list: me.groups.find(group => window.options.groupName === group.name).sessions,
+                list,
                 property: "label",
                 attributes: { "state": "select" },
                 group: "session",
-                listMethod: me.filterSessions,
-                itemMethod: "app.player.onChangeSession",
+                itemMethod: "app.player.session",
                 metadata: {
                     "Name": "label",
                     "Duration": "durationText"
@@ -100,7 +92,7 @@ screens.app.player = function AppPlayer(me) {
         await me.updateSessions();
         me.core.property.set(window, "ui.work.state", false);
     };
-    me.onChangeGroup = {
+    me.group = {
         get: function (object, value) {
             var window = me.singleton;
             return window.options.groupName === value;
@@ -114,7 +106,7 @@ screens.app.player = function AppPlayer(me) {
             await me.updateSessions();
         }
     };
-    me.onChangeSession = {
+    me.session = {
         get: function (object, name) {
             var window = me.singleton;
             return window.options.sessionName === name;
@@ -173,7 +165,7 @@ screens.app.player = function AppPlayer(me) {
                 if (sessionName) {
                     name = sessionName;
                 }
-                me.core.property.set(window, "app.player.onChangeSession", name);
+                me.core.property.set(window, "app.player.session", name);
             }
         }
     };
