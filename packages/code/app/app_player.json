@@ -9,7 +9,7 @@
     },
     "widget.menu.items": [
         [
-            "Session",
+            "Player",
             [
                 [
                     "Refresh",
@@ -54,7 +54,7 @@
             ]
         ],
         [
-            "Player",
+            "Track",
             [
                 [
                     "Auto Play",

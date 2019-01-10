@@ -18,7 +18,6 @@ screens.media.file = function MediaFile(me) {
             me.updateListing();
         }
     };
-    me._listing = {};
     me.info = async function (path) {
         var metadata = null;
         try {
@@ -31,76 +30,72 @@ screens.media.file = function MediaFile(me) {
     };
     me.reset = async function () {
         me._groups = [];
-        me._listing = {};
     };
     me.groups = async function (update = false) {
-        var list = [];
-        if (update || !me._groups || !me._groups.length) {
-            list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
-            for (var group of me._groups) {
-                group.path = me.rootPath + "/" + group.name;
+        try {
+            var unlock = await me.core.mutex.lock();
+            var list = [];
+            if (update || !me._groups || !me._groups.length) {
+                list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
+                for (var group of me._groups) {
+                    group.path = me.rootPath + "/" + group.name;
+                    await me.listing(group, update);
+                }
+            }
+            else {
+                list = me._groups;
             }
         }
-        else {
-            list = me._groups;
+        finally {
+            unlock();
         }
         return list;
-    };
-    me.update = async function () {
-        var groups = await me.groups(true);
-        var promises = [];
-        for (var group of groups) {
-            promises.push(me.listing(group.path, true));
-        }
-        await Promise.all(promises);
     };
     me.exists = async function (name) {
         var groups = await me.groups();
         for (var group of groups) {
-            var files = await me.listing(group.path);
-            if (files) {
-                for (var file of files) {
-                    if (file.name.includes(name)) {
-                        return group.name;
-                    }
+            for (var session of group.sessions) {
+                if (session.name.includes(name)) {
+                    return group.name;
                 }
             }
         }
         return null;
     };
-    me.listing = async function (path, update = false) {
-        var files = null;
-        try {
-            var unlock = await me.core.mutex.lock();
-            if (update || !me._listing[path]) {
-                files = await me.storage.file.getChildren(path);
-                var oldListing = me._listing[path];
-                me._listing[path] = files;
-                for (var file of files) {
-                    var item = null;
-                    if (oldListing) {
-                        item = oldListing.find(item => item.name === file.name);
-                    }
-                    if (item) {
-                        file = Object.assign(file, item);
-                    }
-                    else {
-                        file.path = path + "/" + file.name;
-                        var metadata = await me.info(me.cachePath + "/" + file.name);
-                        if (metadata) {
-                            if (metadata.format) {
-                                file.duration = metadata.format.duration;
-                            }
+    me.listing = async function (group, update = false) {
+        var path = group.path;
+        var files = [];
+        if (update || !group.sessions) {
+            files = await me.storage.file.getChildren(path);
+            var oldListing = group.sessions;
+            group.sessions = files.reverse();
+            for (var file of files) {
+                var item = null;
+                if (oldListing) {
+                    item = oldListing.find(item => item.name === file.name);
+                }
+                if (item) {
+                    file = Object.assign(file, item);
+                }
+                else {
+                    file.group = group.name;
+                    file.session = me.core.path.fileName(file.name);
+                    file.extension = me.core.path.extension(file.name);
+                    file.label = me.core.string.title(me.core.path.fileName(file.name));
+                    file.remote = path + "/" + file.name;
+                    file.local = me.cachePath + "/" + file.name;
+                    var metadata = await me.info(file.local);
+                    if (metadata) {
+                        if (metadata.format) {
+                            file.duration = metadata.format.duration;
+                            file.durationText = me.core.string.formatDuration(file.duration);
                         }
                     }
                 }
             }
-            else {
-                files = me._listing[path];
-            }
         }
-        finally {
-            unlock();
+        else {
+            files = me._listing[path];
         }
         return files;
     };

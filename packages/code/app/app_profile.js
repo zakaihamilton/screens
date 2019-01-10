@@ -55,7 +55,7 @@ screens.app.profile = function AppProfile(me) {
         }
         return bindings;
     };
-    me.sortSessions = function (object, items) {
+    me.sortUserList = function (object, items) {
         if (!items || items.then) {
             return [];
         }
@@ -69,7 +69,7 @@ screens.app.profile = function AppProfile(me) {
                 property: "name",
                 attributes: { "state": "select" },
                 group: "users",
-                listMethod: me.sortSessions,
+                listMethod: me.sortUserList,
                 itemMethod: "app.profile.userName"
             };
             return me.widget.menu.collect(object, info);

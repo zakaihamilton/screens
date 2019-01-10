@@ -14,11 +14,11 @@ screens.manager.schedule = function ManagerSchedule(me) {
         var endDate = me.toDate(end);
         var groups = await me.media.file.groups();
         for (let group of groups) {
-            let listing = await me.media.file.listing(group.path);
-            listing = listing.filter(item => {
+            let sessions = groups.sessions;
+            sessions = sessions.filter(item => {
                 return me.core.path.extension(item.name) === "m4a";
             });
-            for (let item of listing) {
+            for (let item of sessions) {
                 let [year, month, day, name] = item.name.split(/(\d{4})-(\d{2})-(\d{2})\s(.+).m4a/g).slice(1);
                 month = parseInt(month) - 1;
                 let eventDate = me.toDate({ year, month, day });

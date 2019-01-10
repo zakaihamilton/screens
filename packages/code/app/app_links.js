@@ -37,8 +37,6 @@ screens.app.links = function AppLinks(me) {
                     me.core.property.notify(window, "update");
                 }
             });
-            window.rowCount = 20;
-            window.columnCount = 2;
             me.core.property.set(window, "app", me);
         }
     };
