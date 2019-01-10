@@ -194,6 +194,9 @@ screens.kab.letters = function KabLetters(me) {
             }
             if (info.sum && info.sequence && info.sum.enabled) {
                 row = rowIndex + source.offset + 1;
+                if (info.inclusion) {
+                    sum += source.verse.split(" ").length;
+                }
                 entry = { row, column: 1, source: info.sum, text: source.verse, number: sum };
                 if (callback) {
                     callback(entry);

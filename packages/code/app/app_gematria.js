@@ -26,11 +26,13 @@ screens.app.gematria = function AppGematria(me) {
             fontSize: "4em",
             endingLetters: false,
             sumEnabled: true,
+            inclusion: false,
             language: "English"
         });
         me.ui.options.toggleSet(me, null, {
             "sumEnabled": me.calcNumerology,
-            "endingLetters": me.calcNumerology
+            "endingLetters": me.calcNumerology,
+            "inclusion": me.calcNumerology
         });
         me.ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
@@ -68,7 +70,8 @@ screens.app.gematria = function AppGematria(me) {
                 "enabled": window.options.sumEnabled,
                 "borderWidth": "3px"
             },
-            "endingLetters": window.options.endingLetters
+            "endingLetters": window.options.endingLetters,
+            "inclusion": window.options.inclusion
         };
         me.core.property.set(window.var.diagram, "kab.letters.source", info);
         me.core.property.set(window.var.diagram, {

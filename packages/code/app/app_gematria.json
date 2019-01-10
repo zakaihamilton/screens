@@ -32,6 +32,13 @@
                     }
                 ],
                 [
+                    "Inclusion (Kolel)",
+                    "app.gematria.inclusion",
+                    {
+                        "state": "select"
+                    }
+                ],
+                [
                     "Language",
                     "header"
                 ],
