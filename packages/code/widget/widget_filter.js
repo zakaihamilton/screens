@@ -44,13 +44,11 @@ screens.widget.filter = function WidgetFilter(me) {
                     ]
                 }
             ]
-        },
-        draw: function (object) {
-            setTimeout(() => {
-                me.updatePrefixes(object);
-                me.execute(object);
-            }, 0);
         }
+    };
+    me.update = function (object) {
+        me.updatePrefixes(object);
+        me.execute(object);
     };
     me.updatePrefixes = function (object) {
         var widget = me.ui.node.container(object, me.id);

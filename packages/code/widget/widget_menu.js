@@ -201,6 +201,9 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
                 "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
                 "ui.data.values": values
             });
+            me.core.property.set(object, "ui.property.broadcast", {
+                "update": null
+            });
         }
     };
     me.back = {
