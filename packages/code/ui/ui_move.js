@@ -4,7 +4,7 @@
  */
 
 screens.ui.move = function UIMove(me) {
-    me.snapSensitivity = 50;
+    me.snapSensitivity = 75;
     me.enabled = {
         get: function (object) {
             return object.move_enabled;
