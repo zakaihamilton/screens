@@ -40,6 +40,12 @@ screens.app.gematria = function AppGematria(me) {
         });
         me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
     };
+    me.clear = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.input, "ui.basic.text", "");
+        me.core.property.set(window, "name", "");
+        me.calcNumerology(window);
+    };
     me.copyUrl = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");

@@ -13,6 +13,10 @@
             "Gematria",
             [
                 [
+                    "Clear",
+                    "app.gematria.clear"
+                ],
+                [
                     "Summation of Letters",
                     "app.gematria.sumEnabled",
                     {
