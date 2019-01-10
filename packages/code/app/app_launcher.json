@@ -18,102 +18,106 @@
             "ui.property.after": {
                 "ui.tab.activate": null
             }
-        }
-    ],
-    "ui.group.data": {
-        "ui.data.keyList": [
-            "app.launcher.resIcon",
-            "ui.tab.owner"
-        ],
-        "ui.data.default": {
-            "text": "",
-            "ui.tab.owner": "kab",
-            "ui.basic.src": ""
         },
-        "ui.data.values": [
-            [
-                [
-                    "Folder",
-                    "svg"
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.launcher.icons",
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "app.launcher.resIcon",
+                    "ui.tab.owner"
                 ],
-                "utilities"
-            ],
-            [
-                "Transform",
-                "kab"
-            ],
-            [
-                "Player",
-                "kab"
-            ],
-            [
-                "Library",
-                "kab"
-            ],
-            [
-                "Present",
-                "kab"
-            ],
-            [
-                "Profile",
-                "kab"
-            ],
-            [
-                "Login",
-                "utilities"
-            ],
-            [
-                "Logger",
-                "utilities"
-            ],
-            [
-                "Theme",
-                "utilities"
-            ],
-            [
-                "Terminal",
-                "utilities"
-            ],
-            [
-                "Packets",
-                "work"
-            ],
-            [
-                "Envision",
-                "work"
-            ],
-            [
-                "Zoom",
-                "kab"
-            ],
-            [
-                "Gematria",
-                "kab"
-            ],
-            [
-                "Prism",
-                "kab"
-            ],
-            [
-                "Table",
-                "kab"
-            ],
-            [
-                "Notes",
-                "kab"
-            ],
-            [
-                "Workshop",
-                "kab"
-            ],
-            [
-                "Schedule",
-                "kab"
-            ],
-            [
-                "Links",
-                "kab"
-            ]
-        ]
-    }
+                "ui.data.default": {
+                    "text": "",
+                    "ui.tab.owner": "kab",
+                    "ui.basic.src": ""
+                },
+                "ui.data.values": [
+                    [
+                        [
+                            "Folder",
+                            "svg"
+                        ],
+                        "utilities"
+                    ],
+                    [
+                        "Transform",
+                        "tools"
+                    ],
+                    [
+                        "Player",
+                        "main"
+                    ],
+                    [
+                        "Library",
+                        "main"
+                    ],
+                    [
+                        "Present",
+                        "main"
+                    ],
+                    [
+                        "Profile",
+                        "tools"
+                    ],
+                    [
+                        "Login",
+                        "utilities"
+                    ],
+                    [
+                        "Logger",
+                        "utilities"
+                    ],
+                    [
+                        "Theme",
+                        "utilities"
+                    ],
+                    [
+                        "Terminal",
+                        "utilities"
+                    ],
+                    [
+                        "Packets",
+                        "work"
+                    ],
+                    [
+                        "Envision",
+                        "work"
+                    ],
+                    [
+                        "Zoom",
+                        "main"
+                    ],
+                    [
+                        "Gematria",
+                        "tools"
+                    ],
+                    [
+                        "Prism",
+                        "tools"
+                    ],
+                    [
+                        "Table",
+                        "tools"
+                    ],
+                    [
+                        "Notes",
+                        "tools"
+                    ],
+                    [
+                        "Workshop",
+                        "main"
+                    ],
+                    [
+                        "Schedule",
+                        "main"
+                    ],
+                    [
+                        "Links",
+                        "tools"
+                    ]
+                ]
+            }
+        }
+    ]
 }
