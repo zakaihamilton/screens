@@ -14,7 +14,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
         var endDate = me.toDate(end);
         var groups = await me.media.file.groups();
         for (let group of groups) {
-            let sessions = groups.sessions;
+            let sessions = group.sessions;
             sessions = sessions.filter(item => {
                 return me.core.path.extension(item.name) === "m4a";
             });
