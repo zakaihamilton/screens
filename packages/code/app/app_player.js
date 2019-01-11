@@ -69,7 +69,8 @@ screens.app.player = function AppPlayer(me) {
     me.sessionMenuList = {
         get: function (object) {
             var window = me.widget.window.get(object);
-            var list = me.groups.find(group => window.options.groupName === group.name).sessions;
+            var groupName = window.options.groupName.toLowerCase();
+            var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
             var info = {
                 list,
@@ -117,7 +118,8 @@ screens.app.player = function AppPlayer(me) {
                 return;
             }
             var audioFound = false, videoFound = false;
-            var sessions = me.groups.find(group => window.options.groupName === group.name).sessions;
+            var groupName = window.options.groupName.toLowerCase();
+            var sessions = me.groups.find(group => groupName === group.name).sessions;
             if (sessions.length) {
                 if (!name) {
                     name = sessions[0].session;
@@ -157,9 +159,9 @@ screens.app.player = function AppPlayer(me) {
     };
     me.updateSessions = async function (sessionName) {
         var window = me.singleton;
-        var group = window.options.groupName;
-        if (group && typeof group === "string") {
-            var sessions = me.groups.find(group => window.options.groupName === group.name).sessions;
+        var groupName = window.options.groupName.toLowerCase();
+        if (groupName && typeof groupName === "string") {
+            var sessions = me.groups.find(group => groupName === group.name).sessions;
             if (sessions && sessions.length) {
                 var name = sessions[0].session;
                 if (sessionName) {
@@ -237,7 +239,6 @@ screens.app.player = function AppPlayer(me) {
         },
         set: async function (object) {
             var window = me.singleton;
-            var groupName = window.options.groupName;
             if (!object.files.length) {
                 return;
             }
@@ -292,7 +293,8 @@ screens.app.player = function AppPlayer(me) {
         var duration = me.widget.player.duration(object);
         var path = me.widget.player.path(object);
         if (duration) {
-            var sessions = me.groups.find(group => window.options.groupName === group.name).sessions;
+            var groupName = window.options.groupName.toLowerCase();
+            var sessions = me.groups.find(group => groupName === group.name).sessions;
             var session = sessions.find(session => path === session.local);
             if (session) {
                 session.duration = duration;
