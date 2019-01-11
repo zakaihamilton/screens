@@ -89,7 +89,7 @@ screens.app.player = function AppPlayer(me) {
     me.refresh = async function () {
         var window = me.singleton;
         me.core.property.set(window, "ui.work.state", true);
-        me.groups = await me.media.file.groups();
+        me.groups = await me.media.file.groups(true);
         await me.updateSessions();
         me.core.property.set(window, "ui.work.state", false);
     };
