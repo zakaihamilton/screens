@@ -9,79 +9,79 @@
     "maximize": null,
     "icon": "/packages/res/icons/gematria.png",
     "widget.menu.items": [
-        [
-            "Gematria",
-            [
-                [
-                    "Clear",
-                    "app.gematria.clear"
-                ],
-                [
-                    "Summation of Letters",
-                    "app.gematria.sumEnabled",
-                    {
+        {
+            "text": "Gematria",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.gematria.clear"
+                },
+                {
+                    "text": "Summation of Letters",
+                    "select": "app.gematria.sumEnabled",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Ending Letters",
-                    "app.gematria.endingLetters",
-                    {
+                },
+                {
+                    "text": "Ending Letters",
+                    "select": "app.gematria.endingLetters",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Inclusion (Kolel)",
-                    "app.gematria.inclusion",
-                    {
+                },
+                {
+                    "text": "Inclusion (Kolel)",
+                    "select": "app.gematria.inclusion",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Language",
-                    "header"
-                ],
-                [
-                    "None",
-                    "app.gematria.language",
-                    {
+                },
+                {
+                    "text": "Language",
+                    "select": "header"
+                },
+                {
+                    "text": "None",
+                    "select": "app.gematria.language",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "English",
-                    "app.gematria.language",
-                    {
+                },
+                {
+                    "text": "English",
+                    "select": "app.gematria.language",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Hebrew",
-                    "app.gematria.language",
-                    {
+                },
+                {
+                    "text": "Hebrew",
+                    "select": "app.gematria.language",
+                    "options": {
                         "state": "select"
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Font Size",
-                    "header"
-                ],
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesEm(app.gematria.fontSize)"
             ]
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.gematria.content.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

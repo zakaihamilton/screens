@@ -9,48 +9,48 @@
     "maximize": null,
     "icon": "/packages/res/icons/prism.png",
     "widget.menu.items": [
-        [
-            "Transform",
-            [
-                [
-                    "Refresh",
-                    "app.prism.reload",
-                    {
+        {
+            "text": "Transform",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.prism.reload",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
+                },
                 "app.prism.transform.menu"
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Animation",
-                    "app.prism.animation",
-                    {
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Animation",
+                    "select": "app.prism.animation",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Auto Rotate",
-                    "app.prism.autoRotate",
-                    {
+                },
+                {
+                    "text": "Auto Rotate",
+                    "select": "app.prism.autoRotate",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Reset Rotation",
-                    "app.prism.resetRotation"
-                ],
-                [
-                    "Font Size",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Reset Rotation",
+                    "select": "app.prism.resetRotation"
+                },
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesPx(app.prism.fontSize)"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

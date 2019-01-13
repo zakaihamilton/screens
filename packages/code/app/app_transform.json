@@ -43,56 +43,56 @@
                 }
             ],
             "widget.menu.items": [
-                [
-                    "Transform",
-                    [
-                        [
-                            "Input",
-                            "app.transform.showInput",
-                            {
+                {
+                    "text": "Transform",
+                    "select": [
+                        {
+                            "text": "Input",
+                            "select": "app.transform.showInput",
+                            "options": {
                                 "state": "select",
                                 "separator": true
                             }
-                        ],
+                        },
                         "widget.window.exportMenuList(app.transform.exportText)"
                     ]
-                ],
-                [
-                    "Layout",
-                    []
-                ],
-                [
-                    "Audio",
-                    []
-                ],
-                [
-                    "Content",
-                    [
+                },
+                {
+                    "text": "Layout",
+                    "select": []
+                },
+                {
+                    "text": "Audio",
+                    "select": []
+                },
+                {
+                    "text": "Content",
+                    "select": [
                         "app.transform.content.menu"
                     ]
-                ],
-                [
-                    "Window",
-                    [
-                        [
-                            "Cascade",
-                            "ui.arrange.cascade"
-                        ],
-                        [
-                            "Tile Horizontally",
-                            "ui.arrange.tileHorizontally"
-                        ],
-                        [
-                            "Tile Vertically",
-                            "ui.arrange.tileVertically"
-                        ],
-                        [
-                            "Documents",
-                            "header"
-                        ],
+                },
+                {
+                    "text": "Window",
+                    "select": [
+                        {
+                            "text": "Cascade",
+                            "select": "ui.arrange.cascade"
+                        },
+                        {
+                            "text": "Tile Horizontally",
+                            "select": "ui.arrange.tileHorizontally"
+                        },
+                        {
+                            "text": "Tile Vertically",
+                            "select": "ui.arrange.tileVertically"
+                        },
+                        {
+                            "text": "Documents",
+                            "select": "header"
+                        },
                         "widget.window.childMenuList"
                     ]
-                ]
+                }
             ],
             "maximize": true,
             "ui.property.after": {

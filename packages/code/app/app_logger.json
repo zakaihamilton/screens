@@ -8,84 +8,84 @@
     },
     "icon": "/packages/res/icons/logger.png",
     "widget.menu.items": [
-        [
-            "Logger",
-            [
-                [
-                    "Refresh",
-                    "app.logger.refresh"
-                ],
-                [
-                    "Clear",
-                    "app.logger.clear"
-                ],
-                [
-                    "Enabled",
-                    "app.logger.enable",
-                    {
+        {
+            "text": "Logger",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.logger.refresh"
+                },
+                {
+                    "text": "Clear",
+                    "select": "app.logger.clear"
+                },
+                {
+                    "text": "Enabled",
+                    "select": "app.logger.enable",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Server",
-                    "app.logger.source",
-                    {
+                },
+                {
+                    "text": "Server",
+                    "select": "app.logger.source",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Client",
-                    "app.logger.source",
-                    {
+                },
+                {
+                    "text": "Client",
+                    "select": "app.logger.source",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Browser",
-                    "app.logger.source",
-                    {
+                },
+                {
+                    "text": "Browser",
+                    "select": "app.logger.source",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Service",
-                    "app.logger.source",
-                    {
+                },
+                {
+                    "text": "Service",
+                    "select": "app.logger.source",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Service Worker",
-                    "app.logger.source",
-                    {
+                },
+                {
+                    "text": "Service Worker",
+                    "select": "app.logger.source",
+                    "options": {
                         "state": "select"
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Type",
-            [
-                [
-                    "All",
-                    "app.logger.type",
-                    {
+        },
+        {
+            "text": "Type",
+            "select": [
+                {
+                    "text": "All",
+                    "select": "app.logger.type",
+                    "options": {
                         "value": "core.console.retrieveMessages",
                         "state": "select"
                     }
-                ],
-                [
-                    "Errors",
-                    "app.logger.type",
-                    {
+                },
+                {
+                    "text": "Errors",
+                    "select": "app.logger.type",
+                    "options": {
                         "value": "core.console.retrieveErrors",
                         "state": "select"
                     }
-                ]
+                }
             ]
-        ]
+        }
     ],
     "ui.class.load": "app.logger",
     "ui.basic.html": "@app.logger.html",

@@ -115,235 +115,235 @@
         }
     ],
     "widget.menu.items": [
-        [
-            "Transform",
-            [
-                [
-                    "Clear",
-                    "widget.transform.clear",
-                    {
+        {
+            "text": "Transform",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "widget.transform.clear",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "Refresh",
-                    "widget.transform.transform"
-                ],
-                [
-                    "Translation",
-                    "widget.transform.doTranslation",
-                    {
+                },
+                {
+                    "text": "Refresh",
+                    "select": "widget.transform.transform"
+                },
+                {
+                    "text": "Translation",
+                    "select": "widget.transform.doTranslation",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Source",
-                    "widget.transform.keepSource",
-                    {
+                },
+                {
+                    "text": "Source",
+                    "select": "widget.transform.keepSource",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Abridged",
-                    "widget.transform.abridged",
-                    {
+                },
+                {
+                    "text": "Abridged",
+                    "select": "widget.transform.abridged",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Explanation",
-                    "widget.transform.doExplanation",
-                    {
+                },
+                {
+                    "text": "Explanation",
+                    "select": "widget.transform.doExplanation",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Prioritize Explanation",
-                    "widget.transform.prioritizeExplanation",
-                    {
+                },
+                {
+                    "text": "Prioritize Explanation",
+                    "select": "widget.transform.prioritizeExplanation",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Styles",
-                    "widget.transform.addStyles",
-                    {
+                },
+                {
+                    "text": "Styles",
+                    "select": "widget.transform.addStyles",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Category",
-                    "widget.transform.category",
-                    {
+                },
+                {
+                    "text": "Category",
+                    "select": "widget.transform.category",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.addStyles"
                     }
-                ],
-                [
-                    "Headings",
-                    "widget.transform.headings",
-                    {
+                },
+                {
+                    "text": "Headings",
+                    "select": "widget.transform.headings",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.addStyles"
                     }
-                ],
-                [
-                    "Phase Numbers",
-                    "widget.transform.phaseNumbers",
-                    {
+                },
+                {
+                    "text": "Phase Numbers",
+                    "select": "widget.transform.phaseNumbers",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.addStyles"
                     }
-                ],
-                [
-                    "Sub Headings",
-                    "widget.transform.subHeadings",
-                    {
+                },
+                {
+                    "text": "Sub Headings",
+                    "select": "widget.transform.subHeadings",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.addStyles"
                     }
-                ],
-                [
-                    "Language",
-                    "header"
-                ],
-                [
-                    "Auto",
-                    "widget.transform.language",
-                    {
+                },
+                {
+                    "text": "Language",
+                    "select": "header"
+                },
+                {
+                    "text": "Auto",
+                    "select": "widget.transform.language",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "None",
-                    "widget.transform.language",
-                    {
+                },
+                {
+                    "text": "None",
+                    "select": "widget.transform.language",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "English",
-                    "widget.transform.language",
-                    {
+                },
+                {
+                    "text": "English",
+                    "select": "widget.transform.language",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Hebrew",
-                    "widget.transform.language",
-                    {
+                },
+                {
+                    "text": "Hebrew",
+                    "select": "widget.transform.language",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Output",
-                    "widget.transform.output",
-                    {
+                },
+                {
+                    "text": "Output",
+                    "select": "widget.transform.output",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Reflow",
-                    "widget.transform.reflow"
-                ],
-                [
-                    "Snap",
-                    "widget.transform.snap",
-                    {
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Reflow",
+                    "select": "widget.transform.reflow"
+                },
+                {
+                    "text": "Snap",
+                    "select": "widget.transform.snap",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Pages",
-                    "widget.transform.pages",
-                    {
+                },
+                {
+                    "text": "Pages",
+                    "select": "widget.transform.pages",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Columns",
-                    "widget.transform.columns",
-                    {
+                },
+                {
+                    "text": "Columns",
+                    "select": "widget.transform.columns",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.pages"
                     }
-                ],
-                [
-                    "Video Slot",
-                    "widget.transform.pipVideo",
-                    {
+                },
+                {
+                    "text": "Video Slot",
+                    "select": "widget.transform.pipVideo",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Font Size",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesPx(widget.transform.fontSize)",
-                [
-                    "Diagrams",
-                    "header"
-                ],
+                {
+                    "text": "Diagrams",
+                    "select": "header"
+                },
                 "widget.transform.diagramList"
             ]
-        ],
-        [
-            "Audio",
-            [
-                [
-                    "Auto Play",
-                    "widget.transform.autoPlay",
-                    {
+        },
+        {
+            "text": "Audio",
+            "select": [
+                {
+                    "text": "Auto Play",
+                    "select": "widget.transform.autoPlay",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Single Article",
-                    "widget.transform.singleArticle",
-                    {
+                },
+                {
+                    "text": "Single Article",
+                    "select": "widget.transform.singleArticle",
+                    "options": {
                         "state": "select",
                         "enabled": "widget.transform.autoPlay"
                     }
-                ],
-                [
-                    "Speed",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Speed",
+                    "select": "header"
+                },
                 "widget.transform.player.speeds",
-                [
-                    "Voice",
-                    "header"
-                ],
-                [
-                    "None",
-                    "widget.transform.voice",
-                    {
+                {
+                    "text": "Voice",
+                    "select": "header"
+                },
+                {
+                    "text": "None",
+                    "select": "widget.transform.voice",
+                    "options": {
                         "state": "select"
                     },
-                    {
+                    "properties": {
                         "group": "voices"
                     }
-                ],
+                },
                 "widget.transform.player.voices",
-                [
-                    "Volume",
-                    "header"
-                ],
+                {
+                    "text": "Volume",
+                    "select": "header"
+                },
                 "widget.transform.player.volumes"
             ]
-        ]
+        }
     ]
 }

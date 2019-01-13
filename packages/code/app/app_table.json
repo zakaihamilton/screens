@@ -9,84 +9,84 @@
     "maximize": null,
     "icon": "/packages/res/icons/table.png",
     "widget.menu.items": [
-        [
-            "Table",
-            [
-                [
-                    "Clear",
-                    "app.table.clear"
-                ],
-                [
-                    "Edit Mode",
-                    "app.table.editMode",
-                    {
+        {
+            "text": "Table",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.table.clear"
+                },
+                {
+                    "text": "Edit Mode",
+                    "select": "app.table.editMode",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Auto Complete",
-                    "app.table.autoComplete",
-                    {
+                },
+                {
+                    "text": "Auto Complete",
+                    "select": "app.table.autoComplete",
+                    "options": {
                         "state": "select",
                         "visible": "app.table.editMode"
                     }
-                ],
-                [
-                    "Row Header",
-                    "app.table.rowHeader",
-                    {
+                },
+                {
+                    "text": "Row Header",
+                    "select": "app.table.rowHeader",
+                    "options": {
                         "state": "select",
                         "separator": true,
                         "disabled": "app.table.lock"
                     }
-                ],
-                [
-                    "Column Header",
-                    "app.table.columnHeader",
-                    {
+                },
+                {
+                    "text": "Column Header",
+                    "select": "app.table.columnHeader",
+                    "options": {
                         "state": "select",
                         "disabled": "app.table.lock"
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Transform",
-            [
-                [
-                    "Refresh",
-                    "app.table.reload",
-                    {
+        },
+        {
+            "text": "Transform",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.table.reload",
+                    "options": {
                         "separator": true
                     }
-                ],
+                },
                 "app.table.transform.menu"
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Border",
-                    "app.table.border",
-                    {
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Border",
+                    "select": "app.table.border",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Font Size",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesPx(app.table.fontSize)"
             ]
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.table.content.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

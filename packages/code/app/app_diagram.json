@@ -8,29 +8,29 @@
     },
     "icon": "/packages/res/icons/diagram.png",
     "widget.menu.items": [
-        [
-            "Transform",
-            [
-                [
-                    "Refresh",
-                    "app.diagram.reload",
-                    {
+        {
+            "text": "Transform",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.diagram.reload",
+                    "options": {
                         "separator": true
                     }
-                ],
+                },
                 "app.diagram.transform.menu"
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Font Size",
-                    "header"
-                ],
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesPx(app.diagram.fontSize)"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

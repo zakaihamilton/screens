@@ -8,283 +8,268 @@
         "height": "450px"
     },
     "widget.menu.items": [
-        [
-            "Packets",
-            [
-                [
-                    "Refresh",
-                    "app.packets.refreshData"
-                ],
-                [
-                    "Auto Refresh",
-                    "app.packets.autoRefresh",
-                    {
+        {
+            "text": "Packets",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.packets.refreshData"
+                },
+                {
+                    "text": "Auto Refresh",
+                    "select": "app.packets.autoRefresh",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Reset",
-                    "app.packets.reset",
-                    {
+                },
+                {
+                    "text": "Reset",
+                    "select": "app.packets.reset",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "Push Packets",
-                    "app.packets.pushPackets",
-                    {
+                },
+                {
+                    "text": "Push Packets",
+                    "select": "app.packets.pushPackets",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Collect Packets",
-                    "app.packets.collectPackets",
-                    {
+                },
+                {
+                    "text": "Collect Packets",
+                    "select": "app.packets.collectPackets",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Combine Packets",
-                    "app.packets.combinePackets",
-                    {
+                },
+                {
+                    "text": "Combine Packets",
+                    "select": "app.packets.combinePackets",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Filters",
-                    "header"
-                ],
-                [
-                    "Monitor Filter",
-                    "label"
-                ],
-                [
-                    "Enter filter here...",
-                    null,
-                    {
+                },
+                {
+                    "text": "Filters",
+                    "select": "header"
+                },
+                {
+                    "text": "Monitor Filter",
+                    "select": "label"
+                },
+                {
+                    "text": "Enter filter here...",
+                    "options": {
                         "edit": "app.packets.monitorFilter"
                     }
-                ],
-                [
-                    "Search Filter",
-                    "label"
-                ],
-                [
-                    "Enter filter here...",
-                    null,
-                    {
+                },
+                {
+                    "text": "Search Filter",
+                    "select": "label"
+                },
+                {
+                    "text": "Enter filter here...",
+                    "options": {
                         "edit": "app.packets.searchFilter"
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Data",
-            [
-                [
-                    "Title",
-                    null,
-                    {
+        },
+        {
+            "text": "Data",
+            "select": [
+                {
+                    "text": "Title",
+                    "options": {
                         "edit": "app.packets.dataTitle"
                     }
-                ],
-                [
-                    "Refresh",
-                    "app.packets.refreshDataList",
-                    {
+                },
+                {
+                    "text": "Refresh",
+                    "select": "app.packets.refreshDataList",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "Live",
-                    "app.packets.dataProfile",
-                    {
+                },
+                {
+                    "text": "Live",
+                    "select": "app.packets.dataProfile",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Combined",
-                    "app.packets.dataProfile",
-                    {
+                },
+                {
+                    "text": "Combined",
+                    "select": "app.packets.dataProfile",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
+                },
                 "app.packets.dataMenuList",
-                [
-                    "Save",
-                    "app.packets.save",
-                    {
+                {
+                    "text": "Save",
+                    "select": "app.packets.save",
+                    "options": {
                         "enabled": "select",
                         "separator": true
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "View",
-            [
-                [
-                    "Auto",
-                    "app.packets.viewType",
-                    {
+        },
+        {
+            "text": "View",
+            "select": [
+                {
+                    "text": "Auto",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Data by Time",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "Data by Time",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "ABR by Packet Delay",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "ABR by Packet Delay",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Duration by Packet Delay",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "Duration by Packet Delay",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Duration % by Packet Delay",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "Duration % by Packet Delay",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Average Duration by Packet Delay",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "Average Duration by Packet Delay",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Average Duration % by Packet Delay",
-                    "app.packets.viewType",
-                    {
+                },
+                {
+                    "text": "Average Duration % by Packet Delay",
+                    "select": "app.packets.viewType",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Export",
-                    "app.packets.export",
-                    {
+                },
+                {
+                    "text": "Export",
+                    "select": "app.packets.export",
+                    "options": {
                         "separator": true
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Stream",
-            [
+        },
+        {
+            "text": "Stream",
+            "select": [
                 "app.packets.streamMenuList"
             ]
-        ],
-        [
-            "Effects",
-            [
-                [
-                    "Refresh",
-                    "app.packets.applyEffects"
-                ],
-                [
-                    "Enable",
-                    "app.packets.useEffects",
-                    {
+        },
+        {
+            "text": "Effects",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.packets.applyEffects"
+                },
+                {
+                    "text": "Enable",
+                    "select": "app.packets.useEffects",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Bandwidth Rate (KBit)",
-                    "label",
-                    {
+                },
+                {
+                    "text": "Bandwidth Rate (KBit)",
+                    "select": "label",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "options": {
                         "edit": "app.packets.bandwidthRate"
                     }
-                ],
-                [
-                    "Bandwidth Burst (KBit)",
-                    "label"
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "text": "Bandwidth Burst (KBit)",
+                    "select": "label"
+                },
+                {
+                    "options": {
                         "edit": "app.packets.bandwidthBurst"
                     }
-                ],
-                [
-                    "Bandwidth Latency (ms)",
-                    "label"
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "text": "Bandwidth Latency (ms)",
+                    "select": "label"
+                },
+                {
+                    "options": {
                         "edit": "app.packets.bandwidthLatency"
                     }
-                ],
-                [
-                    "Packet Loss (%)",
-                    "label",
-                    {
+                },
+                {
+                    "text": "Packet Loss (%)",
+                    "select": "label",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "options": {
                         "edit": "app.packets.packetLoss"
                     }
-                ],
-                [
-                    "Packet Delay (msec)",
-                    "label"
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "text": "Packet Delay (msec)",
+                    "select": "label"
+                },
+                {
+                    "options": {
                         "edit": "app.packets.packetDelay"
                     }
-                ],
-                [
-                    "Toggle Interval (sec)",
-                    "label",
-                    {
+                },
+                {
+                    "text": "Toggle Interval (sec)",
+                    "select": "label",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "options": {
                         "edit": "app.packets.toggleInterval"
                     }
-                ]
+                }
             ],
-            {
+            "options": {
                 "var": "effectsMenu"
             }
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

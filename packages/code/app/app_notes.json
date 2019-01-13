@@ -9,22 +9,22 @@
     "maximize": null,
     "icon": "/packages/res/icons/notes.png",
     "widget.menu.items": [
-        [
-            "Notes",
-            [
-                [
-                    "Clear",
-                    "app.notes.clear"
-                ],
+        {
+            "text": "Notes",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.notes.clear"
+                },
                 "widget.window.exportMenuList(app.notes.exportText)"
             ]
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.notes.content.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

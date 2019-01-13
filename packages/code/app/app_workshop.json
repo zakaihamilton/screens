@@ -9,66 +9,66 @@
     "maximize": true,
     "icon": "/packages/res/icons/workshop.png",
     "widget.menu.items": [
-        [
-            "Workshop",
-            [
-                [
-                    "Refresh",
-                    "app.workshop.refresh"
-                ],
-                [
-                    "Auto Refresh",
-                    "app.workshop.autoRefresh",
-                    {
+        {
+            "text": "Workshop",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.workshop.refresh"
+                },
+                {
+                    "text": "Auto Refresh",
+                    "select": "app.workshop.autoRefresh",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Shuffle",
-                    "app.workshop.shuffle",
-                    {
+                },
+                {
+                    "text": "Shuffle",
+                    "select": "app.workshop.shuffle",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Filter",
-                    "app.workshop.filter",
-                    {
+                },
+                {
+                    "text": "Filter",
+                    "select": "app.workshop.filter",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Test",
-                    "app.workshop.test",
-                    {
+                },
+                {
+                    "text": "Test",
+                    "select": "app.workshop.test",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Broadcast",
-                    "app.workshop.broadcast",
-                    {
+                },
+                {
+                    "text": "Broadcast",
+                    "select": "app.workshop.broadcast",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "This Device",
-                    "app.workshop.userName",
-                    {
+                },
+                {
+                    "text": "This Device",
+                    "select": "app.workshop.userName",
+                    "options": {
                         "separator": true,
                         "state": "select",
                         "value": ""
                     }
-                ],
-                [
-                    "Users",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Users",
+                    "select": "header"
+                },
                 "app.workshop.shared.userMenuList"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

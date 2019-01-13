@@ -9,46 +9,46 @@
     "maximize": null,
     "icon": "/packages/res/icons/links.png",
     "widget.menu.items": [
-        [
-            "Links",
-            [
-                [
-                    "Clear",
-                    "app.links.clear"
-                ],
-                [
-                    "Edit Mode",
-                    "app.links.editMode",
-                    {
+        {
+            "text": "Links",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.links.clear"
+                },
+                {
+                    "text": "Edit Mode",
+                    "select": "app.links.editMode",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Layout",
-            [
-                [
-                    "Border",
-                    "app.links.border",
-                    {
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Border",
+                    "select": "app.links.border",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Font Size",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
                 "widget.transform.fontSizesPx(app.links.fontSize)"
             ]
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.links.content.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

@@ -9,66 +9,66 @@
     },
     "maximize": null,
     "widget.menu.items": [
-        [
-            "Present",
-            [
-                [
-                    "Clear",
-                    "app.present.clear",
-                    {
+        {
+            "text": "Present",
+            "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.present.clear",
+                    "options": {
                         "enabled": "app.present.shared.isThisDevice"
                     }
-                ],
-                [
-                    "Refresh",
-                    "app.present.refresh",
-                    {
+                },
+                {
+                    "text": "Refresh",
+                    "select": "app.present.refresh",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "This Device",
-                    "app.present.userName",
-                    {
+                },
+                {
+                    "text": "This Device",
+                    "select": "app.present.userName",
+                    "options": {
                         "separator": true,
                         "state": "select",
                         "value": ""
                     }
-                ],
-                [
-                    "Users",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Users",
+                    "select": "header"
+                },
                 "app.present.shared.userMenuList",
                 "widget.window.exportMenuList(app.present.exportText)",
-                [
-                    "Edit Mode",
-                    "app.present.editMode",
-                    {
+                {
+                    "text": "Edit Mode",
+                    "select": "app.present.editMode",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ]
+                }
             ]
-        ],
-        [
-            "Transform",
-            []
-        ],
-        [
-            "Layout",
-            []
-        ],
-        [
-            "Audio",
-            []
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Transform",
+            "select": []
+        },
+        {
+            "text": "Layout",
+            "select": []
+        },
+        {
+            "text": "Audio",
+            "select": []
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.present.content.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

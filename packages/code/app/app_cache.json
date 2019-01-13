@@ -8,15 +8,15 @@
     },
     "fixed": true,
     "widget.menu.items": [
-        [
-            "Special",
-            [
-                [
-                    "Clear All",
-                    "app.cache.clearAll"
-                ]
+        {
+            "text": "Special",
+            "select": [
+                {
+                    "text": "Clear All",
+                    "select": "app.cache.clearAll"
+                }
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

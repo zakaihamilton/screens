@@ -9,20 +9,20 @@
     "icon": "/packages/res/icons/theme.png",
     "maximize": true,
     "widget.menu.items": [
-        [
-            "Theme",
-            [
+        {
+            "text": "Theme",
+            "select": [
                 "ui.theme.menuList",
-                [
-                    "Night Mode",
-                    "ui.theme.nightMode",
-                    {
+                {
+                    "text": "Night Mode",
+                    "select": "ui.theme.nightMode",
+                    "options": {
                         "separator": true,
                         "state": "select"
                     }
-                ]
+                }
             ]
-        ]
+        }
     ],
     "ui.property.after": {
         "storage.local.key": "app-theme-window",

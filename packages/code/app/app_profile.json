@@ -15,28 +15,28 @@
         "storage.local.restore": "widget.window.store"
     },
     "widget.menu.items": [
-        [
-            "Profile",
-            [
-                [
-                    "This Device",
-                    "app.profile.userName",
-                    {
+        {
+            "text": "Profile",
+            "select": [
+                {
+                    "text": "This Device",
+                    "select": "app.profile.userName",
+                    "options": {
                         "separator": true,
                         "state": "select",
                         "value": ""
                     }
-                ],
-                [
-                    "Users",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Users",
+                    "select": "header"
+                },
                 "app.profile.userMenuList"
             ],
-            {
+            "options": {
                 "visible": "app.profile.userListAvailable"
             }
-        ]
+        }
     ],
     "app.profile.initOptions": null,
     "app.profile.updateUser": null,

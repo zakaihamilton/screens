@@ -8,91 +8,90 @@
         "height": "80%"
     },
     "widget.menu.items": [
-        [
-            "Player",
-            [
-                [
-                    "Refresh",
-                    "app.player.refresh"
-                ],
-                [
-                    "Group",
-                    "header"
-                ],
+        {
+            "text": "Player",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.player.refresh"
+                },
+                {
+                    "text": "Group",
+                    "select": "header"
+                },
                 "app.player.groupMenuList",
-                [
-                    "Session",
-                    "header"
-                ],
+                {
+                    "text": "Session",
+                    "select": "header"
+                },
                 "app.player.sessionMenuList",
-                [
-                    "Upload",
-                    null,
-                    {
+                {
+                    "text": "Upload",
+                    "options": {
                         "separator": true
                     },
-                    {
+                    "properties": {
                         "upload": "app.player.upload"
                     }
-                ],
-                [
-                    "Clipboard",
-                    "header"
-                ],
-                [
-                    "Remote Url",
-                    "app.player.copyRemoteUrl"
-                ],
-                [
-                    "Local Url",
-                    "app.player.copyLocalUrl"
-                ],
-                [
-                    "Name",
-                    "app.player.copyName"
-                ]
+                },
+                {
+                    "text": "Clipboard",
+                    "select": "header"
+                },
+                {
+                    "text": "Remote Url",
+                    "select": "app.player.copyRemoteUrl"
+                },
+                {
+                    "text": "Local Url",
+                    "select": "app.player.copyLocalUrl"
+                },
+                {
+                    "text": "Name",
+                    "select": "app.player.copyName"
+                }
             ]
-        ],
-        [
-            "Track",
-            [
-                [
-                    "Auto Play",
-                    "app.player.autoPlay",
-                    {
+        },
+        {
+            "text": "Track",
+            "select": [
+                {
+                    "text": "Auto Play",
+                    "select": "app.player.autoPlay",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Audio",
-                    "app.player.setFormat",
-                    {
+                },
+                {
+                    "text": "Audio",
+                    "select": "app.player.setFormat",
+                    "options": {
                         "state": "select",
                         "enabled": "app.player.hasAudio",
                         "separator": true
                     }
-                ],
-                [
-                    "Video",
-                    "app.player.setFormat",
-                    {
+                },
+                {
+                    "text": "Video",
+                    "select": "app.player.setFormat",
+                    "options": {
                         "state": "select",
                         "enabled": "app.player.hasVideo"
                     }
-                ],
-                [
-                    "Speed",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Speed",
+                    "select": "header"
+                },
                 "app.player.speeds"
             ]
-        ],
-        [
-            "Content",
-            [
+        },
+        {
+            "text": "Content",
+            "select": [
                 "app.player.content.associated.menu"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

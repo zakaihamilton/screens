@@ -9,74 +9,74 @@
     },
     "maximize": null,
     "widget.menu.items": [
-        [
-            "Library",
-            [
-                [
-                    "Search",
-                    "app.library.reSearch"
-                ],
-                [
-                    "Clear",
-                    "app.library.clear"
-                ],
-                [
-                    "Combine Results",
-                    "app.library.combineResults",
-                    {
+        {
+            "text": "Library",
+            "select": [
+                {
+                    "text": "Search",
+                    "select": "app.library.reSearch"
+                },
+                {
+                    "text": "Clear",
+                    "select": "app.library.clear"
+                },
+                {
+                    "text": "Combine Results",
+                    "select": "app.library.combineResults",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Refresh",
-                    "app.library.refresh",
-                    {
+                },
+                {
+                    "text": "Refresh",
+                    "select": "app.library.refresh",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "Tags",
-                    "header"
-                ],
+                },
+                {
+                    "text": "Tags",
+                    "select": "header"
+                },
                 "app.library.tagMenuList",
                 "widget.window.exportMenuList(app.library.exportText)",
-                [
-                    "Edit Mode",
-                    "app.library.editMode",
-                    {
+                {
+                    "text": "Edit Mode",
+                    "select": "app.library.editMode",
+                    "options": {
                         "state": "select",
                         "separator": true
                     },
-                    {
+                    "properties": {
                         "ui.basic.display": "admin"
                     }
-                ],
-                [
-                    "Structured",
-                    "app.library.structuredMode",
-                    {
+                },
+                {
+                    "text": "Structured",
+                    "select": "app.library.structuredMode",
+                    "options": {
                         "state": "select",
                         "visible": "app.library.editMode"
                     }
-                ],
-                [
-                    "Tag Mode",
-                    "app.library.tagMode",
-                    {
+                },
+                {
+                    "text": "Tag Mode",
+                    "select": "app.library.tagMode",
+                    "options": {
                         "state": "select",
                         "visible": "app.library.editMode"
                     }
-                ],
-                [
-                    "Copy Url To Clipboard",
-                    "app.library.copyUrl",
-                    {
+                },
+                {
+                    "text": "Copy Url To Clipboard",
+                    "select": "app.library.copyUrl",
+                    "options": {
                         "separator": true
                     }
-                ]
+                }
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {
