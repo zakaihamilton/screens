@@ -8,61 +8,61 @@
         "height": "80%"
     },
     "widget.menu.items": [
-        [
-            "Envision",
-            [
-                [
-                    "Refresh",
-                    "app.envision.refresh",
-                    {
+        {
+            "text": "Envision",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.envision.refresh",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "Auto Refresh",
-                    "app.envision.autoRefresh",
-                    {
+                },
+                {
+                    "text": "Auto Refresh",
+                    "select": "app.envision.autoRefresh",
+                    "options": {
                         "state": "select"
                     }
-                ],
+                },
                 "widget.window.exportMenuList(app.envision.exportText)",
-                [
-                    "Develop",
-                    "header"
-                ],
-                [
-                    "Output",
-                    "app.envision.outputMode",
-                    {
+                {
+                    "text": "Develop",
+                    "select": "header"
+                },
+                {
+                    "text": "Output",
+                    "select": "app.envision.outputMode",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Edit Mode",
-                    "app.envision.editMode",
-                    {
+                },
+                {
+                    "text": "Edit Mode",
+                    "select": "app.envision.editMode",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Format",
-                    "app.envision.formatMode",
-                    {
+                },
+                {
+                    "text": "Format",
+                    "select": "app.envision.formatMode",
+                    "options": {
                         "state": "select",
                         "visible": "app.envision.editMode"
                     }
-                ],
-                [
-                    "Live Edit",
-                    "app.envision.liveEdit",
-                    {
+                },
+                {
+                    "text": "Live Edit",
+                    "select": "app.envision.liveEdit",
+                    "options": {
                         "state": "select",
                         "visible": "app.envision.editMode"
                     }
-                ]
+                }
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

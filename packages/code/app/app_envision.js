@@ -68,7 +68,7 @@ screens.app.envision = function AppEnvision(me) {
         }
         else {
             me.storage.cache.setCustom("/custom/envision", text);
-            text = "<iframe width='100%' height='100%' src='/custom/envision'></iframe>";
+            text = "<iframe id='envision' width='100%' height='100%' src='/custom/envision'></iframe>";
         }
         me.core.property.set(window.var.content, window.options.outputMode ? "ui.basic.text" : "ui.basic.html", text);
     };
@@ -153,7 +153,11 @@ screens.app.envision = function AppEnvision(me) {
             }
             let item = me.core.json.traverse(root, path);
             if (item.found) {
-                return item.value;
+                var value = item.value;
+                if (typeof value === "object") {
+                    value = JSON.stringify(value);
+                }
+                return value;
             }
             return "";
         });
