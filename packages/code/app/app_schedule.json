@@ -108,6 +108,7 @@
     ],
     "core.link.work": "app.schedule.work",
     "ui.property.after": {
+        "ui.resize.event": "app.schedule.refresh",
         "storage.local.key": "app-schedule-window",
         "storage.local.restore": "widget.window.store"
     }
