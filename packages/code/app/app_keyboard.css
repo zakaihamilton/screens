@@ -15,9 +15,9 @@
     top: 50px;
     z-index: 1000;
     display: grid;
-    grid-gap: 0.5% 1px;
     align-items: start;
-    line-height: 2em;
+    grid-auto-columns:60px;
+    grid-auto-rows:60px;
 }
 
 .app-keyboard-button {
@@ -26,10 +26,8 @@
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    margin: 6px;
+    margin: 3px;
     padding: 3px;
-    height: 80%;
-    width: 80%;
     font-size: 1em;
     text-align: center;
     vertical-align: middle;
@@ -46,7 +44,7 @@
 
 .app-keyboard-button:before {
     position: absolute;
-    font-size: 75%;
+    font-size: 50%;
     opacity: 0.8;
     top: 0.2em;
     line-height: 1em;
@@ -59,7 +57,7 @@
 
 .app-keyboard-button:after {
     position: absolute;
-    font-size: 75%;
+    font-size: 50%;
     opacity: 0.8;
     bottom: 0.2em;
     line-height: 1em;
