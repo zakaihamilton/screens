@@ -166,6 +166,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             monthCount = 11;
         }
         object.var.grid.scrollTop = 0;
+        var positions = me.ui.scroll.positions.get(object);
         var region = me.ui.rect.absoluteRegion(object);
         for (let month = 0; month < monthCount; month++) {
             html += me.ui.html.item({
@@ -282,6 +283,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             });
         }
         me.core.property.set(object.var.grid, "ui.basic.html", html);
+        me.ui.scroll.positions.set(object, positions);
     };
     me.click = function (object, index) {
         var widget = me.ui.node.container(object, me.id);

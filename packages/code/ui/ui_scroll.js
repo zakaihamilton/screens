@@ -101,4 +101,22 @@ screens.ui.scroll = function UIScroll(me) {
             }
         }
     };
+    me.positions = {
+        get: function (object) {
+            var list = [];
+            me.ui.node.iterate(object, (element) => {
+                list.push({ element, scrollLeft: element.scrollLeft, scrollTop: element.scrollTop });
+            }, true);
+            return list;
+        },
+        set: function (object, list) {
+            me.ui.node.iterate(object, (element) => {
+                var item = list.shift();
+                for (let key in item) {
+                    element[key] = item[key];
+                }
+            }, true);
+            return list;
+        }
+    };
 };
