@@ -9,13 +9,13 @@
     "maximize": true,
     "icon": "/packages/res/icons/schedule.png",
     "widget.menu.items": [
-        [
-            "Schedule",
-            [
-                [
-                    "Refresh",
-                    "app.schedule.reset"
-                ],
+        {
+            "text": "Schedule",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.schedule.reset"
+                },
                 [
                     "View",
                     "header"
@@ -87,7 +87,7 @@
                 ],
                 "app.schedule.groupMenuList"
             ]
-        ]
+        }
     ],
     "ui.basic.elements": [
         {

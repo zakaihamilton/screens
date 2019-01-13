@@ -114,6 +114,7 @@ screens.widget.menu = function WidgetMenu(me) {
             }
             me.core.property.set(window.var.menu, "ui.group.data", {
                 "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+                "ui.data.mapping": { "text": "ui.basic.text" },
                 "ui.data.values": value
             });
             me.updateTheme(window);
@@ -199,6 +200,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         if (me.core.property.get(object, "ui.node.parent")) {
             me.core.property.set(object, "ui.group.data", {
                 "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
+                "ui.data.mapping": { "text": "ui.basic.text" },
                 "ui.data.values": values
             });
             me.core.property.set(object, "ui.property.broadcast", {

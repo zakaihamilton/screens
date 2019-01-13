@@ -52,7 +52,15 @@ screens.ui.data = function UIData(me) {
             object.data_suffix = value;
         }
     };
-    me.group = function (object, value) {
+    me.mapping = {
+        get: function (object) {
+            return object.data_mapping;
+        },
+        set: function (object, value) {
+            object.data_mapping = value;
+        }
+    };
+    me.group = function (object) {
         if (object.data_values) {
             var elements = [];
             me.collect(object, elements, object.data_values);
@@ -64,25 +72,38 @@ screens.ui.data = function UIData(me) {
         }
     };
     me.collect = function (object, elements, items) {
-        for (var item_index = 0; item_index < items.length; item_index++) {
-            var properties = {};
-            var values = items[item_index];
-            var data_value = null;
+        for (let item_index = 0; item_index < items.length; item_index++) {
+            let keys = object.data_keys;
+            let properties = {};
+            let values = items[item_index];
             if (typeof values === "string") {
-                var prefix = object.data_prefix || "";
-                var suffix = object.data_suffix || "";
+                let prefix = object.data_prefix || "";
+                let suffix = object.data_suffix || "";
                 values = me.core.property.get(object, prefix + values + suffix);
                 if (Array.isArray(values)) {
                     me.collect(object, elements, values);
                 }
                 continue;
             }
+            if (!Array.isArray(values)) {
+                keys = Object.keys(values);
+                let mapping = object.data_mapping;
+                if (mapping) {
+                    keys = keys.map(key => {
+                        if (key in mapping) {
+                            key = mapping[key];
+                        }
+                        return key;
+                    });
+                }
+                values = Object.values(values);
+            }
             if (!values) {
                 continue;
             }
-            for (var data_key_index = 0; data_key_index < object.data_keys.length; data_key_index++) {
-                var data_key = object.data_keys[data_key_index];
-                var data_value = values[data_key_index];
+            for (let data_key_index = 0; data_key_index < keys.length; data_key_index++) {
+                let data_key = keys[data_key_index];
+                let data_value = values[data_key_index];
                 if (typeof data_value !== "undefined") {
                     if (data_key === "properties") {
                         properties = me.ui.element.combine(properties, data_value);
