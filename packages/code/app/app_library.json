@@ -28,18 +28,6 @@
                         "separator": true
                     }
                 },
-                {
-                    "text": "Refresh",
-                    "select": "app.library.refresh",
-                    "options": {
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Tags",
-                    "select": "header"
-                },
-                "app.library.tagMenuList",
                 "widget.window.exportMenuList(app.library.exportText)",
                 {
                     "text": "Edit Mode",
@@ -75,6 +63,23 @@
                         "separator": true
                     }
                 }
+            ]
+        },
+        {
+            "text": "Tags",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.library.refresh",
+                    "options": {
+                        "separator": true
+                    }
+                },
+                {
+                    "text": "Tags",
+                    "select": "header"
+                },
+                "app.library.tagMenuList"
             ]
         }
     ],

@@ -19,7 +19,7 @@ screens.app.library = function AppLibrary(me) {
         promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
         await Promise.all(promises);
         await me.core.require.load("/external/jsgrid-1.5.3/jsgrid.min.js");
-        me.tagList = me.core.message.send_server("core.cache.use",
+        me.tagList = await me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
@@ -27,7 +27,7 @@ screens.app.library = function AppLibrary(me) {
     };
     me.refresh = async function () {
         me.core.message.send_server("core.cache.reset", me.id);
-        me.tagList = me.core.message.send_server("core.cache.use",
+        me.tagList = await me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
     };
