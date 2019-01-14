@@ -68,7 +68,7 @@ screens.app.schedule = function AppSchedule(me) {
             var info = {
                 list: me.groupListData,
                 property: "name",
-                attributes: { "state": "select" },
+                options: { "state": "select" },
                 group: "group",
                 itemMethod: "app.schedule.group"
             };

@@ -63,7 +63,7 @@ screens.app.player = function AppPlayer(me) {
             var info = {
                 list: me.groups,
                 property: "name",
-                attributes: { "state": "select" },
+                options: { "state": "select" },
                 group: "group",
                 itemMethod: "app.player.groupName"
             };
@@ -79,7 +79,7 @@ screens.app.player = function AppPlayer(me) {
             var info = {
                 list,
                 property: "label",
-                attributes: { "state": "select" },
+                options: { "state": "select" },
                 group: "session",
                 itemMethod: "app.player.session",
                 metadata: {

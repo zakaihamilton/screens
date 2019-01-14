@@ -42,22 +42,27 @@ screens.widget.menu = function WidgetMenu(me) {
                 if (info.group) {
                     properties.group = info.group;
                 }
-                return [[
-                    info.emptyMsg,
-                    null,
-                    {
+                return [{
+                    text: info.emptyMsg,
+                    select: null,
+                    options: {
                         enabled: false
                     },
                     properties
-                ]];
+                }];
             }
             items = items.map(function (item) {
                 var title = String(item[info.property]);
                 if (!title) {
                     return null;
                 }
+                title = title.charAt(0).toUpperCase() + title.slice(1);
+                var ref = title;
                 var properties = {};
                 var item_metadata = {};
+                if (info.group) {
+                    properties.group = info.group;
+                }
                 if (info.metadata) {
                     for (var key in info.metadata) {
                         item_metadata[key] = item[info.metadata[key]];
@@ -65,33 +70,30 @@ screens.widget.menu = function WidgetMenu(me) {
                     properties.metadata = item_metadata;
                     title = "";
                 }
-                if (info.group) {
-                    properties.group = info.group;
-                }
-                title = [title.charAt(0).toUpperCase() + title.slice(1)];
-                var result = [
-                    title,
-                    info.itemMethod,
-                    info.attributes,
+                var result = {
+                    ref,
+                    text: title,
+                    select: info.itemMethod,
+                    options: info.options,
                     properties
-                ];
+                };
                 return result;
             });
             return items;
         };
-        return [[
-            "",
-            null,
-            {
+        return [{
+            text: "",
+            select: null,
+            options: {
                 "header": true,
                 "visible": info.metadata ? true : false
             },
-            {
+            properties: {
                 "group": info.group,
                 "metadata": info.metadata,
                 "promise": { promise: info.list, callback: parseItems }
             }
-        ]];
+        }];
     };
     me.items = {
         set: function (object, value) {
@@ -519,6 +521,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 }
                 var value = values.value;
                 if (typeof value === "undefined") {
+                    value = object.menu_ref;
+                }
+                if (typeof value === "undefined") {
                     value = me.core.property.get(object, "ui.basic.text");
                 }
                 if (method === "admin") {
@@ -715,5 +720,13 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             });
         }
         me.ui.element.create(elements, object, object);
+    };
+    me.ref = {
+        get: function (object) {
+            return object.menu_ref;
+        },
+        set: function (object, value) {
+            object.menu_ref = value;
+        }
     };
 };

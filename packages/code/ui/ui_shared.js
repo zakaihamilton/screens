@@ -12,7 +12,7 @@ screens.ui.shared = function UIShared(me) {
             var info = {
                 list: me.shared.userList,
                 property: "name",
-                attributes: { "state": "select" },
+                options: { "state": "select" },
                 group: "users",
                 itemMethod: me.id + ".userName",
                 emptyMsg: "No Users"
