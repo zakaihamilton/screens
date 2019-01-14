@@ -180,14 +180,21 @@ screens.app.player = function AppPlayer(me) {
                 player = window.var.videoPlayer;
                 path = videoPath;
             }
-            me.core.property.set(window, "ui.work.state", true);
             try {
+                if (window.isDownloading) {
+                    me.core.property.set(window, "ui.work.state", false);
+                }
+                window.isDownloading = true;
+                me.core.property.set(window, "ui.work.state", true);
                 var target = await me.media.file.download(groupName, path);
             }
             catch (err) {
                 alert("Failed to download file. Error: " + JSON.stringify(err));
             }
-            me.core.property.set(window, "ui.work.state", false);
+            finally {
+                me.core.property.set(window, "ui.work.state", false);
+                window.isDownloading = false;
+            }
         }
         if (counter !== me.playerCounter) {
             me.log("counter: " + counter + " does not match: " + me.playerCounter);
