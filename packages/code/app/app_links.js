@@ -60,11 +60,6 @@ screens.app.links = function AppLinks(me) {
         var window = me.widget.window.get(object);
         return [JSON.stringify(window.links), window.links_options];
     };
-    me.rename = function (object) {
-        var window = me.widget.window.get(object);
-        var title = object.value;
-        me.core.property.set(window, "name", title);
-    };
     me.store = function (object, index, key) {
         var window = me.widget.window.get(object);
         var link = window.links[index];

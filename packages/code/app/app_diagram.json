@@ -3,7 +3,7 @@
     "ui.property.style": {
         "left": "50px",
         "top": "50px",
-        "width": "1200px",
+        "width": "600px",
         "height": "600px"
     },
     "icon": "/packages/res/icons/diagram.png",
