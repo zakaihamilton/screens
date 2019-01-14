@@ -31,6 +31,11 @@ screens.media.file = function MediaFile(me) {
     me.reset = async function () {
         me._groups = [];
     };
+    me.download = async function (groupName, path) {
+        var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
+            me.cachePath + "/" + path);
+        return target;
+    };
     me.groups = async function (update = false) {
         try {
             var unlock = await me.core.mutex.lock();

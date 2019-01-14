@@ -64,7 +64,7 @@
                 },
                 {
                     "text": "Audio",
-                    "select": "app.player.setFormat",
+                    "select": "app.player.format",
                     "options": {
                         "state": "select",
                         "enabled": "app.player.hasAudio",
@@ -73,7 +73,7 @@
                 },
                 {
                     "text": "Video",
-                    "select": "app.player.setFormat",
+                    "select": "app.player.format",
                     "options": {
                         "state": "select",
                         "enabled": "app.player.hasVideo"

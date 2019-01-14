@@ -4,9 +4,6 @@
  */
 
 screens.app.player = function AppPlayer(me) {
-    me.rootPath = "/Kab/concepts/private";
-    me.cachePath = "cache";
-    me.useFormat = "Audio";
     me.init = async function () {
         me.groups = await me.media.file.groups();
         me.playerCounter = 0;
@@ -29,6 +26,7 @@ screens.app.player = function AppPlayer(me) {
             groupName: "American",
             sessionName: "",
             speed: "Normal",
+            format: "Audio",
             autoPlay: false
         });
         me.ui.options.toggleSet(me, null, {
@@ -36,6 +34,7 @@ screens.app.player = function AppPlayer(me) {
         });
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
+            format: me.updatePlayer
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
@@ -132,9 +131,9 @@ screens.app.player = function AppPlayer(me) {
             me.hasAudio = audioFound !== null;
             me.hasVideo = videoFound !== null;
             if (audioFound && !videoFound) {
-                me.useFormat = "Audio";
+                window.options.format = "Audio";
             } else if (!audioFound && videoFound) {
-                me.useFormat = "Video";
+                window.options.format = "Video";
             }
             if (name) {
                 me.core.property.set(window, "name", name);
@@ -145,15 +144,6 @@ screens.app.player = function AppPlayer(me) {
                 me.core.property.set(window, "name", "");
                 me.contentList = [];
             }
-            me.core.property.notify(window, "app.player.updatePlayer");
-        }
-    };
-    me.setFormat = {
-        get: function (object, value) {
-            return me.useFormat === value;
-        },
-        set: function (object, value) {
-            me.useFormat = value;
             me.core.property.notify(window, "app.player.updatePlayer");
         }
     };
@@ -171,48 +161,45 @@ screens.app.player = function AppPlayer(me) {
             }
         }
     };
-    me.updatePlayer = {
-        set: async function () {
-            var counter = ++me.playerCounter;
-            var window = me.singleton;
-            var groupName = window.options.groupName;
-            var sessionName = window.options.sessionName;
-            var showAudioPlayer = groupName && sessionName && me.useFormat === "Audio";
-            var showVideoPlayer = groupName && sessionName && me.useFormat === "Video";
-            me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-            me.core.property.set(window.var.audioPlayer, "source", "");
-            me.core.property.set(window.var.videoPlayer, "source", "");
-            var audioPath = sessionName + "." + "m4a";
-            var videoPath = sessionName + "." + "mp4";
-            if (showAudioPlayer || showVideoPlayer) {
-                var player = window.var.audioPlayer;
-                var path = audioPath;
-                if (showVideoPlayer) {
-                    player = window.var.videoPlayer;
-                    path = videoPath;
-                }
-                me.core.property.set(window, "ui.work.state", true);
-                try {
-                    var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
-                        me.cachePath + "/" + path);
-                }
-                catch (err) {
-                    alert("Failed to download file. Error: " + JSON.stringify(err));
-                }
-                me.core.property.set(window, "ui.work.state", false);
+    me.updatePlayer = async function () {
+        var counter = ++me.playerCounter;
+        var window = me.singleton;
+        var groupName = window.options.groupName;
+        var sessionName = window.options.sessionName;
+        var showAudioPlayer = groupName && sessionName && window.options.format === "Audio";
+        var showVideoPlayer = groupName && sessionName && window.options.format === "Video";
+        me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
+        me.core.property.set(window.var.audioPlayer, "source", "");
+        me.core.property.set(window.var.videoPlayer, "source", "");
+        var audioPath = sessionName + "." + "m4a";
+        var videoPath = sessionName + "." + "mp4";
+        if (showAudioPlayer || showVideoPlayer) {
+            var player = window.var.audioPlayer;
+            var path = audioPath;
+            if (showVideoPlayer) {
+                player = window.var.videoPlayer;
+                path = videoPath;
             }
-            if (counter !== me.playerCounter) {
-                me.log("counter: " + counter + " does not match: " + me.playerCounter);
-                return;
+            me.core.property.set(window, "ui.work.state", true);
+            try {
+                var target = await me.media.file.download(groupName, path);
             }
-            me.core.property.set(player, "source", target);
-            if (window.options.autoPlay) {
-                me.core.property.set(player, "widget.player.controls.play");
+            catch (err) {
+                alert("Failed to download file. Error: " + JSON.stringify(err));
             }
-            me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
-            me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
-            window.var.player = player;
+            me.core.property.set(window, "ui.work.state", false);
         }
+        if (counter !== me.playerCounter) {
+            me.log("counter: " + counter + " does not match: " + me.playerCounter);
+            return;
+        }
+        me.core.property.set(player, "source", target);
+        if (window.options.autoPlay) {
+            me.core.property.set(player, "widget.player.controls.play");
+        }
+        me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
+        me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
+        window.var.player = player;
     };
     me.work = {
         set: function (object, value) {
