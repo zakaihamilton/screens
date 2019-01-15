@@ -85,7 +85,7 @@ screens.ui.data = function UIData(me) {
                 }
                 continue;
             }
-            if (!Array.isArray(values)) {
+            if (values && !Array.isArray(values)) {
                 keys = Object.keys(values);
                 let mapping = object.data_mapping;
                 if (mapping) {

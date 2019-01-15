@@ -36,16 +36,12 @@ screens.ui.class = function UIClass(me) {
     };
     me.class = {
         set: function (object, value) {
-            if (value) {
-                me.set_class(object, value);
-            }
+            me.set_class(object, value);
         }
     };
     me.classExtra = {
         set: function (object, value) {
-            if (value) {
-                me.set_class(object, value, true);
-            }
+            me.set_class(object, value, true);
         }
     };
     me.contains = {
@@ -106,9 +102,6 @@ screens.ui.class = function UIClass(me) {
         }
     };
     me.set_class = function (object, path, add = false) {
-        if (!path) {
-            return;
-        }
         if (!add) {
             object.className = "";
         }
@@ -118,20 +111,24 @@ screens.ui.class = function UIClass(me) {
             });
             return;
         }
-        var class_name;
+        var class_name = "";
         if (typeof path === "string" && path.startsWith(".")) {
             class_name = path.substr(1);
         }
         else {
-            path = me.core.property.to_full_name(object, path);
-            class_name = me.to_class(object, path);
+            if (path) {
+                path = me.core.property.to_full_name(object, path);
+                class_name = me.to_class(object, path);
+            }
             var nightMode = me.ui.theme.options.nightMode;
             if (nightMode) {
                 class_name += " night-mode is-dark";
             }
-            var package_name = me.to_package(object, path);
-            if (package_name) {
-                me.useStylesheet(package_name);
+            if (path) {
+                var package_name = me.to_package(object, path);
+                if (package_name) {
+                    me.useStylesheet(package_name);
+                }
             }
         }
         me.processClass(object, class_name, function (item) {

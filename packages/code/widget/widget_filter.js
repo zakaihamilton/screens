@@ -17,20 +17,24 @@ screens.widget.filter = function WidgetFilter(me) {
             "ui.style.margin": "6px",
             "ui.basic.elements": [
                 {
-                    "ui.basic.tag": "p",
-                    "ui.class.add": ["select"],
+                    "ui.basic.tag": "div",
+                    "ui.class.add": ["control", "select"],
                     "ui.basic.var": "prefixes",
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "select",
-                            "ui.class.class": "select",
+                            "ui.class.class": null,
+                            "ui.property.style": {
+                                "borderBottomRightRadius": "0px",
+                                "borderTopRightRadius": "0px"
+                            },
                             "ui.basic.var": "select",
                             "ui.monitor.change": "execute"
                         }
                     ]
                 },
                 {
-                    "ui.basic.tag": "p",
+                    "ui.basic.tag": "div",
                     "ui.class.add": ["control", "is-expanded"],
                     "ui.basic.elements": [
                         {
