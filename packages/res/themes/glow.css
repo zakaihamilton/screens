@@ -397,7 +397,9 @@
     border: none;
     z-index: 0;
     border-radius: 0;
-    box-shadow: none;
+    margin-top: 3px;
+    border-top: 3px solid var(--chrome-background);
+    box-shadow: 0px -1px 0px 0px var(--border-color);
 }
 
 .glow-menu-vertical table {

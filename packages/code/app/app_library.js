@@ -25,11 +25,13 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
     };
-    me.refresh = async function () {
+    me.refresh = async function (object) {
+        var window = me.widget.window.get(object);
         me.core.message.send_server("core.cache.reset", me.id);
         me.tagList = await me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
+        window.names = null;
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
@@ -74,6 +76,9 @@ screens.app.library = function AppLibrary(me) {
     me.menuList = function (object, list, group) {
         var window = me.widget.window.get(object);
         var parseItems = (items) => {
+            if (window.names) {
+                return window.names;
+            }
             var names = new Set();
             if (!items) {
                 items = [];
@@ -138,6 +143,7 @@ screens.app.library = function AppLibrary(me) {
                 ];
                 return result;
             });
+            window.names = names;
             return names;
         };
         if (list.then) {
@@ -457,7 +463,7 @@ screens.app.library = function AppLibrary(me) {
             records.ids = records.tags.map(item => item._id);
         }
         me.updateTextFromRecords(window, records);
-        me.refresh();
+        me.refresh(window);
     };
     me.deleteRecord = async function (object) {
         var records = me.parseRecordsFromText(object);

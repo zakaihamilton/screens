@@ -141,7 +141,7 @@ screens.widget.menu = function WidgetMenu(me) {
         }
     };
     me.select = {
-        set: function (object, value) {
+        set: async function (object, value) {
             var item = value[0];
             var info = value[1];
             if (item === object.selected_item) {
@@ -162,6 +162,7 @@ screens.widget.menu = function WidgetMenu(me) {
             });
             me.core.property.set(object.var.menu, "ui.node.parent");
             object.var.menu = null;
+            await me.core.util.sleep(10);
             me.core.property.set(object.var.modal, "ui.style.display", "block");
             if (typeof info === "string") {
                 me.core.property.set(object, info, item);

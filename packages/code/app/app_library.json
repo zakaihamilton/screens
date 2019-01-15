@@ -75,10 +75,6 @@
                         "separator": true
                     }
                 },
-                {
-                    "text": "Tags",
-                    "select": "header"
-                },
                 "app.library.tagMenuList"
             ]
         }
