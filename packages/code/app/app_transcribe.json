@@ -1,0 +1,76 @@
+{
+    "title": "Transcribe",
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "600px",
+        "height": "600px"
+    },
+    "maximize": null,
+    "icon": "/packages/res/icons/transcribe.png",
+    "widget.menu.items": [
+        {
+            "text": "Transcribe",
+            "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.transcribe.refresh"
+                },
+                {
+                    "text": "Clear",
+                    "select": "app.transcribe.clear"
+                },
+                {
+                    "text": "Edit Mode",
+                    "select": "app.transcribe.editMode",
+                    "options": {
+                        "state": "select",
+                        "separator": true
+                    }
+                },
+                {
+                    "text": "Group",
+                    "select": "header"
+                },
+                "app.transcribe.groupMenuList",
+                {
+                    "text": "Session",
+                    "select": "header"
+                },
+                "app.transcribe.sessionMenuList"
+            ]
+        },
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Border",
+                    "select": "app.transcribe.border",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
+                "widget.transform.fontSizesPx(app.transcribe.fontSize)"
+            ]
+        }
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "transcribe",
+            "ui.class.class": "app.transcribe.widget"
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "app-transcribe-window",
+        "storage.local.restore": "widget.window.store",
+        "title": "Transcribe",
+        "name": "",
+        "app.transcribe.initOptions": null,
+        "app.transcribe.reload": null
+    }
+}

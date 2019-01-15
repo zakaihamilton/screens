@@ -98,6 +98,9 @@ screens.core.path = function CorePath(me) {
         if (currentExtension) {
             path = path.replace("." + currentExtension, "." + extension);
         }
+        else {
+            path += "." + extension;
+        }
         return path;
     };
 };

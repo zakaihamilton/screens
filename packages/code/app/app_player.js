@@ -52,7 +52,10 @@ screens.app.player = function AppPlayer(me) {
             if (args[1]) {
                 await me.core.property.set(window, "app.player.session", args[1]);
             }
-            await me.core.property.notify(window, "app.player.updatePlayer");
+            await me.core.property.set(window, "app.player.updatePlayer");
+        }
+        if (!window.var.player) {
+            await me.core.property.set(window, "app.player.updatePlayer");
         }
         if (args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
@@ -187,12 +190,12 @@ screens.app.player = function AppPlayer(me) {
             return;
         }
         me.core.property.set(player, "source", target);
-        if (window.options.autoPlay) {
-            me.core.property.set(player, "widget.player.controls.play");
-        }
         me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
+        if (window.options.autoPlay) {
+            me.core.property.set(player, "widget.player.controls.play");
+        }
     };
     me.work = {
         set: function (object, value) {

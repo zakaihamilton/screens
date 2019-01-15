@@ -31,6 +31,9 @@ screens.media.file = function MediaFile(me) {
     me.reset = async function () {
         me._groups = [];
     };
+    me.path = function (groupName, path) {
+        return me.cachePath + "/" + path;
+    };
     me.download = async function (groupName, path) {
         var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
             me.cachePath + "/" + path);
@@ -126,7 +129,7 @@ screens.media.file = function MediaFile(me) {
             }
             if (extension === "m4a") {
                 try {
-                    if (!me.media.speech.transcribed(target)) {
+                    if (!me.media.speech.exists(target)) {
                         me.log("transcribing: " + target);
                         await me.media.speech.transcribe(target);
                         var info = await me.manager.download.clean(me.tempDir, "flac");

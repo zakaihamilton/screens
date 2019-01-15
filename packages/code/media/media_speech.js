@@ -9,9 +9,18 @@ screens.media.speech = function MediaSpeech(me) {
         me.ffmpeg = require("fluent-ffmpeg");
         me.ffmpeg.setFfprobePath(ffprobePath);
     };
-    me.transcribed = function (path) {
+    me.exists = function (path) {
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
         return me.core.file.exists(transcriptPath);
+    };
+    me.transcription = async function (path) {
+        var transcriptPath = me.core.path.replaceExtension(path, "txt");
+        var exists = me.core.file.exists(transcriptPath);
+        var data = null;
+        if (exists) {
+            data = await me.core.file.readFile(transcriptPath, "utf8");
+        }
+        return data;
     };
     me.transcribe = async function (path) {
         if (!path) {
