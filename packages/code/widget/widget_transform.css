@@ -23,7 +23,7 @@
     display: block;
     flex: 1;
     flex-direction: column;
-    user-select: all;
+    user-select: text;
     color: var(--color);
     background: var(--background);
     overflow-y: auto;
