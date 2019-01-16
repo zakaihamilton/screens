@@ -115,6 +115,10 @@
                     [
                         "Links",
                         "tools"
+                    ],
+                    [
+                        "Transcribe",
+                        "tools"
                     ]
                 ]
             }
