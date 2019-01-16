@@ -35,4 +35,9 @@ screens.widget.input = function WidgetInput(me) {
             object.maxlength = value;
         }
     };
+    me.insertText = function (object, text) {
+        if (typeof text !== "undefined") {
+            object.value += text;
+        }
+    };
 };

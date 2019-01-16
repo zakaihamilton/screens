@@ -13,7 +13,7 @@ screens.media.speech = function MediaSpeech(me) {
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
         return me.core.file.exists(transcriptPath);
     };
-    me.transcription = async function (path) {
+    me.load = async function (path) {
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
         var exists = me.core.file.exists(transcriptPath);
         var data = null;
@@ -21,6 +21,10 @@ screens.media.speech = function MediaSpeech(me) {
             data = await me.core.file.readFile(transcriptPath, "utf8");
         }
         return data;
+    };
+    me.save = async function (path, data) {
+        var transcriptPath = me.core.path.replaceExtension(path, "txt");
+        await me.core.file.writeFile(transcriptPath, data, "utf8");
     };
     me.transcribe = async function (path) {
         if (!path) {

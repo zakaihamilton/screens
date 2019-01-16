@@ -29,6 +29,14 @@
                     }
                 },
                 {
+                    "text": "Save",
+                    "select": "app.transcribe.saveTranscription",
+                    "options": {
+                        "separator": true,
+                        "visible": "app.transcribe.editMode"
+                    }
+                },
+                {
                     "text": "Group",
                     "select": "header"
                 },

@@ -322,8 +322,12 @@ screens.core.property.object = function CorePropertyObject(me) {
         if (!object) {
             object = {};
         }
-        object.values = {};
-        object.dirty = {};
+        if (!object.values) {
+            object.values = {};
+        }
+        if (!object.dirty) {
+            object.dirty = {};
+        }
         object.component = component.id;
         return object;
     };

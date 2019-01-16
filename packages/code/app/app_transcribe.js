@@ -28,13 +28,14 @@ screens.app.transcribe = function AppTranscribe(me) {
                 editMode: false
             });
             me.ui.options.toggleSet(me, null, {
-                "editMode": me.reload
+                "editMode": me.updateTable,
+                "border": me.updateTable
             });
             me.ui.options.choiceSet(me, null, {
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
                     me.core.property.set(window.var.transcribe, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "reload");
+                    me.updateTable(window);
                     me.core.property.notify(window, "update");
                 },
                 groupName: me.updateSessions
@@ -103,7 +104,7 @@ screens.app.transcribe = function AppTranscribe(me) {
                 me.core.property.set(window, "name", "");
                 me.contentList = [];
             }
-            me.core.property.notify(window, "app.transcribe.updateTranscription");
+            me.core.property.notify(window, "app.transcribe.loadTranscription");
         }
     };
     me.updateSessions = async function (object) {
@@ -118,11 +119,20 @@ screens.app.transcribe = function AppTranscribe(me) {
             }
         }
     };
-    me.updateTranscription = async function (object) {
+    me.loadTranscription = async function (object) {
         var window = me.widget.window.get(object);
         var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
-        var transcription = await me.media.speech.transcription(path);
+        var transcription = await me.media.speech.load(path);
         window.transcribe_text = transcription;
+        me.updateTable(window);
+    };
+    me.saveTranscription = async function (object) {
+        var window = me.widget.window.get(object);
+        var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
+        await me.media.speech.save(path, window.transcribe_text);
+    };
+    me.updateTable = function (object) {
+        var window = me.widget.window.get(object);
         me.core.property.set(window.var.transcribe, {
             "ui.style.fontSize": window.options.fontSize,
             "ui.class.edit-mode": window.options.editMode
@@ -157,8 +167,14 @@ screens.app.transcribe = function AppTranscribe(me) {
         var window = me.widget.window.get(object);
         return [window.transcribe_text, window.transcribe_options];
     };
-    me.store = function (object, index, key) {
+    me.store = function (object, lineIndex) {
         var window = me.widget.window.get(object);
+        var transcribe_text = window.transcribe_text;
+        var lines = transcribe_text.split("\n");
+        var line = lines[lineIndex];
+        let [, timestamp] = line.split(/(\d+:\d+:\d+)\s-\s?(.+)/);
+        lines[lineIndex] = timestamp + " - " + object.value.trim();
+        window.transcribe_text = lines.join("\n");
     };
     me.html = function (object) {
         let html = "";
@@ -175,28 +191,39 @@ screens.app.transcribe = function AppTranscribe(me) {
                 continue;
             }
             let [, timestamp, text] = line.split(/(\d+:\d+:\d+)\s-\s?(.+)/);
+            text = text.trim();
+            var baseClasses = [(editMode ? "edit-mode" : "view-mode")];
+            if (window.options.border) {
+                baseClasses.push("border");
+            }
             html += me.ui.html.item({
-                classes: ["app-transcribe-item", (editMode ? "edit-mode" : "view-mode")],
-                attributes: { timestamp }
+                classes: ["app-transcribe-item", ...baseClasses],
+                attributes: { timestamp, lineIndex }
             }, () => {
                 let html = "";
                 html += me.ui.html.item({
                     tag: "div",
-                    classes: ["app-transcribe-timestamp", (editMode ? "edit-mode" : "view-mode")],
+                    classes: ["app-transcribe-timestamp", ...baseClasses],
                     attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
                     value: timestamp
                 });
                 if (editMode) {
+                    var method = "screens.app.transcribe.store(this," + lineIndex + ")";
                     html += me.ui.html.item({
                         tag: "input",
-                        classes: ["app-transcribe-value", "input", (editMode ? "edit-mode" : "view-mode")],
-                        attributes: { value: text, oninput: "screens.app.transcribe.store(this," + lineIndex + ",'value')" }
+                        classes: ["app-transcribe-value", "input", ...baseClasses],
+                        attributes: { type: "search", value: text, onsearch: method, oninput: method }
+                    });
+                    html += me.ui.html.item({
+                        tag: "div",
+                        classes: ["app-transcribe-speech", ...baseClasses],
+                        attributes: { onclick: "screens.app.transcribe.toggleSpeech(this)" }
                     });
                 }
                 else {
                     html += me.ui.html.item({
                         tag: "div",
-                        classes: ["app-transcribe-vaalue", (editMode ? "edit-mode" : "view-mode")],
+                        classes: ["app-transcribe-value", ...baseClasses],
                         attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
                         value: text
                     });
@@ -205,6 +232,19 @@ screens.app.transcribe = function AppTranscribe(me) {
             });
         }
         return html;
+    };
+    me.toggleSpeech = function (object) {
+        var window = me.widget.window.get(object);
+        var input = me.ui.node.findByTag(object.parentNode, "input");
+        me.core.property.object.create(me.widget.input, input);
+        var result = me.ui.speech.toggle(input);
+        me.core.property.set(object, "ui.class.speechActive", result);
+        me.ui.node.iterate(window, (element) => {
+            if (element !== object && element !== input) {
+                me.ui.speech.stop(element);
+                me.core.property.set(element, "ui.class.speechActive", false);
+            }
+        });
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
@@ -218,7 +258,7 @@ screens.app.transcribe = function AppTranscribe(me) {
             if (args[1]) {
                 await me.core.property.set(window, "app.transcribe.session", args[1]);
             }
-            await me.core.property.notify(window, "app.transcribe.updateTranscription");
+            await me.core.property.notify(window, "app.transcribe.loadTranscription");
         }
     };
     me.goto = async function (object, timestamp) {
@@ -266,18 +306,6 @@ screens.app.transcribe = function AppTranscribe(me) {
                     }
                 }
             });
-        }
-    };
-    me.transcribe = async function (object) {
-        var window = me.widget.window.get(object);
-        var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
-        me.core.property.set(window, "ui.work.state", true);
-        try {
-            await me.media.speech.transcribe(path);
-            me.updateTranscription(object);
-        }
-        finally {
-            me.core.property.set(window, "ui.work.state", false);
         }
     };
     me.work = {

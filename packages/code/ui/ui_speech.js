@@ -21,7 +21,7 @@ screens.ui.speech = function UISpeech(me) {
         recognition.lang = "en-US";
         recognition.onresult = function (event) {
             var last = event.results.length - 1;
-            if (last) {
+            if (last !== -1) {
                 var text = event.results[last][0].transcript;
                 me.core.property.set(object, "insertText", text);
             }

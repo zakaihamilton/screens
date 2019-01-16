@@ -53,6 +53,16 @@ screens.ui.node = function UINode(me) {
         }
         return element;
     };
+    me.findByTag = function (object, tagName) {
+        var element = object.firstChild;
+        while (element) {
+            if (element.tagName && element.tagName.toLowerCase() === tagName) {
+                break;
+            }
+            element = element.nextSibling;
+        }
+        return element;
+    };
     me.findByText = function (object, text) {
         var element = object.firstChild;
         while (element) {

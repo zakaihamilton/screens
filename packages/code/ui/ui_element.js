@@ -217,7 +217,7 @@ screens.ui.element = function UIElement(me) {
             }
         }
         if (defaultProperties) {
-            for (var key in defaultProperties) {
+            for (let key in defaultProperties) {
                 me.core.property.set(object, key, defaultProperties[key]);
             }
         }
@@ -225,7 +225,7 @@ screens.ui.element = function UIElement(me) {
             redirect.disabled = false;
         }
         object.context = context ? context : parent;
-        for (var key in properties) {
+        for (let key in properties) {
             me.core.property.set(object, key, properties[key]);
         }
         if (component.element && component.element.extend) {
