@@ -204,7 +204,7 @@ screens.app.transcribe = function AppTranscribe(me) {
                 html += me.ui.html.item({
                     tag: "div",
                     classes: ["app-transcribe-timestamp", ...baseClasses],
-                    attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
+                    attributes: { timestamp, onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
                     value: timestamp
                 });
                 if (editMode) {
@@ -283,6 +283,39 @@ screens.app.transcribe = function AppTranscribe(me) {
             inView = false;
         }
         return inView;
+    };
+    me.hasPlayer = function () {
+        var player = me.core.app.singleton("player");
+        if (player && player.var.player) {
+            return true;
+        }
+    };
+    me.action = function (object, name) {
+        var player = me.core.app.singleton("player");
+        if (player && player.var.player) {
+            var list = {
+                play: null,
+                stop: null,
+                shortForward: {
+                    method: "forward", args: [2]
+                },
+                shortRewind: {
+                    method: "rewind", args: [2]
+                }
+            };
+            var args = [player.var.player];
+            var item = list[name];
+            var method = name;
+            if (item) {
+                if (item.args) {
+                    args.push(...item.args);
+                }
+                if (item.method) {
+                    method = item.method;
+                }
+                me.widget.player.controls[method].apply(null, args);
+            }
+        }
     };
     me.playerUpdated = function () {
         var window = me.singleton;

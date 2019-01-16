@@ -21,9 +21,12 @@ screens.app.player = function AppPlayer(me) {
         var params = {};
         if (args[3]) {
             params.showInBackground = true;
+            params.args = args;
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
-        me.singleton.args = args;
+        await new Promise(resolve => {
+            me.singleton.resolve = resolve;
+        });
         return me.singleton;
     };
     me.initOptions = async function (object) {
@@ -45,13 +48,18 @@ screens.app.player = function AppPlayer(me) {
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
+        window.resolve();
+    };
+    me.setArgs = function (object, args) {
+        var window = me.widget.window.get(object);
+        window.args = args;
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
         var args = window.args;
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
-        if (args[0] !== groupName || args[1] !== sessionName) {
+        if (args && (args[0] !== groupName || args[1] !== sessionName)) {
             if (args[0]) {
                 await me.core.property.set(window, "app.player.groupName", args[0]);
             }
@@ -63,7 +71,7 @@ screens.app.player = function AppPlayer(me) {
         if (!window.var.player) {
             await me.core.property.set(window, "app.player.updatePlayer");
         }
-        if (args[2] && window.var.player) {
+        if (args && args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
             if (window.options.autoPlay && !me.core.property.get(window.var.player, "widget.player.controls.isPlaying")) {
                 me.core.property.set(window.var.player, "widget.player.controls.play");

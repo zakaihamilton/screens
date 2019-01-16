@@ -64,6 +64,39 @@
                 },
                 "widget.transform.fontSizesPx(app.transcribe.fontSize)"
             ]
+        },
+        {
+            "text": "Player",
+            "select": [
+                {
+                    "text": "Play/Pause",
+                    "select": "app.transcribe.action(play)",
+                    "options": {
+                        "enabled": "app.transcribe.hasPlayer"
+                    }
+                },
+                {
+                    "text": "Stop",
+                    "select": "app.transcribe.action(stop)",
+                    "options": {
+                        "enabled": "app.transcribe.hasPlayer"
+                    }
+                },
+                {
+                    "text": "Rewind 2 Seconds",
+                    "select": "app.transcribe.action(shortRewind)",
+                    "options": {
+                        "enabled": "app.transcribe.hasPlayer"
+                    }
+                },
+                {
+                    "text": "Fast Forward 2 Seconds",
+                    "select": "app.transcribe.action(shortForward)",
+                    "options": {
+                        "enabled": "app.transcribe.hasPlayer"
+                    }
+                }
+            ]
         }
     ],
     "ui.basic.elements": [
