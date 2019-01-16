@@ -120,9 +120,12 @@ screens.ui.rect = function UIRect(me) {
         var height = e[a + 'Height'];
         return { left: 0, top: 0, width: width, height: height, right: width, bottom: height };
     };
-    me.inView = function (object) {
+    me.inView = function (object, parent) {
         var inView = true;
-        var parentRect = me.absoluteRegion(object.parentNode);
+        if (!parent) {
+            parent = object.parentNode;
+        }
+        var parentRect = me.absoluteRegion(parent);
         var objectRect = me.absoluteRegion(object);
         if (!parentRect) {
             inView = false;

@@ -887,18 +887,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         return page;
     };
-    me.scrollToWidget = function (widget, target) {
-        if (widget) {
-            var parent = widget.parentNode;
-            while (parent) {
-                if (parent.parentNode === target) {
-                    me.core.property.set(target, "ui.scroll.to", parent.offsetTop);
-                    break;
-                }
-                parent = parent.parentNode;
-            }
-        }
-    };
     me.options = function (target) {
         return target.options;
     };
@@ -1044,7 +1032,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             callback(true);
             target.notified = true;
             if (options.scrollWidget && scrollToWidget) {
-                me.scrollToWidget(options.scrollWidget, target);
+                me.ui.scroll.toWidget(options.scrollWidget, target);
             }
             me.core.property.set(target, "update");
         }

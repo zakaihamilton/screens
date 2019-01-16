@@ -13,10 +13,16 @@ screens.app.player = function AppPlayer(me) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;
             me.reload(me.singleton);
-            me.core.property.set(me.singleton, "widget.window.show", true);
+            if (!args[3]) {
+                me.core.property.set(me.singleton, "widget.window.show", true);
+            }
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        var params = {};
+        if (args[3]) {
+            params.showInBackground = true;
+        }
+        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         me.singleton.args = args;
         return me.singleton;
     };
@@ -59,6 +65,9 @@ screens.app.player = function AppPlayer(me) {
         }
         if (args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
+            if (window.options.autoPlay && !me.core.property.get(window.var.player, "widget.player.controls.isPlaying")) {
+                me.core.property.set(window.var.player, "widget.player.controls.play");
+            }
         }
     };
     me.groupMenuList = {

@@ -175,7 +175,7 @@ screens.app.transcribe = function AppTranscribe(me) {
                 if (!line) {
                     continue;
                 }
-                let [, timestamp, text] = line.split(/(\d+:\d+:\d+) - (.+)/);
+                let [, timestamp, text] = line.split(/(\d+:\d+:\d+)\s-\s?(.+)/);
                 html += me.ui.html.item({
                     classes: ["app-transcribe-item"]
                 }, () => {
@@ -225,12 +225,51 @@ screens.app.transcribe = function AppTranscribe(me) {
             await me.core.property.notify(window, "app.transcribe.updateTranscription");
         }
     };
-    me.goto = function (object, timestamp) {
+    me.goto = async function (object, timestamp) {
         var window = me.widget.window.get(object);
         var [, hour, min, sec] = timestamp.split(/(\d+):(\d+):(\d+)/);
         var duration = (parseInt(hour) * 3600) + (parseInt(min) * 60) + parseInt(sec);
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
-        me.core.app.launch("player", groupName, sessionName, duration);
+        var player = await me.core.app.launch("player", groupName, sessionName, duration, true);
+        if (player && player.var.player) {
+            me.core.property.set(player.var.player, "core.link.update", "app.transcribe.playerUpdated");
+            me.playerUpdated();
+        }
+    };
+    me.inView = function (object, parent) {
+        var region = me.ui.rect.relativeRegion(object, parent);
+        var inView = true;
+        if (parent.scrollTop > region.top) {
+            inView = false;
+        }
+        if (parent.scrollTop + parent.offsetHeight < region.top + region.height) {
+            inView = false;
+        }
+        return inView;
+    };
+    me.playerUpdated = function () {
+        var window = me.singleton;
+        var player = me.core.app.singleton("player");
+        if (player && player.var.player) {
+            var time = me.widget.player.controls.time(player.var.player);
+            var duration = parseInt(time / 10) * 10;
+            var scroll = false;
+            if (window.duration !== duration) {
+                window.duration = duration;
+                scroll = true;
+            }
+            var name = me.core.string.formatDuration(duration);
+            me.ui.node.iterate(window, (element) => {
+                var match = element.textContent === name;
+                me.core.property.set(element, "ui.class.now", match);
+                if (match && scroll) {
+                    var inView = me.inView(element, window.var.container);
+                    if (!inView) {
+                        me.ui.scroll.toWidget(element, window.var.container, 10);
+                    }
+                }
+            });
+        }
     };
 };

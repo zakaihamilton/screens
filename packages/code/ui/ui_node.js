@@ -5,21 +5,24 @@
 
 screens.ui.node = function UINode(me) {
     me.childList = function (object) {
-        var childNodes = me.childNodes(object);
-        if (!childNodes) {
+        if (!object) {
             return [];
         }
-        var childList = Array(childNodes.length).fill(null);
-        for (var childIndex = 0; childIndex < childNodes.length; childIndex++) {
-            var child = childNodes[childIndex];
+        var elements = object.children;
+        if (!elements) {
+            return [];
+        }
+        var childList = Array(elements.length).fill(null);
+        for (var childIndex = 0; childIndex < elements.length; childIndex++) {
+            var child = elements[childIndex];
             var order = "auto";
             if (child.component && child.style) {
                 order = child.style.zIndex;
             }
-            if (!order || order === "auto" || order < 0 || order >= childNodes.length) {
+            if (!order || order === "auto" || order < 0 || order >= elements.length) {
                 order = 0;
             }
-            for (; childList[order] && order < childNodes.length; order++);
+            for (; childList[order] && order < elements.length; order++);
             childList[order] = child;
         }
         childList = childList.filter(Boolean);
@@ -72,7 +75,7 @@ screens.ui.node = function UINode(me) {
         var element = object.firstChild;
         while (element) {
             if (element.classList) {
-                for (var class_name of class_names) {
+                for (let class_name of class_names) {
                     if (element.classList.contains(class_name)) {
                         return element;
                     }

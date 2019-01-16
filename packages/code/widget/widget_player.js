@@ -239,6 +239,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             ]
         }
     };
+    me.isPlaying = function (object) {
+        var widget = me.upper.mainWidget(object);
+        return !(widget.var.player.paused || widget.var.player.ended);
+    };
     me.play = function (object) {
         var widget = me.upper.mainWidget(object);
         if (widget.var.player.paused || widget.var.player.ended) {
@@ -248,6 +252,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             widget.var.player.pause();
         }
         me.updateButtons(widget.var.player);
+        me.updatePlayer(widget.var.player);
     };
     me.stop = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -255,6 +260,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         widget.var.player.currentTime = 0;
         me.updateProgress(widget);
         me.updateButtons(widget);
+        me.updatePlayer(object);
     };
     me.update = function (object) {
         me.updateProgress(object);
@@ -349,6 +355,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         }
         widget.var.player.currentTime = percent * widget.var.player.duration;
         me.updateProgress(object);
+        me.updatePlayer(object);
     };
     me.rewind = function (object) {
         var widget = me.upper.mainWidget(object);

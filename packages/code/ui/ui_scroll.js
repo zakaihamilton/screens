@@ -119,4 +119,14 @@ screens.ui.scroll = function UIScroll(me) {
             return list;
         }
     };
+    me.toWidget = function (widget, target, delta) {
+        if (widget) {
+            var region = me.ui.rect.relativeRegion(widget, target);
+            var offset = region.top;
+            if (offset) {
+                offset -= delta;
+            }
+            me.to(target, offset);
+        }
+    };
 };

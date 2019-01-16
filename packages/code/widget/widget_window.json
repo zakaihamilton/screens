@@ -51,7 +51,7 @@
             "ui.class.class": "widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
             "ui.touch.dblclick": "menu.context.show(taskbar)",
-            "ui.touch.click": "widget.window.toggleVisibility",
+            "ui.touch.click": "widget.window.taskbarClick",
             "ui.basic.window": null,
             "ui.node.parent": "@widget.taskbar.tasks",
             "widget.icon.type": "list"

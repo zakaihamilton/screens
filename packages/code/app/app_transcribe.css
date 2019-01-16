@@ -66,6 +66,11 @@
     color: var(--highlight-color);
 }
 
+.app-transcribe-timestamp.now {
+    background-color: var(--highlight-background);
+    color: var(--highlight-color);
+}
+
 .app-transcribe-timestamp:hover:active {
     background-color: var(--highlight-color);
     color: var(--highlight-background);

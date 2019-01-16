@@ -7,7 +7,7 @@ screens.ui.focus = function UIFocus(me) {
     me.focus_window = null;
     me.extend = {
         set: function (object) {
-            object.addEventListener('mousedown', function (e) {
+            object.addEventListener(me.ui.touch.eventNames.down, function (e) {
                 var branch = me.find_branch(object, e.clientX, e.clientY);
                 if (branch) {
                     me.core.property.set(branch, "ui.focus.active", true);
@@ -167,6 +167,7 @@ screens.ui.focus = function UIFocus(me) {
         }
         /* Find bottom window to focus on */
         window = me.findLeaf(window);
+        me.core.property.set(window, "showInBackground", false);
         /* Find common window between previous and new window */
         var common = me.common(me.focus_window, window);
         /* Deactivate previous windows */

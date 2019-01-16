@@ -64,6 +64,7 @@ screens.menu.context = function MenuContext(me) {
     me.show = {
         set: function (object, value) {
             var window = me.widget.window.get(object);
+            me.core.property.set(window, "showInBackground", false);
             var visible = !me.core.property.get(window, "ui.class.contains", "minimize");
             var region = me.ui.rect.absoluteRegion(object);
             var bottomUp = !visible || value === "taskbar";
