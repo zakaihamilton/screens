@@ -169,41 +169,37 @@ screens.app.transcribe = function AppTranscribe(me) {
             return "";
         }
         var lines = transcribe_text.split("\n");
-        if (editMode) {
-            for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-                let line = lines[lineIndex];
-                if (!line) {
-                    continue;
-                }
-                let [, timestamp, text] = line.split(/(\d+:\d+:\d+)\s-\s?(.+)/);
+        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            let line = lines[lineIndex];
+            if (!line) {
+                continue;
+            }
+            let [, timestamp, text] = line.split(/(\d+:\d+:\d+)\s-\s?(.+)/);
+            html += me.ui.html.item({
+                classes: ["app-transcribe-item", (editMode ? "edit-mode" : "view-mode")],
+                attributes: { timestamp }
+            }, () => {
+                let html = "";
                 html += me.ui.html.item({
-                    classes: ["app-transcribe-item"]
-                }, () => {
-                    let html = "";
-                    html += me.ui.html.item({
-                        tag: "div",
-                        classes: ["app-transcribe-timestamp"],
-                        attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
-                        value: timestamp
-                    });
+                    tag: "div",
+                    classes: ["app-transcribe-timestamp", (editMode ? "edit-mode" : "view-mode")],
+                    attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
+                    value: timestamp
+                });
+                if (editMode) {
                     html += me.ui.html.item({
                         tag: "input",
-                        classes: ["app-transcribe-value", "input"],
+                        classes: ["app-transcribe-value", "input", (editMode ? "edit-mode" : "view-mode")],
                         attributes: { value: text, oninput: "screens.app.transcribe.store(this," + lineIndex + ",'value')" }
                     });
-                    return html;
-                });
-            }
-        }
-        else {
-            html += me.ui.html.item({ classes: ["app-transcribe-container"] }, () => {
-                var html = "";
-                for (let line of lines) {
-                    let classes = ["app-transcribe-text"];
-                    if (window.options.border) {
-                        classes.push("border");
-                    }
-                    html += me.ui.html.item({ tag: "div", classes, value: line });
+                }
+                else {
+                    html += me.ui.html.item({
+                        tag: "div",
+                        classes: ["app-transcribe-value", (editMode ? "edit-mode" : "view-mode")],
+                        attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
+                        value: text
+                    });
                 }
                 return html;
             });
@@ -261,7 +257,7 @@ screens.app.transcribe = function AppTranscribe(me) {
             }
             var name = me.core.string.formatDuration(duration);
             me.ui.node.iterate(window, (element) => {
-                var match = element.textContent === name;
+                var match = element.getAttribute("timestamp") === name;
                 me.core.property.set(element, "ui.class.now", match);
                 if (match && scroll) {
                     var inView = me.inView(element, window.var.container);

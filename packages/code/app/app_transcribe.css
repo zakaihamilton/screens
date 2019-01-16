@@ -4,74 +4,52 @@
     grid-row-gap: 6px;
 }
 
-.app-transcribe-text {
-    flex: 1;
-    background: var(--background);
-    color: var(--color);
-    text-align: center;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 6px;
-    padding-right: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-self: stretch;
-    font-weight: bold;
-    border: 1px solid transparent;
-}
-
-.app-transcribe-text.border {
-    border: 1px solid var(--border-color);
-}
-
-.app-transcribe-text:hover {
-    background-color: var(--chrome-highlight-background);
-    color: var(--chrome-highlight-color);
-    border: 1px solid var(--border-color);
-}
-
-.app-transcribe-text:hover:active {
-    background-color: var(--color);
-    color: var(--background);
-    border: 1px solid var(--border-color);
-}
-
 .app-transcribe-item {
     display: grid;
-    grid-template-columns: 100px auto;
-    grid-auto-rows: 40px;
+    grid-template-columns: 6em auto;
+    grid-column-gap: 6px;
     margin: 6px;
+    background-color: var(--background);
+    color: var(--color);
+}
+
+.app-transcribe-item.view-mode.now {
+    background-color: var(--highlight-background);
+    color: var(--highlight-color);
+}
+
+.app-transcribe-item.view-mode:hover {
+    background-color: var(--highlight-background);
+    color: var(--highlight-color);
+}
+
+.app-transcribe-item.view-mode:hover:active {
+    background-color: var(--highlight-color);
+    color: var(--highlight-background);
 }
 
 .app-transcribe-timestamp {
     grid-column: 1;
     left: 0px;
     right: 0px;
-    background-color: var(--background);
-    color: var(--color);
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px dashed var(--border-color);
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    height: 2.25em;
     line-height: 1.5;
 }
 
-.app-transcribe-timestamp:hover {
+.app-transcribe-timestamp.edit-mode.now {
     background-color: var(--highlight-background);
     color: var(--highlight-color);
 }
 
-.app-transcribe-timestamp.now {
+.app-transcribe-timestamp.edit-mode:hover {
     background-color: var(--highlight-background);
     color: var(--highlight-color);
 }
 
-.app-transcribe-timestamp:hover:active {
+.app-transcribe-timestamp.edit-mode:hover:active {
     background-color: var(--highlight-color);
     color: var(--highlight-background);
 }
@@ -80,4 +58,19 @@
     grid-column: 2;
     left: 0px;
     right: 0px;
+    height: auto;
+}
+
+.app-transcribe-value.view-mode {
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    padding: 5px;
+}
+
+.app-transcribe-value.input {
+    font-size: inherit;
+    border: none;
 }
