@@ -26,6 +26,7 @@ screens.media.speech = function MediaSpeech(me) {
         if (!path) {
             return null;
         }
+        path = me.core.path.replaceExtension(path, "m4a");
         var transcriptPath = me.core.path.replaceExtension(path, "txt");
 
         var request = require("request");

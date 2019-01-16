@@ -133,7 +133,7 @@ screens.app.transcribe = function AppTranscribe(me) {
         if (!window.transcribe_options) {
             window.transcribe_options = {};
         }
-        var html = me.transcribe(window);
+        var html = me.html(window);
         me.core.property.set(window.var.transcribe, "ui.basic.html", html);
         me.core.property.notify(window, "update");
     };
@@ -160,7 +160,7 @@ screens.app.transcribe = function AppTranscribe(me) {
     me.store = function (object, index, key) {
         var window = me.widget.window.get(object);
     };
-    me.transcribe = function (object) {
+    me.html = function (object) {
         let html = "";
         let window = me.widget.window.get(object);
         let editMode = window.options.editMode;
@@ -196,7 +196,7 @@ screens.app.transcribe = function AppTranscribe(me) {
                 else {
                     html += me.ui.html.item({
                         tag: "div",
-                        classes: ["app-transcribe-value", (editMode ? "edit-mode" : "view-mode")],
+                        classes: ["app-transcribe-vaalue", (editMode ? "edit-mode" : "view-mode")],
                         attributes: { onclick: "screens.app.transcribe.goto(this, '" + timestamp + "')" },
                         value: text
                     });
@@ -266,6 +266,37 @@ screens.app.transcribe = function AppTranscribe(me) {
                     }
                 }
             });
+        }
+    };
+    me.transcribe = async function (object) {
+        var window = me.widget.window.get(object);
+        var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
+        me.core.property.set(window, "ui.work.state", true);
+        try {
+            await me.media.speech.transcribe(path);
+            me.updateTranscription(object);
+        }
+        finally {
+            me.core.property.set(window, "ui.work.state", false);
+        }
+    };
+    me.work = {
+        set: function (object, value) {
+            if (object.workTimeout) {
+                clearTimeout(object.workTimeout);
+                object.workTimeout = null;
+            }
+            if (value) {
+                object.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    me.core.property.set(object.var.transcribe, "ui.style.visibility", "hidden");
+                }, 250);
+            } else {
+                object.workTimeout = setTimeout(function () {
+                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    me.core.property.set(object.var.transcribe, "ui.style.visibility", "visible");
+                }, 250);
+            }
         }
     };
 };
