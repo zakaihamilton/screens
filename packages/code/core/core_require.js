@@ -11,10 +11,15 @@ screens.core.require = function CoreRequire(me) {
         if (me.platform === "client") {
             importScripts("/external/require.js");
         }
+        var paths = [path];
+        if (Array.isArray(path)) {
+            paths = path;
+        }
         return new Promise((resolve, reject) => {
-            require([path], function (module) {
+            require(paths, function (module) {
                 if (module) {
                     resolve(module);
+                    return;
                 }
                 try {
                     module = require(path);
