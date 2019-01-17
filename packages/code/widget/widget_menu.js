@@ -476,7 +476,12 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
             var element = me.ui.node.findByText(parent, text);
             if (element) {
-                me.core.property.set(element, properties);
+                if (!element.menu_options || !element.menu_options.edit) {
+                    me.core.property.set(element, properties);
+                }
+                else {
+                    element = null;
+                }
             }
             return element;
         },
