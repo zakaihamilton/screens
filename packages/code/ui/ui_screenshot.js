@@ -5,7 +5,7 @@
 
 screens.ui.screenshot = function UIScreenshot(me) {
     me.init = async function () {
-        me.html2canvas = await me.core.require.load("/external/html2canvas.js");
+        me.html2canvas = await me.core.require.load(["/external/html2canvas.js"]);
     };
     me.capture = function (object) {
         var window = me.widget.window.get(object);

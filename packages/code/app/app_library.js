@@ -18,7 +18,7 @@ screens.app.library = function AppLibrary(me) {
         promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.min.css"));
         promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
         await Promise.all(promises);
-        await me.core.require.load("/external/jsgrid-1.5.3/jsgrid.min.js");
+        await me.core.require.load(["/external/jsgrid-1.5.3/jsgrid.min.js"]);
         me.tagList = await me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");

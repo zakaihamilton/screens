@@ -5,8 +5,8 @@
 
 screens.widget.wheel = function WidgetWheel(me) {
     me.init = async function () {
-        await me.core.require.load("/external/wheelnav.js");
-        await me.core.require.load("/external/raphael.min.js");
+        await me.core.require.load(["/external/wheelnav.js"]);
+        await me.core.require.load(["/external/raphael.min.js"]);
     };
     me.element = {
         properties: {

@@ -54,7 +54,7 @@ screens.app.propagate = function AppPropagate(me) {
             var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
             var text = await me.storage.upload.readFile(file, true);
             me.core.property.set(window, "name", name);
-            me.core.property.set(window.var.editor, "mode", file.type);
+            me.core.property.set(window.var.editor, "path", file.name);
             me.core.property.set(window.var.editor, "text", text);
         }
     };

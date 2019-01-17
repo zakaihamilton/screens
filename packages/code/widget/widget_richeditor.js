@@ -6,7 +6,7 @@
 screens.widget.richeditor = function WidgetRichEditor(me) {
     me.init = async function () {
         me.import("/node_modules/quill/dist/quill.snow.css");
-        me.quill = await me.core.require.load("/node_modules/quill/dist/quill.js");
+        me.quill = await me.core.require.load(["/node_modules/quill/dist/quill.js"]);
     };
     me.element = {
         properties: {

@@ -85,6 +85,9 @@ screens.ui.theme = function UITheme(me) {
                 element.classList.forEach(function (classItem) {
                     elementCallback(element, classItem);
                 });
+                if (element.themeMethod) {
+                    element.themeMethod(element, nightMode);
+                }
             }
             me.applyTheme(elementCallback, element);
             element = element.nextSibling;

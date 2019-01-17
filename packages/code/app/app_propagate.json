@@ -32,7 +32,7 @@
             "ui.basic.var": "editorContainer",
             "ui.basic.elements": [
                 {
-                    "ui.element.component": "widget.editor",
+                    "ui.element.component": "widget.codeeditor",
                     "ui.class.class": "app.propagate.editor",
                     "ui.basic.var": "editor"
                 }
