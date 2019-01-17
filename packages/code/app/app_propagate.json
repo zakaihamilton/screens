@@ -1,0 +1,48 @@
+{
+    "title": "Propagate",
+    "icon": "/packages/res/icons/propagate.png",
+    "ui.property.style": {
+        "left": "10%",
+        "top": "10%",
+        "width": "80%",
+        "height": "80%"
+    },
+    "widget.menu.items": [
+        {
+            "text": "Propagate",
+            "select": [
+                {
+                    "text": "Files...",
+                    "options": {
+                        "separator": true
+                    },
+                    "properties": {
+                        "upload": "app.propagate.selectFiles"
+                    }
+                },
+                "app.propagate.files",
+                "widget.window.exportMenuList(app.propagate.exportText)"
+            ]
+        }
+    ],
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.propagate.editor.container",
+            "ui.basic.var": "editorContainer",
+            "ui.basic.elements": [
+                {
+                    "ui.element.component": "widget.editor",
+                    "ui.class.class": "app.propagate.editor",
+                    "ui.basic.var": "editor"
+                }
+            ]
+        }
+    ],
+    "ui.property.after": {
+        "storage.local.key": "@ui.windowkey.app-propagate-window",
+        "storage.local.restore": "widget.window.store",
+        "ui.resize.event": "widget.transform.reflow",
+        "app.propagate.initOptions": null
+    }
+}

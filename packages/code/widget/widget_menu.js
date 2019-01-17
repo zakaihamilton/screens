@@ -52,11 +52,16 @@ screens.widget.menu = function WidgetMenu(me) {
                 }];
             }
             items = items.map(function (item) {
-                var title = String(item[info.property]);
+                var title = item;
+                if (info.property) {
+                    title = String(item[info.property]);
+                }
                 if (!title) {
                     return null;
                 }
-                title = title.charAt(0).toUpperCase() + title.slice(1);
+                if (!info.keepCase) {
+                    title = title.charAt(0).toUpperCase() + title.slice(1);
+                }
                 var ref = title;
                 var properties = {};
                 var item_metadata = {};

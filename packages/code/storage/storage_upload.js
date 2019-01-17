@@ -16,7 +16,7 @@ screens.storage.upload = function StorageUpload(me) {
             " path: " + path +
             " fileHandle: " + fileHandle
         );
-        for (chunkIndex = 0; chunkIndex < chunkCount; chunkIndex++) {
+        for (let chunkIndex = 0; chunkIndex < chunkCount; chunkIndex++) {
             var start = chunkIndex * chunkSize;
             var end = start + chunkSize;
             if (end > file.size) {
@@ -37,6 +37,31 @@ screens.storage.upload = function StorageUpload(me) {
             }
         }
         await me.core.file.close(fileHandle);
+    };
+    me.readFile = async function (file, isText = false) {
+        return new Promise((resolve, reject) => {
+            if (!me.reader) {
+                me.log("Creating reader");
+                me.reader = new FileReader();
+            }
+            me.reader.onerror = function (event) {
+                var err = event.target.error;
+                me.log_error("Error reading chunk: " + err.message + " name: " + err.name);
+                reject(event.target.error.code);
+            };
+            me.reader.onload = function (event) {
+                var data = event.target.result;
+                me.log("Result received");
+                resolve(data);
+            };
+            if (isText) {
+                me.reader.readAsText(file);
+            }
+            else {
+                me.reader.readAsArrayBuffer(file);
+            }
+            me.log("Reading from buffer");
+        });
     };
     me.readChunk = function (file, start, end) {
         return new Promise((resolve, reject) => {

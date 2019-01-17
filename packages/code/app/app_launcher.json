@@ -119,6 +119,10 @@
                     [
                         "Transcribe",
                         "tools"
+                    ],
+                    [
+                        "Propagate",
+                        "work"
                     ]
                 ]
             }
