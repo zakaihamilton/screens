@@ -68,4 +68,8 @@ screens.app.propagate = function AppPropagate(me) {
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(target, "importData", text);
     };
+    me.format = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.editor, "format");
+    };
 };

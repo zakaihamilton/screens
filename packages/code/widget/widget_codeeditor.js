@@ -5,7 +5,13 @@
 
 screens.widget.codeeditor = function WidgetCodeEditor(me) {
     me.init = async function () {
-        await me.core.require.load(["/node_modules/ace-builds/src/ace.js", "/node_modules/ace-builds/src/ext-modelist.js"]);
+        await me.core.require.load([
+            "/node_modules/ace-builds/src/ace.js",
+        ]);
+        await me.core.require.load([
+            "/node_modules/ace-builds/src/ext-modelist.js",
+            "/node_modules/ace-builds/src/ext-beautify.js"
+        ]);
     };
     me.element = {
         properties: {
@@ -45,5 +51,9 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
     };
     me.insertText = function (object, text) {
         object.editor.insert(text);
+    };
+    me.format = function (object) {
+        var beautify = ace.require("ace/ext/beautify");
+        beautify.beautify(object.editor.session);
     };
 };

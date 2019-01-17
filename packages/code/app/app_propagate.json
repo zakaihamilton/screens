@@ -23,6 +23,15 @@
                 "app.propagate.files",
                 "widget.window.exportMenuList(app.propagate.exportText)"
             ]
+        },
+        {
+            "text": "Editor",
+            "select": [
+                {
+                    "text": "Format",
+                    "select": "app.propagate.format"
+                }
+            ]
         }
     ],
     "ui.basic.elements": [
