@@ -69,6 +69,7 @@ screens.app.player = function AppPlayer(me) {
             await me.core.property.set(window, "app.player.updatePlayer");
         }
         if (!window.var.player) {
+            await me.core.property.set(window, "app.player.session", sessionName);
             await me.core.property.set(window, "app.player.updatePlayer");
         }
         if (args && args[2] && window.var.player) {
@@ -113,6 +114,7 @@ screens.app.player = function AppPlayer(me) {
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "ui.work.state", true);
+        me.core.property.set(window, "app.player.format", "Audio");
         me.groups = await me.media.file.groups(true);
         await me.updateSessions(window);
         me.core.property.set(window, "ui.work.state", false);
