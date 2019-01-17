@@ -23,10 +23,13 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
         },
         create: function (object) {
             object.editor = ace.edit(object);
-            object.themeMethod = function (element, nightMode) {
-                element.editor.setTheme(nightMode ? "ace/theme/monokai" : "ace/theme/tomorrow");
-            };
+            object.themeMethod = me.updateTheme;
+            me.updateTheme(object);
         }
+    };
+    me.updateTheme = function (object) {
+        var nightMode = me.ui.theme.options.nightMode;
+        object.editor.setTheme(nightMode ? "ace/theme/monokai" : "ace/theme/tomorrow");
     };
     me.path = {
         get: function (object) {
