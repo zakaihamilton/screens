@@ -357,13 +357,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         me.updateProgress(object);
         me.updatePlayer(object);
     };
-    me.rewind = function (object, seconds = 10) {
+    me.rewind = function (object, seconds) {
         var widget = me.upper.mainWidget(object);
+        if (typeof seconds !== "number") {
+            seconds = 10;
+        }
         widget.var.player.currentTime -= seconds;
         me.update(object);
     };
-    me.forward = function (object, seconds = 10) {
+    me.forward = function (object, seconds) {
         var widget = me.upper.mainWidget(object);
+        if (typeof seconds !== "number") {
+            seconds = 10;
+        }
         widget.var.player.currentTime += seconds;
         me.update(object);
     };
