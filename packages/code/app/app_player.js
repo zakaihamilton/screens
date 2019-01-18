@@ -138,8 +138,8 @@ screens.app.player = function AppPlayer(me) {
                     videoFound = sessions.filter(session => session.session === name && session.extension === "mp4");
                 }
             }
-            me.hasAudio = audioFound !== null;
-            me.hasVideo = videoFound !== null;
+            me.hasAudio = audioFound !== null && audioFound.length;
+            me.hasVideo = videoFound !== null && videoFound.length;
             if (audioFound && !videoFound) {
                 window.options.format = "Audio";
             } else if (!audioFound && videoFound) {
@@ -176,6 +176,11 @@ screens.app.player = function AppPlayer(me) {
         var sessionName = window.options.sessionName;
         var showAudioPlayer = groupName && sessionName && window.options.format === "Audio";
         var showVideoPlayer = groupName && sessionName && window.options.format === "Video";
+        if (!me.hasVideo && me.hasAudio) {
+            window.options.format = "Audio";
+            showAudioPlayer = true;
+            showVideoPlayer = false;
+        }
         me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         me.core.property.set(window.var.audioPlayer, "source", "");
         me.core.property.set(window.var.videoPlayer, "source", "");
