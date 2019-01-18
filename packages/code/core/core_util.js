@@ -96,7 +96,7 @@ screens.core.util = function CoreUtil(me) {
     me.url = function (appName, args, local) {
         var url = "";
         if (!local) {
-            "http://www.screensview.com";
+            url = "http://www.screensview.com";
             if (!me.core.util.isSecure()) {
                 url = "localhost:4040";
             }
