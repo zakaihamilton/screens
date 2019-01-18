@@ -168,7 +168,7 @@
 
 .kab-term-phase-none:hover:after {
     background-color: var(--background);
-    color: var(--highlight-color);
+    color: var(--focus-color);
     border: 2px solid var(--phase-root-border);
 }
 
@@ -182,19 +182,19 @@
 
 .kab-term-phase-root {
     background-color: var(--background);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-root:hover:after {
     background-color: var(--background);
-    color: var(--highlight-color);
+    color: var(--focus-color);
     border: 2px solid var(--phase-root-border);
 }
 
 .kab-term-phase-one {
     background-color: var(--phase-one-background);
     border: 2px solid var(--phase-one-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-one-border {
@@ -208,13 +208,13 @@
 .kab-term-phase-one:hover:after {
     background-color: var(--phase-one-background);
     border: 2px solid var(--phase-one-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-two {
     background-color: var(--phase-two-background);
     border: 2px solid var(--phase-two-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-two-border {
@@ -228,13 +228,13 @@
 .kab-term-phase-two:hover:after {
     background-color: var(--phase-two-background);
     border: 2px solid var(--phase-two-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-three {
     background-color: var(--phase-three-background);
     border: 2px solid var(--phase-three-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-three-border {
@@ -253,7 +253,7 @@
 .kab-term-phase-four {
     background-color: var(--phase-four-background);
     border: 2px solid var(--phase-four-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-four-border {
@@ -272,7 +272,7 @@
 .kab-term-phase-collective {
     background-color: var(--phase-collective-background);
     border: 2px solid var(--phase-collective-border);
-    color: var(--highlight-color);
+    color: var(--focus-color);
 }
 
 .kab-term-phase-collective-border {
