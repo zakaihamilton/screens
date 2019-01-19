@@ -108,7 +108,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
             var diff = date.getDate() - day;
             if (firstDay === "saturday") {
                 if (day >= 6) {
-                    diff = date.getDate() - day + 5;
+                    diff = date.getDate() - day + 6;
                 }
                 else {
                     diff = date.getDate() - day - 1;
