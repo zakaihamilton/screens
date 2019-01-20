@@ -23,7 +23,7 @@ screens.app.present = function AppPresent(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
         if (typeof args[0] === "string") {
-            me.content.associated.update(me.singleton, params.title);
+            await me.content.associated.update(me.singleton, params.title);
         }
     };
     me.initOptions = async function (object, resetUser) {

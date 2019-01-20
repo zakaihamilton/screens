@@ -116,7 +116,7 @@ screens.ui.content = function UIContent(me) {
             window.content._private = private;
             window.content._locked = fullItem.locked;
             window.content._owner = fullItem.owner;
-            me.content.associated.update(window, fullItem.title);
+            await me.content.associated.update(window, fullItem.title);
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
         importPrivate: async function (object, item) {
@@ -248,6 +248,7 @@ screens.ui.content = function UIContent(me) {
                 }
                 if (window.content._title !== text) {
                     window.content._title = text;
+                    me.content.associated.update(window, window.content._title);
                 }
             }
         },
@@ -289,34 +290,20 @@ screens.ui.content = function UIContent(me) {
                 if (!window.content) {
                     window.content = {};
                 }
-                window.content.associated = new Promise(async resolve => {
-                    var list = [];
-                    if (name) {
-                        var [publicApps, privateApps] = await me.manager.content.associated(name);
-                        var playerItems = await me.content.associated.playerItems(name);
-                        var publicList = me.content.associated.items(window, name, publicApps);
-                        var privateList = me.content.associated.items(window, name, privateApps, true);
-                        if (publicList && publicList.length && privateList && privateList.length) {
-                            privateList[0][2].separator = true;
-                        }
-                        list.push(...playerItems);
-                        list.push(...publicList);
-                        list.push(...privateList);
+                var list = [];
+                if (name) {
+                    var [publicApps, privateApps] = await me.manager.content.associated(name);
+                    var playerItems = await me.content.associated.playerItems(name);
+                    var publicList = me.content.associated.items(window, name, publicApps);
+                    var privateList = me.content.associated.items(window, name, privateApps, true);
+                    if (publicList && publicList.length && privateList && privateList.length) {
+                        privateList[0][2].separator = true;
                     }
-                    if (!list.length) {
-                        list.push([
-                            "No Associated Content",
-                            null,
-                            {
-                                enabled: false
-                            },
-                            {
-                                "group": "associated"
-                            }
-                        ]);
-                    }
-                    resolve(list);
-                });
+                    list.push(...playerItems);
+                    list.push(...publicList);
+                    list.push(...privateList);
+                }
+                window.content.associated = list;
             },
             playerItems: async function (name) {
                 var list = [];
@@ -370,8 +357,8 @@ screens.ui.content = function UIContent(me) {
                 if (!window.content) {
                     window.content = {};
                 }
-                if (!window.content.associated) {
-                    me.content.associated.update(window, window.content._title);
+                if (!window.content.associated || !window.content.associated.length) {
+                    return null;
                 }
                 return [{
                     "text": "Associated",
