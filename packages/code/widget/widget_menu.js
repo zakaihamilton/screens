@@ -221,7 +221,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            if (value || !me.core.property.get(object, "ui.class.subMenu")) {
+            if (value || !me.core.property.get(object, "ui.class.menu")) {
                 me.core.property.set(object.target, "back", value);
             }
             me.core.property.set(object.target, "ui.property.broadcast", {
@@ -241,11 +241,9 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         var window = me.core.property.get(object, "widget.window.active");
         var region = me.ui.rect.absoluteRegion(item);
         region.left = region.right;
-        region.right = region.right + region.width;
-        region.bottom = region.top;
-        region.top = region.bottom + region.height;
+        region.bottom = region.top - (region.height / 10);
         object.var.menu = me.upper.create_menu(window, object, region, info);
-        me.core.property.set(object.var.menu, "ui.class.subMenu", true);
+        me.core.property.set(object.var.menu, "ui.class.menu", true);
     };
     me.select = {
         set: function (object, value) {
