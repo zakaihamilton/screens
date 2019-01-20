@@ -1066,19 +1066,16 @@ screens.widget.window = function WidgetWindow(me) {
         });
         items = items.filter(Boolean);
         if (!items.length) {
-            items = [[
-                "No Open Compatible Applications",
-                null,
-                {
-                    enabled: false
-                }
-            ]];
+            return null;
         }
-        items.unshift([
-            "Export",
-            "header"
-        ]);
-        return items;
+        var menu = [{
+            "text": "Export",
+            "select": items,
+            "options": {
+                "separator": true
+            }
+        }];
+        return menu;
     };
     return "browser";
 };
