@@ -130,7 +130,7 @@ screens.app.propagate = function AppPropagate(me) {
         var info = {
             list,
             group: "scripts",
-            keepCase: true,
+            title: true,
             emptyMsg: "No Scripts Available",
             itemMethod: "app.propagate.runScript"
         };
@@ -154,6 +154,9 @@ screens.app.propagate = function AppPropagate(me) {
         if (activate) {
             me.fileName.set(object, name);
         }
+        setTimeout(() => {
+            me.setFormat(window);
+        });
     };
     me.runScript = async function (object, name) {
         var code = await me.core.file.readFile(me.scriptsDir + "/" + name + ".js", "utf8");

@@ -45,9 +45,6 @@ async function run() {
     });
     channelsLineup.servicePresentationData.services = services;
     me.output(window, "output.json", JSON.stringify(channelsLineup), true);
-    setTimeout(() => {
-        me.format(window);
-    });
 }
 
 run();

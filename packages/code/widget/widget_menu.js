@@ -59,10 +59,13 @@ screens.widget.menu = function WidgetMenu(me) {
                 if (!title) {
                     return null;
                 }
+                var ref = title;
                 if (!info.keepCase) {
                     title = title.charAt(0).toUpperCase() + title.slice(1);
                 }
-                var ref = title;
+                if (info.title) {
+                    title = me.core.string.title(title);
+                }
                 var properties = {};
                 var item_metadata = {};
                 if (info.group) {
@@ -231,6 +234,9 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             var text = undefined;
             if (item.menu_options) {
                 text = item.menu_options.value;
+            }
+            if (typeof text === "undefined") {
+                text = item.menu_ref;
             }
             if (typeof text === "undefined") {
                 if (me.core.property.get(item, "ui.basic.tag") === "tr") {
