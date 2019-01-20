@@ -39,7 +39,7 @@ screens.app.propagate = function AppPropagate(me) {
     me.clear = function (object) {
         var window = me.widget.window.get(object);
         window.files = [];
-        me.file.set(object, null);
+        me.fileName.set(object, null);
     };
     me.selectFiles = function (object) {
         var window = me.widget.window.get(object);

@@ -38,6 +38,9 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
             return object.file_path;
         },
         set: function (object, value) {
+            if (!value) {
+                value = "";
+            }
             object.file_path = value;
             var modelist = ace.require("ace/ext/modelist");
             var mode = modelist.getModeForPath(object.file_path).mode;
@@ -60,7 +63,11 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
     me.format = function (object) {
         var beautify = ace.require("ace/ext/beautify");
         var modelist = ace.require("ace/ext/modelist");
-        var mode = modelist.getModeForPath(object.file_path).mode;
+        var filePath = object.file_path;
+        if (!filePath) {
+            filePath = "";
+        }
+        var mode = modelist.getModeForPath(filePath).mode;
         if (mode === "ace/mode/json") {
             object.editor.session.setValue(JSON.stringify(JSON.parse(object.editor.getValue()), null, 4));
         }
