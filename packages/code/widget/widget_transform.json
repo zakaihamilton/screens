@@ -358,14 +358,6 @@
                         },
                         "widget.transform.diagramList"
                     ]
-                },
-                {
-                    "text": "Output",
-                    "select": "widget.transform.output",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
                 }
             ]
         }

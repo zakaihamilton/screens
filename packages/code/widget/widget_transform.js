@@ -34,7 +34,6 @@ screens.widget.transform = function WidgetTransform(me) {
             autoPlay: true,
             voice: "Google UK English Male",
             speed: "Normal",
-            output: false,
             volume: "Normal",
             singleArticle: false
         });
@@ -62,8 +61,7 @@ screens.widget.transform = function WidgetTransform(me) {
             diagrams: me.transform,
             pipVideo: me.reflow,
             autoPlay: null,
-            singleArticle: null,
-            output: me.transform
+            singleArticle: null
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -155,15 +153,9 @@ screens.widget.transform = function WidgetTransform(me) {
         else {
             widget.termData = null;
         }
-        if (widget.options.output) {
-            me.core.property.set(widget.var.output, "ui.style.display", text ? "" : "none");
-            me.core.property.set(widget.var.layout, "ui.style.display", "none");
-        }
-        else {
-            me.core.property.set(widget.var.output, "ui.style.display", "none");
-            me.core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
-            me.widget.transform.layout.move(widget.var.output, widget.var.layout);
-        }
+        me.core.property.set(widget.var.output, "ui.style.display", "none");
+        me.core.property.set(widget.var.layout, "ui.style.display", text ? "" : "none");
+        me.widget.transform.layout.move(widget.var.output, widget.var.layout);
         widget.forceReflow = true;
         widget.contentChanged = true;
         widget.inTransform = false;
@@ -235,9 +227,6 @@ screens.widget.transform = function WidgetTransform(me) {
             return;
         }
         if (!widget.options) {
-            return;
-        }
-        if (widget.options.output) {
             return;
         }
         var visibleWidget = null;
