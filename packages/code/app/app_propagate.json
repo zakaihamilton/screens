@@ -27,7 +27,7 @@
                 "app.propagate.files",
                 {
                     "text": "Download",
-                    "select": "app.propagate.saveAs",
+                    "select": "app.propagate.download",
                     "options": {
                         "separator": true
                     }
@@ -59,11 +59,12 @@
                     "options": {
                         "state": "select"
                     }
-                },
-                {
-                    "text": "Scripts",
-                    "select": "header"
-                },
+                }
+            ]
+        },
+        {
+            "text": "Scripts",
+            "select": [
                 "app.propagate.scripts"
             ]
         }

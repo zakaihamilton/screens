@@ -5,6 +5,9 @@
 
 screens.app.propagate = function AppPropagate(me) {
     me.scriptsDir = "packages/res/scripts";
+    me.init = async function () {
+        me.scriptList = await me.core.file.readDir(me.scriptsDir);
+    };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -90,7 +93,7 @@ screens.app.propagate = function AppPropagate(me) {
         }
         return content;
     };
-    me.saveAs = async function (object) {
+    me.download = async function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         var name = me.core.property.get(window, "name");
@@ -111,11 +114,9 @@ screens.app.propagate = function AppPropagate(me) {
         me.core.property.set(window.var.editor, "format");
     };
     me.scripts = function (object) {
+        var list = me.scriptList.filter(file => file.endsWith(".js")).map(file => me.core.path.fileName(file));
         var info = {
-            list: async function () {
-                var files = await me.core.file.readDir(me.scriptsDir);
-                return files.filter(file => file.endsWith(".js")).map(file => me.core.path.fileName(file));
-            }(),
+            list,
             group: "scripts",
             keepCase: true,
             emptyMsg: "No Scripts Available",
