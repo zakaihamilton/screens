@@ -25,6 +25,13 @@
                     }
                 },
                 "app.propagate.files",
+                {
+                    "text": "Save as...",
+                    "select": "app.propagate.saveAs",
+                    "options": {
+                        "separator": true
+                    }
+                },
                 "widget.window.exportMenuList(app.propagate.exportText)"
             ]
         },

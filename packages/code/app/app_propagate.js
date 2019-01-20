@@ -36,7 +36,7 @@ screens.app.propagate = function AppPropagate(me) {
         window.files = Array.from(object.files);
         me.core.property.set(me.ui.node.container(object, "widget.menu.popup"), "back");
         if (window.files && window.files.length) {
-            me.file.set(object, window.files[0].name);
+            me.fileName.set(object, window.files[0].name);
         }
     };
     me.files = function (object) {
@@ -48,11 +48,11 @@ screens.app.propagate = function AppPropagate(me) {
             group: "files",
             keepCase: true,
             emptyMsg: "No Files Selected",
-            itemMethod: "app.propagate.file"
+            itemMethod: "app.propagate.fileName"
         };
         return me.widget.menu.collect(object, info);
     };
-    me.file = {
+    me.fileName = {
         get: function (object, name) {
             var window = me.widget.window.get(object);
             var fileName = me.core.property.get(window, "name");
@@ -89,6 +89,12 @@ screens.app.propagate = function AppPropagate(me) {
             }
         }
         return content;
+    };
+    me.saveAs = async function (object) {
+        var window = me.widget.window.get(object);
+        var text = me.core.property.get(window.var.editor, "text");
+        var name = me.core.property.get(window, "name");
+        me.file.text.export(name, text);
     };
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);

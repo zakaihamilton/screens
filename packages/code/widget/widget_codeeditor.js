@@ -21,7 +21,9 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
             "ui.basic.text": "text"
         },
         create: function (object) {
-            object.editor = ace.edit(object);
+            object.editor = ace.edit(object, {
+                showPrintMargin: false
+            });
             object.themeMethod = me.updateTheme;
             me.updateTheme(object);
         }
@@ -56,6 +58,13 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
     };
     me.format = function (object) {
         var beautify = ace.require("ace/ext/beautify");
-        beautify.beautify(object.editor.session);
+        var modelist = ace.require("ace/ext/modelist");
+        var mode = modelist.getModeForPath(object.file_path).mode;
+        if (mode === "ace/mode/json") {
+            object.editor.session.setValue(JSON.stringify(JSON.parse(object.editor.getValue()), null, 4));
+        }
+        else {
+            beautify.beautify(object.editor.session);
+        }
     };
 };
