@@ -123,7 +123,7 @@ screens.app.propagate = function AppPropagate(me) {
         };
         return me.widget.menu.collect(object, info);
     };
-    me.output = function (object, name, text) {
+    me.output = function (object, name, text, activate) {
         var window = me.widget.window.get(object);
         var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
         if (file) {
@@ -134,6 +134,9 @@ screens.app.propagate = function AppPropagate(me) {
                 name,
                 content: text
             });
+        }
+        if (activate) {
+            me.fileName.set(object, name);
         }
     };
     me.runScript = async function (object, name) {

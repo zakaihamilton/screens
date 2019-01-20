@@ -26,7 +26,7 @@
                 },
                 "app.propagate.files",
                 {
-                    "text": "Save as...",
+                    "text": "Download",
                     "select": "app.propagate.saveAs",
                     "options": {
                         "separator": true
