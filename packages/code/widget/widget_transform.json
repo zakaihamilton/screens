@@ -131,6 +131,9 @@
                 },
                 {
                     "text": "Audio",
+                    "options": {
+                        "separator": true
+                    },
                     "select": [
                         {
                             "text": "Auto Play",
@@ -149,29 +152,35 @@
                         },
                         {
                             "text": "Speed",
-                            "select": "header"
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                "widget.transform.player.speeds"
+                            ]
                         },
-                        "widget.transform.player.speeds",
                         {
                             "text": "Voice",
-                            "select": "header"
+                            "select": [
+                                {
+                                    "text": "None",
+                                    "select": "widget.transform.voice",
+                                    "options": {
+                                        "state": "select"
+                                    },
+                                    "properties": {
+                                        "group": "voices"
+                                    }
+                                },
+                                "widget.transform.player.voices"
+                            ]
                         },
-                        {
-                            "text": "None",
-                            "select": "widget.transform.voice",
-                            "options": {
-                                "state": "select"
-                            },
-                            "properties": {
-                                "group": "voices"
-                            }
-                        },
-                        "widget.transform.player.voices",
                         {
                             "text": "Volume",
-                            "select": "header"
-                        },
-                        "widget.transform.player.volumes"
+                            "select": [
+                                "widget.transform.player.volumes"
+                            ]
+                        }
                     ]
                 },
                 {

@@ -174,8 +174,12 @@ screens.ui.element = function UIElement(me) {
         if (!tag) {
             tag = "div";
         }
+        var exists = false;
         if (component.element && component.element.use) {
             object = component.element.use(properties, parent, context, params);
+            if (object) {
+                exists = true;
+            }
         }
         if (!object) {
             object = document.createElement(tag);
@@ -197,7 +201,7 @@ screens.ui.element = function UIElement(me) {
                 parent = container(object, parent, properties) || parent;
             }
         }
-        if (parent) {
+        if (parent && !exists) {
             me.core.property.set(object, "ui.node.parent", parent);
         }
         if (component.element) {
