@@ -106,7 +106,10 @@ screens.app.propagate = function AppPropagate(me) {
     };
     me.scripts = function (object) {
         var info = {
-            list: me.core.file.readDir(me.scriptsDir),
+            list: async function () {
+                var files = await me.core.file.readDir(me.scriptsDir);
+                return files.filter(file => file.endsWith(".js")).map(file => me.core.path.fileName(file));
+            }(),
             group: "scripts",
             keepCase: true,
             emptyMsg: "No Scripts Available",
@@ -128,7 +131,7 @@ screens.app.propagate = function AppPropagate(me) {
         }
     };
     me.runScript = async function (object, name) {
-        var code = await me.core.file.readFile(me.scriptsDir + "/" + name, "utf8");
+        var code = await me.core.file.readFile(me.scriptsDir + "/" + name + ".js", "utf8");
         try {
             var func = new Function("me", "object", code);
             if (func) {

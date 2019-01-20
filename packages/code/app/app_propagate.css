@@ -10,7 +10,6 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     line-height: 2em;
     font-size: 24px;
     resize: none;
@@ -20,4 +19,5 @@
     padding: 10px;
     background: var(--chrome-background);
     color: var(--chrome-color);
+    font-family:monospace;    
 }

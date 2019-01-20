@@ -15,8 +15,7 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
     };
     me.element = {
         properties: {
-            "ui.basic.tag": "div",
-            "ui.class.classExtra": "container"
+            "ui.basic.tag": "div"
         },
         redirect: {
             "ui.basic.text": "text"
