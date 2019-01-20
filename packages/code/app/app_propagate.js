@@ -28,6 +28,7 @@ screens.app.propagate = function AppPropagate(me) {
         });
         me.core.property.set(window, "app", me);
         me.core.property.set(window, "name", "");
+        window.files = [];
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
@@ -84,11 +85,13 @@ screens.app.propagate = function AppPropagate(me) {
         var content = "";
         if (name) {
             var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
-            if (typeof file.content !== "undefined") {
-                content = file.content;
-            }
-            else {
-                content = await me.storage.upload.readFile(file, true);
+            if (file) {
+                if (typeof file.content !== "undefined") {
+                    content = file.content;
+                }
+                else {
+                    content = await me.storage.upload.readFile(file, true);
+                }
             }
         }
         return content;
@@ -123,6 +126,9 @@ screens.app.propagate = function AppPropagate(me) {
             itemMethod: "app.propagate.runScript"
         };
         return me.widget.menu.collect(object, info);
+    };
+    me.refresh = async function () {
+        me.scriptList = await me.core.file.readDir(me.scriptsDir);
     };
     me.output = function (object, name, text, activate) {
         var window = me.widget.window.get(object);

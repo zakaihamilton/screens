@@ -65,6 +65,10 @@
         {
             "text": "Scripts",
             "select": [
+                {
+                    "text": "Refresh",
+                    "select": "app.propagate.refresh"
+                },
                 "app.propagate.scripts"
             ]
         }
