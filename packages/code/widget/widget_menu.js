@@ -241,7 +241,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         var window = me.core.property.get(object, "widget.window.active");
         var region = me.ui.rect.absoluteRegion(item);
         region.left = region.right;
-        region.bottom = region.top - (region.height / 10);
+        region.bottom = region.top;
         object.var.menu = me.upper.create_menu(window, object, region, info);
         me.core.property.set(object.var.menu, "ui.class.menu", true);
     };
@@ -631,7 +631,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 me.handleValue(object, options, "edit", (value) => {
                     if (options.edit) {
                         me.core.property.set(object, {
-                            "ui.class.add": "edit",
+                            "ui.class.add": ["edit", "input"],
                             "ui.attribute.contenteditable": true,
                             "core.link.close": options.edit,
                             "ui.basic.text": value,
@@ -640,7 +640,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     }
                     else {
                         me.core.property.set(object, {
-                            "ui.class.remove": "edit",
+                            "ui.class.remove": ["edit", "input"],
                             "ui.attribute.contenteditable": false,
                             "core.link.close": null,
                             "ui.attribute.placeholder": null

@@ -384,7 +384,7 @@
     position: absolute;
     min-width: 167px;
     background-color: var(--chrome-background);
-    border: 2px solid var(--chrome-border);
+    border: 1px solid var(--chrome-border);
     z-index: 1000;
     overflow: hidden;
 }
@@ -412,7 +412,7 @@
 }
 
 .glow-menu-vertical.menu {
-    border-radius: 0px 15px 15px 15px;
+    border-radius: 0px 15px 15px 0px;
 }
 
 .glow-menu-vertical th, .glow-menu-vertical td {
@@ -445,6 +445,19 @@
     cursor: default;
     user-select: none;
     position: relative;
+}
+
+.glow-menu-vertical li, .glow-menu-vertical tr, .glow-menu-vertical th, .glow-menu-vertical td, .glow-menu-vertical span {
+    border-top: 1px solid var(--chrome-background);
+    border-bottom: 1px solid var(--chrome-background);
+}
+
+.glow-menu-vertical .glow-menu-vertical li:nth-child(2), .glow-menu-vertical tr:nth-child(2), .glow-menu-vertical th:nth-child(2), .glow-menu-vertical td:nth-child(2), .glow-menu-vertical span:nth-child(2) {
+    border-top: none;
+}
+
+.glow-menu-vertical .glow-menu-vertical li:last-child, .glow-menu-vertical tr:last-child, .glow-menu-vertical th:last-child, .glow-menu-vertical td:last-child, .glow-menu-vertical span:last-child {
+    border-bottom: none;
 }
 
 .glow-menu-vertical input, .glow-menu-vertical li, .glow-menu-vertical tr, .glow-menu-vertical th, .glow-menu-vertical span {
@@ -500,8 +513,6 @@
 }
 
 .glow-menu-vertical input.separator, .glow-menu-vertical li.separator, .glow-menu-vertical tr.separator, .glow-menu-vertical span.separator {
-    margin-top: 3px;
-    border-top: 3px solid var(--chrome-background);
     box-shadow: 0px -1px 0px 0px var(--border-color);
 }
 
@@ -524,14 +535,8 @@
 }
 
 .glow-menu-vertical li.edit, .glow-menu-vertical tr.edit, .glow-menu-vertical span.edit, .glow-menu-vertical input.edit {
-    border-bottom: 1px dotted darkgray;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-bottom: 6px;
-    margin-left: 16px;
-    margin-right: 16px;
-    padding: 3px;
-    width: 90%;
+    margin: 6px;
+    width: 96%;
 }
 
 .glow-menu-vertical li.menu:after, .glow-menu-vertical tr.menu td:first-child:after, .glow-menu-vertical span.menu:after {
@@ -1001,4 +1006,9 @@ strong {
 .jsgrid-nodata-row>.jsgrid-cell {
     background: var(--background) !important;
     color: var(--color);
+}
+
+.field.has-addons .control:last-child .input {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
 }

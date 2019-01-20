@@ -373,21 +373,25 @@ screens.ui.content = function UIContent(me) {
                 if (!window.content.associated) {
                     me.content.associated.update(window, window.content._title);
                 }
-                return [[
-                    "Associated",
-                    "header"
-                ], [
-                    "",
-                    null,
-                    {
-                        "header": true,
-                        "visible": false
+                return [{
+                    "text": "Associated",
+                    "options": {
+                        "separator": true
                     },
-                    {
-                        "group": "associated",
-                        "promise": { promise: window.content.associated }
-                    }
-                ]];
+                    "select": [
+                        {
+                            "text": "",
+                            "options": {
+                                "header": true,
+                                "visible": false
+                            },
+                            "properties": {
+                                "group": "associated",
+                                "promise": { promise: window.content.associated }
+                            }
+                        }
+                    ]
+                }];
             }
         }
     };
