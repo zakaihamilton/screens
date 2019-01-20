@@ -12,6 +12,10 @@
             "text": "Propagate",
             "select": [
                 {
+                    "text": "Clear",
+                    "select": "app.propagate.clear"
+                },
+                {
                     "text": "Files...",
                     "options": {
                         "separator": true
@@ -30,7 +34,30 @@
                 {
                     "text": "Format",
                     "select": "app.propagate.format"
-                }
+                },
+                {
+                    "text": "Type",
+                    "select": "header"
+                },
+                {
+                    "text": "Auto",
+                    "select": "app.propagate.type",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
+                    "text": "None",
+                    "select": "app.propagate.type",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
+                    "text": "Scripts",
+                    "select": "header"
+                },
+                "app.propagate.scripts"
             ]
         }
     ],

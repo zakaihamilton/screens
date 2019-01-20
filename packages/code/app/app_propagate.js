@@ -4,6 +4,7 @@
  */
 
 screens.app.propagate = function AppPropagate(me) {
+    me.scriptsDir = "packages/res/scripts";
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
@@ -14,13 +15,21 @@ screens.app.propagate = function AppPropagate(me) {
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
-
+            type: "Auto"
         });
         me.ui.options.toggleSet(me, null, {
 
         });
+        me.ui.options.choiceSet(me, null, {
+            type: me.setFileType
+        });
         me.core.property.set(window, "app", me);
         me.core.property.set(window, "name", "");
+    };
+    me.clear = function (object) {
+        var window = me.widget.window.get(object);
+        window.files = [];
+        me.file.set(object, null);
     };
     me.selectFiles = function (object) {
         var window = me.widget.window.get(object);
@@ -51,12 +60,35 @@ screens.app.propagate = function AppPropagate(me) {
         },
         set: async function (object, name) {
             var window = me.widget.window.get(object);
-            var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
-            var text = await me.storage.upload.readFile(file, true);
+            var content = await me.content(object, name);
             me.core.property.set(window, "name", name);
-            me.core.property.set(window.var.editor, "path", file.name);
-            me.core.property.set(window.var.editor, "text", text);
+            me.setFileType(object);
+            me.core.property.set(window.var.editor, "text", content);
         }
+    };
+    me.setFileType = function (object) {
+        var window = me.widget.window.get(object);
+        var name = me.core.property.get(window, "name", name);
+        if (window.options.type === "Auto") {
+            me.core.property.set(window.var.editor, "path", name);
+        }
+        else {
+            me.core.property.set(window.var.editor, "path", "");
+        }
+    };
+    me.content = async function (object, name) {
+        var window = me.widget.window.get(object);
+        var content = "";
+        if (name) {
+            var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
+            if (typeof file.content !== "undefined") {
+                content = file.content;
+            }
+            else {
+                content = await me.storage.upload.readFile(file, true);
+            }
+        }
+        return content;
     };
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
@@ -71,5 +103,40 @@ screens.app.propagate = function AppPropagate(me) {
     me.format = function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.editor, "format");
+    };
+    me.scripts = function (object) {
+        var info = {
+            list: me.core.file.readDir(me.scriptsDir),
+            group: "scripts",
+            keepCase: true,
+            emptyMsg: "No Scripts Available",
+            itemMethod: "app.propagate.runScript"
+        };
+        return me.widget.menu.collect(object, info);
+    };
+    me.output = function (object, name, text) {
+        var window = me.widget.window.get(object);
+        var file = window.files.find(file => file.name.toLowerCase() === name.toLowerCase());
+        if (file) {
+            file.content = text;
+        }
+        else {
+            window.files.push({
+                name,
+                content: text
+            });
+        }
+    };
+    me.runScript = async function (object, name) {
+        var code = await me.core.file.readFile(me.scriptsDir + "/" + name, "utf8");
+        try {
+            var func = new Function("me", "object", code);
+            if (func) {
+                func(me, object);
+            }
+        }
+        catch (err) {
+            alert("Error: " + err.message + " stack: " + err.stack);
+        }
     };
 };
