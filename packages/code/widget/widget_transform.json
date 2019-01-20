@@ -208,9 +208,6 @@
                 },
                 {
                     "text": "Language",
-                    "options": {
-                        "menu": true
-                    },
                     "select": [
                         {
                             "text": "Auto",
@@ -294,9 +291,10 @@
                 },
                 {
                     "text": "Font Size",
-                    "select": "header"
+                    "select": [
+                        "widget.transform.fontSizesPx(widget.transform.fontSize)"
+                    ]
                 },
-                "widget.transform.fontSizesPx(widget.transform.fontSize)",
                 {
                     "text": "Diagrams",
                     "select": "header"

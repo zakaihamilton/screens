@@ -677,6 +677,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             else {
                 object.menu_select = value;
             }
+            if (Array.isArray(value)) {
+                me.core.property.set(object, "ui.class.menu", true);
+            }
             var optionNames = ["header", "label"];
             for (var optionName of optionNames) {
                 if (object.menu_select !== optionName) {
