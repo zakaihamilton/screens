@@ -127,39 +127,10 @@ screens.app.envision = function AppEnvision(me) {
             var result = "";
             if (item.found && content && item.value) {
                 for (var element of item.value) {
-                    result += me.processVars(object, content, element);
+                    result += me.core.json.processVars(object, content, element);
                 }
             }
             return result;
-        });
-        return text;
-    };
-    me.processVars = function (object, text, root) {
-        text = text.replace(/\${[^{}]*}/g, function (match) {
-            var path = match.substring(2, match.length - 1);
-            if (path.startsWith("@")) {
-                path = path.substring(1);
-                if (path === "date") {
-                    return new Date().toString();
-                }
-                else {
-                    var info = me.core.property.split(object, path);
-                    let item = me.core.json.traverse(root, info.value);
-                    if (item.found) {
-                        return me.core.property.get(object, info.name, item.value);
-                    }
-                    return "";
-                }
-            }
-            let item = me.core.json.traverse(root, path);
-            if (item.found) {
-                var value = item.value;
-                if (typeof value === "object") {
-                    value = JSON.stringify(value);
-                }
-                return value;
-            }
-            return "";
         });
         return text;
     };
@@ -187,7 +158,7 @@ screens.app.envision = function AppEnvision(me) {
                 throw "Cannot process arrays: " + err;
             }
             try {
-                format = me.processVars(object, format, source);
+                format = me.core.json.processVars(object, format, source);
             }
             catch (err) {
                 throw "Cannot process vars: " + err;

@@ -34,12 +34,9 @@ async function run() {
     }
     var services = channelsLineup.servicePresentationData.services;
     services = services.map(service => {
-        let LCN = service.logicalChannelNumber;
-        let SEK = service.SEK;
         service = Object.assign(service, channelDetails);
         let text = JSON.stringify(service);
-        text = text.replace(/{LCN}/g, LCN);
-        text = text.replace(/{SEK}/g, SEK);
+        text = me.core.json.processVars(object, text, service);
         service = JSON.parse(text);
         return service;
     });
