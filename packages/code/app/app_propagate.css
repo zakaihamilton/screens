@@ -19,5 +19,5 @@
     padding: 10px;
     background: var(--chrome-background);
     color: var(--chrome-color);
-    font-family:monospace;    
+    overflow: hidden;
 }

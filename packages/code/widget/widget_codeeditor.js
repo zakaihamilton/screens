@@ -15,7 +15,8 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
     };
     me.element = {
         properties: {
-            "ui.basic.tag": "div"
+            "ui.basic.tag": "div",
+            "ui.style.fontFamily": "monospace"
         },
         redirect: {
             "ui.basic.text": "text"
@@ -65,6 +66,16 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
         }
         else {
             beautify.beautify(object.editor.session);
+        }
+    };
+    me.readOnly = {
+        get: function (object) {
+            return object.editor.getReadOnly();
+        },
+        set: function (object, value) {
+            if (typeof value !== "undefined") {
+                object.editor.setReadOnly(value);
+            }
         }
     };
 };

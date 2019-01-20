@@ -82,7 +82,8 @@
                 {
                     "ui.element.component": "widget.codeeditor",
                     "ui.class.class": "app.propagate.editor",
-                    "ui.basic.var": "editor"
+                    "ui.basic.var": "editor",
+                    "readOnly": true
                 }
             ]
         }
