@@ -18,13 +18,19 @@ screens.app.propagate = function AppPropagate(me) {
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
         me.ui.options.load(me, window, {
-            type: "Auto"
+            type: "Auto",
+            format: true
         });
         me.ui.options.toggleSet(me, null, {
-
+            format: (object) => {
+                me.setFormat(object);
+            }
         });
         me.ui.options.choiceSet(me, null, {
-            type: me.setFileType
+            type: (object) => {
+                me.setFileType(object);
+                me.setFormat(object);
+            }
         });
         me.core.property.set(window, "app", me);
         me.core.property.set(window, "name", "");
@@ -68,6 +74,7 @@ screens.app.propagate = function AppPropagate(me) {
             me.core.property.set(window, "name", name);
             me.setFileType(object);
             me.core.property.set(window.var.editor, "text", content);
+            me.setFormat(object);
         }
     };
     me.setFileType = function (object) {
@@ -78,6 +85,12 @@ screens.app.propagate = function AppPropagate(me) {
         }
         else {
             me.core.property.set(window.var.editor, "path", "");
+        }
+    };
+    me.setFormat = function (object) {
+        var window = me.widget.window.get(object);
+        if (window.options.format) {
+            me.core.property.set(window.var.editor, "format");
         }
     };
     me.content = async function (object, name) {
@@ -111,10 +124,6 @@ screens.app.propagate = function AppPropagate(me) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.editor, "text");
         me.core.property.set(target, "importData", text);
-    };
-    me.format = function (object) {
-        var window = me.widget.window.get(object);
-        me.core.property.set(window.var.editor, "format");
     };
     me.scripts = function (object) {
         var list = me.scriptList.filter(file => file.endsWith(".js")).map(file => me.core.path.fileName(file));

@@ -40,7 +40,10 @@
             "select": [
                 {
                     "text": "Format",
-                    "select": "app.propagate.format"
+                    "select": "app.propagate.format",
+                    "options": {
+                        "state": "select"
+                    }
                 },
                 {
                     "text": "Type",
