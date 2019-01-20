@@ -533,6 +533,25 @@
     width: 90%;
 }
 
+.glow-menu-vertical li.menu:after, .glow-menu-vertical tr.menu td:first-child:after, .glow-menu-vertical span.menu:after {
+    border-color: var(--border-color);
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    content: '';
+    height: 0.4em;
+    right: 0.5em;
+    position: absolute;
+    vertical-align: top;
+    width: 0.4em;
+    top: 0.6em;
+    transform: rotate(50deg);
+}
+
+.glow-menu-vertical li.selected, .glow-menu-vertical tr.selected td:first-child, .glow-menu-vertical span.selected {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}
+
 .glow-window-footer {
     flex: none;
     height: 18px;

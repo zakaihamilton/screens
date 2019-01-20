@@ -4,7 +4,7 @@
         "widget.window.restore",
         {
             "enabled": "select",
-            "visible": "menu.context.notPopup"
+            "visible": "widget.contextmenu.notPopup"
         }
     ],
     [
@@ -12,7 +12,7 @@
         "widget.window.minimize",
         {
             "enabled": "select",
-            "visible": "menu.context.minimizable"
+            "visible": "widget.contextmenu.minimizable"
         }
     ],
     [
@@ -20,15 +20,15 @@
         "widget.window.maximize",
         {
             "enabled": "select",
-            "visible": "menu.context.maximizable"
+            "visible": "widget.contextmenu.maximizable"
         }
     ],
     [
         "Close",
         "widget.window.close",
         {
-            "separator": "menu.context.resizable",
-            "visible": "menu.context.notEmbed",
+            "separator": "widget.contextmenu.resizable",
+            "visible": "widget.contextmenu.notEmbed",
             "enabled": "select"
         }
     ],
@@ -37,7 +37,7 @@
         "widget.window.alwaysOnTop",
         {
             "separator": true,
-            "visible": "menu.context.notEmbed",
+            "visible": "widget.contextmenu.notEmbed",
             "state": "select"
         }
     ],
@@ -45,7 +45,7 @@
         "See Through",
         "widget.window.seeThrough",
         {
-            "visible": "menu.context.notEmbed",
+            "visible": "widget.contextmenu.notEmbed",
             "state": "select"
         }
     ],
@@ -53,7 +53,7 @@
         "Fullscreen",
         "widget.window.fullscreen",
         {
-            "visible": "menu.context.notEmbed",
+            "visible": "widget.contextmenu.notEmbed",
             "state": "select"
         }
     ],
@@ -66,10 +66,10 @@
     ],
     [
         "Next",
-        "menu.context.next",
+        "widget.contextmenu.next",
         {
             "separator": true,
-            "visible": "menu.context.isChild"
+            "visible": "widget.contextmenu.isChild"
         }
     ],
     [
@@ -77,7 +77,7 @@
         "core.app.tasks",
         {
             "separator": true,
-            "visible": "menu.context.switchable"
+            "visible": "widget.contextmenu.switchable"
         }
     ]
 ]

@@ -180,7 +180,7 @@ screens.widget.menu = function WidgetMenu(me) {
             }
         }
     };
-    me.create_menu = function (window, object, region, values, bottomUp) {
+    me.create_menu = function (window, object, region, values, bottomUp = false) {
         var menu = me.ui.element.create({
             "ui.basic.var": "menu",
             "ui.element.component": "widget.menu.popup",
@@ -221,14 +221,39 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            me.core.property.set(object.target, "back", value);
+            if (value || !me.core.property.get(object, "ui.class.subMenu")) {
+                me.core.property.set(object.target, "back", value);
+            }
+            me.core.property.set(object.target, "ui.property.broadcast", {
+                "ui.class.remove": "selected"
+            });
             me.core.property.set(object, "ui.node.parent");
         }
+    };
+    me.subMenu = async function (object, value) {
+        var item = value[0];
+        var info = value[1];
+        me.core.property.set(object, "ui.property.broadcast", {
+            "ui.class.remove": "selected"
+        });
+        me.core.property.set(item, "ui.class.add", "selected");
+        me.core.property.set(object.var.modal, "ui.style.display", "block");
+        var window = me.core.property.get(object, "widget.window.active");
+        var region = me.ui.rect.absoluteRegion(item);
+        region.left = region.right;
+        region.right = region.right + region.width;
+        region.bottom = region.top;
+        region.top = region.bottom + region.height;
+        object.var.menu = me.upper.create_menu(window, object, region, info);
+        me.core.property.set(object.var.menu, "ui.class.subMenu", true);
     };
     me.select = {
         set: function (object, value) {
             var item = value[0];
             var method = value[1];
+            if (Array.isArray(method)) {
+                return me.subMenu(object, value);
+            }
             me.core.property.set(object, "back", item);
             var prefix = me.core.property.get(item, "prefix");
             var text = undefined;
@@ -590,32 +615,20 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     me.core.property.set(object, "ui.style.display", value ? "" : "none");
                 });
                 me.handleValue(object, options, "state", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "checked");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "checked");
-                    }
+                    me.core.property.set(object, "ui.class.checked", value);
+                });
+                me.handleValue(object, options, "menu", (value) => {
+                    me.core.property.set(object, "ui.class.menu", value);
                 });
                 me.handleValue(object, options, "separator", (value) => {
-                    if (value && object.parentNode.firstChild !== object.previousSibling) {
-                        me.core.property.set(object, "ui.class.add", "separator");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "separator");
-                    }
+                    var result = value && object.parentNode.firstChild !== object.previousSibling;
+                    me.core.property.set(object, "ui.class.separator", result);
                 });
                 me.handleValue(object, options, "header", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "header");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "header");
-                    }
+                    me.core.property.set(object, "ui.class.header", value);
                 });
                 me.handleValue(object, options, "label", (value) => {
-                    if (value) {
-                        me.core.property.set(object, "ui.class.add", "label");
-                    } else {
-                        me.core.property.set(object, "ui.class.remove", "label");
-                    }
+                    me.core.property.set(object, "ui.class.label", value);
                 });
                 me.handleValue(object, options, "edit", (value) => {
                     if (options.edit) {

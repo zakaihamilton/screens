@@ -208,36 +208,40 @@
                 },
                 {
                     "text": "Language",
-                    "select": "header"
-                },
-                {
-                    "text": "Auto",
-                    "select": "widget.transform.language",
                     "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "None",
-                    "select": "widget.transform.language",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "English",
-                    "select": "widget.transform.language",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Hebrew",
-                    "select": "widget.transform.language",
-                    "options": {
-                        "state": "select"
-                    }
+                        "menu": true
+                    },
+                    "select": [
+                        {
+                            "text": "Auto",
+                            "select": "widget.transform.language",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "None",
+                            "select": "widget.transform.language",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "English",
+                            "select": "widget.transform.language",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Hebrew",
+                            "select": "widget.transform.language",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 },
                 {
                     "text": "Output",

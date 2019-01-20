@@ -50,7 +50,7 @@
             "text": "",
             "ui.class.class": "widget.window.icon",
             "ui.basic.src": "/packages/res/icons/default.png",
-            "ui.touch.dblclick": "menu.context.show(taskbar)",
+            "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
             "ui.touch.click": "widget.window.taskbarClick",
             "ui.basic.window": null,
             "ui.node.parent": "@widget.taskbar.tasks",
@@ -67,7 +67,7 @@
                             "ui.basic.window": "@ui.node.parent",
                             "ui.basic.var": "close",
                             "ui.class.class": "close",
-                            "ui.touch.click": "menu.context.show",
+                            "ui.touch.click": "widget.contextmenu.show",
                             "ui.touch.dblclick": "close",
                             "ui.class.add": "@widget.window.mainClass",
                             "ui.attribute.title": "Menu (Double Click to Close)"

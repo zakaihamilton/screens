@@ -21,9 +21,6 @@ function startBrowser(appName, appArgs) {
         "ui": [
             "*"
         ],
-        "menu": [
-            "*"
-        ],
         "widget": [
             "*"
         ],

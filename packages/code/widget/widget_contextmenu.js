@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component MenuContext
+ @component WidgetContextMenu
  */
 
-screens.menu.context = function MenuContext(me) {
+screens.widget.contextmenu = function WidgetContextMenu(me) {
     me.resizable = {
         get: function (object) {
             var window = me.widget.window.get(object);
