@@ -56,14 +56,6 @@
             "select": []
         },
         {
-            "text": "Layout",
-            "select": []
-        },
-        {
-            "text": "Audio",
-            "select": []
-        },
-        {
             "text": "Content",
             "select": [
                 "app.present.content.menu"

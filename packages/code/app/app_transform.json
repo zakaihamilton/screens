@@ -58,14 +58,6 @@
                     ]
                 },
                 {
-                    "text": "Layout",
-                    "select": []
-                },
-                {
-                    "text": "Audio",
-                    "select": []
-                },
-                {
                     "text": "Content",
                     "select": [
                         "app.transform.content.menu"

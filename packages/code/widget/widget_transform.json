@@ -130,41 +130,91 @@
                     "select": "widget.transform.transform"
                 },
                 {
-                    "text": "Translation",
-                    "select": "widget.transform.doTranslation",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
+                    "text": "Audio",
+                    "select": [
+                        {
+                            "text": "Auto Play",
+                            "select": "widget.transform.autoPlay",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Single Article",
+                            "select": "widget.transform.singleArticle",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.autoPlay"
+                            }
+                        },
+                        {
+                            "text": "Speed",
+                            "select": "header"
+                        },
+                        "widget.transform.player.speeds",
+                        {
+                            "text": "Voice",
+                            "select": "header"
+                        },
+                        {
+                            "text": "None",
+                            "select": "widget.transform.voice",
+                            "options": {
+                                "state": "select"
+                            },
+                            "properties": {
+                                "group": "voices"
+                            }
+                        },
+                        "widget.transform.player.voices",
+                        {
+                            "text": "Volume",
+                            "select": "header"
+                        },
+                        "widget.transform.player.volumes"
+                    ]
                 },
                 {
-                    "text": "Source",
-                    "select": "widget.transform.keepSource",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Abridged",
-                    "select": "widget.transform.abridged",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Explanation",
-                    "select": "widget.transform.doExplanation",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Prioritize Explanation",
-                    "select": "widget.transform.prioritizeExplanation",
-                    "options": {
-                        "state": "select"
-                    }
+                    "text": "Text",
+                    "select": [
+                        {
+                            "text": "Translation",
+                            "select": "widget.transform.doTranslation",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Source",
+                            "select": "widget.transform.keepSource",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Abridged",
+                            "select": "widget.transform.abridged",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Explanation",
+                            "select": "widget.transform.doExplanation",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Prioritize Explanation",
+                            "select": "widget.transform.prioritizeExplanation",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 },
                 {
                     "text": "Styles",
@@ -175,39 +225,47 @@
                     }
                 },
                 {
-                    "text": "Category",
-                    "select": "widget.transform.category",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.addStyles"
-                    }
-                },
-                {
-                    "text": "Headings",
-                    "select": "widget.transform.headings",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.addStyles"
-                    }
-                },
-                {
-                    "text": "Phase Numbers",
-                    "select": "widget.transform.phaseNumbers",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.addStyles"
-                    }
-                },
-                {
-                    "text": "Sub Headings",
-                    "select": "widget.transform.subHeadings",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.addStyles"
-                    }
+                    "text": "Other",
+                    "select": [
+                        {
+                            "text": "Category",
+                            "select": "widget.transform.category",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.addStyles"
+                            }
+                        },
+                        {
+                            "text": "Headings",
+                            "select": "widget.transform.headings",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.addStyles"
+                            }
+                        },
+                        {
+                            "text": "Phase Numbers",
+                            "select": "widget.transform.phaseNumbers",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.addStyles"
+                            }
+                        },
+                        {
+                            "text": "Sub Headings",
+                            "select": "widget.transform.subHeadings",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.addStyles"
+                            }
+                        }
+                    ]
                 },
                 {
                     "text": "Language",
+                    "options": {
+                        "separator": true
+                    },
                     "select": [
                         {
                             "text": "Auto",
@@ -241,6 +299,58 @@
                     ]
                 },
                 {
+                    "text": "Layout",
+                    "select": [
+                        {
+                            "text": "Reflow",
+                            "select": "widget.transform.reflow"
+                        },
+                        {
+                            "text": "Snap",
+                            "select": "widget.transform.snap",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Pages",
+                            "select": "widget.transform.pages",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Columns",
+                            "select": "widget.transform.columns",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.pages"
+                            }
+                        },
+                        {
+                            "text": "Video Slot",
+                            "select": "widget.transform.pipVideo",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Font Size",
+                            "select": [
+                                "widget.transform.fontSizesPx(widget.transform.fontSize)"
+                            ]
+                        },
+                        {
+                            "text": "Diagrams",
+                            "select": "header"
+                        },
+                        "widget.transform.diagramList"
+                    ]
+                },
+                {
                     "text": "Output",
                     "select": "widget.transform.output",
                     "options": {
@@ -248,103 +358,6 @@
                         "separator": true
                     }
                 }
-            ]
-        },
-        {
-            "text": "Layout",
-            "select": [
-                {
-                    "text": "Reflow",
-                    "select": "widget.transform.reflow"
-                },
-                {
-                    "text": "Snap",
-                    "select": "widget.transform.snap",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Pages",
-                    "select": "widget.transform.pages",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Columns",
-                    "select": "widget.transform.columns",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.pages"
-                    }
-                },
-                {
-                    "text": "Video Slot",
-                    "select": "widget.transform.pipVideo",
-                    "options": {
-                        "state": "select",
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Font Size",
-                    "select": [
-                        "widget.transform.fontSizesPx(widget.transform.fontSize)"
-                    ]
-                },
-                {
-                    "text": "Diagrams",
-                    "select": "header"
-                },
-                "widget.transform.diagramList"
-            ]
-        },
-        {
-            "text": "Audio",
-            "select": [
-                {
-                    "text": "Auto Play",
-                    "select": "widget.transform.autoPlay",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Single Article",
-                    "select": "widget.transform.singleArticle",
-                    "options": {
-                        "state": "select",
-                        "enabled": "widget.transform.autoPlay"
-                    }
-                },
-                {
-                    "text": "Speed",
-                    "select": "header"
-                },
-                "widget.transform.player.speeds",
-                {
-                    "text": "Voice",
-                    "select": "header"
-                },
-                {
-                    "text": "None",
-                    "select": "widget.transform.voice",
-                    "options": {
-                        "state": "select"
-                    },
-                    "properties": {
-                        "group": "voices"
-                    }
-                },
-                "widget.transform.player.voices",
-                {
-                    "text": "Volume",
-                    "select": "header"
-                },
-                "widget.transform.player.volumes"
             ]
         }
     ]
