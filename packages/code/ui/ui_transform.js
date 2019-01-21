@@ -8,109 +8,191 @@ screens.ui.transform = function UITransform(me) {
         menu: function () {
             var prefix = me.id + ".";
             return [
-                [
-                    "Translation",
-                    prefix + "doTranslation",
-                    {
+                {
+                    "text": "Clear",
+                    "select": prefix + "clear",
+                    "options": {
+                        "separator": true
+                    }
+                },
+                {
+                    "text": "Refresh",
+                    "select": prefix + "transform"
+                },
+                {
+                    "text": "Text",
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        {
+                            "text": "Translation",
+                            "select": prefix + "doTranslation",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Source",
+                            "select": prefix + "keepSource",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Abridged",
+                            "select": prefix + "abridged",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Explanation",
+                            "select": prefix + "doExplanation",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Prioritize Explanation",
+                            "select": prefix + "prioritizeExplanation",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "text": "Styles",
+                    "select": prefix + "addStyles",
+                    "options": {
                         "state": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Keep Source",
-                    prefix + "keepSource",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Abridged",
-                    prefix + "abridged",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Explanation",
-                    prefix + "doExplanation",
-                    {
-                        "state": "select",
+                },
+                {
+                    "text": "Adornments",
+                    "select": [
+                        {
+                            "text": "Category",
+                            "select": prefix + "category",
+                            "options": {
+                                "state": "select",
+                                "enabled": prefix + "addStyles"
+                            }
+                        },
+                        {
+                            "text": "Headings",
+                            "select": prefix + "headings",
+                            "options": {
+                                "state": "select",
+                                "enabled": prefix + "addStyles"
+                            }
+                        },
+                        {
+                            "text": "Phase Numbers",
+                            "select": prefix + "phaseNumbers",
+                            "options": {
+                                "state": "select",
+                                "enabled": prefix + "addStyles"
+                            }
+                        },
+                        {
+                            "text": "Sub Headings",
+                            "select": prefix + "subHeadings",
+                            "options": {
+                                "state": "select",
+                                "enabled": prefix + "addStyles"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "text": "Language",
+                    "options": {
                         "separator": true
-                    }
-                ],
-                [
-                    "Prioritize Explanation",
-                    prefix + "prioritizeExplanation",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "Styles",
-                    prefix + "addStyles",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Category",
-                    prefix + "category",
-                    {
-                        "state": "select",
-                        "enabled": prefix + "category"
-                    }
-                ],
-                [
-                    "Headings",
-                    prefix + "headings",
-                    {
-                        "state": "select",
-                        "enabled": prefix + "addStyles"
-                    }
-                ],
-                [
-                    "Phase Numbers",
-                    prefix + "phaseNumbers",
-                    {
-                        "state": "select",
-                        "enabled": prefix + "addStyles"
-                    }
-                ],
-                [
-                    "Sub Headings",
-                    prefix + "subHeadings",
-                    {
-                        "state": "select",
-                        "enabled": prefix + "addStyles"
-                    }
-                ],
-                [
-                    "Language",
-                    "header"
-                ],
-                [
-                    "Auto",
-                    prefix + "language",
-                    {
-                        "state": "select"
-                    }
-                ],
-                [
-                    "English",
-                    prefix + "language",
-                    {
-                        "state": "select",
-                        "separator": true
-                    }
-                ],
-                [
-                    "Hebrew",
-                    prefix + "language",
-                    {
-                        "state": "select"
-                    }
-                ]
+                    },
+                    "select": [
+                        {
+                            "text": "Auto",
+                            "select": prefix + "language",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "None",
+                            "select": prefix + "language",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "English",
+                            "select": prefix + "language",
+                            "options": {
+                                "state": "select",
+                                "separator": true,
+                                "value": ""
+                            }
+                        },
+                        {
+                            "text": "Hebrew",
+                            "select": prefix + "language",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "text": "Layout",
+                    "select": [
+                        {
+                            "text": "Reflow",
+                            "select": prefix + "reflow"
+                        },
+                        {
+                            "text": "Snap",
+                            "select": prefix + "snap",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Pages",
+                            "select": prefix + "pages",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Columns",
+                            "select": prefix + "columns",
+                            "options": {
+                                "state": "select",
+                                "enabled": prefix + "pages"
+                            }
+                        },
+                        {
+                            "text": "Video Slot",
+                            "select": prefix + "pipVideo",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Font Size",
+                            "select": [
+                                prefix + "fontSizesPx(" + prefix + "fontSize)"
+                            ]
+                        }
+                    ]
+                }
             ];
         },
         popup: function () {

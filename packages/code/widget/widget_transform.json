@@ -286,7 +286,8 @@
                             "text": "None",
                             "select": "widget.transform.language",
                             "options": {
-                                "state": "select"
+                                "state": "select",
+                                "value": ""
                             }
                         },
                         {

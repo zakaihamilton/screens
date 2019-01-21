@@ -61,24 +61,15 @@
                         "separator": true
                     }
                 },
-                "app.table.transform.menu"
-            ]
-        },
-        {
-            "text": "Layout",
-            "select": [
+                "app.table.transform.menu",
                 {
                     "text": "Border",
                     "select": "app.table.border",
                     "options": {
+                        "separator": true,
                         "state": "select"
                     }
-                },
-                {
-                    "text": "Font Size",
-                    "select": "header"
-                },
-                "widget.transform.fontSizesPx(app.table.fontSize)"
+                }
             ]
         },
         {
