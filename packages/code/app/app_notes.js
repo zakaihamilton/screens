@@ -44,7 +44,7 @@ screens.app.notes = function AppNotes(me) {
     };
     me.update = function (object) {
         var window = me.widget.window.get(object);
-        var title = me.core.property.get(window.var.editor, "text").split("\n")[0];
+        var title = me.core.property.get(window, "app.notes.content.title");
         me.core.property.set(window, "name", title);
         me.core.property.set(window.var.editor, "ui.basic.save", { method: "contents", json: true });
     };
