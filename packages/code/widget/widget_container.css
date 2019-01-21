@@ -1,6 +1,6 @@
 .widget-container-root {
     flex: 1;
-    background: var(--background);
+    background: var(--background-transparent);
     overflow: auto;
     position: relative;
     display: block;

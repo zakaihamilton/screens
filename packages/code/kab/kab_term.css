@@ -181,7 +181,6 @@
 }
 
 .kab-term-phase-root {
-    background-color: var(--background);
     color: var(--focus-color);
 }
 
@@ -192,7 +191,7 @@
 }
 
 .kab-term-phase-one {
-    background-color: var(--phase-one-background);
+    background-color: var(--phase-one-background-transparent);
     border: 2px solid var(--phase-one-border);
     color: var(--focus-color);
 }
@@ -212,7 +211,7 @@
 }
 
 .kab-term-phase-two {
-    background-color: var(--phase-two-background);
+    background-color: var(--phase-two-background-transparent);
     border: 2px solid var(--phase-two-border);
     color: var(--focus-color);
 }
@@ -232,7 +231,7 @@
 }
 
 .kab-term-phase-three {
-    background-color: var(--phase-three-background);
+    background-color: var(--phase-three-background-transparent);
     border: 2px solid var(--phase-three-border);
     color: var(--focus-color);
 }
@@ -251,7 +250,7 @@
 }
 
 .kab-term-phase-four {
-    background-color: var(--phase-four-background);
+    background-color: var(--phase-four-background-transparent);
     border: 2px solid var(--phase-four-border);
     color: var(--focus-color);
 }
@@ -270,7 +269,7 @@
 }
 
 .kab-term-phase-collective {
-    background-color: var(--phase-collective-background);
+    background-color: var(--phase-collective-background-transparent);
     border: 2px solid var(--phase-collective-border);
     color: var(--focus-color);
 }

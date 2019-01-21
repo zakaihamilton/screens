@@ -50,7 +50,6 @@
     flex-direction: column;
     user-select: text;
     color: var(--color);
-    background: var(--background);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -66,7 +65,6 @@
     box-sizing: border-box;
     border-top: 1px solid gray;
     margin: 0;
-    background: var(--background);
     transform: translateZ(0);
 }
 

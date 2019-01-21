@@ -53,7 +53,6 @@
 
 .glow-window-border {
     border: Solid 1px #0f2777;
-    background: white;
     border-radius: 15px;
     overflow: hidden;
     min-width: 200px;
@@ -178,7 +177,6 @@
     overflow: hidden;
     border: Solid 1px #0f2777;
     box-shadow: 0px 0px 15px 3px #0f2777;
-    background: var(--chrome-background);
     border-radius: 15px;
     margin: 2px;
 }
@@ -241,8 +239,16 @@
     background: #0f2777;
 }
 
+.glow-window-bottom-left.maximize {
+    display:none;
+}
+
 .glow-window-bottom-right {
     background: #0f2777;
+}
+
+.glow-window-bottom-right.maximize {
+    display:none;
 }
 
 .glow-window-title {
@@ -250,6 +256,7 @@
     display: flex;
     height: 1.5em;
     border-bottom: none;
+    background: var(--chrome-background);
 }
 
 .glow-window-title.child {
