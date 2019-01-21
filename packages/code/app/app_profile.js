@@ -69,6 +69,7 @@ screens.app.profile = function AppProfile(me) {
                 property: "name",
                 options: { "state": "select" },
                 group: "users",
+                sort: true,
                 listMethod: me.sortUserList,
                 itemMethod: "app.profile.userName"
             };

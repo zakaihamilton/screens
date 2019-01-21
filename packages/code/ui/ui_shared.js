@@ -14,6 +14,7 @@ screens.ui.shared = function UIShared(me) {
                 property: "name",
                 options: { "state": "select" },
                 group: "users",
+                sort: true,
                 itemMethod: me.id + ".userName",
                 emptyMsg: "No Users"
             };

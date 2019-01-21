@@ -51,6 +51,14 @@ screens.widget.menu = function WidgetMenu(me) {
                     properties
                 }];
             }
+            if (info.sort) {
+                if (info.property) {
+                    items = items.sort((a, b) => String(a[info.property]).localeCompare(String(b[info.property])));
+                }
+                else {
+                    items = items.sort();
+                }
+            }
             items = items.map(function (item) {
                 var title = item;
                 if (info.property) {
