@@ -114,11 +114,13 @@
                 {
                     "ui.element.component": "widget.container",
                     "ui.basic.var": "container",
-                    "ui.basic.elements": {
-                        "ui.basic.tag": "div",
-                        "ui.class.class": "align",
-                        "ui.basic.var": "align"
-                    }
+                    "ui.basic.elements": [
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.class.class": "align",
+                            "ui.basic.var": "align"
+                        }
+                    ]
                 },
                 {
                     "ui.class.class": "footer",

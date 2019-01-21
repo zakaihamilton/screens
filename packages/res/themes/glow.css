@@ -57,6 +57,8 @@
     overflow: hidden;
     min-width: 200px;
     min-height: 200px;
+	background-color:var(--background);
+	background-size: 400% 400%;
 }
 
 .glow-window-border.transparent {
@@ -228,27 +230,23 @@
 }
 
 .glow-window-top-left {
-    background: #0f2777;
+    background: none;
+    border:none;
 }
 
 .glow-window-top-right {
-    background: #0f2777;
+    background: none;
+    border:none;
 }
 
 .glow-window-bottom-left {
-    background: #0f2777;
-}
-
-.glow-window-bottom-left.maximize {
-    display:none;
+    background: none;
+    border:none;
 }
 
 .glow-window-bottom-right {
-    background: #0f2777;
-}
-
-.glow-window-bottom-right.maximize {
-    display:none;
+    background: none;
+    border:none;
 }
 
 .glow-window-title {
