@@ -35,7 +35,8 @@ screens.ui.content = function UIContent(me) {
                         prefix + "publicMenu"
                     ],
                     "options": {
-                        "visible": prefix + "hasPublic"
+                        "visible": prefix + "hasPublic",
+                        "separator": true
                     }
                 },
                 {
