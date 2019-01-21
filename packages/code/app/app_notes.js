@@ -4,8 +4,8 @@
  */
 
 screens.app.notes = function AppNotes(me) {
-    me.init = function () {
-        me.ui.content.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
     };
     me.launch = async function (args) {
         if (!args) {

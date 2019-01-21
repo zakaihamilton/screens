@@ -5,7 +5,7 @@
 
 screens.app.workshop = function AppWorkshop(me) {
     me.init = async function () {
-        me.ui.shared.attach(me);
+        await me.ui.shared.attach(me);
     };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

@@ -66,11 +66,11 @@ function screens_setup(package_name, component_name, child_name, node) {
         }
     }
     else {
-        component_obj.attach = (me) => {
+        component_obj.attach = async (me) => {
             var context = constructor(me);
             var result = null;
             if (context.init) {
-                result = context.init();
+                result = await context.init();
             }
             return result;
         };

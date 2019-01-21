@@ -7,7 +7,7 @@ screens.app.player = function AppPlayer(me) {
     me.init = async function () {
         me.groups = await me.media.file.groups();
         me.playerCounter = 0;
-        me.ui.content.attach(me);
+        await me.ui.content.attach(me);
     };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

@@ -4,8 +4,8 @@
  */
 
 screens.app.prism = function AppPrism(me) {
-    me.init = function () {
-        me.ui.transform.attach(me);
+    me.init = async function () {
+        await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (!args) {

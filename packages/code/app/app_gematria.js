@@ -4,8 +4,8 @@
  */
 
 screens.app.gematria = function AppGematria(me) {
-    me.init = function () {
-        me.ui.content.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
     };
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

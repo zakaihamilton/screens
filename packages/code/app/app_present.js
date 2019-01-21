@@ -4,9 +4,9 @@
  */
 
 screens.app.present = function AppPresent(me) {
-    me.init = function () {
-        me.ui.content.attach(me);
-        me.ui.shared.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
+        await me.ui.shared.attach(me);
     };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

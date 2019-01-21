@@ -4,9 +4,9 @@
  */
 
 screens.app.table = function AppTable(me) {
-    me.init = function () {
-        me.ui.content.attach(me);
-        me.ui.transform.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
+        await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (!args) {

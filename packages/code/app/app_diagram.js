@@ -4,12 +4,12 @@
  */
 
 screens.app.diagram = function AppDiagram(me) {
-    me.init = function () {
+    me.init = async function () {
         me.core.property.set(me, {
             "core.property.object.path": null,
             "core.property.object.diagramData": null
         });
-        me.ui.transform.attach(me);
+        await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (!args) {

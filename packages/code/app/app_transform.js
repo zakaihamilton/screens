@@ -11,8 +11,8 @@ screens.app.transform = function AppTransform(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
     };
-    me.init = function () {
-        me.ui.content.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
         me.core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
     };
     me.initOptions = {

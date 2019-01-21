@@ -5,8 +5,8 @@
 
 screens.ui.content = function UIContent(me) {
     me.content = {
-        init: function () {
-            me.content.update();
+        init: async function () {
+            await me.content.update();
         },
         info: function (window) {
             if (!window.content) {
@@ -29,71 +29,78 @@ screens.ui.content = function UIContent(me) {
                     prefix + "refresh"
                 ],
                 prefix + "associated.menu",
-                [
-                    "Public",
-                    "header"
-                ],
-                prefix + "publicMenu",
-                [
-                    "Private",
-                    "header"
-                ],
-                prefix + "privateMenu",
-                [
-                    "Title",
-                    "label",
-                    {
+                {
+                    "text": "Public",
+                    "select": [
+                        prefix + "publicMenu"
+                    ],
+                    "options": {
+                        "visible": prefix + "hasPublic"
+                    }
+                },
+                {
+                    "text": "Private",
+                    "select": [
+                        prefix + "privateMenu"
+                    ],
+                    "options": {
+                        "visible": prefix + "hasPrivate"
+                    }
+                },
+                {
+                    "text": "Title",
+                    "select": "label",
+                    "options": {
                         "separator": true
                     }
-                ],
-                [
-                    "",
-                    null,
-                    {
+                },
+                {
+                    "text": "",
+                    "options": {
                         "edit": prefix + "title"
                     }
-                ],
-                [
-                    "Locked",
-                    prefix + "locked",
-                    {
+                },
+                {
+                    "text": "Locked",
+                    "select": prefix + "locked",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Private",
-                    prefix + "private",
-                    {
+                },
+                {
+                    "text": "Private",
+                    "select": prefix + "private",
+                    "options": {
                         "state": "select"
                     }
-                ],
-                [
-                    "Save",
-                    prefix + "save",
-                    {
+                },
+                {
+                    "text": "Save",
+                    "select": prefix + "save",
+                    "options": {
                         "enabled": "select",
                         "separator": true
                     }
-                ],
-                [
-                    "Delete",
-                    prefix + "delete",
-                    {
+                },
+                {
+                    "text": "Delete",
+                    "select": prefix + "delete",
+                    "options": {
                         "enabled": "select",
                         "separator": true
                     }
-                ]
+                }
             ];
         },
-        update: function () {
-            me.content.publicList = me.manager.content.list(me.id);
-            me.content.privateList = me.manager.content.list(me.id, true);
+        update: async function () {
+            me.content.publicList = await me.manager.content.list(me.id);
+            me.content.privateList = await me.manager.content.list(me.id, true);
         },
         refresh: {
             set: async function (object) {
                 var window = me.widget.window.get(object);
                 await me.manager.content.refresh();
-                me.content.update();
+                await me.content.update();
                 var info = me.content.info(window);
                 me.content.associated.update(window, info._title);
             }
@@ -127,13 +134,18 @@ screens.ui.content = function UIContent(me) {
         importPrivate: async function (object, item) {
             me.content.import(object, item, true);
         },
+        hasPublic: function () {
+            return me.content.publicList && me.content.publicList.length;
+        },
+        hasPrivate: function () {
+            return me.content.publicList && me.content.privateList.length;
+        },
         publicMenu: function (object) {
             var info = {
                 list: me.content.publicList,
                 property: "title",
                 group: "public",
-                itemMethod: me.content.import,
-                emptyMsg: "No Content"
+                itemMethod: me.content.import
             };
             return me.widget.menu.collect(object, info);
         },
@@ -142,8 +154,7 @@ screens.ui.content = function UIContent(me) {
                 list: me.content.privateList,
                 property: "title",
                 group: "private",
-                itemMethod: me.content.importPrivate,
-                emptyMsg: "No Content"
+                itemMethod: me.content.importPrivate
             };
             return me.widget.menu.collect(object, info);
         },

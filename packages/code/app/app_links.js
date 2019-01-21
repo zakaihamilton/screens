@@ -5,8 +5,8 @@
 
 screens.app.links = function AppLinks(me) {
     me.maxLinkCount = 20;
-    me.init = function () {
-        me.ui.content.attach(me);
+    me.init = async function () {
+        await me.ui.content.attach(me);
     };
     me.launch = function (args) {
         if (!args) {
