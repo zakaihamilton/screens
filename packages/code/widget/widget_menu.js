@@ -46,7 +46,8 @@ screens.widget.menu = function WidgetMenu(me) {
                     text: info.emptyMsg,
                     select: null,
                     options: {
-                        enabled: false
+                        enabled: false,
+                        separator: info.separator
                     },
                     properties
                 }];
@@ -59,6 +60,7 @@ screens.widget.menu = function WidgetMenu(me) {
                     items = items.sort();
                 }
             }
+            var first = true;
             items = items.map(function (item) {
                 var title = item;
                 if (info.property) {
@@ -86,13 +88,18 @@ screens.widget.menu = function WidgetMenu(me) {
                     properties.metadata = item_metadata;
                     title = "";
                 }
+                var options = Object.assign({}, info.options);
+                if (info.separator && first) {
+                    options.separator = true;
+                }
                 var result = {
                     ref,
                     text: title,
                     select: info.itemMethod,
-                    options: info.options,
+                    options,
                     properties
                 };
+                first = false;
                 return result;
             });
             return items;
@@ -340,6 +347,7 @@ screens.widget.menu.list = function WidgetMenuList(me) {
             }
             me.ui.element.create({
                 "ui.basic.var": "members",
+                "ui.class.class": "widget.menu.members",
                 "ui.basic.tag": membersTag
             }, list, list);
         }
@@ -627,8 +635,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     me.core.property.set(object, "ui.class.menu", value);
                 });
                 me.handleValue(object, options, "separator", (value) => {
-                    var result = value && object.parentNode.firstChild !== object.previousSibling;
-                    me.core.property.set(object, "ui.class.separator", result);
+                    me.core.property.set(object, "ui.class.separator", value);
                 });
                 me.handleValue(object, options, "header", (value) => {
                     me.core.property.set(object, "ui.class.header", value);

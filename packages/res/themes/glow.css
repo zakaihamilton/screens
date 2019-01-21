@@ -513,7 +513,11 @@
 }
 
 .glow-menu-vertical input.separator, .glow-menu-vertical li.separator, .glow-menu-vertical tr.separator, .glow-menu-vertical span.separator {
-    box-shadow: 0px -1px 0px 0px var(--border-color);
+    border-top:1px solid var(--border-color);
+}
+
+.glow-menu-members input.separator, .glow-menu-members li.separator, .glow-menu-members tr.separator, .glow-menu-members span.separator {
+    border-top:1px solid var(--border-color);
 }
 
 .glow-menu-vertical li.header, .glow-menu-vertical span.header {

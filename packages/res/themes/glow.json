@@ -133,6 +133,11 @@
             "replace": true
         },
         {
+            "source": "widget-menu-members",
+            "target": "glow-menu-members",
+            "replace": true
+        },
+        {
             "source": "widget-window-footer",
             "target": "glow-window-footer",
             "replace": true

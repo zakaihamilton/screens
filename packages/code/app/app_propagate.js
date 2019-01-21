@@ -56,6 +56,7 @@ screens.app.propagate = function AppPropagate(me) {
             options: { "state": "select" },
             property: "name",
             group: "files",
+            separator: true,
             keepCase: true,
             emptyMsg: "No Files Selected",
             itemMethod: "app.propagate.fileName"
@@ -130,6 +131,7 @@ screens.app.propagate = function AppPropagate(me) {
         var info = {
             list,
             group: "scripts",
+            separator: true,
             title: true,
             emptyMsg: "No Scripts Available",
             itemMethod: "app.propagate.runScript"
