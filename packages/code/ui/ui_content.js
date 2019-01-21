@@ -8,6 +8,12 @@ screens.ui.content = function UIContent(me) {
         init: function () {
             me.content.update();
         },
+        info: function (window) {
+            if (!window.content) {
+                window.content = { _locked: true };
+            }
+            return window.content;
+        },
         menu: function () {
             var prefix = me.id + ".content.";
             return [
@@ -88,7 +94,8 @@ screens.ui.content = function UIContent(me) {
                 var window = me.widget.window.get(object);
                 await me.manager.content.refresh();
                 me.content.update();
-                me.content.associated.update(window, window.content._title);
+                var info = me.content.info(window);
+                me.content.associated.update(window, info._title);
             }
         },
         get: async function (item, private) {
@@ -109,13 +116,11 @@ screens.ui.content = function UIContent(me) {
             if (!fullItem) {
                 return;
             }
-            if (!window.content) {
-                window.content = {};
-            }
-            window.content._title = fullItem.title;
-            window.content._private = private;
-            window.content._locked = fullItem.locked;
-            window.content._owner = fullItem.owner;
+            var info = me.content.info(window);
+            info._title = fullItem.title;
+            info._private = private;
+            info._locked = fullItem.locked;
+            info._owner = fullItem.owner;
             await me.content.associated.update(window, fullItem.title);
             me.importData(window, fullItem.content, fullItem.title, fullItem.options);
         },
@@ -150,7 +155,8 @@ screens.ui.content = function UIContent(me) {
             },
             set: async function (object) {
                 var window = me.widget.window.get(object);
-                var private = window.content._private;
+                var info = me.content.info(window);
+                var private = info._private;
                 var [content, options] = me.exportData(window);
                 var date = new Date();
                 var title = "";
@@ -159,8 +165,8 @@ screens.ui.content = function UIContent(me) {
                     content = JSON.stringify(content);
                     json = true;
                 }
-                if (window.content._title) {
-                    title = me.core.string.title(window.content._title);
+                if (info._title) {
+                    title = me.core.string.title(info._title);
                 }
                 if (!title) {
                     title = me.core.property.get(window, "widget.window.key");
@@ -168,7 +174,7 @@ screens.ui.content = function UIContent(me) {
                 if (!title) {
                     title = date.toLocaleDateString();
                 }
-                var locked = window.content._locked;
+                var locked = info._locked;
                 if (!locked) {
                     locked = false;
                 }
@@ -192,20 +198,22 @@ screens.ui.content = function UIContent(me) {
         delete: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                if (window.content) {
-                    var locked = window.content._locked;
-                    var title = window.content._title;
-                    var access = !window.content._owner || window.content._owner === me.core.util.userId || me.core.util.isAdmin;
+                var info = me.content.info(window);
+                if (info) {
+                    var locked = info._locked;
+                    var title = info._title;
+                    var access = !info._owner || info._owner === me.core.util.userId || me.core.util.isAdmin;
                     return !locked && title && access;
                 }
                 return false;
             },
             set: async function (object) {
                 var window = me.widget.window.get(object);
-                var private = window.content._private;
+                var info = me.content.info(window);
+                var private = info._private;
                 var title = "";
-                if (window.content._title) {
-                    title = window.content._title;
+                if (info._title) {
+                    title = info._title;
                 }
                 if (!title) {
                     title = me.core.property.get(window, "widget.window.key");
@@ -221,75 +229,63 @@ screens.ui.content = function UIContent(me) {
         copyUrl: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                return window.content._title;
+                var info = me.content.info(window);
+                return info._title;
             },
             set: function (object) {
                 var appName = me.id.split(".").pop();
                 var window = me.widget.window.get(object);
-                me.core.util.copyUrl(appName, [window.content._title]);
+                var info = me.content.info(window);
+                me.core.util.copyUrl(appName, [info._title]);
             }
         },
         title: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                return window.content._title;
+                var info = me.content.info(window);
+                return info._title;
             },
             set: function (object, title) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
+                var info = me.content.info(window);
                 var text = title;
                 if (typeof text !== "string") {
                     text = me.core.property.get(object, "ui.basic.text");
                 }
-                if (window.content._title !== text) {
-                    window.content._title = text;
-                    me.content.associated.update(window, window.content._title);
+                if (info._title !== text) {
+                    info._title = text;
+                    me.content.associated.update(window, info._title);
                 }
             }
         },
         locked: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                return window.content._locked;
+                var info = me.content.info(window);
+                return info._locked;
             },
             set: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                window.content._locked = !window.content._locked;
+                var info = me.content.info(window);
+                info._locked = !info._locked;
             }
         },
         private: {
             get: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                return window.content._private;
+                var info = me.content.info(window);
+                return info._private;
             },
             set: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                window.content._private = !window.content._private;
+                var info = me.content.info(window);
+                info._private = !info._private;
             }
         },
         associated: {
             update: async function (object, name) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
+                var info = me.content.info(window);
                 var list = [];
                 if (name) {
                     var [publicApps, privateApps] = await me.manager.content.associated(name);
@@ -303,7 +299,7 @@ screens.ui.content = function UIContent(me) {
                     list.push(...publicList);
                     list.push(...privateList);
                 }
-                window.content.associated = list;
+                info.associated = list;
             },
             playerItems: async function (name) {
                 var list = [];
@@ -354,10 +350,8 @@ screens.ui.content = function UIContent(me) {
             },
             menu: function (object) {
                 var window = me.widget.window.get(object);
-                if (!window.content) {
-                    window.content = {};
-                }
-                if (!window.content.associated || !window.content.associated.length) {
+                var info = me.content.info(window);
+                if (!info.associated || !info.associated.length) {
                     return null;
                 }
                 return [{
@@ -374,7 +368,7 @@ screens.ui.content = function UIContent(me) {
                             },
                             "properties": {
                                 "group": "associated",
-                                "promise": { promise: window.content.associated }
+                                "promise": { promise: info.associated }
                             }
                         }
                     ]
