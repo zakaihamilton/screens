@@ -190,8 +190,7 @@
                             "text": "Translation",
                             "select": "widget.transform.doTranslation",
                             "options": {
-                                "state": "select",
-                                "separator": true
+                                "state": "select"
                             }
                         },
                         {
@@ -351,14 +350,14 @@
                             "select": [
                                 "widget.transform.fontSizesPx(widget.transform.fontSize)"
                             ]
-                        },
-                        {
-                            "text": "Diagrams",
-                            "select": "header"
-                        },
-                        "widget.transform.diagramList"
+                        }
                     ]
-                }
+                },
+                {
+                    "text": "Diagrams",
+                    "select": "header"
+                },
+                "widget.transform.diagramList"
             ]
         }
     ]
