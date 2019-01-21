@@ -9,7 +9,10 @@ screens.kab.data = function KabData(me) {
     };
     me.reload = async function (language) {
         language = language.toLowerCase();
-        var json = await me.core.json.loadFile("/packages/res/terms/" + language + ".json", false);
+        var json = null;
+        if (language && language !== "none") {
+            json = await me.core.json.loadFile("/packages/res/terms/" + language + ".json", false);
+        }
         if (json) {
             me.files[language] = json;
             if (json) {
@@ -21,7 +24,7 @@ screens.kab.data = function KabData(me) {
     me.terms = async function (language, reload = false) {
         var terms = [];
         var json = await me.load(language, reload);
-        if (json.term) {
+        if (json && json.term) {
             terms = json.term.map(item => item.term);
         }
         return terms;
