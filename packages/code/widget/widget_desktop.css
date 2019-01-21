@@ -26,7 +26,16 @@ body {
     user-select: none;
     user-drag: none;
     touch-action: none;
-    background: lightblue;
+	color: lightblue;
+	background: linear-gradient(-45deg, #FFF3CA, #C8D9F9, #F5CCCB, #D9EAD2);
+	background-size: 400% 400%;
+	animation: widget-desktop-gradient 60s ease infinite;
+}
+
+.widget-desktop-background.night-mode {
+	background: linear-gradient(-45deg, #e8a200, #5274b6, #cc6e6d, #418842);
+	background-size: 400% 400%;
+	animation: widget-desktop-gradient 60s ease infinite;
 }
 
 .widget-desktop-workspace {
@@ -36,4 +45,16 @@ body {
     bottom: 2.3em;
     position: absolute;
     overflow: hidden;
+}
+
+@keyframes widget-desktop-gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }
