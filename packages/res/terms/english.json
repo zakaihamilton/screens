@@ -60,7 +60,6 @@
         "OF",
         "DE"
     ],
-    "abridged": {},
     "replace": {
         "spelling": {
             "Hakaaof": "Hakaa of",
@@ -343,7 +342,7 @@
         },
         {
             "find": "/\\\n",
-            "replace": "</p><p>",
+            "replace": "</p>\n<p>",
             "prefix": "<p>",
             "suffix": "</p>"
         },

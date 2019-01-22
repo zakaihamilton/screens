@@ -184,6 +184,10 @@ screens.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
+    me.hash = function (string) {
+        var hash = me.core.string.hash(string);
+        return hash;
+    };
     me.parse = async function (language, wordsString, options, progressCallback) {
         if (!wordsString) {
             wordsString = "";
@@ -194,29 +198,31 @@ screens.kab.text = function KabText(me) {
         }
         me.core.message.send("kab.term.clear");
         wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
-        if (options.abridged) {
-            wordsString = me.core.message.send("kab.format.replace", wordsString, json.abridged);
-        }
         if (wordsString.includes("\n")) {
             wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
         }
         var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
-        var session = {
-            language,
-            text: wordsString,
-            options,
-            terms,
-            json,
-            progressCallback,
-            percent: 0
-        };
-        wordsString = me.splitWords(session, wordsString);
-        session.text = wordsString;
-        if (session.terms) {
-            wordsString = me.parseSingle(session, null, wordsString);
-        }
-        wordsString = me.core.message.send("kab.format.process", wordsString, json.post);
-        var info = { text: wordsString, terms: me.kab.term.terms, data: json.data };
+        var lines = wordsString.split("\n");
+        lines = lines.map(line => {
+            var hash = me.hash(line);
+            var session = {
+                hash,
+                language,
+                options,
+                terms,
+                json,
+                progressCallback,
+                percent: 0
+            };
+            line = me.splitWords(session, line);
+            session.text = line;
+            if (session.terms) {
+                line = me.parseSingle(session, null, line);
+            }
+            line = me.core.message.send("kab.format.process", line, json.post);
+            return line;
+        });
+        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: json.data };
         return info;
     };
     me.handleInstance = function (session, instance) {
