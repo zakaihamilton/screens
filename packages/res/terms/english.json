@@ -331,7 +331,7 @@
             "replace": "$1\n"
         },
         {
-            "match": "/[^.?!;,\\\"'”…\\”)]$",
+            "match": "/[^.?!;:,\\\"'”…\\”)]$",
             "prefix": "<h4>",
             "suffix": "</h4>"
         },
@@ -2582,6 +2582,11 @@
         {
             "translation": "Illumination",
             "term": "He ’ ara",
+            "hebrew": "הארה"
+        },
+        {
+            "translation": "Illumination",
+            "term": "He ' arah",
             "hebrew": "הארה"
         },
         {
