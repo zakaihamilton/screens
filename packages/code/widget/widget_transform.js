@@ -978,7 +978,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         me.completePage(target.page);
                         target.page = me.createPage(layoutContent, pageSize.width, pageSize.height, pageIndex, options);
                         pageContent = target.page.var.content;
-                        if (previousWidget && previousWidget.tagName.toLowerCase().match(/h\d/)) {
+                        if (previousWidget && previousWidget.tagName && previousWidget.tagName.toLowerCase().match(/h\d/)) {
                             pageContent.appendChild(previousWidget);
                         }
                         if (widget) {

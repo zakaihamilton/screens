@@ -220,6 +220,9 @@ screens.kab.text = function KabText(me) {
                 line = me.parseSingle(session, null, line);
             }
             line = me.core.message.send("kab.format.process", line, json.post);
+            if (line === "<p></p>") {
+                return line;
+            }
             return line;
         });
         var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: json.data };

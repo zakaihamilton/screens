@@ -310,11 +310,6 @@
             "suffix": "</h4>"
         },
         {
-            "match": "/^[^a-z]*$",
-            "prefix": "<h4 style=\"text-transform: uppercase\">",
-            "suffix": "</h4>"
-        },
-        {
             "find": "/\\\n(\\d+\\))",
             "replace": "\n<b>$1</b>"
         },
