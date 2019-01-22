@@ -221,6 +221,47 @@
                             "options": {
                                 "state": "select"
                             }
+                        },
+                        {
+                            "text": "Commentary",
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                {
+                                    "text": "Edit Mode",
+                                    "select": "widget.transform.commentaryEdit",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Label",
+                                    "select": "widget.transform.commentaryLabel",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "Users",
+                                    "select": "header"
+                                },
+                                {
+                                    "text": "None",
+                                    "select": "widget.transform.commentaryUser",
+                                    "options": {
+                                        "value": ""
+                                    }
+                                },
+                                {
+                                    "text": "All",
+                                    "select": "widget.transform.commentaryUser",
+                                    "options": {
+                                        "value": "all"
+                                    }
+                                },
+                                "widget.transform.commentaryUsers"
+                            ]
                         }
                     ]
                 },

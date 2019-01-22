@@ -35,7 +35,10 @@ screens.widget.transform = function WidgetTransform(me) {
             voice: "Google UK English Male",
             speed: "Normal",
             volume: "Normal",
-            singleArticle: false
+            singleArticle: false,
+            commentaryEdit: false,
+            commentaryLabel: true,
+            commentaryUser: ""
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -61,7 +64,9 @@ screens.widget.transform = function WidgetTransform(me) {
             diagrams: me.transform,
             pipVideo: me.reflow,
             autoPlay: null,
-            singleArticle: null
+            singleArticle: null,
+            commentaryEdit: me.transform,
+            commentaryLabel: me.transform
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -74,7 +79,8 @@ screens.widget.transform = function WidgetTransform(me) {
             voice: me.player.changeVoice,
             speed: me.player.updatePlayback,
             volume: me.player.updatePlayback,
-            scrollPos: null
+            scrollPos: null,
+            commentaryUser: me.transform
         });
         me.ui.class.useStylesheet("kab");
     };
@@ -519,6 +525,14 @@ screens.widget.transform = function WidgetTransform(me) {
             }
             return key;
         }
+    };
+    me.commentaryUsers = function (object) {
+        var info = {
+            list: me.db.commentary.users(),
+            group: "users",
+            itemMethod: "widget.transform.commentaryUser"
+        };
+        return me.widget.menu.collect(object, info);
     };
 };
 

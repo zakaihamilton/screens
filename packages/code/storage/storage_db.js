@@ -99,6 +99,9 @@ screens.storage.db = function StorageDB(me) {
     };
     me.list = async function (location, query = {}, projection, params) {
         var collection = await me.collection(location);
+        if (!projection) {
+            projection = {};
+        }
         var cursor = await collection.find(query, projection);
         if (params) {
             for (var param in params) {
@@ -108,7 +111,7 @@ screens.storage.db = function StorageDB(me) {
         var array = await cursor.toArray();
         me.log("found " + array.length +
             " items for query: " + JSON.stringify(query) +
-            " projection: " + projection,
+            " projection: " + JSON.stringify(projection),
             " params: " + JSON.stringify(params),
             " location: " + JSON.stringify(location));
         return array;

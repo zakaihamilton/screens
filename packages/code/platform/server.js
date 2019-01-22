@@ -26,6 +26,7 @@ screens.api = [
     "core.file",
     "db.library",
     "db.shared",
+    "db.commentary",
     "media.file",
     "lib.zoom.meetingInfo",
     "lib.zoom.participants"
@@ -92,7 +93,8 @@ screens.include({
     ],
     "db": [
         "library",
-        "shared"
+        "shared",
+        "commentary"
     ],
     "manager": [
         "download",
@@ -117,6 +119,7 @@ screens.include({
     ]
 }).then(() => {
     screens.core.file.alias.set("service_worker.js", "packages/code/platform/service_worker.js");
+    screens.core.file.alias.set("eve.js", "external/eve.min.js");
     screens.core.startup.run();
 });
 

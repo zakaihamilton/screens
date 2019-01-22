@@ -4,6 +4,13 @@ screens.include({
     "core": [
         "*"
     ],
+    "ui": [
+        "html"
+    ],
+    "db": [
+        "shared",
+        "commentary"
+    ],
     "kab": [
         "*"
     ]

@@ -22,3 +22,7 @@ screens.db.shared.envision = function DbSharedEnvision(me) {
 screens.db.shared.workshop = function DbSharedWorkshop(me) {
     me.init = me.storage.db.extension;
 };
+
+screens.db.shared.commentary = function DbSharedCommentary(me) {
+    me.init = me.storage.db.extension;
+};

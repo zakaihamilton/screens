@@ -203,7 +203,7 @@ screens.kab.text = function KabText(me) {
         }
         var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
         var lines = wordsString.split("\n");
-        lines = lines.map(line => {
+        lines = lines.map(async line => {
             var hash = me.hash(line);
             var session = {
                 hash,
@@ -220,11 +220,15 @@ screens.kab.text = function KabText(me) {
                 line = me.parseSingle(session, null, line);
             }
             line = me.core.message.send("kab.format.process", line, json.post);
-            if (line === "<p></p>") {
+            if (line === "<p></p>" || line === "<br>" || line.includes("<h4>")) {
                 return line;
+            }
+            if (options.commentaryEdit || options.commentaryUser) {
+                return me.kab.commentary.line(session, line);
             }
             return line;
         });
+        lines = await Promise.all(lines);
         var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: json.data };
         return info;
     };

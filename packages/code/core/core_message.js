@@ -9,6 +9,10 @@ screens.core.message = function CoreMessage(me) {
         if (me.platform === "server") {
             return me.send.apply(null, args);
         }
+        else if (me.platform === "client") {
+            args.unshift("core.message.send_server");
+            return me.send_browser.apply(null, args);
+        }
         else {
             return me.send_socket.apply(me.core.socket.io, args);
         }
@@ -230,15 +234,18 @@ screens.core.message = function CoreMessage(me) {
 screens.core.message.worker = function CoreMessageWorker(me) {
     me.init = async function () {
         if (me.platform === "browser") {
-            me.PromiseWorker = await me.core.require.load(["/node_modules/promise-worker/dist/promise-worker.js"]);
+            window.module = {};
+            await me.core.require.load(["/node_modules/promise-worker-bi/dist/index.js"]);
         }
         if (me.platform === "client") {
-            await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
+            self.module = {};
+            me.import("/node_modules/promise-worker-bi/dist/index.js");
+            me.handle = new PromiseWorker();
             me.register();
         }
     };
     me.register = function () {
-        registerPromiseWorker(async (info) => {
+        me.handle.register(async (info) => {
             if (!info) {
                 return;
             }
@@ -258,7 +265,8 @@ screens.core.message.worker = function CoreMessageWorker(me) {
         });
     };
     me.load = async function (path) {
-        me.handle = new me.PromiseWorker(new Worker(path));
+        me.handle = new PromiseWorker(new Worker(path));
+        me.register();
         me.handle.postMessage(null);
     };
     me.postMessage = function (info) {
