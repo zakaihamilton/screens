@@ -1030,7 +1030,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         var widget = page.firstChild;
         var match = null;
         while (widget) {
-            if (widget.style.order) {
+            if (widget.style && widget.style.order) {
                 if (parseInt(widget.style.order) > parseInt(order)) {
                     match = widget;
                     break;
