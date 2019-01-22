@@ -71,6 +71,7 @@
             "ui.basic.tag": "div",
             "ui.class.class": "app.present.editor.container",
             "ui.basic.var": "editorContainer",
+            "ui.basic.show": false,
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.present.editor",
