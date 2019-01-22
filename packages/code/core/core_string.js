@@ -291,4 +291,17 @@ screens.core.string = function CoreString(me) {
         }
         return a;
     };
+    me.hash = function (string) {
+        var i = string.length;
+        var hash1 = 5381;
+        var hash2 = 52711;
+
+        while (i--) {
+            const char = string.charCodeAt(i);
+            hash1 = (hash1 * 33) ^ char;
+            hash2 = (hash2 * 33) ^ char;
+        }
+
+        return (hash1 >>> 0) * 4096 + (hash2 >>> 0);
+    };
 };
