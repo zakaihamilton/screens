@@ -18,14 +18,19 @@
                 },
                 {
                     "text": "Group",
-                    "select": "header"
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "app.player.groupMenuList"
+                    ]
                 },
-                "app.player.groupMenuList",
                 {
                     "text": "Session",
-                    "select": "header"
+                    "select": [
+                        "app.player.sessionMenuList"
+                    ]
                 },
-                "app.player.sessionMenuList",
                 {
                     "text": "Upload",
                     "options": {
@@ -37,19 +42,23 @@
                 },
                 {
                     "text": "Clipboard",
-                    "select": "header"
-                },
-                {
-                    "text": "Remote Url",
-                    "select": "app.player.copyRemoteUrl"
-                },
-                {
-                    "text": "Local Url",
-                    "select": "app.player.copyLocalUrl"
-                },
-                {
-                    "text": "Name",
-                    "select": "app.player.copyName"
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        {
+                            "text": "Remote Url",
+                            "select": "app.player.copyRemoteUrl"
+                        },
+                        {
+                            "text": "Local Url",
+                            "select": "app.player.copyLocalUrl"
+                        },
+                        {
+                            "text": "Name",
+                            "select": "app.player.copyName"
+                        }
+                    ]
                 }
             ]
         },
@@ -82,9 +91,13 @@
                 },
                 {
                     "text": "Speed",
-                    "select": "header"
-                },
-                "app.player.speeds"
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "app.player.speeds"
+                    ]
+                }
             ]
         },
         {
