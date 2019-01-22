@@ -73,7 +73,7 @@
 .widget-schedule-week-grid {
     display: grid;
     grid-template-rows: 40px 40px 40px 40px auto;
-    grid-template-columns: repeat( auto-fit, minmax(150px, 1fr));
+    grid-template-columns: auto;
     overflow: auto;
 }
 
@@ -133,6 +133,7 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     font-weight: bold;
+    min-width: 200px;
 }
 
 .widget-schedule-day.night-mode {
