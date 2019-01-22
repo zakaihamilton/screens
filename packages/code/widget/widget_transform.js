@@ -530,7 +530,8 @@ screens.widget.transform = function WidgetTransform(me) {
         var info = {
             list: me.db.commentary.users(),
             group: "users",
-            itemMethod: "widget.transform.commentaryUser"
+            itemMethod: "widget.transform.commentaryUser",
+            options: { "state": "select" }
         };
         return me.widget.menu.collect(object, info);
     };

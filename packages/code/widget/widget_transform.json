@@ -250,14 +250,16 @@
                                     "text": "None",
                                     "select": "widget.transform.commentaryUser",
                                     "options": {
-                                        "value": ""
+                                        "value": "",
+                                        "state": "select"
                                     }
                                 },
                                 {
                                     "text": "All",
                                     "select": "widget.transform.commentaryUser",
                                     "options": {
-                                        "value": "all"
+                                        "value": "all",
+                                        "state": "select"
                                     }
                                 },
                                 "widget.transform.commentaryUsers"
