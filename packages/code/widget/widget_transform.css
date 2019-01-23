@@ -180,27 +180,28 @@ h4.widget-transform-widget {
     opacity: 1;
 }
 
-.widget-transform-iconbar {
-    position: absolute;
-    bottom: 0%;
-    left: 5%;
-    width: 90%;
-    background-color: #555;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 10%;
-    opacity: 0.25;
-    border-radius: 10px 10px 0px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .widget-transform-level {
     padding: 10px;
     border: 1px solid lightgray;
     border-radius: 10px 10px 10px 10px;
     user-select: all;
+}
+
+.widget-transform-iconbar {
+    position: absolute;
+    bottom: 0%;
+    left: 5%;
+    right: 5%;
+    background-color: #555;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 6em;
+    opacity: 0.25;
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    transition: all 0.3s ease;
 }
 
 .widget-transform-iconbar:hover {
@@ -219,20 +220,13 @@ h4.widget-transform-widget {
     flex: 1;
     padding: 4px;
     text-align: center;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     color: white;
-    font-size: 5vmin;
-    height: 100%;
-}
-
-.widget-transform-iconbar a i {
-    margin-top: 7.5%;
-    width: 100%;
-}
-
-.widget-transform-iconbar.fullscreen a i {
-    margin-top: 12.5%;
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5em;
 }
 
 .widget-transform-iconbar a:hover {
@@ -286,11 +280,11 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause {
-    display: none;
+    display: none !important;
 }
 
 .widget-transform-iconbar-pause.play {
-    display: block;
+    display: flex !important;
     color: white !important;
     background-color: #555 !important;
 }
@@ -301,15 +295,15 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar-pause.play.pause {
-    display: none;
+    display: none !important;
 }
 
 .widget-transform-iconbar-play.play {
-    display: none;
+    display: none !important;
 }
 
 .widget-transform-iconbar-play.play.pause {
-    display: block;
+    display: flex !important;
     color: white !important;
     background-color: #555 !important;
 }
