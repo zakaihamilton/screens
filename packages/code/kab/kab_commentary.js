@@ -51,6 +51,7 @@ screens.kab.commentary = function KabCommentary(me) {
                     });
                 }
                 if (session.options.commentaryEdit) {
+                    let source = me.kab.text.clean(line);
                     html += me.ui.html.item({
                         tag: "textarea",
                         classes: ["kab-term-commentary-edit"],
@@ -58,7 +59,8 @@ screens.kab.commentary = function KabCommentary(me) {
                             onchange: "screens.kab.commentary.store(this)",
                             hash,
                             user: commentary.user,
-                            name: commentary.name
+                            name: commentary.name,
+                            source
                         },
                         value: commentary.text
                     });
@@ -73,11 +75,13 @@ screens.kab.commentary = function KabCommentary(me) {
         var hash = me.core.property.get(element, "ui.attribute.#hash");
         var user = me.core.property.get(element, "ui.attribute.#user");
         var name = me.core.property.get(element, "ui.attribute.#name");
+        var source = me.core.property.get(element, "ui.attribute.#source");
         var data = {
             text,
             hash,
             user,
-            name
+            name,
+            source
         };
         if (text) {
             me.db.commentary.entry.use({

@@ -37,6 +37,8 @@ screens.kab.text = function KabText(me) {
         if (!wordStyle) {
             wordStyle = "whole";
         }
+        wordsString = wordsString.replace(/<[/]?script[^>]*>/g, "");
+        wordsString = wordsString.replace(/<[/]?iframe[^>]*>/g, "");
         if (session.options.abridged) {
             wordsString = wordsString.replace(/\(([^()]+|[^(]+\([^)]*\)[^()]*)\)/g, " ");
             wordsString = wordsString.replace(/\[([^[\]]+|[^[]+\[[^\]]*\][^[\]]*)\]/g, " ");
@@ -184,8 +186,12 @@ screens.kab.text = function KabText(me) {
         }, wordsString);
         return wordsString;
     };
+    me.clean = function (string) {
+        return string.replace(/<[/]?[^>]+>/g, "");
+    };
     me.hash = function (string) {
-        var hash = me.core.string.hash(string);
+        var clean = me.clean(string);
+        var hash = me.core.string.hash(clean);
         return hash;
     };
     me.parse = async function (language, wordsString, options, progressCallback) {
