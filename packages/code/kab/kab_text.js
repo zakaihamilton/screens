@@ -187,7 +187,7 @@ screens.kab.text = function KabText(me) {
         return wordsString;
     };
     me.clean = function (string) {
-        return string.replace(/<[/]?[^>]+>/g, "");
+        return string.replace(/<[/]?[^>]+>/g, "").trim();
     };
     me.hash = function (string) {
         var clean = me.clean(string);
