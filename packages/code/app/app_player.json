@@ -104,9 +104,11 @@
                         "app.player.jumpTimes"
                     ]
                 },
-                "app.player.content.associated.menu",
                 {
                     "text": "Size",
+                    "options": {
+                        "separator": true
+                    },
                     "select": [
                         {
                             "text": "Small",
@@ -131,7 +133,8 @@
                             }
                         }
                     ]
-                }
+                },
+                "app.player.content.associated.menu"
             ]
         }
     ],
