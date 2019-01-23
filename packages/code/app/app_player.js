@@ -273,7 +273,7 @@ screens.app.player = function AppPlayer(me) {
         }
     };
     me.speeds = function () {
-        var speedList = Object.keys(me.widget.player.controls.speeds);
+        var speedList = Object.keys(me.media.voice.speeds);
         speedList = speedList.map(name => {
             var item = [
                 name,
@@ -291,7 +291,7 @@ screens.app.player = function AppPlayer(me) {
     };
     me.updatePlayback = function () {
         var window = me.singleton;
-        var speed = me.widget.player.controls.speeds[window.options.speed];
+        var speed = me.media.voice.speeds[window.options.speed];
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
         me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
     };

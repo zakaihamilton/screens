@@ -25,7 +25,8 @@ screens.media.voice = function MediaVoice(me) {
         "Slower": 0.75,
         "Normal": 1.0,
         "Faster": 1.25,
-        "Fast": 1.5
+        "Fast": 1.5,
+        "Really Fast": 2.0
     };
     me.volumes = {
         "None": 0.0,
