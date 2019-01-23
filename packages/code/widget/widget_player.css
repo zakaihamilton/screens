@@ -20,40 +20,32 @@
     justify-content: space-between;
     margin: 10px;
     flex: 0 0 auto;
-    width: 90%;
-    height: 90%;
 }
 
 .widget-player-controls-button {
-    border: 1px solid transparent;
     text-align: center;
     border: 1px solid transparent;
     background-repeat: no-repeat;
     background-position: center center;
     border-radius: 5px 5px 5px 5px;
+    margin: 4px;
 }
 
 .widget-player-controls-button.small {
-    flex: 0 0 32px;
     width: 32px;
     height: 32px;
-    margin: 4px;
     background-size: 32px 32px;
 }
 
 .widget-player-controls-button.normal {
-    flex: 0 0 64px;
     width: 64px;
     height: 64px;
-    margin: 4px;
     background-size: 64px 64px;
 }
 
 .widget-player-controls-button.large {
-    flex: 0 0 128px;
     width: 128px;
     height: 128px;
-    margin: 4px;
     background-size: 128px 128px;
 }
 
