@@ -9,12 +9,14 @@
         {
             "ui.basic.tag": "div",
             "ui.class.class": "shortcuts",
+            "ui.basic.var": "shortcuts",
             "ui.group.data": {
                 "ui.data.keyList": [
                     "ui.attribute.title",
                     "ui.basic.src",
                     "ui.basic.var",
-                    "ui.touch.click"
+                    "ui.touch.click",
+                    "ui.touch.dblclick"
                 ],
                 "ui.data.default": {
                     "ui.basic.tag": "img",
@@ -23,10 +25,10 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix": ")",
                 "ui.data.values": [
-                    "ui.resize.toggleLockRotation",
-                    "ui.theme.nightMode",
+                    "launcher",
                     "keyboard",
-                    "launcher"
+                    "ui.theme.nightMode",
+                    "ui.resize.toggleLockRotation"
                 ]
             }
         }

@@ -24,12 +24,20 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
             method = name;
             label = name.split(".").pop();
         }
+        var dblClickMethod = null;
+        if (name === "launcher") {
+            dblClickMethod = "widget.taskbar.toggleShortcuts";
+        }
         return [[
             me.core.string.title(label),
             "/packages/res/icons/" + label + ".png",
             label,
             method,
-            label
+            dblClickMethod
         ]];
+    };
+    me.toggleShortcuts = function (object) {
+        var taskbar = me.ui.node.container(object, me.id);
+        me.core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
     };
 };
