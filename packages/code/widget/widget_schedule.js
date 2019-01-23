@@ -203,7 +203,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         row[row.length - 1].end++;
                                     }
                                     else {
-                                        row.push({ start: weekday + 1, end: weekday + 2, value, isToday });
+                                        row.push({ start: weekday + 1, end: weekday + 2, value, date: dayDate, isToday });
                                     }
                                 });
                             }
@@ -214,7 +214,12 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                         classes.push(["today"]);
                                     }
                                     let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
-                                    html += me.ui.html.item({ classes, styles, value: item.value });
+                                    let attributes = {};
+                                    if (key === "day") {
+                                        var dateAsString = item.date.getFullYear() + "-" + (item.date.getMonth() + 1) + "-" + item.date.getDate();
+                                        attributes.onclick = "screens.ui.clipboard.copy('" + dateAsString + "')";
+                                    }
+                                    html += me.ui.html.item({ classes, styles, attributes, value: item.value });
                                 }
                             });
                             for (let weekday = 0; weekday < weekdayCount; weekday++) {

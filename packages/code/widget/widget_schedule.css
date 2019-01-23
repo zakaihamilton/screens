@@ -136,6 +136,10 @@
     min-width: 200px;
 }
 
+.widget-schedule-day:hover:active {
+    background: linear-gradient(to right, var(--phase-three-background), var(--phase-three-border));
+}
+
 .widget-schedule-day.night-mode {
     text-shadow: 2px 2px 4px #000000;
 }

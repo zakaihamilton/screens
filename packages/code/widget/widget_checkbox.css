@@ -25,5 +25,5 @@
 }
 
 .widget-checkbox-original:checked+.widget-checkbox-icon {
-    background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 54%, black 54%, black 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 49%, black 49%, black 51%, transparent 51%, transparent 100%);
+    background: linear-gradient(-45deg, transparent 0%, transparent 54%, black 54%, black 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 49%, black 49%, black 51%, transparent 51%, transparent 100%);
 }
