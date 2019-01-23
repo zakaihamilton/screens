@@ -301,6 +301,13 @@
                             }
                         },
                         {
+                            "text": "Separator",
+                            "select": "widget.transform.commentarySeparator",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
                             "text": "Users",
                             "select": "header"
                         },

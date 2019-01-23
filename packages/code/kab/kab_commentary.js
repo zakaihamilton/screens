@@ -27,6 +27,7 @@ screens.kab.commentary = function KabCommentary(me) {
         }
         if (!session.options.commentaryEdit) {
             for (var commentary of commentaries) {
+                line += "<p>";
                 if (session.options.commentaryLabel) {
                     line += me.ui.html.item({
                         tag: "span",
@@ -34,7 +35,15 @@ screens.kab.commentary = function KabCommentary(me) {
                         value: (userName === "all" ? commentary.name : "Commentary") + ":"
                     });
                 }
-                line += "\n" + commentary.text;
+                var text = commentary.text.split("\n").join("<br/>");
+                line += "\n" + text;
+                if (session.options.commentarySeparator) {
+                    line += me.ui.html.item({
+                        tag: "hr",
+                        classes: ["kab-term-commentary-separator"]
+                    });
+                }
+                line += "</p>";
             }
             return line;
         }

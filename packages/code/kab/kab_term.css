@@ -290,9 +290,14 @@
     background-color: var(--chrome-background);
     color: var(--chrome-color);
     break-inside: avoid;
-    padding:3px;
+    padding: 3px;
 }
 
 .kab-term-commentary-label {
     font-weight: bold;
+}
+
+.kab-term-commentary-separator {
+    border-bottom: 1px solid darkgray;
+    width: 100%;
 }

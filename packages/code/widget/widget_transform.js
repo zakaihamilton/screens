@@ -38,6 +38,7 @@ screens.widget.transform = function WidgetTransform(me) {
             singleArticle: false,
             commentaryEdit: false,
             commentaryLabel: true,
+            commentarySeparator: true,
             commentaryUser: ""
         });
         widget.pageSize = { width: 0, height: 0 };
@@ -66,7 +67,8 @@ screens.widget.transform = function WidgetTransform(me) {
             autoPlay: null,
             singleArticle: null,
             commentaryEdit: me.transform,
-            commentaryLabel: me.transform
+            commentaryLabel: me.transform,
+            commentarySeparator: me.transform
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,

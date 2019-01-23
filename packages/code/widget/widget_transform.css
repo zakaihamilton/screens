@@ -88,10 +88,6 @@
     height: 100%;
 }
 
-.widget-transform-page-content br {
-    display: none;
-}
-
 .widget-transform-page-header {
     height: 60px;
 }
