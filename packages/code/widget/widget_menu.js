@@ -248,17 +248,19 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.subMenu = async function (object, value) {
         var item = value[0];
-        var info = value[1];
+        var values = value[1];
         me.core.property.set(object, "ui.property.broadcast", {
             "ui.class.remove": "selected"
         });
+        var label = me.core.property.get(item, "ui.basic.text");
+        values = [{ text: label, select: "header" }, ...values];
         me.core.property.set(item, "ui.class.add", "selected");
         me.core.property.set(object.var.modal, "ui.style.display", "block");
         var window = me.core.property.get(object, "widget.window.active");
         var region = me.ui.rect.absoluteRegion(object);
         region.bottom = region.top;
         me.core.property.set(object, "ui.style.display", "none");
-        object.var.menu = me.upper.create_menu(window, object, region, info);
+        object.var.menu = me.upper.create_menu(window, object, region, values);
         me.core.property.set(object.var.menu, "ui.class.menu", true);
     };
     me.select = {
