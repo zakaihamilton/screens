@@ -22,6 +22,17 @@
     background-image: linear-gradient( to right, green, #3CB371);
 }
 
+.widget-progress-bar:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 10px;
+    height: 100%;
+    background-color: lightgray;
+    border: 1px solid darkgray;
+}
+
 .widget-progress-label {
     text-align: center;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;

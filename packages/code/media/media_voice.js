@@ -35,6 +35,7 @@ screens.media.voice = function MediaVoice(me) {
         "Normal": 0.75,
         "High": 1.0
     };
+    me.jumpTimes = [2, 5, 10, 15, 20, 25, 30];
     me.isPlaying = function () {
         return me.synth.speaking || me.synth.pending;
     };

@@ -207,6 +207,26 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     "ui.attribute.title": "Fast Forward"
                 },
                 {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "speedDown",
+                    "ui.class.class": [
+                        "button",
+                        "speed-down"
+                    ],
+                    "ui.touch.click": "speedDown",
+                    "ui.attribute.title": "Slow Down"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "speedUp",
+                    "ui.class.class": [
+                        "button",
+                        "speed-up"
+                    ],
+                    "ui.touch.click": "speedUp",
+                    "ui.attribute.title": "Speed Up"
+                },
+                {
                     "ui.basic.tag": "a",
                     "ui.basic.var": "download",
                     "ui.class.class": [
@@ -353,7 +373,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         if (percent > 1) {
             percent = 1;
         }
-        widget.var.player.currentTime = percent * widget.var.player.duration;
+        widget.var.player.currentTime = parseInt(percent * widget.var.player.duration);
         me.updateProgress(object);
         me.updatePlayer(object);
     };
@@ -418,6 +438,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             });
         }
     };
+    me.speedName = function (object) {
+        var widget = me.upper.mainWidget(object);
+        var player = widget.var.player;
+        var rate = player.playbackRate;
+        var speeds = Object.values(me.media.voice.speeds);
+        var index = speeds.indexOf(rate);
+        var name = null;
+        if (index !== -1) {
+            var names = Object.keys(me.media.voice.speeds);
+            name = names[index];
+        }
+        return name;
+    };
     me.speed = function (object) {
         var widget = me.upper.mainWidget(object);
         var player = widget.var.player;
@@ -426,10 +459,34 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.setSpeed = function (object, speed) {
         var widget = me.upper.mainWidget(object);
         var player = widget.var.player;
-        player.playbackRate = speed;
+        player.defaultPlaybackRate = player.playbackRate = speed;
     };
     me.setJumpTime = function (object, jumpTime) {
         var widget = me.upper.mainWidget(object);
         widget.jumpTime = jumpTime;
+    };
+    me.speedUp = function (object) {
+        var widget = me.upper.mainWidget(object);
+        var player = widget.var.player;
+        var rate = player.playbackRate;
+        var speeds = Object.values(me.media.voice.speeds);
+        var index = speeds.indexOf(rate);
+        if (index !== speeds.length - 1) {
+            index++;
+            player.defaultPlaybackRate = player.playbackRate = speeds[index];
+            me.updatePlayer(object);
+        }
+    };
+    me.speedDown = function (object) {
+        var widget = me.upper.mainWidget(object);
+        var player = widget.var.player;
+        var rate = player.playbackRate;
+        var speeds = Object.values(me.media.voice.speeds);
+        var index = speeds.indexOf(rate);
+        if (index) {
+            index--;
+            player.defaultPlaybackRate = player.playbackRate = speeds[index];
+            me.updatePlayer(object);
+        }
     };
 };

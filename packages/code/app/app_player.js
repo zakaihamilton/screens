@@ -50,6 +50,7 @@ screens.app.player = function AppPlayer(me) {
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
+        me.updatePlayback(window);
         window.resolve();
     };
     me.setArgs = function (object, args) {
@@ -292,7 +293,7 @@ screens.app.player = function AppPlayer(me) {
         return speedList;
     };
     me.jumpTimes = function () {
-        var stepList = [2, 5, 10, 15, 20, 25, 30];
+        var stepList = me.media.voice.jumpTimes;
         stepList = stepList.map(step => {
             var item = [
                 step,
@@ -319,7 +320,16 @@ screens.app.player = function AppPlayer(me) {
     };
     me.playerUpdated = async function (object) {
         var window = me.singleton;
+        if (!window) {
+            return;
+        }
         var duration = me.widget.player.duration(object);
+        if (window.var.player) {
+            var speedName = me.widget.player.controls.speedName(window.var.player);
+            if (speedName !== window.options.speed) {
+                me.core.property.set(window, "app.player.speed", speedName);
+            }
+        }
         var path = me.widget.player.path(object);
         if (duration) {
             var groupName = window.options.groupName.toLowerCase();
