@@ -35,7 +35,6 @@
 .widget-progress-label {
     text-align: center;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size: 16px;
     color: black;
     user-select: none;
     pointer-events: none;
@@ -50,7 +49,6 @@
     right: 3px;
     text-align: right;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-    font-size: 16px;
     color: var(--color);
     user-select: none;
     pointer-events: none;

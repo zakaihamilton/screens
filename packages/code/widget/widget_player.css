@@ -124,8 +124,10 @@
 
 .widget-player-controls-progress.normal {
     min-height: 64px;
+    font-size: 2em;
 }
 
 .widget-player-controls-progress.large {
-    min-height: 128px;
+    min-height: 64px;
+    font-size: 2em;
 }
