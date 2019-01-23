@@ -399,7 +399,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 10em;
-    border: none;
     z-index: 0;
     border-radius: 0;
 }
@@ -414,10 +413,6 @@
 
 .glow-menu-vertical.bottom-up {
     border-radius: 15px 15px 0px 0px;
-}
-
-.glow-menu-vertical.menu {
-    border-radius: 0px 15px 15px 0px;
 }
 
 .glow-menu-vertical th, .glow-menu-vertical td {
@@ -559,7 +554,7 @@
     vertical-align: top;
     width: 0.4em;
     top: 0.6em;
-    transform: rotate(50deg);
+    transform: rotate(135deg);
 }
 
 .glow-menu-vertical li.selected, .glow-menu-vertical tr.selected td:first-child, .glow-menu-vertical span.selected {

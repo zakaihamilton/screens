@@ -130,6 +130,24 @@
                     "select": "widget.transform.transform"
                 },
                 {
+                    "text": "Font Size",
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "widget.transform.fontSizesPx(widget.transform.fontSize)"
+                    ]
+                },
+                {
+                    "text": "Diagrams",
+                    "options": {
+                        "separator": true
+                    },
+                    "select": [
+                        "widget.transform.diagramList"
+                    ]
+                },
+                {
                     "text": "Audio",
                     "options": {
                         "separator": true
@@ -221,50 +239,88 @@
                             "options": {
                                 "state": "select"
                             }
+                        }
+                    ]
+                },
+                {
+                    "text": "Layout",
+                    "select": [
+                        {
+                            "text": "Reflow",
+                            "select": "widget.transform.reflow"
                         },
                         {
-                            "text": "Commentary",
+                            "text": "Snap",
+                            "select": "widget.transform.snap",
                             "options": {
+                                "state": "select",
                                 "separator": true
-                            },
-                            "select": [
-                                {
-                                    "text": "Edit Mode",
-                                    "select": "widget.transform.commentaryEdit",
-                                    "options": {
-                                        "state": "select"
-                                    }
-                                },
-                                {
-                                    "text": "Label",
-                                    "select": "widget.transform.commentaryLabel",
-                                    "options": {
-                                        "state": "select"
-                                    }
-                                },
-                                {
-                                    "text": "Users",
-                                    "select": "header"
-                                },
-                                {
-                                    "text": "None",
-                                    "select": "widget.transform.commentaryUser",
-                                    "options": {
-                                        "value": "",
-                                        "state": "select"
-                                    }
-                                },
-                                {
-                                    "text": "All",
-                                    "select": "widget.transform.commentaryUser",
-                                    "options": {
-                                        "value": "all",
-                                        "state": "select"
-                                    }
-                                },
-                                "widget.transform.commentaryUsers"
-                            ]
+                            }
+                        },
+                        {
+                            "text": "Pages",
+                            "select": "widget.transform.pages",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Columns",
+                            "select": "widget.transform.columns",
+                            "options": {
+                                "state": "select",
+                                "enabled": "widget.transform.pages"
+                            }
+                        },
+                        {
+                            "text": "Video Slot",
+                            "select": "widget.transform.pipVideo",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
                         }
+                    ]
+                },
+                {
+                    "text": "Commentary",
+                    "select": [
+                        {
+                            "text": "Edit Mode",
+                            "select": "widget.transform.commentaryEdit",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Label",
+                            "select": "widget.transform.commentaryLabel",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Users",
+                            "select": "header"
+                        },
+                        {
+                            "text": "None",
+                            "select": "widget.transform.commentaryUser",
+                            "options": {
+                                "value": "",
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "All",
+                            "select": "widget.transform.commentaryUser",
+                            "options": {
+                                "value": "all",
+                                "state": "select"
+                            }
+                        },
+                        "widget.transform.commentaryUsers"
                     ]
                 },
                 {
@@ -349,59 +405,7 @@
                             }
                         }
                     ]
-                },
-                {
-                    "text": "Layout",
-                    "select": [
-                        {
-                            "text": "Reflow",
-                            "select": "widget.transform.reflow"
-                        },
-                        {
-                            "text": "Snap",
-                            "select": "widget.transform.snap",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Pages",
-                            "select": "widget.transform.pages",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Columns",
-                            "select": "widget.transform.columns",
-                            "options": {
-                                "state": "select",
-                                "enabled": "widget.transform.pages"
-                            }
-                        },
-                        {
-                            "text": "Video Slot",
-                            "select": "widget.transform.pipVideo",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Font Size",
-                            "select": [
-                                "widget.transform.fontSizesPx(widget.transform.fontSize)"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "text": "Diagrams",
-                    "select": "header"
-                },
-                "widget.transform.diagramList"
+                }
             ]
         }
     ]

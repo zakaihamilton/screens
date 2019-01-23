@@ -315,15 +315,6 @@ screens.widget.transform = function WidgetTransform(me) {
                 return result;
             });
             items = items.filter(Boolean);
-            if (!items.length) {
-                items = [[
-                    "No Matching Diagrams",
-                    null,
-                    {
-                        enabled: false
-                    }
-                ]];
-            }
             return items;
         }
     };

@@ -242,6 +242,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             me.core.property.set(object.target, "ui.property.broadcast", {
                 "ui.class.remove": "selected"
             });
+            me.core.property.set(object.target, "ui.style.display", "");
             me.core.property.set(object, "ui.node.parent");
         }
     };
@@ -254,9 +255,9 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         me.core.property.set(item, "ui.class.add", "selected");
         me.core.property.set(object.var.modal, "ui.style.display", "block");
         var window = me.core.property.get(object, "widget.window.active");
-        var region = me.ui.rect.absoluteRegion(item);
-        region.left = region.right;
+        var region = me.ui.rect.absoluteRegion(object);
         region.bottom = region.top;
+        me.core.property.set(object, "ui.style.display", "none");
         object.var.menu = me.upper.create_menu(window, object, region, info);
         me.core.property.set(object.var.menu, "ui.class.menu", true);
     };
