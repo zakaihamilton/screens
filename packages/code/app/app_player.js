@@ -37,7 +37,8 @@ screens.app.player = function AppPlayer(me) {
             speed: "Normal",
             format: "Audio",
             autoPlay: false,
-            jumpTime: 10
+            jumpTime: 10,
+            iconSize: "Normal"
         });
         me.ui.options.toggleSet(me, null, {
             autoPlay: null
@@ -46,7 +47,8 @@ screens.app.player = function AppPlayer(me) {
             speed: me.updatePlayback,
             format: me.updatePlayer,
             groupName: me.updateSessions,
-            jumpTime: me.updatePlayback
+            jumpTime: me.updatePlayback,
+            iconSize: me.updatePlayback
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
@@ -313,10 +315,12 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var speed = me.media.voice.speeds[window.options.speed];
         var jumpTime = window.options.jumpTime;
-        me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
-        me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
-        me.widget.player.controls.setJumpTime(window.var.audioPlayer, jumpTime);
-        me.widget.player.controls.setJumpTime(window.var.videoPlayer, jumpTime);
+        var iconSize = window.options.iconSize;
+        [window.var.audioPlayer, window.var.videoPlayer].map(player => {
+            me.widget.player.controls.setSpeed(player, speed);
+            me.widget.player.controls.setJumpTime(player, jumpTime);
+            me.widget.player.controls.setIconSize(player, iconSize);
+        });
     };
     me.playerUpdated = async function (object) {
         var window = me.singleton;

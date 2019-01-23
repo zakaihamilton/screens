@@ -103,13 +103,34 @@
                     "select": [
                         "app.player.jumpTimes"
                     ]
+                },
+                "app.player.content.associated.menu",
+                {
+                    "text": "Size",
+                    "select": [
+                        {
+                            "text": "Small",
+                            "select": "app.player.iconSize",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Normal",
+                            "select": "app.player.iconSize",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Large",
+                            "select": "app.player.iconSize",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 }
-            ]
-        },
-        {
-            "text": "Content",
-            "select": [
-                "app.player.content.associated.menu"
             ]
         }
     ],

@@ -16,22 +16,44 @@
 .widget-player-controls-container {
     display: flex;
     flex-wrap: wrap;
-    margin: 4px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
     flex: 0 0 auto;
+    width: 90%;
 }
 
 .widget-player-controls-button {
-    flex: 0 0 64px;
     border: 1px solid transparent;
-    width: 64px;
-    height: 64px;
-    margin: 4px;
     text-align: center;
-    background-size: 64px 64px;
     border: 1px solid transparent;
     background-repeat: no-repeat;
     background-position: center center;
     border-radius: 5px 5px 5px 5px;
+}
+
+.widget-player-controls-button.small {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    margin: 4px;
+    background-size: 32px 32px;
+}
+
+.widget-player-controls-button.normal {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    margin: 4px;
+    background-size: 64px 64px;
+}
+
+.widget-player-controls-button.large {
+    flex: 0 0 128px;
+    width: 128px;
+    height: 128px;
+    margin: 4px;
+    background-size: 128px 128px;
 }
 
 .widget-player-controls-button.night-mode {
@@ -88,11 +110,22 @@
     flex-basis: fill;
     background-color: white;
     border: 1px solid black;
-    min-height: 32px;
     min-width: 200px;
     margin: 4px;
     margin-left: 4px;
     margin-right: 4px;
     border-radius: 5px 5px 5px 5px;
     width: 100%;
+}
+
+.widget-player-controls-progress.small {
+    min-height: 32px;
+}
+
+.widget-player-controls-progress.normal {
+    min-height: 64px;
+}
+
+.widget-player-controls-progress.large {
+    min-height: 128px;
 }

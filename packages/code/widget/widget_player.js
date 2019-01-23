@@ -320,7 +320,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var player = widget.var.player;
         var percentage = 0;
         if (player.duration) {
-            percentage = Math.floor((100 / player.duration) * player.currentTime);
+            percentage = (100 / player.duration) * player.currentTime;
+        }
+        if (percentage < 1) {
+            percentage = 1;
         }
         me.core.property.set(progress, "value", percentage);
         var label = me.formatTime(player.currentTime);
@@ -357,16 +360,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         }
     };
     me.seekEnd = function (object, event) {
-        if (object.seeking) {
+        if (object.seeking && object.over) {
             me.seekEvent(object, event);
-            object.seeking = false;
-            object.over = false;
         }
+        object.seeking = false;
+        object.over = false;
     };
     me.seekEvent = function (object, event) {
         var widget = me.upper.mainWidget(object);
         var controls = widget.var.controls;
-        var percent = event.offsetX / controls.var.progress.offsetWidth;
+        var percent = 0;
+        if (event.offsetX >= 0 && controls.var.progress.clientWidth) {
+            percent = event.offsetX / controls.var.progress.clientWidth;
+        }
         if (percent < 0) {
             percent = 0;
         }
@@ -488,5 +494,26 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
         }
+    };
+    me.setIconSize = function (object, iconSize) {
+        var widget = me.upper.mainWidget(object);
+        var controls = widget.var.controls;
+        iconSize = iconSize.toLowerCase();
+        var sizes = ["small", "normal", "large"];
+        sizes.map(size => {
+            var flag = iconSize === size;
+            var id = "ui.class." + size;
+            var properties = {};
+            properties[id] = flag;
+            me.core.property.set(controls, "ui.property.broadcast", properties);
+        });
+        var isSmall = iconSize === "small";
+        var isNormal = iconSize === "normal";
+        var isLarge = iconSize === "large";
+        me.core.property.set(controls, "ui.property.broadcast", {
+            "ui.class.small": isSmall,
+            "ui.class.normal": isNormal,
+            "ui.class.large": isLarge
+        });
     };
 };
