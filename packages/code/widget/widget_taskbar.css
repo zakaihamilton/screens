@@ -53,10 +53,6 @@
     outline:1px solid black;
 }
 
-.widget-taskbar-shortcut:hover {
-    border: 1px solid black;
-}
-
 .widget-taskbar-shortcut:hover:active {
     box-shadow: inset 0 0 50px #fff, /* inner white */
     inset 20px 0 80px #f0f, /* inner left magenta short */
