@@ -116,8 +116,8 @@
 }
 
 .widget-player-controls-progress.normal {
-    height: 64px;
-    font-size: 2em;
+    height: 48px;
+    font-size: 1.5em;
 }
 
 .widget-player-controls-progress.large {
