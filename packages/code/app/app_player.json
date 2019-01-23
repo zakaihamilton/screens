@@ -126,7 +126,8 @@
                             "text": "Large",
                             "select": "app.player.iconSize",
                             "options": {
-                                "state": "select"
+                                "state": "select",
+                                "visible": "core.device.isNotMobile"
                             }
                         }
                     ]
