@@ -401,6 +401,7 @@
     max-height: 10em;
     z-index: 0;
     border-radius: 0;
+    border: none;    
 }
 
 .glow-menu-vertical table {
