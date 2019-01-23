@@ -143,6 +143,19 @@ screens.widget.schedule = function WidgetSchedule(me) {
         object.schedule_events = events;
         return events;
     };
+    me.formatDate = function (date) {
+        var year = String(date.getFullYear());
+        var month = String((date.getMonth() + 1));
+        if (month.length < 2) {
+            month = "0" + month;
+        }
+        var day = String(date.getDate());
+        if (day.length < 2) {
+            day = "0" + day;
+        }
+        var string = year + "-" + month + "-" + day;
+        return string;
+    };
     me.redraw = async function (object) {
         var type = object.schedule_options.viewType.toLowerCase();
         var size = me.size(object);
@@ -216,7 +229,7 @@ screens.widget.schedule = function WidgetSchedule(me) {
                                     let styles = { "grid-column-start": item.start, "grid-column-end": item.end };
                                     let attributes = {};
                                     if (key === "day") {
-                                        var dateAsString = item.date.getFullYear() + "-" + (item.date.getMonth() + 1) + "-" + item.date.getDate();
+                                        var dateAsString = me.formatDate(item.date);
                                         attributes.onclick = "screens.ui.clipboard.copy('" + dateAsString + "')";
                                     }
                                     html += me.ui.html.item({ classes, styles, attributes, value: item.value });
