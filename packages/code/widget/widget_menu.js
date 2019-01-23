@@ -684,8 +684,20 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             if (object.menu_select && value && Array.isArray(object.menu_select) && Array.isArray(value)) {
                 var menu_select = [];
                 for (var target of value) {
-                    if (!object.menu_select.find((source) => source[0] === target[0])) {
-                        menu_select.push(target);
+                    if (Array.isArray(target)) {
+                        if (!object.menu_select.find((source) => source[0] === target[0])) {
+                            menu_select.push(target);
+                        }
+                    }
+                    else if (typeof target === "string") {
+                        if (!object.menu_select.find((source) => source === target)) {
+                            menu_select.push(target);
+                        }
+                    }
+                    else {
+                        if (!object.menu_select.find((source) => source.text === target.text)) {
+                            menu_select.push(target);
+                        }
                     }
                 }
                 object.menu_select = object.menu_select.concat(menu_select);
