@@ -15,7 +15,7 @@
     overflow-y: hidden;
     position: absolute;
     left: 0em;
-    right: 10em;
+    right: 12em;
     top: 0em;
 }
 
@@ -30,23 +30,27 @@
     right: 0em;
     display: flex;
     height: 2em;
-    width: 10em;
+    width: 12em;
     flex: 0;
 }
 
 .widget-taskbar-shortcut {
     flex: none;
-    width: 2.8em;
+    width: 2.6em;
     height: 1.8em;
     border: 1px solid transparent;
     padding: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     margin: 3px;
     user-select: none;
     -webkit-user-drag: none;
     cursor: default;
     filter: invert(100%);
+}
+
+.widget-taskbar-shortcut.on {
+    outline:1px solid black;
 }
 
 .widget-taskbar-shortcut:hover {

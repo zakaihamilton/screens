@@ -28,7 +28,8 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
             me.core.string.title(label),
             "/packages/res/icons/" + label + ".png",
             label,
-            method
+            method,
+            label
         ]];
     };
 };

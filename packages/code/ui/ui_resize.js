@@ -110,6 +110,14 @@ screens.ui.resize = function UIResize(me) {
             }
         }
     };
+    me.toggleLockRotation = function (object) {
+        var enable = false;
+        ["resize", "orientationchange"].map(name => {
+            enable = !me.core.event.enabled.get(name);
+            me.core.event.enabled.set(name, enable);
+        });
+        me.core.property.set(object, "ui.class.on", !enable);
+    };
     me.event = {
         set: function (object, value) {
             me.core.event.register(null, object, "resize", value, "resize", window);

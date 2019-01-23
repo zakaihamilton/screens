@@ -4,6 +4,7 @@
  */
 
 screens.core.event = function CoreEvent(me) {
+    me.events = {};
     me.lookup = {
         set: function (object, value, property) {
             me.register(null, object, property, value);
@@ -12,6 +13,23 @@ screens.core.event = function CoreEvent(me) {
     me.send_event = function (object, method, event) {
         if (!object || !object.getAttribute || !object.getAttribute("disabled")) {
             return me.core.property.set(object, method, event);
+        }
+    };
+    me.enabled = {
+        get: function (name) {
+            var isEnabled = true;
+            var item = me.events[name];
+            if (item && item.disabled) {
+                isEnabled = false;
+            }
+            return isEnabled;
+        },
+        set: function (name, flag) {
+            var item = me.events[name];
+            if (!item) {
+                item = me.events[name] = {};
+            }
+            item.disabled = !flag;
         }
     };
     me.register = function (handlers, object, type, method, name = type, target = object, options = null) {
@@ -28,6 +46,10 @@ screens.core.event = function CoreEvent(me) {
             var enabled = true;
             if (handlers && name in handlers) {
                 enabled = handlers[name](object, method, event);
+            }
+            var item = me.events[name];
+            if (item && item.disabled) {
+                enabled = false;
             }
             if (enabled) {
                 var result = me.send_event(object, method, event);

@@ -23,6 +23,7 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix": ")",
                 "ui.data.values": [
+                    "ui.resize.toggleLockRotation",
                     "ui.theme.nightMode",
                     "keyboard",
                     "launcher"
