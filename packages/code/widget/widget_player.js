@@ -360,17 +360,23 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.rewind = function (object, seconds) {
         var widget = me.upper.mainWidget(object);
         if (typeof seconds !== "number") {
-            seconds = 10;
+            seconds = widget.jumpTime;
+            if (!seconds) {
+                seconds = 10;
+            }
         }
-        widget.var.player.currentTime -= seconds;
+        widget.var.player.currentTime -= parseInt(seconds);
         me.update(object);
     };
     me.forward = function (object, seconds) {
         var widget = me.upper.mainWidget(object);
         if (typeof seconds !== "number") {
-            seconds = 10;
+            seconds = widget.jumpTime;
+            if (!seconds) {
+                seconds = 10;
+            }
         }
-        widget.var.player.currentTime += seconds;
+        widget.var.player.currentTime += parseInt(seconds);
         me.update(object);
     };
     me.seek = function (object, time) {
@@ -421,5 +427,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var widget = me.upper.mainWidget(object);
         var player = widget.var.player;
         player.playbackRate = speed;
+    };
+    me.setJumpTime = function (object, jumpTime) {
+        var widget = me.upper.mainWidget(object);
+        widget.jumpTime = jumpTime;
     };
 };

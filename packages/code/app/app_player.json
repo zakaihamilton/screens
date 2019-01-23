@@ -97,6 +97,12 @@
                     "select": [
                         "app.player.speeds"
                     ]
+                },
+                {
+                    "text": "Jump Time",
+                    "select": [
+                        "app.player.jumpTimes"
+                    ]
                 }
             ]
         },

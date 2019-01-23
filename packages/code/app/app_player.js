@@ -36,7 +36,8 @@ screens.app.player = function AppPlayer(me) {
             sessionName: "",
             speed: "Normal",
             format: "Audio",
-            autoPlay: false
+            autoPlay: false,
+            jumpTime: 10
         });
         me.ui.options.toggleSet(me, null, {
             autoPlay: null
@@ -44,7 +45,8 @@ screens.app.player = function AppPlayer(me) {
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
             format: me.updatePlayer,
-            groupName: me.updateSessions
+            groupName: me.updateSessions,
+            jumpTime: me.updatePlayback
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
@@ -289,11 +291,31 @@ screens.app.player = function AppPlayer(me) {
         });
         return speedList;
     };
+    me.jumpTimes = function () {
+        var stepList = [2, 5, 10, 15, 20, 25, 30];
+        stepList = stepList.map(step => {
+            var item = [
+                step,
+                "app.player.jumpTime",
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "jump"
+                }
+            ];
+            return item;
+        });
+        return stepList;
+    };
     me.updatePlayback = function () {
         var window = me.singleton;
         var speed = me.media.voice.speeds[window.options.speed];
+        var jumpTime = window.options.jumpTime;
         me.widget.player.controls.setSpeed(window.var.audioPlayer, speed);
         me.widget.player.controls.setSpeed(window.var.videoPlayer, speed);
+        me.widget.player.controls.setJumpTime(window.var.audioPlayer, jumpTime);
+        me.widget.player.controls.setJumpTime(window.var.videoPlayer, jumpTime);
     };
     me.playerUpdated = async function (object) {
         var window = me.singleton;
