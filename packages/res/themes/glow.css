@@ -1,7 +1,6 @@
 .glow-window-label {
     text-align: center;
     background-color: black;
-    font-size: 1em;
     line-height: 1.5em;
     flex: 1;
     margin-left: auto;
@@ -57,8 +56,8 @@
     overflow: hidden;
     min-width: 200px;
     min-height: 200px;
-	background-color:var(--background);
-	background-size: 400% 400%;
+    background-color: var(--background);
+    background-size: 400% 400%;
 }
 
 .glow-window-border.transparent {
@@ -231,22 +230,22 @@
 
 .glow-window-top-left {
     background: none;
-    border:none;
+    border: none;
 }
 
 .glow-window-top-right {
     background: none;
-    border:none;
+    border: none;
 }
 
 .glow-window-bottom-left {
     background: none;
-    border:none;
+    border: none;
 }
 
 .glow-window-bottom-right {
     background: none;
-    border:none;
+    border: none;
 }
 
 .glow-window-title {
@@ -359,11 +358,10 @@
 
 .glow-menu-horizontal span {
     color: var(--chrome-color);
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
     padding-bottom: 0px;
     padding-top: 1px;
-    font-size: 1em;
     text-align: left;
     flex: 0;
     cursor: default;
@@ -401,7 +399,7 @@
     max-height: 10em;
     z-index: 0;
     border-radius: 0;
-    border: none;    
+    border: none;
 }
 
 .glow-menu-vertical table {
@@ -439,9 +437,8 @@
 
 .glow-menu-vertical input, .glow-menu-vertical li, .glow-menu-vertical tr, .glow-menu-vertical th, .glow-menu-vertical td, .glow-menu-vertical span {
     min-height: 1.5em;
-    padding-left: 16px;
-    padding-right: 16px;
-    font-size: 1em;
+    padding-left: 1em;
+    padding-right: 1.5em;
     text-align: left;
     cursor: default;
     user-select: none;
@@ -471,7 +468,7 @@
 }
 
 .glow-menu-vertical div.no-match {
-    padding-left: 16px;
+    padding-left: 1em;
     background-color: var(--chrome-background);
     color: var(--chrome-color);
 }
@@ -514,11 +511,11 @@
 }
 
 .glow-menu-vertical input.separator, .glow-menu-vertical li.separator, .glow-menu-vertical tr.separator, .glow-menu-vertical span.separator {
-    border-top:1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .glow-menu-members input.separator, .glow-menu-members li.separator, .glow-menu-members tr.separator, .glow-menu-members span.separator {
-    border-top:1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .glow-menu-vertical li.header, .glow-menu-vertical span.header {
@@ -543,13 +540,13 @@
     width: 96%;
 }
 
-.glow-menu-vertical li.menu:after, .glow-menu-vertical tr.menu td:first-child:after, .glow-menu-vertical span.menu:after {
+.glow-menu-vertical li.has-menu:after, .glow-menu-vertical tr.has-menu td:first-child:after, .glow-menu-vertical span.has-menu:after {
     border-color: var(--border-color);
     border-style: solid;
     border-width: 2px 2px 0 0;
     content: '';
     height: 0.4em;
-    right: 0.5em;
+    right: 0.4em;
     position: absolute;
     vertical-align: top;
     width: 0.4em;
@@ -567,7 +564,6 @@
     height: 18px;
     display: none;
     color: black;
-    font-size: 16px;
     line-height: 18px;
     position: relative;
     padding-top: 2px;
@@ -583,7 +579,6 @@
     border-radius: 4px;
     font-weight: normal;
     transition: all 0.2s ease-in-out;
-    font-size: 14px;
     text-align: center;
     min-width: 64px;
     min-height: 17px;
@@ -649,13 +644,13 @@
 
 .glow-input-normal {
     margin-left: 18px;
-    font-size: 16px;
     padding: 3px;
     margin-top: 5px;
     margin-bottom: 5px;
     border: 1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
     box-sizing: border-box;
+    font-size: inherit;
 }
 
 .glow-input-normal:read-only {
@@ -672,7 +667,6 @@
 }
 
 .glow-list-dropdown-selection {
-    font-size: 16px;
     text-align: left;
     border: 1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
@@ -747,7 +741,6 @@
     min-height: 18px;
     padding-left: 6px;
     padding-right: 6px;
-    font-size: 14px;
     text-align: left;
     display: block;
     cursor: default;
@@ -774,7 +767,6 @@
 }
 
 .glow-tree-dropdown-selection {
-    font-size: 16px;
     text-align: left;
     border: 1px solid #0f2777;
     border-radius: 5px 5px 5px 5px;
@@ -863,7 +855,6 @@
     min-height: 18px;
     padding-left: 3px;
     padding-right: 3px;
-    font-size: 14px;
     text-align: left;
     display: block;
     cursor: default;
@@ -921,6 +912,7 @@
     border-radius: 5px;
     padding: 2px;
     margin: 2px;
+    align-items: center;
 }
 
 .glow-window-icon.widget-icon-list.minimize {
@@ -1015,4 +1007,8 @@ strong {
 .field.has-addons .control:last-child .input {
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
+}
+
+.inherit-font {
+    font-size: inherit !important;
 }

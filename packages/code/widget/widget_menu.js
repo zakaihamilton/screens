@@ -17,12 +17,12 @@ screens.widget.menu = function WidgetMenu(me) {
     me.updateTheme = function (window) {
         if (window.var.menu) {
             me.core.property.set(window, "ui.property.broadcast", {
-                "ui.class.add": "menu"
+                "ui.class.add": "has-menu"
             });
         }
         else {
             me.core.property.set(window, "ui.property.broadcast", {
-                "ui.class.remove": "menu"
+                "ui.class.remove": "has-menu"
             });
         }
     };
@@ -236,7 +236,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
     };
     me.back = {
         set: function (object, value) {
-            if (value || !me.core.property.get(object, "ui.class.menu")) {
+            if (value || !me.core.property.get(object, "ui.class.has-menu")) {
                 me.core.property.set(object.target, "back", value);
             }
             me.core.property.set(object.target, "ui.property.broadcast", {
@@ -261,7 +261,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
         region.bottom = region.top;
         me.core.property.set(object, "ui.style.display", "none");
         object.var.menu = me.upper.create_menu(window, object, region, values);
-        me.core.property.set(object.var.menu, "ui.class.menu", true);
+        me.core.property.set(object.var.menu, "ui.class.has-menu", true);
     };
     me.select = {
         set: function (object, value) {
@@ -594,9 +594,17 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             }
             if (param && param.then) {
                 callback(false);
-                param.then(callback);
+                param.then(param => {
+                    if (param && Array.isArray(param) && !param.length) {
+                        param = false;
+                    }
+                    callback(param);
+                });
             }
             else {
+                if (param && Array.isArray(param) && !param.length) {
+                    param = false;
+                }
                 callback(param);
             }
         }
@@ -635,7 +643,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     me.core.property.set(object, "ui.class.checked", value);
                 });
                 me.handleValue(object, options, "menu", (value) => {
-                    me.core.property.set(object, "ui.class.menu", value);
+                    me.core.property.set(object, "ui.class.has-menu", value);
                 });
                 me.handleValue(object, options, "separator", (value) => {
                     me.core.property.set(object, "ui.class.separator", value);
@@ -649,7 +657,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 me.handleValue(object, options, "edit", (value) => {
                     if (options.edit) {
                         me.core.property.set(object, {
-                            "ui.class.add": ["edit", "input"],
+                            "ui.class.add": ["edit", "input", "inherit-font"],
                             "ui.attribute.contenteditable": true,
                             "core.link.close": options.edit,
                             "ui.basic.text": value,
@@ -658,7 +666,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                     }
                     else {
                         me.core.property.set(object, {
-                            "ui.class.remove": ["edit", "input"],
+                            "ui.class.remove": ["edit", "input", "inherit-font"],
                             "ui.attribute.contenteditable": false,
                             "core.link.close": null,
                             "ui.attribute.placeholder": null
@@ -706,7 +714,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                 object.menu_select = value;
             }
             if (Array.isArray(value)) {
-                me.core.property.set(object, "ui.class.menu", true);
+                me.core.property.set(object, "ui.class.has-menu", true);
             }
             var optionNames = ["header", "label"];
             for (var optionName of optionNames) {

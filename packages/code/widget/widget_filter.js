@@ -13,17 +13,18 @@ screens.widget.filter = function WidgetFilter(me) {
         },
         properties: {
             "ui.basic.tag": "div",
-            "ui.class.add": ["field", "has-addons"],
+            "ui.class.add": ["field", "has-addons", "inherit-font"],
             "ui.style.margin": "6px",
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.add": ["control", "select"],
+                    "ui.class.add": ["control", "select", "inherit-font"],
                     "ui.basic.var": "prefixes",
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "select",
                             "ui.class.class": null,
+                            "ui.class.add": ["inherit-font"],
                             "ui.property.style": {
                                 "borderBottomRightRadius": "0px",
                                 "borderTopRightRadius": "0px"
@@ -35,11 +36,11 @@ screens.widget.filter = function WidgetFilter(me) {
                 },
                 {
                     "ui.basic.tag": "div",
-                    "ui.class.add": ["control", "is-expanded"],
+                    "ui.class.add": ["control", "is-expanded", "inherit-font"],
                     "ui.basic.elements": [
                         {
                             "ui.basic.tag": "input",
-                            "ui.class.add": ["input", "is-fullwidth"],
+                            "ui.class.add": ["input", "is-fullwidth", "inherit-font"],
                             "ui.basic.var": "filter",
                             "ui.attribute.type": "search",
                             "ui.attribute.placeholder": "Filter",

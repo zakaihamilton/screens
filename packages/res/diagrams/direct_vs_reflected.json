@@ -19,9 +19,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.transform.term",
-                            "ui.style.backgroundColor",
-                            "ui.style.fontWeight"
+                            "app.diagram.term"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
@@ -71,9 +69,7 @@
                     "ui.group.data": {
                         "ui.data.keyList": [
                             "ui.style.gridRow",
-                            "app.diagram.transform.term",
-                            "ui.style.backgroundColor",
-                            "ui.style.fontWeight"
+                            "app.diagram.term"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",

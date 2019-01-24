@@ -16,8 +16,8 @@
     z-index: 1000;
     display: grid;
     align-items: start;
-    grid-auto-columns:60px;
-    grid-auto-rows:60px;
+    grid-auto-columns: 60px;
+    grid-auto-rows: 60px;
 }
 
 .app-keyboard-button {
@@ -28,7 +28,6 @@
     border: 1px solid black;
     margin: 3px;
     padding: 3px;
-    font-size: 1em;
     text-align: center;
     vertical-align: middle;
     padding-bottom: 0.5em;

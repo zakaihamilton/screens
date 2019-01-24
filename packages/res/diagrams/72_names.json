@@ -46,9 +46,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "ui.basic.text",
-                            "ui.style.backgroundColor",
-                            "ui.style.borderColor"
+                            "ui.basic.text"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
@@ -96,10 +94,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "app.diagram.transform.term",
-                            "ui.style.backgroundColor",
-                            "ui.style.borderColor",
-                            "ui.style.display"
+                            "app.diagram.term"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",

@@ -10,10 +10,9 @@
 .widget-menu-horizontal span {
     color: black;
     padding-top: 1px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
     padding-bottom: 0px;
-    font-size: 14px;
     text-align: left;
     border-right: 1px solid transparent;
     flex: 0;
@@ -62,9 +61,8 @@
     background-color: white;
     color: black;
     min-height: 18px;
-    padding-left: 16px;
-    padding-right: 16px;
-    font-size: 14px;
+    padding-left: 1em;
+    padding-right: 1.5em;
     text-align: left;
     display: block;
     cursor: default;

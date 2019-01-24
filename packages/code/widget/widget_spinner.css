@@ -10,7 +10,6 @@
 .widget-spinner-loader span {
   line-height: 200px;
   text-align: center;
-  font-size: 20px;
   color: var(--spinner-color);
   text-shadow: 0 0 3px rgba(81, 203, 238, 1), 0 0 5px #0000FF;
 }

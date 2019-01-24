@@ -141,7 +141,8 @@
                 {
                     "text": "Diagrams",
                     "options": {
-                        "separator": true
+                        "separator": true,
+                        "visible": "widget.transform.diagramList"
                     },
                     "select": [
                         "widget.transform.diagramList"

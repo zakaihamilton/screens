@@ -4,6 +4,10 @@
     background: var(--chrome-background);
 }
 
+.app-launcher-tabs {
+    font-size: inherit;
+}
+
 .app-launcher-tabs a.night-mode {
     background-color: var(--chrome-background);
     color: var(--chrome-color);

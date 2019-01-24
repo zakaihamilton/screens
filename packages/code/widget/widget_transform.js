@@ -304,16 +304,17 @@ screens.widget.transform = function WidgetTransform(me) {
             if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
                 diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
+            diagrams = me.core.json.union(diagrams, "title");
             var items = diagrams.map(function (item) {
-                var result = [
-                    item.title,
-                    function () {
+                var result = {
+                    text: item.title,
+                    select: function () {
                         me.core.app.launch("diagram", item.path, widget.options, null, item.params);
                     },
-                    {
+                    options: {
                         enabled: widget.transformText !== null
                     }
-                ];
+                };
                 return result;
             });
             items = items.filter(Boolean);

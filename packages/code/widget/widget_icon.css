@@ -43,13 +43,12 @@
     margin: 5px;
     flex: 0;
     filter: invert(100%);
-    width: 16px;
-    height: 16px;
+    width: 1em;
+    height: 1em;
 }
 
 .widget-icon-label-icon {
     position: relative;
-    font-size: 1em;
     user-select: none;
     margin: 2px;
     color: var(--color);
@@ -60,7 +59,6 @@
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 1em;
     user-select: none;
     white-space: nowrap;
 }

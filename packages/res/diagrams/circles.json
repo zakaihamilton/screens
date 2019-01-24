@@ -18,8 +18,7 @@
                         "ui.data.keyList": [
                             "ui.style.gridRow",
                             "ui.style.gridColumn",
-                            "app.diagram.transform.term",
-                            "ui.style.backgroundColor"
+                            "app.diagram.term"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
