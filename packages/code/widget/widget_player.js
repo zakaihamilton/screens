@@ -448,10 +448,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         var widget = me.upper.mainWidget(object);
         var method = me.core.property.get(object, "widget.window.method", "url");
         var url = me.core.property.get(object, method);
-        var notes = me.core.app.singleton("notes");
-        if (!notes) {
-            notes = await me.core.app.launch("notes");
-        }
+        var notes = await me.core.app.launch("notes");
         if (notes) {
             var label = me.formatTime(widget.var.player.currentTime);
             me.core.property.set(notes, "ui.property.after", {
