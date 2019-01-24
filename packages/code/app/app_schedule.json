@@ -18,74 +18,80 @@
                 },
                 {
                     "text": "View",
-                    "select": "header"
-                },
-                {
-                    "text": "Year",
-                    "select": "app.schedule.viewType",
                     "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Month",
-                    "select": "app.schedule.viewType",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Week",
-                    "select": "app.schedule.viewType",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Day",
-                    "select": "app.schedule.viewType",
-                    "options": {
-                        "state": "select"
-                    }
+                        "separator": true
+                    },
+                    "select": [
+                        {
+                            "text": "Year",
+                            "select": "app.schedule.viewType",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Month",
+                            "select": "app.schedule.viewType",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Week",
+                            "select": "app.schedule.viewType",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Day",
+                            "select": "app.schedule.viewType",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 },
                 {
                     "text": "First Day of Week",
-                    "select": "header"
-                },
-                {
-                    "text": "Saturday",
-                    "select": "app.schedule.firstDay",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Sunday",
-                    "select": "app.schedule.firstDay",
-                    "options": {
-                        "state": "select"
-                    }
-                },
-                {
-                    "text": "Monday",
-                    "select": "app.schedule.firstDay",
-                    "options": {
-                        "state": "select"
-                    }
+                    "select": [
+                        {
+                            "text": "Saturday",
+                            "select": "app.schedule.firstDay",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Sunday",
+                            "select": "app.schedule.firstDay",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Monday",
+                            "select": "app.schedule.firstDay",
+                            "options": {
+                                "state": "select"
+                            }
+                        }
+                    ]
                 },
                 {
                     "text": "Group",
-                    "select": "header"
-                },
-                {
-                    "text": "All",
-                    "select": "app.schedule.group",
-                    "options": {
-                        "state": "select",
-                        "value": ""
-                    }
-                },
-                "app.schedule.groupMenuList"
+                    "select": [
+                        {
+                            "text": "All",
+                            "select": "app.schedule.group",
+                            "options": {
+                                "state": "select",
+                                "value": ""
+                            }
+                        },
+                        "app.schedule.groupMenuList"
+                    ]
+                }
             ]
         }
     ],

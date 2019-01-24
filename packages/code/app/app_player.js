@@ -298,10 +298,11 @@ screens.app.player = function AppPlayer(me) {
         var stepList = me.media.voice.jumpTimes;
         stepList = stepList.map(step => {
             var item = [
-                step,
+                step + " Seconds",
                 "app.player.jumpTime",
                 {
-                    "state": "select"
+                    "state": "select",
+                    "value": step
                 },
                 {
                     "group": "jump"
