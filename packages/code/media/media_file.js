@@ -31,8 +31,12 @@ screens.media.file = function MediaFile(me) {
     me.reset = async function () {
         me._groups = [];
     };
-    me.path = function (groupName, path) {
-        return me.cachePath + "/" + path;
+    me.paths = function (groupName, path) {
+        var paths = {
+            local: me.cachePath + "/" + path,
+            remote: me.rootPath + "/" + groupName + "/" + path
+        };
+        return paths;
     };
     me.download = async function (groupName, path) {
         var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,

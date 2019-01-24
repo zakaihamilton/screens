@@ -143,6 +143,9 @@ screens.app.player = function AppPlayer(me) {
                     videoFound = sessions.filter(session => session.session === name && session.extension === "mp4");
                 }
             }
+            else {
+                name = "";
+            }
             me.hasAudio = audioFound !== null && audioFound.length;
             me.hasVideo = videoFound !== null && videoFound.length;
             if (audioFound && !videoFound) {
@@ -150,13 +153,10 @@ screens.app.player = function AppPlayer(me) {
             } else if (!audioFound && videoFound) {
                 window.options.format = "Video";
             }
-            if (name) {
-                me.core.property.set(window, "name", name);
-                me.ui.options.save(me, window, { sessionName: name });
-                await me.content.associated.update(window, name);
-            }
-            else {
-                me.core.property.set(window, "name", "");
+            me.core.property.set(window, "name", name);
+            me.ui.options.save(me, window, { sessionName: name });
+            await me.content.associated.update(window, name);
+            if (!name) {
                 me.contentList = [];
             }
             me.core.property.notify(window, "app.player.updatePlayer");
@@ -168,10 +168,11 @@ screens.app.player = function AppPlayer(me) {
         me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
             var sessions = me.groups.find(group => groupName === group.name).sessions;
+            var name = "";
             if (sessions && sessions.length) {
-                var name = sessions[0].session;
-                me.core.property.set(window, "app.player.session", name);
+                name = sessions[0].session;
             }
+            me.core.property.set(window, "app.player.session", name);
         }
     };
     me.updatePlayer = async function (object) {
@@ -260,13 +261,14 @@ screens.app.player = function AppPlayer(me) {
             });
             try {
                 for (var file of object.files) {
-                    await me.storage.upload.file(file, file.local, (index, count) => {
-                        var data = { label: file.local, max: count, value: index };
+                    var paths = await me.media.file.paths(window.options.groupName, file.name);
+                    await me.storage.upload.file(file, paths.local, (index, count) => {
+                        var data = { label: paths.local, max: count, value: index };
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
                     me.core.property.set(progress, "modal.progress.specific", null);
-                    await me.storage.file.uploadFile(file.local, file.remote, (offset, size) => {
-                        var data = { label: file.remote, max: size, value: offset };
+                    await me.storage.file.uploadFile(paths.local, paths.remote, (offset, size) => {
+                        var data = { label: paths.remote, max: size, value: offset };
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
                 }
