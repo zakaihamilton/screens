@@ -12,6 +12,8 @@
     bottom: 0px;
     opacity: 0.0;
     transition: opacity 0.5s, bottom 0.5s;
+    pointer-events: none;
+    user-select: none;
 }
 
 .widget-toast-container.show {
