@@ -499,6 +499,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             index++;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
+            me.widget.toast.show("widget.player.speed", "Speeding up playback to " + Object.keys(me.media.voice.speeds)[index]);
         }
     };
     me.speedDown = function (object) {
@@ -511,6 +512,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             index--;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
+            me.widget.toast.show("widget.player.speed", "Slowing down playback to " + Object.keys(me.media.voice.speeds)[index]);
         }
     };
     me.setIconSize = function (object, iconSize) {

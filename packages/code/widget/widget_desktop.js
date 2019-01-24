@@ -27,6 +27,11 @@ screens.widget.desktop = function WidgetDesktop(me) {
                             "ui.basic.tag": "div",
                             "ui.class.class": "widget.window.align",
                             "ui.basic.var": "align"
+                        },
+                        {
+                            "ui.basic.tag": "div",
+                            "ui.element.component": "widget.toast",
+                            "ui.basic.var": "toast"
                         }
                     ]
                 }
