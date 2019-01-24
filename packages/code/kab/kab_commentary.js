@@ -26,75 +26,121 @@ screens.kab.commentary = function KabCommentary(me) {
             return line;
         }
         if (!session.options.commentaryEdit) {
-            for (var commentary of commentaries) {
-                line += "<p>";
+            let html = "";
+            for (let commentary of commentaries) {
+                if (!commentary.pre) {
+                    continue;
+                }
+                html += "<p>";
                 if (session.options.commentaryLabel) {
-                    line += me.ui.html.item({
+                    html += me.ui.html.item({
                         tag: "span",
                         classes: ["kab-term-commentary-label"],
                         value: (userName === "all" ? commentary.name : "Commentary") + ":"
                     });
                 }
-                var text = commentary.text.split("\n").join("<br/>");
-                line += "\n" + text;
+                let text = commentary.pre.split("\n").join("<br/>");
+                html += "\n" + text;
                 if (session.options.commentarySeparator) {
-                    line += me.ui.html.item({
+                    html += me.ui.html.item({
                         tag: "hr",
                         classes: ["kab-term-commentary-separator"]
                     });
                 }
-                line += "</p>";
+                html += "</p>";
             }
-            return line;
-        }
-        let html = me.ui.html.item({
-            tag: "section"
-        }, () => {
-            let html = line;
-            for (var commentary of commentaries) {
+            html += line;
+            for (let commentary of commentaries) {
+                if (!commentary.post) {
+                    continue;
+                }
+                html += "<p>";
                 if (session.options.commentaryLabel) {
                     html += me.ui.html.item({
                         tag: "span",
                         classes: ["kab-term-commentary-label"],
-                        value: "Commentary:"
+                        value: (userName === "all" ? commentary.name : "Commentary") + ":"
                     });
                 }
+                let text = commentary.post.split("\n").join("<br/>");
+                html += "\n" + text;
+                if (session.options.commentarySeparator) {
+                    html += me.ui.html.item({
+                        tag: "hr",
+                        classes: ["kab-term-commentary-separator"]
+                    });
+                }
+                html += "</p>";
+            }
+            return html;
+        }
+        let html = me.ui.html.item({
+            tag: "section"
+        }, () => {
+            let html = "";
+            for (let commentary of commentaries) {
                 if (session.options.commentaryEdit) {
                     let source = me.kab.text.clean(line);
                     html += me.ui.html.item({
                         tag: "textarea",
                         classes: ["kab-term-commentary-edit"],
                         attributes: {
-                            onchange: "screens.kab.commentary.store(this)",
+                            onchange: "screens.kab.commentary.store(this,'pre')",
                             hash,
                             user: commentary.user,
                             name: commentary.name,
                             source
                         },
-                        value: commentary.text
+                        value: commentary.pre
                     });
                 }
-                return html;
             }
+            html += line;
+            for (let commentary of commentaries) {
+                if (session.options.commentaryEdit) {
+                    let source = me.kab.text.clean(line);
+                    html += me.ui.html.item({
+                        tag: "textarea",
+                        classes: ["kab-term-commentary-edit"],
+                        attributes: {
+                            onchange: "screens.kab.commentary.store(this,'post')",
+                            hash,
+                            user: commentary.user,
+                            name: commentary.name,
+                            source
+                        },
+                        value: commentary.post
+                    });
+                }
+            }
+            return html;
         });
         return html;
     };
-    me.store = function (element) {
+    me.store = async function (element, field) {
         var text = element.value;
         var hash = me.core.property.get(element, "ui.attribute.#hash");
         var user = me.core.property.get(element, "ui.attribute.#user");
         var name = me.core.property.get(element, "ui.attribute.#name");
         var source = me.core.property.get(element, "ui.attribute.#source");
-        var data = {
-            text,
+        var data = await me.db.commentary.entry.find({
+            "user": "$userId",
+            "hash": hash
+        });
+        if (!data) {
+            data = {};
+        }
+        data = Object.assign(data, {
             hash,
             user,
             name,
             source
-        };
+        });
+        data[field] = text;
         if (text) {
             me.db.commentary.entry.use({
-                "user": "$userId"
+                "user": "$userId",
+                "hash": hash
             }, data);
         }
         else {

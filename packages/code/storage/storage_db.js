@@ -58,7 +58,12 @@ screens.storage.db = function StorageDB(me) {
         var results = await collection.find({ "_id": { "$in": ids } }).toArray();
         return results;
     };
-    me.findOne = async function (location, id) {
+    me.find = async function (location, query) {
+        var collection = await me.collection(location);
+        var result = await collection.findOne(query);
+        return result;
+    };
+    me.get = async function (location, id) {
         var collection = await me.collection(location);
         var result = await collection.findOne({ _id: id });
         return result;
@@ -117,6 +122,8 @@ screens.storage.db = function StorageDB(me) {
         return array;
     };
     me.use = async function (location, query, data) {
+        data = Object.assign({}, data);
+        delete data._id;
         var collection = await me.collection(location);
         var result = await collection.replaceOne(query, data, { upsert: true });
         return result;
@@ -135,7 +142,8 @@ screens.storage.db = function StorageDB(me) {
         };
         var mapping = {
             remove: "remove",
-            get: "findOne",
+            get: "get",
+            find: "find",
             set: "set",
             use: "use",
             findByIds: "findByIds",
