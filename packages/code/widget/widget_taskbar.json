@@ -28,9 +28,11 @@
                     "keyboard",
                     "ui.theme.nightMode",
                     "ui.resize.toggleLockRotation",
+                    "ui.theme.toggleFontSize",
                     "widget.taskbar.toggleShortcuts"
                 ]
             }
         }
-    ]
+    ],
+    "toggleShortcuts": null
 }

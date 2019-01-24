@@ -19,6 +19,7 @@
     padding: 10px;
     background: var(--chrome-background);
     color: var(--chrome-color);
+    font-size: inherit;
 }
 
 .app-present-editor.hebrew {

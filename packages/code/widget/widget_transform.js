@@ -354,7 +354,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var fontSizeList = [];
         var fontSize = 0;
         var item = null;
-        for (fontSize = 1; fontSize < 8; fontSize += 1) {
+        for (fontSize = 1; fontSize < 8; fontSize += 0.5) {
             item = [
                 fontSize + "em",
                 method,

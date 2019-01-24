@@ -1,7 +1,7 @@
 .app-keyboard-input {
     margin-left: 0px !important;
     position: relative;
-    top: 10px;
+    top: 0.5em;
     left: 5%;
     width: 90%;
     direction: rtl;
@@ -12,12 +12,10 @@
     left: 5px;
     right: 5px;
     bottom: 5px;
-    top: 50px;
+    top: 70px;
     z-index: 1000;
     display: grid;
-    align-items: start;
-    grid-auto-columns: 60px;
-    grid-auto-rows: 60px;
+    align-items: stretch;
 }
 
 .app-keyboard-button {

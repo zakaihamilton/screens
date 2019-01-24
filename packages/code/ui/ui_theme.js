@@ -10,12 +10,19 @@ screens.ui.theme = function UITheme(me) {
         me.ui.options.load(me, null, {
             nightMode: true,
             theme: "glow",
-            colors: {}
+            colors: {},
+            fontSize: "1em"
         });
-        me.ui.options.toggleSet(me, me, "nightMode", me.update);
-        me.ui.options.choiceSet(me, me, "theme", me.update);
+        me.ui.options.toggleSet(me, me, {
+            "nightMode": me.update
+        });
+        me.ui.options.choiceSet(me, me, {
+            "theme": me.update,
+            "fontSize": me.updateFontSize
+        });
         me.ui.options.listSet(me, me, "colors", me.update);
         me.update();
+        me.updateFontSize();
     };
     me.themeList = {
         get: function (object) {
@@ -46,6 +53,15 @@ screens.ui.theme = function UITheme(me) {
     };
     me.update = function () {
         me.load(me.options.theme);
+    };
+    me.toggleFontSize = function () {
+        var fontSize = me.core.property.get(window.document.body, "ui.style.fontSize");
+        me.core.property.set(me, "ui.theme.fontSize", fontSize !== "16px" ? "1em" : "1.5em");
+    };
+    me.updateFontSize = function () {
+        var fontSize = me.options.fontSize;
+        me.core.property.set(window.document.body, "ui.style.fontSize", fontSize);
+        window.dispatchEvent(new Event("resize"));
     };
     me.updateList = async function () {
         me.themes = ["None"];

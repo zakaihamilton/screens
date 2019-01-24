@@ -53,4 +53,36 @@ screens.app.keyboard = function AppKeyboard(me) {
         }, info);
         return values;
     };
+    me.initOptions = function (object) {
+        var window = me.widget.window.get(object);
+        me.ui.options.load(me, window, {
+            fontSize: "1em"
+        });
+        window.options.fontSize = "1em";
+        me.ui.options.choiceSet(me, null, {
+            "fontSize": (object, value) => {
+                me.core.property.set(window.var.buttons, "ui.style.fontSize", value);
+            }
+        });
+        me.core.property.set(window.var.buttons, "ui.style.fontSize", window.options.fontSize);
+    };
+    me.fontSizesEm = function (object) {
+        var fontSizeList = [];
+        var fontSize = 0;
+        var item = null;
+        for (fontSize = 1; fontSize <= 2.5; fontSize += 0.5) {
+            item = [
+                fontSize + "em",
+                "app.keyboard.fontSize",
+                {
+                    "state": "select"
+                },
+                {
+                    "group": "fontSize"
+                }
+            ];
+            fontSizeList.push(item);
+        }
+        return fontSizeList;
+    };
 };

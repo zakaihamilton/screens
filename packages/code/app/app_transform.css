@@ -7,6 +7,7 @@
     direction: ltr;
     background: var(--chrome-background);
     color: var(--chrome-color);
+    font-size: inherit;
 }
 
 .app-transform-input.hebrew {

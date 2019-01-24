@@ -34,8 +34,7 @@
                 {
                     "ui.basic.text": "Transform",
                     "ui.touch.click": "app.transform.transform",
-                    "ui.basic.var": "doTransform",
-                    "ui.class.add": "app.transform.transform"
+                    "ui.basic.var": "doTransform"
                 },
                 {
                     "ui.element.component": "widget.transform",

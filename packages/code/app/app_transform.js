@@ -45,7 +45,7 @@ screens.app.transform = function AppTransform(me) {
     me.updateWidgets = function (object, showInput, update = true) {
         var window = me.widget.window.get(object);
         me.core.property.set([window.var.input, window.var.doTransform], "ui.style.display", showInput ? "inline-block" : "none");
-        me.core.property.set(window.var.transform, "ui.style.top", showInput ? "250px" : "0px");
+        me.core.property.set(window.var.transform, "ui.style.top", showInput ? "260px" : "0px");
         if (update) {
             me.core.property.notify(window, "update");
         }

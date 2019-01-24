@@ -10,11 +10,23 @@
         "top": "",
         "right": "0em",
         "bottom": "0em",
-        "width": "380px",
-        "height": "350px",
+        "width": "22em",
+        "height": "20em",
         "border": "1px solid black",
         "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },
+    "widget.menu.items": [
+        {
+            "text": "Layout",
+            "select": [
+                {
+                    "text": "Font Size",
+                    "select": "header"
+                },
+                "app.keyboard.fontSizesEm"
+            ]
+        }
+    ],
     "ui.basic.elements": [
         {
             "ui.element.component": "widget.input",
@@ -48,5 +60,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "app.keyboard.initOptions": null
 }
