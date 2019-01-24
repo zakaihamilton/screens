@@ -34,5 +34,8 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
     me.toggleShortcuts = function (object) {
         var taskbar = me.ui.node.container(object, me.id);
         me.core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
+        var isCollapsed = me.core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
+        var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
+        me.core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", "/packages/res/icons/" + name + ".png");
     };
 };
