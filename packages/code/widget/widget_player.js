@@ -85,6 +85,9 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
         }
     };
     me.source = {
+        get: function (object) {
+            return object.src;
+        },
         set: function (object, path) {
             if (path) {
                 var extension = me.core.path.extension(path);
@@ -92,6 +95,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
             }
             me.core.property.set(object.var.source, "ui.attribute.src", path);
             object.var.player.src = path;
+            object.src = path;
             object.var.player.load();
             me.core.property.set(object, "widget.player.controls.update");
         }
@@ -147,11 +151,15 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
         me.core.property.set(object.var.player, "ui.style.height", heightText);
     };
     me.source = {
+        get: function (object) {
+            return object.src;
+        },
         set: function (object, path) {
             var extension = me.core.path.extension(path);
             me.core.property.set(object.var.source, "ui.attribute.src", path);
             me.core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
             object.var.player.src = path;
+            object.src = path;
             object.var.player.load();
             me.update(object);
             me.core.property.set(object, "widget.player.controls.update");

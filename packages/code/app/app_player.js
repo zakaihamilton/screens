@@ -38,7 +38,8 @@ screens.app.player = function AppPlayer(me) {
             format: "Audio",
             autoPlay: false,
             jumpTime: 10,
-            iconSize: "Normal"
+            iconSize: "Normal",
+            time: 0
         });
         me.ui.options.toggleSet(me, null, {
             autoPlay: null
@@ -48,7 +49,8 @@ screens.app.player = function AppPlayer(me) {
             format: me.updatePlayer,
             groupName: me.updateSessions,
             jumpTime: me.updatePlayback,
-            iconSize: me.updatePlayback
+            iconSize: me.updatePlayback,
+            time: null
         });
         me.core.property.set(window, "app", me);
         await me.reload(window);
@@ -75,7 +77,6 @@ screens.app.player = function AppPlayer(me) {
         }
         if (!window.var.player) {
             await me.core.property.set(window, "app.player.session", sessionName);
-            await me.core.property.set(window, "app.player.updatePlayer");
         }
         if (args && args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
@@ -219,10 +220,15 @@ screens.app.player = function AppPlayer(me) {
             me.log("counter: " + counter + " does not match: " + me.playerCounter);
             return;
         }
+        var previous = me.core.property.get(player, "source");
         me.core.property.set(player, "source", target);
         me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
+        var time = window.options.time;
+        if (!previous && time) {
+            me.widget.player.controls.seek(player, time);
+        }
         if (window.options.autoPlay) {
             me.core.property.set(player, "widget.player.controls.play");
         }
@@ -336,6 +342,8 @@ screens.app.player = function AppPlayer(me) {
             if (speedName !== window.options.speed) {
                 me.core.property.set(window, "app.player.speed", speedName);
             }
+            var time = me.widget.player.controls.time(window.var.player);
+            me.core.property.set(window, "app.player.time", time);
         }
         var path = me.widget.player.path(object);
         if (duration) {
