@@ -40,6 +40,16 @@ screens.widget.player = function WidgetPlayer(me) {
         ]);
         return widget;
     };
+    me.type = {
+        get: function (object) {
+            var widget = me.mainWidget(object);
+            return widget.type;
+        },
+        set: function (object, type) {
+            var widget = me.mainWidget(object);
+            widget.type = type;
+        }
+    };
 };
 
 screens.widget.player.audio = function WidgetPlayerAudio(me) {
@@ -47,6 +57,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
         properties: {
             "ui.basic.tag": "div",
             "ui.class.class": "widget",
+            "widget.player.type": "audio",
             "ui.basic.elements": [
                 {
                     "ui.basic.elements": [
@@ -95,6 +106,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
         properties: {
             "ui.basic.tag": "div",
             "ui.class.class": "widget",
+            "widget.player.type": "video",
             "ui.basic.elements": [
                 {
                     "ui.basic.elements": [
@@ -117,7 +129,8 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                 },
                 {
                     "ui.element.component": "widget.player.controls",
-                    "ui.basic.var": "controls"
+                    "ui.basic.var": "controls",
+                    "type": "video"
                 }
             ]
         }
@@ -417,13 +430,18 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.fullscreen = function (object) {
         var widget = me.upper.mainWidget(object);
         var player = widget.var.player;
-        if (player.requestFullscreen) {
-            player.requestFullscreen();
+        if (widget.type === "video") {
+            if (player.requestFullscreen) {
+                player.requestFullscreen();
+            }
+            else if (player.mozRequestFullScreen) {
+                player.mozRequestFullScreen();
+            } else if (player.webkitRequestFullScreen) {
+                player.webkitRequestFullScreen();
+            }
         }
-        else if (player.mozRequestFullScreen) {
-            player.mozRequestFullScreen();
-        } else if (player.webkitRequestFullScreen) {
-            player.webkitRequestFullScreen();
+        else {
+            me.core.property.set(object, "widget.window.fullscreen");
         }
     };
     me.timestamp = async function (object) {
