@@ -9,21 +9,16 @@ screens.ui.transform = function UITransform(me) {
             var prefix = me.id + ".";
             return [
                 {
-                    "text": "Clear",
-                    "select": prefix + "clear",
-                    "options": {
-                        "separator": true
-                    }
-                },
-                {
-                    "text": "Refresh",
-                    "select": prefix + "transform"
-                },
-                {
-                    "text": "Text",
+                    "text": "Font Size",
                     "options": {
                         "separator": true
                     },
+                    "select": [
+                        "widget.transform.fontSizesPx(" + prefix + "fontSize)"
+                    ]
+                },
+                {
+                    "text": "Text",
                     "select": [
                         {
                             "text": "Translation",
@@ -125,7 +120,8 @@ screens.ui.transform = function UITransform(me) {
                             "text": "None",
                             "select": prefix + "language",
                             "options": {
-                                "state": "select"
+                                "state": "select",
+                                "value": ""
                             }
                         },
                         {
@@ -133,8 +129,7 @@ screens.ui.transform = function UITransform(me) {
                             "select": prefix + "language",
                             "options": {
                                 "state": "select",
-                                "separator": true,
-                                "value": ""
+                                "separator": true
                             }
                         },
                         {
@@ -143,53 +138,6 @@ screens.ui.transform = function UITransform(me) {
                             "options": {
                                 "state": "select"
                             }
-                        }
-                    ]
-                },
-                {
-                    "text": "Layout",
-                    "select": [
-                        {
-                            "text": "Reflow",
-                            "select": prefix + "reflow"
-                        },
-                        {
-                            "text": "Snap",
-                            "select": prefix + "snap",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Pages",
-                            "select": prefix + "pages",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Columns",
-                            "select": prefix + "columns",
-                            "options": {
-                                "state": "select",
-                                "enabled": prefix + "pages"
-                            }
-                        },
-                        {
-                            "text": "Video Slot",
-                            "select": prefix + "pipVideo",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Font Size",
-                            "select": [
-                                prefix + "fontSizesPx(" + prefix + "fontSize)"
-                            ]
                         }
                     ]
                 }

@@ -16,7 +16,6 @@
                     "text": "Refresh",
                     "select": "app.prism.reload",
                     "options": {
-                        "state": "select",
                         "separator": true
                     }
                 },
@@ -43,12 +42,7 @@
                 {
                     "text": "Reset Rotation",
                     "select": "app.prism.resetRotation"
-                },
-                {
-                    "text": "Font Size",
-                    "select": "header"
-                },
-                "widget.transform.fontSizesPx(app.prism.fontSize)"
+                }
             ]
         }
     ],

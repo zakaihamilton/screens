@@ -20,16 +20,6 @@
                 },
                 "app.diagram.transform.menu"
             ]
-        },
-        {
-            "text": "Layout",
-            "select": [
-                {
-                    "text": "Font Size",
-                    "select": "header"
-                },
-                "widget.transform.fontSizesPx(app.diagram.fontSize)"
-            ]
         }
     ],
     "ui.basic.elements": [
