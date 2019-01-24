@@ -15,13 +15,13 @@
     overflow-y: hidden;
     position: absolute;
     left: 0em;
-    right: 18em;
+    right: 13.5em;
     top: 0em;
     transition: right 0.5s linear;
 }
 
 .widget-taskbar-tasks.collapse {
-    right: 6.5em;
+    right: 4.5em;
 }
 
 .widget-taskbar-task {
@@ -38,14 +38,14 @@
     overflow: hidden;
     flex-direction: row-reverse;
     height: 2em;
-    width: 18em;
+    width: 13.5em;
     flex: 0;
     transition: width 0.5s linear, order 0.5s linear;
     border-left: 3px solid #3c3f42;
 }
 
 .widget-taskbar-shortcuts.collapse {
-    width: 6.5em;
+    width: 4.5em;
 }
 
 .widget-taskbar-shortcuts :nth-of-type(1) {
@@ -58,13 +58,11 @@
 
 .widget-taskbar-shortcut {
     flex: none;
-    width: 2.6em;
+    width: 2.0em;
     height: 1.8em;
     border: 1px solid transparent;
-    padding: 3px;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    margin: 3px;
+    padding: 0.2em;
+    margin: 0.1em;
     user-select: none;
     -webkit-user-drag: none;
     cursor: default;
