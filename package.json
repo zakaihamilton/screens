@@ -1,6 +1,6 @@
 {
   "name": "screens",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "main": "./packages/code/platform/server.js",
   "repository": {
     "type": "git",
