@@ -15,8 +15,7 @@
                     "ui.attribute.title",
                     "ui.basic.src",
                     "ui.basic.var",
-                    "ui.touch.click",
-                    "ui.touch.dblclick"
+                    "ui.touch.click"
                 ],
                 "ui.data.default": {
                     "ui.basic.tag": "img",
@@ -28,7 +27,8 @@
                     "launcher",
                     "keyboard",
                     "ui.theme.nightMode",
-                    "ui.resize.toggleLockRotation"
+                    "ui.resize.toggleLockRotation",
+                    "widget.taskbar.toggleShortcuts"
                 ]
             }
         }
