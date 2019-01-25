@@ -1,15 +1,16 @@
 .widget-toast-container {
     min-width: 250px;
-    margin-left: -125px;
     background-color: var(--chrome-background);
     border: 1px solid var(--chrome-border);
     color: var(--chrome-color);
     text-align: center;
+    left: 50%;
     border-radius: 2px;
     padding: 16px;
+    transform: translate(-50%, 0px);
     position: fixed;
     z-index: 1000;
-    left: 50%;
+    margin: auto auto;
     bottom: 0px;
     opacity: 0.0;
     transition: opacity 0.5s, bottom 0.5s;
@@ -22,5 +23,5 @@
 
 .widget-toast-container.show {
     opacity: 1.0;
-    bottom: 30px;
+    bottom: 3.5em;
 }
