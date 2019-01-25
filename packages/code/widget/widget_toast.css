@@ -1,8 +1,9 @@
 .widget-toast-container {
     min-width: 250px;
     margin-left: -125px;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--chrome-background);
+    border: 1px solid var(--chrome-border);
+    color: var(--chrome-color);
     text-align: center;
     border-radius: 2px;
     padding: 16px;
@@ -14,6 +15,9 @@
     transition: opacity 0.5s, bottom 0.5s;
     pointer-events: none;
     user-select: none;
+    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    outline: 1px solid rgba(81, 203, 238, 1);
 }
 
 .widget-toast-container.show {
