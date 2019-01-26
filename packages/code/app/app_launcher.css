@@ -39,10 +39,10 @@
 }
 
 .app-launcher-icons {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-    overflow: scroll;
-    position: relative;
+    overflow-y: auto;
     left: 0px;
     right: 0px;
     bottom: 0px;

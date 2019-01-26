@@ -189,17 +189,23 @@ screens.app.player = function AppPlayer(me) {
             showVideoPlayer = false;
         }
         me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
-        me.core.property.set(window.var.audioPlayer, "source", "");
-        me.core.property.set(window.var.videoPlayer, "source", "");
         var audioPath = sessionName + "." + "m4a";
         var videoPath = sessionName + "." + "mp4";
+        var source = null;
+        var player = null;
         if (showAudioPlayer || showVideoPlayer) {
-            var player = window.var.audioPlayer;
+            player = window.var.audioPlayer;
             var path = audioPath;
             if (showVideoPlayer) {
                 player = window.var.videoPlayer;
                 path = videoPath;
             }
+            source = me.core.property.get(player, "source");
+        }
+        var time = window.options.time;
+        me.core.property.set(window.var.audioPlayer, "source", "");
+        me.core.property.set(window.var.videoPlayer, "source", "");
+        if (player) {
             try {
                 if (window.isDownloading) {
                     me.core.property.set(window, "ui.work.state", false);
@@ -220,13 +226,11 @@ screens.app.player = function AppPlayer(me) {
             me.log("counter: " + counter + " does not match: " + me.playerCounter);
             return;
         }
-        var previous = me.core.property.get(player, "source");
         me.core.property.set(player, "source", target);
         me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
-        var time = window.options.time;
-        if (!previous && time) {
+        if (source === target && time) {
             me.widget.player.controls.seek(player, time);
         }
         if (window.options.autoPlay) {
