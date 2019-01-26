@@ -403,6 +403,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         widget.var.player.currentTime = parseInt(percent * widget.var.player.duration);
         me.updateProgress(object);
         me.updatePlayer(object);
+        event.stopPropagation();
     };
     me.rewind = function (object, seconds) {
         var widget = me.upper.mainWidget(object);
