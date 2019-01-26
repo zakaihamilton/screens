@@ -23,6 +23,6 @@ screens.db.shared.workshop = function DbSharedWorkshop(me) {
     me.init = me.storage.db.extension;
 };
 
-screens.db.shared.commentary = function DbSharedCommentary(me) {
+screens.db.shared.highlight = function DbSharedHighlight(me) {
     me.init = me.storage.db.extension;
 };

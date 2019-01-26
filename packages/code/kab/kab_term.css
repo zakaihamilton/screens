@@ -301,3 +301,7 @@
     border-bottom: 1px solid darkgray;
     width: 100%;
 }
+
+.kab-term-highlight {
+    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+}

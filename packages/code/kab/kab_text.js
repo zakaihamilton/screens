@@ -229,8 +229,11 @@ screens.kab.text = function KabText(me) {
             if (line === "<p></p>" || line === "<br>" || line.includes("<h4>")) {
                 return line;
             }
+            if (options.showHighlights) {
+                line = await me.kab.highlight.line(session, line);
+            }
             if (options.commentaryEdit || options.commentaryUser) {
-                return me.kab.commentary.line(session, line);
+                line = await me.kab.commentary.line(session, line);
             }
             return line;
         });

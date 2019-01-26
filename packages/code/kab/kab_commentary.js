@@ -119,9 +119,9 @@ screens.kab.commentary = function KabCommentary(me) {
     };
     me.store = async function (element, field) {
         var text = element.value;
+        var user = "$userId";
+        var name = "$userName";
         var hash = me.core.property.get(element, "ui.attribute.#hash");
-        var user = me.core.property.get(element, "ui.attribute.#user");
-        var name = me.core.property.get(element, "ui.attribute.#name");
         var source = me.core.property.get(element, "ui.attribute.#source");
         var data = await me.db.commentary.entry.find({
             "user": "$userId",

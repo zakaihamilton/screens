@@ -240,6 +240,14 @@
                             "options": {
                                 "state": "select"
                             }
+                        },
+                        {
+                            "text": "Highlight",
+                            "select": "widget.transform.showHighlights",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
                         }
                     ]
                 },
