@@ -213,6 +213,7 @@ screens.kab.text = function KabText(me) {
             var hash = me.hash(line);
             var session = {
                 hash,
+                line,
                 language,
                 options,
                 terms,

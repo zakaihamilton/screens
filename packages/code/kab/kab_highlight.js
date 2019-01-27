@@ -8,7 +8,7 @@ screens.kab.highlight = function KabHighlight(me) {
         var hash = String(session.hash);
         var params = { hash, user: "$userId" };
         var highlight = await me.db.shared.highlight.find(params);
-        let source = me.kab.text.clean(line);
+        let source = me.kab.text.clean(session.line);
         var classes = [];
         if (highlight) {
             classes.push("kab-term-highlight");

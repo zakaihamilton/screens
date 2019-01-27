@@ -80,7 +80,7 @@ screens.kab.commentary = function KabCommentary(me) {
             let html = "";
             for (let commentary of commentaries) {
                 if (session.options.commentaryEdit) {
-                    let source = me.kab.text.clean(line);
+                    let source = me.kab.text.clean(session.line);
                     html += me.ui.html.item({
                         tag: "textarea",
                         classes: ["kab-term-commentary-edit"],
@@ -98,7 +98,7 @@ screens.kab.commentary = function KabCommentary(me) {
             html += line;
             for (let commentary of commentaries) {
                 if (session.options.commentaryEdit) {
-                    let source = me.kab.text.clean(line);
+                    let source = me.kab.text.clean(session.line);
                     html += me.ui.html.item({
                         tag: "textarea",
                         classes: ["kab-term-commentary-edit"],
