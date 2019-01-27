@@ -42,7 +42,7 @@ screens.apps = [
     "cache",
     "launcher",
     "diagram",
-    "gematria",
+    "letters",
     "keyboard",
     "tasks",
     "prism",

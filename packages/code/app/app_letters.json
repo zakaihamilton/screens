@@ -1,5 +1,5 @@
 {
-    "title": "Gematria",
+    "title": "Letters",
     "ui.property.style": {
         "left": "50px",
         "top": "50px",
@@ -7,33 +7,40 @@
         "height": "220px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/gematria.png",
+    "icon": "/packages/res/icons/letters.png",
     "widget.menu.items": [
         {
-            "text": "Gematria",
+            "text": "Letters",
             "select": [
                 {
                     "text": "Clear",
-                    "select": "app.gematria.clear"
+                    "select": "app.letters.clear"
                 },
                 {
-                    "text": "Summation of Letters",
-                    "select": "app.gematria.sumEnabled",
+                    "text": "Numerology",
+                    "select": "app.letters.numerology",
                     "options": {
                         "state": "select",
                         "separator": true
                     }
                 },
                 {
+                    "text": "Summation of Letters",
+                    "select": "app.letters.sumEnabled",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
                     "text": "Ending Letters",
-                    "select": "app.gematria.endingLetters",
+                    "select": "app.letters.endingLetters",
                     "options": {
                         "state": "select"
                     }
                 },
                 {
                     "text": "Inclusion (Kolel)",
-                    "select": "app.gematria.inclusion",
+                    "select": "app.letters.inclusion",
                     "options": {
                         "state": "select"
                     }
@@ -44,14 +51,14 @@
                 },
                 {
                     "text": "None",
-                    "select": "app.gematria.language",
+                    "select": "app.letters.language",
                     "options": {
                         "state": "select"
                     }
                 },
                 {
                     "text": "English",
-                    "select": "app.gematria.language",
+                    "select": "app.letters.language",
                     "options": {
                         "state": "select",
                         "separator": true
@@ -59,7 +66,7 @@
                 },
                 {
                     "text": "Hebrew",
-                    "select": "app.gematria.language",
+                    "select": "app.letters.language",
                     "options": {
                         "state": "select"
                     }
@@ -73,42 +80,42 @@
                     "text": "Font Size",
                     "select": "header"
                 },
-                "widget.transform.fontSizesEm(app.gematria.fontSize)"
+                "widget.transform.fontSizesEm(app.letters.fontSize)"
             ]
         },
         {
             "text": "Content",
             "select": [
-                "app.gematria.content.menu"
+                "app.letters.content.menu"
             ]
         }
     ],
     "ui.basic.elements": [
         {
             "ui.basic.div": "div",
-            "ui.class.class": "app.gematria.bar",
+            "ui.class.class": "app.letters.bar",
             "ui.basic.elements": [
                 {
                     "ui.basic.div": "div",
-                    "ui.basic.text": "Numerology",
-                    "ui.class.class": "app.gematria.input.label"
+                    "ui.basic.text": "Letters",
+                    "ui.class.class": "app.letters.input.label"
                 },
                 {
                     "ui.element.component": "widget.input",
                     "ui.basic.var": "input",
-                    "ui.class.classExtra": "app.gematria.input",
-                    "core.event.input": "app.gematria.calcNumerology"
+                    "ui.class.classExtra": "app.letters.input",
+                    "core.event.input": "app.letters.updateLetters"
                 }
             ]
         },
         {
             "ui.basic.tag": "div",
             "ui.basic.var": "diagram",
-            "ui.class.class": "app.gematria.diagram"
+            "ui.class.class": "app.letters.diagram"
         }
     ],
     "ui.property.after": {
-        "storage.local.key": "app-gematria-window",
+        "storage.local.key": "app-letters-window",
         "storage.local.restore": "widget.window.store"
     }
 }

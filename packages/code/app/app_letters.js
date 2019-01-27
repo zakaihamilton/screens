@@ -3,7 +3,7 @@
  @component AppGematria
  */
 
-screens.app.gematria = function AppGematria(me) {
+screens.app.letters = function AppGematria(me) {
     me.init = async function () {
         await me.ui.content.attach(me);
     };
@@ -17,7 +17,7 @@ screens.app.gematria = function AppGematria(me) {
         }
         me.singleton = me.ui.element.create(__json__, "workspace", "self");
         me.initOptions(me.singleton);
-        me.calcNumerology(me.singleton);
+        me.updateLetters(me.singleton);
         if (typeof args[0] === "string") {
             me.content.import(me.singleton, args[0], args[1]);
         }
@@ -28,20 +28,22 @@ screens.app.gematria = function AppGematria(me) {
         me.ui.options.load(me, window, {
             fontSize: "4em",
             endingLetters: false,
+            numerology: true,
             sumEnabled: true,
             inclusion: false,
             language: "English"
         });
         me.ui.options.toggleSet(me, null, {
-            "sumEnabled": me.calcNumerology,
-            "endingLetters": me.calcNumerology,
-            "inclusion": me.calcNumerology
+            "numerology": me.updateLetters,
+            "sumEnabled": me.updateLetters,
+            "endingLetters": me.updateLetters,
+            "inclusion": me.updateLetters
         });
         me.ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
                 me.core.property.set(window.var.diagram, "ui.style.fontSize", value);
             },
-            "language": me.calcNumerology
+            "language": me.updateLetters
         });
         me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
     };
@@ -49,14 +51,14 @@ screens.app.gematria = function AppGematria(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", "");
         me.core.property.set(window, "name", "");
-        me.calcNumerology(window);
+        me.updateLetters(window);
     };
     me.copyUrl = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
-        me.core.util.copyUrl("gematria", [text]);
+        me.core.util.copyUrl("letters", [text]);
     };
-    me.calcNumerology = function (object) {
+    me.updateLetters = function (object) {
         var window = me.widget.window.get(object);
         var text = me.core.property.get(window.var.input, "ui.basic.text");
         var sources = text.split("|").map((token, index) => {
@@ -92,7 +94,7 @@ screens.app.gematria = function AppGematria(me) {
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "app.gematria.letter"
+                            "ui.class.class": "app.letters.letter"
                         },
                         "ui.data.values": [
                             "kab.letters.text"
@@ -108,7 +110,8 @@ screens.app.gematria = function AppGematria(me) {
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "app.gematria.number"
+                            "ui.class.class": "app.letters.number",
+                            "ui.basic.show": window.options.numerology
                         },
                         "ui.data.values": [
                             "kab.letters.numerology"
@@ -124,7 +127,7 @@ screens.app.gematria = function AppGematria(me) {
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.class.class": "app.gematria.pronunciation"
+                            "ui.class.class": "app.letters.pronunciation"
                         },
                         "ui.data.values": [
                             "kab.letters.pronunciation"
@@ -143,6 +146,6 @@ screens.app.gematria = function AppGematria(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window.var.input, "ui.basic.text", text);
         me.core.property.set(window, "widget.window.name", title);
-        me.calcNumerology(window);
+        me.updateLetters(window);
     };
 };

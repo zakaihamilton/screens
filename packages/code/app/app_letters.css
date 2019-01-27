@@ -3,7 +3,7 @@
     src: url("/packages/res/fonts/ShlomoStam.ttf");
 }
 
-.app-gematria-bar {
+.app-letters-bar {
     position: absolute;
     left: 5%;
     width: 90%;
@@ -12,11 +12,11 @@
     display: flex;
 }
 
-.app-gematria-bar.fullscreen {
+.app-letters-bar.fullscreen {
     display: none;
 }
 
-.app-gematria-input-label {
+.app-letters-input-label {
     flex: 0;
     margin-left: 10px;
     margin-right: 10px;
@@ -24,13 +24,13 @@
     color: var(--color);
 }
 
-.app-gematria-input {
+.app-letters-input {
     margin-left: 0px !important;
     direction: rtl;
     width: 100%;
 }
 
-.app-gematria-diagram {
+.app-letters-diagram {
     position: absolute;
     display: grid;
     padding: 10px;
@@ -45,11 +45,11 @@
     color: var(--color);
 }
 
-.app-gematria-diagram.fullscreen {
+.app-letters-diagram.fullscreen {
     top: 5px;
 }
 
-.app-gematria-letter {
+.app-letters-letter {
     font-family: ShlomoStam;
     display: flex;
     align-items: center;
@@ -63,13 +63,13 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.app-gematria-letter:hover {
+.app-letters-letter:hover {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     border: 1px solid rgba(81, 203, 238, 1);
 }
 
-.app-gematria-number {
+.app-letters-number {
     pointer-events: none;
     display: flex;
     align-items: flex-end;
@@ -79,7 +79,7 @@
     text-align: center;
 }
 
-.app-gematria-pronunciation {
+.app-letters-pronunciation {
     pointer-events: none;
     display: flex;
     align-items: flex-start;
