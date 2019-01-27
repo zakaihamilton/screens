@@ -15,10 +15,18 @@ screens.core.property = function CoreProperty(me) {
             package_name = name.substr(0, separator);
         }
         if (!package_name || !(package_name in screens)) {
-            if (!object || !object.component || object === "none") {
+            if (!object || object === "none") {
                 return default_name;
             }
-            name = object.component + "." + name;
+            if (object.component) {
+                name = object.component + "." + name;
+            }
+            else if (object.id) {
+                name = object.id + "." + name;
+            }
+            else {
+                return default_name;
+            }
         }
         if (typeof object === "object" && "component" in object) {
             var lookup = screens.browse(object.component);

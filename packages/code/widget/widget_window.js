@@ -1065,6 +1065,12 @@ screens.widget.window = function WidgetWindow(me) {
             ];
         });
         items = items.filter(Boolean);
+        items.push({
+            text: "Clipboard",
+            select: () => {
+                me.core.property.set(window, method, me.ui.clipboard);
+            }
+        });
         if (!items.length) {
             return null;
         }

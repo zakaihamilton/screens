@@ -42,4 +42,7 @@ screens.ui.clipboard = function UIClipboard(me) {
             throw "Clipboard not supported";
         }
     };
+    me.importData = function (object, text) {
+        me.copy(text);
+    };
 };
