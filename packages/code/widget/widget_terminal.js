@@ -7,6 +7,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
     me.element = {
         properties: __json__
     };
+    me.timeout = 5000;
     me.sendInput = function (terminal, message, type) {
         var window = me.widget.window.get(terminal);
         var field = me.ui.element.create({
@@ -36,7 +37,7 @@ screens.widget.terminal = function WidgetTerminal(me) {
             if (!terminal.cursorTimeout) {
                 setTimeout(() => {
                     field.focus();
-                }, 1500);
+                }, me.timeout);
             }
         };
         field.onkeydown = function (e) {
