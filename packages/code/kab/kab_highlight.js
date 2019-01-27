@@ -13,11 +13,15 @@ screens.kab.highlight = function KabHighlight(me) {
         if (highlight) {
             classes.push("kab-term-highlight");
         }
+        var styles = {
+            "user-select": "none"
+        };
         var html = me.ui.html.item({
             tag: "span",
             classes,
+            styles,
             attributes: {
-                onclick: "screens.kab.highlight.store(this)",
+                ondblclick: "screens.kab.highlight.store(this)",
                 hash,
                 source
             },
