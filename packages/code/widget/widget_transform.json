@@ -341,13 +341,6 @@
                                 "state": "select",
                                 "separator": true
                             }
-                        },
-                        {
-                            "text": "Copy",
-                            "select": "widget.transform.copyHighlights",
-                            "options": {
-                                "separator": true
-                            }
                         }
                     ]
                 },
