@@ -40,7 +40,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentaryLabel: true,
             commentarySeparator: true,
             commentaryUser: "",
-            showHighlights: true
+            showHighlights: true,
+            copyHighlights: true
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -70,7 +71,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentaryEdit: me.transform,
             commentaryLabel: me.transform,
             commentarySeparator: me.transform,
-            showHighlights: me.transform
+            showHighlights: me.transform,
+            copyHighlights: null
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -530,6 +532,24 @@ screens.widget.transform = function WidgetTransform(me) {
             options: { "state": "select" }
         };
         return me.widget.menu.collect(object, info);
+    };
+    me.text = function (object) {
+        var widget = me.findWidget(object);
+        var list = [];
+        me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
+            var filter = null;
+            if (widget.options.copyHighlights) {
+                filter = (element) => {
+                    return me.core.property.get(element, "ui.class.kab-term-highlight");
+                };
+            }
+            var paragraphs = me.widget.transform.layout.pageText(page, filter);
+            paragraphs = paragraphs.filter(Boolean);
+            if (paragraphs && paragraphs.length) {
+                list.push(paragraphs.join(""));
+            }
+        });
+        return list.join("\n");
     };
 };
 
@@ -1233,14 +1253,20 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         return null;
     };
-    me.pageText = function (page) {
+    me.pageText = function (page, callback) {
         var content = page.var.content;
         var array = Array.from(content.children).map(el => {
             if (el.getAttribute("hidden")) {
                 return "";
             }
+            if (callback && !callback(el)) {
+                return "";
+            }
             var text = el.innerText;
-            return text;
+            if (!text) {
+                return "";
+            }
+            return text.trim();
         });
         return array;
     };

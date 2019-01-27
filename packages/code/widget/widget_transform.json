@@ -240,14 +240,6 @@
                             "options": {
                                 "state": "select"
                             }
-                        },
-                        {
-                            "text": "Highlight",
-                            "select": "widget.transform.showHighlights",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
                         }
                     ]
                 },
@@ -337,6 +329,26 @@
                             }
                         },
                         "widget.transform.commentaryUsers"
+                    ]
+                },
+                {
+                    "text": "Highlight",
+                    "select": [
+                        {
+                            "text": "Enable",
+                            "select": "widget.transform.showHighlights",
+                            "options": {
+                                "state": "select",
+                                "separator": true
+                            }
+                        },
+                        {
+                            "text": "Copy",
+                            "select": "widget.transform.copyHighlights",
+                            "options": {
+                                "separator": true
+                            }
+                        }
                     ]
                 },
                 {
