@@ -533,12 +533,12 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         return me.widget.menu.collect(object, info);
     };
-    me.transformedText = function (object) {
+    me.transformedText = function (object, useFilter) {
         var widget = me.findWidget(object);
         var list = [];
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
             var filter = null;
-            if (widget.options.showHighlights && widget.options.copyHighlights) {
+            if (useFilter && widget.options.showHighlights && widget.options.copyHighlights) {
                 filter = (element) => {
                     return me.core.property.get(element, "ui.class.kab-term-highlight");
                 };
@@ -552,7 +552,10 @@ screens.widget.transform = function WidgetTransform(me) {
         return list.join("\n");
     };
     me.exportText = function (object, target) {
-        var text = me.transformedText(object);
+        var text = me.transformedText(object, true);
+        if (!text) {
+            text = me.transformedText(object, false);
+        }
         me.core.property.set(target, "importData", text);
     };
 };
