@@ -533,7 +533,7 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         return me.widget.menu.collect(object, info);
     };
-    me.text = function (object) {
+    me.transformedText = function (object) {
         var widget = me.findWidget(object);
         var list = [];
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
