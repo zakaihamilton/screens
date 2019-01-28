@@ -16,6 +16,7 @@ screens.kab.highlight = function KabHighlight(me) {
         var styles = {
             "user-select": "none"
         };
+        var value = line.match(/<p>(.*?)<\/p>/)[1];
         var html = me.ui.html.item({
             tag: "span",
             classes,
@@ -25,7 +26,7 @@ screens.kab.highlight = function KabHighlight(me) {
                 hash,
                 source
             },
-            value: line
+            value
         });
         return html;
     };
