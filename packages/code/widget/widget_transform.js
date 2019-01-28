@@ -569,6 +569,28 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         me.core.property.set(target, "importData", text);
     };
+    me.visualize = function (object) {
+        var widget = me.findWidget(object);
+        var window = me.widget.window.get(widget);
+        var currentPage = me.widget.transform.layout.currentPage(widget.var.layout);
+        var terms = [];
+        me.ui.node.iterate(currentPage, (element) => {
+            var term = me.core.property.get(element, "ui.attribute.kab-term");
+            if (term) {
+                terms.push(term);
+            }
+        });
+        terms = Array.from(new Set(terms));
+        terms = terms.map(term => {
+            return [term];
+        });
+        var fullscreen = me.core.property.get(window, "fullscreen");
+        var params = {
+            terms,
+            fullscreen
+        };
+        me.core.app.launch("diagram", "visualize", widget.options, null, params);
+    };
 };
 
 screens.widget.transform.popup = function WidgetTransformPopup(me) {

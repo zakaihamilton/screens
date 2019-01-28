@@ -13,10 +13,7 @@
             "select": [
                 {
                     "text": "Refresh",
-                    "select": "app.diagram.reload",
-                    "options": {
-                        "separator": true
-                    }
+                    "select": "app.diagram.reload"
                 },
                 "app.diagram.transform.menu"
             ]

@@ -20,7 +20,6 @@ screens.app.diagram = function AppDiagram(me) {
         var options = null;
         var parent = "workspace";
         var params = null;
-        var fullscreen = false;
         json["app.diagram.path"] = path;
         if (args.length > 1) {
             options = JSON.parse(JSON.stringify(args[1]));
@@ -29,7 +28,7 @@ screens.app.diagram = function AppDiagram(me) {
         if (args.length > 3) {
             parent = args[2] || "workspace";
             params = args[3];
-            if (fullscreen) {
+            if (params && params.fullscreen) {
                 json["widget.window.fullscreen"] = null;
             }
             json["ui.style.left"] = "0px";

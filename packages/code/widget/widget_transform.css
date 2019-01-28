@@ -307,6 +307,10 @@ h4.widget-transform-widget {
     background-color: #020d17 !important;
 }
 
+.widget-transform-iconbar-fullscreen {
+    border-right: 2px solid darkgray;
+}
+
 .widget-transform-iconbar-scrollToTop {
     border-right: 2px solid darkgray;
 }

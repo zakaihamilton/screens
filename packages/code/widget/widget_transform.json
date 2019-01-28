@@ -45,6 +45,11 @@
                         "widget.transform.sync"
                     ],
                     [
+                        "@ui.html.icon(fa fa-project-diagram)",
+                        "Visualize",
+                        "widget.transform.visualize"
+                    ],
+                    [
                         "@ui.html.icon(fa fa-expand)",
                         "Fullscreen",
                         "widget.window.fullscreen",

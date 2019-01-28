@@ -1,0 +1,43 @@
+{
+    "title": "Visualize",
+    "layers": [
+        {
+            "ui.style.position": "absolute",
+            "ui.style.margin": "2px",
+            "ui.style.left": "0px",
+            "ui.style.top": "0px",
+            "ui.style.width": "100%",
+            "ui.style.height": "100%",
+            "ui.style.display": "inline-block",
+            "core.property.group": [
+                {
+                    "ui.group.data": {
+                        "ui.data.keyList": [
+                            "app.diagram.term"
+                        ],
+                        "ui.data.default": {
+                            "ui.basic.tag": "div",
+                            "ui.property.style": {
+                                "lineHeight": "2em",
+                                "border": "1px solid black",
+                                "padding": "30px",
+                                "textAlign": "center",
+                                "verticalAlign": "middle",
+                                "boxSizing": "border-box",
+                                "position": "absolute",
+                                "borderRadius": "10px",
+                                "boxShadow": "0 0 5px rgba(81, 203, 238, 1)"
+                            }
+                        },
+                        "ui.data.values": [
+                            "ui.param.terms"
+                        ]
+                    }
+                }
+            ],
+            "lib.interact.draggable": {
+                "ui.basic.tag": "div"
+            }
+        }
+    ]
+}
