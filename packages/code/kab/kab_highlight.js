@@ -18,7 +18,7 @@ screens.kab.highlight = function KabHighlight(me) {
         };
         var value = line.match(/<p>(.*?)<\/p>/)[1];
         var html = me.ui.html.item({
-            tag: "span",
+            tag: "p",
             classes,
             styles,
             attributes: {
