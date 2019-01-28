@@ -538,7 +538,7 @@ screens.widget.transform = function WidgetTransform(me) {
         var list = [];
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
             var filter = null;
-            if (widget.options.copyHighlights) {
+            if (widget.options.showHighlights && widget.options.copyHighlights) {
                 filter = (element) => {
                     return me.core.property.get(element, "ui.class.kab-term-highlight");
                 };
@@ -546,10 +546,14 @@ screens.widget.transform = function WidgetTransform(me) {
             var paragraphs = me.widget.transform.layout.pageText(page, filter);
             paragraphs = paragraphs.filter(Boolean);
             if (paragraphs && paragraphs.length) {
-                list.push(paragraphs.join(""));
+                list.push(paragraphs.join("\n"));
             }
         });
         return list.join("\n");
+    };
+    me.exportText = function (object, target) {
+        var text = me.transformedText(object);
+        me.core.property.set(target, "importData", text);
     };
 };
 

@@ -338,8 +338,15 @@
                             "text": "Enable",
                             "select": "widget.transform.showHighlights",
                             "options": {
-                                "state": "select",
-                                "separator": true
+                                "state": "select"
+                            }
+                        },
+                        {
+                            "text": "Export Highlights",
+                            "select": "widget.transform.copyHighlights",
+                            "options": {
+                                "enabled": "widget.transform.showHighlights",
+                                "state": "select"
                             }
                         }
                     ]
@@ -426,7 +433,8 @@
                             }
                         }
                     ]
-                }
+                },
+                "widget.window.exportMenuList(widget.transform.exportText)"
             ]
         }
     ]

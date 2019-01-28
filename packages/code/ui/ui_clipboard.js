@@ -33,7 +33,7 @@ screens.ui.clipboard = function UIClipboard(me) {
                 me.log("clipboard text copied:" + text);
             }
             catch (err) {
-                var error = "Could not copy text: " + text + " error: " + err.message || err;
+                var error = "Could not copy text: " + text + " error: " + err;
                 me.log_error(error);
                 throw error;
             }
