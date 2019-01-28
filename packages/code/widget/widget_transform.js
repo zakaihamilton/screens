@@ -543,13 +543,24 @@ screens.widget.transform = function WidgetTransform(me) {
                     return me.core.property.get(element, "ui.class.kab-term-highlight");
                 };
             }
-            var paragraphs = me.widget.transform.layout.pageText(page, filter);
+            var modify = (element, text) => {
+                if (text) {
+                    if (element.tagName && element.tagName.toLowerCase() === "h4") {
+                        text += "\n";
+                    }
+                    else {
+                        text += "\n\n";
+                    }
+                }
+                return text;
+            };
+            var paragraphs = me.widget.transform.layout.pageText(page, filter, modify);
             paragraphs = paragraphs.filter(Boolean);
             if (paragraphs && paragraphs.length) {
-                list.push(paragraphs.join("\n"));
+                list.push(paragraphs.join(""));
             }
         });
-        return list.join("\n");
+        return list.join("").trim();
     };
     me.exportText = function (object, target) {
         var text = me.transformedText(object, true);
@@ -1260,20 +1271,24 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         return null;
     };
-    me.pageText = function (page, callback) {
+    me.pageText = function (page, filterCallback, modifyCallback) {
         var content = page.var.content;
         var array = Array.from(content.children).map(el => {
             if (el.getAttribute("hidden")) {
                 return "";
             }
-            if (callback && !callback(el)) {
+            if (filterCallback && !filterCallback(el)) {
                 return "";
             }
             var text = el.innerText;
             if (!text) {
-                return "";
+                text = "";
             }
-            return text.trim();
+            text = text.trim();
+            if (modifyCallback) {
+                text = modifyCallback(el, text);
+            }
+            return text;
         });
         return array;
     };
