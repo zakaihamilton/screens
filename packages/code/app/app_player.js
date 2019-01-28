@@ -230,7 +230,7 @@ screens.app.player = function AppPlayer(me) {
         me.core.property.set(window.var.audioPlayer, "ui.style.display", showAudioPlayer ? "" : "none");
         me.core.property.set(window.var.videoPlayer, "ui.style.display", showVideoPlayer ? "" : "none");
         window.var.player = player;
-        if (source === target && time) {
+        if ((!source || source === target) && time) {
             me.widget.player.controls.seek(player, time);
         }
         if (window.options.autoPlay) {
