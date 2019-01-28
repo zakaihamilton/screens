@@ -25,4 +25,10 @@ screens.db.shared.workshop = function DbSharedWorkshop(me) {
 
 screens.db.shared.highlight = function DbSharedHighlight(me) {
     me.init = me.storage.db.extension;
+    me.indexes = [
+        {
+            "user": 1,
+            "hash": 1
+        }
+    ];
 };

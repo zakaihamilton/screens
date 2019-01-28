@@ -14,4 +14,13 @@ screens.db.commentary = function DbCommentary(me) {
 
 screens.db.commentary.entry = function DbCommentaryItem(me) {
     me.init = me.storage.db.extension;
+    me.indexes = [
+        {
+            "hash": 1
+        },
+        {
+            "hash": 1,
+            "name": 1
+        }
+    ];
 };

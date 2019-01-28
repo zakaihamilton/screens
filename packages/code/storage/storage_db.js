@@ -147,12 +147,18 @@ screens.storage.db = function StorageDB(me) {
             set: "set",
             use: "use",
             findByIds: "findByIds",
-            list: "list"
+            list: "list",
+            createIndex: "createIndex"
         };
         var location = getLocation(component.id);
         for (var source in mapping) {
             var target = mapping[source];
             component[source] = me[target].bind(null, location);
+        }
+        if (component.indexes) {
+            for (let index of component.indexes) {
+                component.createIndex(index);
+            }
         }
     };
     return "server";
