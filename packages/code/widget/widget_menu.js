@@ -281,7 +281,7 @@ screens.widget.menu.popup = function WidgetMenuPopup(me) {
             }
             if (typeof text === "undefined") {
                 if (me.core.property.get(item, "ui.basic.tag") === "tr") {
-                    text = me.core.property.get(item.firstChild, "ui.basic.text");
+                    text = me.core.property.get(item.firstElementChild, "ui.basic.text");
                 }
                 else {
                     text = me.core.property.get(item, "ui.basic.text");
@@ -368,10 +368,10 @@ screens.widget.menu.list = function WidgetMenuList(me) {
                 "ui.basic.var": "filter"
             }, list.var.headers, list);
             var members = list.var.members;
-            while (members.firstChild) {
-                list.members.push(members.firstChild);
-                members.firstChild.parentList = list;
-                members.removeChild(members.firstChild);
+            while (members.firstElementChild) {
+                list.members.push(members.firstElementChild);
+                members.firstElementChild.parentList = list;
+                members.removeChild(members.firstElementChild);
             }
             member.parentList = list;
             list.members.push(member);
@@ -402,8 +402,8 @@ screens.widget.menu.list = function WidgetMenuList(me) {
         var updateFunc = () => {
             let found = false;
             var members = list.var.members;
-            while (members.firstChild) {
-                members.removeChild(members.firstChild);
+            while (members.firstElementChild) {
+                members.removeChild(members.firstElementChild);
             }
             var isFirst = me.core.property.get(list.var.members, "ui.basic.tag") === "table";
             for (var child of list.members) {

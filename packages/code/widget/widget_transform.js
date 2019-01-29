@@ -866,7 +866,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
 screens.widget.transform.layout = function WidgetTransformLayout(me) {
     me.move = function (source, target) {
         do {
-            var widget = source.firstChild;
+            var widget = source.firstElementChild;
             if (widget) {
                 target.appendChild(widget);
             }
@@ -874,7 +874,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.clear = function (target) {
         do {
-            var widget = target.firstChild;
+            var widget = target.firstElementChild;
             if (widget) {
                 target.removeChild(widget);
             }
@@ -882,12 +882,12 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
     };
     me.prepare = function (source, target) {
         do {
-            var widget = target.firstChild;
+            var widget = target.firstElementChild;
             if (widget) {
                 if (widget.var && widget.var.content) {
                     var content = widget.var.content;
                     do {
-                        var childWidget = content.firstChild;
+                        var childWidget = content.firstElementChild;
                         if (childWidget) {
                             source.appendChild(childWidget);
                             if (childWidget.style) {
@@ -914,18 +914,18 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return { width: pageWidth, height: pageHeight };
     };
     me.firstPage = function (target) {
-        var page = target.firstChild;
+        var page = target.firstElementChild;
         return page;
     };
     me.firstVisiblePage = function (target) {
         var page = null;
-        var widget = target.firstChild;
+        var widget = target.firstElementChild;
         while (widget) {
             if (widget.offsetTop >= target.scrollTop) {
                 page = widget;
                 break;
             }
-            widget = widget.nextSibling;
+            widget = widget.nextElementSibling;
         }
         return page;
     };
@@ -933,7 +933,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         var page = me.firstPage(target);
         if (page && page.tagName) {
             if (page.tagName.toLowerCase() === "div") {
-                return page.var.content.firstChild;
+                return page.var.content.firstElementChild;
             }
         }
         return page;
@@ -942,7 +942,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         var page = me.firstVisiblePage(target);
         if (page && page.tagName) {
             if (page.tagName.toLowerCase() === "div" && page.var && page.var.content) {
-                return page.var.content.firstChild;
+                return page.var.content.firstElementChild;
             }
         }
         return page;
@@ -966,7 +966,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             target.page = null;
             me.prepare(source, layoutContent);
             var pageSize = me.pageSize(layoutContent);
-            if (!source.firstChild) {
+            if (!source.firstElementChild) {
                 resolve(true);
                 return;
             }
@@ -983,7 +983,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                 var window = me.widget.window.get(target);
                 for (; ;) {
                     var concealed = me.core.property.get(window, "conceal");
-                    var widget = source.firstChild;
+                    var widget = source.firstElementChild;
                     if (!widget || concealed) {
                         clearInterval(target.reflowInterval);
                         target.reflowInterval = null;
@@ -1036,7 +1036,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         if (target.page) {
                             target.page.var.separator.style.display = "block";
                         }
-                    } else if (!(widget.textContent || widget.firstChild)) {
+                    } else if (!(widget.textContent || widget.firstElementChild)) {
                         pageContent.removeChild(widget);
                         widget = null;
                         newPage = false;
@@ -1098,7 +1098,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
     };
     me.widgetByOrder = function (page, order) {
-        var widget = page.firstChild;
+        var widget = page.firstElementChild;
         var match = null;
         while (widget) {
             if (widget.style && widget.style.order) {
@@ -1107,7 +1107,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     break;
                 }
             }
-            widget = widget.nextSibling;
+            widget = widget.nextElementSibling;
         }
         return match;
     };
@@ -1186,13 +1186,13 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
     };
     me.applyNumPages = function (target, numPages) {
-        var widget = target.firstChild;
+        var widget = target.firstElementChild;
         while (widget) {
             if (widget.var && widget.var.pageNumber) {
                 var pageNumber = me.core.property.get(widget, "ui.attribute.pageNumber");
                 me.core.property.set(widget.var.pageNumber, "ui.attribute.longPageNumberText", pageNumber + "/" + numPages);
             }
-            widget = widget.nextSibling;
+            widget = widget.nextElementSibling;
         }
     };
     me.completePage = function (page) {
@@ -1221,16 +1221,16 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         return (isTotal || isPartial);
     };
     me.pageApply = function (target, callback) {
-        var child = target.firstChild;
+        var child = target.firstElementChild;
         while (child) {
             if (child.pageSize) {
                 callback(child);
             }
-            child = child.nextSibling;
+            child = child.nextElementSibling;
         }
     };
     me.updatePages = function (target) {
-        var child = target.firstChild;
+        var child = target.firstElementChild;
         while (child) {
             if (child.pageSize) {
                 var pageInView = me.pageInView(child);
@@ -1246,17 +1246,17 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     child.inView = pageInView;
                 }
             }
-            child = child.nextSibling;
+            child = child.nextElementSibling;
         }
     };
     me.activateOnLoad = function (parent, widget) {
         if (!widget) {
             return;
         }
-        var child = widget.firstChild;
+        var child = widget.firstElementChild;
         while (child) {
             me.activateOnLoad(parent, child);
-            child = child.nextSibling;
+            child = child.nextElementSibling;
         }
         if (widget && widget.getAttribute) {
             var onload = widget.getAttribute("onload");
@@ -1266,14 +1266,14 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
     };
     me.cleanupWidget = function (widget) {
-        var child = widget.firstChild;
+        var child = widget.firstElementChild;
         while (child) {
             if (child.tagName && child.tagName.toLowerCase() === "div") {
                 widget.removeChild(child);
-                child = widget.firstChild;
+                child = widget.firstElementChild;
             }
             if (child) {
-                child = child.nextSibling;
+                child = child.nextElementSibling;
             }
         }
         if (widget.style) {
@@ -1281,7 +1281,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
     };
     me.currentPage = function (target) {
-        var child = target.firstChild;
+        var child = target.firstElementChild;
         while (child) {
             if (child.pageSize) {
                 var pageInView = me.pageInView(child, false);
@@ -1289,7 +1289,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                     return child;
                 }
             }
-            child = child.nextSibling;
+            child = child.nextElementSibling;
         }
         return null;
     };

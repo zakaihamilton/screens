@@ -39,7 +39,6 @@ screens.app.visualize = function AppVisualize(me) {
                 }
             }, options.choice));
             me.ui.class.useStylesheet("kab");
-            me.core.property.set(window.var.terms, "ui.style.fontSize", window.options.fontSize);
             me.core.property.set(window, "app", me);
         }
     };
@@ -47,6 +46,10 @@ screens.app.visualize = function AppVisualize(me) {
         var html = await me.transform.term(object, text);
         object.termText = text;
         me.core.property.set(object, "ui.basic.html", html);
+    };
+    me.update = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window.var.terms, "ui.style.fontSize", window.options.fontSize);
     };
     me.reload = function (object) {
         var window = me.widget.window.get(object);
@@ -61,8 +64,11 @@ screens.app.visualize = function AppVisualize(me) {
         var elements = me.ui.node.childList(window.var.terms);
         if (typeof order === "string") {
             elements.sort((a, b) => {
-                var aText = a.firstChild.getAttribute("kab-" + order);
-                var bText = b.firstChild.getAttribute("kab-" + order);
+                if (!a.firstElementChild.getAttribute || !b.firstElementChild.getAttribute) {
+                    return 0;
+                }
+                var aText = a.firstElementChild.getAttribute("kab-" + order);
+                var bText = b.firstElementChild.getAttribute("kab-" + order);
                 if (order === "phase") {
                     let aIndex = me.widget.transform.phases[aText];
                     let bIndex = me.widget.transform.phases[bText];
@@ -78,16 +84,41 @@ screens.app.visualize = function AppVisualize(me) {
                     return aText.localeCompare(bText);
                 }
             });
+            if (order === "phase") {
+                var previous = null;
+                var result = [];
+                elements.map(element => {
+                    if (!element.firstElementChild.getAttribute) {
+                        result.push(element);
+                        return;
+                    }
+                    var text = element.firstElementChild.getAttribute("kab-" + order);
+                    if (text !== previous) {
+                        result.push(null);
+                    }
+                    previous = text;
+                    result.push(element);
+                });
+                elements = result;
+            }
         }
-        var left = 10, top = 10;
+        var spacePixels = me.ui.basic.emToPixels(window.var.terms, 0.5);
+        var left = spacePixels, top = spacePixels;
+        var height = 0;
         for (var element of elements) {
+            if (!element) {
+                left = spacePixels;
+                top += height + (spacePixels * 2);
+                continue;
+            }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);
+            height = region.height;
             if (left + region.width >= width) {
-                left = 10;
-                top += region.height + 10;
+                left = spacePixels;
+                top += region.height + spacePixels;
             }
             me.lib.interact.moveElement(element, left, top);
-            left += region.width + 10;
+            left += region.width + spacePixels;
         }
     };
 };

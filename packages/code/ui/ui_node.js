@@ -29,7 +29,7 @@ screens.ui.node = function UINode(me) {
         return childList;
     };
     me.findByName = function (object, name) {
-        var element = object.firstChild;
+        var element = object.firstElementChild;
         while (element) {
             if (element.getAttribute && element.getAttribute("name") === name) {
                 break;
@@ -39,38 +39,38 @@ screens.ui.node = function UINode(me) {
                 element = child;
                 break;
             }
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
         return element;
     };
     me.findById = function (object, id) {
-        var element = object.firstChild;
+        var element = object.firstElementChild;
         while (element) {
             if (element.id === id) {
                 break;
             }
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
         return element;
     };
     me.findByTag = function (object, tagName) {
-        var element = object.firstChild;
+        var element = object.firstElementChild;
         while (element) {
             if (element.tagName && element.tagName.toLowerCase() === tagName) {
                 break;
             }
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
         return element;
     };
     me.findByText = function (object, text) {
-        var element = object.firstChild;
+        var element = object.firstElementChild;
         while (element) {
             var elementText = me.core.property.get(element, "ui.basic.text");
             if (text === elementText) {
                 break;
             }
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
         return element;
     };
@@ -82,7 +82,7 @@ screens.ui.node = function UINode(me) {
         else {
             class_names = [class_name];
         }
-        var element = object.firstChild;
+        var element = object.firstElementChild;
         while (element) {
             if (element.classList) {
                 for (let class_name of class_names) {
@@ -95,7 +95,7 @@ screens.ui.node = function UINode(me) {
             if (child) {
                 return child;
             }
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
         return null;
     };
@@ -247,14 +247,14 @@ screens.ui.node = function UINode(me) {
             return parent.removeChild(child);
         }
     };
-    me.firstChild = function (parent) {
+    me.firstElementChild = function (parent) {
         if (!parent) {
             return null;
         }
-        if ("_firstChild" in parent) {
-            return parent._firstChild;
+        if ("_firstElementChild" in parent) {
+            return parent._firstElementChild;
         } else {
-            return parent.firstChild;
+            return parent.firstElementChild;
         }
     };
     me.lastChild = function (parent) {
@@ -293,7 +293,7 @@ screens.ui.node = function UINode(me) {
     me.moveToFirst = {
         set: function (object, value) {
             if (object.parentNode && value) {
-                me.insertBefore(object.parentNode, object, object.parentNode.firstChild);
+                me.insertBefore(object.parentNode, object, object.parentNode.firstElementChild);
             }
         }
     };
@@ -303,7 +303,7 @@ screens.ui.node = function UINode(me) {
                 me.removeChild(object.parentNode, object);
             }
             if (value) {
-                me.insertBefore(value, object, me.firstChild(value));
+                me.insertBefore(value, object, me.firstElementChild(value));
             }
         }
     };
@@ -316,21 +316,21 @@ screens.ui.node = function UINode(me) {
         if (object && target && object !== target && object.parentNode && object.parentNode === target.parentNode) {
             var object_index = me.index(object);
             var target_index = me.index(target);
-            if (!target.nextSibling) {
+            if (!target.nextElementSibling) {
                 me.appendChild(object.parentNode, object);
             } else if (!target.previousSibling) {
                 me.insertBefore(object.parentNode, object, target);
             } else if (object_index > target_index) {
                 me.insertBefore(object.parentNode, object, target);
             } else {
-                me.insertBefore(object.parentNode, object, target.nextSibling);
+                me.insertBefore(object.parentNode, object, target.nextElementSibling);
             }
         }
     };
     me.empty = function (object) {
         if (object) {
-            while (object.firstChild) {
-                object.removeChild(object.firstChild);
+            while (object.firstElementChild) {
+                object.removeChild(object.firstElementChild);
             }
         }
     };

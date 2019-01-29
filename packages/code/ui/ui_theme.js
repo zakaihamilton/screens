@@ -87,7 +87,7 @@ screens.ui.theme = function UITheme(me) {
         if (!parent) {
             parent = document.body;
         }
-        var element = parent.firstChild;
+        var element = parent.firstElementChild;
         while (element) {
             if (element.classList) {
                 if (nightMode) {
@@ -106,7 +106,7 @@ screens.ui.theme = function UITheme(me) {
                 }
             }
             me.applyTheme(elementCallback, element);
-            element = element.nextSibling;
+            element = element.nextElementSibling;
         }
     };
     me.unload = function () {

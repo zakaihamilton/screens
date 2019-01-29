@@ -37,6 +37,10 @@ screens.ui.property = function UIProperty(me) {
     me.after = {
         set: function (object, properties) {
             me.afterQueue.push({ object: object, properties: properties });
+            if (properties.timeout) {
+                clearTimeout(me.afterQueueTimer);
+                me.afterQueueTimer = null;
+            }
             if (!me.afterQueueTimer) {
                 me.afterQueueTimer = setTimeout(function () {
                     me.afterQueueTimer = null;

@@ -52,7 +52,7 @@
                     "ui.basic.html",
                     "ui.attribute.title",
                     "ui.touch.click",
-                    "ui.class.class",
+                    "ui.class.add",
                     "ui.basic.var"
                 ],
                 "ui.data.default": {
@@ -61,9 +61,15 @@
                 },
                 "ui.data.values": [
                     [
+                        "@ui.html.icon(fa fa-expand)",
+                        "Fullscreen",
+                        "widget.window.fullscreen"
+                    ],
+                    [
                         "@ui.html.icon(fas fa-sort)",
                         "Sort by Order",
-                        "app.visualize.sort"
+                        "app.visualize.sort",
+                        "seperator"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-alpha-down)",
@@ -81,6 +87,8 @@
         "app.visualize.transform.popup"
     ],
     "ui.property.after": {
-        "app.visualize.sort": null
-    }
+        "app.visualize.sort": null,
+        "timeout": 100
+    },
+    "update": null
 }

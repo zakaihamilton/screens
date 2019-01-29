@@ -255,4 +255,22 @@ screens.ui.basic = function UIBasic(me) {
             object.style.display = value ? "" : "none";
         }
     };
+    me.pixelsToEm = function (element, pixelValue) {
+        if (element.parentNode) {
+            var parentFontSize = parseFloat(window.getComputedStyle(element.parentNode).fontSize);
+            var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
+            var pixelValueOfOneEm = (elementFontSize / parentFontSize) * elementFontSize;
+            return (pixelValue / pixelValueOfOneEm);
+        }
+        return false;
+    };
+    me.emToPixels = function (element, emValue) {
+        if (element.parentNode) {
+            var parentFontSize = parseFloat(window.getComputedStyle(element.parentNode).fontSize);
+            var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
+            var pixelValueOfOneEm = (elementFontSize / parentFontSize) * elementFontSize;
+            return (emValue * pixelValueOfOneEm);
+        }
+        return false;
+    };
 };
