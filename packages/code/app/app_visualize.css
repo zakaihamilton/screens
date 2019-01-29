@@ -77,7 +77,6 @@
 
 .app-visualize-iconbar a {
     flex: 1;
-    padding: 4px;
     text-align: center;
     transition: all 0.3s ease;
     color: white;
@@ -85,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.5em;
+    min-width: 2.5em;
 }
 
 .app-visualize-iconbar a:hover {
@@ -114,14 +113,14 @@
     border-left: 2px solid darkgray;
 }
 
-.app-visualize-iconbar a.asc:after {
+.app-visualize-iconbar a.asc:before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f309";
     position: relative;
 }
 
-.app-visualize-iconbar a.desc:after {
+.app-visualize-iconbar a.desc:before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f30c";
