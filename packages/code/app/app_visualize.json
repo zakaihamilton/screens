@@ -44,6 +44,43 @@
                 "ui.basic.tag": "div"
             }
         },
+        {
+            "ui.class.class": "app.visualize.iconbar",
+            "ui.basic.var": "iconbar",
+            "ui.group.data": {
+                "ui.data.keyList": [
+                    "ui.basic.html",
+                    "ui.attribute.title",
+                    "ui.touch.click",
+                    "ui.class.class",
+                    "ui.basic.var"
+                ],
+                "ui.data.default": {
+                    "ui.basic.tag": "a",
+                    "href": "#"
+                },
+                "ui.data.values": [
+                    [
+                        "@ui.html.icon(fas fa-sort)",
+                        "Refresh",
+                        "app.visualize.sort"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-sort-alpha-down)",
+                        "Refresh",
+                        "app.visualize.sort(az)"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-sort-amount-down)",
+                        "Refresh",
+                        "app.visualize.sort(phase)"
+                    ]
+                ]
+            }
+        },
         "app.visualize.transform.popup"
-    ]
+    ],
+    "ui.property.after": {
+        "app.visualize.sort": null
+    }
 }

@@ -40,6 +40,7 @@ screens.app.visualize = function AppVisualize(me) {
             }, options.choice));
             me.ui.class.useStylesheet("kab");
             me.core.property.set(window.var.terms, "ui.style.fontSize", window.options.fontSize);
+            me.core.property.set(window, "app", me);
         }
     };
     me.term = async function (object, text) {
@@ -52,6 +53,28 @@ screens.app.visualize = function AppVisualize(me) {
         var elements = me.ui.node.childList(window.var.terms);
         for (var element of elements) {
             me.core.property.set(element, "app.visualize.term", element.termText);
+        }
+    };
+    me.sort = function (object, order) {
+        var window = me.widget.window.get(object);
+        var { width } = me.ui.rect.absoluteRegion(window.var.terms);
+        var elements = me.ui.node.childList(window.var.terms);
+        if (order) {
+            elements.sort((a, b) => {
+                var aText = a.firstChild.getAttribute("kab-text");
+                var bText = b.firstChild.getAttribute("kab-text");
+                return aText.localeCompare(bText);
+            });
+        }
+        var left = 10, top = 10;
+        for (var element of elements) {
+            var region = me.ui.rect.relativeRegion(element, window.var.terms);
+            if (left + region.width >= width) {
+                left = 10;
+                top += region.height + 10;
+            }
+            me.lib.interact.moveElement(element, left, top);
+            left += region.width + 10;
         }
     };
 };

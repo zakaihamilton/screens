@@ -22,17 +22,13 @@ screens.lib.interact = function LibInteract(me) {
     };
     me.dragMoveListener = function (event) {
         var target = event.target,
-            // keep the dragged position in the data-x/data-y attributes
             x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
             y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
-
-        // translate the element
-        target.style.webkitTransform =
-            target.style.transform =
-            "translate(" + x + "px, " + y + "px)";
-
-        // update the posiion attributes
-        target.setAttribute("data-x", x);
-        target.setAttribute("data-y", y);
+        me.moveElement(target, x, y);
+    };
+    me.moveElement = function (object, x, y) {
+        object.style.transform = "translate(" + x + "px, " + y + "px)";
+        object.setAttribute("data-x", x);
+        object.setAttribute("data-y", y);
     };
 };

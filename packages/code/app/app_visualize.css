@@ -17,6 +17,7 @@
     position: absolute;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    transition: all 1s;
 }
 
 .app-visualize-term:hover {
@@ -26,4 +27,68 @@
 .app-visualize-term:hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1),
                 0px 5px 5px rgba(81, 203, 238, 1);
+}
+
+.app-visualize-iconbar {
+    position: absolute;
+    bottom: 0%;
+    left: 5%;
+    right: 5%;
+    background-color: #555;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 4em;
+    opacity: 0.25;
+    border-radius: 10px 10px 0px 0px;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    transition: all 0.3s ease;
+}
+
+.app-visualize-iconbar:hover {
+    opacity: 1;
+}
+
+.app-visualize-iconbar.fullscreen {
+    opacity: 0;
+}
+
+.app-visualize-iconbar.fullscreen:hover {
+    opacity: 1;
+}
+
+.app-visualize-iconbar a {
+    flex: 1;
+    padding: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5em;
+}
+
+.app-visualize-iconbar a:hover {
+    background-color: #020d17;
+}
+
+.app-visualize-iconbar a.active:hover {
+    background-color: #196a19;
+}
+
+.app-visualize-iconbar a.active {
+    background-color: #4CAF50;
+}
+
+.app-visualize-iconbar a.disabled {
+    color: darkgray;
+    background-color: #555;
+}
+
+.app-visualize-iconbar a.disabled:hover {
+    color: lightgray;
+    background-color: darkgray;
 }
