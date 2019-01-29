@@ -1,11 +1,25 @@
+.app-visualize-terms-container {
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 4em;
+    position: absolute;
+    overflow: none;
+}
+
+.app-visualize-terms-container.fullscreen {
+    bottom: 0px;
+}
+
 .app-visualize-terms {
     left: 0px;
     top: 0px;
     right: 0px;
-    bottom: 4.2em;
+    bottom: 0px;
     position: absolute;
     color: var(--color);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 10px;
 }
 
@@ -112,4 +126,12 @@
     font-weight: 900;
     content: "\f30c";
     position: relative;
+}
+
+.widget-transform-iconbar-fullscreen.fullscreen {
+    background-color: #4CAF50;
+}
+
+.widget-transform-iconbar-fullscreen.fullscreen:hover {
+    background-color: #196a19;
 }

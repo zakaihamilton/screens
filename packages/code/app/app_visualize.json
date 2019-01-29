@@ -22,27 +22,33 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
-            "ui.basic.var": "terms",
-            "ui.class.class": "app.visualize.terms",
-            "core.property.group": [
+            "ui.class.class": "app.visualize.terms.container",
+            "ui.basic.elements": [
                 {
-                    "ui.group.data": {
-                        "ui.data.keyList": [
-                            "app.visualize.term"
-                        ],
-                        "ui.data.default": {
-                            "ui.basic.tag": "div",
-                            "ui.class.class": "app.visualize.term"
-                        },
-                        "ui.data.values": [
-                            "ui.param.terms"
-                        ]
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "terms",
+                    "ui.class.class": "app.visualize.terms",
+                    "core.property.group": [
+                        {
+                            "ui.group.data": {
+                                "ui.data.keyList": [
+                                    "app.visualize.term"
+                                ],
+                                "ui.data.default": {
+                                    "ui.basic.tag": "div",
+                                    "ui.class.class": "app.visualize.term"
+                                },
+                                "ui.data.values": [
+                                    "ui.param.terms"
+                                ]
+                            }
+                        }
+                    ],
+                    "lib.interact.draggable": {
+                        "ui.basic.tag": "div"
                     }
                 }
-            ],
-            "lib.interact.draggable": {
-                "ui.basic.tag": "div"
-            }
+            ]
         },
         {
             "ui.class.class": "app.visualize.iconbar",
@@ -63,7 +69,8 @@
                     [
                         "@ui.html.icon(fa fa-expand)",
                         "Fullscreen",
-                        "widget.window.fullscreen"
+                        "widget.window.fullscreen",
+                        "widget-transform-iconbar-fullscreen"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-numeric-up)",
