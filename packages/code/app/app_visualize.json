@@ -106,13 +106,13 @@
                     [
                         "@ui.html.icon(fas fa-tags)",
                         "Sort by Category (Descending)",
-                        "app.visualize.sortUp(category)",
+                        "app.visualize.sortUp(phase/category)",
                         "desc"
                     ],
                     [
                         "@ui.html.icon(fas fa-tags)",
                         "Sort by Category (Ascending)",
-                        "app.visualize.sortDown(category)",
+                        "app.visualize.sortDown(phase/category)",
                         "asc"
                     ]
                 ]

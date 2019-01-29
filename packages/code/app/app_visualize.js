@@ -69,43 +69,47 @@ screens.app.visualize = function AppVisualize(me) {
         var { width } = me.ui.rect.absoluteRegion(window.var.terms);
         var elements = me.ui.node.childList(window.var.terms);
         if (typeof order === "string") {
-            elements.sort((a, b) => {
-                var aText = a.firstElementChild.getAttribute("kab-" + order);
-                var bText = b.firstElementChild.getAttribute("kab-" + order);
-                if (order === "phase") {
-                    let aIndex = me.widget.transform.phases[aText];
-                    let bIndex = me.widget.transform.phases[bText];
-                    if (typeof aIndex === "undefined") {
-                        aIndex = -1;
+            var orderList = order.split("/");
+            for (let orderItem of orderList) {
+                elements = elements.filter(Boolean);
+                elements.sort((a, b) => {
+                    var aText = a.firstElementChild.getAttribute("kab-" + orderItem).split("/")[0];
+                    var bText = b.firstElementChild.getAttribute("kab-" + orderItem).split("/")[0];
+                    if (orderItem === "phase") {
+                        let aIndex = me.widget.transform.phases[aText];
+                        let bIndex = me.widget.transform.phases[bText];
+                        if (typeof aIndex === "undefined") {
+                            aIndex = -1;
+                        }
+                        if (typeof bIndex === "undefined") {
+                            bIndex = -1;
+                        }
+                        return aIndex - bIndex;
                     }
-                    if (typeof bIndex === "undefined") {
-                        bIndex = -1;
+                    else {
+                        return aText.localeCompare(bText);
                     }
-                    return aIndex - bIndex;
-                }
-                else {
-                    return aText.localeCompare(bText);
-                }
-            });
-            if (direction === "up") {
-                elements.reverse();
-            }
-            if (order === "phase") {
-                var previous = null;
-                var result = [];
-                elements.map(element => {
-                    if (!element.firstElementChild.getAttribute) {
-                        result.push(element);
-                        return;
-                    }
-                    var text = element.firstElementChild.getAttribute("kab-" + order);
-                    if (text !== previous) {
-                        result.push(null);
-                    }
-                    previous = text;
-                    result.push(element);
                 });
-                elements = result;
+                if (direction === "up") {
+                    elements.reverse();
+                }
+                if (orderItem === "phase" || orderItem === "category") {
+                    var previous = null;
+                    var result = [];
+                    elements.map(element => {
+                        if (!element.firstElementChild.getAttribute) {
+                            result.push(element);
+                            return;
+                        }
+                        var text = element.firstElementChild.getAttribute("kab-" + orderItem);
+                        if (text !== previous) {
+                            result.push(null);
+                        }
+                        previous = text;
+                        result.push(element);
+                    });
+                    elements = result;
+                }
             }
         }
         else if (direction === "up") {
