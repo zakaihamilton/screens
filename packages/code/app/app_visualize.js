@@ -64,9 +64,6 @@ screens.app.visualize = function AppVisualize(me) {
         var elements = me.ui.node.childList(window.var.terms);
         if (typeof order === "string") {
             elements.sort((a, b) => {
-                if (!a.firstElementChild.getAttribute || !b.firstElementChild.getAttribute) {
-                    return 0;
-                }
                 var aText = a.firstElementChild.getAttribute("kab-" + order);
                 var bText = b.firstElementChild.getAttribute("kab-" + order);
                 if (order === "phase") {
@@ -113,7 +110,7 @@ screens.app.visualize = function AppVisualize(me) {
             }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);
             height = region.height;
-            if (left + region.width >= width) {
+            if (left + region.width >= width - spacePixels) {
                 left = spacePixels;
                 top += region.height + spacePixels;
             }
