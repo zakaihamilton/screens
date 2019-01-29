@@ -62,17 +62,17 @@
                 "ui.data.values": [
                     [
                         "@ui.html.icon(fas fa-sort)",
-                        "Refresh",
+                        "Sort by Order",
                         "app.visualize.sort"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-alpha-down)",
-                        "Refresh",
+                        "Sort by Text",
                         "app.visualize.sort(text)"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-amount-down)",
-                        "Refresh",
+                        "Sort by Phase",
                         "app.visualize.sort(phase)"
                     ]
                 ]
