@@ -48,7 +48,8 @@ screens.apps = [
     "prism",
     "table",
     "notes",
-    "links"
+    "links",
+    "visualize"
 ];
 
 screens.include({

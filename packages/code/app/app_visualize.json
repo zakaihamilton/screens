@@ -1,19 +1,41 @@
 {
     "title": "Visualize",
-    "layers": [
+    "ui.property.style": {
+        "left": "50px",
+        "top": "50px",
+        "width": "600px",
+        "height": "600px"
+    },
+    "icon": "/packages/res/icons/diagram.png",
+    "widget.menu.items": [
         {
-            "ui.style.position": "absolute",
-            "ui.style.margin": "2px",
-            "ui.style.left": "0px",
-            "ui.style.top": "0px",
-            "ui.style.width": "100%",
-            "ui.style.height": "100%",
-            "ui.style.display": "inline-block",
+            "text": "Transform",
+            "select": [
+                "app.visualize.transform.menu"
+            ]
+        }
+    ],
+    "storage.local.key": "app-visualize-window",
+    "storage.local.restore": "widget.window.store",
+    "app.visualize.initOptions": null,
+    "name": "@ui.param.title",
+    "ui.basic.elements": [
+        {
+            "ui.basic.tag": "div",
+            "ui.basic.var": "terms",
+            "ui.property.style": {
+                "left": "0px",
+                "top": "0px",
+                "right": "0px",
+                "bottom": "0px",
+                "position": "absolute",
+                "color": "var(--color)"
+            },
             "core.property.group": [
                 {
                     "ui.group.data": {
                         "ui.data.keyList": [
-                            "app.diagram.term"
+                            "app.visualize.term"
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
@@ -38,6 +60,7 @@
             "lib.interact.draggable": {
                 "ui.basic.tag": "div"
             }
-        }
+        },
+        "app.visualize.transform.popup"
     ]
 }

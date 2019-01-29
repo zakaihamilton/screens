@@ -17,14 +17,9 @@ screens.app.diagram = function AppDiagram(me) {
         }
         var path = me.fullPath(args[0]);
         var json = __json__;
-        var options = null;
         var parent = "workspace";
         var params = null;
         json["app.diagram.path"] = path;
-        if (args.length > 1) {
-            options = JSON.parse(JSON.stringify(args[1]));
-            options.original = args[1];
-        }
         if (args.length > 3) {
             parent = args[2] || "workspace";
             params = args[3];

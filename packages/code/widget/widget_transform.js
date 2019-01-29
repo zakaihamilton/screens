@@ -589,7 +589,7 @@ screens.widget.transform = function WidgetTransform(me) {
             terms,
             fullscreen
         };
-        me.core.app.launch("diagram", "visualize", widget.options, null, params);
+        me.core.app.launch("visualize", params);
     };
 };
 
