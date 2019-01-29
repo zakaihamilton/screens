@@ -109,6 +109,7 @@
     margin-right: 4px;
     border-radius: 5px 5px 5px 5px;
     width: 100%;
+    touch-action: none;
 }
 
 .widget-player-controls-progress.small {

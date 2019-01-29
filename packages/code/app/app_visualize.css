@@ -20,6 +20,7 @@
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     transition: all 1s;
+    touch-action: none;
 }
 
 .app-visualize-term:hover {
