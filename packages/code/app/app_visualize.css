@@ -4,7 +4,7 @@
     right: 0px;
     bottom: 4em;
     position: absolute;
-    overflow: none;
+    overflow: hidden;
 }
 
 .app-visualize-terms-container.fullscreen {
