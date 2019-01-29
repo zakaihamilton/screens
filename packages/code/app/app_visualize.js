@@ -58,7 +58,13 @@ screens.app.visualize = function AppVisualize(me) {
             me.core.property.set(element, "app.visualize.term", element.termText);
         }
     };
-    me.sort = function (object, order) {
+    me.sortDown = function (object, order) {
+        me.sort(object, order, "down");
+    };
+    me.sortUp = function (object, order) {
+        me.sort(object, order, "up");
+    };
+    me.sort = function (object, order, direction) {
         var window = me.widget.window.get(object);
         var { width } = me.ui.rect.absoluteRegion(window.var.terms);
         var elements = me.ui.node.childList(window.var.terms);
@@ -81,6 +87,9 @@ screens.app.visualize = function AppVisualize(me) {
                     return aText.localeCompare(bText);
                 }
             });
+            if (direction === "up") {
+                elements.reverse();
+            }
             if (order === "phase") {
                 var previous = null;
                 var result = [];
@@ -98,6 +107,9 @@ screens.app.visualize = function AppVisualize(me) {
                 });
                 elements = result;
             }
+        }
+        else if (direction === "up") {
+            elements.reverse();
         }
         var spacePixels = me.ui.basic.emToPixels(window.var.terms, 0.5);
         var left = spacePixels, top = spacePixels;

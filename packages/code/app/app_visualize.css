@@ -6,6 +6,7 @@
     position: absolute;
     color: var(--color);
     overflow: auto;
+    margin: 10px;
 }
 
 .app-visualize-term {

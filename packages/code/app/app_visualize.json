@@ -66,20 +66,35 @@
                         "widget.window.fullscreen"
                     ],
                     [
-                        "@ui.html.icon(fas fa-sort)",
-                        "Sort by Order",
-                        "app.visualize.sort",
+                        "@ui.html.icon(fas fa-sort-numeric-up)",
+                        "Sort by Order (Descending)",
+                        "app.visualize.sortUp",
                         "seperator"
                     ],
                     [
+                        "@ui.html.icon(fas fa-sort-numeric-down)",
+                        "Sort by Order (Ascending)",
+                        "app.visualize.sortDown"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-sort-alpha-up)",
+                        "Sort by Text (Descending)",
+                        "app.visualize.sortUp(text)"
+                    ],
+                    [
                         "@ui.html.icon(fas fa-sort-alpha-down)",
-                        "Sort by Text",
-                        "app.visualize.sort(text)"
+                        "Sort by Text (Ascending)",
+                        "app.visualize.sortDown(text)"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-sort-amount-up)",
+                        "Sort by Phase (Descending)",
+                        "app.visualize.sortUp(phase)"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-amount-down)",
-                        "Sort by Phase",
-                        "app.visualize.sort(phase)"
+                        "Sort by Phase (Ascending)",
+                        "app.visualize.sortDown(phase)"
                     ]
                 ]
             }

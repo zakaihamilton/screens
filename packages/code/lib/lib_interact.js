@@ -13,15 +13,17 @@ screens.lib.interact = function LibInteract(me) {
             context: object
         }).draggable({
             onmove: me.dragMoveListener,
+            inertia: true,
             restrict: {
                 restriction: "parent",
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                elementRect: { top: -0.05, left: -0.05, bottom: 1.05, right: 1.05 }
             }
         }).gesturable({
             onmove: me.dragMoveListener,
+            inertia: true,
             restrict: {
                 restriction: "parent",
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                elementRect: { top: -0.05, left: -0.05, bottom: 1.05, right: 1.05 }
             }
         });
     };
