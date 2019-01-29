@@ -19,7 +19,13 @@ screens.kab.highlight = function KabHighlight(me) {
         if (!line) {
             return "";
         }
-        var value = line.match(/<p>(.*?)<\/p>/)[1];
+        var value = line.match(/<p>(.*?)<\/p>/);
+        if (value) {
+            value = value[1];
+        }
+        else {
+            value = line;
+        }
         var html = me.ui.html.item({
             tag: "p",
             classes,
