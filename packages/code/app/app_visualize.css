@@ -99,3 +99,17 @@
 .app-visualize-iconbar a.seperator {
     border-left: 2px solid darkgray;
 }
+
+.app-visualize-iconbar a.asc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f309";
+    position: relative;
+}
+
+.app-visualize-iconbar a.desc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f30c";
+    position: relative;
+}

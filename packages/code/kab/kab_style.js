@@ -85,7 +85,7 @@ screens.kab.style = function KabStyle(me) {
             tooltip = styles.tooltip;
         }
         if (phase) {
-            html += "<span kab-term=\"" + term + "\" kab-phase=\"" + phase + "\" kab-text=\"" + replacement + "\" class=\"kab-term-phase-inline " + nightModeClass;
+            html += "<span kab-term=\"" + term + "\" kab-phase=\"" + phase + "\" kab-text=\"" + replacement + "\" kab-category=\"" + category + "\" class=\"kab-term-phase-inline " + nightModeClass;
             if (phase) {
                 html += " kab-term-phase-" + phase + " kab-term-phase-" + phase + "-border ";
             }

@@ -204,7 +204,7 @@ screens.ui.transform = function UITransform(me) {
             if (!Array.isArray(text)) {
                 array = [text];
             }
-            var options = Object.assign({}, window.options, { category: false });
+            var options = Object.assign({}, window.options);
             var result = await me.core.util.map(array, async (text) => {
                 var info = await me.kab.text.parse(language, text, options);
                 if (!window.termData) {

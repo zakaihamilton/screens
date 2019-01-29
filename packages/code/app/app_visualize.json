@@ -95,6 +95,18 @@
                         "@ui.html.icon(fas fa-sort-amount-down)",
                         "Sort by Phase (Ascending)",
                         "app.visualize.sortDown(phase)"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-tags)",
+                        "Sort by Category (Descending)",
+                        "app.visualize.sortUp(category)",
+                        "desc"
+                    ],
+                    [
+                        "@ui.html.icon(fas fa-tags)",
+                        "Sort by Category (Ascending)",
+                        "app.visualize.sortDown(category)",
+                        "asc"
                     ]
                 ]
             }
