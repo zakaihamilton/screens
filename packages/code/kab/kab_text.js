@@ -162,6 +162,7 @@ screens.kab.text = function KabText(me) {
                         session: session,
                         parent: parentInstance,
                         source: me.core.string.middleLetters(collectedWords, match),
+                        term,
                         target: item.source ? item.source : term,
                         upperCase: upperCase,
                         prefixWord: prefixWord,
