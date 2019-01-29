@@ -23,14 +23,7 @@
         {
             "ui.basic.tag": "div",
             "ui.basic.var": "terms",
-            "ui.property.style": {
-                "left": "0px",
-                "top": "0px",
-                "right": "0px",
-                "bottom": "0px",
-                "position": "absolute",
-                "color": "var(--color)"
-            },
+            "ui.class.class": "app.visualize.terms",
             "core.property.group": [
                 {
                     "ui.group.data": {
@@ -39,17 +32,7 @@
                         ],
                         "ui.data.default": {
                             "ui.basic.tag": "div",
-                            "ui.property.style": {
-                                "lineHeight": "2em",
-                                "border": "1px solid black",
-                                "padding": "30px",
-                                "textAlign": "center",
-                                "verticalAlign": "middle",
-                                "boxSizing": "border-box",
-                                "position": "absolute",
-                                "borderRadius": "10px",
-                                "boxShadow": "0 0 5px rgba(81, 203, 238, 1)"
-                            }
+                            "ui.class.class": "app.visualize.term"
                         },
                         "ui.data.values": [
                             "ui.param.terms"

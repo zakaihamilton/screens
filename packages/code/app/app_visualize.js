@@ -44,6 +44,14 @@ screens.app.visualize = function AppVisualize(me) {
     };
     me.term = async function (object, text) {
         var html = await me.transform.term(object, text);
+        object.termText = text;
         me.core.property.set(object, "ui.basic.html", html);
+    };
+    me.reload = function (object) {
+        var window = me.widget.window.get(object);
+        var elements = me.ui.node.childList(window.var.terms);
+        for (var element of elements) {
+            me.core.property.set(element, "app.visualize.term", element.termText);
+        }
     };
 };
