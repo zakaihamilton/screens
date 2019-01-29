@@ -394,12 +394,12 @@ screens.widget.transform = function WidgetTransform(me) {
         collective: "kab-term-phase-collective"
     };
     me.phases = {
-        root: 2,
-        one: 3,
-        two: 4,
-        three: 5,
-        four: 6,
-        collective: 7
+        root: 0,
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        collective: 5
     };
     me.addTerms = function (terms, rows, used) {
         for (var name in terms) {
@@ -445,7 +445,7 @@ screens.widget.transform = function WidgetTransform(me) {
         me.addTerms(terms, rows, false);
         var rowIndex = 2;
         for (let phase in me.phases) {
-            var columnIndex = me.phases[phase];
+            var columnIndex = me.phases[phase] + 2;
             var name = phase.charAt(0).toUpperCase() + phase.slice(1);
             params.gridData.push([1, columnIndex, name, "kab.term.header"]);
         }

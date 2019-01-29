@@ -68,7 +68,7 @@
                     [
                         "@ui.html.icon(fas fa-sort-alpha-down)",
                         "Refresh",
-                        "app.visualize.sort(az)"
+                        "app.visualize.sort(text)"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-amount-down)",

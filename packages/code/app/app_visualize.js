@@ -59,11 +59,24 @@ screens.app.visualize = function AppVisualize(me) {
         var window = me.widget.window.get(object);
         var { width } = me.ui.rect.absoluteRegion(window.var.terms);
         var elements = me.ui.node.childList(window.var.terms);
-        if (order) {
+        if (typeof order === "string") {
             elements.sort((a, b) => {
-                var aText = a.firstChild.getAttribute("kab-text");
-                var bText = b.firstChild.getAttribute("kab-text");
-                return aText.localeCompare(bText);
+                var aText = a.firstChild.getAttribute("kab-" + order);
+                var bText = b.firstChild.getAttribute("kab-" + order);
+                if (order === "phase") {
+                    let aIndex = me.widget.transform.phases[aText];
+                    let bIndex = me.widget.transform.phases[bText];
+                    if (typeof aIndex === "undefined") {
+                        aIndex = -1;
+                    }
+                    if (typeof bIndex === "undefined") {
+                        bIndex = -1;
+                    }
+                    return aIndex - bIndex;
+                }
+                else {
+                    return aText.localeCompare(bText);
+                }
             });
         }
         var left = 10, top = 10;
