@@ -142,14 +142,14 @@ screens.app.visualize = function AppVisualize(me) {
                 continue;
             }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);
-            height = region.height;
+            height = parseInt(region.height);
             if (left + region.width >= width - spacePixels) {
                 left = spacePixels;
-                top += region.height + spacePixels;
+                top += height + spacePixels;
             }
             me.lib.interact.moveElement(element, left, top);
             me.lib.interact.resizeElement(element);
-            left += region.width + spacePixels;
+            left += parseInt(region.width) + spacePixels;
         }
     };
     me.showToast = async function (object, text) {

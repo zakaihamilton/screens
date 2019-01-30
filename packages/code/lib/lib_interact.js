@@ -41,8 +41,8 @@ screens.lib.interact = function LibInteract(me) {
     };
     me.resizeElement = function (object) {
         var region = me.ui.rect.absoluteRegion(object);
-        var emWidth = me.ui.basic.pixelsToEm(object, region.width);
-        var emHeight = me.ui.basic.pixelsToEm(object, region.height);
+        var emWidth = me.ui.basic.pixelsToEm(object.parentNode, region.width);
+        var emHeight = me.ui.basic.pixelsToEm(object.parentNode, region.height);
         object.style.width = Math.ceil(emWidth);
         object.style.height = Math.ceil(emHeight);
     };
