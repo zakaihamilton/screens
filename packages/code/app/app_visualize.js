@@ -148,6 +148,7 @@ screens.app.visualize = function AppVisualize(me) {
                 top += region.height + spacePixels;
             }
             me.lib.interact.moveElement(element, left, top);
+            me.lib.interact.resizeElement(element);
             left += region.width + spacePixels;
         }
     };
@@ -168,6 +169,7 @@ screens.app.visualize = function AppVisualize(me) {
                 var region = me.ui.rect.absoluteRegion(element);
                 left -= region.width / 2;
                 top -= region.height / 2;
+                me.lib.interact.resizeElement(element);
                 me.lib.interact.moveElement(element, left, top);
                 window.termInput = "";
             }

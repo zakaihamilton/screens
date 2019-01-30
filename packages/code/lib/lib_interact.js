@@ -35,8 +35,15 @@ screens.lib.interact = function LibInteract(me) {
     me.moveElement = function (object, x, y) {
         var emX = me.ui.basic.pixelsToEm(object, x);
         var emY = me.ui.basic.pixelsToEm(object, y);
-        object.style.transform = "translate(" + parseInt(emX) + "em, " + parseInt(emY) + "em)";
+        object.style.transform = "translate(" + Math.ceil(emX) + "em, " + Math.ceil(emY) + "em)";
         object.setAttribute("data-x", x);
         object.setAttribute("data-y", y);
+    };
+    me.resizeElement = function (object) {
+        var region = me.ui.rect.absoluteRegion(object);
+        var emWidth = me.ui.basic.pixelsToEm(object, region.width);
+        var emHeight = me.ui.basic.pixelsToEm(object, region.height);
+        object.style.width = Math.ceil(emWidth);
+        object.style.height = Math.ceil(emHeight);
     };
 };
