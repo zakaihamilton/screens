@@ -45,7 +45,17 @@ screens.app.visualize = function AppVisualize(me) {
     me.term = async function (object, text) {
         var html = await me.transform.term(object, text);
         object.termText = text;
+        html += me.ui.html.item({
+            tag: "i",
+            classes: ["fas", "fa-minus-circle", "app-visualize-delete"],
+            attributes: {
+                onclick: "screens.app.visualize.remove(this)"
+            }
+        });
         me.core.property.set(object, "ui.basic.html", html);
+    };
+    me.remove = function (object) {
+        me.ui.node.removeChild(object.parentNode.parentNode, object.parentNode);
     };
     me.update = function (object) {
         var window = me.widget.window.get(object);

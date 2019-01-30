@@ -70,7 +70,7 @@
                         "@ui.html.icon(fa fa-expand)",
                         "Fullscreen",
                         "widget.window.fullscreen",
-                        "widget-transform-iconbar-fullscreen"
+                        "app-visualize-iconbar-fullscreen"
                     ],
                     [
                         "@ui.html.icon(fas fa-sort-numeric-up)",

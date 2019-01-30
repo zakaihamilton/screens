@@ -126,10 +126,24 @@
     position: relative;
 }
 
-.widget-transform-iconbar-fullscreen.fullscreen {
+.app-visualize-iconbar-fullscreen.fullscreen {
     background-color: #4CAF50;
 }
 
-.widget-transform-iconbar-fullscreen.fullscreen:hover {
+.app-visualize-iconbar-fullscreen.fullscreen:hover {
     background-color: #196a19;
+}
+
+.app-visualize-delete {
+    position: absolute;
+    top:-0.5em;
+    right:-0.5em;
+    visibility:hidden;
+    color:var(--color);
+    background-color:var(--background);
+    text-shadow: none;
+}
+
+.app-visualize-term:hover .app-visualize-delete {
+    visibility:visible;
 }
