@@ -16,13 +16,23 @@ screens.widget.toast = function WidgetToast(me) {
     me.show = function (type, message) {
         var toast = document.body.var.desktop.var.toast;
         if (me.currentType === type) {
-            me.core.property.set(toast, "ui.basic.text", message);
-            me.restartTimer();
+            if (message) {
+                me.core.property.set(toast, "ui.basic.text", message);
+                me.restartTimer();
+            }
+            else {
+                me.showNextMessage();
+            }
         }
         else if (Object.keys(me.messages).length) {
-            me.messages[type] = message;
+            if (message) {
+                me.messages[type] = message;
+            }
+            else {
+                delete me.messages[type];
+            }
         }
-        else {
+        else if (message) {
             me.core.property.set(toast, "ui.basic.text", message);
             me.core.property.set(toast, "ui.class.show", true);
             me.currentType = type;

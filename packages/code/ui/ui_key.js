@@ -30,4 +30,9 @@ screens.ui.key = function UIKey(me) {
             me.core.event.register(me.handle, object, "keyup", value, "enter");
         }
     };
+    me.press = {
+        set: function (object, value) {
+            me.core.event.register(me.handle, object, "keypress", value);
+        }
+    };
 };

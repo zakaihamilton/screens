@@ -154,4 +154,48 @@ screens.app.visualize = function AppVisualize(me) {
             left += region.width + spacePixels;
         }
     };
+    me.keyPress = async function (object, event) {
+        var window = me.widget.window.get(object);
+        var text = String.fromCharCode(event.charCode);
+        if (!window.termInput) {
+            window.termInput = "";
+        }
+        if (event.keyCode === 13) {
+            if (window.termInput) {
+                var element = me.ui.element.create({
+                    "ui.basic.tag": "div",
+                    "ui.class.class": "app.visualize.term",
+                }, window.var.terms);
+                await me.core.property.set(element, "app.visualize.term", window.termInput);
+                var left = window.termPos.left, top = window.termPos.top;
+                var region = me.ui.rect.absoluteRegion(element);
+                left -= region.width / 2;
+                top -= region.height / 2;
+                me.lib.interact.moveElement(element, left, top);
+                window.termInput = "";
+            }
+        }
+        else {
+            window.termInput += text;
+        }
+        me.widget.toast.show("visualize", window.termInput.trim());
+    };
+    me.keyUp = async function (object, event) {
+        var window = me.widget.window.get(object);
+        if (!window.termInput) {
+            window.termInput = "";
+        }
+        if (event.keyCode === 8) {
+            window.termInput = window.termInput.slice(0, -1);
+            me.widget.toast.show("visualize", window.termInput.trim());
+        }
+    };
+    me.touchMove = function (object, event) {
+        var window = me.widget.window.get(object);
+        var target_region = me.ui.rect.absoluteRegion(window.var.terms);
+        window.termPos = {
+            left: event.clientX - target_region.left,
+            top: event.clientY - target_region.top
+        };
+    };
 };

@@ -28,6 +28,10 @@
                     "ui.basic.tag": "div",
                     "ui.basic.var": "terms",
                     "ui.class.class": "app.visualize.terms",
+                    "ui.attribute.tabIndex": "0",
+                    "ui.key.press": "app.visualize.keyPress",
+                    "ui.key.up": "app.visualize.keyUp",
+                    "ui.touch.move": "app.visualize.touchMove",
                     "core.property.group": [
                         {
                             "ui.group.data": {
