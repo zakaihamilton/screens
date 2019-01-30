@@ -1211,10 +1211,10 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         me.clearPage(page);
     };
     me.pageInView = function (page, partial = true) {
-        let parentTop = page.parentNode.scrollTop;
-        let parentBottom = parentTop + page.parentNode.clientHeight;
-        let childTop = page.pageOffset;
-        let childBottom = childTop + page.pageSize;
+        let parentTop = parseInt(page.parentNode.scrollTop);
+        let parentBottom = parseInt(parentTop + page.parentNode.clientHeight);
+        let childTop = parseInt(page.pageOffset);
+        let childBottom = parseInt(childTop + page.pageSize);
         let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
         let isPartial = partial && ((childBottom > parentTop) ||
             (childTop < parentBottom));
