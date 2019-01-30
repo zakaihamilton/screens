@@ -76,7 +76,7 @@
                             "ui.basic.var": "label",
                             "ui.basic.text": "",
                             "ui.class.class": "label",
-                            "ui.move.extend": null,
+                            "ui.move.extend": "window",
                             "ui.touch.dblclick": "toggleSize"
                         },
                         {

@@ -150,8 +150,8 @@ screens.app.visualize = function AppVisualize(me) {
                 left = spacePixels;
                 top += height + spacePixels;
             }
-            me.lib.interact.moveElement(element, left, top);
-            me.lib.interact.resizeElement(element);
+            me.moveElement(element, left, top);
+            me.resizeElement(element);
             left += parseInt(region.width) + spacePixels;
         }
     };
@@ -159,7 +159,7 @@ screens.app.visualize = function AppVisualize(me) {
         var window = me.widget.window.get(object);
         if (window.currentElement) {
             me.core.property.set(window.currentElement, "ui.class.mobile", false);
-            me.lib.interact.resizeElement(window.currentElement);
+            me.resizeElement(window.currentElement);
             window.currentElement = null;
             window.termInput = "";
         }
@@ -180,17 +180,19 @@ screens.app.visualize = function AppVisualize(me) {
                 "ui.class.class": "app.visualize.term",
                 "ui.style.transition": "none",
                 "ui.class.mobile": true,
-                "ui.touch.click": me.applyCurrentElement
+                "ui.touch.click": me.applyCurrentElement,
+                "ui.move.extend": "this",
+                "ui.move.enabled": true
             }, window.var.terms);
         }
         if (update) {
-            await me.core.property.set(element, "app.visualize.term", window.termInput);
+            await me.core.property.set(element, "app.visualize.term", window.termInput.split("\n").join("<br>"));
         }
         var left = window.termPos.left, top = window.termPos.top;
         var region = me.ui.rect.absoluteRegion(element);
         left -= region.width / 2;
         top -= region.height / 2;
-        me.lib.interact.moveElement(element, left, top);
+        me.moveElement(element, left, top);
     };
     me.keyPress = async function (object, event) {
         var window = me.widget.window.get(object);
@@ -199,7 +201,12 @@ screens.app.visualize = function AppVisualize(me) {
             window.termInput = "";
         }
         window.termInput += text;
-        me.updateCurrentElement(object, true);
+        if (window.updateTimer) {
+            clearTimeout(window.updateTimer);
+        }
+        window.updateTimer = setTimeout(() => {
+            me.updateCurrentElement(object, true);
+        }, 500);
     };
     me.keyUp = async function (object, event) {
         var window = me.widget.window.get(object);
@@ -219,5 +226,24 @@ screens.app.visualize = function AppVisualize(me) {
             top: event.clientY - target_region.top
         };
         me.updateCurrentElement(object);
+    };
+    me.moveTerm = function (object, event) {
+        var x = (parseFloat(object.getAttribute("data-x")) || 0) + event.movementX;
+        var y = (parseFloat(object.getAttribute("data-y")) || 0) + event.movementY;
+        me.moveElement(object, x, y);
+    };
+    me.moveElement = function (object, x, y) {
+        var emX = me.ui.basic.pixelsToEm(object.parentNode, x);
+        var emY = me.ui.basic.pixelsToEm(object.parentNode, y);
+        object.style.transform = "translate(" + Math.ceil(emX) + "em, " + Math.ceil(emY) + "em)";
+        object.setAttribute("data-x", x);
+        object.setAttribute("data-y", y);
+    };
+    me.resizeElement = function (object) {
+        var region = me.ui.rect.absoluteRegion(object);
+        var emWidth = me.ui.basic.pixelsToEm(object.parentNode, region.width);
+        var emHeight = me.ui.basic.pixelsToEm(object.parentNode, region.height);
+        object.style.width = emWidth + "em";
+        object.style.height = emHeight + "em";
     };
 };

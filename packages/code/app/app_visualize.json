@@ -41,17 +41,17 @@
                                 ],
                                 "ui.data.default": {
                                     "ui.basic.tag": "div",
-                                    "ui.class.class": "app.visualize.term"
+                                    "ui.class.class": "app.visualize.term",
+                                    "ui.move.extend": "this",
+                                    "ui.move.enabled": true,
+                                    "ui.move.method": "app.visualize.moveTerm"
                                 },
                                 "ui.data.values": [
                                     "ui.param.terms"
                                 ]
                             }
                         }
-                    ],
-                    "lib.interact.draggable": {
-                        "ui.basic.tag": "div"
-                    }
+                    ]
                 }
             ]
         },

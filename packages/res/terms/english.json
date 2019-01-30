@@ -2133,6 +2133,15 @@
             "hebrew": "מדבר"
         },
         {
+            "translation": "Numbers",
+            "style": {
+                "category": "Volume",
+                "phase": "four"
+            },
+            "term": "BaMidbar",
+            "hebrew": "במדבר"
+        },
+        {
             "translation": "Water",
             "style": {
                 "category": "Element",

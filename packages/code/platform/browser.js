@@ -4,8 +4,7 @@ function startBrowser(appName, appArgs) {
             "*"
         ],
         "lib": [
-            "zoom",
-            "interact"
+            "zoom"
         ],
         "storage": [
             "*"

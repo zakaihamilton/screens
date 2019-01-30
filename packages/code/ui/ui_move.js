@@ -21,13 +21,29 @@ screens.ui.move = function UIMove(me) {
             object.move_target = value;
         }
     };
-    me.extend = function (object) {
+    me.method = {
+        get: function (object) {
+            return object.move_method;
+        },
+        set: function (object, value) {
+            object.move_method = value;
+        }
+    };
+    me.extend = function (object, type) {
+        object.move_type = type;
         me.core.property.set(object, "ui.touch.down", "ui.move.down");
     };
     me.down = function (object, event) {
         var target = object.move_target;
-        if (!target) {
+        var type = object.move_type;
+        if (type === "this") {
+            target = object;
+        }
+        else if (type === "window") {
             target = me.widget.window.get(object);
+        }
+        if (!target) {
+            return;
         }
         if (!target.move_enabled) {
             me.core.property.set(target, "ui.focus.active", true);
@@ -46,21 +62,30 @@ screens.ui.move = function UIMove(me) {
             "transition": true
         });
         event.preventDefault();
+        var move_method = "ui.move.move";
+        if (object.move_method) {
+            move_method = object.move_method;
+        }
         me.core.property.set(object, {
-            "ui.touch.move": "ui.move.move",
+            "ui.touch.move": move_method,
             "ui.touch.up": "ui.move.up"
         });
+        me.core.property.set(object, "ui.style.transition", "none");
     };
     me.move = function (object, event) {
+        var type = object.move_type;
         var target_region = me.ui.rect.absoluteRegion(me.info.target);
         var shift_region = {};
         me.ui.rect.emptyRegion(shift_region);
         target_region.left = event.clientX - me.info.left;
         target_region.top = event.clientY - me.info.top;
         me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
-        me.snap(object, true);
+        if (type === "window") {
+            me.snap(object, true);
+        }
     };
     me.up = function (object, event) {
+        var type = object.move_type;
         me.core.property.set(object, {
             "ui.touch.move": null,
             "ui.touch.up": null,
@@ -70,7 +95,11 @@ screens.ui.move = function UIMove(me) {
         });
         var window = me.widget.window.get(me.info.target);
         me.core.property.notify(window, "update");
-        me.snap(object, false);
+
+        if (type === "window") {
+            me.snap(object, false);
+        }
+        me.core.property.set(object, "ui.style.transition", "");
     };
     me.snap = function (object, signalOnly) {
         var window = me.widget.window.get(object);
