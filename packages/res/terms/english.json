@@ -197,7 +197,8 @@
             "small ZON": "little ZON",
             "Shana ": "Shanah ",
             "Olam, Shanah, Nefesh": "Olam, Shanah, Nefesh2",
-            "Nefesh [soul]—with respect to Nefesh": "Nefesh2 [soul]—with respect to Nefesh2"
+            "Nefesh [soul]—with respect to Nefesh": "Nefesh2 [soul]—with respect to Nefesh2",
+            "It contains Hochma": "It contains Hochma2"
         },
         "insert": {
             "Partzuf Keter": "Partzuf de Keter",
@@ -1024,6 +1025,15 @@
             "hebrew": "רוח"
         },
         {
+            "translation": "Modulations",
+            "style": {
+                "category": "Light",
+                "phase": "three"
+            },
+            "term": "Ruachs",
+            "hebrew": "רוחות"
+        },
+        {
             "translation": "Protection",
             "style": {
                 "category": "Light",
@@ -1157,6 +1167,15 @@
         },
         {
             "expansion": [
+                "Hochma",
+                "Bina",
+                "Tifferet",
+                "Malchut"
+            ],
+            "term": "HB TM"
+        },
+        {
+            "expansion": [
                 "Keter",
                 "Hochma",
                 "Bina"
@@ -1213,7 +1232,8 @@
                 "Yetzira",
                 "Assiya"
             ],
-            "term": "BYA"
+            "term": "BYA",
+            "abridged": "Nivrah"
         },
         {
             "expansion": [
@@ -6342,12 +6362,18 @@
             "term": "Boreh",
             "translation": "Creator",
             "fixed": true,
-            "hebrew": "בורא"
+            "hebrew": "בורא",
+            "style": {
+                "phase": "two"
+            }
         },
         {
             "term": "Nivrah",
             "translation": "Creature",
-            "hebrew": "נברא"
+            "hebrew": "נברא",
+            "style": {
+                "phase": "two"
+            }
         },
         {
             "term": "Ruchani",

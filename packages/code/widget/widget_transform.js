@@ -533,12 +533,33 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         return me.widget.menu.collect(object, info);
     };
+    me.transformedHeader = function (object) {
+        var widget = me.findWidget(object);
+        var list = [];
+        me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
+            var filter = (element) => {
+                return (element.tagName && element.tagName.toLowerCase() === "h4");
+            };
+            var modify = (element, text) => {
+                if (text) {
+                    text += "\n";
+                }
+                return text;
+            };
+            var paragraphs = me.widget.transform.layout.pageText(page, filter, modify);
+            paragraphs = paragraphs.filter(Boolean);
+            if (paragraphs && paragraphs.length) {
+                list.push(paragraphs.join(""));
+            }
+        });
+        return list.join("").trim();
+    };
     me.transformedText = function (object, useFilter) {
         var widget = me.findWidget(object);
         var list = [];
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
             var filter = null;
-            if (useFilter && widget.options.showHighlights && widget.options.copyHighlights) {
+            if (useFilter) {
                 filter = (element) => {
                     return me.core.property.get(element, "ui.class.kab-term-highlight");
                 };
@@ -546,10 +567,10 @@ screens.widget.transform = function WidgetTransform(me) {
             var modify = (element, text) => {
                 if (text) {
                     if (element.tagName && element.tagName.toLowerCase() === "h4") {
-                        text += "\n";
+                        text = "\n" + text;
                     }
                     else {
-                        text += "\n\n";
+                        text = "\n\n" + text;
                     }
                 }
                 return text;
@@ -563,8 +584,16 @@ screens.widget.transform = function WidgetTransform(me) {
         return list.join("").trim();
     };
     me.exportText = function (object, target) {
-        var text = me.transformedText(object, true);
-        if (!text) {
+        var widget = me.findWidget(object);
+        var text = "";
+        if (widget.options.showHighlights && widget.options.copyHighlights) {
+            text = me.transformedText(object, true);
+        }
+        if (text) {
+            var header = me.transformedHeader(object);
+            text = header + "\n\n" + text;
+        }
+        else {
             text = me.transformedText(object, false);
         }
         me.core.property.set(target, "importData", text);
