@@ -152,6 +152,10 @@ screens.app.visualize = function AppVisualize(me) {
             left += region.width + spacePixels;
         }
     };
+    me.showToast = async function (object, text) {
+        var html = await me.transform.term(object, text);
+        me.widget.toast.show("visualize", html);
+    };
     me.keyPress = async function (object, event) {
         var window = me.widget.window.get(object);
         var text = String.fromCharCode(event.charCode);
@@ -177,7 +181,7 @@ screens.app.visualize = function AppVisualize(me) {
         else {
             window.termInput += text;
         }
-        me.widget.toast.show("visualize", window.termInput.trim());
+        me.showToast(window, window.termInput.trim());
     };
     me.keyUp = async function (object, event) {
         var window = me.widget.window.get(object);
@@ -186,7 +190,7 @@ screens.app.visualize = function AppVisualize(me) {
         }
         if (event.keyCode === 8) {
             window.termInput = window.termInput.slice(0, -1);
-            me.widget.toast.show("visualize", window.termInput.trim());
+            me.showToast(window, window.termInput.trim());
         }
     };
     me.touchMove = function (object, event) {
