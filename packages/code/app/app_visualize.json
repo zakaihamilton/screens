@@ -12,6 +12,10 @@
         {
             "text": "Transform",
             "select": [
+                {
+                    "text": "Clear",
+                    "select": "app.visualize.clear"
+                },
                 "app.visualize.transform.menu"
             ]
         }

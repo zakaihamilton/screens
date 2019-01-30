@@ -37,12 +37,12 @@
     touch-action: none;
 }
 
-.app-visualize-term:hover {
+.app-visualize-term:not(.mobile):hover {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
     background: linear-gradient(-45deg, #00B4DB, #0083B0);
 }
 
-.app-visualize-term:hover:active {
+.app-visualize-term:not(.mobile):hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1), 0px 5px 5px rgba(81, 203, 238, 1);
 }
 
@@ -52,6 +52,9 @@
 
 .app-visualize-term.mobile span {
     pointer-events: none;
+}
+
+.app-visualize-term.mobile {
     opacity: 0.5;
 }
 
@@ -66,7 +69,7 @@
     border-radius: 10em;
 }
 
-.app-visualize-term:hover .app-visualize-delete {
+.app-visualize-term:not(.mobile):hover .app-visualize-delete {
     visibility: visible;
 }
 

@@ -71,6 +71,10 @@ screens.app.visualize = function AppVisualize(me) {
             me.core.property.set(element, "app.visualize.term", element.termText);
         }
     };
+    me.clear = function (object) {
+        var window = me.widget.window.get(object);
+        me.ui.node.empty(window.var.terms);
+    };
     me.sortDown = function (object, order) {
         me.sort(object, order, "down");
         me.sort(object, order, "down");
@@ -166,6 +170,18 @@ screens.app.visualize = function AppVisualize(me) {
             window.termInput = "";
         }
     };
+    me.createElement = function (object, properties) {
+        var window = me.widget.window.get(object);
+        var element = me.ui.element.create(Object.assign({
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.visualize.term",
+            "ui.style.transition": "none",
+            "ui.move.extend": "this",
+            "ui.move.enabled": true,
+            "ui.move.method": "app.visualize.moveTerm"
+        }, properties), window.var.terms);
+        return element;
+    };
     me.updateCurrentElement = async function (object, update) {
         var window = me.widget.window.get(object);
         if (!window.termInput) {
@@ -177,16 +193,10 @@ screens.app.visualize = function AppVisualize(me) {
         }
         var element = window.currentElement;
         if (!element) {
-            element = window.currentElement = me.ui.element.create({
-                "ui.basic.tag": "div",
-                "ui.class.class": "app.visualize.term",
-                "ui.style.transition": "none",
+            element = window.currentElement = me.createElement(object, {
                 "ui.class.mobile": true,
                 "ui.touch.click": me.applyCurrentElement,
-                "ui.move.extend": "this",
-                "ui.move.enabled": true,
-                "ui.move.method": "app.visualize.moveTerm"
-            }, window.var.terms);
+            });
         }
         if (update) {
             await me.core.property.set(element, "app.visualize.term", window.termInput);
