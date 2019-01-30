@@ -123,6 +123,10 @@
                     [
                         "Propagate",
                         "work"
+                    ],
+                    [
+                        "Visualize",
+                        "tools"
                     ]
                 ]
             }

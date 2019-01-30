@@ -5,6 +5,7 @@
 
 screens.app.visualize = function AppVisualize(me) {
     me.init = async function () {
+        await me.ui.content.attach(me);
         await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
@@ -23,17 +24,22 @@ screens.app.visualize = function AppVisualize(me) {
         if (window.var.terms) {
             window.var.terms.focus();
         }
+        if (typeof args[0] === "string") {
+            me.content.import(window, args[0], args[1]);
+        }
+        else {
+            me.core.property.set(window, "ui.property.after", {
+                "app.visualize.sortDown": null,
+                "timeout": 250
+            });
+        }
         return window;
     };
     me.initOptions = {
         set: function (object) {
             var window = me.widget.window.get(object);
             var options = me.transform.options();
-            if (!window.optionsLoaded) {
-                window.optionsLoaded = true;
-                me.ui.options.load(me, window, Object.assign({
-                }, options.load));
-            }
+            me.ui.options.load(me, window, Object.assign({}, options.load));
             me.ui.options.toggleSet(me, null, Object.assign({}, options.toggle));
             me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
@@ -45,9 +51,46 @@ screens.app.visualize = function AppVisualize(me) {
             me.core.property.set(window, "app", me);
         }
     };
+    me.importData = function (object, text, title, options) {
+        var window = me.widget.window.get(object);
+        me.clear(window);
+        me.core.property.set(window, "widget.window.name", title);
+        var data = JSON.parse(text);
+        for (var item of data) {
+            var emLeft = parseInt(item.left);
+            var emTop = parseInt(item.top);
+            var pixelLeft = parseInt(me.ui.basic.emToPixels(window.var.terms, item.left));
+            var pixelTop = parseInt(me.ui.basic.emToPixels(window.var.terms, item.top));
+            var transform = "translate(" + item.left + "em, " + item.top + "em)";
+            me.createTerm(object, {
+                "ui.attribute.pixelLeft": pixelLeft,
+                "ui.attribute.pixelTop": pixelTop,
+                "ui.attribute.emLeft": emLeft,
+                "ui.attribute.emTop": emTop,
+                "ui.style.transform": transform,
+                "ui.attribute.text": item.text
+            });
+        }
+        me.reload(window);
+    };
+    me.exportData = function (object) {
+        var window = me.widget.window.get(object);
+        var elements = me.ui.node.childList(window.var.terms);
+        var data = [];
+        for (var element of elements) {
+            var text = me.core.property.get(element, "ui.attribute.text");
+            var left = me.core.property.get(element, "ui.attribute.emLeft");
+            var top = me.core.property.get(element, "ui.attribute.emTop");
+            data.push({ left, top, text });
+        }
+        if (!data.length) {
+            return [];
+        }
+        return [JSON.stringify(data), {}];
+    };
     me.term = async function (object, text) {
         var html = await me.transform.term(object, text);
-        object.termText = text;
+        me.core.property.set(object, "ui.attribute.text", text);
         html += me.ui.html.item({
             tag: "i",
             classes: ["fas", "fa-minus-circle", "app-visualize-delete"],
@@ -68,11 +111,13 @@ screens.app.visualize = function AppVisualize(me) {
         var window = me.widget.window.get(object);
         var elements = me.ui.node.childList(window.var.terms);
         for (var element of elements) {
-            me.core.property.set(element, "app.visualize.term", element.termText);
+            var text = me.core.property.get(element, "ui.attribute.text");
+            me.core.property.set(element, "app.visualize.term", text);
         }
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
+        me.core.property.set(window, "widget.window.name", "");
         me.ui.node.empty(window.var.terms);
     };
     me.sortDown = function (object, order) {
@@ -152,14 +197,14 @@ screens.app.visualize = function AppVisualize(me) {
                 continue;
             }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);
-            height = parseInt(region.height);
+            height = parseInt((region.height / spacePixels) + 1) * spacePixels;
             if (left + region.width >= width - spacePixels) {
                 left = spacePixels;
                 top += height + spacePixels;
             }
             me.moveElement(element, left, top);
             left += parseInt(region.width) + spacePixels;
-            left = parseInt(left / spacePixels) * spacePixels;
+            left = parseInt((left / spacePixels) + 1) * spacePixels;
         }
     };
     me.applyCurrentElement = function (object) {
@@ -170,7 +215,7 @@ screens.app.visualize = function AppVisualize(me) {
             window.termInput = "";
         }
     };
-    me.createElement = function (object, properties) {
+    me.createTerm = function (object, properties) {
         var window = me.widget.window.get(object);
         var element = me.ui.element.create(Object.assign({
             "ui.basic.tag": "div",
@@ -193,7 +238,7 @@ screens.app.visualize = function AppVisualize(me) {
         }
         var element = window.currentElement;
         if (!element) {
-            element = window.currentElement = me.createElement(object, {
+            element = window.currentElement = me.createTerm(object, {
                 "ui.class.mobile": true,
                 "ui.touch.click": me.applyCurrentElement,
             });
@@ -244,15 +289,17 @@ screens.app.visualize = function AppVisualize(me) {
         me.updateCurrentElement(object);
     };
     me.moveTerm = function (object, event) {
-        var x = (parseFloat(object.getAttribute("data-x")) || 0) + event.movementX;
-        var y = (parseFloat(object.getAttribute("data-y")) || 0) + event.movementY;
+        var x = parseInt(parseInt(me.core.property.get(object, "ui.attribute.pixelLeft")) + event.movementX);
+        var y = parseInt(parseInt(me.core.property.get(object, "ui.attribute.pixelTop")) + event.movementY);
         me.moveElement(object, x, y);
     };
     me.moveElement = function (object, x, y) {
-        var emX = me.ui.basic.pixelsToEm(object.parentNode, x);
-        var emY = me.ui.basic.pixelsToEm(object.parentNode, y);
-        object.style.transform = "translate(" + Math.ceil(emX) + "em, " + Math.ceil(emY) + "em)";
-        object.setAttribute("data-x", x);
-        object.setAttribute("data-y", y);
+        var emX = parseInt(me.ui.basic.pixelsToEm(object.parentNode, x));
+        var emY = parseInt(me.ui.basic.pixelsToEm(object.parentNode, y));
+        me.core.property.set(object, "ui.style.transform", "translate(" + emX + "em, " + emY + "em)");
+        me.core.property.set(object, "ui.attribute.pixelLeft", x);
+        me.core.property.set(object, "ui.attribute.pixelTop", y);
+        me.core.property.set(object, "ui.attribute.emLeft", emX);
+        me.core.property.set(object, "ui.attribute.emTop", emY);
     };
 };

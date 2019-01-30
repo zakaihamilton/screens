@@ -256,17 +256,11 @@ screens.ui.basic = function UIBasic(me) {
         }
     };
     me.pixelsToEm = function (element, pixelValue) {
-        if (element.parentNode) {
-            var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
-            return (pixelValue / elementFontSize);
-        }
-        return false;
+        var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
+        return (pixelValue / elementFontSize);
     };
     me.emToPixels = function (element, emValue) {
-        if (element.parentNode) {
-            var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
-            return (emValue * elementFontSize);
-        }
-        return false;
+        var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
+        return (emValue * elementFontSize);
     };
 };

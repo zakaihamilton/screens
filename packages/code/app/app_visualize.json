@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/diagram.png",
+    "icon": "/packages/res/icons/visualize.png",
     "widget.menu.items": [
         {
             "text": "Transform",
@@ -17,6 +17,12 @@
                     "select": "app.visualize.clear"
                 },
                 "app.visualize.transform.menu"
+            ]
+        },
+        {
+            "text": "Content",
+            "select": [
+                "app.visualize.content.menu"
             ]
         }
     ],
@@ -129,9 +135,5 @@
         },
         "app.visualize.transform.popup"
     ],
-    "ui.property.after": {
-        "app.visualize.sortDown": null,
-        "timeout": 250
-    },
     "update": null
 }
