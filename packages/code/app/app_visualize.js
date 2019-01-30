@@ -20,6 +20,9 @@ screens.app.visualize = function AppVisualize(me) {
             json["widget.window.fullscreen"] = null;
         }
         var window = me.singleton = me.ui.element.create(json, "workspace", "self", params);
+        if (window.var.terms) {
+            window.var.terms.focus();
+        }
         return window;
     };
     me.initOptions = {
@@ -134,7 +137,7 @@ screens.app.visualize = function AppVisualize(me) {
         if (direction === "up") {
             elements.reverse();
         }
-        var spacePixels = me.ui.basic.emToPixels(window.var.terms, 1);
+        var spacePixels = parseInt(me.ui.basic.emToPixels(window.var.terms, 1));
         var left = spacePixels, top = spacePixels;
         var height = 0;
         elements.map(element => me.core.property.set(element, "ui.style.transition", ""));
@@ -151,7 +154,6 @@ screens.app.visualize = function AppVisualize(me) {
                 top += height + spacePixels;
             }
             me.moveElement(element, left, top);
-            me.resizeElement(element);
             left += parseInt(region.width) + spacePixels;
         }
     };
@@ -159,7 +161,6 @@ screens.app.visualize = function AppVisualize(me) {
         var window = me.widget.window.get(object);
         if (window.currentElement) {
             me.core.property.set(window.currentElement, "ui.class.mobile", false);
-            me.resizeElement(window.currentElement);
             window.currentElement = null;
             window.termInput = "";
         }
@@ -182,11 +183,12 @@ screens.app.visualize = function AppVisualize(me) {
                 "ui.class.mobile": true,
                 "ui.touch.click": me.applyCurrentElement,
                 "ui.move.extend": "this",
-                "ui.move.enabled": true
+                "ui.move.enabled": true,
+                "ui.move.method": "app.visualize.moveTerm"
             }, window.var.terms);
         }
         if (update) {
-            await me.core.property.set(element, "app.visualize.term", window.termInput.split("\n").join("<br>"));
+            await me.core.property.set(element, "app.visualize.term", window.termInput);
         }
         var left = window.termPos.left, top = window.termPos.top;
         var region = me.ui.rect.absoluteRegion(element);
@@ -200,13 +202,16 @@ screens.app.visualize = function AppVisualize(me) {
         if (!window.termInput) {
             window.termInput = "";
         }
+        if (event.charCode === 13) {
+            text = " ";
+        }
         window.termInput += text;
         if (window.updateTimer) {
             clearTimeout(window.updateTimer);
         }
         window.updateTimer = setTimeout(() => {
             me.updateCurrentElement(object, true);
-        }, 500);
+        }, 250);
     };
     me.keyUp = async function (object, event) {
         var window = me.widget.window.get(object);
@@ -238,12 +243,5 @@ screens.app.visualize = function AppVisualize(me) {
         object.style.transform = "translate(" + Math.ceil(emX) + "em, " + Math.ceil(emY) + "em)";
         object.setAttribute("data-x", x);
         object.setAttribute("data-y", y);
-    };
-    me.resizeElement = function (object) {
-        var region = me.ui.rect.absoluteRegion(object);
-        var emWidth = me.ui.basic.pixelsToEm(object.parentNode, region.width);
-        var emHeight = me.ui.basic.pixelsToEm(object.parentNode, region.height);
-        object.style.width = emWidth + "em";
-        object.style.height = emHeight + "em";
     };
 };
