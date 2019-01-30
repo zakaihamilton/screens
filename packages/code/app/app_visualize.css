@@ -18,8 +18,7 @@
     bottom: 0px;
     position: absolute;
     color: var(--color);
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
     margin: 10px;
 }
 

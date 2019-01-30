@@ -8,6 +8,7 @@ screens.lib.interact = function LibInteract(me) {
         me.interact = await me.core.require.load(["/node_modules/interactjs/dist/interact.js"]);
     };
     me.draggable = function (object, info) {
+        object.ignoreDraggable = true;
         var tagName = info["ui.basic.tag"];
         me.interact(tagName, {
             context: object
@@ -21,6 +22,9 @@ screens.lib.interact = function LibInteract(me) {
         });
     };
     me.dragMoveListener = function (event) {
+        if (event.target.ignoreDraggable) {
+            return;
+        }
         var target = event.target,
             x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
             y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
