@@ -155,6 +155,7 @@ screens.app.visualize = function AppVisualize(me) {
             }
             me.moveElement(element, left, top);
             left += parseInt(region.width) + spacePixels;
+            left = parseInt(left / spacePixels) * spacePixels;
         }
     };
     me.applyCurrentElement = function (object) {
