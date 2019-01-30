@@ -6,6 +6,7 @@
         "width": "600px",
         "height": "600px"
     },
+    "maximize": null,
     "icon": "/packages/res/icons/diagram.png",
     "widget.menu.items": [
         {
