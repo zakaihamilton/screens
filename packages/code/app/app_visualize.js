@@ -73,8 +73,18 @@ screens.app.visualize = function AppVisualize(me) {
             for (let orderItem of orderList) {
                 elements = elements.filter(Boolean);
                 elements.sort((a, b) => {
-                    var aText = a.firstElementChild.getAttribute("kab-" + orderItem).split("/")[0];
-                    var bText = b.firstElementChild.getAttribute("kab-" + orderItem).split("/")[0];
+                    var aChild = a.firstElementChild;
+                    var bChild = b.firstElementChild;
+                    if (!aChild || !bChild) {
+                        return 0;
+                    }
+                    var aAttribute = aChild.getAttribute("kab-" + orderItem);
+                    var bAttribute = bChild.getAttribute("kab-" + orderItem);
+                    if (!aAttribute || !bAttribute) {
+                        return 0;
+                    }
+                    var aText = aAttribute.split("/")[0];
+                    var bText = bAttribute.split("/")[0];
                     if (orderItem === "phase") {
                         let aIndex = me.widget.transform.phases[aText];
                         let bIndex = me.widget.transform.phases[bText];
