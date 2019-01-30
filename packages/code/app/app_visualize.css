@@ -50,6 +50,25 @@
     pointer-events: none;
 }
 
+.app-visualize-term.mobile span {
+    pointer-events: none;
+}
+
+.app-visualize-delete {
+    position: absolute;
+    top: -0.5em;
+    right: -0.5em;
+    visibility: hidden;
+    color: var(--color);
+    background-color: var(--background);
+    text-shadow: none;
+    border-radius: 10em;
+}
+
+.app-visualize-term:hover .app-visualize-delete {
+    visibility: visible;
+}
+
 .app-visualize-iconbar {
     position: absolute;
     bottom: 0%;
@@ -137,19 +156,4 @@
 
 .app-visualize-iconbar-fullscreen.fullscreen:hover {
     background-color: #196a19;
-}
-
-.app-visualize-delete {
-    position: absolute;
-    top: -0.5em;
-    right: -0.5em;
-    visibility: hidden;
-    color: var(--color);
-    background-color: var(--background);
-    text-shadow: none;
-    border-radius: 10em;
-}
-
-.app-visualize-term:hover .app-visualize-delete {
-    visibility: visible;
 }
