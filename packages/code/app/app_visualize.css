@@ -39,10 +39,15 @@
 
 .app-visualize-term:hover {
     text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+    background: linear-gradient(-45deg, #00B4DB, #0083B0);
 }
 
 .app-visualize-term:hover:active {
     box-shadow: 0 0 5px rgba(81, 203, 238, 1), 0px 5px 5px rgba(81, 203, 238, 1);
+}
+
+.app-visualize-term:hover:active span {
+    pointer-events: none;
 }
 
 .app-visualize-iconbar {
@@ -136,14 +141,15 @@
 
 .app-visualize-delete {
     position: absolute;
-    top:-0.5em;
-    right:-0.5em;
-    visibility:hidden;
-    color:var(--color);
-    background-color:var(--background);
+    top: -0.5em;
+    right: -0.5em;
+    visibility: hidden;
+    color: var(--color);
+    background-color: var(--background);
     text-shadow: none;
+    border-radius: 10em;
 }
 
 .app-visualize-term:hover .app-visualize-delete {
-    visibility:visible;
+    visibility: visible;
 }

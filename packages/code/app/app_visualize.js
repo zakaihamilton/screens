@@ -70,8 +70,10 @@ screens.app.visualize = function AppVisualize(me) {
     };
     me.sortDown = function (object, order) {
         me.sort(object, order, "down");
+        me.sort(object, order, "down");
     };
     me.sortUp = function (object, order) {
+        me.sort(object, order, "up");
         me.sort(object, order, "up");
     };
     me.sort = function (object, order, direction) {
@@ -135,6 +137,7 @@ screens.app.visualize = function AppVisualize(me) {
         var spacePixels = me.ui.basic.emToPixels(window.var.terms, 1);
         var left = spacePixels, top = spacePixels;
         var height = 0;
+        elements.map(element => me.core.property.set(element, "ui.style.transition", ""));
         for (var element of elements) {
             if (!element) {
                 left = spacePixels;

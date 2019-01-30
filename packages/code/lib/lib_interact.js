@@ -30,11 +30,11 @@ screens.lib.interact = function LibInteract(me) {
             y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
         me.core.property.set(target, "ui.style.transition", "none");
         me.moveElement(target, x, y);
-        me.core.property.set(target, "ui.style.transition", "");
+        setTimeout(() => me.core.property.set(target, "ui.style.transition", ""));
     };
     me.moveElement = function (object, x, y) {
-        var emX = me.ui.basic.pixelsToEm(object, x);
-        var emY = me.ui.basic.pixelsToEm(object, y);
+        var emX = me.ui.basic.pixelsToEm(object.parentNode, x);
+        var emY = me.ui.basic.pixelsToEm(object.parentNode, y);
         object.style.transform = "translate(" + Math.ceil(emX) + "em, " + Math.ceil(emY) + "em)";
         object.setAttribute("data-x", x);
         object.setAttribute("data-y", y);
@@ -43,7 +43,7 @@ screens.lib.interact = function LibInteract(me) {
         var region = me.ui.rect.absoluteRegion(object);
         var emWidth = me.ui.basic.pixelsToEm(object.parentNode, region.width);
         var emHeight = me.ui.basic.pixelsToEm(object.parentNode, region.height);
-        object.style.width = Math.ceil(emWidth);
-        object.style.height = Math.ceil(emHeight);
+        object.style.width = Math.ceil(emWidth) + "em";
+        object.style.height = Math.ceil(emHeight) + "em";
     };
 };

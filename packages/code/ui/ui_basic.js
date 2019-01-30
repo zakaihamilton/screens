@@ -257,19 +257,15 @@ screens.ui.basic = function UIBasic(me) {
     };
     me.pixelsToEm = function (element, pixelValue) {
         if (element.parentNode) {
-            var parentFontSize = parseFloat(window.getComputedStyle(element.parentNode).fontSize);
             var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
-            var pixelValueOfOneEm = (elementFontSize / parentFontSize) * elementFontSize;
-            return (pixelValue / pixelValueOfOneEm);
+            return (pixelValue / elementFontSize);
         }
         return false;
     };
     me.emToPixels = function (element, emValue) {
         if (element.parentNode) {
-            var parentFontSize = parseFloat(window.getComputedStyle(element.parentNode).fontSize);
             var elementFontSize = parseFloat(window.getComputedStyle(element).fontSize);
-            var pixelValueOfOneEm = (elementFontSize / parentFontSize) * elementFontSize;
-            return (emValue * pixelValueOfOneEm);
+            return (emValue * elementFontSize);
         }
         return false;
     };
