@@ -18,13 +18,6 @@ screens.lib.interact = function LibInteract(me) {
                 restriction: "parent",
                 elementRect: { top: -0.05, left: -0.05, bottom: 1.05, right: 1.05 }
             }
-        }).gesturable({
-            onmove: me.dragMoveListener,
-            inertia: true,
-            restrict: {
-                restriction: "parent",
-                elementRect: { top: -0.05, left: -0.05, bottom: 1.05, right: 1.05 }
-            }
         });
     };
     me.dragMoveListener = function (event) {
