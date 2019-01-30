@@ -110,9 +110,6 @@ screens.app.visualize = function AppVisualize(me) {
                         return aText.localeCompare(bText);
                     }
                 });
-                if (direction === "up") {
-                    elements.reverse();
-                }
                 if (orderItem === "phase" || orderItem === "category") {
                     var previous = null;
                     var result = [];
@@ -122,7 +119,7 @@ screens.app.visualize = function AppVisualize(me) {
                             return;
                         }
                         var text = element.firstElementChild.getAttribute("kab-" + orderItem);
-                        if (text !== previous) {
+                        if (previous !== null && text !== previous) {
                             result.push(null);
                         }
                         previous = text;
@@ -132,16 +129,16 @@ screens.app.visualize = function AppVisualize(me) {
                 }
             }
         }
-        else if (direction === "up") {
+        if (direction === "up") {
             elements.reverse();
         }
-        var spacePixels = me.ui.basic.emToPixels(window.var.terms, 0.5);
+        var spacePixels = me.ui.basic.emToPixels(window.var.terms, 1);
         var left = spacePixels, top = spacePixels;
         var height = 0;
         for (var element of elements) {
             if (!element) {
                 left = spacePixels;
-                top += height + (spacePixels * 3);
+                top += height + (spacePixels * 2);
                 continue;
             }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);

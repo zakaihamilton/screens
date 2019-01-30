@@ -35,7 +35,7 @@ screens.lib.interact = function LibInteract(me) {
     me.moveElement = function (object, x, y) {
         var emX = me.ui.basic.pixelsToEm(object, x);
         var emY = me.ui.basic.pixelsToEm(object, y);
-        object.style.transform = "translate(" + emX + "em, " + emY + "em)";
+        object.style.transform = "translate(" + parseInt(emX) + "em, " + parseInt(emY) + "em)";
         object.setAttribute("data-x", x);
         object.setAttribute("data-y", y);
     };
