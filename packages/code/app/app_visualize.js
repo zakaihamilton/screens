@@ -121,7 +121,7 @@ screens.app.visualize = function AppVisualize(me) {
         for (var element of elements) {
             if (!element) {
                 left = spacePixels;
-                top += height + (spacePixels * 2);
+                top += height + (spacePixels * 3);
                 continue;
             }
             var region = me.ui.rect.relativeRegion(element, window.var.terms);
