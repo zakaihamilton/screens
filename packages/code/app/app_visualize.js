@@ -61,13 +61,13 @@ screens.app.visualize = function AppVisualize(me) {
             var emTop = parseInt(item.top);
             var pixelLeft = parseInt(me.ui.basic.emToPixels(window.var.terms, item.left));
             var pixelTop = parseInt(me.ui.basic.emToPixels(window.var.terms, item.top));
-            var transform = "translate(" + item.left + "em, " + item.top + "em)";
             me.createTerm(object, {
                 "ui.attribute.pixelLeft": pixelLeft,
                 "ui.attribute.pixelTop": pixelTop,
                 "ui.attribute.emLeft": emLeft,
                 "ui.attribute.emTop": emTop,
-                "ui.style.transform": transform,
+                "ui.style.left": emLeft + "em",
+                "ui.style.top": emTop + "em",
                 "ui.attribute.text": item.text
             });
         }
@@ -223,7 +223,8 @@ screens.app.visualize = function AppVisualize(me) {
             "ui.style.transition": "none",
             "ui.move.extend": "this",
             "ui.move.enabled": true,
-            "ui.move.method": "app.visualize.moveTerm"
+            "ui.move.method": "app.visualize.moveTerm",
+            "ui.move.relative": true
         }, properties), window.var.terms);
         return element;
     };
@@ -289,17 +290,19 @@ screens.app.visualize = function AppVisualize(me) {
         me.updateCurrentElement(object);
     };
     me.moveTerm = function (object, event) {
-        var x = parseInt(parseInt(me.core.property.get(object, "ui.attribute.pixelLeft")) + event.movementX);
-        var y = parseInt(parseInt(me.core.property.get(object, "ui.attribute.pixelTop")) + event.movementY);
-        me.moveElement(object, x, y);
+        var { left, top, target } = me.ui.move.info;
+        var x = event.clientX - left;
+        var y = event.clientY - top;
+        me.moveElement(target, x, y);
     };
     me.moveElement = function (object, x, y) {
         var emX = parseInt(me.ui.basic.pixelsToEm(object.parentNode, x));
         var emY = parseInt(me.ui.basic.pixelsToEm(object.parentNode, y));
-        me.core.property.set(object, "ui.style.transform", "translate(" + emX + "em, " + emY + "em)");
         me.core.property.set(object, "ui.attribute.pixelLeft", x);
         me.core.property.set(object, "ui.attribute.pixelTop", y);
         me.core.property.set(object, "ui.attribute.emLeft", emX);
         me.core.property.set(object, "ui.attribute.emTop", emY);
+        me.core.property.set(object, "ui.style.left", emX + "em");
+        me.core.property.set(object, "ui.style.top", emY + "em");
     };
 };

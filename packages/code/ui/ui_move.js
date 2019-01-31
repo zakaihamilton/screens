@@ -21,6 +21,14 @@ screens.ui.move = function UIMove(me) {
             object.move_target = value;
         }
     };
+    me.relative = {
+        get: function (object) {
+            return object.move_relative;
+        },
+        set: function (object, value) {
+            object.move_relative = value;
+        }
+    };
     me.method = {
         get: function (object) {
             return object.move_method;
@@ -49,7 +57,8 @@ screens.ui.move = function UIMove(me) {
             me.core.property.set(target, "ui.focus.active", true);
             return;
         }
-        var target_region = me.ui.rect.absoluteRegion(target);
+        var regionMethod = target.move_relative ? me.ui.rect.relativeRegion : me.ui.rect.absoluteRegion;
+        var target_region = regionMethod(target);
         me.info = {
             target: target,
             left: event.clientX - target_region.left,
@@ -68,15 +77,15 @@ screens.ui.move = function UIMove(me) {
         }
         me.core.property.set(object, {
             "ui.touch.move": move_method,
-            "ui.touch.up": "ui.move.up"
+            "ui.touch.up": "ui.move.up",
+            "ui.style.transition": "none",
+            "ui.class.transition": true
         });
-        me.core.property.set(object, "ui.style.transition", "none");
     };
     me.move = function (object, event) {
         var type = object.move_type;
-        var target_region = me.ui.rect.absoluteRegion(me.info.target);
-        var shift_region = {};
-        me.ui.rect.emptyRegion(shift_region);
+        var regionMethod = me.info.target.move_relative ? me.ui.rect.relativeRegion : me.ui.rect.absoluteRegion;
+        var target_region = regionMethod(me.info.target);
         target_region.left = event.clientX - me.info.left;
         target_region.top = event.clientY - me.info.top;
         me.ui.rect.setAbsoluteRegion(me.info.target, target_region);
@@ -89,6 +98,8 @@ screens.ui.move = function UIMove(me) {
         me.core.property.set(object, {
             "ui.touch.move": null,
             "ui.touch.up": null,
+            "ui.class.transition": false,
+            "ui.style.transition": ""
         });
         me.core.property.set(me.info.target, "ui.property.broadcast", {
             "transition": false
@@ -99,7 +110,6 @@ screens.ui.move = function UIMove(me) {
         if (type === "window") {
             me.snap(object, false);
         }
-        me.core.property.set(object, "ui.style.transition", "");
     };
     me.snap = function (object, signalOnly) {
         var window = me.widget.window.get(object);

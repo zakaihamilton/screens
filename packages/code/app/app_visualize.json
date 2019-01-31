@@ -54,7 +54,8 @@
                                     "ui.class.class": "app.visualize.term",
                                     "ui.move.extend": "this",
                                     "ui.move.enabled": true,
-                                    "ui.move.method": "app.visualize.moveTerm"
+                                    "ui.move.method": "app.visualize.moveTerm",
+                                    "ui.move.relative": true
                                 },
                                 "ui.data.values": [
                                     "ui.param.terms"

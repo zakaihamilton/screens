@@ -29,12 +29,15 @@
     padding: 1em;
     text-align: center;
     vertical-align: middle;
-    box-sizing: border-box;
     position: absolute;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
     transition: all 1s;
     touch-action: none;
+}
+
+.app-visualize-term.transition {
+    z-index: 1000;
 }
 
 .app-visualize-term:not(.mobile):hover {
