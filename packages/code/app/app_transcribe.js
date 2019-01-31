@@ -121,15 +121,15 @@ screens.app.transcribe = function AppTranscribe(me) {
     };
     me.loadTranscription = async function (object) {
         var window = me.widget.window.get(object);
-        var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
-        var transcription = await me.media.speech.load(path);
+        var { local } = await me.media.file.paths(window.options.groupName, window.options.sessionName);
+        var transcription = await me.media.speech.load(local);
         window.transcribe_text = transcription;
         me.updateTable(window);
     };
     me.saveTranscription = async function (object) {
         var window = me.widget.window.get(object);
-        var path = await me.media.file.path(window.options.groupName, window.options.sessionName);
-        await me.media.speech.save(path, window.transcribe_text);
+        var { local } = await me.media.file.paths(window.options.groupName, window.options.sessionName);
+        await me.media.speech.save(local, window.transcribe_text);
     };
     me.updateTable = function (object) {
         var window = me.widget.window.get(object);
