@@ -60,6 +60,10 @@ screens.widget.menu = function WidgetMenu(me) {
                     items = items.sort();
                 }
             }
+            if (info.reverse) {
+                items = Array.from(items);
+                items.reverse();
+            }
             var first = true;
             items = items.map(function (item) {
                 var title = item;

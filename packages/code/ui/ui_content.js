@@ -146,6 +146,8 @@ screens.ui.content = function UIContent(me) {
                 list: me.content.publicList,
                 property: "title",
                 group: "public",
+                reverse: true,
+                sort: true,
                 itemMethod: me.content.import
             };
             return me.widget.menu.collect(object, info);
@@ -155,6 +157,8 @@ screens.ui.content = function UIContent(me) {
                 list: me.content.privateList,
                 property: "title",
                 group: "private",
+                reverse: true,
+                sort: true,
                 itemMethod: me.content.importPrivate
             };
             return me.widget.menu.collect(object, info);
