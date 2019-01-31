@@ -113,7 +113,7 @@ screens.media.file = function MediaFile(me) {
     };
     me.updateListing = async function () {
         me.log("updateListing");
-        var listing = await me.listing("/Kab/concepts/private/American", true);
+        var listing = await me.listing("American", true);
         listing = listing.filter(item => {
             return me.core.path.extension(item.name) === "m4a";
         });
