@@ -4,6 +4,9 @@
  */
 
 screens.app.launcher = function AppLauncher(me) {
+    me.init = async function () {
+        await me.ui.image.preload("packages/res/icons");
+    };
     me.launch = async function () {
         let config = await me.core.util.config();
         var params = {
