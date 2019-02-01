@@ -230,7 +230,11 @@ screens.app.visualize = function AppVisualize(me) {
     };
     me.updateCurrentElement = async function (object, update) {
         var window = me.widget.window.get(object);
-        if (!window.termInput) {
+        var text = window.termInput;
+        if (text) {
+            text = text.trim();
+        }
+        if (!text) {
             if (window.currentElement) {
                 me.core.property.set(window.currentElement, "ui.node.parent");
                 window.currentElement = null;
@@ -253,14 +257,18 @@ screens.app.visualize = function AppVisualize(me) {
         top -= region.height / 2;
         me.moveElement(element, left, top);
     };
-    me.keyPress = async function (object, event) {
+    me.keyPress = function (object, event) {
         var window = me.widget.window.get(object);
         var text = String.fromCharCode(event.charCode);
+        event.stopPropagation();
         if (!window.termInput) {
             window.termInput = "";
         }
         if (event.charCode === 13) {
             text = " ";
+        }
+        if (!window.termInput && text === " ") {
+            return;
         }
         window.termInput += text;
         if (window.updateTimer) {
@@ -270,8 +278,9 @@ screens.app.visualize = function AppVisualize(me) {
             me.updateCurrentElement(object, true);
         }, 250);
     };
-    me.keyUp = async function (object, event) {
+    me.keyUp = function (object, event) {
         var window = me.widget.window.get(object);
+        event.stopPropagation();
         if (!window.termInput) {
             window.termInput = "";
         }
@@ -282,10 +291,13 @@ screens.app.visualize = function AppVisualize(me) {
     };
     me.touchMove = function (object, event) {
         var window = me.widget.window.get(object);
-        var target_region = me.ui.rect.absoluteRegion(window.var.terms);
+        var widget = window.var.terms;
+        var target_region = me.ui.rect.relativeRegion(widget);
+        var left = event.clientX - target_region.left + widget.scrollLeft;
+        var top = event.clientY - target_region.top + widget.scrollTop;
         window.termPos = {
-            left: event.clientX - target_region.left,
-            top: event.clientY - target_region.top
+            left,
+            top
         };
         me.updateCurrentElement(object);
     };
@@ -293,7 +305,8 @@ screens.app.visualize = function AppVisualize(me) {
         var { left, top, target } = me.ui.move.info;
         var x = event.clientX - left;
         var y = event.clientY - top;
-        me.moveElement(target, x, y);
+        var emSpace = parseInt(me.ui.basic.pixelsToEm(target.parentNode, 1));
+        me.moveElement(target, x, y - (emSpace * 2));
     };
     me.moveElement = function (object, x, y) {
         var emX = parseInt(me.ui.basic.pixelsToEm(object.parentNode, x));
