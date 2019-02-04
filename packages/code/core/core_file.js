@@ -92,6 +92,21 @@ screens.core.file = function CoreFile(me) {
             await me.makeDir(mkdirPath);
         }
     };
+    me.iterate = async function (path, recursive, callback) {
+        var names = await me.readDir(path);
+        for (var name of names) {
+            if (recursive) {
+                var isDirectory = await me.isDirectory(path + "/" + name);
+                if (isDirectory) {
+                    me.iterate(path + "/" + name, true, callback);
+                    continue;
+                }
+            }
+            if (callback) {
+                await callback(path + "/" + name);
+            }
+        }
+    };
     me.readDir = function (path) {
         path = me.path(path);
         return new Promise((resolve, reject) => {

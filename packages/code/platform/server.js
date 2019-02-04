@@ -79,7 +79,8 @@ screens.include({
         "string",
         "session",
         "object",
-        "task"
+        "task",
+        "pack"
     ],
     "storage": [
         "file",
