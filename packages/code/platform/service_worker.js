@@ -8,6 +8,6 @@ screens.include({
         "cache"
     ]
 }).then(async () => {
-    screens.log("service worker started at: __date__");
+    screens.log("service worker started");
     await screens.core.startup.run();
 });

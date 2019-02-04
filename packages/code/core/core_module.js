@@ -77,8 +77,7 @@ screens.core.module = function CoreModule(me) {
         var data = await me.loadTextFile(filePath);
         var vars = {
             "target_platform": target_platform || "",
-            "source_platform": source_platform || "",
-            "date": new Date().toString()
+            "source_platform": source_platform || ""
         };
         var extensions = { json: false, html: true };
         var extFilePath = filePath;
@@ -262,6 +261,10 @@ screens.core.module = function CoreModule(me) {
                 }
                 if (info.url.startsWith("/custom/")) {
                     return;
+                }
+                if (info.url === "/scripts.js") {
+                    info["content-type"] = "application/javascript";
+                    info.body = await me.core.pack.collect("packages/code", "browser", ["json", "js"]);
                 }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {
                     params.startupApp = info.url.substring(1);

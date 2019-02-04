@@ -7,9 +7,9 @@ screens.core.pack = function CorePack(me) {
     me.init = function () {
 
     };
-    me.collect = async function (rootPath, platformFilter, extFilter) {
+    me.collect = async function (rootPath, target, extFilter) {
         var body = "";
-        await me.iterate(rootPath, true, async (path) => {
+        await me.core.file.iterate(rootPath, true, async (path) => {
             var ext = me.core.path.extension(path);
             var fileName = me.core.path.fileName(path);
             if (extFilter && !extFilter.includes(ext)) {
@@ -17,9 +17,6 @@ screens.core.pack = function CorePack(me) {
             }
             var [package, component, platform] = fileName.split("_");
             if (!package || !component) {
-                return;
-            }
-            if (platform && platformFilter && !platformFilter.includes(platform)) {
                 return;
             }
             var data = await me.core.file.readFile(path, "utf8");
@@ -30,6 +27,7 @@ screens.core.pack = function CorePack(me) {
                     package,
                     component,
                     platform,
+                    target,
                     ext
                 };
                 var result = await handler(info, data);
@@ -41,6 +39,18 @@ screens.core.pack = function CorePack(me) {
                 body += data;
             }
         });
+        return body;
+    };
+    me.js = function (info, data) {
+        var body = "";
+        if (info.platform && info.platform !== info.target) {
+            body = `screens.${info.package}.${info.component} = function (me) {
+                return "${info.platform}";
+            };`;
+        }
+        else {
+            body = data;
+        }
         return body;
     };
     me.json = function (info, data) {
