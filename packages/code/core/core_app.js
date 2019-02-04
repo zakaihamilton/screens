@@ -5,11 +5,22 @@
 
 screens.core.app = function CoreApp(me) {
     me.init = function () {
-        me.core.listener.register(me.ready, me.core.login.id);
+        me.core.listener.register(me.sendReady, me.core.login.id);
     };
-    me.ready = async function () {
+    me.sendReady = async function () {
         if (!me.list) {
             me.list = await me.user.access.appList();
+        }
+        for (var name of screens.components) {
+            if (!(name.includes("app."))) {
+                return null;
+            }
+            try {
+                await me.core.message.send(name + ".ready");
+            }
+            catch (err) {
+                console.error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
+            }
         }
     };
     me.available = function (name) {

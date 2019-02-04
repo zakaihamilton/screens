@@ -4,6 +4,10 @@
  */
 
 screens.startup.app = function StartupApp(me) {
+    me.init = function () {
+        me.core.startup.register(me);
+        me.core.listener.register(me.ready, me.core.login.id);
+    };
     me.run = async function () {
         me.ui.element.create([
             {
@@ -19,22 +23,22 @@ screens.startup.app = function StartupApp(me) {
             await me.core.login.load();
         }
         catch (err) {
-            document.body.innerHTML = __html__.replace("__error__", err.message || err);
+            document.body.innerHTML = me.html.replace("__error__", err.message || err);
             throw err;
         }
         finally {
             me.core.property.set(progress, "close");
         }
-        if (me.core.login.isSignedIn()) {
-            me.start();
-        }
-        else {
+        if (!me.core.login.isSignedIn()) {
             var window = await me.core.app.launch("login", true);
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);
                 me.core.property.set(window, "widget.window.maximize");
             }
         }
+    };
+    me.ready = async function () {
+        await me.start();
     };
     me.start = async function () {
         var app = me.core.startup.app;
@@ -56,4 +60,5 @@ screens.startup.app = function StartupApp(me) {
             }
         }
     };
+    return "browser";
 };

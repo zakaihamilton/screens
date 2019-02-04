@@ -4,26 +4,26 @@
  */
 
 screens.widget.window = function WidgetWindow(me) {
-    me.element = {
-        dependencies: {
-            properties: ["title"]
-        },
-        extend: ["ui.focus"],
-        redirect: {
-            "ui.basic.text": "text",
-            "ui.style.background": "background",
-            "ui.basic.elements": "elements",
-            "ui.basic.html": "html"
-        },
-        draw: function (object) {
-            if (!object.delayTimer) {
-                me.core.property.set(object, "ui.focus.active", !object.showInBackground);
-            }
-            me.core.property.set(object, "update");
-        },
-        properties: __json__
-    };
     me.init = function () {
+        me.element = {
+            dependencies: {
+                properties: ["title"]
+            },
+            extend: ["ui.focus"],
+            redirect: {
+                "ui.basic.text": "text",
+                "ui.style.background": "background",
+                "ui.basic.elements": "elements",
+                "ui.basic.html": "html"
+            },
+            draw: function (object) {
+                if (!object.delayTimer) {
+                    me.core.property.set(object, "ui.focus.active", !object.showInBackground);
+                }
+                me.core.property.set(object, "update");
+            },
+            properties: me.json
+        };
         me.ui.property.themedProperties(me, {
             "popup": null,
             "embed": function (object, value) {

@@ -12,7 +12,7 @@ screens.app.login = function AppLogin(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.autoLogin = args.length ? args[0] : false;
         me.signin();
         return me.singleton;

@@ -24,15 +24,18 @@ function screens_setup(package_name, component_name, child_name, node) {
     if (node && node.id) {
         return [];
     }
+    if (typeof node !== "function") {
+        if (child_name) {
+            screens[package_name][component_name][child_name] = node;
+        }
+        return;
+    }
     var component_obj = Object.assign({}, screens, { id });
     if (child_name) {
         screens[package_name][component_name][child_name] = component_obj;
         component_obj.upper = screens[package_name][component_name];
     } else {
         screens[package_name][component_name] = component_obj;
-    }
-    if (typeof node !== "function") {
-        throw "Component " + id + " cannot be loaded stack: " + new Error().stack;
     }
     var constructor = node;
     var platform = constructor(component_obj, child_name);
@@ -74,7 +77,7 @@ function screens_setup(package_name, component_name, child_name, node) {
             }
             return result;
         };
-        init = { callback: component_obj.init, args: [component_obj] };
+        init = { callback: component_obj.init, args: [component_obj], package_name, component_name, child_name };
     }
     component_obj.require = platform;
     screens.components.push(id);
@@ -111,7 +114,7 @@ async function screens_init(items) {
                             error = { message: "Unknown error" };
                         }
                         var message = error.message || error;
-                        console.error(screens.platform + ": Failed to initialise component: " + item.package_name + "." + item.component_name + " with error: " + message + " stack: " + err.stack);
+                        console.error(screens.platform + ": Failed to initialise component: " + init.package_name + "." + init.component_name + " with error: " + message + " stack: " + err.stack);
                     }
                 }
             } while (init);
@@ -229,10 +232,6 @@ function screens_load(items, state) {
                     console.log(screens.platform + ": Loading " + path);
                     var promises = items[0].promises = [];
                     promises.push(screens_import(path));
-                    var firstItem = items[0];
-                    if (firstItem.component_name === "*" && screens.platform === "browser") {
-                        promises.push(screens_import(path.replace(/\.js/gi, ".css"), true));
-                    }
                 }
                 else if (state === "setup") {
                     var firstItem = items[0];
@@ -308,6 +307,20 @@ function screens_browse(path) {
     }
 }
 
+async function screens_require(items) {
+    var inits = [];
+    if (screens.platform === "server") {
+        for (let item of items) {
+            require(item.module);
+        }
+    }
+    for (let item of items) {
+        inits.push(...await screens_setup(item.package, item.component));
+    }
+    inits = inits.filter(Boolean);
+    await screens_init([{ initializers: inits }]);
+}
+
 var screens = {
     components: [],
     imports: [],
@@ -316,6 +329,7 @@ var screens = {
     include: screens_include,
     import: screens_import,
     browse: screens_browse,
+    require: screens_require,
     log: (message, componentId, userName) => {
         screens.core.console.log.call(this, message, componentId, userName);
     },
@@ -327,6 +341,4 @@ var screens = {
 if (screens.platform === "server" ||
     screens.platform === "service") {
     global.screens = screens;
-    global.__json__ = {};
-    global.__html__ = {};
 }

@@ -87,7 +87,6 @@
             ]
         }
     ],
-    "ui.class.load": "app.logger",
     "ui.basic.html": "@app.logger.html",
     "ui.property.after": {
         "storage.local.key": "app-logger-window",

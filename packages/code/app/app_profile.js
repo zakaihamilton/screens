@@ -4,7 +4,7 @@
  */
 
 screens.app.profile = function AppProfile(me) {
-    me.init = async function () {
+    me.ready = async function () {
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
         me.userList = await me.user.profile.list();
     };
@@ -13,7 +13,7 @@ screens.app.profile = function AppProfile(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", null);
+        me.singleton = me.ui.element.create(me.json, "workspace", "self", null);
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);
@@ -23,9 +23,6 @@ screens.app.profile = function AppProfile(me) {
         me.ui.options.choiceSet(me, null, {
             "userName": me.updateUser
         });
-    };
-    me.html = function () {
-        return __html__;
     };
     me.phases = {
         Unformed: 1,

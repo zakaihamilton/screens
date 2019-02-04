@@ -5,9 +5,7 @@
 
 screens.modal.progress = function ModalProgress(me) {
     me.launch = function (args) {
-        var json = __json__;
-        var params = args[0];
-        return me.ui.element.create(json, "workspace", "self", params);
+        return me.ui.element.create(me.json, "workspace", "self", args[0]);
     };
     me.specific = function (object, data) {
         var window = me.widget.window.get(object);

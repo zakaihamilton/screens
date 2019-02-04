@@ -11,18 +11,18 @@ screens.storage.data = function StorageData(me) {
         me.projectId = keys.project_id;
     };
     me.getService = function () {
-        if (me.service) {
-            return me.service;
+        if (me.handle) {
+            return me.handle;
         }
         if (!me.datastore) {
             me.log_error("Datastore not initialized");
             return null;
         }
-        me.service = me.datastore({
+        me.handle = me.datastore({
             projectId: me.projectId,
             keyFilename: me.core.private.path("google")
         });
-        return me.service;
+        return me.handle;
     };
     me.toDataStore = function (json, nonIndexed, user) {
         nonIndexed = nonIndexed || [];

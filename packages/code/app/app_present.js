@@ -4,7 +4,7 @@
  */
 
 screens.app.present = function AppPresent(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.content.attach(me);
         await me.ui.shared.attach(me);
     };
@@ -21,7 +21,7 @@ screens.app.present = function AppPresent(me) {
             [params.text, params.title] = await me.content.get(args[0]);
             params.resetUser = true;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
+        me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
         if (typeof args[0] === "string") {
             await me.content.associated.update(me.singleton, params.title);
         }

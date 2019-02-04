@@ -4,11 +4,10 @@
  */
 
 screens.widget.transform = function WidgetTransform(me) {
-    me.element = {
-        properties: __json__
-    };
-    me.html = function () {
-        return __html__;
+    me.init = function () {
+        me.element = {
+            properties: me.json
+        };
     };
     me.initOptions = function (object) {
         var widget = me.findWidget(object);
@@ -88,7 +87,6 @@ screens.widget.transform = function WidgetTransform(me) {
             scrollPos: null,
             commentaryUser: me.transform
         });
-        me.ui.class.useStylesheet("kab");
     };
     me.findWidget = function (object) {
         var widget = me.ui.node.container(object, me.id);

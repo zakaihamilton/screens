@@ -52,4 +52,5 @@ screens.ui.link = function UILink(me) {
 
         return false;
     };
+    return "browser";
 };

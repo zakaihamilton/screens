@@ -10,7 +10,7 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self", params);
+        me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.init = async function () {
         var promises = [];
@@ -19,11 +19,13 @@ screens.app.library = function AppLibrary(me) {
         promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
         await Promise.all(promises);
         await me.core.require.load(["/external/jsgrid-1.5.3/jsgrid.min.js"]);
+        me.core.property.link("widget.transform.clear", "app.library.clear", true);
+        me.searchCounter = 0;
+    };
+    me.ready = async function () {
         me.tagList = await me.core.message.send_server("core.cache.use",
             me.id,
             "db.library.tags.list");
-        me.core.property.link("widget.transform.clear", "app.library.clear", true);
-        me.searchCounter = 0;
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);

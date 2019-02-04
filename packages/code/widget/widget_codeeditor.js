@@ -85,4 +85,5 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
             }
         }
     };
+    return "browser";
 };

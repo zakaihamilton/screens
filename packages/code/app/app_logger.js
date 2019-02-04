@@ -9,12 +9,9 @@ screens.app.logger = function AppLogger(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.singleton.isEnabled = false;
         return me.singleton;
-    };
-    me.html = function () {
-        return __html__;
     };
     me.init = function () {
         me.ui.options.load(me, null, {

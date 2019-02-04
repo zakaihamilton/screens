@@ -4,9 +4,7 @@
 */
 
 screens.core.handle = function CoreHandle(me) {
-    me.init = function () {
-        me.handles = {};
-    };
+    me.handles = {};
     me.isHandle = function (ref, type = "handle") {
         return me.core.ref.isRef(ref, type);
     };

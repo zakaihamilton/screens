@@ -9,7 +9,7 @@ screens.app.tasks = function AppTasks(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
     };
     me.tasks = {
         get: function (object) {
@@ -62,7 +62,7 @@ screens.app.tasks = function AppTasks(me) {
             var task = me.findSelectedTask(me.singleton);
             me.core.property.set(task, "widget.window.close");
             me.core.property.set(me.singleton, "widget.window.close");
-            me.singleton = me.ui.element.create(__json__, "workspace", "self");
+            me.singleton = me.ui.element.create(me.json, "workspace", "self");
         }
     };
     me.tile = {

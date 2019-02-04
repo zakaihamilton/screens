@@ -4,16 +4,18 @@
  */
 
 screens.widget.icon = function WidgetIcon(me) {
-    me.element = {
-        dependencies: {
-            properties: ["ui.basic.src", "text"]
-        },
-        redirect: {
-            "ui.basic.text": "text",
-            "ui.basic.src": "src"
-        },
-        extend: ["ui.drag.icon"],
-        properties: __json__
+    me.init = function () {
+        me.element = {
+            dependencies: {
+                properties: ["ui.basic.src", "text"]
+            },
+            redirect: {
+                "ui.basic.text": "text",
+                "ui.basic.src": "src"
+            },
+            extend: ["ui.drag.icon"],
+            properties: me.json
+        };
     };
     me.text = {
         get: function (object) {

@@ -98,7 +98,7 @@ screens.core.file = function CoreFile(me) {
             if (recursive) {
                 var isDirectory = await me.isDirectory(path + "/" + name);
                 if (isDirectory) {
-                    me.iterate(path + "/" + name, true, callback);
+                    await me.iterate(path + "/" + name, true, callback);
                     continue;
                 }
             }

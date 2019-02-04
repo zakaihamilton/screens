@@ -119,4 +119,5 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
         object.editor.insertText(offset, info.label, "link", info.url);
         object.editor.insertText(offset, "\n");
     };
+    return "browser";
 };

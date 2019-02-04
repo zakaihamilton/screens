@@ -8,19 +8,20 @@ screens.core.startup = function CoreStartup(me) {
         name: "",
         params: null
     };
+    me.registered = [];
+    me.register = function (component) {
+        me.registered.push(component);
+    };
     me.run = async function () {
-        var startup = screens["startup"];
-        if (startup) {
-            var components = Object.values(startup);
-            for (let component of components) {
-                if (component.prepare) {
-                    await component.prepare();
-                }
+        var components = me.registered;
+        for (let component of components) {
+            if (component.prepare) {
+                await component.prepare();
             }
-            for (let component of components) {
-                if (component.run) {
-                    await component.run();
-                }
+        }
+        for (let component of components) {
+            if (component.run) {
+                await component.run();
             }
         }
     };

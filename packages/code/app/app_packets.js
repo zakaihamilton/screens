@@ -9,7 +9,7 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         if (me.options.dataProfile !== "Live" && me.options.dataProfile !== "Combined") {
             me.core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
         }
@@ -37,12 +37,14 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData");
             window.dataTitle = "";
         });
+        await screens.include("lib.moment");
+    };
+    me.ready = async function () {
         me.dataList = await me.storage.data.query("app.packets.data");
         me.monitorOptions = await me.manager.packet.getMonitorOptions();
         if (!me.monitorOptions) {
             me.monitorOptions = {};
         }
-        await screens.include("lib.moment");
     };
     me.refreshDataList = {
         set: async function (object) {

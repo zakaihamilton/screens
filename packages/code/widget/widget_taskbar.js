@@ -4,8 +4,10 @@
  */
 
 screens.widget.taskbar = function WidgetTaskBar(me) {
-    me.element = {
-        properties: __json__
+    me.init = function () {
+        me.element = {
+            properties: me.json
+        };
     };
     me.tasks = function (object) {
         var window = me.widget.window.get(object);

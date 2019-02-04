@@ -213,4 +213,5 @@ screens.ui.theme = function UITheme(me) {
             me.ui.color.set(name, color);
         }
     };
+    return "browser";
 };

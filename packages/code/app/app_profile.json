@@ -8,7 +8,6 @@
         "height": "80%"
     },
     "maximize": null,
-    "ui.class.load": "app.profile",
     "ui.basic.html": "@app.profile.html",
     "ui.property.after": {
         "storage.local.key": "app-profile-window",

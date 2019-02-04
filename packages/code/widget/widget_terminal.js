@@ -4,8 +4,10 @@
  */
 
 screens.widget.terminal = function WidgetTerminal(me) {
-    me.element = {
-        properties: __json__
+    me.init = function () {
+        me.element = {
+            properties: me.json
+        };
     };
     me.timeout = 5000;
     me.sendInput = function (terminal, message, type) {

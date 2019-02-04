@@ -9,11 +9,13 @@ screens.app.transform = function AppTransform(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
     };
     me.init = async function () {
-        await me.ui.content.attach(me);
         me.core.property.link("widget.transform.clear", "app.transform.clearEvent", true);
+    };
+    me.ready = async function () {
+        await me.ui.content.attach(me);
     };
     me.initOptions = {
         set: function (object) {
@@ -31,7 +33,6 @@ screens.app.transform = function AppTransform(me) {
                 me.core.property.set(window.var.transform, "reflow");
             });
             me.core.property.set(window, "app", me);
-            me.ui.class.useStylesheet("kab");
         }
     };
     me.exportText = function (object, target) {

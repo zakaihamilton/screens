@@ -161,4 +161,5 @@ screens.core.login = function CoreLogin(me) {
             }
         }
     };
+    return "browser";
 };

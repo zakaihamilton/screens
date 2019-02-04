@@ -4,7 +4,7 @@
  */
 
 screens.app.zoom = function AppZoom(me) {
-    me.init = async function () {
+    me.ready = async function () {
         me.meetingInfo = await me.lib.zoom.meetingInfo();
     };
     me.launch = function () {
@@ -12,7 +12,7 @@ screens.app.zoom = function AppZoom(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         return me.singleton;
     };
     me.joinUrl = function () {

@@ -4,14 +4,14 @@
  */
 
 screens.app.prism = function AppPrism(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (!args) {
             args = [""];
         }
-        var window = me.ui.element.create(__json__, "workspace", "self");
+        var window = me.ui.element.create(me.json, "workspace", "self");
         return window;
     };
     me.initOptions = {
@@ -45,7 +45,6 @@ screens.app.prism = function AppPrism(me) {
                     me.core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.ui.class.useStylesheet("kab");
             me.core.property.set(window, "app", me);
             me.resize(window);
         }

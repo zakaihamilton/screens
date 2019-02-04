@@ -198,7 +198,7 @@ screens.core.message = function CoreMessage(me) {
         if (typeof callback === "function") {
             result = callback.apply(this, args);
             return result;
-        } else {
+        } else if (typeof callback !== "undefined") {
             me.log("callback for " + path + " is not a function but rather " + JSON.stringify(callback));
         }
     };

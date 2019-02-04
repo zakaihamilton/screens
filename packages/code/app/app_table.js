@@ -4,7 +4,7 @@
  */
 
 screens.app.table = function AppTable(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.content.attach(me);
         await me.ui.transform.attach(me);
     };
@@ -12,7 +12,7 @@ screens.app.table = function AppTable(me) {
         if (!args) {
             args = [""];
         }
-        var window = me.ui.element.create(__json__, "workspace", "self");
+        var window = me.ui.element.create(me.json, "workspace", "self");
         if (typeof args[0] === "string") {
             me.content.import(window, args[0], args[1]);
         }
@@ -40,7 +40,6 @@ screens.app.table = function AppTable(me) {
                     me.core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.ui.class.useStylesheet("kab");
             window.rowCount = 20;
             window.columnCount = 10;
             me.core.property.set(window, "app", me);

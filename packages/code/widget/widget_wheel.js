@@ -104,4 +104,5 @@ screens.widget.wheel = function WidgetWheel(me) {
         }
         object.ignore_handler = false;
     };
+    return "browser";
 };

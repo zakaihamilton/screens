@@ -9,6 +9,8 @@ screens.app.diagram = function AppDiagram(me) {
             "core.property.object.path": null,
             "core.property.object.diagramData": null
         });
+    };
+    me.ready = async function () {
         await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
@@ -16,7 +18,7 @@ screens.app.diagram = function AppDiagram(me) {
             args = [""];
         }
         var path = me.fullPath(args[0]);
-        var json = __json__;
+        var json = me.json;
         var parent = "workspace";
         var params = null;
         json["app.diagram.path"] = path;
@@ -54,7 +56,6 @@ screens.app.diagram = function AppDiagram(me) {
                     me.core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.ui.class.useStylesheet("kab");
         }
     };
     me.reload = async function (object) {

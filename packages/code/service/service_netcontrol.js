@@ -104,4 +104,5 @@ screens.service.netcontrol = function ServiceNetControl(me) {
             }
         }
     };
+    return "service";
 };

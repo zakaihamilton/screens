@@ -5,7 +5,7 @@
 
 screens.app.propagate = function AppPropagate(me) {
     me.scriptsDir = "packages/res/scripts";
-    me.init = async function () {
+    me.ready = async function () {
         me.scriptList = await me.core.file.readDir(me.scriptsDir);
     };
     me.launch = function () {
@@ -13,7 +13,7 @@ screens.app.propagate = function AppPropagate(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
     };
     me.initOptions = async function (object) {
         var window = me.widget.window.get(object);

@@ -4,6 +4,9 @@
  */
 
 screens.startup.version = function StartupVersion(me) {
+    me.init = function () {
+        me.core.startup.register(me);
+    };
     me.prepare = async function () {
         if (me.platform === "server") {
             me.log("retrieving version information");

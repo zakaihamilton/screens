@@ -4,7 +4,7 @@
  */
 
 screens.app.theme = function AppTheme(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.theme.updateList();
     };
     me.launch = function () {
@@ -12,7 +12,7 @@ screens.app.theme = function AppTheme(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         var current_theme = me.core.property.get(me.singleton, "ui.theme.theme");
         if (typeof current_theme === "string") {
             current_theme = current_theme.charAt(0).toUpperCase() + current_theme.slice(1);

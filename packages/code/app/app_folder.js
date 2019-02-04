@@ -16,7 +16,7 @@ screens.app.folder = function AppFolder(me) {
             title,
             items
         };
-        return me.ui.element.create(__json__, "workspace", "self", params);
+        return me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.resIcon = async function (object, info) {
         me.core.property.set(object, "text", info.name);

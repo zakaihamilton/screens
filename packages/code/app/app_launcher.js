@@ -4,7 +4,7 @@
  */
 
 screens.app.launcher = function AppLauncher(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.image.preload("packages/res/icons");
     };
     me.launch = async function () {
@@ -12,10 +12,7 @@ screens.app.launcher = function AppLauncher(me) {
         var params = {
             version: config.version
         };
-        return me.ui.element.create(__json__, "workspace", "self", params);
-    };
-    me.html = function () {
-        return __html__;
+        return me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.resIcon = function (object, value) {
         var name = null, extension = null, label = null;

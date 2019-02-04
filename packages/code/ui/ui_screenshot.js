@@ -20,4 +20,5 @@ screens.ui.screenshot = function UIScreenshot(me) {
             document.body.removeChild(link);
         });
     };
+    return "browser";
 };

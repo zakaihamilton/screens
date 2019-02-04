@@ -68,4 +68,5 @@ screens.service.httpserver = function HttpServer(me) {
             }
         }
     };
+    return "service";
 };

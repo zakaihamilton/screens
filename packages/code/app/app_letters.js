@@ -4,7 +4,7 @@
  */
 
 screens.app.letters = function AppGematria(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.content.attach(me);
     };
     me.launch = function (args) {
@@ -15,7 +15,7 @@ screens.app.letters = function AppGematria(me) {
             }
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.initOptions(me.singleton);
         me.updateLetters(me.singleton);
         if (typeof args[0] === "string") {

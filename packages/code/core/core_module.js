@@ -262,9 +262,16 @@ screens.core.module = function CoreModule(me) {
                 if (info.url.startsWith("/custom/")) {
                     return;
                 }
-                if (info.url === "/scripts.js") {
+                if (info.url.startsWith("/platform/")) {
+                    var platform = info.url.split("/").pop().split(".")[0];
                     info["content-type"] = "application/javascript";
-                    info.body = await me.core.pack.collect("packages/code", "browser", ["json", "js"]);
+                    info.body = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"]);
+                    return;
+                }
+                if (info.url === "/screens.css") {
+                    info["content-type"] = "text/css";
+                    info.body = await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"]);
+                    return;
                 }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {
                     params.startupApp = info.url.substring(1);

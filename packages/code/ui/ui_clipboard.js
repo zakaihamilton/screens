@@ -45,4 +45,5 @@ screens.ui.clipboard = function UIClipboard(me) {
     me.importData = function (object, text) {
         me.copy(text);
     };
+    return "browser";
 };

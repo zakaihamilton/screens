@@ -4,7 +4,7 @@
  */
 
 screens.app.transcribe = function AppTranscribe(me) {
-    me.init = async function () {
+    me.ready = async function () {
         me.groups = await me.media.file.groups();
     };
     me.launch = async function (args) {
@@ -14,7 +14,7 @@ screens.app.transcribe = function AppTranscribe(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.singleton.args = args;
         return me.singleton;
     };

@@ -11,13 +11,13 @@ screens.storage.file = function StorageFile(me) {
         me.https = require('https');
     };
     me.getService = async function () {
-        if (me.service) {
-            return me.service;
+        if (me.handle) {
+            return me.handle;
         }
         var fetch = require("isomorphic-fetch");
         var keys = await me.core.private.keys("dropbox");
-        me.service = new me.dropbox({ accessToken: keys['access-token'], fetch: fetch });
-        return me.service;
+        me.handle = new me.dropbox({ accessToken: keys['access-token'], fetch: fetch });
+        return me.handle;
     };
     me.fixPath = function (path) {
         if (path === "/") {

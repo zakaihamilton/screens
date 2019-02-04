@@ -164,4 +164,5 @@ screens.ui.touch = function UITouch(me) {
             me.core.event.register(me.handle, object, "contextmenu", value);
         }
     };
+    return "browser";
 };

@@ -5,14 +5,14 @@
 
 screens.app.links = function AppLinks(me) {
     me.maxLinkCount = 20;
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.content.attach(me);
     };
     me.launch = function (args) {
         if (!args) {
             args = [""];
         }
-        var window = me.ui.element.create(__json__, "workspace", "self");
+        var window = me.ui.element.create(me.json, "workspace", "self");
         if (typeof args[0] === "string") {
             me.content.import(window, args[0], args[1]);
         }

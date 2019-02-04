@@ -4,7 +4,7 @@
  */
 
 screens.app.visualize = function AppVisualize(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.content.attach(me);
         await me.ui.transform.attach(me);
     };
@@ -15,7 +15,7 @@ screens.app.visualize = function AppVisualize(me) {
         if (!args) {
             args = [""];
         }
-        var json = __json__;
+        var json = me.json;
         var params = args[0];
         if (params && params.fullscreen) {
             json["widget.window.fullscreen"] = null;
@@ -47,7 +47,6 @@ screens.app.visualize = function AppVisualize(me) {
                     me.core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.ui.class.useStylesheet("kab");
             me.core.property.set(window, "app", me);
         }
     };

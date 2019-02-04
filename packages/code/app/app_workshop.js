@@ -4,7 +4,7 @@
  */
 
 screens.app.workshop = function AppWorkshop(me) {
-    me.init = async function () {
+    me.ready = async function () {
         await me.ui.shared.attach(me);
     };
     me.launch = async function () {
@@ -12,7 +12,7 @@ screens.app.workshop = function AppWorkshop(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         await me.prepare(me.singleton);
         return me.singleton;
     };

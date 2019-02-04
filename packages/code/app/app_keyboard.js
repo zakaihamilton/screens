@@ -14,7 +14,7 @@ screens.app.keyboard = function AppKeyboard(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
-        me.singleton = me.ui.element.create(__json__, "workspace", "self");
+        me.singleton = me.ui.element.create(me.json, "workspace", "self");
         return me.singleton;
     };
     me.click = function (object) {

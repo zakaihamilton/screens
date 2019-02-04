@@ -245,4 +245,5 @@ screens.ui.element = function UIElement(me) {
         }
         return object;
     };
+    return "browser";
 };

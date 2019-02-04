@@ -197,5 +197,6 @@ screens.service.netmonitor = function ServiceNetMonitor(me) {
     };
     me.newRun = function () {
         me.runIndex++;
-    }
+    };
+    return "service";
 };
