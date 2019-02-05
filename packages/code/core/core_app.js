@@ -20,7 +20,7 @@ screens.core.app = function CoreApp(me) {
                 continue;
             }
             me.core.property.set(progress, "name", me.core.string.title(name.split(".").pop()));
-            me.core.util.performance(name + ".ready", async () => {
+            await me.core.util.performance(name + ".ready", async () => {
                 try {
                     await me.core.message.send(name + ".ready");
                 }
