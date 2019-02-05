@@ -4,9 +4,6 @@
  */
 
 screens.widget.wheel = function WidgetWheel(me) {
-    me.init = async function () {
-        await me.core.require.load(["/external/wheelnav.js"]);
-    };
     me.element = {
         properties: {
             "ui.basic.tag": "div",

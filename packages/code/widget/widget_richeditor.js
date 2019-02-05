@@ -4,10 +4,6 @@
  */
 
 screens.widget.richeditor = function WidgetRichEditor(me) {
-    me.init = async function () {
-        me.import("/node_modules/quill/dist/quill.snow.css");
-        me.quill = await me.core.require.load(["/node_modules/quill/dist/quill.js"]);
-    };
     me.element = {
         properties: {
             "ui.basic.tag": "div",
@@ -18,7 +14,7 @@ screens.widget.richeditor = function WidgetRichEditor(me) {
         },
         create: function (object) {
             if (!object.editor) {
-                object.editor = new me.quill(object, {
+                object.editor = new Quill(object, {
                     modules: {
                         toolbar: {
                             container: [

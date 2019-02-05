@@ -42,7 +42,6 @@ screens.app.packets = function AppPackets(me) {
             me.core.property.set(window, "app.packets.refreshData");
             window.dataTitle = "";
         });
-        await screens.include("lib.moment");
     };
     me.refreshDataList = {
         set: async function (object) {

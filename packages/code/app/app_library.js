@@ -13,12 +13,6 @@ screens.app.library = function AppLibrary(me) {
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.init = async function () {
-        var promises = [];
-        promises.push(me.import("external/jsgrid-1.5.3/jsgrid.min.css"));
-        promises.push(me.import("external/jsgrid-1.5.3/jsgrid-theme.min.css"));
-        promises.push(me.import("node_modules/jquery/dist/jquery.min.js"));
-        await Promise.all(promises);
-        await me.core.require.load(["/external/jsgrid-1.5.3/jsgrid.min.js"]);
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
     };

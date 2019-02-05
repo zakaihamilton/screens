@@ -9,18 +9,22 @@ screens.db.shared = function DbShared(me) {
 
 screens.db.shared.present = function DbSharedPresent(me) {
     me.init = me.storage.db.extension;
+    return "server";
 };
 
 screens.db.shared.chat = function DbSharedChat(me) {
     me.init = me.storage.db.extension;
+    return "server";
 };
 
 screens.db.shared.envision = function DbSharedEnvision(me) {
     me.init = me.storage.db.extension;
+    return "server";
 };
 
 screens.db.shared.workshop = function DbSharedWorkshop(me) {
     me.init = me.storage.db.extension;
+    return "server";
 };
 
 screens.db.shared.highlight = function DbSharedHighlight(me) {
@@ -31,4 +35,5 @@ screens.db.shared.highlight = function DbSharedHighlight(me) {
             "hash": 1
         }
     ];
+    return "server";
 };

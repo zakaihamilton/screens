@@ -4,9 +4,6 @@
  */
 
 screens.kab.draw = function KabDraw(me) {
-    me.init = async function () {
-        await me.import("/node_modules/animate.css/animate.css");
-    };
     me.options = {
         circleMultiplier: 2.5,
         animation: true

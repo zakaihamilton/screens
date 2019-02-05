@@ -82,23 +82,12 @@ screens.widget.chart = function WidgetChart(me) {
                     object.chartInfo.type = object.chartType;
                 }
                 var context = me.core.property.get(object, "context");
-                if (!me.chart) {
-                    me.core.require.load(["/node_modules/chart.js/dist/Chart.bundle.js"]).then((chart) => {
-                        me.chart = chart;
-                        clearTimeout(object.chartTimer);
-                        object.chartTimer = setTimeout(() => {
-                            object.chart = new me.chart.Chart(context, object.chartInfo);
-                        }, 0);
-                    });
-                }
-                else {
-                    clearTimeout(object.chartTimer);
-                    object.chart = new me.chart.Chart(context, object.chartInfo);
-                }
+                clearTimeout(object.chartTimer);
+                object.chart = new Chart(context, object.chartInfo);
             }
         }
     };
     me.dateRel = function (unixTimestamp) {
-        return me.lib.moment.unix(unixTimestamp).toDate();
+        return moment.unix(unixTimestamp).toDate();
     };
 };

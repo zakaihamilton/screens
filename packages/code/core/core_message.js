@@ -234,7 +234,6 @@ screens.core.message.worker = function CoreMessageWorker(me) {
     me.init = async function () {
         if (me.platform === "browser") {
             window.module = {};
-            await me.core.require.load(["/node_modules/promise-worker-bi/dist/index.js"]);
         }
         if (me.platform === "client") {
             self.module = {};
@@ -277,9 +276,6 @@ screens.core.message.worker = function CoreMessageWorker(me) {
 
 screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
     me.init = async function () {
-        if (me.platform === "browser") {
-            me.PromiseWorker = await me.core.require.load(["/node_modules/promise-worker/dist/promise-worker.js"]);
-        }
         if (me.platform === "service_worker") {
             await me.import("/node_modules/promise-worker/dist/promise-worker.register.js");
             me.register();
@@ -305,7 +301,7 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me) {
                         navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
                     });
                 }
-                me.handle = new me.PromiseWorker(navigator.serviceWorker);
+                me.handle = new PromiseWorker(navigator.serviceWorker);
             }
             catch (err) {
                 me.log("Service worker registeration failed for path: " + path + " err: " + err);

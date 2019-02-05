@@ -4,15 +4,6 @@
  */
 
 screens.widget.codeeditor = function WidgetCodeEditor(me) {
-    me.init = async function () {
-        await me.core.require.load([
-            "/node_modules/ace-builds/src/ace.js",
-        ]);
-        await me.core.require.load([
-            "/node_modules/ace-builds/src/ext-modelist.js",
-            "/node_modules/ace-builds/src/ext-beautify.js"
-        ]);
-    };
     me.element = {
         properties: {
             "ui.basic.tag": "div",
