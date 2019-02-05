@@ -20,12 +20,14 @@ screens.core.app = function CoreApp(me) {
                 continue;
             }
             me.core.property.set(progress, "name", me.core.string.title(name.split(".").pop()));
-            try {
-                await me.core.message.send(name + ".ready");
-            }
-            catch (err) {
-                console.error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
-            }
+            me.core.util.performance(name + ".ready", async () => {
+                try {
+                    await me.core.message.send(name + ".ready");
+                }
+                catch (err) {
+                    console.error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
+                }
+            });
         }
         me.core.property.set(progress, "close");
     };
