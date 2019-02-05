@@ -4,6 +4,7 @@
  */
 
 screens.startup.app = function StartupApp(me) {
+    me.firstTime = true;
     me.init = function () {
         me.core.startup.register(me);
         me.core.listener.register(me.ready, me.core.login.id);
@@ -38,7 +39,10 @@ screens.startup.app = function StartupApp(me) {
         }
     };
     me.ready = async function () {
-        await me.start();
+        if (me.firstTime) {
+            me.firstTime = false;
+            await me.start();
+        }
     };
     me.start = async function () {
         var app = me.core.startup.app;
