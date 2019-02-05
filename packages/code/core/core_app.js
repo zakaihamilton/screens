@@ -58,8 +58,8 @@ screens.core.app = function CoreApp(me) {
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
-        result = await me.core.message.send("app." + appName + ".launch", appArgs);
         me.core.property.set(progress, "close");
+        result = await me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };
     me.singleton = function (appName) {

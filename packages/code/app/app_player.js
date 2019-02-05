@@ -17,10 +17,9 @@ screens.app.player = function AppPlayer(me) {
             }
             return me.singleton;
         }
-        var params = {};
+        var params = { args };
         if (args[3]) {
             params.showInBackground = true;
-            params.args = args;
         }
         me.groups = await me.media.file.groups();
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
