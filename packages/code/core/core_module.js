@@ -35,6 +35,12 @@ screens.core.module = function CoreModule(me) {
         return data;
     };
     me.handleStylesheet = async function (filePath, params) {
+        if (filePath.startsWith("/")) {
+            filePath = filePath.substring(1);
+        }
+        if (filePath === "screens.css") {
+            return await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"]);
+        }
         var data = await me.loadTextFile(filePath, params.optional);
         if (!data && params.optional) {
             data = "";
@@ -48,6 +54,10 @@ screens.core.module = function CoreModule(me) {
     me.handleCode = async function (filePath, params, info) {
         if (filePath.startsWith("/")) {
             filePath = filePath.substring(1);
+        }
+        if (filePath.startsWith("platform/")) {
+            var platform = filePath.split("/").pop().split(".")[0];
+            return await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"]);
         }
         var component_path = me.core.module.path_file_to_component(filePath);
         var target_platform = null;
@@ -134,9 +144,14 @@ screens.core.module = function CoreModule(me) {
         return data;
     };
     me.buildHtml = async function (html, params, info) {
+        var ignoreNextLine = false;
         var lines = html.split("\n");
         try {
             lines = lines.map(async (line) => {
+                if (ignoreNextLine) {
+                    ignoreNextLine = false;
+                    return "";
+                }
                 /* Check if to inject file */
                 var result = line.match(/\s<script\ssrc="([^"]*)"><\/script>/);
                 if (result && result.length > 1) {
@@ -147,13 +162,15 @@ screens.core.module = function CoreModule(me) {
                     let codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
                     let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional: true });
                     let codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
-                    line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</script>\n";
+                    line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</" + "script>\n";
                     let cssFilePath = filePath.replace(".js", ".css");
                     let styleContent = await me.core.module.handleMultiFiles(cssFilePath, styleParams, info);
-                    line += "<style id=\"" + cssFilePath + "\">\n" + styleContent + "\n</style>\n";
+                    line += "<style id=\"" + cssFilePath + "\">\n" + styleContent + "\n</" + "style>\n";
+                    return line;
                 }
-                result = line.match(/\s<link\srel="stylesheet"\shref="([^"]*)"><\/link>/);
+                result = line.match(/\s<link\srel="stylesheet"\shref="([^"]*)">/);
                 if (result && result.length > 1) {
+                    ignoreNextLine = true;
                     let filePath = me.core.string.trimEnd(result[1], "?");
                     if (filePath.startsWith("http")) {
                         return line;
@@ -161,6 +178,7 @@ screens.core.module = function CoreModule(me) {
                     let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css" });
                     let styleContent = await me.core.module.handleMultiFiles(filePath, styleParams, info);
                     line = "<style id=\"" + filePath + "\">\n" + styleContent + "\n</style>\n";
+                    return line;
                 }
                 return line;
             });
@@ -260,17 +278,6 @@ screens.core.module = function CoreModule(me) {
                     return;
                 }
                 if (info.url.startsWith("/custom/")) {
-                    return;
-                }
-                if (info.url.startsWith("/platform/")) {
-                    var platform = info.url.split("/").pop().split(".")[0];
-                    info["content-type"] = "application/javascript";
-                    info.body = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"]);
-                    return;
-                }
-                if (info.url === "/screens.css") {
-                    info["content-type"] = "text/css";
-                    info.body = await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"]);
                     return;
                 }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {

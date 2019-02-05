@@ -4,9 +4,6 @@
  */
 
 screens.manager.schedule = function ManagerSchedule(me) {
-    me.init = function () {
-
-    };
     me.events = async function (query) {
         var events = [];
         var { start, end } = query;

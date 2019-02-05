@@ -4,10 +4,15 @@
  */
 
 screens.app.packets = function AppPackets(me) {
-    me.launch = function (args) {
+    me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
+        }
+        me.dataList = await me.storage.data.query("app.packets.data");
+        me.monitorOptions = await me.manager.packet.getMonitorOptions();
+        if (!me.monitorOptions) {
+            me.monitorOptions = {};
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
         if (me.options.dataProfile !== "Live" && me.options.dataProfile !== "Combined") {
@@ -38,13 +43,6 @@ screens.app.packets = function AppPackets(me) {
             window.dataTitle = "";
         });
         await screens.include("lib.moment");
-    };
-    me.ready = async function () {
-        me.dataList = await me.storage.data.query("app.packets.data");
-        me.monitorOptions = await me.manager.packet.getMonitorOptions();
-        if (!me.monitorOptions) {
-            me.monitorOptions = {};
-        }
     };
     me.refreshDataList = {
         set: async function (object) {

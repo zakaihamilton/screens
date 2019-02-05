@@ -4,9 +4,6 @@
  */
 
 screens.app.transcribe = function AppTranscribe(me) {
-    me.ready = async function () {
-        me.groups = await me.media.file.groups();
-    };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;
@@ -14,6 +11,7 @@ screens.app.transcribe = function AppTranscribe(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        me.groups = await me.media.file.groups();
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
         me.singleton.args = args;
         return me.singleton;

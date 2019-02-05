@@ -46,12 +46,12 @@ screens.core.app = function CoreApp(me) {
         });
         me.log("launching app: " + appName);
         await screens.include("app." + appName);
-        me.core.property.set(progress, "close");
         var appArgs = Array.prototype.slice.call(arguments, 1);
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
+        me.core.property.set(progress, "close");
         return result;
     };
     me.singleton = function (appName) {

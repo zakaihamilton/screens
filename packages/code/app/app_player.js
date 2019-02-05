@@ -5,7 +5,6 @@
 
 screens.app.player = function AppPlayer(me) {
     me.ready = async function () {
-        me.groups = await me.media.file.groups();
         me.playerCounter = 0;
         await me.ui.content.attach(me);
     };
@@ -23,6 +22,7 @@ screens.app.player = function AppPlayer(me) {
             params.showInBackground = true;
             params.args = args;
         }
+        me.groups = await me.media.file.groups();
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
             me.singleton.resolve = resolve;

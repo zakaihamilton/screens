@@ -10,6 +10,7 @@ screens.lib.zoom = function LibZoom(me) {
         me.chance = require("chance").Chance();
         var keys = await me.core.private.keys("zoom");
         me.meetingId = keys.meetingId;
+        me._meetingInfo = null;
         me.core.property.link("core.http.receive", "lib.zoom.receive", true);
     };
     me.token = async function () {
@@ -61,9 +62,13 @@ screens.lib.zoom = function LibZoom(me) {
         });
     };
     me.meetingInfo = async function () {
-        var meetingInfo = await me.send("meetings/{meetingId}");
-        if (meetingInfo) {
-            meetingInfo = JSON.parse(meetingInfo);
+        var meetingInfo = me._meetingInfo;
+        if (!meetingInfo) {
+            meetingInfo = await me.send("meetings/{meetingId}");
+            if (meetingInfo) {
+                meetingInfo = JSON.parse(meetingInfo);
+            }
+            me._meetingInfo = meetingInfo;
         }
         return meetingInfo;
     };
