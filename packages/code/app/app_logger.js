@@ -16,15 +16,15 @@ screens.app.logger = function AppLogger(me) {
     me.init = function () {
         me.ui.options.load(me, null, {
             "source": "Browser",
-            "type": "core.console.retrieveMessages"
+            "type": "core.console.retrieveMessages",
+            "filter": ""
         });
         me.ui.options.choiceSet(me, null, {
-            "source": () => {
-                me.core.property.notify(me.singleton, "app.logger.refresh");
-            },
-            "type": () => {
-                me.core.property.notify(me.singleton, "app.logger.refresh");
-            }
+            "source": "app.logger.refresh",
+            "type": "app.logger.refresh"
+        });
+        me.ui.options.listSet(me, null, {
+            "filter": "app.logger.refresh"
         });
     };
     me.send = async function (method) {
@@ -42,19 +42,20 @@ screens.app.logger = function AppLogger(me) {
             me.send("core.console.clearMessages");
         }
     };
-    me.refresh = {
-        set: async function (object) {
-            var bindings = me.bindings(object);
-            var logger = bindings.logger;
-            me.core.property.set(logger, "ui.basic.text", "");
-            var messages = await me.send(me.options.type);
-            if (!messages) {
-                messages = [];
-            }
-            me.core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
-            var isEnabled = await me.send("core.console.isEnabled");
-            me.singleton.isEnabled = isEnabled;
+    me.refresh = async function (object) {
+        var bindings = me.bindings(object);
+        var logger = bindings.logger;
+        me.core.property.set(logger, "ui.basic.text", "");
+        var messages = await me.send(me.options.type);
+        if (!messages) {
+            messages = [];
         }
+        if (me.options.filter) {
+            messages = messages.filter(message => message.includes(me.options.filter));
+        }
+        me.core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
+        var isEnabled = await me.send("core.console.isEnabled");
+        me.singleton.isEnabled = isEnabled;
     };
     me.enable = {
         get: function () {

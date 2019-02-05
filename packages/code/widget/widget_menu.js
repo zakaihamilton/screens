@@ -663,7 +663,9 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
                         me.core.property.set(object, {
                             "ui.class.add": ["edit", "input", "inherit-font"],
                             "ui.attribute.contenteditable": true,
-                            "core.link.close": options.edit,
+                            "core.link.close": () => {
+                                me.core.property.set(object, options.edit, object.value);
+                            },
                             "ui.basic.text": value,
                             "ui.attribute.placeholder": me.core.property.get(object, "ui.basic.text")
                         });

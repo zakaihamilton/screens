@@ -201,9 +201,12 @@ screens.ui.options = function UIOptions(me) {
                 if (object && object.options) {
                     options = object.options;
                 }
+                if (options[key] == value) {
+                    return;
+                }
                 options[key] = value;
                 if (callback) {
-                    callback(object, options[key], key, options);
+                    me.core.message.send(callback, object, options[key], key, options);
                 }
                 if (storage) {
                     me.storage.local.set(me.storageKey(component, object), JSON.stringify(options));

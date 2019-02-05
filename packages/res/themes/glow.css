@@ -463,6 +463,10 @@
     color: var(--chrome-color);
 }
 
+.glow-menu-vertical input::placeholder {
+    color: var(--chrome-color);
+}
+
 .glow-menu-vertical span {
     display: block;
 }

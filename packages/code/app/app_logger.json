@@ -66,7 +66,7 @@
             ]
         },
         {
-            "text": "Type",
+            "text": "View",
             "select": [
                 {
                     "text": "All",
@@ -82,6 +82,16 @@
                     "options": {
                         "value": "core.console.retrieveErrors",
                         "state": "select"
+                    }
+                },
+                {
+                    "text": "Filter",
+                    "select": "label"
+                },
+                {
+                    "text": "Enter filter here...",
+                    "options": {
+                        "edit": "app.logger.filter"
                     }
                 }
             ]

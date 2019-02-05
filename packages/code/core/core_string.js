@@ -186,11 +186,12 @@ screens.core.string = function CoreString(me) {
         }
         return string;
     };
-    me.padNumber = function (string, size) {
+    me.padNumber = function (string, size, char = " ") {
+        string = String(string);
         var index = 0;
         for (; string[index] >= "0" && string[index] <= "9"; index++);
         var number = string.slice(0, index);
-        while (number.length < size) { number = " " + number; }
+        while (number.length < size) { number = char + number; }
         string = number + string.slice(index);
         return string;
     };

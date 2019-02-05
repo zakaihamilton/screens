@@ -197,20 +197,24 @@ screens.core.property = function CoreProperty(me) {
             object = me;
         }
         if (object && object !== me) {
-            source = me.core.property.fullname(object, source);
-            target = me.core.property.fullname(object, target);
+            if (typeof source === "string") {
+                source = me.core.property.fullname(object, source);
+            }
+            if (typeof target === "string") {
+                target = me.core.property.fullname(object, target);
+            }
         }
         var forwarding_list = object._forwarding_list;
         if (!forwarding_list) {
-            forwarding_list = {};
+            forwarding_list = new Map();
             object._forwarding_list = forwarding_list;
         }
-        var source_list = forwarding_list[source];
+        var source_list = forwarding_list.get(source);
         if (!source_list) {
-            source_list = {};
-            forwarding_list[source] = source_list;
+            source_list = new Map();
+            forwarding_list.set(source, source_list);
         }
-        source_list[target] = beforeProperty;
+        source_list.set(target, beforeProperty);
     };
     me.notify = function (object, name, value, now = false) {
         if (!object) {
@@ -296,17 +300,16 @@ screens.core.property = function CoreProperty(me) {
     me.setTo = function (list, object, name, value, beforeProperty) {
         var promises = [];
         if (list) {
-            var forwarding_list = list[name];
+            var forwarding_list = list.get(name);
             if (forwarding_list) {
-                for (var target in forwarding_list) {
-                    var propertyState = forwarding_list[target];
+                forwarding_list.forEach((propertyState, target) => {
                     if (propertyState === beforeProperty) {
                         var result = me.core.property.set(object, target, value);
                         if (result && result.then) {
                             promises.push(result);
                         }
                     }
-                }
+                });
             }
         }
         return promises;

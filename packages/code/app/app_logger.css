@@ -6,4 +6,5 @@
     position: absolute;
     resize: none;
     overflow: auto;
+    font-family: "Courier New", Courier, monospace;
 }
