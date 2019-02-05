@@ -7,6 +7,7 @@ screens.core.pack = function CorePack(me) {
     me.init = function () {
         me.postcss = require("postcss");
         me.autoprefixer = require("autoprefixer");
+        me.uglify = require("uglify-es");
     };
     me.collect = async function (rootPath, target, folderExclude, extInclude) {
         var body = "";
@@ -74,6 +75,23 @@ screens.core.pack = function CorePack(me) {
         }
         return body;
     };
+    me.minify = function (info, data) {
+        if (!me.core.util.isSecure()) {
+            return data;
+        }
+        var minify = me.uglify.minify(data, {
+            mangle: {
+                reserved: ["me"]
+            }
+        });
+        if (minify.code) {
+            data = minify.code;
+        }
+        else {
+            me.log_error("minify path: " + info.path + " error: " + minify.error);
+        }
+        return data;
+    };
     me.js = function (info, data) {
         var body = "";
         if (info.platform && info.platform !== info.target) {
@@ -82,19 +100,19 @@ screens.core.pack = function CorePack(me) {
             };`;
         }
         else {
-            body += data + "\n";
+            body += me.minify(info, data) + "\n";
         }
         return body;
     };
     me.json = function (info, data) {
         var body = `\nscreens.${info.package}.${info.component}.${info.ext} = `;
         body += data + ";\n";
-        return body;
+        return me.minify(info, body);
     };
     me.html = function (info, data) {
         var body = `\nscreens.${info.package}.${info.component}.${info.ext} = \``;
         body += data + "`;\n";
-        return body;
+        return me.minify(info, body);
     };
     me.css = async function (info, data) {
         var result = await me.postcss([me.autoprefixer]).process(data);

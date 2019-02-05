@@ -32,7 +32,6 @@ screens.core.module = function CoreModule(me) {
     };
     me.loadBinaryFile = async function (filePath) {
         var data = await me.core.file.readFile(filePath);
-        me.log("serving binary file: " + filePath);
         return data;
     };
     me.handleStylesheet = async function (filePath, params) {
@@ -194,7 +193,7 @@ screens.core.module = function CoreModule(me) {
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
             var data = me.cache[filePath];
-            if (!data) {
+            if (!data || !me.core.util.isSecure()) {
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
             }

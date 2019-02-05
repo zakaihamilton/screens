@@ -28,7 +28,7 @@ function screens_setup(package_name, component_name, child_name, node) {
         if (child_name) {
             screens[package_name][component_name][child_name] = node;
         }
-        return;
+        return [];
     }
     var component_obj = Object.assign({}, screens, { id });
     if (child_name) {
@@ -315,7 +315,8 @@ async function screens_require(items) {
         }
     }
     for (let item of items) {
-        inits.push(...await screens_setup(item.package, item.component));
+        var init = await screens_setup(item.package, item.component);
+        inits.push(...init);
     }
     inits = inits.filter(Boolean);
     await screens_init([{ initializers: inits }]);
