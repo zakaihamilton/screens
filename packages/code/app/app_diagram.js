@@ -9,8 +9,6 @@ screens.app.diagram = function AppDiagram(me) {
             "core.property.object.path": null,
             "core.property.object.diagramData": null
         });
-    };
-    me.ready = async function () {
         await me.ui.transform.attach(me);
     };
     me.launch = function (args) {

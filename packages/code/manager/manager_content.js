@@ -5,6 +5,11 @@
 
 screens.manager.content = function ManagerContent(me) {
     me._list = {};
+    me.lists = async function (componentId, userId) {
+        var publicList = await me.manager.content.list(componentId, false, userId);
+        var privateList = await me.manager.content.list(componentId, true, userId);
+        return { publicList, privateList };
+    };
     me.list = async function (componentId, private, userId) {
         var kind = componentId + ".content";
         if (private) {

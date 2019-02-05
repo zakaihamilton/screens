@@ -5,14 +5,12 @@
 
 screens.app.propagate = function AppPropagate(me) {
     me.scriptsDir = "packages/res/scripts";
-    me.ready = async function () {
-        me.scriptList = await me.core.file.readDir(me.scriptsDir);
-    };
-    me.launch = function () {
+    me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        me.scriptList = await me.core.file.readDir(me.scriptsDir);
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
     };
     me.initOptions = async function (object) {

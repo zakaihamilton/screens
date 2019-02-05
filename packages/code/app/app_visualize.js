@@ -4,9 +4,11 @@
  */
 
 screens.app.visualize = function AppVisualize(me) {
+    me.init = async function () {
+        await me.ui.transform.attach(me);
+    };
     me.ready = async function () {
         await me.ui.content.attach(me);
-        await me.ui.transform.attach(me);
     };
     me.launch = function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {

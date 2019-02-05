@@ -6,7 +6,7 @@
 screens.ui.content = function UIContent(me) {
     me.content = {
         init: async function () {
-            await me.content.update();
+            me.content.update();
         },
         info: function (window) {
             if (!window.content) {
@@ -94,8 +94,7 @@ screens.ui.content = function UIContent(me) {
             ];
         },
         update: async function () {
-            me.content.publicList = await me.manager.content.list(me.id);
-            me.content.privateList = await me.manager.content.list(me.id, true);
+            Object.assign(me.content, await me.manager.content.lists(me.id));
         },
         refresh: {
             set: async function (object) {
