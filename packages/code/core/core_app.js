@@ -11,10 +11,15 @@ screens.core.app = function CoreApp(me) {
         if (!me.list) {
             me.list = await me.user.access.appList();
         }
+        var progress = me.ui.modal.launch("progress", {
+            "title": "Ready",
+            "delay": "1000"
+        });
         for (var name of screens.components) {
             if (!(name.includes("app."))) {
-                return null;
+                continue;
             }
+            me.core.property.set(progress, "name", me.core.string.title(name.split(".").pop()));
             try {
                 await me.core.message.send(name + ".ready");
             }
@@ -22,6 +27,7 @@ screens.core.app = function CoreApp(me) {
                 console.error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
             }
         }
+        me.core.property.set(progress, "close");
     };
     me.available = function (name) {
         var available = me.core.util.isAdmin || (me.list && me.list.includes(name));
