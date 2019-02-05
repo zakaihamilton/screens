@@ -40,11 +40,6 @@
                 },
                 "ui.data.values": [
                     [
-                        "@ui.html.icon(fa fa-sync)",
-                        "Refresh",
-                        "widget.transform.sync"
-                    ],
-                    [
                         "@ui.html.icon(fa fa-project-diagram)",
                         "Visualize",
                         "widget.transform.visualize"
