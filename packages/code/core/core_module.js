@@ -89,19 +89,6 @@ screens.core.module = function CoreModule(me) {
             "target_platform": target_platform || "",
             "source_platform": source_platform || ""
         };
-        var extensions = { json: false, html: true };
-        var extFilePath = filePath;
-        for (var extension in extensions) {
-            var isString = extensions[extension];
-            if (data && data.includes("__" + extension + "__") && !data.includes("global" + ".__" + extension + "__")) {
-                extFilePath = filePath.replace(".js", "." + extension);
-                var extData = await me.loadTextFile(extFilePath);
-                if (isString) {
-                    extData = JSON.stringify(extData);
-                }
-                vars[extension] = extData;
-            }
-        }
         var originalData = data;
         for (var componentIndex = 0; componentIndex < components.length; componentIndex++) {
             vars.component = components[componentIndex];
