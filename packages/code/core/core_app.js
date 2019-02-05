@@ -11,15 +11,10 @@ screens.core.app = function CoreApp(me) {
         if (!me.list) {
             me.list = await me.user.access.appList();
         }
-        var progress = me.ui.modal.launch("progress", {
-            "title": "Ready",
-            "delay": "1000"
-        });
         for (var name of screens.components) {
             if (!(name.includes("app."))) {
                 continue;
             }
-            me.core.property.set(progress, "name", me.core.string.title(name.split(".").pop()));
             await me.core.util.performance(name + ".ready", async () => {
                 try {
                     await me.core.message.send(name + ".ready");
@@ -29,7 +24,6 @@ screens.core.app = function CoreApp(me) {
                 }
             });
         }
-        me.core.property.set(progress, "close");
     };
     me.available = function (name) {
         var available = me.core.util.isAdmin || (me.list && me.list.includes(name));
@@ -48,17 +42,10 @@ screens.core.app = function CoreApp(me) {
             return null;
         }
         var result = null;
-        var progress = me.ui.modal.launch("progress", {
-            "title": appName.charAt(0).toUpperCase() + appName.slice(1),
-            "delay": "1000"
-        });
-        me.log("launching app: " + appName);
-        await screens.include("app." + appName);
         var appArgs = Array.prototype.slice.call(arguments, 1);
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
-        me.core.property.set(progress, "close");
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
         return result;
     };
