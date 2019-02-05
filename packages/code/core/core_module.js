@@ -275,6 +275,11 @@ screens.core.module = function CoreModule(me) {
                 if (info.url.startsWith("/api")) {
                     return;
                 }
+                if (info.url.startsWith("/upgrade")) {
+                    me.cache = {};
+                    info.body = "Upgrade complete";
+                    return;
+                }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {
                     params.startupApp = info.url.substring(1);
                     info.url = "/main.html";
