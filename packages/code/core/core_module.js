@@ -9,6 +9,7 @@ screens.core.module = function CoreModule(me) {
         me.autoprefixer = require("autoprefixer");
         me.postcss = require("postcss");
         me.mime = require("mime");
+        me.cache = {};
     };
     me.path_file_to_component = function (filePath) {
         filePath = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -192,14 +193,18 @@ screens.core.module = function CoreModule(me) {
             info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            var data = await me.loadTextFile(filePath);
+            var data = me.cache[filePath];
+            if (!data) {
+                data = await me.loadTextFile(filePath);
+                data = await me.buildHtml(data, params, info);
+            }
+            me.cache[filePath] = data;
             var startupArgs = info.query["args"];
             if (!startupArgs) {
                 startupArgs = "";
             }
-            data = data.replace("__startup_app__", "'" + params.startupApp + "'");
-            data = data.replace("__startup_args__", "'" + startupArgs + "'");
-            data = await me.buildHtml(data, params, info);
+            data = data.replace(/__startup_app__/g, "'" + params.startupApp + "'");
+            data = data.replace(/__startup_args__/g, "'" + startupArgs + "'");
             info.body = data;
         } else if (filePath.endsWith(".png")) {
             info["content-type"] = "image/png";
