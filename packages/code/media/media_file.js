@@ -6,6 +6,7 @@
 screens.media.file = function MediaFile(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
+    me.metadata = [];
     me.init = function () {
         me.metadata = require("music-metadata");
         me.os = require("os");
@@ -19,17 +20,21 @@ screens.media.file = function MediaFile(me) {
         }
     };
     me.info = async function (path) {
-        var metadata = null;
+        var metadata = me.metadata.find(item => item.path === path);
+        if (metadata) {
+            return metadata.metadata;
+        }
         try {
             metadata = await me.metadata.parseFile(path, { duration: true });
+            if (metadata) {
+                await me.db.events.metadata.use({ path }, { path, metadata });
+                me.metadata.push({ path, metadata });
+            }
         }
         catch (err) {
             metadata = { path: path, error: err };
         }
         return metadata;
-    };
-    me.reset = async function () {
-        me._groups = [];
     };
     me.paths = function (groupName, path) {
         var paths = {
@@ -45,10 +50,11 @@ screens.media.file = function MediaFile(me) {
     };
     me.groups = async function (update = false) {
         try {
-            var unlock = await me.core.mutex.lock();
+            var unlock = await me.core.mutex.lock(me.id);
             var list = [];
             if (update || !me._groups || !me._groups.length) {
                 list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
+                me.metadata = await me.db.events.metadata.list();
                 for (var group of me._groups) {
                     group.path = me.rootPath + "/" + group.name;
                     await me.listing(group, update);
@@ -78,33 +84,39 @@ screens.media.file = function MediaFile(me) {
         var path = group.path;
         var files = [];
         if (update || !group.sessions) {
-            files = await me.storage.file.getChildren(path);
+            await me.core.util.performance(me.id + ".getChildren", async () => {
+                files = await me.storage.file.getChildren(path);
+            });
             var oldListing = group.sessions;
             group.sessions = files.reverse();
-            for (var file of files) {
-                var item = null;
-                if (oldListing) {
-                    item = oldListing.find(item => item.name === file.name);
-                }
-                if (item) {
-                    file = Object.assign(file, item);
-                }
-                else {
-                    file.group = group.name;
-                    file.session = me.core.path.fileName(file.name);
-                    file.extension = me.core.path.extension(file.name);
-                    file.label = me.core.string.title(me.core.path.fileName(file.name));
-                    file.remote = path + "/" + file.name;
-                    file.local = me.cachePath + "/" + file.name;
-                    var metadata = await me.info(file.local);
-                    if (metadata) {
-                        if (metadata.format) {
-                            file.duration = metadata.format.duration;
-                            file.durationText = me.core.string.formatDuration(file.duration);
+            await me.core.util.performance(me.id + ".metadata", async () => {
+                for (var file of files) {
+                    var item = null;
+                    if (oldListing) {
+                        item = oldListing.find(item => item.name === file.name);
+                    }
+                    if (item) {
+                        file = Object.assign(file, item);
+                    }
+                    else {
+                        file.group = group.name;
+                        file.session = me.core.path.fileName(file.name);
+                        file.extension = me.core.path.extension(file.name);
+                        file.label = me.core.string.title(me.core.path.fileName(file.name));
+                        file.remote = path + "/" + file.name;
+                        file.local = me.cachePath + "/" + file.name;
+                        if (file.local.endsWith(".m4a")) {
+                            var metadata = await me.info(file.local);
+                            if (metadata) {
+                                if (metadata.format) {
+                                    file.duration = metadata.format.duration;
+                                    file.durationText = me.core.string.formatDuration(file.duration);
+                                }
+                            }
                         }
                     }
                 }
-            }
+            });
         }
         else {
             files = me._listing[path];

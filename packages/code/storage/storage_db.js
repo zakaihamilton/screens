@@ -10,30 +10,31 @@ screens.storage.db = function StorageDB(me) {
         me.databases = {};
     };
     me.database = async function (name) {
-        var unlock = await me.core.mutex.lock();
-        var database = me.databases[name];
-        if (database) {
-            unlock();
-            return database;
-        }
-        var keys = await me.core.private.keys("mongodb");
-        var info = keys[name];
-        if (!info) {
-            unlock();
-            var err = name + " mongodb key not defined in private";
-            me.log_error(err);
-            throw err;
-        }
-        var url = info.url;
+        var db = null;
+        var unlock = await me.core.mutex.lock(me.id);
         try {
+            var database = me.databases[name];
+            if (database) {
+                unlock();
+                return database;
+            }
+            var keys = await me.core.private.keys("mongodb");
+            var info = keys[name];
+            if (!info) {
+                unlock();
+                var err = name + " mongodb key not defined in private";
+                me.log_error(err);
+                throw err;
+            }
+            var url = info.url;
             var client = await me.mongodb.MongoClient.connect(url, { useNewUrlParser: true });
+            db = client.db(info.db);
+            me.log("connected to db: " + db.databaseName);
+            me.databases[name] = db;
         }
         finally {
             unlock();
         }
-        var db = client.db(info.db);
-        me.log("connected to db: " + db.databaseName);
-        me.databases[name] = db;
         return db;
     };
     me.collection = async function (location) {
