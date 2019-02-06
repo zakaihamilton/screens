@@ -72,7 +72,7 @@ screens.user.verify = function UserVerify(me) {
         }
     };
     me.heartbeat = function () {
-        me.manager.event.push(me.id, {
+        me.db.events.heartbeat.push({
             user: this.userId,
             name: this.userName,
             date: new Date().toString(),

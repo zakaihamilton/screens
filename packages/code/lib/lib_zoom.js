@@ -74,12 +74,12 @@ screens.lib.zoom = function LibZoom(me) {
     };
     me.receive = async function (info) {
         if (info.method === "POST" && info.url == "/zoom") {
-            me.manager.event.push(me.id, JSON.parse(info.body));
+            me.db.events.participants.push(JSON.parse(info.body));
         }
     };
     me.participants = async function (shuffle = false, test = false) {
         var users = {};
-        var events = await me.manager.event.list(me.id);
+        var events = await me.db.events.participants.list();
         var uuid = "";
         for (var event of events) {
             if (event.event === "meeting_started") {

@@ -41,9 +41,24 @@ screens.storage.db = function StorageDB(me) {
         if (!db) {
             throw "Cannot find database for location: " + location.toString();
         }
+        if (location.options) {
+            let names = await db.listCollections().toArray();
+            if (!names) {
+                throw "Cannot find collection names for location: " + location.toString();
+            }
+            if (!names.map(item => item.name).includes(location.collection)) {
+                await db.createCollection(location.collection, location.options);
+            }
+        }
         var collection = db.collection(location.collection);
         if (!collection) {
             throw "Cannot find collection for location: " + location.toString();
+        }
+        if (location.indexes) {
+            for (let index of location.indexes) {
+                collection.createIndex(index);
+            }
+            location.indexes = null;
         }
         return collection;
     };
@@ -81,8 +96,29 @@ screens.storage.db = function StorageDB(me) {
                     data._id = me.mongodb.ObjectID().toString();
                 }
                 if (data._id) {
-                    var result = await collection.replaceOne({ _id: data._id }, data, { upsert: true });
-                    me.log("replace result: " + JSON.stringify(result));
+                    await collection.replaceOne({ _id: data._id }, data, { upsert: true });
+                }
+            }
+        });
+        if (!isArray) {
+            data = data[0];
+        }
+        return data;
+    };
+    me.push = async function (location, data) {
+        var collection = await me.collection(location);
+        var isArray = true;
+        if (!Array.isArray(data)) {
+            isArray = true;
+            data = [data];
+        }
+        data.map(async data => {
+            if (data) {
+                if (!data._id) {
+                    data._id = me.mongodb.ObjectID().toString();
+                }
+                if (data._id) {
+                    await collection.insertOne(data);
                 }
             }
         });
@@ -138,6 +174,8 @@ screens.storage.db = function StorageDB(me) {
             var tokens = name.split(".");
             location.collection = tokens.pop();
             location.db = tokens.pop();
+            location.options = component.options;
+            location.indexes = component.indexes;
             return location;
         };
         var mapping = {
@@ -148,17 +186,13 @@ screens.storage.db = function StorageDB(me) {
             use: "use",
             findByIds: "findByIds",
             list: "list",
-            createIndex: "createIndex"
+            createIndex: "createIndex",
+            push: "push"
         };
         var location = getLocation(component.id);
         for (var source in mapping) {
             var target = mapping[source];
             component[source] = me[target].bind(null, location);
-        }
-        if (component.indexes) {
-            for (let index of component.indexes) {
-                component.createIndex(index);
-            }
         }
     };
     return "server";

@@ -77,11 +77,11 @@ screens.db.library = function DbLibrary(me) {
 };
 
 screens.db.library.tags = function DbLibraryTag(me) {
-    me.init = me.storage.db.extension;
+    me.init = () => me.storage.db.extension(me);
 };
 
 screens.db.library.content = function DbLibraryContent(me) {
-    me.init = me.storage.db.extension;
+    me.init = () => me.storage.db.extension(me);
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {
