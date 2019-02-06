@@ -132,7 +132,7 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     font-weight: bold;
-    min-width: 200px;
+    min-width: 180px;
 }
 
 .widget-schedule-day:hover:active {
