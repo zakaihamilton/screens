@@ -6,7 +6,11 @@
 screens.app.profile = function AppProfile(me) {
     me.ready = async function () {
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
-        me.userList = await me.user.profile.list();
+        var userList = [];
+        if (me.userListAvailable) {
+            userList = await me.user.profile.list();
+        }
+        me.userList = userList;
     };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
