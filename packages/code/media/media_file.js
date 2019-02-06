@@ -6,7 +6,7 @@
 screens.media.file = function MediaFile(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
-    me.metadata = [];
+    me.metadataCache = [];
     me.init = function () {
         me.metadata = require("music-metadata");
         me.os = require("os");
@@ -20,7 +20,7 @@ screens.media.file = function MediaFile(me) {
         }
     };
     me.info = async function (path) {
-        var metadata = me.metadata.find(item => item.path === path);
+        var metadata = me.metadataCache.find(item => item.path === path);
         if (metadata) {
             return metadata.metadata;
         }
@@ -28,7 +28,7 @@ screens.media.file = function MediaFile(me) {
             metadata = await me.metadata.parseFile(path, { duration: true });
             if (metadata) {
                 await me.db.events.metadata.use({ path }, { path, metadata });
-                me.metadata.push({ path, metadata });
+                me.metadataCache.push({ path, metadata });
             }
         }
         catch (err) {
@@ -54,7 +54,7 @@ screens.media.file = function MediaFile(me) {
             var list = [];
             if (update || !me._groups || !me._groups.length) {
                 list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
-                me.metadata = await me.db.events.metadata.list();
+                me.metadataCache = await me.db.events.metadata.list();
                 for (var group of me._groups) {
                     group.path = me.rootPath + "/" + group.name;
                     await me.listing(group, update);
