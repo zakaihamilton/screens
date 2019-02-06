@@ -6,7 +6,6 @@
 screens.media.file = function MediaFile(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
-    me.metadataCache = [];
     me.init = function () {
         me.metadata = require("music-metadata");
         me.os = require("os");
@@ -14,22 +13,10 @@ screens.media.file = function MediaFile(me) {
         if (!me.core.file.exists(me.cachePath)) {
             me.core.file.makeDir(me.cachePath);
         }
-        if (me.core.http.port === process.env.PORT) {
-            me.core.task.push("media.file.updateListing", 1800000);
-            me.updateListing();
-        }
     };
     me.info = async function (path) {
-        var metadata = me.metadataCache.find(item => item.path === path);
-        if (metadata) {
-            return metadata.metadata;
-        }
         try {
-            metadata = await me.metadata.parseFile(path, { duration: true });
-            if (metadata) {
-                await me.db.events.metadata.use({ path }, { path, metadata });
-                me.metadataCache.push({ path, metadata });
-            }
+            var metadata = await me.metadata.parseFile(path, { duration: true });
         }
         catch (err) {
             metadata = { path: path, error: err };
@@ -49,25 +36,22 @@ screens.media.file = function MediaFile(me) {
         return target;
     };
     me.groups = async function (update = false) {
-        try {
-            var unlock = await me.core.mutex.lock(me.id);
-            var list = [];
-            if (update || !me._groups || !me._groups.length) {
-                list = me._groups = await me.storage.file.getChildren(me.rootPath, false);
-                me.metadataCache = await me.db.events.metadata.list();
-                for (var group of me._groups) {
-                    group.path = me.rootPath + "/" + group.name;
-                    await me.listing(group, update);
+        var files = [];
+        await me.core.util.performance(me.id + ".metadata", async () => {
+            try {
+                var unlock = await me.core.mutex.lock(me.id);
+                var files = await me.db.cache.file.listing(me.rootPath, update, (file) => {
+                    file.path = me.rootPath + "/" + file.name;
+                });
+                for (let file of files) {
+                    file.sessions = await me.listing(file, update);
                 }
             }
-            else {
-                list = me._groups;
+            finally {
+                unlock();
             }
-        }
-        finally {
-            unlock();
-        }
-        return list;
+        });
+        return files;
     };
     me.exists = async function (name) {
         var groups = await me.groups();
@@ -80,52 +64,38 @@ screens.media.file = function MediaFile(me) {
         }
         return null;
     };
-    me.listing = async function (group, update = false) {
-        var path = group.path;
-        var files = [];
-        if (update || !group.sessions) {
-            await me.core.util.performance(me.id + ".getChildren", async () => {
-                files = await me.storage.file.getChildren(path);
-            });
-            var oldListing = group.sessions;
-            group.sessions = files.reverse();
-            await me.core.util.performance(me.id + ".metadata", async () => {
-                for (var file of files) {
-                    var item = null;
-                    if (oldListing) {
-                        item = oldListing.find(item => item.name === file.name);
-                    }
-                    if (item) {
-                        file = Object.assign(file, item);
-                    }
-                    else {
-                        file.group = group.name;
-                        file.session = me.core.path.fileName(file.name);
-                        file.extension = me.core.path.extension(file.name);
-                        file.label = me.core.string.title(me.core.path.fileName(file.name));
-                        file.remote = path + "/" + file.name;
-                        file.local = me.cachePath + "/" + file.name;
-                        if (file.local.endsWith(".m4a")) {
-                            var metadata = await me.info(file.local);
-                            if (metadata) {
-                                if (metadata.format) {
-                                    file.duration = metadata.format.duration;
-                                    file.durationText = me.core.string.formatDuration(file.duration);
-                                }
-                            }
-                        }
+    me.listing = async function (parent, update = false) {
+        var files = await me.db.cache.file.listing(parent.path, update, async (file) => {
+            file.group = parent.name;
+            file.session = me.core.path.fileName(file.name);
+            file.extension = me.core.path.extension(file.name);
+            file.label = me.core.string.title(me.core.path.fileName(file.name));
+            file.remote = parent.path + "/" + file.name;
+            file.local = me.cachePath + "/" + file.name;
+            if (file.local.endsWith(".m4a")) {
+                try {
+                    await me.manager.download.get(file.remote, file.local);
+                }
+                catch (err) {
+                    me.log_error("Failed to download: " + file.remote);
+                }
+                var metadata = await me.info(file.local);
+                if (metadata) {
+                    if (metadata.format) {
+                        file.duration = metadata.format.duration;
+                        file.durationText = me.core.string.formatDuration(file.duration);
                     }
                 }
-            });
-        }
-        else {
-            files = me._listing[path];
-        }
+            }
+        });
+        files.reverse();
         return files;
     };
     me.updateListing = async function () {
         me.log("updateListing");
-        var listing = await me.listing("American", true);
+        var groups = me.groups();
+        var group = groups.find(item => item.name === "american");
+        var listing = await me.listing(group, true);
         listing = listing.filter(item => {
             return me.core.path.extension(item.name) === "m4a";
         });

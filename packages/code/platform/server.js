@@ -36,6 +36,7 @@ screens.api = [
     "db.shared",
     "db.commentary",
     "db.events",
+    "db.cache",
     "media.file",
     "lib.zoom.meetingInfo",
     "lib.zoom.participants"
