@@ -46,7 +46,12 @@ screens.core.app = function CoreApp(me) {
         if (appArgs[0] && appArgs[0].target) {
             appArgs.splice(0, 1);
         }
+        var progress = me.ui.modal.launch("progress", {
+            "title": me.core.string.title(appName),
+            "delay": "250"
+        });
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
+        me.core.property.set(progress, "close");
         return result;
     };
     me.singleton = function (appName) {

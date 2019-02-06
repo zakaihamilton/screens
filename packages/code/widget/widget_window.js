@@ -241,6 +241,7 @@ screens.widget.window = function WidgetWindow(me) {
         },
         set: function (object, value) {
             var window = me.get(object);
+            var isFocused = me.ui.focus.is_active(window);
             var isStatic = me.core.property.get(window, "static");
             if (isStatic) {
                 me.core.property.set(window, "minimize");
@@ -262,7 +263,7 @@ screens.widget.window = function WidgetWindow(me) {
                     "widget.window.refocus": null
                 });
                 me.core.property.notify(parent_window, "update");
-            } else {
+            } else if (isFocused) {
                 me.core.property.set(me.ui.element.workspace(), "widget.window.refocus");
             }
             if (window.delayTimer) {
