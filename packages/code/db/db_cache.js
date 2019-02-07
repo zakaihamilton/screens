@@ -21,6 +21,7 @@ screens.db.cache.file = function DbCacheFile(me) {
                         await callback(file);
                     }
                     await me.db.cache.file.use({ folder, name: file.name }, file);
+                    files.push(file);
                 }
             }
         }
