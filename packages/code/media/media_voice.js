@@ -21,12 +21,15 @@ screens.media.voice = function MediaVoice(me) {
         me.synth.resume();
     };
     me.speeds = {
+        "Really Slow": 0.25,
         "Slow": 0.5,
         "Slower": 0.75,
         "Normal": 1.0,
         "Faster": 1.25,
         "Fast": 1.5,
-        "Really Fast": 2.0
+        "Really Fast": 1.75,
+        "Double Speed": 2.0,
+        "Triple Speed": 3.0
     };
     me.volumes = {
         "None": 0.0,

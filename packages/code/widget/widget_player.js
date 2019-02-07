@@ -505,7 +505,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             index++;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
-            me.widget.toast.show("widget.player.speed", "Speeding up playback to " + Object.keys(me.media.voice.speeds)[index]);
+            var name = Object.keys(me.media.voice.speeds)[index];
+            var message = "Speeding up playback to " + name;
+            message += " (x" + me.media.voice.speeds[name] + ")";
+            me.widget.toast.show("widget.player.speed", message);
         }
     };
     me.speedDown = function (object) {
@@ -518,7 +521,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             index--;
             player.defaultPlaybackRate = player.playbackRate = speeds[index];
             me.updatePlayer(object);
-            me.widget.toast.show("widget.player.speed", "Slowing down playback to " + Object.keys(me.media.voice.speeds)[index]);
+            var name = Object.keys(me.media.voice.speeds)[index];
+            var message = "Slowing down playback to " + name;
+            message += " (x" + me.media.voice.speeds[name] + ")";
+            me.widget.toast.show("widget.player.speed", message);
         }
     };
     me.setIconSize = function (object, iconSize) {
