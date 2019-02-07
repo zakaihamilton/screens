@@ -7,22 +7,25 @@ screens.media.file = function MediaFile(me) {
     me.rootPath = "/Kab/concepts/private";
     me.cachePath = "cache";
     me.init = function () {
-        me.metadata = require("music-metadata");
+        const ffprobePath = require("@ffprobe-installer/ffprobe").path;
+        me.ffmpeg = require("fluent-ffmpeg");
+        me.ffmpeg.setFfprobePath(ffprobePath);
         me.os = require("os");
         me.tempDir = me.os.tmpdir();
         if (!me.core.file.exists(me.cachePath)) {
             me.core.file.makeDir(me.cachePath);
         }
     };
-    me.info = async function (path) {
-        try {
-            var metadata = await me.metadata.parseFile(path, { duration: true });
-        }
-        catch (err) {
-            metadata = { path: path, error: err };
-            me.log_error("Cannot parse metadata for file: " + path + " error: " + err);
-        }
-        return metadata;
+    me.info = function (path) {
+        return new Promise(resolve => {
+            me.ffmpeg.ffprobe(path, function (err, info) {
+                if (err) {
+                    me.log_error("Cannot parse metadata for file: " + path + " error: " + err);
+                    info = null;
+                }
+                resolve(info);
+            });
+        });
     };
     me.paths = function (groupName, path) {
         var paths = {
