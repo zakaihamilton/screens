@@ -40,7 +40,7 @@ screens.media.file = function MediaFile(me) {
         await me.core.util.performance(me.id + ".metadata", async () => {
             try {
                 var unlock = await me.core.mutex.lock(me.id);
-                var files = await me.db.cache.file.listing(me.rootPath, update, (file) => {
+                files = await me.db.cache.file.listing(me.rootPath, update, (file) => {
                     file.path = me.rootPath + "/" + file.name;
                 });
                 for (let file of files) {
