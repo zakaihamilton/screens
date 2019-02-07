@@ -15,7 +15,7 @@ screens.db.cache.file = function DbCacheFile(me) {
             var children = await me.storage.file.getChildren(folder);
             for (let file of children) {
                 file.folder = folder;
-                var exists = files.find(item => item.name === file.name);
+                var exists = files && files.find(item => item.name === file.name);
                 if (!exists) {
                     if (callback) {
                         await callback(file);
