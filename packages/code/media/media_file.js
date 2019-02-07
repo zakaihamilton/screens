@@ -20,6 +20,7 @@ screens.media.file = function MediaFile(me) {
         }
         catch (err) {
             metadata = { path: path, error: err };
+            me.log_error("Cannot parse metadata for file: " + path + " error: " + err);
         }
         return metadata;
     };
