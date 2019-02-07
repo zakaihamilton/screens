@@ -7,8 +7,41 @@ screens.db.cache = function DbCache(me) {
     return "server";
 };
 
+screens.db.cache.data = function DbCacheData(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.indexes = [
+        {
+            "component": 1,
+            "key": 1
+        }
+    ];
+    me.get = function (component, key) {
+        var item = me.find({ component, key });
+        if (!item) {
+            return undefined;
+        }
+        return item.value;
+    };
+    me.set = function (component, key, value) {
+        if (typeof value === "undefined") {
+            return me.remove({ component, key });
+        }
+        else {
+            return me.use({ component, key }, { component, key, value });
+        }
+    };
+    me.reset = function (component) {
+        return me.remove({ component }, false);
+    };
+};
+
 screens.db.cache.file = function DbCacheFile(me) {
     me.init = () => me.storage.db.extension(me);
+    me.indexes = [
+        {
+            "folder": 1
+        }
+    ];
     me.listing = async function (folder, update, callback) {
         var files = await me.db.cache.file.list({ folder });
         if (!files || !files.length || update) {

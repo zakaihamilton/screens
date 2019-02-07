@@ -9,7 +9,6 @@ screens.core.module = function CoreModule(me) {
         me.autoprefixer = require("autoprefixer");
         me.postcss = require("postcss");
         me.mime = require("mime");
-        me.cache = {};
     };
     me.path_file_to_component = function (filePath) {
         filePath = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -192,12 +191,18 @@ screens.core.module = function CoreModule(me) {
             info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            var data = me.cache[filePath];
-            if (!data || !me.core.util.isSecure()) {
+            var useCache = me.core.util.isSecure();
+            var data = null;
+            if (useCache) {
+                data = me.db.cache.data.get(me.id, filePath);
+            }
+            if (!data) {
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
             }
-            me.cache[filePath] = data;
+            if (useCache) {
+                me.db.cache.data.set(me.id, filePath, data);
+            }
             var startupArgs = info.query["args"];
             if (!startupArgs) {
                 startupArgs = "";
@@ -275,7 +280,7 @@ screens.core.module = function CoreModule(me) {
                     return;
                 }
                 if (info.url.startsWith("/upgrade")) {
-                    me.cache = {};
+                    await me.db.cache.data.reset(me.id);
                     info.body = "Upgrade complete";
                     return;
                 }

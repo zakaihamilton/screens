@@ -448,14 +448,14 @@ screens.app.library = function AppLibrary(me) {
         var tagMode = window.options.tagMode;
         var records = me.parseRecordsFromText(window);
         if (records.content && !tagMode) {
-            records.content = await me.db.library.content.set(records.content);
+            records.content = await me.db.library.content.store(records.content);
             records.ids = records.content.map(item => item._id);
         }
         if (records.tags) {
             for (var index = 0; index < records.tags.length; index++) {
                 records.tags[index] = me.addExtra(records.tags[index], records.content[index]);
             }
-            records.tags = await me.db.library.tags.set(records.tags);
+            records.tags = await me.db.library.tags.store(records.tags);
             records.ids = records.tags.map(item => item._id);
         }
         me.updateTextFromRecords(window, records);
@@ -514,13 +514,13 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         }
         if (!Array.isArray(tags)) {
-            var content = await me.db.library.content.get(tags._id);
+            var content = await me.db.library.content.findById(tags._id);
         }
         var records = [];
         if (Array.isArray(tags)) {
             records = tags.map(async (record, index) => {
                 if (window.options.combineResults) {
-                    var content = await me.db.library.content.get(record._id);
+                    var content = await me.db.library.content.findById(record._id);
                     if (index !== tags.length - 1) {
                         content.text += "\n<br>\n";
                     }
