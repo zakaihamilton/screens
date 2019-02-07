@@ -37,19 +37,19 @@ screens.media.file = function MediaFile(me) {
     };
     me.groups = async function (update = false) {
         var files = [];
-        await me.core.util.performance(me.id + ".metadata", async () => {
-            try {
-                var unlock = await me.core.mutex.lock(me.id);
-                files = await me.db.cache.file.listing(me.rootPath, update);
-                for (let file of files) {
-                    file.path = me.rootPath + "/" + file.name;
+        try {
+            var unlock = await me.core.mutex.lock(me.id);
+            files = await me.db.cache.file.listing(me.rootPath, update);
+            for (let file of files) {
+                file.path = me.rootPath + "/" + file.name;
+                await me.core.util.performance(file.path, async () => {
                     file.sessions = await me.listing(file, update);
-                }
+                });
             }
-            finally {
-                unlock();
-            }
-        });
+        }
+        finally {
+            unlock();
+        }
         return files;
     };
     me.exists = async function (name) {
