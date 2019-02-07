@@ -47,7 +47,11 @@ screens.media.file = function MediaFile(me) {
             for (let file of files) {
                 file.path = me.rootPath + "/" + file.name;
                 await me.core.util.performance(file.path, async () => {
-                    file.sessions = await me.listing(file, update);
+                    var sessions = await me.listing(file, update);
+                    sessions = sessions.sort((a, b) => String(a.client_modified).localeCompare(String(b.client_modified)));
+                    sessions.reverse();
+                    file.sessions = sessions;
+
                 });
             }
         }
