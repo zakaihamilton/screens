@@ -39,7 +39,7 @@ screens.core.interface = function CoreInterface(me) {
         var args = Array.prototype.slice.call(arguments, 0);
         var info = {
             method: "POST",
-            url: "/interface",
+            url: "/interface/" + method.replace(/\./g, "/"),
             body: JSON.stringify(args)
         };
         var result = JSON.parse(await me.core.http.send(info));
