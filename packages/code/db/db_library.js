@@ -4,6 +4,9 @@
  */
 
 screens.db.library = function DbLibrary(me) {
+    me.findContentById = function (id) {
+        return me.db.library.content.findById(id);
+    };
     me.find = async function (query, tagList) {
         if (!tagList) {
             tagList = [];

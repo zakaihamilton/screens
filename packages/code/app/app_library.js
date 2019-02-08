@@ -514,13 +514,13 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         }
         if (!Array.isArray(tags)) {
-            var content = await me.db.library.content.findById(tags._id);
+            var content = await me.db.library.findContentById(tags._id);
         }
         var records = [];
         if (Array.isArray(tags)) {
             records = tags.map(async (record, index) => {
                 if (window.options.combineResults) {
-                    var content = await me.db.library.content.findById(record._id);
+                    var content = await me.db.library.findContentById(record._id);
                     if (index !== tags.length - 1) {
                         content.text += "\n<br>\n";
                     }
