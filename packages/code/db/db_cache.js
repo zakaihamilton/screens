@@ -19,6 +19,7 @@ screens.db.cache.data = function DbCacheData(me) {
     me.get = function (component, key) {
         var item = me.find({ component, key });
         if (!item) {
+            me.log("no cache found for component: " + component + " key: " + key);
             return undefined;
         }
         return item.value;

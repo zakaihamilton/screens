@@ -197,7 +197,7 @@ screens.core.module = function CoreModule(me) {
                 data = me.db.cache.data.get(me.id, filePath);
             }
             if (!data) {
-                me.log("building html, useCache: " + useCache);
+                me.log("building html, useCache: " + useCache + " filePath: " + filePath);
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
                 if (useCache) {
