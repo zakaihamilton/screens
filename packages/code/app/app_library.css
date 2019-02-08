@@ -36,11 +36,11 @@
 }
 
 .app-library-editor-container.fullscreen {
-    top: 0px;
+    top: 0px !important;
 }
 
 .app-library-transform {
-    top: 50px;
+    top: 50px !important;
 }
 
 .app-library-transform.fullscreen {
