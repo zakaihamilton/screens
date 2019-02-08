@@ -40,6 +40,7 @@ screens.db.events.msg = function DbEventsParticipants(me) {
                 return;
             }
             for (; index < list.length; index++) {
+                me.log("running message: " + JSON.stringify(list.args));
                 await me.core.message.send.apply(list.args);
                 me.lastMsgId = index;
             }
