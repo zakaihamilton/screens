@@ -197,11 +197,12 @@ screens.core.module = function CoreModule(me) {
                 data = me.db.cache.data.get(me.id, filePath);
             }
             if (!data) {
+                me.log("building html");
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
-            }
-            if (useCache) {
-                me.db.cache.data.set(me.id, filePath, data);
+                if (useCache) {
+                    me.db.cache.data.set(me.id, filePath, data);
+                }
             }
             var startupArgs = info.query["args"];
             if (!startupArgs) {
