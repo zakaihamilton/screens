@@ -68,10 +68,12 @@ screens.app.player = function AppPlayer(me) {
         var updateSession = true;
         if (args && (args[0] !== groupName || args[1] !== sessionName)) {
             if (args[0]) {
-                await me.core.property.set(window, "app.player.groupName", args[0]);
+                groupName = args[0];
+                await me.core.property.set(window, "app.player.groupName", groupName);
             }
             if (args[1]) {
-                await me.core.property.set(window, "app.player.session", args[1]);
+                sessionName = args[1];
+                await me.core.property.set(window, "app.player.session", sessionName);
                 updateSession = false;
             }
             await me.core.property.set(window, "app.player.updatePlayer");
@@ -81,7 +83,7 @@ screens.app.player = function AppPlayer(me) {
             updateSession = false;
         }
         if (updateSession) {
-            await me.updateSession(object, name);
+            await me.updateSession(object, sessionName);
         }
         if (args && args[2] && window.var.player) {
             me.widget.player.controls.seek(window.var.player, args[2]);
@@ -168,7 +170,7 @@ screens.app.player = function AppPlayer(me) {
         },
         set: async function (object, name) {
             await me.updateSession(object, name);
-            me.core.property.notify(window, "app.player.updatePlayer");
+            me.core.property.notify(object, "app.player.updatePlayer");
         }
     };
     me.updateSessions = async function (object) {
