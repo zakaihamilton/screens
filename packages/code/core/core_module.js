@@ -202,7 +202,6 @@ screens.core.module = function CoreModule(me) {
                 data = await me.buildHtml(data, params, info);
                 if (useCache) {
                     me.db.cache.data.set(me.id, filePath, data);
-                    data = me.db.cache.data.get(me.id, filePath);
                 }
             }
             var startupArgs = info.query["args"];
