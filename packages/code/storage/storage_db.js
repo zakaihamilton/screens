@@ -75,13 +75,24 @@ screens.storage.db = function StorageDB(me) {
         return results;
     };
     me.findById = async function (location, id) {
+        var query = { _id: id };
+        var [array, hash] = me.getCache(location, query, "find");
+        if (array) {
+            return array;
+        }
         var collection = await me.collection(location);
-        var result = await collection.findOne({ _id: id });
+        var result = await collection.findOne(query);
+        me.setCache(location, hash, result);
         return result;
     };
     me.find = async function (location, query) {
+        var [array, hash] = me.getCache(location, query, "find");
+        if (array) {
+            return array;
+        }
         var collection = await me.collection(location);
         var result = await collection.findOne(query);
+        me.setCache(location, hash, result);
         return result;
     };
     me.store = async function (location, data) {
@@ -104,6 +115,7 @@ screens.storage.db = function StorageDB(me) {
         if (!isArray) {
             data = data[0];
         }
+        me.notifyCache(location);
         return data;
     };
     me.push = async function (location, data) {
@@ -126,6 +138,7 @@ screens.storage.db = function StorageDB(me) {
         if (!isArray) {
             data = data[0];
         }
+        me.notifyCache(location);
         return data;
     };
     me.remove = async function (location, query, removeOne = true) {
@@ -137,9 +150,14 @@ screens.storage.db = function StorageDB(me) {
         else {
             result = await collection.deleteMany(query);
         }
+        me.notifyCache(location);
         return result.nRemoved;
     };
     me.list = async function (location, query = {}, projection, params) {
+        var [array, hash] = me.getCache(location, query, projection, params);
+        if (array) {
+            return array;
+        }
         var collection = await me.collection(location);
         if (!projection) {
             projection = {};
@@ -150,12 +168,8 @@ screens.storage.db = function StorageDB(me) {
                 cursor = cursor[param](params[param]);
             }
         }
-        var array = await cursor.toArray();
-        me.log("found " + array.length +
-            " items for query: " + JSON.stringify(query) +
-            " projection: " + JSON.stringify(projection),
-            " params: " + JSON.stringify(params),
-            " location: " + JSON.stringify(location));
+        array = await cursor.toArray();
+        me.setCache(location, hash, array);
         return array;
     };
     me.use = async function (location, query, data) {
@@ -163,11 +177,37 @@ screens.storage.db = function StorageDB(me) {
         delete data._id;
         var collection = await me.collection(location);
         var result = await collection.replaceOne(query, data, { upsert: true });
+        me.notifyCache(location);
         return result;
     };
     me.createIndex = async function (location, index) {
         var collection = await me.collection(location);
         collection.createIndex(index);
+    };
+    me.getCache = function (location) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var result = null;
+        var hash = me.core.string.hash(JSON.stringify(args));
+        if (location.cache) {
+            result = location.cache[hash];
+        }
+        return [result, hash];
+    };
+    me.setCache = function (location, hash, value) {
+        if (location.cache) {
+            location.cache[hash] = value;
+        }
+    };
+    me.notifyCache = function (location) {
+        if (location.cache && location.componentId) {
+            me.emptyCache(location);
+            me.db.events.msg.send(location.componentId + ".emptyCache");
+        }
+    };
+    me.emptyCache = function (location) {
+        if (location.cache) {
+            location.cache = {};
+        }
     };
     me.extension = function (component) {
         var getLocation = function (name) {
@@ -177,23 +217,25 @@ screens.storage.db = function StorageDB(me) {
             location.db = tokens.pop();
             location.options = component.options;
             location.indexes = component.indexes;
+            location.cache = component.cache;
+            location.componentId = component.id;
             return location;
         };
-        var mapping = {
-            remove: "remove",
-            store: "store",
-            findById: "findById",
-            find: "find",
-            use: "use",
-            findByIds: "findByIds",
-            list: "list",
-            createIndex: "createIndex",
-            push: "push"
-        };
+        var mapping = [
+            "remove",
+            "store",
+            "findById",
+            "find",
+            "use",
+            "findByIds",
+            "list",
+            "createIndex",
+            "push",
+            "emptyCache"
+        ];
         var location = getLocation(component.id);
-        for (var source in mapping) {
-            var target = mapping[source];
-            component[source] = me[target].bind(null, location);
+        for (var name of mapping) {
+            component[name] = me[name].bind(null, location);
         }
     };
     return "server";

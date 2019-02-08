@@ -93,8 +93,10 @@ screens.ui.content = function UIContent(me) {
                 }
             ];
         },
-        update: async function () {
-            Object.assign(me.content, await me.manager.content.lists(me.id));
+        update: function () {
+            me.manager.content.lists(me.id).then(lists => {
+                Object.assign(me.content, lists);
+            });
         },
         refresh: {
             set: async function (object) {

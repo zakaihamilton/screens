@@ -9,6 +9,7 @@ screens.db.cache = function DbCache(me) {
 
 screens.db.cache.data = function DbCacheData(me) {
     me.init = () => me.storage.db.extension(me);
+    me.cache = {};
     me.indexes = [
         {
             "component": 1,
@@ -37,6 +38,7 @@ screens.db.cache.data = function DbCacheData(me) {
 
 screens.db.cache.file = function DbCacheFile(me) {
     me.init = () => me.storage.db.extension(me);
+    me.cache = {};
     me.indexes = [
         {
             "folder": 1
