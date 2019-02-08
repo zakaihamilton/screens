@@ -18,7 +18,6 @@ screens.api = [
     "user.profile.get",
     "user.profile.set",
     "user.verify.match",
-    "user.verify.heartbeat",
     "user.access.userId",
     "user.access.admin",
     "user.access.appList",

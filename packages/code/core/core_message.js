@@ -14,7 +14,7 @@ screens.core.message = function CoreMessage(me) {
             return me.send_browser.apply(null, args);
         }
         else {
-            return me.send_socket.apply(me.core.socket.io, args);
+            return me.core.interface.send.apply(null, args);
         }
     };
     me.send_browser = function () {
@@ -26,7 +26,7 @@ screens.core.message = function CoreMessage(me) {
         } else if (me.platform === "browser") {
             return me.send.apply(this, args);
         } else if (me.platform === "server") {
-            return me.send_socket.apply(this, args);
+            return me.core.interface.send.apply(null, args);
         }
     };
     me.send_client = function () {

@@ -71,13 +71,5 @@ screens.user.verify = function UserVerify(me) {
             }
         }
     };
-    me.heartbeat = function () {
-        me.db.events.heartbeat.push({
-            user: this.userId,
-            name: this.userName,
-            date: new Date().toString(),
-            utc: Date.now()
-        });
-    };
     return "server";
 };

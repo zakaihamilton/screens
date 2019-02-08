@@ -57,21 +57,6 @@ screens.core.socket = function CoreSocket(me) {
                 });
             });
         }
-        else if (me.platform === "browser") {
-            me.io = io();
-            me.register(me.io);
-            me.core.property.object.create(me, me.io);
-            me.core.property.set(me.io, "ready");
-            me.sendHeartbeat();
-        }
-    };
-    me.sendHeartbeat = function () {
-        setTimeout(async () => {
-            requestAnimationFrame(async () => {
-                await me.user.verify.heartbeat();
-                me.sendHeartbeat();
-            });
-        }, 20000);
     };
     me.setup = async function (ref) {
         me.ref = ref;
