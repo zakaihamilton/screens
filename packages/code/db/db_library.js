@@ -84,6 +84,7 @@ screens.db.library = function DbLibrary(me) {
 
 screens.db.library.tags = function DbLibraryTag(me) {
     me.init = () => me.storage.db.extension(me);
+    me.cache = {};
     return "server";
 };
 

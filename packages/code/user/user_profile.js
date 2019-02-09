@@ -4,6 +4,10 @@
  */
 
 screens.user.profile = function UserProfile(me) {
+    me.profiles = null;
+    me.reset = function () {
+        me.profiles = null;
+    };
     me.get = async function (user) {
         if (!user) {
             user = this.userId;
@@ -16,9 +20,15 @@ screens.user.profile = function UserProfile(me) {
         }
         await me.storage.data.save(profile, "app.profile", user);
         await me.storage.data.save(profile, me.id, user);
+        me.db.events.msg.send(me.id + ".reset");
     };
     me.list = async function () {
-        return await me.storage.data.query("app.profile");
+        if (me.profiles) {
+            return me.profiles;
+        }
+        var profiles = await me.storage.data.query("app.profile");
+        me.profiles = profiles;
+        return profiles;
     };
     return "server";
 };

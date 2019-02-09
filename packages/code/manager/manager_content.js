@@ -4,10 +4,14 @@
  */
 
 screens.manager.content = function ManagerContent(me) {
+    me.cache = {};
     me.lists = async function (componentId, userId) {
         var publicList = await me.manager.content.list(componentId, false, userId);
         var privateList = await me.manager.content.list(componentId, true, userId);
         return { publicList, privateList };
+    };
+    me.reset = function () {
+        me.cache = {};
     };
     me.list = async function (componentId, private, userId) {
         var kind = componentId + ".content";
@@ -17,10 +21,14 @@ screens.manager.content = function ManagerContent(me) {
             }
             kind += "." + userId;
         }
+        if (me.cache[kind]) {
+            return result;
+        }
         var result = await me.storage.data.query(kind);
         if (result) {
             result = result.map(item => { return { title: item.title }; });
         }
+        me.cache[kind] = result;
         return result;
     };
     me.associated = async function (title, userId) {
@@ -76,6 +84,7 @@ screens.manager.content = function ManagerContent(me) {
         var info = me.load(componentId, title, private);
         if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.save(data, kind, title, ["content"]);
+            me.db.events.msg.send(me.id + ".reset");
             result = true;
         }
         return result;
@@ -89,6 +98,7 @@ screens.manager.content = function ManagerContent(me) {
         var info = me.load(componentId, title, private);
         if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.delete(kind, title);
+            me.db.events.msg.send(me.id + ".reset");
             result = true;
         }
         return result;
