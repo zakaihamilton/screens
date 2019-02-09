@@ -77,9 +77,10 @@ screens.core.util = function CoreUtil(me) {
     };
     me.performance = async function (name, callback) {
         var start = me.start();
-        await callback();
+        var result = await callback();
         var duration = me.duration(start);
         me.log("performance: " + me.core.string.padNumber(parseInt(duration), 6) + " - " + this.id + " - " + name);
+        return result;
     };
     me.condense = function (callback) {
         if (callback.timer) {

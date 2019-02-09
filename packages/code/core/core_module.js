@@ -191,17 +191,20 @@ screens.core.module = function CoreModule(me) {
             info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            var useCache = me.core.util.isSecure();
+            var useCache = true; //me.core.util.isSecure();
             var data = null;
             if (useCache) {
-                data = me.db.cache.data.get(me.id, filePath);
+                var item = await me.db.cache.data.find({ component: me.id, path: filePath });
+                if (item) {
+                    data = item.body;
+                }
             }
             if (!data) {
                 me.log("building html, useCache: " + useCache + " filePath: " + filePath);
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
                 if (useCache) {
-                    me.db.cache.data.set(me.id, filePath, data);
+                    me.db.cache.data.use({ component: me.id, path: filePath }, { body: data });
                 }
             }
             var startupArgs = info.query["args"];
@@ -281,7 +284,7 @@ screens.core.module = function CoreModule(me) {
                     return;
                 }
                 if (info.url.startsWith("/upgrade")) {
-                    await me.db.cache.data.reset(me.id);
+                    await me.db.cache.data.remove({ component: me.id }, false);
                     info.body = "Upgrade complete";
                     return;
                 }

@@ -8,7 +8,7 @@ screens.user.profile = function UserProfile(me) {
         if (!user) {
             user = this.userId;
         }
-        return await me.core.cache.use(me.id + "." + user, "storage.data.load", "app.profile", user);
+        return await me.storage.data.load("app.profile", user);
     };
     me.set = async function (profile, user) {
         if (!user) {
@@ -16,11 +16,9 @@ screens.user.profile = function UserProfile(me) {
         }
         await me.storage.data.save(profile, "app.profile", user);
         await me.storage.data.save(profile, me.id, user);
-        me.core.cache.reset(me.id + "." + user);
-        me.core.cache.reset(me.id);
     };
     me.list = async function () {
-        return await me.core.cache.use(me.id, "storage.data.query", "app.profile");
+        return await me.storage.data.query("app.profile");
     };
     return "server";
 };

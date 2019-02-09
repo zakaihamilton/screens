@@ -115,20 +115,6 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
-    me.verify = async function (value, type, id) {
-        var compare = await me.load(type, id);
-        var result = me.core.json.compare(compare, value);
-        if (!result) {
-            var err = "verification mismatch between: " + JSON.stringify(value) + " and " + JSON.stringify(compare);
-            throw err;
-        }
-        return result;
-    };
-    me.saveAndVerify = async function (value, type, id, nonIndexed) {
-        await me.save(value, type, id, nonIndexed);
-        var result = await me.verify(value, type, id);
-        return result;
-    };
     me.query = async function (type, select, filters) {
         var user = this.userId;
         var service = me.getService();

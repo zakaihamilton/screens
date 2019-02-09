@@ -5,7 +5,10 @@
 
 screens.db.library = function DbLibrary(me) {
     me.findContentById = function (id) {
-        return me.db.library.content.findById(id);
+        return me.content.findById(id);
+    };
+    me.tagList = function () {
+        return me.tags.list();
     };
     me.find = async function (query, tagList) {
         if (!tagList) {
@@ -81,10 +84,12 @@ screens.db.library = function DbLibrary(me) {
 
 screens.db.library.tags = function DbLibraryTag(me) {
     me.init = () => me.storage.db.extension(me);
+    return "server";
 };
 
 screens.db.library.content = function DbLibraryContent(me) {
     me.init = () => me.storage.db.extension(me);
+    return "server";
 };
 
 screens.db.library.query = function DbLibraryQuery(me) {
@@ -138,4 +143,5 @@ screens.db.library.query = function DbLibraryQuery(me) {
         }
         return filter;
     };
+    return "server";
 };

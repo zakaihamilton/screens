@@ -23,7 +23,6 @@ screens.api = [
     "user.access.appList",
     "user.access.get",
     "user.access.isAPIAllowed",
-    "core.cache",
     "core.socket",
     "core.object",
     "core.console",

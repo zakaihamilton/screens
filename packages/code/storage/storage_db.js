@@ -81,7 +81,9 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await collection.findOne(query);
+        var result = await me.core.util.performance(me.id + "." + location.collection + ".id", async () => {
+            return await collection.findOne(query);
+        });
         me.setCache(location, hash, result);
         return result;
     };
@@ -91,7 +93,9 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await collection.findOne(query);
+        var result = await me.core.util.performance(me.id + "." + location.collection + "." + JSON.stringify(query), async () => {
+            return await collection.findOne(query);
+        });
         me.setCache(location, hash, result);
         return result;
     };
@@ -162,18 +166,23 @@ screens.storage.db = function StorageDB(me) {
         if (!projection) {
             projection = {};
         }
-        var cursor = await collection.find(query, projection);
-        if (params) {
-            for (var param in params) {
-                cursor = cursor[param](params[param]);
+        array = await me.core.util.performance(me.id + "." + location.collection + "." + JSON.stringify(query), async () => {
+            var cursor = await collection.find(query, projection);
+            if (params) {
+                for (var param in params) {
+                    cursor = cursor[param](params[param]);
+                }
             }
-        }
-        array = await cursor.toArray();
+            return await cursor.toArray();
+        });
         me.setCache(location, hash, array);
         return array;
     };
     me.use = async function (location, query, data) {
-        data = Object.assign({}, data);
+        if (!data) {
+            return me.remove(location, query);
+        }
+        data = Object.assign({}, query, data);
         delete data._id;
         var collection = await me.collection(location);
         var result = await collection.replaceOne(query, data, { upsert: true });
@@ -212,6 +221,13 @@ screens.storage.db = function StorageDB(me) {
             location.cache = {};
         }
     };
+    me.handle = async function (location, query, callback) {
+        var data = await me.find(location, query);
+        if (!data) {
+            data = await callback();
+        }
+        return data;
+    };
     me.extension = function (component) {
         var getLocation = function (name) {
             var location = {};
@@ -234,7 +250,8 @@ screens.storage.db = function StorageDB(me) {
             "list",
             "createIndex",
             "push",
-            "emptyCache"
+            "emptyCache",
+            "handle"
         ];
         var location = getLocation(component.id);
         for (var name of mapping) {

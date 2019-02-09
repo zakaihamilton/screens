@@ -32,7 +32,6 @@ screens.app.schedule = function AppSchedule(me) {
         await me.refresh(window);
     };
     me.reset = async function (object) {
-        await me.manager.content.refresh();
         me.refresh(object);
     };
     me.refresh = async function (object) {

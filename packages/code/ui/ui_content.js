@@ -101,7 +101,6 @@ screens.ui.content = function UIContent(me) {
         refresh: {
             set: async function (object) {
                 var window = me.widget.window.get(object);
-                await me.manager.content.refresh();
                 await me.content.update();
                 var info = me.content.info(window);
                 me.content.associated.update(window, info._title);

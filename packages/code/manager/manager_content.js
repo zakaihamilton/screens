@@ -4,7 +4,6 @@
  */
 
 screens.manager.content = function ManagerContent(me) {
-    me._list = {};
     me.lists = async function (componentId, userId) {
         var publicList = await me.manager.content.list(componentId, false, userId);
         var privateList = await me.manager.content.list(componentId, true, userId);
@@ -18,16 +17,11 @@ screens.manager.content = function ManagerContent(me) {
             }
             kind += "." + userId;
         }
-        var cache = me._list[kind];
-        if (cache) {
-            return cache;
+        var result = await me.storage.data.query(kind);
+        if (result) {
+            result = result.map(item => { return { title: item.title }; });
         }
-        var result = await me.storage.data.query(kind, "title");
-        me._list[kind] = result;
         return result;
-    };
-    me.refresh = function () {
-        me._list = {};
     };
     me.associated = async function (title, userId) {
         if (!userId) {

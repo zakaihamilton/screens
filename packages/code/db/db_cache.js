@@ -13,28 +13,10 @@ screens.db.cache.data = function DbCacheData(me) {
     me.indexes = [
         {
             "component": 1,
-            "key": 1
+            "path": 1
         }
     ];
-    me.get = function (component, key) {
-        var item = me.find({ component, key });
-        if (!item) {
-            me.log("no cache found for component: " + component + " key: " + key);
-            return undefined;
-        }
-        return item.value;
-    };
-    me.set = function (component, key, value) {
-        if (typeof value === "undefined") {
-            return me.remove({ component, key });
-        }
-        else {
-            return me.use({ component, key }, { component, key, value });
-        }
-    };
-    me.reset = function (component) {
-        return me.remove({ component }, false);
-    };
+    return "server";
 };
 
 screens.db.cache.file = function DbCacheFile(me) {

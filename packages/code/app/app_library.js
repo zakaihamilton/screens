@@ -17,16 +17,11 @@ screens.app.library = function AppLibrary(me) {
         me.searchCounter = 0;
     };
     me.ready = async function () {
-        me.tagList = await me.core.message.send_server("core.cache.use",
-            me.id,
-            "db.library.tags.list");
+        me.tagList = await me.db.library.tagList();
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.message.send_server("core.cache.reset", me.id);
-        me.tagList = await me.core.message.send_server("core.cache.use",
-            me.id,
-            "db.library.tags.list");
+        me.tagList = await me.db.library.tagList();
         window.names = null;
     };
     me.initOptions = async function (object) {
