@@ -46,7 +46,7 @@ screens.kab.highlight = function KabHighlight(me) {
         var highlight = me.core.property.get(element, "ui.class.kab-term-highlight");
         var hash = me.core.property.get(element, "ui.attribute.#hash");
         var source = me.core.property.get(element, "ui.attribute.#source");
-        var data = await me.db.commentary.entry.find({
+        var data = await me.db.shared.highlight.find({
             "user": "$userId",
             "hash": hash
         });
