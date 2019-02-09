@@ -9,6 +9,7 @@ screens.core.module = function CoreModule(me) {
         me.autoprefixer = require("autoprefixer");
         me.postcss = require("postcss");
         me.mime = require("mime");
+        me.cache = {};
     };
     me.path_file_to_component = function (filePath) {
         filePath = filePath.substring(filePath.lastIndexOf("/") + 1);
@@ -191,20 +192,17 @@ screens.core.module = function CoreModule(me) {
             info.body = await me.core.module.handleMultiFiles(filePath, params, info);
         } else if (filePath.endsWith(".html")) {
             info["content-type"] = "text/html";
-            var useCache = true; //me.core.util.isSecure();
+            var useCache = me.core.util.isSecure();
             var data = null;
             if (useCache) {
-                var item = await me.db.cache.data.find({ component: me.id, path: filePath });
-                if (item) {
-                    data = item.body;
-                }
+                data = me.cache[filePath];
             }
             if (!data) {
                 me.log("building html, useCache: " + useCache + " filePath: " + filePath);
                 data = await me.loadTextFile(filePath);
                 data = await me.buildHtml(data, params, info);
                 if (useCache) {
-                    me.db.cache.data.use({ component: me.id, path: filePath }, { body: data });
+                    me.cache[filePath] = data;
                 }
             }
             var startupArgs = info.query["args"];
@@ -269,6 +267,9 @@ screens.core.module = function CoreModule(me) {
         </html>";
         info.body = html;
     };
+    me.emptyCache = function () {
+        me.cache = {};
+    };
     me.receive = async function (info) {
         if (me.platform === "server") {
             if (info.method === "GET") {
@@ -284,7 +285,7 @@ screens.core.module = function CoreModule(me) {
                     return;
                 }
                 if (info.url.startsWith("/upgrade")) {
-                    await me.db.cache.data.remove({ component: me.id }, false);
+                    me.db.events.msg.send(me.id + ".emptyCache");
                     info.body = "Upgrade complete";
                     return;
                 }

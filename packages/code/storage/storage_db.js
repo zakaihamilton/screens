@@ -257,6 +257,9 @@ screens.storage.db = function StorageDB(me) {
         for (var name of mapping) {
             component[name] = me[name].bind(null, location);
         }
+        setTimeout(() => {
+            me.collection(location);
+        }, 1000);
     };
     return "server";
 };

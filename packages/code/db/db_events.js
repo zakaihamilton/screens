@@ -31,18 +31,19 @@ screens.db.events.msg = function DbEventsParticipants(me) {
             if (!list) {
                 return;
             }
-            var index = list.indexOf(me.lastMsgId);
             if (!list.length) {
                 return;
             }
+            var index = list.findIndex((item) => item._id === me.lastMsgId);
             if (index == -1) {
                 me.lastMsgId = list[list.length - 1]._id;
                 return;
             }
-            for (; index < list.length; index++) {
-                me.log("running message: " + JSON.stringify(list.args));
-                await me.core.message.send.apply(list.args);
-                me.lastMsgId = index;
+            for (index++; index < list.length; index++) {
+                var item = list[index];
+                me.log("running message: " + JSON.stringify(item.args));
+                await me.core.message.send.apply(null, item.args);
+                me.lastMsgId = item._id;
             }
         }
         finally {
