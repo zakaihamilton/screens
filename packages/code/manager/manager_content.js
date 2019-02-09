@@ -22,7 +22,7 @@ screens.manager.content = function ManagerContent(me) {
             kind += "." + userId;
         }
         if (me.cache[kind]) {
-            return result;
+            return me.cache[kind];
         }
         var result = await me.storage.data.query(kind);
         if (result) {
@@ -85,6 +85,7 @@ screens.manager.content = function ManagerContent(me) {
         if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.save(data, kind, title, ["content"]);
             me.db.events.msg.send(me.id + ".reset");
+            me.reset();
             result = true;
         }
         return result;
@@ -99,6 +100,7 @@ screens.manager.content = function ManagerContent(me) {
         if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
             await me.storage.data.delete(kind, title);
             me.db.events.msg.send(me.id + ".reset");
+            me.reset();
             result = true;
         }
         return result;
