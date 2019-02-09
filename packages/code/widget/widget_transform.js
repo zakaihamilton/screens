@@ -452,7 +452,7 @@ screens.widget.transform = function WidgetTransform(me) {
                 if (!list || !list.length) {
                     continue;
                 }
-                let columnIndex = me.phases[phase];
+                let columnIndex = me.phases[phase] + 2;
                 params.gridData.push([rowIndex, columnIndex, list, me.classes[phase]]);
                 found = true;
             }
