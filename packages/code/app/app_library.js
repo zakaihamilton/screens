@@ -17,7 +17,7 @@ screens.app.library = function AppLibrary(me) {
         me.searchCounter = 0;
     };
     me.ready = async function () {
-        me.tagList = await me.db.library.tagList();
+        me.tagList = me.db.library.tagList();
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
