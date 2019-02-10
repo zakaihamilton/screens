@@ -22,6 +22,7 @@ screens.app.player = function AppPlayer(me) {
             params.showInBackground = true;
         }
         me.groups = await me.media.file.groups();
+        me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
             me.singleton.resolve = resolve;
@@ -124,11 +125,42 @@ screens.app.player = function AppPlayer(me) {
             return me.widget.menu.collect(object, info);
         }
     };
+    me.favouritesMenuList = {
+        get: function (object) {
+            var window = me.widget.window.get(object);
+            var groupName = window.options.groupName.toLowerCase();
+            var list = me.groups.find(group => groupName === group.name).sessions;
+            list = list.filter(session => session.extension === "m4a");
+            list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session && metadata.group === groupName));
+            var info = {
+                list,
+                property: "label",
+                options: { "state": "select" },
+                group: "session",
+                itemMethod: "app.player.session",
+                metadata: {
+                    "Name": "label",
+                    "Duration": "durationText"
+                }
+            };
+            return me.widget.menu.collect(object, info);
+        }
+    };
+    me.hasFavourites = function (object) {
+        var window = me.widget.window.get(object);
+        var groupName = window.options.groupName.toLowerCase();
+        var list = me.groups.find(group => groupName === group.name).sessions;
+        list = list.filter(session => session.extension === "m4a");
+        list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
+            metadata.group === groupName && metadata.isFavourite));
+        return list.length;
+    };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "ui.work.state", true);
         me.core.property.set(window, "app.player.format", "Audio");
         me.groups = await me.media.file.groups(true);
+        me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         await me.updateSessions(window);
         me.core.property.set(window, "ui.work.state", false);
     };
@@ -151,6 +183,12 @@ screens.app.player = function AppPlayer(me) {
         }
         me.hasAudio = audioFound !== null && audioFound.length;
         me.hasVideo = videoFound !== null && videoFound.length;
+        me.metadata = await me.db.shared.metadata.find({ group: groupName, title: name, user: "$userId" });
+        if (!me.metadata) {
+            me.metadata = {};
+        }
+        me.metadata.group = groupName;
+        me.metadata.title = name;
         if (audioFound && !videoFound) {
             window.options.format = "Audio";
         } else if (!audioFound && videoFound) {
@@ -389,5 +427,16 @@ screens.app.player = function AppPlayer(me) {
     me.copyName = function () {
         var window = me.singleton;
         me.ui.clipboard.copy(window.options.sessionName);
+    };
+    me.favourite = {
+        get: function () {
+            return me.metadata.isFavourite;
+        },
+        set: async function () {
+            var metadata = me.metadata;
+            metadata.isFavourite = !metadata.isFavourite;
+            await me.db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
+            me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
+        }
     };
 };

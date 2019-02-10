@@ -32,6 +32,16 @@
                     ]
                 },
                 {
+                    "text": "Favourites",
+                    "select": [
+                        "app.player.favouritesMenuList"
+                    ],
+                    "options": {
+                        "visible": "app.player.hasFavourites",
+                        "separator": true
+                    }
+                },
+                {
                     "text": "Upload",
                     "options": {
                         "separator": true
@@ -66,10 +76,18 @@
             "text": "Track",
             "select": [
                 {
+                    "text": "Favourite",
+                    "select": "app.player.favourite",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
                     "text": "Auto Play",
                     "select": "app.player.autoPlay",
                     "options": {
-                        "state": "select"
+                        "state": "select",
+                        "separator": true
                     }
                 },
                 {

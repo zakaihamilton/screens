@@ -61,6 +61,12 @@ screens.db.shared.content = function DbSharedContent(me) {
     return "server";
 };
 
+screens.db.shared.metadata = function DbSharedContent(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.cache = {};
+    return "server";
+};
+
 screens.db.shared.commentary = function DbSharedCommentary(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};
