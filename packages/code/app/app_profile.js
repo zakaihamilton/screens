@@ -6,11 +6,10 @@
 screens.app.profile = function AppProfile(me) {
     me.ready = async function () {
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
-        var userList = [];
+        me.userList = null;
         if (me.userListAvailable) {
-            userList = await me.user.profile.list();
+            me.userList = await me.user.profile.list();
         }
-        me.userList = userList;
     };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -79,7 +78,7 @@ screens.app.profile = function AppProfile(me) {
     };
     me.userId = async function (object, name) {
         var userId = null;
-        if (me.userList && name) {
+        if (Array.isArray(me.userList) && name) {
             var user = me.userList.find((user) => name == user.name);
             if (user && user.key) {
                 userId = user.key.name;

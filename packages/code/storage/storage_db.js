@@ -202,7 +202,7 @@ screens.storage.db = function StorageDB(me) {
         if (location.cache) {
             result = location.cache[hash];
             if (result) {
-                me.log("using db cache for: " + JSON.stringify(args));
+                me.log("using db cache for: " + location.componentId + " = " + JSON.stringify(args));
             }
         }
         return [result, hash];

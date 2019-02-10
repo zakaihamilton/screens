@@ -93,12 +93,10 @@ screens.manager.packet = function ManagerPacket(me) {
         };
         await me.core.service.sendAll("service.netmonitor.reset");
         await me.core.service.sendAll("service.netcontrol.reset");
-        var effects = await me.retrieveEffects();
-        resolve(effects);
     };
     me.ready = {
         set: async function () {
-            await me.applyEffects(me.packetInfo.effects);
+            me.applyEffects(me.packetInfo.effects);
         }
     };
     me.retrieveEffects = async function () {
