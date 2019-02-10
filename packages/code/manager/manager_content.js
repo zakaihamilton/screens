@@ -6,6 +6,9 @@
 screens.manager.content = function ManagerContent(me) {
     me.cache = {};
     me.lists = async function (componentId, userId) {
+        if (!userId) {
+            userId = this.userId;
+        }
         var publicList = await me.manager.content.list(componentId, false, userId);
         var privateList = await me.manager.content.list(componentId, true, userId);
         return { publicList, privateList };
@@ -14,18 +17,15 @@ screens.manager.content = function ManagerContent(me) {
         me.cache = {};
     };
     me.list = async function (componentId, private, userId) {
-        var kind = componentId + ".content";
+        if (!userId) {
+            userId = this.userId;
+        }
+        var [package, component] = componentId.split(".");
+        var query = { package, component, private: null };
         if (private) {
-            if (!userId) {
-                userId = this.userId;
-            }
-            kind += "." + userId;
+            query.private = userId;
         }
-        if (me.cache[kind]) {
-            return me.cache[kind];
-        }
-        var result = await me.storage.data.query(kind, "title");
-        me.cache[kind] = result;
+        var result = await me.db.shared.content.list(query);
         return result;
     };
     me.associated = async function (title, userId) {
@@ -53,54 +53,74 @@ screens.manager.content = function ManagerContent(me) {
         return results;
     };
     me.exists = async function (componentId, title, private, userId) {
-        var kind = componentId + ".content";
-        if (private) {
-            kind += "." + userId ? userId : this.userId;
+        if (!userId) {
+            userId = this.userId;
         }
-        var result = await me.storage.data.exists(kind, title);
+        var [package, component] = componentId.split(".");
+        var query = { package, component, title, private: null };
+        if (private) {
+            query.private = userId;
+        }
+        var result = await me.db.shared.content.find(query);
+        return result ? true : false;
+    };
+    me.load = async function (componentId, title, private, userId) {
+        if (!userId) {
+            userId = this.userId;
+        }
+        var [package, component] = componentId.split(".");
+        var query = { package, component, title, private: null };
+        if (private) {
+            query.private = userId;
+        }
+        var result = await me.db.shared.content.find(query);
+        if (result) {
+            result.content = me.core.string.decode(result.content);
+        }
         return result;
     };
-    me.load = async function (componentId, title, private) {
-        var kind = componentId + ".content";
+    me.save = async function (componentId, title, data, private, userId, userName) {
+        if (!userId) {
+            userId = this.userId;
+        }
+        if (!userName) {
+            userName = this.userName;
+        }
+        var [package, component] = componentId.split(".");
+        var query = { package, component, title, private: null };
         if (private) {
-            kind += "." + this.userId;
+            query.private = userId;
         }
-        var info = await me.storage.data.load(kind, title);
-        if (info) {
-            info.content = me.core.string.decode(info.content);
-        }
-        return info;
-    };
-    me.save = async function (componentId, title, data, private) {
-        var result = false;
-        var kind = componentId + ".content";
-        if (private) {
-            kind += "." + this.userId;
-        }
+        data = Object.assign({}, data);
         data.content = me.core.string.encode(data.content);
-        var info = me.load(componentId, title, private);
-        if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
-            await me.storage.data.save(data, kind, title, ["content"]);
-            me.db.events.msg.send(me.id + ".reset");
-            me.reset();
-            result = true;
+        var info = await me.load(componentId, title, private, userId);
+        var result = false;
+        if (!info || !info.locked || info.owner === userId || me.user.access.admin(userName)) {
+            result = await me.db.shared.content.use(query, data);
         }
         return result;
     };
-    me.delete = async function (componentId, title, private) {
-        var result = false;
-        var kind = componentId + ".content";
-        if (private) {
-            kind += "." + this.userId;
+    me.delete = async function (componentId, title, private, userId, userName) {
+        if (!userId) {
+            userId = this.userId;
         }
-        var info = me.load(componentId, title, private);
-        if (!info.locked || info.owner === this.userId || me.user.access.admin(this.userName)) {
-            await me.storage.data.delete(kind, title);
-            me.db.events.msg.send(me.id + ".reset");
-            me.reset();
-            result = true;
+        if (!userName) {
+            userName = this.userName;
+        }
+        var [package, component] = componentId.split(".");
+        var query = { package, component, title, private: null };
+        if (private) {
+            query.private = userId;
+        }
+        var info = await me.load(componentId, title, private, userId);
+        var result = false;
+        if (info) {
+            if (!info.locked || info.owner === userId || me.user.access.admin(userName)) {
+                result = await me.db.shared.content.remove(query);
+            }
         }
         return result;
+
     };
     return "server";
 };
