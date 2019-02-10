@@ -833,8 +833,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         });
         voicelist = voicelist.map((voice) => {
             return [voice.name, "widget.transform.voice", {
-                "state": "select",
-                "mark": !voice.localService
+                "state": "select"
             },
             {
                 "group": "voices"

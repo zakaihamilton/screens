@@ -125,17 +125,20 @@ screens.app.player = function AppPlayer(me) {
             return me.widget.menu.collect(object, info);
         }
     };
-    me.favouritesMenuList = {
-        get: function (object) {
+    me.metadataMenuList = {
+        get: function (object, property) {
             var window = me.widget.window.get(object);
             var groupName = window.options.groupName.toLowerCase();
             var list = me.groups.find(group => groupName === group.name).sessions;
             list = list.filter(session => session.extension === "m4a");
-            list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session && metadata.group === groupName));
+            list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
+                metadata.group === groupName && metadata[property]));
             var info = {
                 list,
                 property: "label",
-                options: { "state": "select" },
+                options: {
+                    "state": "select"
+                },
                 group: "session",
                 itemMethod: "app.player.session",
                 metadata: {
@@ -146,13 +149,13 @@ screens.app.player = function AppPlayer(me) {
             return me.widget.menu.collect(object, info);
         }
     };
-    me.hasFavourites = function (object) {
+    me.hasMetadata = function (object, property) {
         var window = me.widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
         var list = me.groups.find(group => groupName === group.name).sessions;
         list = list.filter(session => session.extension === "m4a");
         list = list.filter(session => me.metadataList.find(metadata => metadata.title === session.session &&
-            metadata.group === groupName && metadata.isFavourite));
+            metadata.group === groupName && metadata[property]));
         return list.length;
     };
     me.refresh = async function (object) {
@@ -428,15 +431,18 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         me.ui.clipboard.copy(window.options.sessionName);
     };
-    me.favourite = {
-        get: function () {
-            return me.metadata.isFavourite;
-        },
-        set: async function () {
-            var metadata = me.metadata;
-            metadata.isFavourite = !metadata.isFavourite;
-            await me.db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
-            me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
-        }
-    };
+    var metadataProperties = ["isFavourite", "watchLater"];
+    for (let property of metadataProperties) {
+        me[property] = {
+            get: function () {
+                return me.metadata[property];
+            },
+            set: async function () {
+                var metadata = me.metadata;
+                metadata[property] = !metadata[property];
+                await me.db.shared.metadata.use({ group: metadata.group, title: metadata.title, user: "$userId" }, metadata);
+                me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
+            }
+        };
+    }
 };

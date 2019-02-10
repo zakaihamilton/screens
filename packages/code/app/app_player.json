@@ -34,11 +34,19 @@
                 {
                     "text": "Favourites",
                     "select": [
-                        "app.player.favouritesMenuList"
+                        "app.player.metadataMenuList(isFavourite)"
                     ],
                     "options": {
-                        "visible": "app.player.hasFavourites",
-                        "separator": true
+                        "visible": "app.player.hasMetadata(isFavourite)"
+                    }
+                },
+                {
+                    "text": "Watch Later",
+                    "select": [
+                        "app.player.metadataMenuList(watchLater)"
+                    ],
+                    "options": {
+                        "visible": "app.player.hasMetadata(watchLater)"
                     }
                 },
                 {
@@ -77,7 +85,14 @@
             "select": [
                 {
                     "text": "Favourite",
-                    "select": "app.player.favourite",
+                    "select": "app.player.isFavourite",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
+                    "text": "Watch Later",
+                    "select": "app.player.watchLater",
                     "options": {
                         "state": "select"
                     }
