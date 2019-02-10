@@ -74,6 +74,7 @@ screens.manager.content = function ManagerContent(me) {
             query.private = userId;
         }
         var result = await me.db.shared.content.find(query);
+        result = Object.assign({}, result);
         if (result) {
             result.content = me.core.string.decode(result.content);
         }

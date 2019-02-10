@@ -206,7 +206,7 @@ screens.storage.db = function StorageDB(me) {
     };
     me.setCache = function (location, hash, value) {
         if (location.cache) {
-            location.cache[hash] = JSON.parse(JSON.stringify(value));
+            location.cache[hash] = value;
         }
     };
     me.notifyCache = function (location) {
