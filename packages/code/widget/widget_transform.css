@@ -139,7 +139,7 @@
     margin: 0;
 }
 
-.widget-transform-widget:hover {
+.widget-transform-widget.kab-term-hover:hover {
     text-shadow: 0 0 5px rgba(81, 203, 238, 1);
 }
 

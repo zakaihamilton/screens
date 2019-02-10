@@ -15,6 +15,7 @@ screens.kab.highlight = function KabHighlight(me) {
         if (highlight) {
             classes.push("kab-term-highlight");
         }
+        classes.push("kab-term-hover");
         var styles = {
             "user-select": "none"
         };
