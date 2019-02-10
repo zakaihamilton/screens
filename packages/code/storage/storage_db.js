@@ -159,17 +159,14 @@ screens.storage.db = function StorageDB(me) {
         me.notifyCache(location);
         return result.nRemoved;
     };
-    me.list = async function (location, query = {}, projection, params) {
-        var [array, hash] = me.getCache(location, query, projection, params);
+    me.list = async function (location, query = {}, params) {
+        var [array, hash] = me.getCache(location, query, params);
         if (array) {
             return array;
         }
         var collection = await me.collection(location);
-        if (!projection) {
-            projection = {};
-        }
         array = await me.core.util.performance(me.id + "." + location.collection + "." + JSON.stringify(query), async () => {
-            var cursor = await collection.find(query, projection);
+            var cursor = await collection.find(query);
             if (params) {
                 for (var param in params) {
                     cursor = cursor[param](params[param]);

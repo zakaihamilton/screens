@@ -284,6 +284,11 @@ screens.core.module = function CoreModule(me) {
                 if (info.url.startsWith("/api")) {
                     return;
                 }
+                if (info.url.startsWith("/reset")) {
+                    me.storage.local.empty();
+                    info.body = "Local Cache Empty";
+                    return;
+                }
                 if (info.url.startsWith("/upgrade")) {
                     me.db.events.msg.send(me.id + ".emptyCache");
                     info.body = "Upgrade complete";

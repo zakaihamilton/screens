@@ -10,11 +10,11 @@ screens.db.library = function DbLibrary(me) {
     me.tagList = function () {
         return me.tags.list();
     };
-    me.find = async function (query, tagList) {
+    me.find = async function (text, tagList) {
         if (!tagList) {
             tagList = [];
         }
-        var segments = query.split(" AND ");
+        var segments = text.split(" AND ");
         if (segments && segments.length > 1) {
             me.log("AND: " + JSON.stringify(segments));
             for (let segment of segments) {
@@ -23,7 +23,7 @@ screens.db.library = function DbLibrary(me) {
             me.log("returning " + tagList.length + " unique results");
             return tagList;
         }
-        segments = query.split(" OR ");
+        segments = text.split(" OR ");
         if (segments && segments.length > 1) {
             me.log("OR: " + JSON.stringify(segments));
             var results = [];
@@ -35,14 +35,17 @@ screens.db.library = function DbLibrary(me) {
             me.log("returning " + results.length + " results (reduced from " + prevLength + " )");
             return results;
         }
-        var tags = me.db.library.query.tags(query);
-        var filter = me.db.library.query.filter(query);
+        var tags = me.db.library.query.tags(text);
+        var filter = me.db.library.query.filter(text);
+        var query = {};
         var params = {};
         var result = [];
         var doQuery = false;
         if (filter) {
             if (filter !== "*") {
-                params["$text"] = { "$search": filter };
+                query["$text"] = { "$search": filter };
+                params.project = { score: { $meta: "textScore" } };
+                params.sort = { score: { $meta: "textScore" } };
             }
             doQuery = true;
         }
@@ -54,10 +57,10 @@ screens.db.library = function DbLibrary(me) {
             me.log("found " + tagList.length + " matching tags");
             if (tagList.length) {
                 if (tagList.length > 1) {
-                    params["_id"] = { $in: tagList.map(item => item._id) };
+                    query["_id"] = { $in: tagList.map(item => item._id) };
                 }
                 else {
-                    params["_id"] = tagList[0]._id;
+                    query["_id"] = tagList[0]._id;
                 }
                 doQuery = true;
             }
@@ -69,11 +72,18 @@ screens.db.library = function DbLibrary(me) {
         var list = [];
         if (doQuery) {
             if (filter === "*") {
-                result = await me.db.library.tags.list(params, {});
+                result = await me.db.library.tags.list(query, params);
             }
             else {
-                list = await me.db.library.content.list(params, {});
+                list = await me.db.library.content.list(query, params);
                 result = await me.db.library.tags.findByIds(list.map(item => item._id));
+                if (result) {
+                    result.sort((a, b) => {
+                        let score_a = list.find(item => item._id === a._id).score;
+                        let score_b = list.find(item => item._id === b._id).score;
+                        return score_b - score_a;
+                    });
+                }
             }
             me.log("number of results: " + result.length);
         }
