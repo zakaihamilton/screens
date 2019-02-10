@@ -18,7 +18,7 @@ screens.cmd.exec = function CmdExec(me) {
             else {
                 result = method;
             }
-            me.core.property.set(terminal, "print", JSON.stringify(result));
+            me.core.property.set(terminal, "print", JSON.stringify(result, null, 4));
         }
         catch (err) {
             var string = err;

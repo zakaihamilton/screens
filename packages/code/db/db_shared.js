@@ -42,3 +42,9 @@ screens.db.shared.highlight = function DbSharedHighlight(me) {
     ];
     return "server";
 };
+
+screens.db.shared.content = function DbSharedContent(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.cache = {};
+    return "server";
+};

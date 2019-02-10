@@ -43,18 +43,18 @@ screens.storage.data = function StorageData(me) {
         });
         return results;
     };
-    me.save = async function (value, type, id, nonIndexed) {
+    me.save = async function (value, kind, id, nonIndexed) {
         var user = this.userId;
         var service = me.getService();
         if (service) {
-            const key = service.key([type, id]);
+            const key = service.key([kind, id]);
             return new Promise((resolve, reject) => {
                 service.save({
                     key: key,
                     data: me.toDataStore(value, nonIndexed, user)
                 }, function (err) {
                     if (err) {
-                        err = "error saving data for type: " + type + " id: " + id + " err:" + err;
+                        err = "error saving data for kind: " + kind + " id: " + id + " err:" + err;
                         me.log_error(err);
                         reject(err);
                     }
@@ -65,14 +65,14 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
-    me.delete = async function (type, id) {
+    me.delete = async function (kind, id) {
         var service = me.getService();
         if (service) {
-            const key = service.key([type, id]);
+            const key = service.key([kind, id]);
             return new Promise((resolve, reject) => {
                 service.delete(key, function (err) {
                     if (err) {
-                        err = "error deleting data for type: " + type + " id: " + id + " err:" + err;
+                        err = "error deleting data for kind: " + kind + " id: " + id + " err:" + err;
                         me.log_error(err);
                         reject(err);
                     }
@@ -83,10 +83,10 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
-    me.load = async function (type, id) {
+    me.load = async function (kind, id) {
         var service = me.getService();
         if (service) {
-            const key = service.key([type, id]);
+            const key = service.key([kind, id]);
             return new Promise((resolve, reject) => {
                 service.get(key, function (err, value) {
                     if (err) {
@@ -99,10 +99,10 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
-    me.exists = async function (type, id) {
+    me.exists = async function (kind, id) {
         var service = me.getService();
         if (service) {
-            const key = service.key([type, id]);
+            const key = service.key([kind, id]);
             return new Promise(resolve => {
                 service.get(key, function (err, value) {
                     if (err) {
@@ -115,22 +115,12 @@ screens.storage.data = function StorageData(me) {
             });
         }
     };
-    me.query = async function (type, select, filters) {
-        var user = this.userId;
+    me.query = async function (kind, select) {
         var service = me.getService();
         if (service) {
-            var query = service.createQuery(type);
+            var query = service.createQuery(kind);
             if (select) {
                 query = query.select(select);
-            }
-            if (filters) {
-                filters.map(filter => {
-                    if (filter.value === "$userId") {
-                        me.log("query with user: " + JSON.stringify(user));
-                        filter.value = user;
-                    }
-                    query = query.filter(filter.name, filter.operator, filter.value);
-                });
             }
             try {
                 var results = await service.runQuery(query);
@@ -141,14 +131,59 @@ screens.storage.data = function StorageData(me) {
                 return items;
             }
             catch (err) {
-                var long_error = "failure to execute query, type: " + type +
+                var long_error = "failure to execute query, kind: " + kind +
                     " select: " + JSON.stringify(select) +
-                    " filters: " + JSON.stringify(filters) +
                     " error: " + err.message || err;
                 me.log_error(long_error);
                 return long_error;
             }
         }
+    };
+    me.kinds = async function () {
+        var service = me.getService();
+        if (service) {
+            const query = service.createQuery("__kind__").select("__key__");
+
+            const [entities] = await service.runQuery(query);
+            var kinds = entities.map(entity => entity[service.KEY].name);
+            kinds = kinds.filter(kind => !kind.startsWith("__"));
+
+            return kinds;
+        }
+    };
+    me.migrate = async function (prefix, collection) {
+        var kinds = await me.kinds();
+        var migratedKinds = {};
+        kinds = kinds.filter(kind => kind.startsWith(prefix));
+        if (!kinds.length) {
+            return;
+        }
+        for (var kind of kinds) {
+            var [package, component, target, private] = kind.split(".");
+            let entities = await me.query(kind);
+            if (!entities.length) {
+                continue;
+            }
+            if (!target) {
+                continue;
+            }
+            var targetId = "db." + collection + "." + target;
+            var targetComponent = me.browse(targetId);
+            if (!targetComponent) {
+                throw targetId + " not found in db package";
+            }
+            migratedKinds[kind] = 0;
+            for (var entity of entities) {
+                entity = JSON.parse(JSON.stringify(entity));
+                delete entity.key;
+                entity.package = package;
+                entity.component = component;
+                entity.private = private ? private : null;
+                await targetComponent.store(entity);
+                migratedKinds[kind]++;
+            }
+        }
+        return migratedKinds;
     };
     return "server";
 };

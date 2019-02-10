@@ -99,14 +99,15 @@ screens.storage.db = function StorageDB(me) {
         me.setCache(location, hash, result);
         return result;
     };
-    me.store = async function (location, data) {
+    me.store = async function (location, listOrSingle) {
         var collection = await me.collection(location);
-        var isArray = true;
-        if (!Array.isArray(data)) {
-            isArray = true;
-            data = [data];
+        var isSingle = false;
+        var list = listOrSingle;
+        if (!Array.isArray(listOrSingle)) {
+            isSingle = true;
+            list = [listOrSingle];
         }
-        data.map(async data => {
+        for (var data of list) {
             if (data) {
                 if (!data._id) {
                     data._id = me.mongodb.ObjectID().toString();
@@ -115,12 +116,13 @@ screens.storage.db = function StorageDB(me) {
                     await collection.replaceOne({ _id: data._id }, data, { upsert: true });
                 }
             }
-        });
-        if (!isArray) {
-            data = data[0];
+        }
+        listOrSingle = list;
+        if (isSingle) {
+            listOrSingle = list[0];
         }
         me.notifyCache(location);
-        return data;
+        return listOrSingle;
     };
     me.push = async function (location, data) {
         var collection = await me.collection(location);
@@ -213,7 +215,13 @@ screens.storage.db = function StorageDB(me) {
     me.notifyCache = function (location) {
         if (location.cache && location.componentId) {
             me.emptyCache(location);
-            me.db.events.msg.send(location.componentId + ".emptyCache");
+            if (location.timer) {
+                clearTimeout(location.timer);
+            }
+            location.timer = setTimeout(async () => {
+                location.timer = null;
+                await me.db.events.msg.send(location.componentId + ".emptyCache");
+            }, 1000);
         }
     };
     me.emptyCache = function (location) {
@@ -257,9 +265,6 @@ screens.storage.db = function StorageDB(me) {
         for (var name of mapping) {
             component[name] = me[name].bind(null, location);
         }
-        setTimeout(() => {
-            me.collection(location);
-        }, 1000);
     };
     return "server";
 };

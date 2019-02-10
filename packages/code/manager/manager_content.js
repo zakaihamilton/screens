@@ -24,10 +24,7 @@ screens.manager.content = function ManagerContent(me) {
         if (me.cache[kind]) {
             return me.cache[kind];
         }
-        var result = await me.storage.data.query(kind);
-        if (result) {
-            result = result.map(item => { return { title: item.title }; });
-        }
+        var result = await me.storage.data.query(kind, "title");
         me.cache[kind] = result;
         return result;
     };
