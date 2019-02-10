@@ -318,5 +318,6 @@ screens.app.visualize = function AppVisualize(me) {
         me.core.property.set(object, "ui.attribute.emTop", emY);
         me.core.property.set(object, "ui.style.left", emX + "em");
         me.core.property.set(object, "ui.style.top", emY + "em");
+        me.core.property.set(object, "ui.style.opacity", "");
     };
 };

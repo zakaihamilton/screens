@@ -55,7 +55,10 @@
                                     "ui.move.extend": "this",
                                     "ui.move.enabled": true,
                                     "ui.move.method": "app.visualize.moveTerm",
-                                    "ui.move.relative": true
+                                    "ui.move.relative": true,
+                                    "ui.style.left": "0em",
+                                    "ui.style.top": "0em",
+                                    "ui.style.opacity": "0.0"
                                 },
                                 "ui.data.values": [
                                     "ui.param.terms"
