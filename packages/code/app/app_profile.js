@@ -4,17 +4,14 @@
  */
 
 screens.app.profile = function AppProfile(me) {
-    me.ready = async function () {
-        me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
-        me.userList = null;
-        if (me.userListAvailable) {
-            me.userList = await me.user.profile.list();
-        }
-    };
     me.launch = async function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
+        }
+        me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
+        if (me.userListAvailable) {
+            me.userList = await me.user.profile.list();
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self", null);
     };
@@ -78,8 +75,9 @@ screens.app.profile = function AppProfile(me) {
     };
     me.userId = async function (object, name) {
         var userId = null;
-        if (Array.isArray(me.userList) && name) {
-            var user = me.userList.find((user) => name == user.name);
+        var list = me.userList;
+        if (list && name) {
+            var user = list.find((user) => name == user.name);
             if (user && user.key) {
                 userId = user.key.name;
             }
