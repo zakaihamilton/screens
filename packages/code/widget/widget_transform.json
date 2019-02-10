@@ -348,6 +348,14 @@
                                 "enabled": "widget.transform.showHighlights",
                                 "state": "select"
                             }
+                        },
+                        {
+                            "text": "Export Source",
+                            "select": "widget.transform.exportSource",
+                            "options": {
+                                "enabled": "widget.transform.showHighlights",
+                                "state": "select"
+                            }
                         }
                     ]
                 },

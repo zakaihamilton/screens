@@ -40,7 +40,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentarySeparator: true,
             commentaryUser: "",
             showHighlights: true,
-            copyHighlights: true
+            copyHighlights: true,
+            exportSource: false
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -71,7 +72,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentaryLabel: me.transform,
             commentarySeparator: me.transform,
             showHighlights: me.transform,
-            copyHighlights: null
+            copyHighlights: null,
+            exportSource: null
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -527,28 +529,7 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         return me.widget.menu.collect(object, info);
     };
-    me.transformedHeader = function (object) {
-        var widget = me.findWidget(object);
-        var list = [];
-        me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
-            var filter = (element) => {
-                return (element.tagName && element.tagName.toLowerCase() === "h4");
-            };
-            var modify = (element, text) => {
-                if (text) {
-                    text += "\n";
-                }
-                return text;
-            };
-            var paragraphs = me.widget.transform.layout.pageText(page, filter, modify);
-            paragraphs = paragraphs.filter(Boolean);
-            if (paragraphs && paragraphs.length) {
-                list.push(paragraphs.join(""));
-            }
-        });
-        return list.join("").trim();
-    };
-    me.transformedText = function (object, useFilter) {
+    me.transformedText = function (object, useFilter, useSource) {
         var widget = me.findWidget(object);
         var list = [];
         me.widget.transform.layout.pageApply(widget.var.layout, (page) => {
@@ -559,6 +540,9 @@ screens.widget.transform = function WidgetTransform(me) {
                 };
             }
             var modify = (element, text) => {
+                if (useSource) {
+                    text = me.core.property.get(element, "ui.attribute.#source");
+                }
                 if (text) {
                     if (element.tagName && element.tagName.toLowerCase() === "h4") {
                         text = "\n" + text;
@@ -581,13 +565,9 @@ screens.widget.transform = function WidgetTransform(me) {
         var widget = me.findWidget(object);
         var text = "";
         if (widget.options.showHighlights && widget.options.copyHighlights) {
-            text = me.transformedText(object, true);
+            text = me.transformedText(object, true, widget.options.exportSource);
         }
-        if (text) {
-            var header = me.transformedHeader(object);
-            text = header + "\n\n" + text;
-        }
-        else {
+        if (!text) {
             text = me.transformedText(object, false);
         }
         me.core.property.set(target, "importData", text);

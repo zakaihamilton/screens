@@ -21,7 +21,8 @@ screens.kab.highlight = function KabHighlight(me) {
         if (!line) {
             return "";
         }
-        var value = line.match(/<p>(.*?)<\/p>/);
+        var tag = line.includes("<h4>") ? "h4" : "p";
+        var value = line.match(tag === "h4" ? /<h4>(.*?)<\/h4>/ : /<p>(.*?)<\/p>/);
         if (value) {
             value = value[1];
         }
@@ -29,7 +30,7 @@ screens.kab.highlight = function KabHighlight(me) {
             value = line;
         }
         var html = me.ui.html.item({
-            tag: "p",
+            tag,
             classes,
             styles,
             attributes: {
