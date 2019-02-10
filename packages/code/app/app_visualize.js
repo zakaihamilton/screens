@@ -32,7 +32,7 @@ screens.app.visualize = function AppVisualize(me) {
         else {
             me.core.property.set(window, "ui.property.after", {
                 "app.visualize.sortDown": null,
-                "timeout": 250
+                "timeout": 1000
             });
         }
         return window;
