@@ -78,4 +78,5 @@ screens.db.shared.commentary = function DbSharedCommentary(me) {
             "name": 1
         }
     ];
+    return "server";
 };
