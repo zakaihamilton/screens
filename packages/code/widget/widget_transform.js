@@ -520,7 +520,7 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.commentaryUsers = function (object) {
         var info = {
-            list: me.db.commentary.users(),
+            list: me.db.shared.commentary.users(),
             group: "users",
             itemMethod: "widget.transform.commentaryUser",
             options: { "state": "select" }

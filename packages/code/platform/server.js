@@ -32,7 +32,6 @@ screens.api = [
     "core.file",
     "db.library",
     "db.shared",
-    "db.commentary",
     "db.events",
     "db.cache",
     "media.file",

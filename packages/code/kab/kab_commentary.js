@@ -4,17 +4,20 @@
  */
 
 screens.kab.commentary = function KabCommentary(me) {
-    me.line = async function (session, line) {
-        var hash = String(session.hash);
-        var params = { hash };
-        var userName = session.options.commentaryUser;
+    me.query = function (options) {
+        var query = {};
+        var userName = options.commentaryUser;
         if (userName && userName !== "all") {
-            params.name = userName;
+            query.name = userName;
         }
-        else if (session.options.commentaryEdit) {
-            params.user = "$userId";
+        else if (options.commentaryEdit) {
+            query.user = "$userId";
         }
-        var commentaries = await me.db.commentary.entry.list(params);
+        return query;
+    };
+    me.line = async function (session, commentaries, line) {
+        var hash = String(session.hash);
+        var userName = session.options.commentaryUser;
         if ((!commentaries || !commentaries.length) && session.options.commentaryEdit) {
             commentaries = [{
                 text: "",
@@ -123,7 +126,7 @@ screens.kab.commentary = function KabCommentary(me) {
         var name = "$userName";
         var hash = me.core.property.get(element, "ui.attribute.#hash");
         var source = me.core.property.get(element, "ui.attribute.#source");
-        var data = await me.db.commentary.entry.find({
+        var data = await me.db.shared.commentary.find({
             "user": "$userId",
             "hash": hash
         });
@@ -138,13 +141,13 @@ screens.kab.commentary = function KabCommentary(me) {
         });
         data[field] = text;
         if (text) {
-            me.db.commentary.entry.use({
+            me.db.shared.commentary.use({
                 "user": "$userId",
                 "hash": hash
             }, data);
         }
         else {
-            me.db.commentary.entry.remove({
+            me.db.shared.commentary.remove({
                 "user": "$userId"
             });
         }

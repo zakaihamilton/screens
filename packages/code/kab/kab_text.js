@@ -193,6 +193,7 @@ screens.kab.text = function KabText(me) {
     me.hash = function (string) {
         var clean = me.clean(string);
         var hash = me.core.string.hash(clean);
+        hash = String(hash);
         return hash;
     };
     me.parse = async function (language, wordsString, options, progressCallback) {
@@ -210,7 +211,18 @@ screens.kab.text = function KabText(me) {
         }
         var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
         var lines = wordsString.split("\n");
-        lines = lines.map(async line => {
+        var hashes = lines.map(line => {
+            return me.hash(line);
+        });
+        var request = {};
+        if (options.showHighlights) {
+            request.highlight = me.kab.highlight.query(options);
+        }
+        if (options.commentaryEdit || options.commentaryUser) {
+            request.commentary = me.kab.commentary.query(options);
+        }
+        var items = await me.db.shared.hashResults(request, hashes);
+        lines = lines.map(async (line, index) => {
             var hash = me.hash(line);
             var session = {
                 hash,
@@ -232,10 +244,10 @@ screens.kab.text = function KabText(me) {
                 return line;
             }
             if (options.showHighlights) {
-                line = await me.kab.highlight.line(session, line);
+                line = await me.kab.highlight.line(session, items.highlight[index], line);
             }
             if (options.commentaryEdit || options.commentaryUser) {
-                line = await me.kab.commentary.line(session, line);
+                line = await me.kab.commentary.line(session, items.commentary[index], line);
             }
             return line;
         });

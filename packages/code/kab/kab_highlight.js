@@ -4,10 +4,12 @@
  */
 
 screens.kab.highlight = function KabHighlight(me) {
-    me.line = async function (session, line) {
+    me.query = function () {
+        var query = { user: "$userId" };
+        return query;
+    };
+    me.line = async function (session, highlight, line) {
         var hash = String(session.hash);
-        var params = { hash, user: "$userId" };
-        var highlight = await me.db.shared.highlight.find(params);
         let source = me.kab.text.clean(session.line);
         var classes = [];
         if (highlight) {

@@ -8,8 +8,7 @@ screens.include({
         "html"
     ],
     "db": [
-        "shared",
-        "commentary"
+        "shared"
     ],
     "kab": [
         "*"
