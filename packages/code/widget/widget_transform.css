@@ -139,6 +139,14 @@
     margin: 0;
 }
 
+.widget-transform-widget:hover {
+    text-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+.widget-transform-widget.kab-term-highlight:hover {
+    text-shadow: 0 0 5px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+}
+
 p.widget-transform-widget {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
