@@ -5,7 +5,19 @@
     },
     "replace": {
         "characters": {
-            "'\"": "\""
+            "'\"": "\"",
+            "\u00A0": " "
+        },
+        "tags": {
+            "<subtitle>": "\n<b>",
+            "</subtitle>": "</b>",
+            "<article>": "<br>",
+            "<title>": "<br>\n<b>",
+            "</title>": "</b>",
+            "<rtl>": "<span dir=\"rtl\">",
+            "</rtl>": "</span>",
+            "<set>": "<span style=\"display: inline-block;\">",
+            "</set>": "</span>"
         }
     },
     "pre": [
@@ -39,14 +51,18 @@
             "suffix": "</h4>"
         },
         {
+            "find": "/\\\n",
+            "replace": "</p>\n<p>",
             "prefix": "<p>",
-            "find": "\n",
-            "replace": "</p><p>",
-            "suffix": "<br/><br/>"
+            "suffix": "</p>"
         },
         {
-            "find": "/<p><h4 style=\"text-align:center\"><br><\\/h4><\\/p>",
+            "find": "/<p><h4><br><\\/h4><\\/p>",
             "replace": "<br>"
+        },
+        {
+            "find": "/<p><h4><hr><\\/h4><\\/p>",
+            "replace": "<hr>"
         }
     ],
     "phaseNumber": {
