@@ -114,6 +114,7 @@
             "ui.basic.elements": {
                 "ui.element.component": "widget.editor",
                 "ui.class.class": "app.library.editor",
+                "ui.class.add": "inherit-font",
                 "ui.basic.var": "editor"
             },
             "ui.monitor.change": "app.library.updateText"

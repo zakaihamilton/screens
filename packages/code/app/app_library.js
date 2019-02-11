@@ -320,13 +320,15 @@ screens.app.library = function AppLibrary(me) {
                 transformText += "<article>";
             }
             if (record.tags) {
-                var getTag = (tag, prefix = "") => { if (tag in record.tags) { return prefix + record.tags[tag] + "\n"; } else { return ""; } };
+                var getTag = (tag, prefix = "", suffix = "\n") => { if (tag in record.tags) { return prefix + record.tags[tag] + suffix; } else { return ""; } };
                 transformText += getTag("title");
+                transformText += getTag("number", "", ": ");
                 transformText += getTag("article");
                 transformText += getTag("chapter", "Chapter: ");
                 transformText += getTag("section");
                 transformText += getTag("part", "Part: ");
                 transformText += getTag("portion");
+                transformText += getTag("year");
                 transformText += getTag("volume");
                 transformText += getTag("book");
                 transformText += getTag("author");

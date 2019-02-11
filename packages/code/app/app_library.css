@@ -70,6 +70,7 @@
     resize: none;
     overflow: auto;
     direction: ltr;
+    padding: 10px;
 }
 
 .app-library-editor.hebrew {
