@@ -290,6 +290,21 @@ screens.core.file = function CoreFile(me) {
     return "server";
 };
 
+screens.core.file.buffer = function CoreFileBuffer(me) {
+    me.read = function (path, options) {
+        var buffer = undefined;
+        path = me.upper.path(path);
+        if (me.upper.fs.existsSync(path)) {
+            buffer = me.upper.fs.readFileSync(path, options);
+        }
+        return buffer;
+    };
+    me.write = function (path, data, options) {
+        path = me.upper.path(path);
+        me.upper.fs.writeFileSync(path, data, options);
+    };
+};
+
 screens.core.file.alias = function CoreFileAlias(me) {
     me.aliases = {};
     me.set = function (source, target) {

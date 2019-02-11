@@ -49,7 +49,8 @@ screens.core.module = function CoreModule(me) {
         result.warnings().forEach(function (warn) {
             me.log_warn(warn.toString());
         });
-        return result.css;
+        data = me.core.pack.minify(filePath, result.css);
+        return data;
     };
     me.handleCode = async function (filePath, params, info) {
         if (filePath.startsWith("/")) {
@@ -57,7 +58,7 @@ screens.core.module = function CoreModule(me) {
         }
         if (filePath.startsWith("platform/")) {
             var platform = filePath.split("/").pop().split(".")[0];
-            return await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"]);
+            return await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true);
         }
         var component_path = me.core.module.path_file_to_component(filePath);
         var target_platform = null;
@@ -102,6 +103,7 @@ screens.core.module = function CoreModule(me) {
                 data += originalData;
             }
         }
+        data = me.core.pack.minify(filePath, data);
         return data;
     };
     me.handleMultiFiles = async function (filePath, params, info) {
@@ -147,12 +149,8 @@ screens.core.module = function CoreModule(me) {
                         return line;
                     }
                     let codeParams = Object.assign({}, params, { method: me.handleCode, extension: ".js" });
-                    let styleParams = Object.assign({}, params, { method: me.handleStylesheet, extension: ".css", optional: true });
                     let codeContent = await me.core.module.handleMultiFiles(filePath, codeParams, info);
                     line = "<script id=\"" + filePath + "\">\n" + codeContent + "\n</" + "script>\n";
-                    let cssFilePath = filePath.replace(".js", ".css");
-                    let styleContent = await me.core.module.handleMultiFiles(cssFilePath, styleParams, info);
-                    line += "<style id=\"" + cssFilePath + "\">\n" + styleContent + "\n</" + "style>\n";
                     return line;
                 }
                 result = line.match(/\s<link\srel="stylesheet"\shref="([^"]*)">/);

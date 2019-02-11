@@ -22,6 +22,7 @@
     "bulma": "^0.7.2",
     "chance": "^1.0.18",
     "chart.js": "^2.7.3",
+    "clean-css": "^4.2.1",
     "dropbox": "^4.0.13",
     "es6-promise": "^4.2.5",
     "eslint": "^5.9.0",

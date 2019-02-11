@@ -303,6 +303,8 @@ screens.core.string = function CoreString(me) {
             hash2 = (hash2 * 33) ^ char;
         }
 
-        return (hash1 >>> 0) * 4096 + (hash2 >>> 0);
+        var hash = (hash1 >>> 0) * 4096 + (hash2 >>> 0);
+        hash = String(hash);
+        return hash;
     };
 };

@@ -193,7 +193,6 @@ screens.kab.text = function KabText(me) {
     me.hash = function (string) {
         var clean = me.clean(string);
         var hash = me.core.string.hash(clean);
-        hash = String(hash);
         return hash;
     };
     me.parse = async function (language, wordsString, options, progressCallback) {
