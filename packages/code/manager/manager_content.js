@@ -5,12 +5,12 @@
 
 screens.manager.content = function ManagerContent(me) {
     me.cache = {};
-    me.lists = async function (componentId, userId) {
+    me.lists = async function (userId) {
         if (!userId) {
             userId = this.userId;
         }
-        var publicList = await me.manager.content.list(componentId, false, userId);
-        var privateList = await me.manager.content.list(componentId, true, userId);
+        var publicList = await me.db.shared.content.list({ private: null });
+        var privateList = await me.db.shared.content.list({ private: userId });
         return { publicList, privateList };
     };
     me.reset = function () {

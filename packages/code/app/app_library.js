@@ -10,14 +10,12 @@ screens.app.library = function AppLibrary(me) {
             me.core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
+        me.tagList = me.db.library.tagList();
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.init = async function () {
         me.core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
-    };
-    me.ready = async function () {
-        me.tagList = me.db.library.tagList();
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);

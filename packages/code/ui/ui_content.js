@@ -6,6 +6,9 @@
 screens.ui.content = function UIContent(me) {
     me.content = {
         init: async function () {
+            if (!me.ui.content.lists) {
+                me.ui.content.lists = me.manager.content.lists(me.id);
+            }
             me.content.update();
         },
         info: function (window) {
@@ -93,10 +96,12 @@ screens.ui.content = function UIContent(me) {
                 }
             ];
         },
-        update: function () {
-            me.manager.content.lists(me.id).then(lists => {
-                Object.assign(me.content, lists);
-            });
+        update: async function () {
+            var [package, component] = me.id.split(".");
+            var lists = await me.ui.content.lists;
+            var filter = item => item.package === package && item.component === component;
+            me.content.publicList = lists.publicList.filter(filter);
+            me.content.privateList = lists.privateList.filter(filter);
         },
         refresh: {
             set: async function (object) {
