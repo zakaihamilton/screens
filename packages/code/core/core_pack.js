@@ -49,7 +49,7 @@ screens.core.pack = function CorePack(me) {
         }
         if (componentHeaders) {
             body += "screens.packages = [";
-            body += Object.keys(packages).map(package => "\"" + package + "\"").join(",\n");
+            body += Object.keys(packages).map(package => "\"" + package + "\"").join(",");
             body += "];\n";
             for (let package in packages) {
                 body += `screens.${package} = {`;
