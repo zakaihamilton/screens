@@ -20,7 +20,7 @@ screens.core.app = function CoreApp(me) {
                     await me.core.message.send(name + ".ready");
                 }
                 catch (err) {
-                    console.error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
+                    me.log_error(screens.platform + ": Failed to notify app: " + name + " for ready message with error: " + err);
                 }
             });
         }
@@ -48,7 +48,7 @@ screens.core.app = function CoreApp(me) {
         }
         var progress = me.ui.modal.launch("progress", {
             "title": me.core.string.title(appName),
-            "delay": "250"
+            "delay": "500"
         });
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
         me.core.property.set(progress, "close");
