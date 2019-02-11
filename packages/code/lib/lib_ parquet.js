@@ -8,8 +8,11 @@ screens.lib.parquet = function LibParquet(me) {
         me.parquet = require("parquet");
     };
     me.write = async function (path, schema, records) {
+        let options = {
+            compression: "SNAPPY"
+        };
         schema = new me.parquet.ParquetSchema(schema);
-        var writer = await me.parquet.ParquetWriter.openFile(schema, path);
+        var writer = await me.parquet.ParquetWriter.openFile(schema, path, options);
         for (var record of records) {
             await writer.appendRow(record);
         }
