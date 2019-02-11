@@ -75,9 +75,6 @@ screens.manager.content = function ManagerContent(me) {
         }
         var result = await me.db.shared.content.find(query);
         result = Object.assign({}, result);
-        if (result) {
-            result.content = me.core.string.decode(result.content);
-        }
         return result;
     };
     me.save = async function (componentId, title, data, private, userId, userName) {
@@ -93,7 +90,6 @@ screens.manager.content = function ManagerContent(me) {
             query.private = userId;
         }
         data = Object.assign({}, data);
-        data.content = me.core.string.encode(data.content);
         var info = await me.load(componentId, title, private, userId);
         var result = false;
         if (!info || !info.locked || info.owner === userId || me.user.access.admin(userName)) {
