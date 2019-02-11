@@ -309,10 +309,10 @@ screens.ui.content = function UIContent(me) {
                 var info = me.content.info(window);
                 var list = [];
                 if (name) {
-                    var [publicApps, privateApps] = await me.manager.content.associated(name);
+                    var { publicList, privateList } = await me.manager.content.associated(name);
                     var playerItems = await me.content.associated.playerItems(name);
-                    var publicList = me.content.associated.items(window, name, publicApps);
-                    var privateList = me.content.associated.items(window, name, privateApps, true);
+                    publicList = me.content.associated.items(window, name, publicList);
+                    privateList = me.content.associated.items(window, name, privateList, true);
                     if (publicList && publicList.length && privateList && privateList.length) {
                         privateList[0][2].separator = true;
                     }
