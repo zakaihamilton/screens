@@ -38,6 +38,9 @@
 
 .app-visualize-term.transition {
     z-index: 1000;
+    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+    background: linear-gradient(-45deg, #00B4DB, #0083B0);
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1), 0px 5px 5px rgba(81, 203, 238, 1);
 }
 
 .app-visualize-term:not(.mobile):hover {
@@ -74,6 +77,10 @@
 
 .app-visualize-term:not(.mobile):hover .app-visualize-delete {
     visibility: visible;
+}
+
+.app-visualize-term.transition .app-visualize-delete {
+    visibility: hidden !important;
 }
 
 .app-visualize-iconbar {
