@@ -88,6 +88,7 @@ screens.widget.chart = function WidgetChart(me) {
         }
     };
     me.dateRel = function (unixTimestamp) {
-        return moment.unix(unixTimestamp).toDate();
+        var date = new Date(unixTimestamp * 1000);
+        return date.toString();
     };
 };
