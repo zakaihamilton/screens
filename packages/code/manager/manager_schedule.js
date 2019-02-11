@@ -36,8 +36,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
                 }
             }
         }
-        let [public, private] = await me.manager.content.associated(null, this.userId);
-        let sources = { public, private };
+        let sources = await me.manager.content.associated(null, this.userId);
         for (var source in sources) {
             let list = sources[source];
             for (let app in list) {
@@ -57,7 +56,7 @@ screens.manager.schedule = function ManagerSchedule(me) {
                             group,
                             title,
                             app: me.core.string.title(app),
-                            launch: [app, title, source === "private"]
+                            launch: [app, title, source === "privateList"]
                         });
                     }
                 }

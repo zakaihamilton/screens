@@ -81,7 +81,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await me.core.util.performance(me.id + "." + location.collection + ".id", async () => {
+        var result = await me.core.util.performance(location.componentId + ".findById: " + id, async () => {
             return await collection.findOne(query);
         });
         me.setCache(location, hash, result);
@@ -93,7 +93,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        var result = await me.core.util.performance(me.id + "." + location.collection + "." + JSON.stringify(query), async () => {
+        var result = await me.core.util.performance(location.componentId + ".find: " + JSON.stringify(query), async () => {
             return await collection.findOne(query);
         });
         me.setCache(location, hash, result);
@@ -165,7 +165,7 @@ screens.storage.db = function StorageDB(me) {
             return array;
         }
         var collection = await me.collection(location);
-        array = await me.core.util.performance(me.id + "." + location.collection + "." + JSON.stringify(query), async () => {
+        array = await me.core.util.performance(location.componentId + ".list: " + JSON.stringify(query), async () => {
             var cursor = await collection.find(query);
             if (params) {
                 for (var param in params) {

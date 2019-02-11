@@ -32,25 +32,26 @@ screens.manager.content = function ManagerContent(me) {
         if (!userId) {
             userId = this.userId;
         }
+        let lists = await me.lists(userId);
         let apps = await me.user.access.appList(userId);
-        let results = await Promise.all([false, true].map(async private => {
-            let result = {};
-            for (let app of apps) {
-                var list = await me.list("app." + app, private, userId);
-                for (let item of list) {
-                    if (title && item.title !== title) {
-                        continue;
-                    }
-                    var titles = result[app];
-                    if (!titles) {
-                        titles = result[app] = [];
-                    }
-                    titles.push(item.title);
+        for (let listName in lists) {
+            let list = lists[listName];
+            let filter = item => item.package === "app" && apps.includes(item.component);
+            list = list.filter(filter);
+            let results = {};
+            for (let item of list) {
+                if (title && item.title !== title) {
+                    continue;
                 }
+                var titles = results[item.component];
+                if (!titles) {
+                    titles = results[item.component] = [];
+                }
+                titles.push(item.title);
             }
-            return result;
-        }));
-        return results;
+            lists[listName] = results;
+        }
+        return lists;
     };
     me.exists = async function (componentId, title, private, userId) {
         if (!userId) {
