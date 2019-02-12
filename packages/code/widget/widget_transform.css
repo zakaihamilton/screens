@@ -174,17 +174,6 @@ h4.widget-transform-widget {
     opacity: 0;
 }
 
-.widget-transform-widget:after {
-    content: "\2606\00a0";
-    display: inline-block;
-    opacity: 0;
-    font-size: 75%;
-}
-
-.widget-transform-widget.mark:before {
-    opacity: 1;
-}
-
 .widget-transform-level {
     padding: 10px;
     border: 1px solid lightgray;
