@@ -634,7 +634,7 @@ screens.app.library = function AppLibrary(me) {
                     }
                     var value = item[key];
                     value = value.replace(/\d+/g, (x) => me.core.string.padNumber(x, 3));
-                    if (value.toLowerCase().includes(text)) {
+                    if (key.toLowerCase().includes(text) || value.toLowerCase().includes(text)) {
                         results.add(key + ":" + value);
                     }
                 }
