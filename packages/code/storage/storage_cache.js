@@ -5,9 +5,9 @@
 
 screens.storage.cache = function StorageCache(me) {
     me.policy = {
-        code: 'packages/code',
-        res: 'packages/res',
-        custom: 'custom'
+        code: "packages/code",
+        res: "packages/res",
+        custom: "custom"
     };
     me.init = function () {
         me.core.event.register(null, me, "fetch", me.events.fetch, "fetch", self, { respondWith: true });
