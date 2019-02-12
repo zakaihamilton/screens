@@ -50,7 +50,7 @@
     display: none;
     z-index: 1000;
     user-select: none;
-    user-drag: none;
+    -webkit-user-drag: none;
     touch-action: none;
 }
 
