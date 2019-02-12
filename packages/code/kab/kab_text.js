@@ -239,11 +239,11 @@ screens.kab.text = function KabText(me) {
                 line = me.parseSingle(session, null, line);
             }
             line = me.core.message.send("kab.format.process", line, json.post);
+            if (line === "<br>") {
+                return line;
+            }
             if (options.showHighlights) {
                 line = await me.kab.highlight.line(session, items.highlight[index], line);
-            }
-            if (line === "<p></p>" || line === "<br>" || line.includes("<h4>")) {
-                return line;
             }
             if (options.commentaryEdit || options.commentaryUser) {
                 line = await me.kab.commentary.line(session, items.commentary[index], line);
