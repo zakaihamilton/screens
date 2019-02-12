@@ -13,12 +13,19 @@ screens.widget.codeeditor = function WidgetCodeEditor(me) {
             "ui.basic.text": "text"
         },
         create: function (object) {
+            ace.config.set("basePath", "/node_modules/ace-builds/src-min");
             object.editor = ace.edit(object, {
                 showPrintMargin: false
             });
             object.themeMethod = me.updateTheme;
             me.updateTheme(object);
+        },
+        draw: function (object) {
+            object.editor.resize();
         }
+    };
+    me.resize = function (object) {
+        object.editor.resize();
     };
     me.updateTheme = function (object) {
         var nightMode = me.ui.theme.options.nightMode;

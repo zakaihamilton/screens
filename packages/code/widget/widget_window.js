@@ -519,6 +519,7 @@ screens.widget.window = function WidgetWindow(me) {
                 });
             }
             me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
+                "resize": null,
                 "update": null
             });
         }
@@ -623,6 +624,7 @@ screens.widget.window = function WidgetWindow(me) {
                 me.core.property.set(window.var.icon, "ui.node.parent", "@widget.taskbar.tasks");
                 me.core.property.set(window.var.icon, "widget.icon.type", "list");
                 me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
+                    "resize": null,
                     "update": null
                 });
             }
@@ -645,6 +647,7 @@ screens.widget.window = function WidgetWindow(me) {
                     }
                     me.ui.rect.setRelativeRegion(window, window.restore_region, content);
                     me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
+                        "resize": null,
                         "update": null
                     });
                 }
@@ -696,6 +699,7 @@ screens.widget.window = function WidgetWindow(me) {
                 });
             }
             me.core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
+                "resize": null,
                 "update": null
             });
         }
@@ -777,6 +781,7 @@ screens.widget.window = function WidgetWindow(me) {
                 "ui.class.fullscreen": !fullscreen
             });
             me.core.property.set(list, "ui.property.broadcast", {
+                "resize": null,
                 "update": null
             });
         }
