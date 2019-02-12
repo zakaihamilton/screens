@@ -3,6 +3,12 @@
     "ui.basic.elements": [
         {
             "ui.basic.tag": "div",
+            "ui.class.class": "menu",
+            "ui.basic.var": "menu",
+            "ui.touch.click": "core.app.launcher"
+        },
+        {
+            "ui.basic.tag": "div",
             "ui.class.class": "tasks",
             "ui.basic.var": "tasks"
         },
@@ -24,12 +30,11 @@
                 "ui.data.prefix": "widget.taskbar.shortcut(",
                 "ui.data.suffix": ")",
                 "ui.data.values": [
-                    "launcher",
+                    "widget.taskbar.toggleShortcuts",
                     "keyboard",
                     "ui.theme.nightMode",
                     "ui.resize.toggleLockRotation",
-                    "ui.theme.toggleFontSize",
-                    "widget.taskbar.toggleShortcuts"
+                    "ui.theme.toggleFontSize"
                 ]
             }
         }

@@ -14,14 +14,14 @@
     overflow-x: scroll;
     overflow-y: hidden;
     position: absolute;
-    left: 0em;
+    left: 2.5em;
     right: 13.5em;
     top: 0em;
     transition: right 0.5s linear;
 }
 
 .widget-taskbar-tasks.collapse {
-    right: 4.5em;
+    right: 3em;
 }
 
 .widget-taskbar-task {
@@ -32,28 +32,20 @@
 
 .widget-taskbar-shortcuts {
     position: absolute;
-    right: 0em;
+    right: 0.5em;
     display: flex;
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
     overflow: hidden;
     flex-direction: row-reverse;
     height: 2em;
-    width: 13.5em;
+    width: 11.5em;
     flex: 0;
     transition: width 0.5s linear, order 0.5s linear;
     border-left: 3px solid #3c3f42;
 }
 
 .widget-taskbar-shortcuts.collapse {
-    width: 4.5em;
-}
-
-.widget-taskbar-shortcuts :nth-of-type(1) {
-    order: -2;
-}
-
-.widget-taskbar-shortcuts.collapse :nth-of-type(6) {
-    order: -1;
+    width: 2.5em;
 }
 
 .widget-taskbar-shortcut {
@@ -84,4 +76,26 @@
     -10px 0 80px #f0f, /* outer left magenta */
     10px 0 80px #0ff;
     /* outer right cyan */
+}
+
+.widget-taskbar-menu {
+    position: absolute;
+    left: 0px;
+    flex: 0;
+    width: 2em;
+    height: 2em;
+    border: 1px solid transparent;
+    margin: 0.2em;
+    padding: 0.2em;
+    user-select: none;
+    -webkit-user-drag: none;
+    cursor: default;
+    background-color: white;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUxMiA1MTIiIGhlaWdodD0iNTEycHgiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxnPjxyZWN0IGhlaWdodD0iNjQiIHdpZHRoPSIyNTYiIHg9IjEyOCIgeT0iMzIwIi8+PHJlY3QgaGVpZ2h0PSI2NCIgd2lkdGg9IjI1NiIgeD0iMTI4IiB5PSIyMjQiLz48cGF0aCBkPSJNNDgwLDBIMzJDMTQuMzEyLDAsMCwxNC4zMTIsMCwzMnY0NDhjMCwxNy42ODgsMTQuMzEyLDMyLDMyLDMyaDQ0OGMxNy42ODgsMCwzMi0xNC4zMTIsMzItMzJWMzIgICBDNTEyLDE0LjMxMiw0OTcuNjg4LDAsNDgwLDB6IE00NDgsNDQ4SDY0VjY0aDM4NFY0NDh6Ii8+PHJlY3QgaGVpZ2h0PSI2NCIgd2lkdGg9IjI1NiIgeD0iMTI4IiB5PSIxMjgiLz48L2c+PC9zdmc+');
+    background-size: 100% 100%;
+    border-radius: 20%;
+}
+
+.widget-taskbar-menu:hover:active {
+    filter: invert(25%);
 }
