@@ -28,13 +28,9 @@ screens.core.server = function CoreServer(me) {
         return me.startDate.toString();
     };
     me.upgrade = async function () {
-        var remoteServer = me.core.util.isSecure();
         await me.run("git checkout package.json");
         await me.run("git pull");
         await me.run("npm install");
-        if (remoteServer) {
-            await me.run("pm2 reload all");
-        }
     };
     return "server";
 };
