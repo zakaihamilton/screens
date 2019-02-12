@@ -1,17 +1,32 @@
 .widget-icon-icon {
-    width: 5em;
+    width: 5.5em;
     margin: 5px;
+    padding: 5px;
     text-align: center;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 }
 
 .widget-icon-icon.ui-tab-hidden {
     display: none;
 }
 
+.widget-icon-icon.night-mode:hover {
+    background-color: black;
+}
+
+.widget-icon-icon.night-mode:hover:active {
+    filter: brightness(150%);
+}
+
+.widget-icon-icon:hover {
+    filter: brightness(90%);
+    background-color: white;
+}
+
 .widget-icon-icon:hover:active {
-    opacity: 0.5;
+    filter: brightness(80%);
 }
 
 .widget-icon-list+.widget-icon-list {
@@ -36,7 +51,7 @@
 }
 
 .widget-icon-image-icon.night-mode {
-    filter: invert(var(--filter-percentage));
+    filter: invert(70%);
 }
 
 .widget-icon-image-list {
