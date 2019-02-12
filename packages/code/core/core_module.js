@@ -282,6 +282,9 @@ screens.core.module = function CoreModule(me) {
                 if (info.url.startsWith("/api")) {
                     return;
                 }
+                if (info.url.startsWith("/interface")) {
+                    return;
+                }
                 if (info.url.startsWith("/reset")) {
                     me.db.events.msg.send(me.id + ".emptyCache");
                     me.storage.local.empty();
