@@ -135,12 +135,15 @@
 
 .widget-transform-widget {
     min-height: 3em;
-    padding: 0;
+    padding: 0.2em;
     margin: 0;
+    transition: background-color 1s, color 1s;
+    border-radius: 10px;
 }
 
-.widget-transform-widget.kab-term-hover:hover {
-    text-shadow: 0 0 5px rgba(81, 203, 238, 1);
+.widget-transform-widget.kab-term-hover.night-mode:hover {
+    color: white;
+    background-color: #36383a;
 }
 
 .widget-transform-widget.kab-term-highlight:hover {
