@@ -77,13 +77,13 @@
 }
 
 .app-launcher-results-label:before {
-    content: "\25B6\00a0";
+    content: "\25BC\00a0";
     margin-left: -1.0em;
     display: inline-block;
 }
 
 .app-launcher-results-label.collapse:before {
-    content: "\25BC\00a0";
+    content: "\25B6\00a0";
 }
 
 .app-launcher-results-label {
