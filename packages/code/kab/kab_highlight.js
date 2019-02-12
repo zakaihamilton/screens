@@ -12,8 +12,15 @@ screens.kab.highlight = function KabHighlight(me) {
         var hash = String(session.hash);
         let source = me.kab.text.clean(session.line);
         var classes = [];
+        var ondblclick = null;
         if (highlight) {
-            classes.push("kab-term-highlight");
+            if (highlight && highlight.length) {
+                classes.push("kab-term-highlight");
+            }
+            ondblclick = "screens.kab.highlight.store(this)";
+        }
+        else {
+            ondblclick = "screens.kab.highlight.toggle(this)";
         }
         classes.push("kab-term-hover");
         var styles = {
@@ -23,7 +30,7 @@ screens.kab.highlight = function KabHighlight(me) {
             return "";
         }
         var tag = line.includes("<h4>") ? "h4" : "p";
-        var value = line.match(tag === "h4" ? /<h4>(.*?)<\/h4>/ : /<p>(.*?)<\/p>/);
+        var value = line.replace(/\n/g, "").match(tag === "h4" ? /<h4>(.*?)<\/h4>/ : /<p>(.*?)<\/p>/);
         if (value) {
             value = value[1];
         }
@@ -35,13 +42,16 @@ screens.kab.highlight = function KabHighlight(me) {
             classes,
             styles,
             attributes: {
-                ondblclick: "screens.kab.highlight.store(this)",
+                ondblclick,
                 hash,
                 source
             },
             value
         });
         return html;
+    };
+    me.toggle = async function (element) {
+        me.core.property.set(element, "ui.class.toggle", "kab-term-highlight");
     };
     me.store = async function (element) {
         var user = "$userId";

@@ -16,8 +16,6 @@ screens.kab.commentary = function KabCommentary(me) {
         return query;
     };
     me.line = async function (session, commentaries, line) {
-        var hash = String(session.hash);
-        var userName = session.options.commentaryUser;
         if ((!commentaries || !commentaries.length) && session.options.commentaryEdit) {
             commentaries = [{
                 text: "",
@@ -30,92 +28,18 @@ screens.kab.commentary = function KabCommentary(me) {
         }
         if (!session.options.commentaryEdit) {
             let html = "";
-            for (let commentary of commentaries) {
-                if (!commentary.pre) {
-                    continue;
-                }
-                html += "<p>";
-                if (session.options.commentaryLabel) {
-                    html += me.ui.html.item({
-                        tag: "span",
-                        classes: ["kab-term-commentary-label"],
-                        value: (userName === "all" ? commentary.name : "Commentary") + ":"
-                    });
-                }
-                let text = commentary.pre.split("\n").join("<br/>");
-                html += "\n" + text;
-                if (session.options.commentarySeparator) {
-                    html += me.ui.html.item({
-                        tag: "hr",
-                        classes: ["kab-term-commentary-separator"]
-                    });
-                }
-                html += "</p>";
-            }
+            html += await me.commentary(session, commentaries, "pre");
             html += line;
-            for (let commentary of commentaries) {
-                if (!commentary.post) {
-                    continue;
-                }
-                html += "<p>";
-                if (session.options.commentaryLabel) {
-                    html += me.ui.html.item({
-                        tag: "span",
-                        classes: ["kab-term-commentary-label"],
-                        value: (userName === "all" ? commentary.name : "Commentary") + ":"
-                    });
-                }
-                let text = commentary.post.split("\n").join("<br/>");
-                html += "\n" + text;
-                if (session.options.commentarySeparator) {
-                    html += me.ui.html.item({
-                        tag: "hr",
-                        classes: ["kab-term-commentary-separator"]
-                    });
-                }
-                html += "</p>";
-            }
+            html += await me.commentary(session, commentaries, "post");
             return html;
         }
         let html = me.ui.html.item({
             tag: "section"
         }, () => {
             let html = "";
-            for (let commentary of commentaries) {
-                if (session.options.commentaryEdit) {
-                    let source = me.kab.text.clean(session.line);
-                    html += me.ui.html.item({
-                        tag: "textarea",
-                        classes: ["kab-term-commentary-edit"],
-                        attributes: {
-                            onchange: "screens.kab.commentary.store(this,'pre')",
-                            hash,
-                            user: commentary.user,
-                            name: commentary.name,
-                            source
-                        },
-                        value: commentary.pre
-                    });
-                }
-            }
+            html += me.edit(session, commentaries, "pre");
             html += line;
-            for (let commentary of commentaries) {
-                if (session.options.commentaryEdit) {
-                    let source = me.kab.text.clean(session.line);
-                    html += me.ui.html.item({
-                        tag: "textarea",
-                        classes: ["kab-term-commentary-edit"],
-                        attributes: {
-                            onchange: "screens.kab.commentary.store(this,'post')",
-                            hash,
-                            user: commentary.user,
-                            name: commentary.name,
-                            source
-                        },
-                        value: commentary.post
-                    });
-                }
-            }
+            html += me.edit(session, commentaries, "post");
             return html;
         });
         return html;
@@ -151,5 +75,59 @@ screens.kab.commentary = function KabCommentary(me) {
                 "user": "$userId"
             });
         }
+    };
+    me.commentary = async function (session, commentaries, field) {
+        var userName = session.options.commentaryUser;
+        var line = "";
+        for (let commentary of commentaries) {
+            if (!commentary[field]) {
+                continue;
+            }
+            let html = "";
+            html += "<p>";
+            if (session.options.commentaryLabel) {
+                html += me.ui.html.item({
+                    tag: "span",
+                    classes: ["kab-term-commentary-label"],
+                    value: (userName === "all" ? commentary.name : "Commentary") + ": "
+                });
+            }
+            let text = commentary[field].split("\n").join("<br/>");
+            html += "\n" + text;
+            if (session.options.commentarySeparator) {
+                html += me.ui.html.item({
+                    tag: "hr",
+                    classes: ["kab-term-commentary-separator"]
+                });
+            }
+            html += "</p>";
+            if (session.options.showHighlights) {
+                html = await me.kab.highlight.line(session, null, html);
+            }
+            line += html;
+        }
+        return line;
+    };
+    me.edit = function (session, commentaries, field) {
+        var hash = session.hash;
+        var html = "";
+        for (let commentary of commentaries) {
+            if (session.options.commentaryEdit) {
+                let source = me.kab.text.clean(session.line);
+                html += me.ui.html.item({
+                    tag: "textarea",
+                    classes: ["kab-term-commentary-edit"],
+                    attributes: {
+                        onchange: "screens.kab.commentary.store(this,'" + field + "')",
+                        hash,
+                        user: commentary.user,
+                        name: commentary.name,
+                        source
+                    },
+                    value: commentary[field]
+                });
+            }
+        }
+        return html;
     };
 };

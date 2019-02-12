@@ -10,7 +10,7 @@ screens.db.shared = function DbShared(me) {
             results[key] = [];
             var list = await me.db.shared[key].list(queries[key]);
             for (let hash of hashes) {
-                var result = list.find(item => item.hash === hash);
+                var result = list.filter(item => item.hash === hash);
                 results[key].push(result);
             }
         }
@@ -71,7 +71,7 @@ screens.db.shared.commentary = function DbSharedCommentary(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};
     me.users = async function () {
-        var users = await me.list({}, { name: 1, _id: 0 });
+        var users = await me.list({}, { project: { name: 1, _id: 0 } });
         users = users.map(user => user.name);
         return users;
     };
