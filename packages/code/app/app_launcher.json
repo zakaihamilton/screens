@@ -130,6 +130,11 @@
                     ]
                 ]
             }
+        },
+        {
+            "ui.basic.tag": "div",
+            "ui.class.class": "app.launcher.results",
+            "ui.basic.var": "results"
         }
     ]
 }

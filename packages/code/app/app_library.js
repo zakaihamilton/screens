@@ -617,4 +617,38 @@ screens.app.library = function AppLibrary(me) {
         var search = me.core.property.get(window.var.search, "ui.basic.text");
         me.core.util.copyUrl("library", [search]);
     };
+    me.content = {
+        search: async function (text) {
+            var results = new Set();
+            var tagList = me.tagList;
+            if (!tagList) {
+                tagList = me.tagList = await me.db.library.tagList();
+            }
+            else if (tagList.then) {
+                tagList = me.tagList = await tagList;
+            }
+            for (var item of tagList) {
+                for (var key in item) {
+                    if (key === "_id" || key === "user") {
+                        continue;
+                    }
+                    var value = item[key];
+                    value = value.replace(/\d+/g, (x) => me.core.string.padNumber(x, 3));
+                    if (value.toLowerCase().includes(text)) {
+                        results.add(key + ":" + value);
+                    }
+                }
+            }
+            return Array.from(results).map(result => {
+                var [key, value] = result.split(":");
+                let title = key + ": " + value;
+                let search = result;
+                if (search.includes(" ")) {
+                    search = "\"" + search + "\"";
+                }
+                let args = ["library", search];
+                return { title, args };
+            });
+        }
+    };
 };

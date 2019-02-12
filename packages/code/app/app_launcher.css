@@ -47,3 +47,61 @@
     right: 0px;
     bottom: 0px;
 }
+
+.app-launcher-results {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: 4.5em;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: var(--background);
+    color: var(--color);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.app-launcher-results-collection {
+    border-radius: 10px;
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+    padding: 0.5em;
+    margin: 1em;
+}
+
+.app-launcher-results-collection.collapse {
+    min-height: 2.5em;
+    max-height: 2.5em;
+    overflow-y: hidden;
+}
+
+.app-launcher-results-label:before {
+    content: "\25B6\00a0";
+    margin-left: -1.0em;
+    display: inline-block;
+}
+
+.app-launcher-results-label.collapse:before {
+    content: "\25BC\00a0";
+}
+
+.app-launcher-results-label {
+    padding-left: 1em;
+    padding-bottom: 0.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.app-launcher-results-item {
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border: 1px solid black;
+}
+
+.app-launcher-results-item:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}

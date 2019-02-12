@@ -300,6 +300,21 @@ screens.ui.content = function UIContent(me) {
                 info._private = !info._private;
             }
         },
+        search: async function (text) {
+            var results = [];
+            await me.content.update();
+            var lists = { public: me.content.publicList, private: me.content.privateList };
+            for (var listType in lists) {
+                for (var item of lists[listType]) {
+                    if (item.title.toLowerCase().includes(text)) {
+                        results.push(Object.assign({}, item, {
+                            args: [me.id.split(".").pop(), item.title, listType == "private"]
+                        }));
+                    }
+                }
+            }
+            return results;
+        },
         associated: {
             update: async function (object, name) {
                 var window = me.widget.window.get(object);

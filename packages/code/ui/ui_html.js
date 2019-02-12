@@ -28,7 +28,11 @@ screens.ui.html = function UIHtml(me) {
         }
         if (info.attributes && Object.keys(info.attributes).length) {
             for (let name in info.attributes) {
-                html += " " + name + "=\"" + info.attributes[name] + "\"";
+                let value = info.attributes[name];
+                if (value) {
+                    value = value.replace(/"/g, "'");
+                    html += " " + name + "=\"" + value + "\"";
+                }
             }
         }
         html += ">";

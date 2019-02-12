@@ -7,6 +7,7 @@ screens.app.player = function AppPlayer(me) {
     me.ready = async function () {
         me.playerCounter = 0;
         await me.ui.content.attach(me);
+        me.content.search = me.search;
     };
     me.launch = async function (args) {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -21,7 +22,9 @@ screens.app.player = function AppPlayer(me) {
         if (args[3]) {
             params.showInBackground = true;
         }
-        me.groups = await me.media.file.groups();
+        if (!me.groups) {
+            me.groups = await me.media.file.groups();
+        }
         me.metadataList = await me.db.shared.metadata.list({ user: "$userId" });
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
         await new Promise(resolve => {
@@ -445,4 +448,23 @@ screens.app.player = function AppPlayer(me) {
             }
         };
     }
+    me.search = async function (text) {
+        var results = [];
+        if (!me.groups) {
+            me.groups = await me.media.file.groups();
+        }
+        me.groups.map(group => {
+            var list = group.sessions.filter(session => session.extension === "m4a");
+            list = list.filter(session => session.session.toLowerCase().includes(text));
+            list = list.map(session => {
+                session.title = session.session;
+                session.args = [me.id.split(".").pop(), group.name, session.session];
+                return session;
+            });
+            if (list.length) {
+                results.push(...list);
+            }
+        });
+        return results;
+    };
 };

@@ -34,4 +34,75 @@ screens.app.launcher = function AppLauncher(me) {
         me.core.property.set(object, "ui.basic.display", available);
         me.core.property.set(object, "ui.touch.click", "core.app." + name);
     };
+    me.search = async function (object) {
+        var window = me.widget.window.get(object);
+        var text = object.value;
+        var results = {};
+        var names = [];
+        var lists = [];
+        var message = "";
+        if (text) {
+            for (let name of screens.components) {
+                if (name === "ui.content") {
+                    continue;
+                }
+                let component = me.browse(name);
+                if ("content" in component) {
+                    if ("search" in component.content) {
+                        names.push(name.split(".").pop());
+                        lists.push(component.content.search(text));
+                    }
+                }
+            }
+            lists = await Promise.all(lists);
+            for (var nameIndex = 0; nameIndex < names.length; nameIndex++) {
+                let name = names[nameIndex];
+                let list = lists[nameIndex];
+                if (list.length) {
+                    results[name] = list;
+                }
+            }
+            for (let name in results) {
+                message += me.ui.html.item({
+                    classes: ["app-launcher-results-collection"],
+                }, () => {
+                    var html = "";
+                    html += me.ui.html.item({
+                        value: me.core.string.title(name),
+                        classes: ["app-launcher-results-label"],
+                        attributes: {
+                            onclick: "screens.app.launcher.collapseSearchCollection(this)"
+                        }
+                    });
+                    for (let item of results[name]) {
+                        html += me.ui.html.item({
+                            value: item.title,
+                            classes: ["app-launcher-results-item"],
+                            attributes: {
+                                args: JSON.stringify(item.args),
+                                onclick: "screens.app.launcher.launchSearchItem(this)"
+                            }
+                        });
+                    }
+                    return html;
+                });
+            }
+        }
+        if (message) {
+            me.core.property.set(window.var.results, "ui.style.display", "flex");
+            me.core.property.set(window.var.results, "ui.basic.html", message);
+        }
+        else {
+            me.core.property.set(window.var.results, "ui.style.display", "");
+        }
+    };
+    me.launchSearchItem = function (object) {
+        var args = me.core.property.get(object, "ui.attribute.#args");
+        args = args.replace(/'/g, "\"");
+        me.core.app.launch.apply(null, JSON.parse(args));
+    };
+    me.collapseSearchCollection = function (object) {
+        me.core.property.set(object.parentNode, "ui.class.toggle", "collapse");
+        me.core.property.set(object, "ui.class.toggle", "collapse");
+    };
 };
