@@ -37,6 +37,28 @@ screens.core.http = function CoreHttp(me) {
                 me.io = require("socket.io")(server);
             }
             me.log("normal server is listening");
+            process.on("SIGINT", () => {
+                console.info("SIGINT signal received.");
+                server.close(async function (err) {
+                    if (err) {
+                        console.error(err);
+                        process.exit(1);
+                    }
+                    for (var name of screens.components) {
+                        try {
+                            var component = me.browse(name);
+                            if ("shutdown" in component) {
+                                component.shutdown();
+                            }
+                        }
+                        catch (err) {
+                            console.error("Failed to shutdown component: " + name + " err: " + err);
+                        }
+                    }
+                    console.log("Components shutdown");
+                    process.exit(0);
+                });
+            });
         }
     };
     me.createServer = async function (secure) {
