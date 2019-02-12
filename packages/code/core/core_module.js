@@ -283,6 +283,7 @@ screens.core.module = function CoreModule(me) {
                     return;
                 }
                 if (info.url.startsWith("/reset")) {
+                    me.db.events.msg.send(me.id + ".emptyCache");
                     me.storage.local.empty();
                     info.body = "Local Cache Empty";
                     return;
