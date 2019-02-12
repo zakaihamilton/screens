@@ -10,9 +10,6 @@ screens.ui.transform = function UITransform(me) {
             return [
                 {
                     "text": "Font Size",
-                    "options": {
-                        "separator": true
-                    },
                     "select": [
                         "widget.transform.fontSizesPx(" + prefix + "fontSize)"
                     ]

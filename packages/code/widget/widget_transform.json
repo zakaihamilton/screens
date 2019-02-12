@@ -120,10 +120,7 @@
             "select": [
                 {
                     "text": "Clear",
-                    "select": "widget.transform.clear",
-                    "options": {
-                        "separator": true
-                    }
+                    "select": "widget.transform.clear"
                 },
                 {
                     "text": "Refresh",

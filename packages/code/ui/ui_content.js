@@ -22,10 +22,7 @@ screens.ui.content = function UIContent(me) {
             return [
                 [
                     "Copy Url",
-                    prefix + "copyUrl",
-                    {
-                        "separator": true
-                    }
+                    prefix + "copyUrl"
                 ],
                 [
                     "Refresh",

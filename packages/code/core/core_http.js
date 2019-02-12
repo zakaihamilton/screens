@@ -246,7 +246,7 @@ screens.core.http = function CoreHttp(me) {
             if (info.mimeType && request.overrideMimeType) {
                 request.overrideMimeType(info.mimeType);
             }
-            me.log("sending request info:" + JSON.stringify(info));
+            me.log("sending request:" + info.url);
             request.open(info.method, info.url, true);
             return new Promise((resolve, reject) => {
                 request.onreadystatechange = function () {
