@@ -174,6 +174,7 @@ screens.app.library = function AppLibrary(me) {
         me.core.property.set(window.var.editor, "text", "");
         me.core.property.set(window.var.transform, "text", "");
         me.core.property.set(window.var.transform, "transform");
+        me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         window.searchText = "";
     };
     me.reSearch = function (object) {

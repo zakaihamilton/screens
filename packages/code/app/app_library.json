@@ -70,10 +70,7 @@
             "select": [
                 {
                     "text": "Refresh",
-                    "select": "app.library.refresh",
-                    "options": {
-                        "separator": true
-                    }
+                    "select": "app.library.refresh"
                 },
                 "app.library.tagMenuList"
             ]
