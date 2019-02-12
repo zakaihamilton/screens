@@ -4,6 +4,9 @@
  */
 
 screens.app.launcher = function AppLauncher(me) {
+    me.init = function () {
+        me.searchCounter = 0;
+    };
     me.ready = async function () {
         me.ui.image.preload("packages/res/icons");
     };
@@ -41,6 +44,7 @@ screens.app.launcher = function AppLauncher(me) {
         var names = [];
         var lists = [];
         var message = "";
+        var counter = ++me.searchCounter;
         if (text) {
             for (let name of screens.components) {
                 if (name === "ui.content") {
@@ -55,6 +59,9 @@ screens.app.launcher = function AppLauncher(me) {
                 }
             }
             lists = await Promise.all(lists);
+            if (counter !== me.searchCounter) {
+                return;
+            }
             for (var nameIndex = 0; nameIndex < names.length; nameIndex++) {
                 let name = names[nameIndex];
                 let list = lists[nameIndex];
