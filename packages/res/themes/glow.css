@@ -903,8 +903,8 @@
 
 .glow-window-icon.widget-icon-list {
     display: flex;
-    margin-left: 6px;
-    margin-right: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
     align-items: stretch;
     flex-wrap: nowrap;
     position: relative;
@@ -912,10 +912,8 @@
     box-shadow: 0px 0px 15px 3px #0f2777;
     background-color: transparent;
     color: white;
-    border: 1px solid darkgray;
+    border: 1px solid rgb(90, 58, 58);
     border-radius: 5px;
-    padding: 2px;
-    margin: 2px;
     align-items: center;
 }
 
@@ -931,17 +929,6 @@
     background-color: #0f2777;
     color: white;
     border: 1px solid lightblue;
-}
-
-.glow-taskbar-container {
-    position: absolute;
-    bottom: 0px;
-    height: 2.3em;
-    right: 0px;
-    left: 0px;
-    background: black;
-    border-top: 1px solid gray;
-    box-sizing: border-box;
 }
 
 .glow-text-normal.night-mode {

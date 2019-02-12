@@ -277,11 +277,6 @@
             "replace": true
         },
         {
-            "source": "widget-taskbar-container",
-            "target": "glow-taskbar-container",
-            "replace": true
-        },
-        {
             "source": "widget-text-normal",
             "target": "glow-text-normal"
         }

@@ -40,7 +40,8 @@
 }
 
 .widget-icon-image-list {
-    margin: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     flex: 0;
     filter: invert(100%);
     width: 1em;
@@ -56,6 +57,7 @@
 
 .widget-icon-label-list {
     margin: 2px;
+    padding-right: 5px;
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
