@@ -301,6 +301,7 @@ screens.widget.window = function WidgetWindow(me) {
         }
         me.core.property.set(window.var.label, "ui.basic.text", label);
         me.core.property.set(window.var.icon, "ui.basic.text", label);
+        me.core.property.set(window.var.icon, "ui.attribute.title", label);
     };
     me.label = {
         get: function (object) {

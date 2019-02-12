@@ -5,7 +5,8 @@
             "ui.basic.tag": "div",
             "ui.class.class": "menu",
             "ui.basic.var": "menu",
-            "ui.touch.click": "core.app.launcher"
+            "ui.touch.click": "core.app.launcher",
+            "ui.attribute.title": "Launcher"
         },
         {
             "ui.basic.tag": "div",
