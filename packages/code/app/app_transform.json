@@ -52,8 +52,7 @@
                                 "state": "select",
                                 "separator": true
                             }
-                        },
-                        "widget.window.exportMenuList(app.transform.exportText)"
+                        }
                     ]
                 },
                 {
