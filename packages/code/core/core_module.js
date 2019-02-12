@@ -289,6 +289,7 @@ screens.core.module = function CoreModule(me) {
                 }
                 if (info.url.startsWith("/upgrade")) {
                     me.db.events.msg.send(me.id + ".emptyCache");
+                    await me.core.server.upgrade();
                     info.body = "Upgrade complete";
                     return;
                 }
