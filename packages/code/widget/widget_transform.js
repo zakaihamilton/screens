@@ -1330,7 +1330,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             element.style.opacity = "";
         }
         else {
-            element.style.opacity = "0.5";
+            element.style.opacity = "0.75";
         }
     };
     me.clearWidget = function (widget, modifiers) {
