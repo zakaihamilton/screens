@@ -36,7 +36,7 @@ screens.app.launcher = function AppLauncher(me) {
     };
     me.search = async function (object) {
         var window = me.widget.window.get(object);
-        var text = object.value;
+        var text = object.value.toLowerCase();
         var results = {};
         var names = [];
         var lists = [];
