@@ -3,6 +3,7 @@
     "delay": "@ui.param.delay(0)",
     "popup": true,
     "fixed": true,
+    "nobar": true,
     "ui.property.style": {
         "left": "10%",
         "top": "30%",
