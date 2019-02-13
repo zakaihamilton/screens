@@ -47,6 +47,7 @@ screens.app.launcher = function AppLauncher(me) {
         var counter = ++me.searchCounter;
         if (text) {
             me.core.property.set(window, "temp", false);
+            me.core.property.set(progress, "ui.class.progress", true);
             var components = screens.components.sort();
             for (let name of components) {
                 if (name === "ui.content") {
@@ -74,7 +75,6 @@ screens.app.launcher = function AppLauncher(me) {
                 }
             }
             var progress = me.ui.node.findByName(window, "progress");
-            me.core.property.set(progress, "ui.class.progress", true);
             lists = await Promise.all(lists);
             me.core.property.set(progress, "ui.class.progress", false);
             if (counter !== me.searchCounter) {
