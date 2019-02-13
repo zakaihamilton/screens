@@ -1,7 +1,9 @@
 <div>
-  <input class="input inherit-font app-launcher-search" placeholder="Search..." type="search"
-    oninput="screens.app.launcher.search(this)"></input>
-  <div name="progress" class="app-launcher-progress"></div>
+  <div class="app-launcher-search">
+    <input class="input inherit-font app-launcher-search-input" placeholder="Search..." type="search"
+      oninput="screens.app.launcher.search(this)"></input>
+    <div name="progress" class="app-launcher-search-progress"></div>
+  </div>
   <div class="tabs is-centered is-boxed app-launcher-tabs">
     <ul>
       <li tab="main" class="is-active">

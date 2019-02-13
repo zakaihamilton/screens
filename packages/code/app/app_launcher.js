@@ -50,6 +50,7 @@ screens.app.launcher = function AppLauncher(me) {
         var message = "";
         var counter = ++me.searchCounter;
         if (text) {
+            var progress = me.ui.node.findByName(window, "progress");
             me.core.property.set(window, "temp", false);
             me.core.property.set(progress, "ui.class.progress", true);
             var components = screens.components.sort();
@@ -78,7 +79,6 @@ screens.app.launcher = function AppLauncher(me) {
                     }
                 }
             }
-            var progress = me.ui.node.findByName(window, "progress");
             lists = await Promise.all(lists);
             me.core.property.set(progress, "ui.class.progress", false);
             if (counter !== me.searchCounter) {

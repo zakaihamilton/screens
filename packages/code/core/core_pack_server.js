@@ -31,6 +31,7 @@ screens.core.pack = function CorePack(me) {
                     return;
                 }
                 let info = {
+                    folder: folderName,
                     path,
                     package,
                     component,
@@ -113,10 +114,11 @@ screens.core.pack = function CorePack(me) {
     };
     me.js = function (info, data) {
         var body = "";
+        if (info.folder === "server" || info.folder === "service") {
+            body += `screens.${info.package}.${info.component} = function (me) { return "${info.folder}"; };\n`;
+        }
         if (info.platform && info.platform !== info.target) {
-            body += `screens.${info.package}.${info.component} = function (me) {
-                return "${info.platform}";
-            };`;
+            body += `screens.${info.package}.${info.component} = function (me) { return "${info.platform}"; };\n`;
         }
         else {
             body += me.minify(info.path, data) + "\n";

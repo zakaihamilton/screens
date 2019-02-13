@@ -54,4 +54,5 @@ screens.db.events.msg = function DbEventsParticipants(me) {
         var args = Array.prototype.slice.call(arguments, 0);
         me.push({ args });
     };
+    return "server";
 };

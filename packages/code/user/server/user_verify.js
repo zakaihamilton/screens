@@ -38,7 +38,7 @@ screens.user.verify = function UserVerify(me) {
                         audience: me.client_id,
                     });
                     const payload = ticket.getPayload();
-                    const userid = payload['sub'];
+                    const userid = payload["sub"];
                     profile = await me.storage.data.load(me.id, userid);
                     if (!profile) {
                         profile = {};
