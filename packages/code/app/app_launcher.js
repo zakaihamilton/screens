@@ -15,7 +15,11 @@ screens.app.launcher = function AppLauncher(me) {
         var params = {
             version: config.version
         };
-        return me.ui.element.create(me.json, "workspace", "self", params);
+        var window = me.ui.element.create(me.json, "workspace", "self", params);
+        if (me.core.device.isMobile()) {
+            me.core.property.set(window, "maximize");
+        }
+        return window;
     };
     me.resIcon = function (object, value) {
         var name = null, extension = null, label = null;
@@ -87,7 +91,7 @@ screens.app.launcher = function AppLauncher(me) {
                     results.push({ title: name, members: list });
                 }
             }
-            message = me.tree(object, results, text);
+            message = me.tree(object, results, text, true);
         }
         if (message) {
             me.core.property.set(window.var.results, "ui.style.display", "flex");
@@ -98,21 +102,38 @@ screens.app.launcher = function AppLauncher(me) {
             me.core.property.set(window.var.results, "ui.style.display", "");
         }
     };
-    me.tree = function (object, list, search) {
+    me.tree = function (object, list, search, root) {
         if (!Array.isArray(list)) {
             list = [list];
         }
         let html = "";
         for (let item of list) {
+            let classes = ["app-launcher-results-collection"];
+            if (root) {
+                classes.push("root");
+            }
             html += me.ui.html.item({
-                classes: ["app-launcher-results-collection"],
+                classes,
             }, () => {
                 let html = "";
+                let title = item.title;
+                var onclick = null;
+                if (!root) {
+                    title = me.ui.html.mark(title, search);
+                }
+                let classes = ["app-launcher-results-label"];
+                if (root) {
+                    classes.push("root");
+                }
+                if (item.members && item.members.length) {
+                    classes.push("members");
+                    onclick = "screens.app.launcher.collapseSearchCollection(this)";
+                }
                 html += me.ui.html.item({
-                    value: me.core.string.title(item.title),
-                    classes: ["app-launcher-results-label"],
+                    value: title,
+                    classes,
                     attributes: {
-                        onclick: "screens.app.launcher.collapseSearchCollection(this)"
+                        onclick
                     }
                 });
                 if (!item.members) {
@@ -129,7 +150,7 @@ screens.app.launcher = function AppLauncher(me) {
                     }
                     let styles = { direction: me.core.string.direction(child.title) };
                     html += me.ui.html.item({
-                        value: me.ui.mark.widget(child.title, search),
+                        value: me.ui.html.mark(child.title, search),
                         classes,
                         styles,
                         attributes: {

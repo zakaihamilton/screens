@@ -20,10 +20,9 @@ screens.core.method = function CoreMethod(me) {
                 properties = properties.filter(property => typeof me.browse(component + "." + property) === "function");
                 properties = properties.filter(property => (component + "." + property).toLowerCase().includes(text));
                 if (!properties.length) {
-                    if (component.toLowerCase().includes(text)) {
-                        list.push({ title: component });
+                    if (!component.toLowerCase().includes(text)) {
+                        return;
                     }
-                    return;
                 }
                 properties = properties.map(property => ({
                     title: property

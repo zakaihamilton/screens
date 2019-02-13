@@ -33,6 +33,12 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
             method
         ]];
     };
+    me.prepare = function (object) {
+        var taskbar = me.ui.node.container(object, me.id);
+        if (me.core.device.isMobile()) {
+            me.core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
+        }
+    };
     me.toggleShortcuts = function (object) {
         var taskbar = me.ui.node.container(object, me.id);
         me.core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
