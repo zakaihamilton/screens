@@ -17,6 +17,7 @@ screens.core.method = function CoreMethod(me) {
                 let properties = Object.keys(me.browse(component));
                 properties = properties.filter(property => !keys.includes(property));
                 properties = properties.map(property => component + "." + property);
+                properties = properties.filter(property => typeof me.browse(property) === "function");
                 properties = properties.filter(property => property.toLowerCase().includes(text));
                 properties = properties.map(property => ({
                     title: property
