@@ -66,6 +66,7 @@
     border-radius: 10px;
     background-color: var(--chrome-background);
     color: var(--chrome-color);
+    border: 1px solid var(--chrome-border);
     padding: 0.5em;
     margin: 1em;
 }
@@ -77,28 +78,36 @@
 }
 
 .app-launcher-results-label:before {
-    content: "\25BC\00a0";
-    margin-left: -1.0em;
+    content:"";
+    position: absolute;
+    width:1em;
+    height:1em;
+    margin-top:0.25em;
+    margin-left:-1.5em;
     display: inline-block;
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00OC4wMDAwMDAsIC01MjguMDAwMDAwKSI+PHBhdGggZD0iTTU2LDU0NCBDNTEuNTgxNzIxOCw1NDQgNDgsNTQwLjQxODI3OCA0OCw1MzYgQzQ4LDUzMS41ODE3MjIgNTEuNTgxNzIxOCw1MjggNTYsNTI4IEM2MC40MTgyNzgyLDUyOCA2NCw1MzEuNTgxNzIyIDY0LDUzNiBDNjQsNTQwLjQxODI3OCA2MC40MTgyNzgyLDU0NCA1Niw1NDQgWiBNNTIsNTM1IEw1Miw1MzcgTDYwLDUzNyBMNjAsNTM1IFogTTUyLDUzNSIgaWQ9Ik92YWwgMjEwIGNvcHkgMiIvPjwvZz48L2c+PC9zdmc+');
+}
+
+.app-launcher-results-label.night-mode {
+    filter:invert(100%);
 }
 
 .app-launcher-results-label.collapse:before {
-    content: "\25B6\00a0";
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxNnB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2cHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZWZzLz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGlkPSJJY29ucyB3aXRoIG51bWJlcnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIj48ZyBmaWxsPSIjMDAwMDAwIiBpZD0iR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAwMDAwLCAtNTI4LjAwMDAwMCkiPjxwYXRoIGQ9Ik00LDUzNSBMNCw1MzcgTDcsNTM3IEw3LDU0MCBMOSw1NDAgTDksNTM3IEwxMiw1MzcgTDEyLDUzNSBMOSw1MzUgTDksNTMyIEw3LDUzMiBMNyw1MzUgWiBNOCw1NDQgQzMuNTgxNzIxNzgsNTQ0IDAsNTQwLjQxODI3OCAwLDUzNiBDMCw1MzEuNTgxNzIyIDMuNTgxNzIxNzgsNTI4IDgsNTI4IEMxMi40MTgyNzgyLDUyOCAxNiw1MzEuNTgxNzIyIDE2LDUzNiBDMTYsNTQwLjQxODI3OCAxMi40MTgyNzgyLDU0NCA4LDU0NCBaIE04LDU0NCIgaWQ9Ik92YWwgMjEwIGNvcHkiLz48L2c+PC9nPjwvc3ZnPg==');
 }
 
 .app-launcher-results-label {
-    padding-left: 1em;
+    padding-left: 1.5em;
     padding-bottom: 0.5em;
     font-weight: bold;
     text-transform: uppercase;
 }
 
 .app-launcher-results-item {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    border: 1px solid black;
 }
 
 .app-launcher-results-item:hover {

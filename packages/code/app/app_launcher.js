@@ -46,7 +46,8 @@ screens.app.launcher = function AppLauncher(me) {
         var message = "";
         var counter = ++me.searchCounter;
         if (text) {
-            for (let name of screens.components) {
+            var components = screens.components.sort();
+            for (let name of components) {
                 if (name === "ui.content") {
                     continue;
                 }
@@ -66,7 +67,7 @@ screens.app.launcher = function AppLauncher(me) {
                 let name = names[nameIndex];
                 let list = lists[nameIndex];
                 if (list.length) {
-                    results[name] = list;
+                    results[name] = list.sort((a, b) => a.title.localeCompare(b.title));
                 }
             }
             for (let name in results) {
