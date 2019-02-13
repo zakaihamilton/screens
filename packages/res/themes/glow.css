@@ -584,7 +584,6 @@
     font-weight: normal;
     transition: all 0.2s ease-in-out;
     text-align: center;
-    min-width: 64px;
     min-height: 17px;
     display: inline-block;
     padding: 3px;
