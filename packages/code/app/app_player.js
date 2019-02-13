@@ -462,11 +462,11 @@ screens.app.player = function AppPlayer(me) {
                 return session;
             });
             if (list.length) {
-                results.push(...list);
+                list = list.sort((a, b) => a.title.localeCompare(b.title));
+                list.reverse();
+                results.push({ title: me.core.string.title(group.name), members: list });
             }
         });
-        results = results.sort((a, b) => a.title.localeCompare(b.title));
-        results.reverse();
         return results;
     };
 };

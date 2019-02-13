@@ -121,7 +121,7 @@ screens.app.launcher = function AppLauncher(me) {
                 if (!root) {
                     title = me.ui.html.mark(title, search);
                 }
-                let classes = ["app-launcher-results-label"];
+                let classes = [];
                 if (root) {
                     classes.push("root");
                 }
@@ -130,11 +130,23 @@ screens.app.launcher = function AppLauncher(me) {
                     onclick = "screens.app.launcher.collapseSearchCollection(this)";
                 }
                 html += me.ui.html.item({
-                    value: title,
-                    classes,
+                    tag: "div",
+                    classes: [...classes, "app-launcher-results-branch"],
                     attributes: {
                         onclick
                     }
+                }, () => {
+                    let html = "";
+                    html += me.ui.html.item({
+                        tag: "div",
+                        classes: [...classes, "app-launcher-results-collapse"]
+                    });
+                    html += me.ui.html.item({
+                        tag: "div",
+                        value: title,
+                        classes: [...classes, "app-launcher-results-label"]
+                    });
+                    return html;
                 });
                 if (!item.members) {
                     return html;
@@ -168,7 +180,8 @@ screens.app.launcher = function AppLauncher(me) {
         var args = me.core.property.get(object, "ui.attribute.#args");
         if (args) {
             args = args.replace(/'/g, "\"");
-            me.core.message.send.apply(null, JSON.parse(args));
+            args = JSON.parse(args);
+            me.core.message.send.apply(null, args);
         }
     };
     me.collapseSearchCollection = function (object) {

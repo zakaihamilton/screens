@@ -619,7 +619,6 @@ screens.app.library = function AppLibrary(me) {
     };
     me.content = {
         search: async function (text) {
-            var results = new Set();
             var tagList = me.tagList;
             if (!tagList) {
                 tagList = me.tagList = await me.db.library.tagList();
@@ -627,30 +626,36 @@ screens.app.library = function AppLibrary(me) {
             else if (tagList.then) {
                 tagList = me.tagList = await tagList;
             }
-            for (var item of tagList) {
-                for (var key in item) {
+            var tags = {};
+            for (let item of tagList) {
+                for (let key in item) {
                     if (key === "_id" || key === "user") {
                         continue;
                     }
                     var value = item[key];
                     value = value.replace(/\d+/g, (x) => me.core.string.padNumber(x, 3));
                     if (key.toLowerCase().includes(text) || value.toLowerCase().includes(text)) {
-                        results.add(key + ":" + value);
+                        if (!tags[key]) {
+                            tags[key] = new Set();
+                        }
+                        tags[key].add(value);
                     }
                 }
             }
-            results = Array.from(results).map(result => {
-                var [key, value] = result.split(":");
-                let title = key + ": " + value;
-                let search = result;
-                if (search.includes(" ")) {
-                    search = "\"" + search + "\"";
-                }
-                let args = ["core.app.launch", "library", search];
-                return { title, args };
-            });
-            results = results.sort((a, b) => a.title.localeCompare(b.title));
-            return results;
+            let collections = [];
+            for (let key in tags) {
+                let members = Array.from(tags[key]).map(title => {
+                    let search = title;
+                    if (search.includes(" ")) {
+                        search = "\"" + search + "\"";
+                    }
+                    let args = ["core.app.launch", "library", search];
+                    return { title: me.core.string.title(title), args };
+                });
+                members = members.sort((a, b) => a.title.localeCompare(b.title));
+                collections.push({ title: me.core.string.title(key), members });
+            }
+            return collections;
         }
     };
 };
