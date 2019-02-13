@@ -186,6 +186,7 @@ screens.app.launcher = function AppLauncher(me) {
     };
     me.collapseSearchCollection = function (object) {
         me.core.property.set(object.parentNode, "ui.class.toggle", "collapse");
+        me.core.property.set(object.firstElementChild, "ui.class.toggle", "collapse");
         me.core.property.set(object, "ui.class.toggle", "collapse");
     };
 };
