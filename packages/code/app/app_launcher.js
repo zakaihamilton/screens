@@ -40,7 +40,7 @@ screens.app.launcher = function AppLauncher(me) {
     me.search = async function (object) {
         var window = me.widget.window.get(object);
         var text = object.value.toLowerCase().trim();
-        var results = {};
+        var results = [];
         var names = [];
         var lists = [];
         var message = "";
@@ -83,40 +83,10 @@ screens.app.launcher = function AppLauncher(me) {
                 let name = names[nameIndex];
                 let list = lists[nameIndex];
                 if (list && list.length) {
-                    results[name] = list;
+                    results.push({ title: name, members: list });
                 }
             }
-            for (let name in results) {
-                message += me.ui.html.item({
-                    classes: ["app-launcher-results-collection"],
-                }, () => {
-                    var html = "";
-                    html += me.ui.html.item({
-                        value: me.core.string.title(name),
-                        classes: ["app-launcher-results-label"],
-                        attributes: {
-                            onclick: "screens.app.launcher.collapseSearchCollection(this)"
-                        }
-                    });
-                    for (let item of results[name]) {
-                        let classes = ["app-launcher-results-item"];
-                        if (item.private) {
-                            classes.push("private");
-                        }
-                        let styles = { direction: me.core.string.direction(item.title) };
-                        html += me.ui.html.item({
-                            value: item.title,
-                            classes,
-                            styles,
-                            attributes: {
-                                args: JSON.stringify(item.args),
-                                onclick: "screens.app.launcher.launchSearchItem(this)"
-                            }
-                        });
-                    }
-                    return html;
-                });
-            }
+            message = me.tree(object, results);
         }
         if (message) {
             me.core.property.set(window.var.results, "ui.style.display", "flex");
@@ -125,6 +95,51 @@ screens.app.launcher = function AppLauncher(me) {
         else {
             me.core.property.set(window.var.results, "ui.style.display", "");
         }
+    };
+    me.tree = function (object, list) {
+        if (!Array.isArray(list)) {
+            list = [list];
+        }
+        let html = "";
+        for (let item of list) {
+            html += me.ui.html.item({
+                classes: ["app-launcher-results-collection"],
+            }, () => {
+                let html = "";
+                html += me.ui.html.item({
+                    value: me.core.string.title(item.title),
+                    classes: ["app-launcher-results-label"],
+                    attributes: {
+                        onclick: "screens.app.launcher.collapseSearchCollection(this)"
+                    }
+                });
+                if (!item.members) {
+                    return html;
+                }
+                for (let child of item.members) {
+                    if (child.members) {
+                        html += me.tree(object, child);
+                        continue;
+                    }
+                    let classes = ["app-launcher-results-item"];
+                    if (child.private) {
+                        classes.push("private");
+                    }
+                    let styles = { direction: me.core.string.direction(child.title) };
+                    html += me.ui.html.item({
+                        value: child.title,
+                        classes,
+                        styles,
+                        attributes: {
+                            args: JSON.stringify(child.args),
+                            onclick: "screens.app.launcher.launchSearchItem(this)"
+                        }
+                    });
+                }
+                return html;
+            });
+        }
+        return html;
     };
     me.launchSearchItem = function (object) {
         var args = me.core.property.get(object, "ui.attribute.#args");
