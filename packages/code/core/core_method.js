@@ -11,16 +11,20 @@ screens.core.method = function CoreMethod(me) {
                 return;
             }
             var components = screens.components.sort();
-            components = components.map(component => {
-                if (!component.toLowerCase().includes(text)) {
-                    return null;
-                }
-                return {
-                    title: component
-                };
+            var keys = Object.keys(screens);
+            var list = [];
+            components.map(component => {
+                let properties = Object.keys(me.browse(component));
+                properties = properties.filter(property => !keys.includes(property));
+                properties = properties.map(property => component + "." + property);
+                properties = properties.filter(property => property.toLowerCase().includes(text));
+                properties = properties.map(property => ({
+                    title: property
+                }));
+                list.push(...properties);
             });
-            components = components.filter(Boolean);
-            return components;
+            list = list.filter(Boolean);
+            return list;
         }
     };
 };
