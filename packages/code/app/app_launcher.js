@@ -97,10 +97,7 @@ screens.app.launcher = function AppLauncher(me) {
                         if (item.private) {
                             classes.push("private");
                         }
-                        let styles = {};
-                        if (me.core.string.language(item.title) === "hebrew") {
-                            styles.direction = "rtl";
-                        }
+                        let styles = { direction: me.core.string.direction(item.title) };
                         html += me.ui.html.item({
                             value: item.title,
                             classes,

@@ -57,6 +57,16 @@ screens.core.string = function CoreString(me) {
         }, string);
         return nextWord;
     };
+    me.direction = function (string) {
+        if (!string) {
+            return "ltr";
+        }
+        var position = string.search(/[A-Za-z]/);
+        if (position >= 0) {
+            return "ltr";
+        }
+        return "rtl";
+    };
     me.language = function (string) {
         if (!string) {
             return "english";
