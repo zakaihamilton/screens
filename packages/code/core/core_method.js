@@ -12,6 +12,7 @@ screens.core.method = function CoreMethod(me) {
             }
             var components = screens.components.sort();
             var keys = Object.keys(screens);
+            keys.push("upper");
             var list = [];
             components.map(component => {
                 let properties = Object.keys(me.browse(component));
