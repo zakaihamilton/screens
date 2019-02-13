@@ -67,7 +67,7 @@ screens.app.launcher = function AppLauncher(me) {
                 let name = names[nameIndex];
                 let list = lists[nameIndex];
                 if (list.length) {
-                    results[name] = list.sort((a, b) => a.title.localeCompare(b.title));
+                    results[name] = list;
                 }
             }
             for (let name in results) {

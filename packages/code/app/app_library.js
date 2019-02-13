@@ -639,7 +639,7 @@ screens.app.library = function AppLibrary(me) {
                     }
                 }
             }
-            return Array.from(results).map(result => {
+            results = Array.from(results).map(result => {
                 var [key, value] = result.split(":");
                 let title = key + ": " + value;
                 let search = result;
@@ -649,6 +649,8 @@ screens.app.library = function AppLibrary(me) {
                 let args = ["library", search];
                 return { title, args };
             });
+            results = results.sort((a, b) => a.title.localeCompare(b.title));
+            return results;
         }
     };
 };

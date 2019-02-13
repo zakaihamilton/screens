@@ -313,6 +313,8 @@ screens.ui.content = function UIContent(me) {
                     }
                 }
             }
+            results = results.sort((a, b) => a.title.localeCompare(b.title));
+            results.reverse();
             return results;
         },
         associated: {
