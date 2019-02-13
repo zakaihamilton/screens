@@ -87,7 +87,7 @@ screens.app.launcher = function AppLauncher(me) {
                     results.push({ title: name, members: list });
                 }
             }
-            message = me.tree(object, results);
+            message = me.tree(object, results, text);
         }
         if (message) {
             me.core.property.set(window.var.results, "ui.style.display", "flex");
@@ -98,7 +98,7 @@ screens.app.launcher = function AppLauncher(me) {
             me.core.property.set(window.var.results, "ui.style.display", "");
         }
     };
-    me.tree = function (object, list) {
+    me.tree = function (object, list, search) {
         if (!Array.isArray(list)) {
             list = [list];
         }
@@ -120,7 +120,7 @@ screens.app.launcher = function AppLauncher(me) {
                 }
                 for (let child of item.members) {
                     if (child.members) {
-                        html += me.tree(object, child);
+                        html += me.tree(object, child, search);
                         continue;
                     }
                     let classes = ["app-launcher-results-item"];
@@ -129,7 +129,7 @@ screens.app.launcher = function AppLauncher(me) {
                     }
                     let styles = { direction: me.core.string.direction(child.title) };
                     html += me.ui.html.item({
-                        value: child.title,
+                        value: me.ui.mark.widget(child.title, search),
                         classes,
                         styles,
                         attributes: {
