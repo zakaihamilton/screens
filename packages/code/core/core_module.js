@@ -297,6 +297,11 @@ screens.core.module = function CoreModule(me) {
                     info.body = "Upgrade complete";
                     return;
                 }
+                if (info.url.startsWith("/reload")) {
+                    me.core.server.run("pm2 reload all");
+                    info.body = "Reload complete";
+                    return;
+                }
                 if (info.url.startsWith("/") && !info.url.includes(".")) {
                     params.startupApp = info.url.substring(1);
                     info.url = "/main.html";
