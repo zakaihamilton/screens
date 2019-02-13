@@ -83,9 +83,13 @@ screens.app.launcher = function AppLauncher(me) {
                         }
                     });
                     for (let item of results[name]) {
+                        let classes = ["app-launcher-results-item"];
+                        if (item.private) {
+                            classes.push("private");
+                        }
                         html += me.ui.html.item({
                             value: item.title,
-                            classes: ["app-launcher-results-item"],
+                            classes,
                             attributes: {
                                 args: JSON.stringify(item.args),
                                 onclick: "screens.app.launcher.launchSearchItem(this)"

@@ -112,6 +112,22 @@
     padding-bottom: 0.5em;
 }
 
+.app-launcher-results-item.private:before {
+    content:"";
+    position: absolute;
+    width:1em;
+    height:1em;
+    margin-top:0.25em;
+    margin-left:-1.5em;
+    display: inline-block;
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMiIgaWQ9ImxvY2siIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0yMiAxNiBMMjIgMTIgQTYgNiAwIDAgMCAxMCAxMiBMMTAgMTYgeiBNNCAxNiBMNiAxNiBMNiAxMiBBMTAgMTAgMCAwIDEgMjYgMTIgTDI2IDE2IEwyOCAxNiBMMjggMzAgTDQgMzAgeiIvPjwvc3ZnPg==');
+    background-size: 100% 100%;
+}
+
+.app-launcher-results-item.private.night-mode:before {
+    filter:invert(100%);
+}
+
 .app-launcher-results-item:hover {
     background-color: var(--chrome-highlight-background);
     color: var(--chrome-highlight-color);

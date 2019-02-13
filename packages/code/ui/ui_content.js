@@ -7,7 +7,7 @@ screens.ui.content = function UIContent(me) {
     me.content = {
         init: async function () {
             if (!me.ui.content.lists) {
-                me.ui.content.lists = me.manager.content.lists(me.id);
+                me.ui.content.lists = me.manager.content.lists();
             }
             me.content.update();
         },
@@ -103,6 +103,7 @@ screens.ui.content = function UIContent(me) {
         refresh: {
             set: async function (object) {
                 var window = me.widget.window.get(object);
+                me.ui.content.lists = me.manager.content.lists();
                 await me.content.update();
                 var info = me.content.info(window);
                 me.content.associated.update(window, info._title);

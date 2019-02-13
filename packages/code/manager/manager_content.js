@@ -89,6 +89,7 @@ screens.manager.content = function ManagerContent(me) {
         var query = { package, component, title, private: null };
         if (private) {
             query.private = userId;
+            data.private = userId;
         }
         data = Object.assign({}, data);
         var info = await me.load(componentId, title, private, userId);
