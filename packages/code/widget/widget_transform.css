@@ -352,3 +352,7 @@ h4.widget-transform-widget {
     justify-content: flex-start;
     flex-grow: 0 !important;
 }
+
+.widget-transform-level-item p.click:hover {
+    text-shadow: 0 0 25px rgba(81, 203, 238, 1), 0 0 10px #0000FF;
+}

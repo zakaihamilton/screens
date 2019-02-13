@@ -639,6 +639,14 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
             me.core.property.set(modal, "ui.class.remove", "is-active");
         }
     };
+    me.click = function (object) {
+        var element = object.nextElementSibling;
+        var name = me.core.property.get(element, "ui.attribute.name");
+        if (name === "hebrew") {
+            me.close(object);
+            me.core.app.launch("letters", [element.textContent]);
+        }
+    };
 };
 
 screens.widget.transform.player = function WidgetTransformPlayer(me) {

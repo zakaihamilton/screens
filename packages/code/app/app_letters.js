@@ -13,6 +13,9 @@ screens.app.letters = function AppGematria(me) {
             if (typeof args[0] === "string") {
                 me.content.import(me.singleton, args[0], args[1]);
             }
+            else if (Array.isArray(args[0])) {
+                me.importData(me.singleton, args[0].join("|"));
+            }
             return me.singleton;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
@@ -20,6 +23,9 @@ screens.app.letters = function AppGematria(me) {
         me.updateLetters(me.singleton);
         if (typeof args[0] === "string") {
             me.content.import(me.singleton, args[0], args[1]);
+        }
+        else if (Array.isArray(args[0])) {
+            me.importData(me.singleton, args[0].join("|"));
         }
         return me.singleton;
     };

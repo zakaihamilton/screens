@@ -90,9 +90,12 @@
     transition: border 0.10s ease-in;
     left: 0px;
     top: -1px;
+    bottom: 3px;
     position: absolute;
     line-height: 1em;
-    padding: 0.2em;
+    padding-left: 0.3em;
+    padding-top: 0.2em;
+    padding-right: 0.3em;
     content: attr(kab-term-tooltip);
     text-align: center;
     white-space: pre;
@@ -100,6 +103,8 @@
     min-height: 100%;
     vertical-align: middle;
     border-radius: 5px;
+    font-family: ShlomoStam;
+    font-weight: normal;
 }
 
 [kab-term-tooltip]:hover:after {

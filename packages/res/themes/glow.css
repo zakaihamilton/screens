@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "ShlomoStam";
+    src: url("/packages/res/fonts/ShlomoStam.ttf");
+}
+
 .glow-window-label {
     text-align: center;
     background-color: black;
