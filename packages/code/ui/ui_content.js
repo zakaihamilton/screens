@@ -309,7 +309,7 @@ screens.ui.content = function UIContent(me) {
                 for (var item of lists[listType]) {
                     if (item.title.toLowerCase().includes(text)) {
                         results.push(Object.assign({}, item, {
-                            args: [me.id.split(".").pop(), item.title, listType == "private"]
+                            args: ["core.app.launch", me.id.split(".").pop(), item.title, listType == "private"]
                         }));
                     }
                 }

@@ -46,6 +46,7 @@ screens.app.launcher = function AppLauncher(me) {
         var message = "";
         var counter = ++me.searchCounter;
         if (text) {
+            me.core.property.set(window, "temp", false);
             var components = screens.components.sort();
             for (let name of components) {
                 if (name === "ui.content") {
@@ -93,6 +94,7 @@ screens.app.launcher = function AppLauncher(me) {
             me.core.property.set(window.var.results, "ui.basic.html", message);
         }
         else {
+            me.core.property.set(window, "temp", true);
             me.core.property.set(window.var.results, "ui.style.display", "");
         }
     };
@@ -145,7 +147,7 @@ screens.app.launcher = function AppLauncher(me) {
         var args = me.core.property.get(object, "ui.attribute.#args");
         if (args) {
             args = args.replace(/'/g, "\"");
-            me.core.app.launch.apply(null, JSON.parse(args));
+            me.core.message.send.apply(null, JSON.parse(args));
         }
     };
     me.collapseSearchCollection = function (object) {

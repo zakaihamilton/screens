@@ -458,7 +458,7 @@ screens.app.player = function AppPlayer(me) {
             list = list.filter(session => session.session.toLowerCase().includes(text));
             list = list.map(session => {
                 session.title = session.session;
-                session.args = [me.id.split(".").pop(), group.name, session.session];
+                session.args = ["core.app.launch", "player", group.name, session.session];
                 return session;
             });
             if (list.length) {

@@ -646,7 +646,7 @@ screens.app.library = function AppLibrary(me) {
                 if (search.includes(" ")) {
                     search = "\"" + search + "\"";
                 }
-                let args = ["library", search];
+                let args = ["core.app.launch", "library", search];
                 return { title, args };
             });
             results = results.sort((a, b) => a.title.localeCompare(b.title));
