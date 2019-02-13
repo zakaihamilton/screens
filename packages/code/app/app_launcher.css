@@ -60,6 +60,10 @@
     color: var(--color);
     overflow-x: hidden;
     overflow-y: auto;
+    padding-left:1em;
+    padding-right:1em;
+    padding-top:0em;
+    padding-bottom:0.5em;
 }
 
 .app-launcher-results-collection {
@@ -68,7 +72,7 @@
     color: var(--chrome-color);
     border: 1px solid var(--chrome-border);
     padding: 0.5em;
-    margin: 1em;
+    margin-top: 0.5em;
 }
 
 .app-launcher-results-collection.collapse {

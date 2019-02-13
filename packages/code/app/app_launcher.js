@@ -97,9 +97,14 @@ screens.app.launcher = function AppLauncher(me) {
                         if (item.private) {
                             classes.push("private");
                         }
+                        let styles = {};
+                        if (me.core.string.language(item.title) === "hebrew") {
+                            styles.direction = "rtl";
+                        }
                         html += me.ui.html.item({
                             value: item.title,
                             classes,
+                            styles,
                             attributes: {
                                 args: JSON.stringify(item.args),
                                 onclick: "screens.app.launcher.launchSearchItem(this)"
