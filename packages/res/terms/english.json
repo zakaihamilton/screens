@@ -7428,6 +7428,69 @@
             "term": "Dargot HaSulam",
             "translation": "Steps of the Ladder",
             "hebrew": "דרגות הסולם"
+        },
+        {
+            "term": "Peshat",
+            "translation": "Literal",
+            "hebrew": "פשט"
+        },
+        {
+            "term": "Remez",
+            "translation": "Intimation",
+            "hebrew": "רמז"
+        },
+        {
+            "term": "Sod",
+            "translation": "Secret",
+            "hebrew": "סוד"
+        },
+        {
+            "term": "El",
+            "translation": "God",
+            "hebrew": "אל"
+        },
+        {
+            "term": "Gavar",
+            "translation": "Overcome",
+            "hebrew": "גבר"
+        },
+        {
+            "term": "Pishon",
+            "hebrew": "פישון",
+            "style": {
+                "category": "River"
+            }
+        },
+        {
+            "term": "Gichon",
+            "hebrew": "גיחון",
+            "style": {
+                "category": "River"
+            }
+        },
+        {
+            "term": "Hidekel",
+            "hebrew": "חדקל",
+            "style": {
+                "category": "River"
+            }
+        },
+        {
+            "term": "Euphrates",
+            "hebrew": "פרת",
+            "style": {
+                "category": "River"
+            }
+        },
+        {
+            "term": "Had Kal",
+            "hebrew": "חד קל",
+            "translation": "Sharp and Light"
+        },
+        {
+            "term": "Gachon",
+            "translation": "Belly",
+            "hebrew": "גחון"
         }
     ],
     "style": {
