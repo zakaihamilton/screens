@@ -54,7 +54,14 @@ screens.app.launcher = function AppLauncher(me) {
                 let component = me.browse(name);
                 if ("content" in component) {
                     if ("search" in component.content) {
-                        names.push(name.split(".").pop());
+                        let label = null;
+                        if ("name" in component.content) {
+                            label = component.content.name();
+                        }
+                        if (!label) {
+                            label = name.split(".").pop();
+                        }
+                        names.push(label);
                         lists.push(component.content.search(text));
                     }
                 }
