@@ -45,20 +45,22 @@ function screens_setup(package_name, component_name, child_name, node) {
     var init = null;
     if (platform && screens.platform !== platform) {
         console.log(screens.platform + " => " + id + " => " + platform);
-        component_obj = new Proxy(() => { }, {
+        let handler = {
             get: function (object, property) {
                 if (property in object) {
                     return Reflect.get(object, property);
                 }
                 else {
-                    return function () {
-                        var args = Array.prototype.slice.call(arguments);
-                        args.unshift(id + "." + property);
-                        return screens.core.message["send_" + platform].apply(null, args);
-                    };
+                    return new Proxy(() => { return id + "." + property; }, handler);
                 }
+            },
+            apply: function (target, thisArg, argumentList) {
+                var args = Array.prototype.slice.call(argumentList);
+                args.unshift(target());
+                return screens.core.message["send_" + platform].apply(thisArg, args);
             }
-        });
+        };
+        component_obj = new Proxy(() => { }, handler);
         component_obj = Object.assign(component_obj, screens, { id });
         if (child_name) {
             screens[package_name][component_name][child_name] = component_obj;

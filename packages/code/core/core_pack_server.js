@@ -117,7 +117,7 @@ screens.core.pack = function CorePack(me) {
         if (info.folder === "server" || info.folder === "service") {
             body += `screens.${info.package}.${info.component} = function (me) { return "${info.folder}"; };\n`;
         }
-        if (info.platform && info.platform !== info.target) {
+        else if (info.platform && info.platform !== info.target) {
             body += `screens.${info.package}.${info.component} = function (me) { return "${info.platform}"; };\n`;
         }
         else {
