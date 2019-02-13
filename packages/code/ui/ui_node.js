@@ -361,11 +361,11 @@ screens.ui.node = function UINode(me) {
             if (baseDefault) {
                 values.push(baseDefault);
             }
-            for (var value of values) {
+            for (let value of values) {
                 if (value.startsWith(".")) {
-                    path = value.substring(1);
+                    let path = value.substring(1);
                     var info = me.core.json.traverse(data, path);
-                    var value = info.value;
+                    value = info.value;
                     if (!info.found || typeof value !== "string") {
                         continue;
                     }

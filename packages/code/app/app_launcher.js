@@ -66,7 +66,10 @@ screens.app.launcher = function AppLauncher(me) {
                     }
                 }
             }
+            var progress = me.ui.node.findByName(window, "progress");
+            me.core.property.set(progress, "ui.class.progress", true);
             lists = await Promise.all(lists);
+            me.core.property.set(progress, "ui.class.progress", false);
             if (counter !== me.searchCounter) {
                 return;
             }
