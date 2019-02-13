@@ -645,7 +645,7 @@ screens.app.library = function AppLibrary(me) {
             let collections = [];
             for (let key in tags) {
                 let members = Array.from(tags[key]).map(title => {
-                    let search = title;
+                    let search = key + ":" + title;
                     if (search.includes(" ")) {
                         search = "\"" + search + "\"";
                     }
