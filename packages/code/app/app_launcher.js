@@ -56,13 +56,19 @@ screens.app.launcher = function AppLauncher(me) {
                     if ("search" in component.content) {
                         let label = null;
                         if ("name" in component.content) {
-                            label = component.content.name();
+                            if (typeof component.content.name === "function") {
+                                label = component.content.name();
+                            }
+                            else if (typeof component.content.name === "string") {
+                                label = component.content.name;
+                            }
                         }
                         if (!label) {
                             label = name.split(".").pop();
                         }
                         names.push(label);
-                        lists.push(component.content.search(text));
+                        let result = component.content.search(text);
+                        lists.push(result);
                     }
                 }
             }
@@ -76,7 +82,7 @@ screens.app.launcher = function AppLauncher(me) {
             for (var nameIndex = 0; nameIndex < names.length; nameIndex++) {
                 let name = names[nameIndex];
                 let list = lists[nameIndex];
-                if (list.length) {
+                if (list && list.length) {
                     results[name] = list;
                 }
             }
@@ -122,8 +128,10 @@ screens.app.launcher = function AppLauncher(me) {
     };
     me.launchSearchItem = function (object) {
         var args = me.core.property.get(object, "ui.attribute.#args");
-        args = args.replace(/'/g, "\"");
-        me.core.app.launch.apply(null, JSON.parse(args));
+        if (args) {
+            args = args.replace(/'/g, "\"");
+            me.core.app.launch.apply(null, JSON.parse(args));
+        }
     };
     me.collapseSearchCollection = function (object) {
         me.core.property.set(object.parentNode, "ui.class.toggle", "collapse");
