@@ -4,37 +4,35 @@
  */
 
 screens.lib.dictionary = function LibDictionary(me) {
-    me.init = async function () {
-        me.request = require("request");
-    };
     me.definition = async function (name) {
         var cache = await me.db.cache.dictionary.find({ name });
         if (cache) {
             return cache.definition;
         }
-        var definition = await me.send("?define=" + name);
+        var definition = await me.send(name);
         await me.db.cache.dictionary.use({ name }, { name, definition });
         return definition;
     };
-    me.send = async function (url) {
-        var info = {
-            url: "https://googledictionaryapi.eu-gb.mybluemix.net/" + url
+    me.send = async function (text) {
+        var sources = {
+            google: "https://googledictionaryapi.eu-gb.mybluemix.net/?define=${text}"
         };
-        return new Promise((resolve, reject) => {
-            me.request.get(info, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    if (body[0] === "<") {
-                        resolve({});
-                        return;
-                    }
-                    let json = JSON.parse(body);
-                    resolve(json);
-                }
-            });
+        var promises = [];
+        for (let name in sources) {
+            let url = sources[name].replace(/\${text}/g, text);
+            let promise = me.core.json.get(url);
+            promises.push(promise);
+        }
+        var names = Object.keys(sources);
+        var values = await Promise.all(promises);
+        var result = {};
+        values.map((value, index) => {
+            let name = names[index];
+            if (value) {
+                result[name] = value;
+            }
         });
+        return result;
     };
     return "server";
 };

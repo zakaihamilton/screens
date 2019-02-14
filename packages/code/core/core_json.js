@@ -6,6 +6,9 @@
 screens.core.json = function CoreJson(me) {
     me.init = function () {
         me.files = {};
+        if (me.platform === "server") {
+            me.request = require("request");
+        }
     };
     me.loadComponent = async function (path, useCache = true) {
         var period = path.lastIndexOf(".");
@@ -15,24 +18,24 @@ screens.core.json = function CoreJson(me) {
         var json = await me.loadFile(url, useCache);
         return json;
     };
-    me.request = async function (url) {
-        var info = {
-            method: "GET",
-            url
-        };
-        var json = "{}";
-        try {
-            json = await me.core.http.send(info);
-            if (json) {
-                json = JSON.parse(json);
-            }
+    me.get = async function (url) {
+        if (me.platform === "server") {
+            return new Promise(resolve => {
+                me.request.get(url, (error, response, body) => {
+                    if (error) {
+                        resolve({ error });
+                    }
+                    else {
+                        if (body[0] === "<") {
+                            resolve({ error: "response is in an xml format" });
+                            return;
+                        }
+                        let json = JSON.parse(body);
+                        resolve(json);
+                    }
+                });
+            });
         }
-        catch (err) {
-            var error = "Request for url: " + url + " failed with error: " + err;
-            me.log_error(error);
-            json = {};
-        }
-        return json;
     };
     me.loadFile = async function (path, useCache = true) {
         if (useCache && path in me.files) {

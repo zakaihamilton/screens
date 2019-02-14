@@ -642,15 +642,17 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         let field = me.ui.node.findByName(widget.var.popup, "definition");
         me.core.property.set(field, "ui.basic.html", "");
         var definition = await me.lib.dictionary.definition(term.text);
+        var text = "";
         if (definition) {
-            var text = "";
-            definition.map(item => {
-                for (let type in item.meaning) {
-                    text += "<br><b>" + type + ":</b> " + item.meaning[type].map(item => item.definition).join("<br><br>") + "<br>";
-                }
-            });
-            term.definition = text;
+            if (definition.google) {
+                definition.google.map(item => {
+                    for (let type in item.meaning) {
+                        text += "<br><b>" + type + ":</b> " + item.meaning[type].map(item => item.definition).join("<br><br>") + "<br>";
+                    }
+                });
+            }
         }
+        term.definition = text;
         if (counter !== me.counter) {
             return;
         }
