@@ -1,6 +1,5 @@
 {
     "title": "Launcher",
-    "name": "@ui.param.version",
     "temp": true,
     "icon": "/packages/res/icons/launcher.png",
     "ui.property.style": {

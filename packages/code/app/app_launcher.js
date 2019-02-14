@@ -11,11 +11,7 @@ screens.app.launcher = function AppLauncher(me) {
         me.ui.image.preload("packages/res/icons");
     };
     me.launch = async function () {
-        let config = await me.core.util.config();
-        var params = {
-            version: config.version
-        };
-        var window = me.ui.element.create(me.json, "workspace", "self", params);
+        var window = me.ui.element.create(me.json, "workspace", "self");
         if (me.core.device.isMobile()) {
             me.core.property.set(window, "maximize");
         }
@@ -99,10 +95,14 @@ screens.app.launcher = function AppLauncher(me) {
             }
         }
         if (text) {
+            me.core.property.set(window, "title", "Search");
+            me.core.property.set(window, "name", object.value.trim());
             me.core.property.set(window.var.results, "ui.style.display", "flex");
             me.core.property.set(window.var.results, "ui.basic.html", message);
         }
         else {
+            me.core.property.set(window, "name", "");
+            me.core.property.set(window, "title", "Launcher");
             me.core.property.set(window, "temp", true);
             me.core.property.set(window.var.results, "ui.style.display", "");
         }
