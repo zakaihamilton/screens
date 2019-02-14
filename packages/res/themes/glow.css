@@ -273,7 +273,7 @@
     display: none;
 }
 
-.glow-window-close {
+.glow-window-contextMenu {
     flex: none;
     width: 1.5em;
     background-color: var(--chrome-background);
@@ -281,7 +281,7 @@
     margin-right: auto;
 }
 
-.glow-window-close::after {
+.glow-window-contextMenu::after {
     border-color: var(--border-color);
     border-style: solid;
     border-width: 2px 2px 0 0;
@@ -296,16 +296,16 @@
     transform: rotate(135deg);
 }
 
-.glow-window-close:hover:active {
+.glow-window-contextMenu:hover:active {
     box-shadow: 0px 0px 15px 3px var(--border-color);
     border-radius: 15px;
 }
 
-.glow-window-close.child::after {
+.glow-window-contextMenu.child::after {
     top: 8px;
 }
 
-.glow-window-close.fullscreen {
+.glow-window-contextMenu.fullscreen {
     display: none;
 }
 
@@ -330,7 +330,33 @@
     display: none;
 }
 
-.glow-window-minimize-arrow {
+.glow-window-close-icon {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    left: 45%;
+    top: 30%;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.glow-window-close-icon:before, .glow-window-close-icon:after {
+    position: absolute;
+    content: ' ';
+    height: 0.6em;
+    width: 0.1em;
+    background: var(--border-color);
+}
+
+.glow-window-close-icon:before {
+    transform: rotate(45deg);
+}
+
+.glow-window-close-icon:after {
+    transform: rotate(-45deg);
+}
+
+.glow-window-minimize-icon {
     background: var(--border-color);
     position: relative;
     top: 0.6em;
@@ -341,7 +367,7 @@
     border-radius: 2px;
 }
 
-.glow-window-maximize-arrow {
+.glow-window-maximize-icon {
     border-radius: 2px;
     position: relative;
     left: 0.5em;
@@ -352,7 +378,7 @@
     box-sizing: border-box;
 }
 
-.glow-window-maximize-arrow.restore {
+.glow-window-maximize-icon.restore {
     border: 2px solid var(--border-color);
 }
 

@@ -404,8 +404,9 @@ screens.widget.window = function WidgetWindow(me) {
         parent_window.child_window = window;
         me.updateParentChild(parent_window, window);
         me.core.property.set([
-            window.var.close,
+            window.var.contextMenu,
             parent_window.var.menu,
+            window.var.close,
             window.var.minimize,
             window.var.maximize
         ], "ui.node.parent", parent_window.var.header);
@@ -419,8 +420,9 @@ screens.widget.window = function WidgetWindow(me) {
                 "conceal": false
             });
             me.core.property.set([
-                window.var.close,
+                window.var.contextMenu,
                 window.var.label,
+                window.var.close,
                 window.var.minimize,
                 window.var.maximize
             ], "ui.node.parent", window.var.title);
@@ -847,6 +849,7 @@ screens.widget.window = function WidgetWindow(me) {
             var window = me.get(object);
             if (!me.core.property.get(window, "embed")) {
                 var options = JSON.parse(value);
+                me.core.property.set(window, "ui.style.transition", "none");
                 for (var optionKey in options) {
                     var optionValue = options[optionKey];
                     if (optionKey === "title") {
@@ -863,6 +866,9 @@ screens.widget.window = function WidgetWindow(me) {
                     }
                     me.core.property.set(window, optionKey, optionValue);
                 }
+                setTimeout(() => {
+                    me.core.property.set(window, "ui.style.transition", "");
+                }, 1000);
                 me.fixRegion(window);
             }
         }

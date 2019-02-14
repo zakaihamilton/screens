@@ -391,7 +391,7 @@
     background-color: #000080;
 }
 
-.widget-window-close {
+.widget-window-contextMenu {
     flex: none;
     width: 18px;
     height: 18px;
@@ -399,7 +399,7 @@
     border-right: 1px solid black;
 }
 
-.widget-window-close:after {
+.widget-window-contextMenu:after {
     content: "";
     position: absolute;
     left: 5px;
@@ -411,7 +411,7 @@
     box-shadow: 1px 1px 0px 0px #808080;
 }
 
-.widget-window-close.main:after {
+.widget-window-contextMenu.main:after {
     content: "";
     position: absolute;
     left: 2px;
@@ -423,7 +423,7 @@
     box-shadow: 1px 1px 0px 0px #808080;
 }
 
-.widget-window-close:hover:active {
+.widget-window-contextMenu:hover:active {
     background-color: #808080;
 }
 
@@ -457,7 +457,7 @@
     box-shadow: inset -1px -1px 0px 0px #ffffff;
 }
 
-.widget-window-minimize-arrow {
+.widget-window-minimize-icon {
     position: relative;
     left: 5px;
     top: 7px;
@@ -468,7 +468,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-maximize-arrow.restore {
+.widget-window-maximize-icon.restore {
     position: relative;
     left: 5px;
     top: 6px;
@@ -479,7 +479,7 @@
     border-bottom: 4px solid black;
 }
 
-.widget-window-maximize-arrow.maximize {
+.widget-window-maximize-icon.maximize {
     position: relative;
     left: 5px;
     top: 9px;
@@ -490,7 +490,7 @@
     border-top: 4px solid black;
 }
 
-.widget-window-maximize-arrow.maximize::after {
+.widget-window-maximize-icon.maximize::after {
     content: "";
     position: absolute;
     left: -3px;
@@ -513,6 +513,14 @@
 }
 
 .widget-window-minimize.temp {
+    display: none;
+}
+
+.widget-window-close.child {
+    display: none;
+}
+
+.widget-window-close.static {
     display: none;
 }
 

@@ -65,8 +65,8 @@
                     "ui.basic.elements": [
                         {
                             "ui.basic.window": "@ui.node.parent",
-                            "ui.basic.var": "close",
-                            "ui.class.class": "close",
+                            "ui.basic.var": "contextMenu",
+                            "ui.class.class": "contextMenu",
                             "ui.touch.click": "widget.contextmenu.show",
                             "ui.touch.dblclick": "close",
                             "ui.class.add": "@widget.window.mainClass",
@@ -81,6 +81,19 @@
                         },
                         {
                             "ui.basic.window": "@ui.node.parent",
+                            "ui.basic.var": "close",
+                            "ui.class.class": [
+                                "action",
+                                "close"
+                            ],
+                            "ui.touch.click": "close",
+                            "ui.basic.elements": {
+                                "ui.class.class": "close.icon"
+                            },
+                            "ui.attribute.title": "Close"
+                        },
+                        {
+                            "ui.basic.window": "@ui.node.parent",
                             "ui.basic.var": "minimize",
                             "ui.class.class": [
                                 "action",
@@ -88,7 +101,7 @@
                             ],
                             "ui.touch.click": "minimize",
                             "ui.basic.elements": {
-                                "ui.class.class": "minimize.arrow"
+                                "ui.class.class": "minimize.icon"
                             },
                             "ui.attribute.title": "Minimize"
                         },
@@ -101,7 +114,7 @@
                             ],
                             "ui.touch.click": "toggleSize",
                             "ui.basic.elements": {
-                                "ui.class.class": "maximize.arrow"
+                                "ui.class.class": "maximize.icon"
                             },
                             "ui.attribute.title": "Maximize/Restore"
                         }

@@ -116,8 +116,8 @@
             "replace": true
         },
         {
-            "source": "widget-window-close",
-            "target": "glow-window-close",
+            "source": "widget-window-contextMenu",
+            "target": "glow-window-contextMenu",
             "replace": true
         },
         {
@@ -126,13 +126,18 @@
             "replace": true
         },
         {
-            "source": "widget-window-minimize-arrow",
-            "target": "glow-window-minimize-arrow",
+            "source": "widget-window-close-icon",
+            "target": "glow-window-close-icon",
             "replace": true
         },
         {
-            "source": "widget-window-maximize-arrow",
-            "target": "glow-window-maximize-arrow",
+            "source": "widget-window-minimize-icon",
+            "target": "glow-window-minimize-icon",
+            "replace": true
+        },
+        {
+            "source": "widget-window-maximize-icon",
+            "target": "glow-window-maximize-icon",
             "replace": true
         },
         {
