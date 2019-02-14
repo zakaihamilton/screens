@@ -634,7 +634,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
             classes += "kab-term-phase-" + phase;
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
-        await me.update(widget, term);
+        me.update(widget, term);
         me.core.property.set(widget.var.popup, "ui.class.add", "show");
     };
     me.update = async function (widget, term) {
