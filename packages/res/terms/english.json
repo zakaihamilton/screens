@@ -5897,7 +5897,11 @@
         {
             "translation": "Homily",
             "term": "Drush",
-            "hebrew": "דרוש"
+            "hebrew": "דרוש",
+            "style": {
+                "phase": "two",
+                "category": "Orchard"
+            }
         },
         {
             "translation": "Sound",
@@ -7432,17 +7436,29 @@
         {
             "term": "Peshat",
             "translation": "Literal",
-            "hebrew": "פשט"
+            "hebrew": "פשט",
+            "style": {
+                "phase": "four",
+                "category": "Orchard"
+            }
         },
         {
             "term": "Remez",
             "translation": "Intimation",
-            "hebrew": "רמז"
+            "hebrew": "רמז",
+            "style": {
+                "phase": "three",
+                "category": "Orchard"
+            }
         },
         {
             "term": "Sod",
             "translation": "Secret",
-            "hebrew": "סוד"
+            "hebrew": "סוד",
+            "style": {
+                "phase": "one",
+                "category": "Orchard"
+            }
         },
         {
             "term": "El",
@@ -7458,28 +7474,32 @@
             "term": "Pishon",
             "hebrew": "פישון",
             "style": {
-                "category": "River"
+                "category": "River",
+                "phase": "four"
             }
         },
         {
             "term": "Gichon",
             "hebrew": "גיחון",
             "style": {
-                "category": "River"
+                "category": "River",
+                "phase": "three"
             }
         },
         {
             "term": "Hidekel",
             "hebrew": "חדקל",
             "style": {
-                "category": "River"
+                "category": "River",
+                "phase": "two"
             }
         },
         {
             "term": "Euphrates",
             "hebrew": "פרת",
             "style": {
-                "category": "River"
+                "category": "River",
+                "phase": "one"
             }
         },
         {
@@ -7496,6 +7516,39 @@
             "term": "PARDESS",
             "translation": "Orchard",
             "hebrew": "פרדס"
+        },
+        {
+            "term": "Ben Azai",
+            "hebrew": "בן עזאי",
+            "style": {
+                "category": "Sage",
+                "phase": "four"
+            }
+        },
+        {
+            "term": "Ben Zoma",
+            "hebrew": "בן זומא",
+            "style": {
+                "category": "Sage",
+                "phase": "three"
+            }
+        },
+        {
+            "term": "Acher",
+            "hebrew": "אחר",
+            "translation": "Other",
+            "style": {
+                "category": "Sage",
+                "phase": "two"
+            }
+        },
+        {
+            "term": "Rabbi Akiva",
+            "hebrew": "רבי עקיבא",
+            "style": {
+                "category": "Sage",
+                "phase": "one"
+            }
         }
     ],
     "style": {
