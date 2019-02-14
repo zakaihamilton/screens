@@ -14,7 +14,7 @@ screens.app.letters = function AppGematria(me) {
                 me.content.import(me.singleton, args[0], args[1]);
             }
             else if (Array.isArray(args[0])) {
-                me.importData(me.singleton, args[0].join("|"));
+                me.importData(me.singleton, args[0].join("|"), args[1]);
             }
             return me.singleton;
         }

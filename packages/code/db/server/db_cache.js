@@ -19,6 +19,17 @@ screens.db.cache.data = function DbCacheData(me) {
     return "server";
 };
 
+screens.db.cache.dictionary = function DbCacheDictionary(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.cache = {};
+    me.indexes = [
+        {
+            "name": 1
+        }
+    ];
+    return "server";
+};
+
 screens.db.cache.file = function DbCacheFile(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};

@@ -655,7 +655,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
             return;
         }
         me.core.property.set(field, "ui.basic.html", text);
-    }
+    };
     me.close = function (object) {
         var modal = me.ui.node.classParent(object, "modal");
         if (modal) {
@@ -667,7 +667,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         var name = me.core.property.get(element, "ui.attribute.name");
         if (name === "hebrew") {
             me.close(object);
-            me.core.app.launch("letters", [element.textContent]);
+            me.core.app.launch("letters", [element.textContent], "");
         }
     };
 };

@@ -7,8 +7,13 @@ screens.lib.dictionary = function LibDictionary(me) {
     me.init = async function () {
         me.request = require("request");
     };
-    me.definition = async function (text) {
-        var definition = await me.send("?define=" + text);
+    me.definition = async function (name) {
+        var cache = await me.db.cache.dictionary.find({ name });
+        if (cache) {
+            return cache.definition;
+        }
+        var definition = await me.send("?define=" + name);
+        await me.db.cache.dictionary.use({ name }, { name, definition });
         return definition;
     };
     me.send = async function (url) {
