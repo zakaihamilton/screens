@@ -332,7 +332,7 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-popup {
-    transition: visibility 0s, opacity 1s linear;
+    transition: visibility 0s, opacity 0.5s linear;
     display:flex;
     visibility: hidden;
     opacity:0.0;

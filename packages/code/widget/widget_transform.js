@@ -600,7 +600,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
     me.init = function () {
         me.counter = 0;
     };
-    me.open = function (object, termName) {
+    me.open = async function (object, termName) {
         var widget = me.upper.findWidget(object);
         var foundTermName = Object.keys(widget.termData.terms).find((term) => {
             return term.replace(/\s+/g, "") === termName.replace(/\s+/g, "");
@@ -634,7 +634,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
             classes += "kab-term-phase-" + phase;
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
-        me.update(widget, term);
+        await me.update(widget, term);
         me.core.property.set(widget.var.popup, "ui.class.add", "show");
     };
     me.update = async function (widget, term) {
