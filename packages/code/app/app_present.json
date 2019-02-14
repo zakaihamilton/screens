@@ -37,9 +37,10 @@
                 },
                 {
                     "text": "Users",
-                    "select": "header"
+                    "select": [
+                        "app.present.shared.userMenuList"
+                    ]
                 },
-                "app.present.shared.userMenuList",
                 "widget.window.exportMenuList(app.present.exportText)",
                 {
                     "text": "Edit Mode",
