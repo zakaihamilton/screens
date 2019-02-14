@@ -146,8 +146,8 @@ screens.ui.transform = function UITransform(me) {
                     "ui.basic.var": "popup",
                     "ui.basic.tag": "div",
                     "ui.basic.html": "@widget.transform.html",
+                    "ui.class.class": "widget.transform.popup",
                     "ui.class.add": "modal",
-                    "ui.style.zIndex": "1000",
                     "ui.property.after": {
                         "ui.node.parent": "@ui.element.workspace"
                     }

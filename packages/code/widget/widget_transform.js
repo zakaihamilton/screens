@@ -214,6 +214,9 @@ screens.widget.transform = function WidgetTransform(me) {
     };
     me.modifiers = function (object) {
         var widget = me.findWidget(object);
+        if (!widget) {
+            return [];
+        }
         var modifiers = [widget.language];
         if (widget.options.pipVideo) {
             modifiers.push("pipVideo");

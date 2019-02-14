@@ -95,4 +95,10 @@ screens.ui.html = function UIHtml(me) {
         }
         return html;
     };
+    me.surround = function (html, text, prefix, suffix) {
+        var find = me.core.string.regex("/(" + me.core.string.escape(text) + ")", "gi");
+        var replace = prefix + "$1" + suffix;
+        html = html.replace(find, replace);
+        return html;
+    };
 };

@@ -139,4 +139,13 @@ screens.kab.style = function KabStyle(me) {
         }
         return html;
     };
+    me.formatHebrewText = function (text) {
+        let matches = text.match(/[ֿ\u0590-\u05FF]+/g);
+        if (matches) {
+            Array.from(new Set(matches)).map(match => {
+                text = me.ui.html.surround(text, match, "<span style='font-family: ShlomoStam;'>", "</span>");
+            });
+        }
+        return text;
+    };
 };

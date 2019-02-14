@@ -263,6 +263,7 @@ screens.kab.text = function KabText(me) {
         var translation = instance.item.translation;
         var explanation = instance.item.explanation;
         var source = instance.item.source;
+        var stam = instance.item.stam;
         var context = instance.item.context;
         var lastFieldSeparator = "";
         if (session.json.data.lastFieldSeparator) {
@@ -342,6 +343,9 @@ screens.kab.text = function KabText(me) {
             modify(session, instance, "", source ? source : instance.source, null, "", false, false);
             match = true;
         } else if (source) {
+            if (typeof stam === "undefined" || stam) {
+                source = me.kab.style.formatHebrewText(source);
+            }
             instance.words.splice(instance.wordIndex, instance.span);
             if (Array.isArray(source)) {
                 instance.words.splice(instance.wordIndex, 0, ...source);
