@@ -248,6 +248,9 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/…/g, ", ");
         text = text.replace(/\n[?]/g, "?\n");
         text = text.replace(/[,'"]$/, "");
+        if (me.core.string.language(text) === "english") {
+            text = text.replace(/[ֿ\u0590-\u05FF]+/g, "\n");
+        }
         text = text.split("\n").map(item => {
             var original = null;
             var index = 0;
