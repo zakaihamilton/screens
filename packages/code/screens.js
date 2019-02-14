@@ -51,7 +51,10 @@ function screens_setup(package_name, component_name, child_name, node) {
                     return Reflect.get(object, property);
                 }
                 else {
-                    return new Proxy(() => { return id + "." + property; }, handler);
+                    return new Proxy(() => {
+                        let path = object();
+                        return path + "." + property;
+                    }, handler);
                 }
             },
             apply: function (target, thisArg, argumentList) {
@@ -60,7 +63,7 @@ function screens_setup(package_name, component_name, child_name, node) {
                 return screens.core.message["send_" + platform].apply(thisArg, args);
             }
         };
-        component_obj = new Proxy(() => { }, handler);
+        component_obj = new Proxy(() => { return id; }, handler);
         component_obj = Object.assign(component_obj, screens, { id });
         if (child_name) {
             screens[package_name][component_name][child_name] = component_obj;
