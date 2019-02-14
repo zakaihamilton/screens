@@ -634,8 +634,8 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
             classes += "kab-term-phase-" + phase;
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
-        me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
         me.update(widget, term);
+        me.core.property.set(widget.var.popup, "ui.class.add", "show");
     };
     me.update = async function (widget, term) {
         var counter = ++me.counter;
@@ -659,7 +659,7 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
     me.close = function (object) {
         var modal = me.ui.node.classParent(object, "modal");
         if (modal) {
-            me.core.property.set(modal, "ui.class.remove", "is-active");
+            me.core.property.set(modal, "ui.class.remove", "show");
         }
     };
     me.click = function (object) {

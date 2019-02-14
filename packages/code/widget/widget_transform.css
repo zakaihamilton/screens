@@ -331,6 +331,18 @@ h4.widget-transform-widget {
     border-right: 2px solid darkgray;
 }
 
+.widget-transform-popup {
+    transition: visibility 0s, opacity 1s linear;
+    display:flex;
+    visibility: hidden;
+    opacity:0.0;
+}
+
+.widget-transform-popup.show {
+    visibility: visible;
+    opacity:1.0;
+}
+
 .widget-transform-glow {
     border-radius: 10px;
 }
