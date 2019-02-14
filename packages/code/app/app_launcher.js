@@ -91,9 +91,14 @@ screens.app.launcher = function AppLauncher(me) {
                     results.push({ title: name, members: list });
                 }
             }
-            message = me.tree(object, results, text, true);
+            if (results.length) {
+                message = me.tree(object, results, text, true);
+            }
+            else {
+                message = "<br><b style='text-align:center;'>No Matching Results</b>";
+            }
         }
-        if (message) {
+        if (text) {
             me.core.property.set(window.var.results, "ui.style.display", "flex");
             me.core.property.set(window.var.results, "ui.basic.html", message);
         }
