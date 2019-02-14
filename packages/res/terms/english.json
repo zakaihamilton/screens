@@ -6383,6 +6383,7 @@
         {
             "term": "Nivrah",
             "translation": "Creature",
+            "explanation": "Human",
             "hebrew": "נברא",
             "style": {
                 "phase": "two"

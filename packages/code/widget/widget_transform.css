@@ -142,7 +142,10 @@
 
 .widget-transform-widget {
     min-height: 3em;
-    padding: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
     margin: 0;
     transition: background-color 1s, color 1s;
     border-radius: 10px;
@@ -333,14 +336,14 @@ h4.widget-transform-widget {
 
 .widget-transform-popup {
     transition: visibility 0s, opacity 0.5s linear;
-    display:flex;
+    display: flex;
     visibility: hidden;
-    opacity:0.0;
+    opacity: 0.0;
 }
 
 .widget-transform-popup.show {
     visibility: visible;
-    opacity:1.0;
+    opacity: 1.0;
 }
 
 .widget-transform-glow {
