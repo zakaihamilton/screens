@@ -63,6 +63,8 @@
     min-height: 200px;
     background-color: var(--background);
     background-size: 400% 400%;
+    transition: opacity 1s, transform 1s;
+    opacity: 1;
 }
 
 .glow-window-border.transparent {
@@ -87,7 +89,9 @@
 }
 
 .glow-window-border.minimize {
-    display: none;
+    opacity: 0;
+    transform: translate(0, 200%);
+    z-index: 1000 !important;
 }
 
 .glow-window-border.concealed {
