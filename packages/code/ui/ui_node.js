@@ -374,7 +374,7 @@ screens.ui.node = function UINode(me) {
                     widget.value = value;
                 }
                 else {
-                    me.core.property.set(widget, "ui.basic.text", value);
+                    me.core.property.set(widget, "ui.basic.html", value);
                 }
                 break;
             }

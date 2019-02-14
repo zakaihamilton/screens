@@ -15,6 +15,25 @@ screens.core.json = function CoreJson(me) {
         var json = await me.loadFile(url, useCache);
         return json;
     };
+    me.request = async function (url) {
+        var info = {
+            method: "GET",
+            url
+        };
+        var json = "{}";
+        try {
+            json = await me.core.http.send(info);
+            if (json) {
+                json = JSON.parse(json);
+            }
+        }
+        catch (err) {
+            var error = "Request for url: " + url + " failed with error: " + err;
+            me.log_error(error);
+            json = {};
+        }
+        return json;
+    };
     me.loadFile = async function (path, useCache = true) {
         if (useCache && path in me.files) {
             return me.files[path];

@@ -597,6 +597,9 @@ screens.widget.transform = function WidgetTransform(me) {
 };
 
 screens.widget.transform.popup = function WidgetTransformPopup(me) {
+    me.init = function () {
+        me.counter = 0;
+    };
     me.open = function (object, termName) {
         var widget = me.upper.findWidget(object);
         var foundTermName = Object.keys(widget.termData.terms).find((term) => {
@@ -632,7 +635,27 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         }
         me.core.property.set(widgets.phase, "ui.class.class", classes);
         me.core.property.set(widget.var.popup, "ui.class.add", "is-active");
+        me.update(widget, term);
     };
+    me.update = async function (widget, term) {
+        var counter = ++me.counter;
+        let field = me.ui.node.findByName(widget.var.popup, "definition");
+        me.core.property.set(field, "ui.basic.html", "");
+        var definition = await me.lib.dictionary.definition(term.text);
+        if (definition) {
+            var text = "";
+            definition.map(item => {
+                for (let type in item.meaning) {
+                    text += "<br><b>" + type + ":</b> " + item.meaning[type].map(item => item.definition).join("<br><br>") + "<br>";
+                }
+            });
+            term.definition = text;
+        }
+        if (counter !== me.counter) {
+            return;
+        }
+        me.core.property.set(field, "ui.basic.html", text);
+    }
     me.close = function (object) {
         var modal = me.ui.node.classParent(object, "modal");
         if (modal) {
