@@ -143,7 +143,7 @@ screens.widget.menu = function WidgetMenu(me) {
             }
             me.core.property.set(window.var.menu, "ui.group.data", {
                 "ui.data.keyList": ["ui.basic.text", "select", "options", "properties"],
-                "ui.data.mapping": { "text": "ui.basic.text" },
+                "ui.data.mapping": { "text": "ui.basic.text", "tooltip": "ui.attribute.title" },
                 "ui.data.values": value
             });
             me.updateTheme(window);

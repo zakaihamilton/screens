@@ -18,7 +18,7 @@ screens.app.launcher = function AppLauncher(me) {
         return window;
     };
     me.resIcon = function (object, value) {
-        var name = null, extension = null, label = null;
+        var name = null, extension = null, label = null, tooltip = null;
         if (typeof value === "string") {
             label = value;
             name = value.toLowerCase();
@@ -28,6 +28,12 @@ screens.app.launcher = function AppLauncher(me) {
             name = value[0].toLowerCase();
             extension = value[1];
         }
+        else {
+            label = value.label;
+            name = value.label.toLowerCase();
+            extension = value.extension;
+            tooltip = value.tooltip;
+        }
         if (!extension) {
             extension = "png";
         }
@@ -36,6 +42,7 @@ screens.app.launcher = function AppLauncher(me) {
         me.core.property.set(object, "ui.basic.src", `/packages/res/icons/${name}.${extension}`);
         me.core.property.set(object, "ui.basic.display", available);
         me.core.property.set(object, "ui.touch.click", "core.app." + name);
+        me.core.property.set(object, "ui.attribute.title", tooltip);
     };
     me.search = async function (object) {
         var window = me.widget.window.get(object);
