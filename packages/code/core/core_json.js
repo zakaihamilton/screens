@@ -191,4 +191,19 @@ screens.core.json = function CoreJson(me) {
         });
         return text;
     };
+    me.iterate = function (root, callback) {
+        root = callback(root);
+        if (typeof root === "object") {
+            root = Object.assign({}, root);
+        }
+        else if (Array.isArray(root)) {
+            root = Array.from(root);
+        }
+        if (typeof root !== "string") {
+            for (var key in root) {
+                root[key] = me.iterate(root[key], callback);
+            }
+        }
+        return root;
+    };
 };

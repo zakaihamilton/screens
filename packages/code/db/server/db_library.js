@@ -10,6 +10,42 @@ screens.db.library = function DbLibrary(me) {
     me.tagList = function () {
         return me.tags.list();
     };
+    me.compareTags = function (source, target) {
+        source = Object.assign({}, source);
+        target = Object.assign({}, target);
+        delete source._id;
+        delete target._id;
+        return me.core.json.compare(source, target);
+    };
+    me.removeDuplicates = async function (text) {
+        let duplicatesLength = 0;
+        let results = await me.find(text);
+        let tagsList = await me.tags.findByIds(results.map(item => item._id));
+        let contentList = await me.content.findByIds(results.map(item => item._id));
+        let ids = tagsList.map(item => item._id);
+        let duplicates = [];
+        for (let id of ids) {
+            let tags = tagsList.find(item => item._id === id);
+            let content = contentList.find(item => item._id === id);
+            if (!content) {
+                continue;
+            }
+            let duplicate = contentList.find(item => item._id !== id && item.text === content.text);
+            if (duplicate) {
+                let match = tagsList.find(item => item._id === duplicate._id);
+                if (me.compareTags(tags, match)) {
+                    duplicates.push(id);
+                    duplicatesLength++;
+                    contentList = contentList.filter(item => item._id !== duplicate._id);
+                }
+            }
+        }
+        for (let id of duplicates) {
+            await me.tags.remove({ _id: id });
+            await me.content.remove({ _id: id });
+        }
+        return duplicatesLength;
+    };
     me.find = async function (text, tagList) {
         if (!tagList) {
             tagList = [];
@@ -49,7 +85,7 @@ screens.db.library = function DbLibrary(me) {
             }
             doQuery = true;
         }
-        me.log("query: " + query + " tags: " + JSON.stringify(tags) + " filter: " + filter);
+        me.log("query: " + me.storage.db.queryAsString(query) + " tags: " + me.storage.db.queryAsString(tags) + " filter: " + filter);
         if (tags && Object.keys(tags).length) {
             tagList.push(...await me.db.library.tags.list(tags));
         }

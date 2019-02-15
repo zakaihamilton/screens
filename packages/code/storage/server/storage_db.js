@@ -160,12 +160,12 @@ screens.storage.db = function StorageDB(me) {
         return result.nRemoved;
     };
     me.list = async function (location, query = {}, params) {
-        var [array, hash] = me.getCache(location, query, params);
+        var [array, hash, queryString] = me.getCache(location, query, params);
         if (array) {
             return array;
         }
         var collection = await me.collection(location);
-        array = await me.core.util.performance(location.componentId + ".list: " + JSON.stringify(query), async () => {
+        array = await me.core.util.performance(location.componentId + ".list: " + queryString, async () => {
             var cursor = await collection.find(query);
             if (params) {
                 for (var param in params) {
@@ -192,17 +192,27 @@ screens.storage.db = function StorageDB(me) {
         var collection = await me.collection(location);
         collection.createIndex(index);
     };
+    me.queryAsString = function (query) {
+        var string = JSON.stringify(me.core.json.iterate(query, item => {
+            if (item && item.source) {
+                return item.source;
+            }
+            return item;
+        }));
+        return string;
+    };
     me.getCache = function (location) {
         var args = Array.prototype.slice.call(arguments, 1);
         var result = null;
-        var hash = me.core.string.hash(JSON.stringify(args));
+        var string = me.queryAsString(args);
+        var hash = me.core.string.hash(string);
         if (location.cache) {
             result = location.cache[hash];
             if (result) {
                 me.log("using db cache for: " + location.componentId + " = " + JSON.stringify(args));
             }
         }
-        return [result, hash];
+        return [result, hash, string];
     };
     me.setCache = function (location, hash, value) {
         if (location.cache) {
