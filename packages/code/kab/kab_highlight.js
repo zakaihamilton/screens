@@ -53,6 +53,32 @@ screens.kab.highlight = function KabHighlight(me) {
     me.toggle = async function (element) {
         me.core.property.set(element, "ui.class.toggle", "kab-term-highlight");
     };
+    me.remove = async function (element) {
+        var user = "$userId";
+        var name = "$userName";
+        if (!me.core.property.get(element, "ui.class.contains", "kab-term-highlight")) {
+            return;
+        }
+        me.core.property.set(element, "ui.class.remove", "kab-term-highlight");
+        var hash = me.core.property.get(element, "ui.attribute.#hash");
+        var source = me.core.property.get(element, "ui.attribute.#source");
+        var data = await me.db.shared.highlight.find({
+            "user": "$userId",
+            "hash": hash
+        });
+        if (!data) {
+            data = {};
+        }
+        data = Object.assign(data, {
+            hash,
+            user,
+            name,
+            source
+        });
+        me.db.shared.highlight.remove({
+            "user": "$userId"
+        });
+    };
     me.store = async function (element) {
         var user = "$userId";
         var name = "$userName";

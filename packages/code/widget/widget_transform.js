@@ -597,6 +597,12 @@ screens.widget.transform = function WidgetTransform(me) {
         };
         me.core.app.launch("visualize", params);
     };
+    me.removeHighlights = function (object) {
+        var widget = me.findWidget(object);
+        me.ui.node.iterate(widget.var.layout, (element) => {
+            me.kab.highlight.remove(element);
+        });
+    };
 };
 
 screens.widget.transform.popup = function WidgetTransformPopup(me) {

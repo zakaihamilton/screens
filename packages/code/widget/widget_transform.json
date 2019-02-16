@@ -354,6 +354,13 @@
                                 "enabled": "widget.transform.showHighlights",
                                 "state": "select"
                             }
+                        },
+                        {
+                            "text": "Remove Highlights",
+                            "select": "widget.transform.removeHighlights",
+                            "options": {
+                                "separator": true
+                            }
                         }
                     ]
                 },
