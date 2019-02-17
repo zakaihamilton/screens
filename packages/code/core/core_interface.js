@@ -9,7 +9,7 @@ screens.core.interface = function CoreInterface(me) {
     };
     me.receive = async function (info) {
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/interface")) {
-            info.args = JSON.parse(info.body);
+            info.args = me.fromTypeFormat(info.body);
             var args = [];
             try {
                 await me.core.property.set(info, "user.verify.verify");
@@ -32,17 +32,30 @@ screens.core.interface = function CoreInterface(me) {
             });
 
             info["content-type"] = "application/json";
-            info.body = JSON.stringify(args);
+            info.body = me.toTypeFormat(args);
         }
+    };
+    me.toTypeFormat = function (args) {
+        var string = JSON.stringify(me.core.json.map(args, item => {
+            return me.core.type.wrap(item);
+        }));
+        return string;
+    };
+    me.fromTypeFormat = function (body) {
+        var json = JSON.parse(body);
+        var args = me.core.json.iterate(json, item => {
+            return me.core.type.unwrap(item);
+        });
+        return args;
     };
     me.send = async function (method) {
         var args = Array.prototype.slice.call(arguments, 0);
         var info = {
             method: "POST",
             url: "/interface/" + method.replace(/\./g, "/"),
-            body: JSON.stringify(args)
+            body: me.toTypeFormat(args)
         };
-        var result = JSON.parse(await me.core.http.send(info));
+        var result = me.fromTypeFormat(await me.core.http.send(info));
         if (result[0]) {
             throw result[0];
         }

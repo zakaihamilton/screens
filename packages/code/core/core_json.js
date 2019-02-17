@@ -193,17 +193,38 @@ screens.core.json = function CoreJson(me) {
     };
     me.iterate = function (root, callback) {
         root = callback(root);
-        if (typeof root === "object") {
-            root = Object.assign({}, root);
-        }
-        else if (Array.isArray(root)) {
+        if (Array.isArray(root)) {
             root = Array.from(root);
+        }
+        else if (root instanceof ArrayBuffer) {
+            root = root.slice(0);
+        }
+        else if (root !== null && typeof root === "object") {
+            root = Object.assign({}, root);
         }
         if (typeof root !== "string") {
             for (var key in root) {
                 root[key] = me.iterate(root[key], callback);
             }
         }
+        return root;
+    };
+    me.map = function (root, callback) {
+        if (Array.isArray(root)) {
+            root = Array.from(root);
+        }
+        else if (root instanceof ArrayBuffer) {
+            root = root.slice(0);
+        }
+        else if (root !== null && typeof root === "object") {
+            root = Object.assign({}, root);
+        }
+        if (typeof root !== "string") {
+            for (var key in root) {
+                root[key] = me.map(root[key], callback);
+            }
+        }
+        root = callback(root);
         return root;
     };
 };

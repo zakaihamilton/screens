@@ -223,6 +223,7 @@ screens.app.player = function AppPlayer(me) {
         me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
             var sessions = me.groups.find(group => groupName === group.name).sessions;
+            sessions = sessions.filter(session => session.extension === "m4a");
             var name = "";
             if (sessions && sessions.length) {
                 name = sessions[0].session;
