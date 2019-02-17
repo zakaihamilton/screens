@@ -5753,14 +5753,15 @@
         },
         {
             "translation": "Death",
-            "explanation": "No Internal Power",
+            "explanation": "Deactivated",
             "term": "Mavet",
             "hebrew": "מות"
         },
         {
             "translation": "Death",
-            "explanation": "No Internal Power",
-            "term": "death"
+            "explanation": "Deactivated",
+            "term": "death",
+            "hebrew": "מות"
         },
         {
             "translation": "Blessing",
@@ -6497,6 +6498,14 @@
                 "phase": "four"
             },
             "hebrew": "אוריאל"
+        },
+        {
+            "term": "Rafael",
+            "style": {
+                "category": "Angel",
+                "phase": "three"
+            },
+            "hebrew": "רפאל"
         },
         {
             "term": "Raphael",
