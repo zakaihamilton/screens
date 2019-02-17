@@ -44,7 +44,7 @@ screens.core.stream = function CoreStream(me) {
                 stream.pipe(response);
             }
             else {
-                me.log("cannot stream:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
+                me.log_error("cannot stream:" + path + " with stream: " + stream + " with headers: " + JSON.stringify(headers) + " partial: " + (partial ? "yes" : "no") + " range:" + range);
                 response.end();
             }
         }
