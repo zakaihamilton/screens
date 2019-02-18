@@ -35,7 +35,7 @@ screens.media.file = function MediaFile(me) {
         return paths;
     };
     me.download = async function (groupName, path) {
-        var target = await me.manager.download.get(me.rootPath + "/" + groupName + "/" + path,
+        var target = await me.manager.file.download(me.rootPath + "/" + groupName + "/" + path,
             me.cachePath + "/" + path);
         return target;
     };
@@ -78,7 +78,7 @@ screens.media.file = function MediaFile(me) {
             file.local = me.cachePath + "/" + file.name;
             if (file.local.endsWith(".m4a")) {
                 try {
-                    await me.manager.download.get(file.remote, file.local);
+                    await me.manager.file.download(file.remote, file.local);
                 }
                 catch (err) {
                     me.log_error("Failed to download: " + file.remote);
@@ -110,7 +110,7 @@ screens.media.file = function MediaFile(me) {
             var extension = me.core.path.extension(target);
             if (!item.downloaded) {
                 try {
-                    await me.manager.download.get(item.path, target);
+                    await me.manager.file.download(item.path, target);
                 }
                 catch (err) {
                     me.log_error("Failed to download: " + item.path);

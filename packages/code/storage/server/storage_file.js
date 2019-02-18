@@ -99,18 +99,11 @@ screens.storage.file = function StorageFile(me) {
     me.downloadFile = async function (from, to) {
         var service = await me.getService();
         var path = me.fixPath(from);
-        var result = await service.filesGetTemporaryLink({ path: path });
-        const req = me.https.get(result.link, res => {
-            res.pipe(me.fs.createWriteStream(to));
-        });
-        return new Promise((resolve, reject) => {
-            req.on("close", function () {
-                resolve();
-            });
-            req.on("error", function (e) {
-                reject(e);
-            });
-        });
+        var result = await service.filesDownload({ path: path });
+        if (!result.fileBinary) {
+            throw "No binary content for file: " + path;
+        }
+        await me.core.file.writeFile(to, result.fileBinary, "binary");
     };
     me.uploadFile = async function (from, to, progressCallback) {
         var service = await me.getService();
@@ -135,11 +128,11 @@ screens.storage.file = function StorageFile(me) {
                                 commit: commit,
                                 contents: data
                             });
-                            me.log("finished uploading in parts: " + to + " size: " + fileSize + " result: " + result);
+                            me.log("finished uploading in parts: " + to + " size: " + me.core.string.formatBytes(fileSize) + " result: " + result);
                             resolve();
                         }
                         catch (err) {
-                            me.log("failed to upload in parts: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                            me.log("failed to upload in parts: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                             reject(err);
                         }
                     }
@@ -149,11 +142,11 @@ screens.storage.file = function StorageFile(me) {
                                 path: to,
                                 contents: data
                             });
-                            me.log("finished uploading: " + to + " size: " + fileSize + " result: " + JSON.stringify(result));
+                            me.log("finished uploading: " + to + " size: " + me.core.string.formatBytes(fileSize) + " result: " + JSON.stringify(result));
                             resolve();
                         }
                         catch (err) {
-                            me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                            me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                             reject(err);
                         }
                     }
@@ -169,13 +162,13 @@ screens.storage.file = function StorageFile(me) {
                         });
                     }
                     catch (err) {
-                        me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                        me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                         reject(err);
                         return;
                     }
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
-                    me.log("uploading " + to + ":" + cursor.offset + " / " + fileSize);
+                    me.log("uploading " + to + ":" + me.core.string.formatBytes(cursor.offset) + " / " + me.core.string.formatBytes(fileSize));
                 }
                 else {
                     me.core.file.pause(fileSession);
@@ -186,14 +179,14 @@ screens.storage.file = function StorageFile(me) {
                         });
                     }
                     catch (err) {
-                        me.log("failed to upload: " + to + " size: " + fileSize + " err: " + JSON.stringify(err));
+                        me.log("failed to upload: " + to + " size: " + me.core.string.formatBytes(fileSize) + " err: " + JSON.stringify(err));
                         reject(err);
                         return;
                     }
                     cursor.session_id = response.session_id;
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
-                    me.log("uploading " + to + ":" + cursor.offset + " / " + fileSize);
+                    me.log("uploading " + to + ":" + me.core.string.formatBytes(cursor.offset) + " / " + me.core.string.formatBytes(fileSize));
                 }
             }, chunkSize);
         });
