@@ -8,7 +8,7 @@ screens.storage.file = function StorageFile(me) {
         require("es6-promise").polyfill();
         me.dropbox = require("dropbox").Dropbox;
         me.fs = require("fs");
-        me.https = require('https');
+        me.https = require("https");
     };
     me.getService = async function () {
         if (me.handle) {
@@ -16,7 +16,7 @@ screens.storage.file = function StorageFile(me) {
         }
         var fetch = require("isomorphic-fetch");
         var keys = await me.core.private.keys("dropbox");
-        me.handle = new me.dropbox({ accessToken: keys['access-token'], fetch: fetch });
+        me.handle = new me.dropbox({ accessToken: keys["access-token"], fetch: fetch });
         return me.handle;
     };
     me.fixPath = function (path) {
@@ -45,8 +45,7 @@ screens.storage.file = function StorageFile(me) {
                 if (item[".tag"] !== "folder") {
                     continue;
                 }
-                item.entries = [];
-                await me.iterate(service, item.entries, item.path_lower, null, recursive);
+                await me.iterate(service, entries, item.path_lower, null, recursive);
             }
         }
     };
@@ -85,6 +84,16 @@ screens.storage.file = function StorageFile(me) {
         var service = await me.getService();
         path = me.fixPath(path);
         var response = service.filesGetMetadata({ path: path });
+        return response;
+    };
+    me.copyFile = async function (source, target) {
+        var service = await me.getService();
+        var from_path = me.fixPath(source);
+        var to_path = me.fixPath(target);
+        var response = await service.filesCopy({
+            from_path,
+            to_path
+        });
         return response;
     };
     me.downloadFile = async function (from, to) {

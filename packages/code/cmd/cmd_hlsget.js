@@ -1,6 +1,6 @@
 /*
     @author Zakai Hamilton
-    @component HlsGet
+    @component CmdHlsGet
 */
 
 screens.cmd.hlsget = function CmdHlsGet(me) {
