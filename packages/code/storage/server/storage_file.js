@@ -104,16 +104,15 @@ screens.storage.file = function StorageFile(me) {
             res.pipe(me.fs.createWriteStream(to));
         });
         return new Promise((resolve, reject) => {
-            req.on('close', function () {
+            req.on("close", function () {
                 resolve();
             });
-            req.on('error', function (e) {
+            req.on("error", function (e) {
                 reject(e);
             });
         });
     };
     me.uploadFile = async function (from, to, progressCallback) {
-        const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
         var service = await me.getService();
         var fileSize = await me.core.file.size(from);
         var fileSession = me.core.file.open(from);
@@ -129,9 +128,9 @@ screens.storage.file = function StorageFile(me) {
                 }
                 if (cursor.offset + data.length >= fileSize) {
                     if (cursor.offset) {
-                        var commit = { path: to, mode: 'overwrite', mute: false };
+                        var commit = { path: to, mode: "overwrite", mute: false };
                         try {
-                            var result = await service.filesUploadSessionFinish({
+                            let result = await service.filesUploadSessionFinish({
                                 cursor: cursor,
                                 commit: commit,
                                 contents: data
@@ -146,7 +145,7 @@ screens.storage.file = function StorageFile(me) {
                     }
                     else {
                         try {
-                            var result = await service.filesUpload({
+                            let result = await service.filesUpload({
                                 path: to,
                                 contents: data
                             });
@@ -176,7 +175,7 @@ screens.storage.file = function StorageFile(me) {
                     }
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
-                    me.log("uploading: " + cursor.offset + " / " + fileSize);
+                    me.log("uploading " + to + ":" + cursor.offset + " / " + fileSize);
                 }
                 else {
                     me.core.file.pause(fileSession);
@@ -194,7 +193,7 @@ screens.storage.file = function StorageFile(me) {
                     cursor.session_id = response.session_id;
                     cursor.offset += data.length;
                     me.core.file.resume(fileSession);
-                    me.log("uploading: " + cursor.offset + " / " + fileSize);
+                    me.log("uploading " + to + ":" + cursor.offset + " / " + fileSize);
                 }
             }, chunkSize);
         });

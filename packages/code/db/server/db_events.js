@@ -18,9 +18,9 @@ screens.db.events.msg = function DbEventsParticipants(me) {
     me.busy = false;
     me.init = async () => {
         me.storage.db.extension(me);
-        setInterval(me.handleNextMsg, 5000);
+        setInterval(me.handleNextMsg, 10000);
     };
-    me.options = { capped: true, size: 64000, max: 500 };
+    me.options = { capped: true, size: 32000, max: 100 };
     me.handleNextMsg = async function () {
         if (me.busy) {
             return;
