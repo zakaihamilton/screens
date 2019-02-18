@@ -33,16 +33,15 @@ screens.cmd.files = function CmdFiles(me) {
                             noVideo: null,
                             audioCodec: "copy"
                         });
+                        var fileSize = await me.core.file.size(targetAudioPath);
+                        me.core.property.set(terminal, "print", "converted from: " + me.core.string.formatBytes(videoChild.size) + " to: " + me.core.string.formatBytes(fileSize));
+                        var uploadAudioPath = me.core.path.replaceExtension(videoChild.path_display, "m4a");
+                        await me.storage.file.uploadFile(targetAudioPath, uploadAudioPath);
                     }
                     catch (err) {
                         me.core.property.set(terminal, "print", "failed to convert file: " + JSON.stringify(err));
-                        continue;
                     }
                 }
-                var fileSize = await me.core.file.size(targetAudioPath);
-                me.core.property.set(terminal, "print", "converted from: " + me.core.string.formatBytes(videoChild.size) + " to: " + me.core.string.formatBytes(fileSize));
-                var uploadAudioPath = me.core.path.replaceExtension(videoChild.path_display, "m4a");
-                await me.storage.file.uploadFile(targetAudioPath, uploadAudioPath);
             }
             me.core.property.set(terminal, "print", "successfully converted files");
         }
