@@ -5,9 +5,14 @@
 
 screens.app.library = function AppLibrary(me) {
     me.launch = function (args) {
-        var params = { search: args[0] };
+        var search = args[0];
+        var params = { search };
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
             me.core.property.set(me.singleton, "widget.window.show", true);
+            if (typeof search === "string") {
+                me.core.property.set(me.singleton.var.search, "ui.basic.text", search);
+                me.search(me.singleton);
+            }
             return me.singleton;
         }
         me.tagList = me.db.library.tagList();
