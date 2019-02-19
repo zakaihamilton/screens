@@ -1322,6 +1322,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         if (widget.style) {
             widget.style.border = "1px solid transparent";
+            widget.style.direction = me.core.string.direction(widget.innerText);
         }
     };
     me.currentPage = function (target) {
