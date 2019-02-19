@@ -3190,7 +3190,7 @@
         },
         {
             "translation": "Female Waters",
-            "explanation": "Rising Deficiencies",
+            "explanation": "Deficiencies",
             "term": "Mayin Nukvin",
             "hebrew": "מיין נוקבין"
         },
@@ -4367,7 +4367,7 @@
             "term": "Holam",
             "explanation": "Smallness",
             "style": {
-                "category": "Punctuation",
+                "category": "State",
                 "phase": "root"
             },
             "hebrew": "חולם",
@@ -4378,7 +4378,7 @@
             "term": "Melafom",
             "explanation": "Greatness",
             "style": {
-                "category": "Punctuation",
+                "category": "State",
                 "phase": "one"
             },
             "hebrew": "מלאפום"
@@ -4388,7 +4388,7 @@
             "term": "Shuruk",
             "explanation": "Greatness",
             "style": {
-                "category": "Punctuation",
+                "category": "State",
                 "phase": "one"
             },
             "hebrew": "שורוק",
@@ -4399,7 +4399,7 @@
             "term": "Hirik",
             "explanation": "Expression",
             "style": {
-                "category": "Punctuation",
+                "category": "State",
                 "phase": "two"
             },
             "hebrew": "חיריק",
@@ -6435,45 +6435,45 @@
         {
             "term": "“ And … Went",
             "style": "72 names - right line verse",
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And the angel of God who went",
             "style": "72 names - right line verse",
             "fixed": true,
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And the angel of God went",
             "style": "72 names - right line verse",
             "fixed": true,
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And it came between the camp of Egypt and the camp of Israel",
             "style": "72 names - left line verse",
             "fixed": true,
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And Moses stretched out his hand over the sea",
             "style": "72 names - middle line verse",
             "fixed": true,
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And It Came to pass",
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And It Came",
             "style": "72 names - left line verse",
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "“ And … Stretched",
             "style": "72 names - middle line verse",
-            "case": "ignore"
+            "case": false
         },
         {
             "term": "Michael",
@@ -7569,6 +7569,75 @@
             "term": "Tzedaka",
             "hebrew": "צדקה",
             "translation": "Charity"
+        },
+        {
+            "case": false,
+            "term": "Firmament",
+            "hebrew": "רקיע",
+            "source": "Rakiah",
+            "translation": "Firmament",
+            "explanation": "Separator"
+        },
+        {
+            "case": false,
+            "term": "Firmaments",
+            "hebrew": "רקיעים",
+            "source": "Reki'im",
+            "translation": "Firmaments",
+            "explanation": "Separators"
+        },
+        {
+            "case": false,
+            "term": "Doors",
+            "hebrew": "פתחים",
+            "source": "Petachim",
+            "translation": "Entrances",
+            "context": [
+                "firmaments"
+            ]
+        },
+        {
+            "case": false,
+            "term": "Door",
+            "hebrew": "פתח",
+            "source": "Petach",
+            "translation": "Entrance",
+            "context": [
+                "firmaments"
+            ]
+        },
+        {
+            "translation": "This World",
+            "explanation": "Reality",
+            "style": {
+                "category": "World",
+                "phase": "four"
+            },
+            "source": "Olam ha Zeh",
+            "term": "this world",
+            "hebrew": "עולם הזה"
+        },
+        {
+            "case": false,
+            "term": "Airs",
+            "source": "Avirim",
+            "hebrew": "אווירים",
+            "translation": "Airs",
+            "explanation": "Alignments"
+        },
+        {
+            "prefix": "the",
+            "term": "Zivug AB SAG",
+            "hebrew": "זיווג ע״ב ס״ג",
+            "translation": "Mating of AB SAG",
+            "explanation": "Override Switch"
+        },
+        {
+            "term": "illumination AB SAG",
+            "source": "He ’ arat AB SAG",
+            "hebrew": "הארת ע״ב ס״ג",
+            "translation": "illumination of AB SAG",
+            "explanation": "Override Switch"
         }
     ],
     "style": {

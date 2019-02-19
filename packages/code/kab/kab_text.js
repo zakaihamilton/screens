@@ -138,9 +138,9 @@ screens.kab.text = function KabText(me) {
                     }
                     let match = term;
                     if (!me.core.string.match(collectedWords, term, wordStyle)) {
-                        if (!item.case) {
+                        if (!("case" in item) || !item.case) {
                             match = term.toUpperCase();
-                            if (item.case === "ignore") {
+                            if (!item.case) {
                                 if (me.core.string.match(collectedWords.toUpperCase(), match, wordStyle)) {
                                     term = collectedWords;
                                 }
@@ -234,7 +234,7 @@ screens.kab.text = function KabText(me) {
                 percent: 0
             };
             line = me.splitWords(session, line);
-            session.text = line;
+            session.text = wordsString;
             if (session.terms) {
                 line = me.parseSingle(session, null, line);
             }
@@ -284,12 +284,12 @@ screens.kab.text = function KabText(me) {
         if (context) {
             var contextMatch = true;
             if (typeof context === "string") {
-                if (!session.text.includes(context)) {
+                if (!session.text.toLowerCase().includes(context.toLowerCase())) {
                     contextMatch = false;
                 }
             } else if (Array.isArray(context)) {
                 context.map(function (entry) {
-                    if (!session.text.includes(entry)) {
+                    if (!session.text.toLowerCase().includes(entry.toLowerCase())) {
                         contextMatch = false;
                     }
                 });
