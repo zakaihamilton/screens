@@ -36,14 +36,14 @@ screens.core.interface = function CoreInterface(me) {
         }
     };
     me.toTypeFormat = function (args) {
-        var string = JSON.stringify(me.core.json.map(args, item => {
+        var string = JSON.stringify(me.core.json.map(args, null, item => {
             return me.core.type.wrap(item);
         }));
         return string;
     };
     me.fromTypeFormat = function (body) {
         var json = JSON.parse(body);
-        var args = me.core.json.iterate(json, item => {
+        var args = me.core.json.map(json, item => {
             return me.core.type.unwrap(item);
         });
         return args;

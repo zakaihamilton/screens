@@ -121,6 +121,8 @@ screens.app.player = function AppPlayer(me) {
                 options: { "state": "select" },
                 group: "session",
                 itemMethod: "app.player.session",
+                sort: true,
+                reverse: true,
                 metadata: {
                     "Name": "label",
                     "Duration": "durationText"

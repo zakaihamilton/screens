@@ -186,6 +186,7 @@ screens.storage.db = function StorageDB(me) {
         var collection = await me.collection(location);
         var result = await collection.replaceOne(query, data, { upsert: true });
         me.notifyCache(location);
+        delete result.connection;
         return result;
     };
     me.createIndex = async function (location, index) {
@@ -193,7 +194,7 @@ screens.storage.db = function StorageDB(me) {
         collection.createIndex(index);
     };
     me.queryAsString = function (query) {
-        var string = JSON.stringify(me.core.json.iterate(query, item => {
+        var string = JSON.stringify(me.core.json.map(query, item => {
             if (item && item.source) {
                 return item.source;
             }

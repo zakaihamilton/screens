@@ -4,48 +4,60 @@
 */
 
 screens.core.type = function CoreType(me) {
-    me.wrap = function (unwrapped_data) {
+    me.wrap = function (data) {
         var result = null;
-        if (unwrapped_data === null) {
+        if (data === null) {
             result = { type: "null" };
         }
-        else if (unwrapped_data instanceof Error) {
-            result = { type: "error", data: unwrapped_data.message };
+        else if (Array.isArray(data)) {
+            result = { type: "array", data: data };
         }
-        else if (unwrapped_data instanceof ArrayBuffer) {
-            result = { type: "buffer", data: me.arrayBufferToString(unwrapped_data) };
+        else if (data instanceof Error) {
+            result = { type: "error", data: data.message };
         }
-        else if (Array.isArray(unwrapped_data)) {
-            result = { type: "array", data: unwrapped_data };
+        else if (data instanceof ArrayBuffer) {
+            result = { type: "buffer", data: me.arrayBufferToString(data) };
+        }
+        else if (typeof data === "string") {
+            result = { type: "string", data: data };
+        }
+        else if (typeof data === "number") {
+            result = { type: "number", data: data };
+        }
+        else if (typeof data === "boolean") {
+            result = { type: "boolean", data: data };
         }
         else {
-            result = { type: typeof unwrapped_data, data: unwrapped_data };
+            result = { type: "object", data };
         }
         return result;
     };
     me.unwrap = function (wrapped_data) {
         if (wrapped_data) {
-            var unwrapped_data = wrapped_data.data;
+            var data = wrapped_data.data;
             var type = wrapped_data.type;
             if (type === "null") {
-                unwrapped_data = null;
+                data = null;
             }
             else if (type === "array") {
-                unwrapped_data = Array.from(unwrapped_data);
-            }
-            else if (type === "integer") {
-                unwrapped_data = Number(unwrapped_data);
-            }
-            else if (type === "string") {
-                unwrapped_data = String(unwrapped_data);
+                data = Array.from(data);
             }
             else if (type === "error") {
-                unwrapped_data = new Error(unwrapped_data);
+                data = new Error(data);
             }
             else if (type === "buffer") {
-                unwrapped_data = me.stringToArrayBuffer(unwrapped_data);
+                data = me.stringToArrayBuffer(data);
             }
-            return unwrapped_data;
+            else if (type === "string") {
+                data = String(data);
+            }
+            else if (type === "number") {
+                data = Number(data);
+            }
+            else if (type === "boolean") {
+                data = Boolean(data);
+            }
+            return data;
         }
     };
     me.arrayBufferToString = function (buffer) {

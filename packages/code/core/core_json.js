@@ -191,8 +191,10 @@ screens.core.json = function CoreJson(me) {
         });
         return text;
     };
-    me.iterate = function (root, callback) {
-        root = callback(root);
+    me.map = function (root, before, after) {
+        if (before) {
+            root = before(root);
+        }
         if (Array.isArray(root)) {
             root = Array.from(root);
         }
@@ -204,27 +206,12 @@ screens.core.json = function CoreJson(me) {
         }
         if (typeof root !== "string") {
             for (var key in root) {
-                root[key] = me.iterate(root[key], callback);
+                root[key] = me.map(root[key], before, after);
             }
         }
-        return root;
-    };
-    me.map = function (root, callback) {
-        if (Array.isArray(root)) {
-            root = Array.from(root);
+        if (after) {
+            root = after(root);
         }
-        else if (root instanceof ArrayBuffer) {
-            root = root.slice(0);
-        }
-        else if (root !== null && typeof root === "object") {
-            root = Object.assign({}, root);
-        }
-        if (typeof root !== "string") {
-            for (var key in root) {
-                root[key] = me.map(root[key], callback);
-            }
-        }
-        root = callback(root);
         return root;
     };
 };
