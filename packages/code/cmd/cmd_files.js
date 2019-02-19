@@ -5,6 +5,9 @@
 
 screens.cmd.files = function CmdFiles(me) {
     me.cmd = async function (terminal, args) {
+        if (args.length === 1) {
+            args.push(...["/Kab/concepts/private/american", "cache"]);
+        }
         if (args.length <= 2) {
             me.core.property.set(terminal, "print", "files source target");
             me.core.cmd.exit(terminal);
@@ -41,6 +44,7 @@ screens.cmd.files = function CmdFiles(me) {
                     var uploadAudioPath = me.core.path.replaceExtension(videoChild.path_display, "m4a");
                     me.core.property.set(terminal, "print", "Uploading...");
                     await me.manager.file.upload(targetAudioPath, uploadAudioPath);
+                    await me.core.file.delete(targetVideoPath);
                 }
                 catch (err) {
                     me.core.property.set(terminal, "print", "failed to convert file: " + err);
