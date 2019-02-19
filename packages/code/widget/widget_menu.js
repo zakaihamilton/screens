@@ -791,7 +791,7 @@ screens.widget.menu.item = function WidgetMenuItem(me) {
             elements.push({
                 "ui.basic.tag": tag,
                 "ui.basic.text": tag === "th" ? key : value[key],
-                "ui.touch.click": "widget.menu.list.sort"
+                "ui.touch.down": tag === "th" ? "widget.menu.list.sort" : undefined
             });
         }
         me.ui.element.create(elements, object, object);

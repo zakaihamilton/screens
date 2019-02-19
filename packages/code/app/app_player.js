@@ -103,6 +103,7 @@ screens.app.player = function AppPlayer(me) {
                 property: "name",
                 options: { "state": "select" },
                 group: "group",
+                sort: true,
                 itemMethod: "app.player.groupName"
             };
             return me.widget.menu.collect(object, info);
