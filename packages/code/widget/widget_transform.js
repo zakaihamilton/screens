@@ -1330,7 +1330,28 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             }
         }
     };
+    me.cleanHandlers = function (widget) {
+        if (!widget) {
+            return;
+        }
+        var child = widget.firstElementChild;
+        while (child) {
+            me.cleanHandlers(child);
+            child = child.nextElementSibling;
+        }
+        if (widget && widget.getAttribute) {
+            var attributes = ["onload", "onclick"];
+            attributes.map(attribute => {
+                var value = widget.getAttribute(attribute);
+                if (value) {
+                    value = value.replace(/([.,])<\/span><span>/g, "$1");
+                    widget.setAttribute(attribute, value);
+                }
+            });
+        }
+    };
     me.cleanupWidget = function (widget) {
+        me.cleanHandlers(widget);
         var child = widget.firstElementChild;
         while (child) {
             if (child.tagName && child.tagName.toLowerCase() === "div") {
