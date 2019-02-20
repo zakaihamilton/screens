@@ -236,6 +236,8 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/…/g, ", ");
         text = text.replace(/\n[?]/g, "?\n");
         text = text.replace(/[,'"]$/, "");
+        text = text.replace(/ושמאל/g, "‏ו-שמאל");
+        text = text.replace(/לקו/g, "ל-קו");
         if (me.params.language) {
             if (me.params.language === "english" && me.core.string.language(text) === me.params.language) {
                 text = text.replace(/[ֿ\u0590-\u05FF]+/g, "\n");
