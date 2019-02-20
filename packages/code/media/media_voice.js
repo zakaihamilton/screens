@@ -217,6 +217,13 @@ screens.media.voice = function MediaVoice(me) {
                 text = text.replace(item.replace(",", "\n"), item);
             });
         }
+        let result = text.match(/^([ֿ\u0590-\u05FF]+)\)/);
+        if (result && result.length > 1) {
+            result[1] = result[1].split("").map(char => {
+                return me.kab.letters.pronunciationTable["hebrew"][char];
+            }).join("\n");
+            text = text.replace(/^([ֿ\u0590-\u05FF]+)\)/, "אות\n" + result[1] + "\n");
+        }
         text = text.replace(/No\./g, "No");
         text = text.replace(/^(\d+\))/g, "\n$1\n");
         text = text.replace(/\s-\s/g, "\n");

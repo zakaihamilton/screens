@@ -42,7 +42,7 @@ screens.kab.letters = function KabLetters(me) {
     };
     me.pronunciationTable = {
         "hebrew": {
-            "א": "אלף",
+            "א": "אָלף",
             "ב": "בית",
             "ג": "גימל",
             "ד": "דלת",

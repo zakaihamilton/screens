@@ -881,22 +881,24 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         });
         return menu;
     };
-    me.speeds = function () {
-        var speedList = Object.keys(me.media.voice.speeds);
-        speedList = speedList.map(name => {
-            var item = [
-                name,
-                "widget.transform.speed",
-                {
-                    "state": "select"
-                },
-                {
-                    "group": "speed"
-                }
-            ];
-            return item;
-        });
-        return speedList;
+    me.speeds = function (object) {
+        var list = [];
+        for (var name in me.media.voice.speeds) {
+            var speed = me.media.voice.speeds[name];
+            list.push({ name, speed: "x" + speed });
+        }
+        var info = {
+            list,
+            property: "name",
+            options: { "state": "select" },
+            group: "speeds",
+            itemMethod: "widget.transform.speed",
+            metadata: {
+                "Name": "name",
+                "Speed": "speed"
+            }
+        };
+        return me.widget.menu.collect(object, info);
     };
     me.volumes = function () {
         var volumeList = Object.keys(me.media.voice.volumes);
