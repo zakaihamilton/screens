@@ -199,16 +199,14 @@ screens.kab.text = function KabText(me) {
         if (!wordsString) {
             wordsString = "";
         }
-        var json = await me.kab.data.load(language, options.reload);
-        if (!json) {
+        var globalJson = await me.kab.data.load(language, options.reload);
+        if (!globalJson) {
             return { text: wordsString };
         }
         me.core.message.send("kab.term.clear");
-        wordsString = me.core.message.send("kab.format.replace", wordsString, json.replace);
         if (wordsString.includes("\n")) {
-            wordsString = me.core.message.send("kab.format.process", wordsString, json.pre);
+            wordsString = me.core.message.send("kab.format.process", wordsString, globalJson.pre);
         }
-        var terms = me.core.message.send("kab.text.prepare", json, json.term, options);
         var lines = wordsString.split("\n");
         var hashes = lines.map(line => {
             return me.hash(line);
@@ -221,7 +219,20 @@ screens.kab.text = function KabText(me) {
             request.commentary = me.kab.commentary.query(options);
         }
         var items = await me.db.shared.hashResults(request, hashes);
+        var languages = {};
+        for (let language of ["english", "hebrew"]) {
+            let json = await me.kab.data.load(language);
+            let terms = me.core.message.send("kab.text.prepare", json, json.term, options);
+            languages[language] = {
+                json,
+                terms
+            };
+        }
         lines = lines.map(async (line, index) => {
+            var language = me.core.string.language(me.clean(line));
+            let json = languages[language].json;
+            let terms = languages[language].terms;
+            line = me.core.message.send("kab.format.replace", line, json.replace);
             var hash = me.hash(line);
             var session = {
                 hash,
@@ -251,7 +262,7 @@ screens.kab.text = function KabText(me) {
             return line;
         });
         lines = await Promise.all(lines);
-        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: json.data };
+        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data };
         return info;
     };
     me.handleInstance = function (session, instance) {
@@ -418,9 +429,9 @@ screens.kab.text = function KabText(me) {
             return null;
         }
         for (var item of terms) {
-            var words = item.term.split(" ");
-            var key = words[0].toUpperCase();
-            var lookup = result[key];
+            let words = item.term.split(" ");
+            let key = words[0].toUpperCase();
+            let lookup = result[key];
             if (item.defaultTerm) {
                 me.kab.term.setTerm(options, json.style, item, null, null, null, false);
             }
@@ -432,7 +443,7 @@ screens.kab.text = function KabText(me) {
             lookup[item.term] = item;
         }
         for (var term in result) {
-            var lookup = result[term];
+            let lookup = result[term];
             me.sortKeys(lookup);
         }
         me.sortKeys(result);
