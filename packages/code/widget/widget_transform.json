@@ -177,27 +177,16 @@
                             ]
                         },
                         {
-                            "text": "Voice",
-                            "select": [
-                                {
-                                    "text": "None",
-                                    "select": "widget.transform.voice",
-                                    "options": {
-                                        "state": "select"
-                                    },
-                                    "properties": {
-                                        "group": "voices"
-                                    }
-                                },
-                                "widget.transform.player.voices"
-                            ]
-                        },
-                        {
                             "text": "Volume",
                             "select": [
                                 "widget.transform.player.volumes"
                             ]
-                        }
+                        },
+                        {
+                            "text": "Voice",
+                            "select": "header"
+                        },
+                        "widget.transform.player.voices"
                     ]
                 },
                 {

@@ -45,18 +45,7 @@ screens.media.voice = function MediaVoice(me) {
     me.isPaused = function () {
         return me._isPaused;
     };
-    me.play = function (text, voiceName, params) {
-        if (voiceName === "None") {
-            me.stop();
-            if (params.oncancel) {
-                params.oncancel();
-            }
-            return;
-        }
-        var voices = me.voices(params.language);
-        voices = voices.filter((voice) => {
-            return voice.name.includes(voiceName);
-        });
+    me.play = function (text, params) {
         var volume = 1;
         var speed = 1;
         var pitch = 1;
@@ -87,13 +76,6 @@ screens.media.voice = function MediaVoice(me) {
         if (typeof params.pitch !== "undefined") {
             pitch = params.pitch;
         }
-        if (!voices.length) {
-            voices = me.voices(params.language);
-            if (!voices.length) {
-                return;
-            }
-        }
-        var voice = voices[0];
         me.utterances = [];
         me.params = params;
         me.currentIndex = params.index || 0;
@@ -108,23 +90,24 @@ screens.media.voice = function MediaVoice(me) {
         var processedTexts = textArray.map((text) => me.process(text));
         me.totalParts = processedTexts.length;
         processedTexts.map((text, index) => {
+            let language = me.core.string.language(text);
+            let voiceName = params.voices[language];
+            let voices = me.voices(language);
+            let voice = voices.find(voice => voice.name === voiceName);
+            if (!voice && voiceName !== "None") {
+                voice = voices[0];
+            }
             var parts = text.split("\n");
-            if (!parts.length) {
-                if (params.onend) {
-                    params.onend();
-                }
+            if (!parts.length || !voice) {
+                me.totalParts--;
                 return;
             }
             parts.map(processedText => {
-                if (!processedText.trim().length) {
-                    me.totalParts--;
-                    return;
-                }
                 var utterance = new SpeechSynthesisUtterance();
                 utterance.voice = voice;
-                utterance.volume = volume; // 0 to 1
-                utterance.rate = speed; // 0.1 to 10
-                utterance.pitch = pitch; //0 to 2
+                utterance.volume = volume;
+                utterance.rate = speed;
+                utterance.pitch = pitch;
                 utterance.text = processedText;
                 utterance.lang = voice.lang;
                 utterance.index = index;
@@ -152,6 +135,11 @@ screens.media.voice = function MediaVoice(me) {
                 me.log(index + ":" + processedText);
             });
         });
+        if (!me.totalParts) {
+            if (params.onend) {
+                params.onend();
+            }
+        }
         me.replay();
     };
     me.replay = function () {
@@ -235,7 +223,7 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/[.:;—]/g, "\n");
         text = text.replace(/'["“”]/g, "\n");
         text = text.replace(/’["“”]/g, "\n");
-        text = text.replace(/["”]/g, "\n");
+        text = text.replace(/[”]/g, "\n");
         text = text.replace(/[)\]]/g, ", ");
         text = text.replace(/[“([]/g, ", ");
         text = text.replace(/\s[,]/g, ",");
@@ -249,10 +237,7 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/\n[?]/g, "?\n");
         text = text.replace(/[,'"]$/, "");
         if (me.params.language) {
-            if (me.params.language && me.core.string.language(text) !== me.params.language) {
-                text = "";
-            }
-            if (me.params.language === "english") {
+            if (me.params.language === "english" && me.core.string.language(text) === me.params.language) {
                 text = text.replace(/[ֿ\u0590-\u05FF]+/g, "\n");
             }
         }

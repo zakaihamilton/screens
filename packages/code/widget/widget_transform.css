@@ -151,6 +151,10 @@
     border-radius: 10px;
 }
 
+.widget-transform-widget.hebrew {
+    direction:rtl;
+}
+
 .widget-transform-widget.kab-term-hover.night-mode:hover {
     color: white;
     background-color: #36383a;

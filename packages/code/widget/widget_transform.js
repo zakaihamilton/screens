@@ -31,7 +31,8 @@ screens.widget.transform = function WidgetTransform(me) {
             phaseNumbers: true,
             pipVideo: false,
             autoPlay: true,
-            voice: "Google UK English Male",
+            voiceEnglish: "Google UK English Male",
+            voiceHebrew: "None",
             speed: "Normal",
             volume: "Normal",
             singleArticle: false,
@@ -83,7 +84,8 @@ screens.widget.transform = function WidgetTransform(me) {
                 widget.forceReflow = true;
                 me.core.property.notify(widget, "update");
             },
-            voice: me.player.changeVoice,
+            voiceEnglish: me.player.changeVoice,
+            voiceHebrew: me.player.changeVoice,
             speed: me.player.updatePlayback,
             volume: me.player.updatePlayback,
             scrollPos: null,
@@ -265,7 +267,7 @@ screens.widget.transform = function WidgetTransform(me) {
             columnWidth: "400px",
             scrollWidget: visibleWidget,
             scrollPos: widget.options.scrollPos,
-            playEnabled: widget.options.voice !== "None",
+            playEnabled: widget.options.voiceEnglish !== "None" || widget.options.voiceHebrew !== "None",
             language: widget.options.language
         };
         widget.diagrams = [];
@@ -692,7 +694,7 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
         }
         var isPlaying = me.media.voice.isPlaying(currentPage);
         var isPaused = me.media.voice.isPaused(currentPage);
-        var playWillEnable = widget.options.voice !== "None";
+        var playWillEnable = widget.options.voiceEnglish !== "None" || widget.options.voiceHebrew !== "None";
         var playEnabled = me.widget.transform.layout.options(widget.var.layout).playEnabled;
         if (playWillEnable !== playEnabled && (!playEnabled || !playWillEnable)) {
             me.reflow(object);
@@ -808,9 +810,13 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                 },
                 speed: widget.options.speed,
                 volume: widget.options.volume,
-                language: widget.language
+                language: widget.language,
+                voices: {
+                    english: widget.options.voiceEnglish,
+                    hebrew: widget.options.voiceHebrew,
+                }
             };
-            me.media.voice.play(text, widget.options.voice, params);
+            me.media.voice.play(text, params);
             if (me.currentPlayingPage && me.currentPlayingPage !== currentPage) {
                 me.currentPlayingPage = null;
             }
@@ -844,25 +850,36 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
             me.media.voice.fastforward();
         }
     };
-    me.voices = function (object) {
-        var widget = me.upper.findWidget(object);
-        var language = widget.language;
-        var voicelist = me.media.voice.voices(language);
-        voicelist = voicelist.sort((a, b) => {
-            if (a.name < b.name) return -1;
-            if (a.name > b.name) return 1;
-            return 0;
+    me.voices = function () {
+        var languages = ["english", "hebrew"];
+        var menu = languages.map(language => {
+            let title = me.core.string.title(language);
+            let voiceList = me.media.voice.voices(language);
+            voiceList = voiceList.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+            });
+            voiceList.unshift({ name: "None" });
+            voiceList = voiceList.map((voice) => {
+                return {
+                    text: voice.name,
+                    select: "widget.transform.voice" + title,
+                    options: {
+                        "state": "select"
+                    },
+                    properties: {
+                        "group": "voices"
+                    }
+                };
+            });
+            let properties = {
+                "text": title,
+                "select": voiceList
+            };
+            return properties;
         });
-        voicelist = voicelist.map((voice) => {
-            return [voice.name, "widget.transform.voice", {
-                "state": "select"
-            },
-            {
-                "group": "voices"
-            }
-            ];
-        });
-        return voicelist;
+        return menu;
     };
     me.speeds = function () {
         var speedList = Object.keys(me.media.voice.speeds);
@@ -1322,7 +1339,8 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         if (widget.style) {
             widget.style.border = "1px solid transparent";
-            widget.style.direction = me.core.string.direction(widget.innerText);
+            var language = me.core.string.language(widget.innerText);
+            me.core.property.set(widget, "ui.class.hebrew", language === "hebrew");
         }
     };
     me.currentPage = function (target) {
