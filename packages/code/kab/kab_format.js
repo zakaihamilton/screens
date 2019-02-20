@@ -53,6 +53,12 @@ screens.kab.format = function KabFormat(me) {
                 } else if (find) {
                     wordsString = wordsString.replace(me.core.string.regex(find), me.core.string.regex(item.replace));
                 }
+                if (item.start) {
+                    wordsString = item.start + wordsString;
+                }
+                if (item.end) {
+                    wordsString = wordsString + item.end;
+                }
             });
         }
         return wordsString;

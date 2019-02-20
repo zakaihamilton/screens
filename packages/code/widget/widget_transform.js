@@ -42,7 +42,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentaryUser: "",
             showHighlights: true,
             copyHighlights: true,
-            exportSource: false
+            exportSource: false,
+            highlightReading: true
         });
         widget.pageSize = { width: 0, height: 0 };
         me.ui.options.toggleSet(me, me.findWidget, {
@@ -74,7 +75,8 @@ screens.widget.transform = function WidgetTransform(me) {
             commentarySeparator: me.transform,
             showHighlights: me.transform,
             copyHighlights: null,
-            exportSource: null
+            exportSource: null,
+            highlightReading: null
         });
         me.ui.options.choiceSet(me, me.findWidget, {
             language: me.transform,
@@ -802,9 +804,9 @@ screens.widget.transform.player = function WidgetTransformPlayer(me) {
                         me.core.property.set(object, "widget.transform.player.play");
                     }
                 },
-                onchange: (index, text) => {
+                onchange: (widgetIndex, textIndex, text) => {
                     me.log("onchange: " + index + " text:" + text);
-                    me.widget.transform.layout.markPage(currentPage, index, text);
+                    me.widget.transform.layout.markPage(currentPage, widgetIndex, textIndex);
                     var focusElement = me.widget.transform.layout.focusElement(currentPage);
                     me.focusParagraph(object, focusElement);
                 },
@@ -1388,12 +1390,31 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         }
         return hasSeparator;
     };
-    me.markElement = function (element, mark) {
+    me.markElement = function (element, mark, textIndex) {
+        var childElement = null;
         if (mark) {
+            if (textIndex !== -1) {
+                childElement = element.children[textIndex];
+            }
+            else {
+                element.innerHTML = me.ui.html.mark(element.innerHTML, "");
+            }
             element.style.opacity = "";
         }
         else {
+            element.innerHTML = me.ui.html.mark(element.innerHTML, "");
             element.style.opacity = "0.75";
+        }
+        Array.from(element.children).map(element => {
+            if (element.getAttribute("hidden")) {
+                return;
+            }
+            if (element.style) {
+                element.style.textShadow = "";
+            }
+        });
+        if (childElement && childElement.style) {
+            childElement.style.textShadow = "0 0 25px #eec351, 0 0 10px #51cbee";
         }
     };
     me.clearWidget = function (widget, modifiers) {
@@ -1403,7 +1424,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         if (widget.getAttribute("hidden")) {
             return;
         }
-        me.markElement(widget, true);
+        me.markElement(widget, true, -1);
         if (widget.innerText) {
             me.core.property.set(widget, "ui.class.add", ["widget.transform.widget", modifiers]);
         }
@@ -1417,10 +1438,11 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         });
         page.focusElement = null;
     };
-    me.markPage = function (page, index) {
+    me.markPage = function (page, widgetIndex, textIndex) {
+        var widget = me.upper.findWidget(page);
         var content = page.var.content;
         var focusElement = null;
-        focusElement = content.children[index];
+        focusElement = content.children[widgetIndex];
         Array.from(content.children).map(element => {
             if (element.getAttribute("hidden")) {
                 return;
@@ -1436,10 +1458,12 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                 page.focusElement.classList.remove("mark");
             }
             if (focusElement) {
-                me.markElement(focusElement, true);
                 focusElement.classList.add("mark");
             }
             page.focusElement = focusElement;
+        }
+        if (focusElement) {
+            me.markElement(focusElement, true, (widget.options.highlightReading ? textIndex : -1));
         }
     };
     me.focusElement = function (page) {

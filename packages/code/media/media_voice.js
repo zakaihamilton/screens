@@ -83,64 +83,73 @@ screens.media.voice = function MediaVoice(me) {
         if (params.onstart) {
             params.onstart();
         }
-        var textArray = text;
-        if (!Array.isArray(textArray)) {
-            textArray = [text];
+        var collection = text;
+        if (!Array.isArray(collection)) {
+            collection = [text];
         }
-        var processedTexts = textArray.map((text) => me.process(text));
-        me.totalParts = processedTexts.length;
-        processedTexts.map((text, index) => {
-            let language = me.core.string.language(text);
-            let voiceName = params.voices[language];
-            let voices = me.voices(language);
-            let voice = voices.find(voice => voice.name === voiceName);
-            if (!voice && voiceName !== "None") {
-                voice = voices[0];
-            }
-            var parts = text.split("\n");
-            if (!parts.length || !voice) {
-                me.totalParts--;
-                return;
-            }
-            parts.map(processedText => {
-                var utterance = new SpeechSynthesisUtterance();
-                utterance.voice = voice;
-                utterance.volume = volume;
-                utterance.rate = speed;
-                utterance.pitch = pitch;
-                utterance.text = processedText;
-                utterance.lang = voice.lang;
-                utterance.index = index;
-                utterance.onstart = () => {
-                    if (params.onstate) {
-                        params.onstate();
-                    }
-                    me.currentIndex = utterance.index;
-                    if (params.onchange && processedText) {
-                        params.onchange(utterance.index, processedText);
-                    }
-                };
-                utterance.onend = () => {
-                    if (params.onstate) {
-                        params.onstate();
-                    }
-                    me.queueIndex++;
-                    index = me.utterances.indexOf(utterance);
-                    if (index == me.utterances.length - 1 && params.onend) {
-                        me.queueIndex = 0;
-                        params.onend();
-                    }
-                };
-                me.utterances.push(utterance);
-                me.log(index + ":" + processedText);
+        var totalPartCount = 0;
+        collection.map((collectionText, collectionIndex) => {
+            var groups = me.textSplit(collectionText);
+            var processedTexts = groups.map((text) => me.process(text));
+            totalPartCount += processedTexts.length;
+            processedTexts.map((text, processedIndex) => {
+                let language = me.core.string.language(text);
+                let voiceName = params.voices[language];
+                let voices = me.voices(language);
+                let voice = voices.find(voice => voice.name === voiceName);
+                if (!voice && voiceName !== "None") {
+                    voice = voices[0];
+                }
+                var parts = text.split("\n");
+                if (!parts.length || !voice) {
+                    totalPartCount--;
+                    return;
+                }
+                parts.map(processedText => {
+                    var utterance = new SpeechSynthesisUtterance();
+                    utterance.voice = voice;
+                    utterance.volume = volume;
+                    utterance.rate = speed;
+                    utterance.pitch = pitch;
+                    utterance.text = processedText;
+                    utterance.lang = voice.lang;
+                    utterance.widgetIndex = collectionIndex;
+                    utterance.textIndex = processedIndex;
+                    utterance.onstart = () => {
+                        if (params.onstate) {
+                            params.onstate();
+                        }
+                        me.currentIndex = utterance.widgetIndex;
+                        if (params.onchange && processedText) {
+                            params.onchange(utterance.widgetIndex, utterance.textIndex, collectionText);
+                        }
+                    };
+                    utterance.onend = () => {
+                        if (params.onstate) {
+                            params.onstate();
+                        }
+                        me.queueIndex++;
+                        processedIndex = me.utterances.indexOf(utterance);
+                        if (processedIndex == me.utterances.length - 1 && params.onend) {
+                            me.queueIndex = 0;
+                            params.onend();
+                        }
+                    };
+                    me.utterances.push(utterance);
+                    me.log(processedIndex + ":" + processedText);
+                });
             });
         });
-        if (!me.totalParts) {
+        me.totalParts = totalPartCount;
+        if (!totalPartCount) {
             if (params.onend) {
                 params.onend();
             }
         }
         me.replay();
+    };
+    me.textSplit = function (text) {
+        return text.split(/[,.\n]/g);
     };
     me.replay = function () {
         if (me.currentIndex < 0) {
@@ -149,7 +158,7 @@ screens.media.voice = function MediaVoice(me) {
             return;
         }
         me.log("me.currentIndex:" + me.currentIndex + " me.totalParts: " + me.totalParts);
-        var utterances = me.utterances.filter(utterances => utterances.index >= me.currentIndex);
+        var utterances = me.utterances.filter(utterances => utterances.widgetIndex >= me.currentIndex);
         me.synth.cancel();
         me.playTime = new Date().getTime();
         utterances.map(utterance => me.synth.speak(utterance));
@@ -170,7 +179,7 @@ screens.media.voice = function MediaVoice(me) {
                 }
                 return;
             }
-            stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
+            stop = me.utterances.filter(utterances => utterances.widgetIndex == me.currentIndex).length;
             me.replay();
         } while (!stop);
     };
@@ -186,7 +195,7 @@ screens.media.voice = function MediaVoice(me) {
                 }
                 return;
             }
-            stop = me.utterances.filter(utterances => utterances.index == me.currentIndex).length;
+            stop = me.utterances.filter(utterances => utterances.widgetIndex == me.currentIndex).length;
             me.replay();
         } while (!stop);
     };
@@ -222,7 +231,7 @@ screens.media.voice = function MediaVoice(me) {
             result[1] = result[1].split("").map(char => {
                 return me.kab.letters.pronunciationTable["hebrew"][char];
             }).join("\n");
-            text = text.replace(/^([ֿ\u0590-\u05FF]+)\)/, "אות\n" + result[1] + "\n");
+            text = text.replace(/^([ֿ\u0590-\u05FF]+)\)/, result[1] + "\n");
         }
         text = text.replace(/No\./g, "No");
         text = text.replace(/^(\d+\))/g, "\n$1\n");

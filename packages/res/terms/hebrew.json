@@ -69,6 +69,28 @@
             "replace": "<hr>"
         }
     ],
+    "post": [
+        {
+            "find": "/([,.\n])",
+            "replace": "$1</span><span>"
+        },
+        {
+            "find": "/(<h4>)",
+            "replace": "$1<span>"
+        },
+        {
+            "find": "/(</h4>)",
+            "replace": "</span>$1"
+        },
+        {
+            "find": "/(<p>)",
+            "replace": "$1<span>"
+        },
+        {
+            "find": "/(</p>)",
+            "replace": "</span>$1"
+        }
+    ],
     "phaseNumber": {
         "root": "ש",
         "one": "א",

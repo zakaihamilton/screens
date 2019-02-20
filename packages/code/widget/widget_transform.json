@@ -168,6 +168,13 @@
                             }
                         },
                         {
+                            "text": "Highlight Reading",
+                            "select": "widget.transform.highlightReading",
+                            "options": {
+                                "state": "select"
+                            }
+                        },
+                        {
                             "text": "Speed",
                             "options": {
                                 "separator": true
