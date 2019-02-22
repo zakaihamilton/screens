@@ -1347,7 +1347,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             attributes.map(attribute => {
                 var value = widget.getAttribute(attribute);
                 if (value) {
-                    value = value.replace(/([.,?:])<\/span><span>/g, "$1");
+                    value = value.replace(/([.,?!:;])<\/span><span>/g, "$1");
                     widget.setAttribute(attribute, value);
                 }
             });

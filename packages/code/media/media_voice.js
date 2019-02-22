@@ -148,7 +148,7 @@ screens.media.voice = function MediaVoice(me) {
         me.replay();
     };
     me.textSplit = function (text) {
-        return text.split(/[,.?:\n]/g);
+        return text.split(/[.,?!:;\n]/g);
     };
     me.replay = function () {
         if (me.currentIndex < 0) {
@@ -225,12 +225,15 @@ screens.media.voice = function MediaVoice(me) {
                 text = text.replace(item.replace(",", "\n"), item);
             });
         }
-        let result = text.match(/^([ֿ\u0590-\u05FF]+)\)/);
-        if (result && result.length > 1) {
-            result[1] = result[1].split("").map(char => {
-                return me.kab.letters.pronunciationTable["hebrew"][char];
-            }).join("\n");
-            text = text.replace(/^([ֿ\u0590-\u05FF]+)\)/, result[1] + "\n");
+        var replacements = [/^([ֿ\u0590-\u05FF]+)\)/, /^([ֿ\u0590-\u05FF]+)\./];
+        for (let replacement of replacements) {
+            let result = text.match(replacement);
+            if (result && result.length > 1) {
+                result[1] = result[1].split("").map(char => {
+                    return me.kab.letters.pronunciationTable["hebrew"][char];
+                }).join("\n");
+                text = text.replace(replacement, result[1] + "\n");
+            }
         }
         text = text.replace(/No\./g, "No");
         text = text.replace(/^(\d+\))/g, "\n$1\n");
