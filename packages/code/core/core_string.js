@@ -75,7 +75,11 @@ screens.core.string = function CoreString(me) {
         if (position >= 0) {
             return "english";
         }
-        return "hebrew";
+        position = string.search(/[ֿ\u0590-\u05FF]/);
+        if (position >= 0) {
+            return "hebrew";
+        }
+        return "english";
     };
     me.regex = function (string, options = "g") {
         if (string.startsWith("/")) {

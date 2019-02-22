@@ -151,8 +151,12 @@
     border-radius: 10px;
 }
 
+.widget-transform-widget span.highlight {
+    text-shadow: 0 0 25px #eec351, 0 0 10px #51cbee;
+}
+
 .widget-transform-widget.hebrew {
-    direction:rtl;
+    direction: rtl;
 }
 
 .widget-transform-widget.kab-term-hover.night-mode:hover {
@@ -189,11 +193,9 @@ h4.widget-transform-widget {
 .widget-transform-widget.hebrew:before {
     content: "\25C0\00a0";
     margin-left: 1.0em;
-    display: inline-block;
-    opacity: 0;
 }
 
-.widget-transform-widget.mark:before {
+.widget-transform-widget.mark span.highlight:before {
     opacity: 1;
 }
 

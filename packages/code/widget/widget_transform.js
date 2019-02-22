@@ -1430,13 +1430,9 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             if (element.getAttribute("hidden")) {
                 return;
             }
-            if (element.style) {
-                element.style.textShadow = "";
-            }
+            me.core.property.set(element, "ui.class.highlight", false);
         });
-        if (childElement && childElement.style) {
-            childElement.style.textShadow = "0 0 25px #eec351, 0 0 10px #51cbee";
-        }
+        me.core.property.set(childElement, "ui.class.highlight", true);
     };
     me.clearWidget = function (widget, modifiers) {
         if (!widget.getAttribute) {

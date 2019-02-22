@@ -149,7 +149,7 @@ screens.media.voice = function MediaVoice(me) {
         me.replay();
     };
     me.textSplit = function (text) {
-        return text.split(/[,.\n]/g);
+        return text.split(/[,.?:\n]/g);
     };
     me.replay = function () {
         if (me.currentIndex < 0) {
@@ -254,6 +254,9 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/[,'"]$/, "");
         text = text.replace(/ושמאל/g, "‏ו-שמאל");
         text = text.replace(/לקו/g, "ל-קו");
+        if (text === "’") {
+            text = "";
+        }
         if (me.params.language) {
             if (me.params.language === "english" && me.core.string.language(text) === me.params.language) {
                 text = text.replace(/[ֿ\u0590-\u05FF]+/g, "\n");
