@@ -136,7 +136,6 @@ screens.media.voice = function MediaVoice(me) {
                         }
                     };
                     me.utterances.push(utterance);
-                    me.log(processedIndex + ":" + processedText);
                 });
             });
         });
