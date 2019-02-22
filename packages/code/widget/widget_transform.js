@@ -658,6 +658,9 @@ screens.widget.transform.popup = function WidgetTransformPopup(me) {
         var text = "";
         if (definition) {
             if (definition.google) {
+                if (!Array.isArray(definition.google)) {
+                    definition.google = [definition.google];
+                }
                 definition.google.map(item => {
                     for (let type in item.meaning) {
                         text += "<br><b>" + type + ":</b> " + item.meaning[type].map(item => item.definition).join("<br><br>") + "<br>";

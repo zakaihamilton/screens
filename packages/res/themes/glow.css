@@ -991,6 +991,12 @@
     background-color: rgb(10, 10, 10, 0.5);
 }
 
+@media screen and (min-width: 1000px), print {
+    .modal-card, .modal-content {
+        width: 960px;
+    }
+}
+
 .modal-card-head.night-mode {
     background-color: var(--chrome-background);
 }
