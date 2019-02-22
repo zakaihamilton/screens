@@ -276,6 +276,26 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     ],
                     "ui.touch.click": "timestamp",
                     "ui.attribute.title": "Timestamp"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "previous",
+                    "ui.class.class": [
+                        "button",
+                        "previous"
+                    ],
+                    "ui.touch.click": "previous",
+                    "ui.attribute.title": "Previous Session"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.basic.var": "next",
+                    "ui.class.class": [
+                        "button",
+                        "next"
+                    ],
+                    "ui.touch.click": "next",
+                    "ui.attribute.title": "Next Session"
                 }
             ]
         }
@@ -454,12 +474,10 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         }
     };
     me.timestamp = async function (object) {
-        var widget = me.upper.mainWidget(object);
-        var method = me.core.property.get(object, "widget.window.method", "url");
-        var url = me.core.property.get(object, method);
+        var url = me.core.property.get(object, me.core.property.get(object, "widget.window.method", "url"));
+        var label = me.core.property.get(object, me.core.property.get(object, "widget.window.method", "timestampLabel"));
         var notes = await me.core.app.launch("notes");
         if (notes) {
-            var label = me.formatTime(widget.var.player.currentTime);
             me.core.property.set(notes, "ui.property.after", {
                 "app.notes.insertLink": {
                     label,
@@ -467,6 +485,14 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                 }
             });
         }
+    };
+    me.previous = async function (object) {
+        var widget = me.upper.mainWidget(object);
+        me.core.property.set(widget, "previous");
+    };
+    me.next = async function (object) {
+        var widget = me.upper.mainWidget(object);
+        me.core.property.set(widget, "next");
     };
     me.speedName = function (object) {
         var widget = me.upper.mainWidget(object);

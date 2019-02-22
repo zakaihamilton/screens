@@ -424,6 +424,12 @@ screens.app.player = function AppPlayer(me) {
         var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
         return me.core.util.url("player", [window.options.groupName, window.options.sessionName, time], true);
     };
+    me.timestampLabel = function () {
+        var window = me.singleton;
+        var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
+        var label = window.options.sessionName + " - " + me.widget.player.controls.formatTime(time);
+        return label;
+    };
     me.copyLocalUrl = function () {
         var window = me.singleton;
         var time = window.var.player ? me.widget.player.controls.time(window.var.player) : null;
@@ -472,5 +478,29 @@ screens.app.player = function AppPlayer(me) {
             }
         });
         return results;
+    };
+    me.nextSession = async function (object) {
+        var window = me.widget.window.get(object);
+        var groupName = window.options.groupName.toLowerCase();
+        var list = me.groups.find(group => groupName === group.name).sessions;
+        list = list.filter(session => session.extension === "m4a");
+        var index = list.findIndex(session => session.session === window.options.sessionName);
+        if (index >= list.length) {
+            return;
+        }
+        await me.updateSession(object, list[index + 1].session);
+        me.core.property.notify(object, "app.player.updatePlayer");
+    };
+    me.previousSession = async function (object) {
+        var window = me.widget.window.get(object);
+        var groupName = window.options.groupName.toLowerCase();
+        var list = me.groups.find(group => groupName === group.name).sessions;
+        list = list.filter(session => session.extension === "m4a");
+        var index = list.findIndex(session => session.session === window.options.sessionName);
+        if (index <= 0) {
+            return;
+        }
+        await me.updateSession(object, list[index - 1].session);
+        me.core.property.notify(object, "app.player.updatePlayer");
     };
 };

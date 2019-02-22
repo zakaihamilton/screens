@@ -178,14 +178,18 @@
             "ui.basic.var": "audioPlayer",
             "ui.class.classExtra": "app.player.audioPlayer",
             "ui.style.display": "none",
-            "core.link.update": "app.player.playerUpdated"
+            "core.link.update": "app.player.playerUpdated",
+            "core.link.previous": "app.player.previousSession",
+            "core.link.next": "app.player.nextSession"
         },
         {
             "ui.element.component": "widget.player.video",
             "ui.basic.var": "videoPlayer",
             "ui.class.classExtra": "app.player.videoPlayer",
             "ui.style.display": "none",
-            "core.link.update": "app.player.playerUpdated"
+            "core.link.update": "app.player.playerUpdated",
+            "core.link.previous": "app.player.previousSession",
+            "core.link.next": "app.player.nextSession"
         },
         {
             "ui.element.component": "widget.spinner",
