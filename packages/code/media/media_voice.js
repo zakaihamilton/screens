@@ -148,7 +148,7 @@ screens.media.voice = function MediaVoice(me) {
         me.replay();
     };
     me.textSplit = function (text) {
-        return text.split(/[.,?!:;\n]/g);
+        return text.split(/[.,\n]/g);
     };
     me.replay = function () {
         if (me.currentIndex < 0) {
