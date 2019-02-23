@@ -225,7 +225,7 @@ screens.media.voice = function MediaVoice(me) {
                 text = text.replace(item.replace(",", "\n"), item);
             });
         }
-        var replacements = [/^([ֿ\u0590-\u05FF]+)\)/, /^([ֿ\u0590-\u05FF]+)\./];
+        var replacements = [/^([ֿ\u0590-\u05FF]+)\)/, /^([ֿ\u0590-\u05FF])$/];
         for (let replacement of replacements) {
             let result = text.match(replacement);
             if (result && result.length > 1) {
@@ -255,6 +255,7 @@ screens.media.voice = function MediaVoice(me) {
         text = text.replace(/\n[?]/g, "?\n");
         text = text.replace(/[,'"]$/, "");
         text = text.replace(/ושמאל/g, "‏ו-שמאל");
+        text = text.replace(/מדרגה/g, "מַדְ-רֵגָה");
         text = text.replace(/לקו/g, "ל-קו");
         if (text === "’") {
             text = "";

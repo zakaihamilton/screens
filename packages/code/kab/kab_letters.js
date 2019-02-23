@@ -43,7 +43,7 @@ screens.kab.letters = function KabLetters(me) {
     me.pronunciationTable = {
         "hebrew": {
             "א": "אָלף",
-            "ב": "בית",
+            "ב": "בֵּית",
             "ג": "גימל",
             "ד": "דלת",
             "ה": "הי",
