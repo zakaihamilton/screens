@@ -387,7 +387,7 @@
             "replace": " "
         },
         {
-            "find": "/([,.?:\n])",
+            "find": "/([.,\n])",
             "replace": "$1</span><span>"
         },
         {
