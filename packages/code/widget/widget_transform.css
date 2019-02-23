@@ -152,7 +152,7 @@
 }
 
 .widget-transform-widget span.highlight {
-    text-shadow: 0 0 25px #eec351, 0 0 10px #51cbee;
+    text-shadow: 0 0 15px #eec351;
 }
 
 .widget-transform-widget.hebrew {
