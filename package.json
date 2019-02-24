@@ -23,6 +23,7 @@
     "chance": "^1.0.18",
     "chart.js": "^2.7.3",
     "clean-css": "^4.2.1",
+    "dom-to-image": "^2.6.0",
     "dropbox": "^4.0.16",
     "es6-promise": "^4.2.5",
     "eslint": "^5.9.0",

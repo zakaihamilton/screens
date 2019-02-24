@@ -1284,8 +1284,8 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         let childTop = parseInt(page.pageOffset);
         let childBottom = parseInt(childTop + page.pageSize);
         let isTotal = (childTop >= parentTop && childBottom <= parentBottom);
-        let isPartial = partial && ((childBottom > parentTop) ||
-            (childTop < parentBottom));
+        let isPartial = partial && (((childTop < parentTop) && (childBottom > parentTop)) ||
+            ((childTop < parentBottom) && (childBottom > parentBottom)));
         return (isTotal || isPartial);
     };
     me.pageApply = function (target, callback) {
@@ -1301,15 +1301,14 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
         var child = target.firstElementChild;
         while (child) {
             if (child.pageSize) {
-                var pageInView = me.pageInView(child);
+                var pageInView = me.pageInView(child, false);
                 var childInView = child.inView || false;
                 if (pageInView !== childInView) {
                     if (pageInView) {
-                        child.var.content.style.display = "";
-                        child.style.visibility = "visible";
+                        child.setAttribute("name", "content");
+
                     } else {
-                        child.var.content.style.display = "none";
-                        child.style.visibility = "hidden";
+                        child.setAttribute("name", "");
                     }
                     child.inView = pageInView;
                 }
