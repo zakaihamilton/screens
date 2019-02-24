@@ -1342,13 +1342,15 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             me.cleanHandlers(child);
             child = child.nextElementSibling;
         }
-        if (widget && widget.getAttribute) {
-            var attributes = ["onload", "onclick"];
+        if (widget && widget.getAttributeNames) {
+            var attributes = widget.getAttributeNames();
             attributes.map(attribute => {
                 var value = widget.getAttribute(attribute);
                 if (value) {
-                    value = value.replace(/([.,])<\/span><span>/g, "$1");
-                    widget.setAttribute(attribute, value);
+                    let newValue = value.replace(/<\/span><span>/g, "");
+                    if (newValue !== value) {
+                        widget.setAttribute(attribute, newValue);
+                    }
                 }
             });
         }
