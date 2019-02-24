@@ -367,6 +367,14 @@
         {
             "find": "/\\((\\d*)\\)",
             "replace": "<b>($1)</b>"
+        },
+        {
+            "find": "/:\\s(\\d*\\))",
+            "replace": ":<br>$1"
+        },
+        {
+            "find": "/,\\s(\\d*\\))",
+            "replace": ",<br>$1"
         }
     ],
     "post": [
@@ -1281,7 +1289,8 @@
                 "Gevura",
                 "Tifferet2"
             ],
-            "term": "HGT"
+            "term": "HGT",
+            "abridged": "Regesh"
         },
         {
             "expansion": [
@@ -1309,8 +1318,26 @@
                 "Hod",
                 "Yesod"
             ],
-            "abridged": "Regesh",
+            "abridged": [
+                "Regesh",
+                "Yegiah"
+            ],
             "term": "HGTNHY"
+        },
+        {
+            "expansion": [
+                "Hesed",
+                "Gevura",
+                "Tifferet2",
+                "Netzah",
+                "Hod",
+                "Yesod"
+            ],
+            "abridged": [
+                "Regesh",
+                "Yegiah"
+            ],
+            "term": "HGT NHY"
         },
         {
             "term": "Bina and TM",
@@ -1353,7 +1380,8 @@
                 "Hod",
                 "Yesod"
             ],
-            "term": "NHY"
+            "term": "NHY",
+            "abridged": "Yegiah"
         },
         {
             "expansion": [
@@ -6381,12 +6409,26 @@
         {
             "term": "Regesh",
             "translation": "Emotion",
-            "hebrew": "רגש"
+            "hebrew": "רגש",
+            "style": {
+                "phase": "three"
+            }
+        },
+        {
+            "term": "Yegiah",
+            "translation": "Effort",
+            "hebrew": "יגיעה",
+            "style": {
+                "phase": "four"
+            }
         },
         {
             "term": "Machshava",
             "translation": "Thought",
-            "hebrew": "מחשבה"
+            "hebrew": "מחשבה",
+            "style": {
+                "phase": "two"
+            }
         },
         {
             "term": "Sechel",
