@@ -4,3 +4,7 @@
     user-select: none;
     cursor: default;
 }
+
+.widget-text-normal.night-mode {
+    color: var(--color);
+}

@@ -162,9 +162,11 @@ screens.ui.theme = function UITheme(me) {
     me.findMapping = function (classItem) {
         if (me.currentTheme) {
             var list = me.currentTheme.mapping;
-            for (let item of list) {
-                if (item.source === classItem || item.target === classItem) {
-                    return item;
+            if (list) {
+                for (let item of list) {
+                    if (item.source === classItem || item.target === classItem) {
+                        return item;
+                    }
                 }
             }
         }
@@ -173,18 +175,20 @@ screens.ui.theme = function UITheme(me) {
     me.getMapping = function (source) {
         if (me.currentTheme) {
             var list = me.currentTheme.mapping;
-            for (let item of list) {
-                if (item.source !== source) {
-                    continue;
-                }
-                if (!item.target) {
-                    continue;
-                }
-                if (item.replace) {
-                    return item.target;
-                }
-                else {
-                    return source + " " + item.target;
+            if (list) {
+                for (let item of list) {
+                    if (item.source !== source) {
+                        continue;
+                    }
+                    if (!item.target) {
+                        continue;
+                    }
+                    if (item.replace) {
+                        return item.target;
+                    }
+                    else {
+                        return source + " " + item.target;
+                    }
                 }
             }
         }

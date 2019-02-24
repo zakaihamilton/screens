@@ -17,13 +17,26 @@
 
 .widget-checkbox-icon {
     display: flex;
+    cursor: default;
     position: relative;
     width: 11px;
     height: 11px;
-    border: 1px solid black;
-    margin-top: 1px;
+    top: 0;
+    left: 0;
+    background: #eee;
+    border: 1px solid #ddd;
 }
 
-.widget-checkbox-original:checked+.widget-checkbox-icon {
-    background: linear-gradient(-45deg, transparent 0%, transparent 54%, black 54%, black 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 49%, black 49%, black 51%, transparent 51%, transparent 100%);
+.widget-checkbox-original:checked+.widget-checkbox-icon:after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 3px;
+    background: transparent;
+    top: 2px;
+    left: 1px;
+    border: 3px solid #0f2777;
+    border-top: none;
+    border-right: none;
+    transform: rotate(-45deg);
 }

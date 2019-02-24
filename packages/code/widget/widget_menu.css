@@ -3,116 +3,215 @@
     flex: 1;
     margin-left: auto;
     margin-right: auto;
-    background-color: white;
+    background-color: var(--chrome-background);
     flex-direction: row;
 }
 
 .widget-menu-horizontal span {
-    color: black;
-    padding-top: 1px;
+    color: var(--chrome-color);
     padding-left: 0.3em;
     padding-right: 0.3em;
     padding-bottom: 0px;
+    padding-top: 1px;
     text-align: left;
-    border-right: 1px solid transparent;
     flex: 0;
     cursor: default;
     user-select: none;
 }
 
+.widget-menu-horizontal span.mark {
+    text-shadow: 2px 2px 8px green;
+}
+
 .widget-menu-horizontal span.selected {
-    background-color: #000080;
-    color: white;
-    border-right: 1px solid black;
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
 }
 
 .widget-menu-horizontal span[disabled="true"] {
-    background-color: white;
-    color: lightgray;
-}
-
-.widget-menu-border span[disabled="true"]:hover {
-    background-color: white;
-    color: lightgray;
+    background-color: var(--chrome-background);
+    color: var(--chrome-disabled-color);
 }
 
 .widget-menu-vertical {
+    border-radius: 0px 0px 15px 15px;
     position: absolute;
     min-width: 167px;
-    max-width: 100%;
-    border: 1px solid black;
-    background-color: white;
-    box-shadow: 1px 1px 0px 0px #808080;
+    background-color: var(--chrome-background);
+    border: 1px solid var(--chrome-border);
     z-index: 1000;
+    overflow: hidden;
 }
 
 .widget-menu-vertical.menu-list {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 200px;
-    border: none;
+    max-height: 10em;
     z-index: 0;
-    box-shadow: none;
-    margin-bottom: 0px;
+    border-radius: 0;
+    border: none;
 }
 
-.widget-menu-vertical li, .widget-menu-vertical span {
-    background-color: white;
-    color: black;
-    min-height: 18px;
+.widget-menu-vertical table {
+    width: 100%;
+}
+
+.widget-menu-vertical.menu-list.bottom-up {
+    border-radius: 0;
+}
+
+.widget-menu-vertical.bottom-up {
+    border-radius: 15px 15px 0px 0px;
+}
+
+.widget-menu-vertical th, .widget-menu-vertical td {
+    padding-left: 10px;
+    padding-right: 30px;
+    text-align: left;
+}
+
+.widget-menu-vertical th:after {
+    display: inline-block;
+    content: "\2191";
+    visibility: hidden;
+}
+
+.widget-menu-vertical th.asc:after {
+    visibility: visible;
+}
+
+.widget-menu-vertical th.desc:after {
+    content: "\2193";
+    visibility: visible;
+}
+
+.widget-menu-vertical input, .widget-menu-vertical li, .widget-menu-vertical tr, .widget-menu-vertical th, .widget-menu-vertical td, .widget-menu-vertical span {
+    min-height: 1.5em;
     padding-left: 1em;
     padding-right: 1.5em;
     text-align: left;
-    display: block;
     cursor: default;
     user-select: none;
     position: relative;
 }
 
-.widget-menu-vertical li:hover, .widget-menu-vertical span:hover {
-    background-color: #000080;
-    color: white;
+.widget-menu-vertical li, .widget-menu-vertical tr, .widget-menu-vertical th, .widget-menu-vertical td, .widget-menu-vertical span {
+    border-top: 1px solid var(--chrome-background);
+    border-bottom: 1px solid var(--chrome-background);
 }
 
-.widget-menu-vertical li[disabled="true"], .widget-menu-vertical span[disabled="true"] {
-    background-color: white;
-    color: lightgray;
+.widget-menu-vertical .widget-menu-vertical li:nth-child(2), .widget-menu-vertical tr:nth-child(2), .widget-menu-vertical th:nth-child(2), .widget-menu-vertical td:nth-child(2), .widget-menu-vertical span:nth-child(2) {
+    border-top: none;
 }
 
-.widget-menu-vertical li[disabled="true"]:hover, .widget-menu-vertical span[disabled="true"]:hover {
-    background-color: #000080;
-    color: lightgray;
+.widget-menu-vertical .widget-menu-vertical li:last-child, .widget-menu-vertical tr:last-child, .widget-menu-vertical th:last-child, .widget-menu-vertical td:last-child, .widget-menu-vertical span:last-child {
+    border-bottom: none;
 }
 
-.widget-menu-vertical li.checked:after .widget-menu-vertical span.checked:after {
+.widget-menu-vertical input, .widget-menu-vertical li, .widget-menu-vertical tr, .widget-menu-vertical th, .widget-menu-vertical span {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical input::placeholder {
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical span {
+    display: block;
+}
+
+.widget-menu-vertical div.no-match {
+    padding-left: 1em;
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical li:hover, .widget-menu-vertical tr:hover, .widget-menu-vertical span:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}
+
+.widget-menu-vertical li[disabled="true"], .widget-menu-vertical tr[disabled="true"], .widget-menu-vertical span[disabled="true"] {
+    background-color: var(--chrome-background);
+    color: var(--chrome-disabled-color);
+}
+
+.widget-menu-vertical li[disabled="true"].label, .widget-menu-vertical tr[disabled="true"].label, .widget-menu-vertical span[disabled="true"].label {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical li[disabled="true"]:hover, .widget-menu-vertical tr[disabled="true"]:hover, .widget-menu-vertical span[disabled="true"]:hover {
+    background-color: var(--chrome-background);
+    color: var(--chrome-disabled-color);
+}
+
+.widget-menu-vertical li[disabled="true"].label:hover, .widget-menu-vertical tr[disabled="true"].label:hover, .widget-menu-vertical span[disabled="true"].label:hover {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical li.checked:before, .widget-menu-vertical tr.checked td:first-child:before, .widget-menu-vertical span.checked:before {
     content: '\2713';
     position: absolute;
     left: 3px;
 }
 
-.widget-menu-vertical li.mark:after .widget-menu-vertical span.mark:after {
+.widget-menu-vertical input.mark:after, .widget-menu-vertical li.mark:after, .widget-menu-vertical tr.mark:after, .widget-menu-vertical span.mark:after {
     content: '\2022';
     position: absolute;
     right: 3px;
 }
 
-.widget-menu-vertical li.separator .widget-menu-vertical span.separator {
-    margin-top: 3px;
-    border-top: 3px solid white;
-    box-shadow: 0px -1px 0px 0px black;
+.widget-menu-vertical input.separator, .widget-menu-vertical li.separator, .widget-menu-vertical tr.separator, .widget-menu-vertical span.separator {
+    border-top: 1px solid var(--border-color);
 }
 
-.widget-menu-vertical li.header .widget-menu-vertical span.header {
-    color: black;
+.widget-menu-vertical li.header, .widget-menu-vertical span.header {
     font-weight: bold;
-    margin-top: 3px;
     box-shadow: 0px -1px 0px 0px black;
-    background: linear-gradient(to right, white, lightgray);
+    color: var(--chrome-color);
+    background: linear-gradient(to right, var(--chrome-background), #5e6d9e);
 }
 
-.widget-menu-vertical li.header:hover .widget-menu-vertical span.header:hover {
-    color: black;
+.widget-menu-vertical li.header:hover, .widget-menu-vertical span.header:hover {
+    color: var(--chrome-color);
+}
+
+.widget-menu-vertical li.label, .widget-menu-vertical tr.label, .widget-menu-vertical span.label {
+    font-weight: bold;
+    font-size: 0.75em;
+    margin: 0px;
+}
+
+.widget-menu-vertical li.edit, .widget-menu-vertical tr.edit, .widget-menu-vertical span.edit, .widget-menu-vertical input.edit {
+    margin: 6px;
+    width: 96%;
+}
+
+.widget-menu-vertical li.has-menu:after, .widget-menu-vertical tr.has-menu td:first-child:after, .widget-menu-vertical span.has-menu:after {
+    border-color: var(--border-color);
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    content: '';
+    height: 0.4em;
+    right: 0.4em;
+    position: absolute;
+    vertical-align: top;
+    width: 0.4em;
+    top: 0.6em;
+    transform: rotate(135deg);
+}
+
+.widget-menu-vertical li.selected, .widget-menu-vertical tr.selected td:first-child, .widget-menu-vertical span.selected {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}
+
+.widget-menu-members input.separator, .widget-menu-members li.separator, .widget-menu-members tr.separator, .widget-menu-members span.separator {
+    border-top: 1px solid var(--border-color);
 }
 
 .widget-menu-progress-bar {

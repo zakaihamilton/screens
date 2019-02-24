@@ -1,7 +1,3 @@
-body {
-    overflow: hidden;
-}
-
 .widget-desktop-container {
     position: absolute;
     left: 0px;
@@ -37,4 +33,88 @@ body {
     bottom: 2.3em;
     position: absolute;
     overflow: hidden;
+}
+
+@font-face {
+    font-family: "ShlomoStam";
+    src: url("/packages/res/fonts/ShlomoStam.ttf");
+}
+
+body {
+    overflow: hidden;
+}
+
+.label.night-mode {
+    color: var(--chrome-color);
+}
+
+.input.night-mode {
+    background-color: var(--chrome-background);
+    color: var(--chrome-color);
+}
+
+.input.night-mode::placeholder {
+    color: var(--chrome-disabled-color);
+}
+
+.select select.night-mode {
+    background-color: var(--field-background);
+    color: var(--field-color);
+}
+
+.modal-background.night-mode {
+    background-color: rgb(10, 10, 10, 0.5);
+}
+
+@media screen and (min-width: 1000px), print {
+    .modal-card, .modal-content {
+        width: 960px;
+    }
+}
+
+.modal-card-head.night-mode {
+    background-color: var(--chrome-background);
+}
+
+.modal-card-title.night-mode {
+    color: var(--chrome-color);
+}
+
+.modal-card-body.night-mode {
+    color: var(--color);
+    background-color: var(--background);
+}
+
+.modal-card-foot.night-mode {
+    background-color: var(--chrome-background);
+}
+
+.title.night-mode {
+    color: var(--color);
+}
+
+.delete.night-mode {
+    background-color: var(--background);
+}
+
+.table td.is-dark, .table th.is-dark {
+    border-color: var(--border-color);
+}
+
+strong {
+    color: var(--color);
+}
+
+.jsgrid-nodata-row>.jsgrid-cell {
+    background: var(--background) !important;
+    color: var(--color);
+}
+
+.field.has-addons .control:last-child .input {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.inherit-font {
+    font-size: inherit !important;
 }
