@@ -83,7 +83,6 @@ screens.ui.class = function UIClass(me) {
             path = path.substr(1);
         }
         path = path.replace(/[\.\_]/g, "-");
-        path = me.ui.theme.getMapping(path);
         return path;
     };
     me.to_package = function (object, path) {
