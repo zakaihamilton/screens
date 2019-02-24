@@ -274,7 +274,6 @@ screens.kab.text = function KabText(me) {
                     }
                 }
             }
-            console.log(line);
             line = line.replace(/\[SPAN\]/g, "</span><span>");
             return line;
         });
