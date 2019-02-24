@@ -4,6 +4,15 @@
     box-shadow: inset 0 0 10px var(--border-color), 0 0 10px var(--border-color);
 }
 
+.kab-draw-shape.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.kab-draw-shape.fadeIn {
+    animation-name: fadeIn;
+}
+
 .kab-draw-shape.circle {
     border-radius: 50%;
 }
@@ -42,5 +51,14 @@
     to {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+    to {
+        opacity: 1
     }
 }
