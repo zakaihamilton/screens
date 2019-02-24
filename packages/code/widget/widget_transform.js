@@ -1333,30 +1333,7 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
             }
         }
     };
-    me.cleanHandlers = function (widget) {
-        if (!widget) {
-            return;
-        }
-        var child = widget.firstElementChild;
-        while (child) {
-            me.cleanHandlers(child);
-            child = child.nextElementSibling;
-        }
-        if (widget && widget.getAttributeNames) {
-            var attributes = widget.getAttributeNames();
-            attributes.map(attribute => {
-                var value = widget.getAttribute(attribute);
-                if (value) {
-                    let newValue = value.replace(/<\/span><span>/g, "");
-                    if (newValue !== value) {
-                        widget.setAttribute(attribute, newValue);
-                    }
-                }
-            });
-        }
-    };
     me.cleanupWidget = function (widget) {
-        me.cleanHandlers(widget);
         var child = widget.firstElementChild;
         while (child) {
             if (child.tagName && child.tagName.toLowerCase() === "div") {

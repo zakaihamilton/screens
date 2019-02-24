@@ -400,7 +400,7 @@
         },
         {
             "find": "/([.,:;?!\n])",
-            "replace": "$1</span><span>"
+            "replace": "$1[SPAN]"
         },
         {
             "find": "/(<h4>)",

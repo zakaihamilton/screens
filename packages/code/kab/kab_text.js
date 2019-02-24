@@ -262,6 +262,22 @@ screens.kab.text = function KabText(me) {
             return line;
         });
         lines = await Promise.all(lines);
+        lines = lines.map(line => {
+            let matches = line.match(/<((?:\\.|[^>\\])*)>+/g);
+            if (matches) {
+                for (let match of matches) {
+                    let matches = match.match(/"((?:\\.|[^"\\])*)"+/g);
+                    if (matches) {
+                        for (let match of matches) {
+                            line = line.replace(match, match.replace(/\[SPAN\]/g, ""));
+                        }
+                    }
+                }
+            }
+            console.log(line);
+            line = line.replace(/\[SPAN\]/g, "</span><span>");
+            return line;
+        });
         var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data };
         return info;
     };
