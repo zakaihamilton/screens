@@ -7,7 +7,7 @@
         "height": "220px"
     },
     "maximize": null,
-    "icon": "letters.png",
+    "icon": "letters",
     "widget.menu.items": [
         {
             "text": "Letters",

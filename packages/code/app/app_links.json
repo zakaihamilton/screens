@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "links.png",
+    "icon": "links",
     "widget.menu.items": [
         {
             "text": "Links",

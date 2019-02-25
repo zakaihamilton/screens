@@ -17,7 +17,7 @@ screens.ui.image = function UIImage(me) {
             me.images.push(image);
         }
     };
-    me.get = function (path) {
-        return me[path.replace(/\./g, "_")];
+    me.get = function (name) {
+        return me[name];
     };
 };

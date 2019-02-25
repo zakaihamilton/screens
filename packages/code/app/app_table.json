@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "table.png",
+    "icon": "table",
     "widget.menu.items": [
         {
             "text": "Table",

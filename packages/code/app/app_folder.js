@@ -24,7 +24,7 @@ screens.app.folder = function AppFolder(me) {
             me.core.property.set(object, "ui.basic.src", "folder.svg");
         }
         else {
-            me.core.property.set(object, "ui.basic.src", "file.png");
+            me.core.property.set(object, "ui.basic.src", "file");
         }
         me.core.property.set(object, "ui.touch.click", `core.app.folder(${info.path})`);
     };

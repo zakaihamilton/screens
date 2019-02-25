@@ -3,7 +3,7 @@
     "temp": true,
     "fullscreen": true,
     "nobar": true,
-    "icon": "keyboard.png",
+    "icon": "keyboard",
     "ui.property.style": {
         "position": "absolute",
         "left": "",

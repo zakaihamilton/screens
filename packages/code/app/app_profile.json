@@ -1,6 +1,6 @@
 {
     "title": "Profile",
-    "icon": "profile.png",
+    "icon": "profile",
     "ui.property.style": {
         "left": "10%",
         "top": "10%",

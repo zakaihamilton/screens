@@ -153,7 +153,7 @@ screens.core.pack = function CorePack(me) {
         return me.minify(info.path, result.css);
     };
     me.png = async function (info, data) {
-        var body = `\nscreens.ui.image.${info.file}_png = \``;
+        var body = `\nscreens.ui.image.${info.file} = \``;
         body += "data:image/png;base64," + data.toString("base64");
         body += "`;\n";
         return body;

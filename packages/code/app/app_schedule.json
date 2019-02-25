@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": true,
-    "icon": "schedule.png",
+    "icon": "schedule",
     "widget.menu.items": [
         {
             "text": "Schedule",

@@ -6,7 +6,7 @@
         "width": "640px",
         "height": "480px"
     },
-    "icon": "logger.png",
+    "icon": "logger",
     "widget.menu.items": [
         {
             "text": "Logger",

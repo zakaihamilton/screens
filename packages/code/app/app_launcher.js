@@ -36,7 +36,7 @@ screens.app.launcher = function AppLauncher(me) {
         }
         var available = me.core.app.available(name);
         me.core.property.set(object, "text", label);
-        me.core.property.set(object, "ui.basic.src", `${name}.${extension}`);
+        me.core.property.set(object, "ui.basic.src", `${name}`);
         me.core.property.set(object, "ui.basic.display", available);
         me.core.property.set(object, "ui.touch.click", "core.app." + name);
         me.core.property.set(object, "ui.attribute.title", tooltip);

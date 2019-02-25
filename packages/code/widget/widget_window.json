@@ -49,7 +49,7 @@
             "ui.basic.var": "icon",
             "text": "",
             "ui.class.class": "widget.window.icon",
-            "ui.basic.src": "default.png",
+            "ui.basic.src": "default",
             "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
             "ui.touch.click": "widget.window.taskbarClick",
             "ui.basic.window": null,

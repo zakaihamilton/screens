@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "transcribe.png",
+    "icon": "transcribe",
     "widget.menu.items": [
         {
             "text": "Transcribe",

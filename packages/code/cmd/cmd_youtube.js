@@ -20,7 +20,7 @@ screens.cmd.youtube = function CmdYoutube(me) {
             "ui.style.top": "200px",
             "ui.style.width": "300px",
             "ui.style.height": "300px",
-            "icon": "https://www.youtube.com/yts/img/favicon_32-vfl8NGn4k.png",
+            "icon": "youtube",
             "ui.basic.elements": [
                 {
                     "ui.element.component": "widget.embed",

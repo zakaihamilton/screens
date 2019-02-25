@@ -1,7 +1,7 @@
 {
     "title": "Launcher",
     "temp": true,
-    "icon": "launcher.png",
+    "icon": "launcher",
     "ui.property.style": {
         "left": "5%",
         "top": "5%",
