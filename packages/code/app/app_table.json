@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/table.png",
+    "icon": "table.png",
     "widget.menu.items": [
         {
             "text": "Table",

@@ -6,7 +6,7 @@
         "width": "640px",
         "height": "480px"
     },
-    "icon": "/packages/res/icons/terminal.png",
+    "icon": "terminal.png",
     "ui.style.background": "black",
     "ui.basic.elements": [
         {

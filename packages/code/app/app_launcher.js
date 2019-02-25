@@ -7,9 +7,6 @@ screens.app.launcher = function AppLauncher(me) {
     me.init = function () {
         me.searchCounter = 0;
     };
-    me.ready = async function () {
-        me.ui.image.preload("packages/res/icons");
-    };
     me.launch = async function () {
         var window = me.ui.element.create(me.json, "workspace", "self");
         if (me.core.device.isMobile()) {
@@ -39,7 +36,7 @@ screens.app.launcher = function AppLauncher(me) {
         }
         var available = me.core.app.available(name);
         me.core.property.set(object, "text", label);
-        me.core.property.set(object, "ui.basic.src", `/packages/res/icons/${name}.${extension}`);
+        me.core.property.set(object, "ui.basic.src", `${name}.${extension}`);
         me.core.property.set(object, "ui.basic.display", available);
         me.core.property.set(object, "ui.touch.click", "core.app." + name);
         me.core.property.set(object, "ui.attribute.title", tooltip);

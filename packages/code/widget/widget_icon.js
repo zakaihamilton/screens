@@ -30,7 +30,7 @@ screens.widget.icon = function WidgetIcon(me) {
             return object.var.icon.src;
         },
         set: function (object, value) {
-            object.var.icon.src = value;
+            object.var.icon.src = me.ui.image.get(value);
         }
     };
     me.type = {

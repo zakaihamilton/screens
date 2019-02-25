@@ -11,12 +11,12 @@ screens.core.pack = function CorePack(me) {
         me.cleanCSS = require("clean-css");
         me.cachePath = "cache/hash";
     };
-    me.collect = async function (rootPath, target, folderExclude, extInclude, componentHeaders) {
+    me.collect = async function (root, target, folderExclude, extInclude, componentHeaders, format, defaultPackage, defaultComponent) {
         var body = "";
         var list = [];
         var packages = {};
         for (let ext of extInclude) {
-            await me.core.file.iterate(rootPath, true, async (path) => {
+            await me.core.file.iterate(root, true, async (path) => {
                 let fileExt = me.core.path.extension(path);
                 let fileName = me.core.path.fileName(path);
                 let folderName = path.split("/").slice(-2, -1)[0];
@@ -28,16 +28,26 @@ screens.core.pack = function CorePack(me) {
                 }
                 let [package, component, platform] = fileName.split("_");
                 if (!package || !component) {
-                    return;
+                    if (!defaultPackage || !defaultComponent) {
+                        return;
+                    }
+                    if (!package) {
+                        package = defaultPackage;
+                    }
+                    if (!component) {
+                        component = defaultComponent;
+                    }
                 }
                 let info = {
                     folder: folderName,
+                    file: fileName,
                     path,
                     package,
                     component,
                     platform,
                     target,
-                    ext
+                    ext,
+                    root
                 };
                 if (!packages[package]) {
                     packages[package] = [];
@@ -66,7 +76,7 @@ screens.core.pack = function CorePack(me) {
             }
         }
         for (let info of list) {
-            var data = await me.core.file.readFile(info.path, "utf8");
+            var data = await me.core.file.readFile(info.path, format);
             var handler = me[info.ext];
             if (handler) {
                 var result = await handler(info, data);
@@ -141,6 +151,12 @@ screens.core.pack = function CorePack(me) {
             me.log_warn(warn.toString());
         });
         return me.minify(info.path, result.css);
+    };
+    me.png = async function (info, data) {
+        var body = `\nscreens.ui.image.${info.file}_png = \``;
+        body += "data:image/png;base64," + data.toString("base64");
+        body += "`;\n";
+        return body;
     };
     return "server";
 };

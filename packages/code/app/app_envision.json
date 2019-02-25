@@ -1,6 +1,6 @@
 {
     "title": "Envision",
-    "icon": "/packages/res/icons/envision.png",
+    "icon": "envision.png",
     "ui.property.style": {
         "left": "10%",
         "top": "10%",

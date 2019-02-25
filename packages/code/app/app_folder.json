@@ -1,6 +1,6 @@
 {
     "title": "@ui.param.title",
-    "icon": "/packages/res/icons/folder.svg",
+    "icon": "folder.svg",
     "ui.property.style": {
         "left": "15%",
         "top": "15%",

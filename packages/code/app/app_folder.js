@@ -21,10 +21,10 @@ screens.app.folder = function AppFolder(me) {
     me.resIcon = async function (object, info) {
         me.core.property.set(object, "text", info.name);
         if (info.type === "folder") {
-            me.core.property.set(object, "ui.basic.src", "/packages/res/icons/folder.svg");
+            me.core.property.set(object, "ui.basic.src", "folder.svg");
         }
         else {
-            me.core.property.set(object, "ui.basic.src", "/packages/res/icons/file.png");
+            me.core.property.set(object, "ui.basic.src", "file.png");
         }
         me.core.property.set(object, "ui.touch.click", `core.app.folder(${info.path})`);
     };

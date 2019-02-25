@@ -1,6 +1,6 @@
 {
     "title": "Player",
-    "icon": "/packages/res/icons/player.png",
+    "icon": "player.png",
     "showInBackground": "@ui.param.showInBackground",
     "ui.property.style": {
         "left": "10%",

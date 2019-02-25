@@ -28,7 +28,7 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
         }
         return [[
             me.core.string.title(label),
-            "/packages/res/icons/" + label + ".png",
+            label + ".png",
             label,
             method
         ]];
@@ -43,6 +43,6 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
         me.core.property.set([taskbar.var.shortcuts, taskbar.var.tasks], "ui.class.toggle", "collapse");
         var isCollapsed = me.core.property.get(taskbar.var.shortcuts, "ui.class.collapse");
         var name = isCollapsed ? "toggleShortcutsOn" : "toggleShortcuts";
-        me.core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", "/packages/res/icons/" + name + ".png");
+        me.core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", "" + name + ".png");
     };
 };

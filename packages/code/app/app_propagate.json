@@ -1,6 +1,6 @@
 {
     "title": "Propagate",
-    "icon": "/packages/res/icons/propagate.png",
+    "icon": "propagate.png",
     "ui.property.style": {
         "left": "10%",
         "top": "10%",

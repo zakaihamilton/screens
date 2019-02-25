@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/notes.png",
+    "icon": "notes.png",
     "widget.menu.items": [
         {
             "text": "Notes",

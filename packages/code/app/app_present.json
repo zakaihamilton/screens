@@ -1,6 +1,6 @@
 {
     "title": "Present",
-    "icon": "/packages/res/icons/present.png",
+    "icon": "present.png",
     "ui.property.style": {
         "left": "10%",
         "top": "10%",

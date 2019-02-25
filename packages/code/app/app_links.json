@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/links.png",
+    "icon": "links.png",
     "widget.menu.items": [
         {
             "text": "Links",

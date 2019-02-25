@@ -39,7 +39,7 @@ screens.core.module = function CoreModule(me) {
             filePath = filePath.substring(1);
         }
         if (filePath === "screens.css") {
-            return await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"]);
+            return await me.core.pack.collect("packages/code", "browser", ["platform"], ["css"], false, "utf8");
         }
         var data = await me.loadTextFile(filePath, params.optional);
         if (!data && params.optional) {
@@ -58,7 +58,9 @@ screens.core.module = function CoreModule(me) {
         }
         if (filePath.startsWith("platform/")) {
             var platform = filePath.split("/").pop().split(".")[0];
-            return await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true);
+            var code = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
+            var icons = await me.core.pack.collect("packages/res/icons", platform, null, ["png"], false, null, "ui", "image");
+            return code + icons;
         }
         var component_path = me.core.module.path_file_to_component(filePath);
         var target_platform = null;

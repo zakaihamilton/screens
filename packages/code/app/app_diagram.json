@@ -6,7 +6,7 @@
         "width": "600px",
         "height": "600px"
     },
-    "icon": "/packages/res/icons/diagram.png",
+    "icon": "diagram.png",
     "widget.menu.items": [
         {
             "text": "Transform",

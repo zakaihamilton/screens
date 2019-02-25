@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/visualize.png",
+    "icon": "visualize.png",
     "widget.menu.items": [
         {
             "text": "Transform",

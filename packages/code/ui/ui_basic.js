@@ -22,7 +22,7 @@ screens.ui.basic = function UIBasic(me) {
             return object.src;
         },
         set: function (object, value) {
-            object.src = value;
+            object.src = me.ui.image.get(value);
         }
     };
     me.ref = {

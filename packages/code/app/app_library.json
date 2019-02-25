@@ -1,6 +1,6 @@
 {
     "title": "Library",
-    "icon": "/packages/res/icons/library.png",
+    "icon": "library.png",
     "ui.property.style": {
         "left": "10%",
         "top": "10%",

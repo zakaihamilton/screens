@@ -7,7 +7,7 @@
         "height": "600px"
     },
     "maximize": null,
-    "icon": "/packages/res/icons/transcribe.png",
+    "icon": "transcribe.png",
     "widget.menu.items": [
         {
             "text": "Transcribe",

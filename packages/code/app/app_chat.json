@@ -3,7 +3,7 @@
     "temp": true,
     "fullscreen": true,
     "nobar": true,
-    "icon": "/packages/res/icons/chat.png",
+    "icon": "chat.png",
     "ui.property.style": {
         "position": "absolute",
         "left": "",

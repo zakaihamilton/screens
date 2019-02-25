@@ -1,7 +1,7 @@
 {
     "title": "Launcher",
     "temp": true,
-    "icon": "/packages/res/icons/launcher.png",
+    "icon": "launcher.png",
     "ui.property.style": {
         "left": "5%",
         "top": "5%",
@@ -32,13 +32,6 @@
                     "ui.basic.src": ""
                 },
                 "ui.data.values": [
-                    [
-                        [
-                            "Folder",
-                            "svg"
-                        ],
-                        "utilities"
-                    ],
                     [
                         "Transform",
                         "tools"

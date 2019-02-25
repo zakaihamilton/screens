@@ -2,7 +2,7 @@
     "title": "Login",
     "fixed": true,
     "popup": true,
-    "icon": "/packages/res/icons/login.png",
+    "icon": "login.png",
     "ui.property.after": {
         "ui.property.style": {
             "left": "20%",
