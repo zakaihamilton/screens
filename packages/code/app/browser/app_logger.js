@@ -76,4 +76,5 @@ screens.app.logger = function AppLogger(me) {
         }
         return bindings;
     };
+    return "browser";
 };

@@ -119,11 +119,14 @@ screens.ui.content = function UIContent(me) {
         },
         import: async function (object, item, private) {
             var window = me.widget.window.get(object);
-            var name = item;
+            var title = item;
             if (typeof item !== "string") {
-                name = item.key.name;
+                title = item.key.name;
+                if (!title) {
+                    title = item.title;
+                }
             }
-            var fullItem = await me.manager.content.load(me.id, name, private);
+            var fullItem = await me.manager.content.load(me.id, title, private);
             if (!fullItem) {
                 return;
             }

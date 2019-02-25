@@ -9,8 +9,9 @@ screens.manager.content = function ManagerContent(me) {
         if (!userId) {
             userId = this.userId;
         }
-        var publicList = await me.db.shared.content.list({ private: null });
-        var privateList = await me.db.shared.content.list({ private: userId });
+        var project = { title: 1, package: 1, component: 1 };
+        var publicList = await me.db.shared.content.list({ private: null }, { project });
+        var privateList = await me.db.shared.content.list({ private: userId }, { project });
         return { publicList, privateList };
     };
     me.reset = function () {

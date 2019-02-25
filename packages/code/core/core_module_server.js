@@ -57,10 +57,14 @@ screens.core.module = function CoreModule(me) {
             filePath = filePath.substring(1);
         }
         if (filePath.startsWith("platform/")) {
-            var platform = filePath.split("/").pop().split(".")[0];
-            var code = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
-            var icons = await me.core.pack.collect("packages/res/icons", platform, null, ["png", "svg"], false, null, "ui", "image");
-            return code + icons;
+            let platform = filePath.split("/").pop().split(".")[0];
+            let code = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
+            return code;
+        }
+        if (filePath.startsWith("res/")) {
+            let type = filePath.split("/").pop().split(".")[0];
+            let icons = await me.core.pack.collect("packages/res/" + type, null, null, ["png", "svg"], false, null, "ui", "image");
+            return icons;
         }
         var component_path = me.core.module.path_file_to_component(filePath);
         var target_platform = null;

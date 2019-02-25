@@ -737,4 +737,5 @@ screens.app.packets = function AppPackets(me) {
             }
         }
     };
+    return "browser";
 };
