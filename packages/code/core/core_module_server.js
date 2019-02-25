@@ -59,7 +59,7 @@ screens.core.module = function CoreModule(me) {
         if (filePath.startsWith("platform/")) {
             var platform = filePath.split("/").pop().split(".")[0];
             var code = await me.core.pack.collect("packages/code", platform, ["platform"], ["js", "json", "html"], true, "utf8");
-            var icons = await me.core.pack.collect("packages/res/icons", platform, null, ["png"], false, null, "ui", "image");
+            var icons = await me.core.pack.collect("packages/res/icons", platform, null, ["png", "svg"], false, null, "ui", "image");
             return code + icons;
         }
         var component_path = me.core.module.path_file_to_component(filePath);

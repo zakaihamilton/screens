@@ -158,5 +158,11 @@ screens.core.pack = function CorePack(me) {
         body += "`;\n";
         return body;
     };
+    me.svg = async function (info, data) {
+        var body = `\nscreens.ui.image.${info.file} = \``;
+        body += "data:image/svg+xml;base64," + data.toString("base64");
+        body += "`;\n";
+        return body;
+    };
     return "server";
 };
