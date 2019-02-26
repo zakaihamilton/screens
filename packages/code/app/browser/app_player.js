@@ -111,7 +111,6 @@ screens.app.player = function AppPlayer(me) {
                 property: "name",
                 options: { "state": "select" },
                 group: "group",
-                sort: true,
                 itemMethod: "app.player.groupName"
             };
             return me.widget.menu.collect(object, info);
@@ -129,8 +128,6 @@ screens.app.player = function AppPlayer(me) {
                 options: { "state": "select" },
                 group: "session",
                 itemMethod: "app.player.session",
-                sort: true,
-                reverse: true,
                 metadata: {
                     "Name": "label",
                     "Duration": "durationText"

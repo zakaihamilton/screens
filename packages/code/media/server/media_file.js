@@ -47,10 +47,12 @@ screens.media.file = function MediaFile(me) {
             for (let file of files) {
                 file.path = me.rootPath + "/" + file.name;
                 var sessions = await me.listing(file, update);
-                sessions = sessions.sort((a, b) => String(a.client_modified).localeCompare(String(b.client_modified)));
+                sessions = sessions.sort((a, b) => a.label.localeCompare(b.label));
                 sessions.reverse();
                 file.sessions = sessions;
             }
+            files = files.sort((a, b) => a.name.localeCompare(b.name));
+            files.sort();
         }
         finally {
             unlock();
