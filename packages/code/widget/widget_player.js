@@ -600,8 +600,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     };
     me.enablePeaks = function (object, flag) {
         var widget = me.upper.mainWidget(object);
+        var background = widget.var.controls.var.progress.var.background;
         widget.enablePeaks = flag;
-        me.updatePeaks(object);
+        me.core.property.set(background, "ui.basic.show", flag);
     };
     me.loadPeaks = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -622,7 +623,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.updatePeaks = async function (object) {
         var widget = me.upper.mainWidget(object);
         var item = null;
-        if (widget.src && widget.enablePeaks) {
+        if (widget.src) {
             var name = me.core.path.fileName(widget.src);
             if (!widget.item) {
                 item = await me.db.cache.metadata.find({ name });

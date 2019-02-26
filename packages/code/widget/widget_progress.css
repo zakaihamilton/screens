@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border-color);
+    background-color: var(--background);
 }
 
 .widget-progress-background {
