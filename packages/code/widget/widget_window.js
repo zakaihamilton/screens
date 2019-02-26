@@ -722,11 +722,6 @@ screens.widget.window = function WidgetWindow(me) {
             }
         }
     };
-    me.taskbarClick = function (object) {
-        var window = me.get(object);
-        me.core.property.set(window, "showInBackground", false);
-        me.toggleVisibility(window);
-    };
     me.toggleVisibility = function (object, value) {
         var window = me.get(object);
         if (me.core.property.get(window, "ui.focus.active")) {

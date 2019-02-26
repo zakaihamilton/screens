@@ -46,3 +46,22 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
         me.core.property.set(taskbar.var.toggleShortcuts, "ui.basic.src", "" + name);
     };
 };
+
+screens.widget.taskbar.task = function WidgetTaskbarTask(me) {
+    me.init = function () {
+        me.element = {
+            properties: {
+                "ui.class.class": "item",
+                "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
+                "ui.touch.click": "click",
+                "ui.basic.window": null,
+                "ui.node.parent": "@widget.taskbar.tasks"
+            }
+        };
+    };
+    me.click = function (object) {
+        var window = me.widget.window.get(object);
+        me.core.property.set(window, "showInBackground", false);
+        me.widget.window.toggleVisibility(window);
+    };
+};

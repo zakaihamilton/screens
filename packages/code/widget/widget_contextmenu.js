@@ -78,9 +78,8 @@ screens.widget.contextmenu = function WidgetContextMenu(me) {
                 padding = 0;
                 var menu_region = me.ui.rect.absoluteRegion(menu);
                 var icon_region = me.ui.rect.absoluteRegion(window.var.icon);
-                var icon_icon_region = me.ui.rect.absoluteRegion(window.var.icon.var.icon);
                 me.core.property.set(menu, {
-                    "ui.style.left": icon_icon_region.left + "px",
+                    "ui.style.left": icon_region.left + "px",
                     "ui.style.top": region.bottom - menu_region.height - icon_region.height + padding + "px"
                 });
             }

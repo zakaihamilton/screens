@@ -46,15 +46,8 @@
     },
     "ui.basic.elements": [
         {
-            "ui.basic.var": "icon",
-            "text": "",
-            "ui.class.class": "widget.window.icon",
-            "ui.basic.src": "default",
-            "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
-            "ui.touch.click": "widget.window.taskbarClick",
-            "ui.basic.window": null,
-            "ui.node.parent": "@widget.taskbar.tasks",
-            "widget.icon.type": "list"
+            "ui.element.component": "widget.taskbar.task",
+            "ui.basic.var": "icon"
         },
         {
             "ui.class.class": "margin",

@@ -17,8 +17,10 @@
     position: absolute;
     left: 2.5em;
     right: 12.5em;
-    top: 0.3em;
+    top:0.2em;
+    height: 2.2em;
     transition: right 0.5s linear;
+    align-items: stretch;
 }
 
 .widget-taskbar-tasks div {
@@ -50,11 +52,13 @@
     flex-wrap: nowrap;
     overflow: hidden;
     flex-direction: row-reverse;
-    height: 2em;
+    height: 2.2em;
     width: 11.5em;
+    top:0.2em;
     flex: 0;
     transition: width 0.5s linear;
     border-left: 3px solid #3c3f42;
+    align-items: stretch;
 }
 
 .widget-taskbar-shortcuts.collapse {
@@ -64,7 +68,6 @@
 .widget-taskbar-shortcut {
     flex: none;
     width: 2.0em;
-    height: 1.8em;
     border: 1px solid transparent;
     padding: 0.2em;
     margin: 0.1em;
@@ -118,4 +121,38 @@
 .widget-taskbar-menu:hover:active {
     filter: brightness(125%);
     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+.widget-taskbar-task-item {
+    display: flex;
+    margin-left: 3px;
+    margin-right: 3px;
+    flex-wrap: nowrap;
+    position: relative;
+    min-width: 50px;
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    background-color: transparent;
+    color: white;
+    border: 1px solid rgb(90, 58, 58);
+    border-radius: 5px;
+    align-items: center;
+    padding-left:0.5em;
+    padding-top:0.1em;
+    padding-right:0.5em;
+    padding-bottom:0.1em;
+    margin:0.1em;
+}
+
+.widget-taskbar-task-item.minimize {
+    box-shadow: none;
+    background-color: transparent;
+    color: white;
+    border: 1px solid transparent;
+}
+
+.widget-taskbar-task-item.focus {
+    box-shadow: 0px 0px 15px 3px #0f2777;
+    background-color: #0f2777;
+    color: white;
+    border: 1px solid lightblue;
 }
