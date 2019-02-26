@@ -129,15 +129,6 @@
                     "select": "widget.transform.transform"
                 },
                 {
-                    "text": "Font Size",
-                    "options": {
-                        "separator": true
-                    },
-                    "select": [
-                        "widget.transform.fontSizesPx(widget.transform.fontSize)"
-                    ]
-                },
-                {
                     "text": "Diagrams",
                     "options": {
                         "separator": true,
@@ -201,9 +192,45 @@
                     "text": "Text",
                     "select": [
                         {
+                            "text": "Language",
+                            "select": [
+                                {
+                                    "text": "Auto",
+                                    "select": "widget.transform.language",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                },
+                                {
+                                    "text": "None",
+                                    "select": "widget.transform.language",
+                                    "options": {
+                                        "state": "select",
+                                        "value": ""
+                                    }
+                                },
+                                {
+                                    "text": "English",
+                                    "select": "widget.transform.language",
+                                    "options": {
+                                        "state": "select",
+                                        "separator": true
+                                    }
+                                },
+                                {
+                                    "text": "Hebrew",
+                                    "select": "widget.transform.language",
+                                    "options": {
+                                        "state": "select"
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "text": "Translation",
                             "select": "widget.transform.doTranslation",
                             "options": {
+                                "separator": true,
                                 "state": "select"
                             }
                         },
@@ -244,6 +271,15 @@
                         {
                             "text": "Reflow",
                             "select": "widget.transform.reflow"
+                        },
+                        {
+                            "text": "Font Size",
+                            "options": {
+                                "separator": true
+                            },
+                            "select": [
+                                "widget.transform.fontSizesPx(widget.transform.fontSize)"
+                            ]
                         },
                         {
                             "text": "Snap",
@@ -402,44 +438,6 @@
                             "options": {
                                 "state": "select",
                                 "enabled": "widget.transform.addStyles"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "text": "Language",
-                    "options": {
-                        "separator": true
-                    },
-                    "select": [
-                        {
-                            "text": "Auto",
-                            "select": "widget.transform.language",
-                            "options": {
-                                "state": "select"
-                            }
-                        },
-                        {
-                            "text": "None",
-                            "select": "widget.transform.language",
-                            "options": {
-                                "state": "select",
-                                "value": ""
-                            }
-                        },
-                        {
-                            "text": "English",
-                            "select": "widget.transform.language",
-                            "options": {
-                                "state": "select",
-                                "separator": true
-                            }
-                        },
-                        {
-                            "text": "Hebrew",
-                            "select": "widget.transform.language",
-                            "options": {
-                                "state": "select"
                             }
                         }
                     ]
