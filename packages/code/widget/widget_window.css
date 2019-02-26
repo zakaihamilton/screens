@@ -551,12 +551,8 @@
     top: 0.5em;
     width: 0.5em;
     height: 0.5em;
-    border: 2px dotted var(--border-color);
-    box-sizing: border-box;
-}
-
-.widget-window-maximize-icon.restore {
     border: 2px solid var(--border-color);
+    box-sizing: border-box;
 }
 
 .widget-window-maximize.fixed {
