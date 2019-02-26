@@ -313,8 +313,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             var background = object.var.controls.var.progress.var.background;
             widget.wavesurfer = WaveSurfer.create({
                 container: background,
-                waveColor: "#8470ff",
-                progressColor: "#8470ff",
+                waveColor: "#669966",
+                progressColor: "#669966",
                 backend: "MediaElement",
             });
             widget.wavesurfer.on("waveform-ready", () => {
