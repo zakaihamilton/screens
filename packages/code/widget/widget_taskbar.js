@@ -71,7 +71,8 @@ screens.widget.taskbar.task = function WidgetTaskbarTask(me) {
                         "ui.basic.var": "label"
                     }
                 ]
-            }
+            },
+            extend: ["ui.drag.icon"]
         };
     };
     me.click = function (object) {
