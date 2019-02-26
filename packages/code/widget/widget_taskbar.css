@@ -127,12 +127,10 @@
     display: flex;
     margin-left: 3px;
     margin-right: 3px;
-    flex-wrap: nowrap;
     position: relative;
     min-width: 50px;
     box-shadow: 0px 0px 15px 3px #0f2777;
     background-color: transparent;
-    color: white;
     border: 1px solid rgb(90, 58, 58);
     border-radius: 5px;
     align-items: center;
@@ -141,6 +139,7 @@
     padding-right:0.5em;
     padding-bottom:0.1em;
     margin:0.1em;
+    overflow: hidden;
 }
 
 .widget-taskbar-task-item.minimize {
@@ -155,4 +154,19 @@
     background-color: #0f2777;
     color: white;
     border: 1px solid lightblue;
+}
+
+.widget-taskbar-task-icon {
+    width:1.4em;
+    height:1.4em;
+    filter: invert(100%);
+}
+
+.widget-taskbar-task-label {
+    padding-left:0.5em;
+    color: white;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

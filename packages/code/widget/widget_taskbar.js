@@ -50,12 +50,27 @@ screens.widget.taskbar = function WidgetTaskBar(me) {
 screens.widget.taskbar.task = function WidgetTaskbarTask(me) {
     me.init = function () {
         me.element = {
+            redirect: {
+                "ui.basic.text": "text"
+            },
             properties: {
                 "ui.class.class": "item",
                 "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
                 "ui.touch.click": "click",
                 "ui.basic.window": null,
-                "ui.node.parent": "@widget.taskbar.tasks"
+                "ui.node.parent": "@widget.taskbar.tasks",
+                "ui.basic.elements": [
+                    {
+                        "ui.basic.tag": "img",
+                        "ui.class.class": "icon",
+                        "ui.basic.var": "icon"
+                    },
+                    {
+                        "ui.basic.tag": "div",
+                        "ui.class.class": "label",
+                        "ui.basic.var": "label"
+                    }
+                ]
             }
         };
     };
@@ -63,5 +78,21 @@ screens.widget.taskbar.task = function WidgetTaskbarTask(me) {
         var window = me.widget.window.get(object);
         me.core.property.set(window, "showInBackground", false);
         me.widget.window.toggleVisibility(window);
+    };
+    me.icon = {
+        get: function (object) {
+            return me.core.property.get(object.var.icon, "ui.basic.src");
+        },
+        set: function (object, name) {
+            return me.core.property.set(object.var.icon, "ui.basic.src", name);
+        }
+    };
+    me.text = {
+        get: function (object) {
+            return me.core.property.get(object.var.label, "ui.basic.text");
+        },
+        set: function (object, name) {
+            return me.core.property.set(object.var.label, "ui.basic.text", name);
+        }
     };
 };

@@ -277,10 +277,10 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.icon = {
         get: function (object) {
-            return me.core.property.get(object.var.icon, "ui.basic.src");
+            return me.core.property.get(object.var.icon, "icon");
         },
         set: function (object, value) {
-            me.core.property.set(object.var.icon, "ui.basic.src", value);
+            me.core.property.set(object.var.icon, "icon", value);
         }
     };
     me.update_title = function (object) {
