@@ -51,6 +51,7 @@ screens.core.app = function CoreApp(me) {
             "delay": "500"
         });
         result = await me.core.message.send("app." + appName + ".launch", appArgs);
+        me.core.property.set(result, "show", true);
         me.core.property.set(progress, "close");
         return result;
     };
