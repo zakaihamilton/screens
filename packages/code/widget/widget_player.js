@@ -472,7 +472,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     };
     me.seek = function (object, time) {
         var widget = me.upper.mainWidget(object);
-        widget.var.player.currentTime = time;
+        widget.var.player.currentTime = parseInt(time);
         me.update(object);
     };
     me.time = function (object) {
