@@ -610,7 +610,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         if (widget.item) {
             peaks = widget.item.peaks;
         }
-        widget.wavesurfer.load(widget.var.player, peaks);
+        if (peaks || !me.core.device.isMobile()) {
+            widget.wavesurfer.load(widget.var.player, peaks);
+        }
     };
     me.updatePeaks = async function (object) {
         var widget = me.upper.mainWidget(object);
