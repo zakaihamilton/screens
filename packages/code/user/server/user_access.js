@@ -38,7 +38,7 @@ screens.user.access = function UserAccess(me) {
             me.users = {};
         }
         var result = me.users[user];
-        if (!me.users[user]) {
+        if (!result) {
             result = me.users[user] = await me.storage.data.load(me.id, user);
         }
         return result;
@@ -50,7 +50,7 @@ screens.user.access = function UserAccess(me) {
         if (!me.users) {
             me.users = {};
         }
-        me.users[user] = user;
+        me.users[user] = access;
         await me.storage.data.save(access, me.id, user);
     };
     me.checkAccessList = function (list, path) {
