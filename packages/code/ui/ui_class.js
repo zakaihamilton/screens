@@ -78,7 +78,6 @@ screens.ui.class = function UIClass(me) {
         }
     };
     me.to_class = function (object, path) {
-        path = path.replace("@component", object.component);
         if (path.startsWith(".")) {
             path = path.substr(1);
         }
@@ -86,7 +85,6 @@ screens.ui.class = function UIClass(me) {
         return path;
     };
     me.to_package = function (object, path) {
-        path = path.replace("@component", object.component);
         var tokens = path.split(".");
         if (tokens.length >= 2) {
             return tokens[0];

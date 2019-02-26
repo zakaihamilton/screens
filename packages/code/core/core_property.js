@@ -43,7 +43,6 @@ screens.core.property = function CoreProperty(me) {
     };
     me.to_full_name = function (object, path) {
         if (typeof path === "string") {
-            path = path.replace("@component", object.component);
             if (object.context) {
                 object = object.context;
             }
