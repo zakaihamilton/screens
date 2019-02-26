@@ -82,15 +82,6 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "ui.basic.var": "controls"
                 }
             ]
-        },
-        draw: function (object) {
-            var background = object.var.controls.var.progress.var.background;
-            object.wavesurfer = WaveSurfer.create({
-                container: background,
-                waveColor: "red",
-                progressColor: "red",
-                backend: "MediaElement",
-            });
         }
     };
     me.source = {
@@ -98,6 +89,9 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
             return object.src;
         },
         set: async function (object, path) {
+            if ((!object.src && !path) || object.src === path) {
+                return;
+            }
             if (path) {
                 var extension = me.core.path.extension(path);
                 me.core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
@@ -108,44 +102,6 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
             object.var.player.load();
             me.core.property.set(object, "widget.player.controls.load");
             me.core.property.set(object, "widget.player.controls.update");
-            var item = null;
-            if (object.src) {
-                item = await me.db.cache.metadata.find({ path: object.src });
-                if (!item) {
-                    item = {};
-                }
-                object.item = item;
-                me.loadPeaks(object);
-            }
-            else if (object.wavesurfer) {
-                object.wavesurfer.empty();
-            }
-        }
-    };
-    me.loadPeaks = function (object) {
-        if (!object.src) {
-            return;
-        }
-        setTimeout(() => {
-            me.update(object);
-        }, 500);
-        var peaks = null;
-        if (object.item) {
-            peaks = object.item.peaks;
-        }
-        object.wavesurfer.load(object.var.player, peaks);
-    };
-    me.update = async function (object) {
-        var background = object.var.controls.var.progress;
-        if (object.wavesurfer && object.src) {
-            object.wavesurfer.setHeight(background.offsetHeight);
-            if (object.item && !object.item.peaks) {
-                var peaks = JSON.parse(object.wavesurfer.exportPCM(1024, 1000, true, 0));
-                if (peaks && peaks.length) {
-                    object.item.peaks = peaks;
-                    await me.db.cache.metadata.use({ path: object.src }, object.item);
-                }
-            }
         }
     };
 };
@@ -204,6 +160,9 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
             return object.src;
         },
         set: function (object, path) {
+            if ((!object.src && !path) || object.src === path) {
+                return;
+            }
             var extension = me.core.path.extension(path);
             me.core.property.set(object.var.source, "ui.attribute.src", path);
             me.core.property.set(object.var.source, "ui.attribute.type", "video/" + extension);
@@ -349,6 +308,19 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                 }
             ]
         },
+        draw: function (object) {
+            var widget = me.upper.mainWidget(object);
+            var background = object.var.controls.var.progress.var.background;
+            widget.wavesurfer = WaveSurfer.create({
+                container: background,
+                waveColor: "red",
+                progressColor: "red",
+                backend: "MediaElement",
+            });
+            widget.wavesurfer.on("waveform-ready", () => {
+                me.updatePeaks(widget);
+            });
+        }
     };
     me.isPlaying = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -379,6 +351,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         me.updateLink(object);
         me.updateFullscreen(object);
         me.updatePlayer(object);
+        me.updatePeaks(object);
     };
     me.updatePlayer = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -624,5 +597,49 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             "ui.class.large": isLarge
         });
         me.update(widget);
+    };
+    me.loadPeaks = function (object) {
+        var widget = me.upper.mainWidget(object);
+        if (!widget.src) {
+            return;
+        }
+        setTimeout(() => {
+            me.update(widget);
+        }, 500);
+        var peaks = null;
+        if (widget.item) {
+            peaks = widget.item.peaks;
+        }
+        widget.wavesurfer.load(widget.var.player, peaks);
+    };
+    me.updatePeaks = async function (object) {
+        var widget = me.upper.mainWidget(object);
+        var item = null;
+        if (widget.src) {
+            var name = me.core.path.fileName(widget.src);
+            if (!widget.item) {
+                item = await me.db.cache.metadata.find({ name });
+                if (!item) {
+                    item = {};
+                }
+                widget.item = item;
+                me.loadPeaks(widget);
+            }
+            var background = widget.var.controls.var.progress;
+            if (widget.wavesurfer) {
+                widget.wavesurfer.setHeight(background.offsetHeight);
+                if (widget.item && !widget.item.peaks) {
+                    var peaks = JSON.parse(widget.wavesurfer.exportPCM(1024, 1000, true, 0));
+                    if (peaks && peaks.length) {
+                        widget.item.peaks = peaks;
+                        await me.db.cache.metadata.use({ name }, widget.item);
+                    }
+                }
+            }
+        }
+        else if (widget.wavesurfer) {
+            widget.wavesurfer.empty();
+            widget.item = null;
+        }
     };
 };

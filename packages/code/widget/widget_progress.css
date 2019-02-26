@@ -54,6 +54,7 @@
     pointer-events: none;
     z-index: 1;
     color: var(--color);
+    min-width: 15em;
     text-shadow: 0 0 3px var(--background);
     z-index: 5;
 }

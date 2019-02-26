@@ -52,10 +52,11 @@ screens.app.player = function AppPlayer(me) {
             format: me.updatePlayer,
             groupName: me.updateSessions,
             jumpTime: me.updatePlayback,
-            iconSize: me.updatePlayback,
+            iconSize: me.updateSize,
             time: null
         });
         me.core.property.set(window, "app", me);
+        me.updateSize(window);
         await me.reload(window);
         me.updatePlayback(window);
         window.resolve();
@@ -63,6 +64,13 @@ screens.app.player = function AppPlayer(me) {
     me.setArgs = function (object, args) {
         var window = me.widget.window.get(object);
         window.args = args;
+    };
+    me.updateSize = function (object) {
+        var window = me.widget.window.get(object);
+        var iconSize = window.options.iconSize;
+        [window.var.audioPlayer, window.var.videoPlayer].map(player => {
+            me.widget.player.controls.setIconSize(player, iconSize);
+        });
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
@@ -388,11 +396,9 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var speed = me.media.voice.speeds[window.options.speed];
         var jumpTime = window.options.jumpTime;
-        var iconSize = window.options.iconSize;
         [window.var.audioPlayer, window.var.videoPlayer].map(player => {
             me.widget.player.controls.setSpeed(player, speed);
             me.widget.player.controls.setJumpTime(player, jumpTime);
-            me.widget.player.controls.setIconSize(player, iconSize);
         });
     };
     me.playerUpdated = async function (object) {

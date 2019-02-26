@@ -35,7 +35,7 @@ screens.db.cache.metadata = function DbCacheMetadata(me) {
     me.cache = {};
     me.indexes = [
         {
-            "path": 1
+            "name": 1
         }
     ];
     return "server";
