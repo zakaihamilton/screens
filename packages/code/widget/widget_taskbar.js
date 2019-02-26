@@ -55,18 +55,18 @@ screens.widget.taskbar.task = function WidgetTaskbarTask(me) {
             },
             properties: {
                 "ui.class.class": "item",
-                "ui.touch.dblclick": "widget.contextmenu.show(taskbar)",
-                "ui.touch.click": "click",
                 "ui.basic.window": null,
                 "ui.node.parent": "@widget.taskbar.tasks",
                 "ui.basic.elements": [
                     {
                         "ui.basic.tag": "img",
+                        "ui.touch.click": "widget.contextmenu.show(taskbar)",
                         "ui.class.class": "icon",
                         "ui.basic.var": "icon"
                     },
                     {
                         "ui.basic.tag": "div",
+                        "ui.touch.click": "click",
                         "ui.class.class": "label",
                         "ui.basic.var": "label"
                     }

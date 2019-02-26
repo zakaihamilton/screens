@@ -69,18 +69,17 @@ screens.widget.contextmenu = function WidgetContextMenu(me) {
             var region = me.ui.rect.absoluteRegion(object);
             var bottomUp = !visible || value === "taskbar";
             var menu = me.widget.menu.create_menu(window, object, region, me.json, bottomUp);
-            var padding = 0;
             if (bottomUp) {
                 var parent = me.widget.window.parent(window);
                 if (!parent) {
                     parent = me.ui.element.workspace();
                 }
-                padding = 0;
                 var menu_region = me.ui.rect.absoluteRegion(menu);
                 var icon_region = me.ui.rect.absoluteRegion(window.var.icon);
+                var taskbar_region = me.ui.rect.absoluteRegion(me.ui.element.bar().var.tasks);
                 me.core.property.set(menu, {
                     "ui.style.left": icon_region.left + "px",
-                    "ui.style.top": region.bottom - menu_region.height - icon_region.height + padding + "px"
+                    "ui.style.top": taskbar_region.top - menu_region.height + "px"
                 });
             }
         }
