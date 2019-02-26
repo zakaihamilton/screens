@@ -93,11 +93,13 @@ screens.kab.highlight = function KabHighlight(me) {
         if (!data) {
             data = {};
         }
+        var date = new Date().toString();
         data = Object.assign(data, {
             hash,
             user,
             name,
-            source
+            source,
+            date
         });
         if (highlight) {
             me.db.shared.highlight.use({
