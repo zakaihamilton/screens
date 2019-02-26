@@ -945,6 +945,9 @@ screens.widget.window = function WidgetWindow(me) {
     };
     me.refocus = {
         set: function (object, value) {
+            if (me.ui.focus.inChange) {
+                return;
+            }
             var windows = me.core.property.get(object, "widget.window.visibleWindows");
             if (windows && windows.length) {
                 var window = windows[windows.length - 1];

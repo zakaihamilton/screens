@@ -85,7 +85,7 @@ screens.ui.focus = function UIFocus(me) {
             childList.splice(prevOrder, 1);
             childList.splice(order, 0, object);
         }
-        for (var childOrder = 0; childOrder < childList.length; childOrder++) {
+        for (let childOrder = 0; childOrder < childList.length; childOrder++) {
             if (childList[childOrder].component !== "widget.window") {
                 continue;
             }
@@ -94,7 +94,7 @@ screens.ui.focus = function UIFocus(me) {
             }
             me.core.property.set(childList[childOrder], "ui.style.zIndex", childOrder);
         }
-        for (var childOrder = childList.length - 1; childOrder >= 0; childOrder--) {
+        for (let childOrder = childList.length - 1; childOrder >= 0; childOrder--) {
             if (!me.core.property.get(childList[childOrder], "alwaysOnTop")) {
                 continue;
             }
@@ -170,10 +170,12 @@ screens.ui.focus = function UIFocus(me) {
         me.core.property.set(window, "showInBackground", false);
         /* Find common window between previous and new window */
         var common = me.common(me.focus_window, window);
+        me.inChange = true;
         /* Deactivate previous windows */
         me.deactivate(me.focus_window, common);
         /* Activate new window */
         me.focus_window = window;
         me.activate(window, common);
+        me.inChange = false;
     };
 };
