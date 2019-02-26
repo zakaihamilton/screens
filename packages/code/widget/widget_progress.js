@@ -11,8 +11,18 @@ screens.widget.progress = function WidgetProgress(me) {
             "ui.basic.elements": [
                 {
                     "ui.basic.tag": "div",
+                    "ui.class.class": "background",
+                    "ui.basic.var": "background"
+                },
+                {
+                    "ui.basic.tag": "div",
                     "ui.class.class": "bar",
                     "ui.basic.var": "bar"
+                },
+                {
+                    "ui.basic.tag": "div",
+                    "ui.class.class": "handle",
+                    "ui.basic.var": "handle"
                 },
                 {
                     "ui.basic.tag": "div",
@@ -76,7 +86,6 @@ screens.widget.progress = function WidgetProgress(me) {
         }
     };
     me.update = function (object) {
-        me.core.property.set(object.var.bar, "ui.style.left", 0);
         if (!object.min) {
             object.min = 0;
         }
@@ -84,5 +93,9 @@ screens.widget.progress = function WidgetProgress(me) {
         me.core.property.set(object.var.percent, "ui.basic.text", parseInt(percent) + "%");
         me.core.property.set(object.var.label, "ui.basic.text", object.label);
         me.core.property.set(object.var.bar, "ui.style.width", percent + "%");
+        if (percent > 99) {
+            percent = 99;
+        }
+        me.core.property.set(object.var.handle, "ui.style.left", percent + "%");
     };
 };

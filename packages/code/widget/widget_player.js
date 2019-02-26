@@ -82,13 +82,22 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "ui.basic.var": "controls"
                 }
             ]
+        },
+        draw: function (object) {
+            var background = object.var.controls.var.progress.var.background;
+            object.wavesurfer = WaveSurfer.create({
+                container: background,
+                waveColor: "red",
+                progressColor: "red",
+                backend: "MediaElement",
+            });
         }
     };
     me.source = {
         get: function (object) {
             return object.src;
         },
-        set: function (object, path) {
+        set: async function (object, path) {
             if (path) {
                 var extension = me.core.path.extension(path);
                 me.core.property.set(object.var.source, "ui.attribute.type", "audio/" + extension);
@@ -97,7 +106,46 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
             object.var.player.src = path;
             object.src = path;
             object.var.player.load();
+            me.core.property.set(object, "widget.player.controls.load");
             me.core.property.set(object, "widget.player.controls.update");
+            var item = null;
+            if (object.src) {
+                item = await me.db.cache.metadata.find({ path: object.src });
+                if (!item) {
+                    item = {};
+                }
+                object.item = item;
+                me.loadPeaks(object);
+            }
+            else if (object.wavesurfer) {
+                object.wavesurfer.empty();
+            }
+        }
+    };
+    me.loadPeaks = function (object) {
+        if (!object.src) {
+            return;
+        }
+        setTimeout(() => {
+            me.update(object);
+        }, 500);
+        var peaks = null;
+        if (object.item) {
+            peaks = object.item.peaks;
+        }
+        object.wavesurfer.load(object.var.player, peaks);
+    };
+    me.update = async function (object) {
+        var background = object.var.controls.var.progress;
+        if (object.wavesurfer && object.src) {
+            object.wavesurfer.setHeight(background.offsetHeight);
+            if (object.item && !object.item.peaks) {
+                var peaks = JSON.parse(object.wavesurfer.exportPCM(1024, 1000, true, 0));
+                if (peaks && peaks.length) {
+                    object.item.peaks = peaks;
+                    await me.db.cache.metadata.use({ path: object.src }, object.item);
+                }
+            }
         }
     };
 };
@@ -162,6 +210,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
             object.src = path;
             object.var.player.load();
             me.update(object);
+            me.core.property.set(object, "widget.player.controls.load");
             me.core.property.set(object, "widget.player.controls.update");
         }
     };
@@ -298,7 +347,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                     "ui.attribute.title": "Next Session"
                 }
             ]
-        }
+        },
     };
     me.isPlaying = function (object) {
         var widget = me.upper.mainWidget(object);
@@ -363,8 +412,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         if (player.duration) {
             percentage = (100 / player.duration) * player.currentTime;
         }
-        if (percentage < 1) {
-            percentage = 1;
+        if (percentage < 0) {
+            percentage = 0;
         }
         me.core.property.set(progress, "value", percentage);
         var label = me.formatTime(player.currentTime);
