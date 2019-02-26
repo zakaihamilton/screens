@@ -7,8 +7,8 @@
     display: flex;
     overflow: hidden;
     flex: 1;
-    align-items:flex-end;
-    justify-content:center;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .widget-transform-output {
@@ -237,11 +237,11 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar a {
     flex: 1;
-    padding: 3px;
+    padding: 0.5em;
     text-align: center;
     transition: all 0.3s ease;
     color: white;
-    font-size: 2.5em;
+    font-size: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
