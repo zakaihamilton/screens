@@ -122,6 +122,7 @@
 
 .widget-player-controls-progress.small {
     height: 2em;
+    font-size: 1em;
 }
 
 .widget-player-controls-progress.normal {

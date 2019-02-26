@@ -191,9 +191,10 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
         var window = me.widget.window.get(object);
         var windowRegion = me.ui.rect.absoluteRegion(window);
         var playerRegion = me.ui.rect.relativeRegion(object, window);
+        var controlsRegion = me.ui.rect.relativeRegion(object.var.controls, window);
         var widthText = "";
         var heightText = "";
-        var percent = (((windowRegion.height - playerRegion.top) / windowRegion.height) * 100) - 10;
+        var percent = (((windowRegion.height - playerRegion.top - controlsRegion.height) / windowRegion.height) * 100);
         heightText = parseInt(percent) + "%";
         me.core.property.set(object.var.player, "ui.style.width", widthText);
         me.core.property.set(object.var.player, "ui.style.height", heightText);
@@ -622,5 +623,6 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
             "ui.class.normal": isNormal,
             "ui.class.large": isLarge
         });
+        me.update(widget);
     };
 };
