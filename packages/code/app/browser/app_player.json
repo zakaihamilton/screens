@@ -106,6 +106,13 @@
                     }
                 },
                 {
+                    "text": "Wave Form",
+                    "select": "app.player.waveForm",
+                    "options": {
+                        "state": "select"
+                    }
+                },
+                {
                     "text": "Audio",
                     "select": "app.player.format",
                     "options": {

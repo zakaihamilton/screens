@@ -598,6 +598,11 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         });
         me.update(widget);
     };
+    me.enablePeaks = function (object, flag) {
+        var widget = me.upper.mainWidget(object);
+        widget.enablePeaks = flag;
+        me.updatePeaks(object);
+    };
     me.loadPeaks = function (object) {
         var widget = me.upper.mainWidget(object);
         if (!widget.src) {
@@ -617,7 +622,7 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
     me.updatePeaks = async function (object) {
         var widget = me.upper.mainWidget(object);
         var item = null;
-        if (widget.src) {
+        if (widget.src && widget.enablePeaks) {
             var name = me.core.path.fileName(widget.src);
             if (!widget.item) {
                 item = await me.db.cache.metadata.find({ name });

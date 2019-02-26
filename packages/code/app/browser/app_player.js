@@ -42,10 +42,12 @@ screens.app.player = function AppPlayer(me) {
             autoPlay: false,
             jumpTime: 10,
             iconSize: "Normal",
-            time: 0
+            time: 0,
+            waveForm: true
         });
         me.ui.options.toggleSet(me, null, {
-            autoPlay: null
+            autoPlay: null,
+            waveForm: me.updatePlayback
         });
         me.ui.options.choiceSet(me, null, {
             speed: me.updatePlayback,
@@ -393,9 +395,11 @@ screens.app.player = function AppPlayer(me) {
         var window = me.singleton;
         var speed = me.media.voice.speeds[window.options.speed];
         var jumpTime = window.options.jumpTime;
+        var waveForm = window.options.waveForm;
         [window.var.audioPlayer, window.var.videoPlayer].map(player => {
             me.widget.player.controls.setSpeed(player, speed);
             me.widget.player.controls.setJumpTime(player, jumpTime);
+            me.widget.player.controls.enablePeaks(player, waveForm);
         });
     };
     me.playerUpdated = async function (object) {
