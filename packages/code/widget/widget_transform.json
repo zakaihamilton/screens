@@ -25,6 +25,7 @@
         },
         {
             "ui.class.class": "iconbar",
+            "ui.style.opacity": "0",
             "ui.basic.var": "iconbar",
             "ui.group.data": {
                 "ui.data.keyList": [

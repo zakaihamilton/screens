@@ -55,7 +55,7 @@ screens.ui.property = function UIProperty(me) {
     };
     me.broadcast = {
         set: function (object, properties) {
-            for (var key in properties) {
+            for (let key in properties) {
                 me.core.property.set(object, key, properties[key]);
             }
             var childList = me.ui.node.childList(object);
@@ -69,6 +69,9 @@ screens.ui.property = function UIProperty(me) {
                         continue;
                     }
                     if (child.getAttribute("noBroadcast")) {
+                        for (let key in properties) {
+                            me.core.property.set(child, key, properties[key]);
+                        }
                         continue;
                     }
                     me.broadcast.set(child, properties);

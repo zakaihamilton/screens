@@ -7,6 +7,8 @@
     display: flex;
     overflow: hidden;
     flex: 1;
+    align-items:flex-end;
+    justify-content:center;
 }
 
 .widget-transform-output {
@@ -207,20 +209,18 @@ h4.widget-transform-widget {
 }
 
 .widget-transform-iconbar {
-    position: absolute;
-    bottom: 0%;
-    left: 5%;
-    right: 5%;
+    text-align: center;
     background-color: #555;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 3.5em;
+    height: 3em;
     opacity: 0.25;
     border-radius: 10px 10px 0px 0px;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
     transition: all 0.3s ease;
+    z-index: 500;
 }
 
 .widget-transform-iconbar:hover {
@@ -237,7 +237,7 @@ h4.widget-transform-widget {
 
 .widget-transform-iconbar a {
     flex: 1;
-    padding: 4px;
+    padding: 3px;
     text-align: center;
     transition: all 0.3s ease;
     color: white;

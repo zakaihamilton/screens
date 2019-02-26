@@ -187,12 +187,12 @@ screens.widget.transform = function WidgetTransform(me) {
         }
         var text = me.core.property.get(widget, "text");
         if (value && text) {
-            me.core.property.set(widget.var.layout, "ui.style.opacity", 0);
+            me.core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", 0);
             me.core.property.set(widget.var.spinner, "ui.style.visibility", "visible");
         } else {
             widget.workTimeout = setTimeout(function () {
                 me.core.property.set(widget.var.spinner, "ui.style.visibility", "hidden");
-                me.core.property.set(widget.var.layout, "ui.style.opacity", "");
+                me.core.property.set([widget.var.layout, widget.var.iconbar], "ui.style.opacity", "");
                 me.updateScrolling(widget);
             }, 250);
         }
