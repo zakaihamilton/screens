@@ -14,6 +14,9 @@ screens.widget.toast = function WidgetToast(me) {
         }
     };
     me.show = function (type, message) {
+        if (typeof type !== "string") {
+            type = type.id;
+        }
         var toast = document.body.var.desktop.var.toast;
         if (me.currentType === type) {
             if (message) {

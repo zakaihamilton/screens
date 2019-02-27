@@ -16,7 +16,7 @@
     overflow-y: hidden;
     position: absolute;
     left: 2.5em;
-    right: 12.5em;
+    right: 14.5em;
     top: 0.2em;
     height: 2.2em;
     transition: right 0.5s linear;
@@ -53,7 +53,7 @@
     overflow: hidden;
     flex-direction: row-reverse;
     height: 2.2em;
-    width: 11.5em;
+    width: 13.5em;
     top: 0.2em;
     flex: 0;
     transition: width 0.5s linear;

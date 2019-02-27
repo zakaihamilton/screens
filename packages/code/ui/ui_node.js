@@ -111,7 +111,7 @@ screens.ui.node = function UINode(me) {
             if (object === me.ui.element.workspace()) {
                 return null;
             }
-            for (var class_name of class_names) {
+            for (let class_name of class_names) {
                 if (object.classList.contains(class_name)) {
                     return object;
                 }

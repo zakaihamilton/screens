@@ -1,19 +1,19 @@
 {
-    "title": "Chat",
+    "title": "Messages",
     "temp": true,
     "fullscreen": true,
     "nobar": true,
-    "icon": "chat",
+    "icon": "messages",
     "ui.property.style": {
         "position": "absolute",
         "left": "",
         "top": "",
         "right": "0em",
         "bottom": "0em",
-        "width": "50%",
-        "height": "80%",
+        "width": "100%",
+        "height": "50%",
         "border": "1px solid black",
         "boxShadow": "-3px -3px 6px rgba(0,0,0,.5)"
     },
-    "ui.basic.elements": []
+    "ui.basic.html": "@app.messages.html"
 }

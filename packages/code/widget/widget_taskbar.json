@@ -32,6 +32,7 @@
                 "ui.data.suffix": ")",
                 "ui.data.values": [
                     "widget.taskbar.toggleShortcuts",
+                    "messages",
                     "keyboard",
                     "ui.theme.nightMode",
                     "ui.resize.toggleLockRotation",
