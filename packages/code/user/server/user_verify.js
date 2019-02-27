@@ -52,6 +52,7 @@ screens.user.verify = function UserVerify(me) {
                 info.userId = profile.userid;
                 info.userName = profile.name;
                 info.userEmail = profile.email;
+                me.db.shared.user.use({ user: info.userId }, { name: info.userName, email: info.userEmail });
             }
             catch (err) {
                 let error = "failed to verify token, err: " + err;

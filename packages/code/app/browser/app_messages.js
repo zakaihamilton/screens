@@ -12,7 +12,7 @@ screens.app.messages = function AppMessages(me) {
         setInterval(me.updateList, 5000);
     };
     me.updateList = function () {
-        me.db.shared.message.list({ user: "$userId" }).then(messages => {
+        me.db.shared.message.listing().then(messages => {
             if (messages.length === me.messages.length) {
                 return;
             }
@@ -27,8 +27,15 @@ screens.app.messages = function AppMessages(me) {
         let bar = me.ui.element.bar();
         me.core.property.set(bar.var.messages, "ui.class.on", me.messages.length);
     };
-    me.push = function (title, body, args, type) {
-        me.db.shared.message.push({ title, body, args, type, user: "$userId" });
+    me.push = function (title, body, args, type, broadcast) {
+        var data = { title, body, args, type };
+        if (broadcast) {
+            data.user = "";
+        }
+        else {
+            data.user = "$userId";
+        }
+        me.db.shared.message.send(data);
     };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -69,7 +76,7 @@ screens.app.messages = function AppMessages(me) {
             var id = me.core.property.get(container, "ui.attribute.#id");
             var index = me.messages.findIndex(message => message._id === id);
             var message = me.messages[index];
-            await me.db.shared.message.remove({ _id: message._id });
+            await me.db.shared.message.mark({ _id: message._id });
             me.messages.splice(index, 1);
             me.core.property.set(container, "ui.class.close", true);
             me.updateSignal();

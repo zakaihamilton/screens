@@ -90,5 +90,43 @@ screens.db.shared.commentary = function DbSharedCommentary(me) {
 screens.db.shared.message = function DbSharedContent(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};
+    me.listing = async function (user) {
+        if (!user) {
+            user = this.userId;
+        }
+        return me.list({ user });
+    };
+    me.send = function (data, user) {
+        if (!user) {
+            user = this.userId;
+        }
+        if (data.user) {
+            me.push(data);
+        }
+        else {
+            var users = me.db.shared.user.list();
+            for (let user of users) {
+                data.user = user.user;
+                me.push(data);
+            }
+        }
+    };
+    me.mark = function (messageId, user) {
+        if (!user) {
+            user = this.userId;
+        }
+        me.remove({ _id: messageId, user });
+    };
+    return "server";
+};
+
+screens.db.shared.user = function DbSharedUser(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.cache = {};
+    me.indexes = [
+        {
+            "user": 1
+        }
+    ];
     return "server";
 };
