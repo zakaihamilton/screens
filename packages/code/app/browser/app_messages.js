@@ -27,8 +27,8 @@ screens.app.messages = function AppMessages(me) {
         let bar = me.ui.element.bar();
         me.core.property.set(bar.var.messages, "ui.class.on", me.messages.length);
     };
-    me.push = function (title, body, args) {
-        me.db.shared.message.push({ title, body, args, user: "$userId" });
+    me.push = function (title, body, args, type) {
+        me.db.shared.message.push({ title, body, args, type, user: "$userId" });
     };
     me.launch = function () {
         if (me.core.property.get(me.singleton, "ui.node.parent")) {
@@ -44,8 +44,12 @@ screens.app.messages = function AppMessages(me) {
         var html = "<div class=\"app-message-items\">";
         for (let index = 0; index < messages.length; index++) {
             var message = messages[index];
+            var type = message.type;
+            if (!type) {
+                type = "info";
+            }
             var notification = `
-            <article class="app-message-item message is-info" id="${message._id}">
+            <article class="app-message-item message is-${type}" id="${message._id}">
   <div class="message-header">
     ${message.title}
     <button class="delete" onclick="screens.app.messages.delete(this)"></button>
