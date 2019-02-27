@@ -137,7 +137,6 @@ screens.widget.transform = function WidgetTransform(me) {
             me.log("detected language: " + language);
         }
         widget.options.clickCallback = "screens.widget.transform.popup.open";
-        widget.options.diagramCallback = "screens.widget.transform.loadDiagram";
         widget.options.reload = true;
         me.media.voice.stop();
         var options = Object.assign({}, widget.options, { nightMode: me.ui.theme.options.nightMode });
@@ -153,6 +152,7 @@ screens.widget.transform = function WidgetTransform(me) {
         text = info.text;
         var terms = info.terms;
         var data = info.data;
+        var diagrams = info.diagrams;
         if (widget.language) {
             me.core.property.set(widget.var.layout, "ui.class.remove", widget.language);
         }
@@ -160,7 +160,7 @@ screens.widget.transform = function WidgetTransform(me) {
         widget.language = language;
         me.core.property.set(widget.var.output, "ui.basic.html", text);
         if (text) {
-            widget.termData = { terms, data };
+            widget.termData = { terms, data, diagrams };
         }
         else {
             widget.termData = null;
@@ -272,7 +272,6 @@ screens.widget.transform = function WidgetTransform(me) {
             playEnabled: widget.options.voiceEnglish !== "None" || widget.options.voiceHebrew !== "None",
             language: widget.options.language
         };
-        widget.diagrams = [];
         me.media.voice.stop();
         await me.widget.transform.layout.reflow(widget.var.output, widget.var.layout, reflowOptions);
         me.core.property.set(widget, "ui.work.state", false);
@@ -304,19 +303,21 @@ screens.widget.transform = function WidgetTransform(me) {
     me.diagramList = {
         get: function (object) {
             var widget = me.findWidget(object);
-            var diagrams = widget.diagrams;
+            var diagrams = widget.termData.diagrams;
             if (!diagrams) {
                 diagrams = [];
             }
+            diagrams = diagrams.map(name => {
+                return { title: me.core.string.title(name), name };
+            });
             if (widget.termData && (!diagrams[0] || diagrams[0].title !== "Table of Phases")) {
-                diagrams.unshift({ title: "Table of Phases", path: "table_of_phases", params: me.tableOfPhasesParams(widget) });
+                diagrams.unshift({ title: "Table of Phases", name: "table_of_phases", params: me.tableOfPhasesParams(widget) });
             }
-            diagrams = me.core.json.union(diagrams, "title");
             var items = diagrams.map(function (item) {
                 var result = {
                     text: item.title,
                     select: function () {
-                        me.core.app.launch("diagram", item.path, widget.options, null, item.params);
+                        me.core.app.launch("diagram", item.name, widget.options, null, item.params);
                     },
                     options: {
                         enabled: widget.transformText !== null
@@ -326,16 +327,6 @@ screens.widget.transform = function WidgetTransform(me) {
             });
             items = items.filter(Boolean);
             return items;
-        }
-    };
-    me.loadDiagram = {
-        set: async function (object, path) {
-            var widget = me.findWidget(object);
-            var fullPath = me.fullPath(path);
-            var json = await me.core.json.loadFile(fullPath, false);
-            if (json.title) {
-                widget.diagrams.push({ title: json.title, path: path });
-            }
         }
     };
     me.fontSizesPx = function (object, method) {
@@ -1131,7 +1122,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                             target.page.style.lineHeight = "2em";
                         }
                         previousWidget = null;
-                        me.activateOnLoad(target.page ? target.page : widget, widget);
                         if (showInProgress) {
                             me.completeReflow(resolve, target, options);
                         }
@@ -1139,7 +1129,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                         break;
                     } else if (widget) {
                         previousWidget = widget;
-                        me.activateOnLoad(target.page ? target.page : widget, widget);
                     }
                 }
             }, 0);
@@ -1314,22 +1303,6 @@ screens.widget.transform.layout = function WidgetTransformLayout(me) {
                 }
             }
             child = child.nextElementSibling;
-        }
-    };
-    me.activateOnLoad = function (parent, widget) {
-        if (!widget) {
-            return;
-        }
-        var child = widget.firstElementChild;
-        while (child) {
-            me.activateOnLoad(parent, child);
-            child = child.nextElementSibling;
-        }
-        if (widget && widget.getAttribute) {
-            var onload = widget.getAttribute("onload");
-            if (onload) {
-                me.core.property.set(parent, onload);
-            }
         }
     };
     me.cleanupWidget = function (widget) {

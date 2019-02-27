@@ -196,6 +196,7 @@ screens.kab.text = function KabText(me) {
         return hash;
     };
     me.parse = async function (language, wordsString, options, progressCallback) {
+        var diagrams = [];
         if (!wordsString) {
             wordsString = "";
         }
@@ -259,6 +260,9 @@ screens.kab.text = function KabText(me) {
             if (options.commentaryEdit || options.commentaryUser) {
                 line = await me.kab.commentary.line(session, items.commentary[index], line);
             }
+            if (session.diagrams) {
+                diagrams.push(...session.diagrams);
+            }
             return line;
         });
         lines = await Promise.all(lines);
@@ -277,7 +281,8 @@ screens.kab.text = function KabText(me) {
             line = line.replace(/\[SPAN\]/g, "</span><span>");
             return line;
         });
-        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data };
+        diagrams = Array.from(new Set(diagrams));
+        var info = { text: lines.join("\n"), terms: me.kab.term.terms, data: globalJson.data, diagrams };
         return info;
     };
     me.handleInstance = function (session, instance) {

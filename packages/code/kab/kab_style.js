@@ -103,8 +103,11 @@ screens.kab.style = function KabStyle(me) {
                 html += " kab-term-tooltip=\"" + tooltip + "\"";
             }
             var diagram = me.kab.diagram.matchingDiagram(session, instance.target);
-            if (diagram && session.options.diagramCallback) {
-                html += " onload=\"" + session.options.diagramCallback + "(this," + diagram + ")\"";
+            if (diagram) {
+                if (!session.diagrams) {
+                    session.diagrams = [];
+                }
+                session.diagrams.push(diagram);
             }
             if (session.options.clickCallback) {
                 html += " onclick=\"" + session.options.clickCallback + "(this,'" + instance.item.term + "')\"";
