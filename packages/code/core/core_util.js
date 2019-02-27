@@ -110,7 +110,7 @@ screens.core.util = function CoreUtil(me) {
         var url = me.url(appName, args, local);
         me.ui.clipboard.copy(url);
     };
-    me.genPair = function () {
+    me.random = function () {
         return parseInt(Math.random() * Math.pow(2, 32)).toString(16);
     };
     me.range = function (num, min, max) {

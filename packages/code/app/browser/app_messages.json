@@ -1,8 +1,9 @@
 {
     "title": "Messages",
-    "temp": true,
     "fullscreen": true,
     "nobar": true,
+    "temp": true,
+    "static": true,
     "icon": "messages",
     "ui.property.style": {
         "position": "absolute",

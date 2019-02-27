@@ -47,7 +47,7 @@ screens.media.speech = function MediaSpeech(me) {
         var totalDuration = 0;
 
         function getRequestOptions() {
-            var pair = me.core.util.genPair();
+            var pair = me.core.util.random();
             var streamUrl = "https://www.google.com/speech-api/full-duplex/v1/";
             var upstreamUrl = streamUrl + "up?";
             var upstreamParams = me.core.http.urlEncode({
