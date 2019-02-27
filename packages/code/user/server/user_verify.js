@@ -45,7 +45,7 @@ screens.user.verify = function UserVerify(me) {
                 profile.previous = profile.utc;
                 profile.utc = Date.now();
                 profile.request++;
-                if (profile.previous + 60000 < profile.utc) {
+                if (profile.request === 1 || profile.previous + 60000 < profile.utc) {
                     me.log("Storing profile: " + JSON.stringify(profile));
                     await me.db.cache.tokens.use({ hash }, profile);
                 }
