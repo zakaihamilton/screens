@@ -8,7 +8,6 @@ screens.user.verify = function UserVerify(me) {
         me.core.property.link("core.socket.verify", "user.verify.verify", true);
         var login = await me.core.util.config("settings.core.login");
         me.client_id = login.client_id;
-        me.tokens = {};
         const { OAuth2Client } = require("google-auth-library");
         me.client = new OAuth2Client(me.client_id);
     };
@@ -30,8 +29,9 @@ screens.user.verify = function UserVerify(me) {
                 info.stop = true;
                 return;
             }
+            var hash = me.core.string.hash(token);
             try {
-                var profile = me.tokens[token];
+                var profile = await me.db.cache.tokens.find({ hash });
                 if (!profile) {
                     const ticket = await me.client.verifyIdToken({
                         idToken: token,
@@ -39,18 +39,7 @@ screens.user.verify = function UserVerify(me) {
                     });
                     const payload = ticket.getPayload();
                     const userid = payload["sub"];
-                    profile = await me.storage.data.load(me.id, userid);
-                    if (!profile) {
-                        profile = {};
-                    }
-                    me.log("Found profile: " + JSON.stringify(profile));
-                    profile.userid = userid;
-                    profile.name = name;
-                    profile.email = email;
-                    if (!profile.request) {
-                        profile.request = 0;
-                    }
-                    me.tokens[token] = profile;
+                    profile = { userid, name, email, request: 0 };
                 }
                 profile.date = new Date().toString();
                 profile.previous = profile.utc;
@@ -58,7 +47,7 @@ screens.user.verify = function UserVerify(me) {
                 profile.request++;
                 if (profile.previous + 60000 < profile.utc) {
                     me.log("Storing profile: " + JSON.stringify(profile));
-                    me.storage.data.save(profile, me.id, profile.userid);
+                    await me.db.cache.tokens.use({ hash }, profile);
                 }
                 info.userId = profile.userid;
                 info.userName = profile.name;

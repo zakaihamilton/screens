@@ -41,6 +41,17 @@ screens.db.cache.metadata = function DbCacheMetadata(me) {
     return "server";
 };
 
+screens.db.cache.tokens = function DbCacheTokens(me) {
+    me.init = () => me.storage.db.extension(me);
+    me.cache = {};
+    me.indexes = [
+        {
+            "hash": 1
+        }
+    ];
+    return "server";
+};
+
 screens.db.cache.file = function DbCacheFile(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};
