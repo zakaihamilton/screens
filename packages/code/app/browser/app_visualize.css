@@ -79,10 +79,6 @@
     visibility: visible;
 }
 
-.app-visualize-term.transition .app-visualize-delete {
-    visibility: hidden !important;
-}
-
 .app-visualize-iconbar {
     position: absolute;
     bottom: 0%;

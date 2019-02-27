@@ -6,7 +6,16 @@
     transition: opacity 0.75s, transform 0.75s, max-height 1s, margin 1s;
     overflow: hidden;
     max-height: 20em;
-    border: none;
+    border: 3px solid var(--border-color);
+}
+
+.app-message-item:hover {
+    box-shadow: 0 0 10px rgba(81, 203, 238, 1);
+}
+
+.app-message-item:hover:active {
+    box-shadow: 0 0 10px rgba(81, 203, 238, 1);
+    border: 3px solid rgba(81, 203, 238, 1);
 }
 
 .app-message-item.close {
