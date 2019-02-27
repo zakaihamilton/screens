@@ -1,27 +1,56 @@
-.app-message-items {
+.app-messages-items {
     margin: 0.5em;
 }
 
-.app-message-item {
+.app-messages-item {
     transition: opacity 0.75s, transform 0.75s, max-height 1s, margin 1s;
     overflow: hidden;
     max-height: 20em;
-    border: 3px solid var(--border-color);
 }
 
-.app-message-item:hover {
-    box-shadow: 0 0 10px rgba(81, 203, 238, 1);
-}
-
-.app-message-item:hover:active {
-    box-shadow: 0 0 10px rgba(81, 203, 238, 1);
-    border: 3px solid rgba(81, 203, 238, 1);
-}
-
-.app-message-item.close {
+.app-messages-item.close {
     max-height: 0em;
     margin: 0em;
     padding: 0em;
     transform: translateX(-100%);
     opacity: 0;
+}
+
+.app-messages-actions {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    margin-top: 3em;
+}
+
+.app-messages-action {
+    flex: 0;
+    background: var(--background);
+    color: var(--color);
+    text-align: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: stretch;
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    min-width: 6em;
+    margin-left: 1em;
+}
+
+.app-messages-action:hover {
+    background-color: var(--chrome-highlight-background);
+    color: var(--chrome-highlight-color);
+}
+
+.app-messages-action:hover:active {
+    background-color: var(--color);
+    color: var(--background);
 }

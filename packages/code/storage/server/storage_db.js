@@ -157,7 +157,7 @@ screens.storage.db = function StorageDB(me) {
             result = await collection.deleteMany(query);
         }
         me.notifyCache(location);
-        return result.nRemoved;
+        return result.deletedCount;
     };
     me.list = async function (location, query = {}, params) {
         var [array, hash, queryString] = me.getCache(location, query, params);

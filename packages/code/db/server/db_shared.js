@@ -100,6 +100,7 @@ screens.db.shared.message = function DbSharedContent(me) {
         if (!user) {
             user = this.userId;
         }
+        data.unique = me.core.util.random();
         if (data.user) {
             me.push(data);
         }
@@ -110,12 +111,13 @@ screens.db.shared.message = function DbSharedContent(me) {
                 me.push(data);
             }
         }
+        return data.unique;
     };
-    me.mark = function (messageId, user) {
+    me.mark = function (unique, user) {
         if (!user) {
             user = this.userId;
         }
-        me.remove({ _id: messageId, user });
+        me.remove({ unique, user });
     };
     return "server";
 };

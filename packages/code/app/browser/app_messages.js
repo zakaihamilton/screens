@@ -27,8 +27,17 @@ screens.app.messages = function AppMessages(me) {
         let bar = me.ui.element.bar();
         me.core.property.set(bar.var.messages, "ui.class.on", me.messages.length);
     };
-    me.push = function (title, body, args, type, broadcast) {
-        var data = { title, body, args, type };
+    me.push = function (title, body, type, args, broadcast) {
+        if (!title) {
+            title = "";
+        }
+        if (!body) {
+            body = "";
+        }
+        var data = { title, body, type };
+        if (args) {
+            data.args = args;
+        }
         if (broadcast) {
             data.user = "";
         }
@@ -48,21 +57,29 @@ screens.app.messages = function AppMessages(me) {
     };
     me.html = function (object) {
         var messages = me.messages;
-        var html = "<div class=\"app-message-items\">";
+        var html = "<div class=\"app-messages-items\">";
         for (let index = 0; index < messages.length; index++) {
             var message = messages[index];
             var type = message.type;
             if (!type) {
                 type = "info";
             }
+            var actions = "";
+            if (message.args) {
+                actions += "<div class=\"app-messages-action\" onclick=\"screens.app.messages.click(this)\">Open</div>";
+            }
+            actions += "<div class=\"app-messages-action\" onclick=\"screens.app.messages.remove(this)\">Remove</div>";
             var notification = `
-            <article class="app-message-item message is-${type}" id="${message._id}">
+            <article class="app-messages-item message is-${type}" unique="${message.unique}">
   <div class="message-header">
     ${message.title}
     <button class="delete" onclick="screens.app.messages.delete(this)"></button>
   </div>
-  <div class="message-body" onclick="screens.app.messages.click(this)">
+  <div class="message-body app-messages-body">
     ${message.body}
+    <div class="app-messages-actions">
+        ${actions}
+    </div>
   </div>
 </article>`;
             html += notification;
@@ -70,28 +87,28 @@ screens.app.messages = function AppMessages(me) {
         html += "</div>";
         return html;
     };
-    me.delete = async function (object) {
-        var container = me.ui.node.classParent(object, "app-message-item");
+    me.remove = async function (object) {
+        var container = me.ui.node.classParent(object, "app-messages-item");
         if (container) {
-            var id = me.core.property.get(container, "ui.attribute.#id");
-            var index = me.messages.findIndex(message => message._id === id);
+            var unique = me.core.property.get(container, "ui.attribute.#unique");
+            var index = me.messages.findIndex(message => message.unique === unique);
             var message = me.messages[index];
-            await me.db.shared.message.mark({ _id: message._id });
+            await me.db.shared.message.mark(message.unique);
             me.messages.splice(index, 1);
             me.core.property.set(container, "ui.class.close", true);
             me.updateSignal();
         }
     };
     me.click = function (object) {
-        var container = me.ui.node.classParent(object, "app-message-item");
+        var container = me.ui.node.classParent(object, "app-messages-item");
         if (container) {
-            var id = me.core.property.get(container, "ui.attribute.#id");
-            var index = me.messages.findIndex(message => message._id === id);
+            var unique = me.core.property.get(container, "ui.attribute.#unique");
+            var index = me.messages.findIndex(message => message.unique === unique);
             var message = me.messages[index];
             if (message.args) {
                 me.core.message.send.apply(null, message.args);
             }
-            me.delete(container);
+            me.remove(container);
         }
     };
 };
