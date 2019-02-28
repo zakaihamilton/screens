@@ -21,6 +21,7 @@ screens.core.json = function CoreJson(me) {
     me.get = async function (url) {
         if (me.platform === "server") {
             return new Promise(resolve => {
+                me.log("requesting: " + url);
                 me.request.get(url, (error, response, body) => {
                     if (error) {
                         resolve({ error });
@@ -35,6 +36,9 @@ screens.core.json = function CoreJson(me) {
                     }
                 });
             });
+        }
+        else {
+            return me.core.message.send_server("core.json.get", url);
         }
     };
     me.loadFile = async function (path, useCache = true) {

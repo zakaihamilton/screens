@@ -9,7 +9,9 @@ screens.app.messages = function AppMessages(me) {
     };
     me.ready = async function () {
         me.updateList();
-        setInterval(me.updateList, 5000);
+        if (!me.intervalHandle) {
+            me.intervalHandle = setInterval(me.updateList, 10000);
+        }
     };
     me.updateList = function () {
         me.db.shared.message.listing().then(messages => {
