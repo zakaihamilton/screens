@@ -29,5 +29,17 @@ screens.media.ffmpeg = function MediaFFMpeg(me) {
             instance.save(target);
         });
     };
+    me.metadata = function (path) {
+        return new Promise((resolve, reject) => {
+            me.ffmpeg.ffprobe(path, function (err, metadata) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(metadata);
+                }
+            });
+        });
+    };
     return "server";
 };
