@@ -2,5 +2,6 @@
 /node_modules
 /private
 /files
+/media
 .openode
 .openodeignore
