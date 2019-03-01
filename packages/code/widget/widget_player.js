@@ -326,6 +326,17 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                 waveColor: "#669966",
                 progressColor: "#669966",
                 backend: "MediaElement",
+                plugins: [
+                    WaveSurfer.cursor.create({
+                        showTime: true,
+                        opacity: 0.75,
+                        customShowTimeStyle: {
+                            "background-color": "var(--chrome-background)",
+                            color: "var(--chrome-color)",
+                            padding: "0.2em"
+                        }
+                    })
+                ]
             });
             widget.wavesurfer.on("waveform-ready", () => {
                 me.updatePeaks(widget);

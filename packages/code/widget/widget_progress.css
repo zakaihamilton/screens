@@ -17,8 +17,6 @@
     bottom: 2px;
     left: 2px;
     right: 2px;
-    user-select: none;
-    pointer-events: none;
     background-color: var(--background);
 }
 
@@ -53,11 +51,15 @@
     color: black;
     user-select: none;
     pointer-events: none;
-    z-index: 1;
     color: var(--color);
     min-width: 15em;
     text-shadow: 0 0 3px var(--background);
     z-index: 5;
+}
+
+.widget-progress-container:hover div.widget-progress-label {
+    opacity: 0;
+    background-color: red;
 }
 
 .widget-progress-percent {
