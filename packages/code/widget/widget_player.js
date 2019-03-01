@@ -50,6 +50,14 @@ screens.widget.player = function WidgetPlayer(me) {
             widget.type = type;
         }
     };
+    me.resize = function (object) {
+        var widget = me.mainWidget(object);
+        var background = widget.var.controls.var.progress;
+        if (widget.wavesurfer) {
+            widget.wavesurfer.setHeight(background.offsetHeight);
+        }
+        me.core.property.set(widget, "update");
+    };
 };
 
 screens.widget.player.audio = function WidgetPlayerAudio(me) {
@@ -74,6 +82,7 @@ screens.widget.player.audio = function WidgetPlayerAudio(me) {
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "core.event.canplay": "widget.player.controls.update",
+                    "ui.resize.event": "widget.player.resize",
                     "ui.basic.var": "player",
                     "ui.class.class": "player"
                 },
@@ -131,7 +140,7 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
                     "core.event.play": "widget.player.controls.update",
                     "core.event.pause": "widget.player.controls.update",
                     "core.event.canplay": "widget.player.controls.update",
-                    "ui.resize.event": "update",
+                    "ui.resize.event": "widget.player.resize",
                     "ui.basic.var": "player",
                     "ui.class.class": "player"
                 },
@@ -145,15 +154,16 @@ screens.widget.player.video = function WidgetPlayerVideo(me) {
     };
     me.update = function (object) {
         var window = me.widget.window.get(object);
+        var widget = me.upper.mainWidget(object);
         var windowRegion = me.ui.rect.absoluteRegion(window);
-        var playerRegion = me.ui.rect.relativeRegion(object, window);
-        var controlsRegion = me.ui.rect.relativeRegion(object.var.controls, window);
+        var playerRegion = me.ui.rect.relativeRegion(widget, window);
+        var controlsRegion = me.ui.rect.relativeRegion(widget.var.controls, window);
         var widthText = "";
         var heightText = "";
         var percent = (((windowRegion.height - playerRegion.top - controlsRegion.height) / windowRegion.height) * 100);
         heightText = parseInt(percent) + "%";
-        me.core.property.set(object.var.player, "ui.style.width", widthText);
-        me.core.property.set(object.var.player, "ui.style.height", heightText);
+        me.core.property.set(widget.var.player, "ui.style.width", widthText);
+        me.core.property.set(widget.var.player, "ui.style.height", heightText);
     };
     me.source = {
         get: function (object) {

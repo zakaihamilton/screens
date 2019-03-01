@@ -400,6 +400,12 @@ screens.app.player = function AppPlayer(me) {
             me.widget.player.controls.enablePeaks(player, waveForm);
         });
     };
+    me.resize = function (object) {
+        var window = me.singleton;
+        if (window && window.var.player) {
+            me.core.property.set(window.var.player, "resize");
+        }
+    };
     me.playerUpdated = async function (object) {
         var window = me.singleton;
         if (!window) {
