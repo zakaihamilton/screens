@@ -35,7 +35,7 @@
 
 .widget-progress-handle {
     position: absolute;
-    width: 10px;
+    width: 0.4em;
     height: 100%;
     user-select: none;
     pointer-events: none;
@@ -59,7 +59,6 @@
 
 .widget-progress-container:hover div.widget-progress-label {
     opacity: 0;
-    background-color: red;
 }
 
 .widget-progress-percent {

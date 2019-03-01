@@ -321,22 +321,24 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         draw: function (object) {
             var widget = me.upper.mainWidget(object);
             var background = object.var.controls.var.progress.var.background;
+            var plugins = [
+                WaveSurfer.cursor.create({
+                    showTime: true,
+                    opacity: 0.75,
+                    customShowTimeStyle: {
+                        "background-color": "var(--chrome-background)",
+                        color: "var(--chrome-color)",
+                        padding: "0.2em",
+                        "margin-left": "0.4em"
+                    }
+                })
+            ];
             widget.wavesurfer = WaveSurfer.create({
                 container: background,
                 waveColor: "#669966",
                 progressColor: "#669966",
                 backend: "MediaElement",
-                plugins: [
-                    WaveSurfer.cursor.create({
-                        showTime: true,
-                        opacity: 0.75,
-                        customShowTimeStyle: {
-                            "background-color": "var(--chrome-background)",
-                            color: "var(--chrome-color)",
-                            padding: "0.2em"
-                        }
-                    })
-                ]
+                plugins
             });
             widget.wavesurfer.on("waveform-ready", () => {
                 me.updatePeaks(widget);
