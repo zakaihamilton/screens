@@ -301,6 +301,7 @@ screens.app.player = function AppPlayer(me) {
         if (window.options.autoPlay) {
             me.core.property.set(player, "widget.player.controls.play");
         }
+        me.widget.toast.show(me.id, sessionName);
     };
     me.work = {
         set: function (object, value) {
