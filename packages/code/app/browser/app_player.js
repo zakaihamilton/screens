@@ -272,10 +272,6 @@ screens.app.player = function AppPlayer(me) {
         me.core.property.set(window.var.videoPlayer, "source", "");
         if (player) {
             try {
-                if (window.isDownloading) {
-                    me.core.property.set(window, "ui.work.state", false);
-                }
-                window.isDownloading = true;
                 me.core.property.set(window, "ui.work.state", true);
                 var target = await me.media.file.download(groupName, path);
             }
@@ -284,7 +280,6 @@ screens.app.player = function AppPlayer(me) {
             }
             finally {
                 me.core.property.set(window, "ui.work.state", false);
-                window.isDownloading = false;
             }
         }
         if (counter !== me.playerCounter) {
@@ -313,11 +308,13 @@ screens.app.player = function AppPlayer(me) {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
                     me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "hidden");
+                    me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.opacity", "0");
                 }, 250);
             } else {
                 me.workTimeout = setTimeout(function () {
                     me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
                     me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.visibility", "visible");
+                    me.core.property.set([object.var.audioPlayer, object.var.videoPlayer], "ui.style.opacity", "1");
                 }, 250);
             }
         }
