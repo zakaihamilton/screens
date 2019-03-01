@@ -229,7 +229,7 @@ screens.storage.db = function StorageDB(me) {
             location.timer = setTimeout(async () => {
                 location.timer = null;
                 await me.db.events.msg.send(location.componentId + ".emptyCache");
-            }, 1000);
+            }, 2500);
         }
     };
     me.emptyCache = function (location) {
