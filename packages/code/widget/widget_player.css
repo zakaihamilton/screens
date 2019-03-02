@@ -127,12 +127,12 @@
 
 .widget-player-controls-progress.normal {
     height: 3em;
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
 .widget-player-controls-progress.large {
     height: 3em;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .widget-progress-background wave {
