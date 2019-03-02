@@ -321,8 +321,9 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
         draw: function (object) {
             var widget = me.upper.mainWidget(object);
             var background = object.var.controls.var.progress.var.background;
-            var plugins = [
-                WaveSurfer.cursor.create({
+            var plugins = [];
+            if (!me.core.device.isMobile()) {
+                plugins.push(WaveSurfer.cursor.create({
                     showTime: true,
                     opacity: 0.75,
                     customShowTimeStyle: {
@@ -331,8 +332,8 @@ screens.widget.player.controls = function WidgetPlayerControls(me) {
                         padding: "0.2em",
                         "margin-left": "0.4em"
                     }
-                })
-            ];
+                }));
+            }
             widget.wavesurfer = WaveSurfer.create({
                 container: background,
                 waveColor: "#669966",
