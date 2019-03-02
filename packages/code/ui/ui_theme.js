@@ -35,6 +35,7 @@ screens.ui.theme = function UITheme(me) {
         window.dispatchEvent(new Event("resize"));
     };
     me.updateElements = function (parent) {
+        var isMobile = me.core.device.isMobile();
         var nightMode = me.options.nightMode;
         if (!parent) {
             parent = document.body;
@@ -49,6 +50,9 @@ screens.ui.theme = function UITheme(me) {
                 else {
                     element.classList.remove("night-mode");
                     element.classList.remove("is-dark");
+                }
+                if (isMobile) {
+                    element.classList.add("is-mobile");
                 }
                 if (element.themeMethod) {
                     element.themeMethod(element, nightMode);

@@ -58,7 +58,7 @@
     z-index: 5;
 }
 
-.widget-progress-container:hover div.widget-progress-label {
+.widget-progress-container:hover div.widget-progress-label:not(.is-mobile) {
     opacity: 0;
 }
 
