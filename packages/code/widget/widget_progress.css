@@ -57,7 +57,7 @@
     pointer-events: none;
     touch-action: none;
     color: var(--color);
-    min-width: 15em;
+    min-width: 14em;
     text-shadow: 0 0 3px var(--background);
     z-index: 12;
 }
