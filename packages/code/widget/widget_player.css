@@ -134,3 +134,11 @@
     height: 3em;
     font-size: 2em;
 }
+
+.widget-progress-background wave {
+    touch-action: none;
+}
+
+.widget-progress-background canvas {
+    touch-action: none;
+}
