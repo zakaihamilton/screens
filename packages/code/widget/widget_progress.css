@@ -9,6 +9,7 @@
     justify-content: center;
     border: 1px solid var(--border-color);
     background-color: var(--background);
+    touch-action: none;
 }
 
 .widget-progress-background {
@@ -29,9 +30,10 @@
     right: 3px;
     user-select: none;
     pointer-events: none;
+    touch-action: none;
     background-image: linear-gradient( to right, green, #3CB371);
     opacity: 0.5;
-    z-index: 3;
+    z-index: 10;
 }
 
 .widget-progress-handle {
@@ -40,9 +42,10 @@
     height: 100%;
     user-select: none;
     pointer-events: none;
+    touch-action: none;
     background-color: lightgray;
     border: 1px solid darkgray;
-    z-index: 4;
+    z-index: 11;
     opacity: 0.25;
 }
 
@@ -52,10 +55,11 @@
     color: black;
     user-select: none;
     pointer-events: none;
+    touch-action: none;
     color: var(--color);
     min-width: 15em;
     text-shadow: 0 0 3px var(--background);
-    z-index: 5;
+    z-index: 12;
 }
 
 .widget-progress-container:hover div.widget-progress-label:not(.is-mobile) {
@@ -72,5 +76,5 @@
     color: var(--color);
     user-select: none;
     pointer-events: none;
-    z-index: 1;
+    touch-action: none;
 }
