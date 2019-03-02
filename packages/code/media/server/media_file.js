@@ -15,6 +15,7 @@ screens.media.file = function MediaFile(me) {
         if (!me.core.file.exists(me.cachePath)) {
             me.core.file.makeDir(me.cachePath);
         }
+        me.core.mutex.enable(me.id, true);
     };
     me.info = function (path) {
         return new Promise(resolve => {

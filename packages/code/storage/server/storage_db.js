@@ -8,6 +8,7 @@ screens.storage.db = function StorageDB(me) {
         me.mongodb = require("mongodb");
         me.split = require("split-string");
         me.databases = {};
+        me.core.mutex.enable(me.id, true);
     };
     me.database = async function (name) {
         var db = null;

@@ -53,7 +53,7 @@ screens.user.verify = function UserVerify(me) {
                 info.userName = profile.name;
                 info.userEmail = profile.email;
                 let user = me.db.shared.user.find({ user: info.userId });
-                if (!user) {
+                if (!user || user.name !== info.userName || user.email !== info.userEmail) {
                     me.db.shared.user.use({ user: info.userId }, { name: info.userName, email: info.userEmail });
                 }
             }

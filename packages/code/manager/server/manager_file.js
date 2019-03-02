@@ -4,6 +4,9 @@
  */
 
 screens.manager.file = function ManagerFile(me) {
+    me.init = function () {
+        me.core.mutex.enable(me.id, true);
+    };
     me.download = async function (from, to) {
         var exists = me.core.file.exists(to);
         if (exists) {

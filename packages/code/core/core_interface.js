@@ -6,8 +6,11 @@
 screens.core.interface = function CoreInterface(me) {
     me.init = function () {
         me.core.property.link("core.http.receive", "core.interface.receive", true);
+        me.core.mutex.enable(me.id, true);
     };
     me.receive = async function (info) {
+        var unlock = await me.core.mutex.lock(me.id);
+        unlock();
         if (me.platform === "server" && info.method === "POST" && info.url.startsWith("/interface")) {
             info.args = me.fromTypeFormat(info.body);
             var args = [];
