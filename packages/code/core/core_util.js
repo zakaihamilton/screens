@@ -102,8 +102,10 @@ screens.core.util = function CoreUtil(me) {
                 url = "localhost:4040";
             }
         }
-        url += `/${appName}?args=`;
-        url += me.core.string.encode(JSON.stringify(args));
+        if (appName) {
+            url += `/${appName}?args=`;
+            url += me.core.string.encode(JSON.stringify(args));
+        }
         return url;
     };
     me.copyUrl = function (appName, args, local) {
