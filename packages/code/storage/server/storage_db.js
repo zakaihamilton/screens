@@ -6,7 +6,6 @@
 screens.storage.db = function StorageDB(me) {
     me.init = function () {
         me.mongodb = require("mongodb");
-        me.split = require("split-string");
         me.databases = {};
         me.core.mutex.enable(me.id, true);
     };
