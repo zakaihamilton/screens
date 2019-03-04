@@ -61,7 +61,7 @@ screens.media.mux = function MediaMux(me) {
                     path
                 });
                 for (let part of parts) {
-                    body += "#EXTINF:" + duration + "\n" + part.url + "\n";
+                    body += "#EXTINF:" + part.duration + "\n" + part.url + "\n";
                 }
                 body += "#EXT-X-ENDLIST";
                 info["content-type"] = "application/vnd.apple.mpegurl";
@@ -124,16 +124,18 @@ screens.media.mux = function MediaMux(me) {
         }
         var info = await me.core.server.spawn(me.ffprobePath + " -i " + path + "/" + name + " -v quiet -print_format json -show_format -show_streams -hide_banner ");
         info = JSON.parse(info);
-        var data = await me.core.server.spawn(me.ffprobePath + " -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration_time,pkt_pos,pkt_size -of csv " + path + "/" + name);
+        var data = await me.core.server.spawn(me.ffprobePath + " -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration,pkt_pos,pkt_size -of csv " + path + "/" + name);
         data = data.split("\n").map(item => item.split(","));
+        let video_stream = info.streams.find(stream => stream.codec_type === "video");
+        let frame_rate = parseInt(video_stream.time_base.split("/")[1]);
         let frames = data.map((item, frame_index) => {
-            const [, key_frame, pkt_duration_time, pkt_pos, pkt_size, pict_type] = item;
+            const [, key_frame, pkt_duration, pkt_pos, pkt_size, pict_type] = item;
             return {
                 key_frame,
-                pkt_duration_time: parseFloat(pkt_duration_time),
-                pkt_pos: parseInt(pkt_pos),
+                duration: parseInt(pkt_duration) / frame_rate,
+                offset: parseInt(pkt_pos),
                 pict_type,
-                pkt_size: parseInt(pkt_size),
+                size: parseInt(pkt_size),
                 frame_index
             };
         });
@@ -145,15 +147,14 @@ screens.media.mux = function MediaMux(me) {
                 mainFrame = { duration: 0.0, offset: 0, size: 0 };
             }
             if (!mainFrame.size) {
-                mainFrame.offset = frame.pkt_pos;
-                mainFrame.size = frame.pkt_size;
+                mainFrame.offset = frame.offset;
+                mainFrame.size = frame.size;
             }
             else {
-                mainFrame.size += frame.pkt_size;
+                mainFrame.size += frame.size;
             }
-            mainFrame.duration += frame.pkt_duration_time;
+            mainFrame.duration += frame.duration;
         }
-        mainFrames.push(mainFrame);
         var output = me.core.path.replaceExtension(path + "/" + name, "json");
         var url = me.core.util.url() + "/api/hls/master/" + path + ".m3u8";
         var json = {
