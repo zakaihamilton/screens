@@ -18,7 +18,7 @@ screens.media.mux = function MediaMux(me) {
             if (info.url.startsWith("/api/hls/master/")) {
                 let body = "#EXTM3U\n";
                 let source_dir = info.url.match(/api\/hls\/master\/(.*).m3u8/)[1];
-                let duration = parseFloat(info.query["duration"]) || 2.0;
+                let duration = parseFloat(info.query["duration"]) || 4.0;
                 if (source_dir) {
                     let source_files = await me.core.file.readDir(source_dir);
                     for (let source_file of source_files) {
@@ -50,7 +50,7 @@ screens.media.mux = function MediaMux(me) {
             if (info.url.startsWith("/api/hls/vod/")) {
                 let body = "#EXTM3U\n";
                 let source_file = info.url.match(/api\/hls\/vod\/(.*).m3u8/)[1] + ".json";
-                let duration = parseFloat(info.query["duration"]) || 2.0;
+                let duration = parseFloat(info.query["duration"]) || 4.0;
                 let path = me.core.path.replaceExtension(source_file);
                 let source_buffer = await me.core.file.readFile(source_file, "utf8");
                 let source = JSON.parse(source_buffer);
@@ -165,30 +165,6 @@ screens.media.mux = function MediaMux(me) {
             info,
         };
         me.core.file.writeFile(output, JSON.stringify(json));
-    };
-    me.manageFileOld = async function (path) {
-        if (!path.endsWith(".ts")) {
-            return;
-        }
-        return new Promise(async (resolve, reject) => {
-            me.log("Managing file: " + path);
-            var buffer = await me.core.file.readFile(path);
-            var transmuxer = new me.muxjs.mp4.Transmuxer({ remux: false });
-            transmuxer.on("data", function (segment) {
-                var metadata = segment.metadata;
-                var type = segment.type;
-                var output = me.core.path.replaceExtension(path, type + ".json");
-                me.core.file.writeFile(output, JSON.stringify(metadata));
-            });
-            transmuxer.on("error", function (err) {
-                reject(err);
-            });
-            transmuxer.on("done", function () {
-                resolve();
-            });
-            transmuxer.push(new Uint8Array(buffer));
-            transmuxer.flush();
-        });
     };
     return "server";
 };
