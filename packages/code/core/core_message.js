@@ -236,8 +236,6 @@ screens.core.message.worker = function CoreMessageWorker(me) {
             window.module = {};
         }
         if (me.platform === "client") {
-            self.module = {};
-            me.import("/node_modules/promise-worker-bi/dist/index.js");
             me.handle = new PromiseWorker();
             me.register();
         }

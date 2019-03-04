@@ -59,7 +59,7 @@ screens.app.diagram = function AppDiagram(me) {
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
         var path = me.core.property.get(window, "app.diagram.path");
-        var diagramJson = await me.core.json.loadFile(path, false);
+        var diagramJson = await me.core.json.loadFile(path);
         me.core.property.set(window, "app.diagram.diagramData", diagramJson);
         me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
         me.core.property.notify(window, "app.diagram.refresh");

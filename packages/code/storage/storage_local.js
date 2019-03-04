@@ -68,3 +68,85 @@ screens.storage.local = function StorageLocal(me) {
     };
     return "browser";
 };
+
+screens.storage.local.db = function StorageLocalDb(me) {
+    me.databases = {};
+    me.database = async function (dbName, storeName) {
+        me.core.mutex.enable(me.id, true);
+        var unlock = await me.core.mutex.lock(me.id);
+        let handle = me.databases[dbName];
+        if (handle) {
+            unlock();
+            return handle;
+        }
+        return new Promise((resolve, reject) => {
+            let dbVersion = 1;
+            var request = indexedDB.open(dbName, dbVersion);
+            request.onerror = () => {
+                reject("Cannot open database:" + request.error.name);
+            };
+            request.onupgradeneeded = (e) => {
+                if (e.oldVersion < 1) {
+                    request.result.createObjectStore(storeName);
+                }
+                if (e.oldVersion !== dbVersion) {
+                    request.result.deleteObjectStore(storeName);
+                    request.result.createObjectStore(storeName);
+                }
+            };
+            request.onsuccess = () => {
+                me.databases[dbName] = request.result;
+                unlock();
+                resolve(request.result);
+            };
+        });
+    };
+    me.method = async function (collection, methodName) {
+        let storeName = "screens";
+        if (me.platform === "server" || me.platform === "service") {
+            return;
+        }
+        var args = Array.prototype.slice.call(arguments, 2);
+        var access = {
+            "get": "readonly",
+            "put": "readwrite",
+            "delete": "readwrite",
+            "clear": "readwrite",
+            "count": "readonly",
+            "getAllKeys": "readonly"
+        };
+        var dbHandle = await me.database(collection, storeName);
+        var transaction = dbHandle.transaction(storeName, access[methodName]);
+        return new Promise((resolve, reject) => {
+            let storeHandle = transaction.objectStore(storeName);
+            let method = storeHandle[methodName];
+            let request = method.apply(storeHandle, args);
+            request.onerror = () => {
+                reject(request.error.name);
+            };
+            transaction.oncomplete = () => {
+                resolve(request.result);
+            };
+        });
+    };
+    me.get = function (collection, key) {
+        return me.method(collection, "get", key);
+    };
+    me.set = function (collection, key, value) {
+        if (typeof value === "undefined" || value === null) {
+            return me.method(collection, "delete", key);
+        }
+        else {
+            return me.method(collection, "put", value, key);
+        }
+    };
+    me.clear = function (collection) {
+        return me.method(collection, "clear");
+    };
+    me.length = function (collection) {
+        return me.method(collection, "count");
+    };
+    me.keys = function (collection) {
+        return me.method(collection, "getAllKeys");
+    };
+};

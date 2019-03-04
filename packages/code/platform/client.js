@@ -1,3 +1,5 @@
+self.module = {};
+importScripts("/node_modules/promise-worker-bi/dist/index.js");
 importScripts("/packages/code/screens.js?platform=client");
 importScripts("/platform/client.js?platform=client");
 

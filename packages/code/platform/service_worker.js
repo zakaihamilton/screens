@@ -33,6 +33,18 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+    ({ url, event }) => {
+        if (url.pathname.endsWith(".js")) {
+            return true;
+        }
+        return false;
+    },
+    new workbox.strategies.NetworkFirst({
+        cacheName: "js-cache",
+    })
+);
+
+workbox.routing.registerRoute(
     /\.(?:json)$/,
     new workbox.strategies.NetworkFirst({
         cacheName: "json-cache",
@@ -49,6 +61,23 @@ workbox.routing.registerRoute(
     })
 );
 
+workbox.routing.registerRoute(
+    // Cache image files.
+    /\.(?:woff|ttf)$/,
+    // Use the cache if it's available.
+    new workbox.strategies.CacheFirst({
+        // Use a custom cache name.
+        cacheName: "font-cache",
+        plugins: [
+            new workbox.expiration.Plugin({
+                // Cache only 100 images.
+                maxEntries: 100,
+                // Cache for a maximum of a week.
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+            })
+        ],
+    })
+);
 workbox.routing.registerRoute(
     // Cache image files.
     /\.(?:png|jpg|jpeg|svg|gif|ico)$/,

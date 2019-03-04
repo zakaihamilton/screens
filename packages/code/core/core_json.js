@@ -5,7 +5,6 @@
 
 screens.core.json = function CoreJson(me) {
     me.init = function () {
-        me.files = {};
         if (me.platform === "server") {
             me.request = require("request");
         }
@@ -41,34 +40,34 @@ screens.core.json = function CoreJson(me) {
             return me.core.message.send_server("core.json.get", url);
         }
     };
-    me.loadFile = async function (path, useCache = true) {
-        if (useCache && path in me.files) {
-            return me.files[path];
+    me.loadFile = async function (path) {
+        let json = {};
+        if (path && path.startsWith("/")) {
+            path = path.substring(1);
         }
-        else {
-            if (path && path.startsWith("/")) {
-                path = path.substring(1);
-            }
-            var info = {
-                method: "GET",
-                url: "/" + path
-            };
-            var json = "{}";
-            try {
-                json = await me.core.http.send(info);
-            }
-            catch (err) {
-                var error = "Cannot load json file: " + path + " err: " + err.message || err;
-                me.log_error(error);
-            }
+        if (!me.core.network.isOnline()) {
+            json = await me.storage.local.db.get(me.id, path);
             if (json) {
-                json = JSON.parse(json);
+                return json;
             }
-            if (useCache) {
-                me.files[path] = json;
-            }
-            return json;
         }
+        var info = {
+            method: "GET",
+            url: "/" + path
+        };
+        let buffer = "{}";
+        try {
+            buffer = await me.core.http.send(info);
+        }
+        catch (err) {
+            var error = "Cannot load json file: " + path + " err: " + err.message || err;
+            me.log_error(error);
+        }
+        if (buffer) {
+            json = JSON.parse(buffer);
+        }
+        await me.storage.local.db.set(me.id, path, json);
+        return json;
     };
     me.compare = function (source, target) {
         if (typeof source !== typeof target) {

@@ -4,13 +4,13 @@
  */
 
 screens.core.app = function CoreApp(me) {
-    me.init = function () {
+    me.init = async function () {
         me.core.listener.register(me.sendReady, me.core.login.id);
+        me.list = await me.storage.local.db.get(me.id, "appList");
     };
     me.sendReady = async function () {
-        if (!me.list) {
-            me.list = await me.user.access.appList();
-        }
+        me.list = await me.user.access.appList();
+        await me.storage.local.db.set(me.id, "appList", me.list);
         for (var name of screens.components) {
             if (!(name.includes("app."))) {
                 continue;

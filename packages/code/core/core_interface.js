@@ -52,6 +52,9 @@ screens.core.interface = function CoreInterface(me) {
         return args;
     };
     me.send = async function (method) {
+        if (!me.core.network.isOnline()) {
+            throw "Network is offline";
+        }
         var args = Array.prototype.slice.call(arguments, 0);
         var info = {
             method: "POST",

@@ -35,7 +35,7 @@ screens.startup.app = function StartupApp(me) {
         finally {
             me.core.property.set(progress, "close");
         }
-        if (!me.core.login.isSignedIn()) {
+        if (!me.core.login.isSignedIn() && me.core.network.isOnline()) {
             var window = await me.core.app.launch("login", true);
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);
