@@ -52,19 +52,23 @@ screens.core.interface = function CoreInterface(me) {
         return args;
     };
     me.send = async function (method) {
-        if (!me.core.network.isOnline()) {
-            throw "Network is offline";
-        }
         var args = Array.prototype.slice.call(arguments, 0);
+        var body = me.toTypeFormat(args);
+        var result = null;
+        if (!me.core.util.isOnline()) {
+            result = await me.storage.local.db.get(me.id, body);
+            return result;
+        }
         var info = {
             method: "POST",
             url: "/interface/" + method.replace(/\./g, "/"),
-            body: me.toTypeFormat(args)
+            body
         };
-        var result = me.fromTypeFormat(await me.core.http.send(info));
+        result = me.fromTypeFormat(await me.core.http.send(info));
         if (result[0]) {
             throw result[0];
         }
+        await me.storage.local.db.set(me.id, body, result[1]);
         return result[1];
     };
 };

@@ -41,6 +41,14 @@ screens.core.util = function CoreUtil(me) {
         }
         return item;
     };
+    me.isOnline = function () {
+        if (me.platform === "server" || me.platform === "service") {
+            return true;
+        }
+        else {
+            return me.core.network.isOnline();
+        }
+    };
     me.isSecure = function () {
         if (me.platform === "server") {
             return !me.core.http.localhost;

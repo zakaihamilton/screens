@@ -45,7 +45,7 @@ screens.core.json = function CoreJson(me) {
         if (path && path.startsWith("/")) {
             path = path.substring(1);
         }
-        if (!me.core.network.isOnline()) {
+        if (!me.core.util.isOnline()) {
             json = await me.storage.local.db.get(me.id, path);
             if (json) {
                 return json;

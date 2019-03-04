@@ -21,12 +21,7 @@ screens.startup.app = function StartupApp(me) {
                 "title": "Login",
                 "delay": "1000"
             });
-            if (me.core.network.isOnline()) {
-                await me.core.login.load();
-            }
-            else {
-                me.ready();
-            }
+            await me.core.login.load();
         }
         catch (err) {
             document.body.innerHTML = me.html.replace("__error__", err.message || err);
@@ -35,7 +30,7 @@ screens.startup.app = function StartupApp(me) {
         finally {
             me.core.property.set(progress, "close");
         }
-        if (!me.core.login.isSignedIn() && me.core.network.isOnline()) {
+        if (!me.core.login.isSignedIn()) {
             var window = await me.core.app.launch("login", true);
             if (window) {
                 me.core.property.set(window, "widget.window.show", true);

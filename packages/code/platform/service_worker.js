@@ -63,7 +63,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
     // Cache image files.
-    /\.(?:woff|ttf)$/,
+    /\.(?:woff2|ttf)$/,
     // Use the cache if it's available.
     new workbox.strategies.CacheFirst({
         // Use a custom cache name.

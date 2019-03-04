@@ -6,12 +6,19 @@
 screens.core.login = function CoreLogin(me) {
     me.init = async function () {
         me.state = false;
-        me.info = {};
+        me.wasLoggedIn = false;
+        me.info = await me.storage.local.db.get(me.id, "info");
+        if (!me.info) {
+            me.info = {};
+        }
         me.core.property.link("core.http.headers", "core.login.headers", true);
         me.core.property.link("core.message.headers", "core.login.headers", true);
-        me.core.property.set(me, "core.network.online", "core.login.load");
     };
     me.load = function () {
+        if (!me.core.util.isOnline()) {
+            me.core.listener.signal(me.id);
+            return;
+        }
         var login = me.core.util.config("settings.core.login");
         return new Promise((resolve, reject) => {
             gapi.load("auth2", async function () {
@@ -132,6 +139,7 @@ screens.core.login = function CoreLogin(me) {
             token,
             login
         };
+        me.storage.local.db.set(me.id, "info", me.info);
     };
     me.userChanged = function (user) {
         if (user) {
