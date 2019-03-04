@@ -30,11 +30,11 @@ screens.media.mux = function MediaMux(me) {
                             throw "Codec not supported: " + video_stream.codec_name;
                         }
                         let profile = {
-                            "Baseline": "42E0",
-                            "Main": "4D40",
+                            "Baseline": "42e0",
+                            "Main": "4d40",
                             "High": "6400"
                         };
-                        let video_codec = "avc1." + profile[video_stream.profile] + video_stream.level;
+                        let video_codec = "avc1." + profile[video_stream.profile] + video_stream.level.toString(16);
                         let resolution = video_stream.width + "x" + video_stream.height;
                         body += `#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=${source.info.format.bit_rate},RESOLUTION=${resolution},CODECS="${video_codec}, mp4a.40.2"\n`;
                         let m3u8_file = me.core.path.replaceExtension(source_dir + "/" + source_file, "m3u8");
