@@ -73,8 +73,8 @@ screens.media.mux = function MediaMux(me) {
         if (info.url.startsWith("/api/hls/stream/") && info.url.endsWith(".ts")) {
             let path = info.url.match(/api\/hls\/stream\/(.*)/)[1];
             let ts_file = me.core.path.folderPath(path) + ".ts";
-            let offset = me.core.path.fileName(path);
-            let size = info.query["size"] | 0;
+            let offset = parseInt(me.core.path.fileName(path));
+            let size = parseInt(info.query["size"]) | 0;
             let headers = Object.assign({}, info.headers);
             if (!headers.range || headers.range === "bytes=0-") {
                 headers.range = "bytes=" + offset + "-" + (offset + size);
