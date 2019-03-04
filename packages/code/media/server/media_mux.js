@@ -11,13 +11,13 @@ screens.media.mux = function MediaMux(me) {
         me.core.property.link("core.http.receive", "media.mux.receive", true);
     };
     me.receive = async function (info) {
-        if (me.platform !== "server" || info.method !== "GET" || !info.url.endsWith(".m3u8")) {
+        if (me.platform !== "server" || info.method !== "GET" || (!info.url.endsWith(".m3u8") && !info.url.endsWith(".m3u"))) {
             return;
         }
-        if (info.url.startsWith("/api/hls/master")) {
+        if (info.url.startsWith("/api/hls/master/")) {
             let body = "#EXTM3U\n";
-            var source_dir = info.query["source"];
-            var duration = info.query["duration"] || 2;
+            let source_dir = info.url.match(/api\/hls\/master\/(.*).m3u8/)[1];
+            let duration = parseFloat(info.query["duration"]) || 2.0;
             if (source_dir) {
                 let source_files = await me.core.file.readDir(source_dir);
                 for (let source_file of source_files) {
@@ -38,13 +38,61 @@ screens.media.mux = function MediaMux(me) {
                     let video_codec = "avc1." + profile[video_stream.profile] + video_stream.level;
                     let resolution = video_stream.width + "x" + video_stream.height;
                     body += `#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=${source.info.format.bit_rate},RESOLUTION=${resolution},CODECS="${video_codec}, mp4a.40.2"\n`;
-                    body += me.core.util.url() + "/api/hls/vod?source=" + source_dir + "&duration=" + duration + "&ts=" + me.core.path.replaceExtension(source_file, "ts");
+                    let m3u8_file = me.core.path.replaceExtension(source_dir + "/" + source_file, "m3u8");
+                    body += me.core.util.url() + "/api/hls/vod/" + m3u8_file + "?duration=" + duration;
                     body += "\n";
                 }
             }
             info["content-type"] = "application/vnd.apple.mpegurl";
             info.body = body;
         }
+        if (info.url.startsWith("/api/hls/vod/")) {
+            let body = "#EXTM3U\n";
+            let source_file = info.url.match(/api\/hls\/vod\/(.*).m3u8/)[1] + ".json";
+            let duration = parseFloat(info.query["duration"]) || 2.0;
+            let path = me.core.path.replaceExtension(source_file);
+            let source_buffer = await me.core.file.readFile(source_file, "utf8");
+            let source = JSON.parse(source_buffer);
+            body += "#EXT-X-PLAYLIST-TYPE:VOD\n";
+            body += "#EXT-X-TARGETDURATION:" + source.info.format.duration + "\n";
+            body += "#EXT-X-VERSION:4\n";
+            body += "#EXT-X-MEDIA-SEQUENCE:0\n";
+            let parts = me.genParts(source, {
+                duration,
+                path
+            });
+            for (let part of parts) {
+                body += "#EXTINF:" + duration + "\n" + part.url + "\n";
+            }
+            body += "#EXT-X-ENDLIST";
+            info["content-type"] = "application/vnd.apple.mpegurl";
+            info.body = body;
+        }
+    };
+    me.genParts = function (source, params) {
+        var parts = [];
+        var part = { duration: 0.0, offset: 0, size: 0 };
+        for (let frame of source.frames) {
+            if (part.duration >= params.duration) {
+                part.url = me.genUrl(source, params, part);
+                parts.push(part);
+                part = { duration: 0.0, offset: 0, size: 0 };
+            }
+            if (!part.size) {
+                part.offset = frame.offset;
+                part.size = frame.size;
+            }
+            else {
+                part.size += frame.size;
+            }
+            part.duration += frame.duration;
+        }
+        part.url = me.genUrl(source, params, part);
+        parts.push(part);
+        return parts;
+    };
+    me.genUrl = function (source, params, part) {
+        return me.core.util.url() + "/api/hls/stream/" + params.path + "/" + part.offset + ".ts?size=" + part.size;
     };
     me.manageFolder = async function (path) {
         var files = await me.core.file.readDir(path);
@@ -65,25 +113,40 @@ screens.media.mux = function MediaMux(me) {
         info = JSON.parse(info);
         var data = await me.core.server.spawn("ffprobe -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration_time,pkt_pos,pkt_size -of csv " + path + "/" + name);
         data = data.split("\n").map(item => item.split(","));
-        data = data.map((item, frame_index) => {
+        let frames = data.map((item, frame_index) => {
             const [, key_frame, pkt_duration_time, pkt_pos, pkt_size, pict_type] = item;
-            return { key_frame, pkt_duration_time, pkt_pos, pict_type, pkt_size, frame_index };
+            return {
+                key_frame,
+                pkt_duration_time: parseFloat(pkt_duration_time),
+                pkt_pos: parseInt(pkt_pos),
+                pict_type,
+                pkt_size: parseInt(pkt_size),
+                frame_index
+            };
         });
-        data = data.filter(item => item.key_frame && item.pict_type === "I");
-        var frames = data.map(item => {
-            delete item.pict_type;
-            delete item.key_frame;
-            item.pkt_pos = parseInt(item.pkt_pos);
-            item.pkt_size = parseInt(item.pkt_size);
-            item.pkt_duration_time = parseFloat(item.pkt_duration_time);
-            return item;
-        });
+        var mainFrames = [];
+        var mainFrame = { duration: 0.0, offset: 0, size: 0 };
+        for (let frame of frames) {
+            if (mainFrame.size && frame.key_frame && frame.pict_type === "I") {
+                mainFrames.push(mainFrame);
+                mainFrame = { duration: 0.0, offset: 0, size: 0 };
+            }
+            if (!mainFrame.size) {
+                mainFrame.offset = frame.pkt_pos;
+                mainFrame.size = frame.pkt_size;
+            }
+            else {
+                mainFrame.size += frame.pkt_size;
+            }
+            mainFrame.duration += frame.pkt_duration_time;
+        }
+        mainFrames.push(mainFrame);
         var output = me.core.path.replaceExtension(path + "/" + name, "json");
-        var url = me.core.util.url() + "/api/hls/master.m3u8?source=" + path;
+        var url = me.core.util.url() + "/api/hls/master/" + path + ".m3u8";
         var json = {
             url,
             path,
-            frames,
+            frames: mainFrames,
             info,
         };
         me.core.file.writeFile(output, JSON.stringify(json));

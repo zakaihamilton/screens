@@ -94,12 +94,18 @@ screens.core.path = function CorePath(me) {
         return extension;
     };
     me.replaceExtension = function (path, extension) {
+        if (!extension) {
+            extension = "";
+        }
+        if (extension) {
+            extension = "." + extension;
+        }
         var currentExtension = me.extension(path);
         if (currentExtension) {
-            path = path.replace("." + currentExtension, "." + extension);
+            path = path.replace("." + currentExtension, extension);
         }
         else {
-            path += "." + extension;
+            path += extension;
         }
         return path;
     };
