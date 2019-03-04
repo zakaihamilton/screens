@@ -5,9 +5,7 @@
 
 screens.media.mux = function MediaMux(me) {
     me.init = function () {
-        me.muxjs = require("mux.js");
-        me.videoLib = require("node-video-lib");
-        me.fs = require("fs");
+        me.ffprobePath = require("@ffprobe-installer/ffprobe").path;
         me.core.property.link("core.http.receive", "media.mux.receive", true);
     };
     me.receive = async function (info) {
@@ -124,9 +122,9 @@ screens.media.mux = function MediaMux(me) {
         if (!name.endsWith(".ts")) {
             return;
         }
-        var info = await me.core.server.spawn("ffprobe -i " + path + "/" + name + " -v quiet -print_format json -show_format -show_streams -hide_banner ");
+        var info = await me.core.server.spawn(me.ffprobePath + " -i " + path + "/" + name + " -v quiet -print_format json -show_format -show_streams -hide_banner ");
         info = JSON.parse(info);
-        var data = await me.core.server.spawn("ffprobe -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration_time,pkt_pos,pkt_size -of csv " + path + "/" + name);
+        var data = await me.core.server.spawn(me.ffprobePath + " -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration_time,pkt_pos,pkt_size -of csv " + path + "/" + name);
         data = data.split("\n").map(item => item.split(","));
         let frames = data.map((item, frame_index) => {
             const [, key_frame, pkt_duration_time, pkt_pos, pkt_size, pict_type] = item;
