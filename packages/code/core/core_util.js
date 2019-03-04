@@ -99,7 +99,7 @@ screens.core.util = function CoreUtil(me) {
         if (!local) {
             url = "http://www.screensview.com";
             if (!me.core.util.isSecure()) {
-                url = "localhost:4040";
+                url = "http://localhost:4040";
             }
         }
         if (appName) {

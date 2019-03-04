@@ -10,11 +10,14 @@ screens.core.stream = function CoreStream(me) {
         }
     };
     me.serve = function (headers, response, path, contentType) {
-        var stat = me.fs.statSync(path);
+        var total = headers.total;
         var range = headers.range;
         var partial = false;
         if (range) {
-            var total = stat.size;
+            if (!total) {
+                var stat = me.fs.statSync(path);
+                total = stat.size;
+            }
             var parts = range.replace(/bytes=/, "").split("-");
             var partialstart = parts[0];
             var partialend = parts[1];
