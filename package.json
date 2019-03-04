@@ -55,6 +55,7 @@
     "uglify-es": "^3.3.9",
     "video.js": "^7.3.0",
     "videojs-contrib-hls": "^5.14.1",
+    "workbox-sw": "^4.0.0",
     "xmlhttprequest": "^1.8.0"
   },
   "settings": {

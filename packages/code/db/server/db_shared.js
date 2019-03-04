@@ -31,12 +31,6 @@ screens.db.shared.chat = function DbSharedChat(me) {
     return "server";
 };
 
-screens.db.shared.envision = function DbSharedEnvision(me) {
-    me.init = () => me.storage.db.extension(me);
-    me.cache = {};
-    return "server";
-};
-
 screens.db.shared.workshop = function DbSharedWorkshop(me) {
     me.init = () => me.storage.db.extension(me);
     me.cache = {};

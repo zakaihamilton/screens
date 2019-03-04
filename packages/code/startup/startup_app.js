@@ -21,7 +21,12 @@ screens.startup.app = function StartupApp(me) {
                 "title": "Login",
                 "delay": "1000"
             });
-            await me.core.login.load();
+            if (me.core.network.isOnline()) {
+                await me.core.login.load();
+            }
+            else {
+                me.ready();
+            }
         }
         catch (err) {
             document.body.innerHTML = me.html.replace("__error__", err.message || err);

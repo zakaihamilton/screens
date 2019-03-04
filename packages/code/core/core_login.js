@@ -9,6 +9,7 @@ screens.core.login = function CoreLogin(me) {
         me.info = {};
         me.core.property.link("core.http.headers", "core.login.headers", true);
         me.core.property.link("core.message.headers", "core.login.headers", true);
+        me.core.property.set(me, "core.network.online", "core.login.load");
     };
     me.load = function () {
         var login = me.core.util.config("settings.core.login");
