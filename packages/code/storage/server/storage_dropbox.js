@@ -1,9 +1,9 @@
 /*
  @author Zakai Hamilton
- @component StorageFile
+ @component StorageDropBox
  */
 
-screens.storage.file = function StorageFile(me) {
+screens.storage.dropbox = function StorageDropBox(me) {
     me.init = function () {
         require("es6-promise").polyfill();
         me.dropbox = require("dropbox").Dropbox;
@@ -194,7 +194,7 @@ screens.storage.file = function StorageFile(me) {
     return "server";
 };
 
-screens.storage.file.protocol = function StorageFileProtocol(me) {
+screens.storage.dropbox.protocol = function StorageDropBoxProtocol(me) {
     me.get = async function (path, format = "utf8") {
         var result = await me.core.file.protocol.get(path, format);
         if (result) {

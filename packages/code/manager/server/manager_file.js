@@ -19,7 +19,7 @@ screens.manager.file = function ManagerFile(me) {
             exists = me.core.file.exists(to);
             if (!exists) {
                 try {
-                    await me.storage.file.downloadFile(from, to);
+                    await me.storage.dropbox.downloadFile(from, to);
                 }
                 catch (err) {
                     me.log("Failed to download file: " + from + " err: " + JSON.stringify(err));
@@ -41,7 +41,7 @@ screens.manager.file = function ManagerFile(me) {
         var unlock = await me.core.mutex.lock(me.id);
         me.log("uploading file: " + from + " to: " + to);
         try {
-            await me.storage.file.uploadFile(from, to);
+            await me.storage.dropbox.uploadFile(from, to);
         }
         catch (err) {
             me.log("Failed to upload file: " + from + " err: " + JSON.stringify(err));

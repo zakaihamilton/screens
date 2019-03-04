@@ -17,7 +17,7 @@ screens.cmd.files = function CmdFiles(me) {
         var target = args[2];
         me.core.property.set(terminal, "print", "converting files in " + source);
         try {
-            var children = await me.storage.file.getChildren(source);
+            var children = await me.storage.dropbox.getChildren(source);
             var audioList = children.filter(child => me.core.path.extension(child.name) === "m4a");
             var videoList = children.filter(child => me.core.path.extension(child.name) === "mp4");
             for (let videoChild of videoList) {

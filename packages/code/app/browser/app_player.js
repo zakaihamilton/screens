@@ -340,7 +340,7 @@ screens.app.player = function AppPlayer(me) {
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
                     me.core.property.set(progress, "modal.progress.specific", null);
-                    await me.storage.file.uploadFile(paths.local, paths.remote, (offset, size) => {
+                    await me.storage.dropbox.uploadFile(paths.local, paths.remote, (offset, size) => {
                         var data = { label: paths.remote, max: size, value: offset };
                         me.core.property.set(progress, "modal.progress.specific", data);
                     });
