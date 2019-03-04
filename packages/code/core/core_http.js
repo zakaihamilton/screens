@@ -292,6 +292,8 @@ screens.core.http = function CoreHttp(me) {
         set: function (info) {
             if (info.custom === false) {
                 info.responseHeaders["Content-Type"] = info["content-type"];
+                info.responseHeaders["Access-Control-Allow-Origin"] = "*";
+                info.responseHeaders["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, Content-Type, Accept";
                 info.response.writeHead(info.code, info.responseHeaders);
                 info.response.end(info.body);
             }

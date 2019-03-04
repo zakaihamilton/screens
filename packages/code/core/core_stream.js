@@ -29,7 +29,9 @@ screens.core.stream = function CoreStream(me) {
                 "Content-Range": "bytes " + start + "-" + end + "/" + total,
                 "Accept-Ranges": "bytes",
                 "Content-Length": chunkSize,
-                "Content-Type": contentType
+                "Content-Type": contentType,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
             };
             partial = total !== chunkSize;
             var responseCode = 200;
