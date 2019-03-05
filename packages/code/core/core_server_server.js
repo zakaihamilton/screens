@@ -12,7 +12,7 @@ screens.core.server = function CoreServer(me) {
     me.spawn = async function (cmd) {
         return new Promise((resolve, reject) => {
             me.log("spawning: " + cmd);
-            me.child_process.exec(cmd, { maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
+            me.child_process.exec(cmd, { maxBuffer: 12 * 1024 * 1024 }, (error, stdout, stderr) => {
                 if (error) {
                     me.log("error " + error + " returned on process: " + cmd);
                     reject(stderr);

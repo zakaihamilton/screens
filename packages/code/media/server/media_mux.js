@@ -124,27 +124,26 @@ screens.media.mux = function MediaMux(me) {
         }
         var info = await me.core.server.spawn(me.ffprobePath + " -i " + path + "/" + name + " -v quiet -print_format json -show_format -show_streams -hide_banner ");
         info = JSON.parse(info);
-        var data = await me.core.server.spawn(me.ffprobePath + " -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration,pkt_pos,pkt_size -of csv " + path + "/" + name);
-        data = data.split("\n").map(item => item.split(","));
+        var data = await me.core.server.spawn(me.ffprobePath + " -hide_banner -select_streams v -show_frames -show_entries frame=pict_type,key_frame,pkt_duration,pkt_pos,pkt_size -of json " + path + "/" + name);
+        data = JSON.parse(data).frames;
         let video_stream = info.streams.find(stream => stream.codec_type === "video");
         let frame_rate = parseInt(video_stream.time_base.split("/")[1]);
-        let frames = data.map((item, frame_index) => {
-            const [, key_frame, pkt_duration, pkt_pos, pkt_size, pict_type] = item;
+        let frames = data.map((item) => {
             return {
-                key_frame,
-                duration: parseInt(pkt_duration) / frame_rate,
-                offset: parseInt(pkt_pos),
-                pict_type,
-                size: parseInt(pkt_size),
-                frame_index
+                key_frame: item.key_frame,
+                duration: parseInt(item.pkt_duration) / frame_rate,
+                offset: parseInt(item.pkt_pos),
+                pict_type: item.pict_type,
+                size: parseInt(item.pkt_size),
+                frames: 1
             };
         });
         var mainFrames = [];
-        var mainFrame = { duration: 0.0, offset: 0, size: 0 };
+        var mainFrame = { duration: 0.0, offset: 0, size: 0, frames: 0 };
         for (let frame of frames) {
             if (mainFrame.size && frame.key_frame && frame.pict_type === "I") {
                 mainFrames.push(mainFrame);
-                mainFrame = { duration: 0.0, offset: 0, size: 0 };
+                mainFrame = { duration: 0.0, offset: 0, size: 0, frames: 0 };
             }
             if (!mainFrame.size) {
                 mainFrame.offset = frame.offset;
@@ -154,6 +153,7 @@ screens.media.mux = function MediaMux(me) {
                 mainFrame.size += frame.size;
             }
             mainFrame.duration += frame.duration;
+            mainFrame.frames += frame.frames;
         }
         var output = me.core.path.replaceExtension(path + "/" + name, "json");
         var url = me.core.util.url() + "/api/hls/master/" + path + ".m3u8";
