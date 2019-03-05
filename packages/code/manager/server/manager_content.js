@@ -41,7 +41,7 @@ screens.manager.content = function ManagerContent(me) {
             list = list.filter(filter);
             let results = {};
             for (let item of list) {
-                if (title && item.title !== title) {
+                if (title && !item.title.startsWith(title) && !title.startsWith(item.title)) {
                     continue;
                 }
                 var titles = results[item.component];
