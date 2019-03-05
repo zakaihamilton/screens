@@ -168,4 +168,16 @@ screens.core.util = function CoreUtil(me) {
         };
         requestId = requestAnimationFrame(animateLoop);
     };
+    me.override = function (modulePath, methodName, overrideCallback) {
+        var handle = require(modulePath);
+        var originalMethod = handle[methodName];
+        handle[methodName] = function () {
+            var _this = this;
+            var args = Array.prototype.slice.call(arguments, 0);
+            overrideCallback(() => {
+                originalMethod.apply(_this, args);
+            }, args, _this);
+        };
+        module.exports = handle;
+    };
 };
