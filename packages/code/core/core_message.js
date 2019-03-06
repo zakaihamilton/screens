@@ -286,12 +286,20 @@ screens.core.message.service_worker = function CoreMessageServiceWorker(me, pack
     me.activate = async function () {
         await self.clients.claim();
     };
+    me.unregister = async function () {
+        let result = false;
+        if (me.reg) {
+            result = await me.reg.unregister();
+        }
+        return result;
+    };
     me.load = async function (path) {
         if ("serviceWorker" in navigator) {
             me.log("Service worker registeration for path: " + path);
             try {
                 var reg = await navigator.serviceWorker.register(path);
                 reg.update();
+                me.reg = reg;
                 me.log("Service worker registeration complete for path: " + path);
                 if (!navigator.serviceWorker.controller) {
                     await new Promise(function (resolve) {
