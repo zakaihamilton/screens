@@ -4,9 +4,10 @@
  */
 
 screens.app.packets = function AppPackets(me, packages) {
+    const { core } = packages;
     me.launch = async function (args) {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.dataList = await me.storage.data.query("app.packets.data");
@@ -16,7 +17,7 @@ screens.app.packets = function AppPackets(me, packages) {
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
         if (me.options.dataProfile !== "Live" && me.options.dataProfile !== "Combined") {
-            me.core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
+            core.property.set(me.singleton.var.title, "ui.basic.text", me.options.dataProfile);
         }
         return me.singleton;
     };
@@ -31,15 +32,15 @@ screens.app.packets = function AppPackets(me, packages) {
         me.ui.options.toggleSet(me, null, "autoRefresh", me.refreshData.set);
         me.ui.options.choiceSet(me, null, "viewType", (object) => {
             var window = me.widget.window.get(object);
-            me.core.property.set(window, "app.packets.refreshChart");
-            me.core.property.set(window, "app.packets.refreshData");
+            core.property.set(window, "app.packets.refreshChart");
+            core.property.set(window, "app.packets.refreshData");
         });
         me.ui.options.choiceSet(me, null, "dataProfile", (object) => {
             var window = me.widget.window.get(object);
             if (window.streamIndex > 0) {
-                me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
+                core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
             }
-            me.core.property.set(window, "app.packets.refreshData");
+            core.property.set(window, "app.packets.refreshData");
             window.dataTitle = "";
         });
     };
@@ -56,10 +57,10 @@ screens.app.packets = function AppPackets(me, packages) {
         set: function (object, value) {
             var window = me.widget.window.get(object);
             if (value && value.currentTarget) {
-                value = me.core.property.get(value.currentTarget, "ui.basic.text");
+                value = core.property.get(value.currentTarget, "ui.basic.text");
             }
             else {
-                value = me.core.property.get(object, "ui.basic.text");
+                value = core.property.get(object, "ui.basic.text");
             }
             if (value) {
                 window.dataTitle = value.trim();
@@ -73,10 +74,10 @@ screens.app.packets = function AppPackets(me, packages) {
             },
             set: async function (object, value) {
                 if (value && value.currentTarget) {
-                    value = me.core.property.get(value.currentTarget, "ui.basic.text");
+                    value = core.property.get(value.currentTarget, "ui.basic.text");
                 }
                 else {
-                    value = me.core.property.get(object, "ui.basic.text");
+                    value = core.property.get(object, "ui.basic.text");
                 }
                 if (value) {
                     value = value.trim();
@@ -103,7 +104,7 @@ screens.app.packets = function AppPackets(me, packages) {
                     value = !effects[name];
                 }
                 else {
-                    value = me.core.property.get(target, "ui.basic.text");
+                    value = core.property.get(target, "ui.basic.text");
                     if (value) {
                         value = value.trim();
                     }
@@ -131,7 +132,7 @@ screens.app.packets = function AppPackets(me, packages) {
         try {
             await me.manager.packet.applyEffects(effects);
             window.packetInfo.effects = await me.manager.packet.retrieveEffects();
-            me.core.property.set(window, "app.packets.updateData");
+            core.property.set(window, "app.packets.updateData");
         }
         catch (err) {
             alert("Failed to apply effects: " + JSON.stringify(effects) + " err: " + err);
@@ -157,13 +158,13 @@ screens.app.packets = function AppPackets(me, packages) {
                 var result = [
                     item.title,
                     function () {
-                        window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
-                        me.core.property.set(window, "app.packets.dataProfile", item.title);
+                        window.packetInfo = JSON.parse(core.string.decode(item.packetInfo));
+                        core.property.set(window, "app.packets.dataProfile", item.title);
                         window.dataTitle = item.title;
                     },
                     {
                         "state": function () {
-                            return me.core.property.get(window, "app.packets.dataProfile", item.title);
+                            return core.property.get(window, "app.packets.dataProfile", item.title);
                         }
                     }
                 ];
@@ -174,7 +175,7 @@ screens.app.packets = function AppPackets(me, packages) {
     };
     me.refreshChart = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.chart, {
+        core.property.set(window.var.chart, {
             "reset": null,
             "type": "@app.packets.chartType",
             "options": "@app.packets.chartOptions"
@@ -196,18 +197,18 @@ screens.app.packets = function AppPackets(me, packages) {
                     return item.title === me.options.dataProfile;
                 });
                 if (item) {
-                    window.packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                    window.packetInfo = JSON.parse(core.string.decode(item.packetInfo));
                 }
                 autoRefresh = false;
             }
-            me.core.property.set(window, "app.packets.updateData");
+            core.property.set(window, "app.packets.updateData");
             if (me.timer) {
                 clearTimeout(me.timer);
                 me.timer = null;
             }
             if (autoRefresh) {
                 me.timer = setTimeout(() => {
-                    me.core.property.set(window, "app.packets.refreshData");
+                    core.property.set(window, "app.packets.refreshData");
                 }, 5000);
             }
         }
@@ -228,7 +229,7 @@ screens.app.packets = function AppPackets(me, packages) {
                 var streamRequests = [];
                 if (me.options.dataProfile === "Combined") {
                     me.dataList.map(function (item) {
-                        var packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                        var packetInfo = JSON.parse(core.string.decode(item.packetInfo));
                         streamRequests.push(...packetInfo.streamRequests);
                     });
                 }
@@ -264,18 +265,18 @@ screens.app.packets = function AppPackets(me, packages) {
                         effects = streamRequest.effects;
                     }
                 }
-                me.core.property.set(window.var.chart, "data", "@app.packets.chartData");
-                me.core.property.notify(window.var.chart, "update", {
+                core.property.set(window.var.chart, "data", "@app.packets.chartData");
+                core.property.notify(window.var.chart, "update", {
                     "duration": 0
                 });
                 window.packetCount = me.formatNumber(packetCount);
-                window.streamSize = me.core.string.formatBytes(dataSize);
+                window.streamSize = core.string.formatBytes(dataSize);
                 window.streamCount = streamRequests.length;
-                window.streamDuration = me.core.string.formatDuration(duration);
-                window.averageByteRate = me.core.string.formatBytes(abr) + "/s";
+                window.streamDuration = core.string.formatDuration(duration);
+                window.averageByteRate = core.string.formatBytes(abr) + "/s";
                 window.searchMatch = searchMatch;
                 if (effects) {
-                    me.core.property.set(window.var.effectsMenu, "ui.class.mark", effects.useEffects);
+                    core.property.set(window.var.effectsMenu, "ui.class.mark", effects.useEffects);
                 }
             }
         }
@@ -285,9 +286,9 @@ screens.app.packets = function AppPackets(me, packages) {
             var window = me.widget.window.get(object);
             await me.manager.packet.reset();
             if (window.streamIndex > 0) {
-                me.core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
+                core.property.set(window.var.streamIndex, "ui.basic.text", "Last");
             }
-            me.core.property.set(window, {
+            core.property.set(window, {
                 "app.packets.dataProfile": "Live",
                 "app.packets.refreshChart": null,
                 "app.packets.refreshData": null
@@ -409,7 +410,7 @@ screens.app.packets = function AppPackets(me, packages) {
             var dataProfiles = {};
             if (me.options.dataProfile === "Combined") {
                 me.dataList.map(function (item) {
-                    var packetInfo = JSON.parse(me.core.string.decode(item.packetInfo));
+                    var packetInfo = JSON.parse(core.string.decode(item.packetInfo));
                     dataProfiles[item.title] = packetInfo;
                 });
             }
@@ -606,7 +607,7 @@ screens.app.packets = function AppPackets(me, packages) {
                     title = title += " #" + (runIndex + 1);
                 }
                 var data = {
-                    packetInfo: me.core.string.encode(text),
+                    packetInfo: core.string.encode(text),
                     date: date.toString(),
                     title: title
                 };
@@ -629,12 +630,12 @@ screens.app.packets = function AppPackets(me, packages) {
                 streamIndex = -1;
             }
             window.streamIndex = streamIndex;
-            me.core.property.set(window.var.chart, {
+            core.property.set(window.var.chart, {
                 "reset": null,
                 "type": "@app.packets.chartType",
                 "options": "@app.packets.chartOptions"
             });
-            me.core.property.notify(window, "app.packets.refreshData");
+            core.property.notify(window, "app.packets.refreshData");
         }
     };
     me.pushPackets = {
@@ -667,7 +668,7 @@ screens.app.packets = function AppPackets(me, packages) {
     me.export = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            var chartData = me.core.property.get(window, "app.packets.chartData");
+            var chartData = core.property.get(window, "app.packets.chartData");
             var csvColumns = [];
             chartData.datasets.map((dataset) => {
                 dataset.data.map((data) => {

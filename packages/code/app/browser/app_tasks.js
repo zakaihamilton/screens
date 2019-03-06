@@ -4,9 +4,10 @@
  */
 
 screens.app.tasks = function AppTasks(me, packages) {
+    const { core } = packages;
     me.launch = function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
@@ -16,7 +17,7 @@ screens.app.tasks = function AppTasks(me, packages) {
             var isFirst = true;
             var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
             var items = windows.reverse().map(function (window) {
-                var label = me.core.property.get(window, "label");
+                var label = core.property.get(window, "label");
                 if (label === "Task List" || label === "Launcher") {
                     return null;
                 }
@@ -34,11 +35,11 @@ screens.app.tasks = function AppTasks(me, packages) {
         var selectedTask = null;
         var window = me.widget.window.get(object);
         var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
-        var tasks = me.core.property.get(window.var.tasks, "selection");
+        var tasks = core.property.get(window.var.tasks, "selection");
         if (tasks.length) {
             var task = tasks[0];
             windows.map(function (window) {
-                var label = me.core.property.get(window, "label");
+                var label = core.property.get(window, "label");
                 if (label === task) {
                     selectedTask = window;
                 }
@@ -48,9 +49,9 @@ screens.app.tasks = function AppTasks(me, packages) {
     };
     me.switchTo = {
         set: function () {
-            me.core.property.set(me.singleton, "widget.window.close");
+            core.property.set(me.singleton, "widget.window.close");
             var task = me.findSelectedTask(me.singleton);
-            me.core.property.set(task, "widget.window.show", true);
+            core.property.set(task, "widget.window.show", true);
         }
     };
     me.closeTask = {
@@ -60,23 +61,23 @@ screens.app.tasks = function AppTasks(me, packages) {
         },
         set: function () {
             var task = me.findSelectedTask(me.singleton);
-            me.core.property.set(task, "widget.window.close");
-            me.core.property.set(me.singleton, "widget.window.close");
+            core.property.set(task, "widget.window.close");
+            core.property.set(me.singleton, "widget.window.close");
             me.singleton = me.ui.element.create(me.json, "workspace", "self");
         }
     };
     me.tile = {
         set: function () {
-            me.core.property.set(me.singleton, "widget.window.close");
+            core.property.set(me.singleton, "widget.window.close");
             var workspace = me.ui.element.workspace();
-            me.core.property.set(workspace, "ui.arrange.tileHorizontally");
+            core.property.set(workspace, "ui.arrange.tileHorizontally");
         }
     };
     me.cascade = {
         set: function () {
-            me.core.property.set(me.singleton, "widget.window.close");
+            core.property.set(me.singleton, "widget.window.close");
             var workspace = me.ui.element.workspace();
-            me.core.property.set(workspace, "ui.arrange.cascade");
+            core.property.set(workspace, "ui.arrange.cascade");
         }
     };
 };

@@ -4,13 +4,14 @@
  */
 
 screens.app.zoom = function AppZoom(me, packages) {
+    const { core, ui, lib } = packages;
     me.launch = async function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
-        me.meetingInfo = await me.lib.zoom.meetingInfo();
-        me.singleton = me.ui.element.create(me.json, "workspace", "self");
+        me.meetingInfo = await lib.zoom.meetingInfo();
+        me.singleton = ui.element.create(me.json, "workspace", "self");
         return me.singleton;
     };
     me.joinUrl = function () {
@@ -20,7 +21,7 @@ screens.app.zoom = function AppZoom(me, packages) {
         return me.meetingInfo.id;
     };
     me.date = function () {
-        return me.core.server.date();
+        return core.server.date();
     };
     me.callNumber = function (object, value) {
         return "tel:+" + value + "," + me.meetingInfo.id + ",#,#";

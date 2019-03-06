@@ -23,7 +23,7 @@ screens.core.path = function CorePath(me, packages) {
                     continue;
                 }
                 if (token === "..") {
-                    path = me.core.util.removeLast(path, "/");
+                    path = core.util.removeLast(path, "/");
                     continue;
                 }
                 if (path) {

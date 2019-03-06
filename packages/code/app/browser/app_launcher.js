@@ -4,13 +4,14 @@
  */
 
 screens.app.launcher = function AppLauncher(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.searchCounter = 0;
     };
     me.launch = async function () {
         var window = me.ui.element.create(me.json, "workspace", "self");
-        if (me.core.device.isMobile()) {
-            me.core.property.set(window, "maximize");
+        if (core.device.isMobile()) {
+            core.property.set(window, "maximize");
         }
         return window;
     };
@@ -34,12 +35,12 @@ screens.app.launcher = function AppLauncher(me, packages) {
         if (!extension) {
             extension = "png";
         }
-        var available = me.core.app.available(name);
-        me.core.property.set(object, "text", label);
-        me.core.property.set(object, "ui.basic.src", `${name}`);
-        me.core.property.set(object, "ui.basic.display", available);
-        me.core.property.set(object, "ui.touch.click", "core.app." + name);
-        me.core.property.set(object, "ui.attribute.title", tooltip);
+        var available = core.app.available(name);
+        core.property.set(object, "text", label);
+        core.property.set(object, "ui.basic.src", `${name}`);
+        core.property.set(object, "ui.basic.display", available);
+        core.property.set(object, "ui.touch.click", "core.app." + name);
+        core.property.set(object, "ui.attribute.title", tooltip);
     };
     me.search = async function (object) {
         var window = me.widget.window.get(object);
@@ -51,8 +52,8 @@ screens.app.launcher = function AppLauncher(me, packages) {
         var counter = ++me.searchCounter;
         if (text) {
             var progress = me.ui.node.findByName(window, "progress");
-            me.core.property.set(window, "temp", false);
-            me.core.property.set(progress, "ui.class.progress", true);
+            core.property.set(window, "temp", false);
+            core.property.set(progress, "ui.class.progress", true);
             var components = screens.components.sort();
             for (let name of components) {
                 if (name === "ui.content") {
@@ -80,7 +81,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
                 }
             }
             lists = await Promise.all(lists);
-            me.core.property.set(progress, "ui.class.progress", false);
+            core.property.set(progress, "ui.class.progress", false);
             if (counter !== me.searchCounter) {
                 return;
             }
@@ -99,16 +100,16 @@ screens.app.launcher = function AppLauncher(me, packages) {
             }
         }
         if (text) {
-            me.core.property.set(window, "title", "Search");
-            me.core.property.set(window, "name", object.value.trim());
-            me.core.property.set(window.var.results, "ui.style.display", "flex");
-            me.core.property.set(window.var.results, "ui.basic.html", message);
+            core.property.set(window, "title", "Search");
+            core.property.set(window, "name", object.value.trim());
+            core.property.set(window.var.results, "ui.style.display", "flex");
+            core.property.set(window.var.results, "ui.basic.html", message);
         }
         else {
-            me.core.property.set(window, "name", "");
-            me.core.property.set(window, "title", "Launcher");
-            me.core.property.set(window, "temp", true);
-            me.core.property.set(window.var.results, "ui.style.display", "");
+            core.property.set(window, "name", "");
+            core.property.set(window, "title", "Launcher");
+            core.property.set(window, "temp", true);
+            core.property.set(window.var.results, "ui.style.display", "");
         }
     };
     me.tree = function (object, list, search, root) {
@@ -169,7 +170,7 @@ screens.app.launcher = function AppLauncher(me, packages) {
                     if (child.private) {
                         classes.push("private");
                     }
-                    let styles = { direction: me.core.string.direction(child.title) };
+                    let styles = { direction: core.string.direction(child.title) };
                     html += me.ui.html.item({
                         value: me.ui.html.mark(child.title, search),
                         classes,
@@ -186,16 +187,16 @@ screens.app.launcher = function AppLauncher(me, packages) {
         return html;
     };
     me.launchSearchItem = function (object) {
-        var args = me.core.property.get(object, "ui.attribute.#args");
+        var args = core.property.get(object, "ui.attribute.#args");
         if (args) {
             args = args.replace(/'/g, "\"");
             args = JSON.parse(args);
-            me.core.message.send.apply(null, args);
+            core.message.send.apply(null, args);
         }
     };
     me.collapseSearchCollection = function (object) {
-        me.core.property.set(object.parentNode, "ui.class.toggle", "collapse");
-        me.core.property.set(object.firstElementChild, "ui.class.toggle", "collapse");
-        me.core.property.set(object, "ui.class.toggle", "collapse");
+        core.property.set(object.parentNode, "ui.class.toggle", "collapse");
+        core.property.set(object.firstElementChild, "ui.class.toggle", "collapse");
+        core.property.set(object, "ui.class.toggle", "collapse");
     };
 };

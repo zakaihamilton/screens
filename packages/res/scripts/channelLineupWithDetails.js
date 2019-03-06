@@ -6,10 +6,11 @@
 5. Output new file
 */
 
-var me = me, object = object;
+var me = me, object = object, packages = packages;
 
 async function run() {
-    var window = me.widget.window.get(object);
+    const { core, widget } = packages;
+    var window = widget.window.get(object);
     var channelsLineup = await me.content(window, "channelsLineup.json");
     var channelDetails = await me.content(window, "channelDetails.json");
     if (!channelsLineup) {
@@ -36,7 +37,7 @@ async function run() {
     services = services.map(service => {
         service = Object.assign(service, channelDetails);
         let text = JSON.stringify(service);
-        text = me.core.json.processVars(object, text, service);
+        text = core.json.processVars(object, text, service);
         service = JSON.parse(text);
         return service;
     });

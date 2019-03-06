@@ -4,12 +4,13 @@
  */
 
 screens.app.workshop = function AppWorkshop(me, packages) {
+    const { core } = packages;
     me.ready = async function () {
         await me.ui.shared.attach(me);
     };
     me.launch = async function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
@@ -18,8 +19,8 @@ screens.app.workshop = function AppWorkshop(me, packages) {
     };
     me.prepare = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "app", me);
-        me.core.property.set(window.var.users, {
+        core.property.set(window, "app", me);
+        core.property.set(window.var.users, {
             "navigate": "app.workshop.navigate",
             "options": {
                 spreaderInTitle: "Workshop",
@@ -56,10 +57,10 @@ screens.app.workshop = function AppWorkshop(me, packages) {
         if (window.options.filter) {
             names = names.filter(name => !name.toLowerCase().includes("listen"));
         }
-        me.core.property.set(window, "name", names.length + " Participants");
-        var currentNames = me.core.property.get(window.var.users, "items");
+        core.property.set(window, "name", names.length + " Participants");
+        var currentNames = core.property.get(window.var.users, "items");
         if (JSON.stringify(names) !== JSON.stringify(currentNames)) {
-            me.core.property.set(window.var.users, {
+            core.property.set(window.var.users, {
                 "items": names,
                 "redraw": null
             });
@@ -87,9 +88,9 @@ screens.app.workshop = function AppWorkshop(me, packages) {
             content = { name: window.navigate_name };
             readonly = false;
         }
-        me.core.property.set(window.var.users, "readonly", readonly);
+        core.property.set(window.var.users, "readonly", readonly);
         if (content.name) {
-            me.core.property.set(window.var.users, "user", content.name);
+            core.property.set(window.var.users, "user", content.name);
         }
         if (!window.options.broadcast) {
             if (window.isBroadcast) {

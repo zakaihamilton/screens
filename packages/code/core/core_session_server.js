@@ -4,11 +4,12 @@
  */
 
 screens.core.session = function CoreSession(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.sessions = {};
     };
     me.open = function () {
-        var handle = me.core.ref.gen();
+        var handle = core.ref.gen();
         var session = { handle };
         me.sessions[handle] = session;
         return session;

@@ -4,6 +4,7 @@
  */
 
 screens.app.messages = function AppMessages(me, packages) {
+    const { core } = packages;
     me.init = function () {
         me.messages = [];
     };
@@ -20,14 +21,14 @@ screens.app.messages = function AppMessages(me, packages) {
             }
             me.messages = messages;
             if (me.singleton) {
-                me.core.property.set(me.singleton, "ui.basic.html", me.html(me.singleton));
+                core.property.set(me.singleton, "ui.basic.html", me.html(me.singleton));
             }
             me.updateSignal();
         });
     };
     me.updateSignal = function () {
         let bar = me.ui.element.bar();
-        me.core.property.set(bar.var.messages, "ui.class.on", me.messages.length);
+        core.property.set(bar.var.messages, "ui.class.on", me.messages.length);
     };
     me.push = function (title, body, type, args, broadcast) {
         if (!title) {
@@ -49,12 +50,12 @@ screens.app.messages = function AppMessages(me, packages) {
         me.db.shared.message.send(data);
     };
     me.launch = function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.toggleVisibility", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.toggleVisibility", true);
             return;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
-        me.core.property.set(me.singleton, "ui.class.rise", true);
+        core.property.set(me.singleton, "ui.class.rise", true);
         return me.singleton;
     };
     me.html = function (object) {
@@ -92,23 +93,23 @@ screens.app.messages = function AppMessages(me, packages) {
     me.remove = async function (object) {
         var container = me.ui.node.classParent(object, "app-messages-item");
         if (container) {
-            var unique = me.core.property.get(container, "ui.attribute.#unique");
+            var unique = core.property.get(container, "ui.attribute.#unique");
             var index = me.messages.findIndex(message => message.unique === unique);
             var message = me.messages[index];
             await me.db.shared.message.mark(message.unique);
             me.messages.splice(index, 1);
-            me.core.property.set(container, "ui.class.close", true);
+            core.property.set(container, "ui.class.close", true);
             me.updateSignal();
         }
     };
     me.click = function (object) {
         var container = me.ui.node.classParent(object, "app-messages-item");
         if (container) {
-            var unique = me.core.property.get(container, "ui.attribute.#unique");
+            var unique = core.property.get(container, "ui.attribute.#unique");
             var index = me.messages.findIndex(message => message.unique === unique);
             var message = me.messages[index];
             if (message.args) {
-                me.core.message.send.apply(null, message.args);
+                core.message.send.apply(null, message.args);
             }
             me.remove(container);
         }

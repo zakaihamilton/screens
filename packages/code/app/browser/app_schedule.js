@@ -4,9 +4,10 @@
  */
 
 screens.app.schedule = function AppSchedule(me, packages) {
+    const { core } = packages;
     me.launch = async function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.groupListData = await me.media.file.groups();
@@ -16,8 +17,8 @@ screens.app.schedule = function AppSchedule(me, packages) {
     };
     me.prepare = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "app", me);
-        me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
+        core.property.set(window, "app", me);
+        core.property.set(window.var.container, "ui.style.overflow", "hidden");
         window.currentDate = new Date();
         me.ui.options.load(me, window, {
             "viewType": "Week",
@@ -36,23 +37,23 @@ screens.app.schedule = function AppSchedule(me, packages) {
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "ui.work.state", true);
-        me.core.property.set(window.var.schedule, "options", window.options);
-        me.core.property.set(window.var.schedule, "current", window.currentDate);
-        await me.core.property.set(window.var.schedule, "redraw");
-        me.core.property.set(window, "ui.work.state", false);
+        core.property.set(window, "ui.work.state", true);
+        core.property.set(window.var.schedule, "options", window.options);
+        core.property.set(window.var.schedule, "current", window.currentDate);
+        await core.property.set(window.var.schedule, "redraw");
+        core.property.set(window, "ui.work.state", false);
     };
     me.event = function (object, event) {
-        me.core.app.launch.apply(null, event.launch);
+        core.app.launch.apply(null, event.launch);
     };
     me.previous = function (object) {
         var window = me.widget.window.get(object);
-        window.currentDate = me.core.property.get(window.var.schedule, "previousDate");
+        window.currentDate = core.property.get(window.var.schedule, "previousDate");
         me.refresh(object);
     };
     me.next = function (object) {
         var window = me.widget.window.get(object);
-        window.currentDate = me.core.property.get(window.var.schedule, "nextDate");
+        window.currentDate = core.property.get(window.var.schedule, "nextDate");
         me.refresh(object);
     };
     me.today = function (object) {
@@ -83,13 +84,13 @@ screens.app.schedule = function AppSchedule(me, packages) {
             }
             if (value) {
                 me.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
-                    me.core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
+                    core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    core.property.set([object.var.schedule], "ui.style.visibility", "hidden");
                 }, 250);
             } else {
                 me.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    me.core.property.set([object.var.schedule], "ui.style.visibility", "visible");
+                    core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    core.property.set([object.var.schedule], "ui.style.visibility", "visible");
                 }, 250);
             }
         }

@@ -4,9 +4,10 @@
  */
 
 screens.app.profile = function AppProfile(me, packages) {
+    const { core } = packages;
     me.launch = async function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.userListAvailable = await me.user.access.isAPIAllowed("user.profile.list");
@@ -93,8 +94,8 @@ screens.app.profile = function AppProfile(me, packages) {
             profile = {};
         }
         if (!window.options.userName) {
-            profile.name = me.core.login.userName();
-            profile.email = me.core.login.userEmail();
+            profile.name = core.login.userName();
+            profile.email = core.login.userEmail();
         }
         for (var id in bindings) {
             if (profile[id]) {
@@ -114,10 +115,10 @@ screens.app.profile = function AppProfile(me, packages) {
             profile[id] = bindings[id].value;
         }
         var button = document.getElementById("app.profile.save");
-        me.core.property.set(button, "ui.class.is_loading", true);
+        core.property.set(button, "ui.class.is_loading", true);
         var userId = await me.userId(object, window.options.userName);
         await me.user.profile.set(profile, userId);
-        me.core.property.set(button, "ui.class.is_loading", false);
+        core.property.set(button, "ui.class.is_loading", false);
         me.data = await me.user.profile.get(userId);
     };
     me.update = function () {
@@ -134,8 +135,8 @@ screens.app.profile = function AppProfile(me, packages) {
             phaseMajor.value = "";
             phaseMinor.value = "";
         }
-        me.core.property.set(phaseField, "ui.basic.show", showPhases);
-        me.core.property.set(phaseLabel, "ui.basic.show", showPhases);
+        core.property.set(phaseField, "ui.basic.show", showPhases);
+        core.property.set(phaseLabel, "ui.basic.show", showPhases);
         if (showPhases) {
             if (me.phases[phaseMajor.value] && me.phases[phaseMinor.value]) {
                 text = me.phases[phaseMajor.value] + "." + me.phases[phaseMinor.value];

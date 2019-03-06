@@ -4,6 +4,7 @@
  */
 
 screens.app.links = function AppLinks(me, packages) {
+    const { core } = packages;
     me.maxLinkCount = 20;
     me.ready = async function () {
         await me.ui.content.attach(me);
@@ -32,23 +33,23 @@ screens.app.links = function AppLinks(me, packages) {
             me.ui.options.choiceSet(me, null, {
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
-                    me.core.property.set(window.var.links, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "reload");
-                    me.core.property.notify(window, "update");
+                    core.property.set(window.var.links, "ui.style.fontSize", value);
+                    core.property.notify(window, "reload");
+                    core.property.notify(window, "update");
                 }
             });
-            me.core.property.set(window, "app", me);
+            core.property.set(window, "app", me);
         }
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "name", "");
+        core.property.set(window, "name", "");
         window.links = [];
         me.reload(window);
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "widget.window.name", title);
+        core.property.set(window, "widget.window.name", title);
         window.links = JSON.parse(text);
         if (!options) {
             options = {};
@@ -122,7 +123,7 @@ screens.app.links = function AppLinks(me, packages) {
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.links, {
+        core.property.set(window.var.links, {
             "ui.style.fontSize": window.options.fontSize,
             "ui.class.edit-mode": window.options.editMode
         });
@@ -133,7 +134,7 @@ screens.app.links = function AppLinks(me, packages) {
             window.links_options = {};
         }
         var html = me.links(window);
-        me.core.property.set(window.var.links, "ui.basic.html", html);
-        me.core.property.notify(window, "update");
+        core.property.set(window.var.links, "ui.basic.html", html);
+        core.property.notify(window, "update");
     };
 };

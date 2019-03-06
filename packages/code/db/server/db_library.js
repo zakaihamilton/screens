@@ -4,7 +4,7 @@
  */
 
 screens.db.library = function DbLibrary(me, packages) {
-    const { storage } = packages;
+    const { core, storage } = packages;
     me.findContentById = function (id) {
         return me.content.findById(id);
     };
@@ -16,7 +16,7 @@ screens.db.library = function DbLibrary(me, packages) {
         target = Object.assign({}, target);
         delete source._id;
         delete target._id;
-        return me.core.json.compare(source, target);
+        return core.json.compare(source, target);
     };
     me.removeDuplicates = async function (text) {
         let duplicatesLength = 0;
@@ -68,7 +68,7 @@ screens.db.library = function DbLibrary(me, packages) {
                 results.push(... await me.find(segment, tagList));
             }
             var prevLength = results.length;
-            results = me.core.json.union(results, "_id");
+            results = core.json.union(results, "_id");
             me.log("returning " + results.length + " results (reduced from " + prevLength + " )");
             return results;
         }

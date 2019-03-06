@@ -4,57 +4,58 @@
 */
 
 screens.cmd.files = function CmdFiles(me, packages) {
+    const { core } = packages;
     me.cmd = async function (terminal, args) {
         if (args.length === 1) {
             args.push(...["/Kab/concepts/private/american", "cache"]);
         }
         if (args.length <= 2) {
-            me.core.property.set(terminal, "print", "files source target");
-            me.core.cmd.exit(terminal);
+            core.property.set(terminal, "print", "files source target");
+            core.cmd.exit(terminal);
             return;
         }
         var source = args[1];
         var target = args[2];
-        me.core.property.set(terminal, "print", "converting files in " + source);
+        core.property.set(terminal, "print", "converting files in " + source);
         try {
             var children = await me.storage.dropbox.getChildren(source);
-            var audioList = children.filter(child => me.core.path.extension(child.name) === "m4a");
-            var videoList = children.filter(child => me.core.path.extension(child.name) === "mp4");
+            var audioList = children.filter(child => core.path.extension(child.name) === "m4a");
+            var videoList = children.filter(child => core.path.extension(child.name) === "mp4");
             for (let videoChild of videoList) {
                 try {
-                    var name = me.core.path.fileName(videoChild.name);
-                    var matching = audioList.find(child => me.core.path.fileName(child.name) === name);
+                    var name = core.path.fileName(videoChild.name);
+                    var matching = audioList.find(child => core.path.fileName(child.name) === name);
                     if (matching) {
                         continue;
                     }
                     var targetVideoPath = target + "/" + videoChild.name;
-                    var targetAudioPath = me.core.path.replaceExtension(target + "/" + videoChild.name, "m4a");
-                    me.core.property.set(terminal, "print", videoChild.path_display);
-                    me.core.property.set(terminal, "print", "Downloading...");
+                    var targetAudioPath = core.path.replaceExtension(target + "/" + videoChild.name, "m4a");
+                    core.property.set(terminal, "print", videoChild.path_display);
+                    core.property.set(terminal, "print", "Downloading...");
                     await me.manager.file.download(videoChild.path_lower, targetVideoPath);
-                    if (!await me.core.file.exists(targetAudioPath)) {
-                        me.core.property.set(terminal, "print", "Converting...");
+                    if (!await core.file.exists(targetAudioPath)) {
+                        core.property.set(terminal, "print", "Converting...");
                         await me.media.ffmpeg.convert(targetVideoPath, targetAudioPath, {
                             noVideo: null,
                             audioCodec: "copy"
                         });
-                        var fileSize = await me.core.file.size(targetAudioPath);
-                        me.core.property.set(terminal, "print", "converted from: " + me.core.string.formatBytes(videoChild.size) + " to: " + me.core.string.formatBytes(fileSize));
+                        var fileSize = await core.file.size(targetAudioPath);
+                        core.property.set(terminal, "print", "converted from: " + core.string.formatBytes(videoChild.size) + " to: " + core.string.formatBytes(fileSize));
                     }
-                    var uploadAudioPath = me.core.path.replaceExtension(videoChild.path_display, "m4a");
-                    me.core.property.set(terminal, "print", "Uploading...");
+                    var uploadAudioPath = core.path.replaceExtension(videoChild.path_display, "m4a");
+                    core.property.set(terminal, "print", "Uploading...");
                     await me.manager.file.upload(targetAudioPath, uploadAudioPath);
-                    await me.core.file.delete(targetVideoPath);
+                    await core.file.delete(targetVideoPath);
                 }
                 catch (err) {
-                    me.core.property.set(terminal, "print", "failed to convert file: " + err);
+                    core.property.set(terminal, "print", "failed to convert file: " + err);
                 }
             }
-            me.core.property.set(terminal, "print", "successfully converted files");
+            core.property.set(terminal, "print", "successfully converted files");
         }
         catch (err) {
-            me.core.property.set(terminal, "print", "failed to convert files: " + err);
+            core.property.set(terminal, "print", "failed to convert files: " + err);
         }
-        me.core.cmd.exit(terminal);
+        core.cmd.exit(terminal);
     };
 };

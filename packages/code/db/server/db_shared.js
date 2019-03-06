@@ -90,7 +90,7 @@ screens.db.shared.commentary = function DbSharedCommentary(me, packages) {
 };
 
 screens.db.shared.message = function DbSharedContent(me, packages) {
-    const { storage } = packages;
+    const { core, storage } = packages;
     me.init = () => storage.db.extension(me);
     me.cache = {};
     me.listing = async function (user) {
@@ -103,7 +103,7 @@ screens.db.shared.message = function DbSharedContent(me, packages) {
         if (!user) {
             user = this.userId;
         }
-        data.unique = me.core.util.random();
+        data.unique = core.util.random();
         if (data.user) {
             me.push(data);
         }

@@ -4,17 +4,18 @@
 */
 
 screens.cmd.youtube = function CmdYoutube(me, packages) {
+    const { core, ui } = packages;
     me.cmd = function (terminal, args) {
         if (args.length < 2) {
-            me.core.property.set(terminal, "print", "youtube: title video_id");
-            me.core.property.set(terminal, "print", "example: youtube \"The Computer Chronicles\" YewNEAIkbG4");
-            me.core.cmd.exit(terminal);
+            core.property.set(terminal, "print", "youtube: title video_id");
+            core.property.set(terminal, "print", "example: youtube \"The Computer Chronicles\" YewNEAIkbG4");
+            core.cmd.exit(terminal);
             return;
         }
         var youtube_id = args[2];
         youtube_id = youtube_id.replace("https://youtu.be/", "");
         me.log("youtube_id:" + youtube_id);
-        me.ui.element.create({
+        ui.element.create({
             "title": args[1],
             "ui.style.left": "550px",
             "ui.style.top": "200px",
@@ -31,6 +32,6 @@ screens.cmd.youtube = function CmdYoutube(me, packages) {
                 }
             ]
         });
-        me.core.cmd.exit(terminal);
+        core.cmd.exit(terminal);
     };
 };

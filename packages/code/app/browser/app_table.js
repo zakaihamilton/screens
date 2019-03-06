@@ -4,6 +4,7 @@
  */
 
 screens.app.table = function AppTable(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         await me.ui.transform.attach(me);
     };
@@ -37,25 +38,25 @@ screens.app.table = function AppTable(me, packages) {
             me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
-                    me.core.property.set(window.var.table, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "reload");
-                    me.core.property.notify(window, "update");
+                    core.property.set(window.var.table, "ui.style.fontSize", value);
+                    core.property.notify(window, "reload");
+                    core.property.notify(window, "update");
                 }
             }, options.choice));
             window.rowCount = 20;
             window.columnCount = 10;
-            me.core.property.set(window, "app", me);
+            core.property.set(window, "app", me);
         }
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "name", "");
+        core.property.set(window, "name", "");
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         me.reload(window);
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "widget.window.name", title);
+        core.property.set(window, "widget.window.name", title);
         var cells = JSON.parse(text);
         window.cells = Array.from(Array(window.rowCount), () => new Array(window.columnCount));
         for (var cell of cells) {
@@ -96,12 +97,12 @@ screens.app.table = function AppTable(me, packages) {
     me.rename = function (object) {
         var window = me.widget.window.get(object);
         var title = object.value;
-        me.core.property.set(window, "name", title);
+        core.property.set(window, "name", title);
     };
     me.store = function (object) {
         var window = me.widget.window.get(object);
-        var rowIndex = parseInt(me.core.property.get(object, "ui.attribute.rowIndex"));
-        var columnIndex = parseInt(me.core.property.get(object, "ui.attribute.columnIndex"));
+        var rowIndex = parseInt(core.property.get(object, "ui.attribute.rowIndex"));
+        var columnIndex = parseInt(core.property.get(object, "ui.attribute.columnIndex"));
         var cell = window.cells[rowIndex][columnIndex];
         if (!cell) {
             cell = window.cells[rowIndex][columnIndex] = {};
@@ -185,7 +186,7 @@ screens.app.table = function AppTable(me, packages) {
                 var tag = editMode && !header ? "input" : "div";
                 var value = "";
                 if (!editMode) {
-                    value = await me.core.property.get(window, "app.table.transform.term", cell.value);
+                    value = await core.property.get(window, "app.table.transform.term", cell.value);
                 }
                 else if (header) {
                     value = header;
@@ -211,7 +212,7 @@ screens.app.table = function AppTable(me, packages) {
         if (language) {
             window.terms = await me.kab.data.terms(language);
         }
-        me.core.property.set(window.var.table, {
+        core.property.set(window.var.table, {
             "ui.style.fontSize": window.options.fontSize,
             "ui.class.edit-mode": window.options.editMode
         });
@@ -222,8 +223,8 @@ screens.app.table = function AppTable(me, packages) {
             window.table_options = {};
         }
         var html = await me.rows(window);
-        me.core.property.set(window.var.table, "ui.basic.html", html);
-        me.core.property.notify(window, "update");
+        core.property.set(window.var.table, "ui.basic.html", html);
+        core.property.notify(window, "update");
     };
     me.rowHeader = {
         get: function (object) {

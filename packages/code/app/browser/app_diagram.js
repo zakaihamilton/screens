@@ -4,8 +4,9 @@
  */
 
 screens.app.diagram = function AppDiagram(me, packages) {
+    const { core } = packages;
     me.init = async function () {
-        me.core.property.set(me, {
+        core.property.set(me, {
             "core.property.object.path": null,
             "core.property.object.diagramData": null
         });
@@ -49,38 +50,38 @@ screens.app.diagram = function AppDiagram(me, packages) {
             me.ui.options.choiceSet(me, null, Object.assign({
                 "viewType": me.reload,
                 "fontSize": (object, value) => {
-                    me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "reload");
-                    me.core.property.notify(window, "update");
+                    core.property.set(window.var.viewer, "ui.style.fontSize", value);
+                    core.property.notify(window, "reload");
+                    core.property.notify(window, "update");
                 }
             }, options.choice));
         }
     };
     me.reload = async function (object) {
         var window = me.widget.window.get(object);
-        var path = me.core.property.get(window, "app.diagram.path");
-        var diagramJson = await me.core.json.loadFile(path);
-        me.core.property.set(window, "app.diagram.diagramData", diagramJson);
-        me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-        me.core.property.notify(window, "app.diagram.refresh");
+        var path = core.property.get(window, "app.diagram.path");
+        var diagramJson = await core.json.loadFile(path);
+        core.property.set(window, "app.diagram.diagramData", diagramJson);
+        core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+        core.property.notify(window, "app.diagram.refresh");
     };
     me.refresh = {
         set: function (object) {
             var window = me.widget.window.get(object);
-            me.core.property.set(window.var.viewer, {
+            core.property.set(window.var.viewer, {
                 "ui.basic.html": null,
                 "ui.class.class": "app.diagram." + window.options.viewType.toLowerCase()
             });
-            var diagramData = me.core.property.get(window, "app.diagram.diagramData");
+            var diagramData = core.property.get(window, "app.diagram.diagramData");
             me.ui.element.create(diagramData.layers, window.var.viewer);
             if (diagramData.title) {
-                me.core.property.set(window, "name", diagramData.title);
+                core.property.set(window, "name", diagramData.title);
             }
-            me.core.property.notify(window, "update");
+            core.property.notify(window, "update");
         }
     };
     me.term = async function (object, text) {
         var html = await me.transform.term(object, text);
-        me.core.property.set(object, "ui.basic.html", html);
+        core.property.set(object, "ui.basic.html", html);
     };
 };

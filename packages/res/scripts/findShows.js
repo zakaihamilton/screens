@@ -1,18 +1,18 @@
-var me = me, object = object;
+var me = me, object = object, packages = packages;
 
 async function run() {
-    debugger;
+    const { core } = packages;
     let shows = [];
-    let catalogs = await me.core.json.get("http://localhost:8085/curationchoreographer/staticdata/catalogs");
+    let catalogs = await core.json.get("http://localhost:8085/curationchoreographer/staticdata/catalogs");
     for (let catalog of catalogs) {
         if (!catalog.catalogKey) {
             continue;
         }
         me.widget.toast.show("findShows", catalog.catalogKey);
-        let categories = await me.core.json.get("http://localhost:8085/curationchoreographer/categorytree?catalogKey=" + catalog.catalogKey);
+        let categories = await core.json.get("http://localhost:8085/curationchoreographer/categorytree?catalogKey=" + catalog.catalogKey);
         let iterate = async (parent) => {
             for (let child of parent.children) {
-                let items = await me.core.json.get("http://localhost:8085/curationchoreographer/categories/" + child.classificationId + "/content?classifTermRef=" + child.classifTermRef + "&limit=25&collapse=true&catalogId=" + catalog.catalogKey);
+                let items = await core.json.get("http://localhost:8085/curationchoreographer/categories/" + child.classificationId + "/content?classifTermRef=" + child.classifTermRef + "&limit=25&collapse=true&catalogId=" + catalog.catalogKey);
                 if (!Array.isArray(items)) {
                     continue;
                 }

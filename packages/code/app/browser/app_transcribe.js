@@ -4,11 +4,12 @@
  */
 
 screens.app.transcribe = function AppTranscribe(me, packages) {
+    const { core } = packages;
     me.launch = async function (args) {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
+        if (core.property.get(me.singleton, "ui.node.parent")) {
             me.singleton.args = args;
             me.reload(me.singleton);
-            me.core.property.set(me.singleton, "widget.window.show", true);
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.groups = await me.media.file.groups();
@@ -32,21 +33,21 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
             me.ui.options.choiceSet(me, null, {
                 "fontSize": (object, value) => {
                     var window = me.widget.window.get(object);
-                    me.core.property.set(window.var.transcribe, "ui.style.fontSize", value);
+                    core.property.set(window.var.transcribe, "ui.style.fontSize", value);
                     me.updateTable(window);
-                    me.core.property.notify(window, "update");
+                    core.property.notify(window, "update");
                 },
                 groupName: me.updateSessions
             });
-            me.core.property.set(window, "app", me);
+            core.property.set(window, "app", me);
         }
     };
     me.refresh = async function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "ui.work.state", true);
+        core.property.set(window, "ui.work.state", true);
         me.groups = await me.media.file.groups(true);
         await me.updateSessions(window);
-        me.core.property.set(window, "ui.work.state", false);
+        core.property.set(window, "ui.work.state", false);
     };
     me.groupMenuList = {
         get: function (object) {
@@ -95,25 +96,25 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
                 }
             }
             if (name) {
-                me.core.property.set(window, "name", name);
+                core.property.set(window, "name", name);
                 me.ui.options.save(me, window, { sessionName: name });
             }
             else {
-                me.core.property.set(window, "name", "");
+                core.property.set(window, "name", "");
                 me.contentList = [];
             }
-            me.core.property.notify(window, "app.transcribe.loadTranscription");
+            core.property.notify(window, "app.transcribe.loadTranscription");
         }
     };
     me.updateSessions = async function (object) {
         var window = me.widget.window.get(object);
         var groupName = window.options.groupName.toLowerCase();
-        me.core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
+        core.property.set([window.var.audioPlayer, window.var.videoPlayer], "ui.style.display", "none");
         if (groupName && typeof groupName === "string") {
             var sessions = me.groups.find(group => groupName === group.name).sessions;
             if (sessions && sessions.length) {
                 var name = sessions[0].session;
-                me.core.property.set(window, "app.transcribe.session", name);
+                core.property.set(window, "app.transcribe.session", name);
             }
         }
     };
@@ -131,7 +132,7 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
     };
     me.updateTable = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.transcribe, {
+        core.property.set(window.var.transcribe, {
             "ui.style.fontSize": window.options.fontSize,
             "ui.class.edit-mode": window.options.editMode
         });
@@ -142,18 +143,18 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
             window.transcribe_options = {};
         }
         var html = me.html(window);
-        me.core.property.set(window.var.transcribe, "ui.basic.html", html);
-        me.core.property.notify(window, "update");
+        core.property.set(window.var.transcribe, "ui.basic.html", html);
+        core.property.notify(window, "update");
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "name", "");
+        core.property.set(window, "name", "");
         window.transcribe_text = "";
         me.reload(window);
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "widget.window.name", title);
+        core.property.set(window, "widget.window.name", title);
         window.transcribe_text = text;
         if (!options) {
             options = {};
@@ -234,13 +235,13 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
     me.toggleSpeech = function (object) {
         var window = me.widget.window.get(object);
         var input = me.ui.node.findByTag(object.parentNode, "input");
-        me.core.property.object.create(me.widget.input, input);
+        core.property.object.create(me.widget.input, input);
         var result = me.ui.speech.toggle(input);
-        me.core.property.set(object, "ui.class.speechActive", result);
+        core.property.set(object, "ui.class.speechActive", result);
         me.ui.node.iterate(window, (element) => {
             if (element !== object && element !== input) {
                 me.ui.speech.stop(element);
-                me.core.property.set(element, "ui.class.speechActive", false);
+                core.property.set(element, "ui.class.speechActive", false);
             }
         });
     };
@@ -251,12 +252,12 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
         var sessionName = window.options.sessionName;
         if (args[0] !== groupName || args[1] !== sessionName) {
             if (args[0]) {
-                await me.core.property.set(window, "app.transcribe.groupName", args[0]);
+                await core.property.set(window, "app.transcribe.groupName", args[0]);
             }
             if (args[1]) {
-                await me.core.property.set(window, "app.transcribe.session", args[1]);
+                await core.property.set(window, "app.transcribe.session", args[1]);
             }
-            await me.core.property.notify(window, "app.transcribe.loadTranscription");
+            await core.property.notify(window, "app.transcribe.loadTranscription");
         }
     };
     me.goto = async function (object, timestamp) {
@@ -265,9 +266,9 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
         var duration = (parseInt(hour) * 3600) + (parseInt(min) * 60) + parseInt(sec);
         var groupName = window.options.groupName;
         var sessionName = window.options.sessionName;
-        var player = await me.core.app.launch("player", groupName, sessionName, duration, true);
+        var player = await core.app.launch("player", groupName, sessionName, duration, true);
         if (player && player.var.player) {
-            me.core.property.set(player.var.player, "core.link.update", "app.transcribe.playerUpdated");
+            core.property.set(player.var.player, "core.link.update", "app.transcribe.playerUpdated");
             me.playerUpdated();
         }
     };
@@ -283,13 +284,13 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
         return inView;
     };
     me.hasPlayer = function () {
-        var player = me.core.app.singleton("player");
+        var player = core.app.singleton("player");
         if (player && player.var.player) {
             return true;
         }
     };
     me.action = function (object, name) {
-        var player = me.core.app.singleton("player");
+        var player = core.app.singleton("player");
         if (player && player.var.player) {
             var list = {
                 play: null,
@@ -317,7 +318,7 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
     };
     me.playerUpdated = function () {
         var window = me.singleton;
-        var player = me.core.app.singleton("player");
+        var player = core.app.singleton("player");
         if (player && player.var.player) {
             var time = me.widget.player.controls.time(player.var.player);
             var duration = parseInt(time / 10) * 10;
@@ -326,10 +327,10 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
                 window.duration = duration;
                 scroll = true;
             }
-            var name = me.core.string.formatDuration(duration);
+            var name = core.string.formatDuration(duration);
             me.ui.node.iterate(window, (element) => {
                 var match = element.getAttribute("timestamp") === name;
-                me.core.property.set(element, "ui.class.now", match);
+                core.property.set(element, "ui.class.now", match);
                 if (match && scroll) {
                     var inView = me.inView(element, window.var.container);
                     if (!inView) {
@@ -347,13 +348,13 @@ screens.app.transcribe = function AppTranscribe(me, packages) {
             }
             if (value) {
                 object.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "visible");
-                    me.core.property.set(object.var.transcribe, "ui.style.visibility", "hidden");
+                    core.property.set(object.var.spinner, "ui.style.visibility", "visible");
+                    core.property.set(object.var.transcribe, "ui.style.visibility", "hidden");
                 }, 250);
             } else {
                 object.workTimeout = setTimeout(function () {
-                    me.core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
-                    me.core.property.set(object.var.transcribe, "ui.style.visibility", "visible");
+                    core.property.set(object.var.spinner, "ui.style.visibility", "hidden");
+                    core.property.set(object.var.transcribe, "ui.style.visibility", "visible");
                 }, 250);
             }
         }

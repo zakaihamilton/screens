@@ -4,7 +4,7 @@
  */
 
 screens.lib.dictionary = function LibDictionary(me, packages) {
-    const { db } = packages;
+    const { core, db } = packages;
     me.definition = async function (name) {
         var cache = await db.cache.dictionary.find({ name });
         if (cache) {
@@ -21,7 +21,7 @@ screens.lib.dictionary = function LibDictionary(me, packages) {
         var promises = [];
         for (let name in sources) {
             let url = sources[name].replace(/\${text}/g, text);
-            let promise = me.core.json.get(url);
+            let promise = core.json.get(url);
             promises.push(promise);
         }
         var names = Object.keys(sources);

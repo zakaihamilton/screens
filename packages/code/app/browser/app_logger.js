@@ -4,9 +4,10 @@
  */
 
 screens.app.logger = function AppLogger(me, packages) {
+    const { core } = packages;
     me.launch = function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             return me.singleton;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
@@ -30,7 +31,7 @@ screens.app.logger = function AppLogger(me, packages) {
     me.send = async function (method) {
         var source = me.options.source.toLowerCase().replace(/\s/g, '_');
         var send_method = "send_" + source;
-        var send = me.core.message[send_method];
+        var send = core.message[send_method];
         var args = Array.prototype.slice.call(arguments, 0);
         return await send.apply(null, args);
     };
@@ -38,14 +39,14 @@ screens.app.logger = function AppLogger(me, packages) {
         set: function (object) {
             var bindings = me.bindings(object);
             var logger = bindings.logger;
-            me.core.property.set(logger, "ui.basic.text", "");
+            core.property.set(logger, "ui.basic.text", "");
             me.send("core.console.clearMessages");
         }
     };
     me.refresh = async function (object) {
         var bindings = me.bindings(object);
         var logger = bindings.logger;
-        me.core.property.set(logger, "ui.basic.text", "");
+        core.property.set(logger, "ui.basic.text", "");
         var messages = await me.send(me.options.type);
         if (!messages) {
             messages = [];
@@ -53,7 +54,7 @@ screens.app.logger = function AppLogger(me, packages) {
         if (me.options.filter) {
             messages = messages.filter(message => message.includes(me.options.filter));
         }
-        me.core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
+        core.property.set(logger, "ui.basic.text", messages.join("\r\n"));
         var isEnabled = await me.send("core.console.isEnabled");
         me.singleton.isEnabled = isEnabled;
     };

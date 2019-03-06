@@ -4,18 +4,20 @@
 */
 
 screens.cmd.server = function CmdServer(me, packages) {
+    const { core } = packages;
     me.cmd = async function (terminal, args) {
         var cmd = args.slice(1).join(" ");
         try {
-            var data = await me.core.server.run(cmd);
-            me.core.property.set(terminal, "print", data);
+            var data = await core.server.run(cmd);
+            core.property.set(terminal, "print", data);
         }
         catch (err) {
-            if (typeof err !== "string") {
-                err = JSON.stringify(err);
+            let error = err;
+            if (typeof error !== "string") {
+                error = JSON.stringify(err);
             }
-            me.core.property.set(terminal, "print", err);
+            core.property.set(terminal, "print", error);
         }
-        me.core.cmd.exit(terminal);
+        core.cmd.exit(terminal);
     };
 };

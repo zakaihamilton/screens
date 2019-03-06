@@ -4,7 +4,7 @@
  */
 
 screens.widget.window = function WidgetWindow(me, packages) {
-    const { core } = packages;
+    const { core, ui } = packages;
     me.init = function () {
         me.element = {
             dependencies: {
@@ -25,7 +25,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
             },
             properties: me.json
         };
-        me.ui.property.themedProperties(me, {
+        ui.property.themedProperties(me, {
             "popup": null,
             "embed": function (object, value) {
                 var maximized = core.property.get(object, "ui.class.contains", "maximize");
@@ -63,9 +63,9 @@ screens.widget.window = function WidgetWindow(me, packages) {
         if (parent_window) {
             content = core.property.get(parent_window, "widget.window.content");
         } else {
-            content = me.ui.element.workspace();
+            content = ui.element.workspace();
         }
-        window.restore_region = me.ui.rect.relativeRegion(window, content);
+        window.restore_region = ui.rect.relativeRegion(window, content);
     };
     me.mainClass = {
         get: function (object) {
@@ -101,7 +101,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
             if (!parent) {
                 break;
             }
-            if (parent === me.ui.element.workspace()) {
+            if (parent === ui.element.workspace()) {
                 return null;
             }
             if (parent.window) {
@@ -141,11 +141,11 @@ screens.widget.window = function WidgetWindow(me, packages) {
     };
     me.windows = {
         get: function (object) {
-            var content = me.ui.element.workspace();
-            if (object !== me.ui.element.workspace()) {
+            var content = ui.element.workspace();
+            if (object !== ui.element.workspace()) {
                 content = core.property.get(object, "widget.window.content");
             }
-            return me.ui.node.members(content, me.id);
+            return ui.node.members(content, me.id);
         }
     };
     me.app = {
@@ -206,12 +206,12 @@ screens.widget.window = function WidgetWindow(me, packages) {
     me.elements = {
         get: function (object) {
             var content = core.property.get(object, "widget.window.content");
-            return me.ui.node.childList(content);
+            return ui.node.childList(content);
         },
         set: function (object, value) {
             if (value) {
                 var content = core.property.get(object, "widget.window.content");
-                me.ui.element.create(value, content, object.context);
+                ui.element.create(value, content, object.context);
             }
         }
     };
@@ -224,7 +224,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
             if (value) {
                 var content = core.property.get(object, "widget.window.content");
                 content.innerHTML = value;
-                me.ui.theme.updateElements(object);
+                ui.theme.updateElements(object);
             }
         }
     };
@@ -242,7 +242,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
         },
         set: function (object, value) {
             var window = me.get(object);
-            var isFocused = me.ui.focus.is_active(window);
+            var isFocused = ui.focus.is_active(window);
             var isStatic = core.property.get(window, "static");
             if (isStatic) {
                 core.property.set(window, "minimize");
@@ -265,7 +265,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 });
                 core.property.notify(parent_window, "update");
             } else if (isFocused) {
-                core.property.set(me.ui.element.workspace(), "widget.window.refocus");
+                core.property.set(ui.element.workspace(), "widget.window.refocus");
             }
             if (window.delayTimer) {
                 clearTimeout(window.delayTimer);
@@ -380,11 +380,11 @@ screens.widget.window = function WidgetWindow(me, packages) {
         set: function (object, properties) {
             var window = me.get(object);
             var parent_window = me.parent(window);
-            var content = me.ui.element.workspace();
+            var content = ui.element.workspace();
             if (parent_window) {
                 content = core.property.get(parent_window, "widget.window.content");
             }
-            var members = me.ui.node.members(content, me.id);
+            var members = ui.node.members(content, me.id);
             members.map(function (member) {
                 if (member === window) {
                     return;
@@ -464,7 +464,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 }
                 core.property.set(parent_window, "widget.window.refocus");
             } else {
-                core.property.set(me.ui.element.workspace(), "widget.window.refocus");
+                core.property.set(ui.element.workspace(), "widget.window.refocus");
             }
             core.property.notify(parent_window, "update");
             core.property.notify(window, "update");
@@ -530,8 +530,8 @@ screens.widget.window = function WidgetWindow(me, packages) {
     };
     me.fixRegion = function (object) {
         var window = me.get(object);
-        var region = me.ui.rect.absoluteRegion(window);
-        var workspace_region = me.ui.rect.absoluteRegion(me.ui.element.workspace());
+        var region = ui.rect.absoluteRegion(window);
+        var workspace_region = ui.rect.absoluteRegion(ui.element.workspace());
         var update = false;
         var fixed = core.property.get(window, "fixed");
         if (region.left <= workspace_region.left || region.left >= workspace_region.right) {
@@ -621,7 +621,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
                     parent_window.focus_window = null;
                 }
                 core.property.set(window, {
-                    "ui.node.parent": me.ui.element.workspace(),
+                    "ui.node.parent": ui.element.workspace(),
                     "widget.window.embed": false,
                     "ui.focus.active": !window.showInBackground
                 });
@@ -647,9 +647,9 @@ screens.widget.window = function WidgetWindow(me, packages) {
                     if (parent_window) {
                         content = core.property.get(parent_window, "widget.window.content");
                     } else {
-                        content = me.ui.element.workspace();
+                        content = ui.element.workspace();
                     }
-                    me.ui.rect.setRelativeRegion(window, window.restore_region, content);
+                    ui.rect.setRelativeRegion(window, window.restore_region, content);
                     core.property.set([window, parent_window, window.child_window], "ui.property.broadcast", {
                         "resize": null,
                         "update": null
@@ -690,9 +690,9 @@ screens.widget.window = function WidgetWindow(me, packages) {
                     me.detachFromParent(parent_window);
                     content = core.property.get(parent_window, "widget.window.content");
                 } else {
-                    content = me.ui.element.workspace();
+                    content = ui.element.workspace();
                 }
-                me.ui.rect.setRelativeRegion(window, window.restore_region, content);
+                ui.rect.setRelativeRegion(window, window.restore_region, content);
                 core.property.set(window, {
                     "ui.property.broadcast": {
                         "ui.class.remove": "maximize",
@@ -770,7 +770,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 window = me.parent(window);
             }
             if (!window) {
-                var workspace = me.ui.element.workspace();
+                var workspace = ui.element.workspace();
                 list.push(workspace);
             }
             list = list.filter(function (item, pos, self) {
@@ -798,9 +798,9 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 if (parent_window) {
                     content = core.property.get(parent_window, "widget.window.content");
                 } else {
-                    content = me.ui.element.workspace();
+                    content = ui.element.workspace();
                 }
-                return me.ui.rect.relativeRegion(window, content);
+                return ui.rect.relativeRegion(window, content);
             }
         },
         set: function (object, value) {
@@ -812,10 +812,10 @@ screens.widget.window = function WidgetWindow(me, packages) {
             if (parent_window) {
                 content = core.property.get(parent_window, "widget.window.content");
             } else {
-                content = me.ui.element.workspace();
+                content = ui.element.workspace();
             }
             if (!maximized && !minimized) {
-                me.ui.rect.setRelativeRegion(window, value, content);
+                ui.rect.setRelativeRegion(window, value, content);
             }
             window.restore_region = value;
         }
@@ -920,11 +920,11 @@ screens.widget.window = function WidgetWindow(me, packages) {
     };
     me.visibleWindows = {
         get: function (object, value) {
-            var content = me.ui.element.workspace();
-            if (object !== me.ui.element.workspace()) {
+            var content = ui.element.workspace();
+            if (object !== ui.element.workspace()) {
                 content = core.property.get(object, "widget.window.content");
             }
-            var members = me.ui.node.members(content, me.id);
+            var members = ui.node.members(content, me.id);
             members = members.filter(function (member) {
                 return !core.property.get(member, "ui.class.contains", "minimize");
             });
@@ -946,7 +946,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
     };
     me.refocus = {
         set: function (object, value) {
-            if (me.ui.focus.inChange) {
+            if (ui.focus.inChange) {
                 return;
             }
             var windows = core.property.get(object, "widget.window.visibleWindows");
@@ -993,7 +993,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
         get: function (object) {
             var window = me.get(object);
             var content = core.property.get(window, "widget.window.content");
-            var region = me.ui.rect.relativeRegion(content);
+            var region = ui.rect.relativeRegion(content);
             return region;
         }
     };
@@ -1046,11 +1046,11 @@ screens.widget.window = function WidgetWindow(me, packages) {
                 value = !window.alwaysOnTop;
             }
             window.alwaysOnTop = value;
-            me.ui.focus.updateOrder(window.parentNode, window);
+            ui.focus.updateOrder(window.parentNode, window);
         }
     };
     me.tasks = function () {
-        var windows = me.ui.node.members(me.ui.element.workspace(), me.widget.window.id);
+        var windows = ui.node.members(ui.element.workspace(), me.widget.window.id);
         var items = windows.reverse().map((window) => {
             var label = core.property.get(window, "label");
             if (label === "Task List" || label === "Launcher") {
@@ -1080,7 +1080,7 @@ screens.widget.window = function WidgetWindow(me, packages) {
         items.push({
             text: "Clipboard",
             select: () => {
-                core.property.set(window, method, me.ui.clipboard);
+                core.property.set(window, method, ui.clipboard);
             }
         });
         if (!items.length) {

@@ -4,14 +4,15 @@
  */
 
 screens.app.keyboard = function AppKeyboard(me, packages) {
+    const { core } = packages;
     me.launch = function () {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            if (me.core.property.get(me.singleton, "temp")) {
-                me.core.property.set(me.singleton, "fullscreen", false);
-                me.core.property.set(me.singleton, "nobar", false);
-                me.core.property.set(me.singleton, "temp", false);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            if (core.property.get(me.singleton, "temp")) {
+                core.property.set(me.singleton, "fullscreen", false);
+                core.property.set(me.singleton, "nobar", false);
+                core.property.set(me.singleton, "temp", false);
             }
-            me.core.property.set(me.singleton, "widget.window.show", true);
+            core.property.set(me.singleton, "widget.window.show", true);
             return;
         }
         me.singleton = me.ui.element.create(me.json, "workspace", "self");
@@ -20,7 +21,7 @@ screens.app.keyboard = function AppKeyboard(me, packages) {
     me.click = function (object) {
         var window = me.widget.window.get(object);
         var input = window.var.input;
-        var letter = me.core.property.get(object, "ui.basic.text");
+        var letter = core.property.get(object, "ui.basic.text");
         if (letter === "⌫") {
             input.value = input.value.slice(0, input.value.length - 1);
         }
@@ -61,10 +62,10 @@ screens.app.keyboard = function AppKeyboard(me, packages) {
         window.options.fontSize = "1em";
         me.ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
-                me.core.property.set(window.var.buttons, "ui.style.fontSize", value);
+                core.property.set(window.var.buttons, "ui.style.fontSize", value);
             }
         });
-        me.core.property.set(window.var.buttons, "ui.style.fontSize", window.options.fontSize);
+        core.property.set(window.var.buttons, "ui.style.fontSize", window.options.fontSize);
     };
     me.fontSizesEm = function (object) {
         var fontSizeList = [];

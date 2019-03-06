@@ -4,6 +4,7 @@
  */
 
 screens.app.prism = function AppPrism(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         await me.ui.transform.attach(me);
     };
@@ -40,12 +41,12 @@ screens.app.prism = function AppPrism(me, packages) {
             }, options.toggle));
             me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
-                    me.core.property.set(window.var.viewer, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "reload");
-                    me.core.property.notify(window, "update");
+                    core.property.set(window.var.viewer, "ui.style.fontSize", value);
+                    core.property.notify(window, "reload");
+                    core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.core.property.set(window, "app", me);
+            core.property.set(window, "app", me);
             me.resize(window);
         }
     };
@@ -65,7 +66,7 @@ screens.app.prism = function AppPrism(me, packages) {
                 }
                 return !window.options.autoRotate;
             };
-            me.core.util.animate(animate, 10);
+            core.util.animate(animate, 10);
         }
     };
     me.reload = async function (object) {
@@ -75,10 +76,10 @@ screens.app.prism = function AppPrism(me, packages) {
         window.options.termMethod = "app.prism.transform.term";
         var html = await me.kab.draw.html(window, list, window.options);
         window.var.viewer.rotateDirection = false;
-        me.core.property.set(window.var.viewer, "ui.basic.html", html);
-        me.core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
-        me.core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
-        me.core.property.notify(window, "update");
+        core.property.set(window.var.viewer, "ui.basic.html", html);
+        core.property.set(window.var.viewer, "ui.style.fontSize", window.options.fontSize);
+        core.property.set(window.var.viewer, "ui.style.transform", "rotate3d(0,100,0,0deg)");
+        core.property.notify(window, "update");
     };
     me.resetRotation = function (object) {
         var window = me.widget.window.get(object);
@@ -87,7 +88,7 @@ screens.app.prism = function AppPrism(me, packages) {
     me.rotateEvent = function (object, event) {
         var target_region = me.ui.rect.absoluteRegion(object);
         if (event.type === me.ui.touch.eventNames["down"]) {
-            me.core.property.set(object, {
+            core.property.set(object, {
                 "ui.touch.move": "app.prism.rotateEvent",
                 "ui.touch.up": "app.prism.rotateEvent"
             });
@@ -108,7 +109,7 @@ screens.app.prism = function AppPrism(me, packages) {
         }
         else if (event.type === me.ui.touch.eventNames["up"]) {
             object.rotateMode = false;
-            me.core.property.set(object, {
+            core.property.set(object, {
                 "ui.touch.move": null,
                 "ui.touch.up": null
             });
@@ -117,18 +118,18 @@ screens.app.prism = function AppPrism(me, packages) {
     me.rotate = function (object, angle) {
         var window = me.widget.window.get(object);
         var x = 0, y = 100, z = 0;
-        angle = me.core.util.range(angle, -70, 70);
+        angle = core.util.range(angle, -70, 70);
         window.var.viewer.rotateAngle = angle;
-        me.core.property.set(window.var.viewer, {
+        core.property.set(window.var.viewer, {
             "ui.style.transform": "rotate3d(" + [x, y, z, angle + "deg"].join(",") + ")"
         });
     };
     me.resize = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.container, "ui.style.overflow", "hidden");
+        core.property.set(window.var.container, "ui.style.overflow", "hidden");
         var target_region = me.ui.rect.absoluteRegion(window.var.container);
         var size = target_region.width > target_region.height ? target_region.height : target_region.width;
-        me.core.property.set(window.var.viewer, {
+        core.property.set(window.var.viewer, {
             "ui.style.top": ((target_region.height - size) / 2) + "px",
             "ui.style.left": ((target_region.width - size) / 2) + "px",
             "ui.style.width": size + "px",

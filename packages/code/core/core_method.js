@@ -4,10 +4,11 @@
  */
 
 screens.core.method = function CoreMethod(me, packages) {
+    const { core } = packages;
     me.content = {
         name: "Components",
         search: function (text) {
-            if (!me.core.util.isAdmin) {
+            if (!core.util.isAdmin) {
                 return;
             }
             var components = screens.components.sort();

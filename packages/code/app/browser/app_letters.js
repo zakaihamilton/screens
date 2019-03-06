@@ -4,12 +4,13 @@
  */
 
 screens.app.letters = function AppGematria(me, packages) {
+    const { core } = packages;
     me.ready = async function () {
         await me.ui.content.attach(me);
     };
     me.launch = function (args) {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             if (typeof args[0] === "string") {
                 me.content.import(me.singleton, args[0], args[1]);
             }
@@ -47,26 +48,26 @@ screens.app.letters = function AppGematria(me, packages) {
         });
         me.ui.options.choiceSet(me, null, {
             "fontSize": (object, value) => {
-                me.core.property.set(window.var.diagram, "ui.style.fontSize", value);
+                core.property.set(window.var.diagram, "ui.style.fontSize", value);
             },
             "language": me.updateLetters
         });
-        me.core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
+        core.property.set(window.var.diagram, "ui.style.fontSize", window.options.fontSize);
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.input, "ui.basic.text", "");
-        me.core.property.set(window, "name", "");
+        core.property.set(window.var.input, "ui.basic.text", "");
+        core.property.set(window, "name", "");
         me.updateLetters(window);
     };
     me.copyUrl = function (object) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.input, "ui.basic.text");
-        me.core.util.copyUrl("letters", [text]);
+        var text = core.property.get(window.var.input, "ui.basic.text");
+        core.util.copyUrl("letters", [text]);
     };
     me.updateLetters = function (object) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.input, "ui.basic.text");
+        var text = core.property.get(window.var.input, "ui.basic.text");
         var sources = text.split("|").map((token, index) => {
             return {
                 "verse": token,
@@ -84,8 +85,8 @@ screens.app.letters = function AppGematria(me, packages) {
             "endingLetters": window.options.endingLetters,
             "inclusion": window.options.inclusion
         };
-        me.core.property.set(window.var.diagram, "kab.letters.source", info);
-        me.core.property.set(window.var.diagram, {
+        core.property.set(window.var.diagram, "kab.letters.source", info);
+        core.property.set(window.var.diagram, {
             "ui.basic.html": null,
             "core.property.group": [
                 {
@@ -145,13 +146,13 @@ screens.app.letters = function AppGematria(me, packages) {
     };
     me.exportData = function (object) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.input, "ui.basic.text");
+        var text = core.property.get(window.var.input, "ui.basic.text");
         return [text];
     };
     me.importData = function (object, text, title) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.input, "ui.basic.text", text);
-        me.core.property.set(window, "widget.window.name", title);
+        core.property.set(window.var.input, "ui.basic.text", text);
+        core.property.set(window, "widget.window.name", title);
         me.updateLetters(window);
     };
 };

@@ -4,18 +4,19 @@
 */
 
 screens.cmd.access = function CmdAccess(me, packages) {
+    const { core } = packages;
     me.cmd = async function (terminal, args) {
         var appName = args[1] || "";
         var toggle = args[2] || "";
         var userName = args[3] || "";
-        me.core.property.set(terminal, "print", "Application: " + appName);
+        core.property.set(terminal, "print", "Application: " + appName);
         var userList = await me.user.verify.list();
         var userIndex = 1;
         for (var userItem of userList) {
             if (userName && userItem.name !== userName) {
                 continue;
             }
-            me.core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email);
+            core.property.set(terminal, "print", userIndex + "/" + userList.length + ": " + userItem.name + " - " + userItem.email);
             var access = await me.user.access.get(userItem.userid);
             var modified = false;
             if (!access) {
@@ -40,7 +41,7 @@ screens.cmd.access = function CmdAccess(me, packages) {
                     }
                 }
                 else if (toggle) {
-                    me.core.property.set(terminal, "print", "Only add or remove toggle supported");
+                    core.property.set(terminal, "print", "Only add or remove toggle supported");
                     break;
                 }
             }
@@ -48,10 +49,10 @@ screens.cmd.access = function CmdAccess(me, packages) {
                 access.name = userItem.name;
                 access.email = userItem.email;
                 await me.user.access.set(access, userItem.userid);
-                me.core.property.set(terminal, "insert", " - Changed");
+                core.property.set(terminal, "insert", " - Changed");
             }
             userIndex++;
         }
-        me.core.cmd.exit(terminal);
+        core.cmd.exit(terminal);
     };
 };

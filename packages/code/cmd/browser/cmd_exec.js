@@ -4,9 +4,10 @@
 */
 
 screens.cmd.exec = function CmdExec(me, packages) {
+    const { core } = packages;
     me.cmd = async function (terminal, args) {
         if (args.length <= 1) {
-            me.core.cmd.exit(terminal);
+            core.cmd.exit(terminal);
             return;
         }
         var result = null;
@@ -18,15 +19,15 @@ screens.cmd.exec = function CmdExec(me, packages) {
             else {
                 result = method;
             }
-            me.core.property.set(terminal, "print", JSON.stringify(result, null, 4));
+            core.property.set(terminal, "print", JSON.stringify(result, null, 4));
         }
         catch (err) {
             var string = err;
             if (typeof string === "object") {
                 string = JSON.stringify(string);
             }
-            me.core.property.set(terminal, "print", "exec: " + args[1] + ", error:" + string);
+            core.property.set(terminal, "print", "exec: " + args[1] + ", error:" + string);
         }
-        me.core.cmd.exit(terminal);
+        core.cmd.exit(terminal);
     };
 };

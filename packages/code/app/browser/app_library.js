@@ -4,13 +4,14 @@
  */
 
 screens.app.library = function AppLibrary(me, packages) {
+    const { core } = packages;
     me.launch = function (args) {
         var search = args[0];
         var params = { search };
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.show", true);
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.show", true);
             if (typeof search === "string") {
-                me.core.property.set(me.singleton.var.search, "ui.basic.text", search);
+                core.property.set(me.singleton.var.search, "ui.basic.text", search);
                 me.search(me.singleton);
             }
             return me.singleton;
@@ -19,7 +20,7 @@ screens.app.library = function AppLibrary(me, packages) {
         me.singleton = me.ui.element.create(me.json, "workspace", "self", params);
     };
     me.init = async function () {
-        me.core.property.link("widget.transform.clear", "app.library.clear", true);
+        core.property.link("widget.transform.clear", "app.library.clear", true);
         me.searchCounter = 0;
     };
     me.refresh = async function (object) {
@@ -56,12 +57,12 @@ screens.app.library = function AppLibrary(me, packages) {
         var editMode = window.options.editMode && (!showResults || !window.searchText);
         var structuredMode = window.options.structuredMode;
         var tagMode = window.options.tagMode;
-        me.core.property.set(window.var.transform, "ui.style.opacity", showResults || editMode ? "0" : "");
-        me.core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
-        me.core.property.set(window.var.process, "ui.basic.show", !structuredMode && !tagMode && editMode);
-        me.core.property.set(window.var.showResults, "ui.basic.show", !showResults);
-        me.core.property.set(window.var.resultsContainer, "ui.basic.show", true);
-        me.core.property.set(window.var.resultsContainer, "ui.style.display", showResults && window.searchText ? "" : "none");
+        core.property.set(window.var.transform, "ui.style.opacity", showResults || editMode ? "0" : "");
+        core.property.set([window.var.editor, window.var.editorContainer, window.var.delete, window.var.update], "ui.basic.show", editMode);
+        core.property.set(window.var.process, "ui.basic.show", !structuredMode && !tagMode && editMode);
+        core.property.set(window.var.showResults, "ui.basic.show", !showResults);
+        core.property.set(window.var.resultsContainer, "ui.basic.show", true);
+        core.property.set(window.var.resultsContainer, "ui.style.display", showResults && window.searchText ? "" : "none");
     };
     me.cleanSearchText = function (search) {
         search = search.replace(/\s+/g, " ");
@@ -83,7 +84,7 @@ screens.app.library = function AppLibrary(me, packages) {
                         continue;
                     }
                     var value = item[key];
-                    value = value.replace(/^\d+/g, (x) => me.core.string.padNumber(x, 3));
+                    value = value.replace(/^\d+/g, (x) => core.string.padNumber(x, 3));
                     names.add(key + ":" + value);
                 }
             }
@@ -92,11 +93,11 @@ screens.app.library = function AppLibrary(me, packages) {
                 var result = [
                     nameValue,
                     async function () {
-                        var search = me.core.property.get(window.var.search, "ui.basic.text");
+                        var search = core.property.get(window.var.search, "ui.basic.text");
                         var insert = true;
                         if (search) {
                             nameKey = nameKey.trim().toLowerCase();
-                            search = me.core.string.split(search).map((item) => {
+                            search = core.string.split(search).map((item) => {
                                 if (item.includes(":")) {
                                     var [itemKey] = item.split(":");
                                     itemKey = itemKey.trim().toLowerCase();
@@ -124,7 +125,7 @@ screens.app.library = function AppLibrary(me, packages) {
                                 search += "\"";
                             }
                         }
-                        me.core.property.set(window.var.search, "ui.basic.text", search);
+                        core.property.set(window.var.search, "ui.basic.text", search);
                         me.changedSearch(window.var.search);
                     },
                     {
@@ -171,15 +172,15 @@ screens.app.library = function AppLibrary(me, packages) {
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.search, "ui.basic.text", "");
+        core.property.set(window.var.search, "ui.basic.text", "");
         me.reset(object);
     };
     me.reset = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.editor, "text", "");
-        me.core.property.set(window.var.transform, "text", "");
-        me.core.property.set(window.var.transform, "transform");
-        me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
+        core.property.set(window.var.editor, "text", "");
+        core.property.set(window.var.transform, "text", "");
+        core.property.set(window.var.transform, "transform");
+        core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         window.searchText = "";
     };
     me.reSearch = function (object) {
@@ -190,9 +191,9 @@ screens.app.library = function AppLibrary(me, packages) {
     me.search = async function (object) {
         var window = me.widget.window.get(object);
         var tagMode = window.options.tagMode;
-        var search = me.core.property.get(window.var.search, "ui.basic.text");
+        var search = core.property.get(window.var.search, "ui.basic.text");
         search = me.cleanSearchText(search);
-        me.core.property.set(window.var.search, "ui.basic.text", search);
+        core.property.set(window.var.search, "ui.basic.text", search);
         if (search === window.searchText) {
             return;
         }
@@ -202,9 +203,9 @@ screens.app.library = function AppLibrary(me, packages) {
         clearTimeout(me.searchTimer);
         var records = null;
         if (search) {
-            me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
-            me.core.property.set(window.var.resultsSpinner, "text", "Loading");
-            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+            core.property.set(window.var.resultsContainer, "ui.style.display", "none");
+            core.property.set(window.var.resultsSpinner, "text", "Loading");
+            core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
             try {
                 records = await me.db.library.find(search);
             }
@@ -226,7 +227,7 @@ screens.app.library = function AppLibrary(me, packages) {
             }
         }
         if (search) {
-            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
+            core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
     };
     me.updateText = function (object) {
@@ -341,15 +342,15 @@ screens.app.library = function AppLibrary(me, packages) {
             }
             transformText += record.content.text;
         }
-        me.core.property.set(window.var.editor, "text", text);
-        me.core.property.set(window.var.transform, "text", transformText);
+        core.property.set(window.var.editor, "text", text);
+        core.property.set(window.var.transform, "text", transformText);
         if (!window.options.editMode) {
-            me.core.property.set(window.var.transform, "transform");
+            core.property.set(window.var.transform, "transform");
         }
     };
     me.parseRecordsFromText = function (object) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.editor, "text");
+        var text = core.property.get(window.var.editor, "text");
         var records = {};
         var array = [];
         var isTag = false;
@@ -471,7 +472,7 @@ screens.app.library = function AppLibrary(me, packages) {
     };
     me.process = function (object) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.editor, "text");
+        var text = core.property.get(window.var.editor, "text");
         var prevLine = "";
         var isTag = false;
         text = text.split("\n").map(line => {
@@ -505,14 +506,14 @@ screens.app.library = function AppLibrary(me, packages) {
             prevLine = line;
             return line;
         }).join("\n");
-        me.core.property.set(window.var.editor, "text", text);
+        core.property.set(window.var.editor, "text", text);
         me.updateText(object);
     };
     me.gotoArticle = async function (object, tags, spinner = true) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.resultsContainer, "ui.style.display", "none");
+        core.property.set(window.var.resultsContainer, "ui.style.display", "none");
         if (spinner) {
-            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
+            core.property.set(window.var.resultsSpinner, "ui.style.visibility", "visible");
         }
         if (!Array.isArray(tags)) {
             var content = await me.db.library.findContentById(tags._id);
@@ -540,7 +541,7 @@ screens.app.library = function AppLibrary(me, packages) {
         window.showResults = false;
         me.updateMode(window);
         if (spinner) {
-            me.core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
+            core.property.set(window.var.resultsSpinner, "ui.style.visibility", "hidden");
         }
     };
     me.showResults = function (object) {
@@ -550,8 +551,8 @@ screens.app.library = function AppLibrary(me, packages) {
     };
     me.exportText = function (object, target) {
         var window = me.widget.window.get(object);
-        var text = me.core.property.get(window.var.transform, "text");
-        me.core.property.set(target, "importData", text);
+        var text = core.property.get(window.var.transform, "text");
+        core.property.set(target, "importData", text);
     };
     me.updateResults = function (object, results) {
         var window = me.widget.window.get(object);
@@ -568,7 +569,7 @@ screens.app.library = function AppLibrary(me, packages) {
             }, 250);
         };
         var fields = Object.keys(Object.assign({}, ...results)).filter(name => name !== 'user' && name !== '_id').map(name => {
-            return { name: name, title: me.core.string.title(name), type: "text" };
+            return { name: name, title: core.string.title(name), type: "text" };
         });
         $(window.var.resultsGrid).jsGrid("clearFilter");
         $(window.var.resultsGrid).jsGrid({
@@ -619,8 +620,8 @@ screens.app.library = function AppLibrary(me, packages) {
     };
     me.copyUrl = function (object) {
         var window = me.widget.window.get(object);
-        var search = me.core.property.get(window.var.search, "ui.basic.text");
-        me.core.util.copyUrl("library", [search]);
+        var search = core.property.get(window.var.search, "ui.basic.text");
+        core.util.copyUrl("library", [search]);
     };
     me.content = {
         search: async function (text) {
@@ -638,7 +639,7 @@ screens.app.library = function AppLibrary(me, packages) {
                         continue;
                     }
                     var value = item[key];
-                    value = value.replace(/\d+/g, (x) => me.core.string.padNumber(x, 3));
+                    value = value.replace(/\d+/g, (x) => core.string.padNumber(x, 3));
                     if (key.toLowerCase().includes(text) || value.toLowerCase().includes(text)) {
                         if (!tags[key]) {
                             tags[key] = new Set();
@@ -655,10 +656,10 @@ screens.app.library = function AppLibrary(me, packages) {
                         search = "\"" + search + "\"";
                     }
                     let args = ["core.app.launch", "library", search];
-                    return { title: me.core.string.title(title), args };
+                    return { title: core.string.title(title), args };
                 });
                 members = members.sort((a, b) => a.title.localeCompare(b.title));
-                collections.push({ title: me.core.string.title(key), members });
+                collections.push({ title: core.string.title(key), members });
             }
             return collections;
         }

@@ -4,6 +4,7 @@
  */
 
 screens.app.visualize = function AppVisualize(me, packages) {
+    const { core } = packages;
     me.init = async function () {
         await me.ui.transform.attach(me);
     };
@@ -11,8 +12,8 @@ screens.app.visualize = function AppVisualize(me, packages) {
         await me.ui.content.attach(me);
     };
     me.launch = function (args) {
-        if (me.core.property.get(me.singleton, "ui.node.parent")) {
-            me.core.property.set(me.singleton, "widget.window.close");
+        if (core.property.get(me.singleton, "ui.node.parent")) {
+            core.property.set(me.singleton, "widget.window.close");
         }
         if (!args) {
             args = [""];
@@ -30,7 +31,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
             me.content.import(window, args[0], args[1]);
         }
         else {
-            me.core.property.set(window, "ui.property.after", {
+            core.property.set(window, "ui.property.after", {
                 "app.visualize.sortDown": null,
                 "timeout": 1000
             });
@@ -45,17 +46,17 @@ screens.app.visualize = function AppVisualize(me, packages) {
             me.ui.options.toggleSet(me, null, Object.assign({}, options.toggle));
             me.ui.options.choiceSet(me, null, Object.assign({
                 "fontSize": (object, value) => {
-                    me.core.property.set(window.var.terms, "ui.style.fontSize", value);
-                    me.core.property.notify(window, "update");
+                    core.property.set(window.var.terms, "ui.style.fontSize", value);
+                    core.property.notify(window, "update");
                 }
             }, options.choice));
-            me.core.property.set(window, "app", me);
+            core.property.set(window, "app", me);
         }
     };
     me.importData = function (object, text, title, options) {
         var window = me.widget.window.get(object);
         me.clear(window);
-        me.core.property.set(window, "widget.window.name", title);
+        core.property.set(window, "widget.window.name", title);
         var data = JSON.parse(text);
         for (var item of data) {
             var emLeft = parseInt(item.left);
@@ -79,9 +80,9 @@ screens.app.visualize = function AppVisualize(me, packages) {
         var elements = me.ui.node.childList(window.var.terms);
         var data = [];
         for (var element of elements) {
-            var text = me.core.property.get(element, "ui.attribute.text");
-            var left = me.core.property.get(element, "ui.attribute.emLeft");
-            var top = me.core.property.get(element, "ui.attribute.emTop");
+            var text = core.property.get(element, "ui.attribute.text");
+            var left = core.property.get(element, "ui.attribute.emLeft");
+            var top = core.property.get(element, "ui.attribute.emTop");
             data.push({ left, top, text });
         }
         if (!data.length) {
@@ -91,7 +92,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
     };
     me.term = async function (object, text) {
         var html = await me.transform.term(object, text);
-        me.core.property.set(object, "ui.attribute.text", text);
+        core.property.set(object, "ui.attribute.text", text);
         html += me.ui.html.item({
             tag: "i",
             classes: ["fas", "fa-minus-circle", "app-visualize-delete"],
@@ -99,26 +100,26 @@ screens.app.visualize = function AppVisualize(me, packages) {
                 onclick: "screens.app.visualize.remove(this)"
             }
         });
-        me.core.property.set(object, "ui.basic.html", html);
+        core.property.set(object, "ui.basic.html", html);
     };
     me.remove = function (object) {
         me.ui.node.removeChild(object.parentNode.parentNode, object.parentNode);
     };
     me.update = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window.var.terms, "ui.style.fontSize", window.options.fontSize);
+        core.property.set(window.var.terms, "ui.style.fontSize", window.options.fontSize);
     };
     me.reload = function (object) {
         var window = me.widget.window.get(object);
         var elements = me.ui.node.childList(window.var.terms);
         for (var element of elements) {
-            var text = me.core.property.get(element, "ui.attribute.text");
-            me.core.property.set(element, "app.visualize.term", text);
+            var text = core.property.get(element, "ui.attribute.text");
+            core.property.set(element, "app.visualize.term", text);
         }
     };
     me.clear = function (object) {
         var window = me.widget.window.get(object);
-        me.core.property.set(window, "widget.window.name", "");
+        core.property.set(window, "widget.window.name", "");
         me.ui.node.empty(window.var.terms);
     };
     me.sortDown = function (object, order) {
@@ -190,7 +191,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
         var spacePixels = parseInt(me.ui.basic.emToPixels(window.var.terms, 1));
         var left = spacePixels, top = spacePixels;
         var height = 0;
-        elements.map(element => me.core.property.set(element, "ui.style.transition", ""));
+        elements.map(element => core.property.set(element, "ui.style.transition", ""));
         for (var element of elements) {
             if (!element) {
                 left = spacePixels;
@@ -211,7 +212,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
     me.applyCurrentElement = function (object) {
         var window = me.widget.window.get(object);
         if (window.currentElement) {
-            me.core.property.set(window.currentElement, "ui.class.mobile", false);
+            core.property.set(window.currentElement, "ui.class.mobile", false);
             window.currentElement = null;
             window.termInput = "";
         }
@@ -237,7 +238,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
         }
         if (!text) {
             if (window.currentElement) {
-                me.core.property.set(window.currentElement, "ui.node.parent");
+                core.property.set(window.currentElement, "ui.node.parent");
                 window.currentElement = null;
             }
             return;
@@ -250,7 +251,7 @@ screens.app.visualize = function AppVisualize(me, packages) {
             });
         }
         if (update) {
-            await me.core.property.set(element, "app.visualize.term", window.termInput);
+            await core.property.set(element, "app.visualize.term", window.termInput);
         }
         var left = window.termPos.left, top = window.termPos.top;
         var region = me.ui.rect.absoluteRegion(element);
@@ -312,12 +313,12 @@ screens.app.visualize = function AppVisualize(me, packages) {
     me.moveElement = function (object, x, y) {
         var emX = parseInt(me.ui.basic.pixelsToEm(object.parentNode, x));
         var emY = parseInt(me.ui.basic.pixelsToEm(object.parentNode, y));
-        me.core.property.set(object, "ui.attribute.pixelLeft", x);
-        me.core.property.set(object, "ui.attribute.pixelTop", y);
-        me.core.property.set(object, "ui.attribute.emLeft", emX);
-        me.core.property.set(object, "ui.attribute.emTop", emY);
-        me.core.property.set(object, "ui.style.left", emX + "em");
-        me.core.property.set(object, "ui.style.top", emY + "em");
-        me.core.property.set(object, "ui.style.opacity", "");
+        core.property.set(object, "ui.attribute.pixelLeft", x);
+        core.property.set(object, "ui.attribute.pixelTop", y);
+        core.property.set(object, "ui.attribute.emLeft", emX);
+        core.property.set(object, "ui.attribute.emTop", emY);
+        core.property.set(object, "ui.style.left", emX + "em");
+        core.property.set(object, "ui.style.top", emY + "em");
+        core.property.set(object, "ui.style.opacity", "");
     };
 };

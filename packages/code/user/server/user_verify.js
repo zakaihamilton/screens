@@ -4,9 +4,10 @@
  */
 
 screens.user.verify = function UserVerify(me, packages) {
+    const { core, db, storage } = packages;
     me.init = async function () {
-        me.core.property.link("core.socket.verify", "user.verify.verify", true);
-        var login = await me.core.util.config("settings.core.login");
+        core.property.link("core.socket.verify", "user.verify.verify", true);
+        var login = await core.util.config("settings.core.login");
         me.client_id = login.client_id;
         const { OAuth2Client } = require("google-auth-library");
         me.client = new OAuth2Client(me.client_id);
@@ -17,7 +18,7 @@ screens.user.verify = function UserVerify(me, packages) {
         return isMatch;
     };
     me.list = async function () {
-        return await me.storage.data.query(me.id);
+        return await storage.data.query(me.id);
     };
     me.verify = async function (info) {
         if (me.platform === "server" && (!info.platform || info.platform !== "service")) {
@@ -29,9 +30,9 @@ screens.user.verify = function UserVerify(me, packages) {
                 info.stop = true;
                 return;
             }
-            var hash = me.core.string.hash(token);
+            var hash = core.string.hash(token);
             try {
-                var profile = await me.db.cache.tokens.find({ hash });
+                var profile = await db.cache.tokens.find({ hash });
                 if (!profile) {
                     const ticket = await me.client.verifyIdToken({
                         idToken: token,
@@ -47,14 +48,14 @@ screens.user.verify = function UserVerify(me, packages) {
                 profile.request++;
                 if (profile.request === 1 || profile.previous + 60000 < profile.utc) {
                     me.log("Storing profile: " + JSON.stringify(profile));
-                    await me.db.cache.tokens.use({ hash }, profile);
+                    await db.cache.tokens.use({ hash }, profile);
                 }
                 info.userId = profile.userid;
                 info.userName = profile.name;
                 info.userEmail = profile.email;
-                let user = me.db.shared.user.find({ user: info.userId });
+                let user = db.shared.user.find({ user: info.userId });
                 if (!user || user.name !== info.userName || user.email !== info.userEmail) {
-                    me.db.shared.user.use({ user: info.userId }, { name: info.userName, email: info.userEmail });
+                    db.shared.user.use({ user: info.userId }, { name: info.userName, email: info.userEmail });
                 }
             }
             catch (err) {
